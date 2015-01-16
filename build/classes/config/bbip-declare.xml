@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jump="http://www.bocom.com/schema/jump-core"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:bbip-core="http://www.bocom.com/schema/bbip-core"
+    xmlns:bbip-channel="http://www.bocom.com/schema/bbip-channel"
+    xsi:schemaLocation="http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd
+        http://www.bocom.com/schema/bbip-channel http://www.bocom.com/schema/bbip-channel-1.0.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.bocom.com/schema/bbip-core http://www.bocom.com/schema/bbip-core-1.0.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+ 
+    <bean id="beanFactoryUtils" class="com.bocom.bbip.eups.utils.BeanFactoryUtils"/>
+    <bbip-core:bbip-repository-support base-package="com.bocom.bbip.eups,com.bocom.bbip.gdeups"/>
+	<!-- ======================================== -->
+	<!--  声明使用分行业务平台服务访问支持.-->
+	<!-- ======================================== -->
+ 	<bbip-core:bbip-service-support/>
+ 	
+ 	<!-- 添加BGSP访问支持 -->
+ 	<bbip-core:bbip-bgsp-support/>
+ 	<bbip-channel:bgsp-service-channel-adaptor/>
+ 	
+	<!--========================================
+	 创建分行业务平台服务域,向平台提供服务.
+	======================================== -->
+	<bbip-channel:bbip-service-channel-adaptor service-domain="GDEUPS"/>
+	<!-- ======================================== -->
+	<!--  BBIP平台基础公共服务组件.-->
+	<!-- ======================================== -->
+	<bean id="bbipPubSvr" class="com.bocom.bbip.comp.BBIPPublicServiceImpl"/> 
+	
+	<!-- BBIP平台日志支持(按traceNo来生成日志). -->
+    <bean id="bbipLoggingSupport" class="com.bocom.bbip.comp.logging.BBIPLoggingSupport"/>
+   
+    <!-- bbip-ssb组件 -->
+    <bean id="ssbClent" class="com.bocom.bbip.comp.ssb.service.SSBServiceAccessObject"/>
+    <bean id="messageService" class="com.bocom.bbip.comp.message.MessageService"/>
+</beans>

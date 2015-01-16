@@ -1,0 +1,13 @@
+ClearCase CopyAreaDB|4
+vobs\gn_bbip\eups_code\EUPS_PROJECT\branches\SZXEUPS\src\config\process
+2
+9
+1e:bbip-szxeups-process-check.xml|1|1470e595ea1|cc8|fdbb7c76|7d00eeec03ec11e498210002cf50d54c|0
+20:bbip-szxeups-process-zerobal.xml|1|1470e595ea1|6b7|57795f77|7ac0eed003ec11e498210002cf50d54c|0
+20:bbip-szxeups-process-invoice.xml|1|1470e595e82|294|f4be75f|7890eeb403ec11e498210002cf50d54c|0
+1e:bbip-szxeups-process-order.xml|1|1474da25f47|2b6a|fb2efd59|7abf2e780c9011e48c090002cf50d54c|0
+1f:bbip-szxeups-process-online.xml|1|1470e595e44|196|7f2f8c82|7430ee7c03ec11e498210002cf50d54c|0
+1c:bbip-szxeups-process-szx.xml|1|1474da25eba|be6|c1186561|d05df7fc0e5011e4840c0002cf51b54c|0
+20:bbip-szxeups-process-lottery.xml|1|1470e595e24|921|394428f4|71d0ee6003ec11e498210002cf50d54c|0
+1f:bbip-szxeups-process-alipay.xml|1|1470e595a00|7b1|2126c201|6d80ee2803ec11e498210002cf50d54c|0
+1f:bbip-szxeups-process-single.xml|1|1470e595a00|2e76|e9576d18|6b60ee0c03ec11e498210002cf50d54c|0

@@ -1,0 +1,18 @@
+ClearCase CopyAreaDB|4
+vobs\gn_bbip\eups_code\EUPS_PROJECT\branches\SZXEUPS\src\config\report
+2
+e
+11:ivoPrintReport.vm|1|1470e5979df|10a9|b915f29b|f5e0f4b803ec11e498210002cf50d54c|0
+13:qryMobiFeeReport.vm|1|1470e598fef|4db|df7a3cea|0090f54403ed11e498210002cf50d54c|0
+f:ORDR00Report.vm|1|1470e5979d0|946|8004564a|f190f48003ec11e498210002cf50d54c|0
+f:ORDR01Report.vm|1|1470e5979b0|940|d08c538c|eb20f42c03ec11e498210002cf50d54c|0
+1c:batchWithholdDetailReport.vm|1|1470e597982|44a|6e11ec82|e6e0f3f403ec11e498210002cf50d54c|0
+15:countMessageReport.vm|1|1470e598fdf|332|ba6a7013|fe80f52803ec11e498210002cf50d54c|0
+f:conv.properties|1|1470e5979df|f|2fdc06c1|f3b0f49c03ec11e498210002cf50d54c|0
+1c:payfeeSuccessDetailReport.vm|1|1470e5979a1|54c|99e071de|e8f0f41003ec11e498210002cf50d54c|0
+1c:singleCollectDetailReport.vm|1|1470e5979c0|552|5e6d7605|ef70f46403ec11e498210002cf50d54c|0
+18:countEupsBusTypReport.vm|1|1470e597982|323|c2e4715d|e4b0f3d803ec11e498210002cf50d54c|0
+19:payfeeFailDetailReport.vm|1|1470e5979ef|54c|d607724d|f800f4d403ec11e498210002cf50d54c|0
+16:batchWithholdReport.vm|1|1470e5979fe|2ec|cd8053b9|fa20f4f003ec11e498210002cf50d54c|0
+1b:singleCollectMonthReport.vm|1|1470e5979b0|391|630488f7|ed40f44803ec11e498210002cf50d54c|0
+9:sample.vm|1|1470e598fd0|10a9|b915f29b|fc70f50c03ec11e498210002cf50d54c|0

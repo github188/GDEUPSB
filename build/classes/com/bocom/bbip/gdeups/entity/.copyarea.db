@@ -1,0 +1,24 @@
+ClearCase CopyAreaDB|4
+vobs\gn_bbip\eups_code\EUPS_PROJECT\branches\SZXEUPS\src\com\bocom\bbip\szxeups\entity
+2
+14
+16:EupsSchPayCdeInfo.java|1|1470e5a30a4|52c|30d389cf|811141d803f311e498210002cf50d54c|0
+13:EupsSchClaInfo.java|1|1470e5a31fb|68a|7ba2ea97|93f142b803f311e498210002cf50d54c|0
+19:EupsSchStuPayCntInfo.java|1|1470e5a30f2|7de|e63d2800|8a51424803f311e498210002cf50d54c|0
+10:EupsSchInfo.java|1|1470e5a31fb|5da|5c6bb962|965142d403f311e498210002cf50d54c|0
+1a:EupsSptLotCashOutInfo.java|1|1470e5a2f6c|745|64b11f67|6f0140f803f311e498210002cf50d54c|0
+21:EupsWelLotBetResultDetailKey.java|1|1470e5a316f|3ae|2e9a2c6d|8f01428003f311e498210002cf50d54c|0
+16:EupsSchStuPayInfo.java|1|1470e5a3121|1591|ae481e8c|8cb1426403f311e498210002cf50d54c|0
+1c:EupsWelLotBetResultInfo.java|1|1470e5a2f6c|230|4e52acac|6cd140dc03f311e498210002cf50d54c|0
+1a:EupsJlzfAccountDetail.java|1|1470e5a321b|b48|58bc3f47|989142f003f311e498210002cf50d54c|0
+16:EupsTSZYDCustList.java|1|14723e67ff4|a9f|3f381ab3|7a60c9e205a211e4881d0002cf51b54c|0
+1e:EupsWelLotBetResultDetail.java|1|1470e5a3094|8c4|2ba8d11|7ed141bc03f311e498210002cf50d54c|0
+1b:EupsSportsLotteryOrder.java|1|1470e5a2f9b|a5b|ef030b74|75e1414c03f311e498210002cf50d54c|0
+17:EupsFileDownDetail.java|1|1470e5a31dc|4d6|e807316|9161429c03f311e498210002cf50d54c|0
+17:EupsElectricJnlTmp.java|1|1470e5a2f8b|f0f|fe4f5505|7141411403f311e498210002cf50d54c|0
+13:EupsSchStuInfo.java|1|1470e5a3085|8a6|47d18520|7c9141a003f311e498210002cf50d54c|0
+20:EupsWelLotAwardReturnDetail.java|1|1470e5a3075|b5d|6ab2415a|7811416803f311e498210002cf50d54c|0
+1e:EupsWelLotAwardReturnInfo.java|1|1470e5a30b4|6bb|f0bcfab3|835141f403f311e498210002cf50d54c|0
+18:EupsTSZYDCustEntity.java|1|1470e5a30b4|435|d87425f0|85c1421003f311e498210002cf50d54c|0
+1c:EupsSptLotReturnWinInfo.java|1|1470e5a2f8b|b4b|ef733fa9|73a1413003f311e498210002cf50d54c|0
+1f:EupsWelLotBetResultInfoKey.java|1|1470e5a3075|3a8|cac82a27|7a61418403f311e498210002cf50d54c|0

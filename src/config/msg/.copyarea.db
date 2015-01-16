@@ -1,0 +1,9 @@
+ClearCase CopyAreaDB|4
+vobs\gn_bbip\eups_code\EUPS_PROJECT\branches\SZXEUPS\src\config\msg
+2
+5
+11:values.properties|1|1470e595ee0|0|0|8b80efa403ec11e498210002cf50d54c|0
+11:errors.properties|1|1474da25fb4|3e26|d85ba434|89a46a080e1711e4980f0002cf51b54c|0
+19:errorViewNames.properties|1|1470e595ec0|0|0|8740ef6c03ec11e498210002cf50d54c|0
+14:viewNames.properties|1|1470e595ec0|0|0|8530ef5003ec11e498210002cf50d54c|0
+13:messages.properties|1|1470e595eb1|0|0|8310ef3403ec11e498210002cf50d54c|0

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<x:beans xmlns:x="http://www.springframework.org/schema/beans"
+	xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd
+						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<!-- <x:bean id="batchReport" class="com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender">
+		<x:property name="reportNameTemplateLocationMapping" >
+		  <x:map>
+		    <x:entry  key="batchReport" value="config/report/qryMobiFeeReport.vm"/> 
+		  </x:map>
+		</x:property>
+		<x:property name="internalFunction"  ref="internalFunc"/>
+	</x:bean>
+
+	<x:bean id="internalFunc" class="com.bocom.bbip.gdeups.utils.ReportFunctionUtils"/> -->
+</x:beans>

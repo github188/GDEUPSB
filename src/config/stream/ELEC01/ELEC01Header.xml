@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	 type="LLLL" encoding="GBK" trace="true">
+	<segment name="pwr8583head">
+	<!-- 交易处理码 -->
+		<fixString name="messageType" length="4"/>
+	</segment>
+	<segment name="body">
+	    <varbytes type="X" name="ISO8583" format="none" >
+	  		<!-- <include elementFactory="iso8583://WEB-INF/classes/config/stream/" path="ELEC00/ELEC00Map.xml"/> -->
+	  		<include elementFactory="iso8583://WEB-INF/classes/config/stream/" path="ELEC00/ELEC00Map.xml"/>
+	    </varbytes>
+	</segment>
+</message>

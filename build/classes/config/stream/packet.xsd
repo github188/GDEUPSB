@@ -1,0 +1,589 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://www.bocom.com/jump/transformer/packet"
+	targetNamespace="http://www.bocom.com/jump/transformer/packet">
+	
+	<xsd:simpleType name="byteArrayEncodeType">
+		<xsd:restriction base="xsd:NMTOKEN">
+			<xsd:enumeration value="base64" />
+			<xsd:enumeration value="hex" />
+			<xsd:enumeration value="none" />
+		</xsd:restriction>
+	</xsd:simpleType>
+	
+	<!-- general attributes -->
+	<xsd:attributeGroup name="commonAttributes">
+		<xsd:attribute name="name" use="required" type="xsd:string"/>
+		<xsd:attribute name="alias" type="xsd:string"/>
+		<xsd:attribute name="encoding" type="xsd:string"/>
+		<xsd:attribute name="referred" type="xsd:boolean" default="false"/>
+	</xsd:attributeGroup>
+	
+	<xsd:attributeGroup name="commonFieldAttributes">
+		<xsd:attribute name="name" use="required" type="xsd:string"/>
+		<xsd:attribute name="alias" type="xsd:string"/>
+		<xsd:attribute name="mapping" type="xsd:boolean" default="false"/>
+		<xsd:attribute name="optional" type="xsd:boolean" default="false"/>
+		<xsd:attribute name="referred" type="xsd:boolean" default="false"/>
+	</xsd:attributeGroup>
+	
+	<xsd:attributeGroup name="asciiFieldAttributes">
+		<xsd:attributeGroup ref="commonFieldAttributes" />
+		<xsd:attribute name="encoding" type="xsd:string" />
+		<xsd:attribute name="triming" default="0x20" type="xsd:string"/>
+	</xsd:attributeGroup>
+	
+	<xsd:attributeGroup name="stringFieldAttributes">
+		<xsd:attribute name="default" default="" type="xsd:string"/>
+		<xsd:attribute name="filtering"  type="xsd:string"/>
+		<xsd:attribute name="prefix"  type="xsd:string"/>
+	</xsd:attributeGroup>
+	
+	<xsd:attributeGroup name="numericFieldAttributes">
+		<xsd:attribute name="default" default="0" type="xsd:string"/>
+		<xsd:attribute name="decimal" type="xsd:int"/>
+		<xsd:attribute name="signed" type="xsd:boolean" default="false"/>
+		<xsd:attribute name="leadingSign" type="xsd:boolean" default="true"/>
+		<xsd:attribute name="separateSign" type="xsd:boolean" default="true"/>
+	</xsd:attributeGroup>
+	
+	<xsd:attributeGroup name="numberFieldAttributes">
+		<xsd:attribute name="default" default="0" type="xsd:string"/>
+		<xsd:attribute name="pattern" type="xsd:string" />
+	</xsd:attributeGroup>
+
+	<xsd:attributeGroup name="endianFieldAttributes">
+		<xsd:attribute name="swapped" type="xsd:boolean" default="false"/>
+		<xsd:attribute name="littleEndian" type="xsd:boolean" default="false"/>
+	</xsd:attributeGroup>	
+
+	<!-- var ascii fields -->
+	<xsd:element name="varString">
+		<xsd:complexType>
+			<xsd:attribute name="type" use="required" type="xsd:string"/>
+			<xsd:attribute name="maxLength" type="xsd:int" />
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attributeGroup ref="stringFieldAttributes" />
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="varNumeric">
+		<xsd:complexType>
+			<xsd:attribute name="type" use="required" type="xsd:string"/>
+			<xsd:attribute name="maxLength" type="xsd:int" />
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attributeGroup ref="numericFieldAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="varDouble">
+		<xsd:complexType>
+			<xsd:attribute name="type" use="required" type="xsd:string"/>
+			<xsd:attribute name="maxLength" type="xsd:int" />
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attributeGroup ref="numberFieldAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="varDecimal">
+		<xsd:complexType>
+			<xsd:attribute name="type" use="required" type="xsd:string"/>
+			<xsd:attribute name="maxLength" type="xsd:int" />
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attributeGroup ref="numberFieldAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="varInteger">
+		<xsd:complexType>
+			<xsd:attribute name="type" use="required" type="xsd:string"/>
+			<xsd:attribute name="maxLength" type="xsd:int" />
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attributeGroup ref="numberFieldAttributes"/>
+			<xsd:attribute name="additive" type="xsd:int"/>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="varLong">
+		<xsd:complexType>
+			<xsd:attribute name="type" use="required" type="xsd:string"/>
+			<xsd:attribute name="maxLength" type="xsd:int" />
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attributeGroup ref="numberFieldAttributes"/>
+			<xsd:attribute name="additive" type="xsd:int"/>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="varDate">
+		<xsd:complexType>
+			<xsd:attribute name="type" use="required" type="xsd:string"/>
+			<xsd:attribute name="maxLength" type="xsd:int" />
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attribute name="default" type="xsd:string"/>
+			<xsd:attribute name="pattern" default="yyyyMMdd" type="xsd:string"/>
+		</xsd:complexType>
+	</xsd:element>	
+
+	<xsd:element name="varTime">
+		<xsd:complexType>
+			<xsd:attribute name="type" use="required" type="xsd:string"/>
+			<xsd:attribute name="maxLength" type="xsd:int" />
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attribute name="default" type="xsd:string" />
+			<xsd:attribute name="pattern" default="HHmmss" type="xsd:string"/>
+		</xsd:complexType>
+	</xsd:element>	
+	
+	<xsd:element name="varTimestamp">
+		<xsd:complexType>
+			<xsd:attribute name="type" use="required"/>
+			<xsd:attribute name="maxLength" type="xsd:int" />
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attribute name="default" type="xsd:string" />
+			<xsd:attribute name="pattern" default="yyyyMMddHHmmss" type="xsd:string"/>
+		</xsd:complexType>
+	</xsd:element>	
+
+	<!-- fix ascii fields -->
+	<xsd:element name="fixString">
+		<xsd:complexType>
+			<xsd:attribute name="length" use="required" type="xsd:int"/>
+			<xsd:attribute name="leftJustified" type="xsd:boolean" default="true"/>
+			<xsd:attribute name="filling" default="0x20" type="xsd:string"/>
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attributeGroup ref="stringFieldAttributes" />
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="fixNumeric">
+		<xsd:complexType>
+			<xsd:attribute name="length" use="required" type="xsd:int"/>
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attributeGroup ref="numericFieldAttributes" />
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="fixDouble">
+		<xsd:complexType>
+			<xsd:attribute name="length" use="required" type="xsd:int"/>
+			<xsd:attribute name="leftJustified" type="xsd:boolean" default="false"/>
+			<xsd:attribute name="filling" default="0x30" type="xsd:string"/>
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attributeGroup ref="numberFieldAttributes" />
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="fixDecimal">
+		<xsd:complexType>
+			<xsd:attribute name="length" use="required" type="xsd:int"/>
+			<xsd:attribute name="leftJustified" type="xsd:boolean" default="false"/>
+			<xsd:attribute name="filling" default="0x30" type="xsd:string"/>
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attributeGroup ref="numberFieldAttributes" />
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="fixInteger">
+		<xsd:complexType>
+			<xsd:attribute name="length" use="required" type="xsd:int"/>
+			<xsd:attribute name="leftJustified" type="xsd:boolean" default="false"/>
+			<xsd:attribute name="filling" default="0x30" type="xsd:string"/>
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attributeGroup ref="numberFieldAttributes" />
+			<xsd:attribute name="additive" type="xsd:int"/>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="fixLong">
+		<xsd:complexType>
+			<xsd:attribute name="length" use="required" type="xsd:int"/>
+			<xsd:attribute name="leftJustified" type="xsd:boolean" default="false"/>
+			<xsd:attribute name="filling" default="0x30" type="xsd:string"/>
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attributeGroup ref="numberFieldAttributes" />
+			<xsd:attribute name="additive" type="xsd:int"/>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="fixDate">
+		<xsd:complexType>
+			<xsd:attribute name="length" use="required" type="xsd:int"/>
+			<xsd:attribute name="leftJustified" type="xsd:boolean" default="true"/>
+			<xsd:attribute name="filling" default="0x20" type="xsd:string"/>
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attribute name="default" type="xsd:string"/>
+			<xsd:attribute name="pattern" default="yyyyMMdd" type="xsd:string"/>
+		</xsd:complexType>
+	</xsd:element>	
+
+	<xsd:element name="fixTime">
+		<xsd:complexType>
+			<xsd:attribute name="length" use="required" type="xsd:int"/>
+			<xsd:attribute name="leftJustified" type="xsd:boolean" default="true"/>
+			<xsd:attribute name="filling" default="0x20" type="xsd:string"/>
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attribute name="default" type="xsd:string"/>
+			<xsd:attribute name="pattern" default="HHmmss" type="xsd:string"/>
+		</xsd:complexType>
+	</xsd:element>	
+	
+	<xsd:element name="fixTimestamp">
+		<xsd:complexType>
+			<xsd:attribute name="length" use="required" type="xsd:int"/>
+			<xsd:attribute name="leftJustified" type="xsd:boolean" default="true"/>
+			<xsd:attribute name="filling" default="0x20" type="xsd:string"/>
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attribute name="default" type="xsd:string"/>
+			<xsd:attribute name="pattern" default="yyyyMMddHHmmss" type="xsd:string"/>
+		</xsd:complexType>
+	</xsd:element>	
+
+	<!-- acsii fields without decoration -->
+	<xsd:element name="String">
+		<xsd:complexType>
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attributeGroup ref="stringFieldAttributes" />
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="Numeric">
+		<xsd:complexType>
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attributeGroup ref="numericFieldAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="Double">
+		<xsd:complexType>
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attributeGroup ref="numberFieldAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="Decimal">
+		<xsd:complexType>
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attributeGroup ref="numberFieldAttributes"/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="Integer">
+		<xsd:complexType>
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attributeGroup ref="numberFieldAttributes"/>
+			<xsd:attribute name="additive" type="xsd:int"/>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="Long">
+		<xsd:complexType>
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attributeGroup ref="numberFieldAttributes"/>
+			<xsd:attribute name="additive" type="xsd:int"/>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="Date">
+		<xsd:complexType>
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attribute name="default" type="xsd:string"/>
+			<xsd:attribute name="pattern" default="yyyyMMdd" type="xsd:string"/>
+		</xsd:complexType>
+	</xsd:element>	
+
+	<xsd:element name="Time">
+		<xsd:complexType>
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attribute name="default" type="xsd:string"/>
+			<xsd:attribute name="pattern" default="HHmmss" type="xsd:string"/>
+		</xsd:complexType>
+	</xsd:element>	
+	
+	<xsd:element name="Timestamp">
+		<xsd:complexType>
+			<xsd:attributeGroup ref="asciiFieldAttributes" />
+			<xsd:attribute name="default" type="xsd:string"/>
+			<xsd:attribute name="pattern" default="yyyyMMddHHmmss" type="xsd:string"/>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<!-- binary fields -->
+	<xsd:element name="bytes">
+		<xsd:complexType>
+			<xsd:sequence minOccurs="0">
+				<xsd:element ref="include"/>
+			</xsd:sequence>
+			<xsd:attribute name="length" use="required" type="xsd:int"/>
+			<xsd:attributeGroup ref="commonFieldAttributes" />
+			<xsd:attribute name="default" type="xsd:string"/>
+			<xsd:attribute name="format" type="byteArrayEncodeType" default="base64"/>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="varbytes">
+		<xsd:complexType>
+			<xsd:sequence minOccurs="0">
+				<xsd:element ref="include"/>
+			</xsd:sequence>
+			<xsd:attribute name="type" use="required" type="xsd:string"/>
+			<xsd:attribute name="maxLength" type="xsd:int" />
+			<xsd:attributeGroup ref="commonFieldAttributes" />
+			<xsd:attribute name="default" type="xsd:string"/>
+			<xsd:attribute name="format" type="byteArrayEncodeType" default="base64"/>
+		</xsd:complexType>
+	</xsd:element>
+				
+	<xsd:element name="comp3">
+		<xsd:complexType>
+			<xsd:attribute name="length" use="required" type="xsd:int"/>
+			<xsd:attributeGroup ref="commonFieldAttributes" />
+			<xsd:attribute name="default" default="0x0" type="xsd:string"/>
+			<xsd:attribute name="decimal" type="xsd:int"/>
+			<xsd:attribute name="signed" type="xsd:boolean" default="false"/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="zone">
+		<xsd:complexType>
+			<xsd:attribute name="length" use="required" type="xsd:int"/>
+			<xsd:attributeGroup ref="commonFieldAttributes" />
+			<xsd:attribute name="default" default="0x0" type="xsd:string"/>
+			<xsd:attribute name="decimal" type="xsd:int"/>
+			<xsd:attribute name="signed" type="xsd:boolean" default="false"/>
+			<xsd:attribute name="leadingSign" type="xsd:boolean" default="false"/>
+			<xsd:attribute name="separateSign" type="xsd:boolean" default="false"/>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="int">
+		<xsd:complexType>
+			<xsd:attribute name="length" default="4" type="xsd:int"/>
+			<xsd:attributeGroup ref="commonFieldAttributes" />
+			<xsd:attributeGroup ref="endianFieldAttributes" />
+			<xsd:attribute name="signed" type="xsd:boolean" default="true" />
+			<xsd:attribute name="default" default="0x0" type="xsd:string"/>
+			<xsd:attribute name="additive" type="xsd:int"/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="long">
+		<xsd:complexType>
+			<xsd:attribute name="length" default="8" type="xsd:int"/>
+			<xsd:attributeGroup ref="commonFieldAttributes" />
+			<xsd:attributeGroup ref="endianFieldAttributes" />
+			<xsd:attribute name="signed" type="xsd:boolean" default="true" />
+			<xsd:attribute name="default" default="0x0" type="xsd:string"/>
+			<xsd:attribute name="additive" type="xsd:int"/>
+		</xsd:complexType>
+	</xsd:element>		
+	
+	<xsd:element name="double">
+		<xsd:complexType>
+			<xsd:attribute name="length" default="8" type="xsd:int"/>
+			<xsd:attributeGroup ref="commonFieldAttributes" />
+			<xsd:attributeGroup ref="endianFieldAttributes" />
+			<xsd:attribute name="signed" type="xsd:boolean" default="true" />
+			<xsd:attribute name="default" default="0x0" type="xsd:string"/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="skip">
+		<xsd:complexType>
+			<xsd:attribute name="length" use="required" type="xsd:int"/>
+			<xsd:attributeGroup ref="commonAttributes" />
+			<xsd:attribute name="filling" default="0x20" type="xsd:string"/>
+		</xsd:complexType>
+	</xsd:element>
+		
+	<!-- element groups -->
+	<xsd:group name="asciiGroup">
+		<xsd:choice>
+			<xsd:element ref="String" />
+			<xsd:element ref="Numeric" />
+			<xsd:element ref="Double" />
+			<xsd:element ref="Decimal" />
+			<xsd:element ref="Integer" />
+			<xsd:element ref="Long" />
+			<xsd:element ref="Date" />
+			<xsd:element ref="Time" />
+			<xsd:element ref="Timestamp" />
+		</xsd:choice>
+	</xsd:group>
+	
+	<xsd:group name="fixAsciiGroup">
+		<xsd:choice>
+			<xsd:element ref="fixString" />
+			<xsd:element ref="fixNumeric" />
+			<xsd:element ref="fixDouble" />
+			<xsd:element ref="fixDecimal" />
+			<xsd:element ref="fixInteger" />
+			<xsd:element ref="fixLong" />
+			<xsd:element ref="fixDate" />
+			<xsd:element ref="fixTime" />
+			<xsd:element ref="fixTimestamp" />
+		</xsd:choice>
+	</xsd:group>
+	
+	<xsd:group name="varAsciiGroup">
+		<xsd:choice>
+			<xsd:element ref="varString" />
+			<xsd:element ref="varNumeric" />
+			<xsd:element ref="varDouble" />
+			<xsd:element ref="varDecimal" />
+			<xsd:element ref="varInteger" />
+			<xsd:element ref="varLong" />
+			<xsd:element ref="varDate" />
+			<xsd:element ref="varTime" />
+			<xsd:element ref="varTimestamp" />
+		</xsd:choice>
+	</xsd:group>
+
+	<xsd:group name="binGroup">
+		<xsd:choice>
+			<xsd:element ref="bytes" />
+			<xsd:element ref="comp3" />
+			<xsd:element ref="zone" />
+			<xsd:element ref="int" />
+			<xsd:element ref="long" />
+			<xsd:element ref="double" />
+			<xsd:element ref="varbytes" />
+		</xsd:choice>
+	</xsd:group>
+	
+	<xsd:group name="commonGroup">
+		<xsd:choice>
+			<xsd:element ref="skip" />
+			<xsd:element ref="include" />
+			<xsd:element ref="select" />
+			<xsd:element ref="segment" />
+			<xsd:element ref="loop" />
+			<xsd:element ref="keyValue" />
+		</xsd:choice>
+	</xsd:group>	
+
+	<!-- fields definition -->
+	<xsd:element name="include">
+		<xsd:complexType>
+			<xsd:attribute name="name" type="xsd:string"/>
+			<xsd:attribute name="encoding" type="xsd:string"/>
+			<xsd:attribute name="keys" type="xsd:string"/>
+			<xsd:attribute name="path" type="xsd:string"/>
+			<xsd:attribute name="elementFactory" type="xsd:string"/>
+			<xsd:attribute name="encodePrefix" default="f" type="xsd:string"/>
+			<xsd:attribute name="decodePrefix" default="p" type="xsd:string"/>
+			<xsd:attribute name="nested" type="xsd:boolean" default="false"/>
+		</xsd:complexType>
+	</xsd:element>	
+
+	<xsd:element name="select">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:group ref="commonGroup" maxOccurs="unbounded"/>
+			</xsd:sequence>
+			<xsd:attribute name="name" type="xsd:string"/>
+			<xsd:attribute name="encoding" type="xsd:string"/>
+			<xsd:attribute name="key" use="required" type="xsd:string"/>
+			<xsd:attribute name="default" type="xsd:string"/>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="elements">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:group ref="varAsciiGroup" minOccurs="0"/>
+					<xsd:group ref="fixAsciiGroup" minOccurs="0"/>
+					<xsd:group ref="binGroup" minOccurs="0"/>
+					<xsd:group ref="commonGroup" minOccurs="0"/>					
+				</xsd:choice>
+			</xsd:sequence>
+			<xsd:attribute name="encoding" type="xsd:string"/>
+		</xsd:complexType>
+	</xsd:element>	
+	
+	<xsd:element name="segment">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:choice maxOccurs="unbounded">
+					<xsd:group ref="varAsciiGroup" minOccurs="0"/>
+					<xsd:group ref="fixAsciiGroup" minOccurs="0"/>
+					<xsd:group ref="binGroup" minOccurs="0"/>
+					<xsd:group ref="commonGroup" minOccurs="0"/>					
+				</xsd:choice>
+			</xsd:sequence>
+			<xsd:attribute name="type" type="xsd:string"/>
+			<xsd:attribute name="maxLength" type="xsd:int" />
+			<xsd:attribute name="targetClass" type="xsd:string"/>
+			<xsd:attributeGroup ref="commonAttributes" />
+			<xsd:attribute name="coalesce" type="xsd:boolean" default="true"/>
+		</xsd:complexType>
+	</xsd:element>	
+
+	<xsd:element name="loop">
+		<xsd:complexType>
+			<xsd:choice>
+				<xsd:group ref="varAsciiGroup" />
+				<xsd:group ref="fixAsciiGroup" />
+				<xsd:group ref="binGroup" />
+				<xsd:group ref="commonGroup" />
+			</xsd:choice>
+			<xsd:attribute name="type" type="xsd:string"/>
+			<xsd:attribute name="maxLength" type="xsd:int" />
+			<xsd:attribute name="count" type="xsd:string"/>
+			<xsd:attribute name="targetClass" type="xsd:string"/>
+			<xsd:attributeGroup ref="commonAttributes" />
+			<xsd:attribute name="coalesce" type="xsd:boolean" default="false"/>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="message">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:group ref="commonGroup" maxOccurs="unbounded"/>
+			</xsd:sequence>
+			<xsd:attribute name="type" type="xsd:string"/>
+			<xsd:attribute name="encoding" type="xsd:string"/>
+			<xsd:attribute name="targetClass" type="xsd:string"/>
+			<xsd:attribute name="trace" type="xsd:boolean"/>
+			<xsd:attribute name="filter" type="xsd:string"/>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<!-- key value -->
+	<xsd:element name="key">
+		<xsd:complexType>
+			<xsd:attribute name="type" use="required" type="xsd:string"/>
+			<xsd:attribute name="encoding" type="xsd:string"/>
+			<xsd:attribute name="triming" default="0x20" type="xsd:string"/>
+			<xsd:attributeGroup ref="stringFieldAttributes" />
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="value">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:choice minOccurs="0" maxOccurs="unbounded">
+					<xsd:group ref="commonGroup" />
+					<xsd:group ref="asciiGroup" />
+				</xsd:choice>
+			</xsd:sequence>
+			<xsd:attribute name="type" use="required" type="xsd:string"/>
+			<xsd:attribute name="encoding" type="xsd:string"/>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="keyValue">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element ref="key" />
+				<xsd:element ref="value" />
+			</xsd:sequence>
+			<xsd:attribute name="targetClass" type="xsd:string"/>
+			<xsd:attribute name="type" type="xsd:string"/>
+			<xsd:attribute name="maxLength" type="xsd:int" />
+			<xsd:attributeGroup ref="commonAttributes"/>
+			<xsd:attribute name="coalesce" type="xsd:boolean" default="true"/>
+		</xsd:complexType>
+	</xsd:element>
+	
+</xsd:schema>

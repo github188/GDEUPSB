@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xsd:schema xmlns="http://spring.tangdi.net/schema/tds"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://spring.tangdi.net/schema/tds">
+
+	<!-- <xsd:element name="table" type="tdsComplexType"> </xsd:element> -->
+
+	<xsd:complexType name="tdsComplexType">
+		<xsd:attribute name="id" type="xsd:ID">
+		</xsd:attribute>
+		<xsd:attribute name="key" type="xsd:string">
+		</xsd:attribute>
+		<xsd:attribute name="value" type="xsd:string">
+		</xsd:attribute>
+	</xsd:complexType>
+
+	<xsd:attributeGroup name="xmlFieldsAttributes">
+		<xsd:attribute name="name" type="xsd:string" />
+		<xsd:attribute name="value" type="xsd:string" />
+	</xsd:attributeGroup>
+
+	<xsd:group name="commonGroup">
+		<xsd:choice>
+			<xsd:element ref="key" />
+		</xsd:choice>
+	</xsd:group>
+
+	<xsd:attributeGroup name="commonAttributes">
+		<xsd:attribute name="name" use="required" type="xsd:string" />
+		<xsd:attribute name="alias" type="xsd:string" />
+		<xsd:attribute name="optional" type="xsd:boolean"
+			default="false" />
+		<xsd:attribute name="referred" type="xsd:boolean"
+			default="false" />
+		<xsd:attribute name="mapping" type="xsd:boolean"
+			default="false" />
+		<xsd:attribute name="expression" type="xsd:string" />
+		<xsd:attribute name="value" type="xsd:string" />
+		<xsd:attribute name="key" type="xsd:string" />
+	</xsd:attributeGroup>
+
+	<xsd:element name="duplicateRecord">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:choice minOccurs="1" maxOccurs="1">
+					<xsd:element ref="table" />
+				</xsd:choice>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+
+	<xsd:element name="key">
+		<xsd:complexType>
+			<xsd:attribute name="name" use="required" type="xsd:string" />
+			<xsd:attribute name="value" type="xsd:string" />
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:attributeGroup name="keyAttributes">
+		<xsd:attribute name="name" type="xsd:string" />
+		<xsd:attribute name="value" type="xsd:string" />
+	</xsd:attributeGroup>
+
+	<xsd:element name="table">
+		<xsd:complexType>
+			<xsd:sequence minOccurs="0" maxOccurs="unbounded">
+				<xsd:group ref="commonGroup" maxOccurs="unbounded" />
+			</xsd:sequence>
+			<xsd:attribute name="id" type="xsd:ID">
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:element name="keyType">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:group ref="commonGroup" maxOccurs="unbounded" />
+			</xsd:sequence>
+			<xsd:attributeGroup ref="xmlFieldsAttributes" />
+			<xsd:attribute name="id" type="xsd:ID">
+			</xsd:attribute>
+		</xsd:complexType>
+	</xsd:element>
+
+</xsd:schema>

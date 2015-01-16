@@ -1,0 +1,20 @@
+ClearCase CopyAreaDB|4
+vobs\gn_bbip\eups_code\EUPS_PROJECT\branches\SZXEUPS\src\com\bocom\bbip\szxeups\repository
+2
+10
+2a:EupsWelLotAwardReturnDetailRepository.java|1|1470e5a32a7|196|a6799137|af7143f003f311e498210002cf50d54c|0
+21:EupsFileDownDetailRepository.java|1|1470e5a32e5|184|d1768c1f|b681444403f311e498210002cf50d54c|0
+24:EupsSptLotCashOutInfoRepository.java|1|1470e5a32d6|2a9|82080e30|b411442803f311e498210002cf50d54c|0
+24:EupsJlzfAccountDetailRepository.java|1|14737f5cd20|2b1|13df0c01|ef776ff60bcc11e4902f0002cf51b54c|0
+26:EupsWelLotBetResultInfoRepository.java|1|1470e5a3314|2af|b340739|bb31447c03f311e498210002cf50d54c|0
+20:EupsTSZYDCustListRepository.java|1|14723e6832f|19b|6d008fe3|8290c9ee05a211e4881d0002cf51b54c|0
+1d:EupsSchClaInfoRepository.java|1|1470e5a33ef|170|c969812c|cb11454003f311e498210002cf50d54c|0
+21:EupsElectricJnlTmpRepository.java|1|1470e5a32f5|7a9|942310ab|b8f1446003f311e498210002cf50d54c|0
+20:EupsSchPayCdeInfoRepository.java|1|1470e5a33fe|179|bc23849e|cda1455c03f311e498210002cf50d54c|0
+25:EupsSportsLotteryOrderRepository.java|1|1470e5a340e|1a8|ec2e9995|cfe1457803f311e498210002cf50d54c|0
+1d:EupsSchStuInfoRepository.java|1|1470e5a3324|170|1f0481b0|bd61449803f311e498210002cf50d54c|0
+1a:EupsSchInfoRepository.java|1|1470e5a3362|167|1fbd7dfc|c681450803f311e498210002cf50d54c|0
+20:EupsSchStuPayInfoRepository.java|1|1470e5a3333|490|b8bcb16e|c1e144d003f311e498210002cf50d54c|0
+26:EupsSptLotReturnWinInfoRepository.java|1|1470e5a33df|1b3|2a93a0b6|c8c1452403f311e498210002cf50d54c|0
+28:EupsWelLotAwardReturnInfoRepository.java|1|1470e5a3333|1a7|dced95f0|bfa144b403f311e498210002cf50d54c|0
+28:EupsWelLotBetResultDetailRepository.java|1|1470e5a3343|1e9|52b3b09c|c41144ec03f311e498210002cf50d54c|0

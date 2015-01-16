@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://bbip.bankcomm.com" targetNamespace="http://bbip.bankcomm.com"
+	elementFormDefault="qualified">
+	<xs:element name="bbipRequestHead" type="tns:bbipRequestHead_CType" />
+	<xs:element name="bbipResponseHead" type="tns:bbipResponseHead_CType" />
+
+	 <xs:complexType name="bbipRequestHead_CType">
+    <xs:sequence>
+      <xs:element name="txnCde" type="tns:txnCde_SType" minOccurs="0"/>
+      <xs:element name="chn" type="tns:chn_SType"/>
+      <xs:element name="reqSysCde" type="tns:reqSysCde_SType" minOccurs="0"/>
+      <xs:element name="subSysCde" type="tns:subSysCde_SType" minOccurs="0"/>
+      <xs:element name="bbipBusCde" type="tns:bbipBusCde_SType" minOccurs="0"/>
+      <xs:element name="reqJrnNo" type="tns:reqJrnNo_SType"/>
+      <xs:element name="tlr" type="tns:tlr_SType"/>
+      <xs:element name="br" type="tns:br_SType"/>
+      <xs:element name="bk" type="tns:bk_SType"/>
+      <xs:element name="tlrTmlId" type="tns:tlrTmlId_SType" minOccurs="0"/>
+      <xs:element name="reqTyp" type="tns:reqTyp_SType" minOccurs="0"/>
+      <xs:element name="authLvl" type="tns:authLvl_SType" minOccurs="0"/>
+      <xs:element name="sup1Id" type="tns:sup1Id_SType" minOccurs="0"/>
+      <xs:element name="sup1Auth" type="tns:sup1Auth_SType" minOccurs="0"/>
+      <xs:element name="sup2Id" type="tns:sup2Id_SType" minOccurs="0"/>
+      <xs:element name="sup2Auth" type="tns:sup2Auth_SType" minOccurs="0"/>
+      <xs:element name="authResnTbl" type="tns:authResnTbl_CType" minOccurs="0"/>
+      <xs:element name="authLog" type="tns:authLog_SType" minOccurs="0"/>
+      <xs:element name="filler" type="tns:filler_SType" minOccurs="0"/>
+      <xs:element name="reqTme" type="tns:reqTme_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bbipResponseHead_CType">
+    <xs:sequence>
+      <xs:element name="txnSqn" type="tns:txnSqn_SType" minOccurs="0"/>
+      <xs:element name="oAuthLog" type="tns:oAuthLog_SType" minOccurs="0"/>
+      <xs:element name="oAuthLvl" type="tns:oAuthLvl_SType" minOccurs="0"/>
+      <xs:element name="oSup1Id" type="tns:oSup1Id_SType" minOccurs="0"/>
+      <xs:element name="oSup2Id" type="tns:oSup2Id_SType" minOccurs="0"/>
+      <xs:element name="oAuthResnLst" type="tns:oAuthResnLst_SType" minOccurs="0" maxOccurs="10"/>
+      <xs:element name="acDte" type="tns:acDte_SType" minOccurs="0"/>
+      <xs:element name="acoJrnNo" type="tns:acoJrnNo_SType" minOccurs="0"/>
+      <xs:element name="acoVchNo" type="tns:acoVchNo_SType" minOccurs="0"/>
+      <xs:element name="tpId" type="tns:tpId_SType" minOccurs="0"/>
+      <xs:element name="tpJrnNo" type="tns:tpJrnNo_SType" minOccurs="0"/>
+      <xs:element name="tpRcnDte" type="tns:tpRcnDte_SType" minOccurs="0"/>
+      <xs:element name="tpRspTme" type="tns:tpRspTme_SType" minOccurs="0"/>
+      <xs:element name="rspTme" type="tns:rspTme_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="txnCde_SType">
+    <xs:annotation>
+      <xs:documentation>交易码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="chn_SType">
+    <xs:annotation>
+      <xs:documentation>交易渠道</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="reqSysCde_SType">
+    <xs:annotation>
+      <xs:documentation>请求系统标志</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="subSysCde_SType">
+    <xs:annotation>
+      <xs:documentation>目标子系统码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="bbipBusCde_SType">
+    <xs:annotation>
+      <xs:documentation>BBIP业务类型</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="6"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="reqJrnNo_SType">
+    <xs:annotation>
+      <xs:documentation>请求系统流水</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="40"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="tlr_SType">
+    <xs:annotation>
+      <xs:documentation>柜员号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="7"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="br_SType">
+    <xs:annotation>
+      <xs:documentation>机构号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="bk_SType">
+    <xs:annotation>
+      <xs:documentation>分行号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="tlrTmlId_SType">
+    <xs:annotation>
+      <xs:documentation>终端号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="7"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="reqTyp_SType">
+    <xs:annotation>
+      <xs:documentation>请求类型</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="authLvl_SType">
+    <xs:annotation>
+      <xs:documentation>授权级别</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="sup1Id_SType">
+    <xs:annotation>
+      <xs:documentation>主管1</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="7"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="sup1Auth_SType">
+    <xs:annotation>
+      <xs:documentation>主管1授权级别</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="sup2Id_SType">
+    <xs:annotation>
+      <xs:documentation>主管2</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="7"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="sup2Auth_SType">
+    <xs:annotation>
+      <xs:documentation>主管2授权级别</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="authResn_SType">
+    <xs:annotation>
+      <xs:documentation>授权原因码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="authResnTbl_CType">
+    <xs:sequence>
+      <xs:element name="authResn" type="tns:authResn_SType" minOccurs="10" maxOccurs="10"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="authLog_SType">
+    <xs:annotation>
+      <xs:documentation>授权LOG标志</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="filler_SType">
+    <xs:annotation>
+      <xs:documentation>备用</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="reqTme_SType">
+    <xs:annotation>
+      <xs:documentation>发起交易时间</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime"/>
+  </xs:simpleType>
+  <xs:simpleType name="txnSqn_SType">
+    <xs:annotation>
+      <xs:documentation>BBIP业务处理返回流水号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="40"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="oAuthLog_SType">
+    <xs:annotation>
+      <xs:documentation>返回待授权LOG标志</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="oAuthLvl_SType">
+    <xs:annotation>
+      <xs:documentation>返回待授权级别</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="oSup1Id_SType">
+    <xs:annotation>
+      <xs:documentation>返回待授权主管1</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="7"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="oSup2Id_SType">
+    <xs:annotation>
+      <xs:documentation>返回待授权主管2</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="7"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="oAuthResnLst_SType">
+    <xs:annotation>
+      <xs:documentation>返回授权原因列表</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="76"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="acDte_SType">
+    <xs:annotation>
+      <xs:documentation>记账会计日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:date"/>
+  </xs:simpleType>
+  <xs:simpleType name="acoJrnNo_SType">
+    <xs:annotation>
+      <xs:documentation>记账系统流水号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="40"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="acoVchNo_SType">
+    <xs:annotation>
+      <xs:documentation>记账会计流水号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="40"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="tpId_SType">
+    <xs:annotation>
+      <xs:documentation>第三方系统标识号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="22"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="tpJrnNo_SType">
+    <xs:annotation>
+      <xs:documentation>第三方流水号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="40"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="tpRcnDte_SType">
+    <xs:annotation>
+      <xs:documentation>第三方对账日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:date"/>
+  </xs:simpleType>
+  <xs:simpleType name="tpRspTme_SType">
+    <xs:annotation>
+      <xs:documentation>第三方交易时间</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime"/>
+  </xs:simpleType>
+  <xs:simpleType name="rspTme_SType">
+    <xs:annotation>
+      <xs:documentation>BBIP处理返回时间</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime"/>
+  </xs:simpleType>
+</xs:schema>

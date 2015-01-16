@@ -1,0 +1,8 @@
+ClearCase CopyAreaDB|4
+vobs\gn_bbip\eups_code\EUPS_PROJECT\branches\SZXEUPS\bbiptest\config
+2
+4
+1c:jump-annotation4UnitTest.xml|1|1470e5a4b56|413|376a6b1c|7bc148bc03f411e498210002cf50d54c|0
+4:data|2|0|0|0|6fe1482c03f411e498210002cf50d54c|0
+24:bbip-eups_config4UnitTest.properties|1|1470e5a4b56|56b|6169a6b3|7e2148d803f411e498210002cf50d54c|0
+15:includes4UnitTest.xml|1|1470e5a4b46|373|13f43245|797148a003f411e498210002cf50d54c|0

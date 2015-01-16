@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="GDEUPS">
+        <wb-resource deploy-path="/" source-path="/build/m2e-wtp/web-resources"/>
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <property name="context-root" value="GDEUPS"/>
+        <property name="java-output-path" value="/GDEUPS/build/classes"/>
+    </wb-module>
+</project-modules>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	type="LLLL" encoding="GBK" trace="true" filter="both,config/stream/translateDict.txt">
+	
+	<segment name="head" encoding="GBK">
+		<fixString name="TransCode" length="6" mapping="true"/>
+		<fixString name="Channel" length="3"/>
+		<fixString name="MsgType" length="1"/>
+		<fixInteger name="BodyLength" length="4" referred="true"/>
+	</segment>
+	<select name="body" key="MsgType" default="N">
+		<include name="N" keys="TransCode" encodePrefix="f" decodePrefix="p" />
+		<segment name="E" />
+	</select>
+	
+</message>

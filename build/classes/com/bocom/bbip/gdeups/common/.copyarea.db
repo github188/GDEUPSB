@@ -1,0 +1,7 @@
+ClearCase CopyAreaDB|4
+vobs\gn_bbip\eups_code\EUPS_PROJECT\branches\SZXEUPS\src\com\bocom\bbip\szxeups\common
+2
+3
+f:YbsService.java|1|1470e5a342d|67c6|22e4a21a|d8c145dc03f311e498210002cf50d54c|0
+11:SocketServer.java|1|1470e5a343d|27c1|16ccc4ae|dd31461403f311e498210002cf50d54c|0
+16:SZXEUPSErrorCodes.java|1|1470e5a343d|42b1|189b9827|daf145f803f311e498210002cf50d54c|0

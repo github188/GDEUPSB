@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="WebApp_ID" version="2.4" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+  <display-name>bbipeups</display-name>
+
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+
+  <filter>
+    <filter-name>resourceFilter</filter-name>
+    <filter-class>com.bocom.jump.bp.channel.http.ResourceFilter</filter-class>
+    <!-- 国际化多语言false则为客户端为准，true则以服务器端本地为准-->
+    <init-param>
+      <param-name>useLocale</param-name>
+      <param-value>false</param-value>
+    </init-param>
+    <!--  -->
+  </filter>
+
+  <filter-mapping>
+    <filter-name>resourceFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+
+  <servlet id="http_main">
+    <servlet-name>jump-Http</servlet-name>
+    <servlet-class>com.bocom.jump.bp.channel.http.MainServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:config/includes.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+	<servlet>
+          <servlet-name>jump-WebService</servlet-name>
+          <servlet-class>com.bocom.jump.bp.channel.ws.srv.http.WebServiceServlet</servlet-class>
+          <init-param>
+          <param-name>contextAttribute</param-name>
+          <param-value>com.bocom.jump.bp.channel.http.MainServlet.CONTEXT.jump-Http</param-value>
+          <!-- mainservlet class name + “CONTEXT” + servlet name -->
+         </init-param>
+         <load-on-startup>2</load-on-startup>
+        </servlet>
+        
+  	<servlet-mapping>
+          <servlet-name>jump-WebService</servlet-name>
+          <url-pattern>/ws/*</url-pattern>
+  	</servlet-mapping>
+
+
+  <servlet-mapping>
+    <servlet-name>jump-Http</servlet-name>
+    <url-pattern>*.do</url-pattern>
+    <!-- use *.do for JSP, others for view extension -->
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>jump-Http</servlet-name>
+    <url-pattern>*.json</url-pattern>
+    <!-- use *.do for JSP, others for view extension -->
+  </servlet-mapping>
+
+  <jsp-config>
+    <taglib>
+      <taglib-uri>http://java.sun.com/jsp/jstl/core</taglib-uri>
+      <taglib-location>/WEB-INF/tlds/c.tld</taglib-location>
+    </taglib>
+    <taglib>
+      <taglib-uri>http://java.sun.com/jsp/jstl/fmt</taglib-uri>
+      <taglib-location>/WEB-INF/tlds/fmt.tld</taglib-location>
+    </taglib>
+    <taglib>
+      <taglib-uri>http://java.sun.com/jsp/jstl/functions</taglib-uri>
+      <taglib-location>/WEB-INF/tlds/fn.tld</taglib-location>
+    </taglib>
+    <taglib>
+      <taglib-uri>http://www.bocom.com/jump/taglib</taglib-uri>
+      <taglib-location>/WEB-INF/tlds/jump-http.tld</taglib-location>
+    </taglib>
+  </jsp-config>
+
+  </web-app>

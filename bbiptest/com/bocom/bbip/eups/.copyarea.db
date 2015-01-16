@@ -1,0 +1,14 @@
+ClearCase CopyAreaDB|4
+vobs\gn_bbip\eups_code\EUPS_PROJECT\branches\SZXEUPS\bbiptest\com\bocom\bbip\eups
+2
+a
+9:eupsorder|2|0|0|0|921149dc03f411e498210002cf50d54c|0
+9:eupscheck|2|0|0|0|ba314bbc03f411e498210002cf50d54c|0
+b:eupsinvoice|2|0|0|0|a3a14ab003f411e498210002cf50d54c|0
+a:eupsonline|2|0|0|0|d5d14d0003f411e498210002cf50d54c|0
+a:eupsnative|2|0|0|0|f8014e9803f411e498210002cf50d54c|0
+d:BaseTest.java|1|1470e5a4c20|5fa|cfbb3c0b|13b14fe003f511e498210002cf50d54c|0
+8:eupstask|2|0|0|0|0c414f8803f511e498210002cf50d54c|0
+9:eupsagent|2|0|0|0|1721500803f511e498210002cf50d54c|0
+b:eupszerobal|2|0|0|0|2a4150ec03f511e498210002cf50d54c|0
+7:szxeups|2|0|0|0|245150a403f511e498210002cf50d54c|0

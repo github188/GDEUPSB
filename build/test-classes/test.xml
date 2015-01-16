@@ -1,0 +1,110 @@
+[<?xml version='1.0' encoding='UTF-8'?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+	<soapenv:Header xmlns:wsa="http://www.w3.org/2005/08/addressing">
+		<wsa:To soapenv:mustUnderstand="1">SZXCHPS</wsa:To>
+		<wsa:From>
+			<wsa:Address>SZXEUPS</wsa:Address>
+		</wsa:From>
+		<wsa:Action>http://szxchps.service.bankcomm.com/basic/atomic/operation.UnionService/sigUnionBookProc
+		</wsa:Action>
+		<wsa:MessageID>urn:uuid:4b41a292-1831-45a9-907c-e79c4e5c04ad
+		</wsa:MessageID>
+		<wsa:RelatesTo>urn:uuid:544b5cf1-a2da-45f9-b559-9829fd497005
+		</wsa:RelatesTo>
+	</soapenv:Header>
+	<soapenv:Body>
+		<p0:sigUnionBookProcResponse
+			xmlns:p0="http://szxchps.service.bankcomm.com/basic/atomic/operation.UnionService/Schema"
+			xmlns:p2="http://bbip.bankcomm.com" xmlns:p1="http://gsp.bankcomm.com">
+			<p1:replyInformation>
+				<p1:responseType>E</p1:responseType>
+				<p1:responseCode>BBIP0004UN9998</p1:responseCode>
+				<p1:responseMessage>状态错误</p1:responseMessage>
+			</p1:replyInformation>
+			<p0:response>
+				<p0:responseHeader>
+					<p2:bbipResponseHead>
+						<p2:txnSqn>20140715000000001962</p2:txnSqn>
+						<p2:acDte>2014-03-21</p2:acDte>
+						<p2:acoVchNo>3152454000000690</p2:acoVchNo>
+						<p2:tpId>SZXEUPS</p2:tpId>
+						<p2:tpJrnNo>20140715000000001981</p2:tpJrnNo>
+					</p2:bbipResponseHead>
+				</p0:responseHeader>
+				<p0:pbcBusKey>
+					<p0:txnCnl>01</p0:txnCnl>
+					<p0:ioFlg>O</p0:ioFlg>
+					<p0:exgAra>443001</p0:exgAra>
+					<p0:pbcBusTyp>106</p0:pbcBusTyp>
+					<p0:sndCtrAcpBkn>301584000016</p0:sndCtrAcpBkn>
+					<p0:pclDte>2014-03-21T00:00:00</p0:pclDte>
+					<p0:pbcTxnNo>17186</p0:pbcTxnNo>
+				</p0:pbcBusKey>
+				<p0:dtlSts>B</p0:dtlSts>
+			</p0:response>
+		</p0:sigUnionBookProcResponse>
+	</soapenv:Body>
+</soapenv:Envelope>
+] for request [<?xml version='1.0' encoding='UTF-8'?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+	<soapenv:Header xmlns:wsa="http://www.w3.org/2005/08/addressing">
+		<wsa:To soapenv:mustUnderstand="0">SZXCHPS</wsa:To>
+		<wsa:From>
+			<wsa:Address>SZXEUPS</wsa:Address>
+		</wsa:From>
+		<wsa:Action>http://szxchps.service.bankcomm.com/basic/atomic/operation.UnionService/sigUnionBookProc
+		</wsa:Action>
+		<wsa:MessageID>urn:uuid:544b5cf1-a2da-45f9-b559-9829fd497005
+		</wsa:MessageID>
+	</soapenv:Header>
+	<soapenv:Body>
+		<p0:sigUnionBookProc
+			xmlns:p0="http://szxchps.service.bankcomm.com/basic/atomic/operation.UnionService/Schema"
+			xmlns:p2="http://bbip.bankcomm.com" xmlns:p1="http://gsp.bankcomm.com">
+			<p1:requestInformation>
+				<p1:traceNo>3003440320140514724142890016</p1:traceNo>
+				<p1:version>1</p1:version>
+				<p1:traceSrc>SZXEUPS</p1:traceSrc>
+			</p1:requestInformation>
+			<p0:request>
+				<p0:requestHeader>
+					<p2:bbipRequestHead>
+						<p2:txnCde>JLZF</p2:txnCde>
+						<p2:chn>01</p2:chn>
+						<p2:reqSysCde>SZXEUPS</p2:reqSysCde>
+						<p2:subSysCde>SZXEBNK</p2:subSysCde>
+						<p2:bbipBusCde>10</p2:bbipBusCde>
+						<p2:reqJrnNo>12222220119</p2:reqJrnNo>
+						<p2:tlr>3152454</p2:tlr>
+						<p2:br>01443001999</p2:br>
+						<p2:bk>01443999999</p2:bk>
+						<p2:tlrTmlId>4430000</p2:tlrTmlId>
+						<p2:reqTyp>1</p2:reqTyp>
+						<p2:authLog>1</p2:authLog>
+						<p2:filler>1</p2:filler>
+						<p2:reqTme>2014-05-14T14:14:28</p2:reqTme>
+					</p2:bbipRequestHead>
+				</p0:requestHeader>
+				<p0:tpId>SZXEUPS</p0:tpId>
+				<p0:tpProcId>JLZFDirectAccountProcess</p0:tpProcId>
+				<p0:tpJrnNo>20140715000000001981</p0:tpJrnNo>
+				<p0:txnCnl>01</p0:txnCnl>
+				<p0:cusAcTyp>4</p0:cusAcTyp>
+				<p0:cusAc>443010012890100100001899</p0:cusAc>
+				<p0:cusAcNme>特色</p0:cusAcNme>
+				<p0:drwMde></p0:drwMde>
+				<p0:ccy>CNY</p0:ccy>
+				<p0:txnAmt>300.00</p0:txnAmt>
+				<p0:feeArvFlg></p0:feeArvFlg>
+				<p0:ptbFlg>1</p0:ptbFlg>
+				<p0:payAc>443066041018010123849</p0:payAc>
+				<p0:payNme>BANKCOMM</p0:payNme>
+				<p0:paeAc>622201</p0:paeAc>
+				<p0:paeNme>马三立</p0:paeNme>
+				<p0:paeObk>102584000922</p0:paeObk>
+				<p0:rmk></p0:rmk>
+			</p0:request>
+		</p0:sigUnionBookProc>
+	</soapenv:Body>
+</soapenv:Envelope>
+]
