@@ -1,8 +1,7 @@
 ClearCase CopyAreaDB|4
-vobs\gn_bbip\eups_code\EUPS_PROJECT\branches\SZXEUPS\src\config\data
+vobs\gn_bbip\impl_code\hubei\HBEUPS\bbiptest\config\data
 2
-4
-14:bbip-eups-fields.xml|1|1470e599146|745|cf50714d|2f90f78803ed11e498210002cf50d54c|0
-a:eupsonline|2|0|0|0|32d0f7b003ed11e498210002cf50d54c|0
-f:jump-styles.xml|1|1470e599146|175a|9eb5f722|37d0f7ec03ed11e498210002cf50d54c|0
-a:eupsnative|2|0|0|0|3b10f81403ed11e498210002cf50d54c|0
+3
+7:123.txt|1|14a0515b0c2|54|a8e0be5|bbb04d5e5e7711e49c1d0002cf51b54c|0
+b:result1.txt|1|14a0515b0e1|ee|46572e9c|c1904d7a5e7711e49c1d0002cf51b54c|0
+14:hostTransJournal.txt|1|14a0515b110|3ae|909ec183|c5604d965e7711e49c1d0002cf51b54c|0

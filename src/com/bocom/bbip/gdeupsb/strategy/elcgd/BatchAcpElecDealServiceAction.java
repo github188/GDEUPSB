@@ -27,6 +27,7 @@ import com.bocom.bbip.eups.spi.service.batch.BatchAcpService;
 import com.bocom.bbip.eups.spi.vo.PrepareBatchAcpDomain;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.NumberUtils;
@@ -170,6 +171,11 @@ public class BatchAcpElecDealServiceAction implements BatchAcpService {
 //		context.setData(ParamKeys.COMPANY_NO, dptTyp);  :根据dptTyp查找对应的单位编号
 		context.setData(ParamKeys.COMPANY_NO, comNo);
 		context.setData(ParamKeys.TXN_MDE, Constants.TXN_MDE_FILE);  //文件批扣
+		
+		
+		context.setData("flePreInf", BeanUtils.toMaps(payDetailLst));
+		
+		System.out.println("context="+context);
 		
 		return payDetailLst;
 

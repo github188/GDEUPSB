@@ -6,6 +6,12 @@
       <xsd:import namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdEleService/Schema" schemaLocation="GDEUPSGdEleService.xsd"/>
     </xsd:schema>
   </wsdl:types>
+  <wsdl:message name="batchAccountFileSubmitRequestMessage">
+    <wsdl:part name="batchAccountFileSubmitRequest" element="gdeupsb:batchAccountFileSubmit"/>
+  </wsdl:message>
+  <wsdl:message name="batchAccountFileSubmitResponseMessage">
+    <wsdl:part name="batchAccountFileSubmitResponse" element="gdeupsb:batchAccountFileSubmitResponse"/>
+  </wsdl:message>
   <wsdl:message name="batchAccountFilePreRequestMessage">
     <wsdl:part name="batchAccountFilePreRequest" element="gdeupsb:batchAccountFilePre"/>
   </wsdl:message>
@@ -13,6 +19,11 @@
     <wsdl:part name="batchAccountFilePreResponse" element="gdeupsb:batchAccountFilePreResponse"/>
   </wsdl:message>
   <wsdl:portType name="GDEUPSGdEleServicePortType">
+    <wsdl:operation name="batchAccountFileSubmit">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:batchAccountFileSubmitRequestMessage"/>
+      <wsdl:output message="tns:batchAccountFileSubmitResponseMessage"/>
+    </wsdl:operation>
     <wsdl:operation name="batchAccountFilePre">
       <wsdl:documentation/>
       <wsdl:input message="tns:batchAccountFilePreRequestMessage"/>
@@ -21,6 +32,15 @@
   </wsdl:portType>
   <wsdl:binding name="GDEUPSGdEleServiceSoapBinding" type="tns:GDEUPSGdEleServicePortType">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="batchAccountFileSubmit">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdEleService/batchAccountFileSubmit"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="batchAccountFilePre">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdEleService/batchAccountFilePre"/>
       <wsdl:input>

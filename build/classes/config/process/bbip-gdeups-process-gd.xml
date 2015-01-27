@@ -111,5 +111,13 @@
 	<!-- <action id="gdeups.batchFileDealPreAction" class="com.bocom.bbip.gdeupsb.action.BatchFileDealPreAction" /> -->
 	
 
+	<!-- 文件批量代扣准备数据(柜面) -->
+	<process id="eups.fileBatchPayCreateDataProcessExt" template="eups.simpleTran"  interceptors="bbip.defaultInterceptors" >
+	   <actions>
+	   		<action id="act" ref="eups.fileBatchPayCreateDataServiceAction" operations="prepareBatchDeal"/>
+	   </actions>
+	</process>
+
+
 
 </x:beans>

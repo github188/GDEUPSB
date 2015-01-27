@@ -7,7 +7,7 @@
 		<version>3</version>
 	</parent>
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>GDEUPSA</artifactId>
+	<artifactId>GDEUPSB</artifactId>
 	<packaging>war</packaging>
 	<version>1.0.0</version>
 	<properties>
@@ -67,7 +67,7 @@
 		 <dependency>
             <groupId>com.bocom.bbip</groupId>
             <artifactId>bbip-comp-eups</artifactId>
-            <version>2.0.2-SNAPSHOT</version>
+            <version>2.0.3-SNAPSHOT</version>
         </dependency> 
         
 		<dependency>
