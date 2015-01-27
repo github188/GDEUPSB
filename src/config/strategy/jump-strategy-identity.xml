@@ -8,28 +8,60 @@
 
 	<!-- 欠费查询-->
 	<bean id="eups.qryDealStrategyActionELEC01"
-		class="com.bocom.bbip.gdeups.strategy.elcgd.QueryElecUserStrategyAction">
+		class="com.bocom.bbip.gdeupsb.strategy.elcgd.QueryElecUserStrategyAction">
 	</bean>
 
 
 	<!-- 初始化策略 -->
 	<bean id="eups.prepareCheckDealStrategyActionELC01"
-		class="com.bocom.bbip.gdeups.strategy.elcgd.PreInitElecStrategyAction">
+		class="com.bocom.bbip.gdeupsb.strategy.elcgd.PreInitElecStrategyAction">
 	</bean>
 	<!-- 记账前策略 -->
 	<bean id="eups.preparePayStrategyActionELEC01"
-		class="com.bocom.bbip.gdeups.strategy.elcgd.PrePayElecStrategyAction">
+		class="com.bocom.bbip.gdeupsb.strategy.elcgd.PrePayElecStrategyAction">
 	</bean>
 	<!-- 调用第三方前策略 -->
 	<bean id="eups.prePayFeeStrategyActionELEC01"
-		class="com.bocom.bbip.gdeups.strategy.elcgd.PreThdElecStrategyAction">
+		class="com.bocom.bbip.gdeupsb.strategy.elcgd.PreThdElecStrategyAction">
+	</bean>
+
+	<!-- 调用第三方后策略 -->
+	<bean id="eups.aftPayFeeStrategyAction"
+		class="com.bocom.bbip.gdeupsb.strategy.elcgd.AftThdElecStrategyAction">
+	</bean>
+
+	<!-- 调用第三方前策略 -->
+	<bean id="eups.preCancelStrategyActionELEC01"
+		class="com.bocom.bbip.gdeupsb.strategy.elcgd.PreCnlElecStrategyAction">
 	</bean>
 
 
-	<!-- 抹帐调用第三方前策略-->
-	<action class="com.bocom.bbip.gdeups.strategy.elcgd.PreCnlElecStrategyAction"
-		id="eups.preCancelStrategyActionELEC01" />
-
-
-
+	
+	<!-- 第三方发起的划扣，初始策略-->
+	<bean id="eups.prepareCheckDealStrategyActionELEC01"
+		class="com.bocom.bbip.gdeupsb.strategy.elcgd.PreEleCheckDealStrategyAction">
+	</bean>
+	
+	<bean id="eups.aftPayToBankStrategyActionELEC01"
+		class="com.bocom.bbip.gdeupsb.strategy.elcgd.AftPayDealStrategyAction">
+	</bean>
+	
+		<!-- 第三方发起的划扣撤销，初始策略-->
+	<bean id="eups.preCclToBankStrategyActionELEC01"
+		class="com.bocom.bbip.gdeupsb.strategy.elcgd.PreCnlBnkSglDealStrategyAction">
+	</bean>
+	
+		<!-- 第三方发起的划扣撤销，返回策略-->
+	<bean id="eups.aftCclToBankStrategyActionELEC01"
+		class="com.bocom.bbip.gdeupsb.strategy.elcgd.AftCnlBnkSglDealStrategyAction">
+	</bean>
+	
+	
+	<!-- BatchAcpElecDealServiceAction -->
+	
+			<!-- 第三方发起的划扣撤销，返回策略-->
+	<bean id="eups.fileBatchPayCreateDataServiceActionELEC01"
+		class="com.bocom.bbip.gdeupsb.strategy.elcgd.BatchAcpElecDealServiceAction">
+	</bean>
+	
 </beans>

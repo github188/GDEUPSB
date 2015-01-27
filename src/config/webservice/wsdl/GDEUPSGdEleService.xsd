@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdEleService/Schema" xmlns:gsp="http://gsp.bankcomm.com" xmlns:bbip="http://bbip.bankcomm.com" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdEleService/Schema" elementFormDefault="qualified">
+  <xs:import namespace="http://gsp.bankcomm.com" schemaLocation="headerOfSOAP.xsd"/>
+  <xs:import namespace="http://bbip.bankcomm.com" schemaLocation="headerOfBbip.xsd"/>
+  <xs:element name="batchAccountFilePre" type="tns:batchAccountFilePreReq_CType"/>
+  <xs:element name="batchAccountFilePreResponse" type="tns:batchAccountFilePreRsp_CType"/>
+  <xs:complexType name="batchAccountFilePreReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:batchAccountFilePreRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="batchAccountFilePreRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:batchAccountFilePreResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="requestHeader" type="tns:requestHeader_CType"/>
+  <xs:element name="responseHeader" type="tns:responseHeader_CType"/>
+  <xs:element name="sortingInfo" type="tns:sortingInfo_CType"/>
+  <xs:element name="pageableRequest" type="tns:pageableRequest_CType"/>
+  <xs:element name="pageableResponse" type="tns:pageableResponse_CType"/>
+  <xs:element name="customerAccountInfo" type="tns:customerAccountInfo_CType"/>
+  <xs:element name="terminalInfo" type="tns:terminalInfo_CType"/>
+  <xs:element name="queryRspDisplayList" type="tns:queryRspDisplayList_CType"/>
+  <xs:complexType name="requestHeader_CType">
+    <xs:sequence>
+      <xs:element ref="bbip:bbipRequestHead"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="responseHeader_CType">
+    <xs:sequence>
+      <xs:element ref="bbip:bbipResponseHead"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="property_SType">
+    <xs:annotation>
+      <xs:documentation>排序数据域</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="32"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="direction_SType">
+    <xs:annotation>
+      <xs:documentation>排序方式</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="sortingInfo_CType">
+    <xs:sequence>
+      <xs:element name="property" type="tns:property_SType"/>
+      <xs:element name="direction" type="tns:direction_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="pageNum_SType">
+    <xs:annotation>
+      <xs:documentation>页数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+  <xs:simpleType name="pageSize_SType">
+    <xs:annotation>
+      <xs:documentation>每页显示数据数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+  <xs:complexType name="pageableRequest_CType">
+    <xs:sequence>
+      <xs:element name="pageNum" type="tns:pageNum_SType"/>
+      <xs:element name="pageSize" type="tns:pageSize_SType"/>
+      <xs:element ref="tns:sortingInfo" minOccurs="0" maxOccurs="10"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="totalElements_SType">
+    <xs:annotation>
+      <xs:documentation>总记录数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:long"/>
+  </xs:simpleType>
+  <xs:simpleType name="totalPages_SType">
+    <xs:annotation>
+      <xs:documentation>总页数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:long"/>
+  </xs:simpleType>
+  <xs:complexType name="pageableResponse_CType">
+    <xs:sequence>
+      <xs:element name="totalElements" type="tns:totalElements_SType"/>
+      <xs:element name="totalPages" type="tns:totalPages_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="acTyp_SType">
+    <xs:annotation>
+      <xs:documentation>账户类型</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="cusAc_SType">
+    <xs:annotation>
+      <xs:documentation>客户账号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="40"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="cusNme_SType">
+    <xs:annotation>
+      <xs:documentation>账号户名</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="acSeq_SType">
+    <xs:annotation>
+      <xs:documentation>账号序号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="5"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="acoAc_SType">
+    <xs:annotation>
+      <xs:documentation>记账账号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="24"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ccy_SType">
+    <xs:annotation>
+      <xs:documentation>币种</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="3"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ctfFlg_SType">
+    <xs:annotation>
+      <xs:documentation>钞汇标志</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="bvCde_SType">
+    <xs:annotation>
+      <xs:documentation>凭证代码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="3"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="bvNo_SType">
+    <xs:annotation>
+      <xs:documentation>凭证号码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="35"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="iseDte_SType">
+    <xs:annotation>
+      <xs:documentation>签发日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="pswCekFlg_SType">
+    <xs:annotation>
+      <xs:documentation>密码校验标志</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="payPsw_SType">
+    <xs:annotation>
+      <xs:documentation>支付密码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="16"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="pin_SType">
+    <xs:annotation>
+      <xs:documentation>PIN</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="carVld_SType">
+    <xs:annotation>
+      <xs:documentation>卡有效期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="trk2_SType">
+    <xs:annotation>
+      <xs:documentation>磁道2</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="40"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="trk3_SType">
+    <xs:annotation>
+      <xs:documentation>磁道3</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="104"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="carSeq_SType">
+    <xs:annotation>
+      <xs:documentation>卡序号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="3"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="fld55ActLen_SType">
+    <xs:annotation>
+      <xs:documentation>55域实际长度</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+  <xs:simpleType name="fld55_SType">
+    <xs:annotation>
+      <xs:documentation>55域</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="504"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="obkBk_SType">
+    <xs:annotation>
+      <xs:documentation>支付系统开户行行号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="14"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="dbtAgrNo_SType">
+    <xs:annotation>
+      <xs:documentation>借记多方协议号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="infExtFld_SType">
+    <xs:annotation>
+      <xs:documentation>账户信息扩展字段</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="200"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="customerAccountInfo_CType">
+    <xs:sequence>
+      <xs:element name="acTyp" type="tns:acTyp_SType" minOccurs="0"/>
+      <xs:element name="cusAc" type="tns:cusAc_SType"/>
+      <xs:element name="cusNme" type="tns:cusNme_SType" minOccurs="0"/>
+      <xs:element name="acSeq" type="tns:acSeq_SType" minOccurs="0"/>
+      <xs:element name="acoAc" type="tns:acoAc_SType" minOccurs="0"/>
+      <xs:element name="ccy" type="tns:ccy_SType"/>
+      <xs:element name="ctfFlg" type="tns:ctfFlg_SType" minOccurs="0"/>
+      <xs:element name="bvCde" type="tns:bvCde_SType" minOccurs="0"/>
+      <xs:element name="bvNo" type="tns:bvNo_SType" minOccurs="0"/>
+      <xs:element name="iseDte" type="tns:iseDte_SType" minOccurs="0"/>
+      <xs:element name="pswCekFlg" type="tns:pswCekFlg_SType" minOccurs="0"/>
+      <xs:element name="payPsw" type="tns:payPsw_SType" minOccurs="0"/>
+      <xs:element name="pin" type="tns:pin_SType" minOccurs="0"/>
+      <xs:element name="carVld" type="tns:carVld_SType" minOccurs="0"/>
+      <xs:element name="trk2" type="tns:trk2_SType" minOccurs="0"/>
+      <xs:element name="trk3" type="tns:trk3_SType" minOccurs="0"/>
+      <xs:element name="carSeq" type="tns:carSeq_SType" minOccurs="0"/>
+      <xs:element name="fld55ActLen" type="tns:fld55ActLen_SType" minOccurs="0"/>
+      <xs:element name="fld55" type="tns:fld55_SType" minOccurs="0"/>
+      <xs:element name="obkBk" type="tns:obkBk_SType" minOccurs="0"/>
+      <xs:element name="dbtAgrNo" type="tns:dbtAgrNo_SType" minOccurs="0"/>
+      <xs:element name="infExtFld" type="tns:infExtFld_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="svcEntModCod_SType">
+    <xs:annotation>
+      <xs:documentation>服务点输入方式码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="3"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="posTml_SType">
+    <xs:annotation>
+      <xs:documentation>受卡机终端标识码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="posSpl_SType">
+    <xs:annotation>
+      <xs:documentation>受卡方标识码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="accAdr_SType">
+    <xs:annotation>
+      <xs:documentation>受卡方名称地址</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="48"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="icFlag_SType">
+    <xs:annotation>
+      <xs:documentation>终端读取能力</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="terminalInfo_CType">
+    <xs:sequence>
+      <xs:element name="svcEntModCod" type="tns:svcEntModCod_SType"/>
+      <xs:element name="posTml" type="tns:posTml_SType"/>
+      <xs:element name="posSpl" type="tns:posSpl_SType"/>
+      <xs:element name="accAdr" type="tns:accAdr_SType"/>
+      <xs:element name="icFlag" type="tns:icFlag_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="detailName_SType">
+    <xs:annotation>
+      <xs:documentation>明细名称</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="detailContent_SType">
+    <xs:annotation>
+      <xs:documentation>明细内容</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="queryRspDisplayList_CType">
+    <xs:sequence>
+      <xs:element name="detailName" type="tns:detailName_SType" minOccurs="0"/>
+      <xs:element name="detailContent" type="tns:detailContent_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="batchAccountFilePreRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="filNam" type="tns:filNam_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="batchAccountFilePreResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="cAgtNo" type="tns:cAgtNo_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="eupsBusTyp_SType">
+    <xs:annotation>
+      <xs:documentation>EUPS业务类型</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="filNam_SType">
+    <xs:annotation>
+      <xs:documentation>文件名称</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="35"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="cAgtNo_SType">
+    <xs:annotation>
+      <xs:documentation>单位编号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

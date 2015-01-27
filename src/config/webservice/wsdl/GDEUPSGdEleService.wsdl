@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdEleService" xmlns:gdeupsb="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdEleService/Schema" name="GDEUPSGdEleService" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdEleService">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdEleService">
+      <xsd:import namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdEleService/Schema" schemaLocation="GDEUPSGdEleService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="batchAccountFilePreRequestMessage">
+    <wsdl:part name="batchAccountFilePreRequest" element="gdeupsb:batchAccountFilePre"/>
+  </wsdl:message>
+  <wsdl:message name="batchAccountFilePreResponseMessage">
+    <wsdl:part name="batchAccountFilePreResponse" element="gdeupsb:batchAccountFilePreResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="GDEUPSGdEleServicePortType">
+    <wsdl:operation name="batchAccountFilePre">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:batchAccountFilePreRequestMessage"/>
+      <wsdl:output message="tns:batchAccountFilePreResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GDEUPSGdEleServiceSoapBinding" type="tns:GDEUPSGdEleServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="batchAccountFilePre">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdEleService/batchAccountFilePre"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GDEUPSGdEleService">
+    <wsdl:port name="GDEUPSGdEleServicePort" binding="tns:GDEUPSGdEleServiceSoapBinding">
+      <soap:address location="http://127.0.0.1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

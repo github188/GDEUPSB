@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files xmlns="http://www.bankcomm.com/bbip-fmt-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bankcomm.com/bbip-fmt-1.0 http://www.bocom.com/schema/bbip-fmt-1.0.xsd">
-	
 
-	
+
+
+
+	<!-- 广东电力 -->
+	<file id="eleGzBatFmt" name="eleGzBatFmt" encoding="GBK"
+		lineSeparator="\n">
+		<line name="header" ref="config/fmt/fileFmt/eleGz/eleGzBatchActHeader.xml" encoding="GBK" />
+		<foreach name="detail" ref="config/fmt/fileFmt/eleGz/eleGzBatchActDetail.xml" encoding="GBK" />
+	</file>
+
+
+
 </files>

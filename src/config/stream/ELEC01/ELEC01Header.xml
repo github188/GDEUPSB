@@ -9,8 +9,7 @@
 	</segment>
 	<segment name="body">
 	    <varbytes type="X" name="ISO8583" format="none" >
-	  		<!-- <include elementFactory="iso8583://WEB-INF/classes/config/stream/" path="ELEC00/ELEC00Map.xml"/> -->
-	  		<include elementFactory="iso8583://WEB-INF/classes/config/stream/" path="ELEC00/ELEC00Map.xml"/>
+	  		<include elementFactory="iso8583://WEB-INF/classes/config/stream/" path="ELEC01/ELEC01Map"/>
 	    </varbytes>
 	</segment>
 </message>

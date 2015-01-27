@@ -21,13 +21,18 @@
 
 	<bean id="gspHandler" class="com.bocom.jump.bp.channel.ws.support.GspHandler">
 		<property name="messagesProvider" ref="messagesProvider"></property>
-		<property name="rebuildMessageCode" value="true"></property>
+	<!-- 	<property name="rebuildMessageCode" value="true"></property>
 		<property name="defaultMappingCode" value="${SYS_DEFALUT_ERROR_CODE}"/>
 		<property name="messageCodeMapping">
 			<map>
 				<entry key="validation_error" value="BBIP999998" />
+				<entry key="JUMPCO8001" value="BBIPJ00001" />
+				<entry key="JUMPBP9001" value="BBIPJ00002" />
+				<entry key="JUMPBP9000" value="BBIPJ00003" />
+				<entry key="JUMPCO9001" value="BBIPJ00004" />
+				<entry key="JUMPCO9002" value="BBIPJ00005" /> 
 			</map>
-		</property>
+		</property> -->
 	</bean>
 
 	<bean id="messageFactory" class="com.bocom.jump.bp.channel.ws.AxiomSoapMessageFactory2">
@@ -61,12 +66,17 @@
 					<property name="exceptionHandler" ref="gspHandler"></property>
 					<property name="marshaller" ref="sdoMarshaller" />
 					<property name="unmarshaller" ref="sdoMarshaller" />
-					<property name="identityMapping" ref="identityMapping" />
+					<property name="identityMapping" ref="identityMapping-common" />
 				</bean>
 				<bean class="com.bocom.jump.bp.channel.interceptors.ContextInterceptor"></bean>
 			</array>
 		</property>
 	</bean>
+
+
+	 <bean id="identityMapping-common" class="com.bocom.bbip.channel.ws.MultipleQNameMapping">
+		<property name="mapping" value="classpath*:config/webservice/identityMapping-*.properties"/>
+	</bean> 
 
 	<!-- SDO marshaller -->
 	<bean id="sdoMarshaller"
@@ -94,7 +104,13 @@
 	        	<util:properties  location="classpath:config/webservice/identityMapping-server.properties"/>
 		</property>
 	</bean>
-
+	
+	<!-- common config for server -->
+	<!-- <bean id="identityMappingCom" class="com.bocom.jump.bp.channel.ws.DefaultQNameMapping">
+		<property name="mapping" >
+	        	<util:properties  location="classpath*:config/webservice/identityMapping-server-common.properties"/>
+		</property>
+	</bean> -->
 
 	<bean id="messagePostProcessor"
 		class="com.bocom.jump.bp.channel.ws.srv.jms.WebServiceMessagePostProcessor">

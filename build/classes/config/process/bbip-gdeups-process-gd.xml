@@ -2,6 +2,114 @@
 	xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+						
+						
+		<action id="eups.bbipPaymentExt" class="com.bocom.bbip.gdeupsb.action.BuaPaymentExt" />				
+						
+
+						
+						
+		<action id="eups.paymentToTHDActionExt" class="com.bocom.bbip.gdeupsb.action.PaymentToTHDActionExt" />
+						
+						
+	<!-- 联机单笔记账  -->
+	<process id="eups.payFeeOnlineExt" template="eups.payOnlineTemplateExt"
+		interceptors="eups.thdTransInterceptor">
+		<actions>
+		    <!-- 交易前特色处理 -->
+			<!-- <action id="preCheckAction" ref="eups.prepareCheckDealStrategyAction" /> -->
+			<action id="preCheckAction" ref="eups.payFeeOnlineServiceAction" operations="preCheckDeal"/>
+			<!-- 记账前特色处理 -->
+			<!-- <action id="preHostAction" ref="eups.preparePayStrategyAction" /> -->
+			<action id="preHostAction" ref="eups.payFeeOnlineServiceAction" operations="preHostDeal"/>
+			<!-- 第三方缴费前特色处理 -->
+			<!-- <action id="preThdAction" ref="eups.prePayFeeStrategyAction" /> -->
+			<action id="preThdAction" ref="eups.payFeeOnlineServiceAction" operations="preThdDeal"/>
+			<!-- 第三方缴费后特色处理 -->
+			<!-- <action id="aftThdAction" ref="eups.aftPayFeeStrategyAction" /> -->
+			<action id="aftThdAction" ref="eups.payFeeOnlineServiceAction" operations="aftThdDeal"/>
+		</actions>
+	</process>
 	
+	
+	    <!-- 抹账第三方 -->
+	<action class="com.bocom.bbip.gdeupsb.action.CancelToTHDActionExt"
+		id="eups.cancelToTHDActionExt" />
+		
+		<action id="eups.bbipPaymentCancelUsingReversalExt"  class="com.bocom.bbip.gdeupsb.action.BuaPaymentCancelUsingReversalExt" />
+	
+		<!-- 自动区分抹账：根据流水表第三方状态和主机状态-->
+	<process id="eups.automaticCancelProcessExt" template="eups.autoCancelTemplateExt"  interceptors="eups.thdTransInterceptor" >
+	 	<actions>
+	       <!-- 第三方抹账前处理 -->
+	       <!-- <action id="preCalAction" ref="eups.preCancelStrategyAction"/> -->
+	       <action id="preCalAction" ref="eups.automaticCancelServiceAction" operations="preCancel"/>
+	       <!-- 第三方抹账后处理 -->
+	       <!-- <action id="aftCalAction" ref="eups.aftCancelStrategyAction"/> -->
+	       <action id="aftCalAction" ref="eups.automaticCancelServiceAction" operations="aftCancel"/>
+	   	</actions>
+	</process>
+	
+	
+	<!-- 联机银行方单边记账（银行记帐系统自带冲正，无需发起冲正）  -->
+	<process id="eups.payUnilateralToBankExt" template="eups.payUnilateralNoRvsTemplateExt" interceptors="eups.thdTransInterceptor" >
+	   <actions>
+	       <!-- 交易前服务处理 -->
+		   <!-- <action id="preCheckAction" ref="eups.prepareCheckDealStrategyAction" /> -->
+		   <action id="preCheckAction" ref="eups.payUnilateralToBankServiceAction" operations="prepareCheckDeal"/>
+	       <!-- 交易前检查  -->
+	       <action id="preAction" ref="eups.checkComTxnCtlAction" operations="checkThdTxnCtlNormal"/>
+	       <action id="preAction" ref="eups.checkCusAgrAction"/>
+	       <!-- 记账前处理 -->
+	       <!-- <action id="preAction" ref="eups.prePayToBankStrategyAction"/> -->
+	       <action id="preAction" ref="eups.payUnilateralToBankServiceAction" operations="prePayToBank"/>
+	       <action id="preAction" ref="eups.checkThdReqJnlAction"/>	
+	       <action id="preAction" ref="eups.queryCusAcInfAction" operations="cusAcOldToNew"/>
+	       <action id="preAction" ref="eups.queryCusAcInfAction" operations="queryCusAcTyp"/>
+	       <action id="preAction" ref="eups.preparePaymentInfoAction"/>
+	       <!-- 检查渠道限额，如果配置了渠道限额则检查 -->
+		   <action id="preAction" ref="eups.checkChlAmtLimAction" /> 
+	       <!-- 联机记账预处理 -->
+	       <action id="initAction" ref="eups.initPaymentInfoAction"/>
+	       <!-- 联机531代收付交易主机记账 （自调冲正） -->
+	       <action id="businessAction" ref="eups.bbipPaymentExt"/>
+	       <action id="businessAction" ref="eups.saveCBPaymentResultAction"/>
+	       <!-- 交易结果 -->
+	       <!-- 记账后返回处理 -->
+	       <!-- <action id="finalizeAction" ref="eups.aftPayToBankStrategyAction"/> -->
+	       <action id="finalizeAction" ref="eups.payUnilateralToBankServiceAction" operations="aftPayToBank"/>
+	       <action id="finalizeAction" ref="eups.setTransJournalStateAction"/>
+	       <action id="finalizeAction" ref="eups.savePaymentResultAction"/>
+	   </actions>
+	</process>
+	
+	<!-- 联机银行方单边抹账  -->
+	<process id="eups.cancelUnilateralToBankExt" template="eups.cancelUnilateralTemplate"  interceptors="eups.thdTransInterceptor" >
+	   <actions>
+	       <!-- 交易前检查 -->
+	       <!-- 第三方交易控制检查（默认正常交易） -->
+	       <action id="preAction" ref="eups.checkComTxnCtlAction" operations="checkThdTxnCtlNormal"/>
+	       <!-- 抹账前处理 -->
+	       <!-- <action id="preAction" ref="eups.preCclToBankStrategyAction"/> -->
+	       <action id="preAction" ref="eups.cancelUnilateralToBankServiceAction" operations="preCclToBank"/>    
+	       <action id="preAction" ref="eups.checkBeforeCancelAction" operations="checkBeforeCancelBank"/>
+	       <!-- 联机抹账预处理 -->
+	       <action id="initAction" ref="eups.initCancelInfoAction"/>
+	       <!-- 联机531代收付交易主机抹账 -->
+	       <action id="businessAction" ref="eups.bbipPaymentCancelUsingReversalExt"/>
+	       <action id="businessAction" ref="eups.processCBCancelResultAction"/>
+	       <!-- 交易结果 -->
+	       <!-- 抹账后返回处理 -->
+	       <!-- <action id="finalizeAction" ref="eups.aftCclToBankStrategyAction"/> -->
+	       <action id="finalizeAction" ref="eups.cancelUnilateralToBankServiceAction" operations="aftCclToBank"/>
+	       <action id="finalizeAction" ref="eups.saveCancelResultAction"/>
+	   </actions>
+	</process>
+	
+	
+	
+	<!-- <action id="gdeups.batchFileDealPreAction" class="com.bocom.bbip.gdeupsb.action.BatchFileDealPreAction" /> -->
+	
+
 
 </x:beans>

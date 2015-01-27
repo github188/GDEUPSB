@@ -1,0 +1,57 @@
+20150115_17:30:16.076 [main] [org.springframework.test.context.junit4.SpringJUnit4ClassRunner][396 ]     [    ] SpringJUnit4ClassRunner constructor called with [class com.bocom.bbip.gdeups.elegz.EleGzOnlineTest].
+20150115_17:30:16.165 [main] [org.springframework.test.context.TestContextManager][485 ]     [    ] @TestExecutionListeners is not present for class [class com.bocom.bbip.gdeups.elegz.EleGzOnlineTest]: using defaults.
+20150115_17:30:16.223 [main] [org.springframework.test.annotation.ProfileValueUtils][543 ]     [    ] Retrieved @ProfileValueSourceConfiguration [null] for test class [com.bocom.bbip.gdeups.elegz.EleGzOnlineTest]
+20150115_17:30:16.223 [main] [org.springframework.test.annotation.ProfileValueUtils][543 ]     [    ] Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [com.bocom.bbip.gdeups.elegz.EleGzOnlineTest]
+20150115_17:30:16.225 [main] [org.springframework.test.annotation.ProfileValueUtils][545 ]     [    ] Retrieved @ProfileValueSourceConfiguration [null] for test class [com.bocom.bbip.gdeups.elegz.EleGzOnlineTest]
+20150115_17:30:16.225 [main] [org.springframework.test.annotation.ProfileValueUtils][545 ]     [    ] Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [com.bocom.bbip.gdeups.elegz.EleGzOnlineTest]
+20150115_17:30:16.226 [main] [org.springframework.test.annotation.ProfileValueUtils][546 ]     [    ] Retrieved @ProfileValueSourceConfiguration [null] for test class [com.bocom.bbip.gdeups.elegz.EleGzOnlineTest]
+20150115_17:30:16.226 [main] [org.springframework.test.annotation.ProfileValueUtils][546 ]     [    ] Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [com.bocom.bbip.gdeups.elegz.EleGzOnlineTest]
+20150115_17:30:16.228 [main] [org.springframework.test.annotation.ProfileValueUtils][548 ]     [    ] Retrieved @ProfileValueSourceConfiguration [null] for test class [com.bocom.bbip.gdeups.elegz.EleGzOnlineTest]
+20150115_17:30:16.228 [main] [org.springframework.test.annotation.ProfileValueUtils][548 ]     [    ] Retrieved ProfileValueSource type [class org.springframework.test.annotation.SystemProfileValueSource] for class [com.bocom.bbip.gdeups.elegz.EleGzOnlineTest]
+20150115_17:30:16.233 [main] [org.springframework.test.context.support.DependencyInjectionTestExecutionListener][553 ]     [    ] Performing dependency injection for test context [[TestContext@16bd8ea testClass = EleGzOnlineTest, locations = array<String>['classpath:config/includes4UnitTest.xml'], testInstance = com.bocom.bbip.gdeups.elegz.EleGzOnlineTest@16e1fb1, testMethod = [null], testException = [null]]].
+20150115_17:30:16.234 [main] [org.springframework.test.context.support.AbstractGenericContextLoader][554 ]     [    ] Loading ApplicationContext for locations [classpath:config/includes4UnitTest.xml].
+20150115_17:30:16.311 [main] [org.springframework.beans.factory.xml.XmlBeanDefinitionReader][631 ]     [    ] Loading XML bean definitions from class path resource [config/includes4UnitTest.xml]
+20150115_17:30:16.320 [main] [org.springframework.test.context.TestContextManager][640 ]     [    ] Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@fcfa52] to prepare test instance [com.bocom.bbip.gdeups.elegz.EleGzOnlineTest@16e1fb1]
+java.lang.IllegalStateException: Failed to load ApplicationContext
+	at org.springframework.test.context.TestContext.getApplicationContext(TestContext.java:308) ~[org.springframework.test-3.0.2.RELEASE.jar:3.0.2.RELEASE]
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:109) ~[org.springframework.test-3.0.2.RELEASE.jar:3.0.2.RELEASE]
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:75) ~[org.springframework.test-3.0.2.RELEASE.jar:3.0.2.RELEASE]
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:333) ~[org.springframework.test-3.0.2.RELEASE.jar:3.0.2.RELEASE]
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:220) [org.springframework.test-3.0.2.RELEASE.jar:3.0.2.RELEASE]
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:301) [org.springframework.test-3.0.2.RELEASE.jar:3.0.2.RELEASE]
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12) [junit.jar:na]
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:303) [org.springframework.test-3.0.2.RELEASE.jar:3.0.2.RELEASE]
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:240) [org.springframework.test-3.0.2.RELEASE.jar:3.0.2.RELEASE]
+	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:50) [junit.jar:na]
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238) [junit.jar:na]
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63) [junit.jar:na]
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236) [junit.jar:na]
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53) [junit.jar:na]
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229) [junit.jar:na]
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61) [org.springframework.test-3.0.2.RELEASE.jar:3.0.2.RELEASE]
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70) [org.springframework.test-3.0.2.RELEASE.jar:3.0.2.RELEASE]
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309) [junit.jar:na]
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:180) [org.springframework.test-3.0.2.RELEASE.jar:3.0.2.RELEASE]
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390) [.cp/:na]
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197) [.cp/:na]
+Caused by: org.springframework.beans.factory.BeanDefinitionStoreException: IOException parsing XML document from class path resource [config/includes4UnitTest.xml]; nested exception is java.io.FileNotFoundException: class path resource [config/includes4UnitTest.xml] cannot be opened because it does not exist
+	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:341) ~[org.springframework.beans-3.0.2.RELEASE.jar:3.0.2.RELEASE]
+	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:302) ~[org.springframework.beans-3.0.2.RELEASE.jar:3.0.2.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:143) ~[org.springframework.beans-3.0.2.RELEASE.jar:3.0.2.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:178) ~[org.springframework.beans-3.0.2.RELEASE.jar:3.0.2.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:149) ~[org.springframework.beans-3.0.2.RELEASE.jar:3.0.2.RELEASE]
+	at org.springframework.beans.factory.support.AbstractBeanDefinitionReader.loadBeanDefinitions(AbstractBeanDefinitionReader.java:212) ~[org.springframework.beans-3.0.2.RELEASE.jar:3.0.2.RELEASE]
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:81) ~[org.springframework.test-3.0.2.RELEASE.jar:3.0.2.RELEASE]
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:1) ~[org.springframework.test-3.0.2.RELEASE.jar:3.0.2.RELEASE]
+	at org.springframework.test.context.TestContext.loadApplicationContext(TestContext.java:280) ~[org.springframework.test-3.0.2.RELEASE.jar:3.0.2.RELEASE]
+	at org.springframework.test.context.TestContext.getApplicationContext(TestContext.java:304) ~[org.springframework.test-3.0.2.RELEASE.jar:3.0.2.RELEASE]
+	... 24 common frames omitted
+Caused by: java.io.FileNotFoundException: class path resource [config/includes4UnitTest.xml] cannot be opened because it does not exist
+	at org.springframework.core.io.ClassPathResource.getInputStream(ClassPathResource.java:141) ~[org.springframework.core-3.0.2.RELEASE.jar:3.0.2.RELEASE]
+	at org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:328) ~[org.springframework.beans-3.0.2.RELEASE.jar:3.0.2.RELEASE]
+	... 33 common frames omitted
+20150115_17:30:16.342 [main] [org.springframework.test.context.support.DirtiesContextTestExecutionListener][662 ]     [    ] After test class: context [[TestContext@16bd8ea testClass = EleGzOnlineTest, locations = array<String>['classpath:config/includes4UnitTest.xml'], testInstance = [null], testMethod = [null], testException = [null]]], dirtiesContext [false].

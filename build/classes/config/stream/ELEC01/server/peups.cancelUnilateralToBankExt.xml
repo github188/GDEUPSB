@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="0400Response">
+	<fixString name="cusAc"   length="21"/>   <!-- cusAcEx2 -->
+	<fixString name="thdPayTyp" length="6"  default="020000"/>   <!-- thdPayTyp -->
+	<fixString name="thdTxnAmt"  length="12"  />   <!-- amount4 -->
+	<fixString name="txnDateTime"  length="10" />  <!-- MMDDhhmmss -->   <!-- txnDateTime7 -->
+	<fixString name="pwrtxnDate" length="4" />   <!-- 清算日期 MMDD-->    <!-- pwrtxnDate15 -->
+	<fixString name="pwrThdSub" length="4" /> <!-- 配型部类型 -->    <!-- pwrThdSub18 -->
+	<fixString name="eleBkNo" length="11" />    <!-- 受理方机构标识码 -->   <!-- 32 -->
+	<fixString name="thdSqn" length="12" />    <!-- 供电公司系统参考号 -->   <!-- eleThdSqn37 -->
+	
+	<fixString name="tTrmId" length="8" />    <!-- 供电公司终端标识码 -->   <!-- tTrmId41 -->
+	
+	<fixString name="delTdlId" length="15" />    <!-- 供电公司标识码 -->   <!-- delTdlId -->
+	<fixString name="remarkData"  length="99" />    <!-- 供电公司终端标识码 -->   <!--remarkData48  -->
+	<fixString name="CCY"  length="3"  default="001"/>    <!-- 交易货币代码 -->
+	<fixString name="password"  length="4" />    <!-- 密码 -->
+	<fixString name="thdRgnNo100"   length="11"  default="333333"/>    <!-- 接收机构标识代码-->
+	<fixString name="traTyp104"   length="2"  default="HZ"/>    <!-- 交易类别-->
+	<fixString name="msgIdfCde128"    length="16"/>    <!-- 消息鉴别码-->
+</segment>

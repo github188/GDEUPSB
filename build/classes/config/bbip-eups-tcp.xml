@@ -36,7 +36,7 @@
 	<bean id="encodeTransforms" class="com.bocom.jump.bp.channel.interceptors.EncoderTransform">
 		<constructor-arg value="packet://config/stream/AgentOrderHeader.xml" />
 	</bean>
-	<bean id="decodeTransforms" class="com.bocom.jump.bp.channel.interceptors.EncoderTransform">
+	<bean id="decodeTransforms" class="com.bocom.jump.bp.channel.interceptors.DecoderTransform">
 		<constructor-arg value="packet://config/stream/AgentTOAOrderHeader.xml" />
 	</bean>
 

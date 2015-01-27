@@ -1,0 +1,146 @@
+<x:beans xmlns:x="http://www.springframework.org/schema/beans"
+	xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+
+
+
+	<flow-template id="eups.payOnlineTemplateExt">
+		<step id="init" useCtxState="true" transactional="txTemplate">
+			<!-- 交易检查前处理 -->
+			<action id="preCheckAction" place-holder="false" />
+
+			<!-- 检查交易控制信息 -->
+			<action id="preAction" ref="eups.checkComTxnCtlAction"
+				operations="checkThdTxnCtlNormal" />
+			<!-- 检查个人协议信息，如果“是否验约” isChkAgr 为"1"时检查 -->
+			<action id="preAction" ref="eups.checkCusAgrAction" />
+			<action id="preAction" ref="eups.preparePaymentInfoAction" />
+			<!-- 记账前检查请求方信息 -->
+			<!-- 检查请求方流水号是否重复 reqJrnNo -->
+			<action id="preAction" ref="eups.checkRequestInfoAction"
+				operations="checkRequestJournal" />
+			<!-- 检查渠道限额，如果配置了渠道限额则检查 -->
+			<action id="preAction" ref="eups.checkChlAmtLimAction" />
+			<!-- 记账前处理 -->
+			<action id="preHostAction" place-holder="true" />
+
+			<action id="initAction" ref="eups.initPaymentInfoAction" />
+			<next on="BP_STATE_NORMAL" to="DECISION_OPER1" />
+			<next on="*" to="finalize" />
+		</step>
+		<!-- 某些渠道（如生活馆）请求时会上送isNeedDeduct字段，用来标记是否需要分行记帐 -->
+		<decision id="DECISION_OPER1">
+			<script>isNeedDeduct</script>
+			<next on="0" to="businessCBStep" />
+			<next on="1" to="businessTHDStep" />
+		</decision>
+		<!-- 调用代收付记帐时，代收付会自动调用冲正，此处无需银行冲正 -->
+		<step id="businessCBStep" useCtxState="true" transactional="txTemplate">
+			<action id="businessCBAction" ref="eups.bbipPaymentExt" />
+			<next on="*" to="saveCBStep" />
+		</step>
+		<step id="saveCBStep" useCtxState="true" transactional="txTemplate">
+			<action id="saveCBAction" ref="eups.saveCBPaymentResultAction" />
+			<next on="*" to="businessTHDStep" />
+			<next on="BP_STATE_UNKOWN_FAIL" to="rollback" />
+			<end on="BP_STATE_FAIL" />
+		</step>
+		<step id="businessTHDStep" useCtxState="true" transactional="txTemplate">
+			<!-- 第三方缴费前处理 -->
+			<action id="preThdAction" place-holder="true" />
+
+			<!-- 外发第三方缴费 -->
+			<action id="businessTHDAction" ref="eups.paymentToTHDActionExt" />
+			<next on="BP_STATE_NORMAL" to="afterThdStep" />
+			<next on="BP_STATE_REVERSAL_FAIL" to="afterThdStep" />
+			<!-- 除了成功其他的都进行自动区分冲正 -->
+			<next on="*" to="rollback" />
+		</step>
+		<step id="afterThdStep" next="finalize" useCtxState="true"
+			transactional="txTemplate">
+			<action id="aftThdAction" place-holder="true" />
+			<!-- 交易成功累加渠道限额，如果配置了渠道限额则进行累加 -->
+			<action id="sumAmtAction" ref="eups.sumChlTotamtAction" />
+		</step>
+		<step id="finalize" useCtxState="true" transactional="txTemplate">
+			<action id="finalizeAction" ref="eups.savePaymentResultAction" />
+		</step>
+		<!-- 调起自动冲正 -->
+		<step id="rollback" next="finalize" useCtxState="true"
+			transactional="txTemplate">
+			<action id="rollbackAction" ref="eups.automaticReversalTHDAndCBAction" />
+		</step>
+	</flow-template>
+
+
+<!-- 自动抹帐： 根据流水表第三方状态和主机状态决定抹账方向 -->
+	<flow-template id="eups.autoCancelTemplateExt">
+		<step id="init" useCtxState="true" transactional="txTemplate">
+			<!-- 交易前检查 -->
+			<!-- 第三方交易控制检查（默认正常交易） -->
+			<action id="preAction" ref="eups.checkComTxnCtlAction" operations="checkThdTxnCtlNormal" />
+			<action id="preAction" ref="eups.checkBeforeCancelAction" operations="checkBeforeCancel" />
+			<!-- 联机抹账预处理 -->
+			<action id="initAction" ref="eups.initCancelInfoAction" />
+			<next on="BP_STATE_NORMAL" to="autoCancelPayment" />
+			<next on="*" to="finalize" />
+		</step>
+		<step id="autoCancelPayment" next="REVERSE_TYP" useCtxState="true"
+			transactional="txTemplate">
+			<action id="preAction" ref="eups.checkBeforeCancelAction" operations="autoCancelDistinguish" />
+		</step>
+		<decision id="REVERSE_TYP">
+			<script>tradeTxnDir</script>
+			<next on="OL" to="businessTHDStep" />
+			<next on="BU" to="businessCBStep" />
+			<next on="TU" to="businessTHDStep" />
+		</decision>
+		<step id="businessTHDStep" useCtxState="true" transactional="txTemplate">
+			<action id="preCalAction" place-holder="true" />
+			<action id="businessTHDAction" ref="eups.cancelToTHDActionExt" />
+			<next on="BP_STATE_SUCCESS" to="REVERSE_TYP1" />
+			<next on="*" to="finalize" />
+		</step>
+		<decision id="REVERSE_TYP1">
+			<script>tradeTxnDir</script>
+			<next on="OL" to="businessCBStep" />
+			<next on="TU" to="finalize" />
+		</decision>
+		<step id="businessCBStep" next="finalize" useCtxState="true"
+			transactional="txTemplate">
+			<action id="businessCBAction" ref="eups.bbipPaymentCancelUsingReversalExt" />
+			<action id="businessCBAction" ref="eups.processCBCancelResultAction" />
+		</step>
+		<step id="finalize" useCtxState="true" transactional="txTemplate">
+			<action id="aftCalAction" place-holder="true" />
+			<action id="finalizeAction" ref="eups.saveCancelResultAction" />
+		</step>
+	</flow-template>
+	
+	<!-- 单边记账模板（无冲正） -->
+	<flow-template id="eups.payUnilateralNoRvsTemplateExt">
+		<step id="init" useCtxState="true" transactional="txTemplate">		
+		    <action id="preCheckAction" place-holder="false" />
+		    
+			<action id="preAction" place-holder="true" />
+			<action id="initAction" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="businessProcessing" />
+			<next on="*" to="finalize" />
+			<end on="BUSINESS_PROCESSNIG_STATE_TRANS_FAIL"/>
+		</step>
+		<step id="businessProcessing" useCtxState="true" transactional="txTemplate">
+			<action id="businessAction" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="sumAmtStep" />
+			<next on="*" to="finalize" />
+		</step>
+		<step id="sumAmtStep"  next="finalize"  useCtxState="true" transactional="txTemplate">
+			<!-- 交易成功累加渠道限额，如果配置了渠道限额则进行累加 -->
+			<action id="sumAmtAction" ref="eups.sumChlTotamtAction" />
+		</step>
+		<step id="finalize" useCtxState="true" transactional="txTemplate">
+			<action id="finalizeAction" place-holder="true" />
+		</step>
+	</flow-template>
+
+</x:beans>

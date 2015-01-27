@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration  scan="true" scanPeriod="30 seconds">
+	<property name="LOG_DIR" value="/home/bbipadm/apps/szxeups/logs" />
+	<property name="LOG_FILE_NAME" value="eups_sys" />
+	<property name="ERROR_LOG_FILE_NAME" value="eups_error" />
+	<property name="JOURNAL_LOG_FILE_NAME" value="eups_journal" />
+	<property name="logFileNamePattern" value="${LOG_FILE_NAME}_%d{yyyy-MM-dd}_%i" />
+	<property name="errorlogFileNamePattern" value="${ERROR_LOG_FILE_NAME}_%d{yyyy-MM-dd}_%i" />
+
+	<property name="fileLayoutPattern"
+		value="%-20(%d{yyyyMMdd_HH:mm:ss.SSS} [%thread] [%-4relative]) 
+				[%X{hostName} %X{requestId} %X{processId} %X{service.timing} ] %msg%n" />
+	<property name="consoleLayoutPattern"
+		value="%-20(%d{yyyyMMdd_HH:mm:ss.SSS} [%thread] [%-4relative])
+				[%X{hostName} %X{requestId} %X{processId} %X{service.timing} ] %msg%n" />
+
+	<!-- contextName could use in pattern, like '%contextName' -->
+	<contextName>bbip-eups</contextName>
+	
+	<appender name="SYS_LOG"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_DIR}/${LOG_FILE_NAME}.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_DIR}/${logFileNamePattern}.log.zip
+			</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>100MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+	  <encoder>   
+         <pattern>${fileLayoutPattern}</pattern>   
+         <charset>GBK</charset> 
+      </encoder> 
+	</appender>
+
+	<appender name="ERROR_LOG"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_DIR}/${ERROR_LOG_FILE_NAME}.log</file>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_DIR}/${errorlogFileNamePattern}.log.zip
+			</fileNamePattern>
+			<timeBasedFileNamingAndTriggeringPolicy
+				class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>100MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+			<maxHistory>30</maxHistory><!-- days -->
+		</rollingPolicy>
+	 <encoder>   
+         <pattern>${fileLayoutPattern}</pattern>   
+         <charset>GBK</charset> 
+      </encoder> 
+	</appender>
+	
+	<appender name="JOURNAL_LOG"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/${JOURNAL_LOG_FILE_NAME}.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/${errorlogFileNamePattern}.log.zip
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>30</maxHistory><!-- days -->
+        </rollingPolicy>
+        <encoder>   
+         <pattern>${fileLayoutPattern}</pattern>   
+         <charset>GBK</charset> 
+      </encoder> 
+    </appender>
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<layout name="StandardFormat" class="ch.qos.logback.classic.PatternLayout">
+			<pattern>${consoleLayoutPattern}</pattern>
+		</layout>
+	</appender>
+
+  	<timestamp key="byDate" datePattern="yyyyMMdd"/>
+  	
+	<appender name="PROCESS_LOG" class="ch.qos.logback.classic.sift.SiftingAppender">
+		<discriminator>
+			<key>processId</key>
+			<defaultValue>system</defaultValue>
+		</discriminator>
+		<sift>
+			<appender name="FILE-${processId}" class="ch.qos.logback.core.FileAppender">
+				<file>${LOG_DIR}/${byDate}/${processId}.log</file>
+				<append>true</append>
+				<layout class="ch.qos.logback.classic.PatternLayout">
+					<pattern>%d %level %logger - %msg%n</pattern>
+				</layout>
+			</appender>
+		</sift>
+	</appender>
+
+	<logger name="com.bocom.jump.bp.requestTracing" level="TRACE"
+		additivity="false">
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="SYS_LOG" />
+		<appender-ref ref="PROCESS_LOG" />
+	</logger>
+
+	<logger name="com.bocom.jump.bp.processTracing" level="TRACE"
+		additivity="false">
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="SYS_LOG" />
+		<appender-ref ref="PROCESS_LOG" />
+	</logger>
+
+	<logger name="com.bocom.jump.bp.transportTracing" level="TRACE"
+		additivity="false">
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="SYS_LOG" />
+		<appender-ref ref="PROCESS_LOG" />
+	</logger>
+
+	<logger name="com.bocom.jump.bp.messageTracing" level="TRACE"
+		additivity="false">
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="SYS_LOG" />
+		<appender-ref ref="PROCESS_LOG" />
+	</logger>
+
+	<logger name="com.bocom.jump.bp.support.TRACER" level="TRACE"
+		additivity="false">
+		<appender-ref ref="SYS_LOG" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="PROCESS_LOG" />
+	</logger>
+	<logger name="org.springframework.ws.server.MessageTracing"
+		level="TRACE" additivity="false">
+		<appender-ref ref="SYS_LOG" />
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="PROCESS_LOG" />
+	</logger>
+	<logger name="java.sql.PreparedStatement">
+		<level value="DEBUG" />
+	</logger>
+	<logger name="java.sql.Connection">
+		<level value="DEBUG" />
+	</logger>
+	<logger name="java.sql.Statement">
+		<level value="DEBUG" />
+	</logger>
+	<logger name="com.ibatis">
+		<level value="DEBUG" />
+	</logger>
+	<logger name="com.ibatis.common.jdbc.SimpleDataSource">
+		<level value="DEBUG" />
+	</logger>
+	<logger name="com.ibatis.common.jdbc.ScriptRunner">
+		<level value="DEBUG" />
+	</logger>
+	<logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate">
+		<level value="DEBUG" />
+	</logger>
+
+	<logger name="com.bocom.jump.bp.transform.util.TraceListener">
+		<level value="TRACE" />
+	</logger>
+	
+	<logger name="org.springframework.ws.client.MessageTracing">
+		<level value="TRACE" />
+	</logger>
+	
+	<logger name="com.bocom.health.infrastructure.journal.impl.AsyncDBJournalRecoder" additivity="false">
+	    <level value="WARN"/>
+	    <appender-ref ref="JOURNAL_LOG"/>
+	    <appender-ref ref="PROCESS_LOG"/>
+	</logger>
+	
+	<root level="INFO">
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="SYS_LOG" />
+		<appender-ref ref="ERROR_LOG" />
+		<appender-ref ref="PROCESS_LOG" />
+	</root>
+</configuration>

@@ -22,7 +22,16 @@
 	<bean id="mftpTransfer" class="com.bocom.bbip.file.transfer.mftp.MftpTransferImpl">
 	</bean>
 	
-	<bean id="codeSwitch" class="com.bocom.bbip.gdeups.utils.CodeSwitchUtils">
+	<bean id="buaServer" class="com.bocom.bbip.comp.bua.service.BUAServiceAccessObject">
 	</bean>
-
+	
+		<bean id="cardBINService" class="com.bocom.bbip.comp.account.AccountService">
+	</bean>
+	
+		<!-- 代收付批次号生成组件 -->
+	<bean id="BTPService" class="com.bocom.bbip.comp.btp.BTPService" />
+	
+	
+	<bean id="codeSwitch" class="com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils"/>
+	
 </beans>

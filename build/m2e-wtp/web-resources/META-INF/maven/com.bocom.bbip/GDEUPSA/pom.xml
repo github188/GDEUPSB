@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<parent>
+		<groupId>com.bocom.bbip</groupId>
+		<artifactId>bbip-parent</artifactId>
+		<version>3</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>GDEUPSA</artifactId>
+	<packaging>war</packaging>
+	<version>1.0.0</version>
+	<properties>
+		<buildDirectory>${project.basedir}/build</buildDirectory>
+	</properties>
+	<build>
+		<directory>${buildDirectory}</directory>
+		<sourceDirectory>src</sourceDirectory>
+		<testSourceDirectory>testSrc</testSourceDirectory>
+		<plugins>
+			<plugin>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<warSourceDirectory>WebContent</warSourceDirectory>
+					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<includes>
+						<!-- 执行以UnitTest.java结尾的单元测试 -->
+						<include>**/*UnitTest.java</include>
+					</includes>
+					<forkMode>once</forkMode>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>run</goal>
+						</goals>
+						<configuration>
+							<tasks>
+								<tstamp>
+									<format property="now" pattern="yyyyMMddHHmmss" locale="cn" />
+								</tstamp>
+								<tar
+									destfile="${buildDirectory}/${project.artifactId}-patch-${project.version}-${now}.tar" >
+									<tarfileset
+										dir="${buildDirectory}/${project.artifactId}-${project.version}">
+										<includesfile name="${project.basedir}/patch_list.txt" />
+									</tarfileset>
+								</tar>
+								<echo>Patch dynamic resources DONE!</echo>
+							</tasks>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	<dependencies>
+		 <dependency>
+            <groupId>com.bocom.bbip</groupId>
+            <artifactId>bbip-comp-eups</artifactId>
+            <version>2.0.2-SNAPSHOT</version>
+        </dependency> 
+        
+		<dependency>
+			<groupId>com.bocom.bbip</groupId>
+			<artifactId>bbip-runtime</artifactId>
+			<version>1.0-SNAPSHOT</version>
+			<type>pom</type>
+			<!-- <scope>provided</scope> -->
+			<scope>compiler</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.bocom.bbip</groupId>
+			<artifactId>bbip-test-suite</artifactId>
+			<version>1.0.0</version>
+			<type>pom</type>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>
