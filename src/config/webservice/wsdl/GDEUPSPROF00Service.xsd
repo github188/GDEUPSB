@@ -1,0 +1,476 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/Schema" xmlns:gsp="http://gsp.bankcomm.com" xmlns:bbip="http://bbip.bankcomm.com" targetNamespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/Schema" elementFormDefault="qualified">
+  <xs:import namespace="http://gsp.bankcomm.com" schemaLocation="headerOfSOAP.xsd"/>
+  <xs:import namespace="http://bbip.bankcomm.com" schemaLocation="headerOfBbip.xsd"/>
+  <xs:element name="invoiceStatusQueryManager" type="tns:invoiceStatusQueryManagerReq_CType"/>
+  <xs:element name="invoiceStatusQueryManagerResponse" type="tns:invoiceStatusQueryManagerRsp_CType"/>
+  <xs:complexType name="invoiceStatusQueryManagerReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:invoiceStatusQueryManagerRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="invoiceStatusQueryManagerRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:invoiceStatusQueryManagerResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="invoiceCancelGrantManager" type="tns:invoiceCancelGrantManagerReq_CType"/>
+  <xs:element name="invoiceCancelGrantManagerResponse" type="tns:invoiceCancelGrantManagerRsp_CType"/>
+  <xs:complexType name="invoiceCancelGrantManagerReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:invoiceCancelGrantManagerRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="invoiceCancelGrantManagerRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:invoiceCancelGrantManagerResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="invoiceReceiveManager" type="tns:invoiceReceiveManagerReq_CType"/>
+  <xs:element name="invoiceReceiveManagerResponse" type="tns:invoiceReceiveManagerRsp_CType"/>
+  <xs:complexType name="invoiceReceiveManagerReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:invoiceReceiveManagerRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="invoiceReceiveManagerRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:invoiceReceiveManagerResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="invoiceInvalidManager" type="tns:invoiceInvalidManagerReq_CType"/>
+  <xs:element name="invoiceInvalidManagerResponse" type="tns:invoiceInvalidManagerRsp_CType"/>
+  <xs:complexType name="invoiceInvalidManagerReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:invoiceInvalidManagerRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="invoiceInvalidManagerRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:invoiceInvalidManagerResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="invoiceUseManager" type="tns:invoiceUseManagerReq_CType"/>
+  <xs:element name="invoiceUseManagerResponse" type="tns:invoiceUseManagerRsp_CType"/>
+  <xs:complexType name="invoiceUseManagerReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:invoiceUseManagerRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="invoiceUseManagerRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:invoiceUseManagerResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="invoiceGrantManager" type="tns:invoiceGrantManagerReq_CType"/>
+  <xs:element name="invoiceGrantManagerResponse" type="tns:invoiceGrantManagerRsp_CType"/>
+  <xs:complexType name="invoiceGrantManagerReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:invoiceGrantManagerRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="invoiceGrantManagerRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:invoiceGrantManagerResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="invoiceCheckManager" type="tns:invoiceCheckManagerReq_CType"/>
+  <xs:element name="invoiceCheckManagerResponse" type="tns:invoiceCheckManagerRsp_CType"/>
+  <xs:complexType name="invoiceCheckManagerReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:invoiceCheckManagerRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="invoiceCheckManagerRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:invoiceCheckManagerResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="requestHeader" type="tns:requestHeader_CType"/>
+  <xs:element name="responseHeader" type="tns:responseHeader_CType"/>
+  <xs:element name="sortingInfo" type="tns:sortingInfo_CType"/>
+  <xs:element name="pageableRequest" type="tns:pageableRequest_CType"/>
+  <xs:element name="pageableResponse" type="tns:pageableResponse_CType"/>
+  <xs:element name="queryRspDisplayList" type="tns:queryRspDisplayList_CType"/>
+  <xs:complexType name="requestHeader_CType">
+    <xs:sequence>
+      <xs:element ref="bbip:bbipRequestHead"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="responseHeader_CType">
+    <xs:sequence>
+      <xs:element ref="bbip:bbipResponseHead"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="property_SType">
+    <xs:annotation>
+      <xs:documentation>排序数据域</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="32"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="direction_SType">
+    <xs:annotation>
+      <xs:documentation>排序方式</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="sortingInfo_CType">
+    <xs:sequence>
+      <xs:element name="property" type="tns:property_SType"/>
+      <xs:element name="direction" type="tns:direction_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="pageNum_SType">
+    <xs:annotation>
+      <xs:documentation>页数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+  <xs:simpleType name="pageSize_SType">
+    <xs:annotation>
+      <xs:documentation>每页显示数据数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+  <xs:complexType name="pageableRequest_CType">
+    <xs:sequence>
+      <xs:element name="pageNum" type="tns:pageNum_SType"/>
+      <xs:element name="pageSize" type="tns:pageSize_SType"/>
+      <xs:element ref="tns:sortingInfo" minOccurs="0" maxOccurs="10"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="totalElements_SType">
+    <xs:annotation>
+      <xs:documentation>总记录数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:long"/>
+  </xs:simpleType>
+  <xs:simpleType name="totalPages_SType">
+    <xs:annotation>
+      <xs:documentation>总页数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:long"/>
+  </xs:simpleType>
+  <xs:complexType name="pageableResponse_CType">
+    <xs:sequence>
+      <xs:element name="totalElements" type="tns:totalElements_SType"/>
+      <xs:element name="totalPages" type="tns:totalPages_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="detailName_SType">
+    <xs:annotation>
+      <xs:documentation>明细名称</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="detailContent_SType">
+    <xs:annotation>
+      <xs:documentation>明细内容cusAc</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="queryRspDisplayList_CType">
+    <xs:sequence>
+      <xs:element name="detailName" type="tns:detailName_SType" minOccurs="0"/>
+      <xs:element name="detailContent" type="tns:detailContent_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="invoiceStatusQueryManagerRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="tckNo" type="tns:tckNo_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="invoiceStatusQueryManagerResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="invTyp" type="tns:invTyp_SType" minOccurs="0"/>
+      <xs:element name="oprTlr" type="tns:oprTlr_SType" minOccurs="0"/>
+      <xs:element name="ivBegNo" type="tns:ivBegNo_SType" minOccurs="0"/>
+      <xs:element name="ivEndNo" type="tns:ivEndNo_SType" minOccurs="0"/>
+      <xs:element name="tolNum" type="tns:tolNum_SType" minOccurs="0"/>
+      <xs:element name="status" type="tns:status_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="eupsBusTyp_SType">
+    <xs:annotation>
+      <xs:documentation>EUPS业务类型</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="tckNo_SType">
+    <xs:annotation>
+      <xs:documentation>平台流水号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="invTyp_SType">
+    <xs:annotation>
+      <xs:documentation>凭证类型</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="3"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="oprTlr_SType">
+    <xs:annotation>
+      <xs:documentation>领用柜员</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="7"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ivBegNo_SType">
+    <xs:annotation>
+      <xs:documentation>凭证起始号码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ivEndNo_SType">
+    <xs:annotation>
+      <xs:documentation>凭证结束号码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="tolNum_SType">
+    <xs:annotation>
+      <xs:documentation>张数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="status_SType">
+    <xs:annotation>
+      <xs:documentation>状态</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="invoiceCancelGrantManagerRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="tckNo" type="tns:tckNo_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="invoiceCancelGrantManagerResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="tckNo" type="tns:tckNo_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="invoiceReceiveManagerRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="invTyp" type="tns:invTyp_SType"/>
+      <xs:element name="ivBegNo" type="tns:ivBegNo_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="invoiceReceiveManagerResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="actDat" type="tns:actDat_SType" minOccurs="0"/>
+      <xs:element name="seqNo" type="tns:seqNo_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="actDat_SType">
+    <xs:annotation>
+      <xs:documentation>交易日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="seqNo_SType">
+    <xs:annotation>
+      <xs:documentation>流水号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="invoiceInvalidManagerRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="invTyp" type="tns:invTyp_SType"/>
+      <xs:element name="doType" type="tns:doType_SType"/>
+      <xs:element name="stlNum" type="tns:stlNum_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="invoiceInvalidManagerResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="actDat" type="tns:actDat_SType" minOccurs="0"/>
+      <xs:element name="ivBegNo" type="tns:ivBegNo_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="doType_SType">
+    <xs:annotation>
+      <xs:documentation>凭证处理方法</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="stlNum_SType">
+    <xs:annotation>
+      <xs:documentation>凭证总数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="invoiceUseManagerRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="invTyp" type="tns:invTyp_SType"/>
+      <xs:element name="qyNo" type="tns:qyNo_SType"/>
+      <xs:element name="oldSeq" type="tns:oldSeq_SType"/>
+      <xs:element name="oldTrdate" type="tns:oldTrdate_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="invoiceUseManagerResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="seqNo" type="tns:seqNo_SType" minOccurs="0"/>
+      <xs:element name="actDat" type="tns:actDat_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="qyNo_SType">
+    <xs:annotation>
+      <xs:documentation>企业编号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="oldSeq_SType">
+    <xs:annotation>
+      <xs:documentation>原发票流水号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="oldTrdate_SType">
+    <xs:annotation>
+      <xs:documentation>原交易日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="invoiceGrantManagerRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="invTyp" type="tns:invTyp_SType"/>
+      <xs:element name="oprTlr" type="tns:oprTlr_SType"/>
+      <xs:element name="tlrPin" type="tns:tlrPin_SType"/>
+      <xs:element name="ivBegNo" type="tns:ivBegNo_SType"/>
+      <xs:element name="ivEndNo" type="tns:ivEndNo_SType"/>
+      <xs:element name="tolNum" type="tns:tolNum_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="invoiceGrantManagerResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="tckNo" type="tns:tckNo_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="tlrPin_SType">
+    <xs:annotation>
+      <xs:documentation>密码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="invoiceCheckManagerRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="invTyp" type="tns:invTyp_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="invoiceCheckManagerResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="useDat" type="tns:useDat_SType" minOccurs="0"/>
+      <xs:element name="useNum" type="tns:useNum_SType" minOccurs="0"/>
+      <xs:element name="clrNum" type="tns:clrNum_SType" minOccurs="0"/>
+      <xs:element name="lostNum" type="tns:lostNum_SType" minOccurs="0"/>
+      <xs:element name="actDat" type="tns:actDat_SType" minOccurs="0"/>
+      <xs:element name="ivBegNo" type="tns:ivBegNo_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="useDat_SType">
+    <xs:annotation>
+      <xs:documentation>启用日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="useNum_SType">
+    <xs:annotation>
+      <xs:documentation>正常使用数量</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="clrNum_SType">
+    <xs:annotation>
+      <xs:documentation>作废数量</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="lostNum_SType">
+    <xs:annotation>
+      <xs:documentation>丢失数量</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

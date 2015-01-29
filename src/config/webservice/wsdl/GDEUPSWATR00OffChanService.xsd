@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00OffChanService/Schema" xmlns:gsp="http://gsp.bankcomm.com" xmlns:bbip="http://bbip.bankcomm.com" targetNamespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00OffChanService/Schema" elementFormDefault="qualified">
+  <xs:import namespace="http://gsp.bankcomm.com" schemaLocation="headerOfSOAP.xsd"/>
+  <xs:import namespace="http://bbip.bankcomm.com" schemaLocation="headerOfBbip.xsd"/>
+  <xs:element name="queryAndPrintTransJournal" type="tns:queryAndPrintTransJournalReq_CType"/>
+  <xs:element name="queryAndPrintTransJournalResponse" type="tns:queryAndPrintTransJournalRsp_CType"/>
+  <xs:complexType name="queryAndPrintTransJournalReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:queryAndPrintTransJournalRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryAndPrintTransJournalRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:queryAndPrintTransJournalResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="queryAndPrintHistoryMsg" type="tns:queryAndPrintHistoryMsgReq_CType"/>
+  <xs:element name="queryAndPrintHistoryMsgResponse" type="tns:queryAndPrintHistoryMsgRsp_CType"/>
+  <xs:complexType name="queryAndPrintHistoryMsgReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:queryAndPrintHistoryMsgRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryAndPrintHistoryMsgRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:queryAndPrintHistoryMsgResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="queryThirdCusOffChan" type="tns:queryThirdCusOffChanReq_CType"/>
+  <xs:element name="queryThirdCusOffChanResponse" type="tns:queryThirdCusOffChanRsp_CType"/>
+  <xs:complexType name="queryThirdCusOffChanReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:queryThirdCusOffChanRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryThirdCusOffChanRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:queryThirdCusOffChanResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="requestHeader" type="tns:requestHeader_CType"/>
+  <xs:element name="responseHeader" type="tns:responseHeader_CType"/>
+  <xs:element name="sortingInfo" type="tns:sortingInfo_CType"/>
+  <xs:element name="pageableRequest" type="tns:pageableRequest_CType"/>
+  <xs:element name="pageableResponse" type="tns:pageableResponse_CType"/>
+  <xs:element name="queryRspDisplayList" type="tns:queryRspDisplayList_CType"/>
+  <xs:complexType name="requestHeader_CType">
+    <xs:sequence>
+      <xs:element ref="bbip:bbipRequestHead"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="responseHeader_CType">
+    <xs:sequence>
+      <xs:element ref="bbip:bbipResponseHead"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="property_SType">
+    <xs:annotation>
+      <xs:documentation>排序数据域</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="32"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="direction_SType">
+    <xs:annotation>
+      <xs:documentation>排序方式</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="sortingInfo_CType">
+    <xs:sequence>
+      <xs:element name="property" type="tns:property_SType"/>
+      <xs:element name="direction" type="tns:direction_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="pageNum_SType">
+    <xs:annotation>
+      <xs:documentation>页数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+  <xs:simpleType name="pageSize_SType">
+    <xs:annotation>
+      <xs:documentation>每页显示数据数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+  <xs:complexType name="pageableRequest_CType">
+    <xs:sequence>
+      <xs:element name="pageNum" type="tns:pageNum_SType"/>
+      <xs:element name="pageSize" type="tns:pageSize_SType"/>
+      <xs:element ref="tns:sortingInfo" minOccurs="0" maxOccurs="10"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="totalElements_SType">
+    <xs:annotation>
+      <xs:documentation>总记录数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:long"/>
+  </xs:simpleType>
+  <xs:simpleType name="totalPages_SType">
+    <xs:annotation>
+      <xs:documentation>总页数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:long"/>
+  </xs:simpleType>
+  <xs:complexType name="pageableResponse_CType">
+    <xs:sequence>
+      <xs:element name="totalElements" type="tns:totalElements_SType"/>
+      <xs:element name="totalPages" type="tns:totalPages_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="detailName_SType">
+    <xs:annotation>
+      <xs:documentation>明细名称</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="detailContent_SType">
+    <xs:annotation>
+      <xs:documentation>明细内容cusAc</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="queryRspDisplayList_CType">
+    <xs:sequence>
+      <xs:element name="detailName" type="tns:detailName_SType" minOccurs="0"/>
+      <xs:element name="detailContent" type="tns:detailContent_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryAndPrintTransJournalRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="sqn" type="tns:sqn_SType" minOccurs="0"/>
+      <xs:element name="mfmVchNo" type="tns:mfmVchNo_SType" minOccurs="0"/>
+      <xs:element name="thdRgnNo" type="tns:thdRgnNo_SType" minOccurs="0"/>
+      <xs:element name="thdCusNo" type="tns:thdCusNo_SType" minOccurs="0"/>
+      <xs:element name="cusAc" type="tns:cusAc_SType" minOccurs="0"/>
+      <xs:element name="beginDate" type="tns:beginDate_SType"/>
+      <xs:element name="endDate" type="tns:endDate_SType"/>
+      <xs:element name="reqJnlNo" type="tns:reqJnlNo_SType" minOccurs="0"/>
+      <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
+      <xs:element name="busKnd" type="tns:busKnd_SType" minOccurs="0"/>
+      <xs:element name="chlTyp" type="tns:chlTyp_SType" minOccurs="0"/>
+      <xs:element name="txtSts" type="tns:txtSts_SType" minOccurs="0"/>
+      <xs:element name="tmlNo" type="tns:tmlNo_SType" minOccurs="0"/>
+      <xs:element ref="tns:pageableRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryAndPrintTransJournalResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="retNum" type="tns:retNum_SType"/>
+      <xs:element name="lclJnlList" type="tns:lclJnlList_CType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="tns:pageableResponse" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="eupsBusTyp_SType">
+    <xs:annotation>
+      <xs:documentation>EUPS业务类型</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="sqn_SType">
+    <xs:annotation>
+      <xs:documentation>流水号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="mfmVchNo_SType">
+    <xs:annotation>
+      <xs:documentation>会计流水号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="thdRgnNo_SType">
+    <xs:annotation>
+      <xs:documentation>第三方地区编号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="thdCusNo_SType">
+    <xs:annotation>
+      <xs:documentation>第三方客户标识</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="40"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="cusAc_SType">
+    <xs:annotation>
+      <xs:documentation>客户账号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="40"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="beginDate_SType">
+    <xs:annotation>
+      <xs:documentation>开始时间</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="endDate_SType">
+    <xs:annotation>
+      <xs:documentation>结束时间</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="reqJnlNo_SType">
+    <xs:annotation>
+      <xs:documentation>请求系统流水号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="32"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="comNo_SType">
+    <xs:annotation>
+      <xs:documentation>单位编号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="busKnd_SType">
+    <xs:annotation>
+      <xs:documentation>业务种类</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="chlTyp_SType">
+    <xs:annotation>
+      <xs:documentation>渠道类型</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="txtSts_SType">
+    <xs:annotation>
+      <xs:documentation>交易状态</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="tmlNo_SType">
+    <xs:annotation>
+      <xs:documentation>终端号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="retNum_SType">
+    <xs:annotation>
+      <xs:documentation>返回信息数量</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="thdCusNme_SType">
+    <xs:annotation>
+      <xs:documentation>第三方客户姓名</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="300"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="thdSqn_SType">
+    <xs:annotation>
+      <xs:documentation>第三方流水号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="txnAmt_SType">
+    <xs:annotation>
+      <xs:documentation>交易金额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal"/>
+  </xs:simpleType>
+  <xs:simpleType name="payMde_SType">
+    <xs:annotation>
+      <xs:documentation>支付方式</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="txnSts_SType">
+    <xs:annotation>
+      <xs:documentation>交易状态</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="lclJnlList_CType">
+    <xs:sequence>
+      <xs:element name="thdRgnNo" type="tns:thdRgnNo_SType" minOccurs="0"/>
+      <xs:element name="thdCusNo" type="tns:thdCusNo_SType" minOccurs="0"/>
+      <xs:element name="thdCusNme" type="tns:thdCusNme_SType" minOccurs="0"/>
+      <xs:element name="thdSqn" type="tns:thdSqn_SType" minOccurs="0"/>
+      <xs:element name="cusAc" type="tns:cusAc_SType" minOccurs="0"/>
+      <xs:element name="txnAmt" type="tns:txnAmt_SType" minOccurs="0"/>
+      <xs:element name="sqn" type="tns:sqn_SType" minOccurs="0"/>
+      <xs:element name="mfmVchNo" type="tns:mfmVchNo_SType" minOccurs="0"/>
+      <xs:element name="payMde" type="tns:payMde_SType" minOccurs="0"/>
+      <xs:element name="txnSts" type="tns:txnSts_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryAndPrintHistoryMsgRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="thdCusNo" type="tns:thdCusNo_SType"/>
+      <xs:element name="beginDate" type="tns:beginDate_SType"/>
+      <xs:element name="endDate" type="tns:endDate_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryAndPrintHistoryMsgResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="retNum" type="tns:retNum_SType"/>
+      <xs:element name="historyFeeList" type="tns:historyFeeList_CType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="responseindex_SType">
+    <xs:annotation>
+      <xs:documentation>序号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="je_SType">
+    <xs:annotation>
+      <xs:documentation>总金额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="pnum_SType">
+    <xs:annotation>
+      <xs:documentation>本月行码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="lnum_SType">
+    <xs:annotation>
+      <xs:documentation>上月行码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="xzsl_SType">
+    <xs:annotation>
+      <xs:documentation>校正水量</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="quanty_SType">
+    <xs:annotation>
+      <xs:documentation>本月水量</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="usort_SType">
+    <xs:annotation>
+      <xs:documentation>用水性质</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="uprice_SType">
+    <xs:annotation>
+      <xs:documentation>水价</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="pwuprice_SType">
+    <xs:annotation>
+      <xs:documentation>污水单价</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="price_SType">
+    <xs:annotation>
+      <xs:documentation>水费</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="pwf_SType">
+    <xs:annotation>
+      <xs:documentation>污水费</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="pprice_SType">
+    <xs:annotation>
+      <xs:documentation>邮寄费</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="cdata_SType">
+    <xs:annotation>
+      <xs:documentation>抄表日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="14"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="kk_SType">
+    <xs:annotation>
+      <xs:documentation>扣款标志</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="cnjxs_SType">
+    <xs:annotation>
+      <xs:documentation>违约金系数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ljprice_SType">
+    <xs:annotation>
+      <xs:documentation>垃圾费</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ljbz_SType">
+    <xs:annotation>
+      <xs:documentation>垃圾免征标志</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ljcnj_SType">
+    <xs:annotation>
+      <xs:documentation>垃圾滞纳金</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="cnj_SType">
+    <xs:annotation>
+      <xs:documentation>水费滞纳金</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="pwcnj_SType">
+    <xs:annotation>
+      <xs:documentation>污水滞纳金</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ladderquanty1_SType">
+    <xs:annotation>
+      <xs:documentation>第一阶梯水量</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ladderquanty2_SType">
+    <xs:annotation>
+      <xs:documentation>第二阶梯水量</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ladderquanty3_SType">
+    <xs:annotation>
+      <xs:documentation>第三阶梯水量</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ladderuprice1_SType">
+    <xs:annotation>
+      <xs:documentation>第一阶梯水价</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ladderuprice2_SType">
+    <xs:annotation>
+      <xs:documentation>第二阶梯水价</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ladderuprice3_SType">
+    <xs:annotation>
+      <xs:documentation>第三阶梯水价</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ladderprice1_SType">
+    <xs:annotation>
+      <xs:documentation>第一阶梯水费</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ladderprice2_SType">
+    <xs:annotation>
+      <xs:documentation>第二阶梯水费</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ladderprice3_SType">
+    <xs:annotation>
+      <xs:documentation>第三阶梯水费</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="reserved1_SType">
+    <xs:annotation>
+      <xs:documentation>保留字段1</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="reserved2_SType">
+    <xs:annotation>
+      <xs:documentation>保留字段2</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="historyFeeList_CType">
+    <xs:sequence>
+      <xs:element name="responseindex" type="tns:responseindex_SType" minOccurs="0"/>
+      <xs:element name="je" type="tns:je_SType" minOccurs="0"/>
+      <xs:element name="pnum" type="tns:pnum_SType" minOccurs="0"/>
+      <xs:element name="lnum" type="tns:lnum_SType" minOccurs="0"/>
+      <xs:element name="xzsl" type="tns:xzsl_SType" minOccurs="0"/>
+      <xs:element name="quanty" type="tns:quanty_SType" minOccurs="0"/>
+      <xs:element name="usort" type="tns:usort_SType" minOccurs="0"/>
+      <xs:element name="uprice" type="tns:uprice_SType" minOccurs="0"/>
+      <xs:element name="pwuprice" type="tns:pwuprice_SType" minOccurs="0"/>
+      <xs:element name="price" type="tns:price_SType" minOccurs="0"/>
+      <xs:element name="pwf" type="tns:pwf_SType" minOccurs="0"/>
+      <xs:element name="pprice" type="tns:pprice_SType" minOccurs="0"/>
+      <xs:element name="cdata" type="tns:cdata_SType" minOccurs="0"/>
+      <xs:element name="kk" type="tns:kk_SType" minOccurs="0"/>
+      <xs:element name="cnjxs" type="tns:cnjxs_SType" minOccurs="0"/>
+      <xs:element name="ljprice" type="tns:ljprice_SType" minOccurs="0"/>
+      <xs:element name="ljbz" type="tns:ljbz_SType" minOccurs="0"/>
+      <xs:element name="ljcnj" type="tns:ljcnj_SType" minOccurs="0"/>
+      <xs:element name="cnj" type="tns:cnj_SType" minOccurs="0"/>
+      <xs:element name="pwcnj" type="tns:pwcnj_SType" minOccurs="0"/>
+      <xs:element name="ladderquanty1" type="tns:ladderquanty1_SType" minOccurs="0"/>
+      <xs:element name="ladderquanty2" type="tns:ladderquanty2_SType" minOccurs="0"/>
+      <xs:element name="ladderquanty3" type="tns:ladderquanty3_SType" minOccurs="0"/>
+      <xs:element name="ladderuprice1" type="tns:ladderuprice1_SType" minOccurs="0"/>
+      <xs:element name="ladderuprice2" type="tns:ladderuprice2_SType" minOccurs="0"/>
+      <xs:element name="ladderuprice3" type="tns:ladderuprice3_SType" minOccurs="0"/>
+      <xs:element name="ladderprice1" type="tns:ladderprice1_SType" minOccurs="0"/>
+      <xs:element name="ladderprice2" type="tns:ladderprice2_SType" minOccurs="0"/>
+      <xs:element name="ladderprice3" type="tns:ladderprice3_SType" minOccurs="0"/>
+      <xs:element name="reserved1" type="tns:reserved1_SType" minOccurs="0"/>
+      <xs:element name="reserved2" type="tns:reserved2_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryThirdCusOffChanRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="thdCusNo" type="tns:thdCusNo_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryThirdCusOffChanResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="thdCusNo" type="tns:thdCusNo_SType" minOccurs="0"/>
+      <xs:element name="thdCusNme" type="tns:thdCusNme_SType" minOccurs="0"/>
+      <xs:element name="address" type="tns:address_SType" minOccurs="0"/>
+      <xs:element name="newAddress" type="tns:newAddress_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="address_SType">
+    <xs:annotation>
+      <xs:documentation>地址</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="40"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="newAddress_SType">
+    <xs:annotation>
+      <xs:documentation>新地址</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="40"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

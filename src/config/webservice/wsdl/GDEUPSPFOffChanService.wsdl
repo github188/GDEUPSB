@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPFOffChanService" xmlns:gdeups="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPFOffChanService/Schema" name="GDEUPSPFOffChanService" targetNamespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPFOffChanService">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPFOffChanService">
+      <xsd:import namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPFOffChanService/Schema" schemaLocation="GDEUPSPFOffChanService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="payFeeOffChanRequestMessage">
+    <wsdl:part name="payFeeOffChanRequest" element="gdeups:payFeeOffChan"/>
+  </wsdl:message>
+  <wsdl:message name="payFeeOffChanResponseMessage">
+    <wsdl:part name="payFeeOffChanResponse" element="gdeups:payFeeOffChanResponse"/>
+  </wsdl:message>
+  <wsdl:message name="payBankFeeOffChanRequestMessage">
+    <wsdl:part name="payBankFeeOffChanRequest" element="gdeups:payBankFeeOffChan"/>
+  </wsdl:message>
+  <wsdl:message name="payBankFeeOffChanResponseMessage">
+    <wsdl:part name="payBankFeeOffChanResponse" element="gdeups:payBankFeeOffChanResponse"/>
+  </wsdl:message>
+  <wsdl:message name="payThirdFeeOffChanRequestMessage">
+    <wsdl:part name="payThirdFeeOffChanRequest" element="gdeups:payThirdFeeOffChan"/>
+  </wsdl:message>
+  <wsdl:message name="payThirdFeeOffChanResponseMessage">
+    <wsdl:part name="payThirdFeeOffChanResponse" element="gdeups:payThirdFeeOffChanResponse"/>
+  </wsdl:message>
+  <wsdl:message name="cancelLotteryRequestMessage">
+    <wsdl:part name="cancelLotteryRequest" element="gdeups:cancelLottery"/>
+  </wsdl:message>
+  <wsdl:message name="cancelLotteryResponseMessage">
+    <wsdl:part name="cancelLotteryResponse" element="gdeups:cancelLotteryResponse"/>
+  </wsdl:message>
+  <wsdl:message name="batchPaymentCreateDataRequestMessage">
+    <wsdl:part name="batchPaymentCreateDataRequest" element="gdeups:batchPaymentCreateData"/>
+  </wsdl:message>
+  <wsdl:message name="batchPaymentCreateDataResponseMessage">
+    <wsdl:part name="batchPaymentCreateDataResponse" element="gdeups:batchPaymentCreateDataResponse"/>
+  </wsdl:message>
+  <wsdl:message name="cardBINQueryRequestMessage">
+    <wsdl:part name="cardBINQueryRequest" element="gdeups:cardBINQuery"/>
+  </wsdl:message>
+  <wsdl:message name="cardBINQueryResponseMessage">
+    <wsdl:part name="cardBINQueryResponse" element="gdeups:cardBINQueryResponse"/>
+  </wsdl:message>
+  <wsdl:message name="dutyAndPenaltyRequestMessage">
+    <wsdl:part name="dutyAndPenaltyRequest" element="gdeups:dutyAndPenalty"/>
+  </wsdl:message>
+  <wsdl:message name="dutyAndPenaltyResponseMessage">
+    <wsdl:part name="dutyAndPenaltyResponse" element="gdeups:dutyAndPenaltyResponse"/>
+  </wsdl:message>
+  <wsdl:message name="creditCardPayRequestMessage">
+    <wsdl:part name="creditCardPayRequest" element="gdeups:creditCardPay"/>
+  </wsdl:message>
+  <wsdl:message name="creditCardPayResponseMessage">
+    <wsdl:part name="creditCardPayResponse" element="gdeups:creditCardPayResponse"/>
+  </wsdl:message>
+  <wsdl:message name="payCancelBankOffChanRequestMessage">
+    <wsdl:part name="payCancelBankOffChanRequest" element="gdeups:payCancelBankOffChan"/>
+  </wsdl:message>
+  <wsdl:message name="payCancelBankOffChanResponseMessage">
+    <wsdl:part name="payCancelBankOffChanResponse" element="gdeups:payCancelBankOffChanResponse"/>
+  </wsdl:message>
+  <wsdl:message name="openLotteryRequestMessage">
+    <wsdl:part name="openLotteryRequest" element="gdeups:openLottery"/>
+  </wsdl:message>
+  <wsdl:message name="openLotteryResponseMessage">
+    <wsdl:part name="openLotteryResponse" element="gdeups:openLotteryResponse"/>
+  </wsdl:message>
+  <wsdl:message name="queryThirdFeeOffChanRequestMessage">
+    <wsdl:part name="queryThirdFeeOffChanRequest" element="gdeups:queryThirdFeeOffChan"/>
+  </wsdl:message>
+  <wsdl:message name="queryThirdFeeOffChanResponseMessage">
+    <wsdl:part name="queryThirdFeeOffChanResponse" element="gdeups:queryThirdFeeOffChanResponse"/>
+  </wsdl:message>
+  <wsdl:message name="payCancelOffChanRequestMessage">
+    <wsdl:part name="payCancelOffChanRequest" element="gdeups:payCancelOffChan"/>
+  </wsdl:message>
+  <wsdl:message name="payCancelOffChanResponseMessage">
+    <wsdl:part name="payCancelOffChanResponse" element="gdeups:payCancelOffChanResponse"/>
+  </wsdl:message>
+  <wsdl:message name="batchPaymentSubmitRequestMessage">
+    <wsdl:part name="batchPaymentSubmitRequest" element="gdeups:batchPaymentSubmit"/>
+  </wsdl:message>
+  <wsdl:message name="batchPaymentSubmitResponseMessage">
+    <wsdl:part name="batchPaymentSubmitResponse" element="gdeups:batchPaymentSubmitResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="GDEUPSPFOffChanServicePortType">
+    <wsdl:operation name="payFeeOffChan">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:payFeeOffChanRequestMessage"/>
+      <wsdl:output message="tns:payFeeOffChanResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="payBankFeeOffChan">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:payBankFeeOffChanRequestMessage"/>
+      <wsdl:output message="tns:payBankFeeOffChanResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="payThirdFeeOffChan">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:payThirdFeeOffChanRequestMessage"/>
+      <wsdl:output message="tns:payThirdFeeOffChanResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="cancelLottery">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:cancelLotteryRequestMessage"/>
+      <wsdl:output message="tns:cancelLotteryResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="batchPaymentCreateData">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:batchPaymentCreateDataRequestMessage"/>
+      <wsdl:output message="tns:batchPaymentCreateDataResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="cardBINQuery">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:cardBINQueryRequestMessage"/>
+      <wsdl:output message="tns:cardBINQueryResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="dutyAndPenalty">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:dutyAndPenaltyRequestMessage"/>
+      <wsdl:output message="tns:dutyAndPenaltyResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="creditCardPay">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:creditCardPayRequestMessage"/>
+      <wsdl:output message="tns:creditCardPayResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="payCancelBankOffChan">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:payCancelBankOffChanRequestMessage"/>
+      <wsdl:output message="tns:payCancelBankOffChanResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="openLottery">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:openLotteryRequestMessage"/>
+      <wsdl:output message="tns:openLotteryResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="queryThirdFeeOffChan">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:queryThirdFeeOffChanRequestMessage"/>
+      <wsdl:output message="tns:queryThirdFeeOffChanResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="payCancelOffChan">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:payCancelOffChanRequestMessage"/>
+      <wsdl:output message="tns:payCancelOffChanResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="batchPaymentSubmit">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:batchPaymentSubmitRequestMessage"/>
+      <wsdl:output message="tns:batchPaymentSubmitResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GDEUPSPFOffChanServiceSoapBinding" type="tns:GDEUPSPFOffChanServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="payFeeOffChan">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPFOffChanService/payFeeOffChan"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="payBankFeeOffChan">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPFOffChanService/payBankFeeOffChan"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="payThirdFeeOffChan">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPFOffChanService/payThirdFeeOffChan"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cancelLottery">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPFOffChanService/cancelLottery"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="batchPaymentCreateData">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPFOffChanService/batchPaymentCreateData"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cardBINQuery">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPFOffChanService/cardBINQuery"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="dutyAndPenalty">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPFOffChanService/dutyAndPenalty"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="creditCardPay">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPFOffChanService/creditCardPay"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="payCancelBankOffChan">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPFOffChanService/payCancelBankOffChan"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="openLottery">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPFOffChanService/openLottery"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryThirdFeeOffChan">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPFOffChanService/queryThirdFeeOffChan"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="payCancelOffChan">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPFOffChanService/payCancelOffChan"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="batchPaymentSubmit">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPFOffChanService/batchPaymentSubmit"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GDEUPSPFOffChanService">
+    <wsdl:port name="GDEUPSPFOffChanServicePort" binding="tns:GDEUPSPFOffChanServiceSoapBinding">
+      <soap:address location="http://127.0.0.1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

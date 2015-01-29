@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00OffChanService" xmlns:gdeups="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00OffChanService/Schema" name="GDEUPSWATR00OffChanService" targetNamespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00OffChanService">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00OffChanService">
+      <xsd:import namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00OffChanService/Schema" schemaLocation="GDEUPSWATR00OffChanService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="queryAndPrintTransJournalRequestMessage">
+    <wsdl:part name="queryAndPrintTransJournalRequest" element="gdeups:queryAndPrintTransJournal"/>
+  </wsdl:message>
+  <wsdl:message name="queryAndPrintTransJournalResponseMessage">
+    <wsdl:part name="queryAndPrintTransJournalResponse" element="gdeups:queryAndPrintTransJournalResponse"/>
+  </wsdl:message>
+  <wsdl:message name="queryAndPrintHistoryMsgRequestMessage">
+    <wsdl:part name="queryAndPrintHistoryMsgRequest" element="gdeups:queryAndPrintHistoryMsg"/>
+  </wsdl:message>
+  <wsdl:message name="queryAndPrintHistoryMsgResponseMessage">
+    <wsdl:part name="queryAndPrintHistoryMsgResponse" element="gdeups:queryAndPrintHistoryMsgResponse"/>
+  </wsdl:message>
+  <wsdl:message name="queryThirdCusOffChanRequestMessage">
+    <wsdl:part name="queryThirdCusOffChanRequest" element="gdeups:queryThirdCusOffChan"/>
+  </wsdl:message>
+  <wsdl:message name="queryThirdCusOffChanResponseMessage">
+    <wsdl:part name="queryThirdCusOffChanResponse" element="gdeups:queryThirdCusOffChanResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="GDEUPSWATR00OffChanServicePortType">
+    <wsdl:operation name="queryAndPrintTransJournal">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:queryAndPrintTransJournalRequestMessage"/>
+      <wsdl:output message="tns:queryAndPrintTransJournalResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="queryAndPrintHistoryMsg">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:queryAndPrintHistoryMsgRequestMessage"/>
+      <wsdl:output message="tns:queryAndPrintHistoryMsgResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="queryThirdCusOffChan">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:queryThirdCusOffChanRequestMessage"/>
+      <wsdl:output message="tns:queryThirdCusOffChanResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GDEUPSWATR00OffChanServiceSoapBinding" type="tns:GDEUPSWATR00OffChanServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="queryAndPrintTransJournal">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00OffChanService/queryAndPrintTransJournal"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryAndPrintHistoryMsg">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00OffChanService/queryAndPrintHistoryMsg"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryThirdCusOffChan">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00OffChanService/queryThirdCusOffChan"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GDEUPSWATR00OffChanService">
+    <wsdl:port name="GDEUPSWATR00OffChanServicePort" binding="tns:GDEUPSWATR00OffChanServiceSoapBinding">
+      <soap:address location="http://127.0.0.1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
