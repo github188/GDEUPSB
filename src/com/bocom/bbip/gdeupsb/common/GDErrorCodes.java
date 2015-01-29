@@ -31,5 +31,231 @@ public final class GDErrorCodes {
     public static final String EUPS_ELE_GZ_CANCLE_INFO_ERROR = "BBIP4400EU0104";
 	
     
+    
+  //汕头水费
+    /** 登录数据库错  */
+    public static final String EUPS_WATR00_0001_ERROR = "BBIP4400EU0401";
+    /** 查询不到户号  */
+    public static final String EUPS_WATR00_0002_ERROR = "BBIP4400EU0402";
+    /** 该户号无欠费  */
+    public static final String EUPS_WATR00_0003_ERROR = "BBIP4400EU0403";
+    /** 交易时间非法  */
+    public static final String EUPS_WATR00_0004_ERROR = "BBIP4400EU0404";
+    /** 数据包格式错误  */
+    public static final String EUPS_WATR00_0005_ERROR = "BBIP4400EU0405";
+    /** 户号有非法字符  */
+    public static final String EUPS_WATR00_0006_ERROR = "BBIP4400EU0406";
+    /** 交易流水号非法  */
+    public static final String EUPS_WATR00_0007_ERROR = "BBIP4400EU0407";
+    /** 费用金额有非法字符  */
+    public static final String EUPS_WATR00_0008_ERROR = "BBIP4400EU0408";
+    /** 业务代码非法  */
+    public static final String EUPS_WATR00_0009_ERROR = "BBIP4400EU0409";
+    /** 银行代码非法  */
+    public static final String EUPS_WATR00_0010_ERROR = "BBIP4400EU0410";
+    /** 连接超时  */
+    public static final String EUPS_WATR00_0011_ERROR = "BBIP4400EU0411";
+    /** 实交金额不能小于0  */
+    public static final String EUPS_WATR00_0012_ERROR = "BBIP4400EU0412";
+    /** 反销金额与实交金额不符  */
+    public static final String EUPS_WATR00_0013_ERROR = "BBIP4400EU0413";
+    /** 未找到需反销记录  */
+    public static final String EUPS_WATR00_0014_ERROR = "BBIP4400EU0414";
+    /** 实交金额大于欠费  */
+    public static final String EUPS_WATR00_0015_ERROR = "BBIP4400EU0415";
+    /** 该记录已反销  */
+    public static final String EUPS_WATR00_0016_ERROR = "BBIP4400EU0416";
+    /** 实交金额小于欠费  */
+    public static final String EUPS_WATR00_0017_ERROR = "BBIP4400EU0417";
+    /** 委托关系已存在  */
+    public static final String EUPS_WATR00_0018_ERROR = "BBIP4400EU0418";
+    /** 不存在委托关系  */
+    public static final String EUPS_WATR00_0019_ERROR = "BBIP4400EU0419";
+    /** 该户号已缴费  */
+    public static final String EUPS_WATR00_0020_ERROR = "BBIP4400EU0420";
+    /** 该户号没缴费历史  */
+    public static final String EUPS_WATR00_0021_ERROR = "BBIP4400EU0421";
+    /** 该户号已在其它银行委托  */
+    public static final String EUPS_WATR00_0022_ERROR = "BBIP4400EU0422";
+    /** 该户号已销户请到供水营业厅办理缴费  */
+    public static final String EUPS_WATR00_0023_ERROR = "BBIP4400EU0423";
+    /** 该户已办理自来水公司同城托收业务  */
+    public static final String EUPS_WATR00_0024_ERROR = "BBIP4400EU0424";
+    /** 日结锁定  */
+    public static final String EUPS_WATR00_9996_ERROR = "BBIP4400EU0425";
+    /** 扣款锁定  */
+    public static final String EUPS_WATR00_9997_ERROR = "BBIP4400EU0426";
+    /** 月结锁定  */
+    public static final String EUPS_WATR00_9998_ERROR = "BBIP4400EU0427";
+    /** 数据库或系统错误  */
+    public static final String EUPS_WATR00_9999_ERROR = "BBIP4400EU0428";
+    
+    //汕头电力
+    /** 调用服务出错  */
+    public static final String EUPS_ELEC02_0a_ERROR = "BBIP4400EU0301";
+    /** 银行数据包长度小于交易代码长度  */
+    public static final String EUPS_ELEC02_0b_ERROR = "BBIP4400EU0302";
+    /** 非法交易代码  */
+    public static final String EUPS_ELEC02_0c_ERROR = "BBIP4400EU0303";
+    /** 无法打开银行传来文件  */
+    public static final String EUPS_ELEC02_0d_ERROR = "BBIP4400EU0304";
+    /** 电力端服务发生内部错误  */
+    public static final String EUPS_ELEC02_0e_ERROR = "BBIP4400EU0305";
+    
+    /** 协议以外错误  */
+    public static final String EUPS_ELEC02_0f_ERROR = "BBIP4400EU0306";
+    /** 解析银行文件错误  */
+    public static final String EUPS_ELEC02_0g_ERROR = "BBIP4400EU0307";
+    /** 解析包头错误  */
+    public static final String EUPS_ELEC02_0h_ERROR = "BBIP4400EU0308";
+    /** 解析包体或文件错误  */
+    public static final String EUPS_ELEC02_0i_ERROR = "BBIP4400EU0309";
+    /** 数据包长度错误  */
+    public static final String EUPS_ELEC02_0j_ERROR = "BBIP4400EU0310";
+    
+    /** 数据字段个数错误  */
+    public static final String EUPS_ELEC02_0k_ERROR = "BBIP4400EU0311";
+    /** 字段类型错误  */
+    public static final String EUPS_ELEC02_0l_ERROR = "BBIP4400EU0312";
+    /** 数据库操作错误  */
+    public static final String EUPS_ELEC02_0m_ERROR = "BBIP4400EU0313";
+    /** 电力方生成文件错误  */
+    public static final String EUPS_ELEC02_0n_ERROR = "BBIP4400EU0314";
+    /** 产生返回包错误  */
+    public static final String EUPS_ELEC02_0p_ERROR = "BBIP4400EU0315";
+    
+    /** 数据溢出错误  */
+    public static final String EUPS_ELEC02_0q_ERROR = "BBIP4400EU0316";
+    /** 对方程序失效，应答方处理  */
+    public static final String EUPS_ELEC02_01_ERROR = "BBIP4400EU0317";
+    /** 供电无此户号  */
+    public static final String EUPS_ELEC02_03_ERROR = "BBIP4400EU0318";
+    /** 发起工作站到发起方前置机网络不通  */
+    public static final String EUPS_ELEC02_04_ERROR = "BBIP4400EU0319";
+    /** 双方前置机之间无法通讯，网络连接故障  */
+    public static final String EUPS_ELEC02_05_ERROR = "BBIP4400EU0320";
+    
+    /** 用户无欠费信息  */
+    public static final String EUPS_ELEC02_06_ERROR = "BBIP4400EU0321";
+    /** 用户所在营业区域没在该银行开户  */
+    public static final String EUPS_ELEC02_07_ERROR = "BBIP4400EU0322";
+    /** 用户需到供电交费，在供电有其它业务  */
+    public static final String EUPS_ELEC02_09_ERROR = "BBIP4400EU0323";
+    /** 银行方交易码错误，银行端数据格式或内容错误  */
+    public static final String EUPS_ELEC02_13_ERROR = "BBIP4400EU0324";
+    /**抹帐业务,抹帐日期非当天日期  */
+    public static final String EUPS_ELEC02_14_ERROR = "BBIP4400EU0325";
+    
+    /** 抹帐业务,处理失败,供电无此银行的收费记录  */
+    public static final String EUPS_ELEC02_15_ERROR = "BBIP4400EU0326";
+    /** 正在进行批量代扣业务，需等本业务完成后才能办理本手续  */
+    public static final String EUPS_ELEC02_18_ERROR = "BBIP4400EU0327";
+    /** 签订电费代扣协议，该用户没有委托代扣业务  */
+    public static final String EUPS_ELEC02_19_ERROR = "BBIP4400EU0328";
+    /** 签订电费代扣协议，该用户没有在该行办理委托代扣业务，但在其他行有办理  */
+    public static final String EUPS_ELEC02_20_ERROR = "BBIP4400EU0329";
+    /** 开户操作时，开户不成功  */
+    public static final String EUPS_ELEC02_25_ERROR = "BBIP4400EU0330";
+    
+    /** 签退操作时，签退不成功  */
+    public static final String EUPS_ELEC02_26_ERROR = "BBIP4400EU0331";
+    /** 用户欠费需全部缴清，不允许部分缴费  */
+    public static final String EUPS_ELEC02_27_ERROR = "BBIP4400EU0332";
+    /** 该户是欠费停电户，交费后，须到供电办理复电手续  */
+    public static final String EUPS_ELEC02_28_ERROR = "BBIP4400EU0333";
+    /** 供电方执行入帐失败  */
+    public static final String EUPS_ELEC02_29_ERROR = "BBIP4400EU0334";
+    /**数据库处理数据出错  */
+    public static final String EUPS_ELEC02_50_ERROR = "BBIP4400EU0335";
+    
+    /** 供电尚未开工  */
+    public static final String EUPS_ELEC02_51_ERROR = "BBIP4400EU0336";
+    /** 未知交易码  */
+    public static final String EUPS_ELEC02_59_ERROR = "BBIP4400EU0337";
+    /** 用户帐户挂失  */
+    public static final String EUPS_ELEC02_62_ERROR = "BBIP4400EU0338";
+    /** 用户帐号冻结  */
+    public static final String EUPS_ELEC02_63_ERROR = "BBIP4400EU0339";
+    /** 批量代扣,产生扣款文件错，银行应扣款文件未处理完  */
+    public static final String EUPS_ELEC02_70_ERROR = "BBIP4400EU0340";
+    
+    /** 批量代扣,产生扣款文件错,没有可扣款电费数据  */
+    public static final String EUPS_ELEC02_71_ERROR = "BBIP4400EU0341";
+    /** 回填收费信息或冲帐时,电量(电费)发生变动  */
+    public static final String EUPS_ELEC02_73_ERROR = "BBIP4400EU0342";
+    /** 单笔扣款,供电方提供用户帐号不存在  */
+    public static final String EUPS_ELEC02_74_ERROR = "BBIP4400EU0343";
+    /** 单笔扣款,用户在银行存款余额不足  */
+    public static final String EUPS_ELEC02_75_ERROR = "BBIP4400EU0344";
+    /**单笔扣款,用户帐户存在，但已销户  */
+    public static final String EUPS_ELEC02_76_ERROR = "BBIP4400EU0345";
+    
+    /** 单笔扣款,用户帐户存在，但未与银行方签扣款协议  */
+    public static final String EUPS_ELEC02_77_ERROR = "BBIP4400EU0346";
+    /** 银行提供交易字符串错误，与联网协议约定不符  */
+    public static final String EUPS_ELEC02_78_ERROR = "BBIP4400EU0347";
+    /** 单笔扣款，银行自定义返回错误提示  */
+    public static final String EUPS_ELEC02_79_ERROR = "BBIP4400EU0348";
+    /** 供电签订代扣协议,用户帐号不存在或已销户  */
+    public static final String EUPS_ELEC02_81_ERROR = "BBIP4400EU0349";
+    /** 供电签订代扣协议,银行自定义异常信息  */
+    public static final String EUPS_ELEC02_83_ERROR = "BBIP4400EU0350";
+    /** 前置机无法登录服务器，登录失败  */
+    public static final String EUPS_ELEC02_99_ERROR = "BBIP4400EU0351";
+    
+    //珠海自助通
+    /** 需要授权信息  */
+    public static final String EUPS_PROF00_00_ERROR = "BBIP4400EU1200";
+    /** 授权级别不够  */
+    public static final String EUPS_PROF00_01_ERROR = "BBIP4400EU1201";
+    /** 存在下发凭证，不允许多次发放  */
+    public static final String EUPS_PROF00_02_ERROR = "BBIP4400EU1202";
+    /** 凭证已登记  */
+    public static final String EUPS_PROF00_03_ERROR = "BBIP4400EU1203";
+    /** 凭证信息不存在  */
+    public static final String EUPS_PROF00_04_ERROR = "BBIP4400EU1204";
+    /** 凭证已领用，不能撤销  */
+    public static final String EUPS_PROF00_05_ERROR = "BBIP4400EU1205";
+    /** 终端有未结账凭证  */
+    public static final String EUPS_PROF00_06_ERROR = "BBIP4400EU1206";
+    /** 凭证数量不能为0  */
+    public static final String EUPS_PROF00_07_ERROR = "BBIP4400EU1207";
+    /** 作废数量大于剩余数量  */
+    public static final String EUPS_PROF00_08_ERROR = "BBIP4400EU1208";
+    /** 凭证数量不足  */
+    public static final String EUPS_PROF00_09_ERROR = "BBIP4400EU1209";
+    /** 凭证剩余，不能结账  */
+    public static final String EUPS_PROF00_10_ERROR = "BBIP4400EU1210";
+    
+    //福彩
+    /** 用户未注册  */
+    public static final String EUPS_LOTR01_00_ERROR = "BBIP4400EU1000";
+    /** 非双色球玩法  */
+    public static final String EUPS_LOTR01_01_ERROR = "BBIP4400EU1001";
+    /** 投注方式错误  */
+    public static final String EUPS_LOTR01_02_ERROR = "BBIP4400EU1002";
+    /** 定投信息不存在  */
+    public static final String EUPS_LOTR01_03_ERROR = "BBIP4400EU1003";
+    /** 系统未登陆  */
+    public static final String EUPS_LOTR01_04_ERROR = "BBIP4400EU1004";
+    /** 期号已经执行  */
+    public static final String EUPS_LOTR01_05_ERROR = "BBIP4400EU1005";
+    /** 非购彩时间  */
+    public static final String EUPS_LOTR01_06_ERROR = "BBIP4400EU1006";
+    /** 更新定投计划表失败  */
+    public static final String EUPS_LOTR01_07_ERROR = "BBIP4400EU1007";
+    /** 定投计划执行失败  */
+    public static final String EUPS_LOTR01_08_ERROR = "BBIP4400EU1008";
+    /** 新增开奖公告记录失败  */
+    public static final String EUPS_LOTR01_09_ERROR = "BBIP4400EU1009";
+    /** 下载开奖公告失败  */
+    public static final String EUPS_LOTR01_10_ERROR = "BBIP4400EU1010";
+    /** 新增中奖明细失败  */
+    public static final String EUPS_LOTR01_11_ERROR = "BBIP4400EU1011";
+    /** 下载快乐十分中奖信息失败  */
+    public static final String EUPS_LOTR01_12_ERROR = "BBIP4400EU1012";
+    /** 返奖记录表有返奖记录存在异常  */
+    public static final String EUPS_LOTR01_13_ERROR = "BBIP4400EU1013";
+    
 	
 }
