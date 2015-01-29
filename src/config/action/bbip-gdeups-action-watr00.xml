@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<x:beans xmlns:x="http://www.springframework.org/schema/beans"
+	xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd       http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+	<!-- 汕头水费户号查询 -->
+	<action class="com.bocom.bbip.comp.action.strategy.StrategyDelegatorAction"
+		id="eups.queryThirdCusServiceAction">
+		<x:property name="executableBeanResolver">
+			<x:bean
+				class="com.bocom.bbip.comp.action.strategy.support.DefaultExecutableBeanResolver">
+				<x:property name="strategyKey" value="eupsBusTyp" />
+			</x:bean>
+		</x:property>
+	</action>	
+	<!-- 历史水费查询打印 -->
+	<action id="eups.queryAndPrintHistoryMsgServiceActionWATR00" 
+		class="com.bocom.bbip.gdeupsb.service.impl.watr00.QueryAndPrintHistoryMsgServiceActionWATR00"/>
+	<!-- 水费交易流水查询打印 -->
+	<action id="eups.queryAndPrintTransJournalServiceActionWATR00" 
+		class="com.bocom.bbip.gdeupsb.service.impl.watr00.QueryAndPrintTransJournalServiceActionWATR00"/>
+	<!-- 第三方对总账 -->
+	<action id="eups.checkSumAccountServiceActionWATR00" 
+		class="com.bocom.bbip.gdeupsb.service.impl.watr00.CheckSumAccountServiceActionWATR00"/>
+	<!-- 第三方对明细账请求 -->
+	<action id="eups.checkDetailAccountServiceActionWATR00" 
+		class="com.bocom.bbip.gdeupsb.service.impl.watr00.CheckDetailAccountServiceActionWATR00"/>
+	<!-- 发送明细对账文件 -->
+	<action id="eups.sendCheckDetailAccountServiceActionWATR00" 
+		class="com.bocom.bbip.gdeupsb.service.impl.watr00.SendCheckDetailAccountServiceActionWATR00"/>
+</x:beans>
