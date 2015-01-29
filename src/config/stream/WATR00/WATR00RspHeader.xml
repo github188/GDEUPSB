@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	type="LLLL+"  encoding="GBK" trace="true">
+	<segment name="responseHead">
+		<fixString name="type"              length="4"/> <!-- 数据报类型 -->
+		<fixString name="accountdate"   length="8"/><!-- 记账日期 -->
+		<fixString name="waterno"         length="20"/><!-- 交易流水号或冲正流水号，生成规则：标识+日期+顺序号 -->
+		                                                                    <!-- 标记每笔交易，水费缴纳、冲正、对账、批扣、邮寄需要，记账日期和交易交易流水标示每笔唯一交易 -->
+		<fixString name="bankcode"        length="6"/><!-- 银行代码 -->
+		<fixString name="salesdepart"    length="6"/><!-- 营业点 -->
+		<fixString name="salesperson"    length="6"/><!-- 营业员 -->
+		<fixString name="busitime"         length="14"/><!-- 交易时间 -->
+		<fixString name="thdRspCde"        length="4"/><!-- 错误码，0-成功，非0-有错误 -->
+		<fixString name="zprice"            length="11"/><!-- 本次缴费总金额 -->
+		<fixString name="months"           length="4"/><!-- 未缴费月数 -->
+		<fixString name="operano"          length="4"/><!-- 业务代码 -->
+		<fixString name="password"        length="8"/><!-- 鉴权密码 -->
+		<fixString name="md5digest"       length="32"/><!-- 包体MD5验证码 -->
+	</segment>
+	<select name="body" key="thdRspCde">
+		<include name="0000" keys="type" decodePrefix="p" />
+		<include name="0001" path="error.xml"  />
+		<include name="0002" path="error.xml"  />
+		<include name="0003" path="error.xml"  />
+		<include name="0004" path="error.xml"  />
+		<include name="0005" path="error.xml"  />
+		<include name="0006" path="error.xml"  />
+		<include name="0007" path="error.xml"  />
+		<include name="0008" path="error.xml"  />
+		<include name="0009" path="error.xml"  />
+		<include name="0010" path="error.xml"  />
+		<include name="0011" path="error.xml"  />
+		<include name="0012" path="error.xml"  />
+		<include name="0013" path="error.xml"  />
+		<include name="0014" path="error.xml"  />
+		<include name="0015" path="error.xml"  />
+		<include name="0016" path="error.xml"  />
+		<include name="0017" path="error.xml"  />
+		<include name="0018" path="error.xml"  />
+		<include name="0019" path="error.xml"  />
+		<include name="0020" path="error.xml"  />
+		<include name="0021" path="error.xml"  />
+		<include name="0022" path="error.xml"  />
+		<include name="0023" path="error.xml"  />
+		<include name="0024" path="error.xml"  />
+		<include name="9996" path="error.xml"  />
+		<include name="9997" path="error.xml"  />
+		<include name="9998" path="error.xml"  />
+		<include name="9999" path="error.xml"  />
+	</select>
+</message>

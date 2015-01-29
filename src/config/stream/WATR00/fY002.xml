@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="Y002Request">
+			<fixString name="hno"          length="9"/>   <!-- 户号 -->
+			<fixString name="je"            length="11"/>   <!-- 水费收缴总金额，以分为单位 -->
+			<fixString name="jffs"         length="1"/>   <!-- 缴费方式，1-现金，2-保留 -->
+			<fixString name="reserved" length="10"/>   <!-- 保留字段 -->
+</segment>

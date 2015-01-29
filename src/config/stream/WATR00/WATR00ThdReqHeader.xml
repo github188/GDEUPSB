@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	type="LLLL"  encoding="GBK" trace="true" filter="none,classpath:config/stream/translateDict.txt">
+	<segment name="thdRequestHead">
+		<fixString name="TransCode"              length="4"/> <!-- 数据报类型 -->
+		<fixString name="accountdate"   length="8"/><!-- 记账日期 -->
+		<fixString name="waterno"         length="20"/><!-- 交易流水号或冲正流水号，生成规则：标识+日期+顺序号 -->
+		                                                                    <!-- 标记每笔交易，水费缴纳、冲正、对账、批扣、邮寄需要，记账日期和交易交易流水标示每笔唯一交易 -->
+		<fixString name="bankcode"        length="6"/><!-- 银行代码 -->
+		<fixString name="salesdepart"    length="6"/><!-- 营业点 -->
+		<fixString name="salesperson"    length="6"/><!-- 营业员 -->
+		<fixString name="busitime"         length="14"/><!-- 交易时间 -->
+		<fixString name="thdRspCde"        length="4"/><!-- 错误码，0-成功，非0-有错误 -->
+		<fixString name="zprice"            length="11"/><!-- 本次缴费总金额 -->
+		<fixString name="months"           length="4"/><!-- 未缴费月数 -->
+		<fixString name="operano"          length="4"/><!-- 业务代码 -->
+		<fixString name="password"        length="8"/><!-- 鉴权密码 -->
+		<fixString name="md5digest"       length="32"/><!-- 包体MD5验证码 -->
+	</segment>
+	<select name="body" key="thdRspCde" default="0000">
+		<include name="0000" keys="TransCode" decodePrefix="p" />
+	</select>
+</message>

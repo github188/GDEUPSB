@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="Y003Request">
+			<fixString name="hno"          length="9"/>   <!-- 户号 -->
+			<fixString name="lsh"          length="20"/>   <!--冲正数据流水号 -->
+			<fixString name="je"            length="11"/>   <!-- 错收缴金额，以分为单位 -->
+			<fixString name="reserved" length="10"/>   <!-- 保留字段 -->
+</segment>

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="D012Response">
+			<fixString name="hno"         length="9"/>   <!-- 户号-->
+			<fixString name="month"     length="6"/>   <!-- 月份yyyyMM-->
+			<fixString name="name"      length="40"/>   <!-- 用户名称-->
+			<fixString name="addr"       length="50"/>   <!-- 地址-->
+			<fixString name="newaddr"  length="50"/>   <!-- 新地址-->
+			<segment name="response">
+				<loop name="rspList" count="LLLL">
+					<segment name="rspRecord">
+						<fixString name="responseindex"  length="4"/>   <!-- 包序号-->
+						<fixString name="je"                    length="11"/>   <!-- 水费收缴总金额，以分为单位-->
+						<fixString name="pnum"                length="11"/>   <!-- 本月行码-->
+						<fixString name="lnum"                 length="11"/>   <!-- 上月行码-->
+						<fixString name="xzsl"                 length="11"/>   <!-- 校正水量-->
+						<fixString name="quanty"              length="11"/>   <!-- 本月水量 -->
+						<fixString name="usort"               length="4"/>   <!-- 用水性质-->
+						<fixString name="uprice"              length="11"/>   <!-- 水价，以厘为单位-->
+						<fixString name="pwuprice"          length="11"/>   <!-- 污水单价，以厘为单位-->
+						<fixString name="price"                length="11"/>   <!-- 水费，以分为单位-->
+						<fixString name="pwf"                  length="11"/>   <!-- 污水费，以分为单位-->
+						<fixString name="pprice"              length="11"/>   <!-- 邮寄费，以分为单位-->
+						<fixString name="cdata"               length="14"/>   <!-- 抄表日期YYYYMMDDHH24MISS-->
+						<fixString name="kk"                   length="1"/>   <!-- 扣款标志-->
+						<fixString name="cnjxs"               length="11"/>   <!-- 违约金系数，以厘为单位-->
+						<fixString name="ljprice"             length="11"/>   <!-- 垃圾费，以分为单位-->
+						<fixString name="ljbz"                 length="1"/>   <!-- 垃圾免征标志-->
+						<fixString name="ljcnj"                 length="11"/>   <!-- 垃圾滞纳金，以分为单位-->
+						<fixString name="cnj"                   length="11"/>   <!-- 水费违约金，以分为单位-->
+						<fixString name="pwcnj"               length="11"/>   <!-- 污水滞纳金，以分为单位-->
+						<fixString name="ladderquanty1"   length="11"/>   <!-- 第一阶梯水量-->
+						<fixString name="ladderquanty2"  length="11"/>   <!-- 第二阶梯水量-->
+						<fixString name="ladderquanty3"  length="11"/>   <!-- 第三阶梯水量-->
+						<fixString name="ladderuprice1"  length="11"/>   <!-- 第一阶梯水价，以厘为单位-->
+						<fixString name="ladderuprice2"  length="11"/>   <!-- 第二阶梯水价，以厘为单位-->
+						<fixString name="ladderuprice3"  length="11"/>   <!-- 第三阶梯水价，以厘为单位-->
+						<fixString name="ladderprice1"    length="11"/>   <!-- 第一阶梯水费，以分为单位-->
+						<fixString name="ladderprice2"   length="11"/>   <!-- 第二阶梯水费，以分为单位-->
+						<fixString name="ladderprice3"   length="11"/>   <!-- 第三阶梯水费，以分为单位-->
+						<fixString name="reserved1"       length="10"/>   <!-- 保留字段1-->
+						<fixString name="reserved2"      length="10"/>   <!-- 保留字段2-->
+					</segment>
+				</loop>
+			</segment>
+</segment>

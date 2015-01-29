@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="Y012Request">
+			<fixString name="hno"                   length="9"/>   <!-- 要查询的户号 -->
+			<fixString name="starttime"         length="8"/>   <!-- 开始时间 -->
+			<fixString name="endtime"            length="8"/>   <!-- 结束时间 -->
+			<fixString name="reserved"          length="10"/>   <!-- 保留字段 -->
+</segment>
