@@ -23,4 +23,11 @@
 		</qname-mappings>
 	</server-side-ws-def>
 	
+	<server-side-ws-def wsdl="GDEUPSPFOffChanService.wsdl"
+		namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPFOffChanService/Schema"/>
+	<server-side-ws-def wsdl="GDEUPSWATR00OffChanService.wsdl"
+		namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00OffChanService/Schema"/>
+	<server-side-ws-def wsdl="GDEUPSPROF00Service.wsdl"
+		namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/Schema"/>
+	
 </x:beans>
