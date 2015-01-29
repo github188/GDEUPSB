@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.EupsInvTermInf" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.EupsInvTermInf" >
+    <result column="TLRID" property="tlrid" jdbcType="CHAR" />
+    <result column="NODNO" property="nodno" jdbcType="CHAR" />
+    <result column="INVTYP" property="invtyp" jdbcType="CHAR" />
+    <result column="IVBEGNO" property="ivbegno" jdbcType="CHAR" />
+    <result column="IVENDNO" property="ivendno" jdbcType="CHAR" />
+    <result column="SEQNO" property="seqno" jdbcType="CHAR" />
+    <result column="INVNUM" property="invnum" jdbcType="CHAR" />
+    <result column="USEDAT" property="usedat" jdbcType="CHAR" />
+    <result column="USENUM" property="usenum" jdbcType="CHAR" />
+    <result column="CLRNUM" property="clrnum" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    TLRID, NODNO, INVTYP, IVBEGNO, IVENDNO, SEQNO, INVNUM, USEDAT, USENUM, CLRNUM
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${EUPS_SCHEMA}.EUPS_INV_TERM_INF
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="tlrid!=null" >
+        AND  TLRID=#{tlrid,jdbcType=CHAR}
+      </if>
+      <if test="nodno!=null" >
+        AND  NODNO=#{nodno,jdbcType=CHAR}
+      </if>
+      <if test="invtyp!=null" >
+        AND  INVTYP=#{invtyp,jdbcType=CHAR}
+      </if>
+      <if test="ivbegno!=null" >
+        AND  IVBEGNO=#{ivbegno,jdbcType=CHAR}
+      </if>
+      <if test="ivendno!=null" >
+        AND  IVENDNO=#{ivendno,jdbcType=CHAR}
+      </if>
+      <if test="seqno!=null" >
+        AND  SEQNO=#{seqno,jdbcType=CHAR}
+      </if>
+      <if test="invnum!=null" >
+        AND  INVNUM=#{invnum,jdbcType=CHAR}
+      </if>
+      <if test="usedat!=null" >
+        AND  USEDAT=#{usedat,jdbcType=CHAR}
+      </if>
+      <if test="usenum!=null" >
+        AND  USENUM=#{usenum,jdbcType=CHAR}
+      </if>
+      <if test="clrnum!=null" >
+        AND  CLRNUM=#{clrnum,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.EupsInvTermInf" >
+    insert into ${EUPS_SCHEMA}.EUPS_INV_TERM_INF
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tlrid != null" >
+        TLRID,
+      </if>
+      <if test="nodno != null" >
+        NODNO,
+      </if>
+      <if test="invtyp != null" >
+        INVTYP,
+      </if>
+      <if test="ivbegno != null" >
+        IVBEGNO,
+      </if>
+      <if test="ivendno != null" >
+        IVENDNO,
+      </if>
+      <if test="seqno != null" >
+        SEQNO,
+      </if>
+      <if test="invnum != null" >
+        INVNUM,
+      </if>
+      <if test="usedat != null" >
+        USEDAT,
+      </if>
+      <if test="usenum != null" >
+        USENUM,
+      </if>
+      <if test="clrnum != null" >
+        CLRNUM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tlrid != null" >
+        #{tlrid,jdbcType=CHAR},
+      </if>
+      <if test="nodno != null" >
+        #{nodno,jdbcType=CHAR},
+      </if>
+      <if test="invtyp != null" >
+        #{invtyp,jdbcType=CHAR},
+      </if>
+      <if test="ivbegno != null" >
+        #{ivbegno,jdbcType=CHAR},
+      </if>
+      <if test="ivendno != null" >
+        #{ivendno,jdbcType=CHAR},
+      </if>
+      <if test="seqno != null" >
+        #{seqno,jdbcType=CHAR},
+      </if>
+      <if test="invnum != null" >
+        #{invnum,jdbcType=CHAR},
+      </if>
+      <if test="usedat != null" >
+        #{usedat,jdbcType=CHAR},
+      </if>
+      <if test="usenum != null" >
+        #{usenum,jdbcType=CHAR},
+      </if>
+      <if test="clrnum != null" >
+        #{clrnum,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${EUPS_SCHEMA}.EUPS_INV_TERM_INF
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="tlrid!=null" >
+        AND  TLRID=#{tlrid,jdbcType=CHAR}
+      </if>
+      <if test="nodno!=null" >
+        AND  NODNO=#{nodno,jdbcType=CHAR}
+      </if>
+      <if test="invtyp!=null" >
+        AND  INVTYP=#{invtyp,jdbcType=CHAR}
+      </if>
+      <if test="ivbegno!=null" >
+        AND  IVBEGNO=#{ivbegno,jdbcType=CHAR}
+      </if>
+      <if test="ivendno!=null" >
+        AND  IVENDNO=#{ivendno,jdbcType=CHAR}
+      </if>
+      <if test="seqno!=null" >
+        AND  SEQNO=#{seqno,jdbcType=CHAR}
+      </if>
+      <if test="invnum!=null" >
+        AND  INVNUM=#{invnum,jdbcType=CHAR}
+      </if>
+      <if test="usedat!=null" >
+        AND  USEDAT=#{usedat,jdbcType=CHAR}
+      </if>
+      <if test="usenum!=null" >
+        AND  USENUM=#{usenum,jdbcType=CHAR}
+      </if>
+      <if test="clrnum!=null" >
+        AND  CLRNUM=#{clrnum,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${EUPS_SCHEMA}.EUPS_INV_TERM_INF
+  </select>
+  
+  <update id="updateNum" parameterType="com.bocom.bbip.gdeupsb.entity.EupsInvTermInf" >
+    update ${EUPS_SCHEMA}.EUPS_INV_TERM_INF
+    	set  INVNUM=#{invnum,jdbcType=CHAR},USENUM=#{usenum,jdbcType=CHAR}
+          where  TLRID=#{tlrid,jdbcType=CHAR}
+  </update>
+  <update id="updateInvalidNum" parameterType="com.bocom.bbip.gdeupsb.entity.EupsInvTermInf" >
+    update ${EUPS_SCHEMA}.EUPS_INV_TERM_INF
+    	set  INVNUM=#{invnum,jdbcType=CHAR},CLRNUM=#{clrnum,jdbcType=CHAR}
+          where  TLRID=#{tlrid,jdbcType=CHAR} AND NODNO=#{nodno,jdbcType=CHAR}
+  </update>
+   <delete id="deleteInvTermInf" parameterType="com.bocom.bbip.gdeupsb.entity.EupsInvTermInf" >
+    delete from  ${EUPS_SCHEMA}.EUPS_INV_TERM_INF
+          where  TLRID=#{tlrid,jdbcType=CHAR} AND NODNO=#{nodno,jdbcType=CHAR} AND INVTYP=#{invtyp,jdbcType=CHAR}
+  </delete>
+</mapper>

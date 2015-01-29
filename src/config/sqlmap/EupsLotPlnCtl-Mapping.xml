@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.EupsLotPlnCtl" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.EupsLotPlnCtl" >
+    <result column="GAMEID" property="gameid" jdbcType="CHAR" />
+    <result column="DRAWID" property="drawid" jdbcType="CHAR" />
+    <result column="DRAWNM" property="drawnm" jdbcType="CHAR" />
+    <result column="BETDAT" property="betdat" jdbcType="CHAR" />
+    <result column="BEGTIM" property="begtim" jdbcType="CHAR" />
+    <result column="ENDTIM" property="endtim" jdbcType="CHAR" />
+    <result column="TXNSTS" property="txnsts" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    GAMEID, DRAWID, DRAWNM, BETDAT, BEGTIM, ENDTIM, TXNSTS
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${EUPS_SCHEMA}.EUPS_LOT_PLN_CTL
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="gameid!=null" >
+        AND  GAMEID=#{gameid,jdbcType=CHAR}
+      </if>
+      <if test="drawid!=null" >
+        AND  DRAWID=#{drawid,jdbcType=CHAR}
+      </if>
+      <if test="drawnm!=null" >
+        AND  DRAWNM=#{drawnm,jdbcType=CHAR}
+      </if>
+      <if test="betdat!=null" >
+        AND  BETDAT=#{betdat,jdbcType=CHAR}
+      </if>
+      <if test="begtim!=null" >
+        AND  BEGTIM=#{begtim,jdbcType=CHAR}
+      </if>
+      <if test="endtim!=null" >
+        AND  ENDTIM=#{endtim,jdbcType=CHAR}
+      </if>
+      <if test="txnsts!=null" >
+        AND  TXNSTS=#{txnsts,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.EupsLotPlnCtl" >
+    insert into ${EUPS_SCHEMA}.EUPS_LOT_PLN_CTL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gameid != null" >
+        GAMEID,
+      </if>
+      <if test="drawid != null" >
+        DRAWID,
+      </if>
+      <if test="drawnm != null" >
+        DRAWNM,
+      </if>
+      <if test="betdat != null" >
+        BETDAT,
+      </if>
+      <if test="begtim != null" >
+        BEGTIM,
+      </if>
+      <if test="endtim != null" >
+        ENDTIM,
+      </if>
+      <if test="txnsts != null" >
+        TXNSTS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gameid != null" >
+        #{gameid,jdbcType=CHAR},
+      </if>
+      <if test="drawid != null" >
+        #{drawid,jdbcType=CHAR},
+      </if>
+      <if test="drawnm != null" >
+        #{drawnm,jdbcType=CHAR},
+      </if>
+      <if test="betdat != null" >
+        #{betdat,jdbcType=CHAR},
+      </if>
+      <if test="begtim != null" >
+        #{begtim,jdbcType=CHAR},
+      </if>
+      <if test="endtim != null" >
+        #{endtim,jdbcType=CHAR},
+      </if>
+      <if test="txnsts != null" >
+        #{txnsts,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${EUPS_SCHEMA}.EUPS_LOT_PLN_CTL
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="gameid!=null" >
+        AND  GAMEID=#{gameid,jdbcType=CHAR}
+      </if>
+      <if test="drawid!=null" >
+        AND  DRAWID=#{drawid,jdbcType=CHAR}
+      </if>
+      <if test="drawnm!=null" >
+        AND  DRAWNM=#{drawnm,jdbcType=CHAR}
+      </if>
+      <if test="betdat!=null" >
+        AND  BETDAT=#{betdat,jdbcType=CHAR}
+      </if>
+      <if test="begtim!=null" >
+        AND  BEGTIM=#{begtim,jdbcType=CHAR}
+      </if>
+      <if test="endtim!=null" >
+        AND  ENDTIM=#{endtim,jdbcType=CHAR}
+      </if>
+      <if test="txnsts!=null" >
+        AND  TXNSTS=#{txnsts,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${EUPS_SCHEMA}.EUPS_LOT_PLN_CTL
+  </select>
+  <update id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.EupsLotPlnCtl" >
+    updateTxnsts ${EUPS_SCHEMA}.EUPS_LOT_PLN_CTL
+    	set ENDTIM=#{endtim,jdbcType=CHAR},TXNSTS=#{txnsts,jdbcType=CHAR}
+    	where GAMEID=#{gameid,jdbcType=CHAR} AND DRAWID=#{drawid,jdbcType=CHAR}
+  </update>
+</mapper>

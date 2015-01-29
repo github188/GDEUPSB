@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.EupsLotAutPln" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.EupsLotAutPln" >
+    <result column="PLANNO" property="planno" jdbcType="CHAR" />
+    <result column="PLANNM" property="plannm" jdbcType="CHAR" />
+    <result column="GAMEID" property="gameid" jdbcType="CHAR" />
+    <result column="GAMNAM" property="gamnam" jdbcType="CHAR" />
+    <result column="PLAYID" property="playid" jdbcType="CHAR" />
+    <result column="BETPER" property="betper" jdbcType="CHAR" />
+    <result column="BETMET" property="betmet" jdbcType="CHAR" />
+    <result column="BETMOD" property="betmod" jdbcType="CHAR" />
+    <result column="BETMUL" property="betmul" jdbcType="CHAR" />
+    <result column="BETAMT" property="betamt" jdbcType="CHAR" />
+    <result column="BETLIN" property="betlin" jdbcType="CHAR" />
+    <result column="LOTNAM" property="lotnam" jdbcType="CHAR" />
+    <result column="CRDNO" property="crdno" jdbcType="CHAR" />
+    <result column="MOBTEL" property="mobtel" jdbcType="CHAR" />
+    <result column="BETDAT" property="betdat" jdbcType="CHAR" />
+    <result column="BETTIM" property="bettim" jdbcType="CHAR" />
+    <result column="CCLTIM" property="ccltim" jdbcType="CHAR" />
+    <result column="CURPER" property="curper" jdbcType="CHAR" />
+    <result column="CURFAL" property="curfal" jdbcType="CHAR" />
+    <result column="CONFAL" property="confal" jdbcType="CHAR" />
+    <result column="DOPER" property="doper" jdbcType="CHAR" />
+    <result column="TXNCNL" property="txncnl" jdbcType="CHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    PLANNO, PLANNM, GAMEID, GAMNAM, PLAYID, BETPER, BETMET, BETMOD, BETMUL, BETAMT, BETLIN, 
+    LOTNAM, CRDNO, MOBTEL, BETDAT, BETTIM, CCLTIM, CURPER, CURFAL, CONFAL, DOPER, TXNCNL, 
+    STATUS
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${EUPS_SCHEMA}.EUPS_LOT_AUT_PLN
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="planno!=null" >
+        AND  PLANNO=#{planno,jdbcType=CHAR}
+      </if>
+      <if test="plannm!=null" >
+        AND  PLANNM=#{plannm,jdbcType=CHAR}
+      </if>
+      <if test="gameid!=null" >
+        AND  GAMEID=#{gameid,jdbcType=CHAR}
+      </if>
+      <if test="gamnam!=null" >
+        AND  GAMNAM=#{gamnam,jdbcType=CHAR}
+      </if>
+      <if test="playid!=null" >
+        AND  PLAYID=#{playid,jdbcType=CHAR}
+      </if>
+      <if test="betper!=null" >
+        AND  BETPER=#{betper,jdbcType=CHAR}
+      </if>
+      <if test="betmet!=null" >
+        AND  BETMET=#{betmet,jdbcType=CHAR}
+      </if>
+      <if test="betmod!=null" >
+        AND  BETMOD=#{betmod,jdbcType=CHAR}
+      </if>
+      <if test="betmul!=null" >
+        AND  BETMUL=#{betmul,jdbcType=CHAR}
+      </if>
+      <if test="betamt!=null" >
+        AND  BETAMT=#{betamt,jdbcType=CHAR}
+      </if>
+      <if test="betlin!=null" >
+        AND  BETLIN=#{betlin,jdbcType=CHAR}
+      </if>
+      <if test="lotnam!=null" >
+        AND  LOTNAM=#{lotnam,jdbcType=CHAR}
+      </if>
+      <if test="crdno!=null" >
+        AND  CRDNO=#{crdno,jdbcType=CHAR}
+      </if>
+      <if test="mobtel!=null" >
+        AND  MOBTEL=#{mobtel,jdbcType=CHAR}
+      </if>
+      <if test="betdat!=null" >
+        AND  BETDAT=#{betdat,jdbcType=CHAR}
+      </if>
+      <if test="bettim!=null" >
+        AND  BETTIM=#{bettim,jdbcType=CHAR}
+      </if>
+      <if test="ccltim!=null" >
+        AND  CCLTIM=#{ccltim,jdbcType=CHAR}
+      </if>
+      <if test="curper!=null" >
+        AND  CURPER=#{curper,jdbcType=CHAR}
+      </if>
+      <if test="curfal!=null" >
+        AND  CURFAL=#{curfal,jdbcType=CHAR}
+      </if>
+      <if test="confal!=null" >
+        AND  CONFAL=#{confal,jdbcType=CHAR}
+      </if>
+      <if test="doper!=null" >
+        AND  DOPER=#{doper,jdbcType=CHAR}
+      </if>
+      <if test="txncnl!=null" >
+        AND  TXNCNL=#{txncnl,jdbcType=CHAR}
+      </if>
+      <if test="status!=null" >
+        AND  STATUS=#{status,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.EupsLotAutPln" >
+    insert into ${EUPS_SCHEMA}.EUPS_LOT_AUT_PLN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="planno != null" >
+        PLANNO,
+      </if>
+      <if test="plannm != null" >
+        PLANNM,
+      </if>
+      <if test="gameid != null" >
+        GAMEID,
+      </if>
+      <if test="gamnam != null" >
+        GAMNAM,
+      </if>
+      <if test="playid != null" >
+        PLAYID,
+      </if>
+      <if test="betper != null" >
+        BETPER,
+      </if>
+      <if test="betmet != null" >
+        BETMET,
+      </if>
+      <if test="betmod != null" >
+        BETMOD,
+      </if>
+      <if test="betmul != null" >
+        BETMUL,
+      </if>
+      <if test="betamt != null" >
+        BETAMT,
+      </if>
+      <if test="betlin != null" >
+        BETLIN,
+      </if>
+      <if test="lotnam != null" >
+        LOTNAM,
+      </if>
+      <if test="crdno != null" >
+        CRDNO,
+      </if>
+      <if test="mobtel != null" >
+        MOBTEL,
+      </if>
+      <if test="betdat != null" >
+        BETDAT,
+      </if>
+      <if test="bettim != null" >
+        BETTIM,
+      </if>
+      <if test="ccltim != null" >
+        CCLTIM,
+      </if>
+      <if test="curper != null" >
+        CURPER,
+      </if>
+      <if test="curfal != null" >
+        CURFAL,
+      </if>
+      <if test="confal != null" >
+        CONFAL,
+      </if>
+      <if test="doper != null" >
+        DOPER,
+      </if>
+      <if test="txncnl != null" >
+        TXNCNL,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="planno != null" >
+        #{planno,jdbcType=CHAR},
+      </if>
+      <if test="plannm != null" >
+        #{plannm,jdbcType=CHAR},
+      </if>
+      <if test="gameid != null" >
+        #{gameid,jdbcType=CHAR},
+      </if>
+      <if test="gamnam != null" >
+        #{gamnam,jdbcType=CHAR},
+      </if>
+      <if test="playid != null" >
+        #{playid,jdbcType=CHAR},
+      </if>
+      <if test="betper != null" >
+        #{betper,jdbcType=CHAR},
+      </if>
+      <if test="betmet != null" >
+        #{betmet,jdbcType=CHAR},
+      </if>
+      <if test="betmod != null" >
+        #{betmod,jdbcType=CHAR},
+      </if>
+      <if test="betmul != null" >
+        #{betmul,jdbcType=CHAR},
+      </if>
+      <if test="betamt != null" >
+        #{betamt,jdbcType=CHAR},
+      </if>
+      <if test="betlin != null" >
+        #{betlin,jdbcType=CHAR},
+      </if>
+      <if test="lotnam != null" >
+        #{lotnam,jdbcType=CHAR},
+      </if>
+      <if test="crdno != null" >
+        #{crdno,jdbcType=CHAR},
+      </if>
+      <if test="mobtel != null" >
+        #{mobtel,jdbcType=CHAR},
+      </if>
+      <if test="betdat != null" >
+        #{betdat,jdbcType=CHAR},
+      </if>
+      <if test="bettim != null" >
+        #{bettim,jdbcType=CHAR},
+      </if>
+      <if test="ccltim != null" >
+        #{ccltim,jdbcType=CHAR},
+      </if>
+      <if test="curper != null" >
+        #{curper,jdbcType=CHAR},
+      </if>
+      <if test="curfal != null" >
+        #{curfal,jdbcType=CHAR},
+      </if>
+      <if test="confal != null" >
+        #{confal,jdbcType=CHAR},
+      </if>
+      <if test="doper != null" >
+        #{doper,jdbcType=CHAR},
+      </if>
+      <if test="txncnl != null" >
+        #{txncnl,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${EUPS_SCHEMA}.EUPS_LOT_AUT_PLN
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="planno!=null" >
+        AND  PLANNO=#{planno,jdbcType=CHAR}
+      </if>
+      <if test="plannm!=null" >
+        AND  PLANNM=#{plannm,jdbcType=CHAR}
+      </if>
+      <if test="gameid!=null" >
+        AND  GAMEID=#{gameid,jdbcType=CHAR}
+      </if>
+      <if test="gamnam!=null" >
+        AND  GAMNAM=#{gamnam,jdbcType=CHAR}
+      </if>
+      <if test="playid!=null" >
+        AND  PLAYID=#{playid,jdbcType=CHAR}
+      </if>
+      <if test="betper!=null" >
+        AND  BETPER=#{betper,jdbcType=CHAR}
+      </if>
+      <if test="betmet!=null" >
+        AND  BETMET=#{betmet,jdbcType=CHAR}
+      </if>
+      <if test="betmod!=null" >
+        AND  BETMOD=#{betmod,jdbcType=CHAR}
+      </if>
+      <if test="betmul!=null" >
+        AND  BETMUL=#{betmul,jdbcType=CHAR}
+      </if>
+      <if test="betamt!=null" >
+        AND  BETAMT=#{betamt,jdbcType=CHAR}
+      </if>
+      <if test="betlin!=null" >
+        AND  BETLIN=#{betlin,jdbcType=CHAR}
+      </if>
+      <if test="lotnam!=null" >
+        AND  LOTNAM=#{lotnam,jdbcType=CHAR}
+      </if>
+      <if test="crdno!=null" >
+        AND  CRDNO=#{crdno,jdbcType=CHAR}
+      </if>
+      <if test="mobtel!=null" >
+        AND  MOBTEL=#{mobtel,jdbcType=CHAR}
+      </if>
+      <if test="betdat!=null" >
+        AND  BETDAT=#{betdat,jdbcType=CHAR}
+      </if>
+      <if test="bettim!=null" >
+        AND  BETTIM=#{bettim,jdbcType=CHAR}
+      </if>
+      <if test="ccltim!=null" >
+        AND  CCLTIM=#{ccltim,jdbcType=CHAR}
+      </if>
+      <if test="curper!=null" >
+        AND  CURPER=#{curper,jdbcType=CHAR}
+      </if>
+      <if test="curfal!=null" >
+        AND  CURFAL=#{curfal,jdbcType=CHAR}
+      </if>
+      <if test="confal!=null" >
+        AND  CONFAL=#{confal,jdbcType=CHAR}
+      </if>
+      <if test="doper!=null" >
+        AND  DOPER=#{doper,jdbcType=CHAR}
+      </if>
+      <if test="txncnl!=null" >
+        AND  TXNCNL=#{txncnl,jdbcType=CHAR}
+      </if>
+      <if test="status!=null" >
+        AND  STATUS=#{status,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${EUPS_SCHEMA}.EUPS_LOT_AUT_PLN
+  </select>
+  <update id="updateStatus" parameterType="com.bocom.bbip.gdeupsb.entity.EupsLotAutPln" >
+    update ${EUPS_SCHEMA}.EUPS_LOT_AUT_PLN
+    	set STATUS=#{status,jdbcType=CHAR}
+    	where PLANNO=#{planno,jdbcType=CHAR} AND CRDNO=#{crdno,jdbcType=CHAR} AND STATUS='0'
+  </update>
+</mapper>
