@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<x:beans xmlns:x="http://www.springframework.org/schema/beans"
+	xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd       http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+	
+	<!-- add by hefw 20150120 start 汕头水费 -->
+		<!-- 欠费查询 -->
+		<x:bean id="eups.queryDealServiceActionWATR00" class="com.bocom.bbip.gdeupsb.service.impl.watr00.QueryDealServiceActionWATR00"/>
+		<!-- 联机单笔记账 -->
+		<x:bean id="eups.payFeeOnlineServiceActionWATR00" class="com.bocom.bbip.gdeupsb.service.impl.watr00.PayFeeOnlineServiceActionWATR00"/>
+		<!-- 联机抹帐 -->
+		<x:bean id="eups.automaticCancelServiceActionWATR00" class="com.bocom.bbip.gdeupsb.service.impl.watr00.AutomaticCancelServiceActionWATR00"/>
+		
+		<!-- 户号查询 -->
+		<x:bean id="eups.queryThirdCusServiceActionWATR00" class="com.bocom.bbip.gdeupsb.service.impl.watr00.QueryThirdCusServiceActionWATR00"/>
+	<!-- add by hefw 20150120 end -->
+	
+	
+
+	
+	
+</x:beans>
