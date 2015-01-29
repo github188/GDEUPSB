@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<x:beans xmlns:x="http://www.springframework.org/schema/beans"
+	xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd       http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+	<!-- 凭证付出 -->
+	<action id="eups.invoiceUseManagerServiceActionPROF00" class="com.bocom.bbip.gdeupsb.service.impl.prof00.InvoiceUseManagerServiceActionPROF00"/>
+	<!-- 凭证结账 -->
+	<action id="eups.invoiceCheckManagerServiceActionPROF00" class="com.bocom.bbip.gdeupsb.service.impl.prof00.InvoiceCheckManagerServiceActionPROF00"/>
+	<!-- 凭证作废、丢失 -->
+	<action id="eups.invoiceInvalidManagerServiceActionPROF00" class="com.bocom.bbip.gdeupsb.service.impl.prof00.InvoiceInvalidManagerServiceActionPROF00"/>
+	<!-- 凭证领用 -->
+	<action id="eups.invoiceReceiveManagerServiceActionPROF00" class="com.bocom.bbip.gdeupsb.service.impl.prof00.InvoiceReceiveManagerServiceActionPROF00"/>
+	<!-- 凭证发放 -->
+	<action id="eups.invoiceGrantManagerServiceActionPROF00" class="com.bocom.bbip.gdeupsb.service.impl.prof00.InvoiceGrantManagerServiceActionPROF00"/>
+	<!-- 凭证状态查询 -->
+	<action id="eups.invoiceStatusQueryManagerServiceActionPROF00" class="com.bocom.bbip.gdeupsb.service.impl.prof00.InvoiceStatusQueryManagerServiceActionPROF00"/>
+	<!-- 凭证取消发放 -->
+	<action id="eups.invoiceCancelGrantManagerServiceActionPROF00" class="com.bocom.bbip.gdeupsb.service.impl.prof00.InvoiceCancelGrantManagerServiceActionPROF00"/>
+</x:beans>
