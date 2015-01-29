@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	type="LLLLLLLLLL" encoding="GBK" trace="true"> 
+	<segment name="requestHead">
+		<fixString name="AppTradeCode" length="3"/> <!-- 业务交易码 -->
+		<fixString name="StartAddr"       length="12" /><!-- 银行电网/供电企业代码 -->
+		<fixString name="DestAddr"        length="12" /><!-- 银行电网/供电企业代码 -->
+		<fixString name="MesgID"           length="20" /><!-- 报文标识号 -->
+		<fixString name="WorkDate"       length="8" /><!-- YYYYMMDD -->
+		<fixString name="SendTime"        length="14" /><!-- YYYYMMDDHHMMSS -->
+		<fixString name="mesgPRI"          length="1" /><!-- 5:加急；9：普通 -->
+		<fixString name="recordNum"      length="10" /><!-- 报文含有明细项数或者文件明细行数 -->
+		<fixString name="FileName"         length="32" /><!-- 没有文件则为32个空格 -->
+		<fixString name="zipFlag"            length="1" /><!-- 0：不压缩；1：压缩报文体；2：压缩文件 -->
+	</segment>
+	<select name="body" key="tccode" default="N">
+		<include name="N" keys="AppTradeCode" encodePrefix="f"/>
+	</select>
+</message>

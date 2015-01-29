@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="12Request">
+			<fixString name="WTC" length="12"/>   <!-- 委托节点代码 -->
+			<fixString name="TMN" length="12"/>   <!-- 经办网点号 -->
+			<fixString name="ST0" length="8"/>   <!-- 经办柜员号 -->
+			<fixString name="CLZ"  length="16"/>   <!-- 流水 -->
+			<fixString name="WD0"  length="8"/>   <!-- 工作日期 -->
+			<fixString name="OJN"  length="12"/>   <!-- 原缴费业务委托节点代码 -->
+			<fixString name="OJD"  length="8"/>   <!-- 原缴费业务委托日期 -->
+			<fixString name="OLZ"  length="16"/>   <!-- 原业务流水-->
+			<fixString name="OWK"  length="8"/>   <!-- 原业务工作日期 -->
+			<fixString name="OED"  length="3"/>   <!-- 原费项代码 -->
+			<fixString name="OJF"  length="32"/>   <!-- 原业务缴费号 -->
+			<fixString name="OJB"  length="12"/>   <!-- 原扣款行行号 -->
+			<fixString name="OJC"  length="32"/>   <!-- 原缴费业务账号/卡号 -->
+			<fixString name="OCU"  length="3"/>   <!-- 原业务货币符号 -->
+			<fixString name="OJA"  length="12"/>   <!-- 原缴费业务缴纳金额 -->
+			<fixString name="CXA"  length="12"/>   <!-- 冲销金额 -->
+			<fixString name="OCN"  length="12"/>   <!-- 供电公司编号 -->
+			<fixString name="SCR"  length="64"/>   <!-- 冲销原因 -->
+			<fixString name="AUN"  length="40"/>   <!-- 账户名称 -->
+</segment>

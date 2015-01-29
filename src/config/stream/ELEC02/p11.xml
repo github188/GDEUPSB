@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="11Response">
+			<fixString name="WTC" length="12"/>   <!-- 委托节点代码-->
+			<fixString name="CLZ"  length="16"/>   <!-- 流水-->
+			<fixString name="WD0" length="8"/>   <!-- 工作日期-->
+			<fixString name="OWC" length="12"/>   <!-- 原委托节点代码-->
+			<fixString name="051"   length="8"/>   <!-- 原委托日期-->
+			<fixString name="OLZ" length="16"/>   <!-- 原业务流水号-->
+			<fixString name="CUN" length="3"/>   <!-- 货币符号-->
+			<fixString name="JNA" length="12"/>   <!-- 缴纳金额-->
+			<fixString name="JJM" length="255"/>   <!-- 缴费结果说明-->
+</segment>

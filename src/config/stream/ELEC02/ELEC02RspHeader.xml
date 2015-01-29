@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	type="LLLLLLLLLL"  encoding="GBK" trace="true">
+	<segment name="responseHead">
+		<fixString name="AppTradeCode"   length="3"/> <!-- 业务交易码 -->
+		<fixString name="thdRspCde"        length="2" /><!-- 正确交易返回”00” -->
+		<fixString name="ReturnMessage"  length="60" /><!-- 交易发生错误时返回的错误信息 -->
+		<fixString name="StartAddr"         length="12" /><!-- 银行电网/供电企业代码 -->
+		<fixString name="DestAddr"          length="12" /><!-- 银行电网/供电企业代码 -->
+		<fixString name="MesgID"             length="20" /><!-- 报文标识号 -->
+		<fixString name="WorkDate"         length="8" /><!-- YYYYMMDD -->
+		<fixString name="SendTime"          length="14" /><!-- YYYYMMDDHHMMSS -->
+		<fixString name="mesgPRI"            length="1" /><!-- 5:加急；9：普通 -->
+		<fixString name="recordNum"        length="10" /><!-- 报文含有明细项数或者文件明细行数 -->
+		<fixString name="FileName"           length="32" /><!-- 没有文件则为32个空格 -->
+		<fixString name="zipFlag"              length="1" /><!-- 0：不压缩；1：压缩报文体；2：压缩文件 -->
+	</segment>
+	<select name="body" key="thdRspCde" default="00">
+		<include name="00" keys="AppTradeCode" decodePrefix="p" />
+		<include name="0a" path="error.xml"  />
+		<include name="0b" path="error.xml"  />
+		<include name="0c" path="error.xml"  />
+		<include name="0d" path="error.xml"  />
+		<include name="0e" path="error.xml"  />
+		<include name="0f" path="error.xml"  />
+		<include name="0g" path="error.xml"  />
+		<include name="0h" path="error.xml"  />
+		<include name="0i" path="error.xml"  />
+		<include name="0j" path="error.xml"  />
+		<include name="0k" path="error.xml"  />
+		<include name="0l" path="error.xml"  />
+		<include name="0m" path="error.xml"  />
+		<include name="0n" path="error.xml"  />
+		<include name="0p" path="error.xml"  />
+		<include name="0q" path="error.xml"  />
+		<include name="01" path="error.xml"  />
+		<include name="03" path="error.xml"  />
+		<include name="04" path="error.xml"  />
+		<include name="05" path="error.xml"  />
+		<include name="06" path="error.xml"  />
+		<include name="07" path="error.xml"  />
+		<include name="09" path="error.xml"  />
+		<include name="13" path="error.xml"  />
+		<include name="14" path="error.xml"  />
+		<include name="15" path="error.xml"  />
+		<include name="18" path="error.xml"  />
+		<include name="19" path="error.xml"  />
+		<include name="20" path="error.xml"  />
+		<include name="25" path="error.xml"  />
+		<include name="26" path="error.xml"  />
+		<include name="27" path="error.xml"  />
+		<include name="28" path="error.xml"  />
+		<include name="29" path="error.xml"  />
+		<include name="50" path="error.xml"  />
+		<include name="51" path="error.xml"  />
+		<include name="59" path="error.xml"  />
+		<include name="62" path="error.xml"  />
+		<include name="63" path="error.xml"  />
+		<include name="*" path="error.xml"  />
+	</select>
+</message>
