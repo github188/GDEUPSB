@@ -45,6 +45,40 @@
 		<property name="encodeTransforms" ref="encodeTransforms" />
 		<property name="decodeTransforms" ref="decodeTransforms" />
 	</bean>
+	
+	<!-- add by hefw 20150122 start 福彩接出 -->
+	<bean id="LOTR01GateWay"	class="com.bocom.bbip.gdeupsb.channel.tcp.GdLotSocketTransCodGateway">
+		<property name="host" value="127.0.0.1"  />
+		<property name="port" value="9999"/>
+        <property name="soTimeout" value="30000"/>
+		<property name="streamResolver">
+			<bean class="com.bocom.bbip.gdeupsb.channel.tcp.GdLotStrmTransCodRsv" />
+		</property>
+	</bean>
+
+	<bean id="LOTR01Transport" class="com.bocom.bbip.gdeupsb.channel.tcp.GdLotTransCodTransport">
+		<property name="gateway" ref="LOTR01GateWay" />
+		<property name="encodeTransforms">
+			<array>
+				<bean class="com.bocom.jump.bp.channel.interceptors.EncoderTransform">
+					<constructor-arg value="xml://WEB-INF/classes/config/stream/LOTR01/LOTR01ReqHeader.xml" />
+				</bean>
+			</array>
+		</property>
+		<property name="decodeTransforms">
+			<array>
+				<bean class="com.bocom.jump.bp.channel.interceptors.DecoderTransform">
+					<constructor-arg value="xml://WEB-INF/classes/config/stream/LOTR01/LOTR01RspHeader.xml" />
+				</bean>
+			</array>
+		</property>
+		<property name="transportListener">
+			<bean class="com.bocom.jump.bp.channel.DefaultTransportListener"></bean>
+		</property>
+	</bean>
+	<!-- 第三方接出服务 -->
+	<jump:service name="STHDLOT1" type="com.bocom.jump.bp.channel.DefaultTransport" ref="LOTR01Transport" />
+	<!-- add by hefw 20150122 end 福彩接出 -->
 
 	
 </beans>
