@@ -1,0 +1,50 @@
+<x:beans xmlns:x="http://www.springframework.org/schema/beans"
+	xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+	
+	<!-- add by hefw 20150126 start 珠海自助通发票管理 -->
+	<!-- 凭证付出 -->
+	<process id="eups.invoiceUseManager" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	   <actions>
+	        <action id="act" ref="eups.invoiceUseManagerServiceActionPROF00"/>
+	   </actions>
+	</process>
+	<!-- 发票结账 -->
+	<process id="eups.invoiceCheckManager" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	   <actions>
+	        <action id="act" ref="eups.invoiceCheckManagerServiceActionPROF00"/>
+	   </actions>
+	</process>
+	<!-- 发票作废、丢失 -->
+	<process id="eups.invoiceInvalidManager" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	   <actions>
+	        <action id="act" ref="eups.invoiceInvalidManagerServiceActionPROF00"/>
+	   </actions>
+	</process>
+	<!-- 发票领用 -->
+	<process id="eups.invoiceReceiveManager" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	   <actions>
+	        <action id="act" ref="eups.invoiceReceiveManagerServiceActionPROF00"/>
+	   </actions>
+	</process>
+	<!-- 发票发放 -->
+	<process id="eups.invoiceGrantManager" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	   <actions>
+	        <action id="act" ref="eups.invoiceGrantManagerServiceActionPROF00"/>
+	   </actions>
+	</process>
+	<!-- 发票发放 -->
+	<process id="eups.invoiceStatusQueryManager" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	   <actions>
+	        <action id="act" ref="eups.invoiceStatusQueryManagerServiceActionPROF00"/>
+	   </actions>
+	</process>
+	<!-- 发票取消发放 -->
+	<process id="eups.invoiceCancelGrantManager" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	   <actions>
+	        <action id="act" ref="eups.invoiceCancelGrantManagerServiceActionPROF00"/>
+	   </actions>
+	</process>
+	<!-- add by hefw 20150126 end -->
+</x:beans>
