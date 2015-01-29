@@ -28,5 +28,7 @@
 	 <import resource="classpath*:config/webservice/definition/**/*.xml" />
 	<import resource="classpath*:config/strategy/**/*.xml"/>
 	
+	<import resource="classpath*:config/service/**/*.xml"/>
+	
 	
 </beans>
