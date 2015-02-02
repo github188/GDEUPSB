@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdLotAwdDtl" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdLotAwdDtl" >
+    <id column="TXN_LOG" property="txnLog" jdbcType="CHAR" />
+    <result column="BR_NO" property="brNo" jdbcType="CHAR" />
+    <result column="LOG_NO" property="logNo" jdbcType="CHAR" />
+    <result column="TXN_COD" property="txnCod" jdbcType="CHAR" />
+    <result column="GAME_ID" property="gameId" jdbcType="CHAR" />
+    <result column="DRAW_ID" property="drawId" jdbcType="CHAR" />
+    <result column="KENO_ID" property="kenoId" jdbcType="CHAR" />
+    <result column="LOT_NAM" property="lotNam" jdbcType="CHAR" />
+    <result column="T_LOG_NO" property="tLogNo" jdbcType="CHAR" />
+    <result column="CUS_NAM" property="cusNam" jdbcType="CHAR" />
+    <result column="CRD_NO" property="crdNo" jdbcType="CHAR" />
+    <result column="AWD_AMT" property="awdAmt" jdbcType="CHAR" />
+    <result column="H_TXN_CD" property="hTxnCd" jdbcType="CHAR" />
+    <result column="H_LOG_NO" property="hLogNo" jdbcType="CHAR" />
+    <result column="H_RSP_CD" property="hRspCd" jdbcType="CHAR" />
+    <result column="H_TXN_ST" property="hTxnSt" jdbcType="CHAR" />
+    <result column="AWD_DAT" property="awdDat" jdbcType="CHAR" />
+    <result column="AWD_TIM" property="awdTim" jdbcType="CHAR" />
+    <result column="AWD_RTN" property="awdRtn" jdbcType="CHAR" />
+    <result column="TCK_NO" property="tckNo" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    TXN_LOG, BR_NO, LOG_NO, TXN_COD, GAME_ID, DRAW_ID, KENO_ID, LOT_NAM, T_LOG_NO, CUS_NAM, 
+    CRD_NO, AWD_AMT, H_TXN_CD, H_LOG_NO, H_RSP_CD, H_TXN_ST, AWD_DAT, AWD_TIM, AWD_RTN, 
+    TCK_NO
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_AWD_DTL
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="txnLog!=null" >
+        AND  TXN_LOG=#{txnLog,jdbcType=CHAR}
+      </if>
+      <if test="brNo!=null" >
+        AND  BR_NO=#{brNo,jdbcType=CHAR}
+      </if>
+      <if test="logNo!=null" >
+        AND  LOG_NO=#{logNo,jdbcType=CHAR}
+      </if>
+      <if test="txnCod!=null" >
+        AND  TXN_COD=#{txnCod,jdbcType=CHAR}
+      </if>
+      <if test="gameId!=null" >
+        AND  GAME_ID=#{gameId,jdbcType=CHAR}
+      </if>
+      <if test="drawId!=null" >
+        AND  DRAW_ID=#{drawId,jdbcType=CHAR}
+      </if>
+      <if test="kenoId!=null" >
+        AND  KENO_ID=#{kenoId,jdbcType=CHAR}
+      </if>
+      <if test="lotNam!=null" >
+        AND  LOT_NAM=#{lotNam,jdbcType=CHAR}
+      </if>
+      <if test="tLogNo!=null" >
+        AND  T_LOG_NO=#{tLogNo,jdbcType=CHAR}
+      </if>
+      <if test="cusNam!=null" >
+        AND  CUS_NAM=#{cusNam,jdbcType=CHAR}
+      </if>
+      <if test="crdNo!=null" >
+        AND  CRD_NO=#{crdNo,jdbcType=CHAR}
+      </if>
+      <if test="awdAmt!=null" >
+        AND  AWD_AMT=#{awdAmt,jdbcType=CHAR}
+      </if>
+      <if test="hTxnCd!=null" >
+        AND  H_TXN_CD=#{hTxnCd,jdbcType=CHAR}
+      </if>
+      <if test="hLogNo!=null" >
+        AND  H_LOG_NO=#{hLogNo,jdbcType=CHAR}
+      </if>
+      <if test="hRspCd!=null" >
+        AND  H_RSP_CD=#{hRspCd,jdbcType=CHAR}
+      </if>
+      <if test="hTxnSt!=null" >
+        AND  H_TXN_ST=#{hTxnSt,jdbcType=CHAR}
+      </if>
+      <if test="awdDat!=null" >
+        AND  AWD_DAT=#{awdDat,jdbcType=CHAR}
+      </if>
+      <if test="awdTim!=null" >
+        AND  AWD_TIM=#{awdTim,jdbcType=CHAR}
+      </if>
+      <if test="awdRtn!=null" >
+        AND  AWD_RTN=#{awdRtn,jdbcType=CHAR}
+      </if>
+      <if test="tckNo!=null" >
+        AND  TCK_NO=#{tckNo,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_AWD_DTL
+    where TXN_LOG = #{txnLog,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_AWD_DTL
+    where TXN_LOG = #{txnLog,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotAwdDtl" >
+    insert into ${GDEUPSB_SCHEMA}.GDEUPS_LOT_AWD_DTL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="txnLog != null" >
+        TXN_LOG,
+      </if>
+      <if test="brNo != null" >
+        BR_NO,
+      </if>
+      <if test="logNo != null" >
+        LOG_NO,
+      </if>
+      <if test="txnCod != null" >
+        TXN_COD,
+      </if>
+      <if test="gameId != null" >
+        GAME_ID,
+      </if>
+      <if test="drawId != null" >
+        DRAW_ID,
+      </if>
+      <if test="kenoId != null" >
+        KENO_ID,
+      </if>
+      <if test="lotNam != null" >
+        LOT_NAM,
+      </if>
+      <if test="tLogNo != null" >
+        T_LOG_NO,
+      </if>
+      <if test="cusNam != null" >
+        CUS_NAM,
+      </if>
+      <if test="crdNo != null" >
+        CRD_NO,
+      </if>
+      <if test="awdAmt != null" >
+        AWD_AMT,
+      </if>
+      <if test="hTxnCd != null" >
+        H_TXN_CD,
+      </if>
+      <if test="hLogNo != null" >
+        H_LOG_NO,
+      </if>
+      <if test="hRspCd != null" >
+        H_RSP_CD,
+      </if>
+      <if test="hTxnSt != null" >
+        H_TXN_ST,
+      </if>
+      <if test="awdDat != null" >
+        AWD_DAT,
+      </if>
+      <if test="awdTim != null" >
+        AWD_TIM,
+      </if>
+      <if test="awdRtn != null" >
+        AWD_RTN,
+      </if>
+      <if test="tckNo != null" >
+        TCK_NO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="txnLog != null" >
+        #{txnLog,jdbcType=CHAR},
+      </if>
+      <if test="brNo != null" >
+        #{brNo,jdbcType=CHAR},
+      </if>
+      <if test="logNo != null" >
+        #{logNo,jdbcType=CHAR},
+      </if>
+      <if test="txnCod != null" >
+        #{txnCod,jdbcType=CHAR},
+      </if>
+      <if test="gameId != null" >
+        #{gameId,jdbcType=CHAR},
+      </if>
+      <if test="drawId != null" >
+        #{drawId,jdbcType=CHAR},
+      </if>
+      <if test="kenoId != null" >
+        #{kenoId,jdbcType=CHAR},
+      </if>
+      <if test="lotNam != null" >
+        #{lotNam,jdbcType=CHAR},
+      </if>
+      <if test="tLogNo != null" >
+        #{tLogNo,jdbcType=CHAR},
+      </if>
+      <if test="cusNam != null" >
+        #{cusNam,jdbcType=CHAR},
+      </if>
+      <if test="crdNo != null" >
+        #{crdNo,jdbcType=CHAR},
+      </if>
+      <if test="awdAmt != null" >
+        #{awdAmt,jdbcType=CHAR},
+      </if>
+      <if test="hTxnCd != null" >
+        #{hTxnCd,jdbcType=CHAR},
+      </if>
+      <if test="hLogNo != null" >
+        #{hLogNo,jdbcType=CHAR},
+      </if>
+      <if test="hRspCd != null" >
+        #{hRspCd,jdbcType=CHAR},
+      </if>
+      <if test="hTxnSt != null" >
+        #{hTxnSt,jdbcType=CHAR},
+      </if>
+      <if test="awdDat != null" >
+        #{awdDat,jdbcType=CHAR},
+      </if>
+      <if test="awdTim != null" >
+        #{awdTim,jdbcType=CHAR},
+      </if>
+      <if test="awdRtn != null" >
+        #{awdRtn,jdbcType=CHAR},
+      </if>
+      <if test="tckNo != null" >
+        #{tckNo,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_AWD_DTL
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="txnLog!=null" >
+        AND  TXN_LOG=#{txnLog,jdbcType=CHAR}
+      </if>
+      <if test="brNo!=null" >
+        AND  BR_NO=#{brNo,jdbcType=CHAR}
+      </if>
+      <if test="logNo!=null" >
+        AND  LOG_NO=#{logNo,jdbcType=CHAR}
+      </if>
+      <if test="txnCod!=null" >
+        AND  TXN_COD=#{txnCod,jdbcType=CHAR}
+      </if>
+      <if test="gameId!=null" >
+        AND  GAME_ID=#{gameId,jdbcType=CHAR}
+      </if>
+      <if test="drawId!=null" >
+        AND  DRAW_ID=#{drawId,jdbcType=CHAR}
+      </if>
+      <if test="kenoId!=null" >
+        AND  KENO_ID=#{kenoId,jdbcType=CHAR}
+      </if>
+      <if test="lotNam!=null" >
+        AND  LOT_NAM=#{lotNam,jdbcType=CHAR}
+      </if>
+      <if test="tLogNo!=null" >
+        AND  T_LOG_NO=#{tLogNo,jdbcType=CHAR}
+      </if>
+      <if test="cusNam!=null" >
+        AND  CUS_NAM=#{cusNam,jdbcType=CHAR}
+      </if>
+      <if test="crdNo!=null" >
+        AND  CRD_NO=#{crdNo,jdbcType=CHAR}
+      </if>
+      <if test="awdAmt!=null" >
+        AND  AWD_AMT=#{awdAmt,jdbcType=CHAR}
+      </if>
+      <if test="hTxnCd!=null" >
+        AND  H_TXN_CD=#{hTxnCd,jdbcType=CHAR}
+      </if>
+      <if test="hLogNo!=null" >
+        AND  H_LOG_NO=#{hLogNo,jdbcType=CHAR}
+      </if>
+      <if test="hRspCd!=null" >
+        AND  H_RSP_CD=#{hRspCd,jdbcType=CHAR}
+      </if>
+      <if test="hTxnSt!=null" >
+        AND  H_TXN_ST=#{hTxnSt,jdbcType=CHAR}
+      </if>
+      <if test="awdDat!=null" >
+        AND  AWD_DAT=#{awdDat,jdbcType=CHAR}
+      </if>
+      <if test="awdTim!=null" >
+        AND  AWD_TIM=#{awdTim,jdbcType=CHAR}
+      </if>
+      <if test="awdRtn!=null" >
+        AND  AWD_RTN=#{awdRtn,jdbcType=CHAR}
+      </if>
+      <if test="tckNo!=null" >
+        AND  TCK_NO=#{tckNo,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotAwdDtl" >
+    update ${GDEUPSB_SCHEMA}.GDEUPS_LOT_AWD_DTL
+    <set >
+      <if test="brNo != null" >
+        BR_NO = #{brNo,jdbcType=CHAR},
+      </if>
+      <if test="logNo != null" >
+        LOG_NO = #{logNo,jdbcType=CHAR},
+      </if>
+      <if test="txnCod != null" >
+        TXN_COD = #{txnCod,jdbcType=CHAR},
+      </if>
+      <if test="gameId != null" >
+        GAME_ID = #{gameId,jdbcType=CHAR},
+      </if>
+      <if test="drawId != null" >
+        DRAW_ID = #{drawId,jdbcType=CHAR},
+      </if>
+      <if test="kenoId != null" >
+        KENO_ID = #{kenoId,jdbcType=CHAR},
+      </if>
+      <if test="lotNam != null" >
+        LOT_NAM = #{lotNam,jdbcType=CHAR},
+      </if>
+      <if test="tLogNo != null" >
+        T_LOG_NO = #{tLogNo,jdbcType=CHAR},
+      </if>
+      <if test="cusNam != null" >
+        CUS_NAM = #{cusNam,jdbcType=CHAR},
+      </if>
+      <if test="crdNo != null" >
+        CRD_NO = #{crdNo,jdbcType=CHAR},
+      </if>
+      <if test="awdAmt != null" >
+        AWD_AMT = #{awdAmt,jdbcType=CHAR},
+      </if>
+      <if test="hTxnCd != null" >
+        H_TXN_CD = #{hTxnCd,jdbcType=CHAR},
+      </if>
+      <if test="hLogNo != null" >
+        H_LOG_NO = #{hLogNo,jdbcType=CHAR},
+      </if>
+      <if test="hRspCd != null" >
+        H_RSP_CD = #{hRspCd,jdbcType=CHAR},
+      </if>
+      <if test="hTxnSt != null" >
+        H_TXN_ST = #{hTxnSt,jdbcType=CHAR},
+      </if>
+      <if test="awdDat != null" >
+        AWD_DAT = #{awdDat,jdbcType=CHAR},
+      </if>
+      <if test="awdTim != null" >
+        AWD_TIM = #{awdTim,jdbcType=CHAR},
+      </if>
+      <if test="awdRtn != null" >
+        AWD_RTN = #{awdRtn,jdbcType=CHAR},
+      </if>
+      <if test="tckNo != null" >
+        TCK_NO = #{tckNo,jdbcType=CHAR},
+      </if>
+    </set>
+    where TXN_LOG = #{txnLog,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_AWD_DTL
+    <if test="_parameter" >
+      where TXN_LOG in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
+</mapper>

@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdLotChkCtl" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdLotChkCtl" >
+    <id column="GAME_ID" property="gameId" jdbcType="CHAR" />
+    <id column="DRAW_ID" property="drawId" jdbcType="CHAR" />
+    <result column="CHK_DAT" property="chkDat" jdbcType="CHAR" />
+    <result column="KENO_ID" property="kenoId" jdbcType="CHAR" />
+    <result column="TOT_NUM" property="totNum" jdbcType="CHAR" />
+    <result column="TOT_AMT" property="totAmt" jdbcType="CHAR" />
+    <result column="CHK_FLG" property="chkFlg" jdbcType="CHAR" />
+    <result column="CHK_TIM" property="chkTim" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    GAME_ID, DRAW_ID, CHK_DAT, KENO_ID, TOT_NUM, TOT_AMT, CHK_FLG, CHK_TIM
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CHK_CTL
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="gameId!=null" >
+        AND  GAME_ID=#{gameId,jdbcType=CHAR}
+      </if>
+      <if test="drawId!=null" >
+        AND  DRAW_ID=#{drawId,jdbcType=CHAR}
+      </if>
+      <if test="chkDat!=null" >
+        AND  CHK_DAT=#{chkDat,jdbcType=CHAR}
+      </if>
+      <if test="kenoId!=null" >
+        AND  KENO_ID=#{kenoId,jdbcType=CHAR}
+      </if>
+      <if test="totNum!=null" >
+        AND  TOT_NUM=#{totNum,jdbcType=CHAR}
+      </if>
+      <if test="totAmt!=null" >
+        AND  TOT_AMT=#{totAmt,jdbcType=CHAR}
+      </if>
+      <if test="chkFlg!=null" >
+        AND  CHK_FLG=#{chkFlg,jdbcType=CHAR}
+      </if>
+      <if test="chkTim!=null" >
+        AND  CHK_TIM=#{chkTim,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotChkCtlKey" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CHK_CTL
+    where GAME_ID = #{gameId,jdbcType=CHAR}
+      and DRAW_ID = #{drawId,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotChkCtlKey" >
+    delete from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CHK_CTL
+    where GAME_ID = #{gameId,jdbcType=CHAR}
+      and DRAW_ID = #{drawId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotChkCtl" >
+    insert into ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CHK_CTL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gameId != null" >
+        GAME_ID,
+      </if>
+      <if test="drawId != null" >
+        DRAW_ID,
+      </if>
+      <if test="chkDat != null" >
+        CHK_DAT,
+      </if>
+      <if test="kenoId != null" >
+        KENO_ID,
+      </if>
+      <if test="totNum != null" >
+        TOT_NUM,
+      </if>
+      <if test="totAmt != null" >
+        TOT_AMT,
+      </if>
+      <if test="chkFlg != null" >
+        CHK_FLG,
+      </if>
+      <if test="chkTim != null" >
+        CHK_TIM,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gameId != null" >
+        #{gameId,jdbcType=CHAR},
+      </if>
+      <if test="drawId != null" >
+        #{drawId,jdbcType=CHAR},
+      </if>
+      <if test="chkDat != null" >
+        #{chkDat,jdbcType=CHAR},
+      </if>
+      <if test="kenoId != null" >
+        #{kenoId,jdbcType=CHAR},
+      </if>
+      <if test="totNum != null" >
+        #{totNum,jdbcType=CHAR},
+      </if>
+      <if test="totAmt != null" >
+        #{totAmt,jdbcType=CHAR},
+      </if>
+      <if test="chkFlg != null" >
+        #{chkFlg,jdbcType=CHAR},
+      </if>
+      <if test="chkTim != null" >
+        #{chkTim,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CHK_CTL
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="gameId!=null" >
+        AND  GAME_ID=#{gameId,jdbcType=CHAR}
+      </if>
+      <if test="drawId!=null" >
+        AND  DRAW_ID=#{drawId,jdbcType=CHAR}
+      </if>
+      <if test="chkDat!=null" >
+        AND  CHK_DAT=#{chkDat,jdbcType=CHAR}
+      </if>
+      <if test="kenoId!=null" >
+        AND  KENO_ID=#{kenoId,jdbcType=CHAR}
+      </if>
+      <if test="totNum!=null" >
+        AND  TOT_NUM=#{totNum,jdbcType=CHAR}
+      </if>
+      <if test="totAmt!=null" >
+        AND  TOT_AMT=#{totAmt,jdbcType=CHAR}
+      </if>
+      <if test="chkFlg!=null" >
+        AND  CHK_FLG=#{chkFlg,jdbcType=CHAR}
+      </if>
+      <if test="chkTim!=null" >
+        AND  CHK_TIM=#{chkTim,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotChkCtl" >
+    update ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CHK_CTL
+    <set >
+      <if test="chkDat != null" >
+        CHK_DAT = #{chkDat,jdbcType=CHAR},
+      </if>
+      <if test="kenoId != null" >
+        KENO_ID = #{kenoId,jdbcType=CHAR},
+      </if>
+      <if test="totNum != null" >
+        TOT_NUM = #{totNum,jdbcType=CHAR},
+      </if>
+      <if test="totAmt != null" >
+        TOT_AMT = #{totAmt,jdbcType=CHAR},
+      </if>
+      <if test="chkFlg != null" >
+        CHK_FLG = #{chkFlg,jdbcType=CHAR},
+      </if>
+      <if test="chkTim != null" >
+        CHK_TIM = #{chkTim,jdbcType=CHAR},
+      </if>
+    </set>
+    where GAME_ID = #{gameId,jdbcType=CHAR}
+      and DRAW_ID = #{drawId,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CHK_CTL
+    <if test="_parameter" >
+      where 
+      <foreach item="item" index="index" collection="list" separator="or" >
+        (GAME_ID=#{item.gameId,jdbcType=CHAR} AND DRAW_ID=#{item.drawId,jdbcType=CHAR})
+      </foreach>
+    </if>
+  </select>
+</mapper>

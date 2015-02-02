@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdLotPrzCtl" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdLotPrzCtl" >
+    <id column="T_LOG_NO" property="tLogNo" jdbcType="CHAR" />
+    <result column="GAME_ID" property="gameId" jdbcType="CHAR" />
+    <result column="DRAW_ID" property="drawId" jdbcType="CHAR" />
+    <result column="KENO_ID" property="kenoId" jdbcType="CHAR" />
+    <result column="CIPHER" property="cipher" jdbcType="CHAR" />
+    <result column="BIG_BON" property="bigBon" jdbcType="CHAR" />
+    <result column="TOT_PRZ" property="totPrz" jdbcType="CHAR" />
+    <result column="TXNLOG" property="txnlog" jdbcType="CHAR" />
+    <result column="TERM_ID" property="termId" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    T_LOG_NO, GAME_ID, DRAW_ID, KENO_ID, CIPHER, BIG_BON, TOT_PRZ, TXNLOG, TERM_ID
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_PRZ_CTL
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="tLogNo!=null" >
+        AND  T_LOG_NO=#{tLogNo,jdbcType=CHAR}
+      </if>
+      <if test="gameId!=null" >
+        AND  GAME_ID=#{gameId,jdbcType=CHAR}
+      </if>
+      <if test="drawId!=null" >
+        AND  DRAW_ID=#{drawId,jdbcType=CHAR}
+      </if>
+      <if test="kenoId!=null" >
+        AND  KENO_ID=#{kenoId,jdbcType=CHAR}
+      </if>
+      <if test="cipher!=null" >
+        AND  CIPHER=#{cipher,jdbcType=CHAR}
+      </if>
+      <if test="bigBon!=null" >
+        AND  BIG_BON=#{bigBon,jdbcType=CHAR}
+      </if>
+      <if test="totPrz!=null" >
+        AND  TOT_PRZ=#{totPrz,jdbcType=CHAR}
+      </if>
+      <if test="txnlog!=null" >
+        AND  TXNLOG=#{txnlog,jdbcType=CHAR}
+      </if>
+      <if test="termId!=null" >
+        AND  TERM_ID=#{termId,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_PRZ_CTL
+    where T_LOG_NO = #{tLogNo,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_PRZ_CTL
+    where T_LOG_NO = #{tLogNo,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotPrzCtl" >
+    insert into ${GDEUPSB_SCHEMA}.GDEUPS_LOT_PRZ_CTL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tLogNo != null" >
+        T_LOG_NO,
+      </if>
+      <if test="gameId != null" >
+        GAME_ID,
+      </if>
+      <if test="drawId != null" >
+        DRAW_ID,
+      </if>
+      <if test="kenoId != null" >
+        KENO_ID,
+      </if>
+      <if test="cipher != null" >
+        CIPHER,
+      </if>
+      <if test="bigBon != null" >
+        BIG_BON,
+      </if>
+      <if test="totPrz != null" >
+        TOT_PRZ,
+      </if>
+      <if test="txnlog != null" >
+        TXNLOG,
+      </if>
+      <if test="termId != null" >
+        TERM_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tLogNo != null" >
+        #{tLogNo,jdbcType=CHAR},
+      </if>
+      <if test="gameId != null" >
+        #{gameId,jdbcType=CHAR},
+      </if>
+      <if test="drawId != null" >
+        #{drawId,jdbcType=CHAR},
+      </if>
+      <if test="kenoId != null" >
+        #{kenoId,jdbcType=CHAR},
+      </if>
+      <if test="cipher != null" >
+        #{cipher,jdbcType=CHAR},
+      </if>
+      <if test="bigBon != null" >
+        #{bigBon,jdbcType=CHAR},
+      </if>
+      <if test="totPrz != null" >
+        #{totPrz,jdbcType=CHAR},
+      </if>
+      <if test="txnlog != null" >
+        #{txnlog,jdbcType=CHAR},
+      </if>
+      <if test="termId != null" >
+        #{termId,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_PRZ_CTL
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="tLogNo!=null" >
+        AND  T_LOG_NO=#{tLogNo,jdbcType=CHAR}
+      </if>
+      <if test="gameId!=null" >
+        AND  GAME_ID=#{gameId,jdbcType=CHAR}
+      </if>
+      <if test="drawId!=null" >
+        AND  DRAW_ID=#{drawId,jdbcType=CHAR}
+      </if>
+      <if test="kenoId!=null" >
+        AND  KENO_ID=#{kenoId,jdbcType=CHAR}
+      </if>
+      <if test="cipher!=null" >
+        AND  CIPHER=#{cipher,jdbcType=CHAR}
+      </if>
+      <if test="bigBon!=null" >
+        AND  BIG_BON=#{bigBon,jdbcType=CHAR}
+      </if>
+      <if test="totPrz!=null" >
+        AND  TOT_PRZ=#{totPrz,jdbcType=CHAR}
+      </if>
+      <if test="txnlog!=null" >
+        AND  TXNLOG=#{txnlog,jdbcType=CHAR}
+      </if>
+      <if test="termId!=null" >
+        AND  TERM_ID=#{termId,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotPrzCtl" >
+    update ${GDEUPSB_SCHEMA}.GDEUPS_LOT_PRZ_CTL
+    <set >
+      <if test="gameId != null" >
+        GAME_ID = #{gameId,jdbcType=CHAR},
+      </if>
+      <if test="drawId != null" >
+        DRAW_ID = #{drawId,jdbcType=CHAR},
+      </if>
+      <if test="kenoId != null" >
+        KENO_ID = #{kenoId,jdbcType=CHAR},
+      </if>
+      <if test="cipher != null" >
+        CIPHER = #{cipher,jdbcType=CHAR},
+      </if>
+      <if test="bigBon != null" >
+        BIG_BON = #{bigBon,jdbcType=CHAR},
+      </if>
+      <if test="totPrz != null" >
+        TOT_PRZ = #{totPrz,jdbcType=CHAR},
+      </if>
+      <if test="txnlog != null" >
+        TXNLOG = #{txnlog,jdbcType=CHAR},
+      </if>
+      <if test="termId != null" >
+        TERM_ID = #{termId,jdbcType=CHAR},
+      </if>
+    </set>
+    where T_LOG_NO = #{tLogNo,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_PRZ_CTL
+    <if test="_parameter" >
+      where T_LOG_NO in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
+</mapper>

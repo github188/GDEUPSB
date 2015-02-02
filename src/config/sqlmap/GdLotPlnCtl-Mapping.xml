@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdLotPlnCtl" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdLotPlnCtl" >
+    <id column="DRAW_ID" property="drawId" jdbcType="CHAR" />
+    <id column="GAME_ID" property="gameId" jdbcType="CHAR" />
+    <result column="DRAW_NM" property="drawNm" jdbcType="CHAR" />
+    <result column="BET_DAT" property="betDat" jdbcType="CHAR" />
+    <result column="BEG_TIM" property="begTim" jdbcType="CHAR" />
+    <result column="END_TIM" property="endTim" jdbcType="CHAR" />
+    <result column="TXN_STS" property="txnSts" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    DRAW_ID, GAME_ID, DRAW_NM, BET_DAT, BEG_TIM, END_TIM, TXN_STS
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_PLN_CTL
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="drawId!=null" >
+        AND  DRAW_ID=#{drawId,jdbcType=CHAR}
+      </if>
+      <if test="gameId!=null" >
+        AND  GAME_ID=#{gameId,jdbcType=CHAR}
+      </if>
+      <if test="drawNm!=null" >
+        AND  DRAW_NM=#{drawNm,jdbcType=CHAR}
+      </if>
+      <if test="betDat!=null" >
+        AND  BET_DAT=#{betDat,jdbcType=CHAR}
+      </if>
+      <if test="begTim!=null" >
+        AND  BEG_TIM=#{begTim,jdbcType=CHAR}
+      </if>
+      <if test="endTim!=null" >
+        AND  END_TIM=#{endTim,jdbcType=CHAR}
+      </if>
+      <if test="txnSts!=null" >
+        AND  TXN_STS=#{txnSts,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotPlnCtlKey" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_PLN_CTL
+    where DRAW_ID = #{drawId,jdbcType=CHAR}
+      and GAME_ID = #{gameId,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotPlnCtlKey" >
+    delete from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_PLN_CTL
+    where DRAW_ID = #{drawId,jdbcType=CHAR}
+      and GAME_ID = #{gameId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotPlnCtl" >
+    insert into ${GDEUPSB_SCHEMA}.GDEUPS_LOT_PLN_CTL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="drawId != null" >
+        DRAW_ID,
+      </if>
+      <if test="gameId != null" >
+        GAME_ID,
+      </if>
+      <if test="drawNm != null" >
+        DRAW_NM,
+      </if>
+      <if test="betDat != null" >
+        BET_DAT,
+      </if>
+      <if test="begTim != null" >
+        BEG_TIM,
+      </if>
+      <if test="endTim != null" >
+        END_TIM,
+      </if>
+      <if test="txnSts != null" >
+        TXN_STS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="drawId != null" >
+        #{drawId,jdbcType=CHAR},
+      </if>
+      <if test="gameId != null" >
+        #{gameId,jdbcType=CHAR},
+      </if>
+      <if test="drawNm != null" >
+        #{drawNm,jdbcType=CHAR},
+      </if>
+      <if test="betDat != null" >
+        #{betDat,jdbcType=CHAR},
+      </if>
+      <if test="begTim != null" >
+        #{begTim,jdbcType=CHAR},
+      </if>
+      <if test="endTim != null" >
+        #{endTim,jdbcType=CHAR},
+      </if>
+      <if test="txnSts != null" >
+        #{txnSts,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_PLN_CTL
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="drawId!=null" >
+        AND  DRAW_ID=#{drawId,jdbcType=CHAR}
+      </if>
+      <if test="gameId!=null" >
+        AND  GAME_ID=#{gameId,jdbcType=CHAR}
+      </if>
+      <if test="drawNm!=null" >
+        AND  DRAW_NM=#{drawNm,jdbcType=CHAR}
+      </if>
+      <if test="betDat!=null" >
+        AND  BET_DAT=#{betDat,jdbcType=CHAR}
+      </if>
+      <if test="begTim!=null" >
+        AND  BEG_TIM=#{begTim,jdbcType=CHAR}
+      </if>
+      <if test="endTim!=null" >
+        AND  END_TIM=#{endTim,jdbcType=CHAR}
+      </if>
+      <if test="txnSts!=null" >
+        AND  TXN_STS=#{txnSts,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotPlnCtl" >
+    update ${GDEUPSB_SCHEMA}.GDEUPS_LOT_PLN_CTL
+    <set >
+      <if test="drawNm != null" >
+        DRAW_NM = #{drawNm,jdbcType=CHAR},
+      </if>
+      <if test="betDat != null" >
+        BET_DAT = #{betDat,jdbcType=CHAR},
+      </if>
+      <if test="begTim != null" >
+        BEG_TIM = #{begTim,jdbcType=CHAR},
+      </if>
+      <if test="endTim != null" >
+        END_TIM = #{endTim,jdbcType=CHAR},
+      </if>
+      <if test="txnSts != null" >
+        TXN_STS = #{txnSts,jdbcType=CHAR},
+      </if>
+    </set>
+    where DRAW_ID = #{drawId,jdbcType=CHAR}
+      and GAME_ID = #{gameId,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_PLN_CTL
+    <if test="_parameter" >
+      where 
+      <foreach item="item" index="index" collection="list" separator="or" >
+        (DRAW_ID=#{item.drawId,jdbcType=CHAR} AND GAME_ID=#{item.gameId,jdbcType=CHAR})
+      </foreach>
+    </if>
+  </select>
+</mapper>
