@@ -84,4 +84,18 @@ public final class GDParamKeys {
 	
 	
 	/***********************广东烟草start*****************************/
+	/***第三方规定返回码*/
+    public static final String RSP_CDE = "RET_CODE";
+    /***第三方规定返回信息*/
+    public static final String RSP_MSG = "MSG";
+    /***第三方规定原返回码*/
+    public static final String RET_CODE_OLD = "RET_CODE_OLD";
+    /***第三方规定原返回信息*/
+    public static final String RSP_MSG_OLD = "MSG_OLD";
+    /***交易功能选择*/
+    public static final String TBC_TXNFLG = "txnFlg";
+    /***第三方规定原交易码*/
+    public static final String BANK_SEQ_OLD = "BANK_SEQ_OLD";
+ 
+	/***********************广东烟草start*****************************/
 }

@@ -11,7 +11,8 @@ package com.bocom.bbip.gdeupsb.common;
 public class GDConstants {
 
 	/********************* 公共start **********************/
-
+    /***返回交易失败码*/
+    public static final String RSP_FAIL_COD = "9999";
 	/** 授权原因 **/
 	public static final String AUTH_REASON = "authResn";
 
@@ -85,4 +86,11 @@ public class GDConstants {
 	public static final String GZ_ELE_BUS_KND_ELEC = "CRP";
 
 	/********************* 广州电力end **********************/
+    /*********************广东烟草Start***************************/
+    /***返回码内容*/
+    public static final String TBC_RSP_COD = "TBC999"; 
+    
+    /*********************广东烟草end***************************/
+    
+	
 }
