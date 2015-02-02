@@ -80,4 +80,8 @@ public final class GDParamKeys {
 	public static final String GZ_ELE_ACT_CLS = "actCls";
 
 	/********************* 广州电力end **********************/
+	
+	
+	
+	/***********************广东烟草start*****************************/
 }

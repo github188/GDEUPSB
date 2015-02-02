@@ -6,7 +6,7 @@ import com.bocom.bbip.data.annotation.StepSequenceGenerator;
 import java.io.Serializable;
 
 public class GdLotDrwTblKey implements Serializable {
-    private static final long serialVersionUID = -2329697101178391817L;
+    private static final long serialVersionUID = 8783421669450603648L;
 
     @Id
     @GeneratedValue

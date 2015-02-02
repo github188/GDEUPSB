@@ -1,13 +1,5 @@
 package com.bocom.bbip.gdeupsb.utils;
 
-import java.util.Map;
-
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import xmlDefinition.TdsBean;
-import xmlDefinition.TdsBeanPro;
-
 
 /**
  * 通过传入tableId及key，找到对应配置文件下的value，用于code switch
@@ -17,7 +9,7 @@ import xmlDefinition.TdsBeanPro;
  */
 public class CodeSwitchUtils {
 
-	public static String codeGenerator(String tableId, String key) {
+/*	public static String codeGenerator(String tableId, String key) {
 
 		String xml = "classpath:config/switchcode/tds-test.xml";
 
@@ -31,5 +23,5 @@ public class CodeSwitchUtils {
 
 		return t.getValue();
 	}
-
+*/
 }

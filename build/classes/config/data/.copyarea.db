@@ -1,7 +1,0 @@
-ClearCase CopyAreaDB|4
-vobs\gn_bbip\impl_code\hubei\HBEUPS\bbiptest\config\data
-2
-3
-7:123.txt|1|14a0515b0c2|54|a8e0be5|bbb04d5e5e7711e49c1d0002cf51b54c|0
-b:result1.txt|1|14a0515b0e1|ee|46572e9c|c1904d7a5e7711e49c1d0002cf51b54c|0
-14:hostTransJournal.txt|1|14a0515b110|3ae|909ec183|c5604d965e7711e49c1d0002cf51b54c|0

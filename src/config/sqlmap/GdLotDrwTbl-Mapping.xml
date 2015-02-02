@@ -23,11 +23,14 @@
     <result column="PAY_FLG" property="payFlg" jdbcType="CHAR" />
     <result column="PAY_AMT" property="payAmt" jdbcType="CHAR" />
     <result column="FLW_CTL" property="flwCtl" jdbcType="CHAR" />
+    <result column="CLR_TIM" property="clrTim" jdbcType="CHAR" />
+    <result column="RTN_TIM" property="rtnTim" jdbcType="CHAR" />
+    <result column="XFE_FLG" property="xfeFlg" jdbcType="CHAR" />
   </resultMap>
   <sql id="baseColumnList" >
     GAME_ID, DRAW_ID, DRAW_NM, SAL_STR, SAL_END, CSH_STR, CSH_END, KENO_ID, KENO_NM, 
     K_SAL_ST, K_SAL_ED, CHK_FLG, CHK_TIM, DOW_PRZ, PRZ_AMT, TOT_AMT, DIF_FLG, DIF_AMT, 
-    PAY_FLG, PAY_AMT, FLW_CTL
+    PAY_FLG, PAY_AMT, FLW_CTL, CLR_TIM, RTN_TIM, XFE_FLG
   </sql>
   <select id="find" resultMap="basicResultMap" >
     select
@@ -96,6 +99,15 @@
       </if>
       <if test="flwCtl!=null" >
         AND  FLW_CTL=#{flwCtl,jdbcType=CHAR}
+      </if>
+      <if test="clrTim!=null" >
+        AND  CLR_TIM=#{clrTim,jdbcType=CHAR}
+      </if>
+      <if test="rtnTim!=null" >
+        AND  RTN_TIM=#{rtnTim,jdbcType=CHAR}
+      </if>
+      <if test="xfeFlg!=null" >
+        AND  XFE_FLG=#{xfeFlg,jdbcType=CHAR}
       </if>
     </trim>
   </select>
@@ -177,6 +189,15 @@
       <if test="flwCtl != null" >
         FLW_CTL,
       </if>
+      <if test="clrTim != null" >
+        CLR_TIM,
+      </if>
+      <if test="rtnTim != null" >
+        RTN_TIM,
+      </if>
+      <if test="xfeFlg != null" >
+        XFE_FLG,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="gameId != null" >
@@ -241,6 +262,15 @@
       </if>
       <if test="flwCtl != null" >
         #{flwCtl,jdbcType=CHAR},
+      </if>
+      <if test="clrTim != null" >
+        #{clrTim,jdbcType=CHAR},
+      </if>
+      <if test="rtnTim != null" >
+        #{rtnTim,jdbcType=CHAR},
+      </if>
+      <if test="xfeFlg != null" >
+        #{xfeFlg,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -310,6 +340,15 @@
       <if test="flwCtl!=null" >
         AND  FLW_CTL=#{flwCtl,jdbcType=CHAR}
       </if>
+      <if test="clrTim!=null" >
+        AND  CLR_TIM=#{clrTim,jdbcType=CHAR}
+      </if>
+      <if test="rtnTim!=null" >
+        AND  RTN_TIM=#{rtnTim,jdbcType=CHAR}
+      </if>
+      <if test="xfeFlg!=null" >
+        AND  XFE_FLG=#{xfeFlg,jdbcType=CHAR}
+      </if>
     </trim>
   </select>
   <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotDrwTbl" >
@@ -371,6 +410,15 @@
       </if>
       <if test="flwCtl != null" >
         FLW_CTL = #{flwCtl,jdbcType=CHAR},
+      </if>
+      <if test="clrTim != null" >
+        CLR_TIM = #{clrTim,jdbcType=CHAR},
+      </if>
+      <if test="rtnTim != null" >
+        RTN_TIM = #{rtnTim,jdbcType=CHAR},
+      </if>
+      <if test="xfeFlg != null" >
+        XFE_FLG = #{xfeFlg,jdbcType=CHAR},
       </if>
     </set>
     where GAME_ID = #{gameId,jdbcType=CHAR}

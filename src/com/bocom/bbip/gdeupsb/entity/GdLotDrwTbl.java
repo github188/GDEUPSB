@@ -1,7 +1,7 @@
 package com.bocom.bbip.gdeupsb.entity;
 
 public class GdLotDrwTbl extends GdLotDrwTblKey {
-    private static final long serialVersionUID = -9033174404594289488L;
+    private static final long serialVersionUID = -2150231855459014327L;
 
     private String drawNm;
 
@@ -40,6 +40,12 @@ public class GdLotDrwTbl extends GdLotDrwTblKey {
     private String payAmt;
 
     private String flwCtl;
+
+    private String clrTim;
+
+    private String rtnTim;
+
+    private String xfeFlg;
 
     public String getDrawNm() {
         return drawNm;
@@ -191,5 +197,29 @@ public class GdLotDrwTbl extends GdLotDrwTblKey {
 
     public void setFlwCtl(String flwCtl) {
         this.flwCtl = flwCtl;
+    }
+
+    public String getClrTim() {
+        return clrTim;
+    }
+
+    public void setClrTim(String clrTim) {
+        this.clrTim = clrTim;
+    }
+
+    public String getRtnTim() {
+        return rtnTim;
+    }
+
+    public void setRtnTim(String rtnTim) {
+        this.rtnTim = rtnTim;
+    }
+
+    public String getXfeFlg() {
+        return xfeFlg;
+    }
+
+    public void setXfeFlg(String xfeFlg) {
+        this.xfeFlg = xfeFlg;
     }
 }

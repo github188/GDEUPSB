@@ -1,7 +1,0 @@
-ClearCase CopyAreaDB|4
-vobs\gn_bbip\eups_code\EUPS_PROJECT\branches\SZXEUPS\src\config\webservice
-2
-3
-a:definition|2|0|0|0|0158f07004b711e484160002cf50d54c|0
-4:wsdl|2|0|0|0|cc850fe210a511e488230002cf51b54c|0
-21:identityMapping-server.properties|1|14757e254c2|201f|c48c277a|04e299fe10ac11e4a8170002cf51b54c|0

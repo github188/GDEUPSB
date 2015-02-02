@@ -1,8 +1,0 @@
-ClearCase CopyAreaDB|4
-vobs\gn_bbip\eups_code\EUPS_PROJECT\branches\SZXEUPS\src\config\fmt
-2
-4
-14:FileFormatConfig.xml|1|1470e599165|1ee3|e38fa90c|0461017003ee11e498210002cf50d54c|0
-12:translateDict.show|1|1470e599165|543|f795e959|4670f89803ed11e498210002cf50d54c|0
-f:checkFileFormat|2|0|0|0|10294f060c1911e4b8150002cf51b54c|0
-7:format1|2|0|0|0|49a0f8c003ed11e498210002cf50d54c|0
