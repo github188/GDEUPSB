@@ -435,4 +435,30 @@
       </foreach>
     </if>
   </select>
+  <select id="query" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${EUPS_SCHEMA}.GDEUPS_LOT_DRW_TBL
+    where (SAL_END &lt; #{cshStr,jdbcType=CHAR} OR (KSAL_ED &lt;  #{cshStr,jdbcType=CHAR} AND GAME_ID='7')) 
+    	AND FLW_CTL='10' AND KENO_ID!='AAAAA'   	ORDER BY GAME_ID DESC,DRAW_ID ASC
+  </select>
+  <update id="updateFlwCtl" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotDrwTbl">
+  	update ${EUPS_SCHEMA}.GDEUPS_LOT_DRW_TBL
+  		set FLW_CTL=#{flwCtl,jdbcType=CHAR}
+  		where GAME_ID=#{gameId,jdbcType=CHAR} AND DRAW_ID=#{drawId,jdbcType=CHAR} AND
+  			KENO_ID=#{kenoId,jdbcType=CHAR}
+  </update>
+  <update id="updatePayFlg" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotDrwTbl">
+  	update ${EUPS_SCHEMA}.GDEUPS_LOT_DRW_TBL
+  		set FLW_CTL=#{flwCtl,jdbcType=CHAR},PAY_FLG=#{payFlg,jdbcType=CHAR},
+  			PAY_AMT=#{payAmt,jdbcType=CHAR},XFE_FLG=#{xfeFlg,jdbcType=CHAR}
+  		where GAME_ID=#{gameId,jdbcType=CHAR} AND DRAW_ID=#{drawId,jdbcType=CHAR} AND
+  			KENO_ID=#{kenoId,jdbcType=CHAR}
+  </update>
+  <update id="updatePrzAmt" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotDrwTbl">
+  	update ${EUPS_SCHEMA}.GDEUPS_LOT_DRW_TBL
+  		set PRZ_AMT=#{przAmt,jdbcType=CHAR}
+  		where GAME_ID=#{gameId,jdbcType=CHAR} AND DRAW_ID=#{drawId,jdbcType=CHAR} AND
+  			KENO_ID=#{kenoId,jdbcType=CHAR}
+  </update>
 </mapper>

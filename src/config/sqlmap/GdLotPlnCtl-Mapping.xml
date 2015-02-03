@@ -161,4 +161,9 @@
       </foreach>
     </if>
   </select>
+  <update id="updateTxnsts" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotPlnCtl" >
+    update ${EUPS_SCHEMA}.GDEUPS_LOT_PLN_CTL
+    	set END_TIM=#{endTim,jdbcType=CHAR},TXN_STS=#{txnSts,jdbcType=CHAR}
+    	where GAME_ID=#{gameId,jdbcType=CHAR} AND DRAW_ID=#{drawId,jdbcType=CHAR}
+  </update>
 </mapper>
