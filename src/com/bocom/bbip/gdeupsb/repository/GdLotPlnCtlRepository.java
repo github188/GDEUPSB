@@ -5,4 +5,9 @@ import com.bocom.bbip.gdeupsb.entity.GdLotPlnCtl;
 import com.bocom.bbip.gdeupsb.entity.GdLotPlnCtlKey;
 
 public interface GdLotPlnCtlRepository extends PagingAndSortingRepository<GdLotPlnCtl, GdLotPlnCtlKey> {
+	/**
+	 * 定投计划执行，更新定投控制表状态
+	 * @param eupsLotAutPln
+	 */
+	void updateTxnsts(GdLotPlnCtl gdLotPlnCtl);
 }
