@@ -176,8 +176,11 @@ public class GdLotTransCodTransport implements Transport{
 					action_235(w,context);
 				}else if("212".equals(action)) {
 				    action_212(w,context);
-				}
-				
+				}else if("200".equals(action)) {
+				    w.writeStartElement("pkgC");
+		            w.writeEndElement();
+		            w.writeEndElement();
+                }
 			w.writeEndElement();
 			w.flush();
 			String data = sw.toString();
@@ -217,7 +220,6 @@ public class GdLotTransCodTransport implements Transport{
             w.writeEndElement();
         w.writeEndElement();
     }
-	
 	/**
 	 * 解包
 	 * @param context
@@ -252,9 +254,10 @@ public class GdLotTransCodTransport implements Transport{
 			r = factory.createXMLStreamReader(sr);
 			if("235".equals(action)){
 				decode_235(r,map);
-			}
-			if("212".equals(action)){
+			}else if("212".equals(action)){
                 decode_212(r,map);
+            }else if("200".equals(action)){
+                decode_200(r,map);
             }
 			
 		} catch (UnsupportedEncodingException e) {
@@ -298,19 +301,34 @@ public class GdLotTransCodTransport implements Transport{
 		map.put("kdraw", list);
 	}
 	
-	   private void decode_212(XMLStreamReader r,Map<String,Object> map) throws XMLStreamException{
-	        List<Map<String,Object>> list = new ArrayList<Map<String,Object>>(); 
-	        while(r.hasNext()){
-	            int typ = r.next();
-	            if(typ!=XMLStreamConstants.START_ELEMENT)
-	                continue;
-	            String name = r.getName().toString();
-	            if("return".equals(name)){
-	                map.put("thdRspCde", r.getAttributeValue(0));
-	                map.put("resultDes", r.getAttributeValue(1));
-	            }
-	        }
-	    }
+    private void decode_212(XMLStreamReader r,Map<String,Object> map) throws XMLStreamException{
+        List<Map<String,Object>> list = new ArrayList<Map<String,Object>>(); 
+        while(r.hasNext()){
+            int typ = r.next();
+            if(typ!=XMLStreamConstants.START_ELEMENT)
+                continue;
+            String name = r.getName().toString();
+            if("return".equals(name)){
+                map.put("rRspCod", r.getAttributeValue(0));
+                map.put("rRspMsg", r.getAttributeValue(1));
+            }
+        }
+    }
+   
+    private void decode_200(XMLStreamReader r,Map<String,Object> map) throws XMLStreamException{
+       List<Map<String,Object>> list = new ArrayList<Map<String,Object>>(); 
+       while(r.hasNext()){
+           int typ = r.next();
+           if(typ!=XMLStreamConstants.START_ELEMENT)
+               continue;
+           String name = r.getName().toString();
+           if("return".equals(name)){
+               map.put("rRspCod", r.getAttributeValue(0));
+               map.put("rRspMsg", r.getAttributeValue(1));
+           }
+       }
+   }
+   
 //	public static void main(String[] args) {
 //		XMLInputFactory factory = null;
 //		XMLStreamReader r = null;

@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
-import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
@@ -13,6 +12,9 @@ import com.bocom.bbip.gdeupsb.entity.GdLotSysCfg;
 import com.bocom.bbip.gdeupsb.repository.GdLotSysCfgRepository;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.jump.bp.JumpException;
+import com.bocom.jump.bp.channel.CommunicationException;
+import com.bocom.jump.bp.channel.Transport;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -24,6 +26,7 @@ import com.bocom.jump.bp.core.CoreException;
  */
 public class LoginAction extends BaseAction {
     // dealId 运营商 141
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public void execute(Context context) throws CoreException {
         log.info("LoginAction Start !!");
@@ -48,9 +51,19 @@ public class LoginAction extends BaseAction {
         context.setData("user", context.getData("usrPam"));
         context.setData("pwd", context.getData("usrPas"));
 
-        Map<String, Object> resultMap= get(ThirdPartyAdaptor.class).trade(context);
+        Transport ts = context.getService("STHDLOT1");
+        Map<String,Object> thdReturnMessage = null;//申请当前期号，奖期信息下载
+        try {
+            thdReturnMessage = (Map<String, Object>) ts.submit(context.getDataMap(), context);
+            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
+        } catch (CommunicationException e1) {
+            e1.printStackTrace();
+        } catch (JumpException e1) {
+            e1.printStackTrace();
+        }
+
         CommThdRspCdeAction cRspCdeAction = new CommThdRspCdeAction();
-        String responseCode = cRspCdeAction.getThdRspCde(resultMap,  context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
+        String responseCode = cRspCdeAction.getThdRspCde(thdReturnMessage,  context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
         log.info("responseCode:["+responseCode+"]");
         if(!Constants.RESPONSE_CODE_SUCC.equals(responseCode)){
             log.info("QueryLot Fail!");
@@ -62,9 +75,18 @@ public class LoginAction extends BaseAction {
         
         //系统对时
         context.setData("action", "200");
-        Map<String, Object> resultMassage= get(ThirdPartyAdaptor.class).trade(context);
+        Transport transport = context.getService("STHDLOT1");
+        Map<String,Object> thdMessage = null;//申请当前期号，奖期信息下载
+        try {
+            thdMessage = (Map<String, Object>) transport.submit(context.getDataMap(), context);
+            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
+        } catch (CommunicationException e1) {
+            e1.printStackTrace();
+        } catch (JumpException e1) {
+            e1.printStackTrace();
+        }
         CommThdRspCdeAction cRspCde = new CommThdRspCdeAction();
-        String thdResponsCode = cRspCde.getThdRspCde(resultMassage,  context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
+        String thdResponsCode = cRspCde.getThdRspCde(thdMessage,  context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
         log.info("responseCode:["+thdResponsCode+"]");
         if(!Constants.RESPONSE_CODE_SUCC.equals(thdResponsCode)){
             log.info("Check Systerm Time  Fail!");

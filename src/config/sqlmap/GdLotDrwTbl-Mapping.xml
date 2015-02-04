@@ -53,12 +53,7 @@
      </where>
      fetch first 1 rows only
   </select>
-  
-  
-  
-  
-  
-  
+
   <select id="find" resultMap="basicResultMap" >
     select
     <include refid="baseColumnList" />
