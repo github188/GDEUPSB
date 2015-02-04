@@ -25,13 +25,19 @@
 	
 	<server-side-ws-def wsdl="GDEUPSPFOffChanService.wsdl"
 		namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPFOffChanService/Schema"/>
-	<server-side-ws-def wsdl="GDEUPSWATR00OffChanService.wsdl"
-		namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00OffChanService/Schema"/>
-	<server-side-ws-def wsdl="GDEUPSPROF00Service.wsdl"
-		namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/Schema"/>
 	 <server-side-ws-def wsdl="GDEUPSBTbcService.wsdl"
     namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBTbcService/Schema" />
     <server-side-ws-def wsdl="GDEUPSBLotService.wsdl"
     namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotService/Schema" />
 	
+	<!-- 汕头水费 -->
+	<server-side-ws-def wsdl="GDEUPSWATR00Service.wsdl"
+		namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service/Schema"/>
+	<!-- 汕头电力 -->
+	<server-side-ws-def wsdl="GDEUPSELEC02Service.wsdl"
+		namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/Schema"/>
+	<server-side-ws-def wsdl="GDEUPSPROF00Service.wsdl"
+		namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/Schema"/>
+	<server-side-ws-def wsdl="GDEUPSLOTR01Service.wsdl"
+		namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSLOTR01Service/Schema"/>
 </x:beans>
