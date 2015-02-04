@@ -17,7 +17,7 @@
   <select id="find" resultMap="basicResultMap" >
     select
     <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CHK_CTL
+    from gdeupsb.GDEUPS_LOT_CHK_CTL
     <trim prefix="WHERE" prefixOverrides="AND" >
       <if test="gameId!=null" >
         AND  GAME_ID=#{gameId,jdbcType=CHAR}
@@ -48,17 +48,17 @@
   <select id="findOne" resultMap="basicResultMap" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotChkCtlKey" >
     select 
     <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CHK_CTL
+    from gdeupsb.GDEUPS_LOT_CHK_CTL
     where GAME_ID = #{gameId,jdbcType=CHAR}
       and DRAW_ID = #{drawId,jdbcType=CHAR}
   </select>
   <delete id="delete" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotChkCtlKey" >
-    delete from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CHK_CTL
+    delete from gdeupsb.GDEUPS_LOT_CHK_CTL
     where GAME_ID = #{gameId,jdbcType=CHAR}
       and DRAW_ID = #{drawId,jdbcType=CHAR}
   </delete>
   <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotChkCtl" >
-    insert into ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CHK_CTL
+    insert into gdeupsb.GDEUPS_LOT_CHK_CTL
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="gameId != null" >
         GAME_ID,
@@ -113,7 +113,7 @@
     </trim>
   </insert>
   <select id="findCount" resultType="java.lang.Integer" >
-    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CHK_CTL
+    select count(*) from gdeupsb.GDEUPS_LOT_CHK_CTL
     <trim prefix="WHERE" prefixOverrides="AND" >
       <if test="gameId!=null" >
         AND  GAME_ID=#{gameId,jdbcType=CHAR}
@@ -142,7 +142,7 @@
     </trim>
   </select>
   <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotChkCtl" >
-    update ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CHK_CTL
+    update gdeupsb.GDEUPS_LOT_CHK_CTL
     <set >
       <if test="chkDat != null" >
         CHK_DAT = #{chkDat,jdbcType=CHAR},
@@ -169,7 +169,7 @@
   <select id="findAll" resultMap="basicResultMap" >
     select 
     <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CHK_CTL
+    from gdeupsb.GDEUPS_LOT_CHK_CTL
     <if test="_parameter" >
       where 
       <foreach item="item" index="index" collection="list" separator="or" >

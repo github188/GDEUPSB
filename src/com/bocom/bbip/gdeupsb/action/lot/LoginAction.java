@@ -8,6 +8,7 @@ import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.entity.GdLotSysCfg;
 import com.bocom.bbip.gdeupsb.repository.GdLotSysCfgRepository;
 import com.bocom.bbip.utils.BeanUtils;
@@ -32,7 +33,7 @@ public class LoginAction extends BaseAction {
         log.info("LoginAction Start !!");
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
         context.setData("nodNo", "441800");
-        GdLotSysCfg lotSysCfgInfo = get(GdLotSysCfgRepository.class).findOne("141");
+        GdLotSysCfg lotSysCfgInfo = get(GdLotSysCfgRepository.class).findOne(GDConstants.LOT_DEAL_ID);
         if (null == lotSysCfgInfo) {
             context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
             context.setData(ParamKeys.RSP_CDE, "LOT999");
@@ -43,13 +44,15 @@ public class LoginAction extends BaseAction {
         context.setData("type", "3");
         context.setData("action", "212");
         context.setData("version", "0");
-        context.setData("dealer_id", "141");
+        context.setData("dealer_id", GDConstants.LOT_DEAL_ID);
         context.setData("terminal_id", "0");
         context.setData("mobile", "0");
         context.setData("phone", "0");
         context.setData("sent_time", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMddHHmmss));
-        context.setData("user", context.getData("usrPam"));
-        context.setData("pwd", context.getData("usrPas"));
+       // context.setData("user", context.getData("usrPam"));
+       // context.setData("pwd", context.getData("usrPas"));
+        context.setData("usrPam", "tangdi");
+        context.setData("usrPas", "123456");
 
         Transport ts = context.getService("STHDLOT1");
         Map<String,Object> thdReturnMessage = null;//申请当前期号，奖期信息下载
@@ -106,7 +109,7 @@ public class LoginAction extends BaseAction {
         String diffTm = commonLotAction.difTime(nodNo, brNo, lotTim, lclTim);
         context.setData("diffTm", diffTm);
         GdLotSysCfg lotSysCfgInfoInput = BeanUtils.toObject(context.getDataMap(), GdLotSysCfg.class);
-        lotSysCfgInfoInput.setDealId("141");
+        lotSysCfgInfoInput.setDealId(GDConstants.LOT_DEAL_ID);
         try {
             get(GdLotSysCfgRepository.class).update(lotSysCfgInfoInput);
         } catch (Exception e) {

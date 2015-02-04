@@ -98,4 +98,7 @@ public final class GDParamKeys {
     public static final String BANK_SEQ_OLD = "BANK_SEQ_OLD";
  
 	/***********************广东烟草start*****************************/
+    /** 运营商编号：dealId*/
+    public static final String LOT_DEAL_ID = "dealId";
+
 }

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBTbcService" xmlns:gdeupsb="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBTbcService/Schema" name="GDEUPSBTbcService" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBTbcService">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBTbcService">
+      <xsd:import namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBTbcService/Schema" schemaLocation="GDEUPSBTbcService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="maintainTbcInfoRequestMessage">
+    <wsdl:part name="maintainTbcInfoRequest" element="gdeupsb:maintainTbcInfo"/>
+  </wsdl:message>
+  <wsdl:message name="maintainTbcInfoResponseMessage">
+    <wsdl:part name="maintainTbcInfoResponse" element="gdeupsb:maintainTbcInfoResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="GDEUPSBTbcServicePortType">
+    <wsdl:operation name="maintainTbcInfo">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:maintainTbcInfoRequestMessage"/>
+      <wsdl:output message="tns:maintainTbcInfoResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GDEUPSBTbcServiceSoapBinding" type="tns:GDEUPSBTbcServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="maintainTbcInfo">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBTbcService/maintainTbcInfo"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GDEUPSBTbcService">
+    <wsdl:port name="GDEUPSBTbcServicePort" binding="tns:GDEUPSBTbcServiceSoapBinding">
+      <soap:address location="http://127.0.0.1:8080/GDEUPSB/ws/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

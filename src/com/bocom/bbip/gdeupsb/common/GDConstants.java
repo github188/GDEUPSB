@@ -86,9 +86,12 @@ public class GDConstants {
 	public static final String GZ_ELE_BUS_KND_ELEC = "CRP";
 
 	/********************* 广州电力end **********************/
+	
     /*********************广东烟草Start***************************/
     /***返回码内容*/
     public static final String TBC_RSP_COD = "TBC999"; 
+    /** 运营商编号：141*/
+    public static final String LOT_DEAL_ID = "141";
     
     /*********************广东烟草end***************************/
     

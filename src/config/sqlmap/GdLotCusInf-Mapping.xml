@@ -27,7 +27,7 @@
   <select id="find" resultMap="basicResultMap" >
     select
     <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CUS_INF
+    from gdeupsb.GDEUPS_LOT_CUS_INF
     <trim prefix="WHERE" prefixOverrides="AND" >
       <if test="crdNo!=null" >
         AND  CRD_NO=#{crdNo,jdbcType=CHAR}
@@ -85,15 +85,15 @@
   <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
     select 
     <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CUS_INF
+    from gdeupsb.GDEUPS_LOT_CUS_INF
     where CRD_NO = #{crdNo,jdbcType=CHAR}
   </select>
   <delete id="delete" parameterType="java.lang.String" >
-    delete from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CUS_INF
+    delete from gdeupsb.GDEUPS_LOT_CUS_INF
     where CRD_NO = #{crdNo,jdbcType=CHAR}
   </delete>
   <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotCusInf" >
-    insert into ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CUS_INF
+    insert into gdeupsb.GDEUPS_LOT_CUS_INF
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="crdNo != null" >
         CRD_NO,
@@ -202,7 +202,7 @@
     </trim>
   </insert>
   <select id="findCount" resultType="java.lang.Integer" >
-    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CUS_INF
+    select count(*) from gdeupsb.GDEUPS_LOT_CUS_INF
     <trim prefix="WHERE" prefixOverrides="AND" >
       <if test="crdNo!=null" >
         AND  CRD_NO=#{crdNo,jdbcType=CHAR}
@@ -258,7 +258,7 @@
     </trim>
   </select>
   <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotCusInf" >
-    update ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CUS_INF
+    update gdeupsb.GDEUPS_LOT_CUS_INF
     <set >
       <if test="brNo != null" >
         BR_NO = #{brNo,jdbcType=CHAR},
@@ -314,7 +314,7 @@
   <select id="findAll" resultMap="basicResultMap" >
     select 
     <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CUS_INF
+    from gdeupsb.GDEUPS_LOT_CUS_INF
     <if test="_parameter" >
       where CRD_NO in
       <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >

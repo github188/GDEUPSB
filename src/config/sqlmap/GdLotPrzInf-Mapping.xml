@@ -27,7 +27,7 @@
   <select id="find" resultMap="basicResultMap" >
     select
     <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_PRZ_INF
+    from gdeupsb.GDEUPS_LOT_PRZ_INF
     <trim prefix="WHERE" prefixOverrides="AND" >
       <if test="gameId!=null" >
         AND  GAME_ID=#{gameId,jdbcType=CHAR}
@@ -85,17 +85,17 @@
   <select id="findOne" resultMap="basicResultMap" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotPrzInfKey" >
     select 
     <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_PRZ_INF
+    from gdeupsb.GDEUPS_LOT_PRZ_INF
     where GAME_ID = #{gameId,jdbcType=CHAR}
       and DRAW_ID = #{drawId,jdbcType=CHAR}
   </select>
   <delete id="delete" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotPrzInfKey" >
-    delete from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_PRZ_INF
+    delete from gdeupsb.GDEUPS_LOT_PRZ_INF
     where GAME_ID = #{gameId,jdbcType=CHAR}
       and DRAW_ID = #{drawId,jdbcType=CHAR}
   </delete>
   <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotPrzInf" >
-    insert into ${GDEUPSB_SCHEMA}.GDEUPS_LOT_PRZ_INF
+    insert into gdeupsb.GDEUPS_LOT_PRZ_INF
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="gameId != null" >
         GAME_ID,
@@ -204,7 +204,7 @@
     </trim>
   </insert>
   <select id="findCount" resultType="java.lang.Integer" >
-    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_PRZ_INF
+    select count(*) from gdeupsb.GDEUPS_LOT_PRZ_INF
     <trim prefix="WHERE" prefixOverrides="AND" >
       <if test="gameId!=null" >
         AND  GAME_ID=#{gameId,jdbcType=CHAR}
@@ -260,7 +260,7 @@
     </trim>
   </select>
   <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotPrzInf" >
-    update ${GDEUPSB_SCHEMA}.GDEUPS_LOT_PRZ_INF
+    update gdeupsb.GDEUPS_LOT_PRZ_INF
     <set >
       <if test="gameNm != null" >
         GAME_NM = #{gameNm,jdbcType=CHAR},
@@ -314,7 +314,7 @@
   <select id="findAll" resultMap="basicResultMap" >
     select 
     <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_PRZ_INF
+    from gdeupsb.GDEUPS_LOT_PRZ_INF
     <if test="_parameter" >
       where 
       <foreach item="item" index="index" collection="list" separator="or" >

@@ -29,5 +29,9 @@
 		namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00OffChanService/Schema"/>
 	<server-side-ws-def wsdl="GDEUPSPROF00Service.wsdl"
 		namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/Schema"/>
+	 <server-side-ws-def wsdl="GDEUPSBTbcService.wsdl"
+    namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBTbcService/Schema" />
+    <server-side-ws-def wsdl="GDEUPSBLotService.wsdl"
+    namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotService/Schema" />
 	
 </x:beans>

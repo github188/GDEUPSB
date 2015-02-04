@@ -10,6 +10,7 @@ import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.entity.GdLotCusInf;
 import com.bocom.bbip.gdeupsb.repository.GdLotCusInfRepository;
 import com.bocom.bbip.utils.CollectionUtils;
@@ -46,7 +47,7 @@ public class QueryRegisterAction  extends BaseAction{
         context.setData("type", "3");
         context.setData("action", "209");
         context.setData("version", "0");
-        context.setData("dealer_id", "141");
+        context.setData("dealer_id", GDConstants.LOT_DEAL_ID);
         context.setData("terminal_id", "0");
         context.setData("mobile", "0");
         context.setData("phone", "0");

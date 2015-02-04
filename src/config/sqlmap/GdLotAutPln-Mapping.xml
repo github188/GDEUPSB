@@ -34,7 +34,7 @@
   <select id="find" resultMap="basicResultMap" >
     select
     <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_AUT_PLN
+    from gdeupsb.GDEUPS_LOT_AUT_PLN
     <trim prefix="WHERE" prefixOverrides="AND" >
       <if test="planNo!=null" >
         AND  PLAN_NO=#{planNo,jdbcType=CHAR}
@@ -110,15 +110,15 @@
   <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
     select 
     <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_AUT_PLN
+    from gdeupsb.GDEUPS_LOT_AUT_PLN
     where PLAN_NO = #{planNo,jdbcType=CHAR}
   </select>
   <delete id="delete" parameterType="java.lang.String" >
-    delete from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_AUT_PLN
+    delete from gdeupsb.GDEUPS_LOT_AUT_PLN
     where PLAN_NO = #{planNo,jdbcType=CHAR}
   </delete>
   <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotAutPln" >
-    insert into ${GDEUPSB_SCHEMA}.GDEUPS_LOT_AUT_PLN
+    insert into gdeupsb.GDEUPS_LOT_AUT_PLN
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="planNo != null" >
         PLAN_NO,
@@ -263,7 +263,7 @@
     </trim>
   </insert>
   <select id="findCount" resultType="java.lang.Integer" >
-    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_AUT_PLN
+    select count(*) from gdeupsb.GDEUPS_LOT_AUT_PLN
     <trim prefix="WHERE" prefixOverrides="AND" >
       <if test="planNo!=null" >
         AND  PLAN_NO=#{planNo,jdbcType=CHAR}
@@ -337,7 +337,7 @@
     </trim>
   </select>
   <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotAutPln" >
-    update ${GDEUPSB_SCHEMA}.GDEUPS_LOT_AUT_PLN
+    update gdeupsb.GDEUPS_LOT_AUT_PLN
     <set >
       <if test="planNm != null" >
         PLAN_NM = #{planNm,jdbcType=CHAR},
@@ -411,7 +411,7 @@
   <select id="findAll" resultMap="basicResultMap" >
     select 
     <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_AUT_PLN
+    from gdeupsb.GDEUPS_LOT_AUT_PLN
     <if test="_parameter" >
       where PLAN_NO in
       <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >

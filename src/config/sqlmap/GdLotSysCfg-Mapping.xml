@@ -22,7 +22,7 @@
   <select id="find" resultMap="basicResultMap" >
     select
     <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_SYS_CFG
+    from gdeupsb.GDEUPS_LOT_SYS_CFG
     <trim prefix="WHERE" prefixOverrides="AND" >
       <if test="dealId!=null" >
         AND  DEAL_ID=#{dealId,jdbcType=CHAR}
@@ -65,15 +65,15 @@
   <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
     select 
     <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_SYS_CFG
+    from gdeupsb.GDEUPS_LOT_SYS_CFG
     where DEAL_ID = #{dealId,jdbcType=CHAR}
   </select>
   <delete id="delete" parameterType="java.lang.String" >
-    delete from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_SYS_CFG
+    delete from gdeupsb.GDEUPS_LOT_SYS_CFG
     where DEAL_ID = #{dealId,jdbcType=CHAR}
   </delete>
   <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotSysCfg" >
-    insert into ${GDEUPSB_SCHEMA}.GDEUPS_LOT_SYS_CFG
+    insert into gdeupsb.GDEUPS_LOT_SYS_CFG
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="dealId != null" >
         DEAL_ID,
@@ -152,7 +152,7 @@
     </trim>
   </insert>
   <select id="findCount" resultType="java.lang.Integer" >
-    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_SYS_CFG
+    select count(*) from gdeupsb.GDEUPS_LOT_SYS_CFG
     <trim prefix="WHERE" prefixOverrides="AND" >
       <if test="dealId!=null" >
         AND  DEAL_ID=#{dealId,jdbcType=CHAR}
@@ -193,7 +193,7 @@
     </trim>
   </select>
   <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotSysCfg" >
-    update ${GDEUPSB_SCHEMA}.GDEUPS_LOT_SYS_CFG
+    update gdeupsb.GDEUPS_LOT_SYS_CFG
     <set >
       <if test="usrPam != null" >
         USR_PAM = #{usrPam,jdbcType=CHAR},
@@ -234,7 +234,7 @@
   <select id="findAll" resultMap="basicResultMap" >
     select 
     <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_SYS_CFG
+    from gdeupsb.GDEUPS_LOT_SYS_CFG
     <if test="_parameter" >
       where DEAL_ID in
       <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >

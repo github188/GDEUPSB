@@ -22,7 +22,7 @@
   </sql>
   
    <update id="updateByGameIdAndDrawId" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotChkDtl" >
-    update ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CHK_DTL
+    update gdeupsb.GDEUPS_LOT_CHK_DTL
     <set >
         CHK_FLG = #{chkFlg,jdbcType=CHAR}, CHK_TIM = #{chkTim,jdbcType=CHAR}
     </set>
@@ -30,7 +30,7 @@
   </update>
 
     <update id="updateMatchLotChkDtl" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotChkDtl" >
-    update ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CHK_DTL
+    update gdeupsb.GDEUPS_LOT_CHK_DTL
     <set >
         CHK_FLG = '1', CHK_TIM = #{chkTim,jdbcType=CHAR}
     </set>
@@ -49,7 +49,7 @@
   <select id="find" resultMap="basicResultMap" >
     select
     <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CHK_DTL
+    from gdeupsb.GDEUPS_LOT_CHK_DTL
     <trim prefix="WHERE" prefixOverrides="AND" >
       <if test="txnLog!=null" >
         AND  TXN_LOG=#{txnLog,jdbcType=CHAR}
@@ -95,15 +95,15 @@
   <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
     select 
     <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CHK_DTL
+    from gdeupsb.GDEUPS_LOT_CHK_DTL
     where TXN_LOG = #{txnLog,jdbcType=CHAR}
   </select>
   <delete id="delete" parameterType="java.lang.String" >
-    delete from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CHK_DTL
+    delete from gdeupsb.GDEUPS_LOT_CHK_DTL
     where TXN_LOG = #{txnLog,jdbcType=CHAR}
   </delete>
   <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotChkDtl" >
-    insert into ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CHK_DTL
+    insert into gdeupsb.GDEUPS_LOT_CHK_DTL
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="txnLog != null" >
         TXN_LOG,
@@ -188,7 +188,7 @@
     </trim>
   </insert>
   <select id="findCount" resultType="java.lang.Integer" >
-    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CHK_DTL
+    select count(*) from gdeupsb.GDEUPS_LOT_CHK_DTL
     <trim prefix="WHERE" prefixOverrides="AND" >
       <if test="txnLog!=null" >
         AND  TXN_LOG=#{txnLog,jdbcType=CHAR}
@@ -232,7 +232,7 @@
     </trim>
   </select>
   <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotChkDtl" >
-    update ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CHK_DTL
+    update gdeupsb.GDEUPS_LOT_CHK_DTL
     <set >
       <if test="chkDat != null" >
         CHK_DAT = #{chkDat,jdbcType=CHAR},
@@ -276,7 +276,7 @@
   <select id="findAll" resultMap="basicResultMap" >
     select 
     <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CHK_DTL
+    from gdeupsb.GDEUPS_LOT_CHK_DTL
     <if test="_parameter" >
       where TXN_LOG in
       <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
