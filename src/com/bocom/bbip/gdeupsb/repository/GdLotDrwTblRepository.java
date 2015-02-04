@@ -1,7 +1,10 @@
 package com.bocom.bbip.gdeupsb.repository;
 
 import java.util.List;
+import java.util.Map;
 
+import com.bocom.bbip.data.annotation.Find;
+import com.bocom.bbip.data.annotation.Update;
 import com.bocom.bbip.data.repository.PagingAndSortingRepository;
 import com.bocom.bbip.gdeupsb.entity.GdLotDrwTbl;
 import com.bocom.bbip.gdeupsb.entity.GdLotDrwTblKey;
@@ -28,4 +31,10 @@ public interface GdLotDrwTblRepository extends PagingAndSortingRepository<GdLotD
 	 * @param eupsLotDrwTbl
 	 */
 	void updatePrzAmt(GdLotDrwTbl gdLotDrwTbl);
+
+	@Update
+	public void update(GdLotDrwTbl lotDrwTbl);
+	
+	@Find
+	public GdLotDrwTbl qryLotDrwInf(Map<String, Object> map);
 }

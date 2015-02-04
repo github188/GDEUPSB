@@ -32,6 +32,33 @@
     K_SAL_ST, K_SAL_ED, CHK_FLG, CHK_TIM, DOW_PRZ, PRZ_AMT, TOT_AMT, DIF_FLG, DIF_AMT, 
     PAY_FLG, PAY_AMT, FLW_CTL, CLR_TIM, RTN_TIM, XFE_FLG
   </sql>
+  
+   <select id="qryLotDrwInf"  parameterType="map" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${BBIPADM_SCHEMA}.GDEUPS_LOT_DRW_TBL
+     <where>
+        <choose>
+          <when test="isKeno == Y">
+            FLW_CTL='0' and GAME_ID=#{gameId} and KENO_ID != 'AAAAA'
+            and K_SAL_ST &lt; #{lotTime}  and K_SAL_ED &gt;#{lotTime} 
+            order by K_SAL_ST asc
+          </when>
+          <otherwise>
+            FLW_CTL='0' and GAME_ID=#{gameId} and KENO_ID != 'AAAAA'
+            and SAL_STR &lt; #{lotTime}  and SAL_END &gt;#{lotTime} 
+            order by SAL_STR asc
+          </otherwise>
+        </choose>
+     </where>
+     fetch first 1 rows only
+  </select>
+  
+  
+  
+  
+  
+  
   <select id="find" resultMap="basicResultMap" >
     select
     <include refid="baseColumnList" />

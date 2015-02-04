@@ -20,6 +20,32 @@
     TXN_LOG, CHK_DAT, GAME_ID, DRAW_ID, KENO_ID, SEQ_NO, SCH_ID, LOT_NAM, PLAY_ID, TXN_TIM, 
     TXN_AMT, CHK_FLG, CHK_TIM
   </sql>
+  
+   <update id="updateByGameIdAndDrawId" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotChkDtl" >
+    update ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CHK_DTL
+    <set >
+        CHK_FLG = #{chkFlg,jdbcType=CHAR}, CHK_TIM = #{chkTim,jdbcType=CHAR}
+    </set>
+    where GAME_ID = #{gameId,jdbcType=CHAR} AND DRAW_ID = #{drawId,jdbcType=CHAR}
+  </update>
+
+    <update id="updateMatchLotChkDtl" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotChkDtl" >
+    update ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CHK_DTL
+    <set >
+        CHK_FLG = '1', CHK_TIM = #{chkTim,jdbcType=CHAR}
+    </set>
+    where GAME_ID = #{gameId,jdbcType=CHAR} AND DRAW_ID = #{drawId,jdbcType=CHAR}
+         AND TXN_LOG in 
+           (select TXN_LOG from GDEUPS_LOT_TXN_JNL  where GAME_ID= #{gameId,jdbcType=CHAR} 
+               AND DRAW_ID = #{drawId,jdbcType=CHAR} and CHK_FLG='1' )
+  </update>
+
+  <select id="statLotChkDtlUnChk" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotChkDtl"  resultType="java.lang.Integer">
+     select count(*) from ${BBIPADM_SCHEMA}.GDEUPS_LOT_CHK_DTL 
+    WHERE GAME_ID = #{gameId,jdbcType=CHAR} AND DRAW_ID = #{drawId,jdbcType=CHAR} 
+    AND CHK_FLG != '0'
+  </select>
+  
   <select id="find" resultMap="basicResultMap" >
     select
     <include refid="baseColumnList" />

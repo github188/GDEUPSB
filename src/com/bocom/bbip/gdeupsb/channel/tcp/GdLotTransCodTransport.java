@@ -174,6 +174,8 @@ public class GdLotTransCodTransport implements Transport{
 //						w.writeEndElement();
 //					w.writeEndElement();
 					action_235(w,context);
+				}else if("212".equals(action)) {
+				    action_212(w,context);
 				}
 				
 			w.writeEndElement();
@@ -205,6 +207,17 @@ public class GdLotTransCodTransport implements Transport{
 			w.writeEndElement();
 		w.writeEndElement();
 	}
+	
+	private void action_212(XMLStreamWriter w,Context context) throws XMLStreamException{
+        w.writeStartElement("pkgC");
+            w.writeStartElement("user");
+            w.writeCharacters(context.getData("usrPam").toString());
+            w.writeStartElement("pwd");
+            w.writeCharacters(context.getData("usrPas").toString());
+            w.writeEndElement();
+        w.writeEndElement();
+    }
+	
 	/**
 	 * 解包
 	 * @param context
@@ -240,6 +253,10 @@ public class GdLotTransCodTransport implements Transport{
 			if("235".equals(action)){
 				decode_235(r,map);
 			}
+			if("212".equals(action)){
+                decode_212(r,map);
+            }
+			
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (XMLStreamException e) {
@@ -280,6 +297,20 @@ public class GdLotTransCodTransport implements Transport{
 		}
 		map.put("kdraw", list);
 	}
+	
+	   private void decode_212(XMLStreamReader r,Map<String,Object> map) throws XMLStreamException{
+	        List<Map<String,Object>> list = new ArrayList<Map<String,Object>>(); 
+	        while(r.hasNext()){
+	            int typ = r.next();
+	            if(typ!=XMLStreamConstants.START_ELEMENT)
+	                continue;
+	            String name = r.getName().toString();
+	            if("return".equals(name)){
+	                map.put("thdRspCde", r.getAttributeValue(0));
+	                map.put("resultDes", r.getAttributeValue(1));
+	            }
+	        }
+	    }
 //	public static void main(String[] args) {
 //		XMLInputFactory factory = null;
 //		XMLStreamReader r = null;

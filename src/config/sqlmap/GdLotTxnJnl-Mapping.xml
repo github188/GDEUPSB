@@ -57,6 +57,61 @@
     H_TXN_SB, H_LOG_NO, H_RSP_CD, H_TXN_ST, T_RSP_CD, T_TXN_ST, THD_CHK, T_CHK_NO, CHK_TIM, 
     CHK_FLG, AWD_FLG, AWD_RTN, C_AGT_NO, TCK_NO, TXN_CNL, BET_TYP, L_CHK_TM, TXN_STS
   </sql>
+  
+  
+  <update id="updateByGameIdAndDrawId" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotTxnJnl" >
+    update ${GDEUPSB_SCHEMA}.GDEUPS_LOT_TXN_JNL
+    <set >
+        CHK_FLG = #{chkFlg,jdbcType=CHAR}, CHK_TIM = #{chkTim,jdbcType=CHAR}
+    </set>
+    where GAME_ID = #{gameId,jdbcType=CHAR} AND DRAW_ID = #{drawId,jdbcType=CHAR}
+  </update>
+  
+    <update id="updateMatchLotTxnJnl" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotTxnJnl" >
+      update ${GDEUPSB_SCHEMA}.GDEUPS_LOT_TXN_JNL
+      <set >
+         CHK_FLG ='1', CHK_TIM = #{chkTim,jdbcType=CHAR}, TXN_STS='S'
+     </set>
+         where GAME_ID = #{gameId,jdbcType=CHAR} AND DRAW_ID = #{drawId,jdbcType=CHAR} AND
+           TXN_LOG in (select a.TXN_LOG from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_TXN_JNL a, ${GDEUPSB_SCHEMA}.GDEUPS_LOT_CHK_DTL b
+                         where a.GAME_ID=b.GAME_ID and a.DRAW_ID=b.DRAW_ID and a.KENO_ID=b.KENO_ID
+                            and a.SCH_ID=b.SCH_ID and a.LOT_NAM=b.LOT_NAM and a.TXN_LOG=b.TXN_LOG
+                            and a.PLAY_ID=b.PLAY_ID and a.TXN_AMT=b.TXN_AMT
+                            and a.TXN_STS in ('S', 'T'))
+    </update>
+
+  <update id="updateUnMatchLotTxnJnl" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotTxnJnl" >
+    update ${GDEUPSB_SCHEMA}.GDEUPS_LOT_TXN_JNL
+    <set >
+        CHK_FLG = '2', CHK_TIM = #{chkTim,jdbcType=CHAR}
+    </set>
+    where GAME_ID = #{gameId,jdbcType=CHAR} AND DRAW_ID = #{drawId,jdbcType=CHAR} 
+    AND CHK_FLG = '0' AND TXN_STS in ('S', 'T')
+  </update>
+  
+  
+  <select id="statLotTxnJnlUnChk"  parameterType="com.bocom.bbip.gdeupsb.entity.GdLotTxnJnl" resultType="java.lang.Integer" >
+    select count(*) from ${BBIPADM_SCHEMA}.GDEUPS_LOT_TXN_JNL 
+    WHERE GAME_ID = #{gameId,jdbcType=CHAR} AND DRAW_ID = #{drawId,jdbcType=CHAR} 
+    AND CHK_FLG != '1' AND TXN_STS in ('S', 'T')
+  </select>
+   <select id="qryLotTxnJnl"  parameterType="map" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${BBIPADM_SCHEMA}.GDEUPS_LOT_TXN_JNL
+     <where>
+        <choose>
+          <when test="betTyp !=null and betTyp != ''">
+             CRD_NO=#{crdNo} AND BET_TYP=#{betTyp} AND BET_DAT between #{begDat} and #{endDat} AND TXN_STS='S'
+          </when>
+          <otherwise>
+             CRD_NO=#{crdNo} AND BET_DAT between #{begDat} and #{endDat} AND TXN_STS='S'
+         </otherwise>
+        </choose>
+     </where>
+     order by TXN_TIM desc
+  </select>
+
   <select id="find" resultMap="basicResultMap" >
     select
     <include refid="baseColumnList" />
