@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<x:beans xmlns:x="http://www.springframework.org/schema/beans"
+    xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd       http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+
+    <!--广东烟草客户余额信息查询 -->
+    <action class="com.bocom.bbip.gdeupsb.action.tbc.FindClientRemainingMoney"
+        id="gdeupsb.FindClientRemainingMoney" />
+    <!--广东烟草发起对账-->
+    <action class="com.bocom.bbip.gdeupsb.action.tbc.CheckFileToThirdAction"
+        id="gdeupsb.CheckFileToThirdAction" />
+    <!--广东烟草签到-->
+    <action class="com.bocom.bbip.gdeupsb.action.tbc.SignInAction"
+        id="gdeupsb.TbcSignInAction" />
+    <!--广东烟草签退-->
+    <action class="com.bocom.bbip.gdeupsb.action.tbc.SignOutAction"
+        id="gdeupsb.TbcSignOutAction" />
+    <!--广东烟草通讯状态测试-->
+    <action class="com.bocom.bbip.gdeupsb.action.tbc.CommunicateStateTestAction"
+        id="gdeupsb.TbcCommunicateStateTest" />
+    <!--烟草公司对开户、销户、划扣的校正检查-->
+    <action class="com.bocom.bbip.gdeupsb.action.tbc.VerifyToThirdAction"
+        id="gdeupsb.TbcVerifyToThirdAction" />
+        
+    <!--烟草开户-->
+    <action class="com.bocom.bbip.gdeupsb.action.tbc.EstablishAccountAction"
+        id="gdeupsb.EstablishAccountAction" />
+    <!--烟草销户-->
+    <action class="com.bocom.bbip.gdeupsb.action.tbc.DestroyAccountAction"
+        id="gdeupsb.DestroyAccountAction" />
+        
+    <!--银行对烟草公司信息维护-->
+    <action class="com.bocom.bbip.gdeupsb.action.tbc.MaintainTbcInfoAction"
+        id="gdeupsb.TbcMaintainTbcInfo" />
+</x:beans>

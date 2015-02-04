@@ -1,0 +1,48 @@
+<x:beans xmlns:x="http://www.springframework.org/schema/beans"
+    xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                        http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+                        
+    <!--投注查询-->
+    <process id="queryCathecticAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <action id="act" ref="gdeupsb.QueryCathecticAction"/>
+        </actions>
+    </process>
+    
+    <!--用户注册查询-->
+     <process id="queryRegisterAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <action id="act" ref="gdeupsb.QueryRegisterAction"/>
+        </actions>
+    </process>
+    
+    <!--用户实时投注 -->
+    <process id="cathecticOnTimeAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <action id="act" ref="gdeupsb.CathecticOnTimeAction"/>
+        </actions>
+    </process>
+    
+    <!--用户登录 -->
+     <process id="loginAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <action id="act" ref="gdeupsb.LoginAction"/>
+        </actions>
+    </process>
+    
+    <!--用户注册 -->
+     <process id="registAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <action id="act" ref="gdeupsb.RegistAction"/>
+        </actions>
+    </process>
+    
+     <!--用户更新注册 -->
+     <process id="updateRegistInfoAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <action id="act" ref="gdeupsb.UpdateRegistInfoAction"/>
+        </actions>
+    </process>
+    
+</x:beans>

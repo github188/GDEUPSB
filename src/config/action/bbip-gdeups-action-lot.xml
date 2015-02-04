@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<x:beans xmlns:x="http://www.springframework.org/schema/beans"
+    xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd       http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+
+    <!--投注查询-->
+    <action class="com.bocom.bbip.gdeupsb.action.lot.QueryCathecticAction"
+        id="gdeupsb.QueryCathecticAction" />
+    <!--用户注册信息查询 -->
+    <action class="com.bocom.bbip.gdeupsb.action.lot.QueryRegisterAction"
+        id="gdeupsb.QueryRegisterAction" />
+    <!--用户实时投注 -->
+    <action class="com.bocom.bbip.gdeupsb.action.lot.CathecticOnTimeAction"
+        id="gdeupsb.CathecticOnTimeAction" />
+    <!--用户登录 -->
+    <action class="com.bocom.bbip.gdeupsb.action.lot.LoginAction"
+        id="gdeupsb.LoginAction" />
+    <!--用户注册-->
+    <action class="com.bocom.bbip.gdeupsb.action.lot.RegistAction"
+        id="gdeupsb.RegistAction" />
+    <!--用户更新注册-->
+    <action class="com.bocom.bbip.gdeupsb.action.lot.UpdateRegistInfoAction"
+        id="gdeupsb.UpdateRegistInfoAction" />
+        
+</x:beans>

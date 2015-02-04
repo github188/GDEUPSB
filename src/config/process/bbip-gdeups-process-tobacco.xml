@@ -1,0 +1,69 @@
+<x:beans xmlns:x="http://www.springframework.org/schema/beans"
+    xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                        http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+                        
+    <!--烟草客户余额查询-->
+    <process id="gdeupsb.findClientRemainingMoney" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <action id="act" ref="gdeupsb.FindClientRemainingMoney"/>
+        </actions>
+    </process>
+    
+    <!--第三方对账-->
+    <process id="gdeupsb.checkFileToThird" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <action id="act" ref="gdeupsb.CheckFileToThirdAction"/>
+        </actions>
+    </process>
+    
+    <!--烟草签到-->
+    <process id="gdeupsb.signIn" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <action id="act" ref="gdeupsb.TbcSignInAction"/>
+        </actions>
+    </process>
+    
+    <!--烟草签退-->
+    <process id="gdeupsb.signOut" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <action id="act" ref="gdeupsb.TbcSignOutAction"/>
+        </actions>
+    </process>
+    
+    <!--烟草通讯状态测试-->
+    <process id="gdeupsb.communicateStateTest" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <action id="act" ref="gdeupsb.TbcCommunicateStateTest"/>
+        </actions>
+    </process>
+    
+    <!--烟草公司对开户、销户、划扣的校正检查-->
+    <process id="gdeupsb.verifyToThirdAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <!-- 签到状态检查 -引用公共版 -->
+            <action id="act" ref="gdeupsb.TbcVerifyToThirdAction"/>
+        </actions>
+    </process>
+    <!--烟草开户-->
+    <process id="gdeupsb.establishAccountAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <action id="act" ref="gdeupsb.EstablishAccountAction"/>
+        </actions>
+    </process>
+    <!--烟草销户-->
+    <process id="gdeupsb.destroyAccountAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <action id="act" ref="gdeupsb.DestroyAccountAction"/>
+        </actions>
+    </process>
+    
+    
+
+    <!--广东烟草公司信息维护-->
+    <process id="maintainTbcInfo" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <action id="act" ref="gdeupsb.TbcMaintainTbcInfo"/>
+        </actions>
+    </process>
+</x:beans>
