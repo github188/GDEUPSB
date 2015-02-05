@@ -58,6 +58,7 @@
 
 	<bean id="LOTR01Transport" class="com.bocom.bbip.gdeupsb.channel.tcp.GdLotTransCodTransport">
 		<property name="gateway" ref="LOTR01GateWay" />
+		<!-- 
 		<property name="encodeTransforms">
 			<array>
 				<bean class="com.bocom.jump.bp.channel.interceptors.EncoderTransform">
@@ -72,6 +73,7 @@
 				</bean>
 			</array>
 		</property>
+		 -->
 		<property name="transportListener">
 			<bean class="com.bocom.jump.bp.channel.DefaultTransportListener"></bean>
 		</property>
