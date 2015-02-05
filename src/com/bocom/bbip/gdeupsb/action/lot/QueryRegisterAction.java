@@ -9,10 +9,12 @@ import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
+import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.entity.GdLotCusInf;
 import com.bocom.bbip.gdeupsb.repository.GdLotCusInfRepository;
+import com.bocom.bbip.thd.org.apache.commons.lang.StringUtils;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
@@ -56,34 +58,25 @@ public class QueryRegisterAction  extends BaseAction{
         context.setData("gambler_pwd", context.getData("lotPsw"));
         context.setData("modify_time", context.getData("fTXNTm"));
         Map<String, Object> resultMap= get(ThirdPartyAdaptor.class).trade(context);
+       
         CommThdRspCdeAction cRspCdeAction = new CommThdRspCdeAction();
         String responseCode = cRspCdeAction.getThdRspCde(resultMap,  context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
         log.info("responseCode:["+responseCode+"]");
-        if(!Constants.RESPONSE_CODE_SUCC.equals(responseCode)){
+        context.setDataMap(resultMap);
+        if(BPState.isBPStateOvertime(context)){
+            throw new CoreException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
+        }else if(!((Constants.RESPONSE_CODE_SUCC).equals(responseCode))){
+            if(StringUtils.isEmpty(responseCode)){
+                //未知错误
+                throw new CoreException(ErrorCodes.TRANSACTION_ERROR_OTHER);
+            }
             log.info("QueryLot Fail!");
             context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
             context.setData(ParamKeys.RSP_CDE, "LOT999");
-            context.setData(ParamKeys.RSP_MSG, "系统角色登录失败!!!");
+            context.setData(ParamKeys.RSP_MSG, "彩民查询失败!!!");
             return;
         }
-          /* <Exec func="PUB:CallThirdOther"  error="IGNORE">
-             <Arg name="HTxnCd" value="209"/>
-             <Arg name="ObjSvr" value="STHDLOTA"/>
-           </Exec>
-           <If condition="~RetCod=-1">
-              <Exec func="PUB:RollbackWork" error="IGNORE"/>
-              <Set>MsgTyp=E</Set>
-              <Set>RspCod=LOT999</Set>
-              <Set>RspMsg=彩民查询超时</Set>
-              <Return/>
-           </If>
-           <If condition="~RetCod!=0">
-              <Exec func="PUB:RollbackWork" error="IGNORE"/>
-              <Set>MsgTyp=E</Set>
-              <Set>RspCod=LOT999</Set>
-              <Set>RspMsg=彩民查询失败</Set>
-              <Return/>
-           </If>*/
+        
         context.setData("MsgTyp",Constants.RESPONSE_TYPE_SUCC);
         context.setData(ParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
         context.setData(ParamKeys.RSP_MSG,Constants.RESPONSE_MSG);

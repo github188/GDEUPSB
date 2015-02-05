@@ -21,5 +21,9 @@
     <!--用户更新注册-->
     <action class="com.bocom.bbip.gdeupsb.action.lot.UpdateRegistInfoAction"
         id="gdeupsb.UpdateRegistInfoAction" />
+       
+   <!-- 游戏对账  -->
+    <action class="com.bocom.bbip.gdeupsb.action.lot.DeductMoneyAction"
+        id="gdeupsb.DeductMoneyAction" />
         
 </x:beans>

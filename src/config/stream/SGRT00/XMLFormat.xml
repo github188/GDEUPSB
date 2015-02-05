@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/xml"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/xml xml.xsd"
+      name="DLMAPS" trace="true" encoding="GBK">
+   <record name="pub">
+   
+        <string name="TRADE_ID" referred="true" mapping="true"/>  
+        <string name="TRAN_TIME" />
+        <string name="BANK_ID" />
+        <string name="DPT_ID" />
+        <string name="TRADE_SEQ" />
+        <string name="APP_TYPE" />
+    </record>
+        <select name="body" key="MsgType" default="N">
+            <include name="N" keys="TransCode" encodePrefix="p" decodePrefix="f" />
+        </select>
+    
+
+</message>

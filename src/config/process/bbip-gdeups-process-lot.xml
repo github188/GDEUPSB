@@ -45,4 +45,11 @@
         </actions>
     </process>
     
+      <!--游戏对账-->
+     <process id="deductMoneyAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <action id="act" ref="gdeupsb.DeductMoneyAction"/>
+        </actions>
+    </process>
+    
 </x:beans>

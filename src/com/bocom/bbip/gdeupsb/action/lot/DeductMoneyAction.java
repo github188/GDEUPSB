@@ -123,7 +123,7 @@ public class DeductMoneyAction extends BaseAction {
             context.setData(ParamKeys.RSP_MSG, "对账更新状态失败!");
             return;
         }
-        // 更新我方多账的状态 --"对购彩记录进行对账(对账失败)
+        //  更新我方多账的状态 --"对购彩记录进行对账(对账失败)
         try {
             get(GdLotTxnJnlRepository.class).updateUnMatchLotTxnJnl(gdLotTxnJnl);
         } catch(Exception e){

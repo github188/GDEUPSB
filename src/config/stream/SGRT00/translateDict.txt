@@ -1,0 +1,18 @@
+# the dictionary is for translate data between our system and other system.
+## every line format is: keyName.[ourvalue]=[othervalue]
+##
+##  During formating message out, it will translate [ourvalue] to [othervalue];
+##  During parsing message in, it will translate [othervalue] to [ourvalue].
+#  filter="both,packets/translateDict.txt"
+#  filter="format,packets/translateDict.txt"
+#  filter="parse,packets/translateDict.txt"
+
+TransCode.gdeupsb.communicateStateTest=8888
+TransCode.gdeupsb.verifyToThirdAction=8926
+TransCode.eups.payUnilateralToBank=8914
+TransCode.gdeupsb.findClientRemainingMoney=8924
+TransCode.gdeupsb.checkFileToThird=8918
+TransCode.gdeupsb.signIn=8910
+TransCode.gdeupsb.signOut=8911
+TransCode.gdeupsb.establishAccountAction=8912
+TransCode.gdeupsb.destroyAccountAction=8913

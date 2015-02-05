@@ -66,6 +66,7 @@ public class DestroyAccountAction extends BaseAction {
             context.setData(GDParamKeys.RSP_MSG,"账号已注销!！！");
             return; 
         }
+        
       //检查用户名是否匹配
         String cusNme = context.getData("cusNme").toString().trim();
         String tCusNm = accessObject.getData("tCusNm").toString().trim();
@@ -103,6 +104,7 @@ public class DestroyAccountAction extends BaseAction {
             context.setData(GDParamKeys.RSP_MSG,"数据库处理失败!！！");
             return;
         }
+
         context.setData(GDParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
         context.setData(GDParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);

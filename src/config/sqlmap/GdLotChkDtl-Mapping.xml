@@ -23,19 +23,15 @@
   
    <update id="updateByGameIdAndDrawId" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotChkDtl" >
     update gdeupsb.GDEUPS_LOT_CHK_DTL
-    <set >
-        CHK_FLG = #{chkFlg,jdbcType=CHAR}, CHK_TIM = #{chkTim,jdbcType=CHAR}
-    </set>
-    where GAME_ID = #{gameId,jdbcType=CHAR} AND DRAW_ID = #{drawId,jdbcType=CHAR}
+       set CHK_FLG = #{chkFlg,jdbcType=CHAR}, CHK_TIM = #{chkTim,jdbcType=CHAR}
+          where GAME_ID = #{gameId,jdbcType=CHAR} AND DRAW_ID = #{drawId,jdbcType=CHAR}
   </update>
 
     <update id="updateMatchLotChkDtl" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotChkDtl" >
     update gdeupsb.GDEUPS_LOT_CHK_DTL
-    <set >
-        CHK_FLG = '1', CHK_TIM = #{chkTim,jdbcType=CHAR}
-    </set>
-    where GAME_ID = #{gameId,jdbcType=CHAR} AND DRAW_ID = #{drawId,jdbcType=CHAR}
-         AND TXN_LOG in 
+    set CHK_FLG = '1', CHK_TIM = #{chkTim,jdbcType=CHAR}
+        where GAME_ID = #{gameId,jdbcType=CHAR} AND DRAW_ID = #{drawId,jdbcType=CHAR}
+           AND TXN_LOG in 
            (select TXN_LOG from GDEUPS_LOT_TXN_JNL  where GAME_ID= #{gameId,jdbcType=CHAR} 
                AND DRAW_ID = #{drawId,jdbcType=CHAR} and CHK_FLG='1' )
   </update>
