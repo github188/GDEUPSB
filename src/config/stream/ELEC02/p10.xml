@@ -6,37 +6,38 @@
 			<fixString name="ECD"   length="12"/>   <!-- 收付费企业代码-->
 			<fixString name="WD0" length="8"/>   <!-- 工作日期-->
 			<fixString name="CLZ"   length="16"/>   <!-- 流水-->
-			<fixString name="D051"   length="8"/>   <!-- 原委托日期-->
+			<fixString name="O51"   length="8"/>   <!-- 原委托日期-->
 			<fixString name="OCC"   length="3"/>   <!-- 原指令代码-->
 			<fixString name="OCN"   length="12"/>   <!-- 原委托节点代码-->
 			<fixString name="OLZ"  length="16"/>   <!-- 原业务流水号-->
 			<fixString name="JFH"   length="32"/>   <!-- 缴费号-->
 			<fixString name="CLM"  length="64"/>   <!-- 客户名称-->
 			<fixString name="QFI"  length="255"/>   <!-- 欠费总信息内容-->
-			<fixString name="QFM" length="12"/>   <!-- 欠费总金额-->
+			<fixString name="OweFeeAmt" length="12" referred="true"/>   <!-- 欠费总金额-->
+			<addString name="oweFeeAmt"  expression="exp:@com.bocom.bbip.utils.NumberUtils@centToYuan(this.OweFeeAmt)" />
 			<fixString name="PCF"   length="1"/>   <!-- 部分缴费标志-->
 			<fixString name="OAN"  length="32"/>   <!-- 供电局银行账号-->
 			<segment name="QF">
-				<loop name="QFLIST">
+				<loop name="rspList">
 					<segment name="qfrecord">
-						<fixString name="QFXXH" length="2"/>   <!-- 欠费项序号-->
-						<fixString name="QFXQFNR" length="255"/>   <!-- 欠费项欠费内容-->
-						<fixString name="KHMC" length="80"/>   <!-- 客户名称-->
-						<fixString name="JLDH" length="5"/>   <!-- 计量点号-->
-						<fixString name="YSPZH" length="16"/>   <!-- 应收凭证号-->
-						<fixString name="DJ" length="8"/>   <!-- 电价 -->
+						<fixString name="JFXH" length="2"/>   <!-- 欠费项序号-->
+						<fixString name="QFTX" length="255"/>   <!-- 欠费项欠费内容-->
+						<fixString name="UNM" length="80"/>   <!-- 客户名称-->
+						<fixString name="JLD" length="5"/>   <!-- 计量点号-->
+						<fixString name="YSH" length="16"/>   <!-- 应收凭证号-->
+						<fixString name="DLJG" length="8"/>   <!-- 电价 -->
 						<fixString name="TBDL" length="8"/>   <!-- 退补电量-->
 						<fixString name="SYHM" length="10"/>   <!-- 上月行码-->
 						<fixString name="BYHM" length="10"/>   <!-- 本月行码-->
-						<fixString name="DBZCBH" length="16"/>   <!-- 电表资产编号-->
-						<fixString name="DBCCBH" length="16"/>   <!-- 电表出厂编号-->
-						<fixString name="CBRQ" length="8"/>   <!-- 抄表日期-->
-						<fixString name="QFXQFJE" length="12"/>   <!-- 欠费项欠费金额-->
-						<fixString name="CS" length="2"/>   <!-- 次数-->
-						<fixString name="YF" length="6"/>   <!-- 月份-->
-						<fixString name="WYJ" length="12"/>   <!-- 违约金-->
-						<fixString name="BJ" length="12"/>   <!-- 本金-->
-						<fixString name="DL" length="8"/>   <!-- 电量-->
+						<fixString name="DBZC" length="16"/>   <!-- 电表资产编号-->
+						<fixString name="DBCC" length="16"/>   <!-- 电表出厂编号-->
+						<fixString name="CBDT" length="8"/>   <!-- 抄表日期-->
+						<fixString name="JFJE" length="12"/>   <!-- 欠费项欠费金额-->
+						<fixString name="MNS" length="2"/>   <!-- 次数-->
+						<fixString name="MON" length="6"/>   <!-- 月份-->
+						<fixString name="PCC" length="12"/>   <!-- 违约金-->
+						<fixString name="CPS" length="12"/>   <!-- 本金-->
+						<fixString name="DNLN" length="8"/>   <!-- 电量-->
 					</segment>
 				</loop>
 			</segment>
