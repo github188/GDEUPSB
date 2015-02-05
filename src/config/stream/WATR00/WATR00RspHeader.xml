@@ -12,8 +12,9 @@
 		<fixString name="salesdepart"    length="6"/><!-- 营业点 -->
 		<fixString name="salesperson"    length="6"/><!-- 营业员 -->
 		<fixString name="busitime"         length="14"/><!-- 交易时间 -->
-		<fixString name="thdRspCde"        length="4"/><!-- 错误码，0-成功，非0-有错误 -->
-		<fixString name="zprice"            length="11"/><!-- 本次缴费总金额 -->
+		<fixString name="thdRspCde"        length="4" /><!-- 错误码，0-成功，非0-有错误 -->
+		<fixString name="OweFeeAmt"    length="11" referred="true"/><!-- 本次缴费总金额 -->
+		<addString name="oweFeeAmt"  expression="exp:@com.bocom.bbip.utils.NumberUtils@centToYuan(this.OweFeeAmt)" />
 		<fixString name="months"           length="4"/><!-- 未缴费月数 -->
 		<fixString name="operano"          length="4"/><!-- 业务代码 -->
 		<fixString name="password"        length="8"/><!-- 鉴权密码 -->

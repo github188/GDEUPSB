@@ -6,12 +6,12 @@
 			<fixString name="hno"         length="9"/>   <!-- 户号-->
 			<fixString name="month"     length="6"/>   <!-- 月份yyyyMM-->
 			<fixString name="name"      length="40"/>   <!-- 用户名称-->
-			<fixString name="addr"       length="50"/>   <!-- 地址-->
+			<fixString name="addr"       length="50" />   <!-- 地址-->
 			<fixString name="newaddr"  length="50"/>   <!-- 新地址-->
 			<segment name="response">
 				<loop name="rspList" count="LLLL">
 					<segment name="rspRecord">
-						<fixString name="responseindex"  length="4"/>   <!-- 包序号-->
+						<fixString name="resonseIndex"  length="4"/>   <!-- 包序号-->
 						<fixString name="je"                    length="11"/>   <!-- 水费收缴总金额，以分为单位-->
 						<fixString name="pnum"                length="11"/>   <!-- 本月行码-->
 						<fixString name="lnum"                 length="11"/>   <!-- 上月行码-->
@@ -23,7 +23,7 @@
 						<fixString name="price"                length="11"/>   <!-- 水费，以分为单位-->
 						<fixString name="pwf"                  length="11"/>   <!-- 污水费，以分为单位-->
 						<fixString name="pprice"              length="11"/>   <!-- 邮寄费，以分为单位-->
-						<fixString name="cdata"               length="14"/>   <!-- 抄表日期YYYYMMDDHH24MISS-->
+						<fixString name="cdate"               length="14"/>   <!-- 抄表日期YYYYMMDDHH24MISS-->
 						<fixString name="kk"                   length="1"/>   <!-- 扣款标志-->
 						<fixString name="cnjxs"               length="11"/>   <!-- 违约金系数，以厘为单位-->
 						<fixString name="ljprice"             length="11"/>   <!-- 垃圾费，以分为单位-->

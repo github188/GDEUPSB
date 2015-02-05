@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="D013Request">
+			<fixString name="path" length="255"/>   <!-- 上传目录 -->
+			<fixString name="filename" length="255"/>   <!-- 文件名称 -->
+			<fixString name="filesize" length="11"/>   <!-- 文件大小 -->
+			<fixString name="reserved" length="10"/>   <!-- 保留字段 -->
+</segment>
