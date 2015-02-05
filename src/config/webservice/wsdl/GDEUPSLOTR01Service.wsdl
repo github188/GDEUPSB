@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSLOTR01Service" xmlns:gdeups="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSLOTR01Service/Schema" name="GDEUPSLOTR01Service" targetNamespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSLOTR01Service">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSLOTR01Service">
+      <xsd:import namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSLOTR01Service/Schema" schemaLocation="GDEUPSLOTR01Service.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="cancelPlanPayRequestMessage">
+    <wsdl:part name="cancelPlanPayRequest" element="gdeups:cancelPlanPay"/>
+  </wsdl:message>
+  <wsdl:message name="cancelPlanPayResponseMessage">
+    <wsdl:part name="cancelPlanPayResponse" element="gdeups:cancelPlanPayResponse"/>
+  </wsdl:message>
+  <wsdl:message name="queryPlanPayRequestMessage">
+    <wsdl:part name="queryPlanPayRequest" element="gdeups:queryPlanPay"/>
+  </wsdl:message>
+  <wsdl:message name="queryPlanPayResponseMessage">
+    <wsdl:part name="queryPlanPayResponse" element="gdeups:queryPlanPayResponse"/>
+  </wsdl:message>
+  <wsdl:message name="insertPlanPayRequestMessage">
+    <wsdl:part name="insertPlanPayRequest" element="gdeups:insertPlanPay"/>
+  </wsdl:message>
+  <wsdl:message name="insertPlanPayResponseMessage">
+    <wsdl:part name="insertPlanPayResponse" element="gdeups:insertPlanPayResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="GDEUPSLOTR01ServicePortType">
+    <wsdl:operation name="cancelPlanPay">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:cancelPlanPayRequestMessage"/>
+      <wsdl:output message="tns:cancelPlanPayResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="queryPlanPay">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:queryPlanPayRequestMessage"/>
+      <wsdl:output message="tns:queryPlanPayResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="insertPlanPay">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:insertPlanPayRequestMessage"/>
+      <wsdl:output message="tns:insertPlanPayResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GDEUPSLOTR01ServiceSoapBinding" type="tns:GDEUPSLOTR01ServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="cancelPlanPay">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSLOTR01Service/cancelPlanPay"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryPlanPay">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSLOTR01Service/queryPlanPay"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="insertPlanPay">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSLOTR01Service/insertPlanPay"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GDEUPSLOTR01Service">
+    <wsdl:port name="GDEUPSLOTR01ServicePort" binding="tns:GDEUPSLOTR01ServiceSoapBinding">
+      <soap:address location="http://127.0.0.1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

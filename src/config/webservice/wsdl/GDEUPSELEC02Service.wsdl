@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service" xmlns:gdeups="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/Schema" name="GDEUPSELEC02Service" targetNamespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service">
+      <xsd:import namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/Schema" schemaLocation="GDEUPSELEC02Service.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="payFeeOffChanRequestMessage">
+    <wsdl:part name="payFeeOffChanRequest" element="gdeups:payFeeOffChan"/>
+  </wsdl:message>
+  <wsdl:message name="payFeeOffChanResponseMessage">
+    <wsdl:part name="payFeeOffChanResponse" element="gdeups:payFeeOffChanResponse"/>
+  </wsdl:message>
+  <wsdl:message name="payCancelOffChanRequestMessage">
+    <wsdl:part name="payCancelOffChanRequest" element="gdeups:payCancelOffChan"/>
+  </wsdl:message>
+  <wsdl:message name="payCancelOffChanResponseMessage">
+    <wsdl:part name="payCancelOffChanResponse" element="gdeups:payCancelOffChanResponse"/>
+  </wsdl:message>
+  <wsdl:message name="queryThirdFeeOffChanRequestMessage">
+    <wsdl:part name="queryThirdFeeOffChanRequest" element="gdeups:queryThirdFeeOffChan"/>
+  </wsdl:message>
+  <wsdl:message name="queryThirdFeeOffChanResponseMessage">
+    <wsdl:part name="queryThirdFeeOffChanResponse" element="gdeups:queryThirdFeeOffChanResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="GDEUPSELEC02ServicePortType">
+    <wsdl:operation name="payFeeOffChan">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:payFeeOffChanRequestMessage"/>
+      <wsdl:output message="tns:payFeeOffChanResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="payCancelOffChan">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:payCancelOffChanRequestMessage"/>
+      <wsdl:output message="tns:payCancelOffChanResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="queryThirdFeeOffChan">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:queryThirdFeeOffChanRequestMessage"/>
+      <wsdl:output message="tns:queryThirdFeeOffChanResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GDEUPSELEC02ServiceSoapBinding" type="tns:GDEUPSELEC02ServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="payFeeOffChan">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/payFeeOffChan"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="payCancelOffChan">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/payCancelOffChan"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryThirdFeeOffChan">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/queryThirdFeeOffChan"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GDEUPSELEC02Service">
+    <wsdl:port name="GDEUPSELEC02ServicePort" binding="tns:GDEUPSELEC02ServiceSoapBinding">
+      <soap:address location="http://127.0.0.1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

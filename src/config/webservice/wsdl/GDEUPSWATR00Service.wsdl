@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service" xmlns:gdeups="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service/Schema" name="GDEUPSWATR00Service" targetNamespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service">
+      <xsd:import namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service/Schema" schemaLocation="GDEUPSWATR00Service.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="payFeeOffChanRequestMessage">
+    <wsdl:part name="payFeeOffChanRequest" element="gdeups:payFeeOffChan"/>
+  </wsdl:message>
+  <wsdl:message name="payFeeOffChanResponseMessage">
+    <wsdl:part name="payFeeOffChanResponse" element="gdeups:payFeeOffChanResponse"/>
+  </wsdl:message>
+  <wsdl:message name="printTransJournalRequestMessage">
+    <wsdl:part name="printTransJournalRequest" element="gdeups:printTransJournal"/>
+  </wsdl:message>
+  <wsdl:message name="printTransJournalResponseMessage">
+    <wsdl:part name="printTransJournalResponse" element="gdeups:printTransJournalResponse"/>
+  </wsdl:message>
+  <wsdl:message name="printPublicMsgRequestMessage">
+    <wsdl:part name="printPublicMsgRequest" element="gdeups:printPublicMsg"/>
+  </wsdl:message>
+  <wsdl:message name="printPublicMsgResponseMessage">
+    <wsdl:part name="printPublicMsgResponse" element="gdeups:printPublicMsgResponse"/>
+  </wsdl:message>
+  <wsdl:message name="payCancelOffChanRequestMessage">
+    <wsdl:part name="payCancelOffChanRequest" element="gdeups:payCancelOffChan"/>
+  </wsdl:message>
+  <wsdl:message name="payCancelOffChanResponseMessage">
+    <wsdl:part name="payCancelOffChanResponse" element="gdeups:payCancelOffChanResponse"/>
+  </wsdl:message>
+  <wsdl:message name="queryThirdFeeOffChanRequestMessage">
+    <wsdl:part name="queryThirdFeeOffChanRequest" element="gdeups:queryThirdFeeOffChan"/>
+  </wsdl:message>
+  <wsdl:message name="queryThirdFeeOffChanResponseMessage">
+    <wsdl:part name="queryThirdFeeOffChanResponse" element="gdeups:queryThirdFeeOffChanResponse"/>
+  </wsdl:message>
+  <wsdl:message name="queryHistoryMsgRequestMessage">
+    <wsdl:part name="queryHistoryMsgRequest" element="gdeups:queryHistoryMsg"/>
+  </wsdl:message>
+  <wsdl:message name="queryHistoryMsgResponseMessage">
+    <wsdl:part name="queryHistoryMsgResponse" element="gdeups:queryHistoryMsgResponse"/>
+  </wsdl:message>
+  <wsdl:message name="queryThirdCusRequestMessage">
+    <wsdl:part name="queryThirdCusRequest" element="gdeups:queryThirdCus"/>
+  </wsdl:message>
+  <wsdl:message name="queryThirdCusResponseMessage">
+    <wsdl:part name="queryThirdCusResponse" element="gdeups:queryThirdCusResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="GDEUPSWATR00ServicePortType">
+    <wsdl:operation name="payFeeOffChan">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:payFeeOffChanRequestMessage"/>
+      <wsdl:output message="tns:payFeeOffChanResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="printTransJournal">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:printTransJournalRequestMessage"/>
+      <wsdl:output message="tns:printTransJournalResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="printPublicMsg">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:printPublicMsgRequestMessage"/>
+      <wsdl:output message="tns:printPublicMsgResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="payCancelOffChan">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:payCancelOffChanRequestMessage"/>
+      <wsdl:output message="tns:payCancelOffChanResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="queryThirdFeeOffChan">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:queryThirdFeeOffChanRequestMessage"/>
+      <wsdl:output message="tns:queryThirdFeeOffChanResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="queryHistoryMsg">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:queryHistoryMsgRequestMessage"/>
+      <wsdl:output message="tns:queryHistoryMsgResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="queryThirdCus">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:queryThirdCusRequestMessage"/>
+      <wsdl:output message="tns:queryThirdCusResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GDEUPSWATR00ServiceSoapBinding" type="tns:GDEUPSWATR00ServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="payFeeOffChan">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service/payFeeOffChan"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="printTransJournal">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service/printTransJournal"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="printPublicMsg">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service/printPublicMsg"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="payCancelOffChan">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service/payCancelOffChan"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryThirdFeeOffChan">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service/queryThirdFeeOffChan"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryHistoryMsg">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service/queryHistoryMsg"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryThirdCus">
+      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service/queryThirdCus"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GDEUPSWATR00Service">
+    <wsdl:port name="GDEUPSWATR00ServicePort" binding="tns:GDEUPSWATR00ServiceSoapBinding">
+      <soap:address location="http://127.0.0.1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
