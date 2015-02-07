@@ -309,4 +309,23 @@ public class GDConstants {
 
 	/*********** 中山批量文件系统 *******************/
 	public static final String FDPD_RSP_COD = "481299";
+	
+	
+	// /** 0:对私 **/
+    // public static final String GZ_ELE_PAY_MDE_0 = "0";
+    //
+    // /** 1：对公 **/
+    // public static final String GZ_ELE_PAY_MDE_1 = "1";// /** 0:对私 **/
+    // public static final String GZ_ELE_PAY_MDE_0 = "0";
+    //
+    // /** 1：对公 **/
+    // public static final String GZ_ELE_PAY_MDE_1 = "1";// /** 0:对私 **/
+    // public static final String GZ_ELE_PAY_MDE_0 = "0";
+    //
+    // /** 1：对公 **/
+    // public static final String GZ_ELE_PAY_MDE_1 = "1";// /** 0:对私 **/
+    // public static final String GZ_ELE_PAY_MDE_0 = "0";
+    //
+    // /** 1：对公 **/
+    // public static final String GZ_ELE_PAY_MDE_1 = "1";
 }
