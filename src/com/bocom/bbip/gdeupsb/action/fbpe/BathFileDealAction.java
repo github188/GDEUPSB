@@ -26,10 +26,11 @@ import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.eups.spi.service.batch.BatchAcpService;
 import com.bocom.bbip.eups.spi.vo.PrepareBatchAcpDomain;
 import com.bocom.bbip.file.Marshaller;
+import com.bocom.bbip.gdeupsb.entity.GdFbpeFileBatchTmp;
+import com.bocom.bbip.gdeupsb.repository.GdFbpeFileBatchTmpRepository;
 import com.bocom.bbip.gdeupsb.strategy.elcgd.AftCnlBnkSglDealStrategyAction;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.FileUtils;
-import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -49,12 +50,14 @@ public class BathFileDealAction implements BatchAcpService {
     EupsBatchConsoleInfoRepository batchConsoleInfoRepository;
     @Autowired
     Marshaller marshaller;
+    @Autowired
+    GdFbpeFileBatchTmpRepository fileBatchTmpRepository;
     @SuppressWarnings("unchecked")
     @Override
     public List<EupsBatchPayEntity> prepareBatchDeal(PrepareBatchAcpDomain preparebatchacpdomain, Context context)
             throws CoreException {
         log.info("BathFileDealAction start!..");
-        List <EupsBatchPayEntity> payDetailLst = new ArrayList<EupsBatchPayEntity>();
+        List <GdFbpeFileBatchTmp> payDetailLst = new ArrayList<GdFbpeFileBatchTmp>();
         String comNo = context.getData("cAgtNo").toString();
         // 检查签到签退
         EupsThdTranCtlInfo eupsThdTranCtlInfo = thdTranCtlInfoRepository.findOne(comNo);
@@ -79,78 +82,74 @@ public class BathFileDealAction implements BatchAcpService {
             <Exec func="PUB:ReadRecord">
                 <Arg name="SqlCmd" value="GetBatInf"></Arg>
             </Exec>*/
-        /*   //交易上锁
-        //TODO AplCls ？？？
-        String recKey = context.getData("aplCls")+":"+context.getData("txnCod")+":"+fileName;
-        
-        context.setData(ParamKeys.WS_TRANS_CODE,"GetChk");
-    
-        Result ret = get(BBIPPublicService.class).tryLock( recKey, (long) 0,(long) 30);
-        int status = ret.getStatus();
-        if (status != 0) {
-            log.info("交易并发，请稍后在做");
-            context.setData(ParamKeys.RSP_CDE,"329999");
-            context.setData(ParamKeys.RSP_MSG,"交易并发，请稍后在做 !!");
-            throw new CoreException("交易并发，请稍后在做 ");
-        }*/
-        
         String localFileName=fileName+"."+context.getData(ParamKeys.BK);
         // @PARA.RcvMod 为0 磁盘拷贝
         String srcFilName= "dat/term/recv/"+fileName;
         String objFilName ="dat/fbp/"+localFileName;
        
-        File srcFil =new File(srcFilName);
-        File objFil =new File(objFilName);
+        File srcFile =new File(srcFilName);
+        File objFile =new File(objFilName);
         
         try {
-            FileUtils.copyFile(srcFil, objFil);
+            FileUtils.copyFile(srcFile, objFile);
         } catch (IOException e) {
             log.info("cope File Error"+ e);
             context.setData(ParamKeys.RSP_CDE,"478007");
             context.setData(ParamKeys.RSP_MSG,"拷贝文件失败");
             return null;
         }
-       //++++++++++++++++++++++++++++++++++++++++++   +++++++++++++++
       //自行实现解析文件
       //Resource resource = new FileSystemResource(TransferUtils.resolveFilePath(eupsThdFtpInf.getLocDir().trim(), eupsThdFtpInf.getLocFleNme().trim()));
-        Resource resource = new FileSystemResource(objFil);
+        Resource resource = new FileSystemResource(objFile);
         Map<String,Object> map = new HashMap<String, Object>(); 
+        //根据单位编号寻找格式文件解析
         if(comNo.equals("tv")) {
-            try {
+            try { 
                 map= marshaller.unmarshal("tvFbpeBatFmt", resource, Map.class);
             } catch (JumpException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         } else if (comNo.equals("gas")) {
-            //根据单位编号判断解析文件格式   mob ,tel等
+            try {
+                map= marshaller.unmarshal("gasFbpeBatFmt", resource, Map.class);
+            } catch (JumpException e) {
+                e.printStackTrace();
+            }
+        }  else if (comNo.equals("mob")) {
+            try {
+                map= marshaller.unmarshal("mobFbpeBatFmt", resource, Map.class);
+            } catch (JumpException e) {
+                e.printStackTrace();
+            }
+        } else if (comNo.equals("tel")) {
+            try {
+                map= marshaller.unmarshal("telFbpeBatFmt", resource, Map.class);
+            } catch (JumpException e) {
+                e.printStackTrace();
+            }
         }
 
-//        Map<String,Object> orgHeadMap=(Map<String, Object>) map.get("header");
+        // Map<String,Object> orgHeadMap=(Map<String, Object>) map.get("header");
         List<Map<String, Object>> parseMap = (List<Map<String, Object>>) map.get("detail");  //文件体
-       // List<Map<String, Object>> parseMap = operateFile.pareseFile(eupsThdFtpInf, "eleGzBatFmt"); // 解析只有detail文件
-        
+        // List<Map<String, Object>> parseMap = operateFile.pareseFile(eupsThdFtpInf, "eleGzBatFmt"); // 解析只有detail文件
         for (Map<String, Object> orgMap : parseMap) {
-            EupsBatchPayEntity batchPayDtl = new EupsBatchPayEntity();
-            batchPayDtl.setCusAc((String) orgMap.get("cusAc")); // 客户帐号
-            BigDecimal txnAmt = NumberUtils.centToYuan((String) orgMap.get("tTxnAmt")); // 交易金额
-            batchPayDtl.setTxnAmt(txnAmt);
-            batchPayDtl.setAgtSrvCusId((String) orgMap.get("thdCusNo")); // 第三方客户标志
-            payDetailLst.add(batchPayDtl);
+            GdFbpeFileBatchTmp batchTem = new GdFbpeFileBatchTmp();
+            batchTem.setAccAmt((String) orgMap.get("accAmt"));
+            batchTem.setAccNo((String) orgMap.get("accNo"));
+            batchTem.setActNo((String) orgMap.get("actNo"));
+            batchTem.setSqn((String) orgMap.get("sqn"));
+            batchTem.setTxnNo((String) orgMap.get("txnNo"));
+            batchTem.setOrgCde((String) orgMap.get("orgCde"));
+            batchTem.setTlrNo((String) orgMap.get("tlrNo"));
+            batchTem.setTxnTim((String) orgMap.get("txnTme"));
+            batchTem.setCusNo((String) orgMap.get("cusNo"));
+            batchTem.setCusAc((String) orgMap.get("cusAc"));
+            batchTem.setCusNam((String) orgMap.get("cusNam"));
+            batchTem.setTxnAmt((String) orgMap.get("txnAmt"));
+            fileBatchTmpRepository.insert(batchTem);
+            payDetailLst.add(batchTem);
         }
         context.setData(ParamKeys.EUPS_BATCH_PAY_ENTITY_LIST, payDetailLst);
-
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         return null;
     }
 }
