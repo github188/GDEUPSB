@@ -368,6 +368,22 @@
 			<action id="act" ref="gdeups.agtListCrpInfAction" />
 		</actions>
 	</process>
+	
+	
+	
+	
+	   <!-- 签约批量文件的导入 -->
+<!--    <process id="gdeupsb.batchSignFileInput" template="eups.simpleTran"
+		interceptors="bbip.defaultInterceptors">
+		<actions>
+			<action id="act" ref="gdeups.fileInputPreAction" />
+			<action id="act" ref="gdeups.agtFileSendImlServiceAction"  	operations="agtFleSndByGdsId" />
+			<action id="act" ref="gdeups.preSignDealCheckAction" />
+		</actions>
+	</process> -->
+	
+	
+	
 
 	<!--清算轧差试算 -->
 	<action class="com.bocom.bbip.gdeupsb.action.lot.LotClearCountAction"

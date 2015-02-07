@@ -90,6 +90,34 @@ public final class GDErrorCodes {
 
 	/** 签约一站通-没有满足条件的记录 */
 	public static final String EUPS_SIGN_NO_RECORD_FOUND = "BBIP4400EU1708";
+	
+	/** 文件名不符合规范 */
+	public static final String EUPS_FILE_RULE_ERROR = "BBIP0004EU0137";
+	/** 文件名中的业务类型不正确 */
+	public static final String EUPS_FILE_BUSTYPE_ERROR = "BBIP0004EU0138";
+	/** 检查文件头中的网点号 */
+	public static final String EUPS_FILE_HEADBR_ERROR = "BBIP0004EU0139";
+	/** 文件头汇总笔数与明细不一致 */
+	public static final String  EUPS_FILE_HEADCNT_ERROR="BBIP0004EU0140";
+	/** 文件明细第 */
+	public static final String  EUPS_FILE_DETAIL_ERROR="BBIP0004EU0141";
+	/**打印报错**/
+	public static final String  PRINT_REPORT_ERROR="BBIP0004EU0142";
+	/**无打印模板**/
+	public static final String  PRINT_FMTFIL_ERROR="BBIP0004EU0143";
+	/**生成签约成功清单失败**/
+	public static final String  PRINT_SUCC_ERROR="BBIP0004EU0144";
+	/**生成签约失败清单失败**/
+	public static final String  PRINT_FAIL_ERROR="BBIP0004EU01445";
+	/**文件头的业务类型不对**/
+	public static final String EUPS_FILE_HEADSBID_ERROR="BBIP0004EU01446";
+	/**文件头的日期不对**/
+	public static final String EUPS_FILE_HEADDATE_ERROR="BBIP0004EU01447";
+	
+	
+	
+	
+	
 
 	// 汕头水费
 	/** 登录数据库错 */

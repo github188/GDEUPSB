@@ -119,6 +119,17 @@ public final class GDParamKeys {
 	/** 操作渠道txnCnl **/
 	public static final String SIGN_STATION_TXN_CNL = "signTxnCnl";
 
+	/** 签约成功的模板 **/
+	public static final String GDS_RPTSUCC_CONFI = "44101_batimp_suc|44102_batimp_suc|44103_batimp_suc|44104_batimp_suc|44105_batimp_suc|44106_batimp_suc|44107_batimp_suc|44108_batimp_suc";
+	/** 签约失败的模板 **/
+	public static final String GDS_RPTFIAL_CONFI = "44101_batimp_fail|44102_batimp_fail|44103_batimp_fail|44104_batimp_fail|44105_batimp_fail|44106_batimp_fail|44107_batimp_fail|44108_batimp_fail";
+	/** 成功的报表名称 ***/
+	public static final String GDS_SUCC_REPORT = "gdmodsignsuccbillReport";
+	/** 失败的报表名称 ***/
+	public static final String GDS_FAIL_REPORT = "gdmodsignfailbillReport";
+
+	public static final String GDS_BATCH_FILE = "batchSignGdsfile";
+
 	/********************* 签约一站通end **********************/
 
 	/********************* 福彩start **********************/
