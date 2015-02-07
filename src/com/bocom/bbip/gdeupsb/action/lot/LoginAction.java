@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.Map;
 
 import com.bocom.bbip.eups.action.BaseAction;
-import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
@@ -27,6 +26,7 @@ import com.bocom.jump.bp.core.CoreException;
  */
 public class LoginAction extends BaseAction {
     // dealId 运营商 141
+
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public void execute(Context context) throws CoreException {
@@ -41,6 +41,7 @@ public class LoginAction extends BaseAction {
             return;
         }
         //向福彩中心发出系统角色登录
+        context.setData("eupsBusTyp", "LOTR01");
         context.setData("type", "3");
         context.setData("action", "212");
         context.setData("version", "0");
@@ -49,26 +50,23 @@ public class LoginAction extends BaseAction {
         context.setData("mobile", "0");
         context.setData("phone", "0");
         context.setData("sent_time", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMddHHmmss));
-       // context.setData("user", context.getData("usrPam"));
-       // context.setData("pwd", context.getData("usrPas"));
+       // context.setData("usrPam", context.getData("usrPam"));
+       // context.setData("usrPas", context.getData("usrPas"));
         context.setData("usrPam", "tangdi");
         context.setData("usrPas", "123456");
 
         Transport ts = context.getService("STHDLOT1");
-        Map<String,Object> thdReturnMessage = null;//申请当前期号，奖期信息下载
+        Map<String,Object> resultMap = null;//申请当前期号，奖期信息下载
         try {
-            thdReturnMessage = (Map<String, Object>) ts.submit(context.getDataMap(), context);
+            resultMap = (Map<String, Object>) ts.submit(context.getDataMap(), context);
             context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
         } catch (CommunicationException e1) {
             e1.printStackTrace();
         } catch (JumpException e1) {
             e1.printStackTrace();
-        }
-
-        CommThdRspCdeAction cRspCdeAction = new CommThdRspCdeAction();
-        String responseCode = cRspCdeAction.getThdRspCde(thdReturnMessage,  context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
-        log.info("responseCode:["+responseCode+"]");
-        if(!Constants.RESPONSE_CODE_SUCC.equals(responseCode)){
+        }  
+        
+        if(!Constants.RESPONSE_CODE_SUCC.equals(resultMap.get("resultCode"))){
             log.info("QueryLot Fail!");
             context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
             context.setData(ParamKeys.RSP_CDE, "LOT999");
@@ -79,19 +77,18 @@ public class LoginAction extends BaseAction {
         //系统对时
         context.setData("action", "200");
         Transport transport = context.getService("STHDLOT1");
-        Map<String,Object> thdMessage = null;//申请当前期号，奖期信息下载
+        Map<String,Object> map = null;//申请当前期号，奖期信息下载
         try {
-            thdMessage = (Map<String, Object>) transport.submit(context.getDataMap(), context);
+            map = (Map<String, Object>) transport.submit(context.getDataMap(), context);
             context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
         } catch (CommunicationException e1) {
             e1.printStackTrace();
         } catch (JumpException e1) {
             e1.printStackTrace();
         }
-        CommThdRspCdeAction cRspCde = new CommThdRspCdeAction();
-        String thdResponsCode = cRspCde.getThdRspCde(thdMessage,  context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
-        log.info("responseCode:["+thdResponsCode+"]");
-        if(!Constants.RESPONSE_CODE_SUCC.equals(thdResponsCode)){
+       // Map<String, Object> map= get(ThirdPartyAdaptor.class).trade(context);
+
+        if(!Constants.RESPONSE_CODE_SUCC.equals(map.get("resultCode"))){
             log.info("Check Systerm Time  Fail!");
             context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
             context.setData(ParamKeys.RSP_CDE, "LOT999");

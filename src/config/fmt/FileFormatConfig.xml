@@ -4,14 +4,17 @@
 
 
 
-
 	<!-- 广东电力 -->
 	<file id="eleGzBatFmt" name="eleGzBatFmt" encoding="GBK"
 		lineSeparator="\n">
 		<line name="header" ref="config/fmt/fileFmt/eleGz/eleGzBatchActHeader.xml" encoding="GBK" />
 		<foreach name="detail" ref="config/fmt/fileFmt/eleGz/eleGzBatchActDetail.xml" encoding="GBK" />
 	</file>
-
-
+	
+	<!-- 佛山有线电视-->
+    <file id="tvFbpeBatFmt" name="eleGzBatFmt" encoding="GBK"
+        lineSeparator="\n">
+         <foreach name="detail" ref="config/fmt/fileFmt/fbpe/fbpeTvBatch.xml" encoding="GBK" />
+    </file>
 
 </files>

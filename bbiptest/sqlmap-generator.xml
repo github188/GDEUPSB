@@ -14,6 +14,5 @@
 			password="${dataSource.password}" />
 		<javaModelGenerator targetPackage="com.bocom.bbip.gdeupsb.entity" targetProject="GDEUPSB/src" />
 		<sqlMapGenerator targetPackage="config.sqlmap" targetProject="GDEUPSB/src" />
-		<table schema="GDEUPS" tableName="TRSP_PAY_INFO" domainObjectName="TrspPayInfo" />
-	</context>
+		<table schema="GDEUPSB" tableName="GD_ELEC_FILE_BATCH_TMP" domainObjectName="GdElecFileBatchTmp"/>
 </generatorConfiguration>

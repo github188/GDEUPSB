@@ -1,0 +1,616 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GDEupsEleTmp" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GDEupsEleTmp" >
+    <id column="SQN" property="sqn" jdbcType="CHAR" />
+    <result column="BANK_NO" property="bankNo" jdbcType="CHAR" />
+    <result column="COM_NO" property="comNo" jdbcType="CHAR" />
+    <result column="FILE_DTE" property="fileDte" jdbcType="CHAR" />
+    <result column="CCY" property="ccy" jdbcType="CHAR" />
+    <result column="BUS_KND" property="busKnd" jdbcType="CHAR" />
+    <result column="TOT_CNT" property="totCnt" jdbcType="CHAR" />
+    <result column="TOT_AMT" property="totAmt" jdbcType="DECIMAL" />
+    <result column="SUC_TOT_CNT" property="sucTotCnt" jdbcType="CHAR" />
+    <result column="SUC_TOT_AMT" property="sucTotAmt" jdbcType="DECIMAL" />
+    <result column="FAL_TOT_CNT" property="falTotCnt" jdbcType="CHAR" />
+    <result column="FAL_TOT_AMT" property="falTotAmt" jdbcType="DECIMAL" />
+    <result column="NUMBER" property="number" jdbcType="CHAR" />
+    <result column="THD_CUS_NO" property="thdCusNo" jdbcType="CHAR" />
+    <result column="THD_CUS_NME" property="thdCusNme" jdbcType="CHAR" />
+    <result column="CUS_AC" property="cusAc" jdbcType="CHAR" />
+    <result column="CUS_NME" property="cusNme" jdbcType="CHAR" />
+    <result column="FULL_DED_FLAG" property="fullDedFlag" jdbcType="CHAR" />
+    <result column="PAY_TYPE" property="payType" jdbcType="CHAR" />
+    <result column="ACCOUNT_NO" property="accountNo" jdbcType="CHAR" />
+    <result column="ELECTRICITY_YEARMONTH" property="electricityYearmonth" jdbcType="CHAR" />
+    <result column="PAYMENT_MONEY" property="paymentMoney" jdbcType="DECIMAL" />
+    <result column="CAPITIAL" property="capitial" jdbcType="DECIMAL" />
+    <result column="DEDIT" property="dedit" jdbcType="DECIMAL" />
+    <result column="PAYMENT_RESULT" property="paymentResult" jdbcType="CHAR" />
+    <result column="TXN_AMT" property="txnAmt" jdbcType="DECIMAL" />
+    <result column="BANK_SQN" property="bankSqn" jdbcType="CHAR" />
+    <result column="TXN_DTE" property="txnDte" jdbcType="DATE" />
+    <result column="TXN_TME" property="txnTme" jdbcType="TIMESTAMP" />
+    <result column="BAK_FLD" property="bakFld" jdbcType="VARCHAR" />
+    <result column="RSV_FLD1" property="rsvFld1" jdbcType="VARCHAR" />
+    <result column="RSV_FLD2" property="rsvFld2" jdbcType="VARCHAR" />
+    <result column="RSV_FLD3" property="rsvFld3" jdbcType="VARCHAR" />
+    <result column="RSV_FLD4" property="rsvFld4" jdbcType="VARCHAR" />
+    <result column="RSV_FLD5" property="rsvFld5" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    SQN, BANK_NO, COM_NO, FILE_DTE, CCY, BUS_KND, TOT_CNT, TOT_AMT, SUC_TOT_CNT, SUC_TOT_AMT, 
+    FAL_TOT_CNT, FAL_TOT_AMT, NUMBER, THD_CUS_NO, THD_CUS_NME, CUS_AC, CUS_NME, FULL_DED_FLAG, 
+    PAY_TYPE, ACCOUNT_NO, ELECTRICITY_YEARMONTH, PAYMENT_MONEY, CAPITIAL, DEDIT, PAYMENT_RESULT, 
+    TXN_AMT, BANK_SQN, TXN_DTE, TXN_TME, BAK_FLD, RSV_FLD1, RSV_FLD2, RSV_FLD3, RSV_FLD4, 
+    RSV_FLD5
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_ELE_TMP
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="bankNo!=null" >
+        AND  BANK_NO=#{bankNo,jdbcType=CHAR}
+      </if>
+      <if test="comNo!=null" >
+        AND  COM_NO=#{comNo,jdbcType=CHAR}
+      </if>
+      <if test="fileDte!=null" >
+        AND  FILE_DTE=#{fileDte,jdbcType=CHAR}
+      </if>
+      <if test="ccy!=null" >
+        AND  CCY=#{ccy,jdbcType=CHAR}
+      </if>
+      <if test="busKnd!=null" >
+        AND  BUS_KND=#{busKnd,jdbcType=CHAR}
+      </if>
+      <if test="totCnt!=null" >
+        AND  TOT_CNT=#{totCnt,jdbcType=CHAR}
+      </if>
+      <if test="totAmt!=null" >
+        AND  TOT_AMT=#{totAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="sucTotCnt!=null" >
+        AND  SUC_TOT_CNT=#{sucTotCnt,jdbcType=CHAR}
+      </if>
+      <if test="sucTotAmt!=null" >
+        AND  SUC_TOT_AMT=#{sucTotAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="falTotCnt!=null" >
+        AND  FAL_TOT_CNT=#{falTotCnt,jdbcType=CHAR}
+      </if>
+      <if test="falTotAmt!=null" >
+        AND  FAL_TOT_AMT=#{falTotAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="number!=null" >
+        AND  NUMBER=#{number,jdbcType=CHAR}
+      </if>
+      <if test="thdCusNo!=null" >
+        AND  THD_CUS_NO=#{thdCusNo,jdbcType=CHAR}
+      </if>
+      <if test="thdCusNme!=null" >
+        AND  THD_CUS_NME=#{thdCusNme,jdbcType=CHAR}
+      </if>
+      <if test="cusAc!=null" >
+        AND  CUS_AC=#{cusAc,jdbcType=CHAR}
+      </if>
+      <if test="cusNme!=null" >
+        AND  CUS_NME=#{cusNme,jdbcType=CHAR}
+      </if>
+      <if test="fullDedFlag!=null" >
+        AND  FULL_DED_FLAG=#{fullDedFlag,jdbcType=CHAR}
+      </if>
+      <if test="payType!=null" >
+        AND  PAY_TYPE=#{payType,jdbcType=CHAR}
+      </if>
+      <if test="accountNo!=null" >
+        AND  ACCOUNT_NO=#{accountNo,jdbcType=CHAR}
+      </if>
+      <if test="electricityYearmonth!=null" >
+        AND  ELECTRICITY_YEARMONTH=#{electricityYearmonth,jdbcType=CHAR}
+      </if>
+      <if test="paymentMoney!=null" >
+        AND  PAYMENT_MONEY=#{paymentMoney,jdbcType=DECIMAL}
+      </if>
+      <if test="capitial!=null" >
+        AND  CAPITIAL=#{capitial,jdbcType=DECIMAL}
+      </if>
+      <if test="dedit!=null" >
+        AND  DEDIT=#{dedit,jdbcType=DECIMAL}
+      </if>
+      <if test="paymentResult!=null" >
+        AND  PAYMENT_RESULT=#{paymentResult,jdbcType=CHAR}
+      </if>
+      <if test="txnAmt!=null" >
+        AND  TXN_AMT=#{txnAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="bankSqn!=null" >
+        AND  BANK_SQN=#{bankSqn,jdbcType=CHAR}
+      </if>
+      <if test="txnDte!=null" >
+        AND  TXN_DTE=#{txnDte,jdbcType=DATE}
+      </if>
+      <if test="txnTme!=null" >
+        AND  TXN_TME=#{txnTme,jdbcType=TIMESTAMP}
+      </if>
+      <if test="bakFld!=null" >
+        AND  BAK_FLD=#{bakFld,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld1!=null" >
+        AND  RSV_FLD1=#{rsvFld1,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld2!=null" >
+        AND  RSV_FLD2=#{rsvFld2,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld3!=null" >
+        AND  RSV_FLD3=#{rsvFld3,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld4!=null" >
+        AND  RSV_FLD4=#{rsvFld4,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld5!=null" >
+        AND  RSV_FLD5=#{rsvFld5,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_ELE_TMP
+    where SQN = #{sqn,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from ${GDEUPSB_SCHEMA}.GDEUPS_ELE_TMP
+    where SQN = #{sqn,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsEleTmp" >
+    insert into ${GDEUPSB_SCHEMA}.GDEUPS_ELE_TMP
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sqn != null" >
+        SQN,
+      </if>
+      <if test="bankNo != null" >
+        BANK_NO,
+      </if>
+      <if test="comNo != null" >
+        COM_NO,
+      </if>
+      <if test="fileDte != null" >
+        FILE_DTE,
+      </if>
+      <if test="ccy != null" >
+        CCY,
+      </if>
+      <if test="busKnd != null" >
+        BUS_KND,
+      </if>
+      <if test="totCnt != null" >
+        TOT_CNT,
+      </if>
+      <if test="totAmt != null" >
+        TOT_AMT,
+      </if>
+      <if test="sucTotCnt != null" >
+        SUC_TOT_CNT,
+      </if>
+      <if test="sucTotAmt != null" >
+        SUC_TOT_AMT,
+      </if>
+      <if test="falTotCnt != null" >
+        FAL_TOT_CNT,
+      </if>
+      <if test="falTotAmt != null" >
+        FAL_TOT_AMT,
+      </if>
+      <if test="number != null" >
+        NUMBER,
+      </if>
+      <if test="thdCusNo != null" >
+        THD_CUS_NO,
+      </if>
+      <if test="thdCusNme != null" >
+        THD_CUS_NME,
+      </if>
+      <if test="cusAc != null" >
+        CUS_AC,
+      </if>
+      <if test="cusNme != null" >
+        CUS_NME,
+      </if>
+      <if test="fullDedFlag != null" >
+        FULL_DED_FLAG,
+      </if>
+      <if test="payType != null" >
+        PAY_TYPE,
+      </if>
+      <if test="accountNo != null" >
+        ACCOUNT_NO,
+      </if>
+      <if test="electricityYearmonth != null" >
+        ELECTRICITY_YEARMONTH,
+      </if>
+      <if test="paymentMoney != null" >
+        PAYMENT_MONEY,
+      </if>
+      <if test="capitial != null" >
+        CAPITIAL,
+      </if>
+      <if test="dedit != null" >
+        DEDIT,
+      </if>
+      <if test="paymentResult != null" >
+        PAYMENT_RESULT,
+      </if>
+      <if test="txnAmt != null" >
+        TXN_AMT,
+      </if>
+      <if test="bankSqn != null" >
+        BANK_SQN,
+      </if>
+      <if test="txnDte != null" >
+        TXN_DTE,
+      </if>
+      <if test="txnTme != null" >
+        TXN_TME,
+      </if>
+      <if test="bakFld != null" >
+        BAK_FLD,
+      </if>
+      <if test="rsvFld1 != null" >
+        RSV_FLD1,
+      </if>
+      <if test="rsvFld2 != null" >
+        RSV_FLD2,
+      </if>
+      <if test="rsvFld3 != null" >
+        RSV_FLD3,
+      </if>
+      <if test="rsvFld4 != null" >
+        RSV_FLD4,
+      </if>
+      <if test="rsvFld5 != null" >
+        RSV_FLD5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sqn != null" >
+        #{sqn,jdbcType=CHAR},
+      </if>
+      <if test="bankNo != null" >
+        #{bankNo,jdbcType=CHAR},
+      </if>
+      <if test="comNo != null" >
+        #{comNo,jdbcType=CHAR},
+      </if>
+      <if test="fileDte != null" >
+        #{fileDte,jdbcType=CHAR},
+      </if>
+      <if test="ccy != null" >
+        #{ccy,jdbcType=CHAR},
+      </if>
+      <if test="busKnd != null" >
+        #{busKnd,jdbcType=CHAR},
+      </if>
+      <if test="totCnt != null" >
+        #{totCnt,jdbcType=CHAR},
+      </if>
+      <if test="totAmt != null" >
+        #{totAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="sucTotCnt != null" >
+        #{sucTotCnt,jdbcType=CHAR},
+      </if>
+      <if test="sucTotAmt != null" >
+        #{sucTotAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="falTotCnt != null" >
+        #{falTotCnt,jdbcType=CHAR},
+      </if>
+      <if test="falTotAmt != null" >
+        #{falTotAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNo != null" >
+        #{thdCusNo,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNme != null" >
+        #{thdCusNme,jdbcType=CHAR},
+      </if>
+      <if test="cusAc != null" >
+        #{cusAc,jdbcType=CHAR},
+      </if>
+      <if test="cusNme != null" >
+        #{cusNme,jdbcType=CHAR},
+      </if>
+      <if test="fullDedFlag != null" >
+        #{fullDedFlag,jdbcType=CHAR},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=CHAR},
+      </if>
+      <if test="accountNo != null" >
+        #{accountNo,jdbcType=CHAR},
+      </if>
+      <if test="electricityYearmonth != null" >
+        #{electricityYearmonth,jdbcType=CHAR},
+      </if>
+      <if test="paymentMoney != null" >
+        #{paymentMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="capitial != null" >
+        #{capitial,jdbcType=DECIMAL},
+      </if>
+      <if test="dedit != null" >
+        #{dedit,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentResult != null" >
+        #{paymentResult,jdbcType=CHAR},
+      </if>
+      <if test="txnAmt != null" >
+        #{txnAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="bankSqn != null" >
+        #{bankSqn,jdbcType=CHAR},
+      </if>
+      <if test="txnDte != null" >
+        #{txnDte,jdbcType=DATE},
+      </if>
+      <if test="txnTme != null" >
+        #{txnTme,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bakFld != null" >
+        #{bakFld,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld1 != null" >
+        #{rsvFld1,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld2 != null" >
+        #{rsvFld2,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld3 != null" >
+        #{rsvFld3,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld4 != null" >
+        #{rsvFld4,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld5 != null" >
+        #{rsvFld5,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_ELE_TMP
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="bankNo!=null" >
+        AND  BANK_NO=#{bankNo,jdbcType=CHAR}
+      </if>
+      <if test="comNo!=null" >
+        AND  COM_NO=#{comNo,jdbcType=CHAR}
+      </if>
+      <if test="fileDte!=null" >
+        AND  FILE_DTE=#{fileDte,jdbcType=CHAR}
+      </if>
+      <if test="ccy!=null" >
+        AND  CCY=#{ccy,jdbcType=CHAR}
+      </if>
+      <if test="busKnd!=null" >
+        AND  BUS_KND=#{busKnd,jdbcType=CHAR}
+      </if>
+      <if test="totCnt!=null" >
+        AND  TOT_CNT=#{totCnt,jdbcType=CHAR}
+      </if>
+      <if test="totAmt!=null" >
+        AND  TOT_AMT=#{totAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="sucTotCnt!=null" >
+        AND  SUC_TOT_CNT=#{sucTotCnt,jdbcType=CHAR}
+      </if>
+      <if test="sucTotAmt!=null" >
+        AND  SUC_TOT_AMT=#{sucTotAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="falTotCnt!=null" >
+        AND  FAL_TOT_CNT=#{falTotCnt,jdbcType=CHAR}
+      </if>
+      <if test="falTotAmt!=null" >
+        AND  FAL_TOT_AMT=#{falTotAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="number!=null" >
+        AND  NUMBER=#{number,jdbcType=CHAR}
+      </if>
+      <if test="thdCusNo!=null" >
+        AND  THD_CUS_NO=#{thdCusNo,jdbcType=CHAR}
+      </if>
+      <if test="thdCusNme!=null" >
+        AND  THD_CUS_NME=#{thdCusNme,jdbcType=CHAR}
+      </if>
+      <if test="cusAc!=null" >
+        AND  CUS_AC=#{cusAc,jdbcType=CHAR}
+      </if>
+      <if test="cusNme!=null" >
+        AND  CUS_NME=#{cusNme,jdbcType=CHAR}
+      </if>
+      <if test="fullDedFlag!=null" >
+        AND  FULL_DED_FLAG=#{fullDedFlag,jdbcType=CHAR}
+      </if>
+      <if test="payType!=null" >
+        AND  PAY_TYPE=#{payType,jdbcType=CHAR}
+      </if>
+      <if test="accountNo!=null" >
+        AND  ACCOUNT_NO=#{accountNo,jdbcType=CHAR}
+      </if>
+      <if test="electricityYearmonth!=null" >
+        AND  ELECTRICITY_YEARMONTH=#{electricityYearmonth,jdbcType=CHAR}
+      </if>
+      <if test="paymentMoney!=null" >
+        AND  PAYMENT_MONEY=#{paymentMoney,jdbcType=DECIMAL}
+      </if>
+      <if test="capitial!=null" >
+        AND  CAPITIAL=#{capitial,jdbcType=DECIMAL}
+      </if>
+      <if test="dedit!=null" >
+        AND  DEDIT=#{dedit,jdbcType=DECIMAL}
+      </if>
+      <if test="paymentResult!=null" >
+        AND  PAYMENT_RESULT=#{paymentResult,jdbcType=CHAR}
+      </if>
+      <if test="txnAmt!=null" >
+        AND  TXN_AMT=#{txnAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="bankSqn!=null" >
+        AND  BANK_SQN=#{bankSqn,jdbcType=CHAR}
+      </if>
+      <if test="txnDte!=null" >
+        AND  TXN_DTE=#{txnDte,jdbcType=DATE}
+      </if>
+      <if test="txnTme!=null" >
+        AND  TXN_TME=#{txnTme,jdbcType=TIMESTAMP}
+      </if>
+      <if test="bakFld!=null" >
+        AND  BAK_FLD=#{bakFld,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld1!=null" >
+        AND  RSV_FLD1=#{rsvFld1,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld2!=null" >
+        AND  RSV_FLD2=#{rsvFld2,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld3!=null" >
+        AND  RSV_FLD3=#{rsvFld3,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld4!=null" >
+        AND  RSV_FLD4=#{rsvFld4,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld5!=null" >
+        AND  RSV_FLD5=#{rsvFld5,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsEleTmp" >
+    update ${GDEUPSB_SCHEMA}.GDEUPS_ELE_TMP
+    <set >
+      <if test="bankNo != null" >
+        BANK_NO = #{bankNo,jdbcType=CHAR},
+      </if>
+      <if test="comNo != null" >
+        COM_NO = #{comNo,jdbcType=CHAR},
+      </if>
+      <if test="fileDte != null" >
+        FILE_DTE = #{fileDte,jdbcType=CHAR},
+      </if>
+      <if test="ccy != null" >
+        CCY = #{ccy,jdbcType=CHAR},
+      </if>
+      <if test="busKnd != null" >
+        BUS_KND = #{busKnd,jdbcType=CHAR},
+      </if>
+      <if test="totCnt != null" >
+        TOT_CNT = #{totCnt,jdbcType=CHAR},
+      </if>
+      <if test="totAmt != null" >
+        TOT_AMT = #{totAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="sucTotCnt != null" >
+        SUC_TOT_CNT = #{sucTotCnt,jdbcType=CHAR},
+      </if>
+      <if test="sucTotAmt != null" >
+        SUC_TOT_AMT = #{sucTotAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="falTotCnt != null" >
+        FAL_TOT_CNT = #{falTotCnt,jdbcType=CHAR},
+      </if>
+      <if test="falTotAmt != null" >
+        FAL_TOT_AMT = #{falTotAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="number != null" >
+        NUMBER = #{number,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNo != null" >
+        THD_CUS_NO = #{thdCusNo,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNme != null" >
+        THD_CUS_NME = #{thdCusNme,jdbcType=CHAR},
+      </if>
+      <if test="cusAc != null" >
+        CUS_AC = #{cusAc,jdbcType=CHAR},
+      </if>
+      <if test="cusNme != null" >
+        CUS_NME = #{cusNme,jdbcType=CHAR},
+      </if>
+      <if test="fullDedFlag != null" >
+        FULL_DED_FLAG = #{fullDedFlag,jdbcType=CHAR},
+      </if>
+      <if test="payType != null" >
+        PAY_TYPE = #{payType,jdbcType=CHAR},
+      </if>
+      <if test="accountNo != null" >
+        ACCOUNT_NO = #{accountNo,jdbcType=CHAR},
+      </if>
+      <if test="electricityYearmonth != null" >
+        ELECTRICITY_YEARMONTH = #{electricityYearmonth,jdbcType=CHAR},
+      </if>
+      <if test="paymentMoney != null" >
+        PAYMENT_MONEY = #{paymentMoney,jdbcType=DECIMAL},
+      </if>
+      <if test="capitial != null" >
+        CAPITIAL = #{capitial,jdbcType=DECIMAL},
+      </if>
+      <if test="dedit != null" >
+        DEDIT = #{dedit,jdbcType=DECIMAL},
+      </if>
+      <if test="paymentResult != null" >
+        PAYMENT_RESULT = #{paymentResult,jdbcType=CHAR},
+      </if>
+      <if test="txnAmt != null" >
+        TXN_AMT = #{txnAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="bankSqn != null" >
+        BANK_SQN = #{bankSqn,jdbcType=CHAR},
+      </if>
+      <if test="txnDte != null" >
+        TXN_DTE = #{txnDte,jdbcType=DATE},
+      </if>
+      <if test="txnTme != null" >
+        TXN_TME = #{txnTme,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bakFld != null" >
+        BAK_FLD = #{bakFld,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld1 != null" >
+        RSV_FLD1 = #{rsvFld1,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld2 != null" >
+        RSV_FLD2 = #{rsvFld2,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld3 != null" >
+        RSV_FLD3 = #{rsvFld3,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld4 != null" >
+        RSV_FLD4 = #{rsvFld4,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld5 != null" >
+        RSV_FLD5 = #{rsvFld5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SQN = #{sqn,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_ELE_TMP
+    <if test="_parameter" >
+      where SQN in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
+</mapper>

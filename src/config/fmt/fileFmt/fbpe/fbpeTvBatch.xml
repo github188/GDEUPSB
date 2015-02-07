@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+    encoding="utf-8" trace="true">
+    <segment name="detail" encoding="GBK">
+        <fixString name="L1" length="3" />  <!--交易代码-->
+        <fixString name="thdCusNo" length="20" />  <!-- 机构代码-->
+        <fixString name="thdCusNo" length="20" />  <!-- SMS交易流水号-->
+        <fixString name="thdCusNo" length="20" />  <!-- 操作员号-->
+        <fixString name="thdCusNo" length="20" />  <!-- 交易时间-->
+        <fixString name="thdCusNo" length="20" />  <!-- SMS帐单号码-->
+        <fixString name="thdCusNo" length="20" />  <!-- DVB客户编号-->
+        <fixString name="thdCusNo" length="20" />  <!-- IC卡号-->
+        <fixString name="thdCusNo" length="20" />  <!-- DVB客户姓名-->
+        <fixString name="thdCusNo" length="20" />  <!-- 应缴金额(带小数点)-->
+        <fixString name="thdCusNo" length="20" />  <!-- 扣帐金额(带小数点)-->
+        <fixString name="thdCusNo" length="20" />  <!-- 银行账号->
+            
+    </segment>
+</message>

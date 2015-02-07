@@ -178,7 +178,7 @@ public class GdLotTransCodTransport implements Transport{
 				    action_212(w,context);
 				}else if("200".equals(action)) {
 				    w.writeStartElement("pkgC");
-		            w.writeEndElement();
+				    w.writeCharacters(" ");
 		            w.writeEndElement();
                 }
 			w.writeEndElement();
@@ -215,10 +215,10 @@ public class GdLotTransCodTransport implements Transport{
         w.writeStartElement("pkgC");
             w.writeStartElement("user");
             w.writeCharacters(context.getData("usrPam").toString());
+            w.writeEndElement();
             w.writeStartElement("pwd");
             w.writeCharacters(context.getData("usrPas").toString());
             w.writeEndElement();
-        w.writeEndElement();
     }
 	/**
 	 * 解包
@@ -309,8 +309,8 @@ public class GdLotTransCodTransport implements Transport{
                 continue;
             String name = r.getName().toString();
             if("return".equals(name)){
-                map.put("rRspCod", r.getAttributeValue(0));
-                map.put("rRspMsg", r.getAttributeValue(1));
+                map.put("resultCode", r.getAttributeValue(0));
+                map.put("resultDes", r.getAttributeValue(1));
             }
         }
     }
