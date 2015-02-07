@@ -262,7 +262,7 @@ public class GDConstants {
 	public static final String BR_NO = "443999";
 	/** 对账标志为未处理 **/
 	public static final String WCL = "0";
-
+ /** CESHI  */
 	/** 燃气扣款流水返回第三方状态 B0:扣款成功 */
 	public static final String GAS_THDSTS_TYP_B0 = "B0";
 	/** 燃气扣款流水返回第三方状态 B1:金额不足扣费失败 */
