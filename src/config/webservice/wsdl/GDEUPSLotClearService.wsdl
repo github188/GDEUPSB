@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSLotClearService" xmlns:gdeupsb="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSLotClearService/Schema" name="GDEUPSLotClearService" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSLotClearService">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSLotClearService">
+      <xsd:import namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSLotClearService/Schema" schemaLocation="GDEUPSLotClearService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="lotClearPayDealRequestMessage">
+    <wsdl:part name="lotClearPayDealRequest" element="gdeupsb:lotClearPayDeal"/>
+  </wsdl:message>
+  <wsdl:message name="lotClearPayDealResponseMessage">
+    <wsdl:part name="lotClearPayDealResponse" element="gdeupsb:lotClearPayDealResponse"/>
+  </wsdl:message>
+  <wsdl:message name="lotClearCountRequestMessage">
+    <wsdl:part name="lotClearCountRequest" element="gdeupsb:lotClearCount"/>
+  </wsdl:message>
+  <wsdl:message name="lotClearCountResponseMessage">
+    <wsdl:part name="lotClearCountResponse" element="gdeupsb:lotClearCountResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="GDEUPSLotClearServicePortType">
+    <wsdl:operation name="lotClearPayDeal">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:lotClearPayDealRequestMessage"/>
+      <wsdl:output message="tns:lotClearPayDealResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="lotClearCount">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:lotClearCountRequestMessage"/>
+      <wsdl:output message="tns:lotClearCountResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GDEUPSLotClearServiceSoapBinding" type="tns:GDEUPSLotClearServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="lotClearPayDeal">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSLotClearService/lotClearPayDeal"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="lotClearCount">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSLotClearService/lotClearCount"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GDEUPSLotClearService">
+    <wsdl:port name="GDEUPSLotClearServicePort" binding="tns:GDEUPSLotClearServiceSoapBinding">
+      <soap:address location="http://127.0.0.1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -37,4 +37,23 @@ public interface GdLotDrwTblRepository extends PagingAndSortingRepository<GdLotD
 	
 	@Find
 	public GdLotDrwTbl qryLotDrwInf(Map<String, Object> map);
+	
+	
+	/** 福彩清算-查询汇总垫付信息 */
+	public List<Map<String, Object>> findTolPayInf(GdLotDrwTbl gdLotDrwTbl);
+	
+	/** 福彩清算-统计轧差金额信息 */
+	public List<Map<String, Object>> findTolDifInf(GdLotDrwTbl gdLotDrwTbl);
+	
+	/** 福彩清算-检查是否可以进行清算 */
+	public List<String> findChkClrFlg(GdLotDrwTbl gdLotDrwTbl);
+	
+	/** 福彩清算-更新垫付状态  */
+	public void updateTolPayInf(GdLotDrwTbl gdLotDrwTbl);
+	
+	/** 福彩清算-更新轧差状态  */
+	public void updateTolDifInf(GdLotDrwTbl gdLotDrwTbl);
+	
+	
+	
 }

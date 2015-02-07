@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet spacket.xsd"
+    encoding="utf-8" trace="true">
+<!--     //根据客户账号|姓名|金额|代理服务客户标识|代理服务客户姓名|本行标志|开户银行|备注一|备注 -->
+	<segment name="header" encoding="utf-8">
+		<varString name="comNo" type="D|" />
+		<varString name="totCount" type="D|" />
+		<varString name="totAmt" type="D|" />
+	</segment>
+</message>
+

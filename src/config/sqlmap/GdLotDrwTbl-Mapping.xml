@@ -483,4 +483,67 @@
   		where GAME_ID=#{gameId,jdbcType=CHAR} AND DRAW_ID=#{drawId,jdbcType=CHAR} AND
   			KENO_ID=#{kenoId,jdbcType=CHAR}
   </update>
+  
+  
+	<!-- 查询汇总垫付信息 -->
+	<select id="findTolPayInf" resultType="java.util.Map"
+		parameterType="java.util.Map">
+		select COALESCE(sum(bigint(PAY_AMT)),0) TolPayAmt
+		from
+		gdeupsb.GDEUPS_LOT_DRW_TBL
+		where GAME_ID=#{gameId,jdbcType=CHAR} and
+		SubStr(SAL_END, 1, 8) &lt; #{salEnd,jdbcType=CHAR}
+		and PAY_FLG= '1' and
+		PAY_AMT != '' and CHK_FLG in ('2', '3')
+	</select>
+
+	<!-- 统计轧差金额信息 -->
+	<select id="findTolDifInf" resultType="java.util.Map"
+		parameterType="java.util.Map">
+		select COALESCE(sum(bigint(case when DIF_FLG='1' then
+		DIF_AMT else '-'||DIF_AMT end)),0) TolDifAmt
+		from
+		gdeupsb.GDEUPS_LOT_DRW_TBL
+		where GAME_ID=#{gameId,jdbcType=CHAR} and
+		SubStr(SAL_END, 1, 8) &lt; #{salEnd,jdbcType=CHAR}
+		and CHK_FLG = '2'
+		and DIF_AMT != ''
+	</select>
+
+
+	<!-- 检查是否可以进行清算 -->
+	<select id="findChkClrFlg" resultType="java.lang.String"
+		parameterType="java.util.Map">
+		SELECT 'Y' YN FROM table(values(1)) as annoy WHERE
+		EXISTS(
+		SELECT 'Y'
+		FROM gdeupsb.GDEUPS_LOT_DRW_TBL
+		WHERE
+		GAME_ID=#{gameId,jdbcType=CHAR} and SubStr(SAL_END, 1, 8) &lt;
+		#{salEnd,jdbcType=CHAR}
+		and (CHK_FLG in ('','0','1') or FLW_CTL !=
+		'10') and KENO_ID in
+		('','AAAAA'))
+	</select>
+
+	<!-- 更新垫付状态 -->
+	<update id="updateTolPayInf" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotDrwTbl">
+		update
+		gdeupsb.GDEUPS_LOT_DRW_TBL set PAY_FLG = '2',
+		RTN_TIM=#{rtnTim,jdbcType=CHAR}
+		where GAME_ID=#{gameId,jdbcType=CHAR} and SubStr(SAL_END, 1, 8) &lt;
+		#{salEnd,jdbcType=CHAR}
+		and PAY_FLG = '1' and (PAY_AMT != '' or PAY_AMT != '0')
+	</update>
+	
+	<!-- 更新轧差状态 -->
+	<update id="updateTolDifInf" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotDrwTbl">
+		update
+		gdeupsb.GDEUPS_LOT_DRW_TBL 
+		set CHK_FLG = '3',
+		CLR_TIM=#{clrTim,jdbcType=CHAR}
+		where GAME_ID=#{gameId,jdbcType=CHAR} and SubStr(SAL_END, 1, 8) &lt;
+		#{salEnd,jdbcType=CHAR}
+		and  CHK_FLG ='2' and (DIF_AMT != '' or DIF_AMT!='0')
+	</update>
 </mapper>

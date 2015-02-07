@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="body" >
+	 <varString type="D|"  name="carNo"  /> <!-- 车牌号码 -->
+	  <varString type="D|"  name="carTyp"  /> <!-- 车牌类别-->
+	   <varString type="D|"  name="payMon"  /> <!-- 缴费月数 -->
+	 <varString type="D|"  name="tactDt"  /> <!-- 交易日期 -->
+	 <varString type="D|" name="tlogNo"  /> <!-- 原车辆缴费打发票流水号-->
+	     <varString type="D|" name="invNo"  /> <!-- 发票号 -->
+	     <varString type="D|" name="txnAmt"  /> <!--交易金额 -->
+	     <!-- ICS中多了一个TACTDT，中文名收费日期 -->
+</segment>

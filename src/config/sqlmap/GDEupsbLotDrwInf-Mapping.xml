@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GDEupsbLotDrwInf" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GDEupsbLotDrwInf" >
+    <id column="DRAWID" property="drawid" jdbcType="CHAR" />
+    <result column="GAMEID" property="gameid" jdbcType="CHAR" />
+    <result column="DRAWNM" property="drawnm" jdbcType="CHAR" />
+    <result column="SALSTR" property="salstr" jdbcType="CHAR" />
+    <result column="SALEND" property="salend" jdbcType="CHAR" />
+    <result column="CSHSTR" property="cshstr" jdbcType="CHAR" />
+    <result column="CSHEND" property="cshend" jdbcType="CHAR" />
+    <result column="KENOID" property="kenoid" jdbcType="CHAR" />
+    <result column="KENONM" property="kenonm" jdbcType="CHAR" />
+    <result column="KSALST" property="ksalst" jdbcType="CHAR" />
+    <result column="KSALED" property="ksaled" jdbcType="CHAR" />
+    <result column="CHKFLG" property="chkflg" jdbcType="CHAR" />
+    <result column="CHKTIM" property="chktim" jdbcType="CHAR" />
+    <result column="DOWPRZ" property="dowprz" jdbcType="CHAR" />
+    <result column="PRZAMT" property="przamt" jdbcType="CHAR" />
+    <result column="TOTAMT" property="totamt" jdbcType="CHAR" />
+    <result column="DIFFLG" property="difflg" jdbcType="CHAR" />
+    <result column="DIFAMT" property="difamt" jdbcType="CHAR" />
+    <result column="PAYFLG" property="payflg" jdbcType="CHAR" />
+    <result column="PAYAMT" property="payamt" jdbcType="CHAR" />
+    <result column="FLWCTL" property="flwctl" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    DRAWID, GAMEID, DRAWNM, SALSTR, SALEND, CSHSTR, CSHEND, KENOID, KENONM, KSALST, KSALED, 
+    CHKFLG, CHKTIM, DOWPRZ, PRZAMT, TOTAMT, DIFFLG, DIFAMT, PAYFLG, PAYAMT, FLWCTL
+  </sql>
+
+  <select id="qryLotDrwInf"  parameterType="map" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${BBIPADM_SCHEMA}.LOT_DRW_TBL
+     <where>
+        <choose>
+          <when test="isKeno == Y">
+            FlwCtl='0' and GameId=#{gameId} and KenoId != 'AAAAA'
+            and KSalSt &lt; #{lotTime}  and KSalEd &gt;#{lotTime} 
+            order by SalStr,KSalSt asc
+          </when>
+          <otherwise>
+          FlwCtl='0' and GameId=#{gameId} and KenoId != 'AAAAA'
+            and SalStr &lt; #{lotTime}  and SalEnd &gt;#{lotTime} 
+            order by SalStr asc
+          </otherwise>
+        </choose>
+     </where>
+     fetch first 1 rows only
+  </select>
+  
+  
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.LOT_DRW_TBL
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="drawid!=null" >
+        AND  DRAWID=#{drawid,jdbcType=CHAR}
+      </if>
+      <if test="gameid!=null" >
+        AND  GAMEID=#{gameid,jdbcType=CHAR}
+      </if>
+      <if test="drawnm!=null" >
+        AND  DRAWNM=#{drawnm,jdbcType=CHAR}
+      </if>
+      <if test="salstr!=null" >
+        AND  SALSTR=#{salstr,jdbcType=CHAR}
+      </if>
+      <if test="salend!=null" >
+        AND  SALEND=#{salend,jdbcType=CHAR}
+      </if>
+      <if test="cshstr!=null" >
+        AND  CSHSTR=#{cshstr,jdbcType=CHAR}
+      </if>
+      <if test="cshend!=null" >
+        AND  CSHEND=#{cshend,jdbcType=CHAR}
+      </if>
+      <if test="kenoid!=null" >
+        AND  KENOID=#{kenoid,jdbcType=CHAR}
+      </if>
+      <if test="kenonm!=null" >
+        AND  KENONM=#{kenonm,jdbcType=CHAR}
+      </if>
+      <if test="ksalst!=null" >
+        AND  KSALST=#{ksalst,jdbcType=CHAR}
+      </if>
+      <if test="ksaled!=null" >
+        AND  KSALED=#{ksaled,jdbcType=CHAR}
+      </if>
+      <if test="chkflg!=null" >
+        AND  CHKFLG=#{chkflg,jdbcType=CHAR}
+      </if>
+      <if test="chktim!=null" >
+        AND  CHKTIM=#{chktim,jdbcType=CHAR}
+      </if>
+      <if test="dowprz!=null" >
+        AND  DOWPRZ=#{dowprz,jdbcType=CHAR}
+      </if>
+      <if test="przamt!=null" >
+        AND  PRZAMT=#{przamt,jdbcType=CHAR}
+      </if>
+      <if test="totamt!=null" >
+        AND  TOTAMT=#{totamt,jdbcType=CHAR}
+      </if>
+      <if test="difflg!=null" >
+        AND  DIFFLG=#{difflg,jdbcType=CHAR}
+      </if>
+      <if test="difamt!=null" >
+        AND  DIFAMT=#{difamt,jdbcType=CHAR}
+      </if>
+      <if test="payflg!=null" >
+        AND  PAYFLG=#{payflg,jdbcType=CHAR}
+      </if>
+      <if test="payamt!=null" >
+        AND  PAYAMT=#{payamt,jdbcType=CHAR}
+      </if>
+      <if test="flwctl!=null" >
+        AND  FLWCTL=#{flwctl,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.LOT_DRW_TBL
+    where DRAWID = #{drawid,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from ${GDEUPSB_SCHEMA}.LOT_DRW_TBL
+    where DRAWID = #{drawid,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbLotDrwInf" >
+    insert into ${GDEUPSB_SCHEMA}.LOT_DRW_TBL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="drawid != null" >
+        DRAWID,
+      </if>
+      <if test="gameid != null" >
+        GAMEID,
+      </if>
+      <if test="drawnm != null" >
+        DRAWNM,
+      </if>
+      <if test="salstr != null" >
+        SALSTR,
+      </if>
+      <if test="salend != null" >
+        SALEND,
+      </if>
+      <if test="cshstr != null" >
+        CSHSTR,
+      </if>
+      <if test="cshend != null" >
+        CSHEND,
+      </if>
+      <if test="kenoid != null" >
+        KENOID,
+      </if>
+      <if test="kenonm != null" >
+        KENONM,
+      </if>
+      <if test="ksalst != null" >
+        KSALST,
+      </if>
+      <if test="ksaled != null" >
+        KSALED,
+      </if>
+      <if test="chkflg != null" >
+        CHKFLG,
+      </if>
+      <if test="chktim != null" >
+        CHKTIM,
+      </if>
+      <if test="dowprz != null" >
+        DOWPRZ,
+      </if>
+      <if test="przamt != null" >
+        PRZAMT,
+      </if>
+      <if test="totamt != null" >
+        TOTAMT,
+      </if>
+      <if test="difflg != null" >
+        DIFFLG,
+      </if>
+      <if test="difamt != null" >
+        DIFAMT,
+      </if>
+      <if test="payflg != null" >
+        PAYFLG,
+      </if>
+      <if test="payamt != null" >
+        PAYAMT,
+      </if>
+      <if test="flwctl != null" >
+        FLWCTL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="drawid != null" >
+        #{drawid,jdbcType=CHAR},
+      </if>
+      <if test="gameid != null" >
+        #{gameid,jdbcType=CHAR},
+      </if>
+      <if test="drawnm != null" >
+        #{drawnm,jdbcType=CHAR},
+      </if>
+      <if test="salstr != null" >
+        #{salstr,jdbcType=CHAR},
+      </if>
+      <if test="salend != null" >
+        #{salend,jdbcType=CHAR},
+      </if>
+      <if test="cshstr != null" >
+        #{cshstr,jdbcType=CHAR},
+      </if>
+      <if test="cshend != null" >
+        #{cshend,jdbcType=CHAR},
+      </if>
+      <if test="kenoid != null" >
+        #{kenoid,jdbcType=CHAR},
+      </if>
+      <if test="kenonm != null" >
+        #{kenonm,jdbcType=CHAR},
+      </if>
+      <if test="ksalst != null" >
+        #{ksalst,jdbcType=CHAR},
+      </if>
+      <if test="ksaled != null" >
+        #{ksaled,jdbcType=CHAR},
+      </if>
+      <if test="chkflg != null" >
+        #{chkflg,jdbcType=CHAR},
+      </if>
+      <if test="chktim != null" >
+        #{chktim,jdbcType=CHAR},
+      </if>
+      <if test="dowprz != null" >
+        #{dowprz,jdbcType=CHAR},
+      </if>
+      <if test="przamt != null" >
+        #{przamt,jdbcType=CHAR},
+      </if>
+      <if test="totamt != null" >
+        #{totamt,jdbcType=CHAR},
+      </if>
+      <if test="difflg != null" >
+        #{difflg,jdbcType=CHAR},
+      </if>
+      <if test="difamt != null" >
+        #{difamt,jdbcType=CHAR},
+      </if>
+      <if test="payflg != null" >
+        #{payflg,jdbcType=CHAR},
+      </if>
+      <if test="payamt != null" >
+        #{payamt,jdbcType=CHAR},
+      </if>
+      <if test="flwctl != null" >
+        #{flwctl,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSB_SCHEMA}.LOT_DRW_TBL
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="drawid!=null" >
+        AND  DRAWID=#{drawid,jdbcType=CHAR}
+      </if>
+      <if test="gameid!=null" >
+        AND  GAMEID=#{gameid,jdbcType=CHAR}
+      </if>
+      <if test="drawnm!=null" >
+        AND  DRAWNM=#{drawnm,jdbcType=CHAR}
+      </if>
+      <if test="salstr!=null" >
+        AND  SALSTR=#{salstr,jdbcType=CHAR}
+      </if>
+      <if test="salend!=null" >
+        AND  SALEND=#{salend,jdbcType=CHAR}
+      </if>
+      <if test="cshstr!=null" >
+        AND  CSHSTR=#{cshstr,jdbcType=CHAR}
+      </if>
+      <if test="cshend!=null" >
+        AND  CSHEND=#{cshend,jdbcType=CHAR}
+      </if>
+      <if test="kenoid!=null" >
+        AND  KENOID=#{kenoid,jdbcType=CHAR}
+      </if>
+      <if test="kenonm!=null" >
+        AND  KENONM=#{kenonm,jdbcType=CHAR}
+      </if>
+      <if test="ksalst!=null" >
+        AND  KSALST=#{ksalst,jdbcType=CHAR}
+      </if>
+      <if test="ksaled!=null" >
+        AND  KSALED=#{ksaled,jdbcType=CHAR}
+      </if>
+      <if test="chkflg!=null" >
+        AND  CHKFLG=#{chkflg,jdbcType=CHAR}
+      </if>
+      <if test="chktim!=null" >
+        AND  CHKTIM=#{chktim,jdbcType=CHAR}
+      </if>
+      <if test="dowprz!=null" >
+        AND  DOWPRZ=#{dowprz,jdbcType=CHAR}
+      </if>
+      <if test="przamt!=null" >
+        AND  PRZAMT=#{przamt,jdbcType=CHAR}
+      </if>
+      <if test="totamt!=null" >
+        AND  TOTAMT=#{totamt,jdbcType=CHAR}
+      </if>
+      <if test="difflg!=null" >
+        AND  DIFFLG=#{difflg,jdbcType=CHAR}
+      </if>
+      <if test="difamt!=null" >
+        AND  DIFAMT=#{difamt,jdbcType=CHAR}
+      </if>
+      <if test="payflg!=null" >
+        AND  PAYFLG=#{payflg,jdbcType=CHAR}
+      </if>
+      <if test="payamt!=null" >
+        AND  PAYAMT=#{payamt,jdbcType=CHAR}
+      </if>
+      <if test="flwctl!=null" >
+        AND  FLWCTL=#{flwctl,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbLotDrwInf" >
+    update ${GDEUPSB_SCHEMA}.LOT_DRW_TBL
+    <set >
+      <if test="gameid != null" >
+        GAMEID = #{gameid,jdbcType=CHAR},
+      </if>
+      <if test="drawnm != null" >
+        DRAWNM = #{drawnm,jdbcType=CHAR},
+      </if>
+      <if test="salstr != null" >
+        SALSTR = #{salstr,jdbcType=CHAR},
+      </if>
+      <if test="salend != null" >
+        SALEND = #{salend,jdbcType=CHAR},
+      </if>
+      <if test="cshstr != null" >
+        CSHSTR = #{cshstr,jdbcType=CHAR},
+      </if>
+      <if test="cshend != null" >
+        CSHEND = #{cshend,jdbcType=CHAR},
+      </if>
+      <if test="kenoid != null" >
+        KENOID = #{kenoid,jdbcType=CHAR},
+      </if>
+      <if test="kenonm != null" >
+        KENONM = #{kenonm,jdbcType=CHAR},
+      </if>
+      <if test="ksalst != null" >
+        KSALST = #{ksalst,jdbcType=CHAR},
+      </if>
+      <if test="ksaled != null" >
+        KSALED = #{ksaled,jdbcType=CHAR},
+      </if>
+      <if test="chkflg != null" >
+        CHKFLG = #{chkflg,jdbcType=CHAR},
+      </if>
+      <if test="chktim != null" >
+        CHKTIM = #{chktim,jdbcType=CHAR},
+      </if>
+      <if test="dowprz != null" >
+        DOWPRZ = #{dowprz,jdbcType=CHAR},
+      </if>
+      <if test="przamt != null" >
+        PRZAMT = #{przamt,jdbcType=CHAR},
+      </if>
+      <if test="totamt != null" >
+        TOTAMT = #{totamt,jdbcType=CHAR},
+      </if>
+      <if test="difflg != null" >
+        DIFFLG = #{difflg,jdbcType=CHAR},
+      </if>
+      <if test="difamt != null" >
+        DIFAMT = #{difamt,jdbcType=CHAR},
+      </if>
+      <if test="payflg != null" >
+        PAYFLG = #{payflg,jdbcType=CHAR},
+      </if>
+      <if test="payamt != null" >
+        PAYAMT = #{payamt,jdbcType=CHAR},
+      </if>
+      <if test="flwctl != null" >
+        FLWCTL = #{flwctl,jdbcType=CHAR},
+      </if>
+    </set>
+    where DRAWID = #{drawid,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.LOT_DRW_TBL
+    <if test="_parameter" >
+      where DRAWID in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
+</mapper>

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GDEupsLotPrzInfo" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GDEupsLotPrzInfo" >
+    <result column="TLOGNO" property="tlogno" jdbcType="CHAR" />
+    <result column="DRAWID" property="drawid" jdbcType="CHAR" />
+    <result column="KENOID" property="kenoid" jdbcType="CHAR" />
+    <result column="PLAYID" property="playid" jdbcType="CHAR" />
+    <result column="BETMUL" property="betmul" jdbcType="CHAR" />
+    <result column="BETLIN" property="betlin" jdbcType="CHAR" />
+    <result column="BETMOD" property="betmod" jdbcType="CHAR" />
+    <result column="TXNTIM" property="txntim" jdbcType="CHAR" />
+    <result column="TXNLOG" property="txnlog" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    TLOGNO, DRAWID, KENOID, PLAYID, BETMUL, BETLIN, BETMOD, TXNTIM, TXNLOG
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.LOT_PRZ_INFO
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="tlogno!=null" >
+        AND  TLOGNO=#{tlogno,jdbcType=CHAR}
+      </if>
+      <if test="drawid!=null" >
+        AND  DRAWID=#{drawid,jdbcType=CHAR}
+      </if>
+      <if test="kenoid!=null" >
+        AND  KENOID=#{kenoid,jdbcType=CHAR}
+      </if>
+      <if test="playid!=null" >
+        AND  PLAYID=#{playid,jdbcType=CHAR}
+      </if>
+      <if test="betmul!=null" >
+        AND  BETMUL=#{betmul,jdbcType=CHAR}
+      </if>
+      <if test="betlin!=null" >
+        AND  BETLIN=#{betlin,jdbcType=CHAR}
+      </if>
+      <if test="betmod!=null" >
+        AND  BETMOD=#{betmod,jdbcType=CHAR}
+      </if>
+      <if test="txntim!=null" >
+        AND  TXNTIM=#{txntim,jdbcType=CHAR}
+      </if>
+      <if test="txnlog!=null" >
+        AND  TXNLOG=#{txnlog,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsLotPrzInfo" >
+    insert into ${GDEUPSB_SCHEMA}.LOT_PRZ_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tlogno != null" >
+        TLOGNO,
+      </if>
+      <if test="drawid != null" >
+        DRAWID,
+      </if>
+      <if test="kenoid != null" >
+        KENOID,
+      </if>
+      <if test="playid != null" >
+        PLAYID,
+      </if>
+      <if test="betmul != null" >
+        BETMUL,
+      </if>
+      <if test="betlin != null" >
+        BETLIN,
+      </if>
+      <if test="betmod != null" >
+        BETMOD,
+      </if>
+      <if test="txntim != null" >
+        TXNTIM,
+      </if>
+      <if test="txnlog != null" >
+        TXNLOG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tlogno != null" >
+        #{tlogno,jdbcType=CHAR},
+      </if>
+      <if test="drawid != null" >
+        #{drawid,jdbcType=CHAR},
+      </if>
+      <if test="kenoid != null" >
+        #{kenoid,jdbcType=CHAR},
+      </if>
+      <if test="playid != null" >
+        #{playid,jdbcType=CHAR},
+      </if>
+      <if test="betmul != null" >
+        #{betmul,jdbcType=CHAR},
+      </if>
+      <if test="betlin != null" >
+        #{betlin,jdbcType=CHAR},
+      </if>
+      <if test="betmod != null" >
+        #{betmod,jdbcType=CHAR},
+      </if>
+      <if test="txntim != null" >
+        #{txntim,jdbcType=CHAR},
+      </if>
+      <if test="txnlog != null" >
+        #{txnlog,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSB_SCHEMA}.LOT_PRZ_INFO
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="tlogno!=null" >
+        AND  TLOGNO=#{tlogno,jdbcType=CHAR}
+      </if>
+      <if test="drawid!=null" >
+        AND  DRAWID=#{drawid,jdbcType=CHAR}
+      </if>
+      <if test="kenoid!=null" >
+        AND  KENOID=#{kenoid,jdbcType=CHAR}
+      </if>
+      <if test="playid!=null" >
+        AND  PLAYID=#{playid,jdbcType=CHAR}
+      </if>
+      <if test="betmul!=null" >
+        AND  BETMUL=#{betmul,jdbcType=CHAR}
+      </if>
+      <if test="betlin!=null" >
+        AND  BETLIN=#{betlin,jdbcType=CHAR}
+      </if>
+      <if test="betmod!=null" >
+        AND  BETMOD=#{betmod,jdbcType=CHAR}
+      </if>
+      <if test="txntim!=null" >
+        AND  TXNTIM=#{txntim,jdbcType=CHAR}
+      </if>
+      <if test="txnlog!=null" >
+        AND  TXNLOG=#{txnlog,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.LOT_PRZ_INFO
+  </select>
+</mapper>

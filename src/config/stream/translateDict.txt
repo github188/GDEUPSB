@@ -6,3 +6,35 @@
 #  filter="both,packets/translateDict.txt"
 #  filter="format,packets/translateDict.txt"
 #  filter="parse,packets/translateDict.txt"
+
+
+
+
+##南方电网  欠费查询
+TransCode.460410=10
+
+##南方电网  签到签退
+TransCode.eups.manageChlSignInOut=91
+
+##南方电网 单边记账
+TransCode.eups.payUnilateralToBankExt=22
+
+##南方电网 单边抹账
+TransCode.eups.cancelUnilateralToBankExt=23
+
+##南方电网  供电方发起供电到银行变更代扣协议请求
+TransCode.gdeupsb.powerChangeTreaty=32
+
+##南方电网   供电批量代扣取消业务
+TransCode.gdeupsb.cancelBatch=24
+
+##南方电网   供电批量代扣文件准备
+TransCode.gdeupsb.batchDataFile=20
+
+##珠海路桥  对账 
+TransCode.gdeupsb.checkTrspFile=GetChk
+
+
+
+TransCode.gdeupsb.hSCardSignIn=000101
+TransCode.gdeupsb.trspPrintInvoic=484004

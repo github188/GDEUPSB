@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdEupsCusAgent" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdEupsCusAgent" >
+    <id column="AGD_AGR_NO" property="agdAgrNo" jdbcType="CHAR" />
+    <result column="AGT_CLL_CUS_ID" property="agtCllCusId" jdbcType="CHAR" />
+    <result column="COM_NO" property="comNo" jdbcType="CHAR" />
+    <result column="COM_NUM" property="comNum" jdbcType="VARCHAR" />
+    <result column="ACO_AC" property="acoAc" jdbcType="CHAR" />
+    <result column="BUS_TYP" property="busTyp" jdbcType="CHAR" />
+    <result column="BUS_KND" property="busKnd" jdbcType="CHAR" />
+    <result column="AGT_SRV_CUS_ID" property="agtSrvCusId" jdbcType="VARCHAR" />
+    <result column="AGT_SRV_CUS_PNM" property="agtSrvCusPnm" jdbcType="VARCHAR" />
+    <result column="AGR_VLD_DTE" property="agrVldDte" jdbcType="DATE" />
+    <result column="AGR_EXP_DTE" property="agrExpDte" jdbcType="DATE" />
+    <result column="PED_AGR_STS" property="pedAgrSts" jdbcType="CHAR" />
+    <result column="DES1" property="des1" jdbcType="VARCHAR" />
+    <result column="DES2" property="des2" jdbcType="VARCHAR" />
+    <result column="DES3" property="des3" jdbcType="VARCHAR" />
+    <result column="DES4" property="des4" jdbcType="VARCHAR" />
+    <result column="DES5" property="des5" jdbcType="VARCHAR" />
+    <result column="SEL_ID" property="selId" jdbcType="CHAR" />
+    <result column="SEL_NME" property="selNme" jdbcType="VARCHAR" />
+    <result column="RCO_ID" property="rcoId" jdbcType="CHAR" />
+    <result column="RCO_NME" property="rcoNme" jdbcType="VARCHAR" />
+    <result column="BAT_NO" property="batNo" jdbcType="VARCHAR" />
+    <result column="BAT_SEQ" property="batSeq" jdbcType="INTEGER" />
+    <result column="MKI_EVT_NO" property="mkiEvtNo" jdbcType="CHAR" />
+    <result column="AGE_BR" property="ageBr" jdbcType="CHAR" />
+    <result column="AGR_BR" property="agrBr" jdbcType="CHAR" />
+    <result column="AGR_TLR" property="agrTlr" jdbcType="CHAR" />
+    <result column="ATH_TLR" property="athTlr" jdbcType="CHAR" />
+    <result column="AGR_TME" property="agrTme" jdbcType="TIMESTAMP" />
+    <result column="CNL_STS" property="cnlSts" jdbcType="VARCHAR" />
+    <result column="AGR_CHL" property="agrChl" jdbcType="CHAR" />
+    <result column="CMU_TEL" property="cmuTel" jdbcType="VARCHAR" />
+    <result column="EML" property="eml" jdbcType="VARCHAR" />
+    <result column="EXT_FLD1" property="extFld1" jdbcType="VARCHAR" />
+    <result column="EXT_FLD2" property="extFld2" jdbcType="VARCHAR" />
+    <result column="EXT_FLD3" property="extFld3" jdbcType="VARCHAR" />
+    <result column="TPS_STS" property="tpsSts" jdbcType="CHAR" />
+    <result column="ERR_MSG" property="errMsg" jdbcType="VARCHAR" />
+    <result column="AGT_AGR_NO" property="agtAgrNo" jdbcType="CHAR" />
+    <result column="CUS_NO" property="cusNo" jdbcType="VARCHAR" />
+    <result column="CUS_AC" property="cusAc" jdbcType="CHAR" />
+    <result column="ID_TYP" property="idTyp" jdbcType="CHAR" />
+    <result column="CUS_TYP" property="cusTyp" jdbcType="VARCHAR" />
+    <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+    <result column="CUS_NME" property="cusNme" jdbcType="VARCHAR" />
+    <result column="BV_CDE" property="bvCde" jdbcType="CHAR" />
+    <result column="BV_NO" property="bvNo" jdbcType="CHAR" />
+    <result column="AC_TYP" property="acTyp" jdbcType="CHAR" />
+    <result column="OUR_OTH_FLG" property="ourOthFlg" jdbcType="CHAR" />
+    <result column="OBK_BK" property="obkBk" jdbcType="VARCHAR" />
+    <result column="CCY" property="ccy" jdbcType="CHAR" />
+    <result column="THD_CUS_NO" property="thdCusNo" jdbcType="CHAR" />
+    <result column="THD_CUS_NME" property="thdCusNme" jdbcType="VARCHAR" />
+    <result column="EUPS_BUS_TYP" property="eupsBusTyp" jdbcType="CHAR" />
+    <result column="AGD_DTE" property="agdDte" jdbcType="DATE" />
+    <result column="CON_COL_DAY" property="conColDay" jdbcType="CHAR" />
+    <result column="AGD_AMT" property="agdAmt" jdbcType="DECIMAL" />
+    <result column="CRE_DTE" property="creDte" jdbcType="DATE" />
+    <result column="FIL_FLG" property="filFlg" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    AGD_AGR_NO, AGT_CLL_CUS_ID, COM_NO, COM_NUM, ACO_AC, BUS_TYP, BUS_KND, AGT_SRV_CUS_ID, 
+    AGT_SRV_CUS_PNM, AGR_VLD_DTE, AGR_EXP_DTE, PED_AGR_STS, DES1, DES2, DES3, DES4, DES5, 
+    SEL_ID, SEL_NME, RCO_ID, RCO_NME, BAT_NO, BAT_SEQ, MKI_EVT_NO, AGE_BR, AGR_BR, AGR_TLR, 
+    ATH_TLR, AGR_TME, CNL_STS, AGR_CHL, CMU_TEL, EML, EXT_FLD1, EXT_FLD2, EXT_FLD3, TPS_STS, 
+    ERR_MSG, AGT_AGR_NO, CUS_NO, CUS_AC, ID_TYP, CUS_TYP, ID_NO, CUS_NME, BV_CDE, BV_NO, 
+    AC_TYP, OUR_OTH_FLG, OBK_BK, CCY, THD_CUS_NO, THD_CUS_NME, EUPS_BUS_TYP, AGD_DTE, 
+    CON_COL_DAY, AGD_AMT, CRE_DTE, FIL_FLG
+  </sql>
+  
+  
+  
+  
+  
+  
+  
+</mapper>

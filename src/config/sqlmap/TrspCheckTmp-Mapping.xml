@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.TrspCheckTmp" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.TrspCheckTmp" >
+    <id column="SQN" property="sqn" jdbcType="CHAR" />
+    <result column="TCHK_NO" property="tchkNo" jdbcType="CHAR" />
+    <result column="TXN_DAT" property="txnDat" jdbcType="DATE" />
+    <result column="TXN_AMT" property="txnAmt" jdbcType="DECIMAL" />
+    <result column="INV_NO" property="invNo" jdbcType="CHAR" />
+    <result column="PAY_MON" property="payMon" jdbcType="CHAR" />
+    <result column="CAR_TYP" property="carTyp" jdbcType="CHAR" />
+    <result column="CAR_NO" property="carNo" jdbcType="CHAR" />
+    <result column="STATUE" property="statue" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    SQN, TCHK_NO, TXN_DAT, TXN_AMT, INV_NO, PAY_MON, CAR_TYP, CAR_NO, STATUE
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from GDEUPSB.TRSP_CHECK_TMP
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="tchkNo!=null" >
+        AND  TCHK_NO=#{tchkNo,jdbcType=CHAR}
+      </if>
+      <if test="txnDat!=null" >
+        AND  TXN_DAT=#{txnDat,jdbcType=DATE}
+      </if>
+      <if test="txnAmt!=null" >
+        AND  TXN_AMT=#{txnAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="invNo!=null" >
+        AND  INV_NO=#{invNo,jdbcType=CHAR}
+      </if>
+      <if test="payMon!=null" >
+        AND  PAY_MON=#{payMon,jdbcType=CHAR}
+      </if>
+      <if test="carTyp!=null" >
+        AND  CAR_TYP=#{carTyp,jdbcType=CHAR}
+      </if>
+      <if test="carNo!=null" >
+        AND  CAR_NO=#{carNo,jdbcType=CHAR}
+      </if>
+      <if test="statue!=null" >
+        AND  STATUE=#{statue,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from GDEUPSB.TRSP_CHECK_TMP
+    where SQN = #{sqn,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from GDEUPSB.TRSP_CHECK_TMP
+    where SQN = #{sqn,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.TrspCheckTmp" >
+    insert into GDEUPSB.TRSP_CHECK_TMP
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sqn != null" >
+        SQN,
+      </if>
+      <if test="tchkNo != null" >
+        TCHK_NO,
+      </if>
+      <if test="txnDat != null" >
+        TXN_DAT,
+      </if>
+      <if test="txnAmt != null" >
+        TXN_AMT,
+      </if>
+      <if test="invNo != null" >
+        INV_NO,
+      </if>
+      <if test="payMon != null" >
+        PAY_MON,
+      </if>
+      <if test="carTyp != null" >
+        CAR_TYP,
+      </if>
+      <if test="carNo != null" >
+        CAR_NO,
+      </if>
+      <if test="statue != null" >
+        STATUE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sqn != null" >
+        #{sqn,jdbcType=CHAR},
+      </if>
+      <if test="tchkNo != null" >
+        #{tchkNo,jdbcType=CHAR},
+      </if>
+      <if test="txnDat != null" >
+        #{txnDat,jdbcType=DATE},
+      </if>
+      <if test="txnAmt != null" >
+        #{txnAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="invNo != null" >
+        #{invNo,jdbcType=CHAR},
+      </if>
+      <if test="payMon != null" >
+        #{payMon,jdbcType=CHAR},
+      </if>
+      <if test="carTyp != null" >
+        #{carTyp,jdbcType=CHAR},
+      </if>
+      <if test="carNo != null" >
+        #{carNo,jdbcType=CHAR},
+      </if>
+      <if test="statue != null" >
+        #{statue,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from GDEUPSB.TRSP_CHECK_TMP
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="tchkNo!=null" >
+        AND  TCHK_NO=#{tchkNo,jdbcType=CHAR}
+      </if>
+      <if test="txnDat!=null" >
+        AND  TXN_DAT=#{txnDat,jdbcType=DATE}
+      </if>
+      <if test="txnAmt!=null" >
+        AND  TXN_AMT=#{txnAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="invNo!=null" >
+        AND  INV_NO=#{invNo,jdbcType=CHAR}
+      </if>
+      <if test="payMon!=null" >
+        AND  PAY_MON=#{payMon,jdbcType=CHAR}
+      </if>
+      <if test="carTyp!=null" >
+        AND  CAR_TYP=#{carTyp,jdbcType=CHAR}
+      </if>
+      <if test="carNo!=null" >
+        AND  CAR_NO=#{carNo,jdbcType=CHAR}
+      </if>
+      <if test="statue!=null" >
+        AND  STATUE=#{statue,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.TrspCheckTmp" >
+    update GDEUPSB.TRSP_CHECK_TMP
+    <set >
+      <if test="tchkNo != null" >
+        TCHK_NO = #{tchkNo,jdbcType=CHAR},
+      </if>
+      <if test="txnDat != null" >
+        TXN_DAT = #{txnDat,jdbcType=DATE},
+      </if>
+      <if test="txnAmt != null" >
+        TXN_AMT = #{txnAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="invNo != null" >
+        INV_NO = #{invNo,jdbcType=CHAR},
+      </if>
+      <if test="payMon != null" >
+        PAY_MON = #{payMon,jdbcType=CHAR},
+      </if>
+      <if test="carTyp != null" >
+        CAR_TYP = #{carTyp,jdbcType=CHAR},
+      </if>
+      <if test="carNo != null" >
+        CAR_NO = #{carNo,jdbcType=CHAR},
+      </if>
+      <if test="statue != null" >
+        STATUE = #{statue,jdbcType=CHAR},
+      </if>
+    </set>
+    where SQN = #{sqn,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from GDEUPSB.TRSP_CHECK_TMP
+    <if test="_parameter" >
+      where SQN in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
+	
+	<delete id="deleteAll"  parameterType="java.lang.String"  >
+			delete  from GDEUPSB.TRSP_CHECK_TMP  where '1' =#{string,jdbcType=CHAR}
+	</delete>
+	<update id="updateAll" parameterType="java.lang.String" >
+			update GDEUPSB.TRSP_CHECK_TMP set STATUE='0' WHERE  TCHK_NO=#{tchkNo,jdbcType=CHAR}
+	</update>
+</mapper>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	 encoding="GBK" trace="true" >
+	<segment name="ReqHead" encoding="GBK">
+	     <varString name="TransCode" referred="true" mapping="true"  type="D|" /> <!-- 交易码-->
+    </segment>
+  <include keys="TransCode" encodePrefix="f"/> 
+</message>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="body" >
+	 <varString type="D|"  name="tactDt"  /> <!-- 交易日期 -->
+	 <varString type="D|" name="tlogNo"  /> <!-- 流水号-->
+	    <varString type="D|" name="otLogNo"  /> <!-- 原流水号-->
+	     <varString type="D|" name="invNo"  /> <!-- 新发票号 -->
+	    
+     
+</segment>

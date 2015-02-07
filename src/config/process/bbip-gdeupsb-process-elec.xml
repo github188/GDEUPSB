@@ -1,0 +1,81 @@
+<x:beans xmlns:x="http://www.springframework.org/schema/beans"
+	xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+
+		
+	<!-- 南方电网 缴费结果查询
+			<process id="gdeupsb.bbipPayResultQuery" template="eups.simpleTran"  interceptors="eups.transMessageInterceptor">
+			  <actions>
+			   			<action id="act" ref="gdeupsb.preQryResultAction"/>
+			   </actions>
+			</process>
+			-->
+
+		
+	<!-- 南方电网  银行发起存入预付款-->
+	 		<process id="gdeupsb.advanceTrade"  template="eups.payOnlineTemplateExt"  interceptors="eups.thdTransInterceptor">
+			  <actions>
+			   			<action id="preCheckAction"  ref="gdeupsb.advanceTradeAction" />
+		   				<action id="preHostAction"   ref="gdeupsb.nullAction" />
+		   				<action id="preThdAction"   ref="gdeupsb.nullAction" />
+			   			<action id="aftThdAction"   ref="gdeupsb.nullAction" /> 
+			   </actions>
+			</process>	
+
+	<!-- 南方电网  抹账查询-->
+		<process id="gdeupsb.CancelQryOnline"  template="eups.simpleTran"  interceptors="eups.transMessageInterceptor">
+			  <actions>
+			   			<action id="act"  ref="gdeupsb.tallyCancelQryOnlineAction"/>
+			   </actions>
+			</process>
+			
+	<!-- 南方电网  银行查询客户交费记录-->
+		<process id="gdeupsb.qryCusPayRecord"  template="eups.simpleTran"  interceptors="eups.transMessageInterceptor">
+			  <actions>
+			 			 <action id="act" ref="eups.checkComTxnCtlAction" operations="checkThdTxnCtlNormal" />
+			   			  <action id="act"  ref="gdeupsb.qryCusPayRecordAction"/>
+			   </actions>
+		</process>			
+
+	<!-- 南方电网  供电到银行变更代扣协议请求-->
+		<process id="gdeupsb.powerChangeTreaty"  template="eups.simpleTran"  interceptors="eups.transMessageInterceptor">
+			  <actions>
+			   			  <action id="act"  ref="gesupsb.powerChangeTreatyAction"/>
+			   </actions>
+		</process>
+		
+	<!-- 南方电网  查询客户基本信息-->
+		<process id="gdeupsb.qryCusBaseMsg"  template="eups.simpleTran"  interceptors="eups.thdTransInterceptorExt">
+			  <actions>
+			   			  <action id="act"  ref="gdeupsb.qryCusBaseMsgAction"/>
+			   </actions>
+		</process>		
+		
+	<!-- 南方电网  代收日志服务记录-->
+		<process id="gdeupsb.logService"  template="eups.simpleTran"  interceptors="eups.transMessageInterceptor">
+			  <actions>
+			   			  <action id="act"  ref="gdeupsb.logServiceAction"/>
+			   </actions>
+		</process>			
+	
+	<!-- 南方电网  查询客户信息-->
+		<process id="gdeupsb.qryCusMsg"  template="eups.simpleTran"  interceptors="eups.transMessageInterceptor">
+			  <actions>
+			   			  <action id="act"  ref="gdeupsb.qryCusMsgAction"/>
+			   			  <action id="act" ref="eups.registerUnAccServiceAction"/>
+			   </actions>
+		</process>		
+	<!-- 南方电网  供电批量代扣取消交易-->		
+		<process id="gdeupsb.cancelBatch"  template="eups.simpleTran"  interceptors="eups.thdTransInterceptorExt">
+				  <actions>
+				   			  <action id="act"  ref="gdeupsb.CancelBatchAction"/>
+				   </actions>
+			</process>					
+	<!-- 南方电网  供电批量数据准备-->	
+			<process id="gdeupsb.batchDataFile"  template="eups.simpleTran"  interceptors="eups.thdTransInterceptorExt">
+				  <actions>
+				   			  <action id="act"  ref="gdeupsb.batchDataFileAction"/>
+				   </actions>
+			</process>			
+</x:beans>

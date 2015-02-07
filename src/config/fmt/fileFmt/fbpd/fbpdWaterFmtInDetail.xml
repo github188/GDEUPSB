@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet spacket.xsd"
+	encoding="GBK" trace="true">
+	<segment name="detail" encoding="GBK">
+	
+	<!-- 
+	<Process name="WATR_in_484999"    desc="中山水费"  sqn_flag="Y" sqn_node_name="SeqNo">
+		<Data extend_flag="Y">
+	  <Item name="AA"       length="07"/>   机构号
+      <Item name="ActNo"    length="26"/>   账号
+      <Item name="TCusId"   length="09"/>     户号
+      <Item name="TCusNm"   length="30"/>   户名
+      <Item name="BB"       length="10"/>   客户编号
+      <Item name="TxnAmt"   length="13" expression="FMUL($TxnAmt,100,0)"/>  金额
+      <AddItem name="SeqNo"    expression="ADDCHAR($SeqNo,5,0,1)"/>
+		</Data>
+	</Process>	
+	 -->
+	
+	<fixString name="comNo" length="7" />
+	<fixString name="cusAc" length="26" />
+	<fixString name="cusNo" length="9" />
+	<fixString name="cusNme" length="30" />
+	<fixString name="thdCusNo" length="10" />
+	<fixString name="txnAmt" length="13" />
+	<fixString name="seqNo" length="32" />
+		
+	</segment>
+</message>

@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo" >
+  <resultMap id="BaseResultMap" type="com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo" >
+    <id column="BAT_NO" property="batNo" jdbcType="CHAR" />
+    <result column="TXN_MDE" property="txnMde" jdbcType="CHAR" />
+    <result column="RAP_TYP" property="rapTyp" jdbcType="CHAR" />
+    <result column="COM_NO" property="comNo" jdbcType="CHAR" />
+    <result column="COM_NME" property="comNme" jdbcType="VARCHAR" />
+    <result column="BUS_KND" property="busKnd" jdbcType="CHAR" />
+    <result column="TXN_ORG_CDE" property="txnOrgCde" jdbcType="CHAR" />
+    <result column="TXN_TLR" property="txnTlr" jdbcType="CHAR" />
+    <result column="SUB_DTE" property="subDte" jdbcType="DATE" />
+    <result column="EXE_DTE" property="exeDte" jdbcType="DATE" />
+    <result column="BAT_STS" property="batSts" jdbcType="CHAR" />
+    <result column="FLE_NME" property="fleNme" jdbcType="CHAR" />
+    <result column="TOT_CNT" property="totCnt" jdbcType="INTEGER" />
+    <result column="TOT_AMT" property="totAmt" jdbcType="DECIMAL" />
+    <result column="SUC_TOT_CNT" property="sucTotCnt" jdbcType="INTEGER" />
+    <result column="SUC_TOT_AMT" property="sucTotAmt" jdbcType="DECIMAL" />
+    <result column="FAL_TOT_CNT" property="falTotCnt" jdbcType="INTEGER" />
+    <result column="FAL_TOT_AMT" property="falTotAmt" jdbcType="DECIMAL" />
+    <result column="PAY_CNT" property="payCnt" jdbcType="INTEGER" />
+    <result column="RSV_FLD1" property="rsvFld1" jdbcType="VARCHAR" />
+    <result column="RSV_FLD2" property="rsvFld2" jdbcType="VARCHAR" />
+    <result column="RSV_FLD3" property="rsvFld3" jdbcType="VARCHAR" />
+    <result column="RSV_FLD4" property="rsvFld4" jdbcType="VARCHAR" />
+    <result column="RSV_FLD5" property="rsvFld5" jdbcType="VARCHAR" />
+    <result column="RSV_FLD6" property="rsvFld6" jdbcType="VARCHAR" />
+    <result column="RSV_FLD7" property="rsvFld7" jdbcType="VARCHAR" />
+    <result column="RSV_FLD8" property="rsvFld8" jdbcType="VARCHAR" />
+    <result column="RSV_FLD9" property="rsvFld9" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    BAT_NO, TXN_MDE, RAP_TYP, COM_NO, COM_NME, BUS_KND, TXN_ORG_CDE, TXN_TLR, SUB_DTE, 
+    EXE_DTE, BAT_STS, FLE_NME, TOT_CNT, TOT_AMT, SUC_TOT_CNT, SUC_TOT_AMT, FAL_TOT_CNT, 
+    FAL_TOT_AMT, PAY_CNT, RSV_FLD1, RSV_FLD2, RSV_FLD3, RSV_FLD4, RSV_FLD5, RSV_FLD6, 
+    RSV_FLD7, RSV_FLD8, RSV_FLD9
+  </sql>
+ 
+  <select id="findConsoleInfo" resultMap="BaseResultMap" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo" >
+    select 
+    <include refid="Base_Column_List" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_BATCH_CONSOLE_INFO
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="batNo!=null" >
+        AND  BAT_NO=#{batNo,jdbcType=CHAR}
+      </if>
+      <if test="fleNme!=null" >
+        AND  FLE_NME=#{fleNme,jdbcType=CHAR}
+      </if>
+      </trim>
+  </select>
+  <delete id="deleteConsoleInfo" parameterType="java.lang.String" >
+    delete from ${GDEUPSB_SCHEMA}.GDEUPS_BATCH_CONSOLE_INFO
+    where BAT_NO = #{batNo,jdbcType=CHAR}
+  </delete>
+
+  
+  <insert id="insertConsoleInfo" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo" >
+    insert into ${GDEUPSB_SCHEMA}.GDEUPS_BATCH_CONSOLE_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="batNo != null" >
+        BAT_NO,
+      </if>
+      <if test="txnMde != null" >
+        TXN_MDE,
+      </if>
+      <if test="rapTyp != null" >
+        RAP_TYP,
+      </if>
+      <if test="comNo != null" >
+        COM_NO,
+      </if>
+      <if test="comNme != null" >
+        COM_NME,
+      </if>
+      <if test="busKnd != null" >
+        BUS_KND,
+      </if>
+      <if test="txnOrgCde != null" >
+        TXN_ORG_CDE,
+      </if>
+      <if test="txnTlr != null" >
+        TXN_TLR,
+      </if>
+      <if test="subDte != null" >
+        SUB_DTE,
+      </if>
+      <if test="exeDte != null" >
+        EXE_DTE,
+      </if>
+      <if test="batSts != null" >
+        BAT_STS,
+      </if>
+      <if test="fleNme != null" >
+        FLE_NME,
+      </if>
+      <if test="totCnt != null" >
+        TOT_CNT,
+      </if>
+      <if test="totAmt != null" >
+        TOT_AMT,
+      </if>
+      <if test="sucTotCnt != null" >
+        SUC_TOT_CNT,
+      </if>
+      <if test="sucTotAmt != null" >
+        SUC_TOT_AMT,
+      </if>
+      <if test="falTotCnt != null" >
+        FAL_TOT_CNT,
+      </if>
+      <if test="falTotAmt != null" >
+        FAL_TOT_AMT,
+      </if>
+      <if test="payCnt != null" >
+        PAY_CNT,
+      </if>
+      <if test="rsvFld1 != null" >
+        RSV_FLD1,
+      </if>
+      <if test="rsvFld2 != null" >
+        RSV_FLD2,
+      </if>
+      <if test="rsvFld3 != null" >
+        RSV_FLD3,
+      </if>
+      <if test="rsvFld4 != null" >
+        RSV_FLD4,
+      </if>
+      <if test="rsvFld5 != null" >
+        RSV_FLD5,
+      </if>
+      <if test="rsvFld6 != null" >
+        RSV_FLD6,
+      </if>
+      <if test="rsvFld7 != null" >
+        RSV_FLD7,
+      </if>
+      <if test="rsvFld8 != null" >
+        RSV_FLD8,
+      </if>
+      <if test="rsvFld9 != null" >
+        RSV_FLD9,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="batNo != null" >
+        #{batNo,jdbcType=CHAR},
+      </if>
+      <if test="txnMde != null" >
+        #{txnMde,jdbcType=CHAR},
+      </if>
+      <if test="rapTyp != null" >
+        #{rapTyp,jdbcType=CHAR},
+      </if>
+      <if test="comNo != null" >
+        #{comNo,jdbcType=CHAR},
+      </if>
+      <if test="comNme != null" >
+        #{comNme,jdbcType=VARCHAR},
+      </if>
+      <if test="busKnd != null" >
+        #{busKnd,jdbcType=CHAR},
+      </if>
+      <if test="txnOrgCde != null" >
+        #{txnOrgCde,jdbcType=CHAR},
+      </if>
+      <if test="txnTlr != null" >
+        #{txnTlr,jdbcType=CHAR},
+      </if>
+      <if test="subDte != null" >
+        #{subDte,jdbcType=DATE},
+      </if>
+      <if test="exeDte != null" >
+        #{exeDte,jdbcType=DATE},
+      </if>
+      <if test="batSts != null" >
+        #{batSts,jdbcType=CHAR},
+      </if>
+      <if test="fleNme != null" >
+        #{fleNme,jdbcType=CHAR},
+      </if>
+      <if test="totCnt != null" >
+        #{totCnt,jdbcType=INTEGER},
+      </if>
+      <if test="totAmt != null" >
+        #{totAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="sucTotCnt != null" >
+        #{sucTotCnt,jdbcType=INTEGER},
+      </if>
+      <if test="sucTotAmt != null" >
+        #{sucTotAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="falTotCnt != null" >
+        #{falTotCnt,jdbcType=INTEGER},
+      </if>
+      <if test="falTotAmt != null" >
+        #{falTotAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="payCnt != null" >
+        #{payCnt,jdbcType=INTEGER},
+      </if>
+      <if test="rsvFld1 != null" >
+        #{rsvFld1,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld2 != null" >
+        #{rsvFld2,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld3 != null" >
+        #{rsvFld3,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld4 != null" >
+        #{rsvFld4,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld5 != null" >
+        #{rsvFld5,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld6 != null" >
+        #{rsvFld6,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld7 != null" >
+        #{rsvFld7,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld8 != null" >
+        #{rsvFld8,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld9 != null" >
+        #{rsvFld9,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  
+  <update id="updateConsoleInfo" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo" >
+    update ${GDEUPSB_SCHEMA}.GDEUPS_BATCH_CONSOLE_INFO
+    <set >
+      <if test="txnMde != null" >
+        TXN_MDE = #{txnMde,jdbcType=CHAR},
+      </if>
+      <if test="rapTyp != null" >
+        RAP_TYP = #{rapTyp,jdbcType=CHAR},
+      </if>
+      <if test="comNo != null" >
+        COM_NO = #{comNo,jdbcType=CHAR},
+      </if>
+      <if test="comNme != null" >
+        COM_NME = #{comNme,jdbcType=VARCHAR},
+      </if>
+      <if test="busKnd != null" >
+        BUS_KND = #{busKnd,jdbcType=CHAR},
+      </if>
+      <if test="txnOrgCde != null" >
+        TXN_ORG_CDE = #{txnOrgCde,jdbcType=CHAR},
+      </if>
+      <if test="txnTlr != null" >
+        TXN_TLR = #{txnTlr,jdbcType=CHAR},
+      </if>
+      <if test="subDte != null" >
+        SUB_DTE = #{subDte,jdbcType=DATE},
+      </if>
+      <if test="exeDte != null" >
+        EXE_DTE = #{exeDte,jdbcType=DATE},
+      </if>
+      <if test="batSts != null" >
+        BAT_STS = #{batSts,jdbcType=CHAR},
+      </if>
+      <if test="fleNme != null" >
+        FLE_NME = #{fleNme,jdbcType=CHAR},
+      </if>
+      <if test="totCnt != null" >
+        TOT_CNT = #{totCnt,jdbcType=INTEGER},
+      </if>
+      <if test="totAmt != null" >
+        TOT_AMT = #{totAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="sucTotCnt != null" >
+        SUC_TOT_CNT = #{sucTotCnt,jdbcType=INTEGER},
+      </if>
+      <if test="sucTotAmt != null" >
+        SUC_TOT_AMT = #{sucTotAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="falTotCnt != null" >
+        FAL_TOT_CNT = #{falTotCnt,jdbcType=INTEGER},
+      </if>
+      <if test="falTotAmt != null" >
+        FAL_TOT_AMT = #{falTotAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="payCnt != null" >
+        PAY_CNT = #{payCnt,jdbcType=INTEGER},
+      </if>
+      <if test="rsvFld1 != null" >
+        RSV_FLD1 = #{rsvFld1,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld2 != null" >
+        RSV_FLD2 = #{rsvFld2,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld3 != null" >
+        RSV_FLD3 = #{rsvFld3,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld4 != null" >
+        RSV_FLD4 = #{rsvFld4,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld5 != null" >
+        RSV_FLD5 = #{rsvFld5,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld6 != null" >
+        RSV_FLD6 = #{rsvFld6,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld7 != null" >
+        RSV_FLD7 = #{rsvFld7,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld8 != null" >
+        RSV_FLD8 = #{rsvFld8,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld9 != null" >
+        RSV_FLD9 = #{rsvFld9,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where BAT_NO = #{batNo,jdbcType=CHAR}
+  </update>
+ 
+</mapper>

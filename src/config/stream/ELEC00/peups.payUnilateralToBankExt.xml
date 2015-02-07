@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="460412Resp">
+	
+<!--网点名称	WDMC	Varchar2(64)-->
+		<fixString name="netName"  length="64"/>
+<!--交易流水号	JYLSH	Varchar2(24)-->
+		<fixString name="thdSqn"  length="24"/>
+<!--交易日期	JYRQ	Varchar2(8)-->
+		<fixString name="txnDte"  length="8"/>
+<!--交易时间	JYSJ	Varchar2(6)-->
+		<fixString name="txnTme"  length="6"/>
+<!--原交易流水号	YJYLSH	Varchar2(24)-->
+		<fixString name="oldTxnSqn"  length="24"/>
+<!--原交易日期	YJYRQ	Varchar2(8)-->
+		<fixString name="busOldDate"  length="8"/>
+<!--原交易时间	YJYSJ	Varchar2 (6)-->
+		<fixString name="busOldTime"  length="6"/>
+<!--收费方式	SFFS	Varchar2(3)-->
+		<fixString name="busTyp"  length="3"/>
+<!--费用类型	FYLX	Varchar2(3)-->
+		<fixString name="costType"  length="3"/>
+<!--入账银行代码	RZYHDM	Varchar2(4)-->
+		<fixString name="bankNo"  length="4"/>
+<!--单位编码	DWBM	Varchar2(8)-->
+		<fixString name="comNo"  length="8"/>
+<!--费号	JFH	Varchar2(20)-->
+		<fixString name="payNo"  length="20"/>
+<!--结算户名称	JSHMC	Varchar2(64)-->
+		<fixString name="settleAccountsName"  length="64"/>
+<!--用电地址	YDDZ	Varchar2(128)-->
+		<fixString name="electroAddress"  length="128"/>
+<!--扣款账户	KKZH	Varchar2(32)-->
+		<fixString name="cusAc"  length="32"/>
+<!--扣款账户名称	KKZHMC	Varchar2(128)-->
+		<fixString name="CusNme"  length="128"/>
+<!--部分缴费标志	BFJFBZ	Varchar2(1)-->
+		<fixString name="fulDedFlg"  length="1"/>
+<!--账务流水号	ZWLSH	Varchar2(16)-->
+		<fixString name="accountsSerialNo"  length="16"/>
+<!--电费年月	DFNY	Varchar2(6)-->
+		<fixString name="electricityYearMonth"  length="6"/>
+<!--货币符号	HBFH	Varchar2(5)-->
+		<fixString name="ccy"  length="5"/>
+<!--扣费金额	KFJE	Number(14,2)-->
+		<fixString name="txnAmt"  length="16"/>
+<!--本金	BJ	Number(14,2)-->
+		<fixString name="capital"  length="16"/>
+<!--违约金	WYJ	Number(14,2)-->
+		<fixString name="dedit"  length="16"/>
+<!--预付费标志	YFFBZ	Varchar2(1)-->
+		<fixString name="payInAdvSign"  length="1"/>
+<!--预付费金额	YFFJE	Number(14,2)-->
+		<fixString name="payInAdvMoney"  length="16"/>
+<!--实扣金额	SKJE	Number(14,2)-->
+		<fixString name="withholdMoney"  length="16"/>
+</segment>

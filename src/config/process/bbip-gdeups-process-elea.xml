@@ -1,0 +1,417 @@
+<x:beans xmlns:x="http://www.springframework.org/schema/beans"
+	xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+
+
+	<action id="eups.bbipPaymentExt" class="com.bocom.bbip.gdeupsb.action.BuaPaymentExt" />
+
+
+
+
+	<action id="eups.paymentToTHDActionExt" class="com.bocom.bbip.gdeupsb.action.PaymentToTHDActionExt" />
+
+
+	<!-- 联机单笔记账 -->
+	<process id="eups.payFeeOnlineExt" template="eups.payOnlineTemplateExt"
+		interceptors="eups.thdTransInterceptor">
+		<actions>
+			<!-- 交易前特色处理 -->
+			<!-- <action id="preCheckAction" ref="eups.prepareCheckDealStrategyAction" 
+				/> -->
+			<action id="preCheckAction" ref="eups.payFeeOnlineServiceAction"
+				operations="preCheckDeal" />
+			<!-- 记账前特色处理 -->
+			<!-- <action id="preHostAction" ref="eups.preparePayStrategyAction" /> -->
+			<action id="preHostAction" ref="eups.payFeeOnlineServiceAction"
+				operations="preHostDeal" />
+			<!-- 第三方缴费前特色处理 -->
+			<!-- <action id="preThdAction" ref="eups.prePayFeeStrategyAction" /> -->
+			<action id="preThdAction" ref="eups.payFeeOnlineServiceAction"
+				operations="preThdDeal" />
+			<!-- 第三方缴费后特色处理 -->
+			<!-- <action id="aftThdAction" ref="eups.aftPayFeeStrategyAction" /> -->
+			<action id="aftThdAction" ref="eups.payFeeOnlineServiceAction"
+				operations="aftThdDeal" />
+		</actions>
+	</process>
+	
+	
+			<!-- 联机单笔抹帐  -->
+	<process id="eups.automaticCancelExt" template="eups.cancelOnlineExtTemplate"  interceptors="eups.thdTransInterceptorExt" >
+	   <actions>
+	       <!-- 第三方抹账前处理 -->
+	       <action id="preCalAction" ref="eups.preCancelStrategyAction"/>
+	       <!-- 第三方抹账后处理 -->
+	       <action id="aftCalAction" ref="eups.aftCancelStrategyAction"/>
+	   </actions>
+	</process>
+		
+
+
+	<!-- 抹账第三方 -->
+	<action class="com.bocom.bbip.gdeupsb.action.CancelToTHDActionExt"
+		id="eups.cancelToTHDActionExt" />
+
+	<action id="eups.bbipPaymentCancelUsingReversalExt"
+		class="com.bocom.bbip.gdeupsb.action.BuaPaymentCancelUsingReversalExt" />
+
+	<!-- 自动区分抹账：根据流水表第三方状态和主机状态 -->
+	<process id="eups.automaticCancelProcessExt" template="eups.autoCancelTemplateExt"
+		interceptors="eups.thdTransInterceptor">
+		<actions>
+			<!-- 第三方抹账前处理 -->
+			<!-- <action id="preCalAction" ref="eups.preCancelStrategyAction"/> -->
+			<action id="preCalAction" ref="eups.automaticCancelServiceAction"
+				operations="preCancel" />
+			<!-- 第三方抹账后处理 -->
+			<!-- <action id="aftCalAction" ref="eups.aftCancelStrategyAction"/> -->
+			<action id="aftCalAction" ref="eups.automaticCancelServiceAction"
+				operations="aftCancel" />
+		</actions>
+	</process>
+
+
+	<!-- 联机银行方单边记账（银行记帐系统自带冲正，无需发起冲正） -->
+	<process id="eups.payUnilateralToBankExt" template="eups.payUnilateralNoRvsTemplateExt"
+		interceptors="eups.thdTransInterceptor">
+		<actions>
+			<!-- 交易前服务处理 -->
+			<!-- <action id="preCheckAction" ref="eups.prepareCheckDealStrategyAction" 
+				/> -->
+			<action id="preCheckAction" ref="eups.payUnilateralToBankServiceAction"
+				operations="prepareCheckDeal" />
+			<!-- 交易前检查 -->
+			<action id="preAction" ref="eups.checkComTxnCtlAction"
+				operations="checkThdTxnCtlNormal" />
+			<action id="preAction" ref="eups.checkCusAgrAction" />
+			<!-- 记账前处理 -->
+			<!-- <action id="preAction" ref="eups.prePayToBankStrategyAction"/> -->
+			<action id="preAction" ref="eups.payUnilateralToBankServiceAction"
+				operations="prePayToBank" />
+			<action id="preAction" ref="eups.checkThdReqJnlAction" />
+			<action id="preAction" ref="eups.queryCusAcInfAction"
+				operations="cusAcOldToNew" />
+			<action id="preAction" ref="eups.queryCusAcInfAction"
+				operations="queryCusAcTyp" />
+			<action id="preAction" ref="eups.preparePaymentInfoAction" />
+			<!-- 检查渠道限额，如果配置了渠道限额则检查 -->
+			<action id="preAction" ref="eups.checkChlAmtLimAction" />
+			<!-- 联机记账预处理 -->
+			<action id="initAction" ref="eups.initPaymentInfoAction" />
+			<!-- 联机531代收付交易主机记账 （自调冲正） -->
+			<action id="businessAction" ref="eups.bbipPaymentExt" />
+			<action id="businessAction" ref="eups.saveCBPaymentResultAction" />
+			<!-- 交易结果 -->
+			<!-- 记账后返回处理 -->
+			<!-- <action id="finalizeAction" ref="eups.aftPayToBankStrategyAction"/> -->
+			<action id="finalizeAction" ref="eups.payUnilateralToBankServiceAction"
+				operations="aftPayToBank" />
+			<action id="finalizeAction" ref="eups.setTransJournalStateAction" />
+			<action id="finalizeAction" ref="eups.savePaymentResultAction" />
+		</actions>
+	</process>
+
+	<!-- 联机银行方单边抹账 -->
+	<process id="eups.cancelUnilateralToBankExt" template="eups.cancelUnilateralTemplate"
+		interceptors="eups.thdTransInterceptor">
+		<actions>
+			<!-- 交易前检查 -->
+			<!-- 第三方交易控制检查（默认正常交易） -->
+			<action id="preAction" ref="eups.checkComTxnCtlAction"
+				operations="checkThdTxnCtlNormal" />
+			<!-- 抹账前处理 -->
+			<!-- <action id="preAction" ref="eups.preCclToBankStrategyAction"/> -->
+			<action id="preAction" ref="eups.cancelUnilateralToBankServiceAction"
+				operations="preCclToBank" />
+			<action id="preAction" ref="eups.checkBeforeCancelAction"
+				operations="checkBeforeCancelBank" />
+			<!-- 联机抹账预处理 -->
+			<action id="initAction" ref="eups.initCancelInfoAction" />
+			<!-- 联机531代收付交易主机抹账 -->
+			<action id="businessAction" ref="eups.bbipPaymentCancelUsingReversalExt" />
+			<action id="businessAction" ref="eups.processCBCancelResultAction" />
+			<!-- 交易结果 -->
+			<!-- 抹账后返回处理 -->
+			<!-- <action id="finalizeAction" ref="eups.aftCclToBankStrategyAction"/> -->
+			<action id="finalizeAction" ref="eups.cancelUnilateralToBankServiceAction"
+				operations="aftCclToBank" />
+			<action id="finalizeAction" ref="eups.saveCancelResultAction" />
+		</actions>
+	</process>
+
+
+
+	<!-- <action id="gdeups.batchFileDealPreAction" class="com.bocom.bbip.gdeupsb.action.BatchFileDealPreAction" 
+		/> -->
+
+
+	<!-- 文件批量代扣准备数据(柜面) -->
+	<process id="eups.fileBatchPayCreateDataProcessExt" template="eups.simpleTran"
+		interceptors="bbip.defaultInterceptors">
+		<actions>
+			<action id="act" ref="eups.fileBatchPayCreateDataServiceAction"	operations="prepareBatchDeal" />
+		</actions>
+	</process>
+
+	<!--电力付费网关发出网管信息 -->
+	<action class="com.bocom.bbip.gdeupsb.action.elea.EleGzCmuTestAction"
+		id="eleGzCmuTestAction" />
+
+	<!-- 电力付费网关发出网管信息 -->
+	<process id="gdeups.eleCmuTestProcess" template="eups.simpleTran"
+		interceptors="bbip.defaultInterceptors">
+		<actions>
+			<action id="act" ref="eleGzCmuTestAction" />
+		</actions>
+	</process>
+
+	<!--电力付费网关发出网管信息 -->
+	<action class="com.bocom.bbip.gdeupsb.action.elea.EleGzBnkCmuTestAction"
+		id="eleGzBnkCmuTestAction" />
+
+	<!-- 银行发出网管信息 -->
+	<process id="gdeups.eleCmuBnkTestProcess" template="eups.simpleTran"
+		interceptors="bbip.defaultInterceptors">
+		<actions>
+			<action id="act" ref="eleGzBnkCmuTestAction" />
+		</actions>
+	</process>
+
+	<!--银行发起银行代扣代收电费对帐交易 -->
+	<action class="com.bocom.bbip.gdeupsb.action.elea.SynExcCheckEleGzFileAction"
+		id="gdeupsb.synExcCheckEleGzFileAction" />
+
+
+	<!-- 银行发起银行代扣代收电费对帐交易 -->
+	<process id="gdeupsb.eleCmuBnkTestProcess" template="eups.simpleTran"
+		interceptors="bbip.defaultInterceptors">
+		<actions>
+			<action id="act" ref="gdeupsb.synExcCheckEleGzFileAction" />
+		</actions>
+	</process>
+
+
+	<!--银行发起银行代扣代收电费对帐交易 -->
+	<action class="com.bocom.bbip.gdeupsb.action.sign.AgtScanPrintAction"
+		id="gdeups.agtScanPrintAction" />
+
+
+
+	<!--签约一站通：协议浏览或打印 -->
+	<process id="gdeups.agtScanPrintProcess" template="eups.simpleTran"
+		interceptors="bbip.defaultInterceptors">
+		<actions>
+			<action id="act" ref="gdeups.agtScanPrintAction" />
+		</actions>
+	</process>
+
+
+	<!--签约一站通：协议维护数据准备 -->
+	<action class="com.bocom.bbip.gdeupsb.action.sign.AgtMdyDealPreAction"
+		id="gdeups.agtMdyDealPreAction" />
+
+
+	<!--签约一站通：特色业务自定义处理 -->
+
+	<action class="com.bocom.bbip.gdeupsb.expand.AgtMdyDealImlServiceAction"
+		id="gdeups.agtMdyDealImlServiceAction">
+		<x:property name="executableBeanResolver">
+			<x:bean
+				class="com.bocom.bbip.eups.spi.resolver.DefaultExecutableBeanResolver">
+				<x:property name="strategyKey" value="gdsBId" />
+			</x:bean>
+		</x:property>
+	</action>
+
+
+	<!--签约一站通：协议维护数据准备 -->
+	<action class="com.bocom.bbip.gdeupsb.action.sign.AgtComPackDealAction"
+		id="gdseups.agtComPackDealAction" />
+
+
+
+	<!--签约一站通：代理协议批量维护 -->
+	<process id="gdeups.agtMdyDealProcess" template="eups.simpleTran"
+		interceptors="bbip.defaultInterceptors">
+		<actions>
+			<action id="act" ref="gdeups.agtMdyDealPreAction" />
+			<action id="act" ref="gdeups.agtMdyDealImlServiceAction"
+				operations="agtDelByGdsIdService" />
+			<action id="act" ref="gdseups.agtComPackDealAction" />
+		</actions>
+	</process>
+
+	<!--签约一站通：数据拷盘-准备 -->
+	<action class="com.bocom.bbip.gdeupsb.action.sign.AgtFileSendPreAction"
+		id="gdeups.agtFileSendPreAction" />
+
+	<!--签约一站通：数据拷盘特色业务自定义处理 -->
+	<action class="com.bocom.bbip.gdeupsb.expand.AgtFileSendImlServiceAction"
+		id="gdeups.agtFileSendImlServiceAction">
+		<x:property name="executableBeanResolver">
+			<x:bean
+				class="com.bocom.bbip.eups.spi.resolver.DefaultExecutableBeanResolver">
+				<x:property name="strategyKey" value="gdsBId" />
+			</x:bean>
+		</x:property>
+	</action>
+
+
+	<!--签约一站通：协议数据拷盘 -->
+	<process id="gdeups.agtMdyResultDealProcess" template="eups.simpleTran"
+		interceptors="bbip.defaultInterceptors">
+		<actions>
+			<action id="act" ref="gdeups.agtFileSendPreAction" />
+			<action id="act" ref="gdeups.agtFileSendImlServiceAction"
+				operations="agtFleSndDelService" />
+			<!-- 发送打印数据，此处不需要 -->
+			<!-- <action id="act" ref="gdseups.agtFileSendAftAction" /> -->
+		</actions>
+	</process>
+
+
+	<!--签约一站通：协议数据拷盘异常处理 -->
+	<action class="com.bocom.bbip.gdeupsb.action.sign.AgtMdyRstUnsureDealAction"
+		id="gdeups.agtMdyRstUnsureDealAction" />
+
+	<!--签约一站通：协议数据拷盘异常处理 -->
+	<process id="gdeups.agtMdyRstUnsureDealProcess" template="eups.simpleTran"
+		interceptors="bbip.defaultInterceptors">
+		<actions>
+			<action id="act" ref="gdeups.agtMdyRstUnsureDealAction" />
+		</actions>
+	</process>
+
+
+	<!--签约一站通：代理协议校验 -->
+	<action class="com.bocom.bbip.gdeupsb.action.sign.AgtValidCheckAction"
+		id="gdeups.agtValidCheckAction" />
+
+	<!--签约一站通：代理协议校验拓展点 -->
+	<action class="com.bocom.bbip.gdeupsb.expand.AgtValidCheckServiceAction"
+		id="gdeups.agtValidCheckServiceAction">
+		<x:property name="executableBeanResolver">
+			<x:bean
+				class="com.bocom.bbip.eups.spi.resolver.DefaultExecutableBeanResolver">
+				<x:property name="strategyKey" value="gdsBId" />
+			</x:bean>
+		</x:property>
+	</action>
+
+	<!--签约一站通：代理协议校验拓展后处理 -->
+	<action class="com.bocom.bbip.gdeupsb.action.sign.AgtVldChkUnlockAction"
+		id="gdeups.agtVldChkUnlockAction" />
+
+	<!--签约一站通：代理协议校验 -->
+	<process id="gdeups.agtValidCheckProcess" template="eups.simpleTran"
+		interceptors="bbip.defaultInterceptors">
+		<actions>
+			<action id="act" ref="gdeups.agtValidCheckAction" />
+			<action id="act" ref="gdeups.agtValidCheckServiceAction"
+				operations="agtValidCheckService" />
+			<action id="act" ref="gdeups.agtVldChkUnlockAction" />
+		</actions>
+	</process>
+
+	<!-- 数据更新：获取系统配置等初始化 -->
+	<action class="com.bocom.bbip.gdeupsb.action.sign.AgtDateUpdPreAction"
+		id="gdeups.agtDateUpdPreAction" />
+
+
+
+	<!--签约一站通：协议更新:特色拓展点 -->
+	<action class="com.bocom.bbip.gdeupsb.expand.AgtDataUpdImlServiceAction"
+		id="gdeups.agtDateUpdServiceAction">
+		<x:property name="executableBeanResolver">
+			<x:bean
+				class="com.bocom.bbip.eups.spi.resolver.DefaultExecutableBeanResolver">
+				<x:property name="strategyKey" value="gdsBId" />
+			</x:bean>
+		</x:property>
+	</action>
+
+
+	<!--协议数据更新 -->
+	<process id="gdeups.agtDateUpdProcess" template="eups.simpleTran"
+		interceptors="bbip.defaultInterceptors">
+		<actions>
+			<action id="act" ref="gdeups.agtDateUpdPreAction" />
+			<action id="act" ref="gdeups.agtDateUpdServiceAction"
+				operations="agtDateUpdService" />
+			<action id="act" ref="gdeups.agtVldChkUnlockAction" />
+		</actions>
+	</process>
+
+
+	<!--签约一站通：签约结果打印 -->
+	<action class="com.bocom.bbip.gdeupsb.action.sign.AgtVldChkUnlockAction"
+		id="gdeups.agtSignRstPrtAction" />
+
+
+	<!--签约一站通：签约结果打印 -->
+	<process id="gdeups.agtSignRstPrtProcess" template="eups.simpleTran"
+		interceptors="bbip.defaultInterceptors">
+		<actions>
+			<action id="act" ref="gdeups.agtSignRstPrtAction" />
+		</actions>
+	</process>
+
+	<!--代收付机构资料浏览 -->
+	<action class="com.bocom.bbip.gdeupsb.action.sign.AgtListCrpInfAction"
+		id="gdeups.agtListCrpInfAction" />
+
+	<!--签约一站通：代收付机构资料浏览 -->
+	<process id="gdeups.agtListCrpInfProcess" template="eups.simpleTran"
+		interceptors="bbip.defaultInterceptors">
+		<actions>
+			<action id="act" ref="gdeups.agtListCrpInfAction" />
+		</actions>
+	</process>
+
+	<!--清算轧差试算 -->
+	<action class="com.bocom.bbip.gdeupsb.action.lot.LotClearCountAction"
+		id="gdeups.lotClearCountAction" />
+
+	<!--福彩特色清算：清算轧差试算 -->
+	<process id="gdeups.lotClearCountProcess" template="eups.simpleTran"
+		interceptors="bbip.defaultInterceptors">
+		<actions>
+			<action id="act" ref="gdeups.lotClearCountAction" />
+		</actions>
+	</process>
+
+	<!--清算轧差-初始准备 -->
+	<action class="com.bocom.bbip.gdeupsb.action.lot.LotClrDatPreAction"
+		id="gdeups.lotClrDatPreAction" />
+
+	<!--清算轧差-资金垫款处理 -->
+	<action class="com.bocom.bbip.gdeupsb.action.lot.LotClearDfPayAction"
+		id="gdeups.lotClrDfPayAction" />
+
+	<!--清算轧差-更新还款结果 -->
+	<action class="com.bocom.bbip.gdeupsb.action.lot.LotClearDfUpdAction"
+		id="gdeups.lotClrDfUpdAction" />
+
+	<!--清算轧差-资金轧差处理 -->
+	<action class="com.bocom.bbip.gdeupsb.action.lot.LotClearGcPayAction"
+		id="gdeups.lotClrGcPayAction" />
+
+	<!--清算轧差-更新轧差结果 -->
+	<action class="com.bocom.bbip.gdeupsb.action.lot.LotClearGcUpdAction"
+		id="gdeups.lotClrGcUpdAction" />
+
+	<!--福彩特色清算：清算轧差 -->
+	<process id="gdeups.lotClearPayDealProcess" template="gdeups.lotClearTemplate"
+		interceptors="bbip.defaultInterceptors">
+		<actions>
+			<action id="initPre" ref="gdeups.lotClrDatPreAction" />
+			<action id="dfPayDel" ref="gdeups.lotClrDfPayAction" />  <!-- 垫付资金还款 -->
+			<action id="updDfRst" ref="gdeups.lotClrDfUpdAction" />  <!-- 更新还款结果 -->
+			<action id="gcPayDel" ref="gdeups.lotClrGcPayAction" />  <!-- 轧差资金处理 -->
+			<action id="updGcRst" ref="gdeups.lotClrGcUpdAction" />	 <!-- 更新轧差结果 -->
+		</actions>
+	</process>
+
+</x:beans>
+

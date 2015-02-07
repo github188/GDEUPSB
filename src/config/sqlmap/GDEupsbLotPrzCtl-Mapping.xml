@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GDEupsbLotPrzCtl" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GDEupsbLotPrzCtl" >
+    <id column="TLOGNO" property="tlogno" jdbcType="CHAR" />
+    <result column="GAMEID" property="gameId" jdbcType="CHAR" />
+    <result column="DRAWID" property="drawId" jdbcType="CHAR" />
+    <result column="KENOID" property="kenoId" jdbcType="CHAR" />
+    <result column="CIPHER" property="cipher" jdbcType="CHAR" />
+    <result column="BIGBON" property="bigBon" jdbcType="CHAR" />
+    <result column="TOTPRZ" property="totPrz" jdbcType="CHAR" />
+    <result column="TXNLOG" property="txnLog" jdbcType="CHAR" />
+    <result column="TERMID" property="termId" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    TLOGNO, GAMEID, DRAWID, KENOID, CIPHER, BIGBON, TOTPRZ, TXNLOG, TERMID
+  </sql>
+  
+ 
+ <delete id="deletePrzCtl"  parameterType="java.lang.String" >
+ 	delete from GDEUPSB.LOT_PRZ_CTL
+	   	<trim prefix="WHERE" prefixOverrides="AND" >
+  		<if test="kennoid != null or kenoId != ''">
+  		AND kenoId=#{kenoId,jdbcType=CHAR}
+  		</if>
+  		<if test="gameId != null or gameId != ''">
+  		AND gameId=#{gameId,jdbcType=CHAR}
+  		</if>
+  		<if test="drawId != null or drawId != ''">
+  		AND drawId=#{drawId,jdbcType=CHAR}
+  		</if>
+  	</trim>
+ </delete>
+ 
+ 
+ 
+ 
+ 
+  
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.LOT_PRZ_CTL
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="tlogno!=null" >
+        AND  TLOGNO=#{tlogno,jdbcType=CHAR}
+      </if>
+      <if test="gameId!=null" >
+        AND  gameId=#{gameId,jdbcType=CHAR}
+      </if>
+      <if test="drawId!=null" >
+        AND  drawId=#{drawId,jdbcType=CHAR}
+      </if>
+      <if test="kenoId!=null" >
+        AND  kenoId=#{kenoId,jdbcType=CHAR}
+      </if>
+      <if test="cipher!=null" >
+        AND  CIPHER=#{cipher,jdbcType=CHAR}
+      </if>
+      <if test="bigBon!=null" >
+        AND  bigBon=#{bigBon,jdbcType=CHAR}
+      </if>
+      <if test="totPrz!=null" >
+        AND  totPrz=#{totPrz,jdbcType=CHAR}
+      </if>
+      <if test="txnLog!=null" >
+        AND  txnLog=#{txnLog,jdbcType=CHAR}
+      </if>
+      <if test="termId!=null" >
+        AND  termId=#{termId,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.LOT_PRZ_CTL
+    where TLOGNO = #{tlogno,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from ${GDEUPSB_SCHEMA}.LOT_PRZ_CTL
+    where TLOGNO = #{tlogno,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbLotPrzCtl" >
+    insert into ${GDEUPSB_SCHEMA}.LOT_PRZ_CTL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="tlogno != null" >
+        TLOGNO,
+      </if>
+      <if test="gameId != null" >
+        gameId,
+      </if>
+      <if test="drawId != null" >
+        drawId,
+      </if>
+      <if test="kenoId != null" >
+        kenoId,
+      </if>
+      <if test="cipher != null" >
+        CIPHER,
+      </if>
+      <if test="bigBon != null" >
+        bigBon,
+      </if>
+      <if test="totPrz != null" >
+        totPrz,
+      </if>
+      <if test="txnLog != null" >
+        txnLog,
+      </if>
+      <if test="termId != null" >
+        termId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="tlogno != null" >
+        #{tlogno,jdbcType=CHAR},
+      </if>
+      <if test="gameId != null" >
+        #{gameId,jdbcType=CHAR},
+      </if>
+      <if test="drawId != null" >
+        #{drawId,jdbcType=CHAR},
+      </if>
+      <if test="kenoId != null" >
+        #{kenoId,jdbcType=CHAR},
+      </if>
+      <if test="cipher != null" >
+        #{cipher,jdbcType=CHAR},
+      </if>
+      <if test="bigBon != null" >
+        #{bigBon,jdbcType=CHAR},
+      </if>
+      <if test="totPrz != null" >
+        #{totPrz,jdbcType=CHAR},
+      </if>
+      <if test="txnLog != null" >
+        #{txnLog,jdbcType=CHAR},
+      </if>
+      <if test="termId != null" >
+        #{termId,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSB_SCHEMA}.LOT_PRZ_CTL
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="tlogno!=null" >
+        AND  TLOGNO=#{tlogno,jdbcType=CHAR}
+      </if>
+      <if test="gameId!=null" >
+        AND  gameId=#{gameId,jdbcType=CHAR}
+      </if>
+      <if test="drawId!=null" >
+        AND  drawId=#{drawId,jdbcType=CHAR}
+      </if>
+      <if test="kenoId!=null" >
+        AND  kenoId=#{kenoId,jdbcType=CHAR}
+      </if>
+      <if test="cipher!=null" >
+        AND  CIPHER=#{cipher,jdbcType=CHAR}
+      </if>
+      <if test="bigBon!=null" >
+        AND  bigBon=#{bigBon,jdbcType=CHAR}
+      </if>
+      <if test="totPrz!=null" >
+        AND  totPrz=#{totPrz,jdbcType=CHAR}
+      </if>
+      <if test="txnLog!=null" >
+        AND  txnLog=#{txnLog,jdbcType=CHAR}
+      </if>
+      <if test="termId!=null" >
+        AND  termId=#{termId,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbLotPrzCtl" >
+    update ${GDEUPSB_SCHEMA}.LOT_PRZ_CTL
+    <set >
+      <if test="gameId != null" >
+        gameId = #{gameId,jdbcType=CHAR},
+      </if>
+      <if test="drawId != null" >
+        drawId = #{drawId,jdbcType=CHAR},
+      </if>
+      <if test="kenoId != null" >
+        kenoId = #{kenoId,jdbcType=CHAR},
+      </if>
+      <if test="cipher != null" >
+        CIPHER = #{cipher,jdbcType=CHAR},
+      </if>
+      <if test="bigBon != null" >
+        bigBon = #{bigBon,jdbcType=CHAR},
+      </if>
+      <if test="totPrz != null" >
+        totPrz = #{totPrz,jdbcType=CHAR},
+      </if>
+      <if test="txnLog != null" >
+        txnLog = #{txnLog,jdbcType=CHAR},
+      </if>
+      <if test="termId != null" >
+        termId = #{termId,jdbcType=CHAR},
+      </if>
+    </set>
+    where TLOGNO = #{tlogno,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.LOT_PRZ_CTL
+    <if test="_parameter" >
+      where TLOGNO in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
+</mapper>

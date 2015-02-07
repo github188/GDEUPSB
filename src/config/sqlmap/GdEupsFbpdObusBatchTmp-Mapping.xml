@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdEupsFbpdObusBatchTmp" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdEupsFbpdObusBatchTmp" >
+    <result column="COM_NO" property="comNo" jdbcType="CHAR" />
+    <result column="CUS_AC" property="cusAc" jdbcType="CHAR" />
+    <result column="CUS_NO" property="cusNo" jdbcType="CHAR" />
+    <result column="CUS_NME" property="cusNme" jdbcType="CHAR" />
+    <result column="THD_CUS_NO" property="thdCusNo" jdbcType="CHAR" />
+    <result column="CCY" property="ccy" jdbcType="CHAR" />
+    <result column="TXN_AMT" property="txnAmt" jdbcType="CHAR" />
+    <result column="SUC_FLG" property="sucFlg" jdbcType="CHAR" />
+    <result column="CHR_DTE" property="chrDte" jdbcType="CHAR" />
+    <result column="SUB_DTE" property="subDte" jdbcType="CHAR" />
+    <result column="SEQ_NO" property="seqNo" jdbcType="CHAR" />
+    <result column="TMP_FLD1" property="tmpFld1" jdbcType="CHAR" />
+    <result column="TMP_FLD2" property="tmpFld2" jdbcType="CHAR" />
+    <result column="TMP_FLD3" property="tmpFld3" jdbcType="CHAR" />
+    <result column="TMP_FLD4" property="tmpFld4" jdbcType="CHAR" />
+    <result column="TMP_FLD5" property="tmpFld5" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    COM_NO, CUS_AC, CUS_NO, CUS_NME, THD_CUS_NO, CCY, TXN_AMT, SUC_FLG, CHR_DTE, SUB_DTE, 
+    SEQ_NO, TMP_FLD1, TMP_FLD2, TMP_FLD3, TMP_FLD4, TMP_FLD5
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_OBUS_BATCH_TMP
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="comNo!=null" >
+        AND  COM_NO=#{comNo,jdbcType=CHAR}
+      </if>
+      <if test="cusAc!=null" >
+        AND  CUS_AC=#{cusAc,jdbcType=CHAR}
+      </if>
+      <if test="cusNo!=null" >
+        AND  CUS_NO=#{cusNo,jdbcType=CHAR}
+      </if>
+      <if test="cusNme!=null" >
+        AND  CUS_NME=#{cusNme,jdbcType=CHAR}
+      </if>
+      <if test="thdCusNo!=null" >
+        AND  THD_CUS_NO=#{thdCusNo,jdbcType=CHAR}
+      </if>
+      <if test="ccy!=null" >
+        AND  CCY=#{ccy,jdbcType=CHAR}
+      </if>
+      <if test="txnAmt!=null" >
+        AND  TXN_AMT=#{txnAmt,jdbcType=CHAR}
+      </if>
+      <if test="sucFlg!=null" >
+        AND  SUC_FLG=#{sucFlg,jdbcType=CHAR}
+      </if>
+      <if test="chrDte!=null" >
+        AND  CHR_DTE=#{chrDte,jdbcType=CHAR}
+      </if>
+      <if test="subDte!=null" >
+        AND  SUB_DTE=#{subDte,jdbcType=CHAR}
+      </if>
+      <if test="seqNo!=null" >
+        AND  SEQ_NO=#{seqNo,jdbcType=CHAR}
+      </if>
+      <if test="tmpFld1!=null" >
+        AND  TMP_FLD1=#{tmpFld1,jdbcType=CHAR}
+      </if>
+      <if test="tmpFld2!=null" >
+        AND  TMP_FLD2=#{tmpFld2,jdbcType=CHAR}
+      </if>
+      <if test="tmpFld3!=null" >
+        AND  TMP_FLD3=#{tmpFld3,jdbcType=CHAR}
+      </if>
+      <if test="tmpFld4!=null" >
+        AND  TMP_FLD4=#{tmpFld4,jdbcType=CHAR}
+      </if>
+      <if test="tmpFld5!=null" >
+        AND  TMP_FLD5=#{tmpFld5,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsFbpdObusBatchTmp" >
+    insert into ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_OBUS_BATCH_TMP
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="comNo != null" >
+        COM_NO,
+      </if>
+      <if test="cusAc != null" >
+        CUS_AC,
+      </if>
+      <if test="cusNo != null" >
+        CUS_NO,
+      </if>
+      <if test="cusNme != null" >
+        CUS_NME,
+      </if>
+      <if test="thdCusNo != null" >
+        THD_CUS_NO,
+      </if>
+      <if test="ccy != null" >
+        CCY,
+      </if>
+      <if test="txnAmt != null" >
+        TXN_AMT,
+      </if>
+      <if test="sucFlg != null" >
+        SUC_FLG,
+      </if>
+      <if test="chrDte != null" >
+        CHR_DTE,
+      </if>
+      <if test="subDte != null" >
+        SUB_DTE,
+      </if>
+      <if test="seqNo != null" >
+        SEQ_NO,
+      </if>
+      <if test="tmpFld1 != null" >
+        TMP_FLD1,
+      </if>
+      <if test="tmpFld2 != null" >
+        TMP_FLD2,
+      </if>
+      <if test="tmpFld3 != null" >
+        TMP_FLD3,
+      </if>
+      <if test="tmpFld4 != null" >
+        TMP_FLD4,
+      </if>
+      <if test="tmpFld5 != null" >
+        TMP_FLD5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="comNo != null" >
+        #{comNo,jdbcType=CHAR},
+      </if>
+      <if test="cusAc != null" >
+        #{cusAc,jdbcType=CHAR},
+      </if>
+      <if test="cusNo != null" >
+        #{cusNo,jdbcType=CHAR},
+      </if>
+      <if test="cusNme != null" >
+        #{cusNme,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNo != null" >
+        #{thdCusNo,jdbcType=CHAR},
+      </if>
+      <if test="ccy != null" >
+        #{ccy,jdbcType=CHAR},
+      </if>
+      <if test="txnAmt != null" >
+        #{txnAmt,jdbcType=CHAR},
+      </if>
+      <if test="sucFlg != null" >
+        #{sucFlg,jdbcType=CHAR},
+      </if>
+      <if test="chrDte != null" >
+        #{chrDte,jdbcType=CHAR},
+      </if>
+      <if test="subDte != null" >
+        #{subDte,jdbcType=CHAR},
+      </if>
+      <if test="seqNo != null" >
+        #{seqNo,jdbcType=CHAR},
+      </if>
+      <if test="tmpFld1 != null" >
+        #{tmpFld1,jdbcType=CHAR},
+      </if>
+      <if test="tmpFld2 != null" >
+        #{tmpFld2,jdbcType=CHAR},
+      </if>
+      <if test="tmpFld3 != null" >
+        #{tmpFld3,jdbcType=CHAR},
+      </if>
+      <if test="tmpFld4 != null" >
+        #{tmpFld4,jdbcType=CHAR},
+      </if>
+      <if test="tmpFld5 != null" >
+        #{tmpFld5,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_OBUS_BATCH_TMP
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="comNo!=null" >
+        AND  COM_NO=#{comNo,jdbcType=CHAR}
+      </if>
+      <if test="cusAc!=null" >
+        AND  CUS_AC=#{cusAc,jdbcType=CHAR}
+      </if>
+      <if test="cusNo!=null" >
+        AND  CUS_NO=#{cusNo,jdbcType=CHAR}
+      </if>
+      <if test="cusNme!=null" >
+        AND  CUS_NME=#{cusNme,jdbcType=CHAR}
+      </if>
+      <if test="thdCusNo!=null" >
+        AND  THD_CUS_NO=#{thdCusNo,jdbcType=CHAR}
+      </if>
+      <if test="ccy!=null" >
+        AND  CCY=#{ccy,jdbcType=CHAR}
+      </if>
+      <if test="txnAmt!=null" >
+        AND  TXN_AMT=#{txnAmt,jdbcType=CHAR}
+      </if>
+      <if test="sucFlg!=null" >
+        AND  SUC_FLG=#{sucFlg,jdbcType=CHAR}
+      </if>
+      <if test="chrDte!=null" >
+        AND  CHR_DTE=#{chrDte,jdbcType=CHAR}
+      </if>
+      <if test="subDte!=null" >
+        AND  SUB_DTE=#{subDte,jdbcType=CHAR}
+      </if>
+      <if test="seqNo!=null" >
+        AND  SEQ_NO=#{seqNo,jdbcType=CHAR}
+      </if>
+      <if test="tmpFld1!=null" >
+        AND  TMP_FLD1=#{tmpFld1,jdbcType=CHAR}
+      </if>
+      <if test="tmpFld2!=null" >
+        AND  TMP_FLD2=#{tmpFld2,jdbcType=CHAR}
+      </if>
+      <if test="tmpFld3!=null" >
+        AND  TMP_FLD3=#{tmpFld3,jdbcType=CHAR}
+      </if>
+      <if test="tmpFld4!=null" >
+        AND  TMP_FLD4=#{tmpFld4,jdbcType=CHAR}
+      </if>
+      <if test="tmpFld5!=null" >
+        AND  TMP_FLD5=#{tmpFld5,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_OBUS_BATCH_TMP
+  </select>
+</mapper>

@@ -8,12 +8,6 @@
     <result column="FILE_DTE" property="fileDte" jdbcType="CHAR" />
     <result column="CCY" property="ccy" jdbcType="CHAR" />
     <result column="BUS_KND" property="busKnd" jdbcType="CHAR" />
-    <result column="TOT_CNT" property="totCnt" jdbcType="CHAR" />
-    <result column="TOT_AMT" property="totAmt" jdbcType="DECIMAL" />
-    <result column="SUC_TOT_CNT" property="sucTotCnt" jdbcType="CHAR" />
-    <result column="SUC_TOT_AMT" property="sucTotAmt" jdbcType="DECIMAL" />
-    <result column="FAL_TOT_CNT" property="falTotCnt" jdbcType="CHAR" />
-    <result column="FAL_TOT_AMT" property="falTotAmt" jdbcType="DECIMAL" />
     <result column="NUMBER" property="number" jdbcType="CHAR" />
     <result column="THD_CUS_NO" property="thdCusNo" jdbcType="CHAR" />
     <result column="THD_CUS_NME" property="thdCusNme" jdbcType="CHAR" />
@@ -39,8 +33,7 @@
     <result column="RSV_FLD5" property="rsvFld5" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="baseColumnList" >
-    SQN, BANK_NO, COM_NO, FILE_DTE, CCY, BUS_KND, TOT_CNT, TOT_AMT, SUC_TOT_CNT, SUC_TOT_AMT, 
-    FAL_TOT_CNT, FAL_TOT_AMT, NUMBER, THD_CUS_NO, THD_CUS_NME, CUS_AC, CUS_NME, FULL_DED_FLAG, 
+    SQN, BANK_NO, COM_NO, FILE_DTE, CCY, BUS_KND,NUMBER, THD_CUS_NO, THD_CUS_NME, CUS_AC, CUS_NME, FULL_DED_FLAG, 
     PAY_TYPE, ACCOUNT_NO, ELECTRICITY_YEARMONTH, PAYMENT_MONEY, CAPITIAL, DEDIT, PAYMENT_RESULT, 
     TXN_AMT, BANK_SQN, TXN_DTE, TXN_TME, BAK_FLD, RSV_FLD1, RSV_FLD2, RSV_FLD3, RSV_FLD4, 
     RSV_FLD5
@@ -67,24 +60,6 @@
       </if>
       <if test="busKnd!=null" >
         AND  BUS_KND=#{busKnd,jdbcType=CHAR}
-      </if>
-      <if test="totCnt!=null" >
-        AND  TOT_CNT=#{totCnt,jdbcType=CHAR}
-      </if>
-      <if test="totAmt!=null" >
-        AND  TOT_AMT=#{totAmt,jdbcType=DECIMAL}
-      </if>
-      <if test="sucTotCnt!=null" >
-        AND  SUC_TOT_CNT=#{sucTotCnt,jdbcType=CHAR}
-      </if>
-      <if test="sucTotAmt!=null" >
-        AND  SUC_TOT_AMT=#{sucTotAmt,jdbcType=DECIMAL}
-      </if>
-      <if test="falTotCnt!=null" >
-        AND  FAL_TOT_CNT=#{falTotCnt,jdbcType=CHAR}
-      </if>
-      <if test="falTotAmt!=null" >
-        AND  FAL_TOT_AMT=#{falTotAmt,jdbcType=DECIMAL}
       </if>
       <if test="number!=null" >
         AND  NUMBER=#{number,jdbcType=CHAR}
@@ -188,24 +163,6 @@
       <if test="busKnd != null" >
         BUS_KND,
       </if>
-      <if test="totCnt != null" >
-        TOT_CNT,
-      </if>
-      <if test="totAmt != null" >
-        TOT_AMT,
-      </if>
-      <if test="sucTotCnt != null" >
-        SUC_TOT_CNT,
-      </if>
-      <if test="sucTotAmt != null" >
-        SUC_TOT_AMT,
-      </if>
-      <if test="falTotCnt != null" >
-        FAL_TOT_CNT,
-      </if>
-      <if test="falTotAmt != null" >
-        FAL_TOT_AMT,
-      </if>
       <if test="number != null" >
         NUMBER,
       </if>
@@ -294,24 +251,6 @@
       </if>
       <if test="busKnd != null" >
         #{busKnd,jdbcType=CHAR},
-      </if>
-      <if test="totCnt != null" >
-        #{totCnt,jdbcType=CHAR},
-      </if>
-      <if test="totAmt != null" >
-        #{totAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="sucTotCnt != null" >
-        #{sucTotCnt,jdbcType=CHAR},
-      </if>
-      <if test="sucTotAmt != null" >
-        #{sucTotAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="falTotCnt != null" >
-        #{falTotCnt,jdbcType=CHAR},
-      </if>
-      <if test="falTotAmt != null" >
-        #{falTotAmt,jdbcType=DECIMAL},
       </if>
       <if test="number != null" >
         #{number,jdbcType=CHAR},
@@ -405,24 +344,6 @@
       <if test="busKnd!=null" >
         AND  BUS_KND=#{busKnd,jdbcType=CHAR}
       </if>
-      <if test="totCnt!=null" >
-        AND  TOT_CNT=#{totCnt,jdbcType=CHAR}
-      </if>
-      <if test="totAmt!=null" >
-        AND  TOT_AMT=#{totAmt,jdbcType=DECIMAL}
-      </if>
-      <if test="sucTotCnt!=null" >
-        AND  SUC_TOT_CNT=#{sucTotCnt,jdbcType=CHAR}
-      </if>
-      <if test="sucTotAmt!=null" >
-        AND  SUC_TOT_AMT=#{sucTotAmt,jdbcType=DECIMAL}
-      </if>
-      <if test="falTotCnt!=null" >
-        AND  FAL_TOT_CNT=#{falTotCnt,jdbcType=CHAR}
-      </if>
-      <if test="falTotAmt!=null" >
-        AND  FAL_TOT_AMT=#{falTotAmt,jdbcType=DECIMAL}
-      </if>
       <if test="number!=null" >
         AND  NUMBER=#{number,jdbcType=CHAR}
       </if>
@@ -511,24 +432,6 @@
       </if>
       <if test="busKnd != null" >
         BUS_KND = #{busKnd,jdbcType=CHAR},
-      </if>
-      <if test="totCnt != null" >
-        TOT_CNT = #{totCnt,jdbcType=CHAR},
-      </if>
-      <if test="totAmt != null" >
-        TOT_AMT = #{totAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="sucTotCnt != null" >
-        SUC_TOT_CNT = #{sucTotCnt,jdbcType=CHAR},
-      </if>
-      <if test="sucTotAmt != null" >
-        SUC_TOT_AMT = #{sucTotAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="falTotCnt != null" >
-        FAL_TOT_CNT = #{falTotCnt,jdbcType=CHAR},
-      </if>
-      <if test="falTotAmt != null" >
-        FAL_TOT_AMT = #{falTotAmt,jdbcType=DECIMAL},
       </if>
       <if test="number != null" >
         NUMBER = #{number,jdbcType=CHAR},

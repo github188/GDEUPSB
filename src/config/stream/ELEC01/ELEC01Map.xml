@@ -26,6 +26,8 @@
 	<fixString name="pwrFee28" index="28" length="12" dynBitSet="true"/>   
 	<!-- 受理方机构标识码 -->
 	<varString name="eleBkNo32" index="32" type="C"  format="bcd" dynBitSet="true"/>
+		<!-- 发送机构标识码-->
+	<varString name="sndFlg33" index="32" type="C"  format="bcd" dynBitSet="true"/>
 	<!-- 供电公司系统参考号-->
 	<fixString name="eleThdSqn37" index="37" length="12"  format="bcd"   dynBitSet="true"/>
 	<!--应答码.-->
@@ -38,6 +40,8 @@
     <varString name="remarkData48" index="48" type="CC" dynBitSet="true"/>
 	<!-- 交易货币代码,人民币的货币代码为156.-->
 	<fixString name="CCY" index="49" length="3" filling="0x00"  dynBitSet="true"/>
+	<!-- 网管信息码 -->
+	<fixString name="cmuCde70" index="70" length="3"    dynBitSet="true"/>
     <!-- 接收机构标识代码-->
 	<varString name="thdRgnNo100" index="100" type="C"  format="bcd"  dynBitSet="true"/>
     <!-- F104 --> 

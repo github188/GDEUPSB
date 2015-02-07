@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	encoding="utf-8"  trace="true">
+	
+	<segment name="header" encoding="utf-8">
+			<fixString name="SQN"  length="27"/><!-- 对账批次流水号 -->
+			<fixString name="enterBankNo"   length="4"/><!-- 银行代码 -->
+			<fixString name="comNo"   length="8"  /><!-- 单位编码 -->
+			<fixString name="busTyp"   length="3"    /><!-- 收费方式-->
+			<fixString name="payType"   length="3"   /><!-- 费用类型-->
+			<fixString name="amount"   length="11"   /><!--  总笔数-->
+			<fixString name="allMoney"   length="16"  /><!--  总金额-->
+			<fixString name="checkDate"  length="8" /><!--  达账日期-->
+			<fixString name="checkTime"   length="6"  /><!--  达账时间-->
+	</segment>
+	
+	<!--  	<include  encodePrefix="checkFileDtlHead.xml"/>  -->
+</message>

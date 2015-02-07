@@ -28,7 +28,6 @@ public class PreThdElecStrategyAction implements Executable {
 	public void execute(Context context) throws CoreException, CoreRuntimeException {
 		log.info("PreThdElecStrategyAction start!..");
 		
-//	
 //	      <Set>TraTyp=JF</Set>
 //	      <Set>TxnAmt=ADDCHAR(DELSPACE($TxnAmt,all),12,0,1)</Set> <!--交易金额-->
 //	      <Set>Fee=ADDCHAR(DELSPACE($Fee,all),12,0,1)</Set>       <!--手续费-->
@@ -67,6 +66,7 @@ public class PreThdElecStrategyAction implements Executable {
 		context.setData(GDParamKeys.GZ_ELE_TXN_DTE, eleTxnDteStr);
 		
 		//TODO
+		//48域附加数据设置
 //	      <Set>OData=STRCAT(ADDCHAR($TCusId,21, ,1),$LChkTm,01,SPACE(12),$PayTyp,ADDCHAR($ChkNum,25, ,1))</Set>  <!--附加数据-->
 //	      <Set>RsFld1=$OData</Set>                                <!--数据备用-->  
 //	      <Set>MacFlag=0</Set>          <!--发送MAC生成-->

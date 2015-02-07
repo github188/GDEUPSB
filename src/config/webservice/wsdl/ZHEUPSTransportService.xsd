@@ -1,0 +1,914 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/Schema" xmlns:gsp="http://gsp.bankcomm.com" xmlns:bbip="http://bbip.bankcomm.com" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/Schema" elementFormDefault="qualified">
+  <xs:import namespace="http://gsp.bankcomm.com" schemaLocation="headerOfSOAP.xsd"/>
+  <xs:import namespace="http://bbip.bankcomm.com" schemaLocation="headerOfBbip.xsd"/>
+  <xs:element name="trspFeeMonQry" type="tns:trspFeeMonQryReq_CType"/>
+  <xs:element name="trspFeeMonQryResponse" type="tns:trspFeeMonQryRsp_CType"/>
+  <xs:complexType name="trspFeeMonQryReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:trspFeeMonQryRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="trspFeeMonQryRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:trspFeeMonQryResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="trspPrintNP" type="tns:trspPrintNPReq_CType"/>
+  <xs:element name="trspPrintNPResponse" type="tns:trspPrintNPRsp_CType"/>
+  <xs:complexType name="trspPrintNPReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:trspPrintNPRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="trspPrintNPRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:trspPrintNPResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="trspFeeInfoQry" type="tns:trspFeeInfoQryReq_CType"/>
+  <xs:element name="trspFeeInfoQryResponse" type="tns:trspFeeInfoQryRsp_CType"/>
+  <xs:complexType name="trspFeeInfoQryReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:trspFeeInfoQryRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="trspFeeInfoQryRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:trspFeeInfoQryResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="transportFeeQuery" type="tns:transportFeeQueryReq_CType"/>
+  <xs:element name="transportFeeQueryResponse" type="tns:transportFeeQueryRsp_CType"/>
+  <xs:complexType name="transportFeeQueryReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:transportFeeQueryRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="transportFeeQueryRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:transportFeeQueryResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="trspAddPrintInvoic" type="tns:trspAddPrintInvoicReq_CType"/>
+  <xs:element name="trspAddPrintInvoicResponse" type="tns:trspAddPrintInvoicRsp_CType"/>
+  <xs:complexType name="trspAddPrintInvoicReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:trspAddPrintInvoicRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="trspAddPrintInvoicRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:trspAddPrintInvoicResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="trspPrintInv" type="tns:trspPrintInvReq_CType"/>
+  <xs:element name="trspPrintInvResponse" type="tns:trspPrintInvRsp_CType"/>
+  <xs:complexType name="trspPrintInvReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:trspPrintInvRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="trspPrintInvRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:trspPrintInvResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="transportPayCancel" type="tns:transportPayCancelReq_CType"/>
+  <xs:element name="transportPayCancelResponse" type="tns:transportPayCancelRsp_CType"/>
+  <xs:complexType name="transportPayCancelReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:transportPayCancelRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="transportPayCancelRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:transportPayCancelResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="trspPreInvoicQry" type="tns:trspPreInvoicQryReq_CType"/>
+  <xs:element name="trspPreInvoicQryResponse" type="tns:trspPreInvoicQryRsp_CType"/>
+  <xs:complexType name="trspPreInvoicQryReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:trspPreInvoicQryRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="trspPreInvoicQryRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:trspPreInvoicQryResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="npzz" type="tns:npzzReq_CType"/>
+  <xs:element name="npzzResponse" type="tns:npzzRsp_CType"/>
+  <xs:complexType name="npzzReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:npzzRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="npzzRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:npzzResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="trspInvoiceCancel" type="tns:trspInvoiceCancelReq_CType"/>
+  <xs:element name="trspInvoiceCancelResponse" type="tns:trspInvoiceCancelRsp_CType"/>
+  <xs:complexType name="trspInvoiceCancelReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:trspInvoiceCancelRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="trspInvoiceCancelRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:trspInvoiceCancelResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="hsscCheckFile" type="tns:hsscCheckFileReq_CType"/>
+  <xs:element name="hsscCheckFileResponse" type="tns:hsscCheckFileRsp_CType"/>
+  <xs:complexType name="hsscCheckFileReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:hsscCheckFileRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="hsscCheckFileRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:hsscCheckFileResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="transportFeeCharge" type="tns:transportFeeChargeReq_CType"/>
+  <xs:element name="transportFeeChargeResponse" type="tns:transportFeeChargeRsp_CType"/>
+  <xs:complexType name="transportFeeChargeReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:transportFeeChargeRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="transportFeeChargeRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:transportFeeChargeResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="trspBillCancel" type="tns:trspBillCancelReq_CType"/>
+  <xs:element name="trspBillCancelResponse" type="tns:trspBillCancelRsp_CType"/>
+  <xs:complexType name="trspBillCancelReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:trspBillCancelRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="trspBillCancelRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:trspBillCancelResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="trspNpDelet" type="tns:trspNpDeletReq_CType"/>
+  <xs:element name="trspNpDeletResponse" type="tns:trspNpDeletRsp_CType"/>
+  <xs:complexType name="trspNpDeletReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:trspNpDeletRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="trspNpDeletRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:trspNpDeletResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="trspNpQry" type="tns:trspNpQryReq_CType"/>
+  <xs:element name="trspNpQryResponse" type="tns:trspNpQryRsp_CType"/>
+  <xs:complexType name="trspNpQryReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:trspNpQryRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="trspNpQryRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:trspNpQryResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="requestHeader" type="tns:requestHeader_CType"/>
+  <xs:element name="responseHeader" type="tns:responseHeader_CType"/>
+  <xs:element name="sortingInfo" type="tns:sortingInfo_CType"/>
+  <xs:element name="pageableRequest" type="tns:pageableRequest_CType"/>
+  <xs:element name="pageableResponse" type="tns:pageableResponse_CType"/>
+  <xs:complexType name="requestHeader_CType">
+    <xs:sequence>
+      <xs:element ref="bbip:bbipRequestHead"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="responseHeader_CType">
+    <xs:sequence>
+      <xs:element ref="bbip:bbipResponseHead"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="property_SType">
+    <xs:annotation>
+      <xs:documentation>排序数据域</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="32"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="direction_SType">
+    <xs:annotation>
+      <xs:documentation>排序方式</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="sortingInfo_CType">
+    <xs:sequence>
+      <xs:element name="property" type="tns:property_SType"/>
+      <xs:element name="direction" type="tns:direction_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="pageNum_SType">
+    <xs:annotation>
+      <xs:documentation>页数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+  <xs:simpleType name="pageSize_SType">
+    <xs:annotation>
+      <xs:documentation>每页显示数据数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+  <xs:complexType name="pageableRequest_CType">
+    <xs:sequence>
+      <xs:element name="pageNum" type="tns:pageNum_SType"/>
+      <xs:element name="pageSize" type="tns:pageSize_SType"/>
+      <xs:element ref="tns:sortingInfo" minOccurs="0" maxOccurs="10"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="totalElements_SType">
+    <xs:annotation>
+      <xs:documentation>总记录数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:long"/>
+  </xs:simpleType>
+  <xs:simpleType name="totalPages_SType">
+    <xs:annotation>
+      <xs:documentation>总页数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:long"/>
+  </xs:simpleType>
+  <xs:complexType name="pageableResponse_CType">
+    <xs:sequence>
+      <xs:element name="totalElements" type="tns:totalElements_SType"/>
+      <xs:element name="totalPages" type="tns:totalPages_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="trspFeeMonQryRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="oldTxnSqn" type="tns:oldTxnSqn_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="trspFeeMonQryResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="begDat" type="tns:begDat_SType" minOccurs="0"/>
+      <xs:element name="endDat" type="tns:endDat_SType" minOccurs="0"/>
+      <xs:element name="carNo" type="tns:carNo_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="eupsBusTyp_SType">
+    <xs:annotation>
+      <xs:documentation>业务类型</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="oldTxnSqn_SType">
+    <xs:annotation>
+      <xs:documentation>原交易流水号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="begDat_SType">
+    <xs:annotation>
+      <xs:documentation>有效起始日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime"/>
+  </xs:simpleType>
+  <xs:simpleType name="endDat_SType">
+    <xs:annotation>
+      <xs:documentation>有效结束日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime"/>
+  </xs:simpleType>
+  <xs:simpleType name="carNo_SType">
+    <xs:annotation>
+      <xs:documentation>车牌号码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="trspPrintNPRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="carNo" type="tns:carNo_SType"/>
+      <xs:element name="oldTxnSqn" type="tns:oldTxnSqn_SType" minOccurs="0"/>
+      <xs:element name="idNo" type="tns:idNo_SType" minOccurs="0"/>
+      <xs:element name="begDat" type="tns:begDat_SType" minOccurs="0"/>
+      <xs:element name="endDat" type="tns:endDat_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="trspPrintNPResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="idNo" type="tns:idNo_SType" minOccurs="0"/>
+      <xs:element name="carNo" type="tns:carNo_SType" minOccurs="0"/>
+      <xs:element name="begDat" type="tns:begDat_SType" minOccurs="0"/>
+      <xs:element name="endDat" type="tns:endDat_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="idNo_SType">
+    <xs:annotation>
+      <xs:documentation>年票号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="trspFeeInfoQryRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element ref="tns:pageableRequest"/>
+      <xs:element name="carNo" type="tns:carNo_SType"/>
+      <xs:element name="status" type="tns:status_SType" minOccurs="0"/>
+      <xs:element name="begDat" type="tns:begDat_SType"/>
+      <xs:element name="endDat" type="tns:endDat_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="trspFeeInfoQryResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element ref="tns:pageableResponse" minOccurs="0"/>
+      <xs:element name="resultList" type="tns:resultList_CType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="apCode" type="tns:apCode_SType" minOccurs="0"/>
+      <xs:element name="ofmtCd" type="tns:ofmtCd_SType" minOccurs="0"/>
+      <xs:element name="ttl" type="tns:ttl_SType" minOccurs="0"/>
+      <xs:element name="subTtl" type="tns:subTtl_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="status_SType">
+    <xs:annotation>
+      <xs:documentation>交易状态</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="payLog_SType">
+    <xs:annotation>
+      <xs:documentation>自助缴费流水号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="actNo_SType">
+    <xs:annotation>
+      <xs:documentation>扣款账号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="21"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="payDat_SType">
+    <xs:annotation>
+      <xs:documentation>缴费日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime"/>
+  </xs:simpleType>
+  <xs:simpleType name="invNo_SType">
+    <xs:annotation>
+      <xs:documentation>发票号码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="tactDt_SType">
+    <xs:annotation>
+      <xs:documentation>打票日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime"/>
+  </xs:simpleType>
+  <xs:complexType name="resultList_CType">
+    <xs:sequence>
+      <xs:element name="payLog" type="tns:payLog_SType" minOccurs="0"/>
+      <xs:element name="actNo" type="tns:actNo_SType" minOccurs="0"/>
+      <xs:element name="payDat" type="tns:payDat_SType" minOccurs="0"/>
+      <xs:element name="invNo" type="tns:invNo_SType" minOccurs="0"/>
+      <xs:element name="tactDt" type="tns:tactDt_SType" minOccurs="0"/>
+      <xs:element name="status" type="tns:status_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="apCode_SType">
+    <xs:annotation>
+      <xs:documentation>ap代码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ofmtCd_SType">
+    <xs:annotation>
+      <xs:documentation>ofmt代码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="3"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ttl_SType">
+    <xs:annotation>
+      <xs:documentation>社保卡申请数据查询</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="subTtl_SType">
+    <xs:annotation>
+      <xs:documentation>查询内容</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="transportFeeQueryRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="carNo" type="tns:carNo_SType"/>
+      <xs:element name="carTyp" type="tns:carTyp_SType" minOccurs="0"/>
+      <xs:element name="payMon" type="tns:payMon_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="transportFeeQueryResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="carNo" type="tns:carNo_SType" minOccurs="0"/>
+      <xs:element name="carTyp" type="tns:carTyp_SType" minOccurs="0"/>
+      <xs:element name="payMon" type="tns:payMon_SType" minOccurs="0"/>
+      <xs:element name="begDat" type="tns:begDat_SType" minOccurs="0"/>
+      <xs:element name="endDat" type="tns:endDat_SType" minOccurs="0"/>
+      <xs:element name="carName" type="tns:carName_SType" minOccurs="0"/>
+      <xs:element name="carDzs" type="tns:carDzs_SType" minOccurs="0"/>
+      <xs:element name="cntStd" type="tns:cntStd_SType" minOccurs="0"/>
+      <xs:element name="corpus" type="tns:corpus_SType" minOccurs="0"/>
+      <xs:element name="lateFee" type="tns:lateFee_SType" minOccurs="0"/>
+      <xs:element name="txnAmt" type="tns:txnAmt_SType" minOccurs="0"/>
+      <xs:element name="CLGS" type="tns:CLGS_SType" minOccurs="0"/>
+      <xs:element name="YYBZ" type="tns:YYBZ_SType" minOccurs="0"/>
+      <xs:element name="tcusNm" type="tns:tcusNm_SType" minOccurs="0"/>
+      <xs:element name="feeStd" type="tns:feeStd_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="carTyp_SType">
+    <xs:annotation>
+      <xs:documentation>车牌类别</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="3"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="payMon_SType">
+    <xs:annotation>
+      <xs:documentation>缴费月数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="carName_SType">
+    <xs:annotation>
+      <xs:documentation>车型说明</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="carDzs_SType">
+    <xs:annotation>
+      <xs:documentation>吨数或座数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="cntStd_SType">
+    <xs:annotation>
+      <xs:documentation>计费标准</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="6"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="corpus_SType">
+    <xs:annotation>
+      <xs:documentation>本金</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="18"/>
+      <xs:fractionDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="lateFee_SType">
+    <xs:annotation>
+      <xs:documentation>滞纳金</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="18"/>
+      <xs:fractionDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="txnAmt_SType">
+    <xs:annotation>
+      <xs:documentation>交易金额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="18"/>
+      <xs:fractionDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CLGS_SType">
+    <xs:annotation>
+      <xs:documentation>车辆归属</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="YYBZ_SType">
+    <xs:annotation>
+      <xs:documentation>营运标志</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="tcusNm_SType">
+    <xs:annotation>
+      <xs:documentation>车主名称</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="feeStd_SType">
+    <xs:annotation>
+      <xs:documentation>标准年收费额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="18"/>
+      <xs:fractionDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="trspAddPrintInvoicRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="carNo" type="tns:carNo_SType"/>
+      <xs:element name="carTyp" type="tns:carTyp_SType"/>
+      <xs:element name="invNo" type="tns:invNo_SType"/>
+      <xs:element name="oprtFlg" type="tns:oprtFlg_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="trspAddPrintInvoicResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="message" type="tns:message_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="oprtFlg_SType">
+    <xs:annotation>
+      <xs:documentation>打印标志</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="message_SType">
+    <xs:annotation>
+      <xs:documentation>返回信息</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="trspPrintInvRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="carNo" type="tns:carNo_SType"/>
+      <xs:element name="oldTxnSqn" type="tns:oldTxnSqn_SType" minOccurs="0"/>
+      <xs:element name="payDat" type="tns:payDat_SType" minOccurs="0"/>
+      <xs:element name="invNo" type="tns:invNo_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="trspPrintInvResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="sqn" type="tns:sqn_SType" minOccurs="0"/>
+      <xs:element name="tactDt" type="tns:tactDt_SType" minOccurs="0"/>
+      <xs:element name="txnAmt" type="tns:txnAmt_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="sqn_SType">
+    <xs:annotation>
+      <xs:documentation>流水号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="transportPayCancelRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="oldTxnSqn" type="tns:oldTxnSqn_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="transportPayCancelResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="carNo" type="tns:carNo_SType" minOccurs="0"/>
+      <xs:element name="tcusNm" type="tns:tcusNm_SType" minOccurs="0"/>
+      <xs:element name="txnAmt" type="tns:txnAmt_SType" minOccurs="0"/>
+      <xs:element name="actDat" type="tns:actDat_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="actDat_SType">
+    <xs:annotation>
+      <xs:documentation>交易日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime"/>
+  </xs:simpleType>
+  <xs:complexType name="trspPreInvoicQryRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="oldTxnSqn" type="tns:oldTxnSqn_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="trspPreInvoicQryResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="carNo" type="tns:carNo_SType" minOccurs="0"/>
+      <xs:element name="tcusNm" type="tns:tcusNm_SType" minOccurs="0"/>
+      <xs:element name="txnAmt" type="tns:txnAmt_SType" minOccurs="0"/>
+      <xs:element name="actDat" type="tns:actDat_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="npzzRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="zzDat" type="tns:zzDat_SType"/>
+      <xs:element name="amo1" type="tns:amo1_SType" minOccurs="0"/>
+      <xs:element name="amo2" type="tns:amo2_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="npzzResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="message" type="tns:message_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="zzDat_SType">
+    <xs:annotation>
+      <xs:documentation>轧账日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="amo1_SType">
+    <xs:annotation>
+      <xs:documentation>使用数量</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="5"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="amo2_SType">
+    <xs:annotation>
+      <xs:documentation>作废数量</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="5"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="trspInvoiceCancelRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="carNo" type="tns:carNo_SType"/>
+      <xs:element name="carTyp" type="tns:carTyp_SType" minOccurs="0"/>
+      <xs:element name="invNo" type="tns:invNo_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="trspInvoiceCancelResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="sqn" type="tns:sqn_SType" minOccurs="0"/>
+      <xs:element name="payLog" type="tns:payLog_SType" minOccurs="0"/>
+      <xs:element name="txnAmt" type="tns:txnAmt_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="hsscCheckFileRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="ftpNo" type="tns:ftpNo_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="hsscCheckFileResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="returnMessage" type="tns:returnMessage_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="ftpNo_SType">
+    <xs:annotation>
+      <xs:documentation>ftp号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="returnMessage_SType">
+    <xs:annotation>
+      <xs:documentation>返回信息</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="transportFeeChargeRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="carNo" type="tns:carNo_SType"/>
+      <xs:element name="carTyp" type="tns:carTyp_SType" minOccurs="0"/>
+      <xs:element name="actNo" type="tns:actNo_SType"/>
+      <xs:element name="pinBlk" type="tns:pinBlk_SType"/>
+      <xs:element name="payMon" type="tns:payMon_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="transportFeeChargeResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="carNo" type="tns:carNo_SType" minOccurs="0"/>
+      <xs:element name="carTyp" type="tns:carTyp_SType" minOccurs="0"/>
+      <xs:element name="payMon" type="tns:payMon_SType" minOccurs="0"/>
+      <xs:element name="actDat" type="tns:actDat_SType" minOccurs="0"/>
+      <xs:element name="sqn" type="tns:sqn_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="pinBlk_SType">
+    <xs:annotation>
+      <xs:documentation>交易密码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="trspBillCancelRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="carNo" type="tns:carNo_SType"/>
+      <xs:element name="payDat" type="tns:payDat_SType" minOccurs="0"/>
+      <xs:element name="payLog" type="tns:payLog_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="trspBillCancelResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="txnAmt" type="tns:txnAmt_SType" minOccurs="0"/>
+      <xs:element name="sqn" type="tns:sqn_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="trspNpDeletRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="idNo" type="tns:idNo_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="trspNpDeletResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="returnMessage" type="tns:returnMessage_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="trspNpQryRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element ref="tns:pageableRequest"/>
+      <xs:element name="begDat" type="tns:begDat_SType" minOccurs="0"/>
+      <xs:element name="endDat" type="tns:endDat_SType" minOccurs="0"/>
+      <xs:element name="func" type="tns:func_SType" minOccurs="0"/>
+      <xs:element name="nodNo" type="tns:nodNo_SType" minOccurs="0"/>
+      <xs:element name="status" type="tns:status_SType" minOccurs="0"/>
+      <xs:element name="idNo" type="tns:idNo_SType" minOccurs="0"/>
+      <xs:element name="carNo" type="tns:carNo_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="trspNpQryResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element ref="tns:pageableResponse" minOccurs="0"/>
+      <xs:element name="npResultList" type="tns:npResultList_CType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="apCode" type="tns:apCode_SType" minOccurs="0"/>
+      <xs:element name="ofmtCd" type="tns:ofmtCd_SType" minOccurs="0"/>
+      <xs:element name="ttl" type="tns:ttl_SType" minOccurs="0"/>
+      <xs:element name="subTtl" type="tns:subTtl_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="func_SType">
+    <xs:annotation>
+      <xs:documentation>统计方式</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="nodNo_SType">
+    <xs:annotation>
+      <xs:documentation>网点号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="6"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="prtDat_SType">
+    <xs:annotation>
+      <xs:documentation>打印日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime"/>
+  </xs:simpleType>
+  <xs:simpleType name="tlrId_SType">
+    <xs:annotation>
+      <xs:documentation>年票状态</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="7"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="npResultList_CType">
+    <xs:sequence>
+      <xs:element name="nodNo" type="tns:nodNo_SType" minOccurs="0"/>
+      <xs:element name="prtDat" type="tns:prtDat_SType" minOccurs="0"/>
+      <xs:element name="carNo" type="tns:carNo_SType" minOccurs="0"/>
+      <xs:element name="sqn" type="tns:sqn_SType" minOccurs="0"/>
+      <xs:element name="invNo" type="tns:invNo_SType" minOccurs="0"/>
+      <xs:element name="idNo" type="tns:idNo_SType" minOccurs="0"/>
+      <xs:element name="status" type="tns:status_SType" minOccurs="0"/>
+      <xs:element name="begDat" type="tns:begDat_SType" minOccurs="0"/>
+      <xs:element name="endDat" type="tns:endDat_SType" minOccurs="0"/>
+      <xs:element name="tlrId" type="tns:tlrId_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

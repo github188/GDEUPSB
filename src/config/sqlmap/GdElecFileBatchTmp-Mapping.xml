@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdElecFileBatchTmp" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdElecFileBatchTmp" >
+    <id column="SQN" property="sqn" jdbcType="CHAR" />
+    <result column="DF_MON" property="dfMon" jdbcType="CHAR" />
+    <result column="TOT_CNT" property="totCnt" jdbcType="CHAR" />
+    <result column="TOT_AMT" property="totAmt" jdbcType="CHAR" />
+    <result column="RS_FLD1" property="rsFld1" jdbcType="CHAR" />
+    <result column="THD_CUS_NO" property="thdCusNo" jdbcType="CHAR" />
+    <result column="CUS_AC" property="cusAc" jdbcType="CHAR" />
+    <result column="TTXN_AMT" property="ttxnAmt" jdbcType="CHAR" />
+    <result column="ELE_MON" property="eleMon" jdbcType="CHAR" />
+    <result column="RS_FLD2" property="rsFld2" jdbcType="CHAR" />
+    <result column="COM_AC" property="comAc" jdbcType="CHAR" />
+    <result column="FLAG" property="flag" jdbcType="CHAR" />
+    <result column="T_COMNO" property="tComno" jdbcType="CHAR" />
+    <result column="TXN_DTE" property="txnDte" jdbcType="CHAR" />
+    <result column="TLR" property="tlr" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    SQN, DF_MON, TOT_CNT, TOT_AMT, RS_FLD1, THD_CUS_NO, CUS_AC, TTXN_AMT, ELE_MON, RS_FLD2, 
+    COM_AC, FLAG, T_COMNO, TXN_DTE, TLR
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GD_ELEC_FILE_BATCH_TMP
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="dfMon!=null" >
+        AND  DF_MON=#{dfMon,jdbcType=CHAR}
+      </if>
+      <if test="totCnt!=null" >
+        AND  TOT_CNT=#{totCnt,jdbcType=CHAR}
+      </if>
+      <if test="totAmt!=null" >
+        AND  TOT_AMT=#{totAmt,jdbcType=CHAR}
+      </if>
+      <if test="rsFld1!=null" >
+        AND  RS_FLD1=#{rsFld1,jdbcType=CHAR}
+      </if>
+      <if test="thdCusNo!=null" >
+        AND  THD_CUS_NO=#{thdCusNo,jdbcType=CHAR}
+      </if>
+      <if test="cusAc!=null" >
+        AND  CUS_AC=#{cusAc,jdbcType=CHAR}
+      </if>
+      <if test="ttxnAmt!=null" >
+        AND  TTXN_AMT=#{ttxnAmt,jdbcType=CHAR}
+      </if>
+      <if test="eleMon!=null" >
+        AND  ELE_MON=#{eleMon,jdbcType=CHAR}
+      </if>
+      <if test="rsFld2!=null" >
+        AND  RS_FLD2=#{rsFld2,jdbcType=CHAR}
+      </if>
+      <if test="comAc!=null" >
+        AND  COM_AC=#{comAc,jdbcType=CHAR}
+      </if>
+      <if test="flag!=null" >
+        AND  FLAG=#{flag,jdbcType=CHAR}
+      </if>
+      <if test="tComno!=null" >
+        AND  T_COMNO=#{tComno,jdbcType=CHAR}
+      </if>
+      <if test="txnDte!=null" >
+        AND  TXN_DTE=#{txnDte,jdbcType=CHAR}
+      </if>
+      <if test="tlr!=null" >
+        AND  TLR=#{tlr,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GD_ELEC_FILE_BATCH_TMP
+    where SQN = #{sqn,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from ${GDEUPSB_SCHEMA}.GD_ELEC_FILE_BATCH_TMP
+    where SQN = #{sqn,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdElecFileBatchTmp" >
+    insert into ${GDEUPSB_SCHEMA}.GD_ELEC_FILE_BATCH_TMP
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sqn != null" >
+        SQN,
+      </if>
+      <if test="dfMon != null" >
+        DF_MON,
+      </if>
+      <if test="totCnt != null" >
+        TOT_CNT,
+      </if>
+      <if test="totAmt != null" >
+        TOT_AMT,
+      </if>
+      <if test="rsFld1 != null" >
+        RS_FLD1,
+      </if>
+      <if test="thdCusNo != null" >
+        THD_CUS_NO,
+      </if>
+      <if test="cusAc != null" >
+        CUS_AC,
+      </if>
+      <if test="ttxnAmt != null" >
+        TTXN_AMT,
+      </if>
+      <if test="eleMon != null" >
+        ELE_MON,
+      </if>
+      <if test="rsFld2 != null" >
+        RS_FLD2,
+      </if>
+      <if test="comAc != null" >
+        COM_AC,
+      </if>
+      <if test="flag != null" >
+        FLAG,
+      </if>
+      <if test="tComno != null" >
+        T_COMNO,
+      </if>
+      <if test="txnDte != null" >
+        TXN_DTE,
+      </if>
+      <if test="tlr != null" >
+        TLR,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sqn != null" >
+        #{sqn,jdbcType=CHAR},
+      </if>
+      <if test="dfMon != null" >
+        #{dfMon,jdbcType=CHAR},
+      </if>
+      <if test="totCnt != null" >
+        #{totCnt,jdbcType=CHAR},
+      </if>
+      <if test="totAmt != null" >
+        #{totAmt,jdbcType=CHAR},
+      </if>
+      <if test="rsFld1 != null" >
+        #{rsFld1,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNo != null" >
+        #{thdCusNo,jdbcType=CHAR},
+      </if>
+      <if test="cusAc != null" >
+        #{cusAc,jdbcType=CHAR},
+      </if>
+      <if test="ttxnAmt != null" >
+        #{ttxnAmt,jdbcType=CHAR},
+      </if>
+      <if test="eleMon != null" >
+        #{eleMon,jdbcType=CHAR},
+      </if>
+      <if test="rsFld2 != null" >
+        #{rsFld2,jdbcType=CHAR},
+      </if>
+      <if test="comAc != null" >
+        #{comAc,jdbcType=CHAR},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=CHAR},
+      </if>
+      <if test="tComno != null" >
+        #{tComno,jdbcType=CHAR},
+      </if>
+      <if test="txnDte != null" >
+        #{txnDte,jdbcType=CHAR},
+      </if>
+      <if test="tlr != null" >
+        #{tlr,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSB_SCHEMA}.GD_ELEC_FILE_BATCH_TMP
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="dfMon!=null" >
+        AND  DF_MON=#{dfMon,jdbcType=CHAR}
+      </if>
+      <if test="totCnt!=null" >
+        AND  TOT_CNT=#{totCnt,jdbcType=CHAR}
+      </if>
+      <if test="totAmt!=null" >
+        AND  TOT_AMT=#{totAmt,jdbcType=CHAR}
+      </if>
+      <if test="rsFld1!=null" >
+        AND  RS_FLD1=#{rsFld1,jdbcType=CHAR}
+      </if>
+      <if test="thdCusNo!=null" >
+        AND  THD_CUS_NO=#{thdCusNo,jdbcType=CHAR}
+      </if>
+      <if test="cusAc!=null" >
+        AND  CUS_AC=#{cusAc,jdbcType=CHAR}
+      </if>
+      <if test="ttxnAmt!=null" >
+        AND  TTXN_AMT=#{ttxnAmt,jdbcType=CHAR}
+      </if>
+      <if test="eleMon!=null" >
+        AND  ELE_MON=#{eleMon,jdbcType=CHAR}
+      </if>
+      <if test="rsFld2!=null" >
+        AND  RS_FLD2=#{rsFld2,jdbcType=CHAR}
+      </if>
+      <if test="comAc!=null" >
+        AND  COM_AC=#{comAc,jdbcType=CHAR}
+      </if>
+      <if test="flag!=null" >
+        AND  FLAG=#{flag,jdbcType=CHAR}
+      </if>
+      <if test="tComno!=null" >
+        AND  T_COMNO=#{tComno,jdbcType=CHAR}
+      </if>
+      <if test="txnDte!=null" >
+        AND  TXN_DTE=#{txnDte,jdbcType=CHAR}
+      </if>
+      <if test="tlr!=null" >
+        AND  TLR=#{tlr,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdElecFileBatchTmp" >
+    update ${GDEUPSB_SCHEMA}.GD_ELEC_FILE_BATCH_TMP
+    <set >
+      <if test="dfMon != null" >
+        DF_MON = #{dfMon,jdbcType=CHAR},
+      </if>
+      <if test="totCnt != null" >
+        TOT_CNT = #{totCnt,jdbcType=CHAR},
+      </if>
+      <if test="totAmt != null" >
+        TOT_AMT = #{totAmt,jdbcType=CHAR},
+      </if>
+      <if test="rsFld1 != null" >
+        RS_FLD1 = #{rsFld1,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNo != null" >
+        THD_CUS_NO = #{thdCusNo,jdbcType=CHAR},
+      </if>
+      <if test="cusAc != null" >
+        CUS_AC = #{cusAc,jdbcType=CHAR},
+      </if>
+      <if test="ttxnAmt != null" >
+        TTXN_AMT = #{ttxnAmt,jdbcType=CHAR},
+      </if>
+      <if test="eleMon != null" >
+        ELE_MON = #{eleMon,jdbcType=CHAR},
+      </if>
+      <if test="rsFld2 != null" >
+        RS_FLD2 = #{rsFld2,jdbcType=CHAR},
+      </if>
+      <if test="comAc != null" >
+        COM_AC = #{comAc,jdbcType=CHAR},
+      </if>
+      <if test="flag != null" >
+        FLAG = #{flag,jdbcType=CHAR},
+      </if>
+      <if test="tComno != null" >
+        T_COMNO = #{tComno,jdbcType=CHAR},
+      </if>
+      <if test="txnDte != null" >
+        TXN_DTE = #{txnDte,jdbcType=CHAR},
+      </if>
+      <if test="tlr != null" >
+        TLR = #{tlr,jdbcType=CHAR},
+      </if>
+    </set>
+    where SQN = #{sqn,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GD_ELEC_FILE_BATCH_TMP
+    <if test="_parameter" >
+      where SQN in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
+  
+  
+<!--    <select id="findEleAgtFileTmp"  resultType="java.util.Map" >
+    select   CUS_AC CUSAC,TTXN_AMT TXNAMT,THD_CUS_NO  AGTSRVCUSID,   OUROTHFLG
+    from ${GDEUPSB_SCHEMA}.GD_ELEC_FILE_BATCH_TMP
+    <if test="_parameter" >
+      where SQN in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select> -->
+  
+</mapper>

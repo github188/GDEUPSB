@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<x:beans xmlns:x="http://www.springframework.org/schema/beans"
+	xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd       http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+
+	<!--  查询记录结果-->
+	<action   class="com.bocom.bbip.gdeupsb.action.efek.QryCusBaseMsgAction"
+		id="gdeupsb.qryCusBaseMsgAction" />
+		
+		
+	<!--  查询抹账结果-->
+	<action   class="com.bocom.bbip.gdeupsb.action.efek.TallyCancelQryOnlineAction"
+		id="gdeupsb.tallyCancelQryOnlineAction" />	
+	<!-- 预付款 -->
+	<action   class="com.bocom.bbip.gdeupsb.action.efek.AdvanceTradeAction"
+		id="gdeupsb.advanceTradeAction"/>
+	<!-- 无操作Action -->
+	<action   class="com.bocom.bbip.gdeupsb.action.efek.NullAction"
+		id="gdeupsb.nullAction"/>
+	<!--  交费记录查询-->
+	<action   class="com.bocom.bbip.gdeupsb.action.efek.QryCusPayRecordAction"
+		id="gdeupsb.qryCusPayRecordAction" />
+	<!--  交费记录查询-->
+	<action   class="com.bocom.bbip.gdeupsb.action.efek.PowerChangeTreatyAction"
+		id="gesupsb.powerChangeTreatyAction" />	
+	<!--  代收付日志服务记录-->
+	<action   class="com.bocom.bbip.gdeupsb.action.efek.LogServiceAction"
+		id="gdeupsb.logServiceAction" />	
+	<!--  银行查询客户信息-->
+	<action   class="com.bocom.bbip.gdeupsb.action.efek.QryCusMsgAction"
+		id="gdeupsb.qryCusMsgAction" />	
+		
+	<!--  供电批量代扣取消交易-->
+	<action   class="com.bocom.bbip.gdeupsb.action.efek.batch.CancelBatchAction"
+		id="gdeupsb.CancelBatchAction" />		
+	<!--  供电批量批量数据准备-->
+	<action   class="com.bocom.bbip.gdeupsb.action.efek.batch.BatchDataFileAction"
+		id="gdeupsb.batchDataFileAction" />			
+		
+		
+</x:beans>

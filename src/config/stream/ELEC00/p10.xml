@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="460410Resp">
+		
+		<fixString name="busTyp" length="3" /><!--  收费方式-->
+		<fixString name="payType" length="3" /><!--  费用类型-->
+        <fixString name="comNo" length="8" /><!--  单位编码-->
+		<fixString name="payNo" length="20" /><!-- 缴费号 -->
+		<fixString name="thdCusNme" length="64" /><!-- 结算户名称 -->
+		<fixString name="rsvFld6" length="128" /><!-- 用电地址 -->
+        
+		<fixString name="bankNo" length="4" /><!-- 扣款银行代码 -->
+	      <fixString name="cusAc" length="32" /><!-- 扣款账户 -->
+	      <fixString name="cusNme" length="128" /><!--  扣款账户名称-->
+	      <fixString name="fulDedFlg" length="1" /><!-- 部分缴费标志 -->
+	      <fixString name="accountsSerialNo" length="16" /><!-- 账务流水号 -->
+	      <fixString name="electricityYearMonth" length="16" /><!--  电费年月-->
+      <fixString name="oweFeeAmt" length="16" /><!--  欠费金额-->
+      <fixString name="capital" length="16" /><!--  本金-->
+      <fixString name="dedit" length="16" /><!-- 违约金 -->
+	
+</segment>

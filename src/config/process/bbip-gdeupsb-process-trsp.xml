@@ -1,0 +1,164 @@
+<x:beans xmlns:x="http://www.springframework.org/schema/beans"
+	xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+		
+		<!-- 珠海路桥 对账 -->
+			<process id="gdeupsb.checkTrspFile" template="eups.simpleTran"  interceptors="eups.transMessageInterceptor">
+			  <actions>
+			   			<action id="act" ref="gdeupsb.checkTrspFileAction"/>
+			   </actions>
+			</process>
+	
+	
+	<!-- 查询汽车费用  -->
+	 <process id="gdeupsb.transportFeeQuery" template="eups.simpleTran"
+		interceptors="eups.transMessageInterceptor">
+		<actions>
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.common.CheckComTxnCtlAction" operations="checkThdTxnCtlNormal" />
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.transportfee.QueryTransportFeeAction"/>
+		</actions>
+	</process> 
+	
+	<!-- 打印发票嵌套查询 -->
+	 <process id="gdeupsb.trspPreInvoicQry" template="eups.simpleTran"
+		interceptors="eups.thdTransInterceptor">
+		<actions>
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.common.CheckComTxnCtlAction" operations="checkThdTxnCtlNormal" />
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.transportfee.QueryFeeInfoAction"/>
+		</actions>
+	</process>
+	
+	<!-- 银行单边冲正 -->
+	 <process id="gdeupsb.trspBankSingleCancel" template="eups.simpleTran"
+		interceptors="eups.thdTransInterceptor">
+		<actions>
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.common.CheckComTxnCtlAction" operations="checkThdTxnCtlNormal" />
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.transportfee.PreBankCancelAction"/>
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.common.GDBuaPaymentCancelUsingReversal"/>
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.transportfee.AftBankCancelAction"/>
+		</actions>
+	</process>
+	
+	<!-- <process id="gdeupsb.trspPrintInvCancel" template="eups.simpleTran"
+		interceptors="eups.thdTransInterceptor">
+		<actions>
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.common.CheckComTxnCtlAction" operations="checkThdTxnCtlNormal" />
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.transportfee.PreInvCancelAction"/>
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.common.GDBuaPaymentCancelUsingReversal"/>
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.transportfee.AftBankCancelAction"/>
+		</actions>
+	</process> -->
+	
+	<!-- 打印发票 -->
+	 <process id="gdeupsb.trspPrintInvoic" template="gdeupsb.addPrintInvoicFlow"
+		interceptors="eups.thdTransInterceptor">
+		<actions>
+		    <action id="chkBeforeAct" class="com.bocom.bbip.gdeupsb.action.common.CheckComTxnCtlAction" operations="checkThdTxnCtlNormal" />
+		    <action id="preAddPrintInvoicAct" class="com.bocom.bbip.gdeupsb.action.transportfee.PrePrintAction"/>
+		    <action id="callThirdAction" class="com.bocom.bbip.gdeupsb.action.transportfee.PrintCallThirdAction"/>
+		    <action id="regTransRollBackAct" class="com.bocom.bbip.gdeupsb.action.transportfee.PrePrintInvCancelAction"/>
+			<action id="regTransRollBackAct" class="com.bocom.bbip.gdeupsb.action.transportfee.PrintInvCancelAction"/>
+			<!-- <action id="aftRegTransRollBackAct" class="com.bocom.bbip.gdeupsb.action.transportfee.AftPrintInvCancelAction"/> --> 
+		    <action id="finalizeAction" class="com.bocom.bbip.gdeupsb.action.transportfee.PrintAction"/>
+		</actions>
+	</process> 
+	
+	<!--缴费记录查询 -->
+	<process id="gdeupsb.trspFeeInfoQry" template="eups.simpleTran"
+		interceptors="eups.thdTransInterceptor">
+		<actions>
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.common.CheckComTxnCtlAction" operations="checkThdTxnCtlNormal" />
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.transportfee.FeeInfoQryAction"/>		    
+		</actions>
+	</process>
+	
+	<!-- 补打发票 -->
+	<process id="gdeupsb.trspAddPrintInvoic" template="gdeupsb.addPrintInvoicFlow"
+		interceptors="eups.thdTransInterceptor">
+		<actions>
+		    <action id="chkBeforeAct" class="com.bocom.bbip.gdeupsb.action.common.CheckComTxnCtlAction" operations="checkThdTxnCtlNormal" />
+		    <action id="preAddPrintInvoicAct" class="com.bocom.bbip.gdeupsb.action.transportfee.PreAddPrintAction"/>
+		    <action id="callThirdAction" class="com.bocom.bbip.gdeupsb.action.transportfee.AddPrintCallThirdAction"/>
+		    <!-- <action id="preRegTransRollBackAct" class="com.bocom.bbip.gdeupsb.action.transportfee.PreAddPrintInvCancelAction"/> -->
+			<action id="regTransRollBackAct" class="com.bocom.bbip.gdeupsb.action.transportfee.PrintAddInvCancelAction"/>
+			<!-- <action id="aftRegTransRollBackAct" class="com.bocom.bbip.gdeupsb.action.transportfee.AftAddPrintInvCancelAction"/> -->
+		    <action id="finalizeAction" class="com.bocom.bbip.gdeupsb.action.transportfee.PrintAction"/>
+		</actions>
+	</process>
+	
+	<!-- 缴费月份查询 -->
+	<process id="gdeupsb.trspFeeMonQry" template="eups.simpleTran"
+		interceptors="eups.thdTransInterceptor">
+		<actions>
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.common.CheckComTxnCtlAction" operations="checkThdTxnCtlNormal" />
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.transportfee.FeeMonQryAction"/>
+		</actions>
+	</process>
+	
+	<!-- 路桥年票日终轧账 -->
+	<process id="gdeupsb.trspZZ" template="eups.simpleTran"
+		interceptors="eups.thdTransInterceptor">
+		<actions>
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.common.CheckComTxnCtlAction" operations="checkThdTxnCtlNormal" />
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.transportfee.ZZAction"/>
+		</actions>
+	</process>
+	
+	<!-- 路桥年票查询 -->
+	<process id="gdeupsb.trspNpQry" template="eups.simpleTran"
+		interceptors="eups.thdTransInterceptor">
+		<actions>
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.common.CheckComTxnCtlAction" operations="checkThdTxnCtlNormal" />
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.transportfee.NpQryAction"/>
+		</actions>
+	</process>
+	
+	<!-- 凭条退费 -->
+	<process id="gdeupsb.billCancel" template="gdeupsb.onlineCancelBankFlowTran"
+		interceptors="eups.thdTransInterceptor">
+		<actions>
+		    <action id="chkBeforeCancelAct" class="com.bocom.bbip.gdeupsb.action.common.CheckComTxnCtlAction" operations="checkThdTxnCtlNormal" />
+		    <action id="chkBeforeCancelAct" class="com.bocom.bbip.gdeupsb.action.transportfee.PreCancelAction"/>
+		    <action id="simpleCancelAccBankAct" class="com.bocom.bbip.gdeupsb.action.transportfee.BuaPaymentCancelExt"/>
+		    <action id="aftCancelAction" class="com.bocom.bbip.gdeupsb.action.transportfee.AftCancelAction"/>
+		    
+		    <action id="preRegTransRollBackAct" class="com.bocom.bbip.gdeupsb.action.transportfee.PreRegTransRollBackAction"/>
+		    <action id="regTransRollBackAct" class="com.bocom.bbip.gdeupsb.action.common.GDBuaPaymentCancelUsingReversal"/>
+		    <action id="aftRegTransRollBackAct" class="com.bocom.bbip.gdeupsb.action.transportfee.AftRegTransRollBackAction"/>
+		    <action id="finalizeAction" class="com.bocom.bbip.gdeupsb.action.transportfee.CancelFinalizeAction"/>
+		</actions>
+	</process> 
+	
+	<!-- 作废发票退费 -->
+	 <process id="gdeupsb.trspInvoiceCancel" template="eups.simpleTran"
+		interceptors="eups.thdTransInterceptor">
+		<actions>
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.common.CheckComTxnCtlAction" operations="checkThdTxnCtlNormal" />
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.transportfee.PreInvoiceCancelAction"/>
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.transportfee.GDBuaPaymentCancelUsingReversalInvoiceExt"/>
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.transportfee.InvoiceFinalAction"/>
+		</actions>
+	</process>
+	
+	<!-- 年票打印 -->
+	 <process id="gdeupsb.trspPrintNP" template="eups.simpleTran"
+		interceptors="eups.thdTransInterceptor">
+		<actions>
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.common.CheckComTxnCtlAction" operations="checkThdTxnCtlNormal" />
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.transportfee.PrintNpAction"/>
+		</actions>
+	</process>
+	
+	<!-- 年票作废 -->
+	 <process id="gdeupsb.trspNpDelet" template="eups.simpleTran"
+		interceptors="eups.thdTransInterceptor">
+		<actions>
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.common.CheckComTxnCtlAction" operations="checkThdTxnCtlNormal" />
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.transportfee.NpDeletAction"/>
+		</actions>
+	</process>
+	
+	
+	
+</x:beans>

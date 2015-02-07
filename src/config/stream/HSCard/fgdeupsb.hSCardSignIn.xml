@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="0001Response" >
+	 <fixString length="6" name="DCC_LS"  /> <!-- 银行流水号 -->
+	 <fixString length="16" name="DCC_TERMKEY" /> <!-- 终端密钥 -->
+      <fixString length="8" name="DCC_TERM"/> <!-- 终端号 -->
+</segment>

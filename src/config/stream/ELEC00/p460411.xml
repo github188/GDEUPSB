@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="460411Resp">
+	
+		<fixString name="sqn" length="24" /><!-- 交易流水号 -->
+		<fixString name="txnDte" length="8" /><!--  交易日期-->
+		<fixString name="txnTme" length="6" /><!-- 交易时间 -->
+		<fixString name="txnAmt" length="24" /><!--  原交易流水号-->
+		<fixString name="txnAmt" length="8" /><!--  原交易日期-->
+		<fixString name="txnAmt" length="6" /><!-- 原交易时间 -->
+		<fixString name="payNo" length="20" /><!--  缴费号-->
+		<fixString name="electricityYearMonth" length="16" /><!--  电费年月-->
+		<fixString name="txnAmt" length="16" /><!--  实扣金额-->
+		<fixString name="paymentResult" length="128" /><!-- 缴费结果说明 -->
+	
+</segment>

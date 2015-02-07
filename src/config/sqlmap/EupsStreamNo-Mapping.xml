@@ -1,0 +1,1750 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.EupsStreamNo" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.EupsStreamNo" >
+    <id column="SQN" property="sqn" jdbcType="CHAR" />
+    <result column="TXN_DTE" property="txnDte" jdbcType="DATE" />
+    <result column="TXN_TME" property="txnTme" jdbcType="TIMESTAMP" />
+    <result column="BK" property="bk" jdbcType="CHAR" />
+    <result column="BUS_KND" property="busKnd" jdbcType="CHAR" />
+    <result column="EUPS_BUS_TYP" property="eupsBusTyp" jdbcType="CHAR" />
+    <result column="RAP_TYP" property="rapTyp" jdbcType="CHAR" />
+    <result column="TXN_TYP" property="txnTyp" jdbcType="CHAR" />
+    <result column="PFE_TYP" property="pfeTyp" jdbcType="CHAR" />
+    <result column="ITG_TYP" property="itgTyp" jdbcType="CHAR" />
+    <result column="TXN_STS" property="txnSts" jdbcType="CHAR" />
+    <result column="QRY_SQN" property="qrySqn" jdbcType="CHAR" />
+    <result column="TRACE_NO" property="traceNo" jdbcType="CHAR" />
+    <result column="REQ_SYS_CDE" property="reqSysCde" jdbcType="CHAR" />
+    <result column="REQ_JRN_NO" property="reqJrnNo" jdbcType="CHAR" />
+    <result column="REQ_TME" property="reqTme" jdbcType="TIMESTAMP" />
+    <result column="BR" property="br" jdbcType="CHAR" />
+    <result column="ORG_CDE" property="orgCde" jdbcType="CHAR" />
+    <result column="TML_NO" property="tmlNo" jdbcType="CHAR" />
+    <result column="TXN_TLR" property="txnTlr" jdbcType="CHAR" />
+    <result column="CHL_TYP" property="chlTyp" jdbcType="CHAR" />
+    <result column="ATH_TLR_NO" property="athTlrNo" jdbcType="CHAR" />
+    <result column="CHK_TLR" property="chkTlr" jdbcType="CHAR" />
+    <result column="REQ_VCH_NO" property="reqVchNo" jdbcType="CHAR" />
+    <result column="TXN_CDE" property="txnCde" jdbcType="CHAR" />
+    <result column="SVR_NME" property="svrNme" jdbcType="CHAR" />
+    <result column="COM_NO" property="comNo" jdbcType="CHAR" />
+    <result column="RSP_CDE" property="rspCde" jdbcType="CHAR" />
+    <result column="RSP_MSG" property="rspMsg" jdbcType="VARCHAR" />
+    <result column="OLD_TXN_SQN" property="oldTxnSqn" jdbcType="CHAR" />
+    <result column="THD_OBK_CDE" property="thdObkCde" jdbcType="CHAR" />
+    <result column="RVS_TRACE_NO" property="rvsTraceNo" jdbcType="CHAR" />
+    <result column="THD_RGN_NO" property="thdRgnNo" jdbcType="CHAR" />
+    <result column="THD_CUS_NO" property="thdCusNo" jdbcType="CHAR" />
+    <result column="THD_SUB_CUS_NO" property="thdSubCusNo" jdbcType="CHAR" />
+    <result column="THD_CUS_NME" property="thdCusNme" jdbcType="VARCHAR" />
+    <result column="THD_FEE_PRD" property="thdFeePrd" jdbcType="CHAR" />
+    <result column="OUR_OTH_FLG" property="ourOthFlg" jdbcType="CHAR" />
+    <result column="BK_CD_TYP" property="bkCdTyp" jdbcType="CHAR" />
+    <result column="ACC_TYP" property="accTyp" jdbcType="CHAR" />
+    <result column="DRW_MDE" property="drwMde" jdbcType="CHAR" />
+    <result column="CUS_AC" property="cusAc" jdbcType="CHAR" />
+    <result column="CUS_NME" property="cusNme" jdbcType="VARCHAR" />
+    <result column="ACC_SEQ" property="accSeq" jdbcType="CHAR" />
+    <result column="BV_KND" property="bvKnd" jdbcType="CHAR" />
+    <result column="BV_NO" property="bvNo" jdbcType="CHAR" />
+    <result column="CSH_NO" property="cshNo" jdbcType="CHAR" />
+    <result column="CHO_NO" property="choNo" jdbcType="CHAR" />
+    <result column="PAY_CHL" property="payChl" jdbcType="CHAR" />
+    <result column="CCY" property="ccy" jdbcType="CHAR" />
+    <result column="TXN_AMT" property="txnAmt" jdbcType="DECIMAL" />
+    <result column="REQ_TXN_AMT" property="reqTxnAmt" jdbcType="DECIMAL" />
+    <result column="HFE" property="hfe" jdbcType="DECIMAL" />
+    <result column="HFE_ITM_SEQ" property="hfeItmSeq" jdbcType="CHAR" />
+    <result column="HFE_PST_BR" property="hfePstBr" jdbcType="CHAR" />
+    <result column="FUL_DED_FLG" property="fulDedFlg" jdbcType="CHAR" />
+    <result column="RMK_CDE" property="rmkCde" jdbcType="CHAR" />
+    <result column="LIS_ACC" property="lisAcc" jdbcType="CHAR" />
+    <result column="SPL_NO" property="splNo" jdbcType="CHAR" />
+    <result column="SPL_TER_NO" property="splTerNo" jdbcType="CHAR" />
+    <result column="ID_TYP" property="idTyp" jdbcType="CHAR" />
+    <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+    <result column="CMU_TEL" property="cmuTel" jdbcType="VARCHAR" />
+    <result column="MFM_TXN_CDE" property="mfmTxnCde" jdbcType="CHAR" />
+    <result column="MFM_TXN_SUB_CDE" property="mfmTxnSubCde" jdbcType="CHAR" />
+    <result column="AC_DTE" property="acDte" jdbcType="DATE" />
+    <result column="MFM_VCH_NO" property="mfmVchNo" jdbcType="CHAR" />
+    <result column="MFM_JRN_NO" property="mfmJrnNo" jdbcType="CHAR" />
+    <result column="MFM_TXN_STS" property="mfmTxnSts" jdbcType="CHAR" />
+    <result column="MFM_RSP_CDE" property="mfmRspCde" jdbcType="CHAR" />
+    <result column="MFM_RSP_MSG" property="mfmRspMsg" jdbcType="VARCHAR" />
+    <result column="THD_TXN_CDE" property="thdTxnCde" jdbcType="CHAR" />
+    <result column="THD_TXN_DTE" property="thdTxnDte" jdbcType="DATE" />
+    <result column="THD_TXN_TME" property="thdTxnTme" jdbcType="TIMESTAMP" />
+    <result column="THD_SQN" property="thdSqn" jdbcType="CHAR" />
+    <result column="THD_TXN_STS" property="thdTxnSts" jdbcType="CHAR" />
+    <result column="THD_RSP_CDE" property="thdRspCde" jdbcType="CHAR" />
+    <result column="THD_RSP_MSG" property="thdRspMsg" jdbcType="CHAR" />
+    <result column="RCN_FLG" property="rcnFlg" jdbcType="CHAR" />
+    <result column="MFM_DYT_RCN_FLG" property="mfmDytRcnFlg" jdbcType="CHAR" />
+    <result column="MFM_EOD_RCN_FLG" property="mfmEodRcnFlg" jdbcType="CHAR" />
+    <result column="MFM_RCN_BAT" property="mfmRcnBat" jdbcType="CHAR" />
+    <result column="MFM_RCN_TME" property="mfmRcnTme" jdbcType="TIMESTAMP" />
+    <result column="EXT_RCN_FLG" property="extRcnFlg" jdbcType="CHAR" />
+    <result column="THD_RCN_FLG" property="thdRcnFlg" jdbcType="CHAR" />
+    <result column="THD_RCN_TME" property="thdRcnTme" jdbcType="TIMESTAMP" />
+    <result column="THD_RCN_BAT" property="thdRcnBat" jdbcType="CHAR" />
+    <result column="IS_BAT_FLG" property="isBatFlg" jdbcType="CHAR" />
+    <result column="BAT_NO" property="batNo" jdbcType="CHAR" />
+    <result column="PRT_FLG" property="prtFlg" jdbcType="CHAR" />
+    <result column="PRT_CNT" property="prtCnt" jdbcType="INTEGER" />
+    <result column="BAK_FLD1" property="bakFld1" jdbcType="CHAR" />
+    <result column="BAK_FLD2" property="bakFld2" jdbcType="CHAR" />
+    <result column="BAK_FLD3" property="bakFld3" jdbcType="CHAR" />
+    <result column="BAK_FLD4" property="bakFld4" jdbcType="CHAR" />
+    <result column="BAK_FLD5" property="bakFld5" jdbcType="CHAR" />
+    <result column="BAK_FLD6" property="bakFld6" jdbcType="CHAR" />
+    <result column="RSV_FLD1" property="rsvFld1" jdbcType="VARCHAR" />
+    <result column="RSV_FLD2" property="rsvFld2" jdbcType="VARCHAR" />
+    <result column="RSV_FLD3" property="rsvFld3" jdbcType="VARCHAR" />
+    <result column="RSV_FLD4" property="rsvFld4" jdbcType="VARCHAR" />
+    <result column="RSV_FLD5" property="rsvFld5" jdbcType="VARCHAR" />
+    <result column="RSV_FLD6" property="rsvFld6" jdbcType="VARCHAR" />
+    <result column="FIL_FLG" property="filFlg" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    SQN, TXN_DTE, TXN_TME, BK, BUS_KND, EUPS_BUS_TYP, RAP_TYP, TXN_TYP, PFE_TYP, ITG_TYP, 
+    TXN_STS, QRY_SQN, TRACE_NO, REQ_SYS_CDE, REQ_JRN_NO, REQ_TME, BR, ORG_CDE, TML_NO, 
+    TXN_TLR, CHL_TYP, ATH_TLR_NO, CHK_TLR, REQ_VCH_NO, TXN_CDE, SVR_NME, COM_NO, RSP_CDE, 
+    RSP_MSG, OLD_TXN_SQN, THD_OBK_CDE, RVS_TRACE_NO, THD_RGN_NO, THD_CUS_NO, THD_SUB_CUS_NO, 
+    THD_CUS_NME, THD_FEE_PRD, OUR_OTH_FLG, BK_CD_TYP, ACC_TYP, DRW_MDE, CUS_AC, CUS_NME, 
+    ACC_SEQ, BV_KND, BV_NO, CSH_NO, CHO_NO, PAY_CHL, CCY, TXN_AMT, REQ_TXN_AMT, HFE, 
+    HFE_ITM_SEQ, HFE_PST_BR, FUL_DED_FLG, RMK_CDE, LIS_ACC, SPL_NO, SPL_TER_NO, ID_TYP, 
+    ID_NO, CMU_TEL, MFM_TXN_CDE, MFM_TXN_SUB_CDE, AC_DTE, MFM_VCH_NO, MFM_JRN_NO, MFM_TXN_STS, 
+    MFM_RSP_CDE, MFM_RSP_MSG, THD_TXN_CDE, THD_TXN_DTE, THD_TXN_TME, THD_SQN, THD_TXN_STS, 
+    THD_RSP_CDE, THD_RSP_MSG, RCN_FLG, MFM_DYT_RCN_FLG, MFM_EOD_RCN_FLG, MFM_RCN_BAT, 
+    MFM_RCN_TME, EXT_RCN_FLG, THD_RCN_FLG, THD_RCN_TME, THD_RCN_BAT, IS_BAT_FLG, BAT_NO, 
+    PRT_FLG, PRT_CNT, BAK_FLD1, BAK_FLD2, BAK_FLD3, BAK_FLD4, BAK_FLD5, BAK_FLD6, RSV_FLD1, 
+    RSV_FLD2, RSV_FLD3, RSV_FLD4, RSV_FLD5, RSV_FLD6, FIL_FLG
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="txnDte!=null" >
+        AND  TXN_DTE=#{txnDte,jdbcType=DATE}
+      </if>
+      <if test="txnTme!=null" >
+        AND  TXN_TME=#{txnTme,jdbcType=TIMESTAMP}
+      </if>
+      <if test="bk!=null" >
+        AND  BK=#{bk,jdbcType=CHAR}
+      </if>
+      <if test="busKnd!=null" >
+        AND  BUS_KND=#{busKnd,jdbcType=CHAR}
+      </if>
+      <if test="eupsBusTyp!=null" >
+        AND  EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
+      </if>
+      <if test="rapTyp!=null" >
+        AND  RAP_TYP=#{rapTyp,jdbcType=CHAR}
+      </if>
+      <if test="txnTyp!=null" >
+        AND  TXN_TYP=#{txnTyp,jdbcType=CHAR}
+      </if>
+      <if test="pfeTyp!=null" >
+        AND  PFE_TYP=#{pfeTyp,jdbcType=CHAR}
+      </if>
+      <if test="itgTyp!=null" >
+        AND  ITG_TYP=#{itgTyp,jdbcType=CHAR}
+      </if>
+      <if test="txnSts!=null" >
+        AND  TXN_STS=#{txnSts,jdbcType=CHAR}
+      </if>
+      <if test="qrySqn!=null" >
+        AND  QRY_SQN=#{qrySqn,jdbcType=CHAR}
+      </if>
+      <if test="traceNo!=null" >
+        AND  TRACE_NO=#{traceNo,jdbcType=CHAR}
+      </if>
+      <if test="reqSysCde!=null" >
+        AND  REQ_SYS_CDE=#{reqSysCde,jdbcType=CHAR}
+      </if>
+      <if test="reqJrnNo!=null" >
+        AND  REQ_JRN_NO=#{reqJrnNo,jdbcType=CHAR}
+      </if>
+      <if test="reqTme!=null" >
+        AND  REQ_TME=#{reqTme,jdbcType=TIMESTAMP}
+      </if>
+      <if test="br!=null" >
+        AND  BR=#{br,jdbcType=CHAR}
+      </if>
+      <if test="orgCde!=null" >
+        AND  ORG_CDE=#{orgCde,jdbcType=CHAR}
+      </if>
+      <if test="tmlNo!=null" >
+        AND  TML_NO=#{tmlNo,jdbcType=CHAR}
+      </if>
+      <if test="txnTlr!=null" >
+        AND  TXN_TLR=#{txnTlr,jdbcType=CHAR}
+      </if>
+      <if test="chlTyp!=null" >
+        AND  CHL_TYP=#{chlTyp,jdbcType=CHAR}
+      </if>
+      <if test="athTlrNo!=null" >
+        AND  ATH_TLR_NO=#{athTlrNo,jdbcType=CHAR}
+      </if>
+      <if test="chkTlr!=null" >
+        AND  CHK_TLR=#{chkTlr,jdbcType=CHAR}
+      </if>
+      <if test="reqVchNo!=null" >
+        AND  REQ_VCH_NO=#{reqVchNo,jdbcType=CHAR}
+      </if>
+      <if test="txnCde!=null" >
+        AND  TXN_CDE=#{txnCde,jdbcType=CHAR}
+      </if>
+      <if test="svrNme!=null" >
+        AND  SVR_NME=#{svrNme,jdbcType=CHAR}
+      </if>
+      <if test="comNo!=null" >
+        AND  COM_NO=#{comNo,jdbcType=CHAR}
+      </if>
+      <if test="rspCde!=null" >
+        AND  RSP_CDE=#{rspCde,jdbcType=CHAR}
+      </if>
+      <if test="rspMsg!=null" >
+        AND  RSP_MSG=#{rspMsg,jdbcType=VARCHAR}
+      </if>
+      <if test="oldTxnSqn!=null" >
+        AND  OLD_TXN_SQN=#{oldTxnSqn,jdbcType=CHAR}
+      </if>
+      <if test="thdObkCde!=null" >
+        AND  THD_OBK_CDE=#{thdObkCde,jdbcType=CHAR}
+      </if>
+      <if test="rvsTraceNo!=null" >
+        AND  RVS_TRACE_NO=#{rvsTraceNo,jdbcType=CHAR}
+      </if>
+      <if test="thdRgnNo!=null" >
+        AND  THD_RGN_NO=#{thdRgnNo,jdbcType=CHAR}
+      </if>
+      <if test="thdCusNo!=null" >
+        AND  THD_CUS_NO=#{thdCusNo,jdbcType=CHAR}
+      </if>
+      <if test="thdSubCusNo!=null" >
+        AND  THD_SUB_CUS_NO=#{thdSubCusNo,jdbcType=CHAR}
+      </if>
+      <if test="thdCusNme!=null" >
+        AND  THD_CUS_NME=#{thdCusNme,jdbcType=VARCHAR}
+      </if>
+      <if test="thdFeePrd!=null" >
+        AND  THD_FEE_PRD=#{thdFeePrd,jdbcType=CHAR}
+      </if>
+      <if test="ourOthFlg!=null" >
+        AND  OUR_OTH_FLG=#{ourOthFlg,jdbcType=CHAR}
+      </if>
+      <if test="bkCdTyp!=null" >
+        AND  BK_CD_TYP=#{bkCdTyp,jdbcType=CHAR}
+      </if>
+      <if test="accTyp!=null" >
+        AND  ACC_TYP=#{accTyp,jdbcType=CHAR}
+      </if>
+      <if test="drwMde!=null" >
+        AND  DRW_MDE=#{drwMde,jdbcType=CHAR}
+      </if>
+      <if test="cusAc!=null" >
+        AND  CUS_AC=#{cusAc,jdbcType=CHAR}
+      </if>
+      <if test="cusNme!=null" >
+        AND  CUS_NME=#{cusNme,jdbcType=VARCHAR}
+      </if>
+      <if test="accSeq!=null" >
+        AND  ACC_SEQ=#{accSeq,jdbcType=CHAR}
+      </if>
+      <if test="bvKnd!=null" >
+        AND  BV_KND=#{bvKnd,jdbcType=CHAR}
+      </if>
+      <if test="bvNo!=null" >
+        AND  BV_NO=#{bvNo,jdbcType=CHAR}
+      </if>
+      <if test="cshNo!=null" >
+        AND  CSH_NO=#{cshNo,jdbcType=CHAR}
+      </if>
+      <if test="choNo!=null" >
+        AND  CHO_NO=#{choNo,jdbcType=CHAR}
+      </if>
+      <if test="payChl!=null" >
+        AND  PAY_CHL=#{payChl,jdbcType=CHAR}
+      </if>
+      <if test="ccy!=null" >
+        AND  CCY=#{ccy,jdbcType=CHAR}
+      </if>
+      <if test="txnAmt!=null" >
+        AND  TXN_AMT=#{txnAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="reqTxnAmt!=null" >
+        AND  REQ_TXN_AMT=#{reqTxnAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="hfe!=null" >
+        AND  HFE=#{hfe,jdbcType=DECIMAL}
+      </if>
+      <if test="hfeItmSeq!=null" >
+        AND  HFE_ITM_SEQ=#{hfeItmSeq,jdbcType=CHAR}
+      </if>
+      <if test="hfePstBr!=null" >
+        AND  HFE_PST_BR=#{hfePstBr,jdbcType=CHAR}
+      </if>
+      <if test="fulDedFlg!=null" >
+        AND  FUL_DED_FLG=#{fulDedFlg,jdbcType=CHAR}
+      </if>
+      <if test="rmkCde!=null" >
+        AND  RMK_CDE=#{rmkCde,jdbcType=CHAR}
+      </if>
+      <if test="lisAcc!=null" >
+        AND  LIS_ACC=#{lisAcc,jdbcType=CHAR}
+      </if>
+      <if test="splNo!=null" >
+        AND  SPL_NO=#{splNo,jdbcType=CHAR}
+      </if>
+      <if test="splTerNo!=null" >
+        AND  SPL_TER_NO=#{splTerNo,jdbcType=CHAR}
+      </if>
+      <if test="idTyp!=null" >
+        AND  ID_TYP=#{idTyp,jdbcType=CHAR}
+      </if>
+      <if test="idNo!=null" >
+        AND  ID_NO=#{idNo,jdbcType=VARCHAR}
+      </if>
+      <if test="cmuTel!=null" >
+        AND  CMU_TEL=#{cmuTel,jdbcType=VARCHAR}
+      </if>
+      <if test="mfmTxnCde!=null" >
+        AND  MFM_TXN_CDE=#{mfmTxnCde,jdbcType=CHAR}
+      </if>
+      <if test="mfmTxnSubCde!=null" >
+        AND  MFM_TXN_SUB_CDE=#{mfmTxnSubCde,jdbcType=CHAR}
+      </if>
+      <if test="acDte!=null" >
+        AND  AC_DTE=#{acDte,jdbcType=DATE}
+      </if>
+      <if test="mfmVchNo!=null" >
+        AND  MFM_VCH_NO=#{mfmVchNo,jdbcType=CHAR}
+      </if>
+      <if test="mfmJrnNo!=null" >
+        AND  MFM_JRN_NO=#{mfmJrnNo,jdbcType=CHAR}
+      </if>
+      <if test="mfmTxnSts!=null" >
+        AND  MFM_TXN_STS=#{mfmTxnSts,jdbcType=CHAR}
+      </if>
+      <if test="mfmRspCde!=null" >
+        AND  MFM_RSP_CDE=#{mfmRspCde,jdbcType=CHAR}
+      </if>
+      <if test="mfmRspMsg!=null" >
+        AND  MFM_RSP_MSG=#{mfmRspMsg,jdbcType=VARCHAR}
+      </if>
+      <if test="thdTxnCde!=null" >
+        AND  THD_TXN_CDE=#{thdTxnCde,jdbcType=CHAR}
+      </if>
+      <if test="thdTxnDte!=null" >
+        AND  THD_TXN_DTE=#{thdTxnDte,jdbcType=DATE}
+      </if>
+      <if test="thdTxnTme!=null" >
+        AND  THD_TXN_TME=#{thdTxnTme,jdbcType=TIMESTAMP}
+      </if>
+      <if test="thdSqn!=null" >
+        AND  THD_SQN=#{thdSqn,jdbcType=CHAR}
+      </if>
+      <if test="thdTxnSts!=null" >
+        AND  THD_TXN_STS=#{thdTxnSts,jdbcType=CHAR}
+      </if>
+      <if test="thdRspCde!=null" >
+        AND  THD_RSP_CDE=#{thdRspCde,jdbcType=CHAR}
+      </if>
+      <if test="thdRspMsg!=null" >
+        AND  THD_RSP_MSG=#{thdRspMsg,jdbcType=CHAR}
+      </if>
+      <if test="rcnFlg!=null" >
+        AND  RCN_FLG=#{rcnFlg,jdbcType=CHAR}
+      </if>
+      <if test="mfmDytRcnFlg!=null" >
+        AND  MFM_DYT_RCN_FLG=#{mfmDytRcnFlg,jdbcType=CHAR}
+      </if>
+      <if test="mfmEodRcnFlg!=null" >
+        AND  MFM_EOD_RCN_FLG=#{mfmEodRcnFlg,jdbcType=CHAR}
+      </if>
+      <if test="mfmRcnBat!=null" >
+        AND  MFM_RCN_BAT=#{mfmRcnBat,jdbcType=CHAR}
+      </if>
+      <if test="mfmRcnTme!=null" >
+        AND  MFM_RCN_TME=#{mfmRcnTme,jdbcType=TIMESTAMP}
+      </if>
+      <if test="extRcnFlg!=null" >
+        AND  EXT_RCN_FLG=#{extRcnFlg,jdbcType=CHAR}
+      </if>
+      <if test="thdRcnFlg!=null" >
+        AND  THD_RCN_FLG=#{thdRcnFlg,jdbcType=CHAR}
+      </if>
+      <if test="thdRcnTme!=null" >
+        AND  THD_RCN_TME=#{thdRcnTme,jdbcType=TIMESTAMP}
+      </if>
+      <if test="thdRcnBat!=null" >
+        AND  THD_RCN_BAT=#{thdRcnBat,jdbcType=CHAR}
+      </if>
+      <if test="isBatFlg!=null" >
+        AND  IS_BAT_FLG=#{isBatFlg,jdbcType=CHAR}
+      </if>
+      <if test="batNo!=null" >
+        AND  BAT_NO=#{batNo,jdbcType=CHAR}
+      </if>
+      <if test="prtFlg!=null" >
+        AND  PRT_FLG=#{prtFlg,jdbcType=CHAR}
+      </if>
+      <if test="prtCnt!=null" >
+        AND  PRT_CNT=#{prtCnt,jdbcType=INTEGER}
+      </if>
+      <if test="bakFld1!=null" >
+        AND  BAK_FLD1=#{bakFld1,jdbcType=CHAR}
+      </if>
+      <if test="bakFld2!=null" >
+        AND  BAK_FLD2=#{bakFld2,jdbcType=CHAR}
+      </if>
+      <if test="bakFld3!=null" >
+        AND  BAK_FLD3=#{bakFld3,jdbcType=CHAR}
+      </if>
+      <if test="bakFld4!=null" >
+        AND  BAK_FLD4=#{bakFld4,jdbcType=CHAR}
+      </if>
+      <if test="bakFld5!=null" >
+        AND  BAK_FLD5=#{bakFld5,jdbcType=CHAR}
+      </if>
+      <if test="bakFld6!=null" >
+        AND  BAK_FLD6=#{bakFld6,jdbcType=CHAR}
+      </if>
+      <if test="rsvFld1!=null" >
+        AND  RSV_FLD1=#{rsvFld1,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld2!=null" >
+        AND  RSV_FLD2=#{rsvFld2,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld3!=null" >
+        AND  RSV_FLD3=#{rsvFld3,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld4!=null" >
+        AND  RSV_FLD4=#{rsvFld4,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld5!=null" >
+        AND  RSV_FLD5=#{rsvFld5,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld6!=null" >
+        AND  RSV_FLD6=#{rsvFld6,jdbcType=VARCHAR}
+      </if>
+      <if test="filFlg!=null" >
+        AND  FIL_FLG=#{filFlg,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from ${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL
+    where SQN = #{sqn,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from ${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL
+    where SQN = #{sqn,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.EupsStreamNo" >
+    insert into ${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sqn != null" >
+        SQN,
+      </if>
+      <if test="txnDte != null" >
+        TXN_DTE,
+      </if>
+      <if test="txnTme != null" >
+        TXN_TME,
+      </if>
+      <if test="bk != null" >
+        BK,
+      </if>
+      <if test="busKnd != null" >
+        BUS_KND,
+      </if>
+      <if test="eupsBusTyp != null" >
+        EUPS_BUS_TYP,
+      </if>
+      <if test="rapTyp != null" >
+        RAP_TYP,
+      </if>
+      <if test="txnTyp != null" >
+        TXN_TYP,
+      </if>
+      <if test="pfeTyp != null" >
+        PFE_TYP,
+      </if>
+      <if test="itgTyp != null" >
+        ITG_TYP,
+      </if>
+      <if test="txnSts != null" >
+        TXN_STS,
+      </if>
+      <if test="qrySqn != null" >
+        QRY_SQN,
+      </if>
+      <if test="traceNo != null" >
+        TRACE_NO,
+      </if>
+      <if test="reqSysCde != null" >
+        REQ_SYS_CDE,
+      </if>
+      <if test="reqJrnNo != null" >
+        REQ_JRN_NO,
+      </if>
+      <if test="reqTme != null" >
+        REQ_TME,
+      </if>
+      <if test="br != null" >
+        BR,
+      </if>
+      <if test="orgCde != null" >
+        ORG_CDE,
+      </if>
+      <if test="tmlNo != null" >
+        TML_NO,
+      </if>
+      <if test="txnTlr != null" >
+        TXN_TLR,
+      </if>
+      <if test="chlTyp != null" >
+        CHL_TYP,
+      </if>
+      <if test="athTlrNo != null" >
+        ATH_TLR_NO,
+      </if>
+      <if test="chkTlr != null" >
+        CHK_TLR,
+      </if>
+      <if test="reqVchNo != null" >
+        REQ_VCH_NO,
+      </if>
+      <if test="txnCde != null" >
+        TXN_CDE,
+      </if>
+      <if test="svrNme != null" >
+        SVR_NME,
+      </if>
+      <if test="comNo != null" >
+        COM_NO,
+      </if>
+      <if test="rspCde != null" >
+        RSP_CDE,
+      </if>
+      <if test="rspMsg != null" >
+        RSP_MSG,
+      </if>
+      <if test="oldTxnSqn != null" >
+        OLD_TXN_SQN,
+      </if>
+      <if test="thdObkCde != null" >
+        THD_OBK_CDE,
+      </if>
+      <if test="rvsTraceNo != null" >
+        RVS_TRACE_NO,
+      </if>
+      <if test="thdRgnNo != null" >
+        THD_RGN_NO,
+      </if>
+      <if test="thdCusNo != null" >
+        THD_CUS_NO,
+      </if>
+      <if test="thdSubCusNo != null" >
+        THD_SUB_CUS_NO,
+      </if>
+      <if test="thdCusNme != null" >
+        THD_CUS_NME,
+      </if>
+      <if test="thdFeePrd != null" >
+        THD_FEE_PRD,
+      </if>
+      <if test="ourOthFlg != null" >
+        OUR_OTH_FLG,
+      </if>
+      <if test="bkCdTyp != null" >
+        BK_CD_TYP,
+      </if>
+      <if test="accTyp != null" >
+        ACC_TYP,
+      </if>
+      <if test="drwMde != null" >
+        DRW_MDE,
+      </if>
+      <if test="cusAc != null" >
+        CUS_AC,
+      </if>
+      <if test="cusNme != null" >
+        CUS_NME,
+      </if>
+      <if test="accSeq != null" >
+        ACC_SEQ,
+      </if>
+      <if test="bvKnd != null" >
+        BV_KND,
+      </if>
+      <if test="bvNo != null" >
+        BV_NO,
+      </if>
+      <if test="cshNo != null" >
+        CSH_NO,
+      </if>
+      <if test="choNo != null" >
+        CHO_NO,
+      </if>
+      <if test="payChl != null" >
+        PAY_CHL,
+      </if>
+      <if test="ccy != null" >
+        CCY,
+      </if>
+      <if test="txnAmt != null" >
+        TXN_AMT,
+      </if>
+      <if test="reqTxnAmt != null" >
+        REQ_TXN_AMT,
+      </if>
+      <if test="hfe != null" >
+        HFE,
+      </if>
+      <if test="hfeItmSeq != null" >
+        HFE_ITM_SEQ,
+      </if>
+      <if test="hfePstBr != null" >
+        HFE_PST_BR,
+      </if>
+      <if test="fulDedFlg != null" >
+        FUL_DED_FLG,
+      </if>
+      <if test="rmkCde != null" >
+        RMK_CDE,
+      </if>
+      <if test="lisAcc != null" >
+        LIS_ACC,
+      </if>
+      <if test="splNo != null" >
+        SPL_NO,
+      </if>
+      <if test="splTerNo != null" >
+        SPL_TER_NO,
+      </if>
+      <if test="idTyp != null" >
+        ID_TYP,
+      </if>
+      <if test="idNo != null" >
+        ID_NO,
+      </if>
+      <if test="cmuTel != null" >
+        CMU_TEL,
+      </if>
+      <if test="mfmTxnCde != null" >
+        MFM_TXN_CDE,
+      </if>
+      <if test="mfmTxnSubCde != null" >
+        MFM_TXN_SUB_CDE,
+      </if>
+      <if test="acDte != null" >
+        AC_DTE,
+      </if>
+      <if test="mfmVchNo != null" >
+        MFM_VCH_NO,
+      </if>
+      <if test="mfmJrnNo != null" >
+        MFM_JRN_NO,
+      </if>
+      <if test="mfmTxnSts != null" >
+        MFM_TXN_STS,
+      </if>
+      <if test="mfmRspCde != null" >
+        MFM_RSP_CDE,
+      </if>
+      <if test="mfmRspMsg != null" >
+        MFM_RSP_MSG,
+      </if>
+      <if test="thdTxnCde != null" >
+        THD_TXN_CDE,
+      </if>
+      <if test="thdTxnDte != null" >
+        THD_TXN_DTE,
+      </if>
+      <if test="thdTxnTme != null" >
+        THD_TXN_TME,
+      </if>
+      <if test="thdSqn != null" >
+        THD_SQN,
+      </if>
+      <if test="thdTxnSts != null" >
+        THD_TXN_STS,
+      </if>
+      <if test="thdRspCde != null" >
+        THD_RSP_CDE,
+      </if>
+      <if test="thdRspMsg != null" >
+        THD_RSP_MSG,
+      </if>
+      <if test="rcnFlg != null" >
+        RCN_FLG,
+      </if>
+      <if test="mfmDytRcnFlg != null" >
+        MFM_DYT_RCN_FLG,
+      </if>
+      <if test="mfmEodRcnFlg != null" >
+        MFM_EOD_RCN_FLG,
+      </if>
+      <if test="mfmRcnBat != null" >
+        MFM_RCN_BAT,
+      </if>
+      <if test="mfmRcnTme != null" >
+        MFM_RCN_TME,
+      </if>
+      <if test="extRcnFlg != null" >
+        EXT_RCN_FLG,
+      </if>
+      <if test="thdRcnFlg != null" >
+        THD_RCN_FLG,
+      </if>
+      <if test="thdRcnTme != null" >
+        THD_RCN_TME,
+      </if>
+      <if test="thdRcnBat != null" >
+        THD_RCN_BAT,
+      </if>
+      <if test="isBatFlg != null" >
+        IS_BAT_FLG,
+      </if>
+      <if test="batNo != null" >
+        BAT_NO,
+      </if>
+      <if test="prtFlg != null" >
+        PRT_FLG,
+      </if>
+      <if test="prtCnt != null" >
+        PRT_CNT,
+      </if>
+      <if test="bakFld1 != null" >
+        BAK_FLD1,
+      </if>
+      <if test="bakFld2 != null" >
+        BAK_FLD2,
+      </if>
+      <if test="bakFld3 != null" >
+        BAK_FLD3,
+      </if>
+      <if test="bakFld4 != null" >
+        BAK_FLD4,
+      </if>
+      <if test="bakFld5 != null" >
+        BAK_FLD5,
+      </if>
+      <if test="bakFld6 != null" >
+        BAK_FLD6,
+      </if>
+      <if test="rsvFld1 != null" >
+        RSV_FLD1,
+      </if>
+      <if test="rsvFld2 != null" >
+        RSV_FLD2,
+      </if>
+      <if test="rsvFld3 != null" >
+        RSV_FLD3,
+      </if>
+      <if test="rsvFld4 != null" >
+        RSV_FLD4,
+      </if>
+      <if test="rsvFld5 != null" >
+        RSV_FLD5,
+      </if>
+      <if test="rsvFld6 != null" >
+        RSV_FLD6,
+      </if>
+      <if test="filFlg != null" >
+        FIL_FLG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sqn != null" >
+        #{sqn,jdbcType=CHAR},
+      </if>
+      <if test="txnDte != null" >
+        #{txnDte,jdbcType=DATE},
+      </if>
+      <if test="txnTme != null" >
+        #{txnTme,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bk != null" >
+        #{bk,jdbcType=CHAR},
+      </if>
+      <if test="busKnd != null" >
+        #{busKnd,jdbcType=CHAR},
+      </if>
+      <if test="eupsBusTyp != null" >
+        #{eupsBusTyp,jdbcType=CHAR},
+      </if>
+      <if test="rapTyp != null" >
+        #{rapTyp,jdbcType=CHAR},
+      </if>
+      <if test="txnTyp != null" >
+        #{txnTyp,jdbcType=CHAR},
+      </if>
+      <if test="pfeTyp != null" >
+        #{pfeTyp,jdbcType=CHAR},
+      </if>
+      <if test="itgTyp != null" >
+        #{itgTyp,jdbcType=CHAR},
+      </if>
+      <if test="txnSts != null" >
+        #{txnSts,jdbcType=CHAR},
+      </if>
+      <if test="qrySqn != null" >
+        #{qrySqn,jdbcType=CHAR},
+      </if>
+      <if test="traceNo != null" >
+        #{traceNo,jdbcType=CHAR},
+      </if>
+      <if test="reqSysCde != null" >
+        #{reqSysCde,jdbcType=CHAR},
+      </if>
+      <if test="reqJrnNo != null" >
+        #{reqJrnNo,jdbcType=CHAR},
+      </if>
+      <if test="reqTme != null" >
+        #{reqTme,jdbcType=TIMESTAMP},
+      </if>
+      <if test="br != null" >
+        #{br,jdbcType=CHAR},
+      </if>
+      <if test="orgCde != null" >
+        #{orgCde,jdbcType=CHAR},
+      </if>
+      <if test="tmlNo != null" >
+        #{tmlNo,jdbcType=CHAR},
+      </if>
+      <if test="txnTlr != null" >
+        #{txnTlr,jdbcType=CHAR},
+      </if>
+      <if test="chlTyp != null" >
+        #{chlTyp,jdbcType=CHAR},
+      </if>
+      <if test="athTlrNo != null" >
+        #{athTlrNo,jdbcType=CHAR},
+      </if>
+      <if test="chkTlr != null" >
+        #{chkTlr,jdbcType=CHAR},
+      </if>
+      <if test="reqVchNo != null" >
+        #{reqVchNo,jdbcType=CHAR},
+      </if>
+      <if test="txnCde != null" >
+        #{txnCde,jdbcType=CHAR},
+      </if>
+      <if test="svrNme != null" >
+        #{svrNme,jdbcType=CHAR},
+      </if>
+      <if test="comNo != null" >
+        #{comNo,jdbcType=CHAR},
+      </if>
+      <if test="rspCde != null" >
+        #{rspCde,jdbcType=CHAR},
+      </if>
+      <if test="rspMsg != null" >
+        #{rspMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="oldTxnSqn != null" >
+        #{oldTxnSqn,jdbcType=CHAR},
+      </if>
+      <if test="thdObkCde != null" >
+        #{thdObkCde,jdbcType=CHAR},
+      </if>
+      <if test="rvsTraceNo != null" >
+        #{rvsTraceNo,jdbcType=CHAR},
+      </if>
+      <if test="thdRgnNo != null" >
+        #{thdRgnNo,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNo != null" >
+        #{thdCusNo,jdbcType=CHAR},
+      </if>
+      <if test="thdSubCusNo != null" >
+        #{thdSubCusNo,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNme != null" >
+        #{thdCusNme,jdbcType=VARCHAR},
+      </if>
+      <if test="thdFeePrd != null" >
+        #{thdFeePrd,jdbcType=CHAR},
+      </if>
+      <if test="ourOthFlg != null" >
+        #{ourOthFlg,jdbcType=CHAR},
+      </if>
+      <if test="bkCdTyp != null" >
+        #{bkCdTyp,jdbcType=CHAR},
+      </if>
+      <if test="accTyp != null" >
+        #{accTyp,jdbcType=CHAR},
+      </if>
+      <if test="drwMde != null" >
+        #{drwMde,jdbcType=CHAR},
+      </if>
+      <if test="cusAc != null" >
+        #{cusAc,jdbcType=CHAR},
+      </if>
+      <if test="cusNme != null" >
+        #{cusNme,jdbcType=VARCHAR},
+      </if>
+      <if test="accSeq != null" >
+        #{accSeq,jdbcType=CHAR},
+      </if>
+      <if test="bvKnd != null" >
+        #{bvKnd,jdbcType=CHAR},
+      </if>
+      <if test="bvNo != null" >
+        #{bvNo,jdbcType=CHAR},
+      </if>
+      <if test="cshNo != null" >
+        #{cshNo,jdbcType=CHAR},
+      </if>
+      <if test="choNo != null" >
+        #{choNo,jdbcType=CHAR},
+      </if>
+      <if test="payChl != null" >
+        #{payChl,jdbcType=CHAR},
+      </if>
+      <if test="ccy != null" >
+        #{ccy,jdbcType=CHAR},
+      </if>
+      <if test="txnAmt != null" >
+        #{txnAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="reqTxnAmt != null" >
+        #{reqTxnAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="hfe != null" >
+        #{hfe,jdbcType=DECIMAL},
+      </if>
+      <if test="hfeItmSeq != null" >
+        #{hfeItmSeq,jdbcType=CHAR},
+      </if>
+      <if test="hfePstBr != null" >
+        #{hfePstBr,jdbcType=CHAR},
+      </if>
+      <if test="fulDedFlg != null" >
+        #{fulDedFlg,jdbcType=CHAR},
+      </if>
+      <if test="rmkCde != null" >
+        #{rmkCde,jdbcType=CHAR},
+      </if>
+      <if test="lisAcc != null" >
+        #{lisAcc,jdbcType=CHAR},
+      </if>
+      <if test="splNo != null" >
+        #{splNo,jdbcType=CHAR},
+      </if>
+      <if test="splTerNo != null" >
+        #{splTerNo,jdbcType=CHAR},
+      </if>
+      <if test="idTyp != null" >
+        #{idTyp,jdbcType=CHAR},
+      </if>
+      <if test="idNo != null" >
+        #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cmuTel != null" >
+        #{cmuTel,jdbcType=VARCHAR},
+      </if>
+      <if test="mfmTxnCde != null" >
+        #{mfmTxnCde,jdbcType=CHAR},
+      </if>
+      <if test="mfmTxnSubCde != null" >
+        #{mfmTxnSubCde,jdbcType=CHAR},
+      </if>
+      <if test="acDte != null" >
+        #{acDte,jdbcType=DATE},
+      </if>
+      <if test="mfmVchNo != null" >
+        #{mfmVchNo,jdbcType=CHAR},
+      </if>
+      <if test="mfmJrnNo != null" >
+        #{mfmJrnNo,jdbcType=CHAR},
+      </if>
+      <if test="mfmTxnSts != null" >
+        #{mfmTxnSts,jdbcType=CHAR},
+      </if>
+      <if test="mfmRspCde != null" >
+        #{mfmRspCde,jdbcType=CHAR},
+      </if>
+      <if test="mfmRspMsg != null" >
+        #{mfmRspMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="thdTxnCde != null" >
+        #{thdTxnCde,jdbcType=CHAR},
+      </if>
+      <if test="thdTxnDte != null" >
+        #{thdTxnDte,jdbcType=DATE},
+      </if>
+      <if test="thdTxnTme != null" >
+        #{thdTxnTme,jdbcType=TIMESTAMP},
+      </if>
+      <if test="thdSqn != null" >
+        #{thdSqn,jdbcType=CHAR},
+      </if>
+      <if test="thdTxnSts != null" >
+        #{thdTxnSts,jdbcType=CHAR},
+      </if>
+      <if test="thdRspCde != null" >
+        #{thdRspCde,jdbcType=CHAR},
+      </if>
+      <if test="thdRspMsg != null" >
+        #{thdRspMsg,jdbcType=CHAR},
+      </if>
+      <if test="rcnFlg != null" >
+        #{rcnFlg,jdbcType=CHAR},
+      </if>
+      <if test="mfmDytRcnFlg != null" >
+        #{mfmDytRcnFlg,jdbcType=CHAR},
+      </if>
+      <if test="mfmEodRcnFlg != null" >
+        #{mfmEodRcnFlg,jdbcType=CHAR},
+      </if>
+      <if test="mfmRcnBat != null" >
+        #{mfmRcnBat,jdbcType=CHAR},
+      </if>
+      <if test="mfmRcnTme != null" >
+        #{mfmRcnTme,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extRcnFlg != null" >
+        #{extRcnFlg,jdbcType=CHAR},
+      </if>
+      <if test="thdRcnFlg != null" >
+        #{thdRcnFlg,jdbcType=CHAR},
+      </if>
+      <if test="thdRcnTme != null" >
+        #{thdRcnTme,jdbcType=TIMESTAMP},
+      </if>
+      <if test="thdRcnBat != null" >
+        #{thdRcnBat,jdbcType=CHAR},
+      </if>
+      <if test="isBatFlg != null" >
+        #{isBatFlg,jdbcType=CHAR},
+      </if>
+      <if test="batNo != null" >
+        #{batNo,jdbcType=CHAR},
+      </if>
+      <if test="prtFlg != null" >
+        #{prtFlg,jdbcType=CHAR},
+      </if>
+      <if test="prtCnt != null" >
+        #{prtCnt,jdbcType=INTEGER},
+      </if>
+      <if test="bakFld1 != null" >
+        #{bakFld1,jdbcType=CHAR},
+      </if>
+      <if test="bakFld2 != null" >
+        #{bakFld2,jdbcType=CHAR},
+      </if>
+      <if test="bakFld3 != null" >
+        #{bakFld3,jdbcType=CHAR},
+      </if>
+      <if test="bakFld4 != null" >
+        #{bakFld4,jdbcType=CHAR},
+      </if>
+      <if test="bakFld5 != null" >
+        #{bakFld5,jdbcType=CHAR},
+      </if>
+      <if test="bakFld6 != null" >
+        #{bakFld6,jdbcType=CHAR},
+      </if>
+      <if test="rsvFld1 != null" >
+        #{rsvFld1,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld2 != null" >
+        #{rsvFld2,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld3 != null" >
+        #{rsvFld3,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld4 != null" >
+        #{rsvFld4,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld5 != null" >
+        #{rsvFld5,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld6 != null" >
+        #{rsvFld6,jdbcType=VARCHAR},
+      </if>
+      <if test="filFlg != null" >
+        #{filFlg,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="txnDte!=null" >
+        AND  TXN_DTE=#{txnDte,jdbcType=DATE}
+      </if>
+      <if test="txnTme!=null" >
+        AND  TXN_TME=#{txnTme,jdbcType=TIMESTAMP}
+      </if>
+      <if test="bk!=null" >
+        AND  BK=#{bk,jdbcType=CHAR}
+      </if>
+      <if test="busKnd!=null" >
+        AND  BUS_KND=#{busKnd,jdbcType=CHAR}
+      </if>
+      <if test="eupsBusTyp!=null" >
+        AND  EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
+      </if>
+      <if test="rapTyp!=null" >
+        AND  RAP_TYP=#{rapTyp,jdbcType=CHAR}
+      </if>
+      <if test="txnTyp!=null" >
+        AND  TXN_TYP=#{txnTyp,jdbcType=CHAR}
+      </if>
+      <if test="pfeTyp!=null" >
+        AND  PFE_TYP=#{pfeTyp,jdbcType=CHAR}
+      </if>
+      <if test="itgTyp!=null" >
+        AND  ITG_TYP=#{itgTyp,jdbcType=CHAR}
+      </if>
+      <if test="txnSts!=null" >
+        AND  TXN_STS=#{txnSts,jdbcType=CHAR}
+      </if>
+      <if test="qrySqn!=null" >
+        AND  QRY_SQN=#{qrySqn,jdbcType=CHAR}
+      </if>
+      <if test="traceNo!=null" >
+        AND  TRACE_NO=#{traceNo,jdbcType=CHAR}
+      </if>
+      <if test="reqSysCde!=null" >
+        AND  REQ_SYS_CDE=#{reqSysCde,jdbcType=CHAR}
+      </if>
+      <if test="reqJrnNo!=null" >
+        AND  REQ_JRN_NO=#{reqJrnNo,jdbcType=CHAR}
+      </if>
+      <if test="reqTme!=null" >
+        AND  REQ_TME=#{reqTme,jdbcType=TIMESTAMP}
+      </if>
+      <if test="br!=null" >
+        AND  BR=#{br,jdbcType=CHAR}
+      </if>
+      <if test="orgCde!=null" >
+        AND  ORG_CDE=#{orgCde,jdbcType=CHAR}
+      </if>
+      <if test="tmlNo!=null" >
+        AND  TML_NO=#{tmlNo,jdbcType=CHAR}
+      </if>
+      <if test="txnTlr!=null" >
+        AND  TXN_TLR=#{txnTlr,jdbcType=CHAR}
+      </if>
+      <if test="chlTyp!=null" >
+        AND  CHL_TYP=#{chlTyp,jdbcType=CHAR}
+      </if>
+      <if test="athTlrNo!=null" >
+        AND  ATH_TLR_NO=#{athTlrNo,jdbcType=CHAR}
+      </if>
+      <if test="chkTlr!=null" >
+        AND  CHK_TLR=#{chkTlr,jdbcType=CHAR}
+      </if>
+      <if test="reqVchNo!=null" >
+        AND  REQ_VCH_NO=#{reqVchNo,jdbcType=CHAR}
+      </if>
+      <if test="txnCde!=null" >
+        AND  TXN_CDE=#{txnCde,jdbcType=CHAR}
+      </if>
+      <if test="svrNme!=null" >
+        AND  SVR_NME=#{svrNme,jdbcType=CHAR}
+      </if>
+      <if test="comNo!=null" >
+        AND  COM_NO=#{comNo,jdbcType=CHAR}
+      </if>
+      <if test="rspCde!=null" >
+        AND  RSP_CDE=#{rspCde,jdbcType=CHAR}
+      </if>
+      <if test="rspMsg!=null" >
+        AND  RSP_MSG=#{rspMsg,jdbcType=VARCHAR}
+      </if>
+      <if test="oldTxnSqn!=null" >
+        AND  OLD_TXN_SQN=#{oldTxnSqn,jdbcType=CHAR}
+      </if>
+      <if test="thdObkCde!=null" >
+        AND  THD_OBK_CDE=#{thdObkCde,jdbcType=CHAR}
+      </if>
+      <if test="rvsTraceNo!=null" >
+        AND  RVS_TRACE_NO=#{rvsTraceNo,jdbcType=CHAR}
+      </if>
+      <if test="thdRgnNo!=null" >
+        AND  THD_RGN_NO=#{thdRgnNo,jdbcType=CHAR}
+      </if>
+      <if test="thdCusNo!=null" >
+        AND  THD_CUS_NO=#{thdCusNo,jdbcType=CHAR}
+      </if>
+      <if test="thdSubCusNo!=null" >
+        AND  THD_SUB_CUS_NO=#{thdSubCusNo,jdbcType=CHAR}
+      </if>
+      <if test="thdCusNme!=null" >
+        AND  THD_CUS_NME=#{thdCusNme,jdbcType=VARCHAR}
+      </if>
+      <if test="thdFeePrd!=null" >
+        AND  THD_FEE_PRD=#{thdFeePrd,jdbcType=CHAR}
+      </if>
+      <if test="ourOthFlg!=null" >
+        AND  OUR_OTH_FLG=#{ourOthFlg,jdbcType=CHAR}
+      </if>
+      <if test="bkCdTyp!=null" >
+        AND  BK_CD_TYP=#{bkCdTyp,jdbcType=CHAR}
+      </if>
+      <if test="accTyp!=null" >
+        AND  ACC_TYP=#{accTyp,jdbcType=CHAR}
+      </if>
+      <if test="drwMde!=null" >
+        AND  DRW_MDE=#{drwMde,jdbcType=CHAR}
+      </if>
+      <if test="cusAc!=null" >
+        AND  CUS_AC=#{cusAc,jdbcType=CHAR}
+      </if>
+      <if test="cusNme!=null" >
+        AND  CUS_NME=#{cusNme,jdbcType=VARCHAR}
+      </if>
+      <if test="accSeq!=null" >
+        AND  ACC_SEQ=#{accSeq,jdbcType=CHAR}
+      </if>
+      <if test="bvKnd!=null" >
+        AND  BV_KND=#{bvKnd,jdbcType=CHAR}
+      </if>
+      <if test="bvNo!=null" >
+        AND  BV_NO=#{bvNo,jdbcType=CHAR}
+      </if>
+      <if test="cshNo!=null" >
+        AND  CSH_NO=#{cshNo,jdbcType=CHAR}
+      </if>
+      <if test="choNo!=null" >
+        AND  CHO_NO=#{choNo,jdbcType=CHAR}
+      </if>
+      <if test="payChl!=null" >
+        AND  PAY_CHL=#{payChl,jdbcType=CHAR}
+      </if>
+      <if test="ccy!=null" >
+        AND  CCY=#{ccy,jdbcType=CHAR}
+      </if>
+      <if test="txnAmt!=null" >
+        AND  TXN_AMT=#{txnAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="reqTxnAmt!=null" >
+        AND  REQ_TXN_AMT=#{reqTxnAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="hfe!=null" >
+        AND  HFE=#{hfe,jdbcType=DECIMAL}
+      </if>
+      <if test="hfeItmSeq!=null" >
+        AND  HFE_ITM_SEQ=#{hfeItmSeq,jdbcType=CHAR}
+      </if>
+      <if test="hfePstBr!=null" >
+        AND  HFE_PST_BR=#{hfePstBr,jdbcType=CHAR}
+      </if>
+      <if test="fulDedFlg!=null" >
+        AND  FUL_DED_FLG=#{fulDedFlg,jdbcType=CHAR}
+      </if>
+      <if test="rmkCde!=null" >
+        AND  RMK_CDE=#{rmkCde,jdbcType=CHAR}
+      </if>
+      <if test="lisAcc!=null" >
+        AND  LIS_ACC=#{lisAcc,jdbcType=CHAR}
+      </if>
+      <if test="splNo!=null" >
+        AND  SPL_NO=#{splNo,jdbcType=CHAR}
+      </if>
+      <if test="splTerNo!=null" >
+        AND  SPL_TER_NO=#{splTerNo,jdbcType=CHAR}
+      </if>
+      <if test="idTyp!=null" >
+        AND  ID_TYP=#{idTyp,jdbcType=CHAR}
+      </if>
+      <if test="idNo!=null" >
+        AND  ID_NO=#{idNo,jdbcType=VARCHAR}
+      </if>
+      <if test="cmuTel!=null" >
+        AND  CMU_TEL=#{cmuTel,jdbcType=VARCHAR}
+      </if>
+      <if test="mfmTxnCde!=null" >
+        AND  MFM_TXN_CDE=#{mfmTxnCde,jdbcType=CHAR}
+      </if>
+      <if test="mfmTxnSubCde!=null" >
+        AND  MFM_TXN_SUB_CDE=#{mfmTxnSubCde,jdbcType=CHAR}
+      </if>
+      <if test="acDte!=null" >
+        AND  AC_DTE=#{acDte,jdbcType=DATE}
+      </if>
+      <if test="mfmVchNo!=null" >
+        AND  MFM_VCH_NO=#{mfmVchNo,jdbcType=CHAR}
+      </if>
+      <if test="mfmJrnNo!=null" >
+        AND  MFM_JRN_NO=#{mfmJrnNo,jdbcType=CHAR}
+      </if>
+      <if test="mfmTxnSts!=null" >
+        AND  MFM_TXN_STS=#{mfmTxnSts,jdbcType=CHAR}
+      </if>
+      <if test="mfmRspCde!=null" >
+        AND  MFM_RSP_CDE=#{mfmRspCde,jdbcType=CHAR}
+      </if>
+      <if test="mfmRspMsg!=null" >
+        AND  MFM_RSP_MSG=#{mfmRspMsg,jdbcType=VARCHAR}
+      </if>
+      <if test="thdTxnCde!=null" >
+        AND  THD_TXN_CDE=#{thdTxnCde,jdbcType=CHAR}
+      </if>
+      <if test="thdTxnDte!=null" >
+        AND  THD_TXN_DTE=#{thdTxnDte,jdbcType=DATE}
+      </if>
+      <if test="thdTxnTme!=null" >
+        AND  THD_TXN_TME=#{thdTxnTme,jdbcType=TIMESTAMP}
+      </if>
+      <if test="thdSqn!=null" >
+        AND  THD_SQN=#{thdSqn,jdbcType=CHAR}
+      </if>
+      <if test="thdTxnSts!=null" >
+        AND  THD_TXN_STS=#{thdTxnSts,jdbcType=CHAR}
+      </if>
+      <if test="thdRspCde!=null" >
+        AND  THD_RSP_CDE=#{thdRspCde,jdbcType=CHAR}
+      </if>
+      <if test="thdRspMsg!=null" >
+        AND  THD_RSP_MSG=#{thdRspMsg,jdbcType=CHAR}
+      </if>
+      <if test="rcnFlg!=null" >
+        AND  RCN_FLG=#{rcnFlg,jdbcType=CHAR}
+      </if>
+      <if test="mfmDytRcnFlg!=null" >
+        AND  MFM_DYT_RCN_FLG=#{mfmDytRcnFlg,jdbcType=CHAR}
+      </if>
+      <if test="mfmEodRcnFlg!=null" >
+        AND  MFM_EOD_RCN_FLG=#{mfmEodRcnFlg,jdbcType=CHAR}
+      </if>
+      <if test="mfmRcnBat!=null" >
+        AND  MFM_RCN_BAT=#{mfmRcnBat,jdbcType=CHAR}
+      </if>
+      <if test="mfmRcnTme!=null" >
+        AND  MFM_RCN_TME=#{mfmRcnTme,jdbcType=TIMESTAMP}
+      </if>
+      <if test="extRcnFlg!=null" >
+        AND  EXT_RCN_FLG=#{extRcnFlg,jdbcType=CHAR}
+      </if>
+      <if test="thdRcnFlg!=null" >
+        AND  THD_RCN_FLG=#{thdRcnFlg,jdbcType=CHAR}
+      </if>
+      <if test="thdRcnTme!=null" >
+        AND  THD_RCN_TME=#{thdRcnTme,jdbcType=TIMESTAMP}
+      </if>
+      <if test="thdRcnBat!=null" >
+        AND  THD_RCN_BAT=#{thdRcnBat,jdbcType=CHAR}
+      </if>
+      <if test="isBatFlg!=null" >
+        AND  IS_BAT_FLG=#{isBatFlg,jdbcType=CHAR}
+      </if>
+      <if test="batNo!=null" >
+        AND  BAT_NO=#{batNo,jdbcType=CHAR}
+      </if>
+      <if test="prtFlg!=null" >
+        AND  PRT_FLG=#{prtFlg,jdbcType=CHAR}
+      </if>
+      <if test="prtCnt!=null" >
+        AND  PRT_CNT=#{prtCnt,jdbcType=INTEGER}
+      </if>
+      <if test="bakFld1!=null" >
+        AND  BAK_FLD1=#{bakFld1,jdbcType=CHAR}
+      </if>
+      <if test="bakFld2!=null" >
+        AND  BAK_FLD2=#{bakFld2,jdbcType=CHAR}
+      </if>
+      <if test="bakFld3!=null" >
+        AND  BAK_FLD3=#{bakFld3,jdbcType=CHAR}
+      </if>
+      <if test="bakFld4!=null" >
+        AND  BAK_FLD4=#{bakFld4,jdbcType=CHAR}
+      </if>
+      <if test="bakFld5!=null" >
+        AND  BAK_FLD5=#{bakFld5,jdbcType=CHAR}
+      </if>
+      <if test="bakFld6!=null" >
+        AND  BAK_FLD6=#{bakFld6,jdbcType=CHAR}
+      </if>
+      <if test="rsvFld1!=null" >
+        AND  RSV_FLD1=#{rsvFld1,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld2!=null" >
+        AND  RSV_FLD2=#{rsvFld2,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld3!=null" >
+        AND  RSV_FLD3=#{rsvFld3,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld4!=null" >
+        AND  RSV_FLD4=#{rsvFld4,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld5!=null" >
+        AND  RSV_FLD5=#{rsvFld5,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld6!=null" >
+        AND  RSV_FLD6=#{rsvFld6,jdbcType=VARCHAR}
+      </if>
+      <if test="filFlg!=null" >
+        AND  FIL_FLG=#{filFlg,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.EupsStreamNo" >
+    update ${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL
+    <set >
+      <if test="txnDte != null" >
+        TXN_DTE = #{txnDte,jdbcType=DATE},
+      </if>
+      <if test="txnTme != null" >
+        TXN_TME = #{txnTme,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bk != null" >
+        BK = #{bk,jdbcType=CHAR},
+      </if>
+      <if test="busKnd != null" >
+        BUS_KND = #{busKnd,jdbcType=CHAR},
+      </if>
+      <if test="eupsBusTyp != null" >
+        EUPS_BUS_TYP = #{eupsBusTyp,jdbcType=CHAR},
+      </if>
+      <if test="rapTyp != null" >
+        RAP_TYP = #{rapTyp,jdbcType=CHAR},
+      </if>
+      <if test="txnTyp != null" >
+        TXN_TYP = #{txnTyp,jdbcType=CHAR},
+      </if>
+      <if test="pfeTyp != null" >
+        PFE_TYP = #{pfeTyp,jdbcType=CHAR},
+      </if>
+      <if test="itgTyp != null" >
+        ITG_TYP = #{itgTyp,jdbcType=CHAR},
+      </if>
+      <if test="txnSts != null" >
+        TXN_STS = #{txnSts,jdbcType=CHAR},
+      </if>
+      <if test="qrySqn != null" >
+        QRY_SQN = #{qrySqn,jdbcType=CHAR},
+      </if>
+      <if test="traceNo != null" >
+        TRACE_NO = #{traceNo,jdbcType=CHAR},
+      </if>
+      <if test="reqSysCde != null" >
+        REQ_SYS_CDE = #{reqSysCde,jdbcType=CHAR},
+      </if>
+      <if test="reqJrnNo != null" >
+        REQ_JRN_NO = #{reqJrnNo,jdbcType=CHAR},
+      </if>
+      <if test="reqTme != null" >
+        REQ_TME = #{reqTme,jdbcType=TIMESTAMP},
+      </if>
+      <if test="br != null" >
+        BR = #{br,jdbcType=CHAR},
+      </if>
+      <if test="orgCde != null" >
+        ORG_CDE = #{orgCde,jdbcType=CHAR},
+      </if>
+      <if test="tmlNo != null" >
+        TML_NO = #{tmlNo,jdbcType=CHAR},
+      </if>
+      <if test="txnTlr != null" >
+        TXN_TLR = #{txnTlr,jdbcType=CHAR},
+      </if>
+      <if test="chlTyp != null" >
+        CHL_TYP = #{chlTyp,jdbcType=CHAR},
+      </if>
+      <if test="athTlrNo != null" >
+        ATH_TLR_NO = #{athTlrNo,jdbcType=CHAR},
+      </if>
+      <if test="chkTlr != null" >
+        CHK_TLR = #{chkTlr,jdbcType=CHAR},
+      </if>
+      <if test="reqVchNo != null" >
+        REQ_VCH_NO = #{reqVchNo,jdbcType=CHAR},
+      </if>
+      <if test="txnCde != null" >
+        TXN_CDE = #{txnCde,jdbcType=CHAR},
+      </if>
+      <if test="svrNme != null" >
+        SVR_NME = #{svrNme,jdbcType=CHAR},
+      </if>
+      <if test="comNo != null" >
+        COM_NO = #{comNo,jdbcType=CHAR},
+      </if>
+      <if test="rspCde != null" >
+        RSP_CDE = #{rspCde,jdbcType=CHAR},
+      </if>
+      <if test="rspMsg != null" >
+        RSP_MSG = #{rspMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="oldTxnSqn != null" >
+        OLD_TXN_SQN = #{oldTxnSqn,jdbcType=CHAR},
+      </if>
+      <if test="thdObkCde != null" >
+        THD_OBK_CDE = #{thdObkCde,jdbcType=CHAR},
+      </if>
+      <if test="rvsTraceNo != null" >
+        RVS_TRACE_NO = #{rvsTraceNo,jdbcType=CHAR},
+      </if>
+      <if test="thdRgnNo != null" >
+        THD_RGN_NO = #{thdRgnNo,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNo != null" >
+        THD_CUS_NO = #{thdCusNo,jdbcType=CHAR},
+      </if>
+      <if test="thdSubCusNo != null" >
+        THD_SUB_CUS_NO = #{thdSubCusNo,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNme != null" >
+        THD_CUS_NME = #{thdCusNme,jdbcType=VARCHAR},
+      </if>
+      <if test="thdFeePrd != null" >
+        THD_FEE_PRD = #{thdFeePrd,jdbcType=CHAR},
+      </if>
+      <if test="ourOthFlg != null" >
+        OUR_OTH_FLG = #{ourOthFlg,jdbcType=CHAR},
+      </if>
+      <if test="bkCdTyp != null" >
+        BK_CD_TYP = #{bkCdTyp,jdbcType=CHAR},
+      </if>
+      <if test="accTyp != null" >
+        ACC_TYP = #{accTyp,jdbcType=CHAR},
+      </if>
+      <if test="drwMde != null" >
+        DRW_MDE = #{drwMde,jdbcType=CHAR},
+      </if>
+      <if test="cusAc != null" >
+        CUS_AC = #{cusAc,jdbcType=CHAR},
+      </if>
+      <if test="cusNme != null" >
+        CUS_NME = #{cusNme,jdbcType=VARCHAR},
+      </if>
+      <if test="accSeq != null" >
+        ACC_SEQ = #{accSeq,jdbcType=CHAR},
+      </if>
+      <if test="bvKnd != null" >
+        BV_KND = #{bvKnd,jdbcType=CHAR},
+      </if>
+      <if test="bvNo != null" >
+        BV_NO = #{bvNo,jdbcType=CHAR},
+      </if>
+      <if test="cshNo != null" >
+        CSH_NO = #{cshNo,jdbcType=CHAR},
+      </if>
+      <if test="choNo != null" >
+        CHO_NO = #{choNo,jdbcType=CHAR},
+      </if>
+      <if test="payChl != null" >
+        PAY_CHL = #{payChl,jdbcType=CHAR},
+      </if>
+      <if test="ccy != null" >
+        CCY = #{ccy,jdbcType=CHAR},
+      </if>
+      <if test="txnAmt != null" >
+        TXN_AMT = #{txnAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="reqTxnAmt != null" >
+        REQ_TXN_AMT = #{reqTxnAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="hfe != null" >
+        HFE = #{hfe,jdbcType=DECIMAL},
+      </if>
+      <if test="hfeItmSeq != null" >
+        HFE_ITM_SEQ = #{hfeItmSeq,jdbcType=CHAR},
+      </if>
+      <if test="hfePstBr != null" >
+        HFE_PST_BR = #{hfePstBr,jdbcType=CHAR},
+      </if>
+      <if test="fulDedFlg != null" >
+        FUL_DED_FLG = #{fulDedFlg,jdbcType=CHAR},
+      </if>
+      <if test="rmkCde != null" >
+        RMK_CDE = #{rmkCde,jdbcType=CHAR},
+      </if>
+      <if test="lisAcc != null" >
+        LIS_ACC = #{lisAcc,jdbcType=CHAR},
+      </if>
+      <if test="splNo != null" >
+        SPL_NO = #{splNo,jdbcType=CHAR},
+      </if>
+      <if test="splTerNo != null" >
+        SPL_TER_NO = #{splTerNo,jdbcType=CHAR},
+      </if>
+      <if test="idTyp != null" >
+        ID_TYP = #{idTyp,jdbcType=CHAR},
+      </if>
+      <if test="idNo != null" >
+        ID_NO = #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cmuTel != null" >
+        CMU_TEL = #{cmuTel,jdbcType=VARCHAR},
+      </if>
+      <if test="mfmTxnCde != null" >
+        MFM_TXN_CDE = #{mfmTxnCde,jdbcType=CHAR},
+      </if>
+      <if test="mfmTxnSubCde != null" >
+        MFM_TXN_SUB_CDE = #{mfmTxnSubCde,jdbcType=CHAR},
+      </if>
+      <if test="acDte != null" >
+        AC_DTE = #{acDte,jdbcType=DATE},
+      </if>
+      <if test="mfmVchNo != null" >
+        MFM_VCH_NO = #{mfmVchNo,jdbcType=CHAR},
+      </if>
+      <if test="mfmJrnNo != null" >
+        MFM_JRN_NO = #{mfmJrnNo,jdbcType=CHAR},
+      </if>
+      <if test="mfmTxnSts != null" >
+        MFM_TXN_STS = #{mfmTxnSts,jdbcType=CHAR},
+      </if>
+      <if test="mfmRspCde != null" >
+        MFM_RSP_CDE = #{mfmRspCde,jdbcType=CHAR},
+      </if>
+      <if test="mfmRspMsg != null" >
+        MFM_RSP_MSG = #{mfmRspMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="thdTxnCde != null" >
+        THD_TXN_CDE = #{thdTxnCde,jdbcType=CHAR},
+      </if>
+      <if test="thdTxnDte != null" >
+        THD_TXN_DTE = #{thdTxnDte,jdbcType=DATE},
+      </if>
+      <if test="thdTxnTme != null" >
+        THD_TXN_TME = #{thdTxnTme,jdbcType=TIMESTAMP},
+      </if>
+      <if test="thdSqn != null" >
+        THD_SQN = #{thdSqn,jdbcType=CHAR},
+      </if>
+      <if test="thdTxnSts != null" >
+        THD_TXN_STS = #{thdTxnSts,jdbcType=CHAR},
+      </if>
+      <if test="thdRspCde != null" >
+        THD_RSP_CDE = #{thdRspCde,jdbcType=CHAR},
+      </if>
+      <if test="thdRspMsg != null" >
+        THD_RSP_MSG = #{thdRspMsg,jdbcType=CHAR},
+      </if>
+      <if test="rcnFlg != null" >
+        RCN_FLG = #{rcnFlg,jdbcType=CHAR},
+      </if>
+      <if test="mfmDytRcnFlg != null" >
+        MFM_DYT_RCN_FLG = #{mfmDytRcnFlg,jdbcType=CHAR},
+      </if>
+      <if test="mfmEodRcnFlg != null" >
+        MFM_EOD_RCN_FLG = #{mfmEodRcnFlg,jdbcType=CHAR},
+      </if>
+      <if test="mfmRcnBat != null" >
+        MFM_RCN_BAT = #{mfmRcnBat,jdbcType=CHAR},
+      </if>
+      <if test="mfmRcnTme != null" >
+        MFM_RCN_TME = #{mfmRcnTme,jdbcType=TIMESTAMP},
+      </if>
+      <if test="extRcnFlg != null" >
+        EXT_RCN_FLG = #{extRcnFlg,jdbcType=CHAR},
+      </if>
+      <if test="thdRcnFlg != null" >
+        THD_RCN_FLG = #{thdRcnFlg,jdbcType=CHAR},
+      </if>
+      <if test="thdRcnTme != null" >
+        THD_RCN_TME = #{thdRcnTme,jdbcType=TIMESTAMP},
+      </if>
+      <if test="thdRcnBat != null" >
+        THD_RCN_BAT = #{thdRcnBat,jdbcType=CHAR},
+      </if>
+      <if test="isBatFlg != null" >
+        IS_BAT_FLG = #{isBatFlg,jdbcType=CHAR},
+      </if>
+      <if test="batNo != null" >
+        BAT_NO = #{batNo,jdbcType=CHAR},
+      </if>
+      <if test="prtFlg != null" >
+        PRT_FLG = #{prtFlg,jdbcType=CHAR},
+      </if>
+      <if test="prtCnt != null" >
+        PRT_CNT = #{prtCnt,jdbcType=INTEGER},
+      </if>
+      <if test="bakFld1 != null" >
+        BAK_FLD1 = #{bakFld1,jdbcType=CHAR},
+      </if>
+      <if test="bakFld2 != null" >
+        BAK_FLD2 = #{bakFld2,jdbcType=CHAR},
+      </if>
+      <if test="bakFld3 != null" >
+        BAK_FLD3 = #{bakFld3,jdbcType=CHAR},
+      </if>
+      <if test="bakFld4 != null" >
+        BAK_FLD4 = #{bakFld4,jdbcType=CHAR},
+      </if>
+      <if test="bakFld5 != null" >
+        BAK_FLD5 = #{bakFld5,jdbcType=CHAR},
+      </if>
+      <if test="bakFld6 != null" >
+        BAK_FLD6 = #{bakFld6,jdbcType=CHAR},
+      </if>
+      <if test="rsvFld1 != null" >
+        RSV_FLD1 = #{rsvFld1,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld2 != null" >
+        RSV_FLD2 = #{rsvFld2,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld3 != null" >
+        RSV_FLD3 = #{rsvFld3,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld4 != null" >
+        RSV_FLD4 = #{rsvFld4,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld5 != null" >
+        RSV_FLD5 = #{rsvFld5,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld6 != null" >
+        RSV_FLD6 = #{rsvFld6,jdbcType=VARCHAR},
+      </if>
+      <if test="filFlg != null" >
+        FIL_FLG = #{filFlg,jdbcType=CHAR},
+      </if>
+    </set>
+    where SQN = #{sqn,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL
+    <if test="_parameter" >
+      where SQN in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
+  
+  <!-- 南方电网  查询客户缴费记录 -->
+		 <select id="findList" resultMap="basicResultMap" parameterType="com.bocom.bbip.gdeupsb.entity.EupsStreamNoList">
+			select
+			<include refid="baseColumnList" />
+				from ${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL
+					where THD_CUS_NO=#{payNo,jdbcType=CHAR}
+					AND EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
+					AND (
+							TXN_DTE between #{startDate,jdbcType=CHAR} AND #{endDate,jdbcType=CHAR}
+					)
+		</select>
+
+  <!-- 南方电网   -->
+		 <select id="findLogService" resultMap="basicResultMap" >
+			select
+			<include refid="baseColumnList" />
+				from ${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL
+					where EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
+					AND   COM_NO=#{comNo,jdbcType=CHAR}
+					AND   TXN_STS !='S'
+		</select>	
+</mapper>

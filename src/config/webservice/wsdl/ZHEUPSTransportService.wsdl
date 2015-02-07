@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService" xmlns:gdeupsb="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/Schema" name="ZHEUPSTransportService" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService">
+      <xsd:import namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/Schema" schemaLocation="ZHEUPSTransportService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="trspFeeMonQryRequestMessage">
+    <wsdl:part name="trspFeeMonQryRequest" element="gdeupsb:trspFeeMonQry"/>
+  </wsdl:message>
+  <wsdl:message name="trspFeeMonQryResponseMessage">
+    <wsdl:part name="trspFeeMonQryResponse" element="gdeupsb:trspFeeMonQryResponse"/>
+  </wsdl:message>
+  <wsdl:message name="trspPrintNPRequestMessage">
+    <wsdl:part name="trspPrintNPRequest" element="gdeupsb:trspPrintNP"/>
+  </wsdl:message>
+  <wsdl:message name="trspPrintNPResponseMessage">
+    <wsdl:part name="trspPrintNPResponse" element="gdeupsb:trspPrintNPResponse"/>
+  </wsdl:message>
+  <wsdl:message name="trspFeeInfoQryRequestMessage">
+    <wsdl:part name="trspFeeInfoQryRequest" element="gdeupsb:trspFeeInfoQry"/>
+  </wsdl:message>
+  <wsdl:message name="trspFeeInfoQryResponseMessage">
+    <wsdl:part name="trspFeeInfoQryResponse" element="gdeupsb:trspFeeInfoQryResponse"/>
+  </wsdl:message>
+  <wsdl:message name="transportFeeQueryRequestMessage">
+    <wsdl:part name="transportFeeQueryRequest" element="gdeupsb:transportFeeQuery"/>
+  </wsdl:message>
+  <wsdl:message name="transportFeeQueryResponseMessage">
+    <wsdl:part name="transportFeeQueryResponse" element="gdeupsb:transportFeeQueryResponse"/>
+  </wsdl:message>
+  <wsdl:message name="trspAddPrintInvoicRequestMessage">
+    <wsdl:part name="trspAddPrintInvoicRequest" element="gdeupsb:trspAddPrintInvoic"/>
+  </wsdl:message>
+  <wsdl:message name="trspAddPrintInvoicResponseMessage">
+    <wsdl:part name="trspAddPrintInvoicResponse" element="gdeupsb:trspAddPrintInvoicResponse"/>
+  </wsdl:message>
+  <wsdl:message name="trspPrintInvRequestMessage">
+    <wsdl:part name="trspPrintInvRequest" element="gdeupsb:trspPrintInv"/>
+  </wsdl:message>
+  <wsdl:message name="trspPrintInvResponseMessage">
+    <wsdl:part name="trspPrintInvResponse" element="gdeupsb:trspPrintInvResponse"/>
+  </wsdl:message>
+  <wsdl:message name="transportPayCancelRequestMessage">
+    <wsdl:part name="transportPayCancelRequest" element="gdeupsb:transportPayCancel"/>
+  </wsdl:message>
+  <wsdl:message name="transportPayCancelResponseMessage">
+    <wsdl:part name="transportPayCancelResponse" element="gdeupsb:transportPayCancelResponse"/>
+  </wsdl:message>
+  <wsdl:message name="trspPreInvoicQryRequestMessage">
+    <wsdl:part name="trspPreInvoicQryRequest" element="gdeupsb:trspPreInvoicQry"/>
+  </wsdl:message>
+  <wsdl:message name="trspPreInvoicQryResponseMessage">
+    <wsdl:part name="trspPreInvoicQryResponse" element="gdeupsb:trspPreInvoicQryResponse"/>
+  </wsdl:message>
+  <wsdl:message name="npzzRequestMessage">
+    <wsdl:part name="npzzRequest" element="gdeupsb:npzz"/>
+  </wsdl:message>
+  <wsdl:message name="npzzResponseMessage">
+    <wsdl:part name="npzzResponse" element="gdeupsb:npzzResponse"/>
+  </wsdl:message>
+  <wsdl:message name="trspInvoiceCancelRequestMessage">
+    <wsdl:part name="trspInvoiceCancelRequest" element="gdeupsb:trspInvoiceCancel"/>
+  </wsdl:message>
+  <wsdl:message name="trspInvoiceCancelResponseMessage">
+    <wsdl:part name="trspInvoiceCancelResponse" element="gdeupsb:trspInvoiceCancelResponse"/>
+  </wsdl:message>
+  <wsdl:message name="hsscCheckFileRequestMessage">
+    <wsdl:part name="hsscCheckFileRequest" element="gdeupsb:hsscCheckFile"/>
+  </wsdl:message>
+  <wsdl:message name="hsscCheckFileResponseMessage">
+    <wsdl:part name="hsscCheckFileResponse" element="gdeupsb:hsscCheckFileResponse"/>
+  </wsdl:message>
+  <wsdl:message name="transportFeeChargeRequestMessage">
+    <wsdl:part name="transportFeeChargeRequest" element="gdeupsb:transportFeeCharge"/>
+  </wsdl:message>
+  <wsdl:message name="transportFeeChargeResponseMessage">
+    <wsdl:part name="transportFeeChargeResponse" element="gdeupsb:transportFeeChargeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="trspBillCancelRequestMessage">
+    <wsdl:part name="trspBillCancelRequest" element="gdeupsb:trspBillCancel"/>
+  </wsdl:message>
+  <wsdl:message name="trspBillCancelResponseMessage">
+    <wsdl:part name="trspBillCancelResponse" element="gdeupsb:trspBillCancelResponse"/>
+  </wsdl:message>
+  <wsdl:message name="trspNpDeletRequestMessage">
+    <wsdl:part name="trspNpDeletRequest" element="gdeupsb:trspNpDelet"/>
+  </wsdl:message>
+  <wsdl:message name="trspNpDeletResponseMessage">
+    <wsdl:part name="trspNpDeletResponse" element="gdeupsb:trspNpDeletResponse"/>
+  </wsdl:message>
+  <wsdl:message name="trspNpQryRequestMessage">
+    <wsdl:part name="trspNpQryRequest" element="gdeupsb:trspNpQry"/>
+  </wsdl:message>
+  <wsdl:message name="trspNpQryResponseMessage">
+    <wsdl:part name="trspNpQryResponse" element="gdeupsb:trspNpQryResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="ZHEUPSTransportServicePortType">
+    <wsdl:operation name="trspFeeMonQry">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:trspFeeMonQryRequestMessage"/>
+      <wsdl:output message="tns:trspFeeMonQryResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="trspPrintNP">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:trspPrintNPRequestMessage"/>
+      <wsdl:output message="tns:trspPrintNPResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="trspFeeInfoQry">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:trspFeeInfoQryRequestMessage"/>
+      <wsdl:output message="tns:trspFeeInfoQryResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="transportFeeQuery">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:transportFeeQueryRequestMessage"/>
+      <wsdl:output message="tns:transportFeeQueryResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="trspAddPrintInvoic">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:trspAddPrintInvoicRequestMessage"/>
+      <wsdl:output message="tns:trspAddPrintInvoicResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="trspPrintInv">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:trspPrintInvRequestMessage"/>
+      <wsdl:output message="tns:trspPrintInvResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="transportPayCancel">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:transportPayCancelRequestMessage"/>
+      <wsdl:output message="tns:transportPayCancelResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="trspPreInvoicQry">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:trspPreInvoicQryRequestMessage"/>
+      <wsdl:output message="tns:trspPreInvoicQryResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="npzz">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:npzzRequestMessage"/>
+      <wsdl:output message="tns:npzzResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="trspInvoiceCancel">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:trspInvoiceCancelRequestMessage"/>
+      <wsdl:output message="tns:trspInvoiceCancelResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="hsscCheckFile">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:hsscCheckFileRequestMessage"/>
+      <wsdl:output message="tns:hsscCheckFileResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="transportFeeCharge">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:transportFeeChargeRequestMessage"/>
+      <wsdl:output message="tns:transportFeeChargeResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="trspBillCancel">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:trspBillCancelRequestMessage"/>
+      <wsdl:output message="tns:trspBillCancelResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="trspNpDelet">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:trspNpDeletRequestMessage"/>
+      <wsdl:output message="tns:trspNpDeletResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="trspNpQry">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:trspNpQryRequestMessage"/>
+      <wsdl:output message="tns:trspNpQryResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ZHEUPSTransportServiceSoapBinding" type="tns:ZHEUPSTransportServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="trspFeeMonQry">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/trspFeeMonQry"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="trspPrintNP">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/trspPrintNP"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="trspFeeInfoQry">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/trspFeeInfoQry"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="transportFeeQuery">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/transportFeeQuery"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="trspAddPrintInvoic">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/trspAddPrintInvoic"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="trspPrintInv">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/trspPrintInv"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="transportPayCancel">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/transportPayCancel"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="trspPreInvoicQry">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/trspPreInvoicQry"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="npzz">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/npzz"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="trspInvoiceCancel">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/trspInvoiceCancel"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="hsscCheckFile">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/hsscCheckFile"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="transportFeeCharge">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/transportFeeCharge"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="trspBillCancel">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/trspBillCancel"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="trspNpDelet">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/trspNpDelet"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="trspNpQry">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/trspNpQry"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ZHEUPSTransportService">
+    <wsdl:port name="ZHEUPSTransportServicePort" binding="tns:ZHEUPSTransportServiceSoapBinding">
+      <soap:address location="http://127.0.0.1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

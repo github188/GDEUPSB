@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet spacket.xsd"
+	encoding="GBK" trace="true">
+	<segment name="detail" encoding="GBK">
+<!-- 	
+数据结构:
+字符串格式报文，由一些指定长度的字符串（字符串没有达到指定长度的在右边以空格补足）组合而成中间以半角的逗号“,”为分割符，
+报文前10字符为报文指令，确定报文进行的业务类型
+ -->
+		
+<!-- 		
+1	指令	10	SMPCPAY
+12	燃气托收流水号	18	年月日（8位）+银行标志（4位）+6位流水号 示例：20130927CNJT000001
+31	银行标志	4	CNJT
+36	用户编码	12	
+49	银行帐号	32	
+82	费用年月	6	YYYYMM  示例：201309
+89	应缴费用	10	示例：123.23
+-->
+	<fixString name="tCommd" length="10"/>
+	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	
+	<fixString name="thdsqn" length="18"    />
+	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	
+	<fixString name="bk" length="4"   />
+	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	
+	<fixString name="cusNo" length="12"   /> 
+	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	
+	<fixString name="cusAc" length="32"   />
+	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	
+	<fixString name="bakFld3" length="6"   />
+	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	
+	<fixString name="reqTxnAmt" length="10"   />
+	<!-- <fixString  name="DeliA" length="1"  /> -->
+		
+		
+		
+	</segment>
+</message>

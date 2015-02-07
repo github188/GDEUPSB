@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdsAgtTrc" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdsAgtTrc" >
+    <result column="OPR_TIM" property="oprTim" jdbcType="CHAR" />
+    <result column="ACT_DAT" property="actDat" jdbcType="CHAR" />
+    <result column="TXN_CNL" property="txnCnl" jdbcType="CHAR" />
+    <result column="TLR_ID" property="tlrId" jdbcType="CHAR" />
+    <result column="SUP1_ID" property="sup1Id" jdbcType="CHAR" />
+    <result column="SUP2_ID" property="sup2Id" jdbcType="CHAR" />
+    <result column="ACT_NO" property="actNo" jdbcType="CHAR" />
+    <result column="NOD_NO" property="nodNo" jdbcType="CHAR" />
+    <result column="BRNO" property="brno" jdbcType="CHAR" />
+    <result column="TTXN_CD" property="ttxnCd" jdbcType="CHAR" />
+    <result column="TXN_COD" property="txnCod" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="resultMapWithBLOBs" type="com.bocom.bbip.gdeupsb.entity.GdsAgtTrc" extends="basicResultMap" >
+    <result column="PRV_DAT" property="prvDat" jdbcType="CLOB" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    OPR_TIM, ACT_DAT, TXN_CNL, TLR_ID, SUP1_ID, SUP2_ID, ACT_NO, NOD_NO, BRNO, TTXN_CD, 
+    TXN_COD
+  </sql>
+  <sql id="blobColumnList" >
+    PRV_DAT
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDS_AGT_TRC
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="oprTim!=null" >
+        AND  OPR_TIM=#{oprTim,jdbcType=CHAR}
+      </if>
+      <if test="actDat!=null" >
+        AND  ACT_DAT=#{actDat,jdbcType=CHAR}
+      </if>
+      <if test="txnCnl!=null" >
+        AND  TXN_CNL=#{txnCnl,jdbcType=CHAR}
+      </if>
+      <if test="tlrId!=null" >
+        AND  TLR_ID=#{tlrId,jdbcType=CHAR}
+      </if>
+      <if test="sup1Id!=null" >
+        AND  SUP1_ID=#{sup1Id,jdbcType=CHAR}
+      </if>
+      <if test="sup2Id!=null" >
+        AND  SUP2_ID=#{sup2Id,jdbcType=CHAR}
+      </if>
+      <if test="actNo!=null" >
+        AND  ACT_NO=#{actNo,jdbcType=CHAR}
+      </if>
+      <if test="nodNo!=null" >
+        AND  NOD_NO=#{nodNo,jdbcType=CHAR}
+      </if>
+      <if test="brno!=null" >
+        AND  BRNO=#{brno,jdbcType=CHAR}
+      </if>
+      <if test="ttxnCd!=null" >
+        AND  TTXN_CD=#{ttxnCd,jdbcType=CHAR}
+      </if>
+      <if test="txnCod!=null" >
+        AND  TXN_COD=#{txnCod,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdsAgtTrc" >
+    insert into ${GDEUPSB_SCHEMA}.GDS_AGT_TRC
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oprTim != null" >
+        OPR_TIM,
+      </if>
+      <if test="actDat != null" >
+        ACT_DAT,
+      </if>
+      <if test="txnCnl != null" >
+        TXN_CNL,
+      </if>
+      <if test="tlrId != null" >
+        TLR_ID,
+      </if>
+      <if test="sup1Id != null" >
+        SUP1_ID,
+      </if>
+      <if test="sup2Id != null" >
+        SUP2_ID,
+      </if>
+      <if test="actNo != null" >
+        ACT_NO,
+      </if>
+      <if test="nodNo != null" >
+        NOD_NO,
+      </if>
+      <if test="brno != null" >
+        BRNO,
+      </if>
+      <if test="ttxnCd != null" >
+        TTXN_CD,
+      </if>
+      <if test="txnCod != null" >
+        TXN_COD,
+      </if>
+      <if test="prvDat != null" >
+        PRV_DAT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oprTim != null" >
+        #{oprTim,jdbcType=CHAR},
+      </if>
+      <if test="actDat != null" >
+        #{actDat,jdbcType=CHAR},
+      </if>
+      <if test="txnCnl != null" >
+        #{txnCnl,jdbcType=CHAR},
+      </if>
+      <if test="tlrId != null" >
+        #{tlrId,jdbcType=CHAR},
+      </if>
+      <if test="sup1Id != null" >
+        #{sup1Id,jdbcType=CHAR},
+      </if>
+      <if test="sup2Id != null" >
+        #{sup2Id,jdbcType=CHAR},
+      </if>
+      <if test="actNo != null" >
+        #{actNo,jdbcType=CHAR},
+      </if>
+      <if test="nodNo != null" >
+        #{nodNo,jdbcType=CHAR},
+      </if>
+      <if test="brno != null" >
+        #{brno,jdbcType=CHAR},
+      </if>
+      <if test="ttxnCd != null" >
+        #{ttxnCd,jdbcType=CHAR},
+      </if>
+      <if test="txnCod != null" >
+        #{txnCod,jdbcType=CHAR},
+      </if>
+      <if test="prvDat != null" >
+        #{prvDat,jdbcType=CLOB},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSB_SCHEMA}.GDS_AGT_TRC
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="oprTim!=null" >
+        AND  OPR_TIM=#{oprTim,jdbcType=CHAR}
+      </if>
+      <if test="actDat!=null" >
+        AND  ACT_DAT=#{actDat,jdbcType=CHAR}
+      </if>
+      <if test="txnCnl!=null" >
+        AND  TXN_CNL=#{txnCnl,jdbcType=CHAR}
+      </if>
+      <if test="tlrId!=null" >
+        AND  TLR_ID=#{tlrId,jdbcType=CHAR}
+      </if>
+      <if test="sup1Id!=null" >
+        AND  SUP1_ID=#{sup1Id,jdbcType=CHAR}
+      </if>
+      <if test="sup2Id!=null" >
+        AND  SUP2_ID=#{sup2Id,jdbcType=CHAR}
+      </if>
+      <if test="actNo!=null" >
+        AND  ACT_NO=#{actNo,jdbcType=CHAR}
+      </if>
+      <if test="nodNo!=null" >
+        AND  NOD_NO=#{nodNo,jdbcType=CHAR}
+      </if>
+      <if test="brno!=null" >
+        AND  BRNO=#{brno,jdbcType=CHAR}
+      </if>
+      <if test="ttxnCd!=null" >
+        AND  TTXN_CD=#{ttxnCd,jdbcType=CHAR}
+      </if>
+      <if test="txnCod!=null" >
+        AND  TXN_COD=#{txnCod,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDS_AGT_TRC
+  </select>
+</mapper>

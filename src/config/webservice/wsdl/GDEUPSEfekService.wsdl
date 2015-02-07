@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService" xmlns:gdeupsb="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/Schema" name="GDEUPSEfekService" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService">
+      <xsd:import namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/Schema" schemaLocation="GDEUPSEfekService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="insertCusAgentRequestMessage">
+    <wsdl:part name="insertCusAgentRequest" element="gdeupsb:insertCusAgent"/>
+  </wsdl:message>
+  <wsdl:message name="insertCusAgentResponseMessage">
+    <wsdl:part name="insertCusAgentResponse" element="gdeupsb:insertCusAgentResponse"/>
+  </wsdl:message>
+  <wsdl:message name="checkFileDetailRequestMessage">
+    <wsdl:part name="checkFileDetailRequest" element="gdeupsb:checkFileDetail"/>
+  </wsdl:message>
+  <wsdl:message name="checkFileDetailResponseMessage">
+    <wsdl:part name="checkFileDetailResponse" element="gdeupsb:checkFileDetailResponse"/>
+  </wsdl:message>
+  <wsdl:message name="qryCusMsgRequestMessage">
+    <wsdl:part name="qryCusMsgRequest" element="gdeupsb:qryCusMsg"/>
+  </wsdl:message>
+  <wsdl:message name="qryCusMsgResponseMessage">
+    <wsdl:part name="qryCusMsgResponse" element="gdeupsb:qryCusMsgResponse"/>
+  </wsdl:message>
+  <wsdl:message name="qryCusBaseMsgRequestMessage">
+    <wsdl:part name="qryCusBaseMsgRequest" element="gdeupsb:qryCusBaseMsg"/>
+  </wsdl:message>
+  <wsdl:message name="qryCusBaseMsgResponseMessage">
+    <wsdl:part name="qryCusBaseMsgResponse" element="gdeupsb:qryCusBaseMsgResponse"/>
+  </wsdl:message>
+  <wsdl:message name="qryCusPayRecordRequestMessage">
+    <wsdl:part name="qryCusPayRecordRequest" element="gdeupsb:qryCusPayRecord"/>
+  </wsdl:message>
+  <wsdl:message name="qryCusPayRecordResponseMessage">
+    <wsdl:part name="qryCusPayRecordResponse" element="gdeupsb:qryCusPayRecordResponse"/>
+  </wsdl:message>
+  <wsdl:message name="tallyCancelOnlineRequestMessage">
+    <wsdl:part name="tallyCancelOnlineRequest" element="gdeupsb:tallyCancelOnline"/>
+  </wsdl:message>
+  <wsdl:message name="tallyCancelOnlineResponseMessage">
+    <wsdl:part name="tallyCancelOnlineResponse" element="gdeupsb:tallyCancelOnlineResponse"/>
+  </wsdl:message>
+  <wsdl:message name="advanceTradeRequestMessage">
+    <wsdl:part name="advanceTradeRequest" element="gdeupsb:advanceTrade"/>
+  </wsdl:message>
+  <wsdl:message name="advanceTradeResponseMessage">
+    <wsdl:part name="advanceTradeResponse" element="gdeupsb:advanceTradeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="deleteCusAgentRequestMessage">
+    <wsdl:part name="deleteCusAgentRequest" element="gdeupsb:deleteCusAgent"/>
+  </wsdl:message>
+  <wsdl:message name="deleteCusAgentResponseMessage">
+    <wsdl:part name="deleteCusAgentResponse" element="gdeupsb:deleteCusAgentResponse"/>
+  </wsdl:message>
+  <wsdl:message name="checkFileSumAcctRequestMessage">
+    <wsdl:part name="checkFileSumAcctRequest" element="gdeupsb:checkFileSumAcct"/>
+  </wsdl:message>
+  <wsdl:message name="checkFileSumAcctResponseMessage">
+    <wsdl:part name="checkFileSumAcctResponse" element="gdeupsb:checkFileSumAcctResponse"/>
+  </wsdl:message>
+  <wsdl:message name="tallyOneOnlineRequestMessage">
+    <wsdl:part name="tallyOneOnlineRequest" element="gdeupsb:tallyOneOnline"/>
+  </wsdl:message>
+  <wsdl:message name="tallyOneOnlineResponseMessage">
+    <wsdl:part name="tallyOneOnlineResponse" element="gdeupsb:tallyOneOnlineResponse"/>
+  </wsdl:message>
+  <wsdl:message name="logServiceRequestMessage">
+    <wsdl:part name="logServiceRequest" element="gdeupsb:logService"/>
+  </wsdl:message>
+  <wsdl:message name="logServiceResponseMessage">
+    <wsdl:part name="logServiceResponse" element="gdeupsb:logServiceResponse"/>
+  </wsdl:message>
+  <wsdl:message name="tallyCancelQryOnlineRequestMessage">
+    <wsdl:part name="tallyCancelQryOnlineRequest" element="gdeupsb:tallyCancelQryOnline"/>
+  </wsdl:message>
+  <wsdl:message name="tallyCancelQryOnlineResponseMessage">
+    <wsdl:part name="tallyCancelQryOnlineResponse" element="gdeupsb:tallyCancelQryOnlineResponse"/>
+  </wsdl:message>
+  <wsdl:message name="updateCusAgentRequestMessage">
+    <wsdl:part name="updateCusAgentRequest" element="gdeupsb:updateCusAgent"/>
+  </wsdl:message>
+  <wsdl:message name="updateCusAgentResponseMessage">
+    <wsdl:part name="updateCusAgentResponse" element="gdeupsb:updateCusAgentResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="GDEUPSEfekServicePortType">
+    <wsdl:operation name="insertCusAgent">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:insertCusAgentRequestMessage"/>
+      <wsdl:output message="tns:insertCusAgentResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="checkFileDetail">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:checkFileDetailRequestMessage"/>
+      <wsdl:output message="tns:checkFileDetailResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="qryCusMsg">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:qryCusMsgRequestMessage"/>
+      <wsdl:output message="tns:qryCusMsgResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="qryCusBaseMsg">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:qryCusBaseMsgRequestMessage"/>
+      <wsdl:output message="tns:qryCusBaseMsgResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="qryCusPayRecord">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:qryCusPayRecordRequestMessage"/>
+      <wsdl:output message="tns:qryCusPayRecordResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="tallyCancelOnline">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:tallyCancelOnlineRequestMessage"/>
+      <wsdl:output message="tns:tallyCancelOnlineResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="advanceTrade">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:advanceTradeRequestMessage"/>
+      <wsdl:output message="tns:advanceTradeResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="deleteCusAgent">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:deleteCusAgentRequestMessage"/>
+      <wsdl:output message="tns:deleteCusAgentResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="checkFileSumAcct">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:checkFileSumAcctRequestMessage"/>
+      <wsdl:output message="tns:checkFileSumAcctResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="tallyOneOnline">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:tallyOneOnlineRequestMessage"/>
+      <wsdl:output message="tns:tallyOneOnlineResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="logService">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:logServiceRequestMessage"/>
+      <wsdl:output message="tns:logServiceResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="tallyCancelQryOnline">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:tallyCancelQryOnlineRequestMessage"/>
+      <wsdl:output message="tns:tallyCancelQryOnlineResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="updateCusAgent">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:updateCusAgentRequestMessage"/>
+      <wsdl:output message="tns:updateCusAgentResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GDEUPSEfekServiceSoapBinding" type="tns:GDEUPSEfekServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="insertCusAgent">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/insertCusAgent"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="checkFileDetail">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/checkFileDetail"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="qryCusMsg">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/qryCusMsg"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="qryCusBaseMsg">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/qryCusBaseMsg"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="qryCusPayRecord">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/qryCusPayRecord"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="tallyCancelOnline">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/tallyCancelOnline"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="advanceTrade">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/advanceTrade"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="deleteCusAgent">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/deleteCusAgent"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="checkFileSumAcct">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/checkFileSumAcct"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="tallyOneOnline">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/tallyOneOnline"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="logService">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/logService"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="tallyCancelQryOnline">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/tallyCancelQryOnline"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateCusAgent">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/updateCusAgent"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GDEUPSEfekService">
+    <wsdl:port name="GDEUPSEfekServicePort" binding="tns:GDEUPSEfekServiceSoapBinding">
+      <soap:address location="http://127.0.0.1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

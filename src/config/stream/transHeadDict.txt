@@ -1,0 +1,5 @@
+TRSP00Encode=config/stream/TRSP00/TRSP00RspHeader.xml
+TRSP00Decode=config/stream/TRSP00/TRSP00ReqHeader.xml
+
+PGAS00Encode=config/stream/PGAS00/PGAS00ReqHeader.xml
+PGAS00Decode=config/stream/PGAS00/PGAS00RspHeader.xml

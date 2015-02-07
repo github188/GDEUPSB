@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdsAgtWater">
+	<resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdsAgtWater">
+		<id column="GDS_BID" property="gdsBid" jdbcType="CHAR" />
+		<id column="ACT_NO" property="actNo" jdbcType="CHAR" />
+		<id column="GDS_AID" property="gdsAid" jdbcType="CHAR" />
+		<id column="TCUS_ID" property="tcusId" jdbcType="CHAR" />
+		<result column="SUB_STS" property="subSts" jdbcType="CHAR" />
+		<result column="LAGT_ST" property="lagtSt" jdbcType="CHAR" />
+		<result column="TAGT_ST" property="tagtSt" jdbcType="CHAR" />
+		<result column="TXN_CNL" property="txnCnl" jdbcType="CHAR" />
+		<result column="BNK_TYP" property="bnkTyp" jdbcType="CHAR" />
+		<result column="BNK_NO" property="bnkNo" jdbcType="CHAR" />
+		<result column="BNK_NAM" property="bnkNam" jdbcType="CHAR" />
+		<result column="ORG_COD" property="orgCod" jdbcType="CHAR" />
+		<result column="ORG_NAM" property="orgNam" jdbcType="CHAR" />
+		<result column="TBUS_TP" property="tbusTp" jdbcType="CHAR" />
+		<result column="TCUS_NM" property="tcusNm" jdbcType="CHAR" />
+		<result column="EFF_DAT" property="effDat" jdbcType="CHAR" />
+		<result column="IVD_DAT" property="ivdDat" jdbcType="CHAR" />
+		<result column="LER_MSG" property="lerMsg" jdbcType="CHAR" />
+		<result column="TER_MSG" property="terMsg" jdbcType="CHAR" />
+		<result column="AREA_ID" property="areaId" jdbcType="CHAR" />
+		<result column="BATCH_ID" property="batchId" jdbcType="CHAR" />
+		<result column="USB_FLG" property="usbFlg" jdbcType="CHAR" />
+	</resultMap>
+	<sql id="baseColumnList">
+		GDS_BID, ACT_NO, GDS_AID, TCUS_ID, SUB_STS, LAGT_ST,
+		TAGT_ST, TXN_CNL,
+		BNK_TYP, BNK_NO,
+		BNK_NAM, ORG_COD, ORG_NAM, TBUS_TP,
+		TCUS_NM, EFF_DAT, IVD_DAT, LER_MSG,
+		TER_MSG,
+		AREA_ID, BATCH_ID, USB_FLG
+	</sql>
+	<select id="find" resultMap="basicResultMap">
+		select
+		<include refid="baseColumnList" />
+		from ${GDEUPSB_SCHEMA}.GDS_AGT_WATER
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="gdsBid!=null">
+				AND GDS_BID=#{gdsBid,jdbcType=CHAR}
+			</if>
+			<if test="actNo!=null">
+				AND ACT_NO=#{actNo,jdbcType=CHAR}
+			</if>
+			<if test="gdsAid!=null">
+				AND GDS_AID=#{gdsAid,jdbcType=CHAR}
+			</if>
+			<if test="tcusId!=null">
+				AND TCUS_ID=#{tcusId,jdbcType=CHAR}
+			</if>
+			<if test="subSts!=null">
+				AND SUB_STS=#{subSts,jdbcType=CHAR}
+			</if>
+			<if test="lagtSt!=null">
+				AND LAGT_ST=#{lagtSt,jdbcType=CHAR}
+			</if>
+			<if test="tagtSt!=null">
+				AND TAGT_ST=#{tagtSt,jdbcType=CHAR}
+			</if>
+			<if test="txnCnl!=null">
+				AND TXN_CNL=#{txnCnl,jdbcType=CHAR}
+			</if>
+			<if test="bnkTyp!=null">
+				AND BNK_TYP=#{bnkTyp,jdbcType=CHAR}
+			</if>
+			<if test="bnkNo!=null">
+				AND BNK_NO=#{bnkNo,jdbcType=CHAR}
+			</if>
+			<if test="bnkNam!=null">
+				AND BNK_NAM=#{bnkNam,jdbcType=CHAR}
+			</if>
+			<if test="orgCod!=null">
+				AND ORG_COD=#{orgCod,jdbcType=CHAR}
+			</if>
+			<if test="orgNam!=null">
+				AND ORG_NAM=#{orgNam,jdbcType=CHAR}
+			</if>
+			<if test="tbusTp!=null">
+				AND TBUS_TP=#{tbusTp,jdbcType=CHAR}
+			</if>
+			<if test="tcusNm!=null">
+				AND TCUS_NM=#{tcusNm,jdbcType=CHAR}
+			</if>
+			<if test="effDat!=null">
+				AND EFF_DAT=#{effDat,jdbcType=CHAR}
+			</if>
+			<if test="ivdDat!=null">
+				AND IVD_DAT=#{ivdDat,jdbcType=CHAR}
+			</if>
+			<if test="lerMsg!=null">
+				AND LER_MSG=#{lerMsg,jdbcType=CHAR}
+			</if>
+			<if test="terMsg!=null">
+				AND TER_MSG=#{terMsg,jdbcType=CHAR}
+			</if>
+			<if test="areaId!=null">
+				AND AREA_ID=#{areaId,jdbcType=CHAR}
+			</if>
+			<if test="batchId!=null">
+				AND BATCH_ID=#{batchId,jdbcType=CHAR}
+			</if>
+			<if test="usbFlg!=null">
+				AND USB_FLG=#{usbFlg,jdbcType=CHAR}
+			</if>
+		</trim>
+	</select>
+	<select id="findOne" resultMap="basicResultMap"
+		parameterType="com.bocom.bbip.gdeupsb.entity.GdsAgtWaterKey">
+		select
+		<include refid="baseColumnList" />
+		from ${GDEUPSB_SCHEMA}.GDS_AGT_WATER
+		where GDS_BID =
+		#{gdsBid,jdbcType=CHAR}
+		and ACT_NO = #{actNo,jdbcType=CHAR}
+		and GDS_AID
+		= #{gdsAid,jdbcType=CHAR}
+		and TCUS_ID = #{tcusId,jdbcType=CHAR}
+	</select>
+	<delete id="delete" parameterType="com.bocom.bbip.gdeupsb.entity.GdsAgtWaterKey">
+		delete from
+		${GDEUPSB_SCHEMA}.GDS_AGT_WATER
+		where GDS_BID = #{gdsBid,jdbcType=CHAR}
+		and ACT_NO = #{actNo,jdbcType=CHAR}
+		and GDS_AID =
+		#{gdsAid,jdbcType=CHAR}
+		and TCUS_ID = #{tcusId,jdbcType=CHAR}
+	</delete>
+	<insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdsAgtWater">
+		insert into ${GDEUPSB_SCHEMA}.GDS_AGT_WATER
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="gdsBid != null">
+				GDS_BID,
+			</if>
+			<if test="actNo != null">
+				ACT_NO,
+			</if>
+			<if test="gdsAid != null">
+				GDS_AID,
+			</if>
+			<if test="tcusId != null">
+				TCUS_ID,
+			</if>
+			<if test="subSts != null">
+				SUB_STS,
+			</if>
+			<if test="lagtSt != null">
+				LAGT_ST,
+			</if>
+			<if test="tagtSt != null">
+				TAGT_ST,
+			</if>
+			<if test="txnCnl != null">
+				TXN_CNL,
+			</if>
+			<if test="bnkTyp != null">
+				BNK_TYP,
+			</if>
+			<if test="bnkNo != null">
+				BNK_NO,
+			</if>
+			<if test="bnkNam != null">
+				BNK_NAM,
+			</if>
+			<if test="orgCod != null">
+				ORG_COD,
+			</if>
+			<if test="orgNam != null">
+				ORG_NAM,
+			</if>
+			<if test="tbusTp != null">
+				TBUS_TP,
+			</if>
+			<if test="tcusNm != null">
+				TCUS_NM,
+			</if>
+			<if test="effDat != null">
+				EFF_DAT,
+			</if>
+			<if test="ivdDat != null">
+				IVD_DAT,
+			</if>
+			<if test="lerMsg != null">
+				LER_MSG,
+			</if>
+			<if test="terMsg != null">
+				TER_MSG,
+			</if>
+			<if test="areaId != null">
+				AREA_ID,
+			</if>
+			<if test="batchId != null">
+				BATCH_ID,
+			</if>
+			<if test="usbFlg != null">
+				USB_FLG,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="gdsBid != null">
+				#{gdsBid,jdbcType=CHAR},
+			</if>
+			<if test="actNo != null">
+				#{actNo,jdbcType=CHAR},
+			</if>
+			<if test="gdsAid != null">
+				#{gdsAid,jdbcType=CHAR},
+			</if>
+			<if test="tcusId != null">
+				#{tcusId,jdbcType=CHAR},
+			</if>
+			<if test="subSts != null">
+				#{subSts,jdbcType=CHAR},
+			</if>
+			<if test="lagtSt != null">
+				#{lagtSt,jdbcType=CHAR},
+			</if>
+			<if test="tagtSt != null">
+				#{tagtSt,jdbcType=CHAR},
+			</if>
+			<if test="txnCnl != null">
+				#{txnCnl,jdbcType=CHAR},
+			</if>
+			<if test="bnkTyp != null">
+				#{bnkTyp,jdbcType=CHAR},
+			</if>
+			<if test="bnkNo != null">
+				#{bnkNo,jdbcType=CHAR},
+			</if>
+			<if test="bnkNam != null">
+				#{bnkNam,jdbcType=CHAR},
+			</if>
+			<if test="orgCod != null">
+				#{orgCod,jdbcType=CHAR},
+			</if>
+			<if test="orgNam != null">
+				#{orgNam,jdbcType=CHAR},
+			</if>
+			<if test="tbusTp != null">
+				#{tbusTp,jdbcType=CHAR},
+			</if>
+			<if test="tcusNm != null">
+				#{tcusNm,jdbcType=CHAR},
+			</if>
+			<if test="effDat != null">
+				#{effDat,jdbcType=CHAR},
+			</if>
+			<if test="ivdDat != null">
+				#{ivdDat,jdbcType=CHAR},
+			</if>
+			<if test="lerMsg != null">
+				#{lerMsg,jdbcType=CHAR},
+			</if>
+			<if test="terMsg != null">
+				#{terMsg,jdbcType=CHAR},
+			</if>
+			<if test="areaId != null">
+				#{areaId,jdbcType=CHAR},
+			</if>
+			<if test="batchId != null">
+				#{batchId,jdbcType=CHAR},
+			</if>
+			<if test="usbFlg != null">
+				#{usbFlg,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="findCount" resultType="java.lang.Integer">
+		select count(*) from ${GDEUPSB_SCHEMA}.GDS_AGT_WATER
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="gdsBid!=null">
+				AND GDS_BID=#{gdsBid,jdbcType=CHAR}
+			</if>
+			<if test="actNo!=null">
+				AND ACT_NO=#{actNo,jdbcType=CHAR}
+			</if>
+			<if test="gdsAid!=null">
+				AND GDS_AID=#{gdsAid,jdbcType=CHAR}
+			</if>
+			<if test="tcusId!=null">
+				AND TCUS_ID=#{tcusId,jdbcType=CHAR}
+			</if>
+			<if test="subSts!=null">
+				AND SUB_STS=#{subSts,jdbcType=CHAR}
+			</if>
+			<if test="lagtSt!=null">
+				AND LAGT_ST=#{lagtSt,jdbcType=CHAR}
+			</if>
+			<if test="tagtSt!=null">
+				AND TAGT_ST=#{tagtSt,jdbcType=CHAR}
+			</if>
+			<if test="txnCnl!=null">
+				AND TXN_CNL=#{txnCnl,jdbcType=CHAR}
+			</if>
+			<if test="bnkTyp!=null">
+				AND BNK_TYP=#{bnkTyp,jdbcType=CHAR}
+			</if>
+			<if test="bnkNo!=null">
+				AND BNK_NO=#{bnkNo,jdbcType=CHAR}
+			</if>
+			<if test="bnkNam!=null">
+				AND BNK_NAM=#{bnkNam,jdbcType=CHAR}
+			</if>
+			<if test="orgCod!=null">
+				AND ORG_COD=#{orgCod,jdbcType=CHAR}
+			</if>
+			<if test="orgNam!=null">
+				AND ORG_NAM=#{orgNam,jdbcType=CHAR}
+			</if>
+			<if test="tbusTp!=null">
+				AND TBUS_TP=#{tbusTp,jdbcType=CHAR}
+			</if>
+			<if test="tcusNm!=null">
+				AND TCUS_NM=#{tcusNm,jdbcType=CHAR}
+			</if>
+			<if test="effDat!=null">
+				AND EFF_DAT=#{effDat,jdbcType=CHAR}
+			</if>
+			<if test="ivdDat!=null">
+				AND IVD_DAT=#{ivdDat,jdbcType=CHAR}
+			</if>
+			<if test="lerMsg!=null">
+				AND LER_MSG=#{lerMsg,jdbcType=CHAR}
+			</if>
+			<if test="terMsg!=null">
+				AND TER_MSG=#{terMsg,jdbcType=CHAR}
+			</if>
+			<if test="areaId!=null">
+				AND AREA_ID=#{areaId,jdbcType=CHAR}
+			</if>
+			<if test="batchId!=null">
+				AND BATCH_ID=#{batchId,jdbcType=CHAR}
+			</if>
+			<if test="usbFlg!=null">
+				AND USB_FLG=#{usbFlg,jdbcType=CHAR}
+			</if>
+		</trim>
+	</select>
+	<update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdsAgtWater">
+		update ${GDEUPSB_SCHEMA}.GDS_AGT_WATER
+		<set>
+			<if test="subSts != null">
+				SUB_STS = #{subSts,jdbcType=CHAR},
+			</if>
+			<if test="lagtSt != null">
+				LAGT_ST = #{lagtSt,jdbcType=CHAR},
+			</if>
+			<if test="tagtSt != null">
+				TAGT_ST = #{tagtSt,jdbcType=CHAR},
+			</if>
+			<if test="txnCnl != null">
+				TXN_CNL = #{txnCnl,jdbcType=CHAR},
+			</if>
+			<if test="bnkTyp != null">
+				BNK_TYP = #{bnkTyp,jdbcType=CHAR},
+			</if>
+			<if test="bnkNo != null">
+				BNK_NO = #{bnkNo,jdbcType=CHAR},
+			</if>
+			<if test="bnkNam != null">
+				BNK_NAM = #{bnkNam,jdbcType=CHAR},
+			</if>
+			<if test="orgCod != null">
+				ORG_COD = #{orgCod,jdbcType=CHAR},
+			</if>
+			<if test="orgNam != null">
+				ORG_NAM = #{orgNam,jdbcType=CHAR},
+			</if>
+			<if test="tbusTp != null">
+				TBUS_TP = #{tbusTp,jdbcType=CHAR},
+			</if>
+			<if test="tcusNm != null">
+				TCUS_NM = #{tcusNm,jdbcType=CHAR},
+			</if>
+			<if test="effDat != null">
+				EFF_DAT = #{effDat,jdbcType=CHAR},
+			</if>
+			<if test="ivdDat != null">
+				IVD_DAT = #{ivdDat,jdbcType=CHAR},
+			</if>
+			<if test="lerMsg != null">
+				LER_MSG = #{lerMsg,jdbcType=CHAR},
+			</if>
+			<if test="terMsg != null">
+				TER_MSG = #{terMsg,jdbcType=CHAR},
+			</if>
+			<if test="areaId != null">
+				AREA_ID = #{areaId,jdbcType=CHAR},
+			</if>
+			<if test="batchId != null">
+				BATCH_ID = #{batchId,jdbcType=CHAR},
+			</if>
+			<if test="usbFlg != null">
+				USB_FLG = #{usbFlg,jdbcType=CHAR},
+			</if>
+		</set>
+		where GDS_BID = #{gdsBid,jdbcType=CHAR}
+		and ACT_NO =
+		#{actNo,jdbcType=CHAR}
+		and GDS_AID = #{gdsAid,jdbcType=CHAR}
+		and TCUS_ID
+		= #{tcusId,jdbcType=CHAR}
+	</update>
+	<select id="findAll" resultMap="basicResultMap">
+		select
+		<include refid="baseColumnList" />
+		from ${GDEUPSB_SCHEMA}.GDS_AGT_WATER
+		<if test="_parameter">
+			where
+			<foreach item="item" index="index" collection="list"
+				separator="or">
+				(GDS_BID=#{item.gdsBid,jdbcType=CHAR} AND
+				ACT_NO=#{item.actNo,jdbcType=CHAR} AND
+				GDS_AID=#{item.gdsAid,jdbcType=CHAR} AND
+				TCUS_ID=#{item.tcusId,jdbcType=CHAR})
+			</foreach>
+		</if>
+	</select>
+
+	<!-- 签约一站通:查询签约明细 -->
+	<select id="findSignDeatilInfo" resultType="java.util.Map">
+		select
+		Sub_Sts subSts,Gds_BId gdsBid, Org_Cod orgCod, LAgt_St lagtSt,
+		TAgt_St tagtSt, TCus_Id tcusId, Eff_Dat effDat,
+		Ivd_Dat ivdDat,
+		ErrMsg
+		errMsg ${extSql}
+		from ${agtSTb}
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="gdsBid!=null">
+				AND Gds_BId=#{gdsBId}
+			</if>
+			<if test="actNo!=null">
+				AND ACT_NO=#{actNo}
+			</if>
+			<if test="effDat!=null">
+				AND Eff_Dat=#{effDat}
+			</if>
+			<if test="ivdDatt!=null">
+				AND ivdDat=#{ivdDatt}
+			</if>
+		</trim>
+	</select>
+
+
+	<!-- 签约一站通:查询签约明细 -->
+	<select id="findSignDeatilList" resultType="java.util.Map">
+		select
+		Sub_Sts
+		subSts,Gds_BId gdsBid, Org_Cod orgCod, LAgt_St lagtSt,
+		TAgt_St tagtSt,
+		TCus_Id tcusId, Eff_Dat effDat,
+		Ivd_Dat ivdDat,
+		ErrMsg
+		errMsg ${extSql}
+		from ${AGTSTB}
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="GDSBID!=null">
+				Gds_BId=#{GDSBID}
+			</if>
+			<if test="ACTNO!=null">
+				and ACT_NO=#{ACTNO}
+			</if>
+		</trim>
+	</select>
+
+	<!-- 签约一站通:查询签约明细总数 -->
+	<select id="findSignDeatilListCount" resultType="java.lang.Integer">
+		select count(*)
+		from ${AGTSTB}
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="GDSBID!=null">
+				Gds_BId=#{GDSBID}
+			</if>
+			<if test="ACTNO!=null">
+				and ACT_NO=#{ACTNO}
+			</if>
+		</trim>
+	</select>
+
+	<!-- 签约一站通协议维护:协议信息查询 -->
+	<select id="findSignDeatilForQry" resultType="java.util.Map">
+		select *
+		from
+		${AgtMTb} a, ${AgtSTb} b where a.Gds_BId=#{gdsBId} and
+		a.Act_No=#{actNo} and a.Gds_BId=b.Gds_BId and a.Act_No=b.Act_No order
+		by b.Sub_Sts for read
+		only
+	</select>
+
+	<!-- 签约一站通协议维护:获取协议子表原协议信息 -->
+	<select id="findOldAgtInf" resultType="java.util.Map">
+		select LAGT_ST oLagtSt,
+		TAgt_St otagtSt, Eff_Dat OEffDat
+		from
+		${agtSTb}
+		where GDS_BID=#{gdsBId}
+		and ACT_NO=#{actNo} and
+		Gds_AId=#{gdsAId} and TCUS_ID=#{cusNo}
+	</select>
+
+
+	<!-- 将原流水信息状态改为作废 -->
+	<update id="updateOldAgtInfCnl" parameterType="java.util.Map">
+		update ${AgtSTb}
+		set Sub_Sts='1', IVD_DAT=#{ivdDat} where
+		GDS_BID=#{gdsBId}
+		and
+		ACT_NO=#{actNo,jdbcType=CHAR}
+	</update>
+
+
+
+
+	<!-- 签约一站通协议维护:检查用户编号信息是否已存在 -->
+	<select id="findCusIsExist" resultType="java.util.Map">
+		select *
+		from
+		${agtSTb}
+		where TCUS_ID=#{cusNo} and TBUS_TP=#{tBusTyp} and SUB_STS = '0'
+	</select>
+
+
+	<!-- 更新原有协议信息 -->
+	<update id="updateOldAgtInf" parameterType="java.util.Map">
+		update ${AgtSTb}
+		set
+		Sub_Sts=#{subSts},LAGT_ST=#{lagtSt},TAGT_ST=#{tagtSt},BNK_TYP=#{bnkTyp},BNK_NO=#{bnkNo},BNK_NAM=#{bnkNam}
+		,ORG_COD=#{orgCod},TBUS_TP=#{tbusTp},TCUS_ID=#{tcusId},TCUS_NM=#{tcusNm},EFF_DAT=#{effDat},IVD_DAT=#{ivdDat}
+		where GDS_BID=#{gdsBid} and ACT_NO=#{actNo} and GDS_AID=#{gdsAid} and
+		TCUS_ID=#{tcusId}
+	</update>
+
+	<!-- 新增一条协议信息 -->
+	<insert id="insertDetailAgtInf" parameterType="java.util.Map">
+		insert into
+		${agtSTb}
+		(Sub_Sts,LAGT_ST,TAGT_ST,GDS_BID,ACT_NO,GDS_AID,BNK_TYP,BNK_NO,BNK_NAM,ORG_COD,TBUS_TP,TCUS_ID,TCUS_NM,EFF_DAT,
+		IVD_DAT,TXN_CNL)
+		values
+		(#{SubSts},#{lagtSt},#{tagtSt},#{gdsBid},#{actNo},#{GdsAId},#{BnkTyp},#{BnkNo},#{bnkNam},#{OrgCod},#{TBusTp},#{TCusId},
+		#{TCusNm},#{EffDat},
+		#{IvdDat},#{txnCnl})
+	</insert>
+
+	<!-- 签约一站通协议拷盘:查找拷盘数据 -->
+	<select id="findFileSndInfo" resultType="java.util.Map">
+		select
+		'JH'||#{actDat}||#{tSeqNo} RptFil,
+		right('000000'||rtrim(char(row_number()over())),6) DtlSeq,
+		a.Act_No
+		ActNo, a.Act_Nm ActNm, a.Tel_No TelNo, a.Mob_Tel Mob_Tel, a.EMail
+		EMail,
+		a.Id_Typ IdTyp, a.Id_No IdNo,
+		b.Txn_Cnl TxnCnl, b.Bnk_No BnkNo,
+		b.Bnk_Typ BnkTyp, b.Bnk_Nam BnkNam, b.Eff_Dat
+		EffDat, b.TCus_Id TCusId,
+		case when a.Act_Typ in ( '0','A','B','9' ) then '1' when a.Act_Typ in
+		(
+		'1','2','4' ) then '0' end PrvFlg,
+		case when a.Act_Typ in (
+		'0','A','B','9' ) then Gds_AId when a.Act_Typ in (
+		'1','2','4' ) then
+		'' end GdsAId
+		from ${agtMTb} a, ${agtSTb} b
+		where a.Gds_BId=#{gdsBId}
+		and a.Gds_BId=b.Gds_BId and a.Act_No=b.Act_No and (
+		b.Eff_Dat between
+		#{begDat} and #{endDat} ) and b.Sub_Sts='0' and b.TAgt_St in (
+		'U','C'
+		)
+		and b.usb_flg='Y' and length(trim(b.Tcus_Id)) = 10
+		order by b.TCus_Id,
+		b.TBus_Tp asc for read only
+	</select>
+
+	<!-- 数据拷盘：更新该批次的批次号 -->
+	<update id="updateBchUsbFlg" parameterType="java.util.Map">
+		update ${agtSTb}
+		set
+		BATCH_ID=#{batchId},USB_FLG=#{usbFlg}
+		where Gds_BId=#{gdsBId} and
+		Eff_Dat between #{begDat} and #{endDat} and
+		Sub_Sts='0' and TAgt_St in
+		( 'U','C' )
+		and length(trim(TCus_Id)) = 10 and USB_FLG='Y'
+	</update>
+
+	<!-- 签约一站通协议维护:检查用户编号信息是否已存在 -->
+	<select id="findBatchCnt" resultType="java.lang.Integer">
+		select count(BATCH_ID) Cnt
+		from
+		${agtSTb}
+		where BATCH_ID=#{batchId}
+	</select>
+
+	<!-- 数据拷盘异常处理：更新制盘信息 -->
+	<update id="updateFleSndInf" parameterType="java.util.Map">
+		update ${agtSTb}
+		set
+		USB_FLG='Y'
+		where BATCH_ID=#{batchId}
+	</update>
+
+	<!-- 签约一站通-代理协议校验:获取协议表数据 -->
+	<select id="findAgtCheckInf" resultType="java.util.Map"
+		parameterType="java.util.Map">
+		select * from
+		${agtMtb} a, ${agtStb} b
+		where
+		a.Gds_BId=b.Gds_BId and
+		a.Act_No=b.Act_No and (
+		b.LAGT_ST='U' or
+		b.TAgt_St='U' or b.TAgt_St='C'
+		) and SUB_STS='0' for read only
+	</select>
+
+	<!-- 签约一站通-代理协议校验:更新协议子表信息 -->
+	<update id="updateAgtChkSts" parameterType="java.util.Map">
+		update ${agtStb}
+		set
+		LAgt_St=#{lAgtSt}, TAgt_St=#{tAgtSt}, LER_MSG=#{lerMsg},
+		TER_MSG=#{terMsg}
+		where Gds_BId=#{gdsBId} and ACT_NO=#{actNo} and
+		Gds_AId=#{gdsAId} and Sub_Sts=#{subSts}
+	</update>
+
+	<!-- 签约一站通-:协议更新：更新协议子表信息 -->
+	<update id="updateAgtWtrDelSts" parameterType="java.util.Map">
+		update ${agtStb}
+		set TAgt_St=#{tAgtSt}, TER_MSG=#{terMsg},USB_FLG='Y' where
+		Gds_BId=#{gdsBId}
+		and ACT_NO=#{actNo} and Gds_AId=#{gdsAId}
+		and
+		Sub_Sts='0'
+	</update>
+
+	<!-- 签约一站通-:协议更新：更新协议子表所有协议信息 -->
+	<update id="updateAgtWtrDelStsAll" parameterType="java.util.Map">
+		update
+		${agtStb} set TAgt_St=#{tAgtSt}, TER_MSG=#{terMsg},USB_FLG='Y' where
+		Gds_BId=#{gdsBId}
+		and ACT_NO=#{actNo} and Sub_Sts='0'
+	</update>
+
+	<!-- 签约一站通-协议更新:统计批次协议总数 -->
+	<select id="findBatchAgtCnt" resultType="java.lang.Integer"
+		parameterType="com.bocom.bbip.gdeupsb.entity.GdsAgtWaterKey">
+		select count(*) totCnt from
+		${GDEUPSB_SCHEMA}.GDS_AGT_WATER
+		where BATCH_ID=#{batchId,jdbcType=CHAR}
+	</select>
+
+	<!-- 签约一站通-协议更新:统计批次协议总数 -->
+	<select id="findActInfUsbFlg" resultType="java.lang.String">
+		select act_no from
+		${GDEUPSB_SCHEMA}.GDS_AGT_WATER
+		where BATCH_ID=#{batchId,jdbcType=CHAR}
+		and usb_flg != 'Y'
+	</select>
+
+	<!-- 签约一站通-:协议更新：更新协议子表为可制盘 -->
+	<update id="updateBatchUsbFlg" parameterType="java.util.Map">
+		update
+		${agtStb} set
+		USB_FLG='Y' where
+		Gds_BId=#{gdsBId}
+		and
+		BATCH_ID=#{batchId,jdbcType=CHAR}
+	</update>
+
+
+
+</mapper>

@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspNpManag" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspNpManag" >
+    <id column="ID_NO" property="idNo" jdbcType="CHAR" />
+    <result column="NOD_NO" property="nodNo" jdbcType="CHAR" />
+    <result column="SQN" property="sqn" jdbcType="CHAR" />
+    <result column="CAR_NO" property="carNo" jdbcType="CHAR" />
+    <result column="INV_NO" property="invNo" jdbcType="CHAR" />
+    <result column="PRT_DAT" property="prtDat" jdbcType="DATE" />
+    <result column="BEG_DAT" property="begDat" jdbcType="DATE" />
+    <result column="END_DAT" property="endDat" jdbcType="DATE" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="TLR_ID" property="tlrId" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    ID_NO, NOD_NO, SQN, CAR_NO, INV_NO, PRT_DAT, BEG_DAT, END_DAT, STATUS, TLR_ID
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from gdeupsb.TRSP_NP_MANAG
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="idNo!=null" >
+        AND  ID_NO=#{idNo,jdbcType=CHAR}
+      </if>
+      <if test="nodNo!=null" >
+        AND  NOD_NO=#{nodNo,jdbcType=CHAR}
+      </if>
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="carNo!=null" >
+        AND  CAR_NO=#{carNo,jdbcType=CHAR}
+      </if>
+      <if test="invNo!=null" >
+        AND  INV_NO=#{invNo,jdbcType=CHAR}
+      </if>
+      <if test="prtDat!=null" >
+        AND  PRT_DAT=#{prtDat,jdbcType=DATE}
+      </if>
+      <if test="begDat!=null" >
+        AND  BEG_DAT=#{begDat,jdbcType=DATE}
+      </if>
+      <if test="endDat!=null" >
+        AND  END_DAT=#{endDat,jdbcType=DATE}
+      </if>
+      <if test="status!=null" >
+        AND  STATUS=#{status,jdbcType=CHAR}
+      </if>
+      <if test="tlrId!=null" >
+        AND  TLR_ID=#{tlrId,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from gdeupsb.TRSP_NP_MANAG
+    where ID_NO = #{idNo,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from gdeupsb.TRSP_NP_MANAG
+    where ID_NO = #{idNo,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspNpManag" >
+    insert into gdeupsb.TRSP_NP_MANAG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idNo != null" >
+        ID_NO,
+      </if>
+      <if test="nodNo != null" >
+        NOD_NO,
+      </if>
+      <if test="sqn != null" >
+        SQN,
+      </if>
+      <if test="carNo != null" >
+        CAR_NO,
+      </if>
+      <if test="invNo != null" >
+        INV_NO,
+      </if>
+      <if test="prtDat != null" >
+        PRT_DAT,
+      </if>
+      <if test="begDat != null" >
+        BEG_DAT,
+      </if>
+      <if test="endDat != null" >
+        END_DAT,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="tlrId != null" >
+        TLR_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idNo != null" >
+        #{idNo,jdbcType=CHAR},
+      </if>
+      <if test="nodNo != null" >
+        #{nodNo,jdbcType=CHAR},
+      </if>
+      <if test="sqn != null" >
+        #{sqn,jdbcType=CHAR},
+      </if>
+      <if test="carNo != null" >
+        #{carNo,jdbcType=CHAR},
+      </if>
+      <if test="invNo != null" >
+        #{invNo,jdbcType=CHAR},
+      </if>
+      <if test="prtDat != null" >
+        #{prtDat,jdbcType=DATE},
+      </if>
+      <if test="begDat != null" >
+        #{begDat,jdbcType=DATE},
+      </if>
+      <if test="endDat != null" >
+        #{endDat,jdbcType=DATE},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="tlrId != null" >
+        #{tlrId,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from gdeupsb.TRSP_NP_MANAG
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="idNo!=null" >
+        AND  ID_NO=#{idNo,jdbcType=CHAR}
+      </if>
+      <if test="nodNo!=null" >
+        AND  NOD_NO=#{nodNo,jdbcType=CHAR}
+      </if>
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="carNo!=null" >
+        AND  CAR_NO=#{carNo,jdbcType=CHAR}
+      </if>
+      <if test="invNo!=null" >
+        AND  INV_NO=#{invNo,jdbcType=CHAR}
+      </if>
+      <if test="prtDat!=null" >
+        AND  PRT_DAT=#{prtDat,jdbcType=DATE}
+      </if>
+      <if test="begDat!=null" >
+        AND  BEG_DAT=#{begDat,jdbcType=DATE}
+      </if>
+      <if test="endDat!=null" >
+        AND  END_DAT=#{endDat,jdbcType=DATE}
+      </if>
+      <if test="status!=null" >
+        AND  STATUS=#{status,jdbcType=CHAR}
+      </if>
+      <if test="tlrId!=null" >
+        AND  TLR_ID=#{tlrId,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspNpManag" >
+    update gdeupsb.TRSP_NP_MANAG
+    <set >
+      <if test="nodNo != null" >
+        NOD_NO = #{nodNo,jdbcType=CHAR},
+      </if>
+      <if test="sqn != null" >
+        SQN = #{sqn,jdbcType=CHAR},
+      </if>
+      <if test="carNo != null" >
+        CAR_NO = #{carNo,jdbcType=CHAR},
+      </if>
+      <if test="invNo != null" >
+        INV_NO = #{invNo,jdbcType=CHAR},
+      </if>
+      <if test="prtDat != null" >
+        PRT_DAT = #{prtDat,jdbcType=DATE},
+      </if>
+      <if test="begDat != null" >
+        BEG_DAT = #{begDat,jdbcType=DATE},
+      </if>
+      <if test="endDat != null" >
+        END_DAT = #{endDat,jdbcType=DATE},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="tlrId != null" >
+        TLR_ID = #{tlrId,jdbcType=CHAR},
+      </if>
+    </set>
+    where ID_NO = #{idNo,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from gdeupsb.TRSP_NP_MANAG
+    <if test="_parameter" >
+      where ID_NO in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
+  <select id="findCountByStatus" resultType="java.lang.Integer" >
+    select count(*) from gdeupsb.TRSP_NP_MANAG
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="idNo!=null" >
+        AND  ID_NO=#{idNo,jdbcType=CHAR}
+      </if>
+      <if test="nodNo!=null" >
+        AND  NOD_NO=#{nodNo,jdbcType=CHAR}
+      </if>
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="carNo!=null" >
+        AND  CAR_NO=#{carNo,jdbcType=CHAR}
+      </if>
+      <if test="invNo!=null" >
+        AND  INV_NO=#{invNo,jdbcType=CHAR}
+      </if>
+      <if test="prtDat!=null" >
+        AND  PRT_DAT=#{prtDat,jdbcType=DATE}
+      </if>
+      <if test="begDat!=null" >
+        AND  BEG_DAT=#{begDat,jdbcType=DATE}
+      </if>
+      <if test="endDat!=null" >
+        AND  END_DAT=#{endDat,jdbcType=DATE}
+      </if>
+      
+      <if test="tlrId!=null" >
+        AND  TLR_ID=#{tlrId,jdbcType=CHAR}
+      </if>
+      AND  STATUS IN ('0','1')
+    </trim>
+  </select>
+  <select id="findCountSum" resultType="java.lang.Integer">
+    select count(*) from gdeupsb.TRSP_NP_MANAG 
+      
+	<trim prefix="WHERE" prefixOverrides="AND" >
+      (PRT_DAT BETWEEN #{begDat,jdbcType=DATE} AND #{endDat,jdbcType=DATE})  
+      <if test="nodNo != ''" >
+       and  NOD_NO = #{nodNo,jdbcType=CHAR}
+      </if>
+      <if test="status != ''" >
+       and  STATUS = #{status,jdbcType=CHAR}
+      </if>
+      <if test="idNo != ''" >
+       and  ID_NO = #{idNo,jdbcType=CHAR}
+      </if>
+      <if test="carNo != ''" >
+       and  CAR_NO = #{carNo,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findNpInfo" resultType="java.lang.Integer" >
+  SELECT NodNo NodNoF,PrtDat,CarNo,LogNo,InvNo,IdNo,Status,BegDat,EndDat,TLRID
+    select NOD_NO,PRT_DAT,CAR_NO,SQN,INV_NO,ID_NO,STATUS,BEG_DAT,END_DAT,TLR_ID
+     from gdeupsb.TRSP_NP_MANAG WHERE
+    
+      (PRT_DAT BETWEEN #{begDat,jdbcType=DATE} AND #{endDat,jdbcType=DATE})
+      
+      AND (NOD_NO = #{nodNo,jdbcType=CHAR} OR ''= #{nodNo,jdbcType=CHAR})
+      AND (STATUS = #{status,jdbcType=CHAR} OR ''= #{status,jdbcType=CHAR})
+      AND (ID_NO = #{idNo,jdbcType=CHAR} OR ''= #{idNo,jdbcType=CHAR})
+      AND (CAR_NO = #{carNo,jdbcType=CHAR} OR ''= #{carNo,jdbcType=CHAR})  ORDER BY ID_NO
+  </select>
+  <update id="updateSt" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspNpManag" >
+    update gdeupsb.TRSP_NP_MANAG
+    <set >
+      <if test="nodNo != null" >
+        NOD_NO = #{nodNo,jdbcType=CHAR},
+      </if>
+     
+      <if test="carNo != null" >
+        CAR_NO = #{carNo,jdbcType=CHAR},
+      </if>
+      <if test="invNo != null" >
+        INV_NO = #{invNo,jdbcType=CHAR},
+      </if>
+      <if test="prtDat != null" >
+        PRT_DAT = #{prtDat,jdbcType=DATE},
+      </if>
+      <if test="begDat != null" >
+        BEG_DAT = #{begDat,jdbcType=DATE},
+      </if>
+      <if test="endDat != null" >
+        END_DAT = #{endDat,jdbcType=DATE},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="tlrId != null" >
+        TLR_ID = #{tlrId,jdbcType=CHAR},
+      </if>
+    </set>
+    where ID_NO = #{idNo,jdbcType=CHAR} AND SQN = #{sqn,jdbcType=CHAR}
+  </update>
+</mapper>

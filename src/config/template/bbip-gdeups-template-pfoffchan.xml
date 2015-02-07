@@ -72,6 +72,40 @@
 			<action id="rollbackAction" ref="eups.automaticReversalTHDAndCBAction" />
 		</step>
 	</flow-template>
+	
+	
+	
+		<!-- 联机抹账 -->
+			<flow-template id="eups.cancelOnlineExtTemplate">
+				<step id="init" useCtxState="true" transactional="txTemplate">
+					<!-- 交易前检查 -->
+					<!-- 第三方交易控制检查（默认正常交易） -->
+					<action id="preAction" ref="eups.checkComTxnCtlAction"
+						operations="checkThdTxnCtlNormal" />
+					<action id="preAction" ref="eups.checkBeforeCancelAction"
+						operations="checkBeforeCancel" />
+					<!-- 联机抹账预处理 -->
+					<action id="initAction" ref="eups.initCancelInfoAction" />
+					<next on="BP_STATE_NORMAL" to="businessTHDStep" />
+					<next on="*" to="finalize" />
+				</step>
+				<step id="businessTHDStep" useCtxState="true" transactional="txTemplate">
+					<action id="preCalAction" place-holder="true" />
+					<action id="businessTHDAction" ref="eups.cancelToTHDExtAction" />   <!-- 要改  -->
+					<next on="BP_STATE_SUCCESS" to="businessCBStep" />
+					<next on="*" to="finalize" />
+				</step>
+				<step id="businessCBStep" next="finalize" useCtxState="true"
+					transactional="txTemplate">
+					<action id="businessCBAction" ref="eups.bbipPaymentCancelUsingReversalExt" />
+					<action id="businessCBAction" ref="eups.processCBCancelResultAction" />
+				</step>
+				<step id="finalize" useCtxState="true" transactional="txTemplate">
+					<action id="aftCalAction" place-holder="true" />
+					<action id="finalizeAction" ref="eups.saveCancelResultAction" />
+				</step>
+			</flow-template>	
+		
 
 
 <!-- 自动抹帐： 根据流水表第三方状态和主机状态决定抹账方向 -->
@@ -142,5 +176,90 @@
 			<action id="finalizeAction" place-holder="true" />
 		</step>
 	</flow-template>
+	
+		<!-- 福彩清算轧差 -->
+	<flow-template id="gdeups.lotClearTemplate">
+		<step id="init" useCtxState="true" transactional="txTemplate">		 <!-- 数据准备，获取系统配置等 -->
+		    <action id="initPre" place-holder="false" />  
+			<next on="*" to="cbDfDealStep" />  
+		</step>
+		<step id="cbDfDealStep" useCtxState="true" transactional="txTemplate">  <!-- 垫款处理 -->
+			<action id="dfPayDel" place-holder="true" />
+			<action id="updDfRst" place-holder="true" />
+			<next on="BP_STATE_REVAL" to="rollback" /> 
+			<next on="*" to="cbGcDealStep" /> 
+		</step>
+		<step id="cbGcDealStep"   useCtxState="true" transactional="txTemplate">  <!-- 轧差处理 -->
+			<action id="gcPayDel" place-holder="true" />
+			<action id="updGcRst" place-holder="true"  />
+			<next on="BP_STATE_REVAL" to="rollback" />  
+			<end on="*"/>
+		</step>
+		<step id="rollback" useCtxState="true" transactional="txTemplate">   <!-- 冲正-->
+			<action id="rollback" place-holder="true" />
+		</step>
+	</flow-template>
+	
+	
+	<!-- 凭条退费 -->
+	<flow-template id="gdeupsb.onlineCancelBankFlowTran">
+		<step id="prepare" useCtxState="true"  transactional="txTemplate">
+			<action id="chkBeforeCancelAct" place-holder="true"/>
+			<next on="*" to="simpleCancelAccBankAct" />
+		</step>
+		<step id="simpleCancelAccBankAct" useCtxState="true" transactional="txTemplate">
+			<action id="simpleCancelAccBankAct" place-holder="true" />
+			<action id="aftCancelAction" place-holder="true" />
+			<next on="regTransRollBackFlag" to="regTransRollBackAct" />
+			<next on="complete"  to="finalize"/>
+			
+		</step>
+		<step id="regTransRollBackAct" useCtxState="true" transactional="txTemplate">
+			<action id="preRegTransRollBackAct" place-holder="true" />
+			<action id="regTransRollBackAct" place-holder="true" />
+			<action id="aftRegTransRollBackAct" place-holder="true" />
+			<end on="*"/>
+		</step>
+		<step id="finalize" useCtxState="true" transactional="txTemplate">
+			<action id="finalizeAction" place-holder="true" />
+		<end on="*"/>
+		</step> 
+	</flow-template>
+	
+	<!-- 打发票 -->
+	<flow-template id="gdeupsb.addPrintInvoicFlow">
+		<step id="prepare" useCtxState="true"  transactional="txTemplate">
+			<action id="chkBeforeAct" place-holder="true"/>
+			<next on="*" to="addPrintInvoicAct" />
+		</step>
+		<step id="addPrintInvoicAct" useCtxState="true" transactional="txTemplate">
+			<action id="preAddPrintInvoicAct" place-holder="true" />	
+			<next on="complete"  to="finalize"/>
+			<next on="callThd"   to="callThirdAct"/>
+			<end on="fail" />		
+		</step>
+		<step id="callThirdAct" useCtxState="true" transactional="txTemplate">
+			<action id="callThirdAction" place-holder="true" />
+			
+			<next on="complete"  to="finalize"/>
+			<next on="*" to="regTransRollBackAct" />
+			
+		</step>
+		<step id="regTransRollBackAct" useCtxState="true" transactional="txTemplate">
+			
+			<action id="regTransRollBackAct"/>
+			
+			<end on="*"/>
+		</step>
+		<step id="finalize" useCtxState="true" transactional="txTemplate">
+			<action id="finalizeAction" place-holder="true" />
+		<end on="*"/>
+		</step> 
+	</flow-template>
+	
+	         
+     <simple-template id="gdgaseups.simpleTran" transactional="txTemplate">
+		<action id="act" place-holder="true" />
+	</simple-template>
 
 </x:beans>

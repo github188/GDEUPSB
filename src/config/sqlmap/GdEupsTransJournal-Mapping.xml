@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
+	<resultMap id="basicResultMap"
+		type="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
+		<id column="SQN" property="sqn" jdbcType="CHAR" />
+		<result column="BK" property="bk" jdbcType="CHAR" />
+		<result column="PFE_TYP" property="pfeTyp" jdbcType="CHAR" />
+		<result column="ITG_TYP" property="itgTyp" jdbcType="CHAR" />
+		<result column="QRY_SQN" property="qrySqn" jdbcType="CHAR" />
+		<result column="TRACE_NO" property="traceNo" jdbcType="CHAR" />
+		<result column="REQ_SYS_CDE" property="reqSysCde" jdbcType="CHAR" />
+		<result column="REQ_JRN_NO" property="reqJrnNo" jdbcType="CHAR" />
+		<result column="REQ_TME" property="reqTme" jdbcType="TIMESTAMP" />
+		<result column="BR" property="br" jdbcType="CHAR" />
+		<result column="ORG_CDE" property="orgCde" jdbcType="CHAR" />
+		<result column="TML_NO" property="tmlNo" jdbcType="CHAR" />
+		<result column="TXN_TLR" property="txnTlr" jdbcType="CHAR" />
+		<result column="SVR_NME" property="svrNme" jdbcType="CHAR" />
+		<result column="COM_NO" property="comNo" jdbcType="CHAR" />
+		<result column="EUPS_BUS_TYP" property="eupsBusTyp" jdbcType="CHAR" />
+		<result column="RAP_TYP" property="rapTyp" jdbcType="CHAR" />
+		<result column="TXN_DTE" property="txnDte" jdbcType="DATE" />
+		<result column="TXN_TME" property="txnTme" jdbcType="TIMESTAMP" />
+		<result column="TXN_CDE" property="txnCde" jdbcType="CHAR" />
+		<result column="TXN_STS" property="txnSts" jdbcType="CHAR" />
+		<result column="RSP_MSG" property="rspMsg" jdbcType="VARCHAR" />
+		<result column="OLD_TXN_SQN" property="oldTxnSqn" jdbcType="CHAR" />
+		<result column="THD_OBK_CDE" property="thdObkCde" jdbcType="CHAR" />
+		<result column="RVS_TRACE_NO" property="rvsTraceNo" jdbcType="CHAR" />
+		<result column="THD_SUB_CUS_NO" property="thdSubCusNo"
+			jdbcType="CHAR" />
+		<result column="THD_FEE_PRD" property="thdFeePrd" jdbcType="CHAR" />
+		<result column="BK_CD_TYP" property="bkCdTyp" jdbcType="CHAR" />
+		<result column="TXN_AMT" property="txnAmt" jdbcType="DECIMAL" />
+		<result column="CCY" property="ccy" jdbcType="CHAR" />
+		<result column="CHL_TYP" property="chlTyp" jdbcType="CHAR" />
+		<result column="ATH_TLR_NO" property="athTlrNo" jdbcType="CHAR" />
+		<result column="CHK_TLR" property="chkTlr" jdbcType="CHAR" />
+		<result column="REQ_VCH_NO" property="reqVchNo" jdbcType="CHAR" />
+		<result column="BUS_KND" property="busKnd" jdbcType="CHAR" />
+		<result column="RSP_CDE" property="rspCde" jdbcType="CHAR" />
+		<result column="MFM_TXN_CDE" property="mfmTxnCde" jdbcType="CHAR" />
+		<result column="MFM_TXN_SUB_CDE" property="mfmTxnSubCde"
+			jdbcType="CHAR" />
+		<result column="AC_DTE" property="acDte" jdbcType="DATE" />
+		<result column="MFM_VCH_NO" property="mfmVchNo" jdbcType="CHAR" />
+		<result column="MFM_JRN_NO" property="mfmJrnNo" jdbcType="CHAR" />
+		<result column="MFM_TXN_STS" property="mfmTxnSts" jdbcType="CHAR" />
+		<result column="MFM_RSP_CDE" property="mfmRspCde" jdbcType="CHAR" />
+		<result column="MFM_RSP_MSG" property="mfmRspMsg" jdbcType="VARCHAR" />
+		<result column="THD_TXN_CDE" property="thdTxnCde" jdbcType="CHAR" />
+		<result column="THD_TXN_DTE" property="thdTxnDte" jdbcType="DATE" />
+		<result column="THD_TXN_TME" property="thdTxnTme" jdbcType="TIMESTAMP" />
+		<result column="THD_SQN" property="thdSqn" jdbcType="CHAR" />
+		<result column="THD_TXN_STS" property="thdTxnSts" jdbcType="CHAR" />
+		<result column="THD_RSP_CDE" property="thdRspCde" jdbcType="CHAR" />
+		<result column="THD_RSP_MSG" property="thdRspMsg" jdbcType="CHAR" />
+		<result column="RCN_FLG" property="rcnFlg" jdbcType="CHAR" />
+		<result column="MFM_DYT_RCN_FLG" property="mfmDytRcnFlg"
+			jdbcType="CHAR" />
+		<result column="MFM_EOD_RCN_FLG" property="mfmEodRcnFlg"
+			jdbcType="CHAR" />
+		<result column="MFM_RCN_BAT" property="mfmRcnBat" jdbcType="CHAR" />
+		<result column="MFM_RCN_TME" property="mfmRcnTme" jdbcType="TIMESTAMP" />
+		<result column="THD_RCN_FLG" property="thdRcnFlg" jdbcType="CHAR" />
+		<result column="THD_RCN_TME" property="thdRcnTme" jdbcType="TIMESTAMP" />
+		<result column="THD_RCN_BAT" property="thdRcnBat" jdbcType="CHAR" />
+		<result column="IS_BAT_FLG" property="isBatFlg" jdbcType="CHAR" />
+		<result column="BAT_NO" property="batNo" jdbcType="CHAR" />
+		<result column="EXT_RCN_FLG" property="extRcnFlg" jdbcType="CHAR" />
+		<result column="OUR_OTH_FLG" property="ourOthFlg" jdbcType="CHAR" />
+		<result column="THD_RGN_NO" property="thdRgnNo" jdbcType="CHAR" />
+		<result column="THD_CUS_NO" property="thdCusNo" jdbcType="CHAR" />
+		<result column="THD_CUS_NME" property="thdCusNme" jdbcType="VARCHAR" />
+		<result column="PAY_CHL" property="payChl" jdbcType="CHAR" />
+		<result column="SPL_NO" property="splNo" jdbcType="CHAR" />
+		<result column="SPL_TER_NO" property="splTerNo" jdbcType="CHAR" />
+		<result column="TXN_TYP" property="txnTyp" jdbcType="CHAR" />
+		<result column="CUS_AC" property="cusAc" jdbcType="CHAR" />
+		<result column="CUS_NME" property="cusNme" jdbcType="VARCHAR" />
+		<result column="ID_TYP" property="idTyp" jdbcType="CHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+		<result column="CMU_TEL" property="cmuTel" jdbcType="VARCHAR" />
+		<result column="ACC_TYP" property="accTyp" jdbcType="CHAR" />
+		<result column="ACC_SEQ" property="accSeq" jdbcType="CHAR" />
+		<result column="BV_KND" property="bvKnd" jdbcType="CHAR" />
+		<result column="BV_NO" property="bvNo" jdbcType="CHAR" />
+		<result column="LIS_ACC" property="lisAcc" jdbcType="CHAR" />
+		<result column="CHO_NO" property="choNo" jdbcType="CHAR" />
+		<result column="RMK_CDE" property="rmkCde" jdbcType="CHAR" />
+		<result column="CSH_NO" property="cshNo" jdbcType="CHAR" />
+		<result column="DRW_MDE" property="drwMde" jdbcType="CHAR" />
+		<result column="REQ_TXN_AMT" property="reqTxnAmt" jdbcType="DECIMAL" />
+		<result column="FUL_DED_FLG" property="fulDedFlg" jdbcType="CHAR" />
+		<result column="HFE" property="hfe" jdbcType="DECIMAL" />
+		<result column="HFE_ITM_SEQ" property="hfeItmSeq" jdbcType="CHAR" />
+		<result column="HFE_PST_BR" property="hfePstBr" jdbcType="CHAR" />
+		<result column="PRT_FLG" property="prtFlg" jdbcType="CHAR" />
+		<result column="PRT_CNT" property="prtCnt" jdbcType="INTEGER" />
+		<result column="BAK_FLD1" property="bakFld1" jdbcType="CHAR" />
+		<result column="BAK_FLD2" property="bakFld2" jdbcType="CHAR" />
+		<result column="BAK_FLD3" property="bakFld3" jdbcType="CHAR" />
+		<result column="BAK_FLD4" property="bakFld4" jdbcType="CHAR" />
+		<result column="BAK_FLD5" property="bakFld5" jdbcType="CHAR" />
+		<result column="BAK_FLD6" property="bakFld6" jdbcType="CHAR" />
+		<result column="RSV_FLD1" property="rsvFld1" jdbcType="VARCHAR" />
+		<result column="RSV_FLD2" property="rsvFld2" jdbcType="VARCHAR" />
+		<result column="RSV_FLD3" property="rsvFld3" jdbcType="VARCHAR" />
+		<result column="RSV_FLD4" property="rsvFld4" jdbcType="VARCHAR" />
+		<result column="RSV_FLD5" property="rsvFld5" jdbcType="VARCHAR" />
+		<result column="RSV_FLD6" property="rsvFld6" jdbcType="VARCHAR" />
+		<result column="FIL_FLG" property="filFlg" jdbcType="CHAR" />
+		<result column="TOTAL_AMT" property="totalAmt" jdbcType="DECIMAL" />
+		<result column="TOTAL_COUNT" property="totalCount" jdbcType="INTEGER" />
+		<result column="ALL_SUM_AMT" property="ASumAmt" jdbcType="DECIMAL" />
+		<result column="ALL_SUM_CNT" property="ASumCnt" jdbcType="INTEGER" />
+		<result column="SUC_SUM_AMT" property="NSumAmt" jdbcType="DECIMAL" />
+		<result column="SUC_SUM_CNT" property="NSumCnt" jdbcType="INTEGER" />
+		<result column="RVS_SUM_AMT" property="RSumAmt" jdbcType="DECIMAL" />
+		<result column="RVS_SUM_CNT" property="RSumCnt" jdbcType="INTEGER" />
+		<result column="TRADE_STS" property="tradeSts" jdbcType="CHAR" />
+		<result column="FMT_TXN_DTE" property="fmtTxnDte" jdbcType="VARCHAR" />
+		<result column="FMT_TXN_TME" property="fmtTxnTme" jdbcType="VARCHAR" />
+		<result column="FMT_HTXN_DTE" property="fmtHTxnDte" jdbcType="VARCHAR" />
+		<result column="FMT_HTXN_TME" property="fmtHTxnTme" jdbcType="VARCHAR" />
+		<result column="FMT_TTXN_DTE" property="fmtTTxnDte" jdbcType="VARCHAR" />
+		<result column="FMT_TTXN_TME" property="fmtTTxnTme" jdbcType="VARCHAR" />
+		<result column="FMT_AC_DTE" property="fmtAcDte" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="baseColumnList">
+		SQN, BK, PFE_TYP, ITG_TYP, QRY_SQN, TRACE_NO, REQ_SYS_CDE,
+		REQ_JRN_NO,
+		REQ_TME, BR,
+		ORG_CDE, TML_NO, TXN_TLR, SVR_NME, COM_NO,
+		EUPS_BUS_TYP, RAP_TYP, TXN_DTE,
+		TXN_TME,
+		TXN_CDE, TXN_STS, RSP_MSG,
+		OLD_TXN_SQN, THD_OBK_CDE, RVS_TRACE_NO,
+		THD_SUB_CUS_NO,
+		THD_FEE_PRD,
+		BK_CD_TYP, TXN_AMT, CCY, CHL_TYP, ATH_TLR_NO, CHK_TLR, REQ_VCH_NO,
+		BUS_KND,
+		RSP_CDE, MFM_TXN_CDE, MFM_TXN_SUB_CDE, AC_DTE, MFM_VCH_NO,
+		MFM_JRN_NO,
+		MFM_TXN_STS,
+		MFM_RSP_CDE, MFM_RSP_MSG, THD_TXN_CDE,
+		THD_TXN_DTE, THD_TXN_TME, THD_SQN,
+		THD_TXN_STS,
+		THD_RSP_CDE,
+		THD_RSP_MSG, RCN_FLG, MFM_DYT_RCN_FLG, MFM_EOD_RCN_FLG, MFM_RCN_BAT,
+		MFM_RCN_TME, THD_RCN_FLG, THD_RCN_TME, THD_RCN_BAT, IS_BAT_FLG,
+		BAT_NO, EXT_RCN_FLG,
+		OUR_OTH_FLG, THD_RGN_NO, THD_CUS_NO, THD_CUS_NME,
+		PAY_CHL, SPL_NO, SPL_TER_NO,
+		TXN_TYP,
+		CUS_AC, CUS_NME, ID_TYP, ID_NO,
+		CMU_TEL, ACC_TYP, ACC_SEQ, BV_KND, BV_NO,
+		LIS_ACC,
+		CHO_NO, RMK_CDE,
+		CSH_NO, DRW_MDE, REQ_TXN_AMT, FUL_DED_FLG, HFE, HFE_ITM_SEQ,
+		HFE_PST_BR,
+		PRT_FLG, PRT_CNT, BAK_FLD1, BAK_FLD2, BAK_FLD3, BAK_FLD4,
+		BAK_FLD5, BAK_FLD6,
+		RSV_FLD1,
+		RSV_FLD2, RSV_FLD3, RSV_FLD4, RSV_FLD5,
+		RSV_FLD6, FIL_FLG
+	</sql>
+
+	<!--广州电力划扣对账统计信息查询 -->
+	<select id="findGzEleChkHKInfo" resultType="java.util.Map"
+		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
+		select count(*) totalDeal, sum(TXN_AMT) totalFee from
+		eups.EUPS_TRANS_JOURNAL where EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
+		and TXN_DTE=#{txnDte,jdbcType=DATE} and MFM_TXN_STS='S' and
+		THD_TXN_CDE='HK'
+	</select>
+
+	<!--广州电力划扣对账明细信息查询 -->
+	<select id="findGzEleChkHKDetail" resultType="java.util.Map"
+		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
+		select THD_SQN tLogNo,THD_CUS_NO thdCusNo,THD_TXN_DTE
+		tActDt,TXN_DTE actDat, TXN_TME BkTim, MFM_VCH_NO bkLog,
+		CUS_AC actNo,
+		'0200' txnKnd,TXN_AMT txnAmt,' ' oTlogNo,THD_TXN_DTE dLDat,THD_TXN_TME
+		dLTim,BAK_FLD1 lChkTm
+		from
+		eups.EUPS_TRANS_JOURNAL where EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
+		and
+		TXN_DTE=#{txnDte,jdbcType=DATE} and MFM_TXN_STS='S' and
+		THD_TXN_CDE='HK'
+	</select>
+
+	<!--广州电力缴费对账统计信息查询 -->
+	<select id="findGzEleChkJFInfo" resultType="java.util.Map"
+		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
+		select count(*) totalDeal, sum(TXN_AMT) totalFee from
+		eups.EUPS_TRANS_JOURNAL where EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
+		and TXN_DTE=#{txnDte,jdbcType=DATE} and MFM_TXN_STS='S' and
+		THD_TXN_CDE='JF'
+	</select>
+
+	<!--广州电力缴费对账明细信息查询 -->
+	<select id="findGzEleChkJFDetail" resultType="java.util.Map"
+		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
+		select THD_SQN tLogNo,THD_CUS_NO thdCusNo,THD_TXN_DTE
+		tActDt,TXN_DTE actDat, TXN_TME BkTim, MFM_VCH_NO bkLog,
+		CUS_AC actNo,
+		'0200' txnKnd,TXN_AMT txnAmt,' ' oTlogNo,THD_TXN_DTE dLDat,THD_TXN_TME
+		dLTim, BAK_FLD3 bakFld3, BV_NO bvNo,
+		BAK_FLD1 lChkTm
+		from
+		eups.EUPS_TRANS_JOURNAL where EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
+		and
+		TXN_DTE=#{txnDte,jdbcType=DATE} and MFM_TXN_STS='S' and
+		THD_TXN_CDE='JF'
+	</select>
+
+
+	<!-- 惠州燃气代扣流水信息查询 -->
+	<select id="findGasJnlInfo" resultMap="basicResultMap">
+		SELECT
+		THD_CUS_NO,BAK_FLD3,CUS_AC,CUS_NME,TXN_AMT,TXN_TME,MFM_VCH_NO,SQN,THD_SQN
+		FROM EUPS.EUPS_TRANS_JOURNAL WHERE MFM_TXN_STS='S' AND
+		MFM_RSP_CDE='SC0000' AND BAK_FLD1='1' AND BAK_FLD2='B0'
+		<trim>
+			<if test="thdCusNo!=null">
+				AND THD_CUS_NO=#{thdCusNo,jdbcType=CHAR}
+			</if>
+			<if test="cusAc!=null">
+				AND CUS_AC=#{cusAc,jdbcType=CHAR}
+			</if>
+			<if test="cusNme!=null">
+				AND CUS_NME=#{cusNme,jdbcType=VARCHAR}
+			</if>
+			<if test="beginDate!=null">
+				AND TXN_DTE &gt;=#{beginDate,jdbcType=DATE}
+			</if>
+			<if test="endDate!=null">
+				AND TXN_DTE &lt;=#{endDate,jdbcType=DATE}
+			</if>
+		</trim>
+	</select>
+
+
+</mapper>

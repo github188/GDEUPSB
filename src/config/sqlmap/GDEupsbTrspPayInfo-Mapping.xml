@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspPayInfo" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspPayInfo" >
+    <id column="THD_KEY" property="thdKey" jdbcType="CHAR" />
+    <result column="BR_NO" property="brNo" jdbcType="CHAR" />
+    <result column="CAR_TYP" property="carTyp" jdbcType="CHAR" />
+    <result column="CAR_NO" property="carNo" jdbcType="CHAR" />
+    <result column="TCUS_NM" property="tcusNm" jdbcType="CHAR" />
+    <result column="PAY_MON" property="payMon" jdbcType="CHAR" />
+    <result column="ACT_DAT" property="actDat" jdbcType="DATE" />
+    <result column="TACT_DT" property="tactDt" jdbcType="DATE" />
+    <result column="TXN_AMT" property="txnAmt" jdbcType="DECIMAL" />
+    <result column="FLG" property="flg" jdbcType="CHAR" />
+    <result column="BAK_FLD1" property="bakFld1" jdbcType="CHAR" />
+    <result column="BAK_FLD2" property="bakFld2" jdbcType="CHAR" />
+    <result column="BAK_FLD3" property="bakFld3" jdbcType="CHAR" />
+    <result column="RSV_FLD1" property="rsvFld1" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    THD_KEY, BR_NO, CAR_TYP, CAR_NO, TCUS_NM, PAY_MON, ACT_DAT, TACT_DT, TXN_AMT, FLG, 
+    BAK_FLD1, BAK_FLD2, BAK_FLD3, RSV_FLD1
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from gdeupsb.TRSP_PAY_INFO
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="thdKey!=null" >
+        AND  THD_KEY=#{thdKey,jdbcType=CHAR}
+      </if>
+      <if test="brNo!=null" >
+        AND  BR_NO=#{brNo,jdbcType=CHAR}
+      </if>
+      <if test="carTyp!=null" >
+        AND  CAR_TYP=#{carTyp,jdbcType=CHAR}
+      </if>
+      <if test="carNo!=null" >
+        AND  CAR_NO=#{carNo,jdbcType=CHAR}
+      </if>
+      <if test="tcusNm!=null" >
+        AND  TCUS_NM=#{tcusNm,jdbcType=CHAR}
+      </if>
+      <if test="payMon!=null" >
+        AND  PAY_MON=#{payMon,jdbcType=CHAR}
+      </if>
+      <if test="actDat!=null" >
+        AND  ACT_DAT=#{actDat,jdbcType=DATE}
+      </if>
+      <if test="tactDt!=null" >
+        AND  TACT_DT=#{tactDt,jdbcType=DATE}
+      </if>
+      <if test="txnAmt!=null" >
+        AND  TXN_AMT=#{txnAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="flg!=null" >
+        AND  FLG=#{flg,jdbcType=CHAR}
+      </if>
+      <if test="bakFld1!=null" >
+        AND  BAK_FLD1=#{bakFld1,jdbcType=CHAR}
+      </if>
+      <if test="bakFld2!=null" >
+        AND  BAK_FLD2=#{bakFld2,jdbcType=CHAR}
+      </if>
+      <if test="bakFld3!=null" >
+        AND  BAK_FLD3=#{bakFld3,jdbcType=CHAR}
+      </if>
+      <if test="rsvFld1!=null" >
+        AND  RSV_FLD1=#{rsvFld1,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from gdeupsb.TRSP_PAY_INFO
+    where THD_KEY = #{thdKey,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from gdeupsb.TRSP_PAY_INFO
+    where THD_KEY = #{thdKey,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspPayInfo" >
+    insert into gdeupsb.TRSP_PAY_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="thdKey != null" >
+        THD_KEY,
+      </if>
+      <if test="brNo != null" >
+        BR_NO,
+      </if>
+      <if test="carTyp != null" >
+        CAR_TYP,
+      </if>
+      <if test="carNo != null" >
+        CAR_NO,
+      </if>
+      <if test="tcusNm != null" >
+        TCUS_NM,
+      </if>
+      <if test="payMon != null" >
+        PAY_MON,
+      </if>
+      <if test="actDat != null" >
+        ACT_DAT,
+      </if>
+      <if test="tactDt != null" >
+        TACT_DT,
+      </if>
+      <if test="txnAmt != null" >
+        TXN_AMT,
+      </if>
+      <if test="flg != null" >
+        FLG,
+      </if>
+      <if test="bakFld1 != null" >
+        BAK_FLD1,
+      </if>
+      <if test="bakFld2 != null" >
+        BAK_FLD2,
+      </if>
+      <if test="bakFld3 != null" >
+        BAK_FLD3,
+      </if>
+      <if test="rsvFld1 != null" >
+        RSV_FLD1,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="thdKey != null" >
+        #{thdKey,jdbcType=CHAR},
+      </if>
+      <if test="brNo != null" >
+        #{brNo,jdbcType=CHAR},
+      </if>
+      <if test="carTyp != null" >
+        #{carTyp,jdbcType=CHAR},
+      </if>
+      <if test="carNo != null" >
+        #{carNo,jdbcType=CHAR},
+      </if>
+      <if test="tcusNm != null" >
+        #{tcusNm,jdbcType=CHAR},
+      </if>
+      <if test="payMon != null" >
+        #{payMon,jdbcType=CHAR},
+      </if>
+      <if test="actDat != null" >
+        #{actDat,jdbcType=DATE},
+      </if>
+      <if test="tactDt != null" >
+        #{tactDt,jdbcType=DATE},
+      </if>
+      <if test="txnAmt != null" >
+        #{txnAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="flg != null" >
+        #{flg,jdbcType=CHAR},
+      </if>
+      <if test="bakFld1 != null" >
+        #{bakFld1,jdbcType=CHAR},
+      </if>
+      <if test="bakFld2 != null" >
+        #{bakFld2,jdbcType=CHAR},
+      </if>
+      <if test="bakFld3 != null" >
+        #{bakFld3,jdbcType=CHAR},
+      </if>
+      <if test="rsvFld1 != null" >
+        #{rsvFld1,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from gdeupsb.TRSP_PAY_INFO
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="thdKey!=null" >
+        AND  THD_KEY=#{thdKey,jdbcType=CHAR}
+      </if>
+      <if test="brNo!=null" >
+        AND  BR_NO=#{brNo,jdbcType=CHAR}
+      </if>
+      <if test="carTyp!=null" >
+        AND  CAR_TYP=#{carTyp,jdbcType=CHAR}
+      </if>
+      <if test="carNo!=null" >
+        AND  CAR_NO=#{carNo,jdbcType=CHAR}
+      </if>
+      <if test="tcusNm!=null" >
+        AND  TCUS_NM=#{tcusNm,jdbcType=CHAR}
+      </if>
+      <if test="payMon!=null" >
+        AND  PAY_MON=#{payMon,jdbcType=CHAR}
+      </if>
+      <if test="actDat!=null" >
+        AND  ACT_DAT=#{actDat,jdbcType=DATE}
+      </if>
+      <if test="tactDt!=null" >
+        AND  TACT_DT=#{tactDt,jdbcType=DATE}
+      </if>
+      <if test="txnAmt!=null" >
+        AND  TXN_AMT=#{txnAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="flg!=null" >
+        AND  FLG=#{flg,jdbcType=CHAR}
+      </if>
+      <if test="bakFld1!=null" >
+        AND  BAK_FLD1=#{bakFld1,jdbcType=CHAR}
+      </if>
+      <if test="bakFld2!=null" >
+        AND  BAK_FLD2=#{bakFld2,jdbcType=CHAR}
+      </if>
+      <if test="bakFld3!=null" >
+        AND  BAK_FLD3=#{bakFld3,jdbcType=CHAR}
+      </if>
+      <if test="rsvFld1!=null" >
+        AND  RSV_FLD1=#{rsvFld1,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspPayInfo" >
+    update gdeupsb.TRSP_PAY_INFO
+    <set >
+      <if test="brNo != null" >
+        BR_NO = #{brNo,jdbcType=CHAR},
+      </if>
+      <if test="carTyp != null" >
+        CAR_TYP = #{carTyp,jdbcType=CHAR},
+      </if>
+      <if test="carNo != null" >
+        CAR_NO = #{carNo,jdbcType=CHAR},
+      </if>
+      <if test="tcusNm != null" >
+        TCUS_NM = #{tcusNm,jdbcType=CHAR},
+      </if>
+      <if test="payMon != null" >
+        PAY_MON = #{payMon,jdbcType=CHAR},
+      </if>
+      <if test="actDat != null" >
+        ACT_DAT = #{actDat,jdbcType=DATE},
+      </if>
+      <if test="tactDt != null" >
+        TACT_DT = #{tactDt,jdbcType=DATE},
+      </if>
+      <if test="txnAmt != null" >
+        TXN_AMT = #{txnAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="flg != null" >
+        FLG = #{flg,jdbcType=CHAR},
+      </if>
+      <if test="bakFld1 != null" >
+        BAK_FLD1 = #{bakFld1,jdbcType=CHAR},
+      </if>
+      <if test="bakFld2 != null" >
+        BAK_FLD2 = #{bakFld2,jdbcType=CHAR},
+      </if>
+      <if test="bakFld3 != null" >
+        BAK_FLD3 = #{bakFld3,jdbcType=CHAR},
+      </if>
+      <if test="rsvFld1 != null" >
+        RSV_FLD1 = #{rsvFld1,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where THD_KEY = #{thdKey,jdbcType=CHAR}
+  </update>
+   
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from gdeupsb.TRSP_PAY_INFO
+    <if test="_parameter" >
+      where THD_KEY in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
+</mapper>

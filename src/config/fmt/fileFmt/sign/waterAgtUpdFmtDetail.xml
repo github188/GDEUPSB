@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet spacket.xsd"
+	encoding="gbk" trace="true">
+	<segment name="detail" encoding="GBK">
+		<varString name="filNam" type="D|" />  <!-- 批次号-->
+		<varString name="dtlSeq" type="D|" />  <!-- 记录序号-->
+		<varString name="effDat" type="D|" />  <!-- 发送日期-->
+		<varString name="tCusId" type="D|" />  <!-- 客户编号-->
+		<varString name="actNm" type="D|" />  <!--账户名-->
+		<varString name="actNo" type="D|" />  <!--账号-->
+		<varString name="bnkNo" type="D|" />  <!--开户行名-->
+		<varString name="bnkTyp" type="D|" />  <!--银行类型-->
+		<varString name="bnkNam" type="D|" />  <!--开户行号-->
+		<varString name="telNo" type="D|" />  <!--固定电话号码-->
+		<varString name="mobTel" type="D|" />  <!--手机号码-->
+		<varString name="eMail" type="D|" />  <!--电子邮箱-->
+		<varString name="idNo" type="D|" />  <!--身份证号码-->
+		<varString name="newFlg" type="D|" />  <!--是否新办理-->
+		<varString name="prvFlg" type="D|" />  <!--是否个人用户-->
+		<varString name="gdsAId1" type="D|" />  <!--水费合同号-->
+		<varString name="gdsAId2" type="D|" />  <!--排污费合同号-->
+		<varString name="result" type="D|" />  <!--处理标志-->
+		<varString name="errMsg" type="D|" />  <!--处理失败的原因-->
+	</segment>
+</message>

@@ -1,0 +1,33 @@
+# the dictionary is for translate data between our system and other system.
+## every line format is: keyName.[ourvalue]=[othervalue]
+##
+##  During formating message out, it will translate [ourvalue] to [othervalue];
+##  During parsing message in, it will translate [othervalue] to [ourvalue].
+#  filter="both,packets/translateDict.txt"
+#  filter="format,packets/translateDict.txt"
+#  filter="parse,packets/translateDict.txt"
+
+##thdTxnCde.gdeupsb.hzPGasSmpcPayOnlineAction=460710
+#thdTxnCde.460710=gdeupsb.hzPGasSmpcPayOnlineAction
+#thdTxnCde.gdeupsb.hzPGasReversePaymentThdAction=460711
+#thdTxnCde.460711=gdeupsb.hzPGasReversePaymentThdAction
+#thdTxnCde.gdeupsb.preBatchGashDealServiceAction=460716
+#thdTxnCde.460716=gdeupsb.preBatchGashDealServiceAction
+
+#thdTxnCde.gdeupsb.oprGasCusAgentAction=460701
+#thdTxnCde.460701=gdeupsb.oprGasCusAgentAction
+
+#thdTxnCde.gdeupsb.oprGasCusAgentAction=Add
+#thdTxnCde.gdeupsb.oprGasCusAgentAction=AddNo
+#thdTxnCde.Add=gdeupsb.oprGasCusAgentAction
+#thdTxnCde.AddNo=gdeupsb.oprGasCusAgentAction
+
+#thdTxnCde.gdeupsb.oprGasCusAgentAction=Edit
+#thdTxnCde.gdeupsb.oprGasCusAgentAction=EditNo
+#thdTxnCde.Edit=gdeupsb.oprGasCusAgentAction
+#thdTxnCde.EditNo=gdeupsb.oprGasCusAgentAction
+
+#thdTxnCde.gdeupsb.oprGasCusAgentAction=Stop
+#thdTxnCde.gdeupsb.oprGasCusAgentAction=StopNo
+#thdTxnCde.Stop=gdeupsb.oprGasCusAgentAction
+#thdTxnCde.StopNo=gdeupsb.oprGasCusAgentAction

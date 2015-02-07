@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspInvChgInfo" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspInvChgInfo" >
+    <id column="SQN" property="sqn" jdbcType="CHAR" />
+    <result column="THD_KEY" property="thdKey" jdbcType="CHAR" />
+    <result column="TLOG_NO" property="tlogNo" jdbcType="CHAR" />
+    <result column="INV_NO" property="invNo" jdbcType="CHAR" />
+    <result column="OINV_NO" property="oinvNo" jdbcType="CHAR" />
+    <result column="CAR_TYP" property="carTyp" jdbcType="CHAR" />
+    <result column="CAR_NO" property="carNo" jdbcType="CHAR" />
+    <result column="TACT_DT" property="tactDt" jdbcType="DATE" />
+    <result column="ACT_DAT" property="actDat" jdbcType="DATE" />
+    <result column="NOD_NO" property="nodNo" jdbcType="CHAR" />
+    <result column="TLR_ID" property="tlrId" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    SQN, THD_KEY, TLOG_NO, INV_NO, OINV_NO, CAR_TYP, CAR_NO, TACT_DT, ACT_DAT, NOD_NO, 
+    TLR_ID
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from gdeupsb.TRSP_INV_CHG_INFO
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="thdKey!=null" >
+        AND  THD_KEY=#{thdKey,jdbcType=CHAR}
+      </if>
+      <if test="tlogNo!=null" >
+        AND  TLOG_NO=#{tlogNo,jdbcType=CHAR}
+      </if>
+      <if test="invNo!=null" >
+        AND  INV_NO=#{invNo,jdbcType=CHAR}
+      </if>
+      <if test="oinvNo!=null" >
+        AND  OINV_NO=#{oinvNo,jdbcType=CHAR}
+      </if>
+      <if test="carTyp!=null" >
+        AND  CAR_TYP=#{carTyp,jdbcType=CHAR}
+      </if>
+      <if test="carNo!=null" >
+        AND  CAR_NO=#{carNo,jdbcType=CHAR}
+      </if>
+      <if test="tactDt!=null" >
+        AND  TACT_DT=#{tactDt,jdbcType=DATE}
+      </if>
+      <if test="actDat!=null" >
+        AND  ACT_DAT=#{actDat,jdbcType=DATE}
+      </if>
+      <if test="nodNo!=null" >
+        AND  NOD_NO=#{nodNo,jdbcType=CHAR}
+      </if>
+      <if test="tlrId!=null" >
+        AND  TLR_ID=#{tlrId,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from gdeupsb.TRSP_INV_CHG_INFO
+    where SQN = #{sqn,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from gdeupsb.TRSP_INV_CHG_INFO
+    where SQN = #{sqn,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspInvChgInfo" >
+    insert into gdeupsb.TRSP_INV_CHG_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sqn != null" >
+        SQN,
+      </if>
+      <if test="thdKey != null" >
+        THD_KEY,
+      </if>
+      <if test="tlogNo != null" >
+        TLOG_NO,
+      </if>
+      <if test="invNo != null" >
+        INV_NO,
+      </if>
+      <if test="oinvNo != null" >
+        OINV_NO,
+      </if>
+      <if test="carTyp != null" >
+        CAR_TYP,
+      </if>
+      <if test="carNo != null" >
+        CAR_NO,
+      </if>
+      <if test="tactDt != null" >
+        TACT_DT,
+      </if>
+      <if test="actDat != null" >
+        ACT_DAT,
+      </if>
+      <if test="nodNo != null" >
+        NOD_NO,
+      </if>
+      <if test="tlrId != null" >
+        TLR_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sqn != null" >
+        #{sqn,jdbcType=CHAR},
+      </if>
+      <if test="thdKey != null" >
+        #{thdKey,jdbcType=CHAR},
+      </if>
+      <if test="tlogNo != null" >
+        #{tlogNo,jdbcType=CHAR},
+      </if>
+      <if test="invNo != null" >
+        #{invNo,jdbcType=CHAR},
+      </if>
+      <if test="oinvNo != null" >
+        #{oinvNo,jdbcType=CHAR},
+      </if>
+      <if test="carTyp != null" >
+        #{carTyp,jdbcType=CHAR},
+      </if>
+      <if test="carNo != null" >
+        #{carNo,jdbcType=CHAR},
+      </if>
+      <if test="tactDt != null" >
+        #{tactDt,jdbcType=DATE},
+      </if>
+      <if test="actDat != null" >
+        #{actDat,jdbcType=DATE},
+      </if>
+      <if test="nodNo != null" >
+        #{nodNo,jdbcType=CHAR},
+      </if>
+      <if test="tlrId != null" >
+        #{tlrId,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from gdeupsb.TRSP_INV_CHG_INFO
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="thdKey!=null" >
+        AND  THD_KEY=#{thdKey,jdbcType=CHAR}
+      </if>
+      <if test="tlogNo!=null" >
+        AND  TLOG_NO=#{tlogNo,jdbcType=CHAR}
+      </if>
+      <if test="invNo!=null" >
+        AND  INV_NO=#{invNo,jdbcType=CHAR}
+      </if>
+      <if test="oinvNo!=null" >
+        AND  OINV_NO=#{oinvNo,jdbcType=CHAR}
+      </if>
+      <if test="carTyp!=null" >
+        AND  CAR_TYP=#{carTyp,jdbcType=CHAR}
+      </if>
+      <if test="carNo!=null" >
+        AND  CAR_NO=#{carNo,jdbcType=CHAR}
+      </if>
+      <if test="tactDt!=null" >
+        AND  TACT_DT=#{tactDt,jdbcType=DATE}
+      </if>
+      <if test="actDat!=null" >
+        AND  ACT_DAT=#{actDat,jdbcType=DATE}
+      </if>
+      <if test="nodNo!=null" >
+        AND  NOD_NO=#{nodNo,jdbcType=CHAR}
+      </if>
+      <if test="tlrId!=null" >
+        AND  TLR_ID=#{tlrId,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspInvChgInfo" >
+    update gdeupsb.TRSP_INV_CHG_INFO
+    <set >
+      <if test="thdKey != null" >
+        THD_KEY = #{thdKey,jdbcType=CHAR},
+      </if>
+      <if test="tlogNo != null" >
+        TLOG_NO = #{tlogNo,jdbcType=CHAR},
+      </if>
+      <if test="invNo != null" >
+        INV_NO = #{invNo,jdbcType=CHAR},
+      </if>
+      <if test="oinvNo != null" >
+        OINV_NO = #{oinvNo,jdbcType=CHAR},
+      </if>
+      <if test="carTyp != null" >
+        CAR_TYP = #{carTyp,jdbcType=CHAR},
+      </if>
+      <if test="carNo != null" >
+        CAR_NO = #{carNo,jdbcType=CHAR},
+      </if>
+      <if test="tactDt != null" >
+        TACT_DT = #{tactDt,jdbcType=DATE},
+      </if>
+      <if test="actDat != null" >
+        ACT_DAT = #{actDat,jdbcType=DATE},
+      </if>
+      <if test="nodNo != null" >
+        NOD_NO = #{nodNo,jdbcType=CHAR},
+      </if>
+      <if test="tlrId != null" >
+        TLR_ID = #{tlrId,jdbcType=CHAR},
+      </if>
+    </set>
+    where SQN = #{sqn,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from gdeupsb.TRSP_INV_CHG_INFO
+    <if test="_parameter" >
+      where SQN in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
+</mapper>

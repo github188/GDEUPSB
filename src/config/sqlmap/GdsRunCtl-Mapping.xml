@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdsRunCtl" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdsRunCtl" >
+    <id column="GDS_BID" property="gdsBid" jdbcType="CHAR" />
+    <result column="GDS_BNM" property="gdsBnm" jdbcType="CHAR" />
+    <result column="AGT_MTB" property="agtMtb" jdbcType="CHAR" />
+    <result column="AGT_STB" property="agtStb" jdbcType="CHAR" />
+    <result column="JNL_MTB" property="jnlMtb" jdbcType="CHAR" />
+    <result column="JNL_STB" property="jnlStb" jdbcType="CHAR" />
+    <result column="ATH_FLG" property="athFlg" jdbcType="CHAR" />
+    <result column="NAM_CHK" property="namChk" jdbcType="CHAR" />
+    <result column="PIN_CHK" property="pinChk" jdbcType="CHAR" />
+    <result column="PSW_CHK" property="pswChk" jdbcType="CHAR" />
+    <result column="LCL_CHK" property="lclChk" jdbcType="CHAR" />
+    <result column="LCL_SVR" property="lclSvr" jdbcType="CHAR" />
+    <result column="LCL_COD" property="lclCod" jdbcType="CHAR" />
+    <result column="THD_CHK" property="thdChk" jdbcType="CHAR" />
+    <result column="THD_SVR" property="thdSvr" jdbcType="CHAR" />
+    <result column="THD_COD" property="thdCod" jdbcType="CHAR" />
+    <result column="AGT_BR" property="agtBr" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    GDS_BID, GDS_BNM, AGT_MTB, AGT_STB, JNL_MTB, JNL_STB, ATH_FLG, NAM_CHK, PIN_CHK, 
+    PSW_CHK, LCL_CHK, LCL_SVR, LCL_COD, THD_CHK, THD_SVR, THD_COD, AGT_BR
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDS_RUN_CTL
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="gdsBid!=null" >
+        AND  GDS_BID=#{gdsBid,jdbcType=CHAR}
+      </if>
+      <if test="gdsBnm!=null" >
+        AND  GDS_BNM=#{gdsBnm,jdbcType=CHAR}
+      </if>
+      <if test="agtMtb!=null" >
+        AND  AGT_MTB=#{agtMtb,jdbcType=CHAR}
+      </if>
+      <if test="agtStb!=null" >
+        AND  AGT_STB=#{agtStb,jdbcType=CHAR}
+      </if>
+      <if test="jnlMtb!=null" >
+        AND  JNL_MTB=#{jnlMtb,jdbcType=CHAR}
+      </if>
+      <if test="jnlStb!=null" >
+        AND  JNL_STB=#{jnlStb,jdbcType=CHAR}
+      </if>
+      <if test="athFlg!=null" >
+        AND  ATH_FLG=#{athFlg,jdbcType=CHAR}
+      </if>
+      <if test="namChk!=null" >
+        AND  NAM_CHK=#{namChk,jdbcType=CHAR}
+      </if>
+      <if test="pinChk!=null" >
+        AND  PIN_CHK=#{pinChk,jdbcType=CHAR}
+      </if>
+      <if test="pswChk!=null" >
+        AND  PSW_CHK=#{pswChk,jdbcType=CHAR}
+      </if>
+      <if test="lclChk!=null" >
+        AND  LCL_CHK=#{lclChk,jdbcType=CHAR}
+      </if>
+      <if test="lclSvr!=null" >
+        AND  LCL_SVR=#{lclSvr,jdbcType=CHAR}
+      </if>
+      <if test="lclCod!=null" >
+        AND  LCL_COD=#{lclCod,jdbcType=CHAR}
+      </if>
+      <if test="thdChk!=null" >
+        AND  THD_CHK=#{thdChk,jdbcType=CHAR}
+      </if>
+      <if test="thdSvr!=null" >
+        AND  THD_SVR=#{thdSvr,jdbcType=CHAR}
+      </if>
+      <if test="thdCod!=null" >
+        AND  THD_COD=#{thdCod,jdbcType=CHAR}
+      </if>
+      <if test="agtBr!=null" >
+        AND  AGT_BR=#{agtBr,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDS_RUN_CTL
+    where GDS_BID = #{gdsBid,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from ${GDEUPSB_SCHEMA}.GDS_RUN_CTL
+    where GDS_BID = #{gdsBid,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdsRunCtl" >
+    insert into ${GDEUPSB_SCHEMA}.GDS_RUN_CTL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gdsBid != null" >
+        GDS_BID,
+      </if>
+      <if test="gdsBnm != null" >
+        GDS_BNM,
+      </if>
+      <if test="agtMtb != null" >
+        AGT_MTB,
+      </if>
+      <if test="agtStb != null" >
+        AGT_STB,
+      </if>
+      <if test="jnlMtb != null" >
+        JNL_MTB,
+      </if>
+      <if test="jnlStb != null" >
+        JNL_STB,
+      </if>
+      <if test="athFlg != null" >
+        ATH_FLG,
+      </if>
+      <if test="namChk != null" >
+        NAM_CHK,
+      </if>
+      <if test="pinChk != null" >
+        PIN_CHK,
+      </if>
+      <if test="pswChk != null" >
+        PSW_CHK,
+      </if>
+      <if test="lclChk != null" >
+        LCL_CHK,
+      </if>
+      <if test="lclSvr != null" >
+        LCL_SVR,
+      </if>
+      <if test="lclCod != null" >
+        LCL_COD,
+      </if>
+      <if test="thdChk != null" >
+        THD_CHK,
+      </if>
+      <if test="thdSvr != null" >
+        THD_SVR,
+      </if>
+      <if test="thdCod != null" >
+        THD_COD,
+      </if>
+      <if test="agtBr != null" >
+        AGT_BR,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gdsBid != null" >
+        #{gdsBid,jdbcType=CHAR},
+      </if>
+      <if test="gdsBnm != null" >
+        #{gdsBnm,jdbcType=CHAR},
+      </if>
+      <if test="agtMtb != null" >
+        #{agtMtb,jdbcType=CHAR},
+      </if>
+      <if test="agtStb != null" >
+        #{agtStb,jdbcType=CHAR},
+      </if>
+      <if test="jnlMtb != null" >
+        #{jnlMtb,jdbcType=CHAR},
+      </if>
+      <if test="jnlStb != null" >
+        #{jnlStb,jdbcType=CHAR},
+      </if>
+      <if test="athFlg != null" >
+        #{athFlg,jdbcType=CHAR},
+      </if>
+      <if test="namChk != null" >
+        #{namChk,jdbcType=CHAR},
+      </if>
+      <if test="pinChk != null" >
+        #{pinChk,jdbcType=CHAR},
+      </if>
+      <if test="pswChk != null" >
+        #{pswChk,jdbcType=CHAR},
+      </if>
+      <if test="lclChk != null" >
+        #{lclChk,jdbcType=CHAR},
+      </if>
+      <if test="lclSvr != null" >
+        #{lclSvr,jdbcType=CHAR},
+      </if>
+      <if test="lclCod != null" >
+        #{lclCod,jdbcType=CHAR},
+      </if>
+      <if test="thdChk != null" >
+        #{thdChk,jdbcType=CHAR},
+      </if>
+      <if test="thdSvr != null" >
+        #{thdSvr,jdbcType=CHAR},
+      </if>
+      <if test="thdCod != null" >
+        #{thdCod,jdbcType=CHAR},
+      </if>
+      <if test="agtBr != null" >
+        #{agtBr,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSB_SCHEMA}.GDS_RUN_CTL
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="gdsBid!=null" >
+        AND  GDS_BID=#{gdsBid,jdbcType=CHAR}
+      </if>
+      <if test="gdsBnm!=null" >
+        AND  GDS_BNM=#{gdsBnm,jdbcType=CHAR}
+      </if>
+      <if test="agtMtb!=null" >
+        AND  AGT_MTB=#{agtMtb,jdbcType=CHAR}
+      </if>
+      <if test="agtStb!=null" >
+        AND  AGT_STB=#{agtStb,jdbcType=CHAR}
+      </if>
+      <if test="jnlMtb!=null" >
+        AND  JNL_MTB=#{jnlMtb,jdbcType=CHAR}
+      </if>
+      <if test="jnlStb!=null" >
+        AND  JNL_STB=#{jnlStb,jdbcType=CHAR}
+      </if>
+      <if test="athFlg!=null" >
+        AND  ATH_FLG=#{athFlg,jdbcType=CHAR}
+      </if>
+      <if test="namChk!=null" >
+        AND  NAM_CHK=#{namChk,jdbcType=CHAR}
+      </if>
+      <if test="pinChk!=null" >
+        AND  PIN_CHK=#{pinChk,jdbcType=CHAR}
+      </if>
+      <if test="pswChk!=null" >
+        AND  PSW_CHK=#{pswChk,jdbcType=CHAR}
+      </if>
+      <if test="lclChk!=null" >
+        AND  LCL_CHK=#{lclChk,jdbcType=CHAR}
+      </if>
+      <if test="lclSvr!=null" >
+        AND  LCL_SVR=#{lclSvr,jdbcType=CHAR}
+      </if>
+      <if test="lclCod!=null" >
+        AND  LCL_COD=#{lclCod,jdbcType=CHAR}
+      </if>
+      <if test="thdChk!=null" >
+        AND  THD_CHK=#{thdChk,jdbcType=CHAR}
+      </if>
+      <if test="thdSvr!=null" >
+        AND  THD_SVR=#{thdSvr,jdbcType=CHAR}
+      </if>
+      <if test="thdCod!=null" >
+        AND  THD_COD=#{thdCod,jdbcType=CHAR}
+      </if>
+      <if test="agtBr!=null" >
+        AND  AGT_BR=#{agtBr,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdsRunCtl" >
+    update ${GDEUPSB_SCHEMA}.GDS_RUN_CTL
+    <set >
+      <if test="gdsBnm != null" >
+        GDS_BNM = #{gdsBnm,jdbcType=CHAR},
+      </if>
+      <if test="agtMtb != null" >
+        AGT_MTB = #{agtMtb,jdbcType=CHAR},
+      </if>
+      <if test="agtStb != null" >
+        AGT_STB = #{agtStb,jdbcType=CHAR},
+      </if>
+      <if test="jnlMtb != null" >
+        JNL_MTB = #{jnlMtb,jdbcType=CHAR},
+      </if>
+      <if test="jnlStb != null" >
+        JNL_STB = #{jnlStb,jdbcType=CHAR},
+      </if>
+      <if test="athFlg != null" >
+        ATH_FLG = #{athFlg,jdbcType=CHAR},
+      </if>
+      <if test="namChk != null" >
+        NAM_CHK = #{namChk,jdbcType=CHAR},
+      </if>
+      <if test="pinChk != null" >
+        PIN_CHK = #{pinChk,jdbcType=CHAR},
+      </if>
+      <if test="pswChk != null" >
+        PSW_CHK = #{pswChk,jdbcType=CHAR},
+      </if>
+      <if test="lclChk != null" >
+        LCL_CHK = #{lclChk,jdbcType=CHAR},
+      </if>
+      <if test="lclSvr != null" >
+        LCL_SVR = #{lclSvr,jdbcType=CHAR},
+      </if>
+      <if test="lclCod != null" >
+        LCL_COD = #{lclCod,jdbcType=CHAR},
+      </if>
+      <if test="thdChk != null" >
+        THD_CHK = #{thdChk,jdbcType=CHAR},
+      </if>
+      <if test="thdSvr != null" >
+        THD_SVR = #{thdSvr,jdbcType=CHAR},
+      </if>
+      <if test="thdCod != null" >
+        THD_COD = #{thdCod,jdbcType=CHAR},
+      </if>
+      <if test="agtBr != null" >
+        AGT_BR = #{agtBr,jdbcType=CHAR},
+      </if>
+    </set>
+    where GDS_BID = #{gdsBid,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDS_RUN_CTL
+    <if test="_parameter" >
+      where GDS_BID in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
+  
+  	<!-- 签约一站通:根据卡号查询签订业务种类信息-->
+	<select id="findSignCardBId" resultType="java.util.Map">
+		select b.GDS_BID gdsBid,b.Agt_STb agtStb from ${GDEUPSB_SCHEMA}.GDS_RUN_CTL b, ${GDEUPSB_SCHEMA}.GDS_AGT_INF a
+		 where a.Act_No =#{actNo} and a.Gds_BId=b.Gds_BId order by gdsBid
+	</select>
+  
+  
+</mapper>

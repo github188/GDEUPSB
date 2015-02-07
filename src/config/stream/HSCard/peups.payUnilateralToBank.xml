@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="body" >
+	 <fixString length="8" name="tmlNo"  /> <!-- 终端号 -->
+	<fixString length="6" name="thdSqn"  /> <!-- 圈存流水-->
+	    <fixString length="18" name="DCC_ID_NO" /> <!-- 学工号-->
+	     <fixString length="20" name="cusAc"  /> <!-- 银行卡号 -->
+	     <fixString length="1" name="idTyp"  /> <!-- 证件类型 -->
+	     <fixString length="20" name="idNo"  /> <!-- 证件号码 -->
+	     <fixString length="20" name="DCC_NAME"  /> <!-- 姓名 -->
+	     <fixString length="18"  name="txnAmt"  /> <!-- 圈款金额 -->
+	    <fixString length="32" name="DCC_DDP_RMRK" /> <!-- 备注1 -->
+	    <fixString length="32" name="DCC_DEP_RMRK"  /> <!-- 备注2 -->
+	    <fixString length="32" name="DCC_DRW_RMRK"  /> <!-- 备注3 -->
+	    <fixString length="8" name="DCC_MAC"  /> <!-- 16进制字符串 -->
+      
+</segment>

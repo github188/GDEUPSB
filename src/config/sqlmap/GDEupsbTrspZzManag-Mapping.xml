@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspZzManag" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspZzManag" >
+    <id column="NOD_NO" property="nodNo" jdbcType="CHAR" />
+    <id column="ZZ_DAT" property="zzDat" jdbcType="CHAR" />
+    <result column="FLG" property="flg" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    NOD_NO, ZZ_DAT, FLG
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from gdeupsb.TRSP_ZZ_MANAG
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="nodNo!=null" >
+        AND  NOD_NO=#{nodNo,jdbcType=CHAR}
+      </if>
+      <if test="zzDat!=null" >
+        AND  ZZ_DAT=#{zzDat,jdbcType=CHAR}
+      </if>
+      <if test="flg!=null" >
+        AND  FLG=#{flg,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspZzManagKey" >
+    select 
+    <include refid="baseColumnList" />
+    from gdeupsb.TRSP_ZZ_MANAG
+    where NOD_NO = #{nodNo,jdbcType=CHAR}
+      and ZZ_DAT = #{zzDat,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspZzManagKey" >
+    delete from gdeupsb.TRSP_ZZ_MANAG
+    where NOD_NO = #{nodNo,jdbcType=CHAR}
+      and ZZ_DAT = #{zzDat,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspZzManag" >
+    insert into gdeupsb.TRSP_ZZ_MANAG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="nodNo != null" >
+        NOD_NO,
+      </if>
+      <if test="zzDat != null" >
+        ZZ_DAT,
+      </if>
+      <if test="flg != null" >
+        FLG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="nodNo != null" >
+        #{nodNo,jdbcType=CHAR},
+      </if>
+      <if test="zzDat != null" >
+        #{zzDat,jdbcType=CHAR},
+      </if>
+      <if test="flg != null" >
+        #{flg,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from gdeupsb.TRSP_ZZ_MANAG
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="nodNo!=null" >
+        AND  NOD_NO=#{nodNo,jdbcType=CHAR}
+      </if>
+      <if test="zzDat!=null" >
+        AND  ZZ_DAT=#{zzDat,jdbcType=CHAR}
+      </if>
+      <if test="flg!=null" >
+        AND  FLG=#{flg,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspZzManag" >
+    update gdeupsb.TRSP_ZZ_MANAG
+    <set >
+      <if test="flg != null" >
+        FLG = #{flg,jdbcType=CHAR},
+      </if>
+    </set>
+    where NOD_NO = #{nodNo,jdbcType=CHAR}
+      and ZZ_DAT = #{zzDat,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from gdeupsb.TRSP_ZZ_MANAG
+    <if test="_parameter" >
+      where 
+      <foreach item="item" index="index" collection="list" separator="or" >
+        (NOD_NO=#{item.nodNo,jdbcType=CHAR} AND ZZ_DAT=#{item.zzDat,jdbcType=CHAR})
+      </foreach>
+    </if>
+  </select>
+</mapper>

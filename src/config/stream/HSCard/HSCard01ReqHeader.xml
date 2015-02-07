@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	type="LLLL" encoding="GBK" trace="true"  filter="both,WEB-INF/classes/config/stream/HSCard/translateDict.txt">
+	<segment name="head">
+		<fixString name="TransCode" length="6"  referred="true" mapping="true"/>  
+		<fixString name="DCC_SCHID" length="10"/>  <!--学校代号 -->
+		<fixString name="thdTxnDte" length="8"/>  <!--交易日期 -->
+	</segment>
+ 	<include keys="TransCode" decodePrefix="p"/> 
+</message>

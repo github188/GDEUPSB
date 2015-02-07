@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+     filter="both,WEB-INF/classes/config/stream/PGAS00/translateDict.txt"
+     encoding="UTF-8"  trace="true">	<!-- type="LLLL"  -->
+	<segment name="hzGasRsp">
+	
+	<!-- <fixString name="TransCode" length="6" />
+	<fixString  name="Deli1" length="1" default=","/> -->
+	<!-- 
+	<fixString name="comNo" length="10" />
+	<fixString  name="Deli1" length="1" default=","/>
+	
+	<fixString name="thdTxnCde" length="10" />
+ 	<fixString  name="Deli1" length="1" default=","/>
+ 	 -->
+ 	 
+ 	 <String name="thdTxnCde" length="6" />
+ 	 <!-- <fixString  name="Deli1" length="1" default=","/> -->
+ 	
+ 	 <fixString name="rtnCod" length="10" />
+ 	 <!-- <fixString  name="Deli2" length="1" default=","/> -->
+ 	 
+ 	 
+	</segment>
+ 	<!-- <include keys="TransCode" encodePrefix="rsp" /> -->
+ 	
+ 	 <select name="hzGasReqBody" key="tccode" default="N">
+		<include name="N" keys="thdTxnCde" encodePrefix="req" decodePrefix="rsp" />
+	</select>
+ 	
+ 	
+ 	
+</message>

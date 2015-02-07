@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="460413Req">
+		
+		   <fixString name="netName" length="64" /><!-- 网点名称 -->
+	      <fixString name="sqn" length="24" /><!-- 交易流水号 -->
+		<fixString name="traSendDate" length="8" /><!-- 交易日期 -->
+		<fixString name="traSendTime" length="6" /><!--  交易时间-->
+	     <fixString name="busTyp" length="3" /><!--  收费方式-->
+		<fixString name="payType" length="3" /><!--  费用类型-->
+		<fixString name="comNo" length="8" /><!--  单位编码-->
+		<fixString name="payNo" length="20" /><!-- 缴费号 -->
+	    <fixString name="traSendDate" length="8" /><!-- 存入日期 -->
+		<fixString name="traSendTime" length="6" /><!--  存入时间-->
+		<fixString name="payInAdvMoney" length="16" /><!--  存入预付款-->
+	    <fixString name="payMde" length="1" /><!-- 付款方式 -->
+	    <fixString name="txnTlr" length="20" /><!-- 操作员号 -->
+		<fixString name="bakFld1" length="128" /><!-- 备注说明 -->
+      
+	</segment>

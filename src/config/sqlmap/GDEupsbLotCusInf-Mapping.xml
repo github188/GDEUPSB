@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GDEupsbLotCusInf" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GDEupsbLotCusInf" >
+    <id column="CRDNO" property="crdno" jdbcType="CHAR" />
+    <result column="BRNO" property="brno" jdbcType="CHAR" />
+    <result column="CUSNAM" property="cusnam" jdbcType="CHAR" />
+    <result column="ACTNO" property="actno" jdbcType="CHAR" />
+    <result column="ACTNOD" property="actnod" jdbcType="CHAR" />
+    <result column="IDTYP" property="idtyp" jdbcType="CHAR" />
+    <result column="IDNO" property="idno" jdbcType="CHAR" />
+    <result column="MOBTEL" property="mobtel" jdbcType="CHAR" />
+    <result column="FIXTEL" property="fixtel" jdbcType="CHAR" />
+    <result column="LOTNAM" property="lotnam" jdbcType="CHAR" />
+    <result column="LOTPSW" property="lotpsw" jdbcType="CHAR" />
+    <result column="REGTIM" property="regtim" jdbcType="CHAR" />
+    <result column="EMAIL" property="email" jdbcType="CHAR" />
+    <result column="CITYID" property="cityid" jdbcType="CHAR" />
+    <result column="SEX" property="sex" jdbcType="CHAR" />
+    <result column="BTHDAY" property="bthday" jdbcType="CHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    CRDNO, BRNO, CUSNAM, ACTNO, ACTNOD, IDTYP, IDNO, MOBTEL, FIXTEL, LOTNAM, LOTPSW, 
+    REGTIM, EMAIL, CITYID, SEX, BTHDAY, STATUS
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from gdeupsb.LOT_CUS_INF
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="crdno!=null" >
+        AND  CRDNO=#{crdno,jdbcType=CHAR}
+      </if>
+      <if test="brno!=null" >
+        AND  BRNO=#{brno,jdbcType=CHAR}
+      </if>
+      <if test="cusnam!=null" >
+        AND  CUSNAM=#{cusnam,jdbcType=CHAR}
+      </if>
+      <if test="actno!=null" >
+        AND  ACTNO=#{actno,jdbcType=CHAR}
+      </if>
+      <if test="actnod!=null" >
+        AND  ACTNOD=#{actnod,jdbcType=CHAR}
+      </if>
+      <if test="idtyp!=null" >
+        AND  IDTYP=#{idtyp,jdbcType=CHAR}
+      </if>
+      <if test="idno!=null" >
+        AND  IDNO=#{idno,jdbcType=CHAR}
+      </if>
+      <if test="mobtel!=null" >
+        AND  MOBTEL=#{mobtel,jdbcType=CHAR}
+      </if>
+      <if test="fixtel!=null" >
+        AND  FIXTEL=#{fixtel,jdbcType=CHAR}
+      </if>
+      <if test="lotnam!=null" >
+        AND  LOTNAM=#{lotnam,jdbcType=CHAR}
+      </if>
+      <if test="lotpsw!=null" >
+        AND  LOTPSW=#{lotpsw,jdbcType=CHAR}
+      </if>
+      <if test="regtim!=null" >
+        AND  REGTIM=#{regtim,jdbcType=CHAR}
+      </if>
+      <if test="email!=null" >
+        AND  EMAIL=#{email,jdbcType=CHAR}
+      </if>
+      <if test="cityid!=null" >
+        AND  CITYID=#{cityid,jdbcType=CHAR}
+      </if>
+      <if test="sex!=null" >
+        AND  SEX=#{sex,jdbcType=CHAR}
+      </if>
+      <if test="bthday!=null" >
+        AND  BTHDAY=#{bthday,jdbcType=CHAR}
+      </if>
+      <if test="status!=null" >
+        AND  STATUS=#{status,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from gdeupsb.LOT_CUS_INF
+    where CRDNO = #{crdno,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from gdeupsb.LOT_CUS_INF
+    where CRDNO = #{crdno,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbLotCusInf" >
+    insert into gdeupsb.LOT_CUS_INF
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="crdno != null" >
+        CRDNO,
+      </if>
+      <if test="brno != null" >
+        BRNO,
+      </if>
+      <if test="cusnam != null" >
+        CUSNAM,
+      </if>
+      <if test="actno != null" >
+        ACTNO,
+      </if>
+      <if test="actnod != null" >
+        ACTNOD,
+      </if>
+      <if test="idtyp != null" >
+        IDTYP,
+      </if>
+      <if test="idno != null" >
+        IDNO,
+      </if>
+      <if test="mobtel != null" >
+        MOBTEL,
+      </if>
+      <if test="fixtel != null" >
+        FIXTEL,
+      </if>
+      <if test="lotnam != null" >
+        LOTNAM,
+      </if>
+      <if test="lotpsw != null" >
+        LOTPSW,
+      </if>
+      <if test="regtim != null" >
+        REGTIM,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="cityid != null" >
+        CITYID,
+      </if>
+      <if test="sex != null" >
+        SEX,
+      </if>
+      <if test="bthday != null" >
+        BTHDAY,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="crdno != null" >
+        #{crdno,jdbcType=CHAR},
+      </if>
+      <if test="brno != null" >
+        #{brno,jdbcType=CHAR},
+      </if>
+      <if test="cusnam != null" >
+        #{cusnam,jdbcType=CHAR},
+      </if>
+      <if test="actno != null" >
+        #{actno,jdbcType=CHAR},
+      </if>
+      <if test="actnod != null" >
+        #{actnod,jdbcType=CHAR},
+      </if>
+      <if test="idtyp != null" >
+        #{idtyp,jdbcType=CHAR},
+      </if>
+      <if test="idno != null" >
+        #{idno,jdbcType=CHAR},
+      </if>
+      <if test="mobtel != null" >
+        #{mobtel,jdbcType=CHAR},
+      </if>
+      <if test="fixtel != null" >
+        #{fixtel,jdbcType=CHAR},
+      </if>
+      <if test="lotnam != null" >
+        #{lotnam,jdbcType=CHAR},
+      </if>
+      <if test="lotpsw != null" >
+        #{lotpsw,jdbcType=CHAR},
+      </if>
+      <if test="regtim != null" >
+        #{regtim,jdbcType=CHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=CHAR},
+      </if>
+      <if test="cityid != null" >
+        #{cityid,jdbcType=CHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=CHAR},
+      </if>
+      <if test="bthday != null" >
+        #{bthday,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from gdeupsb.LOT_CUS_INF
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="crdno!=null" >
+        AND  CRDNO=#{crdno,jdbcType=CHAR}
+      </if>
+      <if test="brno!=null" >
+        AND  BRNO=#{brno,jdbcType=CHAR}
+      </if>
+      <if test="cusnam!=null" >
+        AND  CUSNAM=#{cusnam,jdbcType=CHAR}
+      </if>
+      <if test="actno!=null" >
+        AND  ACTNO=#{actno,jdbcType=CHAR}
+      </if>
+      <if test="actnod!=null" >
+        AND  ACTNOD=#{actnod,jdbcType=CHAR}
+      </if>
+      <if test="idtyp!=null" >
+        AND  IDTYP=#{idtyp,jdbcType=CHAR}
+      </if>
+      <if test="idno!=null" >
+        AND  IDNO=#{idno,jdbcType=CHAR}
+      </if>
+      <if test="mobtel!=null" >
+        AND  MOBTEL=#{mobtel,jdbcType=CHAR}
+      </if>
+      <if test="fixtel!=null" >
+        AND  FIXTEL=#{fixtel,jdbcType=CHAR}
+      </if>
+      <if test="lotnam!=null" >
+        AND  LOTNAM=#{lotnam,jdbcType=CHAR}
+      </if>
+      <if test="lotpsw!=null" >
+        AND  LOTPSW=#{lotpsw,jdbcType=CHAR}
+      </if>
+      <if test="regtim!=null" >
+        AND  REGTIM=#{regtim,jdbcType=CHAR}
+      </if>
+      <if test="email!=null" >
+        AND  EMAIL=#{email,jdbcType=CHAR}
+      </if>
+      <if test="cityid!=null" >
+        AND  CITYID=#{cityid,jdbcType=CHAR}
+      </if>
+      <if test="sex!=null" >
+        AND  SEX=#{sex,jdbcType=CHAR}
+      </if>
+      <if test="bthday!=null" >
+        AND  BTHDAY=#{bthday,jdbcType=CHAR}
+      </if>
+      <if test="status!=null" >
+        AND  STATUS=#{status,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbLotCusInf" >
+    update gdeupsb.LOT_CUS_INF
+    <set >
+      <if test="brno != null" >
+        BRNO = #{brno,jdbcType=CHAR},
+      </if>
+      <if test="cusnam != null" >
+        CUSNAM = #{cusnam,jdbcType=CHAR},
+      </if>
+      <if test="actno != null" >
+        ACTNO = #{actno,jdbcType=CHAR},
+      </if>
+      <if test="actnod != null" >
+        ACTNOD = #{actnod,jdbcType=CHAR},
+      </if>
+      <if test="idtyp != null" >
+        IDTYP = #{idtyp,jdbcType=CHAR},
+      </if>
+      <if test="idno != null" >
+        IDNO = #{idno,jdbcType=CHAR},
+      </if>
+      <if test="mobtel != null" >
+        MOBTEL = #{mobtel,jdbcType=CHAR},
+      </if>
+      <if test="fixtel != null" >
+        FIXTEL = #{fixtel,jdbcType=CHAR},
+      </if>
+      <if test="lotnam != null" >
+        LOTNAM = #{lotnam,jdbcType=CHAR},
+      </if>
+      <if test="lotpsw != null" >
+        LOTPSW = #{lotpsw,jdbcType=CHAR},
+      </if>
+      <if test="regtim != null" >
+        REGTIM = #{regtim,jdbcType=CHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=CHAR},
+      </if>
+      <if test="cityid != null" >
+        CITYID = #{cityid,jdbcType=CHAR},
+      </if>
+      <if test="sex != null" >
+        SEX = #{sex,jdbcType=CHAR},
+      </if>
+      <if test="bthday != null" >
+        BTHDAY = #{bthday,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+    </set>
+    where CRDNO = #{crdno,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from gdeupsb.LOT_CUS_INF
+    <if test="_parameter" >
+      where CRDNO in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
+</mapper>

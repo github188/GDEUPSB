@@ -1,0 +1,20 @@
+<x:beans xmlns:x="http://www.springframework.org/schema/beans"
+	xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+	<!-- 一卡通签到  -->
+	<process id="gdeupsb.hSCardSignIn" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">
+		<actions>
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.hscard.HScardSignInAction"/>
+		</actions>
+	</process> 
+	
+	<!-- 一卡通签退  -->
+	<process id="gdeupsb.hSCardSignOut" template="eups.simpleTran"
+		interceptors="eups.transMessageInterceptor">
+		<actions>
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.hscard.HScardSignOutAction"/>
+		</actions>
+	</process> 
+
+</x:beans>

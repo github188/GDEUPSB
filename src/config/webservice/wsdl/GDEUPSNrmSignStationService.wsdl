@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignStationService" xmlns:gdeupsb="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignStationService/Schema" name="GDEUPSNrmSignStationService" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignStationService">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignStationService">
+      <xsd:import namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignStationService/Schema" schemaLocation="GDEUPSNrmSignStationService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="agentUpdateRequestMessage">
+    <wsdl:part name="agentUpdateRequest" element="gdeupsb:agentUpdate"/>
+  </wsdl:message>
+  <wsdl:message name="agentUpdateResponseMessage">
+    <wsdl:part name="agentUpdateResponse" element="gdeupsb:agentUpdateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="agentBatchOperateRequestMessage">
+    <wsdl:part name="agentBatchOperateRequest" element="gdeupsb:agentBatchOperate"/>
+  </wsdl:message>
+  <wsdl:message name="agentBatchOperateResponseMessage">
+    <wsdl:part name="agentBatchOperateResponse" element="gdeupsb:agentBatchOperateResponse"/>
+  </wsdl:message>
+  <wsdl:message name="agentFileSendRequestMessage">
+    <wsdl:part name="agentFileSendRequest" element="gdeupsb:agentFileSend"/>
+  </wsdl:message>
+  <wsdl:message name="agentFileSendResponseMessage">
+    <wsdl:part name="agentFileSendResponse" element="gdeupsb:agentFileSendResponse"/>
+  </wsdl:message>
+  <wsdl:message name="agentScanPrintRequestMessage">
+    <wsdl:part name="agentScanPrintRequest" element="gdeupsb:agentScanPrint"/>
+  </wsdl:message>
+  <wsdl:message name="agentScanPrintResponseMessage">
+    <wsdl:part name="agentScanPrintResponse" element="gdeupsb:agentScanPrintResponse"/>
+  </wsdl:message>
+  <wsdl:message name="agentFleSndUnSureDelRequestMessage">
+    <wsdl:part name="agentFleSndUnSureDelRequest" element="gdeupsb:agentFleSndUnSureDel"/>
+  </wsdl:message>
+  <wsdl:message name="agentFleSndUnSureDelResponseMessage">
+    <wsdl:part name="agentFleSndUnSureDelResponse" element="gdeupsb:agentFleSndUnSureDelResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="GDEUPSNrmSignStationServicePortType">
+    <wsdl:operation name="agentUpdate">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:agentUpdateRequestMessage"/>
+      <wsdl:output message="tns:agentUpdateResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="agentBatchOperate">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:agentBatchOperateRequestMessage"/>
+      <wsdl:output message="tns:agentBatchOperateResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="agentFileSend">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:agentFileSendRequestMessage"/>
+      <wsdl:output message="tns:agentFileSendResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="agentScanPrint">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:agentScanPrintRequestMessage"/>
+      <wsdl:output message="tns:agentScanPrintResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="agentFleSndUnSureDel">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:agentFleSndUnSureDelRequestMessage"/>
+      <wsdl:output message="tns:agentFleSndUnSureDelResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GDEUPSNrmSignStationServiceSoapBinding" type="tns:GDEUPSNrmSignStationServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="agentUpdate">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignStationService/agentUpdate"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="agentBatchOperate">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignStationService/agentBatchOperate"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="agentFileSend">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignStationService/agentFileSend"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="agentScanPrint">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignStationService/agentScanPrint"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="agentFleSndUnSureDel">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignStationService/agentFleSndUnSureDel"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GDEUPSNrmSignStationService">
+    <wsdl:port name="GDEUPSNrmSignStationServicePort" binding="tns:GDEUPSNrmSignStationServiceSoapBinding">
+      <soap:address location="http://127.0.0.1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

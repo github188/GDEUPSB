@@ -1,0 +1,844 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GDEupsbLotTxnJnl" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GDEupsbLotTxnJnl" >
+    <id column="TXNLOG" property="txnLog" jdbcType="CHAR" />
+    <result column="BRNO" property="brNo" jdbcType="CHAR" />
+    <result column="LOGNO" property="logNo" jdbcType="CHAR" />
+    <result column="TTXNCD" property="tTxnCd" jdbcType="CHAR" />
+    <result column="TXNCOD" property="txnCod" jdbcType="CHAR" />
+    <result column="SCHTYP" property="schTyp" jdbcType="CHAR" />
+    <result column="SCHTIT" property="schTit" jdbcType="CHAR" />
+    <result column="SECLEV" property="seclev" jdbcType="CHAR" />
+    <result column="CITYID" property="cityId" jdbcType="CHAR" />
+    <result column="DRAWID" property="drawId" jdbcType="CHAR" />
+    <result column="KENOID" property="kenoId" jdbcType="CHAR" />
+    <result column="GAMEID" property="gameId" jdbcType="CHAR" />
+    <result column="GAMNAM" property="gamNam" jdbcType="CHAR" />
+    <result column="PLAYID" property="playId" jdbcType="CHAR" />
+    <result column="BETMET" property="betMet" jdbcType="CHAR" />
+    <result column="BETMOD" property="betMod" jdbcType="CHAR" />
+    <result column="BETMUL" property="betMul" jdbcType="CHAR" />
+    <result column="TXNAMT" property="txnAmt" jdbcType="CHAR" />
+    <result column="BETLIN" property="betLin" jdbcType="CHAR" />
+    <result column="LOTNAM" property="lotNam" jdbcType="CHAR" />
+    <result column="BETDAT" property="betDat" jdbcType="CHAR" />
+    <result column="TXNTIM" property="txnTim" jdbcType="CHAR" />
+    <result column="SCHID" property="schId" jdbcType="CHAR" />
+    <result column="TLOGNO" property="tLogNo" jdbcType="CHAR" />
+    <result column="CIPHER" property="cipher" jdbcType="CHAR" />
+    <result column="VERIFY" property="verify" jdbcType="CHAR" />
+    <result column="CUSNAM" property="cusNam" jdbcType="CHAR" />
+    <result column="CRDNO" property="crdNo" jdbcType="CHAR" />
+    <result column="HTXNCD" property="hTxnCd" jdbcType="CHAR" />
+    <result column="HTXNSB" property="hTxnSb" jdbcType="CHAR" />
+    <result column="HLOGNO" property="hLogNo" jdbcType="CHAR" />
+    <result column="HRSPCD" property="hRspCd" jdbcType="CHAR" />
+    <result column="HTXNST" property="hTxnSt" jdbcType="CHAR" />
+    <result column="TRSPCD" property="tRspCd" jdbcType="CHAR" />
+    <result column="TTXNST" property="tTxnSt" jdbcType="CHAR" />
+    <result column="THDCHK" property="thdChk" jdbcType="CHAR" />
+    <result column="TCHKNO" property="tChkNo" jdbcType="CHAR" />
+    <result column="CHKTIM" property="chkTim" jdbcType="CHAR" />
+    <result column="CHKFLG" property="chkFlg" jdbcType="CHAR" />
+    <result column="AWDFLG" property="awdFlg" jdbcType="CHAR" />
+    <result column="AWDRTN" property="awdRtn" jdbcType="CHAR" />
+    <result column="CAGTNO" property="cAgtNo" jdbcType="CHAR" />
+    <result column="TCKNO" property="tckNo" jdbcType="CHAR" />
+    <result column="TXNCNL" property="txnCnl" jdbcType="CHAR" />
+    <result column="BETTYP" property="betTyp" jdbcType="CHAR" />
+    <result column="LCHKTM" property="lChkTm" jdbcType="CHAR" />
+    <result column="TXNSTS" property="txnSts" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    TXNLOG, BRNO, LOGNO, TTXNCD, TXNCOD, SCHTYP, SCHTIT, SECLEV, CITYID, DRAWID, KENOID, 
+    GAMEID, GAMNAM, PLAYID, BETMET, BETMOD, BETMUL, TXNAMT, BETLIN, LOTNAM, BETDAT, TXNTIM, 
+    SCHID, TLOGNO, CIPHER, VERIFY, CUSNAM, CRDNO, HTXNCD, HTXNSB, HLOGNO, HRSPCD, HTXNST, 
+    TRSPCD, TTXNST, THDCHK, TCHKNO, CHKTIM, CHKFLG, AWDFLG, AWDRTN, CAGTNO, TCKNO, TXNCNL, 
+    BETTYP, LCHKTM, TXNSTS
+  </sql>
+ 
+ <select id="qryLotWinRecord" parameterType="java.util.Map" resultType="java.util.Map" >
+			select a.TLogNo, a.DrawId, a.KenoId, a.PlayId,a.BetMul, a.BetLin, a.BetMod, b.TotPrz, a.TxnTim, a.TxnLog
+			from GDEUPSB.Lot_Prz_Ctl b, GDEUPSB.Lot_Txn_Jnl a
+			<where>
+				<choose>
+				 <when test='betTyp != ""'>
+				 	a.GameId=b.GameId and a.DrawId=b.DrawId and a.KenoId=b.KenoId and a.TxnLog=b.TxnLog and a.TLogNo=b.TLogNo and CrdNo=#{crdNo} and BetDat between #{begDat} and #{endDat} and BetTyp=#{betTyp} and TxnSts='S' and a.GameId=#{gameId}
+				 </when>
+				 <otherwise>
+				 	a.GameId=b.GameId and a.DrawId=b.DrawId and a.KenoId=b.KenoId and a.TxnLog=b.TxnLog and a.TLogNo=b.TLogNo and CrdNo=#{crdNo} and BetDat between #{begDat} and #{endDat}  and TxnSts='S' and a.GameId=#{gameId}
+				 </otherwise>
+				</choose>
+			</where>
+			order by TxnTim desc
+ </select>
+ 			
+  
+  
+  <select id="qryLotTxnJnl"  parameterType="map" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${BBIPADM_SCHEMA}.LOT_TXN_JNL
+     <where>
+        <choose>
+          <when test="betTyp !=null and betTyp != ''">
+             CrdNo=#{crdNo} AND BetTyp=#{betTyp} AND BetDat between #{begDat} and #{endDat} AND TxnSts='S'
+          </when>
+          <otherwise>
+             CrdNo=#{crdNo} AND BetDat between #{begDat} and #{endDat} AND TxnSts='S'
+         </otherwise>
+        </choose>
+     </where>
+     order by TxnTim desc
+  </select>
+  
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from gdeupsb.LOT_TXN_JNL
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="txnlog!=null" >
+        AND  TXNLOG=#{txnlog,jdbcType=CHAR}
+      </if>
+      <if test="brno!=null" >
+        AND  BRNO=#{brno,jdbcType=CHAR}
+      </if>
+      <if test="logno!=null" >
+        AND  LOGNO=#{logno,jdbcType=CHAR}
+      </if>
+      <if test="ttxncd!=null" >
+        AND  TTXNCD=#{ttxncd,jdbcType=CHAR}
+      </if>
+      <if test="txncod!=null" >
+        AND  TXNCOD=#{txncod,jdbcType=CHAR}
+      </if>
+      <if test="schtyp!=null" >
+        AND  SCHTYP=#{schtyp,jdbcType=CHAR}
+      </if>
+      <if test="schtit!=null" >
+        AND  SCHTIT=#{schtit,jdbcType=CHAR}
+      </if>
+      <if test="seclev!=null" >
+        AND  SECLEV=#{seclev,jdbcType=CHAR}
+      </if>
+      <if test="cityid!=null" >
+        AND  CITYID=#{cityid,jdbcType=CHAR}
+      </if>
+      <if test="drawid!=null" >
+        AND  DRAWID=#{drawid,jdbcType=CHAR}
+      </if>
+      <if test="kenoid!=null" >
+        AND  KENOID=#{kenoid,jdbcType=CHAR}
+      </if>
+      <if test="gameid!=null" >
+        AND  GAMEID=#{gameid,jdbcType=CHAR}
+      </if>
+      <if test="gamnam!=null" >
+        AND  GAMNAM=#{gamnam,jdbcType=CHAR}
+      </if>
+      <if test="playid!=null" >
+        AND  PLAYID=#{playid,jdbcType=CHAR}
+      </if>
+      <if test="betmet!=null" >
+        AND  BETMET=#{betmet,jdbcType=CHAR}
+      </if>
+      <if test="betmod!=null" >
+        AND  BETMOD=#{betmod,jdbcType=CHAR}
+      </if>
+      <if test="betmul!=null" >
+        AND  BETMUL=#{betmul,jdbcType=CHAR}
+      </if>
+      <if test="txnamt!=null" >
+        AND  TXNAMT=#{txnamt,jdbcType=CHAR}
+      </if>
+      <if test="betlin!=null" >
+        AND  BETLIN=#{betlin,jdbcType=CHAR}
+      </if>
+      <if test="lotnam!=null" >
+        AND  LOTNAM=#{lotnam,jdbcType=CHAR}
+      </if>
+      <if test="betdat!=null" >
+        AND  BETDAT=#{betdat,jdbcType=CHAR}
+      </if>
+      <if test="txntim!=null" >
+        AND  TXNTIM=#{txntim,jdbcType=CHAR}
+      </if>
+      <if test="schid!=null" >
+        AND  SCHID=#{schid,jdbcType=CHAR}
+      </if>
+      <if test="tlogno!=null" >
+        AND  TLOGNO=#{tlogno,jdbcType=CHAR}
+      </if>
+      <if test="cipher!=null" >
+        AND  CIPHER=#{cipher,jdbcType=CHAR}
+      </if>
+      <if test="verify!=null" >
+        AND  VERIFY=#{verify,jdbcType=CHAR}
+      </if>
+      <if test="cusnam!=null" >
+        AND  CUSNAM=#{cusnam,jdbcType=CHAR}
+      </if>
+      <if test="crdno!=null" >
+        AND  CRDNO=#{crdno,jdbcType=CHAR}
+      </if>
+      <if test="htxncd!=null" >
+        AND  HTXNCD=#{htxncd,jdbcType=CHAR}
+      </if>
+      <if test="htxnsb!=null" >
+        AND  HTXNSB=#{htxnsb,jdbcType=CHAR}
+      </if>
+      <if test="hlogno!=null" >
+        AND  HLOGNO=#{hlogno,jdbcType=CHAR}
+      </if>
+      <if test="hrspcd!=null" >
+        AND  HRSPCD=#{hrspcd,jdbcType=CHAR}
+      </if>
+      <if test="htxnst!=null" >
+        AND  HTXNST=#{htxnst,jdbcType=CHAR}
+      </if>
+      <if test="trspcd!=null" >
+        AND  TRSPCD=#{trspcd,jdbcType=CHAR}
+      </if>
+      <if test="ttxnst!=null" >
+        AND  TTXNST=#{ttxnst,jdbcType=CHAR}
+      </if>
+      <if test="thdchk!=null" >
+        AND  THDCHK=#{thdchk,jdbcType=CHAR}
+      </if>
+      <if test="tchkno!=null" >
+        AND  TCHKNO=#{tchkno,jdbcType=CHAR}
+      </if>
+      <if test="chktim!=null" >
+        AND  CHKTIM=#{chktim,jdbcType=CHAR}
+      </if>
+      <if test="chkflg!=null" >
+        AND  CHKFLG=#{chkflg,jdbcType=CHAR}
+      </if>
+      <if test="awdflg!=null" >
+        AND  AWDFLG=#{awdflg,jdbcType=CHAR}
+      </if>
+      <if test="awdrtn!=null" >
+        AND  AWDRTN=#{awdrtn,jdbcType=CHAR}
+      </if>
+      <if test="cagtno!=null" >
+        AND  CAGTNO=#{cagtno,jdbcType=CHAR}
+      </if>
+      <if test="tckno!=null" >
+        AND  TCKNO=#{tckno,jdbcType=CHAR}
+      </if>
+      <if test="txncnl!=null" >
+        AND  TXNCNL=#{txncnl,jdbcType=CHAR}
+      </if>
+      <if test="bettyp!=null" >
+        AND  BETTYP=#{bettyp,jdbcType=CHAR}
+      </if>
+      <if test="lchktm!=null" >
+        AND  LCHKTM=#{lchktm,jdbcType=CHAR}
+      </if>
+      <if test="txnsts!=null" >
+        AND  TXNSTS=#{txnsts,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from gdeupsb.LOT_TXN_JNL
+    where TXNLOG = #{txnlog,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from gdeupsb.LOT_TXN_JNL
+    where TXNLOG = #{txnlog,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbLotTxnJnl" >
+    insert into gdeupsb.LOT_TXN_JNL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="txnlog != null" >
+        TXNLOG,
+      </if>
+      <if test="brno != null" >
+        BRNO,
+      </if>
+      <if test="logno != null" >
+        LOGNO,
+      </if>
+      <if test="ttxncd != null" >
+        TTXNCD,
+      </if>
+      <if test="txncod != null" >
+        TXNCOD,
+      </if>
+      <if test="schtyp != null" >
+        SCHTYP,
+      </if>
+      <if test="schtit != null" >
+        SCHTIT,
+      </if>
+      <if test="seclev != null" >
+        SECLEV,
+      </if>
+      <if test="cityid != null" >
+        CITYID,
+      </if>
+      <if test="drawid != null" >
+        DRAWID,
+      </if>
+      <if test="kenoid != null" >
+        KENOID,
+      </if>
+      <if test="gameid != null" >
+        GAMEID,
+      </if>
+      <if test="gamnam != null" >
+        GAMNAM,
+      </if>
+      <if test="playid != null" >
+        PLAYID,
+      </if>
+      <if test="betmet != null" >
+        BETMET,
+      </if>
+      <if test="betmod != null" >
+        BETMOD,
+      </if>
+      <if test="betmul != null" >
+        BETMUL,
+      </if>
+      <if test="txnamt != null" >
+        TXNAMT,
+      </if>
+      <if test="betlin != null" >
+        BETLIN,
+      </if>
+      <if test="lotnam != null" >
+        LOTNAM,
+      </if>
+      <if test="betdat != null" >
+        BETDAT,
+      </if>
+      <if test="txntim != null" >
+        TXNTIM,
+      </if>
+      <if test="schid != null" >
+        SCHID,
+      </if>
+      <if test="tlogno != null" >
+        TLOGNO,
+      </if>
+      <if test="cipher != null" >
+        CIPHER,
+      </if>
+      <if test="verify != null" >
+        VERIFY,
+      </if>
+      <if test="cusnam != null" >
+        CUSNAM,
+      </if>
+      <if test="crdno != null" >
+        CRDNO,
+      </if>
+      <if test="htxncd != null" >
+        HTXNCD,
+      </if>
+      <if test="htxnsb != null" >
+        HTXNSB,
+      </if>
+      <if test="hlogno != null" >
+        HLOGNO,
+      </if>
+      <if test="hrspcd != null" >
+        HRSPCD,
+      </if>
+      <if test="htxnst != null" >
+        HTXNST,
+      </if>
+      <if test="trspcd != null" >
+        TRSPCD,
+      </if>
+      <if test="ttxnst != null" >
+        TTXNST,
+      </if>
+      <if test="thdchk != null" >
+        THDCHK,
+      </if>
+      <if test="tchkno != null" >
+        TCHKNO,
+      </if>
+      <if test="chktim != null" >
+        CHKTIM,
+      </if>
+      <if test="chkflg != null" >
+        CHKFLG,
+      </if>
+      <if test="awdflg != null" >
+        AWDFLG,
+      </if>
+      <if test="awdrtn != null" >
+        AWDRTN,
+      </if>
+      <if test="cagtno != null" >
+        CAGTNO,
+      </if>
+      <if test="tckno != null" >
+        TCKNO,
+      </if>
+      <if test="txncnl != null" >
+        TXNCNL,
+      </if>
+      <if test="bettyp != null" >
+        BETTYP,
+      </if>
+      <if test="lchktm != null" >
+        LCHKTM,
+      </if>
+      <if test="txnsts != null" >
+        TXNSTS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="txnlog != null" >
+        #{txnlog,jdbcType=CHAR},
+      </if>
+      <if test="brno != null" >
+        #{brno,jdbcType=CHAR},
+      </if>
+      <if test="logno != null" >
+        #{logno,jdbcType=CHAR},
+      </if>
+      <if test="ttxncd != null" >
+        #{ttxncd,jdbcType=CHAR},
+      </if>
+      <if test="txncod != null" >
+        #{txncod,jdbcType=CHAR},
+      </if>
+      <if test="schtyp != null" >
+        #{schtyp,jdbcType=CHAR},
+      </if>
+      <if test="schtit != null" >
+        #{schtit,jdbcType=CHAR},
+      </if>
+      <if test="seclev != null" >
+        #{seclev,jdbcType=CHAR},
+      </if>
+      <if test="cityid != null" >
+        #{cityid,jdbcType=CHAR},
+      </if>
+      <if test="drawid != null" >
+        #{drawid,jdbcType=CHAR},
+      </if>
+      <if test="kenoid != null" >
+        #{kenoid,jdbcType=CHAR},
+      </if>
+      <if test="gameid != null" >
+        #{gameid,jdbcType=CHAR},
+      </if>
+      <if test="gamnam != null" >
+        #{gamnam,jdbcType=CHAR},
+      </if>
+      <if test="playid != null" >
+        #{playid,jdbcType=CHAR},
+      </if>
+      <if test="betmet != null" >
+        #{betmet,jdbcType=CHAR},
+      </if>
+      <if test="betmod != null" >
+        #{betmod,jdbcType=CHAR},
+      </if>
+      <if test="betmul != null" >
+        #{betmul,jdbcType=CHAR},
+      </if>
+      <if test="txnamt != null" >
+        #{txnamt,jdbcType=CHAR},
+      </if>
+      <if test="betlin != null" >
+        #{betlin,jdbcType=CHAR},
+      </if>
+      <if test="lotnam != null" >
+        #{lotnam,jdbcType=CHAR},
+      </if>
+      <if test="betdat != null" >
+        #{betdat,jdbcType=CHAR},
+      </if>
+      <if test="txntim != null" >
+        #{txntim,jdbcType=CHAR},
+      </if>
+      <if test="schid != null" >
+        #{schid,jdbcType=CHAR},
+      </if>
+      <if test="tlogno != null" >
+        #{tlogno,jdbcType=CHAR},
+      </if>
+      <if test="cipher != null" >
+        #{cipher,jdbcType=CHAR},
+      </if>
+      <if test="verify != null" >
+        #{verify,jdbcType=CHAR},
+      </if>
+      <if test="cusnam != null" >
+        #{cusnam,jdbcType=CHAR},
+      </if>
+      <if test="crdno != null" >
+        #{crdno,jdbcType=CHAR},
+      </if>
+      <if test="htxncd != null" >
+        #{htxncd,jdbcType=CHAR},
+      </if>
+      <if test="htxnsb != null" >
+        #{htxnsb,jdbcType=CHAR},
+      </if>
+      <if test="hlogno != null" >
+        #{hlogno,jdbcType=CHAR},
+      </if>
+      <if test="hrspcd != null" >
+        #{hrspcd,jdbcType=CHAR},
+      </if>
+      <if test="htxnst != null" >
+        #{htxnst,jdbcType=CHAR},
+      </if>
+      <if test="trspcd != null" >
+        #{trspcd,jdbcType=CHAR},
+      </if>
+      <if test="ttxnst != null" >
+        #{ttxnst,jdbcType=CHAR},
+      </if>
+      <if test="thdchk != null" >
+        #{thdchk,jdbcType=CHAR},
+      </if>
+      <if test="tchkno != null" >
+        #{tchkno,jdbcType=CHAR},
+      </if>
+      <if test="chktim != null" >
+        #{chktim,jdbcType=CHAR},
+      </if>
+      <if test="chkflg != null" >
+        #{chkflg,jdbcType=CHAR},
+      </if>
+      <if test="awdflg != null" >
+        #{awdflg,jdbcType=CHAR},
+      </if>
+      <if test="awdrtn != null" >
+        #{awdrtn,jdbcType=CHAR},
+      </if>
+      <if test="cagtno != null" >
+        #{cagtno,jdbcType=CHAR},
+      </if>
+      <if test="tckno != null" >
+        #{tckno,jdbcType=CHAR},
+      </if>
+      <if test="txncnl != null" >
+        #{txncnl,jdbcType=CHAR},
+      </if>
+      <if test="bettyp != null" >
+        #{bettyp,jdbcType=CHAR},
+      </if>
+      <if test="lchktm != null" >
+        #{lchktm,jdbcType=CHAR},
+      </if>
+      <if test="txnsts != null" >
+        #{txnsts,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from gdeupsb.LOT_TXN_JNL
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="txnlog!=null" >
+        AND  TXNLOG=#{txnlog,jdbcType=CHAR}
+      </if>
+      <if test="brno!=null" >
+        AND  BRNO=#{brno,jdbcType=CHAR}
+      </if>
+      <if test="logno!=null" >
+        AND  LOGNO=#{logno,jdbcType=CHAR}
+      </if>
+      <if test="ttxncd!=null" >
+        AND  TTXNCD=#{ttxncd,jdbcType=CHAR}
+      </if>
+      <if test="txncod!=null" >
+        AND  TXNCOD=#{txncod,jdbcType=CHAR}
+      </if>
+      <if test="schtyp!=null" >
+        AND  SCHTYP=#{schtyp,jdbcType=CHAR}
+      </if>
+      <if test="schtit!=null" >
+        AND  SCHTIT=#{schtit,jdbcType=CHAR}
+      </if>
+      <if test="seclev!=null" >
+        AND  SECLEV=#{seclev,jdbcType=CHAR}
+      </if>
+      <if test="cityid!=null" >
+        AND  CITYID=#{cityid,jdbcType=CHAR}
+      </if>
+      <if test="drawid!=null" >
+        AND  DRAWID=#{drawid,jdbcType=CHAR}
+      </if>
+      <if test="kenoid!=null" >
+        AND  KENOID=#{kenoid,jdbcType=CHAR}
+      </if>
+      <if test="gameid!=null" >
+        AND  GAMEID=#{gameid,jdbcType=CHAR}
+      </if>
+      <if test="gamnam!=null" >
+        AND  GAMNAM=#{gamnam,jdbcType=CHAR}
+      </if>
+      <if test="playid!=null" >
+        AND  PLAYID=#{playid,jdbcType=CHAR}
+      </if>
+      <if test="betmet!=null" >
+        AND  BETMET=#{betmet,jdbcType=CHAR}
+      </if>
+      <if test="betmod!=null" >
+        AND  BETMOD=#{betmod,jdbcType=CHAR}
+      </if>
+      <if test="betmul!=null" >
+        AND  BETMUL=#{betmul,jdbcType=CHAR}
+      </if>
+      <if test="txnamt!=null" >
+        AND  TXNAMT=#{txnamt,jdbcType=CHAR}
+      </if>
+      <if test="betlin!=null" >
+        AND  BETLIN=#{betlin,jdbcType=CHAR}
+      </if>
+      <if test="lotnam!=null" >
+        AND  LOTNAM=#{lotnam,jdbcType=CHAR}
+      </if>
+      <if test="betdat!=null" >
+        AND  BETDAT=#{betdat,jdbcType=CHAR}
+      </if>
+      <if test="txntim!=null" >
+        AND  TXNTIM=#{txntim,jdbcType=CHAR}
+      </if>
+      <if test="schid!=null" >
+        AND  SCHID=#{schid,jdbcType=CHAR}
+      </if>
+      <if test="tlogno!=null" >
+        AND  TLOGNO=#{tlogno,jdbcType=CHAR}
+      </if>
+      <if test="cipher!=null" >
+        AND  CIPHER=#{cipher,jdbcType=CHAR}
+      </if>
+      <if test="verify!=null" >
+        AND  VERIFY=#{verify,jdbcType=CHAR}
+      </if>
+      <if test="cusnam!=null" >
+        AND  CUSNAM=#{cusnam,jdbcType=CHAR}
+      </if>
+      <if test="crdno!=null" >
+        AND  CRDNO=#{crdno,jdbcType=CHAR}
+      </if>
+      <if test="htxncd!=null" >
+        AND  HTXNCD=#{htxncd,jdbcType=CHAR}
+      </if>
+      <if test="htxnsb!=null" >
+        AND  HTXNSB=#{htxnsb,jdbcType=CHAR}
+      </if>
+      <if test="hlogno!=null" >
+        AND  HLOGNO=#{hlogno,jdbcType=CHAR}
+      </if>
+      <if test="hrspcd!=null" >
+        AND  HRSPCD=#{hrspcd,jdbcType=CHAR}
+      </if>
+      <if test="htxnst!=null" >
+        AND  HTXNST=#{htxnst,jdbcType=CHAR}
+      </if>
+      <if test="trspcd!=null" >
+        AND  TRSPCD=#{trspcd,jdbcType=CHAR}
+      </if>
+      <if test="ttxnst!=null" >
+        AND  TTXNST=#{ttxnst,jdbcType=CHAR}
+      </if>
+      <if test="thdchk!=null" >
+        AND  THDCHK=#{thdchk,jdbcType=CHAR}
+      </if>
+      <if test="tchkno!=null" >
+        AND  TCHKNO=#{tchkno,jdbcType=CHAR}
+      </if>
+      <if test="chktim!=null" >
+        AND  CHKTIM=#{chktim,jdbcType=CHAR}
+      </if>
+      <if test="chkflg!=null" >
+        AND  CHKFLG=#{chkflg,jdbcType=CHAR}
+      </if>
+      <if test="awdflg!=null" >
+        AND  AWDFLG=#{awdflg,jdbcType=CHAR}
+      </if>
+      <if test="awdrtn!=null" >
+        AND  AWDRTN=#{awdrtn,jdbcType=CHAR}
+      </if>
+      <if test="cagtno!=null" >
+        AND  CAGTNO=#{cagtno,jdbcType=CHAR}
+      </if>
+      <if test="tckno!=null" >
+        AND  TCKNO=#{tckno,jdbcType=CHAR}
+      </if>
+      <if test="txncnl!=null" >
+        AND  TXNCNL=#{txncnl,jdbcType=CHAR}
+      </if>
+      <if test="bettyp!=null" >
+        AND  BETTYP=#{bettyp,jdbcType=CHAR}
+      </if>
+      <if test="lchktm!=null" >
+        AND  LCHKTM=#{lchktm,jdbcType=CHAR}
+      </if>
+      <if test="txnsts!=null" >
+        AND  TXNSTS=#{txnsts,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbLotTxnJnl" >
+    update gdeupsb.LOT_TXN_JNL
+    <set >
+      <if test="brno != null" >
+        BRNO = #{brno,jdbcType=CHAR},
+      </if>
+      <if test="logno != null" >
+        LOGNO = #{logno,jdbcType=CHAR},
+      </if>
+      <if test="ttxncd != null" >
+        TTXNCD = #{ttxncd,jdbcType=CHAR},
+      </if>
+      <if test="txncod != null" >
+        TXNCOD = #{txncod,jdbcType=CHAR},
+      </if>
+      <if test="schtyp != null" >
+        SCHTYP = #{schtyp,jdbcType=CHAR},
+      </if>
+      <if test="schtit != null" >
+        SCHTIT = #{schtit,jdbcType=CHAR},
+      </if>
+      <if test="seclev != null" >
+        SECLEV = #{seclev,jdbcType=CHAR},
+      </if>
+      <if test="cityid != null" >
+        CITYID = #{cityid,jdbcType=CHAR},
+      </if>
+      <if test="drawid != null" >
+        DRAWID = #{drawid,jdbcType=CHAR},
+      </if>
+      <if test="kenoid != null" >
+        KENOID = #{kenoid,jdbcType=CHAR},
+      </if>
+      <if test="gameid != null" >
+        GAMEID = #{gameid,jdbcType=CHAR},
+      </if>
+      <if test="gamnam != null" >
+        GAMNAM = #{gamnam,jdbcType=CHAR},
+      </if>
+      <if test="playid != null" >
+        PLAYID = #{playid,jdbcType=CHAR},
+      </if>
+      <if test="betmet != null" >
+        BETMET = #{betmet,jdbcType=CHAR},
+      </if>
+      <if test="betmod != null" >
+        BETMOD = #{betmod,jdbcType=CHAR},
+      </if>
+      <if test="betmul != null" >
+        BETMUL = #{betmul,jdbcType=CHAR},
+      </if>
+      <if test="txnamt != null" >
+        TXNAMT = #{txnamt,jdbcType=CHAR},
+      </if>
+      <if test="betlin != null" >
+        BETLIN = #{betlin,jdbcType=CHAR},
+      </if>
+      <if test="lotnam != null" >
+        LOTNAM = #{lotnam,jdbcType=CHAR},
+      </if>
+      <if test="betdat != null" >
+        BETDAT = #{betdat,jdbcType=CHAR},
+      </if>
+      <if test="txntim != null" >
+        TXNTIM = #{txntim,jdbcType=CHAR},
+      </if>
+      <if test="schid != null" >
+        SCHID = #{schid,jdbcType=CHAR},
+      </if>
+      <if test="tlogno != null" >
+        TLOGNO = #{tlogno,jdbcType=CHAR},
+      </if>
+      <if test="cipher != null" >
+        CIPHER = #{cipher,jdbcType=CHAR},
+      </if>
+      <if test="verify != null" >
+        VERIFY = #{verify,jdbcType=CHAR},
+      </if>
+      <if test="cusnam != null" >
+        CUSNAM = #{cusnam,jdbcType=CHAR},
+      </if>
+      <if test="crdno != null" >
+        CRDNO = #{crdno,jdbcType=CHAR},
+      </if>
+      <if test="htxncd != null" >
+        HTXNCD = #{htxncd,jdbcType=CHAR},
+      </if>
+      <if test="htxnsb != null" >
+        HTXNSB = #{htxnsb,jdbcType=CHAR},
+      </if>
+      <if test="hlogno != null" >
+        HLOGNO = #{hlogno,jdbcType=CHAR},
+      </if>
+      <if test="hrspcd != null" >
+        HRSPCD = #{hrspcd,jdbcType=CHAR},
+      </if>
+      <if test="htxnst != null" >
+        HTXNST = #{htxnst,jdbcType=CHAR},
+      </if>
+      <if test="trspcd != null" >
+        TRSPCD = #{trspcd,jdbcType=CHAR},
+      </if>
+      <if test="ttxnst != null" >
+        TTXNST = #{ttxnst,jdbcType=CHAR},
+      </if>
+      <if test="thdchk != null" >
+        THDCHK = #{thdchk,jdbcType=CHAR},
+      </if>
+      <if test="tchkno != null" >
+        TCHKNO = #{tchkno,jdbcType=CHAR},
+      </if>
+      <if test="chktim != null" >
+        CHKTIM = #{chktim,jdbcType=CHAR},
+      </if>
+      <if test="chkflg != null" >
+        CHKFLG = #{chkflg,jdbcType=CHAR},
+      </if>
+      <if test="awdflg != null" >
+        AWDFLG = #{awdflg,jdbcType=CHAR},
+      </if>
+      <if test="awdrtn != null" >
+        AWDRTN = #{awdrtn,jdbcType=CHAR},
+      </if>
+      <if test="cagtno != null" >
+        CAGTNO = #{cagtno,jdbcType=CHAR},
+      </if>
+      <if test="tckno != null" >
+        TCKNO = #{tckno,jdbcType=CHAR},
+      </if>
+      <if test="txncnl != null" >
+        TXNCNL = #{txncnl,jdbcType=CHAR},
+      </if>
+      <if test="bettyp != null" >
+        BETTYP = #{bettyp,jdbcType=CHAR},
+      </if>
+      <if test="lchktm != null" >
+        LCHKTM = #{lchktm,jdbcType=CHAR},
+      </if>
+      <if test="txnsts != null" >
+        TXNSTS = #{txnsts,jdbcType=CHAR},
+      </if>
+    </set>
+    where TXNLOG = #{txnlog,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from gdeupsb.LOT_TXN_JNL
+    <if test="_parameter" >
+      where TXNLOG in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
+</mapper>

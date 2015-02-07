@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	encoding="utf-8" trace="true">
+	<segment name="detail" encoding="utf-8">
+	
+		<fixString name="cusAc"  length="20"   referred="true" /> <!--银行账号-->
+        <fixString name="DCC_ID_NO"   length="18"   referred="true" /> <!--学工号-->
+        <fixString name="DCC_TERM_NO"  length="8" referred="true" /> <!--终端号-->
+        <fixString name="DCC_TX_LOG_OFFLN"  length="6" referred="true" /> <!--圈存流水号-->
+        <fixString name="DCC_DATE"  length="8"   referred="true" /> <!--交易日期-->
+        <fixString name="DCC_TIME"   length="6"   referred="true" /> <!--交易时间-->
+        <fixString name="DCC_SCHID"  length="10" referred="true" /> <!--学校代码-->
+        <fixString name="DCC_TX_LOG"  length="20" referred="true" /> <!--银行流水号-->
+        <fixString name="txnAmt"  length="18" referred="true" /> <!--交易金额-->
+	</segment>
+</message>
