@@ -190,5 +190,12 @@
 	</file>
 	
 	<!-- 中山文件批扣End! -->
+	
+	<!-- 汕头水费批扣文件解析 start  -->
+	<file id="watr00FmtIn" name="watr00FmtIn" encoding="GBK" lineSeparator="\n">
+		<foreach name="detail" ref="config/fmt/fileFmt/watr00/watr00FmtInDetail.xml" encoding="GBK" />
+		<line name="total" ref="config/fmt/fileFmt/watr00/watr00FmtInTotal.xml" encoding="GBK" />
+	</file>
+	<!-- 汕头水费批扣文件解析 end  -->
 
 </files>
