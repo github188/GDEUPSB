@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service" xmlns:gdeups="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/Schema" name="GDEUPSELEC02Service" targetNamespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service">
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service" xmlns:gdeupsb="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/Schema" name="GDEUPSELEC02Service" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service">
   <wsdl:types>
-    <xsd:schema targetNamespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service">
-      <xsd:import namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/Schema" schemaLocation="GDEUPSELEC02Service.xsd"/>
+    <xsd:schema targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service">
+      <xsd:import namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/Schema" schemaLocation="GDEUPSELEC02Service.xsd"/>
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="payFeeOffChanRequestMessage">
-    <wsdl:part name="payFeeOffChanRequest" element="gdeups:payFeeOffChan"/>
+    <wsdl:part name="payFeeOffChanRequest" element="gdeupsb:payFeeOffChan"/>
   </wsdl:message>
   <wsdl:message name="payFeeOffChanResponseMessage">
-    <wsdl:part name="payFeeOffChanResponse" element="gdeups:payFeeOffChanResponse"/>
+    <wsdl:part name="payFeeOffChanResponse" element="gdeupsb:payFeeOffChanResponse"/>
   </wsdl:message>
   <wsdl:message name="payCancelOffChanRequestMessage">
-    <wsdl:part name="payCancelOffChanRequest" element="gdeups:payCancelOffChan"/>
+    <wsdl:part name="payCancelOffChanRequest" element="gdeupsb:payCancelOffChan"/>
   </wsdl:message>
   <wsdl:message name="payCancelOffChanResponseMessage">
-    <wsdl:part name="payCancelOffChanResponse" element="gdeups:payCancelOffChanResponse"/>
+    <wsdl:part name="payCancelOffChanResponse" element="gdeupsb:payCancelOffChanResponse"/>
   </wsdl:message>
   <wsdl:message name="queryThirdFeeOffChanRequestMessage">
-    <wsdl:part name="queryThirdFeeOffChanRequest" element="gdeups:queryThirdFeeOffChan"/>
+    <wsdl:part name="queryThirdFeeOffChanRequest" element="gdeupsb:queryThirdFeeOffChan"/>
   </wsdl:message>
   <wsdl:message name="queryThirdFeeOffChanResponseMessage">
-    <wsdl:part name="queryThirdFeeOffChanResponse" element="gdeups:queryThirdFeeOffChanResponse"/>
+    <wsdl:part name="queryThirdFeeOffChanResponse" element="gdeupsb:queryThirdFeeOffChanResponse"/>
   </wsdl:message>
   <wsdl:portType name="GDEUPSELEC02ServicePortType">
     <wsdl:operation name="payFeeOffChan">
@@ -44,7 +44,7 @@
   <wsdl:binding name="GDEUPSELEC02ServiceSoapBinding" type="tns:GDEUPSELEC02ServicePortType">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     <wsdl:operation name="payFeeOffChan">
-      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/payFeeOffChan"/>
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/payFeeOffChan"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -53,7 +53,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="payCancelOffChan">
-      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/payCancelOffChan"/>
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/payCancelOffChan"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -62,7 +62,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="queryThirdFeeOffChan">
-      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/queryThirdFeeOffChan"/>
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/queryThirdFeeOffChan"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>

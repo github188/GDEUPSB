@@ -1,52 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service" xmlns:gdeups="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/Schema" name="GDEUPSPROF00Service" targetNamespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service">
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service" xmlns:gdeupsb="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/Schema" name="GDEUPSPROF00Service" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service">
   <wsdl:types>
-    <xsd:schema targetNamespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service">
-      <xsd:import namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/Schema" schemaLocation="GDEUPSPROF00Service.xsd"/>
+    <xsd:schema targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service">
+      <xsd:import namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/Schema" schemaLocation="GDEUPSPROF00Service.xsd"/>
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="invoiceStatusQueryManagerRequestMessage">
-    <wsdl:part name="invoiceStatusQueryManagerRequest" element="gdeups:invoiceStatusQueryManager"/>
+    <wsdl:part name="invoiceStatusQueryManagerRequest" element="gdeupsb:invoiceStatusQueryManager"/>
   </wsdl:message>
   <wsdl:message name="invoiceStatusQueryManagerResponseMessage">
-    <wsdl:part name="invoiceStatusQueryManagerResponse" element="gdeups:invoiceStatusQueryManagerResponse"/>
+    <wsdl:part name="invoiceStatusQueryManagerResponse" element="gdeupsb:invoiceStatusQueryManagerResponse"/>
   </wsdl:message>
   <wsdl:message name="invoiceCancelGrantManagerRequestMessage">
-    <wsdl:part name="invoiceCancelGrantManagerRequest" element="gdeups:invoiceCancelGrantManager"/>
+    <wsdl:part name="invoiceCancelGrantManagerRequest" element="gdeupsb:invoiceCancelGrantManager"/>
   </wsdl:message>
   <wsdl:message name="invoiceCancelGrantManagerResponseMessage">
-    <wsdl:part name="invoiceCancelGrantManagerResponse" element="gdeups:invoiceCancelGrantManagerResponse"/>
+    <wsdl:part name="invoiceCancelGrantManagerResponse" element="gdeupsb:invoiceCancelGrantManagerResponse"/>
   </wsdl:message>
   <wsdl:message name="invoiceReceiveManagerRequestMessage">
-    <wsdl:part name="invoiceReceiveManagerRequest" element="gdeups:invoiceReceiveManager"/>
+    <wsdl:part name="invoiceReceiveManagerRequest" element="gdeupsb:invoiceReceiveManager"/>
   </wsdl:message>
   <wsdl:message name="invoiceReceiveManagerResponseMessage">
-    <wsdl:part name="invoiceReceiveManagerResponse" element="gdeups:invoiceReceiveManagerResponse"/>
+    <wsdl:part name="invoiceReceiveManagerResponse" element="gdeupsb:invoiceReceiveManagerResponse"/>
   </wsdl:message>
   <wsdl:message name="invoiceInvalidManagerRequestMessage">
-    <wsdl:part name="invoiceInvalidManagerRequest" element="gdeups:invoiceInvalidManager"/>
+    <wsdl:part name="invoiceInvalidManagerRequest" element="gdeupsb:invoiceInvalidManager"/>
   </wsdl:message>
   <wsdl:message name="invoiceInvalidManagerResponseMessage">
-    <wsdl:part name="invoiceInvalidManagerResponse" element="gdeups:invoiceInvalidManagerResponse"/>
+    <wsdl:part name="invoiceInvalidManagerResponse" element="gdeupsb:invoiceInvalidManagerResponse"/>
   </wsdl:message>
   <wsdl:message name="invoiceUseManagerRequestMessage">
-    <wsdl:part name="invoiceUseManagerRequest" element="gdeups:invoiceUseManager"/>
+    <wsdl:part name="invoiceUseManagerRequest" element="gdeupsb:invoiceUseManager"/>
   </wsdl:message>
   <wsdl:message name="invoiceUseManagerResponseMessage">
-    <wsdl:part name="invoiceUseManagerResponse" element="gdeups:invoiceUseManagerResponse"/>
+    <wsdl:part name="invoiceUseManagerResponse" element="gdeupsb:invoiceUseManagerResponse"/>
   </wsdl:message>
   <wsdl:message name="invoiceGrantManagerRequestMessage">
-    <wsdl:part name="invoiceGrantManagerRequest" element="gdeups:invoiceGrantManager"/>
+    <wsdl:part name="invoiceGrantManagerRequest" element="gdeupsb:invoiceGrantManager"/>
   </wsdl:message>
   <wsdl:message name="invoiceGrantManagerResponseMessage">
-    <wsdl:part name="invoiceGrantManagerResponse" element="gdeups:invoiceGrantManagerResponse"/>
+    <wsdl:part name="invoiceGrantManagerResponse" element="gdeupsb:invoiceGrantManagerResponse"/>
   </wsdl:message>
   <wsdl:message name="invoiceCheckManagerRequestMessage">
-    <wsdl:part name="invoiceCheckManagerRequest" element="gdeups:invoiceCheckManager"/>
+    <wsdl:part name="invoiceCheckManagerRequest" element="gdeupsb:invoiceCheckManager"/>
   </wsdl:message>
   <wsdl:message name="invoiceCheckManagerResponseMessage">
-    <wsdl:part name="invoiceCheckManagerResponse" element="gdeups:invoiceCheckManagerResponse"/>
+    <wsdl:part name="invoiceCheckManagerResponse" element="gdeupsb:invoiceCheckManagerResponse"/>
   </wsdl:message>
   <wsdl:portType name="GDEUPSPROF00ServicePortType">
     <wsdl:operation name="invoiceStatusQueryManager">
@@ -88,7 +88,7 @@
   <wsdl:binding name="GDEUPSPROF00ServiceSoapBinding" type="tns:GDEUPSPROF00ServicePortType">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     <wsdl:operation name="invoiceStatusQueryManager">
-      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/invoiceStatusQueryManager"/>
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/invoiceStatusQueryManager"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -97,7 +97,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="invoiceCancelGrantManager">
-      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/invoiceCancelGrantManager"/>
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/invoiceCancelGrantManager"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -106,7 +106,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="invoiceReceiveManager">
-      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/invoiceReceiveManager"/>
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/invoiceReceiveManager"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -115,7 +115,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="invoiceInvalidManager">
-      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/invoiceInvalidManager"/>
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/invoiceInvalidManager"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -124,7 +124,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="invoiceUseManager">
-      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/invoiceUseManager"/>
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/invoiceUseManager"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -133,7 +133,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="invoiceGrantManager">
-      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/invoiceGrantManager"/>
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/invoiceGrantManager"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -142,7 +142,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="invoiceCheckManager">
-      <soap:operation soapAction="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/invoiceCheckManager"/>
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/invoiceCheckManager"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
