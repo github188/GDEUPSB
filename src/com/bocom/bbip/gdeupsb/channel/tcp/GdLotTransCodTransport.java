@@ -367,7 +367,6 @@ public class GdLotTransCodTransport implements Transport{
 	}
 	
     private void decode_212(XMLStreamReader r,Map<String,Object> map) throws XMLStreamException{
-        List<Map<String,Object>> list = new ArrayList<Map<String,Object>>(); 
         while(r.hasNext()){
             int typ = r.next();
             if(typ!=XMLStreamConstants.START_ELEMENT)
@@ -381,7 +380,6 @@ public class GdLotTransCodTransport implements Transport{
     }
    
     private void decode_200(XMLStreamReader r,Map<String,Object> map) throws XMLStreamException{
-       List<Map<String,Object>> list = new ArrayList<Map<String,Object>>(); 
        while(r.hasNext()){
            int typ = r.next();
            if(typ!=XMLStreamConstants.START_ELEMENT)
@@ -393,6 +391,19 @@ public class GdLotTransCodTransport implements Transport{
            }
        }
    }
+    private void decode_209(XMLStreamReader r,Map<String,Object> map) throws XMLStreamException{
+        while(r.hasNext()){
+            int typ = r.next();
+            if(typ!=XMLStreamConstants.START_ELEMENT)
+                continue;
+            String name = r.getName().toString();
+            if("return".equals(name)){
+                map.put("rRspCod", r.getAttributeValue(0));
+                map.put("rRspMsg", r.getAttributeValue(1));
+            }
+        }
+    }
+
     private void decode_236(XMLStreamReader r,Map<String,Object> map) throws XMLStreamException{
 		List<Map<String,Object>> prizeItems = new ArrayList<Map<String,Object>>(); 
 		List<Map<String,Object>> clses = new ArrayList<Map<String,Object>>(); 
@@ -492,28 +503,4 @@ public class GdLotTransCodTransport implements Transport{
 			}
 		}
 	}
-   
-//	public static void main(String[] args) {
-//		XMLInputFactory factory = null;
-//		XMLStreamReader r = null;
-//		StringReader sr = null;
-//		Map<String,Object> map = new HashMap<String,Object>();
-//		try {
-//			String data = "<action>123</action>";
-//			factory = XMLInputFactory.newFactory();
-//			sr = new StringReader(data);
-//			r = factory.createXMLStreamReader(sr);
-//			while(r.hasNext()){
-//				int typ = r.next();
-//				if(typ!=XMLStreamConstants.START_ELEMENT)
-//					continue;
-//				String name = r.getName().toString();
-//				String value = r.getElementText();
-//				System.out.println(name);
-//				System.out.println(value);
-//			}
-//		}catch(Exception e){
-//			
-//		}
-//	}
 }
