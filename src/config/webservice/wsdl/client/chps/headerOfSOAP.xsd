@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://gsp.bankcomm.com" targetNamespace="http://gsp.bankcomm.com" elementFormDefault="qualified">
+	<xs:complexType name="ResponseHeaderType">
+		<xs:sequence>
+			<xs:element name="responseType" type="xs:string"/>
+			<xs:element name="responseCode" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>1015000000-正常返回</xs:documentation>
+					<xs:documentation>1015ACC001-访问主机超时
+					</xs:documentation>
+					<xs:documentation>1015ACC002-主机响应不为正常
+					</xs:documentation>
+					<xs:documentation>1015CON001-柜员号为必输项
+					</xs:documentation>
+					<xs:documentation>1015CON002-前台流水号重复
+					</xs:documentation>
+					<xs:documentation>1015CON003-挂账编号不存在
+					</xs:documentation>
+					<xs:documentation>1015CON004-系统代码输入错误</xs:documentation>
+					<xs:documentation>1015TEC001-数据库访问异常
+					</xs:documentation>
+					<xs:documentation>1015CON005-挂账编号不能为空
+					</xs:documentation>
+					<xs:documentation>1015CON006-未查询到数据
+					</xs:documentation>
+					<xs:documentation>1015CON007-程序处理异常
+					</xs:documentation>
+					<xs:documentation>1015CON008-内部分户号不能为空</xs:documentation>
+					<xs:documentation>1015CON009-前台流水号不能为空</xs:documentation>
+					<xs:documentation>1015CON009-前台流水号不能为空</xs:documentation>
+					<xs:documentation>1015TEC002-工作流异常</xs:documentation>
+					<xs:documentation>1015CON011-申请未撤销,无法删除</xs:documentation>
+					<xs:documentation>1015CON012-状态必须为登记成功或审批驳回</xs:documentation>
+					<xs:documentation>1015CON014-非当日，不可抹账</xs:documentation>
+					<xs:documentation>1015CON015-未找到销账申请记录</xs:documentation>
+					<xs:documentation>1015CON016-不可以申请销账</xs:documentation>
+					<xs:documentation>1015TEC003-发起流程异常</xs:documentation>
+					<xs:documentation>1015CON017-日期字符串转换数字异常</xs:documentation>
+					<xs:documentation>1015CON018-销账编号不存在</xs:documentation>
+					<xs:documentation>1015CON019-挂账编号不可单独出现，必须与其他条件共存才可模糊查询</xs:documentation>
+					<xs:documentation>1015CON020-起始页字符串包含不可解析的字符</xs:documentation>
+					<xs:documentation>1015CON021-页容量字符串包含不可解析的字符</xs:documentation>
+					<xs:documentation>1015CON022-当前操作用户权限不够</xs:documentation>
+					<xs:documentation>1015CON023-审批参数ID未输入</xs:documentation>
+					<xs:documentation>1015CON024-输入请求头非法</xs:documentation>
+					<xs:documentation>1015CON025-调用验证方法发生错误</xs:documentation>
+					<xs:documentation>1015CON026-挂账数据查询为空</xs:documentation>
+					<xs:documentation>1015CON027-输入机构号为空</xs:documentation>
+					<xs:documentation>1015CON028-起始页码或者页容量输入为空</xs:documentation>
+					<xs:documentation>1015CON029-查询分页出现异常</xs:documentation>
+				</xs:annotation>
+				<!-- 编号改为: 4位系统编号 + 原始编号 -->
+			</xs:element>
+			<xs:element name="responseMessage" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RequestHeaderType">
+		<xs:sequence>
+		    <xs:element name="traceNo" type="xs:string"/>
+			<xs:element name="version" type="xs:string"/>
+			<xs:element name="traceSrc" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="requestInformation" type="tns:RequestHeaderType"/>
+	<xs:element name="replyInformation" type="tns:ResponseHeaderType"/>
+</xs:schema>

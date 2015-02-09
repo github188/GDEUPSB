@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdchps.service.bankcomm.com/basic/atomic/operation.GDChpsParamService" xmlns:gdchps="http://gdchps.service.bankcomm.com/basic/atomic/operation.GDChpsParamService/Schema" name="GDChpsParamService" targetNamespace="http://gdchps.service.bankcomm.com/basic/atomic/operation.GDChpsParamService">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://gdchps.service.bankcomm.com/basic/atomic/operation.GDChpsParamService">
+      <xsd:import namespace="http://gdchps.service.bankcomm.com/basic/atomic/operation.GDChpsParamService/Schema" schemaLocation="GDChpsParamService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="cusrBasInfRequestMessage">
+    <wsdl:part name="cusrBasInfRequest" element="gdchps:cusrBasInf"/>
+  </wsdl:message>
+  <wsdl:message name="cusrBasInfResponseMessage">
+    <wsdl:part name="cusrBasInfResponse" element="gdchps:cusrBasInfResponse"/>
+  </wsdl:message>
+  <wsdl:message name="listSgdBusInfRequestMessage">
+    <wsdl:part name="listSgdBusInfRequest" element="gdchps:listSgdBusInf"/>
+  </wsdl:message>
+  <wsdl:message name="listSgdBusInfResponseMessage">
+    <wsdl:part name="listSgdBusInfResponse" element="gdchps:listSgdBusInfResponse"/>
+  </wsdl:message>
+  <wsdl:message name="listCrpInfRequestMessage">
+    <wsdl:part name="listCrpInfRequest" element="gdchps:listCrpInf"/>
+  </wsdl:message>
+  <wsdl:message name="listCrpInfResponseMessage">
+    <wsdl:part name="listCrpInfResponse" element="gdchps:listCrpInfResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getSgdBusInfRequestMessage">
+    <wsdl:part name="getSgdBusInfRequest" element="gdchps:getSgdBusInf"/>
+  </wsdl:message>
+  <wsdl:message name="getSgdBusInfResponseMessage">
+    <wsdl:part name="getSgdBusInfResponse" element="gdchps:getSgdBusInfResponse"/>
+  </wsdl:message>
+  <wsdl:message name="cusrDetInfRequestMessage">
+    <wsdl:part name="cusrDetInfRequest" element="gdchps:cusrDetInf"/>
+  </wsdl:message>
+  <wsdl:message name="cusrDetInfResponseMessage">
+    <wsdl:part name="cusrDetInfResponse" element="gdchps:cusrDetInfResponse"/>
+  </wsdl:message>
+  <wsdl:message name="queryCusrDetInfRequestMessage">
+    <wsdl:part name="queryCusrDetInfRequest" element="gdchps:queryCusrDetInf"/>
+  </wsdl:message>
+  <wsdl:message name="queryCusrDetInfResponseMessage">
+    <wsdl:part name="queryCusrDetInfResponse" element="gdchps:queryCusrDetInfResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="GDChpsParamServicePortType">
+    <wsdl:operation name="cusrBasInf">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:cusrBasInfRequestMessage"/>
+      <wsdl:output message="tns:cusrBasInfResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="listSgdBusInf">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:listSgdBusInfRequestMessage"/>
+      <wsdl:output message="tns:listSgdBusInfResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="listCrpInf">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:listCrpInfRequestMessage"/>
+      <wsdl:output message="tns:listCrpInfResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="getSgdBusInf">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:getSgdBusInfRequestMessage"/>
+      <wsdl:output message="tns:getSgdBusInfResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="cusrDetInf">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:cusrDetInfRequestMessage"/>
+      <wsdl:output message="tns:cusrDetInfResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="queryCusrDetInf">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:queryCusrDetInfRequestMessage"/>
+      <wsdl:output message="tns:queryCusrDetInfResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GDChpsParamServiceSoapBinding" type="tns:GDChpsParamServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="cusrBasInf">
+      <soap:operation soapAction="http://gdchps.service.bankcomm.com/basic/atomic/operation.GDChpsParamService/cusrBasInf"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listSgdBusInf">
+      <soap:operation soapAction="http://gdchps.service.bankcomm.com/basic/atomic/operation.GDChpsParamService/listSgdBusInf"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="listCrpInf">
+      <soap:operation soapAction="http://gdchps.service.bankcomm.com/basic/atomic/operation.GDChpsParamService/listCrpInf"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getSgdBusInf">
+      <soap:operation soapAction="http://gdchps.service.bankcomm.com/basic/atomic/operation.GDChpsParamService/getSgdBusInf"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cusrDetInf">
+      <soap:operation soapAction="http://gdchps.service.bankcomm.com/basic/atomic/operation.GDChpsParamService/cusrDetInf"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryCusrDetInf">
+      <soap:operation soapAction="http://gdchps.service.bankcomm.com/basic/atomic/operation.GDChpsParamService/queryCusrDetInf"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GDChpsParamService">
+    <wsdl:port name="GDChpsParamServicePort" binding="tns:GDChpsParamServiceSoapBinding">
+      <soap:address location="http://127.0.0.1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
