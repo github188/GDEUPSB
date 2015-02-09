@@ -1,17 +1,21 @@
 package com.bocom.bbip.gdeupsb.service.impl.watr00;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsAmountInfo;
 import com.bocom.bbip.eups.spi.service.online.PayFeeOnlineService;
 import com.bocom.bbip.eups.spi.vo.CommHeadDomain;
 import com.bocom.bbip.eups.spi.vo.PayFeeOnlineDomain;
 import com.bocom.bbip.eups.spi.vo.PayFeeOnlineRetDomain;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
+import com.bocom.jump.bp.service.id.seq.StepSequenceFactory;
 
 /**
  * 联机缴费
@@ -59,18 +63,20 @@ public class PayFeeOnlineServiceActionWATR00 implements PayFeeOnlineService {
 		logger.info("PayFeeOnlineServiceActionWATR00 preThdDeal start ... ...");
 		// TODO:为第三方接口报文字段赋值，发送请求至第三方
 		context.setData("type", "Y002");
-		context.setData("accountdate", "20150123");
-		context.setData("waterno", "JH201501230000000001");//TODO:流水号生成
-		context.setData("bankcode", "COMM");
-		context.setData("salesdepart", "327103");
-		context.setData("salesperson", "327103");
-		context.setData("busitime", "20150123104100");
-		context.setData("thdRspCde", "0000");
-		context.setData("zprice", "10000");
-		context.setData("months", "3");
-		context.setData("operano", "0001");
-		context.setData("password", "123123");
-		context.setData("md5digest", "0000000");
+		context.setData("accountdate", DateUtils.format((Date)context.getData(ParamKeys.AC_DATE), DateUtils.STYLE_yyyyMMdd));
+		StepSequenceFactory s = context.getService("logNoService");
+		String logNo = s.create().toString();
+		context.setData("waterno", "JH"+logNo);//流水号生成
+		context.setData("bankcode", "JT");
+		context.setData("salesdepart",context.getData(ParamKeys.BR));
+		context.setData("salesperson", ((String)context.getData(ParamKeys.TELLER)).substring(4, 7));
+		context.setData("busitime", DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMddHHmmss));
+		context.setData("thdRspCde", "0");
+		context.setData("zprice", "");
+		context.setData("months", "");
+		context.setData("operano", "");
+		context.setData("password", "        ");
+		context.setData("md5digest", " ");
 		
 		context.setData("hno", context.getData("thdCusNo"));
 		context.setData("je", context.getData("txnAmt"));
