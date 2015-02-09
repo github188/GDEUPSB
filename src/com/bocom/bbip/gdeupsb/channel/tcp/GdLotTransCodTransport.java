@@ -135,7 +135,7 @@ public class GdLotTransCodTransport implements Transport{
 		Object obj = null;
 		try {
 			sw = new StringWriter();
-			factory = XMLOutputFactory.newFactory();
+			factory = XMLOutputFactory.newInstance();
 			w = factory.createXMLStreamWriter(sw);
 			w.writeStartElement("root");
 				w.writeStartElement("pkgH");
@@ -233,7 +233,7 @@ public class GdLotTransCodTransport implements Transport{
 		try {
 			String data = new String((byte[])obj,"gbk");
 			logger.info("data["+data+"]");
-			factory = XMLInputFactory.newFactory();
+			factory = XMLInputFactory.newInstance();
 			sr = new StringReader(data);
 			r = factory.createXMLStreamReader(sr);
 			String action = "";
