@@ -182,7 +182,13 @@ public class GdLotTransCodTransport implements Transport{
 		            w.writeEndElement();
                 }else if("209".equals(action)) {  //彩民信息查询
                     action_209(w,context);
-                }
+                }else if("236".equals(action)){
+					action_236(w,context);
+				}else if("240".equals(action)){
+					action_240(w,context);
+				}else if("237".equals(action)){
+					action_237(w,context);
+				}
 			w.writeEndElement();
 			w.flush();
 			String data = sw.toString();
@@ -234,6 +240,45 @@ public class GdLotTransCodTransport implements Transport{
             w.writeCharacters(context.getData("fTXNTm").toString());
             w.writeEndElement();
     }
+	private void action_236(XMLStreamWriter w,Context context) throws XMLStreamException{
+		w.writeStartElement("pkgC");
+			w.writeStartElement("game_id");
+			w.writeCharacters(context.getData("gameId").toString());
+			w.writeEndElement();
+			w.writeStartElement("draw_id");
+			w.writeCharacters(context.getData("drawId").toString());
+			w.writeEndElement();
+			w.writeStartElement("keno_draw_id");
+			w.writeCharacters(context.getData("kenoId").toString());
+			w.writeEndElement();
+		w.writeEndElement();
+	}
+	private void action_240(XMLStreamWriter w,Context context) throws XMLStreamException{
+		w.writeStartElement("pkgC");
+			w.writeStartElement("game_id");
+			w.writeCharacters(context.getData("gameId").toString());
+			w.writeEndElement();
+			w.writeStartElement("draw_id");
+			w.writeCharacters(context.getData("drawId").toString());
+			w.writeEndElement();
+			w.writeStartElement("keno_draw_id");
+			w.writeCharacters(context.getData("kenoId").toString());
+			w.writeEndElement();
+		w.writeEndElement();
+	}
+	private void action_237(XMLStreamWriter w,Context context) throws XMLStreamException{
+		w.writeStartElement("pkgC");
+			w.writeStartElement("game_id");
+			w.writeCharacters(context.getData("gameId").toString());
+			w.writeEndElement();
+			w.writeStartElement("draw_id");
+			w.writeCharacters(context.getData("drawId").toString());
+			w.writeEndElement();
+			w.writeStartElement("file_type");
+			w.writeCharacters(context.getData("filTyp").toString());
+			w.writeEndElement();
+		w.writeEndElement();
+	}
 	/**
 	 * 解包
 	 * @param context
@@ -272,7 +317,13 @@ public class GdLotTransCodTransport implements Transport{
                 decode_212(r,map);
             }else if("200".equals(action)){
                 decode_200(r,map);
-            }
+            }else if("236".equals(action)){
+				decode_236(r,map);
+			}else if("240".equals(action)){
+				decode_240(r,map);
+			}else if("237".equals(action)){
+				decode_237(r,map);
+			}
 			
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
@@ -342,6 +393,105 @@ public class GdLotTransCodTransport implements Transport{
            }
        }
    }
+    private void decode_236(XMLStreamReader r,Map<String,Object> map) throws XMLStreamException{
+		List<Map<String,Object>> prizeItems = new ArrayList<Map<String,Object>>(); 
+		List<Map<String,Object>> clses = new ArrayList<Map<String,Object>>(); 
+		Map<String,Object> prizeItem = new HashMap<String,Object>();
+		Map<String,Object> cls = new HashMap<String,Object>();
+		while(r.hasNext()){
+			int typ = r.next();
+			if(typ!=XMLStreamConstants.START_ELEMENT)
+				continue;
+			String name = r.getName().toString();
+			if("return".equals(name)){
+				map.put("thdRspCde", r.getAttributeValue(0));
+				map.put("resultDes", r.getAttributeValue(1));
+			}else if("openPrize".equals(name)){
+				map.put("gameNm", r.getAttributeValue(0));
+				map.put("drawNm", r.getAttributeValue(1));
+				map.put("kenoNm", r.getAttributeValue(2));
+				map.put("strTim", r.getAttributeValue(3));
+				map.put("stpTim", r.getAttributeValue(4));
+				map.put("totPrz", r.getAttributeValue(5));
+				map.put("jacPot", r.getAttributeValue(6));
+			}else if("prize".equals(name)){
+				map.put("opnTot", r.getAttributeValue(0));
+			}else if("prizeItem".equals(name)){
+				prizeItem = new HashMap<String,Object>();
+				clses = new ArrayList<Map<String,Object>>(); 
+				prizeItem.put("opnNum", r.getAttributeValue(0));
+				prizeItem.put("bonCod", r.getAttributeValue(1));
+				prizeItem.put("clsNum", r.getAttributeValue(2));
+				prizeItem.put("clses", clses);
+				prizeItems.add(prizeItem);
+			}else if("class".equals(name)){
+				cls = new HashMap<String,Object>();
+				cls.put("clsNam", r.getAttributeValue(0));
+				cls.put("bonAmt", r.getAttributeValue(1));
+				cls.put("bonNum", r.getAttributeValue(2));
+				clses.add(cls);
+			}
+		}
+		map.put("prize", prizeItems);
+	}
+	private void decode_240(XMLStreamReader r,Map<String,Object> map) throws XMLStreamException{
+		List<Map<String,Object>> bonusItems = new ArrayList<Map<String,Object>>(); 
+		List<Map<String,Object>> nodes = new ArrayList<Map<String,Object>>(); 
+		Map<String,Object> bonusItem = new HashMap<String,Object>();
+		Map<String,Object> node = new HashMap<String,Object>();
+		while(r.hasNext()){
+			int typ = r.next();
+			if(typ!=XMLStreamConstants.START_ELEMENT)
+				continue;
+			String name = r.getName().toString();
+			if("return".equals(name)){
+				map.put("thdRspCde", r.getAttributeValue(0));
+				map.put("resultDes", r.getAttributeValue(1));
+			}else if("keno".equals(name)){
+				map.put("gameId", r.getAttributeValue(0));
+				map.put("drawId", r.getAttributeValue(1));
+				map.put("kenoId", r.getAttributeValue(2));
+			}else if("point".equals(name)){
+				map.put("dump", r.getAttributeValue(0));
+				map.put("cash", r.getAttributeValue(1));
+				map.put("db", r.getAttributeValue(2));
+			}else if("bounsItem".equals(name)){
+				bonusItem = new HashMap<String,Object>();
+				nodes = new ArrayList<Map<String,Object>>(); 
+				bonusItem.put("txnLog", r.getAttributeValue(0));
+				bonusItem.put("cipher", r.getAttributeValue(1));
+				bonusItem.put("bigBon", r.getAttributeValue(2));
+				bonusItem.put("totPrz", r.getAttributeValue(3));
+				bonusItem.put("tLogNo", r.getAttributeValue(4));
+				bonusItem.put("termId", r.getAttributeValue(5));
+				bonusItem.put("nodes", nodes);
+				bonusItems.add(bonusItem);
+			}else if("bonusNode".equals(name)){
+				node = new HashMap<String,Object>();
+				node.put("betMod", r.getAttributeValue(0));
+				node.put("betMul", r.getAttributeValue(1));
+				node.put("class", r.getAttributeValue(2));
+				node.put("przAmt", r.getAttributeValue(3));
+				node.put("betLin", r.getAttributeValue(4));
+				nodes.add(node);
+			}
+		}
+		map.put("bonusItems", bonusItems);
+	}
+	private void decode_237(XMLStreamReader r,Map<String,Object> map) throws XMLStreamException{
+		while(r.hasNext()){
+			int typ = r.next();
+			if(typ!=XMLStreamConstants.START_ELEMENT)
+				continue;
+			String name = r.getName().toString();
+			if("return".equals(name)){
+				map.put("thdRspCde", r.getAttributeValue(0));
+				map.put("resultDes", r.getAttributeValue(1));
+			}else if("file".equals(name)){
+				map.put("file", r.getElementText());
+			}
+		}
+	}
    
 //	public static void main(String[] args) {
 //		XMLInputFactory factory = null;
