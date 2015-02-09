@@ -42,18 +42,11 @@ public class LoginAction extends BaseAction {
         }
         //向福彩中心发出系统角色登录
         context.setData("eupsBusTyp", "LOTR01");
-        context.setData("type", "3");
         context.setData("action", "212");
-        context.setData("version", "0");
-        context.setData("dealer_id", GDConstants.LOT_DEAL_ID);
-        context.setData("terminal_id", "0");
-        context.setData("mobile", "0");
-        context.setData("phone", "0");
-        context.setData("sent_time", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMddHHmmss));
-       // context.setData("usrPam", context.getData("usrPam"));
-       // context.setData("usrPas", context.getData("usrPas"));
-        context.setData("usrPam", "tangdi");
-        context.setData("usrPas", "123456");
+        context.setData("usrPam", context.getData("usrPam"));
+        context.setData("usrPas", context.getData("usrPas"));
+        // context.setData("usrPam", "tangdi"); 测试
+        // context.setData("usrPas", "123456");
 
         Transport ts = context.getService("STHDLOT1");
         Map<String,Object> resultMap = null;//申请当前期号，奖期信息下载

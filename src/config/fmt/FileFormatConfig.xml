@@ -15,13 +15,13 @@
             encoding="GBK" />
     </file>
     <!-- 佛山电信文本批量-->
-    <file id="gasFbpeBatFmt" name="gasFbpeBatFmt" encoding="GBK"
+    <file id="telFbpeBatFmt" name="gasFbpeBatFmt" encoding="GBK"
         lineSeparator="\n">
         <foreach name="detail" ref="config/fmt/fileFmt/fbpe/fbpeTelBatchDeatil.xml"
             encoding="GBK" />
     </file>
     <!-- 佛山移动文本批量-->
-    <file id="gasFbpeBatFmt" name="gasFbpeBatFmt" encoding="GBK"
+    <file id="mobFbpeBatFmt" name="gasFbpeBatFmt" encoding="GBK"
         lineSeparator="\n">
         <line name="header" ref="config/fmt/fileFmt/fbpe/fbpeMobBatchDeatil.xml"
             encoding="GBK" />

@@ -23,6 +23,9 @@ import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
+import com.bocom.jump.bp.JumpException;
+import com.bocom.jump.bp.channel.CommunicationException;
+import com.bocom.jump.bp.channel.Transport;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -34,6 +37,7 @@ import com.bocom.jump.bp.core.CoreException;
  */
 public class CathecticOnTimeAction extends BaseAction{
 
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public void execute(Context context) throws CoreException {
         log.info("Enter in CathecticOnTimeAction... ");
@@ -290,30 +294,29 @@ public class CathecticOnTimeAction extends BaseAction{
         String lotTxnTim = DateUtils.format(date, DateUtils.STYLE_yyyyMMddHHmmss);
         context.setData("lotTxnTim", lotTxnTim);
         // 调第三方
-        Map<String, Object> resultMap= get(ThirdPartyAdaptor.class).trade(context);
+        Transport ts = context.getService("STHDLOT1");
+        Map<String,Object> resultMap = null;//申请当前期号，奖期信息下载
+        try {
+            resultMap = (Map<String, Object>) ts.submit(context.getDataMap(), context);
+            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
+        } catch (CommunicationException e1) {
+            e1.printStackTrace();
+        } catch (JumpException e1) {
+            e1.printStackTrace();
+        }  
+        
         String sndStatus = "F";
         if(context.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL)){
-            CommThdRspCdeAction cRspCdeAction = new CommThdRspCdeAction();
-            String responseCode = cRspCdeAction.getThdRspCde(resultMap,  context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
-            log.info("responseCode:["+responseCode+"]");
-            if(Constants.RESPONSE_CODE_SUCC.equals(responseCode)){
+            if(Constants.RESPONSE_CODE_SUCC.equals(map.get("resultCode"))){
                 log.info("QueryLot success!");
                 sndStatus = "S";
                 context.setData("sndMsg", "发送购彩成功");
                 context.setData("txnSts", "S");
                 context.setData("tTxnSt", "S");
-            }/*else if (){
-                responseCode = ErrorCodes.EUPS_THD_RSP_CODE_ERROR;
-                sndStatus = "T";
-                context.setData("sndMsg", "发送购彩超时");
-                context.setData("txnSts", "T");
-                context.setData("tTxnSt", "T");
-                context.setData("tzCod", "TZ9014");
-                throw new CoreException(responseCode);
-            }*/else {
+            }else {
                 sndStatus = "F";
-                context.setData("sndMsg", resultMap.get("rRspMsg")+"["+responseCode+"]");
-                if (responseCode.equals("1618")){
+                context.setData("sndMsg", resultMap.get("rRspMsg")+"["+map.get("resultCode")+"]");
+                if (map.get("resultCode").equals("1618")){
                     context.setData("sndMsg", "快乐十分该期结束，请稍后购买");
                 }
                 context.setData("txnSts", "F");
