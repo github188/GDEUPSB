@@ -1,4 +1,4 @@
-package com.bocom.bbip.gdeupsb.action.gas;
+﻿package com.bocom.bbip.gdeupsb.action.gas;
 
 import java.util.Date;
 import java.util.List;
@@ -61,7 +61,7 @@ public class QryHzThdJnlInfoAction extends BaseAction{
 			if(!((null==context.getData(ParamKeys.CUS_NME)) || "".equals(context.getData(ParamKeys.CUS_NME)) ||  "?".equals(context.getData(ParamKeys.CUS_NME)) )){
 				txnJnl.setCusNme(context.getData(ParamKeys.CUS_NME).toString());
 			}
-			
+			//
 			logger.info("==========" + txnJnl.getThdCusNo() + "====" + txnJnl.getCusAc() + "=====" + txnJnl.getCusNme());
 			
 			txnJnl.setBeginDate(DateUtils.parse((String) context.getData("beginDate")));
