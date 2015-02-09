@@ -87,6 +87,20 @@
       <xs:element name="response" type="tns:invoiceGrantManagerResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:element name="checkTlrPasswd" type="tns:checkTlrPasswdReq_CType"/>
+  <xs:element name="checkTlrPasswdResponse" type="tns:checkTlrPasswdRsp_CType"/>
+  <xs:complexType name="checkTlrPasswdReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:checkTlrPasswdRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="checkTlrPasswdRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:checkTlrPasswdResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:element name="invoiceCheckManager" type="tns:invoiceCheckManagerReq_CType"/>
   <xs:element name="invoiceCheckManagerResponse" type="tns:invoiceCheckManagerRsp_CType"/>
   <xs:complexType name="invoiceCheckManagerReq_CType">
@@ -99,6 +113,34 @@
     <xs:sequence>
       <xs:element ref="gsp:replyInformation"/>
       <xs:element name="response" type="tns:invoiceCheckManagerResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="updateTlrPasswd" type="tns:updateTlrPasswdReq_CType"/>
+  <xs:element name="updateTlrPasswdResponse" type="tns:updateTlrPasswdRsp_CType"/>
+  <xs:complexType name="updateTlrPasswdReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:updateTlrPasswdRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="updateTlrPasswdRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:updateTlrPasswdResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="checkTlrInf" type="tns:checkTlrInfReq_CType"/>
+  <xs:element name="checkTlrInfResponse" type="tns:checkTlrInfRsp_CType"/>
+  <xs:complexType name="checkTlrInfReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:checkTlrInfRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="checkTlrInfRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:checkTlrInfResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
   <xs:element name="requestHeader" type="tns:requestHeader_CType"/>
@@ -423,6 +465,24 @@
       <xs:maxLength value="8"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:complexType name="checkTlrPasswdRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="passwd" type="tns:passwd_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="checkTlrPasswdResponse_CType">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:simpleType name="passwd_SType">
+    <xs:annotation>
+      <xs:documentation>密码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:complexType name="invoiceCheckManagerRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
@@ -473,4 +533,32 @@
       <xs:maxLength value="8"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:complexType name="updateTlrPasswdRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="newPwd" type="tns:newPwd_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="updateTlrPasswdResponse_CType">
+    <xs:sequence/>
+  </xs:complexType>
+  <xs:simpleType name="newPwd_SType">
+    <xs:annotation>
+      <xs:documentation>新密码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="checkTlrInfRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="oprTlr" type="tns:oprTlr_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="checkTlrInfResponse_CType">
+    <xs:sequence/>
+  </xs:complexType>
 </xs:schema>

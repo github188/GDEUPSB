@@ -42,11 +42,20 @@
   <wsdl:message name="invoiceGrantManagerResponseMessage">
     <wsdl:part name="invoiceGrantManagerResponse" element="gdeupsb:invoiceGrantManagerResponse"/>
   </wsdl:message>
+  <wsdl:message name="checkTlrPasswdRequestMessage">
+    <wsdl:part name="checkTlrPasswdRequest" element="gdeupsb:checkTlrPasswd"/>
+  </wsdl:message>
   <wsdl:message name="invoiceCheckManagerRequestMessage">
     <wsdl:part name="invoiceCheckManagerRequest" element="gdeupsb:invoiceCheckManager"/>
   </wsdl:message>
   <wsdl:message name="invoiceCheckManagerResponseMessage">
     <wsdl:part name="invoiceCheckManagerResponse" element="gdeupsb:invoiceCheckManagerResponse"/>
+  </wsdl:message>
+  <wsdl:message name="updateTlrPasswdRequestMessage">
+    <wsdl:part name="updateTlrPasswdRequest" element="gdeupsb:updateTlrPasswd"/>
+  </wsdl:message>
+  <wsdl:message name="checkTlrInfRequestMessage">
+    <wsdl:part name="checkTlrInfRequest" element="gdeupsb:checkTlrInf"/>
   </wsdl:message>
   <wsdl:portType name="GDEUPSPROF00ServicePortType">
     <wsdl:operation name="invoiceStatusQueryManager">
@@ -79,10 +88,19 @@
       <wsdl:input message="tns:invoiceGrantManagerRequestMessage"/>
       <wsdl:output message="tns:invoiceGrantManagerResponseMessage"/>
     </wsdl:operation>
+    <wsdl:operation name="checkTlrPasswd">
+      <wsdl:input message="tns:checkTlrPasswdRequestMessage"/>
+    </wsdl:operation>
     <wsdl:operation name="invoiceCheckManager">
       <wsdl:documentation/>
       <wsdl:input message="tns:invoiceCheckManagerRequestMessage"/>
       <wsdl:output message="tns:invoiceCheckManagerResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="updateTlrPasswd">
+      <wsdl:input message="tns:updateTlrPasswdRequestMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="checkTlrInf">
+      <wsdl:input message="tns:checkTlrInfRequestMessage"/>
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="GDEUPSPROF00ServiceSoapBinding" type="tns:GDEUPSPROF00ServicePortType">
@@ -141,6 +159,12 @@
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="checkTlrPasswd">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/checkTlrPasswd"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
     <wsdl:operation name="invoiceCheckManager">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/invoiceCheckManager"/>
       <wsdl:input>
@@ -149,6 +173,18 @@
       <wsdl:output>
         <soap:body use="literal"/>
       </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="updateTlrPasswd">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/updateTlrPasswd"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="checkTlrInf">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/checkTlrInf"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="GDEUPSPROF00Service">
