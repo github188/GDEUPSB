@@ -68,12 +68,12 @@ public class CathecticOnTimeAction extends BaseAction{
         
         //<Exec func="PUB:CodeSwitching">
         Map<String, Object> map = new HashMap<String, Object>();
-       // map.put("isKeno", context.getData("isKeno"));
-        //map.put("gameId", context.getData("gameId"));
-        //map.put("lotTime", context.getData("lotTime"));
-        map.put("isKeno", "Y");
-        map.put("gameId", "5");
-        map.put("lotTime", "20150111223344");
+        map.put("isKeno", context.getData("isKeno"));
+        map.put("gameId", context.getData("gameId"));
+        map.put("lotTime", context.getData("lotTime"));
+        //map.put("isKeno", "Y"); 测试
+        // map.put("gameId", "5");
+        // map.put("lotTime", "20150111223344");
         
         GdLotDrwTbl lotDrwInf =new GdLotDrwTbl();
         try {

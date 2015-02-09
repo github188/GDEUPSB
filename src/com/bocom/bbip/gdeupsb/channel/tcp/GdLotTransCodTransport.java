@@ -174,12 +174,14 @@ public class GdLotTransCodTransport implements Transport{
 //						w.writeEndElement();
 //					w.writeEndElement();
 					action_235(w,context);
-				}else if("212".equals(action)) {
+				}else if("212".equals(action)) {  //系统角色登录
 				    action_212(w,context);
-				}else if("200".equals(action)) {
+				}else if("200".equals(action)) {  //系统对时
 				    w.writeStartElement("pkgC");
 				    w.writeCharacters(" ");
 		            w.writeEndElement();
+                }else if("209".equals(action)) {  //彩民信息查询
+                    action_209(w,context);
                 }
 			w.writeEndElement();
 			w.flush();
@@ -218,6 +220,18 @@ public class GdLotTransCodTransport implements Transport{
             w.writeEndElement();
             w.writeStartElement("pwd");
             w.writeCharacters(context.getData("usrPas").toString());
+            w.writeEndElement();
+    }
+	private void action_209(XMLStreamWriter w,Context context) throws XMLStreamException{
+        w.writeStartElement("pkgC");
+            w.writeStartElement("gambler_name");
+            w.writeCharacters(context.getData("gambler_name").toString());
+            w.writeEndElement();
+            w.writeStartElement("gambler_pwd");
+            w.writeCharacters(context.getData("gambler_pwd").toString());
+            w.writeEndElement();
+            w.writeStartElement("modify_time");
+            w.writeCharacters(context.getData("fTXNTm").toString());
             w.writeEndElement();
     }
 	/**

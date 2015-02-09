@@ -43,8 +43,6 @@ public class LoginAction extends BaseAction {
         //向福彩中心发出系统角色登录
         context.setData("eupsBusTyp", "LOTR01");
         context.setData("action", "212");
-        context.setData("usrPam", context.getData("usrPam"));
-        context.setData("usrPas", context.getData("usrPas"));
         // context.setData("usrPam", "tangdi"); 测试
         // context.setData("usrPas", "123456");
 
