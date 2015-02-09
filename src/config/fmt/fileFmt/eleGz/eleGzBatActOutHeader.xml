@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet spacket.xsd"
+	encoding="gbk" trace="true">
+	<segment name="header" encoding="gbk">    <!-- 供电批扣返盘文件格式 -->
+		<varString name="DFMon" type="D|" />  <!-- 电费月 -->
+		<varString name="TotCnt" type="D|" />  <!-- 总记录数 -->
+		<varString name="TotAmt" type="D|" />  <!-- 总金额 -->
+		<varString name="STotCnt" type="D|" />  <!-- 已划款户数 -->	
+		<varString name="STotAmt" type="D|" />  <!-- 已划款金额 -->
+		<varString name="FTotCnt" type="D|" />  <!-- 失败户数-->
+		<varString name="FTotAmt" type="D|" />  <!-- 失败金额-->
+		<varString name="RsFld1" type="D|" />  <!-- 供电局批号 -->
+		<varString name="ActDat" type="D|" />  <!-- 划款日期 -->
+	</segment>
+</message>

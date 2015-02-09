@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet spacket.xsd"
+	encoding="utf-8" trace="true">
+	<segment name="detail" encoding="GBK">     <!-- 供电批扣返盘文件格式 -->
+		<varString name="thdCusNo" type="D|" />  <!-- 第三方客户标识-->
+		<varString name="cusAc" type="D|" />  <!-- 客户帐号-->
+		<varString name="ttxnAmt" type="D|" />  <!-- 金额-->
+		<varString name="eleMon" type="D|" />  <!-- 电费月份-->
+		<varString name="rsFld2" type="D|" />  <!--区号-->
+		<varString name="comAc" type="D|" />  <!--供电企业账号-->
+		<varString name="hRspCd" type="D|" />  <!--返回码，需要转换-->
+	</segment>
+</message>
