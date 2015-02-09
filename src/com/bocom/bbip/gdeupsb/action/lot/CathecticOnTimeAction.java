@@ -7,8 +7,6 @@ import java.util.Map;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
-import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
-import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
@@ -283,7 +281,7 @@ public class CathecticOnTimeAction extends BaseAction{
         //TODO;
         //  <!-- 送第三方报文之前先提交数据库事务 -->
         //<Exec  func="PUB:CommitWork"  />
-        context.setData("tTxnCd", "231");
+        context.setData("action", "231");
         if (!accStatus.equals("S")) {
             log.info("账务处理未成功");
             context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
@@ -295,7 +293,7 @@ public class CathecticOnTimeAction extends BaseAction{
         context.setData("lotTxnTim", lotTxnTim);
         // 调第三方
         Transport ts = context.getService("STHDLOT1");
-        Map<String,Object> resultMap = null;//申请当前期号，奖期信息下载
+        Map<String,Object> resultMap = null;
         try {
             resultMap = (Map<String, Object>) ts.submit(context.getDataMap(), context);
             context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);

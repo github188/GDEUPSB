@@ -188,7 +188,10 @@ public class GdLotTransCodTransport implements Transport{
 					action_240(w,context);
 				}else if("237".equals(action)){
 					action_237(w,context);
-				}
+				}else if("231".equals(action)) {  //投注
+                    action_231(w,context);
+                }
+				
 			w.writeEndElement();
 			w.flush();
 			String data = sw.toString();
@@ -279,6 +282,79 @@ public class GdLotTransCodTransport implements Transport{
 			w.writeEndElement();
 		w.writeEndElement();
 	}
+	private void action_231(XMLStreamWriter w,Context context) throws XMLStreamException{
+        w.writeStartElement("pkgC");
+            w.writeStartElement("schemeInfo");
+                w.writeStartElement("dealer_serial");
+                w.writeCharacters(context.getData("txnLog").toString());
+                w.writeEndElement();
+                w.writeStartElement("scheme_type");
+                w.writeCharacters(context.getData("schTyp").toString());
+                w.writeEndElement();
+                w.writeStartElement("scheme_title");
+                w.writeCharacters(context.getData("schTit").toString());
+                w.writeEndElement();
+                w.writeStartElement("secrecy_level");
+                w.writeCharacters(context.getData("secLev").toString());
+                w.writeEndElement();
+                w.writeStartElement("create_time");
+                w.writeCharacters(context.getData("lotTxnTim").toString());
+                w.writeEndElement();
+                w.writeStartElement("city_id");
+                w.writeCharacters(context.getData("cityId").toString());
+                w.writeEndElement();
+                w.writeStartElement("game_id");
+                w.writeCharacters(context.getData("gameId").toString());
+                w.writeEndElement();
+                w.writeStartElement("draw_id");
+                w.writeCharacters(context.getData("drawId").toString());
+                w.writeEndElement();
+                w.writeStartElement("keno_draw_id");
+                w.writeCharacters(context.getData("kenoId").toString());
+                w.writeEndElement();
+                w.writeStartElement("play_id");
+                w.writeCharacters(context.getData("playId").toString());
+                w.writeEndElement();
+                w.writeStartElement("bet_method");
+                w.writeCharacters(context.getData("betMet").toString());
+                w.writeEndElement();
+                w.writeStartElement("bet_mode");
+                w.writeCharacters(context.getData("betMod").toString());
+                w.writeEndElement();
+                w.writeStartElement("bet_multiple");
+                w.writeCharacters(context.getData("betMul").toString());
+                w.writeEndElement();
+                w.writeStartElement("bet_money");
+                w.writeCharacters(context.getData("txnAmt").toString());
+                w.writeEndElement();
+                w.writeStartElement("betInfo");
+                w.writeAttribute("group", context.getData("grpNum").toString());
+                w.writeAttribute("num", context.getData("betNum").toString());
+                    w.writeStartElement("bet_line");
+                    w.writeCharacters(context.getData("betLin").toString());
+                    w.writeEndElement();
+                w.writeEndElement();
+            w.writeEndElement();
+            
+            w.writeStartElement("gamblerInfo");
+                w.writeStartElement("gambler_name");
+                w.writeCharacters(context.getData("lotNam").toString());
+                w.writeEndElement();
+                w.writeStartElement("chargeInfo");
+                    w.writeStartElement("game_id");
+                    w.writeAttribute("isSettled", "1");
+                       
+                        w.writeStartElement("account_type");
+                        w.writeCharacters("14");
+                        w.writeEndElement();
+                        w.writeStartElement("charge_id");
+                        w.writeCharacters("14110000");
+                        w.writeEndElement();
+                    w.writeEndElement();
+                w.writeEndElement();
+            w.writeEndElement();
+        w.writeEndElement();
+    }
 	/**
 	 * 解包
 	 * @param context
@@ -323,7 +399,11 @@ public class GdLotTransCodTransport implements Transport{
 				decode_240(r,map);
 			}else if("237".equals(action)){
 				decode_237(r,map);
-			}
+			}else if("209".equals(action)){
+			    decode_209(r,map);
+            }else if("231".equals(action)){
+                decode_231(r,map);
+            }
 			
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
@@ -391,6 +471,45 @@ public class GdLotTransCodTransport implements Transport{
            }
        }
    }
+    
+    private void decode_231(XMLStreamReader r,Map<String,Object> map) throws XMLStreamException{
+        while(r.hasNext()){
+            int typ = r.next();
+            if(typ!=XMLStreamConstants.START_ELEMENT)
+                continue;
+            String name = r.getName().toString();
+            if("return".equals(name)){
+                map.put("rRspCod", r.getAttributeValue(0));
+                map.put("rRspMsg", r.getAttributeValue(1));
+            }
+            if ("schemeInfo".equals(name)) {
+                if ("dealer_serial".equals(name)) {
+                    map.put("txnLog", r.getElementText());
+                }
+                if ("scheme_id".equals(name)) {
+                    map.put("schId", r.getElementText());
+                }
+                if ("serial_no".equals(name)) {
+                    map.put("tLogNo", r.getElementText());
+                }
+                if ("cipher".equals(name)) {
+                    map.put("cipher", r.getElementText());
+                }
+                if ("checksum".equals(name)) {
+                    map.put("verify", r.getElementText());
+                }
+            }
+            if ("gamblerInfo".equals(name)) {
+                if ("gambler_name".equals(name)) {
+                    map.put("lotNam", r.getElementText());
+                }
+                if ("gambler_balance".equals(name)) {
+                    map.put("lotBal", r.getElementText());
+                }
+            }
+        }
+    }
+    
     private void decode_209(XMLStreamReader r,Map<String,Object> map) throws XMLStreamException{
         while(r.hasNext()){
             int typ = r.next();
@@ -400,6 +519,80 @@ public class GdLotTransCodTransport implements Transport{
             if("return".equals(name)){
                 map.put("rRspCod", r.getAttributeValue(0));
                 map.put("rRspMsg", r.getAttributeValue(1));
+            }
+            if("gamblerBasicInfo".equals(name)) {
+                if ("gambler_name".equals(name)) {
+                    map.put("lotNam", r.getElementText());
+                }
+                if ("register_time".equals(name)) {
+                    map.put("regTim", r.getElementText());
+                }
+                if ("email".equals(name)) {
+                    map.put("email", r.getElementText());
+                }
+            }
+            if("gamblerAdditionalInfo".equals(name)) {
+                if ("city_id".equals(name)) {
+                    map.put("cityId", r.getElementText());
+                }
+                if ("ID_type".equals(name)) {
+                    map.put("lotIdTyp", r.getElementText());
+                }
+                if ("ID_no".equals(name)) {
+                    map.put("idNo", r.getElementText());
+                }
+                if ("account_type".equals(name)) {
+                    map.put("lotAccTyp", r.getElementText());
+                }
+                if ("charge_type".equals(name)) {
+                    map.put("lotChgTyp", r.getElementText());
+                }
+                if ("prize_type".equals(name)) {
+                    map.put("lotPrzTyp", r.getElementText());
+                }
+                if ("bindDealer".equals(name)) {
+                    map.put("isDealId", "1");
+                    map.put("dealId", r.getAttributeValue(1));
+                }
+                if ("bindCard".equals(name)) {
+                    map.put("lotisBind", r.getAttributeValue(0));
+                    if ("card_type".equals(name)) {
+                        map.put("lotCrdTyp", r.getElementText());
+                    }
+                    if ("bank_id".equals(name)) {
+                        map.put("lotBankId", r.getElementText());
+                    }
+                    if ("bank_card".equals(name)) {
+                        map.put("crdNo", r.getElementText());
+                    }
+                }
+                if ("real_name".equals(name)) {
+                    map.put("cusNam", r.getElementText());
+                }
+                if ("sex".equals(name)) {
+                    map.put("sex", r.getElementText());
+                }
+                if ("birthday".equals(name)) {
+                    map.put("bthDay", r.getElementText());
+                }
+                if ("mobile".equals(name)) {
+                    map.put("mobTel", r.getElementText());
+                }
+                if ("phone".equals(name)) {
+                    map.put("fixTel", r.getElementText());
+                }
+                if ("gambler_status".equals(name)) {
+                    map.put("status", r.getElementText());
+                }
+                if ("gambler_points".equals(name)) {
+                    map.put("lotPot", r.getElementText());
+                }
+                if ("gambler_exp".equals(name)) {
+                    map.put("lotExp", r.getElementText());
+                }
+                if ("gambler_exp_levelup".equals(name)) {
+                    map.put("lotExpLvl", r.getElementText());
+                }
             }
         }
     }
