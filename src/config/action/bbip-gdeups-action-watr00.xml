@@ -12,12 +12,15 @@
 			</x:bean>
 		</x:property>
 	</action>	
-	<!-- 历史水费查询打印 -->
-	<action id="eups.queryAndPrintHistoryMsgServiceActionWATR00" 
-		class="com.bocom.bbip.gdeupsb.service.impl.watr00.QueryAndPrintHistoryMsgServiceActionWATR00"/>
-	<!-- 水费交易流水查询打印 -->
-	<action id="eups.queryAndPrintTransJournalServiceActionWATR00" 
-		class="com.bocom.bbip.gdeupsb.service.impl.watr00.QueryAndPrintTransJournalServiceActionWATR00"/>
+	<!-- 历史水费查询 -->
+	<action id="eups.queryHistoryMsgServiceActionWATR00" 
+		class="com.bocom.bbip.gdeupsb.service.impl.watr00.QueryHistoryMsgServiceActionWATR00"/>
+	<!-- 水费交易流水打印 -->
+	<action id="eups.printTransJournalServiceActionWATR00" 
+		class="com.bocom.bbip.gdeupsb.service.impl.watr00.PrintTransJournalServiceActionWATR00"/>
+	<!-- 对公缴费记账回执打印 -->
+	<action id="eups.printPublicMsgServiceActionWATR00" 
+		class="com.bocom.bbip.gdeupsb.service.impl.watr00.PrintPublicMsgServiceActionWATR00"/>
 	<!-- 第三方对总账 -->
 	<action id="eups.checkSumAccountServiceActionWATR00" 
 		class="com.bocom.bbip.gdeupsb.service.impl.watr00.CheckSumAccountServiceActionWATR00"/>
@@ -27,4 +30,13 @@
 	<!-- 发送明细对账文件 -->
 	<action id="eups.sendCheckDetailAccountServiceActionWATR00" 
 		class="com.bocom.bbip.gdeupsb.service.impl.watr00.SendCheckDetailAccountServiceActionWATR00"/>
+	<!-- 银行发起批量扣款查询请求 -->
+	<action id="eups.sendBatchQueryServiceActionWATR00" 
+		class="com.bocom.bbip.gdeupsb.service.impl.watr00.SendBatchQueryServiceActionWATR00"/>
+	<!-- 第三方发起批量扣款查询结果请求 -->
+	<action id="eups.batchQueryResultServiceActionWATR00" 
+		class="com.bocom.bbip.gdeupsb.service.impl.watr00.BatchQueryResultServiceActionWATR00"/>
+	<!-- 银行发起批量扣款处理结果请求 -->
+	<action id="eups.sendBatchResultServiceActionWATR00" 
+		class="com.bocom.bbip.gdeupsb.service.impl.watr00.SendBatchResultServiceActionWATR00"/>
 </x:beans>
