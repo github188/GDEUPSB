@@ -9,7 +9,7 @@
         <fixString name="length2" length="3" /> 
         <fixString name="actNo" length="$length2" />  <!--银行账号-->
         <fixString name="length3" length="3" /> 
-        <fixString name="cusNam" length="$length3" />  <!-- DVB客户姓名-->
+        <fixString name="cusNam" length="$length3" />   <!-- DVB客户姓名-->
         <fixString name="length4" length="3" />  
         <fixString name="txnAmt" length="$length4" />   <!-- 应缴金额(带小数点)-->
     </segment>
