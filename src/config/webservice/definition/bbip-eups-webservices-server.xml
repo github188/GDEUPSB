@@ -33,6 +33,7 @@
 	<!-- 汕头水费 -->
 	 <server-side-ws-def wsdl="GDEUPSWATR00Service.wsdl"
 		namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service/Schema"/>
+	
  	<!-- 汕头电力 -->
 	<server-side-ws-def wsdl="GDEUPSELEC02Service.wsdl"
 		namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/Schema"/>
@@ -170,6 +171,9 @@
 			<qname-mapping operation="downloadLotPrzFile"  process-id="gdeupsb.downloadLotPrzFilAction" />
 		</qname-mappings>
 	</server-side-ws-def> -->
+	<!-- 珠海路桥 -->
+	<server-side-ws-def wsdl="ZHEUPSTransportService.wsdl"
+		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/Schema" />
 		
 		
 </x:beans>
