@@ -16,5 +16,14 @@
 		    <action id="act" class="com.bocom.bbip.gdeupsb.action.hscard.HScardSignOutAction"/>
 		</actions>
 	</process> 
+	
+	<!-- 余额查询  -->
+	 <process id="gdeupsb.hsCardFeeQuery" template="eups.simpleTran"
+		interceptors="eups.transMessageInterceptor">
+		<actions>
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.common.CheckComTxnCtlAction" operations="checkThdTxnCtlNormal" />
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.hscard.HSCardFeeQueryAction"/>
+		</actions>
+	</process> 
 
 </x:beans>
