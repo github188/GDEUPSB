@@ -5,21 +5,27 @@
 	
 	<!-- add by hefw 20150114 start 汕头水费 -->
 	<!-- 户号查询 -->
-	<process id="eups.queryThirdCus" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	<process id="gdeupsb.GDEUPSWATR00Service.queryThirdCus" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
 	   <actions>
 	        <action id="act" ref="eups.queryThirdCusServiceAction"/>
 	   </actions>
 	</process>
-	<!-- 历史水费查询打印 -->
-	<process id="eups.queryAndPrintHistoryMsg" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	<!-- 历史水费查询 -->
+	<process id="gdeupsb.GDEUPSWATR00Service.queryHistoryMsg" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
 	   <actions>
-	        <action id="act" ref="eups.queryAndPrintHistoryMsgServiceActionWATR00"/>
+	        <action id="act" ref="eups.queryHistoryMsgServiceActionWATR00"/>
 	   </actions>
 	</process>
-	<!-- 水费流水查询打印 -->
-	<process id="eups.queryAndPrintTransJournal" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">	
+	<!-- 水费流水打印 -->
+	<process id="gdeupsb.GDEUPSWATR00Service.printTransJournal" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">	
 	   <actions>
-	        <action id="act" ref="eups.queryAndPrintTransJournalServiceActionWATR00"/>
+	        <action id="act" ref="eups.printTransJournalServiceActionWATR00"/>
+	   </actions>
+	</process>
+	<!-- 对公缴费记账回执打印 -->
+	<process id="gdeupsb.GDEUPSWATR00Service.printPublicMsg" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">	
+	   <actions>
+	        <action id="act" ref="eups.printPublicMsgServiceActionWATR00"/>
 	   </actions>
 	</process>
 	<!-- 第三方对总账 -->
@@ -38,6 +44,30 @@
 	<process id="eups.sendCheckDetailAccount" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
 	   <actions>
 	        <action id="act" ref="eups.sendCheckDetailAccountServiceActionWATR00"/>
+	   </actions>
+	</process>
+	<!-- 银行发起批量扣款查询请求 -->
+	<process id="eups.sendBatchQuery" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	   <actions>
+	        <action id="act" ref="eups.sendBatchQueryServiceActionWATR00"/>
+	   </actions>
+	</process>
+	<!-- 第三方发起批量扣款查询结果请求 -->
+	<process id="D013" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	   <actions>
+	        <action id="act" ref="eups.batchQueryResultServiceActionWATR00"/>
+	   </actions>
+	</process>
+	<!-- 银行发起批量扣款处理结果请求 -->
+	<process id="eups.sendBatchResult" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	   <actions>
+	        <action id="act" ref="eups.sendBatchResultServiceActionWATR00"/>
+	   </actions>
+	</process>
+	<!-- 第三方发起批量扣款请求，该交易与D013相同 -->
+	<process id="D008" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	   <actions>
+	        <action id="act" ref="eups.batchQueryResultServiceActionWATR00"/>
 	   </actions>
 	</process>
 	<!-- add by hefw 20150114 end -->

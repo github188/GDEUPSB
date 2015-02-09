@@ -5,43 +5,43 @@
 	
 	<!-- add by hefw 20150126 start 珠海自助通发票管理 -->
 	<!-- 凭证付出 -->
-	<process id="eups.invoiceUseManager" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	<process id="gdeupsb.GDEUPSPROF00Service.invoiceUseManager" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
 	   <actions>
 	        <action id="act" ref="eups.invoiceUseManagerServiceActionPROF00"/>
 	   </actions>
 	</process>
 	<!-- 发票结账 -->
-	<process id="eups.invoiceCheckManager" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	<process id="gdeupsb.GDEUPSPROF00Service.invoiceCheckManager" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
 	   <actions>
 	        <action id="act" ref="eups.invoiceCheckManagerServiceActionPROF00"/>
 	   </actions>
 	</process>
 	<!-- 发票作废、丢失 -->
-	<process id="eups.invoiceInvalidManager" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	<process id="gdeupsb.GDEUPSPROF00Service.invoiceInvalidManager" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
 	   <actions>
 	        <action id="act" ref="eups.invoiceInvalidManagerServiceActionPROF00"/>
 	   </actions>
 	</process>
 	<!-- 发票领用 -->
-	<process id="eups.invoiceReceiveManager" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	<process id="gdeupsb.GDEUPSPROF00Service.invoiceReceiveManager" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
 	   <actions>
 	        <action id="act" ref="eups.invoiceReceiveManagerServiceActionPROF00"/>
 	   </actions>
 	</process>
 	<!-- 发票发放 -->
-	<process id="eups.invoiceGrantManager" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	<process id="gdeupsb.GDEUPSPROF00Service.invoiceGrantManager" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
 	   <actions>
 	        <action id="act" ref="eups.invoiceGrantManagerServiceActionPROF00"/>
 	   </actions>
 	</process>
-	<!-- 发票发放 -->
-	<process id="eups.invoiceStatusQueryManager" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	<!-- 发票状态查询 -->
+	<process id="gdeupsb.GDEUPSPROF00Service.invoiceStatusQueryManager" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
 	   <actions>
 	        <action id="act" ref="eups.invoiceStatusQueryManagerServiceActionPROF00"/>
 	   </actions>
 	</process>
 	<!-- 发票取消发放 -->
-	<process id="eups.invoiceCancelGrantManager" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	<process id="gdeupsb.GDEUPSPROF00Service.invoiceCancelGrantManager" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
 	   <actions>
 	        <action id="act" ref="eups.invoiceCancelGrantManagerServiceActionPROF00"/>
 	   </actions>
