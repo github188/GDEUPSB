@@ -66,6 +66,12 @@
   <wsdl:message name="trspInvoiceCancelResponseMessage">
     <wsdl:part name="trspInvoiceCancelResponse" element="gdeupsb:trspInvoiceCancelResponse"/>
   </wsdl:message>
+  <wsdl:message name="transportWyFeeQueryRequestMessage">
+    <wsdl:part name="transportWyFeeQueryRequest" element="gdeupsb:transportWyFeeQuery"/>
+  </wsdl:message>
+  <wsdl:message name="transportWyFeeQueryResponseMessage">
+    <wsdl:part name="transportWyFeeQueryResponse" element="gdeupsb:transportWyFeeQueryResponse"/>
+  </wsdl:message>
   <wsdl:message name="hsscCheckFileRequestMessage">
     <wsdl:part name="hsscCheckFileRequest" element="gdeupsb:hsscCheckFile"/>
   </wsdl:message>
@@ -146,6 +152,11 @@
       <wsdl:documentation/>
       <wsdl:input message="tns:trspInvoiceCancelRequestMessage"/>
       <wsdl:output message="tns:trspInvoiceCancelResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="transportWyFeeQuery">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:transportWyFeeQueryRequestMessage"/>
+      <wsdl:output message="tns:transportWyFeeQueryResponseMessage"/>
     </wsdl:operation>
     <wsdl:operation name="hsscCheckFile">
       <wsdl:documentation/>
@@ -258,6 +269,15 @@
     </wsdl:operation>
     <wsdl:operation name="trspInvoiceCancel">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/trspInvoiceCancel"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="transportWyFeeQuery">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/transportWyFeeQuery"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>

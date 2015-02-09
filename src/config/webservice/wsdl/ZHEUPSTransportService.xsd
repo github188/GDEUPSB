@@ -143,6 +143,20 @@
       <xs:element name="response" type="tns:trspInvoiceCancelResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:element name="transportWyFeeQuery" type="tns:transportWyFeeQueryReq_CType"/>
+  <xs:element name="transportWyFeeQueryResponse" type="tns:transportWyFeeQueryRsp_CType"/>
+  <xs:complexType name="transportWyFeeQueryReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:transportWyFeeQueryRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="transportWyFeeQueryRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:transportWyFeeQueryResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:element name="hsscCheckFile" type="tns:hsscCheckFileReq_CType"/>
   <xs:element name="hsscCheckFileResponse" type="tns:hsscCheckFileRsp_CType"/>
   <xs:complexType name="hsscCheckFileReq_CType">
@@ -755,6 +769,132 @@
       <xs:element name="txnAmt" type="tns:txnAmt_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="transportWyFeeQueryRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="cardNO" type="tns:cardNO_SType"/>
+      <xs:element name="password" type="tns:password_SType" minOccurs="0"/>
+      <xs:element name="plateNo" type="tns:plateNo_SType" minOccurs="0"/>
+      <xs:element name="plateType" type="tns:plateType_SType" minOccurs="0"/>
+      <xs:element name="monthCount" type="tns:monthCount_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="transportWyFeeQueryResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="MGID" type="tns:MGID_SType" minOccurs="0"/>
+      <xs:element name="carNo" type="tns:carNo_SType" minOccurs="0"/>
+      <xs:element name="carTyp" type="tns:carTyp_SType" minOccurs="0"/>
+      <xs:element name="sumMon" type="tns:sumMon_SType" minOccurs="0"/>
+      <xs:element name="CarOwner" type="tns:CarOwner_SType" minOccurs="0"/>
+      <xs:element name="begDat" type="tns:begDat_SType" minOccurs="0"/>
+      <xs:element name="endDat" type="tns:endDat_SType" minOccurs="0"/>
+      <xs:element name="FeeStd" type="tns:FeeStd_SType" minOccurs="0"/>
+      <xs:element name="LateFee" type="tns:LateFee_SType" minOccurs="0"/>
+      <xs:element name="Corpus" type="tns:Corpus_SType" minOccurs="0"/>
+      <xs:element name="TotalAmt" type="tns:TotalAmt_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="cardNO_SType">
+    <xs:annotation>
+      <xs:documentation>卡号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="password_SType">
+    <xs:annotation>
+      <xs:documentation>密码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="plateNo_SType">
+    <xs:annotation>
+      <xs:documentation>汽车编号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="plateType_SType">
+    <xs:annotation>
+      <xs:documentation>汽车类型</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="monthCount_SType">
+    <xs:annotation>
+      <xs:documentation>缴费月份</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="MGID_SType">
+    <xs:annotation>
+      <xs:documentation>MGID</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="sumMon_SType">
+    <xs:annotation>
+      <xs:documentation>缴费月数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CarOwner_SType">
+    <xs:annotation>
+      <xs:documentation>车主</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FeeStd_SType">
+    <xs:annotation>
+      <xs:documentation>计费标准</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="LateFee_SType">
+    <xs:annotation>
+      <xs:documentation>滞纳金</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="18"/>
+      <xs:fractionDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="Corpus_SType">
+    <xs:annotation>
+      <xs:documentation>本金</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="18"/>
+      <xs:fractionDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TotalAmt_SType">
+    <xs:annotation>
+      <xs:documentation>总金额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="18"/>
+      <xs:fractionDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:complexType name="hsscCheckFileRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader" minOccurs="0"/>
