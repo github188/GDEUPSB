@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	encoding="utf-8" trace="true">
+	
+	<segment name="total"  encoding="utf-8">
+			<varString name="totCnt" type="D\t"/><!--  总记录-->
+			<varString name="totAmt" type="D\t"/><!--  总金额-->
+	</segment>
+	
+</message>
