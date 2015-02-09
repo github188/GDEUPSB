@@ -20,8 +20,10 @@ import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.entity.EupsBatchPayEntity;
+import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
 import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
 import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
+import com.bocom.bbip.eups.repository.EupsThdBaseInfoRepository;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.eups.spi.service.batch.BatchAcpService;
 import com.bocom.bbip.eups.spi.vo.PrepareBatchAcpDomain;
@@ -48,6 +50,8 @@ public class BathFileDealAction implements BatchAcpService {
     EupsThdTranCtlInfoRepository thdTranCtlInfoRepository;
     @Autowired
     EupsBatchConsoleInfoRepository batchConsoleInfoRepository;
+    @Autowired
+    EupsThdBaseInfoRepository thdBaseInfoRepository;
     @Autowired
     Marshaller marshaller;
     @Autowired
@@ -77,11 +81,12 @@ public class BathFileDealAction implements BatchAcpService {
             return null;
         }
         context.setData(ParamKeys.RSP_CDE, Constants.RESPONSE_CODE_SUCC);
-       
-        /*  <!--获取业务类型和单位名称  -->
-            <Exec func="PUB:ReadRecord">
-                <Arg name="SqlCmd" value="GetBatInf"></Arg>
-            </Exec>*/
+        EupsThdBaseInfo thdBaseInfo = thdBaseInfoRepository.findOne(comNo);
+        if (null != thdBaseInfo) {
+            context.setData("bBusTyp",thdBaseInfo.getEupsBusTyp());
+            context.setData("crpNam",thdBaseInfo.getComNme());
+        }
+      
         String localFileName=fileName+"."+context.getData(ParamKeys.BK);
         // @PARA.RcvMod 为0 磁盘拷贝
         String srcFilName= "dat/term/recv/"+fileName;
@@ -101,7 +106,8 @@ public class BathFileDealAction implements BatchAcpService {
       //自行实现解析文件
       //Resource resource = new FileSystemResource(TransferUtils.resolveFilePath(eupsThdFtpInf.getLocDir().trim(), eupsThdFtpInf.getLocFleNme().trim()));
         Resource resource = new FileSystemResource(objFile);
-        Map<String,Object> map = new HashMap<String, Object>(); 
+        Map<String, List<Map<String, Object>>> map= new HashMap<String, List<Map<String,Object>>>();
+
         //根据单位编号寻找格式文件解析
         if(comNo.equals("tv")) {
             try { 
@@ -134,18 +140,23 @@ public class BathFileDealAction implements BatchAcpService {
         // List<Map<String, Object>> parseMap = operateFile.pareseFile(eupsThdFtpInf, "eleGzBatFmt"); // 解析只有detail文件
         for (Map<String, Object> orgMap : parseMap) {
             GdFbpeFileBatchTmp batchTem = new GdFbpeFileBatchTmp();
-            batchTem.setAccAmt((String) orgMap.get("accAmt"));
-            batchTem.setAccNo((String) orgMap.get("accNo"));
-            batchTem.setActNo((String) orgMap.get("actNo"));
-            batchTem.setSqn((String) orgMap.get("sqn"));
-            batchTem.setTxnNo((String) orgMap.get("txnNo"));
-            batchTem.setOrgCde((String) orgMap.get("orgCde"));
-            batchTem.setTlrNo((String) orgMap.get("tlrNo"));
-            batchTem.setTxnTim((String) orgMap.get("txnTme"));
-            batchTem.setCusNo((String) orgMap.get("cusNo"));
-            batchTem.setCusAc((String) orgMap.get("cusAc"));
-            batchTem.setCusNam((String) orgMap.get("cusNam"));
-            batchTem.setTxnAmt((String) orgMap.get("txnAmt"));
+            batchTem.setAccAmt(orgMap.get("accAmt").toString());
+            batchTem.setAccNo(orgMap.get("accNo").toString());
+            batchTem.setActNo(orgMap.get("actNo").toString());
+            batchTem.setSqn(orgMap.get("sqn").toString());
+            batchTem.setTxnNo(orgMap.get("txnNo").toString());
+            batchTem.setOrgCde(orgMap.get("orgCde").toString());
+            batchTem.setTlrNo(orgMap.get("tlrNo").toString());
+            batchTem.setTxnTim(orgMap.get("txnTme").toString());
+            batchTem.setCusNo(orgMap.get("cusNo").toString());
+            batchTem.setCusAc(orgMap.get("cusAc").toString());
+            batchTem.setCusNam(orgMap.get("cusNam").toString());
+            batchTem.setTxnAmt(orgMap.get("txnAmt").toString());
+            batchTem.setCosMon(orgMap.get("months").toString());
+            batchTem.setRsvFld1(orgMap.get("rsvFld1").toString());
+            batchTem.setBankNo(orgMap.get("bankNo").toString());
+            batchTem.setBankNam(orgMap.get("bankNam").toString());
+            
             fileBatchTmpRepository.insert(batchTem);
             payDetailLst.add(batchTem);
         }

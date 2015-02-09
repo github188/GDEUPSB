@@ -1,6 +1,7 @@
 package com.bocom.bbip.gdeupsb.utils;
 
 import java.math.BigDecimal;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -18,5 +19,30 @@ public class GdExpCommonUtils {
         String subFmt = fmtstr.substring(0, abc);
         return subFmt;
     }
-     
+
+    // 截取字符串
+       public static final String subStr(String ags, int sta, int end) {
+           deleteAllSpace(ags);
+           ags.substring(sta, end);
+           return ags;
+       }
+
+    // 删除所有空格
+       public static final String deleteAllSpace(String str) {
+           System.out.println("delAllSpc"+str);
+           if (str == null || str.length() == 0)
+               return str;
+           int sz = str.length();
+           char chs[] = new char[sz];
+           int count = 0;
+           for (int i = 0; i < sz; i++)
+               if (!Character.isWhitespace(str.charAt(i)))
+                   chs[count++] = str.charAt(i);
+
+           if (count == sz)
+               return str;
+           else
+               return new String(chs, 0, count);
+       }
+
 }
