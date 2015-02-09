@@ -2,14 +2,19 @@
 <files xmlns="http://www.bankcomm.com/bbip-fmt-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bankcomm.com/bbip-fmt-1.0 http://www.bocom.com/schema/bbip-fmt-1.0.xsd">
 
-
-
-	<!-- 佛山有线电视 -->
-	<file id="tvFbpeBatFmt" name="eleGzBatFmt" encoding="GBK"
+	<!-- 佛山有线电视 文本批量-->
+	<file id="tvFbpeBatFmt" name="tvFbpeBatFmt" encoding="GBK"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/fbpe/fbpeTvBatch.xml"
+		<foreach name="detail" ref="config/fmt/fileFmt/fbpe/fbpeTvBatchDeatil.xml"
 			encoding="GBK" />
 	</file>
+	   <!-- 佛山燃气文本批量-->
+    <file id="gasFbpeBatFmt" name="gasFbpeBatFmt" encoding="GBK"
+        lineSeparator="\n">
+        <foreach name="detail" ref="config/fmt/fileFmt/fbpe/fbpeGasBatchDeatil.xml"
+            encoding="GBK" />
+    </file>
+	
 
 	<!-- 广东电力 -->
 	<file id="eleGzBatFmt" name="eleGzBatFmt" encoding="GBK"

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+    encoding="utf-8" trace="true">
+    <segment name="detail" encoding="GBK">
+        <fixString name="txnNo" length="3" />  <!--交易代码-->
+        <fixString name="orgCde" length="3" />  <!-- 机构代码-->
+        <fixString name="sqn" length="20" />  <!-- SMS交易流水号-->
+        <fixString name="tlrNo" length="6" />  <!-- 操作员号-->
+        <fixString name="txnTme" length="14" />  <!-- 交易时间-->
+        <fixString name="accNo" length="10" />  <!-- SMS帐单号码-->
+        <fixString name="cusNo" length="20" />  <!-- DVB客户编号-->
+        <fixString name="cusAc" length="20" />  <!-- IC卡号-->
+        <fixString name="cusNam" length="20" />  <!-- DVB客户姓名-->
+        <fixString name="txnAmt" length="10" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@transYuanToFen(this.txnAMt)"/>  <!-- 应缴金额(带小数点)-->
+        <fixString name="accAmt" length="10" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@transYuanToFen(this.txnAMt)"/>  <!-- 扣帐金额(带小数点)-->
+        <fixString name="actNo" length="20" />  <!--银行账号-->
+
+    </segment>
+</message>
