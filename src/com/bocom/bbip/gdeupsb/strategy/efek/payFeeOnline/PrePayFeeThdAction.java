@@ -28,12 +28,8 @@ public class PrePayFeeThdAction implements Executable{
 			CoreRuntimeException {
 		logger.info("==============Start   PrePayFeeThdAction");
 		
-		String txnSts=(String)context.getData(ParamKeys.TXN_STS);
-		if("B".equals(txnSts) ||  "s".equals(txnSts)){           
 			context.setData(GDParamKeys.SVRCOD, "11");             //GDConstants 常量
 			constantOfSoapUI(context);
-			
-		} 	
 	}
 	/**
 	 *报文信息 
@@ -58,5 +54,11 @@ public class PrePayFeeThdAction implements Executable{
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, "");//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, "");//交易目标地址
 				
+				Date txnDte=context.getData(ParamKeys.TXN_DATE);
+				Date txnTme=context.getData(ParamKeys.TXN_TIME);
+				String txnDate=DateUtils.format(txnDte,DateUtils.STYLE_yyyyMMdd);
+				String txnTime=DateUtils.formatAsHHmmss(txnTme);
+				context.setData(ParamKeys.TXN_DATE, txnDate);
+				context.setData(ParamKeys.TXN_TIME, txnTime);
 	}
 }

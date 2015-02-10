@@ -45,7 +45,7 @@ public class PrePayFeeAction implements Executable{
 						context.setData("ActSqn",ActSqn);//	 <Set>ActSqn=SUBSTR($InAcNo,14,5)</Set>   InAcNo日间记账账号
 						context.setData("ActNod",ActNod);//   <Set>ActNod=SUBSTR($InAcNo,1,6)</Set>
 						context.setData(ParamKeys.BAK_FLD1,"代扣电费");
-					}else if("4".equals(ActFlg)){                  //卡
+					}else if("2".equals(ActFlg) ||  "4".equals(ActFlg)){                  //卡  存折
 						context.setData(ParamKeys.TXN_CODE,"471140");
 						context.setData(ParamKeys.CHL_TYP, "L");  //<Set>CnlTyp=L</Set>
 						context.setData("Mask", "9102");//					<Set>Mask=9102</Set>

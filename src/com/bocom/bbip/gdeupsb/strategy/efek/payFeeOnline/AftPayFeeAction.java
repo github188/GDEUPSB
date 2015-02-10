@@ -1,11 +1,14 @@
 package com.bocom.bbip.gdeupsb.strategy.efek.payFeeOnline;
 
+import java.util.Date;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -30,5 +33,16 @@ public class AftPayFeeAction implements Executable{
 		}else{
 					throw new CoreException("~~~~~~~~~~失败~~~"+context.getData(GDParamKeys.SUCFLG));
 		}
+		
+		Date txnDte=DateUtils.parse(context.getData(ParamKeys.TXN_DTE).toString());
+		Date txnTme=DateUtils.parse(context.getData(ParamKeys.TXN_DTE).toString()+context.getData(ParamKeys.TXN_DTE).toString(),DateUtils.STYLE_yyyyMMddHHmmss);
+		context.setData(ParamKeys.TXN_DTE, txnDte);
+		context.setData(ParamKeys.TXN_TME, txnTme);
+		
+		Date thdTxnDte=DateUtils.parse(context.getData(ParamKeys.THD_TXN_DATE).toString());
+		Date thdTxnTme=DateUtils.parse(context.getData(ParamKeys.THD_TXN_DATE).toString()+context.getData(ParamKeys.THD_TXN_TIME).toString(),DateUtils.STYLE_yyyyMMddHHmmss);
+		context.setData(ParamKeys.THD_TXN_DATE, thdTxnDte);
+		context.setData(ParamKeys.THD_TXN_TIME, thdTxnTme);
+
 	}
 }
