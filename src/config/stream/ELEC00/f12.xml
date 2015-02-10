@@ -8,9 +8,9 @@
 		<fixString name="sqn" length="24" /><!-- 交易流水号 -->
 		<fixString name="traSendDate" length="8" /><!-- 交易日期 -->
 		<fixString name="traSendTime" length="6" /><!--  交易时间-->
-		<fixString name="txnAmt" length="24" /><!--  原交易流水号-->
-		<fixString name="txnAmt" length="8" /><!--  原交易日期-->
-		<fixString name="txnAmt" length="6" /><!-- 原交易时间 -->
+		<fixString name="oldTxnSqn" length="24" /><!--  原交易流水号-->
+		<fixString name="oldTxnDte" length="8" /><!--  原交易日期-->
+		<fixString name="oldTxnTme" length="6" /><!-- 原交易时间 -->
 		<fixString name="busTyp" length="3" /><!--  收费方式-->
 		<fixString name="payType" length="3" /><!--  费用类型-->
 		<fixString name="comNo" length="8" /><!--  单位编码-->
