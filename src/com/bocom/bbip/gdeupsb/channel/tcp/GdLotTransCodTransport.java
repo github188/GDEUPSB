@@ -190,6 +190,8 @@ public class GdLotTransCodTransport implements Transport{
 					action_237(w,context);
 				}else if("231".equals(action)) {  //投注
                     action_231(w,context);
+                }else if("201".equals(action)) {  //注册
+                    action_201(w,context);
                 }
 				
 			w.writeEndElement();
@@ -214,6 +216,78 @@ public class GdLotTransCodTransport implements Transport{
 		}
 		return obj;
 	}
+	   private void action_201(XMLStreamWriter w,Context context) throws XMLStreamException{
+	        w.writeStartElement("pkgC");
+	            w.writeStartElement("gamblerBasicInfo");
+    	            w.writeStartElement("gambler_name");
+    	            w.writeCharacters(context.getData("lotNam").toString());
+    	            w.writeEndElement();
+    	            w.writeStartElement("gambler_pwd");
+                    w.writeCharacters(context.getData("lotPsw").toString());
+                    w.writeEndElement();
+                    w.writeStartElement("regist_time");
+                    w.writeCharacters(context.getData("regTim").toString());
+                    w.writeEndElement();
+                    w.writeStartElement("email");
+                    w.writeCharacters(context.getData("email").toString());
+                    w.writeEndElement();
+	            w.writeEndElement();
+	            w.writeStartElement("gamblerAdditionalInfo");
+                    w.writeStartElement("city_id");
+                    w.writeCharacters(context.getData("cityId").toString());
+                    w.writeEndElement();
+                    w.writeStartElement("ID_type");
+                    w.writeCharacters(context.getData("idTyp").toString());
+                    w.writeEndElement();
+                    w.writeStartElement("ID_no");
+                    w.writeCharacters(context.getData("idNo").toString());
+                    w.writeEndElement();
+                    w.writeStartElement("account_type");
+                    w.writeCharacters("14");
+                    w.writeEndElement();
+                    w.writeStartElement("charge_type");
+                    w.writeCharacters("5");
+                    w.writeEndElement();
+                    w.writeStartElement("prize_type");
+                    w.writeCharacters("3");
+                    w.writeEndElement();
+                    w.writeStartElement("bindCard");
+                        w.writeAttribute("isBind", "1");
+                        w.writeStartElement("card_type");
+                        w.writeCharacters("2");
+                        w.writeEndElement();
+                        w.writeStartElement("bank_id");
+                        w.writeCharacters("COMM");
+                        w.writeEndElement();
+                        w.writeStartElement("bank_card");
+                        w.writeCharacters(context.getData("crdNo").toString());
+                        w.writeEndElement();
+                    w.writeEndElement();
+                    w.writeStartElement("real_name");
+                    w.writeCharacters(context.getData("cusNam").toString());
+                    w.writeEndElement();
+                    w.writeStartElement("sex");
+                    w.writeCharacters(context.getData("sex").toString());
+                    w.writeEndElement();
+                    w.writeStartElement("birthday");
+                    w.writeCharacters("");
+                    w.writeEndElement();
+                    w.writeStartElement("mobile");
+                    w.writeCharacters(context.getData("mobTel").toString());
+                    w.writeEndElement();
+                    w.writeStartElement("phone");
+                    w.writeCharacters("");
+                    w.writeEndElement();
+                w.writeEndElement();
+                w.writeStartElement("bindDealer");
+                    w.writeAttribute("isBind", "1");
+                    w.writeStartElement("dealer_id");
+                    w.writeCharacters(context.getData("dealId").toString());
+                    w.writeEndElement();
+                w.writeEndElement();
+	        w.writeEndElement();
+	    }
+	   
 	private void action_235(XMLStreamWriter w,Context context) throws XMLStreamException{
 		w.writeStartElement("pkgC");
 			w.writeStartElement("game_id");
@@ -328,8 +402,8 @@ public class GdLotTransCodTransport implements Transport{
                 w.writeCharacters(context.getData("txnAmt").toString());
                 w.writeEndElement();
                 w.writeStartElement("betInfo");
-                w.writeAttribute("group", context.getData("grpNum").toString());
-                w.writeAttribute("num", context.getData("betNum").toString());
+                    w.writeAttribute("group", context.getData("grpNum").toString());
+                    w.writeAttribute("num", context.getData("betNum").toString());
                     w.writeStartElement("bet_line");
                     w.writeCharacters(context.getData("betLin").toString());
                     w.writeEndElement();
@@ -341,9 +415,7 @@ public class GdLotTransCodTransport implements Transport{
                 w.writeCharacters(context.getData("lotNam").toString());
                 w.writeEndElement();
                 w.writeStartElement("chargeInfo");
-                    w.writeStartElement("game_id");
                     w.writeAttribute("isSettled", "1");
-                       
                         w.writeStartElement("account_type");
                         w.writeCharacters("14");
                         w.writeEndElement();
@@ -403,6 +475,8 @@ public class GdLotTransCodTransport implements Transport{
 			    decode_209(r,map);
             }else if("231".equals(action)){
                 decode_231(r,map);
+            }else if("201".equals(action)){
+                decode_201(r,map);
             }
 			
 		} catch (UnsupportedEncodingException e) {
@@ -412,6 +486,39 @@ public class GdLotTransCodTransport implements Transport{
 		}
 		return map;
 	}
+	 private void decode_201(XMLStreamReader r,Map<String,Object> map) throws XMLStreamException{
+	        while(r.hasNext()){
+	            int typ = r.next();
+	            if(typ!=XMLStreamConstants.START_ELEMENT)
+	                continue;
+	            String name = r.getName().toString();
+	            if("return".equals(name)){
+	                map.put("resultCode", r.getAttributeValue(0));
+	                map.put("resultDes", r.getAttributeValue(1));
+	            }
+	            if ("gambler_name".equals(name)) {
+                    map.put("lotNam", r.getElementText());
+                }
+	            if ("gambler_status".equals(name)) {
+                    map.put("status", r.getElementText());
+                }
+	            if ("account_type".equals(name)) {
+                    map.put("lotAccTyp", r.getElementText());
+                }
+	            if ("charge_type".equals(name)) {
+                    map.put("lotChgTyp", r.getElementText());
+                }
+	            if ("prize_type".equals(name)) {
+                    map.put("lotPrzTyp", r.getElementText());
+                }
+	            if ("bindDealer".equals(name)) {
+	                map.put("isBind", r.getAttributeValue(0));
+	                if ("dealer_id".equals(name)) {
+	                    map.put("lotDealId", r.getElementText());
+	                }
+                }
+	        }
+	    }
 	private void decode_235(XMLStreamReader r,Map<String,Object> map) throws XMLStreamException{
 		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>(); 
 		while(r.hasNext()){
