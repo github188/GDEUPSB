@@ -73,31 +73,38 @@
 	</file>
 
 
-
+	<!-- 南方电网  对账 -->
 	<file name="elecCheckFile" id="elecCheckFile" encoding="utf-8"
 		lineSeparator="\n">
-		<line name="header" ref="config/fmt/efek/CheckFileDtlHead.xml" />
-		<foreach name="detail" ref="config/fmt/efek/CheckFileDetail.xml" />
+		<line name="header" ref="config/fmt/fileFmt/efek/CheckFileDtlHead.xml" />
+		<foreach name="detail" ref="config/fmt/fileFmt/efek/CheckFileDetail.xml" />
 	</file>
 
 	<!-- 日志服务 -->
 	<file name="logService" id="logService" encoding="utf-8"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/efek/LogService.xml" />
+		<foreach name="detail" ref="config/fmt/fileFmt/efek/LogService.xml" />
 	</file>
 
 	<!-- 南方电网 批量文件入库 -->
 	<file name="batchFile" id="batchFile" encoding="UTF-8"
 		lineSeparator="\n">
-		<line name="head" ref="config/fmt/efek/BatchDataHead.xml" />
-		<foreach name="detail" ref="config/fmt/efek/BatchDataDetail.xml" />
+		<line name="head" ref="config/fmt/fileFmt/efek/BatchDataHead.xml" />
+		<foreach name="detail" ref="config/fmt/fileFmt/efek/BatchDataDetail.xml" />
 	</file>
+	<!-- 南方电网 批量文件返回 -->
+	<file name="efekBatchResulf" id="efekBatchResulf" encoding="UTF-8"
+		lineSeparator="\n">
+		<line name="head" ref="config/fmt/fileFmt/efek/BatchDataResultHead.xml" />
+		<foreach name="detail" ref="config/fmt/fileFmt/efek/BatchDataResultDetail.xml" />
+	</file>
+
 
 	<!-- 珠海路桥 -->
 	<file name="trspCheckFile" id="trspCheckFile" encoding="UTF-8"
 		lineSeparator="\n">
 		<line name="head" ref="config/fmt/fileFmt/TRSP00/CheckFileDtlHead.xml" />
-		<foreach name="detail" ref="config/fmt/TRSP00/CheckFileDetail.xml" />
+		<foreach name="detail" ref="config/fmt/fTileFmt/RSP00/CheckFileDetail.xml" />
 	</file>
 	
 		
@@ -192,10 +199,33 @@
 	<!-- 中山文件批扣End! -->
 	
 	<!-- 汕头水费批扣文件解析 start  -->
-	<file id="watr00FmtIn" name="watr00FmtIn" encoding="GBK" lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/watr00/watr00FmtInDetail.xml" encoding="GBK" />
-		<line name="total" ref="config/fmt/fileFmt/watr00/watr00FmtInTotal.xml" encoding="GBK" />
-	</file>
+		<file id="watr00FmtIn" name="watr00FmtIn" encoding="GBK" lineSeparator="\n">
+				<foreach name="detail" ref="config/fmt/fileFmt/watr00/watr00FmtInDetail.xml" encoding="GBK" />
+				<line name="total" ref="config/fmt/fileFmt/watr00/watr00FmtInTotal.xml" encoding="GBK" />
+		</file>
 	<!-- 汕头水费批扣文件解析 end  -->
-
+	
+	<!-- 广州文本代收付 -->
+		<!-- 广州电话银行保险 -->
+		<file id="insuBatchFile" name="insuBatchFile" encoding="GBK" lineSeparator="\n">
+				<foreach name="detail" ref="config/fmt/fileFmt/gzag/insuBatchDataDetail.xml" encoding="GBK" />
+		</file>
+		<!-- 银行兑奖划款情况文件 -->
+		<file id="lottBatchFile" name="lottBatchFile" encoding="GBK" lineSeparator="\n">
+				<line name="header" ref="config/fmt/fileFmt/gzag/lottBatchDataHead.xml" encoding="GBK" />
+				<foreach name="detail" ref="config/fmt/fileFmt/gzag/lottBatchDataDetail.xml" encoding="GBK" />
+		</file>
+		<!-- 羊城通空中充值-->
+		<file id="yctBatchFile" name="yctBatchFile" encoding="GBK" lineSeparator="\n">
+				<foreach name="detail" ref="config/fmt/fileFmt/gzag/yctBatchDataDetail.xml" encoding="GBK" />
+		</file>
+		<!-- 粤通卡-->
+		<file id="yktBatchFile" name="yktBatchFile" encoding="GBK" lineSeparator="\n">
+				<foreach name="detail" ref="config/fmt/fileFmt/gzag/yktBatchDataDetail.xml" encoding="GBK" />
+		</file>
+		<!-- 体育彩票银行兑奖文件返回 -->
+		<file id="sptltBatchFile" name="sptltBatchFile" encoding="GBK" lineSeparator="\n">
+				<line name="header" ref="config/fmt/fileFmt/gzag/sptltBatchDataHead.xml" encoding="GBK" />
+				<foreach name="detail" ref="config/fmt/fileFmt/gzag/sptltBatchDataDetail.xml" encoding="GBK" />
+		</file>
 </files>
