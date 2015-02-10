@@ -11,7 +11,7 @@
 			<segment name="response">
 				<loop name="rspList" count="LLLL">
 					<segment name="rspRecord">
-						<fixString name="responseindex"  length="4"/>   <!-- 包序号-->
+						<fixString name="responseIndex"  length="4"/>   <!-- 包序号-->
 						<fixString name="je"                    length="11"/>   <!-- 水费收缴总金额，以分为单位-->
 						<fixString name="pnum"                length="11"/>   <!-- 本月行码-->
 						<fixString name="lnum"                 length="11"/>   <!-- 上月行码-->
