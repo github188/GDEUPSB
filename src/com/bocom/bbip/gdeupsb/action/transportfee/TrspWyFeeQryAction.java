@@ -55,7 +55,7 @@ public class TrspWyFeeQryAction extends BaseAction{
 //           <Set>MsgTyp=N</Set>
 //           <!--返回包体-->
 //        </If>
-//
+
 //        <Set>responseType=$MsgTyp</Set>
 //        <Set>responseCode=$RspCod</Set>
 //        <Set>replyMessage=$RspMsg</Set>
