@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<x:beans xmlns:x="http://www.springframework.org/schema/beans"
+	xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd       http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+	<!-- 定投执行 -->
+	<action id="eups.executePlanPayServiceActionLOTR01" class="com.bocom.bbip.gdeupsb.service.impl.lotr01.ExecutePlanPayServiceActionLOTR01"/>
+	<!-- 定投录入 -->
+	<action id="eups.insertPlanPayServiceActionLOTR01" class="com.bocom.bbip.gdeupsb.service.impl.lotr01.InsertPlanPayServiceActionLOTR01"/>
+	<!-- 定投取消 -->
+	<action id="eups.cancelPlanPayServiceActionLOTR01" class="com.bocom.bbip.gdeupsb.service.impl.lotr01.CancelPlanPayServiceActionLOTR01"/>
+	<!-- 定投明细查询 -->
+	<action id="eups.queryPlanPayServiceActionLOTR01" class="com.bocom.bbip.gdeupsb.service.impl.lotr01.QueryPlanPayServiceActionLOTR01"/>
+	<!-- 定投返奖 -->
+	<action id="eups.proPlanPayServiceActionLOTR01" class="com.bocom.bbip.gdeupsb.service.impl.lotr01.ProPlanPayServiceActionLOTR01"/>
+	<!-- 定投返奖：根据奖期执行返奖操作 -->
+	<action id="eups.payPlanServiceActionLOTR01" class="com.bocom.bbip.gdeupsb.service.impl.lotr01.PayPlanServiceActionLOTR01"/>
+	<!-- 定投返奖：从代发内部户转账到中奖人账户 -->
+	<action id="eups.payAmtServiceActionLOTR01" class="com.bocom.bbip.gdeupsb.service.impl.lotr01.PayAmtServiceActionLOTR01"/>
+	</x:beans>
