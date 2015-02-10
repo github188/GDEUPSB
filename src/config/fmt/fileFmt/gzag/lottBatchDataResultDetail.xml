@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	encoding="utf-8" trace="true">
+	
+	<segment name="detail"  encoding="utf-8">
+			<fixString name="lendtypeOrGameno"          length="2"/><!--游戏编号-->
+	        <fixString name="number"           length="5"/><!--总期号-->
+	        <fixString name="sitrLogicNo"            length="8"/><!--站点逻辑机号-->   
+	        <fixString name="lottSqn"            length="5"/><!--彩票流水号-->
+	        <fixString name="pourAmt"       length="10"/><!--投注金额-->
+	         <fixString name="bankSqn"      length="20"/><!--银行系统流水号-->
+	         <fixString name="cusAc"        length="30"/><!--银行卡号-->
+	         <fixString name="bvNo"        length="18"/><!--身份证号-->
+	          <fixString name="txnAmt"    length="13"  /><!--中奖金额-->                                       
+			<fixString name="rspCode"   length="1" />	<!--成功标志-->       
+	</segment>
+	
+</message>

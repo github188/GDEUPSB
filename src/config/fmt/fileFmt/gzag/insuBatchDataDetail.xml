@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	encoding="utf-8" trace="true">
+	
+	<segment name="detail"  encoding="utf-8">
+			
+			<fixString name="lendtypeOrGameno" 			      length="02"/>	  <!--请款类型 -->
+			<fixString name="thdCusNo" 		  length="14"/>	  <!--保单编号-->
+			<fixString name="txnDte" 			  length="8"/>	  <!--保单生效日-->
+			<fixString name="cusAc" 		  length="21"/>   <!--帐号--> 
+			<fixString name="txnAmt" 		  length="12"/>   <!--金额-->
+			<fixString name="thdCusNme" 		  length="30"/>	  <!-- 户名 -->
+			<fixString name="bvNo" 		      length="18"/>	  <!-- 证件号 -->
+			<fixString name="bakFld" 	     length="20"/>   <!--备注-->
+			<fixString name="lendStartDate" 	     length="8"/>   <!--请款起始日-->
+			<fixString name="lendEndDate" 		    length="8"/>   <!--请款终止日-->
+			
+	</segment>
+	
+</message>

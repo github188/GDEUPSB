@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	encoding="utf-8" trace="true">
+	
+	<segment name="detail"  encoding="utf-8">
+			<fixString  name="bankSqn"	            length="20" /><!--接入系统流水号-->
+			<fixString  name="lottSqn"	           length="20" /><!--购彩流水号-->
+			<fixString  name="awardDate"	              length="8"/><!--返奖日期-->   
+			<fixString  name="cusAc"	            length="21" /><!--帐号-->
+			<fixString  name="thdCusNme"	             length="30"/><!--客户姓名-->
+			 <fixString  name="bvNo"	              length="30" /><!--证件号码-->
+			<fixString  name="txnAmt"	             length="15" /><!--返奖金额-->
+			<fixString  name="buyLottAmt"	              length="15" /><!--购彩金额-->
+			 <fixString  name="number"	               length="15" /><!--期号-->
+			<fixString  name="lendtypeOrGameno"	    length="2" /><!--彩票类型-->
+			<fixString  name="telephone"	              length="20" /><!--联系电话-->
+			
+	</segment>
+	
+</message>
