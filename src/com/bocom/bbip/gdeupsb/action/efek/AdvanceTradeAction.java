@@ -55,7 +55,7 @@ public class AdvanceTradeAction extends BaseAction {
 		
 		context.setData(ParamKeys.TXN_DAT,DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())));
 		context.setData(ParamKeys.TXN_TME,DateUtils.parse(DateUtils.formatAsTranstime(new Date())));
-		// 柜员号 context.setData(ParamKeys.TELLER, context.getData(arg0));
+		// 柜员号 
 		// 记账
 		String ActFlg = (String) context.getData(ParamKeys.ACC_TYPE); // 银行内部账务类型
 //		TML_NO

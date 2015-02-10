@@ -36,16 +36,14 @@ public class QryCusPayRecordAction extends BaseAction{
     ThirdPartyAdaptor callThdTradeManager;
 		public void execute(Context context)throws CoreException,CoreRuntimeException{
 				log.info("=============Start QryCusPayRecordAction");
-				String payNo=context.getData(GDParamKeys.PAY_NO).toString();
-				Date startDate=DateUtils.parse(context.getData(GDParamKeys.ELECTRIC_START_YEARMONTH).toString());
-				String eupsBusTyp=context.getData(ParamKeys.EUPS_BUSS_TYPE).toString();
-				Date endDate=null;
-				String end=(String)context.getData(GDParamKeys.ELECTRIC_END_YEARMONTH);
-				if(StringUtils.isNotEmpty(end)){
-						endDate=DateUtils.parse(end);
-				}else{
-						endDate=DateUtils.parse(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
+//				String payNo=context.getData(GDParamKeys.PAY_NO).toString();
+//				Date startDate=DateUtils.parse(context.getData(GDParamKeys.ELECTRIC_START_YEARMONTH).toString());
+//				String eupsBusTyp=context.getData(ParamKeys.EUPS_BUSS_TYPE).toString();
+				String endDate=(String)context.getData(GDParamKeys.ELECTRIC_END_YEARMONTH);
+				if(StringUtils.isEmpty(endDate)){
+						endDate=DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
 				}
+				/*
 				EupsStreamNoList eupsStreamNoList=new EupsStreamNoList();
 				eupsStreamNoList.setEndDate(endDate);
 				eupsStreamNoList.setStartDate(startDate);
@@ -98,6 +96,8 @@ public class QryCusPayRecordAction extends BaseAction{
 						}
 						context.setData("DetailInformation", BeanUtils.toMaps(streamNoList));
 				}
+				*/
+				context.setData(GDParamKeys.SVRCOD, "40");
 				callThd(context);
 				
 		}
@@ -134,7 +134,7 @@ public class QryCusPayRecordAction extends BaseAction{
 							                context.setData(ParamKeys.THIRD_RETURN_MESSAGE, rspMap);
 							                //第三方返回码
 							                CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
-							                String responseCode = rspCdeAction.getThdRspCde(rspMap, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
+							                String responseCode = rspCdeAction.getThdRspCde(rspMap, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());    
 							                log.info("third response code="+responseCode);
 							                if(StringUtils.isEmpty(responseCode)){
 							                	responseCode=ErrorCodes.EUPS_THD_SYS_ERROR;
