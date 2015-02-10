@@ -563,6 +563,8 @@ public final class GDParamKeys {
 	public final static String ZZ_DAT = "zzDat";
 	/** 标识号 */
 	public final static String ID_NO = "idNo";
+	/** 前置交易时间 */
+	public final static String FTXN_TM = "ftxnTm";
 
 	/**************** 华商一卡通字段相关 ****************/
 	public final static String TML_NO = "tmlNo";
