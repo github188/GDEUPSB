@@ -1,0 +1,89 @@
+<x:beans xmlns:x="http://www.springframework.org/schema/beans"
+	xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+	
+	<!-- add by hefw 20150120 start 广东福彩 -->
+		<!-- 定投计划录入 -->
+		<process id="eups.insertPlanPay" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">	
+		   <actions>
+		        <action id="act" ref="eups.insertPlanPayServiceActionLOTR01"/>
+		   </actions>
+		</process>
+		<!-- 定投计划明细查询 -->
+		<process id="eups.queryPlanPay" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">	
+		   <actions>
+		        <action id="act" ref="eups.queryPlanPayServiceActionLOTR01"/>
+		   </actions>
+		</process>
+		<!-- 定投计划取消 -->
+		<process id="eups.cancelPlanPay" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">	
+		   <actions>
+		        <action id="act" ref="eups.cancelPlanPayServiceActionLOTR01"/>
+		   </actions>
+		</process>
+		<!-- 定投计划执行 -->
+		<process id="eups.executePlanPay" template="gdeups.lotExecutePlanTemplate" interceptors="eups.transMessageInterceptor">	
+		   <actions>
+		   		<!-- 
+		   		<action id="act" ref="eups.executePlanPayServiceActionLOTR01" operations="getDrawInf"/>
+		   		<action id="act" ref="eups.executePlanPayServiceActionLOTR01"/>
+		        <action id="act" ref="eups.executePlanPayServiceActionLOTR01" operations="saveCtlRst"/> -->
+		        <action id="exePlanAction1" ref="eups.executePlanPayServiceActionLOTR01" operations="initStep"/>
+		        <action id="exePlanAction2" ref="eups.executePlanPayServiceActionLOTR01" operations="chkCtlStep"/>
+		        <action id="exePlanAction3" ref="eups.executePlanPayServiceActionLOTR01" operations="chkDrwStep"/>
+		        <action id="exePlanAction4" ref="eups.executePlanPayServiceActionLOTR01" operations="chkTimStep"/>
+		        <action id="exePlanAction5" ref="eups.executePlanPayServiceActionLOTR01" operations="exePlanStep"/>
+		        <action id="exePlanAction6" ref="eups.executePlanPayServiceActionLOTR01" operations="savPlanStep"/>
+		        <action id="exePlanAction7" ref="eups.executePlanPayServiceActionLOTR01" operations="finalize"/>
+		   </actions>
+		</process>
+		<!-- 定投返奖 -->
+		<process id="eups.proPlanPay" template="gdeups.lotPayPlanTemplate" interceptors="eups.transMessageInterceptor">	
+		   <actions>
+		        <action id="proPlanPayAction1" ref="eups.proPlanPayServiceActionLOTR01" operations="init"/>
+		        <action id="proPlanPayAction2" ref="eups.proPlanPayServiceActionLOTR01" operations="proPlanPay"/><!-- 调用process=eups.proPlanPay -->
+		        <action id="proPlanPayAction3" ref="eups.proPlanPayServiceActionLOTR01" operations="updAmt1"/>
+		        <action id="proPlanPayAction4" ref="eups.proPlanPayServiceActionLOTR01" operations="updAmt2"/>
+		        <action id="proPlanPayAction5" ref="eups.proPlanPayServiceActionLOTR01" operations="updAmt3"/>
+		        <action id="proPlanPayAction6" ref="eups.proPlanPayServiceActionLOTR01" operations="finalize"/>
+		   </actions>
+		</process>
+		<!-- 定投返奖：根据奖期执行返奖操作 -->
+		<process id="eups.payPlan" template="eups.payPlanTemplate" interceptors="bbip.defaultInterceptors">	
+		   <actions>
+		        <action id="payPlanAction1" ref="eups.payPlanServiceActionLOTR01" operations="stsChkStep"/>
+		        <action id="payPlanAction2" ref="eups.payPlanServiceActionLOTR01" operations="initStep"/>
+		        <action id="payPlanAction3" ref="eups.payPlanServiceActionLOTR01" operations="step1"/>
+		        <action id="payPlanAction4" ref="eups.payPlanServiceActionLOTR01" operations="step2"/>
+		        <action id="payPlanAction5" ref="eups.payPlanServiceActionLOTR01" operations="step3"/>
+		        <action id="payPlanAction6" ref="eups.payPlanServiceActionLOTR01" operations="step4"/>
+		        <action id="payPlanAction7" ref="eups.payPlanServiceActionLOTR01" operations="step5"/>
+		        <action id="payPlanAction8" ref="eups.payPlanServiceActionLOTR01" operations="step6"/>
+		        <action id="payPlanAction9" ref="eups.payPlanServiceActionLOTR01" operations="step7"/>
+		        <action id="payPlanAction10" ref="eups.payPlanServiceActionLOTR01" operations="step8"/>
+		        <action id="payPlanAction11" ref="eups.payPlanServiceActionLOTR01" operations="step9"/>
+		        <action id="payPlanAction12" ref="eups.payPlanServiceActionLOTR01" operations="step10"/>
+		        <action id="payPlanAction13" ref="eups.payPlanServiceActionLOTR01" operations="step11"/>
+		        <action id="payPlanAction14" ref="eups.payPlanServiceActionLOTR01" operations="step12"/>
+		        <action id="payPlanAction15" ref="eups.payPlanServiceActionLOTR01" operations="step13"/>
+		        <action id="payPlanAction16" ref="eups.payPlanServiceActionLOTR01" operations="step14"/>
+		        <action id="payPlanAction17" ref="eups.payPlanServiceActionLOTR01" operations="step15"/>
+		        <action id="payPlanAction18" ref="eups.payPlanServiceActionLOTR01" operations="step16"/>
+		        <action id="payPlanAction19" ref="eups.payPlanServiceActionLOTR01" operations="step17"/>
+		        <action id="payPlanAction20" ref="eups.payPlanServiceActionLOTR01" operations="step18"/>
+		        <action id="payPlanAction21" ref="eups.payPlanServiceActionLOTR01" operations="finalize"/>
+		   </actions>
+		</process>
+		<!-- 定投返奖：从代发内部户转账到中奖人账户 -->
+		<process id="eups.payAmt" template="gdeups.lotPayAmtTemplate" interceptors="bbip.defaultInterceptors">	
+		   <actions>
+		        <action id="payAmtAction1" ref="eups.payAmtServiceActionLOTR01" operations="transfer"/>
+		        <action id="payAmtAction2" ref="eups.payAmtServiceActionLOTR01" operations="updDtl"/>
+		        <action id="payAmtAction3" ref="eups.payAmtServiceActionLOTR01" operations="updTxn"/>
+		        <action id="payAmtAction4" ref="eups.payAmtServiceActionLOTR01" operations="finalize"/>
+		   </actions>
+		</process>
+	<!-- add by hefw 20150120 end -->
+
+</x:beans>
