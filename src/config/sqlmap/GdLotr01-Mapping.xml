@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="lotr01" >
+
+	<!-- 根据代收单位编号查询代收内部户 -->
+	<select id="findDsActNo" resultType="map" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotSysCfg">
+		select PARAM_VALUE dsActNo from
+		BBIP.PLAT_PRM_TBL
+		WHERE PARAM_NAME=#{dsCAgtNo,jdbcType=VARCHAR} AND SYSTEM_CODE='GDEUPSB'
+	</select>
+	<!-- 根据代发单位编号查询代发内部户 -->
+	<select id="findDfActNo" resultType="map" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotSysCfg">
+		select PARAM_VALUE dfActNo from
+		BBIP.PLAT_PRM_TBL
+		WHERE PARAM_NAME=#{dfCAgtNo,jdbcType=VARCHAR}  AND SYSTEM_CODE='GDEUPSB'
+	</select>
+
+</mapper>

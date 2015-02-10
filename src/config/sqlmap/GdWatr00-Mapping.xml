@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="watr00" >
+  	<!-- 根据业务类型和交易日期统计笔数,金额 -->
+	<select id="findCountAmt" resultType="map">
+		select count(*) count , sum(txn_amt) je from
+		${GDEUPSB_SCHEMA}.EUPS_TRANS_JOURNAL
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="eupsBusTyp!=null">
+				AND EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=VARCHAR}
+			</if>
+			<if test="beginDate!=null">
+				AND TXN_DTE &gt;= #{beginDate,jdbcType=VARCHAR}
+			</if>
+			<if test="endDate!=null">
+				AND TXN_DTE &lt;= #{endDate,jdbcType=VARCHAR}
+			</if>
+			<if test="txnSts!=null">
+				AND TXN_STS =#{txnSts,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</select>
+	<!-- 根据业务类型和交易日期查询明细笔数,金额 -->
+	<select id="findDetailAmt" resultType="map">
+		select * from
+		${GDEUPSB_SCHEMA}.EUPS_TRANS_JOURNAL
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="eupsBusTyp!=null">
+				AND EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=VARCHAR}
+			</if>
+			<if test="beginDate!=null">
+				AND TXN_DTE &gt;= #{beginDate,jdbcType=VARCHAR}
+			</if>
+			<if test="endDate!=null">
+				AND TXN_DTE &lt;= #{endDate,jdbcType=VARCHAR}
+			</if>
+			<if test="txnSts!=null">
+				AND TXN_STS =#{txnSts,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</select>
+	<!-- 查询对公回执信息 -->
+	<select id="queryPublicMsg" resultType="map" parameterType="map">
+		select * from
+		${GDEUPSB_SCHEMA}.EUPS_TRANS_JOURNAL
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="eupsBusTyp!=null">
+				AND EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=VARCHAR}
+			</if>
+			<if test="beginDate!=null">
+				AND TXN_DTE &gt;= #{beginDate,jdbcType=VARCHAR}
+			</if>
+			<if test="endDate!=null">
+				AND TXN_DTE &lt;= #{endDate,jdbcType=VARCHAR}
+			</if>
+			<if test="cusAc!=null">
+				AND CUS_AC = #{cusAc,jdbcType=VARCHAR}
+			</if>
+			<if test="txnSts!=null">
+				AND TXN_STS =#{txnSts,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</select>
+</mapper>
