@@ -460,7 +460,7 @@ public final class GDParamKeys {
 	public final static String SUB_DATE = "subDte";
 	/** 总笔数 */
 	public final static String TOT_CNT = "totCnt";
-	public final static String TOT_Count = "totCount";
+	public final static String TOT_COUNT = "totCount";
 	/** 成功笔数 */
 	public final static String SUC_TOT_CNT = "sucTotCnt";
 	/** 失败笔数 */
