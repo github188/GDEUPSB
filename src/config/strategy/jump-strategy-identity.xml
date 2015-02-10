@@ -104,7 +104,7 @@
 			
 	<!-- 联机单笔记账后处理-->
 			<bean id="eups.aftPayFeeStrategyActionELEC00"  
-					class="com.bocom.bbip.gdeupsb.strategy.efek.payFeeOnline.AftPayToBankAction"/>
+					class="com.bocom.bbip.gdeupsb.strategy.efek.payFeeOnline.AftPayFeeAction"/>
 			
 	<!-- 联机单笔抹账 前处理-->
 			<bean id="eups.preCancelStrategyActionELEC00"  
