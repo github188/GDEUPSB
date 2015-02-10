@@ -60,6 +60,12 @@
   <wsdl:message name="npzzResponseMessage">
     <wsdl:part name="npzzResponse" element="gdeupsb:npzzResponse"/>
   </wsdl:message>
+  <wsdl:message name="transportWyFeeChargeRequestMessage">
+    <wsdl:part name="transportWyFeeChargeRequest" element="gdeupsb:transportWyFeeCharge"/>
+  </wsdl:message>
+  <wsdl:message name="transportWyFeeChargeResponseMessage">
+    <wsdl:part name="transportWyFeeChargeResponse" element="gdeupsb:transportWyFeeChargeResponse"/>
+  </wsdl:message>
   <wsdl:message name="trspInvoiceCancelRequestMessage">
     <wsdl:part name="trspInvoiceCancelRequest" element="gdeupsb:trspInvoiceCancel"/>
   </wsdl:message>
@@ -147,6 +153,11 @@
       <wsdl:documentation/>
       <wsdl:input message="tns:npzzRequestMessage"/>
       <wsdl:output message="tns:npzzResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="transportWyFeeCharge">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:transportWyFeeChargeRequestMessage"/>
+      <wsdl:output message="tns:transportWyFeeChargeResponseMessage"/>
     </wsdl:operation>
     <wsdl:operation name="trspInvoiceCancel">
       <wsdl:documentation/>
@@ -260,6 +271,15 @@
     </wsdl:operation>
     <wsdl:operation name="npzz">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/npzz"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="transportWyFeeCharge">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/transportWyFeeCharge"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
