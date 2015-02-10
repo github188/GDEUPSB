@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspTxnJnl;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspTxnJnlRepository;
@@ -27,12 +28,14 @@ public class TrspWyFeeChargeAction extends BaseAction{
 		log.info("TrspWyFeeChargeAction start......");
 		String cardNo = "cardNo";  //前端输入的银行卡号
 		String totalAmt = "totalAmt"; //交易金额
+		String monthCount = "monthCount";
+		String plateType = "plateType";
 		String CHARGE_PROCESS = "eups.payUnilateralToBank";
 		ctx.setData(GDParamKeys.FTXN_TM, new Date());
 		ctx.setData(GDParamKeys.BR_NO, "443999");
 		ctx.setData(GDParamKeys.CAR_NO, ctx.getData("plateNo"));
 		ctx.setData(GDParamKeys.ACT_NO, ctx.getData(cardNo));
-		ctx.setData(GDParamKeys.TXN_AMT, totalAmt);
+		ctx.setData(GDParamKeys.TXN_AMT, ctx.getData(totalAmt));
 //		<Set>BrNo=444999</Set>
 //        <Set>CCSCod=TLU6</Set>
 //        <Set>TTxnCd=484002</Set>
@@ -79,9 +82,14 @@ public class TrspWyFeeChargeAction extends BaseAction{
 		gdEupsbTrspTxnJnl.setBrNo(ctx.getData(GDParamKeys.BR_NO).toString());
 		gdEupsbTrspTxnJnl.setActNo(ctx.getData(GDParamKeys.ACT_NO).toString());
 		gdEupsbTrspTxnJnl.setTxnAmt((BigDecimal)ctx.getData(GDParamKeys.TXN_AMT));
+		gdEupsbTrspTxnJnl.setPayMon(ctx.getData(monthCount).toString());
+		gdEupsbTrspTxnJnl.setCarTyp(ctx.getData(plateType).toString());
+		gdEupsbTrspTxnJnl.setSqn(ctx.getData(GDParamKeys.SQN).toString());
+		
 //		TODO: <Set>PCusId=$pmpCustId</Set>  <!--收付通宝客户编号-->
 		gdEupsbTrspTxnJnlRepository.insert(gdEupsbTrspTxnJnl);
-		
+		ctx.setData(ParamKeys.ACCOUNT_DATE, ctx.getData(ParamKeys.ACCOUNT_DATE).toString());
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@"+ctx.getDataMap());
 		get(BBIPPublicService.class).synExecute(CHARGE_PROCESS, ctx);
 		
 //		TODO:
