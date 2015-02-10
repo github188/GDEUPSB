@@ -2,6 +2,7 @@ package com.bocom.bbip.gdeupsb.action.lot;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
@@ -11,9 +12,11 @@ import com.bocom.bbip.gdeupsb.entity.GdLotCusInf;
 import com.bocom.bbip.gdeupsb.repository.GdLotCusInfRepository;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.jump.bp.JumpException;
+import com.bocom.jump.bp.channel.CommunicationException;
+import com.bocom.jump.bp.channel.Transport;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
-
 
 /**
  * 福彩更改用户注册
@@ -23,6 +26,7 @@ import com.bocom.jump.bp.core.CoreException;
  */
 public class UpdateRegistInfoAction extends BaseAction {
 
+    @SuppressWarnings("unchecked")
     @Override
     public void execute (Context context) throws CoreException {
         log.info("==》》》》》》UpdateRegistInfoAction Start !!==》》》》》》");
@@ -52,53 +56,53 @@ public class UpdateRegistInfoAction extends BaseAction {
         if (null == lotCusInf.getLotPsw()) {
             context.setData("lotPsw"," ");
         }
-        //TODO; PUB:CallThirdOther
-        /* <!-- 向福彩中心发彩民注销 -->
-         <Exec func="PUB:CallThirdOther"  error="IGNORE">
-           <Arg name="HTxnCd" value="219"/>
-           <Arg name="ObjSvr" value="STHDLOTA"/>
-         </Exec>
-         <If condition="~RetCod=-1">
-            <Exec func="PUB:RollbackWork" error="IGNORE"/>
-            <Set>MsgTyp=E</Set>
-            <Set>RspCod=LOT999</Set>
-            <Set>RspMsg=彩民注销超时</Set>
-            <Return/>
-         </If>
-         <If condition="~RetCod!=0">
-            <Exec func="PUB:RollbackWork" error="IGNORE"/>
-            <Set>MsgTyp=E</Set>
-            <Set>RspCod=LOT999</Set>
-            <Set>RspMsg=彩民注销失败</Set>
-            <Return/>
-         </If>*/
+        //PUB:CallThirdOther 向福彩中心发彩民注销 
+        context.setData("eupsBusTyp", "LOTR01");
+        context.setData("action", "219");
+       
+        @SuppressWarnings("rawtypes")
+        Transport ts = context.getService("STHDLOT1");
+        Map<String,Object> resultMap = null;//申请当前期号，奖期信息下载
+        try {
+            resultMap = (Map<String, Object>) ts.submit(context.getDataMap(), context);
+            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
+        } catch (CommunicationException e1) {
+            e1.printStackTrace();
+        } catch (JumpException e1) {
+            e1.printStackTrace();
+        }  
+        if(!Constants.RESPONSE_CODE_SUCC.equals(resultMap.get("resultCode"))){
+            log.info("UpdateRegist Fail!");
+            context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
+            context.setData(ParamKeys.RSP_CDE, "LOT999");
+            context.setData(ParamKeys.RSP_MSG, "彩民注销失败!!!");
+            return;
+        }
         context.setData("lotNam", context.getData("mobTel"));
         context.setData("regTim", DateUtils.format(new Date(),  DateUtils.STYLE_yyyyMMddHHmmss));
-        //TODO; PUB:CallThirdOther
-        /* <Exec func="PUB:CallThirdOther"  error="IGNORE">
-           <Arg name="HTxnCd" value="201"/>
-           <Arg name="ObjSvr" value="STHDLOTA"/>
-         </Exec>
-         <If condition="~RetCod=-1">
-            <Exec func="PUB:RollbackWork" error="IGNORE"/>
-            <Set>MsgTyp=E</Set>
-            <Set>RspCod=LOT999</Set>
-            <Set>RspMsg=彩民注册超时</Set>
-            <Return/>
-         </If>
-         <If condition="~RetCod!=0">
-            <Exec func="PUB:RollbackWork" error="IGNORE"/>
-            <Set>MsgTyp=E</Set>
-            <Set>RspCod=LOT999</Set>
-            <Set>RspMsg=$resultDes</Set>
-            <Return/>
-         </If>
-*/
-     /*   UPDATE  lotcusinf
-        SET    LotNam='%s',MobTel='%s',RegTim='%s'
-        WHERE   CrdNo='%s'  and Status='1'
-       </Sentence>
-       <Fields>LotNam|MobTel|RegTim|CrdNo|</Fields>*/
+      //PUB:CallThirdOther 向福彩中心发出彩民注册
+        context.setData("eupsBusTyp", "LOTR01");
+        context.setData("action", "201");
+       
+        @SuppressWarnings("rawtypes")
+        Transport transport = context.getService("STHDLOT1");
+        Map<String,Object> map = null;//申请当前期号，奖期信息下载
+        try {
+            map = (Map<String, Object>) transport.submit(context.getDataMap(), context);
+            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
+        } catch (CommunicationException e1) {
+            e1.printStackTrace();
+        } catch (JumpException e1) {
+            e1.printStackTrace();
+        }  
+        if(!Constants.RESPONSE_CODE_SUCC.equals(map.get("resultCode"))){
+            log.info("Regist Fail!");
+            context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
+            context.setData(ParamKeys.RSP_CDE, "LOT999");
+            context.setData(ParamKeys.RSP_MSG, "彩民注册失败!!!");
+            return;
+        }
+   
         GdLotCusInf lotCusInfInput = new GdLotCusInf();
         lotCusInfInput.setCrdNo(context.getData("crdNo").toString());
         lotCusInfInput.setLotNam(context.getData("lotNam").toString());

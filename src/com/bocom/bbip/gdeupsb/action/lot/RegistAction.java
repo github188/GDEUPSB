@@ -148,9 +148,7 @@ public class RegistAction extends BaseAction{
         //PUB:CallThirdOther 向福彩中心发出彩民注册
         context.setData("eupsBusTyp", "LOTR01");
         context.setData("action", "201");
-        // context.setData("usrPam", "tangdi"); 测试
-        // context.setData("usrPas", "123456");
-
+       
         Transport ts = context.getService("STHDLOT1");
         Map<String,Object> resultMap = null;//申请当前期号，奖期信息下载
         try {

@@ -192,6 +192,8 @@ public class GdLotTransCodTransport implements Transport{
                     action_231(w,context);
                 }else if("201".equals(action)) {  //注册
                     action_201(w,context);
+                }else if("219".equals(action)) {  //注册
+                    action_219(w,context);
                 }
 				
 			w.writeEndElement();
@@ -288,6 +290,19 @@ public class GdLotTransCodTransport implements Transport{
 	        w.writeEndElement();
 	    }
 	   
+    private void action_219(XMLStreamWriter w,Context context) throws XMLStreamException{
+        w.writeStartElement("pkgC");
+            w.writeStartElement("gambler_name");
+            w.writeCharacters(context.getData("lotNam").toString());
+            w.writeEndElement();
+            w.writeStartElement("modify_time");
+            w.writeCharacters(context.getData("fTXNTm").toString());
+            w.writeEndElement();
+            w.writeStartElement("gambler_name");
+            w.writeCharacters(context.getData("lotPsw").toString());
+            w.writeEndElement();
+        w.writeEndElement();
+    }
 	private void action_235(XMLStreamWriter w,Context context) throws XMLStreamException{
 		w.writeStartElement("pkgC");
 			w.writeStartElement("game_id");
@@ -477,6 +492,8 @@ public class GdLotTransCodTransport implements Transport{
                 decode_231(r,map);
             }else if("201".equals(action)){
                 decode_201(r,map);
+            }else if("219".equals(action)){
+                decode_219(r,map);
             }
 			
 		} catch (UnsupportedEncodingException e) {
@@ -579,6 +596,18 @@ public class GdLotTransCodTransport implements Transport{
        }
    }
     
+    private void decode_219(XMLStreamReader r,Map<String,Object> map) throws XMLStreamException{
+        while(r.hasNext()){
+            int typ = r.next();
+            if(typ!=XMLStreamConstants.START_ELEMENT)
+                continue;
+            String name = r.getName().toString();
+            if("return".equals(name)){
+                map.put("resultCode", r.getAttributeValue(0));
+                map.put("resultDes", r.getAttributeValue(1));
+            }
+        }
+    }
     private void decode_231(XMLStreamReader r,Map<String,Object> map) throws XMLStreamException{
         while(r.hasNext()){
             int typ = r.next();
