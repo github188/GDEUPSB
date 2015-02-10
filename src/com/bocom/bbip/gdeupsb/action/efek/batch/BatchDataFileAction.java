@@ -17,6 +17,7 @@ import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.AgtFileBatchDetail;
+import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.entity.GDEupsEleTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GDEupsEleTmpRepository;
@@ -52,14 +53,20 @@ public class BatchDataFileAction extends BaseAction{
 						if(CollectionUtils.isEmpty(mapList)){
 								throw new CoreException("~~~~~~~~~~~~处理状态异常");
 						}
-						for (Map<String, Object> map : mapList) {
-//							map.put(ParamKeys.EUPS_FILE_HEADER, BeanUtils.toMap(context));
-							map.put(ParamKeys.SEQUENCE, get(BBIPPublicService.class).getBBIPSequence());
-							 GDEupsEleTmp gdEupsEleTmp=BeanUtils.toObject(map, GDEupsEleTmp.class);
-							 logger.info("~~~~~map~~~~"+map);
-							 gdEupsEleTmpRepository.insert(gdEupsEleTmp);
+						String batNo=context.getData(ParamKeys.BAT_NO).toString();
+						for (int i=0;i<mapList.size();i++) {
+							Map<String, Object> map=new HashMap<String, Object>();
+							if(i==0){
+									GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=BeanUtils.toObject(map, GDEupsBatchConsoleInfo.class);
+									get(GDEupsBatchConsoleInfoRepository.class).insert(gdEupsBatchConsoleInfo);
+							}else{
+									map.put(ParamKeys.SEQUENCE, get(BBIPPublicService.class).getBBIPSequence());
+									 GDEupsEleTmp gdEupsEleTmp=BeanUtils.toObject(map, GDEupsEleTmp.class);
+									 gdEupsEleTmp.setBakFld(batNo);
+									 logger.info("~~~~~map~~~~"+map);
+									 gdEupsEleTmpRepository.insert(gdEupsEleTmp);
+							}
 						}
-						logger.info("==========End  BatchDataFileAction");
 				//生成文件
 						
 						//	文件名		账户类型(2位,PT普通账户)+FS_银行代码(4位)+单位编码（8位）+ 日期（yyyymmdd）(8位)＋批次号（5位）.txt
@@ -68,13 +75,13 @@ public class BatchDataFileAction extends BaseAction{
 						String comNo=context.getData(ParamKeys.COMPANY_NO).toString()	;
 						String date=DateUtils.format(DateUtils.parse(context.getData(GDParamKeys.SUB_DATE).toString()),DateUtils.STYLE_yyyyMMdd);
 						//批次号
-						String batNo=context.getData(ParamKeys.BAT_NO).toString().substring(0, 5);
-						String createFileName=cusType+bankNo+comNo+date+batNo+".txt";
+						String createFileName=cusType+bankNo+comNo+date+batNo.substring(0, 5)+".txt";
 						
 						//文件内容
 						Map<String, Object> resultMap=createFileMap(context);
 						context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_NAME, createFileName);
 						context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_MAP, resultMap);
+						logger.info("==========End  BatchDataFileAction");
 	}
 	/**
 	 * 文件map拼装
@@ -85,7 +92,7 @@ public class BatchDataFileAction extends BaseAction{
 			//header
 			Map<String, Object> headMap=new HashMap<String, Object>();
 			headMap.put(ParamKeys.COMPANY_NO, context.getData(ParamKeys.COMPANY_NO).toString());
-			headMap.put(GDParamKeys.TOT_Count, context.getData(GDParamKeys.TOT_CNT));
+			headMap.put(GDParamKeys.TOT_COUNT, context.getData(GDParamKeys.TOT_CNT));
 			headMap.put(ParamKeys.TOT_AMT, context.getData(ParamKeys.TOT_AMT));
 			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 			//detail
