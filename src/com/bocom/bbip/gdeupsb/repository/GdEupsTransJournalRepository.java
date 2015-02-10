@@ -29,4 +29,9 @@ public interface GdEupsTransJournalRepository extends PagingAndSortingRepository
 	/** 惠州燃气代扣流水信息查询*/
 	public List<GdEupsTransJournal> findGasJnlInfo(GdEupsTransJournal gdEupsTransJournal);
 
+	/** 广东烟草流水信息查询*/
+    public List<GdEupsTransJournal> findTbcTransJournals(GdEupsTransJournal transJournal);
+    /** 广东烟草流水表信息查询*/
+    public List<GdEupsTransJournal> findTbcTransJnls(GdEupsTransJournal transJournal);
+
 }
