@@ -66,6 +66,23 @@ public class ThdTransMainInterceptorExt implements Interceptor {
     @Override
     public void onRequest(Context context) throws CoreException, CoreRuntimeException {
         log.info("=================interceptor start!context=" + context);
+        
+        //String 日期装换成时间类型
+        context.setData(ParamKeys.TXN_DTE, DateUtils.parse(context.getData(ParamKeys.TXN_DATE).toString(),DateUtils.STYLE_yyyyMMdd));
+        context.setData(ParamKeys.TXN_TME, DateUtils.parse(DateUtils.format(new Date(),DateUtils.STYLE_TRANS_TIME)));
+        if(null != context.getData(ParamKeys.THD_TXN_DATE)){
+            Date thdTxnDte=DateUtils.parse(context.getData(ParamKeys.THD_TXN_DATE).toString(),DateUtils.STYLE_yyyyMMdd);
+            context.setData(ParamKeys.THD_TXN_DATE, thdTxnDte);
+        }else{
+        	 context.setData(ParamKeys.THD_TXN_DATE, DateUtils.parse(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)));
+        }
+        if(null != context.getData(ParamKeys.THD_TXN_TIME)){
+            Date thdTxnTme=DateUtils.parse(context.getData(ParamKeys.THD_TXN_TIME).toString(),DateUtils.STYLE_yyyyMMddHHmmss);
+            context.setData(ParamKeys.THD_TXN_TIME, thdTxnTme);
+        }else{
+        	context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse(DateUtils.formatAsTranstime(new Date())));
+        }
+        
         log.info("start!loadMap=" + this.loadMap);
         // 请求字段处理
         switchChannelCodeReq(context);
@@ -81,6 +98,7 @@ public class ThdTransMainInterceptorExt implements Interceptor {
 
         // 系统内部数据生成
         systemDateGen(context);
+        
         log.info("============on request end,context=" + context);
     }
 
@@ -91,10 +109,7 @@ public class ThdTransMainInterceptorExt implements Interceptor {
         // 返回字段处理
         switchChannelCodeRsp(context);
 
-        System.out.println("~~~~~~~~~~~~"+context.getData(ParamKeys.TXN_AMOUNT));
-        
         log.info("channle=" + context.getData(ParamKeys.CHANNEL));
-        context.setData(ParamKeys.TXN_TIME, DateUtils.formatAsHHmmss(new Date()));
         // 生活馆json处理
         try {
             onlineAftDeal(context);
@@ -273,7 +288,6 @@ public class ThdTransMainInterceptorExt implements Interceptor {
         context.setData(ParamKeys.SERVICE_NAME, context.getProcessId());
         // 日期:acDate
         String acDte = context.getData(ParamKeys.ACCOUNT_DATE);
-
         if (StringUtils.isNotEmpty(acDte)) {
             acDte = DateUtils.format(DateUtils.parse(acDte.trim()), DateUtils.STYLE_yyyyMMdd);
         } else {
@@ -281,12 +295,13 @@ public class ThdTransMainInterceptorExt implements Interceptor {
         }
         context.setData(ParamKeys.ACCOUNT_DATE, DateUtils.parse(acDte));
         context.setData(ParamKeys.AC_DATE, DateUtils.parse(acDte));
-        
+
+        Date txnTme = new Date();
         if (null == context.getData(ParamKeys.TXN_DATE)) {
-            context.setData(ParamKeys.TXN_DATE, DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
+            context.setData(ParamKeys.TXN_DATE, txnTme);
         }
         if (null == context.getData(ParamKeys.TXN_TIME)) {
-            context.setData(ParamKeys.TXN_TIME, DateUtils.formatAsHHmmss(new Date()));
+            context.setData(ParamKeys.TXN_TIME, txnTme);
         }
         // ccy
         // context.setData(ParamKeys.CCY, Constants.EPS_CCY_NO);
@@ -336,36 +351,32 @@ public class ThdTransMainInterceptorExt implements Interceptor {
      */
     private void switchChannelCodeRsp(Context context) {
 
-    	String thdSqn = context.getData(ParamKeys.THD_SEQUENCE);
+        String thdSqn = context.getData(ParamKeys.THD_SEQUENCE);
         if (StringUtils.isNotEmpty(thdSqn)) {
             context.setData(ParamKeys.THD_JRN_NO, thdSqn.trim());
         }
         context.setData(ParamKeys.SERVICE_NAME, context.getProcessId());
-
         // 第三方对账日期thdRcnTme
         Timestamp thdRcnTme = context.getData(ParamKeys.THD_RCN_TME);
-
         if (null != thdRcnTme) {
             context.setData(ParamKeys.THD_RCN_DATE, DateUtils.format(thdRcnTme, DateUtils.STYLE_yyyyMMdd));
         }
-       
         // 第三方返回时间thdRspTime
-        Date thdTxnDte = DateUtils.parse((String)context.getData(ParamKeys.THD_TXN_DATE));
-        
-        if (null != thdTxnDte ) {
-        	
+        Date thdTxnDte = context.getData(ParamKeys.THD_TXN_DATE);
+        Date thdTxnTme = context.getData(ParamKeys.THD_TXN_TIME);
+        if (null != thdTxnDte && null != thdTxnTme) {
             String thdTxnDteStr = DateUtils.format(thdTxnDte, DateUtils.STYLE_yyyyMMdd);
-            String thdTxnTmeStr = DateUtils.format(new Date(), DateUtils.STYLE_HHmmss);
-           
+            String thdTxnTmeStr = DateUtils.format(thdTxnTme, DateUtils.STYLE_HHmmss);
+            context.setData(ParamKeys.THD_RSP_TME, thdTxnDteStr + thdTxnTmeStr);
         }
+
         String sqn = context.getData(ParamKeys.SEQUENCE);
         if (StringUtils.isNotEmpty(sqn)) {
             context.setData(ParamKeys.RSP_JRN_NO, sqn);
         }
         log.info("================get sqn:context=" + context);
-        context.setData(ParamKeys.TXN_TIME, DateUtils.parse(DateUtils.formatAsTranstime(new Date())));
-        Date rspTime = DateUtils.parse(DateUtils.formatAsTranstime((Date)context.getData(ParamKeys.TXN_TIME)));
-        
+
+        Date rspTime = context.getData(ParamKeys.TXN_DATE);
         if (null != rspTime) {
             context.setData(ParamKeys.RESPONSE_TIME, rspTime);
         } else {
