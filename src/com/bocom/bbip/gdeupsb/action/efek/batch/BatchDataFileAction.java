@@ -62,7 +62,7 @@ public class BatchDataFileAction extends BaseAction{
 							}else{
 									map.put(ParamKeys.SEQUENCE, get(BBIPPublicService.class).getBBIPSequence());
 									 GDEupsEleTmp gdEupsEleTmp=BeanUtils.toObject(map, GDEupsEleTmp.class);
-									 gdEupsEleTmp.setBakFld(batNo);
+									 gdEupsEleTmp.setRsvFld5(batNo);
 									 logger.info("~~~~~map~~~~"+map);
 									 gdEupsEleTmpRepository.insert(gdEupsEleTmp);
 							}

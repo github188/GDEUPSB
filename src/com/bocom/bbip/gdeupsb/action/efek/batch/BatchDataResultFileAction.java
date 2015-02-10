@@ -9,13 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
-import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
-import com.bocom.bbip.gdeupsb.entity.AgtFileBatchDetail;
 import com.bocom.bbip.gdeupsb.entity.GDEupsEleTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsEleTmpRepository;
 import com.bocom.bbip.utils.BeanUtils;
@@ -32,6 +30,9 @@ public class BatchDataResultFileAction extends BaseAction{
 	EupsBatchConsoleInfoRepository eupsBatchConsoleInfoRepository;
 	@Autowired
 	GDEupsEleTmpRepository gdEupsEleTmpRepository;
+	/**
+	 * 南方电网 结果文件处理
+	 */
 		public void execute(Context context)throws CoreException,CoreRuntimeException{
 			//
 			Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -45,7 +46,7 @@ public class BatchDataResultFileAction extends BaseAction{
 			String fileName=eupsBatchConsoleInfo.getFleNme();
 			//文件内容 
 			GDEupsEleTmp gdEupsEleTmps =new GDEupsEleTmp();
-			gdEupsEleTmps.setBakFld(batNo);
+			gdEupsEleTmps.setRsvFld5(batNo);
 			List<GDEupsEleTmp> detailList=gdEupsEleTmpRepository.find(gdEupsEleTmps);
 			resultMap.put(ParamKeys.EUPS_FILE_DETAIL, detailList);
 			
