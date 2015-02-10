@@ -1,0 +1,283 @@
+<x:beans xmlns:x="http://www.springframework.org/schema/beans"
+	xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+
+	<!-- 福彩定投执行模板 -->
+	<flow-template id="gdeups.lotExecutePlanTemplate">
+		<!-- 获取系统配置、奖期信息下载 -->
+		<step id="initStep" useCtxState="true" transactional="txTemplate">		
+		     <action id="exePlanAction1" place-holder="true" /> 
+			<next on="BP_STATE_NORMAL" to="chkCtlStep" />
+			<next on="*" to="finalize" />
+		</step>
+		<!-- 检查定投控制信息 -->
+		<step id="chkCtlStep" useCtxState="true">		
+		     <action id="exePlanAction2" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="chkDrwStep" />
+			<next on="*" to="finalize" />
+		</step>
+		<!-- 检查奖期信息 -->
+		<step id="chkDrwStep" useCtxState="true" transactional="txTemplate">		
+		    <action id="exePlanAction3" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="chkTimStep" />
+			<next on="*" to="finalize" />
+		</step>
+		<!-- 判断是否购彩时间 -->
+		<step id="chkTimStep" useCtxState="true" transactional="txTemplate">		
+		     <action id="exePlanAction4" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="exePlanStep" />
+			<next on="*" to="finalize" />
+		</step>
+		<!-- 查询定投计划表，获取定投信息，循环处理定投信息 -->
+		<step id="exePlanStep" useCtxState="true">		
+		     <action id="exePlanAction5" place-holder="true" />
+		     <next on="BP_STATE_NORMAL" to="savPlanStep" />
+			 <next on="*" to="finalize" />
+		</step>
+		<!-- 保存定投结果 -->
+		<step id="savPlanStep" useCtxState="true" transactional="txTemplate">		
+		     <action id="exePlanAction6" place-holder="true" />
+		     <next on="BP_STATE_NORMAL" to="finalize" />
+			 <next on="*" to="finalize" />
+		</step>
+		<step id="finalize" useCtxState="true" transactional="txTemplate">
+			<action id="exePlanAction7" place-holder="true" />
+		</step>
+	</flow-template>
+
+	<!-- 福彩定投返奖模板 -->
+	<flow-template id="gdeups.lotPayPlanTemplate">
+		<!-- 获取系统配置、福彩时间、奖期信息 -->
+		<step id="initStep" useCtxState="true" transactional="txTemplate">		
+		     <action id="proPlanPayAction1" place-holder="true" /> 
+			<next on="BP_STATE_NORMAL" to="proPayStep" />
+			<next on="*" to="finalize" />
+		</step>
+		<!-- 循环处理奖期信息 -->
+		<step id="proPayStep" useCtxState="true">		
+		     <action id="proPlanPayAction2" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="updAmt1Step" />
+			<next on="*" to="finalize" />
+		</step>
+		<!-- 计算返奖总金额与购彩总金额，更新扎差金额 -->
+		<step id="updAmt1Step" useCtxState="true" transactional="txTemplate">		
+		    <action id="proPlanPayAction3" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="updAmt2Step" />
+			<next on="*" to="finalize" />
+		</step>
+		<!-- 查询未汇总返奖的记录，更新汇总返奖总金额 -->
+		<step id="updAmt2Step" useCtxState="true" transactional="txTemplate">		
+		     <action id="proPlanPayAction4" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="updAmt3Step" />
+			<next on="*" to="finalize" />
+		</step>
+		<!-- 查询符合条件的未扎差记录，更新扎差 -->
+		<step id="updAmt3Step" useCtxState="true" transactional="txTemplate">		
+		     <action id="proPlanPayAction5" place-holder="true" />
+		</step>
+		<step id="finalize" useCtxState="true" transactional="txTemplate">
+			<action id="proPlanPayAction6" place-holder="true" />
+		</step>
+	</flow-template>
+	
+	
+    <!-- 定投单期返奖模板 -->
+	<flow-template id="eups.payPlanTemplate">
+	    <!-- 初始状态查询 -->
+		<step id="stsChkStep" useCtxState="true" transactional="txTemplate">
+			<!-- 查询奖期信息表返奖流程控制标志 -->
+			<action id="payPlanAction1" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="DECISION_OPER1" />
+			<next on="*" to="finalize" />
+		</step>
+		<!-- 根据返奖流程标志，确定执行步骤 -->
+		<decision id="DECISION_OPER1">
+			<script>flwCtl</script>
+			<next on="0" to="initStep" />
+			<next on="1" to="step1" />
+			<next on="2" to="step2" />
+			<next on="3" to="step3" />
+			<next on="4" to="step4" />
+			<next on="5" to="step5" />
+			<next on="6" to="step9" />
+			<next on="7" to="step10" />
+			<next on="8" to="step16" />
+			<next on="9" to="step17" />
+			<next on="10" to="step18" />
+			<next on="*" to="finalize" />
+		</decision>
+		<!--第0步 初始化 -->
+		<step id="initStep" useCtxState="true" transactional="txTemplate">
+			<action id="payPlanAction2" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="step1" />
+			<next on="*" to="finalize" />
+		</step>
+		<!--第1步 获取开奖公告信息 -->
+		<step id="step1" useCtxState="true" transactional="txTemplate">
+			<action id="payPlanAction3" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="step2" />
+			<next on="*" to="finalize" />
+		</step>
+		<!--第2步 -->
+		<step id="step2" useCtxState="true" transactional="txTemplate">
+			<action id="payPlanAction4" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="step3" />
+			<next on="*" to="finalize" />
+		</step>
+		<!--第3步 获取中奖记录明细信息 -->
+		<step id="step3" useCtxState="true" transactional="txTemplate">
+			<action id="payPlanAction5" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="step4" />
+			<next on="*" to="finalize" />
+		</step>
+		
+		<!--第4步 检查中奖记录控制表 -->
+		<step id="step4" useCtxState="true" transactional="txTemplate">
+			<action id="payPlanAction6" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="DECISION_OPER2" />
+			<next on="*" to="finalize" />
+		</step>
+		<!-- 根据返奖流程标志，确定执行步骤 -->
+		<decision id="DECISION_OPER2">
+			<script>flwCtl</script>
+			<next on="5" to="step5" />
+			<next on="10" to="step18" />
+			<next on="*" to="finalize" />
+		</decision>
+		
+		<!--第5步根据中奖记录控制表和投注流水表生成返奖明细记录 -->
+		<step id="step5" useCtxState="true" transactional="txTemplate">
+			<action id="payPlanAction7" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="DECISION_OPER3" />
+			<next on="*" to="finalize" />
+		</step>
+		<!-- 根据返奖流程标志，确定执行步骤 -->
+		<decision id="DECISION_OPER3">
+			<script>flwCtl</script>
+			<next on="5" to="step6" />
+			<next on="10" to="step18" />
+			<next on="*" to="finalize" />
+		</decision>
+		<!--第5步检查中奖记录是否重复 -->
+		<step id="step6" useCtxState="true" transactional="txTemplate">
+			<action id="payPlanAction8" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="step7" />
+			<next on="*" to="finalize" />
+		</step>
+		<!--第5步统计返奖总金额，更新奖期信息表返奖总金额 -->
+		<step id="step7" useCtxState="true" transactional="txTemplate">
+			<action id="payPlanAction9" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="step8" />
+			<next on="*" to="finalize" />
+		</step>
+		<!--第5步更新投注流水表中奖记录的中奖标志 -->
+		<step id="step8" useCtxState="true" transactional="txTemplate">
+			<action id="payPlanAction10" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="step9" />
+			<next on="*" to="finalize" />
+		</step>
+		
+		<!--第6步更新奖期信息状态为6-->
+		<step id="step9" useCtxState="true" transactional="txTemplate">
+			<action id="payPlanAction11" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="step10" />
+			<next on="*" to="finalize" />
+		</step>
+		<!--第7步返奖资金划拨检查 -->
+		<step id="step10" useCtxState="true" transactional="txTemplate">
+			<action id="payPlanAction12" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="step11" />
+			<next on="*" to="finalize" />
+		</step>
+		<!--第7步检查代收内部户余额是否大于返奖总金额 -->
+		<step id="step11" useCtxState="true" transactional="txTemplate">
+			<action id="payPlanAction13" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="DECISION_OPER4" />
+			<next on="*" to="finalize" />
+		</step>
+		<!-- 根据判断结果，确定执行步骤 -->
+		<decision id="DECISION_OPER4">
+			<script>isGreater</script>
+			<next on="yes" to="step12" /><!-- 大于等于，直接划账 -->
+			<next on="no" to="step13" /><!-- 小于，查询对公户 -->
+		</decision>
+		<!--第7步大于等于，直接划账 -->
+		<step id="step12" useCtxState="true" transactional="txTemplate">
+			<action id="payPlanAction14" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="step15" /><!-- 至更新操作 -->
+			<next on="*" to="finalize" />
+		</step>
+		<!--第7步小于，查询对公户余额，判断是否大于返奖总金额 -->
+		<step id="step13" useCtxState="true" transactional="txTemplate">
+			<action id="payPlanAction15" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="DECISION_OPER5" />
+			<next on="*" to="finalize" />
+		</step>
+		<!-- 根据判断结果，确定执行步骤 -->
+		<decision id="DECISION_OPER5">
+			<script>isGreater</script>
+			<next on="yes" to="step14" /><!-- 大于等于，直接划账 -->
+			<next on="no" to="finalize" /><!-- 小于，提示余额不足，退出 -->
+		</decision>
+		<!--第7步对公户划款到代发内部户 -->
+		<step id="step14" useCtxState="true" transactional="txTemplate">
+			<action id="payPlanAction16" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="step15" />
+			<next on="*" to="finalize" />
+		</step>
+		<!--第7步更新返奖垫付标志、返奖总金额、返奖款划拨标志 -->
+		<step id="step15" useCtxState="true" transactional="txTemplate">
+			<action id="payPlanAction17" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="step16" />
+			<next on="*" to="finalize" />
+		</step>
+		<!--第8步更新奖期信息状态为8,9 -->
+		<step id="step16" useCtxState="true" transactional="txTemplate">
+			<action id="payPlanAction18" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="step17" />
+			<next on="*" to="finalize" />
+		</step>
+		<!--第9步根据返奖明细记录进行返奖 -->
+		<step id="step17" useCtxState="true" transactional="txTemplate">
+			<action id="payPlanAction19" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="step18" />
+			<next on="*" to="finalize" />
+		</step>
+		<!--第10步返奖完成 -->
+		<step id="step18" useCtxState="true" transactional="txTemplate">
+			<action id="payPlanAction20" place-holder="true" />
+		</step>
+		<!-- 操作退出，发送短信 -->
+		<step id="finalize" useCtxState="true" transactional="txTemplate">
+			<action id="payPlanAction21" place-holder="true" />
+		</step>
+	</flow-template>
+	
+	
+	<!-- 福彩返奖模板 -->
+	<flow-template id="gdeups.lotPayAmtTemplate">
+		<!-- 从代发内部户转账到中奖人账户 -->
+		<step id="transferStep" useCtxState="true" transactional="txTemplate">		
+		    <action id="payAmtAction" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="updDtlStep" />
+			<next on="*" to="finalize" />
+		</step>
+		<!-- 更新返奖明细记录状态 -->
+		<step id="updDtlStep" useCtxState="true" transactional="txTemplate">		
+		    <action id="payAmtAction" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="updTxnStep" />
+			<next on="*" to="finalize" />
+		</step>
+		<!-- 更新投注流水表返奖标志 -->
+		<step id="updTxnStep" useCtxState="true" transactional="txTemplate">		
+		    <action id="payAmtAction" place-holder="true" />
+		</step>
+		<step id="finalize" useCtxState="true" transactional="txTemplate">
+			<action id="payAmtAction" place-holder="true" />
+		</step>
+	</flow-template>
+	
+	
+
+</x:beans>
