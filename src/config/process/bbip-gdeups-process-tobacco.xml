@@ -10,12 +10,12 @@
         </actions>
     </process>
     
-    <!--第三方对账-->
-    <process id="gdeupsb.checkFileToThird" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+   <!--第三方对账-->
+   <!--  <process id="gdeupsb.checkFileToThird" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
         <actions>
             <action id="act" ref="gdeupsb.CheckFileToThirdAction"/>
         </actions>
-    </process>
+    </process>  -->
     
     <!--烟草签到-->
     <process id="gdeupsb.signIn" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
