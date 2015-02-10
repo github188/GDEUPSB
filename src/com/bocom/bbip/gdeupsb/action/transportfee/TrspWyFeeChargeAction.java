@@ -7,6 +7,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspTxnJnl;
@@ -26,8 +27,10 @@ public class TrspWyFeeChargeAction extends BaseAction{
 		log.info("TrspWyFeeChargeAction start......");
 		String cardNo = "cardNo";  //前端输入的银行卡号
 		String totalAmt = "totalAmt"; //交易金额
+		String CHARGE_PROCESS = "eups.payUnilateralToBank";
 		ctx.setData(GDParamKeys.FTXN_TM, new Date());
 		ctx.setData(GDParamKeys.BR_NO, "443999");
+		ctx.setData(GDParamKeys.CAR_NO, ctx.getData("plateNo"));
 		ctx.setData(GDParamKeys.ACT_NO, ctx.getData(cardNo));
 		ctx.setData(GDParamKeys.TXN_AMT, totalAmt);
 //		<Set>BrNo=444999</Set>
@@ -77,8 +80,13 @@ public class TrspWyFeeChargeAction extends BaseAction{
 		gdEupsbTrspTxnJnl.setActNo(ctx.getData(GDParamKeys.ACT_NO).toString());
 		gdEupsbTrspTxnJnl.setTxnAmt((BigDecimal)ctx.getData(GDParamKeys.TXN_AMT));
 //		TODO: <Set>PCusId=$pmpCustId</Set>  <!--收付通宝客户编号-->
+		gdEupsbTrspTxnJnlRepository.insert(gdEupsbTrspTxnJnl);
 		
+		get(BBIPPublicService.class).synExecute(CHARGE_PROCESS, ctx);
 		
-		
+//		TODO:
+//		<Exec func="PUB:ExecSql" error="IGNORE">
+//        <Arg name="SqlCmd" value="Updwbgjnl" />
+//      </Exec>
 	}
 }
