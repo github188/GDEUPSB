@@ -362,7 +362,7 @@ public final class GDParamKeys {
 	/** 交易人标识 */
 	public final static String TRADE_PERSON_IDENTIFY = "traPerIdenty";
 	/** 交易码 */
-	public final static String SVRCOD = "transCode";
+	public final static String SVRCOD = "TransCode";
 	/** 数据包类型 */
 	public final static String BAG_TYPE = "bagTyp";
 	/** 交易发起方 */
