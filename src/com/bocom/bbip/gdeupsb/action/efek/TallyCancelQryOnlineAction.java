@@ -21,8 +21,10 @@ public class TallyCancelQryOnlineAction extends BaseAction{
 		public void execute(Context context)throws CoreException,CoreRuntimeException{
 				log.info("~~~~~~~~~~Start TallyCancelQryOnlineAction");
 				context.setData(GDParamKeys.TOTNUM,"1");
-				String sqn=context.getData(ParamKeys.MFM_VCH_NO).toString();
-				EupsTransJournal eupsTransJournal=eupsTransJournalRepository.findOne(sqn);
+				String mfmVchNo=context.getData(ParamKeys.MFM_VCH_NO).toString();
+				EupsTransJournal eupsTransJournals=new EupsTransJournal();
+				eupsTransJournals.setMfmVchNo(mfmVchNo);
+				EupsTransJournal eupsTransJournal=eupsTransJournalRepository.find(eupsTransJournals).get(0);
 				if(null != eupsTransJournal){
 						context.setData("ApCode", "46");
 						context.setData("OFmtCd", "999");
