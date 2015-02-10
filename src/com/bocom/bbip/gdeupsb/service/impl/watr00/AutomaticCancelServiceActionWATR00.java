@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsTransJournal;
 import com.bocom.bbip.eups.spi.service.online.AutomaticCancelService;
 import com.bocom.bbip.eups.spi.vo.CancelDomain;
 import com.bocom.bbip.utils.DateUtils;
@@ -39,7 +40,7 @@ public class AutomaticCancelServiceActionWATR00 implements	AutomaticCancelServic
 		context.setData("waterno", "JH"+logNo);//流水号生成
 		
 		context.setData("bankcode", "JT");
-		context.setData("salesdepart",context.getData(ParamKeys.BR));
+		context.setData("salesdepart",((String)context.getData(ParamKeys.BR)).substring(2, 8));
 		context.setData("salesperson", ((String)context.getData(ParamKeys.TELLER)).substring(4, 7));
 		context.setData("busitime", DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMddHHmmss));
 		context.setData("thdRspCde", "0");
@@ -62,7 +63,13 @@ public class AutomaticCancelServiceActionWATR00 implements	AutomaticCancelServic
 	@Override
 	public Map<String, Object> aftCancel(CancelDomain canceldomain,Context context) throws CoreException {
 		logger.info("AutomaticCancelServiceActionWATR00 aftCancel  start ... ...");
-		
+		EupsTransJournal eupsTransJournal = context.getData("lclJnlList");
+		if(eupsTransJournal==null){
+			eupsTransJournal = new EupsTransJournal();
+			String oldTxnSqn = (String)context.getData("oldTxnSqn");
+			eupsTransJournal.setOldTxnSqn(oldTxnSqn.trim());
+	        context.setData("lclJnlList", eupsTransJournal);
+		}
 		logger.info("AutomaticCancelServiceActionWATR00 aftCancel  end ... ...");
 		return null;
 	}
