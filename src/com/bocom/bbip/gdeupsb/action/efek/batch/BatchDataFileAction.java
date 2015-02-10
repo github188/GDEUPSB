@@ -1,44 +1,28 @@
 package com.bocom.bbip.gdeupsb.action.efek.batch;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.bcel.generic.ACONST_NULL;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 
 import com.bocom.bbip.comp.BBIPPublicService;
-import com.bocom.bbip.comp.account.AccountService;
 import com.bocom.bbip.eups.action.BaseAction;
-import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
-import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.eups.entity.AgtsCusActInfo;
-import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
-import com.bocom.bbip.file.transfer.sftp.SFTPTransfer;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.AgtFileBatchDetail;
-import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.entity.GDEupsEleTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GDEupsEleTmpRepository;
 import com.bocom.bbip.thd.org.apache.commons.collections.CollectionUtils;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
-import com.bocom.bbip.utils.IOUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -84,45 +68,14 @@ public class BatchDataFileAction extends BaseAction{
 						String comNo=context.getData(ParamKeys.COMPANY_NO).toString()	;
 						String date=DateUtils.format(DateUtils.parse(context.getData(GDParamKeys.SUB_DATE).toString()),DateUtils.STYLE_yyyyMMdd);
 						//批次号
-						String batNo="";
+						String batNo=context.getData(ParamKeys.BAT_NO).toString().substring(0, 5);
 						String createFileName=cusType+bankNo+comNo+date+batNo+".txt";
 						
 						//文件内容
 						Map<String, Object> resultMap=createFileMap(context);
 						context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_NAME, createFileName);
 						context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_MAP, resultMap);
-						
-//						get(OperateFTPAction.class).putCheckFile(eupsThdFtpConfig);
 	}
-	/**
-	 * 下载文件 
-	 */
-		public void downloadFileToThird(EupsThdFtpConfig eupsThdFtpConfig) throws CoreException {
-				logger.info("=================Start  BatchDataFileAction  downloadFileToThird ");
-				SFTPTransfer transferSFTPT = new SFTPTransfer();
-				transferSFTPT.setHost(((String) eupsThdFtpConfig.getThdIpAdr()).trim());
-				transferSFTPT.setPort(Integer.valueOf(eupsThdFtpConfig.getBidPot().trim()));
-				transferSFTPT.setUserName(((String) eupsThdFtpConfig.getOppNme().trim()));
-				transferSFTPT.setPassword(((String) eupsThdFtpConfig.getOppUsrPsw().trim()));
-				
-				try {
-					transferSFTPT.logon();			
-					String localFilePath = (String)eupsThdFtpConfig.getLocDir().trim();
-					String rmtFileLocation = (String)eupsThdFtpConfig.getRmtWay().trim();
-					Resource resource = transferSFTPT.getResource(rmtFileLocation);
-					if (null != resource) {
-						File localFile = new File(localFilePath);
-						OutputStream fos = new FileOutputStream(localFile);
-						IOUtils.copy(resource.getInputStream(), fos);
-						fos.close();
-					}
-				} catch (Exception e) {
-					throw new CoreException(ErrorCodes.EUPS_FTP_FILEDOWN_FAIL);
-				} finally {
-					transferSFTPT.logout();
-					logger.info("==========End   downloadFileToThird");
-				}
-		}
 	/**
 	 * 文件map拼装
 	 */
