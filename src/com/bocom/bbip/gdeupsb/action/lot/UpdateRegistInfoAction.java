@@ -80,7 +80,7 @@ public class UpdateRegistInfoAction extends BaseAction {
         }
         context.setData("lotNam", context.getData("mobTel"));
         context.setData("regTim", DateUtils.format(new Date(),  DateUtils.STYLE_yyyyMMddHHmmss));
-      //PUB:CallThirdOther 向福彩中心发出彩民注册
+        //PUB:CallThirdOther 向福彩中心发出彩民注册
         context.setData("eupsBusTyp", "LOTR01");
         context.setData("action", "201");
        
