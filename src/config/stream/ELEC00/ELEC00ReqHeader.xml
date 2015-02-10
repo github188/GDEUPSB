@@ -2,7 +2,7 @@
 <message xmlns="http://www.bocom.com/jump/transformer/packet"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
-	type="LLLL" encoding="GBK"  filter="both,WEB-INF/classes/config/stream/translateDict.txt"> 
+	type="LLLL" encoding="GBK" trace="true"  filter="both,WEB-INF/classes/config/stream/translateDict.txt"> 
 	<segment name="head">
 		<!-- 数据包长度	SJBCD	Number(9)  -->
 					<fixString name="bagLen" length="10" />
@@ -41,5 +41,5 @@
 		<!-- 压缩标志	YSBZ	Varchar2(1)  -->
 					<fixString name="redSign" length="1" />
 	</segment>
-					<include keys="TransCode" decodePrefix="f"/>
+					<include keys="TransCode" decodePrefix="p"/>
 </message>
