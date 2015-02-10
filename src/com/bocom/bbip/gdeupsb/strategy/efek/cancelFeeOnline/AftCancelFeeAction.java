@@ -2,8 +2,13 @@ package com.bocom.bbip.gdeupsb.strategy.efek.cancelFeeOnline;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsTransJournal;
+import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
+import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -11,7 +16,8 @@ import com.bocom.jump.bp.core.Executable;
 
 public class AftCancelFeeAction implements Executable{
 	private final static Log logger=LogFactory.getLog(AftCancelFeeAction.class);
-
+	@Autowired
+	EupsTransJournalRepository eupsTransJournalRepository;
 	/**
 	 * 抹账后处理
 	 */
@@ -19,12 +25,31 @@ public class AftCancelFeeAction implements Executable{
 	public void execute(Context context)throws CoreException,CoreRuntimeException{
 		logger.info("==========Start  AftCancelFeeAction");
 		
-		context.setData("TIATyp", "C");      //不明 TIATyp 是什么
-		//TODO	    <Set>TTxnCd=STRCAT(SUBSTR($OTTxnCd,1,5),9)</Set>	    <Set>HTxnCd=STRCAT(SUBSTR($OHTxnCd,1,5),9)</Set>
-		String txnCd=(String)context.getData(ParamKeys.TXN_CODE);
-		
-		context.setData(ParamKeys.THD_TXN_CDE, txnCd.substring(1, 6)+"9");
-		context.setData(ParamKeys.TXN_CODE, txnCd.substring(1, 6)+"9");
+		EupsTransJournal eupsTransJournal=eupsTransJournalRepository.findOne(context.getData(ParamKeys.OLD_TXN_SQN).toString());
+		if(null != eupsTransJournal){
+				String txnSts=eupsTransJournal.getTxnSts();
+				if("c".equals(txnSts) || "C".equals(txnSts)){
+						context.setData(GDParamKeys.MSGTYP, "N");
+						context.setData(ParamKeys.RSP_CDE, Constants.HOST_RESPONSE_CODE_SUCC);
+						context.setData(ParamKeys.RSP_MSG, "原记录【"+context.getData(ParamKeys.OLD_TXN_SQN).toString()+"】已经抹账");
+				}else if("b".equals(txnSts) || "B".equals(txnSts)){
+				}else if("s".equals(txnSts) || "S".equals(txnSts)){
+						logger.info("~~~~~~~~~~发送成功");
+						context.setData(ParamKeys.RESPONSE_MESSAGE, "交易成功");
+						context.setData(ParamKeys.RESPONSE_CODE, Constants.HOST_RESPONSE_CODE_SUCC);
+						context.setData(ParamKeys.RSP_MSG, "原记录【"+context.getData(ParamKeys.OLD_TXN_SQN).toString()+"】准备抹账");
+				}else{
+					context.setData(GDParamKeys.MSGTYP, "E");
+					context.setData(ParamKeys.RSP_CDE, "EFE999");
+					context.setData(ParamKeys.RSP_MSG, "原记录【"+context.getData(ParamKeys.OLD_TXN_SQN).toString()+"】状态【"+txnSts+"】未明，不进行抹账");
+					throw new CoreRuntimeException("原记录【"+context.getData(ParamKeys.OLD_TXN_SQN).toString()+"】状态【"+txnSts+"】未明，不进行抹账");
+				}
+		}else{
+				context.setData(GDParamKeys.MSGTYP, "N");
+				context.setData(ParamKeys.RSP_CDE, Constants.HOST_RESPONSE_CODE_SUCC);
+				context.setData(ParamKeys.RSP_MSG, "原记录【"+context.getData(ParamKeys.OLD_TXN_SQN).toString()+"】不存在");
+				throw new CoreRuntimeException("原记录【"+context.getData(ParamKeys.OLD_TXN_SQN).toString()+"】不存在");
+			}
 		
 	}
 }
