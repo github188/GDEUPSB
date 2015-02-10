@@ -1,5 +1,7 @@
 package com.bocom.bbip.gdeupsb.strategy.efek.cancelFeeOnline;
 
+import java.util.Date;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsTransJournal;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -24,6 +27,11 @@ public class AftCancelFeeAction implements Executable{
 	@Override
 	public void execute(Context context)throws CoreException,CoreRuntimeException{
 		logger.info("==========Start  AftCancelFeeAction");
+		
+		Date thdTxnDte=DateUtils.parse(context.getData(ParamKeys.THD_TXN_DATE).toString());
+		Date thdTxnTme=DateUtils.parse(context.getData(ParamKeys.THD_TXN_DATE).toString()+context.getData(ParamKeys.THD_TXN_TIME).toString(),DateUtils.STYLE_yyyyMMddHHmmss);
+		context.setData(ParamKeys.THD_TXN_DATE, thdTxnDte);
+		context.setData(ParamKeys.THD_TXN_TIME, thdTxnTme);
 		
 		EupsTransJournal eupsTransJournal=eupsTransJournalRepository.findOne(context.getData(ParamKeys.OLD_TXN_SQN).toString());
 		if(null != eupsTransJournal){
