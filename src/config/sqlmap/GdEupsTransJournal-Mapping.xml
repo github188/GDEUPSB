@@ -166,6 +166,15 @@
 		RSV_FLD2, RSV_FLD3, RSV_FLD4, RSV_FLD5,
 		RSV_FLD6, FIL_FLG
 	</sql>
+    <!--广东烟草信息统计查询 -->
+    <select id="findTbcTransJournals" resultType="java.util.Map"
+        parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
+        SELECT Count(*) totSum, COALESCE(sum(CAST(TXN_AMT AS BIGINT)),0) totAmt,THD_SQN tLogNo
+        FROM eups.EUPS_TRANS_JOURNAL
+        WHERE COM_NO = #{comNo,jdbcType=CHAR}
+        AND TXN_DTE=#{txnDte,jdbcType=DATE} AND MFM_TXN_STS='S' 
+        AND MFM_RSP_CDE='SC0000' AND TXN_CDE='483805' and SQN  &gt;=#{sqn,jdbcType=CHAR}
+    </select>
 
 	<!--广州电力划扣对账统计信息查询 -->
 	<select id="findGzEleChkHKInfo" resultType="java.util.Map"
