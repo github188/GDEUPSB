@@ -10,6 +10,8 @@
 		<x:bean id="eups.payFeeOnlineServiceActionELEC02" class="com.bocom.bbip.gdeupsb.service.impl.elec02.PayFeeOnlineServiceActionELEC02"/>
 		<!-- 联机抹帐 -->
 		<x:bean id="eups.automaticCancelServiceActionELEC02" class="com.bocom.bbip.gdeupsb.service.impl.elec02.AutomaticCancelServiceActionELEC02"/>
+		<!-- 会计流水查询 -->
+		<x:bean id="eups.queryJournalOffChanServiceActionELEC02" class="com.bocom.bbip.gdeupsb.service.impl.elec02.QueryJournalOffChanServiceActionELEC02"/>
 	<!-- add by hefw 20150120 end -->
 	
 	
