@@ -13,8 +13,18 @@
 		</x:property>
 	</action>	
 	<!-- 会计流水查询 -->
+	<action class="com.bocom.bbip.comp.action.strategy.StrategyDelegatorAction"
+		id="eups.queryJournalOffChanServiceAction">
+		<x:property name="executableBeanResolver">
+			<x:bean
+				class="com.bocom.bbip.comp.action.strategy.support.DefaultExecutableBeanResolver">
+				<x:property name="strategyKey" value="eupsBusTyp" />
+			</x:bean>
+		</x:property>
+	</action>	
+	<!-- 会计流水查询
 	<action id="eups.queryJournalOffChanServiceAction" 
-		class="com.bocom.bbip.gdeupsb.service.impl.watr00.QueryJournalOffChanServiceActionWATR00"/>
+		class="com.bocom.bbip.gdeupsb.service.impl.watr00.QueryJournalOffChanServiceActionWATR00"/> -->
 	<!-- 历史水费查询 -->
 	<action id="eups.queryHistoryMsgServiceActionWATR00" 
 		class="com.bocom.bbip.gdeupsb.service.impl.watr00.QueryHistoryMsgServiceActionWATR00"/>
