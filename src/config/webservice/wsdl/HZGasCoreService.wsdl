@@ -18,11 +18,29 @@
   <wsdl:message name="vinGasCusAgentResponseMessage">
     <wsdl:part name="vinGasCusAgentResponse" element="gdeupsb:vinGasCusAgentResponse"/>
   </wsdl:message>
+  <wsdl:message name="uploadDKchkFleRequestMessage">
+    <wsdl:part name="uploadDKchkFleRequest" element="gdeupsb:uploadDKchkFle"/>
+  </wsdl:message>
+  <wsdl:message name="uploadDKchkFleResponseMessage">
+    <wsdl:part name="uploadDKchkFleResponse" element="gdeupsb:uploadDKchkFleResponse"/>
+  </wsdl:message>
   <wsdl:message name="qryJnlInfoRequestMessage">
     <wsdl:part name="qryJnlInfoRequest" element="gdeupsb:qryJnlInfo"/>
   </wsdl:message>
   <wsdl:message name="qryJnlInfoResponseMessage">
     <wsdl:part name="qryJnlInfoResponse" element="gdeupsb:qryJnlInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="printReportFormsRequestMessage">
+    <wsdl:part name="printReportFormsRequest" element="gdeupsb:printReportForms"/>
+  </wsdl:message>
+  <wsdl:message name="printReportFormsResponseMessage">
+    <wsdl:part name="printReportFormsResponse" element="gdeupsb:printReportFormsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="uploadCusAgentFileRequestMessage">
+    <wsdl:part name="uploadCusAgentFileRequest" element="gdeupsb:uploadCusAgentFile"/>
+  </wsdl:message>
+  <wsdl:message name="uploadCusAgentFileResponseMessage">
+    <wsdl:part name="uploadCusAgentFileResponse" element="gdeupsb:uploadCusAgentFileResponse"/>
   </wsdl:message>
   <wsdl:portType name="HZGasCoreServicePortType">
     <wsdl:operation name="qryCusInfo">
@@ -35,10 +53,25 @@
       <wsdl:input message="tns:vinGasCusAgentRequestMessage"/>
       <wsdl:output message="tns:vinGasCusAgentResponseMessage"/>
     </wsdl:operation>
+    <wsdl:operation name="uploadDKchkFle">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:uploadDKchkFleRequestMessage"/>
+      <wsdl:output message="tns:uploadDKchkFleResponseMessage"/>
+    </wsdl:operation>
     <wsdl:operation name="qryJnlInfo">
       <wsdl:documentation/>
       <wsdl:input message="tns:qryJnlInfoRequestMessage"/>
       <wsdl:output message="tns:qryJnlInfoResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="printReportForms">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:printReportFormsRequestMessage"/>
+      <wsdl:output message="tns:printReportFormsResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="uploadCusAgentFile">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:uploadCusAgentFileRequestMessage"/>
+      <wsdl:output message="tns:uploadCusAgentFileResponseMessage"/>
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="HZGasCoreServiceSoapBinding" type="tns:HZGasCoreServicePortType">
@@ -61,8 +94,35 @@
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="uploadDKchkFle">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.HZGasCoreService/uploadDKchkFle"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="qryJnlInfo">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.HZGasCoreService/qryJnlInfo"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="printReportForms">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.HZGasCoreService/printReportForms"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="uploadCusAgentFile">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.HZGasCoreService/uploadCusAgentFile"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -73,7 +133,7 @@
   </wsdl:binding>
   <wsdl:service name="HZGasCoreService">
     <wsdl:port name="HZGasCoreServicePort" binding="tns:HZGasCoreServiceSoapBinding">
-      <soap:address location="http://127.0.0.1:8080/GEDUPSB/ws/"/>
+      <soap:address location="http://127.0.0.1:8080/GDEUPSB/ws/"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

@@ -31,6 +31,20 @@
       <xs:element name="response" type="tns:vinGasCusAgentResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:element name="uploadDKchkFle" type="tns:uploadDKchkFleReq_CType"/>
+  <xs:element name="uploadDKchkFleResponse" type="tns:uploadDKchkFleRsp_CType"/>
+  <xs:complexType name="uploadDKchkFleReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:uploadDKchkFleRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="uploadDKchkFleRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:uploadDKchkFleResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:element name="qryJnlInfo" type="tns:qryJnlInfoReq_CType"/>
   <xs:element name="qryJnlInfoResponse" type="tns:qryJnlInfoRsp_CType"/>
   <xs:complexType name="qryJnlInfoReq_CType">
@@ -43,6 +57,34 @@
     <xs:sequence>
       <xs:element ref="gsp:replyInformation"/>
       <xs:element name="response" type="tns:qryJnlInfoResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="printReportForms" type="tns:printReportFormsReq_CType"/>
+  <xs:element name="printReportFormsResponse" type="tns:printReportFormsRsp_CType"/>
+  <xs:complexType name="printReportFormsReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:printReportFormsRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="printReportFormsRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:printReportFormsResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="uploadCusAgentFile" type="tns:uploadCusAgentFileReq_CType"/>
+  <xs:element name="uploadCusAgentFileResponse" type="tns:uploadCusAgentFileRsp_CType"/>
+  <xs:complexType name="uploadCusAgentFileReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:uploadCusAgentFileRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="uploadCusAgentFileRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:uploadCusAgentFileResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
   <xs:element name="requestHeader" type="tns:requestHeader_CType"/>
@@ -321,7 +363,7 @@
       <xs:element name="optFlg" type="tns:optFlg_SType"/>
       <xs:element name="comNo" type="tns:comNo_SType"/>
       <xs:element name="thdCusNo" type="tns:thdCusNo_SType"/>
-      <xs:element name="idTyp" type="tns:idTyp_SType" minOccurs="0"/>
+      <xs:element name="idTyp" type="tns:idTyp_SType"/>
       <xs:element name="idNo" type="tns:idNo_SType"/>
       <xs:element name="cusTyp" type="tns:cusTyp_SType" minOccurs="0"/>
       <xs:element name="cusAc" type="tns:cusAc_SType" minOccurs="0"/>
@@ -388,6 +430,46 @@
       <xs:maxLength value="12"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:complexType name="uploadDKchkFleRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="txnDte" type="tns:txnDte_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="uploadDKchkFleResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="apCode" type="tns:apCode_SType" minOccurs="0"/>
+      <xs:element name="oFmtCd" type="tns:oFmtCd_SType" minOccurs="0"/>
+      <xs:element name="sqn" type="tns:sqn_SType" minOccurs="0"/>
+      <xs:element name="rspMsg" type="tns:rspMsg_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="txnDte_SType">
+    <xs:annotation>
+      <xs:documentation>交易日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="sqn_SType">
+    <xs:annotation>
+      <xs:documentation>流水号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="rspMsg_SType">
+    <xs:annotation>
+      <xs:documentation>返回消息</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:complexType name="qryJnlInfoRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
@@ -417,13 +499,17 @@
     <xs:annotation>
       <xs:documentation>开始日期</xs:documentation>
     </xs:annotation>
-    <xs:restriction base="xs:string"/>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="endDate_SType">
     <xs:annotation>
       <xs:documentation>结束日期</xs:documentation>
     </xs:annotation>
-    <xs:restriction base="xs:string"/>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="bakFld3_SType">
     <xs:annotation>
@@ -459,14 +545,6 @@
       <xs:maxLength value="20"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="sqn_SType">
-    <xs:annotation>
-      <xs:documentation>流水号</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="20"/>
-    </xs:restriction>
-  </xs:simpleType>
   <xs:simpleType name="thdSqn_SType">
     <xs:annotation>
       <xs:documentation>第三方流水号</xs:documentation>
@@ -487,6 +565,47 @@
       <xs:element name="mfmVchNo" type="tns:mfmVchNo_SType" minOccurs="0"/>
       <xs:element name="sqn" type="tns:sqn_SType" minOccurs="0"/>
       <xs:element name="thdSqn" type="tns:thdSqn_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="printReportFormsRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="beginDate" type="tns:beginDate_SType"/>
+      <xs:element name="endDate" type="tns:endDate_SType"/>
+      <xs:element name="prtFlg" type="tns:prtFlg_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="printReportFormsResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="apCode" type="tns:apCode_SType" minOccurs="0"/>
+      <xs:element name="oFmtCd" type="tns:oFmtCd_SType" minOccurs="0"/>
+      <xs:element name="rspMsg" type="tns:rspMsg_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="prtFlg_SType">
+    <xs:annotation>
+      <xs:documentation>报表类型</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="uploadCusAgentFileRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="txnDte" type="tns:txnDte_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="uploadCusAgentFileResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="apCode" type="tns:apCode_SType" minOccurs="0"/>
+      <xs:element name="oFmtCd" type="tns:oFmtCd_SType" minOccurs="0"/>
+      <xs:element name="sqn" type="tns:sqn_SType" minOccurs="0"/>
+      <xs:element name="rspMsg" type="tns:rspMsg_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>
