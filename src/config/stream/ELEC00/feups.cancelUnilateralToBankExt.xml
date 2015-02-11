@@ -2,26 +2,6 @@
 <segment xmlns="http://www.bocom.com/jump/transformer/packet"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
-	name="460423Req">
-		
-		<fixString name="netName"  length="64" /><!--  网点名称	WDMC	Varchar2(64)-->
-		<fixString name="sqn"  length="24" /><!--  交易流水号	JYLSH	Varchar2(24)-->
-		<fixString name="txnDte"  length="8" /><!--  交易日期	JYRQ	Varchar2(8)-->
-		<fixString name="txnTme"  length="6" /><!--  交易时间	JYSJ	Varchar2 (6)-->
-		<fixString name="oldTxnSqn"  length="24" /><!--  原交易流水号	YJYLSH	Varchar2(24)-->
-		<fixString name="busOldDate"  length="8" /><!--  原交易日期	YJYRQ	Varchar2(8)-->
-		<fixString name="busOldTime"  length="6" /><!--  原交易时间	YJYSJ	Varchar2 (6)-->
-		<fixString name="busTyp"  length="3" /><!--  收费方式	SFFS	Varchar2(3)-->
-		<fixString name="costType"  length="3" /><!--  费用类型	FYLX	Varchar2(3)-->
-		<fixString name="bankNo"  length="4" /><!--  入账银行代码	RZYHDM	Varchar2(4)-->
-		<fixString name="comNo"  length="8" /><!--  单位编码	DWBM	Varchar2(8)-->
-		<fixString name="payNo"  length="20" /><!--  缴费号	JFH	Varchar2(20)-->
-		<fixString name="settleAccountsName"  length="64" /><!--  结算户名称	JSHMC	Varchar2(64)-->
-		<fixString name="electroAddress"  length="128" /><!--  用电地址	YDDZ	Varchar2(128)-->
-		<fixString name="accountsSerialNo"  length="16" /><!--  账务流水号	ZWLSH	Varchar2(16)-->
-		<fixString name="electricityYearMonth"  length="6" /><!--  电费年月	DFNY	Varchar2(6)-->
-		<fixString name="cusAc"  length="32" /><!--  扣款账户	KKZH	Varchar2(32)-->
-		<fixString name="CusNme"  length="128" /><!--  扣款账户名称	KKZHMC	Varchar2(128)-->
-		<fixString name="withholdMoney"  length="16" /><!--  原实扣金额	YSKJE	Number(14,2)-->
-		<fixString name="txnAmt"  length="16" /><!--  抹账金额	MZJE	Number(14,2)-->
-	</segment>
+	name="460423Resp">
+		<!-- 返回数据包为空 -->
+</segment>

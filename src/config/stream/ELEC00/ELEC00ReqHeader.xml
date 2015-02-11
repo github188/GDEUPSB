@@ -37,7 +37,7 @@
 		<!-- 交易优先级	JYYXJ	Varchar2(1)  -->
 					<fixString name="traPry" length="1" />
 		<!-- 交易返回代码	JYFHDM	Varchar2(5)  -->
-					<fixString name="traRetCode" length="5" />
+					<fixString name="thdRspCde" length="5" />
 		<!-- 压缩标志	YSBZ	Varchar2(1)  -->
 					<fixString name="redSign" length="1" />
 	</segment>
