@@ -5,13 +5,11 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
         http://spring.tangdi.net/schema/tds http://spring.tangdi.net/schema/tds/tds.xsd" >
 
-
       <table id="elegz" >
 	       <key name="3"   value="this is tds,key=3,value=5"/>
 	       <key name="2"   value="this is tds,key=2,value=6"/>
 	       <key name="4"   value="this is tds,key=4,value=7"/>
 	  </table> 
-    
     
         <table id="tds2" >
 	       <key name="3"   value="this is tds2,key=3,value=a"/>
