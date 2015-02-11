@@ -12,6 +12,14 @@
 			<action id="act" ref="oprGasCusAgentAction" />
 		</actions>
 	</process>
+	<!-- 用户协议文件上传（0全部，1新增） -->
+	<process id="gdeupsb.gasAgentBatchFileToFTP" template="eups.simpleTran"
+		interceptors="eups.transMessageInterceptor">
+		<actions>
+			<action id="act" ref="gasAgentBatchFileToFTP" />
+		</actions>
+	</process>
+
 
 
 	<!-- 惠州燃气代扣流水信息查询 -->
@@ -50,11 +58,13 @@
 		</actions>
 	</process>
 
-	<!-- 惠州燃气批量托收数据准备 -->
-	<!-- <process id="gdeupsb.preBatchGashDealServiceAction" template="eups.simpleTran" 
-		interceptors="eups.transMessageInterceptor"> <actions> <action id="act" ref="preBatchGashDealServiceAction" 
-		/> </actions> </process> -->
 
+	<!-- 惠州燃气批量托收数据准备 -->
+<!-- 	 <process id="gdeupsb.preBatchGashDealServiceAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor"> 
+	 	<beans>
+			<bean id="act" ref="preBatchGashDealServiceAction" />
+		</beans>
+	</process>  -->
 
 	<!-- 惠州燃气对账文件上传 -->
 	<!-- <process id="gdeupsb.checkFileToThdHzAction" template="eups.simpleTran" 
@@ -114,8 +124,5 @@
 		</actions>
 	</process>
 
-	<!-- 中山文件批量:文件录入及检查 -->
-	<!-- <process id="gdeupsb.checkAndImportFileFbpdAction" template="eups.simpleTran" 
-		interceptors="eups.transMessageInterceptor"> <actions> <action id="act" ref="checkAndImportFileFbpdAction" 
-		/> </actions> </process> -->
+
 </x:beans>
