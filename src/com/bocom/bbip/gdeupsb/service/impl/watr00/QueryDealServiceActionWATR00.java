@@ -79,6 +79,7 @@ public class QueryDealServiceActionWATR00 implements QueryDealService {
 			if(Constants.RESPONSE_CODE_SUCC.equals(responseCode)){
 				logger.info("QryDealStrategyActionWATR00 success!");
 				context.setDataMap(thdReturnMessage);
+				context.setData("txnSqn", context.getData("sqn"));//保存查询交易流水号，返回给前端，用于缴费
 //				String txnAmt = thdReturnMessage.get("zprice").toString().trim();
 //				context.setData(ParamKeys.OWE_FEE_AMT, txnAmt);
 			}else{
