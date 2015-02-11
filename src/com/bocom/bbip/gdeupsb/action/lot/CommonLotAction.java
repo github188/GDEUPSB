@@ -310,8 +310,6 @@ public class CommonLotAction {
     }
 
     /**
-     * 
-     * 
      * 获取系统配置
      */
     private void GetSysCfg() {

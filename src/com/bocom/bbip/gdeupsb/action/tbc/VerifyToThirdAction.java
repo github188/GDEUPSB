@@ -1,5 +1,8 @@
 package com.bocom.bbip.gdeupsb.action.tbc;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.eups.action.BaseAction;
@@ -13,6 +16,8 @@ import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.service.BGSPServiceAccessObject;
+import com.bocom.bbip.service.Result;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -27,7 +32,9 @@ public class VerifyToThirdAction extends BaseAction {
 
     @Autowired
     EupsTransJournalRepository eupsTransJournalRepository;
-   
+    @Autowired
+    BGSPServiceAccessObject serviceAccess;
+
     @Override
     public void execute(Context context) throws CoreException  {
         log.info(" VerifyToThirdAction is start!");
@@ -53,30 +60,34 @@ public class VerifyToThirdAction extends BaseAction {
             throw new CoreException(ErrorCodes.THD_CHL_ALDEAY_SIGN_OUT);
         }
         String txnCode = context.getData("oTTxnCd");
-        if("8912".equals(txnCode)) {  // <!--开户-->
-            //TODO; 涉及协议表  --开户--
-           /* EupsTransJournal eupsTransJournal = get(EupsTransJournalRepository.class).findOne(context.getData(ParamKeys.COMPANY_NO).toString());
-            if (null == eupsTransJournal) {
-                context.setData(ParamKeys.RSP_CDE,GDEUPSConstants.EUPS_TBC_RSP_FAIL_COD);
-                context.setData(ParamKeys.RSP_MSG,GDEUPSErrorCodes.EUPS_CUST_UNLEGAL);
+        if("8912".equals(txnCode)) {  //检查开户
+            //   检查该客户是否已签约
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("cusAc", context.getData("actNo").toString());
+            Result accessObject =  serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", map);
+            if (null == accessObject) {
+                context.setData(ParamKeys.RSP_CDE,"9999");
+                context.setData(ParamKeys.RSP_MSG,"客户已注销或未开户!!");
                 context.setData(ParamKeys.OLD_TXN_SEQUENCE, null);
             } else {
                 context.setData(ParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
                 context.setData(ParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
                 context.setData(ParamKeys.OLD_TXN_SEQUENCE, null);
-            }*/
-        } else if("8913".equals(txnCode)) { // <!--销户-->
-          //TODO; 涉及协议表 --销户--
-           /* EupsTransJournal eupsTransJournal = get(EupsTransJournalRepository.class).findOne(context.getData(ParamKeys.COMPANY_NO).toString());
-            if (null != eupsTransJournal) {
-                context.setData(ParamKeys.RSP_CDE,GDEUPSConstants.EUPS_TBC_RSP_FAIL_COD);
-                context.setData(ParamKeys.RSP_MSG,GDEUPSErrorCodes.EUPS_CUST_SIGN_FAIL);
+            }
+        } else if("8913".equals(txnCode)) { // 检查销户
+            //   检查该客户是否已签约
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("cusAc", context.getData("actNo").toString());
+            Result accessObject =  serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", map);
+            if (null != accessObject) {
+                context.setData(ParamKeys.RSP_CDE,"9999");
+                context.setData(ParamKeys.RSP_MSG,"客户未注销!!");
                 context.setData(ParamKeys.OLD_TXN_SEQUENCE, null);
             } else {
                 context.setData(ParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
                 context.setData(ParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
                 context.setData(ParamKeys.OLD_TXN_SEQUENCE, null);
-            }*/
+            }
         } else if ("8914".equals(txnCode)){ // <!--扣款-->
             EupsTransJournal eupsTransJournal = eupsTransJournalRepository.findOne(context.getData("oTLogNo").toString());
             if (null == eupsTransJournal) {//   <!--没此交易记录--> 
