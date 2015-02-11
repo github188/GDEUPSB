@@ -31,8 +31,12 @@ public class CodeSwitchUtils {
 
 		Map<String, TdsBeanPro> p = tds.getKey();
 		TdsBeanPro t = p.get(key);
-
-		return t.getValue();
+		if(null!=t){
+			return t.getValue();
+		}else{
+			return null;
+		}
+		
 	}
 
 }
