@@ -89,6 +89,7 @@ public class TrspWyFeeChargeAction extends BaseAction{
 //		TODO: <Set>PCusId=$pmpCustId</Set>  <!--收付通宝客户编号-->
 		gdEupsbTrspTxnJnlRepository.insert(gdEupsbTrspTxnJnl);
 		ctx.setData(ParamKeys.ACCOUNT_DATE, ctx.getData(ParamKeys.ACCOUNT_DATE).toString());
+		ctx.setData(ParamKeys.AC_DATE, ctx.getData(ParamKeys.AC_DATE).toString());
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@"+ctx.getDataMap());
 		get(BBIPPublicService.class).synExecute(CHARGE_PROCESS, ctx);
 		
