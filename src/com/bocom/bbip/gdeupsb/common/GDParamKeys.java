@@ -380,7 +380,7 @@ public final class GDParamKeys {
 	/** 交易优先级 */
 	public final static String TRADE_PRIORITY = "traPry";
 	/** 交易返回代码 */
-	public final static String TRADE_RETURN_CODE = "traRetCode";
+	public final static String TRADE_RETURN_CODE = "thdRspCde";
 	/** 压缩标志 */
 	public final static String REDUCE_SIGN = "redSign";
 	/** 预付费标志 */

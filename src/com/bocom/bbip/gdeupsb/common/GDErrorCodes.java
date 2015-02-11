@@ -386,5 +386,12 @@ public final class GDErrorCodes {
 	/************************ 中山文件批量 *********************/
 	/******* 批次文件重复录入 *********/
 	public static final String GDEUPSB_BAT_FIL_EXIST = "BBIP4400EU1601";
+	
+	/**************************南方电网***********************/
+	/**部分与汕头电力相同 ELEC02*/
+	/** 银行正在日结中，无法进行缴费*/
+	public static final String EUPS_ELEC00_84_ERROR="BBIP4400EU0001";
+	/**供电账户锁定，无法进行缴费，请致电供电95598 */
+	public static final String EUPS_ELEC00_100_ERROR="BBIP4400EU0002";
 
 }
