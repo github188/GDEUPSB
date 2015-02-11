@@ -21,6 +21,9 @@
 	<fixString name="Deli2" length="1" default="," />
  	-->
  	
+ 	<fixString name="rtnCod" length="10" />
+ 	 <!-- <fixString  name="Deli2" length="1" default=","/> -->
+ 	
 	<fixString name="cusNo" length="12"    />
 	<!-- <fixString  name="Deli3" length="1" default=","/> -->
 	

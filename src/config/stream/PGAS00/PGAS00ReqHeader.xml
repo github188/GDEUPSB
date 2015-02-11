@@ -15,11 +15,6 @@
  	<fixString name="thdTxnCde" length="6" /> 
  	<!-- <fixString name="DeliA"      length="1" default=","/> -->
  	
- 	<fixString name="tCommd" length="10" /> 
- 	<!-- <fixString name="DeliA"      length="1" default=","/> -->
- 	
- 	<fixString name="bk" length="4" default="CNJT"/>
- 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
  	
  	
  	 	

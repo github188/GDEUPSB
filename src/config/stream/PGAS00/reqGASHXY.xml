@@ -13,7 +13,6 @@ Edit 为修改用户协议
 Stop 为取消用户协议
 12	银行标志	4	CNJT
 
-
 17	用户编码	12	
 30	电话	50	
 82	银行帐号	32	
@@ -26,6 +25,12 @@ Stop 为取消用户协议
 	<fixString name="bk" length="4" default="CNJT"  />
 	<fixString  name="DeliA" length="1" default=","/> -->
 	
+	<fixString name="tCommd" length="10" /> 
+ 	<!-- <fixString name="DeliA"      length="1" default=","/> -->
+ 	
+ 	<fixString name="bk" length="4" default="CNJT"/>
+ 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+ 		
 	<fixString name="cusNo" length="12" /> 
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
 	
