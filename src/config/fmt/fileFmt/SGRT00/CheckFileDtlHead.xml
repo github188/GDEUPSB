@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+    trace="true" encoding="GBK">
+    <segment >
+        
+        <varString name="top" type="D|"></varString>
+        <varString name="TRADE_ID" type="D|"></varString>
+        <varString name="TRAN_TIME"  type="D|"></varString>
+        <varString name="BANK_ID"  type="D|"></varString>
+        <varString name="DPT_ID"  type="D|"></varString>
+        <varString name="TRADE_SEQ"  type="D|"></varString>
+        <varString name="APP_TYPE"  type="D|"></varString>
+        <varString name="pubEnd"  type="D|"></varString>
+        <varString name="RET_CODE"  type="D|"></varString>
+        <varString name="MSG"  type="D|"></varString>
+    </segment>
+</message>

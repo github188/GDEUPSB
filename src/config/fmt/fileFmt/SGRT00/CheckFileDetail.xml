@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/xml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/xml spacket.xsd"
+	encoding="utf-8" trace="true">
+	<segment name="detail" encoding="utf-8">
+				<varString name="txnDat"  type="D|"></varString>
+				<varString name="sqn"  type="D|"></varString>
+				<varString name="txnAmt"  type="D|"></varString>
+				<varString name="invNo"  type="D|"></varString>
+				<varString name="payMon"  type="D|"></varString>
+				<varString name="carTyp"  type="D|"></varString>
+				<varString name="carNo"  type="D|"></varString>
+				<varString name="statue"  type="D|"></varString>
+				<varString name="chkErr"  type="D|"></varString>
+		</segment>
+</message>		
