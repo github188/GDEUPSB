@@ -6,6 +6,27 @@
 						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
 	
+	
+	<!-- 中山文件批量:文件录入及检查 -->
+	<bean id="eups.fileBatchPayCreateDataServiceActionZSAG00"
+		class="com.bocom.bbip.gdeupsb.action.fbpd.CheckAndImportFileFbpdAction">
+	</bean>
+	
+	<!-- 中山文件批量:文件批量完成通知前端 -->
+	
+	
+	 <!-- 燃气： 文件批扣数据准备 -->
+  	<bean id="eups.fileBatchPayCreateDataServiceActionPGAS00"
+		class="com.bocom.bbip.gdeupsb.action.gas.BatchGashDealServiceAction">
+	</bean>
+	
+	<!-- 燃气：文件批量托收完成通知燃气  --> 
+	<bean id="eups.afterBatchAcpServiceActionPGAS00"
+		class="com.bocom.bbip.gdeupsb.action.gas.MsgToGasAftBatchAction">
+	</bean>
+
+	
+	
 	<bean id="eups.qryDealStrategyActionELEC01"
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.QueryElecUserStrategyAction">
 	</bean>
