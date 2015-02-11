@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet spacket.xsd"
+	encoding="GBK" trace="true">
+	<segment name="detail" encoding="GBK">
+<!-- 	
+数据结构:
+字符串格式报文，由一些指定长度的字符串（字符串没有达到指定长度的在右边以空格补足）组合而成中间以半角的逗号“,”为分割符，
+报文前10字符为报文指令，确定报文进行的业务类型
+ -->
+
+<!-- 从协议表中获取数据按照以下格式生成文件 -->
+
+<!-- 
+
+  <Process name="ALLDATA"   desc="全量代扣协议">
+  	<Data  line_wrap="N">
+    <Item name="BnkCod"   length="4"  value="cnjt"   />  承办行代码
+    <Item name="DChar"   length="1"  value=","   /> 
+    <Item name="UserNo"   length="12" desc="用户编号"/>
+    <Item name="DChar"   length="1"  value=","   /> 
+    <Item name="TelNo"    length="50" desc="手机号码"/>
+    <Item name="DChar"   length="1"  value=","   /> 
+    <Item name="ActNo"    length="32" desc="付款账号"/>
+    <Item name="DChar"   length="1"  value=","   /> 
+    <Item name="IdType"   length="2"  desc="证件类型"/>
+    <Item name="DChar"   length="1"  value=","   /> 
+    <Item name="IdNo"     length="32" desc="证件号码"/>
+    <Item name="HChar"   value="&#x000D;&#x000A;" />
+    </Data>
+  </Process>
+
+ -->
+	<fixString name="bk" length="4"   default="CNJT"/>	<!-- 承办行代码 -->
+	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	
+	<fixString name="cusNo" length="12"   />		<!-- 用户编号 -->
+	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+
+	<fixString name="cmuTel" length="50" />			<!-- 手机号码 -->
+	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	
+	<fixString name="cusAc" length="32"   />		<!-- 付款账号 -->
+	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	
+	<fixString name="idTyp" length="2" />		<!-- 证件类型 -->
+	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	 
+	<fixString name="idNo" length="32" />		<!-- 证件号码 -->
+	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+
+		
+		
+	</segment>
+</message>
