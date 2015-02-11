@@ -76,8 +76,9 @@ public class ThdTransMainInterceptorExt implements Interceptor {
         }else{
         	 context.setData(ParamKeys.THD_TXN_DATE, DateUtils.parse(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)));
         }
+        String thdTxnDte=DateUtils.format((Date)context.getData(ParamKeys.THD_TXN_DATE),DateUtils.STYLE_yyyyMMdd);
         if(null != context.getData(ParamKeys.THD_TXN_TIME)){
-            Date thdTxnTme=DateUtils.parse(context.getData(ParamKeys.THD_TXN_TIME).toString(),DateUtils.STYLE_yyyyMMddHHmmss);
+            Date thdTxnTme=DateUtils.parse(thdTxnDte+context.getData(ParamKeys.THD_TXN_TIME).toString(),DateUtils.STYLE_yyyyMMddHHmmss);
             context.setData(ParamKeys.THD_TXN_TIME, thdTxnTme);
         }else{
         	context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse(DateUtils.formatAsTranstime(new Date())));
