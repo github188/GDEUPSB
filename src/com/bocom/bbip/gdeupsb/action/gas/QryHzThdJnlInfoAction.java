@@ -1,4 +1,4 @@
-﻿package com.bocom.bbip.gdeupsb.action.gas;
+package com.bocom.bbip.gdeupsb.action.gas;
 
 import java.util.Date;
 import java.util.List;
@@ -21,7 +21,7 @@ import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
 
-/**
+/** 
  * 惠州燃气代扣流水信息查询
  * 
  * @author WangMQ
