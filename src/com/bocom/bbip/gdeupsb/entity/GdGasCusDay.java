@@ -1,6 +1,13 @@
 package com.bocom.bbip.gdeupsb.entity;
 
+import com.bocom.bbip.data.annotation.GeneratedValue;
+import com.bocom.bbip.data.annotation.Id;
+
 public class GdGasCusDay {
+    @Id
+    @GeneratedValue
+    private String sequence;
+
     private String cusNo;
 
     private String tCommd;
@@ -24,6 +31,14 @@ public class GdGasCusDay {
     private String cmuTel;
 
     private String thdCusAdr;
+
+    public String getSequence() {
+        return sequence;
+    }
+
+    public void setSequence(String sequence) {
+        this.sequence = sequence;
+    }
 
     public String getCusNo() {
         return cusNo;
