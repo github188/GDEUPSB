@@ -19,13 +19,14 @@
 	</Process>
 	 -->
 	 
-	<fixString name="comNo" length="7" />
-	<fixString name="cusAc" length="26" />
-	<fixString name="cusNo" length="9" />
-	<fixString name="cusNme" length="30" />
-	<fixString name="thdCusNo" length="10" />
-	<fixString name="txnAmt" length="13" />
-	<fixString name="seqNo" length="32" />
+	 
+	<fixString name="comNo" length="4" />
+	<fixString name="cusAc" length="26" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GDExpCommonUtils@AddChar(this.seqNo,5,0,1)"/>
+	<fixString name="ccy" length="3" />
+	<fixString name="txnAmt" length="15" />
+	<fixString name="tmpFld1" length="4" />
+	<fixString name="tmpFld2" length="12" />
+	<fixString name="tmpFld3" length="6" />
 		
 	</segment>
 </message>
