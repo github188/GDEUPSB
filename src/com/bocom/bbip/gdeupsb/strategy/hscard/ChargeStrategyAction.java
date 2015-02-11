@@ -1,7 +1,6 @@
 package com.bocom.bbip.gdeupsb.strategy.hscard;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -9,23 +8,12 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
-
-
-
-
-
-import com.bea.common.ldap.DateUtil;
-import com.bea.common.ldap.exps.Param;
 import com.bocom.bbip.comp.BBIPPublicService;
-import com.bocom.bbip.comp.BBIPPublicServiceImpl;
-import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsTransJournal;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
-import com.bocom.bbip.thd.org.joda.time.DateTime;
-import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -80,7 +68,8 @@ public class ChargeStrategyAction implements Executable{
 	    	  context.setData(ParamKeys.RSP_CDE, ErrorCodes.EUPS_CHECK_TXN_AMT_FAIL);
 	    	  context.setData(ParamKeys.RSP_MSG, "金额超限");
 	    	System.out.println("111111111111111111111111111111111111111111111111111111111");
-	    	  throw new CoreException(""asdasdasd)
+//	    	TODO:
+	    	  throw new CoreException("");
 	      }
 	      
 	      System.out.println("22222222222222222222222222222222222222222222222");
