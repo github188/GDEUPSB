@@ -100,12 +100,14 @@
       <xs:element name="payNo" type="tns:payNo_SType"/>
       <xs:element name="checkType" type="tns:checkType_SType"/>
       <xs:element name="electricityYearMonth" type="tns:electricityYearMonth_SType" minOccurs="0"/>
+      <xs:element ref="tns:pageableRequest" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="queryFeeResponse_CType">
     <xs:sequence>
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
       <xs:element name="Information" type="tns:Information_CType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="tns:pageableResponse" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="eupsBusTyp_SType">
