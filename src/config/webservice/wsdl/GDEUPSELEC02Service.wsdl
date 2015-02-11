@@ -6,6 +6,12 @@
       <xsd:import namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/Schema" schemaLocation="GDEUPSELEC02Service.xsd"/>
     </xsd:schema>
   </wsdl:types>
+  <wsdl:message name="queryJournalOffChanRequestMessage">
+    <wsdl:part name="queryJournalOffChanRequest" element="gdeupsb:queryJournalOffChan"/>
+  </wsdl:message>
+  <wsdl:message name="queryJournalOffChanResponseMessage">
+    <wsdl:part name="queryJournalOffChanResponse" element="gdeupsb:queryJournalOffChanResponse"/>
+  </wsdl:message>
   <wsdl:message name="payFeeOffChanRequestMessage">
     <wsdl:part name="payFeeOffChanRequest" element="gdeupsb:payFeeOffChan"/>
   </wsdl:message>
@@ -25,6 +31,11 @@
     <wsdl:part name="queryThirdFeeOffChanResponse" element="gdeupsb:queryThirdFeeOffChanResponse"/>
   </wsdl:message>
   <wsdl:portType name="GDEUPSELEC02ServicePortType">
+    <wsdl:operation name="queryJournalOffChan">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:queryJournalOffChanRequestMessage"/>
+      <wsdl:output message="tns:queryJournalOffChanResponseMessage"/>
+    </wsdl:operation>
     <wsdl:operation name="payFeeOffChan">
       <wsdl:documentation/>
       <wsdl:input message="tns:payFeeOffChanRequestMessage"/>
@@ -43,6 +54,15 @@
   </wsdl:portType>
   <wsdl:binding name="GDEUPSELEC02ServiceSoapBinding" type="tns:GDEUPSELEC02ServicePortType">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="queryJournalOffChan">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/queryJournalOffChan"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="payFeeOffChan">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/payFeeOffChan"/>
       <wsdl:input>
