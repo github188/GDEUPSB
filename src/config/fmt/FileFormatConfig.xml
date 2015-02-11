@@ -134,15 +134,34 @@
 			ref="config/fmt/checkFileFormat/gas/checkFileFormatToGas.xml" encoding="GBK"/>
 	</file>
 	
-	<!-- 惠州燃气批量文件 -->
-		<file id="PGAS00BatFmt" name="PGAS00BatFmt" encoding="GBK"
+	<!-- 惠州燃气批量托收文件 -->
+	<file id="PGAS00BatFmt" name="PGAS00BatFmt" encoding="GBK"
 		lineSeparator="\n">
 		<foreach name="detail" ref="config/fmt/fileFmt/gas/gashBatchActDetail.xml" encoding="GBK" />
 	</file>
 	
+	<!-- 惠州燃气批量托收完成通知燃气：批量结果格式 -->
+	<file id="msgToGasFileFmt" name="msgToGasFileFmt" encoding="GBK"
+		lineSeparator="\n">
+		<foreach name="detail" ref="config/fmt/fileFmt/gas/msgToGasFileFmt.xml" encoding="GBK" />
+	</file>
+	
+	<!-- 惠州燃气增量代扣协议文件 -->
+	<file id="gasDayAgentBatFmt" name="gasDayAgentBatFmt" encoding="GBK"
+		lineSeparator="\n">
+		<foreach name="detail" ref="config/fmt/fileFmt/gas/gasDayAgentBatFmtDetail.xml" encoding="GBK" />
+	</file>
+	
+	<!-- 惠州燃气全量代扣协议文件 -->
+	<file id="gasAllAgentBatFmt" name="gasAllAgentBatFmt" encoding="GBK"
+		lineSeparator="\n">
+		<foreach name="detail" ref="config/fmt/fileFmt/gas/gasAllAgentBatFmtDetail.xml" encoding="GBK" />
+	</file>
+	
+	
+	
 	
 	<!-- 中山文件批扣Start! -->
-	
 	<!-- 水费文件格式fbpdWaterFmt -->
 	<file id="fbpdWaterFmtIn" name="fbpdWaterFmtIn" encoding="GBK"
 		lineSeparator="\n">
