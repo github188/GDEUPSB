@@ -80,7 +80,7 @@ public class ChargeStrategyAction implements Executable{
 	    	  context.setData(ParamKeys.RSP_CDE, ErrorCodes.EUPS_CHECK_TXN_AMT_FAIL);
 	    	  context.setData(ParamKeys.RSP_MSG, "金额超限");
 	    	System.out.println("111111111111111111111111111111111111111111111111111111111");
-	    	  return;
+	    	  throw new CoreException(""asdasdasd)
 	      }
 	      
 	      System.out.println("22222222222222222222222222222222222222222222222");
