@@ -2,6 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bocom.bbip.gdeupsb.entity.GdGasCusDay" >
   <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdGasCusDay" >
+    <id column="SEQUENCE" property="sequence" jdbcType="CHAR" />
     <result column="CUS_NO" property="cusNo" jdbcType="CHAR" />
     <result column="T_COMMD" property="tCommd" jdbcType="CHAR" />
     <result column="CUS_AC" property="cusAc" jdbcType="CHAR" />
@@ -16,14 +17,17 @@
     <result column="THD_CUS_ADR" property="thdCusAdr" jdbcType="CHAR" />
   </resultMap>
   <sql id="baseColumnList" >
-    CUS_NO, T_COMMD, CUS_AC, CUS_NME, ACC_TYP, OPT_DAT, OPT_NOD, ID_TYP, ID_NO, THD_CUS_NAM, 
-    CMU_TEL, THD_CUS_ADR
+    SEQUENCE, CUS_NO, T_COMMD, CUS_AC, CUS_NME, ACC_TYP, OPT_DAT, OPT_NOD, ID_TYP, ID_NO, 
+    THD_CUS_NAM, CMU_TEL, THD_CUS_ADR
   </sql>
   <select id="find" resultMap="basicResultMap" >
     select
     <include refid="baseColumnList" />
     from ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_DAY
     <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="sequence!=null" >
+        AND  SEQUENCE=#{sequence,jdbcType=CHAR}
+      </if>
       <if test="cusNo!=null" >
         AND  CUS_NO=#{cusNo,jdbcType=CHAR}
       </if>
@@ -62,9 +66,22 @@
       </if>
     </trim>
   </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_DAY
+    where SEQUENCE = #{sequence,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_DAY
+    where SEQUENCE = #{sequence,jdbcType=CHAR}
+  </delete>
   <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdGasCusDay" >
     insert into ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_DAY
     <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sequence != null" >
+        SEQUENCE,
+      </if>
       <if test="cusNo != null" >
         CUS_NO,
       </if>
@@ -103,6 +120,9 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sequence != null" >
+        #{sequence,jdbcType=CHAR},
+      </if>
       <if test="cusNo != null" >
         #{cusNo,jdbcType=CHAR},
       </if>
@@ -144,6 +164,9 @@
   <select id="findCount" resultType="java.lang.Integer" >
     select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_DAY
     <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="sequence!=null" >
+        AND  SEQUENCE=#{sequence,jdbcType=CHAR}
+      </if>
       <if test="cusNo!=null" >
         AND  CUS_NO=#{cusNo,jdbcType=CHAR}
       </if>
@@ -182,9 +205,57 @@
       </if>
     </trim>
   </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdGasCusDay" >
+    update ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_DAY
+    <set >
+      <if test="cusNo != null" >
+        CUS_NO = #{cusNo,jdbcType=CHAR},
+      </if>
+      <if test="tCommd != null" >
+        T_COMMD = #{tCommd,jdbcType=CHAR},
+      </if>
+      <if test="cusAc != null" >
+        CUS_AC = #{cusAc,jdbcType=CHAR},
+      </if>
+      <if test="cusNme != null" >
+        CUS_NME = #{cusNme,jdbcType=CHAR},
+      </if>
+      <if test="accTyp != null" >
+        ACC_TYP = #{accTyp,jdbcType=CHAR},
+      </if>
+      <if test="optDat != null" >
+        OPT_DAT = #{optDat,jdbcType=CHAR},
+      </if>
+      <if test="optNod != null" >
+        OPT_NOD = #{optNod,jdbcType=CHAR},
+      </if>
+      <if test="idTyp != null" >
+        ID_TYP = #{idTyp,jdbcType=CHAR},
+      </if>
+      <if test="idNo != null" >
+        ID_NO = #{idNo,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNam != null" >
+        THD_CUS_NAM = #{thdCusNam,jdbcType=CHAR},
+      </if>
+      <if test="cmuTel != null" >
+        CMU_TEL = #{cmuTel,jdbcType=CHAR},
+      </if>
+      <if test="thdCusAdr != null" >
+        THD_CUS_ADR = #{thdCusAdr,jdbcType=CHAR},
+      </if>
+    </set>
+    where SEQUENCE = #{sequence,jdbcType=CHAR}
+  </update>
   <select id="findAll" resultMap="basicResultMap" >
     select 
     <include refid="baseColumnList" />
     from ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_DAY
+    <if test="_parameter" >
+      where SEQUENCE in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
   </select>
 </mapper>
