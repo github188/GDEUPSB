@@ -1,16 +1,9 @@
 package com.bocom.bbip.gdeupsb.strategy.efek.queryFeeOnline;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import com.bocom.bbip.eups.entity.EupsAmountInfo;
-import com.bocom.bbip.eups.repository.EupsAmountInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
-import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -28,5 +21,6 @@ public class QueryFeeAction implements Executable{
 			logger.info("=========Start  CheckFeeAction ");
 			context.setData(GDParamKeys.TOTNUM, "1");
 			context.setData(GDParamKeys.SVRCOD, "10");
+			
 	}
 }

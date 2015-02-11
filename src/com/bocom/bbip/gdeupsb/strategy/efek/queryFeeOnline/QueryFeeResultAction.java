@@ -16,7 +16,6 @@ import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.eups.entity.EupsAmountInfo;
 import com.bocom.bbip.eups.repository.EupsAmountInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.utils.BeanUtils;
@@ -41,8 +40,8 @@ public class QueryFeeResultAction implements Executable{
 		public void execute(Context context) throws CoreException,
 			CoreRuntimeException {
 			logger.info("===========Start QueryFeeResultAction");
-			
-			String payNo=context.getData(GDParamKeys.PAY_NO).toString();
+			/*				
+		    String payNo=context.getData(GDParamKeys.PAY_NO).toString();
 			String busType=(String)context.getData(GDParamKeys.BUS_TYPE);
 			String checkType=context.getData(GDParamKeys.CHECK_TYPE).toString();
 			EupsAmountInfo eupsAmountInfos=new EupsAmountInfo();
@@ -70,7 +69,13 @@ public class QueryFeeResultAction implements Executable{
 				}
 				context.setDataMap(BeanUtils.toMap(eupsAmountInfolist));
 			}
+			*/
 			callThd(context);
+			context.setData(ParamKeys.RAP_TYPE, "2");
+			Date thdTxnDate=DateUtils.parse(context.getData(ParamKeys.THD_TXN_DATE).toString(),DateUtils.STYLE_yyyyMMdd);
+	        Date thdTxnTme = DateUtils.parse(context.getData(ParamKeys.THD_TXN_TIME).toString(),DateUtils.STYLE_HHmmss);
+	        context.setData(ParamKeys.THD_TXN_DATE, thdTxnDate);
+	        context.setData(ParamKeys.THD_TXN_TIME, thdTxnTme);
 		}
 		/**
 		 *  报文常量 外发第三方 
@@ -99,11 +104,12 @@ public class QueryFeeResultAction implements Executable{
 						
 						try{
 							Map<String, Object> rspMap = callThdTradeManager.trade(context);
-							System.out.println(context.getState()+"~~~~~~~~~~~~~'");
 								if(BPState.isBPStateNormal(context)){
 										if(null !=rspMap){
 											 	context.setDataMap(rspMap);
 								                context.setData(ParamKeys.THIRD_RETURN_MESSAGE, rspMap);
+								                //TODO 怎样得到欠费金额
+								                context.setData(ParamKeys.OWE_FEE_AMT, "13222");
 								                //第三方返回码
 								                CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
 								                String responseCode = rspCdeAction.getThdRspCde(rspMap, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
@@ -164,5 +170,6 @@ public class QueryFeeResultAction implements Executable{
 							context.setData(ParamKeys.THD_TXN_STS, Constants.TXNSTS_FAIL);
 							context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 						}
+						
 			}
 }
