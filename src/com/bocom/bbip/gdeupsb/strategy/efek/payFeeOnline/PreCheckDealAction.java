@@ -45,8 +45,8 @@ public class PreCheckDealAction implements Executable{
 								context.setData(ParamKeys.RSP_MSG, "获取单位编码【"+comNo+"】交易参数错");
 								throw new CoreRuntimeException("获取单位编码【"+comNo+"】交易参数错");
 				}
+				context.setData(ParamKeys.TELLER, eupsThdTranCtlInfo.getTxnTlr());
 				context.setData(GDParamKeys.TOTNUM, "1");
-				
 				//日期时间格式修改
 				context.setData(ParamKeys.CCY, "RMB");
 				context.setData("thdTxnDte", DateUtils.parse(DateUtils.format(new Date(),DateUtils.STYLE_SIMPLE_DATE)));
@@ -55,9 +55,6 @@ public class PreCheckDealAction implements Executable{
 				context.setData(ParamKeys.TXN_DATE, DateUtils.parse(DateUtils.format(new Date(),DateUtils.STYLE_SIMPLE_DATE)));
 				context.setData(ParamKeys.TXN_TIME,DateUtils.parse(DateUtils.format(new Date(),DateUtils.STYLE_TRANS_TIME)));
 				
-				if(null != context.getData(GDParamKeys.NET_NAME)){
-						context.setData(ParamKeys.BR, context.getData(GDParamKeys.NET_NAME));
-				}
 				//TODO
 				context.setData(ParamKeys.BUS_TYP,context.getData(GDParamKeys.BUS_TYPE));
 				logger.info("~~~~~~~~~~~交易日期："+context.getData(ParamKeys.TXN_DATE)

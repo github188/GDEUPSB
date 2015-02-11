@@ -22,7 +22,11 @@ public class PrePayFeeAction implements Executable{
 			CoreRuntimeException {
 			logger.info("============Start  PrePayFeeAction");
 					String ActFlg=(String)context.getData(ParamKeys.ACC_TYPE);          //银行内部账务类型
-
+					//网点名
+					if(null != context.getData(GDParamKeys.NET_NAME)){
+						context.setData(ParamKeys.BR, context.getData(GDParamKeys.NET_NAME));
+					}
+					
 					//TODO InAcNo 不确定  日间记账账号
 					// <Set>ActSqn=SUBSTR($InAcNo,14,5)</Set>　　 <Set>ActNod=SUBSTR($InAcNo,1,6)</Set>
 					String ActNod=context.getData(ParamKeys.CUS_AC).toString().substring(1, 6);

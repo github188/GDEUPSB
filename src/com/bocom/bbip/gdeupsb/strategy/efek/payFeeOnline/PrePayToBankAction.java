@@ -29,21 +29,17 @@ public class PrePayToBankAction implements Executable{
 			CoreRuntimeException {
 			logger.info("=========Start PrePayToBankAction");
 			context.setData(GDParamKeys.TOTNUM, "1");
-			context.setData(ParamKeys.TXN_DAT, DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())));
-			context.setData(ParamKeys.TXN_TME, DateUtils.parse(DateUtils.format(new Date(),DateUtils.STYLE_HHmmss)));
+			context.setData(ParamKeys.TXN_DTE, DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())));
+			String time=DateUtils.format(new Date(),DateUtils.STYLE_TRANS_TIME);
+			Date txnTme=DateUtils.parse(time);
+			context.setData(ParamKeys.TXN_TME, txnTme);
 			//TODO 待定  
-
-			//TODO 签约检查 
-			
 			String ActFlg=(String)context.getData(ParamKeys.ACC_TYPE);
 			//TODO 
 			ActFlg="0";
-			//TODO InAcNo 不确定  日间记账账号
 			// <Set>ActSqn=SUBSTR($InAcNo,14,5)</Set>　　 <Set>ActNod=SUBSTR($InAcNo,1,6)</Set>
-			System.out.println(context.getData(ParamKeys.CUS_AC));
 			String ActNod=context.getData(ParamKeys.CUS_AC).toString().substring(1, 7);
 			String ActSqn=context.getData(ParamKeys.CUS_AC).toString().substring(14, 19);
-			System.out.println(123);
 			if("0".equals(ActFlg)){              //对公
 				//GDContants定义常量
 				context.setData(ParamKeys.TXN_CODE,"451240");
@@ -54,13 +50,13 @@ public class PrePayToBankAction implements Executable{
 				context.setData(ParamKeys.BV_KIND,"00");
 				
 				context.setData(ParamKeys.BV_NO,"00000000");
-				context.setData(ParamKeys.TXN_DATE,DateUtils.parse(context.getData(ParamKeys.TXN_DATE).toString()));
+				context.setData(ParamKeys.TXN_DAT,(Date)context.getData(ParamKeys.TXN_DTE));
 				context.setData(ParamKeys.CCY_NO,Constants.EUPS_PAYMENT_TO_ACPS_CCY_CDE);
 				context.setData(GDParamKeys.ACCMOD, "1");
 				context.setData("ActSqn",ActSqn);//	 <Set>ActSqn=SUBSTR($InAcNo,14,5)</Set>   InAcNo日间记账账号
 				context.setData("ActNod",ActNod);//   <Set>ActNod=SUBSTR($InAcNo,1,6)</Set>
 				context.setData(ParamKeys.BAK_FLD1,"代扣电费");
-			}else if("4".equals(ActFlg)){                  //卡
+			}else if("2".equals(ActFlg) || "4".equals(ActFlg)){                  //卡
 				context.setData(ParamKeys.TXN_CODE,"471140");
 				context.setData(ParamKeys.CHL_TYP, "L");  //<Set>CnlTyp=L</Set>
 				context.setData("Mask", "9102");//					<Set>Mask=9102</Set>
