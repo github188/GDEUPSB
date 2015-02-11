@@ -68,7 +68,7 @@ public class CheckBkFileToThirdStrategyAction implements Executable{
 		logger.info("对账文件已生成");
 		}catch(Exception e){
 			 logger.error("File create error : " + e.getMessage());
-	            throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
+	            throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL,e);
 		}
 		
 		//向指定FTP路径放文件
@@ -89,13 +89,14 @@ public class CheckBkFileToThirdStrategyAction implements Executable{
 		Map<String,Object> map = new HashMap<String, Object>();
 		String tTxnDt = context.getData(ParamKeys.THD_TXN_DATE);
 		GDEupsbTransJournal gdeups = new GDEupsbTransJournal();
+		//TODO:时间不能写死
 		gdeups.setThdTxnDte(DateUtils.parse("2015-01-22"));
 		gdeups.setTxnSts("S");
 		gdeups.setMfmTxnSts("S");
 		
 		List<GDEupsbTransJournal> chkGDEupsTransJournal = gdEupsbTransJournalRepository.findCheck(gdeups);
 
-		if(null == chkGDEupsTransJournal && CollectionUtils.isEmpty(chkGDEupsTransJournal)){
+		if( CollectionUtils.isEmpty(chkGDEupsTransJournal)){
 			 logger.info("There are no records for select check trans journal ");
 	            throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
 		}
