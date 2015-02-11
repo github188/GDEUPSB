@@ -13,6 +13,7 @@ import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspTxnJnl;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspTxnJnlRepository;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -34,8 +35,10 @@ public class TrspWyFeeChargeAction extends BaseAction{
 		ctx.setData(GDParamKeys.FTXN_TM, new Date());
 		ctx.setData(GDParamKeys.BR_NO, "443999");
 		ctx.setData(GDParamKeys.CAR_NO, ctx.getData("plateNo"));
+		ctx.setData(GDParamKeys.CAR_TYP, ctx.getData("plateType"));
 		ctx.setData(GDParamKeys.ACT_NO, ctx.getData(cardNo));
 		ctx.setData(GDParamKeys.TXN_AMT, ctx.getData(totalAmt));
+		ctx.setData(GDParamKeys.PAY_MON, ctx.getData("monthCount"));
 //		<Set>BrNo=444999</Set>
 //        <Set>CCSCod=TLU6</Set>
 //        <Set>TTxnCd=484002</Set>
@@ -77,19 +80,19 @@ public class TrspWyFeeChargeAction extends BaseAction{
 //		 INSERT INTO wbgtxnjnl444 VALUES('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')
 //	       </Sentence>
 //	       <Fields>BrNo|ActDat|FTxnTm|CrdNo|TxnAmt|Fee|PCusId|TxnCnl|TxnSrc|TxnCod|PayTyp|TxnSts|NodTrc|PmpTrc|TckNo|ThdTrc|</Fields>
-		GDEupsbTrspTxnJnl gdEupsbTrspTxnJnl = new GDEupsbTrspTxnJnl();
-		gdEupsbTrspTxnJnl.setFtxnTm((Date)ctx.getData(GDParamKeys.FTXN_TM));
-		gdEupsbTrspTxnJnl.setBrNo(ctx.getData(GDParamKeys.BR_NO).toString());
-		gdEupsbTrspTxnJnl.setActNo(ctx.getData(GDParamKeys.ACT_NO).toString());
-		gdEupsbTrspTxnJnl.setTxnAmt((BigDecimal)ctx.getData(GDParamKeys.TXN_AMT));
-		gdEupsbTrspTxnJnl.setPayMon(ctx.getData(monthCount).toString());
-		gdEupsbTrspTxnJnl.setCarTyp(ctx.getData(plateType).toString());
-		gdEupsbTrspTxnJnl.setSqn(ctx.getData(GDParamKeys.SQN).toString());
-		
-//		TODO: <Set>PCusId=$pmpCustId</Set>  <!--收付通宝客户编号-->
-		gdEupsbTrspTxnJnlRepository.insert(gdEupsbTrspTxnJnl);
-		ctx.setData(ParamKeys.ACCOUNT_DATE, ctx.getData(ParamKeys.ACCOUNT_DATE).toString());
-		ctx.setData(ParamKeys.AC_DATE, ctx.getData(ParamKeys.AC_DATE).toString());
+//		GDEupsbTrspTxnJnl gdEupsbTrspTxnJnl = new GDEupsbTrspTxnJnl();
+//		gdEupsbTrspTxnJnl.setFtxnTm((Date)ctx.getData(GDParamKeys.FTXN_TM));
+//		gdEupsbTrspTxnJnl.setBrNo(ctx.getData(GDParamKeys.BR_NO).toString());
+//		gdEupsbTrspTxnJnl.setActNo(ctx.getData(GDParamKeys.ACT_NO).toString());
+//		gdEupsbTrspTxnJnl.setTxnAmt((BigDecimal)ctx.getData(GDParamKeys.TXN_AMT));
+//		gdEupsbTrspTxnJnl.setPayMon(ctx.getData(monthCount).toString());
+//		gdEupsbTrspTxnJnl.setCarTyp(ctx.getData(plateType).toString());
+//		gdEupsbTrspTxnJnl.setSqn(ctx.getData(GDParamKeys.SQN).toString());
+//		
+////		TODO: <Set>PCusId=$pmpCustId</Set>  <!--收付通宝客户编号-->
+//		gdEupsbTrspTxnJnlRepository.insert(gdEupsbTrspTxnJnl);
+		ctx.setData(ParamKeys.ACCOUNT_DATE, DateUtils.format((Date)ctx.getData(ParamKeys.ACCOUNT_DATE), DateUtils.STYLE_yyyyMMdd));
+		ctx.setData(ParamKeys.AC_DATE, DateUtils.format((Date)ctx.getData(ParamKeys.AC_DATE), DateUtils.STYLE_yyyyMMdd));
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@"+ctx.getDataMap());
 		get(BBIPPublicService.class).synExecute(CHARGE_PROCESS, ctx);
 		
