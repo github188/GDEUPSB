@@ -3,6 +3,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
 	name="body" >
-			<varString name="rspCde"  type="D|"></varString><!--  返回码-->
+			<varString name="thdRspCde"  type="D|"></varString><!--  返回码-->
 			<varString name="chkErr"  type="D|"></varString><!--  对帐文件名-->
 </segment>
