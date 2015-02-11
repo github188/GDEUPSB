@@ -1,8 +1,5 @@
 package com.bocom.bbip.gdeupsb.action.transportfee;
 
-import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,15 +10,11 @@ import com.bocom.bbip.data.domain.Pageable;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.eups.entity.EupsTransJournal;
-import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspFeeInfoRepository;
 import com.bocom.bbip.utils.BeanUtils;
-import com.bocom.bbip.utils.CollectionUtils;
-import com.bocom.bbip.utils.ContextUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
