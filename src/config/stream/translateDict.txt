@@ -8,8 +8,7 @@
 #  filter="parse,packets/translateDict.txt"
 
 
-##南方电网  欠费查询
-TransCode.460410=10
+
 
 ##南方电网  签到签退
 TransCode.eups.manageChlSignInOut=91
