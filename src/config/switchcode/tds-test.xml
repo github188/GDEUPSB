@@ -5,10 +5,20 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
         http://spring.tangdi.net/schema/tds http://spring.tangdi.net/schema/tds/tds.xsd" >
 
-      <table id="elegz" >
+	 <!-- 广州电力根据适配类型转换为对应的单位编号 -->	
+	  <table id="eleGzComNoGen" >
 	       <key name="3"   value="this is tds,key=3,value=5"/>
 	       <key name="2"   value="this is tds,key=2,value=6"/>
 	       <key name="4"   value="this is tds,key=4,value=7"/>
+	  </table> 
+
+	 <!-- 广州电力根据适配类型转为对应的内部账户 -->	
+      <table id="eleGzActNoGen" >
+	       <key name="0000"   value="4410001273"/>
+	       <key name="1000"   value="xxxxxxxxxx"/>
+	       <key name="1100"   value="xxxxxxxxxx"/>
+	       <key name="1200"   value="xxxxxxxxxx"/>
+	       <key name="1300"   value="xxxxxxxxxx"/>
 	  </table> 
     
         <table id="tds2" >
