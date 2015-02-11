@@ -10,6 +10,12 @@
 	        <action id="act" ref="eups.queryThirdCusServiceAction"/>
 	   </actions>
 	</process>
+	<!-- 会计流水查询 -->
+	<process id="gdeupsb.GDEUPSWATR00Service.queryJournalOffChan" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	   <actions>
+	        <action id="act" ref="eups.queryJournalOffChanServiceAction"/>
+	   </actions>
+	</process>
 	<!-- 历史水费查询 -->
 	<process id="gdeupsb.GDEUPSWATR00Service.queryHistoryMsg" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
 	   <actions>
