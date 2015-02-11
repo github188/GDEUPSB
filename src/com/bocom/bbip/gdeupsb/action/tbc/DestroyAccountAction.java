@@ -49,7 +49,7 @@ public class DestroyAccountAction extends BaseAction {
         //TODO;以此确定comNo 现在测试直接传的是comNo
         context.setData("DevId", context.getData("DEV_ID"));
         context.setData("teller", context.getData("TELLER"));
-        
+
         //检查系统签到状态
         EupsThdTranCtlInfo eupsThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(context.getData(ParamKeys.COMPANY_NO).toString());
         if (null == eupsThdTranCtlInfo) {

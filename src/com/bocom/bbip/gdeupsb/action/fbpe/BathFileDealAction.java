@@ -27,7 +27,10 @@ import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.eups.spi.service.batch.BatchAcpService;
 import com.bocom.bbip.eups.spi.vo.PrepareBatchAcpDomain;
 import com.bocom.bbip.file.Marshaller;
+import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.entity.GdFbpeFileBatchTmp;
+import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GdFbpeFileBatchTmpRepository;
 import com.bocom.bbip.gdeupsb.strategy.elcgd.AftCnlBnkSglDealStrategyAction;
 import com.bocom.bbip.utils.CollectionUtils;
@@ -48,7 +51,7 @@ public class BathFileDealAction implements BatchAcpService {
     @Autowired
     EupsThdTranCtlInfoRepository thdTranCtlInfoRepository;
     @Autowired
-    EupsBatchConsoleInfoRepository batchConsoleInfoRepository;
+    GDEupsBatchConsoleInfoRepository batchConsoleInfoRepository;
     @Autowired
     EupsThdBaseInfoRepository thdBaseInfoRepository;
     @Autowired
@@ -59,6 +62,8 @@ public class BathFileDealAction implements BatchAcpService {
     @Override
     public List<EupsBatchPayEntity> prepareBatchDeal(PrepareBatchAcpDomain preparebatchacpdomain, Context context)
             throws CoreException {
+        //TODO 调用吴艳辉方法；
+        String batNo=context.getData("batNo");
         log.info("BathFileDealAction start!..");
         List <GdFbpeFileBatchTmp> payDetailLst = new ArrayList<GdFbpeFileBatchTmp>();
         String comNo = context.getData("cAgtNo").toString();
@@ -69,16 +74,16 @@ public class BathFileDealAction implements BatchAcpService {
         }
         /**  第三方文件名*/
         String fileName = context.getData("dskNam").toString();
-        //检查批次是否已录入
-        EupsBatchConsoleInfo batchInfo = new EupsBatchConsoleInfo();
+        //检查批次是否已录入  吴艳辉已经做了
+     /*   GDEupsBatchConsoleInfo batchInfo = new GDEupsBatchConsoleInfo();
         batchInfo.setFleNme(fileName);
         batchInfo.setExeDte(new Date());
-        List<EupsBatchConsoleInfo> batchList = batchConsoleInfoRepository.find(batchInfo);
+        List<GDEupsBatchConsoleInfo> batchList = batchConsoleInfoRepository.find(batchInfo);
         if (CollectionUtils.isNotEmpty(batchList)) {
             context.setData(ParamKeys.RSP_CDE, "481299");
             context.setData(ParamKeys.RSP_MSG, "该批次已录入，批次号为"+batchList.get(0).getBatNo()+"!");
             return null;
-        }
+        }*/
         context.setData(ParamKeys.RSP_CDE, Constants.RESPONSE_CODE_SUCC);
         EupsThdBaseInfo thdBaseInfo = thdBaseInfoRepository.findOne(comNo);
         if (null != thdBaseInfo) {
@@ -155,11 +160,14 @@ public class BathFileDealAction implements BatchAcpService {
             batchTem.setRsvFld1(orgMap.get("rsvFld1").toString());
             batchTem.setBankNo(orgMap.get("bankNo").toString());
             batchTem.setBankNam(orgMap.get("bankNam").toString());
+            batchTem.setRsvFld8(batNo);//预留字段8作为批次号，
+            batchTem.setRsvFld7("tvFbpeBatFmt");//预留字段8作为批次号，
             
             fileBatchTmpRepository.insert(batchTem);
             payDetailLst.add(batchTem);
         }
-        context.setData(ParamKeys.EUPS_BATCH_PAY_ENTITY_LIST, payDetailLst);
+        context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_NAME, localFileName);
+        context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_MAP, payDetailLst);
         return null;
     }
 }

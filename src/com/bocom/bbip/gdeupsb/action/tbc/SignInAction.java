@@ -58,7 +58,7 @@ public class SignInAction extends BaseAction {
            // String beforeMacChk =GDEUPSConstants.EUPS_TBC_BLANK, macChk =GDEUPSConstants.EUPS_TBC_BLANK;
             if (StringUtils.isNotEmpty(mainkey)) {
                 //TODO;加密
-          /*      try {
+          /* try {
                     //得到主密钥
                     mainkey = mainkey.trim();
                     MessageDigest md = MessageDigest.getInstance(GDEUPSConstants.EUPS_TBC_MD5);
