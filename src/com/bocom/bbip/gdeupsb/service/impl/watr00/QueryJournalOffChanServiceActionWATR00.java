@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
+import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsTransJournal;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.thd.org.apache.commons.collections.CollectionUtils;
@@ -29,6 +30,7 @@ public class QueryJournalOffChanServiceActionWATR00 extends BaseAction {
 		EupsTransJournal eupsTransJournal = new EupsTransJournal();
 		eupsTransJournal.setMfmVchNo(mfmVchNo);
 		eupsTransJournal.setTxnDte(new Date());
+		eupsTransJournal.setEupsBusTyp((String)context.getData(ParamKeys.EUPS_BUSS_TYPE));
 		List<EupsTransJournal> eupsTransJournals = get(EupsTransJournalRepository.class).find(eupsTransJournal);
 		if(CollectionUtils.isEmpty(eupsTransJournals)){
 			//不存在流水信息
