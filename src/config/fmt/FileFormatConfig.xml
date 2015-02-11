@@ -28,6 +28,15 @@
         <foreach name="detail" ref="config/fmt/fileFmt/fbpe/fbpeMobBatchDeatil.xml"
             encoding="GBK" />
     </file>
+    <!-- 广东烟草对账-->
+    <file id="tbcCheckFile" name="tbcCheckFile" encoding="GBK" lineSeparator="\n">
+        <line name="top" ref="config/fmt/fileFmt/SGRT00/CheckFileDtlHead.xml"
+            encoding="GBK" />
+        <foreach name="detail" ref="config/fmt/fileFmt/SGRT00/CheckFileDeatil.xml"
+            encoding="GBK" />
+        <line name="bottom" ref="config/fmt/fileFmt/SGRT00/CheckFileEnd.xml"
+            encoding="GBK" />
+    </file>
 
 	<!-- 广东电力 -->
 	<file id="eleGzBatFmt" name="eleGzBatFmt" encoding="GBK"

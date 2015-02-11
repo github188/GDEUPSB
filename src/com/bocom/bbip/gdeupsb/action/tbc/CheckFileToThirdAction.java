@@ -91,16 +91,20 @@ public class CheckFileToThirdAction implements CheckThdFileToBkService {
             throw new CoreException("无此交易信息！");
         }
         Map<String, Object> fileMap = new HashMap<String, Object>();
-        fileMap.put("top","<?xml version='1.0' encoding='UTF-8'?>\n<DLMAPS>\n<PUB>|\n");
-        fileMap.put("TRADE_ID", "<TRADE_ID>8918</TRADE_ID>|\n");
-        fileMap.put("TRAN_TIME", "<TRAN_TIME>"+context.getData("txnDte").toString()+"</TRAN_TIME>|\n");
-        fileMap.put("BANK_ID", "<BANK_ID>"+context.getData("BANK_ID")+"</BANK_ID>|\n");
-        fileMap.put("DPT_ID", "<DPT_ID>"+context.getData("DPT_ID")+"</DPT_ID>|\n");
-        fileMap.put("TRADE_SEQ", "<TRADE_SEQ>"+resultList.get(0).get("tLogNo")+"</TRADE_SEQ>|\n");
-        fileMap.put("APP_TYPE", "<APP_TYPE> </APP_TYPE>|\n");
-        fileMap.put("pubEnd","</PUB>\n<OUT>|\n");
-        fileMap.put("RET_CODE", "<RET_CODE>000000</RET_CODE>|\n");
-        fileMap.put("MSG", "<MSG>交易成功</MSG>\n<RE>|\n");
+        Map<String, Object> fileHeader = new HashMap<String, Object>();
+        Map<String, Object> fileBottom = new HashMap<String, Object>();
+        
+        fileHeader.put("top","<?xml version='1.0' encoding='UTF-8'?>\n<DLMAPS>\n<PUB>|\n");
+        fileHeader.put("TRADE_ID", "<TRADE_ID>8918</TRADE_ID>|\n");
+        fileHeader.put("TRAN_TIME", "<TRAN_TIME>"+context.getData("txnDte").toString()+"</TRAN_TIME>|\n");
+        fileHeader.put("BANK_ID", "<BANK_ID>"+context.getData("BANK_ID")+"</BANK_ID>|\n");
+        fileHeader.put("DPT_ID", "<DPT_ID>"+context.getData("DPT_ID")+"</DPT_ID>|\n");
+        fileHeader.put("TRADE_SEQ", "<TRADE_SEQ>"+resultList.get(0).get("tLogNo")+"</TRADE_SEQ>|\n");
+        fileHeader.put("APP_TYPE", "<APP_TYPE> </APP_TYPE>|\n");
+        fileHeader.put("pubEnd","</PUB>\n<OUT>|\n");
+        fileHeader.put("RET_CODE", "<RET_CODE>000000</RET_CODE>|\n");
+        fileHeader.put("MSG", "<MSG>交易成功</MSG>\n<RE>|\n");
+        fileMap.put("top", fileHeader);
         GdEupsTransJournal eupsTransJournal = new GdEupsTransJournal();
         eupsTransJournal.setTxnDte((date));
         eupsTransJournal.setComNo(context.getData(ParamKeys.COMPANY_NO).toString());
@@ -108,11 +112,13 @@ public class CheckFileToThirdAction implements CheckThdFileToBkService {
         List<GdEupsTransJournal> transJournalList =transJournalRepository.find(eupsTransJournal);
         List<Map<String,Object>> transJnlList=(List<Map<String, Object>>) BeanUtils.toMaps(transJournalList);
         fileMap.put("detail", transJnlList);
-        fileMap.put("REEND", "\n</RE>\n<TOTAL>|\n");
-        fileMap.put("DEV_ID", "<DEV_ID>"+context.getData("devId")+"</DEV_ID>|\n");
-        fileMap.put("Teller", "<Teller>"+context.getData("teller") +"</Teller>|\n");
-        fileMap.put("SUCC_COUNT", "<SUCC_COUNT>"+resultList.get(0).get("totSum")+"</SUCC_COUNT>|\n");
-        fileMap.put("SUCC_AMT", "<SUCC_AMT>"+resultList.get(0).get("totAmt")+"</SUCC_AMT>\n</TOTAL>\n</OUT>\n</DLMAPS>|");
+        
+        fileBottom.put("REEND", "\n</RE>\n<TOTAL>|\n");
+        fileBottom.put("DEV_ID", "<DEV_ID>"+context.getData("devId")+"</DEV_ID>|\n");
+        fileBottom.put("Teller", "<Teller>"+context.getData("teller") +"</Teller>|\n");
+        fileBottom.put("SUCC_COUNT", "<SUCC_COUNT>"+resultList.get(0).get("totSum")+"</SUCC_COUNT>|\n");
+        fileBottom.put("SUCC_AMT", "<SUCC_AMT>"+resultList.get(0).get("totAmt")+"</SUCC_AMT>\n</TOTAL>\n</OUT>\n</DLMAPS>|");
+        fileBottom.put("bottom", fileBottom);
         operateFile.createCheckFile(eupsThdFtpConfig, "tbcCheckFile", locFileName, fileMap);
         operateFTPAction.putCheckFile(eupsThdFtpConfig);
         return null;
