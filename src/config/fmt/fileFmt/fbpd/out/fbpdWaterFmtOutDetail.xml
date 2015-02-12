@@ -19,6 +19,21 @@
 	</Process>	
 	 -->
 	
+	
+<!-- 	
+	<Process name="WATR_out_484999" desc="中山水费">   保费输出
+		<Data>
+      <Item name="AA"       length="07"/>   机构号
+      <Item name="ActNo"    length="26"/>   姓名
+      <Item name="TCusId"   length="09"/>   户号
+      <Item name="TCusNm"   length="30"/>   户名
+      <Item name="BB"       length="10"/>   客户编号
+      <Item name="TxnAmt"   length="13" expression="AMTSIMPLEFMT($TxnAmt)" align_mode="right" /> 金额
+      <SwitchCode name="HRspCd" new_name="SucFlg" tab_name="H2T_WATR_484" col_name="HRspCd"/>
+      <Item name="RecSts"   length="01"/>
+		</Data>
+	</Process> 
+	-->
 	<fixString name="comNo" length="7" />
 	<fixString name="cusAc" length="26" />
 	<fixString name="cusNo" length="9" />

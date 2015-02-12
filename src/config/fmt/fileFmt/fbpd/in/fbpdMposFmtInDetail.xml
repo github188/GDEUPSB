@@ -24,12 +24,12 @@
 	</Process>
  -->
  
- 
+ <!-- 
 	<fixString name="thdCusNo" length="10" />
 	<fixString name="cusAc" length="30" />
-	<varString name="txnAmt" type="" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GDExpCommonUtils@transYuanToFen(this.txnAMt)" />
+	<varString name="txnAmt" type="" referred="true" expression="exp:@com.bocom.bbip.utils.NumberUtils@yuanToCent(this.txnAMt)" />
 	<fixString name="seqNo" length="5" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GDExpCommonUtils@AddChar(this.seqNo,5,0,1)"/>
-	
+	 -->
 	
 	
 	<fixString name="chkDate" length="8" />

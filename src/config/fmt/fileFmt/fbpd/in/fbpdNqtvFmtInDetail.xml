@@ -20,7 +20,7 @@
 	<varString name="thdCusNo" type="D|" />
 	<varString name="cusAc" type="D|" />
 	<varString name="cusNme" type="D|" />
-	<varString name="txnAmt" type="D|" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GDExpCommonUtils@transYuanToFen(this.txnAMt)" />
+	<varString name="txnAmt" type="D|" referred="true" expression="exp:@com.bocom.bbip.utils.NumberUtils@yuanToCent(this.txnAMt)" />
 	
 	
 	<!-- <fixString name="seqNo"  referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GDExpCommonUtils@AddChar(this.seqNo,5,0,1)"/>

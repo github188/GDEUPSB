@@ -20,7 +20,7 @@
 	<fixString name="comNo" length="4" />
 	<fixString name="thdCusNo" length="8" />
 	<fixString name="cusAc" length="21" />
-	<fixString name="txnAmt" length="12" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GDExpCommonUtils@transYuanToFen(this.txnAMt)" />
+	<fixString name="txnAmt" length="12" referred="true" expression="exp:@com.bocom.bbip.utils.NumberUtils@yuanToCent(this.txnAMt)" />
 	
 	<!-- <A3pressi3SeqNo,5,0,13"/> -->
 	
