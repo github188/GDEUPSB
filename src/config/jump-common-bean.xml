@@ -31,7 +31,9 @@
 		<!-- 代收付批次号生成组件 -->
 	<bean id="BTPService" class="com.bocom.bbip.comp.btp.BTPService" />
 	
-	
+
 	<bean id="codeSwitch" class="com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils"/>
+	
+	<bean id="gemsService" class="com.bocom.bbip.comp.gems.service.DefaultGemsServiceAccessObject"/>
 	
 </beans>

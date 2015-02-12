@@ -15,17 +15,44 @@
             encoding="GBK" />
     </file>
     <!-- 佛山电信文本批量 -->
-    <file id="telFbpeBatFmt" name="gasFbpeBatFmt" encoding="GBK"
+    <file id="telFbpeBatFmt" name="telFbpeBatFmt" encoding="GBK"
         lineSeparator="\n">
         <foreach name="detail" ref="config/fmt/fileFmt/fbpe/fbpeTelBatchDeatil.xml"
             encoding="GBK"/>
     </file>
     <!-- 佛山移动文本批量-->
-    <file id="mobFbpeBatFmt" name="gasFbpeBatFmt" encoding="GBK"
+    <file id="mobFbpeBatFmt" name="mobFbpeBatFmt" encoding="GBK"
         lineSeparator="\n">
         <line name="header" ref="config/fmt/fileFmt/fbpe/fbpeMobBatchDeatil.xml"
             encoding="GBK" />
         <foreach name="detail" ref="config/fmt/fileFmt/fbpe/fbpeMobBatchDeatil.xml"
+            encoding="GBK" />
+    </file>
+    
+    <!-- 佛山有线电视 文本批量返盘-->
+    <file id="tvFbpeBatResultFmt" name="tvFbpeBatFmt" encoding="GBK"
+        lineSeparator="\n">
+        <foreach name="detail" ref="config/fmt/fileFmt/fbpe/fbpeTvBatchResultDeatil.xml"
+            encoding="GBK" />
+    </file>
+    <!-- 佛山燃气文本批量返盘-->
+    <file id="gasFbpeBatResultFmt" name="gasFbpeBatFmt" encoding="GBK"
+        lineSeparator="\n">
+        <foreach name="detail" ref="config/fmt/fileFmt/fbpe/fbpeGasBatchResultDeatil.xml"
+            encoding="GBK" />
+    </file>
+    <!-- 佛山电信文本批量返盘 -->
+    <file id="telFbpeBatResultFmt" name="telFbpeBatResultFmt" encoding="GBK"
+        lineSeparator="\n">
+        <foreach name="detail" ref="config/fmt/fileFmt/fbpe/fbpeTelBatchResultDeatil.xml"
+            encoding="GBK"/>
+    </file>
+    <!-- 佛山移动文本批量返盘-->
+    <file id="mobFbpeBatResultFmt" name="mobFbpeBatResultFmt" encoding="GBK"
+        lineSeparator="\n">
+        <line name="header" ref="config/fmt/fileFmt/fbpe/fbpeMobBatchResultDeatil.xml"
+            encoding="GBK" />
+        <foreach name="detail" ref="config/fmt/fileFmt/fbpe/fbpeMobBatchResultDeatil.xml"
             encoding="GBK" />
     </file>
     <!-- 广东烟草对账-->
