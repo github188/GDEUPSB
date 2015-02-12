@@ -1,0 +1,422 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdGashBatchTmp" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdGashBatchTmp" >
+    <id column="SQN" property="sqn" jdbcType="CHAR" />
+    <result column="BAT_NO" property="batNo" jdbcType="CHAR" />
+    <result column="BAT_STS" property="batSts" jdbcType="CHAR" />
+    <result column="PKG_FLG" property="pkgFlg" jdbcType="CHAR" />
+    <result column="TOT_CNT" property="totCnt" jdbcType="CHAR" />
+    <result column="TOT_AMT" property="totAmt" jdbcType="CHAR" />
+    <result column="SUC_TOT_CNT" property="sucTotCnt" jdbcType="CHAR" />
+    <result column="SUC_TOT_AMT" property="sucTotAmt" jdbcType="CHAR" />
+    <result column="TXN_DTE" property="txnDte" jdbcType="DATE" />
+    <result column="TXN_TME" property="txnTme" jdbcType="TIMESTAMP" />
+    <result column="THD_SQN" property="thdSqn" jdbcType="CHAR" />
+    <result column="BK" property="bk" jdbcType="CHAR" />
+    <result column="CUS_NO" property="cusNo" jdbcType="CHAR" />
+    <result column="CUS_NME" property="cusNme" jdbcType="CHAR" />
+    <result column="CUS_AC" property="cusAc" jdbcType="CHAR" />
+    <result column="PAY_MON" property="payMon" jdbcType="CHAR" />
+    <result column="REQ_TXN_AMT" property="reqTxnAmt" jdbcType="CHAR" />
+    <result column="TXN_AMT" property="txnAmt" jdbcType="CHAR" />
+    <result column="TMP_FLD1" property="tmpFld1" jdbcType="CHAR" />
+    <result column="TMP_FLD2" property="tmpFld2" jdbcType="CHAR" />
+    <result column="TMP_FLD3" property="tmpFld3" jdbcType="CHAR" />
+    <result column="TMP_FLD4" property="tmpFld4" jdbcType="CHAR" />
+    <result column="TMP_FLD5" property="tmpFld5" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    SQN, BAT_NO, BAT_STS, PKG_FLG, TOT_CNT, TOT_AMT, SUC_TOT_CNT, SUC_TOT_AMT, TXN_DTE, 
+    TXN_TME, THD_SQN, BK, CUS_NO, CUS_NME, CUS_AC, PAY_MON, REQ_TXN_AMT, TXN_AMT, TMP_FLD1, 
+    TMP_FLD2, TMP_FLD3, TMP_FLD4, TMP_FLD5
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_GASH_BATCH_TMP
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="batNo!=null" >
+        AND  BAT_NO=#{batNo,jdbcType=CHAR}
+      </if>
+      <if test="batSts!=null" >
+        AND  BAT_STS=#{batSts,jdbcType=CHAR}
+      </if>
+      <if test="pkgFlg!=null" >
+        AND  PKG_FLG=#{pkgFlg,jdbcType=CHAR}
+      </if>
+      <if test="totCnt!=null" >
+        AND  TOT_CNT=#{totCnt,jdbcType=CHAR}
+      </if>
+      <if test="totAmt!=null" >
+        AND  TOT_AMT=#{totAmt,jdbcType=CHAR}
+      </if>
+      <if test="sucTotCnt!=null" >
+        AND  SUC_TOT_CNT=#{sucTotCnt,jdbcType=CHAR}
+      </if>
+      <if test="sucTotAmt!=null" >
+        AND  SUC_TOT_AMT=#{sucTotAmt,jdbcType=CHAR}
+      </if>
+      <if test="txnDte!=null" >
+        AND  TXN_DTE=#{txnDte,jdbcType=DATE}
+      </if>
+      <if test="txnTme!=null" >
+        AND  TXN_TME=#{txnTme,jdbcType=TIMESTAMP}
+      </if>
+      <if test="thdSqn!=null" >
+        AND  THD_SQN=#{thdSqn,jdbcType=CHAR}
+      </if>
+      <if test="bk!=null" >
+        AND  BK=#{bk,jdbcType=CHAR}
+      </if>
+      <if test="cusNo!=null" >
+        AND  CUS_NO=#{cusNo,jdbcType=CHAR}
+      </if>
+      <if test="cusNme!=null" >
+        AND  CUS_NME=#{cusNme,jdbcType=CHAR}
+      </if>
+      <if test="cusAc!=null" >
+        AND  CUS_AC=#{cusAc,jdbcType=CHAR}
+      </if>
+      <if test="payMon!=null" >
+        AND  PAY_MON=#{payMon,jdbcType=CHAR}
+      </if>
+      <if test="reqTxnAmt!=null" >
+        AND  REQ_TXN_AMT=#{reqTxnAmt,jdbcType=CHAR}
+      </if>
+      <if test="txnAmt!=null" >
+        AND  TXN_AMT=#{txnAmt,jdbcType=CHAR}
+      </if>
+      <if test="tmpFld1!=null" >
+        AND  TMP_FLD1=#{tmpFld1,jdbcType=CHAR}
+      </if>
+      <if test="tmpFld2!=null" >
+        AND  TMP_FLD2=#{tmpFld2,jdbcType=CHAR}
+      </if>
+      <if test="tmpFld3!=null" >
+        AND  TMP_FLD3=#{tmpFld3,jdbcType=CHAR}
+      </if>
+      <if test="tmpFld4!=null" >
+        AND  TMP_FLD4=#{tmpFld4,jdbcType=CHAR}
+      </if>
+      <if test="tmpFld5!=null" >
+        AND  TMP_FLD5=#{tmpFld5,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_GASH_BATCH_TMP
+    where SQN = #{sqn,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from ${GDEUPSB_SCHEMA}.GDEUPS_GASH_BATCH_TMP
+    where SQN = #{sqn,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdGashBatchTmp" >
+    insert into ${GDEUPSB_SCHEMA}.GDEUPS_GASH_BATCH_TMP
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sqn != null" >
+        SQN,
+      </if>
+      <if test="batNo != null" >
+        BAT_NO,
+      </if>
+      <if test="batSts != null" >
+        BAT_STS,
+      </if>
+      <if test="pkgFlg != null" >
+        PKG_FLG,
+      </if>
+      <if test="totCnt != null" >
+        TOT_CNT,
+      </if>
+      <if test="totAmt != null" >
+        TOT_AMT,
+      </if>
+      <if test="sucTotCnt != null" >
+        SUC_TOT_CNT,
+      </if>
+      <if test="sucTotAmt != null" >
+        SUC_TOT_AMT,
+      </if>
+      <if test="txnDte != null" >
+        TXN_DTE,
+      </if>
+      <if test="txnTme != null" >
+        TXN_TME,
+      </if>
+      <if test="thdSqn != null" >
+        THD_SQN,
+      </if>
+      <if test="bk != null" >
+        BK,
+      </if>
+      <if test="cusNo != null" >
+        CUS_NO,
+      </if>
+      <if test="cusNme != null" >
+        CUS_NME,
+      </if>
+      <if test="cusAc != null" >
+        CUS_AC,
+      </if>
+      <if test="payMon != null" >
+        PAY_MON,
+      </if>
+      <if test="reqTxnAmt != null" >
+        REQ_TXN_AMT,
+      </if>
+      <if test="txnAmt != null" >
+        TXN_AMT,
+      </if>
+      <if test="tmpFld1 != null" >
+        TMP_FLD1,
+      </if>
+      <if test="tmpFld2 != null" >
+        TMP_FLD2,
+      </if>
+      <if test="tmpFld3 != null" >
+        TMP_FLD3,
+      </if>
+      <if test="tmpFld4 != null" >
+        TMP_FLD4,
+      </if>
+      <if test="tmpFld5 != null" >
+        TMP_FLD5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sqn != null" >
+        #{sqn,jdbcType=CHAR},
+      </if>
+      <if test="batNo != null" >
+        #{batNo,jdbcType=CHAR},
+      </if>
+      <if test="batSts != null" >
+        #{batSts,jdbcType=CHAR},
+      </if>
+      <if test="pkgFlg != null" >
+        #{pkgFlg,jdbcType=CHAR},
+      </if>
+      <if test="totCnt != null" >
+        #{totCnt,jdbcType=CHAR},
+      </if>
+      <if test="totAmt != null" >
+        #{totAmt,jdbcType=CHAR},
+      </if>
+      <if test="sucTotCnt != null" >
+        #{sucTotCnt,jdbcType=CHAR},
+      </if>
+      <if test="sucTotAmt != null" >
+        #{sucTotAmt,jdbcType=CHAR},
+      </if>
+      <if test="txnDte != null" >
+        #{txnDte,jdbcType=DATE},
+      </if>
+      <if test="txnTme != null" >
+        #{txnTme,jdbcType=TIMESTAMP},
+      </if>
+      <if test="thdSqn != null" >
+        #{thdSqn,jdbcType=CHAR},
+      </if>
+      <if test="bk != null" >
+        #{bk,jdbcType=CHAR},
+      </if>
+      <if test="cusNo != null" >
+        #{cusNo,jdbcType=CHAR},
+      </if>
+      <if test="cusNme != null" >
+        #{cusNme,jdbcType=CHAR},
+      </if>
+      <if test="cusAc != null" >
+        #{cusAc,jdbcType=CHAR},
+      </if>
+      <if test="payMon != null" >
+        #{payMon,jdbcType=CHAR},
+      </if>
+      <if test="reqTxnAmt != null" >
+        #{reqTxnAmt,jdbcType=CHAR},
+      </if>
+      <if test="txnAmt != null" >
+        #{txnAmt,jdbcType=CHAR},
+      </if>
+      <if test="tmpFld1 != null" >
+        #{tmpFld1,jdbcType=CHAR},
+      </if>
+      <if test="tmpFld2 != null" >
+        #{tmpFld2,jdbcType=CHAR},
+      </if>
+      <if test="tmpFld3 != null" >
+        #{tmpFld3,jdbcType=CHAR},
+      </if>
+      <if test="tmpFld4 != null" >
+        #{tmpFld4,jdbcType=CHAR},
+      </if>
+      <if test="tmpFld5 != null" >
+        #{tmpFld5,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_GASH_BATCH_TMP
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="batNo!=null" >
+        AND  BAT_NO=#{batNo,jdbcType=CHAR}
+      </if>
+      <if test="batSts!=null" >
+        AND  BAT_STS=#{batSts,jdbcType=CHAR}
+      </if>
+      <if test="pkgFlg!=null" >
+        AND  PKG_FLG=#{pkgFlg,jdbcType=CHAR}
+      </if>
+      <if test="totCnt!=null" >
+        AND  TOT_CNT=#{totCnt,jdbcType=CHAR}
+      </if>
+      <if test="totAmt!=null" >
+        AND  TOT_AMT=#{totAmt,jdbcType=CHAR}
+      </if>
+      <if test="sucTotCnt!=null" >
+        AND  SUC_TOT_CNT=#{sucTotCnt,jdbcType=CHAR}
+      </if>
+      <if test="sucTotAmt!=null" >
+        AND  SUC_TOT_AMT=#{sucTotAmt,jdbcType=CHAR}
+      </if>
+      <if test="txnDte!=null" >
+        AND  TXN_DTE=#{txnDte,jdbcType=DATE}
+      </if>
+      <if test="txnTme!=null" >
+        AND  TXN_TME=#{txnTme,jdbcType=TIMESTAMP}
+      </if>
+      <if test="thdSqn!=null" >
+        AND  THD_SQN=#{thdSqn,jdbcType=CHAR}
+      </if>
+      <if test="bk!=null" >
+        AND  BK=#{bk,jdbcType=CHAR}
+      </if>
+      <if test="cusNo!=null" >
+        AND  CUS_NO=#{cusNo,jdbcType=CHAR}
+      </if>
+      <if test="cusNme!=null" >
+        AND  CUS_NME=#{cusNme,jdbcType=CHAR}
+      </if>
+      <if test="cusAc!=null" >
+        AND  CUS_AC=#{cusAc,jdbcType=CHAR}
+      </if>
+      <if test="payMon!=null" >
+        AND  PAY_MON=#{payMon,jdbcType=CHAR}
+      </if>
+      <if test="reqTxnAmt!=null" >
+        AND  REQ_TXN_AMT=#{reqTxnAmt,jdbcType=CHAR}
+      </if>
+      <if test="txnAmt!=null" >
+        AND  TXN_AMT=#{txnAmt,jdbcType=CHAR}
+      </if>
+      <if test="tmpFld1!=null" >
+        AND  TMP_FLD1=#{tmpFld1,jdbcType=CHAR}
+      </if>
+      <if test="tmpFld2!=null" >
+        AND  TMP_FLD2=#{tmpFld2,jdbcType=CHAR}
+      </if>
+      <if test="tmpFld3!=null" >
+        AND  TMP_FLD3=#{tmpFld3,jdbcType=CHAR}
+      </if>
+      <if test="tmpFld4!=null" >
+        AND  TMP_FLD4=#{tmpFld4,jdbcType=CHAR}
+      </if>
+      <if test="tmpFld5!=null" >
+        AND  TMP_FLD5=#{tmpFld5,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdGashBatchTmp" >
+    update ${GDEUPSB_SCHEMA}.GDEUPS_GASH_BATCH_TMP
+    <set >
+      <if test="batNo != null" >
+        BAT_NO = #{batNo,jdbcType=CHAR},
+      </if>
+      <if test="batSts != null" >
+        BAT_STS = #{batSts,jdbcType=CHAR},
+      </if>
+      <if test="pkgFlg != null" >
+        PKG_FLG = #{pkgFlg,jdbcType=CHAR},
+      </if>
+      <if test="totCnt != null" >
+        TOT_CNT = #{totCnt,jdbcType=CHAR},
+      </if>
+      <if test="totAmt != null" >
+        TOT_AMT = #{totAmt,jdbcType=CHAR},
+      </if>
+      <if test="sucTotCnt != null" >
+        SUC_TOT_CNT = #{sucTotCnt,jdbcType=CHAR},
+      </if>
+      <if test="sucTotAmt != null" >
+        SUC_TOT_AMT = #{sucTotAmt,jdbcType=CHAR},
+      </if>
+      <if test="txnDte != null" >
+        TXN_DTE = #{txnDte,jdbcType=DATE},
+      </if>
+      <if test="txnTme != null" >
+        TXN_TME = #{txnTme,jdbcType=TIMESTAMP},
+      </if>
+      <if test="thdSqn != null" >
+        THD_SQN = #{thdSqn,jdbcType=CHAR},
+      </if>
+      <if test="bk != null" >
+        BK = #{bk,jdbcType=CHAR},
+      </if>
+      <if test="cusNo != null" >
+        CUS_NO = #{cusNo,jdbcType=CHAR},
+      </if>
+      <if test="cusNme != null" >
+        CUS_NME = #{cusNme,jdbcType=CHAR},
+      </if>
+      <if test="cusAc != null" >
+        CUS_AC = #{cusAc,jdbcType=CHAR},
+      </if>
+      <if test="payMon != null" >
+        PAY_MON = #{payMon,jdbcType=CHAR},
+      </if>
+      <if test="reqTxnAmt != null" >
+        REQ_TXN_AMT = #{reqTxnAmt,jdbcType=CHAR},
+      </if>
+      <if test="txnAmt != null" >
+        TXN_AMT = #{txnAmt,jdbcType=CHAR},
+      </if>
+      <if test="tmpFld1 != null" >
+        TMP_FLD1 = #{tmpFld1,jdbcType=CHAR},
+      </if>
+      <if test="tmpFld2 != null" >
+        TMP_FLD2 = #{tmpFld2,jdbcType=CHAR},
+      </if>
+      <if test="tmpFld3 != null" >
+        TMP_FLD3 = #{tmpFld3,jdbcType=CHAR},
+      </if>
+      <if test="tmpFld4 != null" >
+        TMP_FLD4 = #{tmpFld4,jdbcType=CHAR},
+      </if>
+      <if test="tmpFld5 != null" >
+        TMP_FLD5 = #{tmpFld5,jdbcType=CHAR},
+      </if>
+    </set>
+    where SQN = #{sqn,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_GASH_BATCH_TMP
+    <if test="_parameter" >
+      where SQN in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
+</mapper>

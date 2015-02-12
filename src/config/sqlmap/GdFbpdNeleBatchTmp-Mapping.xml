@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdFbpdNeleBatchTmp" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdFbpdNeleBatchTmp" >
+    <id column="SQN" property="sqn" jdbcType="CHAR" />
+    <result column="BAT_FLG" property="batFlg" jdbcType="CHAR" />
+    <result column="CCY" property="ccy" jdbcType="CHAR" />
+    <result column="PAY_FLG" property="payFlg" jdbcType="CHAR" />
+    <result column="FEE_TYP" property="feeTyp" jdbcType="CHAR" />
+    <result column="TOT_CNT" property="totCnt" jdbcType="CHAR" />
+    <result column="TOT_AMT" property="totAmt" jdbcType="CHAR" />
+    <result column="SUB_DTE" property="subDte" jdbcType="CHAR" />
+    <result column="TXN_DTE" property="txnDte" jdbcType="CHAR" />
+    <result column="THD_SQN" property="thdSqn" jdbcType="CHAR" />
+    <result column="BK" property="bk" jdbcType="CHAR" />
+    <result column="SER_NO" property="serNo" jdbcType="CHAR" />
+    <result column="PAY_FEE_NO" property="payFeeNo" jdbcType="CHAR" />
+    <result column="BR" property="br" jdbcType="CHAR" />
+    <result column="CUS_AC" property="cusAc" jdbcType="CHAR" />
+    <result column="CUS_NME" property="cusNme" jdbcType="CHAR" />
+    <result column="TXN_AMT" property="txnAmt" jdbcType="CHAR" />
+    <result column="TXN_TYP" property="txnTyp" jdbcType="CHAR" />
+    <result column="CUS_DPM" property="cusDpm" jdbcType="CHAR" />
+    <result column="FEE_MON" property="feeMon" jdbcType="CHAR" />
+    <result column="FEE_CNT" property="feeCnt" jdbcType="CHAR" />
+    <result column="THD_CUS_NME" property="thdCusNme" jdbcType="CHAR" />
+    <result column="ELE_AC" property="eleAc" jdbcType="CHAR" />
+    <result column="FRZ_AMT" property="frzAmt" jdbcType="CHAR" />
+    <result column="F_SEQ_NO" property="fSeqNo" jdbcType="CHAR" />
+    <result column="CRP_COD" property="crpCod" jdbcType="CHAR" />
+    <result column="EVID_NO" property="evidNo" jdbcType="CHAR" />
+    <result column="RS_FLD1" property="rsFld1" jdbcType="CHAR" />
+    <result column="RS_FLD2" property="rsFld2" jdbcType="CHAR" />
+    <result column="RS_FLD3" property="rsFld3" jdbcType="CHAR" />
+    <result column="RS_FLD4" property="rsFld4" jdbcType="CHAR" />
+    <result column="RS_FLD5" property="rsFld5" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    SQN, BAT_FLG, CCY, PAY_FLG, FEE_TYP, TOT_CNT, TOT_AMT, SUB_DTE, TXN_DTE, THD_SQN, 
+    BK, SER_NO, PAY_FEE_NO, BR, CUS_AC, CUS_NME, TXN_AMT, TXN_TYP, CUS_DPM, FEE_MON, 
+    FEE_CNT, THD_CUS_NME, ELE_AC, FRZ_AMT, F_SEQ_NO, CRP_COD, EVID_NO, RS_FLD1, RS_FLD2, 
+    RS_FLD3, RS_FLD4, RS_FLD5
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_NELE_BATCH_TMP
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="batFlg!=null" >
+        AND  BAT_FLG=#{batFlg,jdbcType=CHAR}
+      </if>
+      <if test="ccy!=null" >
+        AND  CCY=#{ccy,jdbcType=CHAR}
+      </if>
+      <if test="payFlg!=null" >
+        AND  PAY_FLG=#{payFlg,jdbcType=CHAR}
+      </if>
+      <if test="feeTyp!=null" >
+        AND  FEE_TYP=#{feeTyp,jdbcType=CHAR}
+      </if>
+      <if test="totCnt!=null" >
+        AND  TOT_CNT=#{totCnt,jdbcType=CHAR}
+      </if>
+      <if test="totAmt!=null" >
+        AND  TOT_AMT=#{totAmt,jdbcType=CHAR}
+      </if>
+      <if test="subDte!=null" >
+        AND  SUB_DTE=#{subDte,jdbcType=CHAR}
+      </if>
+      <if test="txnDte!=null" >
+        AND  TXN_DTE=#{txnDte,jdbcType=CHAR}
+      </if>
+      <if test="thdSqn!=null" >
+        AND  THD_SQN=#{thdSqn,jdbcType=CHAR}
+      </if>
+      <if test="bk!=null" >
+        AND  BK=#{bk,jdbcType=CHAR}
+      </if>
+      <if test="serNo!=null" >
+        AND  SER_NO=#{serNo,jdbcType=CHAR}
+      </if>
+      <if test="payFeeNo!=null" >
+        AND  PAY_FEE_NO=#{payFeeNo,jdbcType=CHAR}
+      </if>
+      <if test="br!=null" >
+        AND  BR=#{br,jdbcType=CHAR}
+      </if>
+      <if test="cusAc!=null" >
+        AND  CUS_AC=#{cusAc,jdbcType=CHAR}
+      </if>
+      <if test="cusNme!=null" >
+        AND  CUS_NME=#{cusNme,jdbcType=CHAR}
+      </if>
+      <if test="txnAmt!=null" >
+        AND  TXN_AMT=#{txnAmt,jdbcType=CHAR}
+      </if>
+      <if test="txnTyp!=null" >
+        AND  TXN_TYP=#{txnTyp,jdbcType=CHAR}
+      </if>
+      <if test="cusDpm!=null" >
+        AND  CUS_DPM=#{cusDpm,jdbcType=CHAR}
+      </if>
+      <if test="feeMon!=null" >
+        AND  FEE_MON=#{feeMon,jdbcType=CHAR}
+      </if>
+      <if test="feeCnt!=null" >
+        AND  FEE_CNT=#{feeCnt,jdbcType=CHAR}
+      </if>
+      <if test="thdCusNme!=null" >
+        AND  THD_CUS_NME=#{thdCusNme,jdbcType=CHAR}
+      </if>
+      <if test="eleAc!=null" >
+        AND  ELE_AC=#{eleAc,jdbcType=CHAR}
+      </if>
+      <if test="frzAmt!=null" >
+        AND  FRZ_AMT=#{frzAmt,jdbcType=CHAR}
+      </if>
+      <if test="fSeqNo!=null" >
+        AND  F_SEQ_NO=#{fSeqNo,jdbcType=CHAR}
+      </if>
+      <if test="crpCod!=null" >
+        AND  CRP_COD=#{crpCod,jdbcType=CHAR}
+      </if>
+      <if test="evidNo!=null" >
+        AND  EVID_NO=#{evidNo,jdbcType=CHAR}
+      </if>
+      <if test="rsFld1!=null" >
+        AND  RS_FLD1=#{rsFld1,jdbcType=CHAR}
+      </if>
+      <if test="rsFld2!=null" >
+        AND  RS_FLD2=#{rsFld2,jdbcType=CHAR}
+      </if>
+      <if test="rsFld3!=null" >
+        AND  RS_FLD3=#{rsFld3,jdbcType=CHAR}
+      </if>
+      <if test="rsFld4!=null" >
+        AND  RS_FLD4=#{rsFld4,jdbcType=CHAR}
+      </if>
+      <if test="rsFld5!=null" >
+        AND  RS_FLD5=#{rsFld5,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_NELE_BATCH_TMP
+    where SQN = #{sqn,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_NELE_BATCH_TMP
+    where SQN = #{sqn,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdFbpdNeleBatchTmp" >
+    insert into ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_NELE_BATCH_TMP
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sqn != null" >
+        SQN,
+      </if>
+      <if test="batFlg != null" >
+        BAT_FLG,
+      </if>
+      <if test="ccy != null" >
+        CCY,
+      </if>
+      <if test="payFlg != null" >
+        PAY_FLG,
+      </if>
+      <if test="feeTyp != null" >
+        FEE_TYP,
+      </if>
+      <if test="totCnt != null" >
+        TOT_CNT,
+      </if>
+      <if test="totAmt != null" >
+        TOT_AMT,
+      </if>
+      <if test="subDte != null" >
+        SUB_DTE,
+      </if>
+      <if test="txnDte != null" >
+        TXN_DTE,
+      </if>
+      <if test="thdSqn != null" >
+        THD_SQN,
+      </if>
+      <if test="bk != null" >
+        BK,
+      </if>
+      <if test="serNo != null" >
+        SER_NO,
+      </if>
+      <if test="payFeeNo != null" >
+        PAY_FEE_NO,
+      </if>
+      <if test="br != null" >
+        BR,
+      </if>
+      <if test="cusAc != null" >
+        CUS_AC,
+      </if>
+      <if test="cusNme != null" >
+        CUS_NME,
+      </if>
+      <if test="txnAmt != null" >
+        TXN_AMT,
+      </if>
+      <if test="txnTyp != null" >
+        TXN_TYP,
+      </if>
+      <if test="cusDpm != null" >
+        CUS_DPM,
+      </if>
+      <if test="feeMon != null" >
+        FEE_MON,
+      </if>
+      <if test="feeCnt != null" >
+        FEE_CNT,
+      </if>
+      <if test="thdCusNme != null" >
+        THD_CUS_NME,
+      </if>
+      <if test="eleAc != null" >
+        ELE_AC,
+      </if>
+      <if test="frzAmt != null" >
+        FRZ_AMT,
+      </if>
+      <if test="fSeqNo != null" >
+        F_SEQ_NO,
+      </if>
+      <if test="crpCod != null" >
+        CRP_COD,
+      </if>
+      <if test="evidNo != null" >
+        EVID_NO,
+      </if>
+      <if test="rsFld1 != null" >
+        RS_FLD1,
+      </if>
+      <if test="rsFld2 != null" >
+        RS_FLD2,
+      </if>
+      <if test="rsFld3 != null" >
+        RS_FLD3,
+      </if>
+      <if test="rsFld4 != null" >
+        RS_FLD4,
+      </if>
+      <if test="rsFld5 != null" >
+        RS_FLD5,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sqn != null" >
+        #{sqn,jdbcType=CHAR},
+      </if>
+      <if test="batFlg != null" >
+        #{batFlg,jdbcType=CHAR},
+      </if>
+      <if test="ccy != null" >
+        #{ccy,jdbcType=CHAR},
+      </if>
+      <if test="payFlg != null" >
+        #{payFlg,jdbcType=CHAR},
+      </if>
+      <if test="feeTyp != null" >
+        #{feeTyp,jdbcType=CHAR},
+      </if>
+      <if test="totCnt != null" >
+        #{totCnt,jdbcType=CHAR},
+      </if>
+      <if test="totAmt != null" >
+        #{totAmt,jdbcType=CHAR},
+      </if>
+      <if test="subDte != null" >
+        #{subDte,jdbcType=CHAR},
+      </if>
+      <if test="txnDte != null" >
+        #{txnDte,jdbcType=CHAR},
+      </if>
+      <if test="thdSqn != null" >
+        #{thdSqn,jdbcType=CHAR},
+      </if>
+      <if test="bk != null" >
+        #{bk,jdbcType=CHAR},
+      </if>
+      <if test="serNo != null" >
+        #{serNo,jdbcType=CHAR},
+      </if>
+      <if test="payFeeNo != null" >
+        #{payFeeNo,jdbcType=CHAR},
+      </if>
+      <if test="br != null" >
+        #{br,jdbcType=CHAR},
+      </if>
+      <if test="cusAc != null" >
+        #{cusAc,jdbcType=CHAR},
+      </if>
+      <if test="cusNme != null" >
+        #{cusNme,jdbcType=CHAR},
+      </if>
+      <if test="txnAmt != null" >
+        #{txnAmt,jdbcType=CHAR},
+      </if>
+      <if test="txnTyp != null" >
+        #{txnTyp,jdbcType=CHAR},
+      </if>
+      <if test="cusDpm != null" >
+        #{cusDpm,jdbcType=CHAR},
+      </if>
+      <if test="feeMon != null" >
+        #{feeMon,jdbcType=CHAR},
+      </if>
+      <if test="feeCnt != null" >
+        #{feeCnt,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNme != null" >
+        #{thdCusNme,jdbcType=CHAR},
+      </if>
+      <if test="eleAc != null" >
+        #{eleAc,jdbcType=CHAR},
+      </if>
+      <if test="frzAmt != null" >
+        #{frzAmt,jdbcType=CHAR},
+      </if>
+      <if test="fSeqNo != null" >
+        #{fSeqNo,jdbcType=CHAR},
+      </if>
+      <if test="crpCod != null" >
+        #{crpCod,jdbcType=CHAR},
+      </if>
+      <if test="evidNo != null" >
+        #{evidNo,jdbcType=CHAR},
+      </if>
+      <if test="rsFld1 != null" >
+        #{rsFld1,jdbcType=CHAR},
+      </if>
+      <if test="rsFld2 != null" >
+        #{rsFld2,jdbcType=CHAR},
+      </if>
+      <if test="rsFld3 != null" >
+        #{rsFld3,jdbcType=CHAR},
+      </if>
+      <if test="rsFld4 != null" >
+        #{rsFld4,jdbcType=CHAR},
+      </if>
+      <if test="rsFld5 != null" >
+        #{rsFld5,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_NELE_BATCH_TMP
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="batFlg!=null" >
+        AND  BAT_FLG=#{batFlg,jdbcType=CHAR}
+      </if>
+      <if test="ccy!=null" >
+        AND  CCY=#{ccy,jdbcType=CHAR}
+      </if>
+      <if test="payFlg!=null" >
+        AND  PAY_FLG=#{payFlg,jdbcType=CHAR}
+      </if>
+      <if test="feeTyp!=null" >
+        AND  FEE_TYP=#{feeTyp,jdbcType=CHAR}
+      </if>
+      <if test="totCnt!=null" >
+        AND  TOT_CNT=#{totCnt,jdbcType=CHAR}
+      </if>
+      <if test="totAmt!=null" >
+        AND  TOT_AMT=#{totAmt,jdbcType=CHAR}
+      </if>
+      <if test="subDte!=null" >
+        AND  SUB_DTE=#{subDte,jdbcType=CHAR}
+      </if>
+      <if test="txnDte!=null" >
+        AND  TXN_DTE=#{txnDte,jdbcType=CHAR}
+      </if>
+      <if test="thdSqn!=null" >
+        AND  THD_SQN=#{thdSqn,jdbcType=CHAR}
+      </if>
+      <if test="bk!=null" >
+        AND  BK=#{bk,jdbcType=CHAR}
+      </if>
+      <if test="serNo!=null" >
+        AND  SER_NO=#{serNo,jdbcType=CHAR}
+      </if>
+      <if test="payFeeNo!=null" >
+        AND  PAY_FEE_NO=#{payFeeNo,jdbcType=CHAR}
+      </if>
+      <if test="br!=null" >
+        AND  BR=#{br,jdbcType=CHAR}
+      </if>
+      <if test="cusAc!=null" >
+        AND  CUS_AC=#{cusAc,jdbcType=CHAR}
+      </if>
+      <if test="cusNme!=null" >
+        AND  CUS_NME=#{cusNme,jdbcType=CHAR}
+      </if>
+      <if test="txnAmt!=null" >
+        AND  TXN_AMT=#{txnAmt,jdbcType=CHAR}
+      </if>
+      <if test="txnTyp!=null" >
+        AND  TXN_TYP=#{txnTyp,jdbcType=CHAR}
+      </if>
+      <if test="cusDpm!=null" >
+        AND  CUS_DPM=#{cusDpm,jdbcType=CHAR}
+      </if>
+      <if test="feeMon!=null" >
+        AND  FEE_MON=#{feeMon,jdbcType=CHAR}
+      </if>
+      <if test="feeCnt!=null" >
+        AND  FEE_CNT=#{feeCnt,jdbcType=CHAR}
+      </if>
+      <if test="thdCusNme!=null" >
+        AND  THD_CUS_NME=#{thdCusNme,jdbcType=CHAR}
+      </if>
+      <if test="eleAc!=null" >
+        AND  ELE_AC=#{eleAc,jdbcType=CHAR}
+      </if>
+      <if test="frzAmt!=null" >
+        AND  FRZ_AMT=#{frzAmt,jdbcType=CHAR}
+      </if>
+      <if test="fSeqNo!=null" >
+        AND  F_SEQ_NO=#{fSeqNo,jdbcType=CHAR}
+      </if>
+      <if test="crpCod!=null" >
+        AND  CRP_COD=#{crpCod,jdbcType=CHAR}
+      </if>
+      <if test="evidNo!=null" >
+        AND  EVID_NO=#{evidNo,jdbcType=CHAR}
+      </if>
+      <if test="rsFld1!=null" >
+        AND  RS_FLD1=#{rsFld1,jdbcType=CHAR}
+      </if>
+      <if test="rsFld2!=null" >
+        AND  RS_FLD2=#{rsFld2,jdbcType=CHAR}
+      </if>
+      <if test="rsFld3!=null" >
+        AND  RS_FLD3=#{rsFld3,jdbcType=CHAR}
+      </if>
+      <if test="rsFld4!=null" >
+        AND  RS_FLD4=#{rsFld4,jdbcType=CHAR}
+      </if>
+      <if test="rsFld5!=null" >
+        AND  RS_FLD5=#{rsFld5,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdFbpdNeleBatchTmp" >
+    update ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_NELE_BATCH_TMP
+    <set >
+      <if test="batFlg != null" >
+        BAT_FLG = #{batFlg,jdbcType=CHAR},
+      </if>
+      <if test="ccy != null" >
+        CCY = #{ccy,jdbcType=CHAR},
+      </if>
+      <if test="payFlg != null" >
+        PAY_FLG = #{payFlg,jdbcType=CHAR},
+      </if>
+      <if test="feeTyp != null" >
+        FEE_TYP = #{feeTyp,jdbcType=CHAR},
+      </if>
+      <if test="totCnt != null" >
+        TOT_CNT = #{totCnt,jdbcType=CHAR},
+      </if>
+      <if test="totAmt != null" >
+        TOT_AMT = #{totAmt,jdbcType=CHAR},
+      </if>
+      <if test="subDte != null" >
+        SUB_DTE = #{subDte,jdbcType=CHAR},
+      </if>
+      <if test="txnDte != null" >
+        TXN_DTE = #{txnDte,jdbcType=CHAR},
+      </if>
+      <if test="thdSqn != null" >
+        THD_SQN = #{thdSqn,jdbcType=CHAR},
+      </if>
+      <if test="bk != null" >
+        BK = #{bk,jdbcType=CHAR},
+      </if>
+      <if test="serNo != null" >
+        SER_NO = #{serNo,jdbcType=CHAR},
+      </if>
+      <if test="payFeeNo != null" >
+        PAY_FEE_NO = #{payFeeNo,jdbcType=CHAR},
+      </if>
+      <if test="br != null" >
+        BR = #{br,jdbcType=CHAR},
+      </if>
+      <if test="cusAc != null" >
+        CUS_AC = #{cusAc,jdbcType=CHAR},
+      </if>
+      <if test="cusNme != null" >
+        CUS_NME = #{cusNme,jdbcType=CHAR},
+      </if>
+      <if test="txnAmt != null" >
+        TXN_AMT = #{txnAmt,jdbcType=CHAR},
+      </if>
+      <if test="txnTyp != null" >
+        TXN_TYP = #{txnTyp,jdbcType=CHAR},
+      </if>
+      <if test="cusDpm != null" >
+        CUS_DPM = #{cusDpm,jdbcType=CHAR},
+      </if>
+      <if test="feeMon != null" >
+        FEE_MON = #{feeMon,jdbcType=CHAR},
+      </if>
+      <if test="feeCnt != null" >
+        FEE_CNT = #{feeCnt,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNme != null" >
+        THD_CUS_NME = #{thdCusNme,jdbcType=CHAR},
+      </if>
+      <if test="eleAc != null" >
+        ELE_AC = #{eleAc,jdbcType=CHAR},
+      </if>
+      <if test="frzAmt != null" >
+        FRZ_AMT = #{frzAmt,jdbcType=CHAR},
+      </if>
+      <if test="fSeqNo != null" >
+        F_SEQ_NO = #{fSeqNo,jdbcType=CHAR},
+      </if>
+      <if test="crpCod != null" >
+        CRP_COD = #{crpCod,jdbcType=CHAR},
+      </if>
+      <if test="evidNo != null" >
+        EVID_NO = #{evidNo,jdbcType=CHAR},
+      </if>
+      <if test="rsFld1 != null" >
+        RS_FLD1 = #{rsFld1,jdbcType=CHAR},
+      </if>
+      <if test="rsFld2 != null" >
+        RS_FLD2 = #{rsFld2,jdbcType=CHAR},
+      </if>
+      <if test="rsFld3 != null" >
+        RS_FLD3 = #{rsFld3,jdbcType=CHAR},
+      </if>
+      <if test="rsFld4 != null" >
+        RS_FLD4 = #{rsFld4,jdbcType=CHAR},
+      </if>
+      <if test="rsFld5 != null" >
+        RS_FLD5 = #{rsFld5,jdbcType=CHAR},
+      </if>
+    </set>
+    where SQN = #{sqn,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_NELE_BATCH_TMP
+    <if test="_parameter" >
+      where SQN in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
+</mapper>
