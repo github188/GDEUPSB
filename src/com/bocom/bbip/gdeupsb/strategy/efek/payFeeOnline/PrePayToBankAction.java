@@ -76,5 +76,7 @@ public class PrePayToBankAction implements Executable{
 				
 				context.setData("GthFlg", "N");//			<Set>GthFlg=N</Set>
 			}
+			
+			context.setData(ParamKeys.TXN_TLR, "4430");
 		}
 }

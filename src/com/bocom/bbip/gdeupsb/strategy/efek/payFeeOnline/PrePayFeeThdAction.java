@@ -4,10 +4,8 @@ import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.eups.repository.EupsThdTranCtlDetailRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
@@ -17,8 +15,6 @@ import com.bocom.jump.bp.core.Executable;
 
 public class PrePayFeeThdAction implements Executable{
 	private final static Log logger=LogFactory.getLog(PrePayFeeThdAction.class);
-	@Autowired
-	EupsThdTranCtlDetailRepository eupsThdTranCtlDetailRepository;
 
 	/**
 	 * 记账前，第三方处理
