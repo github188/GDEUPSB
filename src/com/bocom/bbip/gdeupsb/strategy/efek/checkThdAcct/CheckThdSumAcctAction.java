@@ -24,6 +24,7 @@ import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.eups.spi.service.check.CheckThdSumAcctService;
 import com.bocom.bbip.eups.spi.vo.CheckDomain;
 import com.bocom.bbip.eups.utils.CommonUtil;
+import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.thd.org.apache.commons.collections.CollectionUtils;
 import com.bocom.bbip.thd.org.apache.commons.lang.StringUtils;
@@ -170,11 +171,11 @@ public class CheckThdSumAcctAction implements  CheckThdSumAcctService{
 						                context.setData(ParamKeys.RESPONSE_CODE, responseCode);
 						                
 						             // 第三方交易成功
-							                if (Constants.RESPONSE_CODE_SUCC.equals(responseCode)) {
+							                if (GDConstants.SUCCESS_CODE.equals(responseCode)) {
 							                    logger.info("The third process response successful.");
 							                    context.setData(ParamKeys.TXN_STS, Constants.TXNSTS_SUCCESS);
 							                    context.setData(ParamKeys.THD_TXN_STS, Constants.THD_TXNSTS_SUCCESS);
-							                    context.setData(ParamKeys.RSP_CDE, Constants.HOST_RESPONSE_CODE_SUCC);
+							                    context.setData(ParamKeys.RSP_CDE, GDConstants.SUCCESS_CODE);
 							                    context.setData(ParamKeys.RSP_MSG, "交易成功");
 							                }else if(BPState.isBPStateReversalFail(context)){
 							                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
