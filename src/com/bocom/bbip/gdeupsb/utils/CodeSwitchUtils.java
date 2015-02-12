@@ -1,12 +1,5 @@
 package com.bocom.bbip.gdeupsb.utils;
 
-import java.util.Map;
-
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import xmlDefinition.TdsBean;
-import xmlDefinition.TdsBeanPro;
 
 //import com.bocom.bbip.gdeupsb.utils.proswitch.bean.TdsBean;
 //import com.bocom.bbip.gdeupsb.utils.proswitch.bean.TdsBeanPro;
@@ -22,20 +15,21 @@ public class CodeSwitchUtils {
 
 	public static String codeGenerator(String tableId, String key) {
 
-		String xml = "classpath:config/switchcode/tds-test.xml";
-
-		ApplicationContext ctx = null;
-		ctx = new ClassPathXmlApplicationContext(new String[] { xml });
-
-		TdsBean tds = ctx.getBean(tableId, TdsBean.class);
-
-		Map<String, TdsBeanPro> p = tds.getKey();
-		TdsBeanPro t = p.get(key);
-		if(null!=t){
-			return t.getValue();
-		}else{
-			return null;
-		}
+//		String xml = "classpath:config/switchcode/tds-test.xml";
+//
+//		ApplicationContext ctx = null;
+//		ctx = new ClassPathXmlApplicationContext(new String[] { xml });
+//
+//		TdsBean tds = ctx.getBean(tableId, TdsBean.class);
+//
+//		Map<String, TdsBeanPro> p = tds.getKey();
+//		TdsBeanPro t = p.get(key);
+//		if(null!=t){
+//			return t.getValue();
+//		}else{
+//			return null;
+//		}
+		return null;
 		
 	}
 
