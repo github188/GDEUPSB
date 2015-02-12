@@ -20,7 +20,7 @@ public class PowerChangeTreatyAction extends BaseAction{
 		 */
 		public void execute(Context context)throws CoreException,CoreRuntimeException{
 			log.info("===========Start PowerChangeTreatyAction");
-			context.setData(GDParamKeys.SVRCOD, "32");
+			context.setData(GDParamKeys.SVRCOD, "32");   
 			if(context.getData(GDParamKeys.NET_NAME)){
 					context.setData(ParamKeys.BR, context.getData(GDParamKeys.NET_NAME));
 			}
@@ -120,7 +120,7 @@ public class PowerChangeTreatyAction extends BaseAction{
 //		        </Default>
 //		      </Switch>
 			context.setData("PKGCNT", GDConstants.SUCCESS_CODE);
-			context.setData(ParamKeys.MESSAGE_TYPE, "N");
+			context.setData(ParamKeys.MESSAGE_TYPE, "N");  
 			context.setData(ParamKeys.RSP_CDE, GDConstants.SUCCESS_CODE);
 		}
 }
