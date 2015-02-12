@@ -91,7 +91,7 @@ public class BatchAcpElecDealServiceAction implements BatchAcpService {
 	Marshaller marshaller;
 
 	@Override
-	public List<EupsBatchPayEntity> prepareBatchDeal(PrepareBatchAcpDomain preparebatchacpdomain, Context context) throws CoreException {
+	public void prepareBatchDeal(PrepareBatchAcpDomain preparebatchacpdomain, Context context) throws CoreException {
 
 		log.info("BatchFileDealPreAction initDeal start!hahahahaha..");
 
@@ -165,7 +165,6 @@ public class BatchAcpElecDealServiceAction implements BatchAcpService {
 
 		System.out.println("context=" + context);
 
-		return payDetailLst;
 
 	}
 
