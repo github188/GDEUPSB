@@ -6,10 +6,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsTransJournal;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
+import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
@@ -38,13 +38,13 @@ public class AftCancelFeeAction implements Executable{
 				String txnSts=eupsTransJournal.getTxnSts();
 				if("c".equals(txnSts) || "C".equals(txnSts)){
 						context.setData(GDParamKeys.MSGTYP, "N");
-						context.setData(ParamKeys.RSP_CDE, Constants.HOST_RESPONSE_CODE_SUCC);
+						context.setData(ParamKeys.RSP_CDE, GDConstants.SUCCESS_CODE);
 						context.setData(ParamKeys.RSP_MSG, "原记录【"+context.getData(ParamKeys.OLD_TXN_SQN).toString()+"】已经抹账");
 				}else if("b".equals(txnSts) || "B".equals(txnSts)){
 				}else if("s".equals(txnSts) || "S".equals(txnSts)){
 						logger.info("~~~~~~~~~~发送成功");
 						context.setData(ParamKeys.RESPONSE_MESSAGE, "交易成功");
-						context.setData(ParamKeys.RESPONSE_CODE, Constants.HOST_RESPONSE_CODE_SUCC);
+						context.setData(ParamKeys.RESPONSE_CODE, GDConstants.SUCCESS_CODE);
 						context.setData(ParamKeys.RSP_MSG, "原记录【"+context.getData(ParamKeys.OLD_TXN_SQN).toString()+"】准备抹账");
 				}else{
 					context.setData(GDParamKeys.MSGTYP, "E");
@@ -54,7 +54,7 @@ public class AftCancelFeeAction implements Executable{
 				}
 		}else{
 				context.setData(GDParamKeys.MSGTYP, "N");
-				context.setData(ParamKeys.RSP_CDE, Constants.HOST_RESPONSE_CODE_SUCC);
+				context.setData(ParamKeys.RSP_CDE, GDConstants.SUCCESS_CODE);
 				context.setData(ParamKeys.RSP_MSG, "原记录【"+context.getData(ParamKeys.OLD_TXN_SQN).toString()+"】不存在");
 				throw new CoreRuntimeException("原记录【"+context.getData(ParamKeys.OLD_TXN_SQN).toString()+"】不存在");
 			}
