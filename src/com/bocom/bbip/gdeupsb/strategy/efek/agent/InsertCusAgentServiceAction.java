@@ -146,18 +146,18 @@ public class InsertCusAgentServiceAction implements CommInsertCusAgentService{
 		Map<String, Object> map = callThdTradeManager.trade(context);
 		
 	    if (BPState.isBPStateOvertime(context)) {
-	    	logger.error("==============湖北电力解约 第三方超时==============");
+	    	logger.error("==============南方电网解约 第三方超时==============");
             throw new CoreException("解约 第三方超时");
             
 	    } else if (BPState.isBPStateTransFail(context)) {
-	    	logger.error("==============湖北电力解约第三方时未发送成功==============");
+	    	logger.error("==============南方电网解约第三方时未发送成功==============");
 	    	throw new CoreException("解约第三方时未发送成功");
 	    } else if (BPState.isBPStateSystemError(context)) {
-	    	logger.error("==============湖北电力解约第三方系统错误==============");
+	    	logger.error("==============南方电网解约第三方系统错误==============");
 	    	throw new CoreException("解约第三方系统错误");
 	    }
 	    String thdRspCde=map.get(ParamKeys.RESPONSE_CODE).toString();
-	    if(!thdRspCde.equals(GDConstants.SUCCESS_CODE) ){
+	    if(!thdRspCde.equals(Constants.RESPONSE_CODE_SUCC) ){
 	    	throw new CoreException("解约失败");
 	    }
     	return null;
