@@ -181,7 +181,6 @@ public class ServiceThdInterceptorExt extends BaseAction implements ChannelInter
         Map<String, String> propertyMap = getProperty(thdRspCdeInput);
         String responseCodeTHD = propertyMap.get(eupsBusTyp + "~" + responseCode);
         //TODO responseCodeTHD 修改
-        responseCodeTHD="000000";
         if (null == responseCodeTHD) {
             // 第三方默认错误为JUMPBP9001
             //responseCode = "JUMPBP9001";
