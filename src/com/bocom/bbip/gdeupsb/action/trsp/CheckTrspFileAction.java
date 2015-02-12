@@ -164,10 +164,8 @@ public class CheckTrspFileAction extends BaseAction{
 				Map<String, Object> rspMap=callThdTradeManager.trade(context);
 				 CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
 	             String responseCode = rspCdeAction.getThdRspCde(rspMap, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
-	             System.out.println("~~~~~rspCde~~~~~~~~~~"+context.getData("rspCde"));
 	             context.setData(GDParamKeys.RETCOD, responseCode);
-	             //返回没有成功
-	            responseCode="000000";
+
 	             if(!Constants.RESPONSE_CODE_SUCC.equals(responseCode)){
 						context.setData(GDParamKeys.MSGTYP, "E");
 						context.setData(ParamKeys.RSP_CDE, "329999");
