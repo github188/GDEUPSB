@@ -15,4 +15,5 @@
 		<javaModelGenerator targetPackage="com.bocom.bbip.gdeupsb.entity" targetProject="GDEUPSB/src" />
 		<sqlMapGenerator targetPackage="config.sqlmap" targetProject="GDEUPSB/src" />
 		<table schema="GDEUPSB" tableName="GD_ELEC_FILE_BATCH_TMP" domainObjectName="GdElecFileBatchTmp"/>
+</context>
 </generatorConfiguration>
