@@ -145,11 +145,11 @@
 					class="com.bocom.bbip.gdeupsb.strategy.efek.payFeeOnline.AftPayToBankAction"/>		
 		
 	<!-- 联机单边抹账 前处理-->
-			<bean id="eups.preCclToTHDStrategyActionELEC00"  
+			<bean id="eups.preCclToBankStrategyActionELEC00"  
 					class="com.bocom.bbip.gdeupsb.strategy.efek.cancelFeeOnline.PreCclToTHDAction"/>	
 			
 	<!-- 联机单边抹账 后处理	-->
-			<bean id="eups.aftCclToTHDStrategyActionELEC00"  
+			<bean id="eups.aftCclToBankStrategyActionELEC00"  
 					class="com.bocom.bbip.gdeupsb.strategy.efek.cancelFeeOnline.AftCclToTHDAction"/>		
 
 	<!-- 第三方对账  对总账-->
