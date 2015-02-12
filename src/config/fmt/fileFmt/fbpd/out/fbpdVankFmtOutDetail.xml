@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet spacket.xsd"
+	encoding="GBK" trace="true">
+	<segment name="detail" encoding="GBK">
+	
+	<!-- 
+	<Process name="VANK_in_484999" desc="中山物业管理费"  sqn_flag="Y" sqn_node_name="SeqNo">   管理费输入
+		<Data extend_flag="Y">
+			<Item name="AA"	    length="4"/>	  机构号
+			<Item name="TCusId" length="8"/>	  户号
+			<Item name="ActNo"  length="21"/>	  账号
+			<Item name="TxnAmt" length="12" expression="FMUL($TxnAmt,100,0)"/>	金额
+			<A3pressi3SeqNo,5,0,13"/>
+		</Data>
+	</Process> 
+	 -->
+	 
+	<fixString name="comNo" length="4" />
+	<fixString name="thdCusNo" length="8" />
+	<fixString name="cusAc" length="21" />
+	<fixString name="txnAmt" length="12" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GDExpCommonUtils@transYuanToFen(this.txnAMt)" />
+	
+	<!-- <A3pressi3SeqNo,5,0,13"/> -->
+	
+	<!-- <fixString name="seqNo" length="5" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.ExpCommonUtils@AddChar(this.seqNo,5,0,1)"/> -->
+	
+	</segment>
+</message>
