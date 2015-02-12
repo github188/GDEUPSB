@@ -138,6 +138,8 @@ public class GDConstants {
 
 	/** 人民币 */
 	public final static String RENMINBI = "RMB";
+	/**第三方响应成功*/
+	public final static String SUCCESS_CODE="00000";
 	// ~~~~~~~~~~~~~~~银行代码~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	/** 102 中国工商银行 */
 	public final static String Industrial_Commercial_Bank = "102";
@@ -214,7 +216,7 @@ public class GDConstants {
 	/** 违约使用电费 */
 	public final static String Electricity_DeditMoney = "020";
 	/** 业扩费用 */
-	public final static String Bus_Add_Cost = "030";
+	public final static String BUS_Add_Cost = "030";
 
 	// ~~~~~~~~~~~~文件类型代码~~~~~~~~~~~~~~·~~~~~~~~~~~~~~~~·
 	/** 01 供电批量扣款文件 */
