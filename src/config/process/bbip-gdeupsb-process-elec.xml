@@ -72,10 +72,5 @@
 				   			  <action id="act"  ref="gdeupsb.CancelBatchAction"/>
 				   </actions>
 			</process>					
-	<!-- 南方电网  供电批量数据准备-->	
-			<process id="gdeupsb.batchDataFile"  template="eups.simpleTran"  interceptors="eups.thdTransInterceptorExt">
-				  <actions>
-				   			  <action id="act"  ref="gdeupsb.batchDataFileAction"/>
-				   </actions>
-			</process>			
+
 </x:beans>
