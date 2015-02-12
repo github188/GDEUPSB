@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.util.CollectionUtils;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
@@ -27,6 +28,7 @@ import com.bocom.bbip.gdeupsb.entity.GdGasCusDay;
 import com.bocom.bbip.gdeupsb.repository.GdGasCusDayRepository;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.bbip.service.Result;
+import com.bocom.bbip.service.support.BBIPAsyncMessageService;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
@@ -46,7 +48,7 @@ public class OprGasCusAgentAction extends BaseAction{
 		logger.info("Enter in OprGasCusAgentAction!...........");
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 		
-		context.setData("TransCode", "460701");
+		context.setData("thdTxnCde", "460701");
 		context.setData("eupsBusTyp", "PGAS00");
 		context.setData("comNo", "PGAS00");
 		context.setData("bk", "CNJT");
@@ -78,22 +80,25 @@ public class OprGasCusAgentAction extends BaseAction{
 				throw new CoreException(ErrorCodes.EUPS_CANCEL_CHECK_AUTH_FAIL);
 			}
 		}
+
+		//无需查询单位协议 now
+//查询单位协议   SELECT TActNo,BBusTyp,CrpCod FROM savcrpagr where CAgtNo='%s' and SvrSts='1'      //comNo    useSts
+//		EupsThdBaseInfo thdBaseInfo = BeanUtils.toObject(context.getDataMap(), EupsThdBaseInfo.class);
+//		thdBaseInfo.setUseSts("0");
+//		List<EupsThdBaseInfo> thdBaseInfoList = get(EupsThdBaseInfoRepository.class).find(thdBaseInfo);
+//		if(CollectionUtils.isEmpty(thdBaseInfoList)){
+//			context.setData("rspCod", GDConstants.GAS_ERROR_CODE);
+//			context.setData("rspmsg", "单位协议不存在");
+//			throw new CoreRuntimeException("单位协议不存在");
+//		}
+//		logger.info("存在单位协议，可进行交易");
+
 		
-		//查询单位协议   SELECT TActNo,BBusTyp,CrpCod FROM savcrpagr where CAgtNo='%s' and SvrSts='1'      //comNo    useSts
-		EupsThdBaseInfo thdBaseInfo = BeanUtils.toObject(context.getDataMap(), EupsThdBaseInfo.class);
-		thdBaseInfo.setUseSts("0");
-		List<EupsThdBaseInfo> thdBaseInfoList = get(EupsThdBaseInfoRepository.class).find(thdBaseInfo);
-		if(CollectionUtils.isEmpty(thdBaseInfoList)){
-			context.setData("rspCod", GDConstants.GAS_ERROR_CODE);
-			context.setData("rspmsg", "单位协议不存在");
-			throw new CoreRuntimeException("单位协议不存在");
-		}
-		logger.info("存在单位协议，可进行交易");
 		
 //		<Set>TActNo=491800012620190029499</Set>  
 //	      <Set>@MSG.OIP=$HstIp</Set>  <!--第三方IP-->
 //	      <Set>@MSG.OPT=$HstPrt</Set> <!--第三方PORT-->
-		context.setData("tTxnNo", GDConstants.GAS_THD_TXN_CDE);
+		context.setData("tTxnNo", GDConstants.GAS_THD_TXN_NO);
 //		context.setData("@MSG.OIP", context.getData("hstIp"));
 //		context.setData("@MSG.OPT", context.getData("HstPrt"));
 		
@@ -206,31 +211,28 @@ public class OprGasCusAgentAction extends BaseAction{
 					throw new CoreRuntimeException("燃气方返回操作失败!");
 				}
 			}
-		}else{	
+		}
+		else if("NOUser".equals(context.getData("rtnCod").toString().trim())){  //NOUser 为无此用户（用户编码错误）
 			context.setData("msgTyp", "E");
 			context.setData("rspCod", GDConstants.GAS_ERROR_CODE);
-			context.setData("rspMsg", "向燃气公司查询不到此用户编号，请联系燃气公司!");
+			context.setData("rspMsg", "无此用户或用户编码错误!");
+			throw new CoreRuntimeException("无此用户或用户编码错误!");
+		}else if("UserStop".equals(context.getData("rtnCod").toString().trim())){  //UserStop为此用户已报停
+			context.setData("msgTyp", "E");
+			context.setData("rspCod", GDConstants.GAS_ERROR_CODE);
+			context.setData("rspMsg", "此用户已报停!");
+			throw new CoreRuntimeException("此用户已报停!");
+		}
+		else{	
+			context.setData("msgTyp", "E");
+			context.setData("rspCod", GDConstants.GAS_ERROR_CODE);
+			context.setData("rspMsg", "系统错误!");
+			throw new CoreRuntimeException("系统错误");
 		}
 		
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
 	}
 	
-	
-	
-	/**
-	 * 根据用户编码cusNo 查用户协议表
-	 * @param context
-	 * @return
-	 * @throws CoreException
-	 * @throws CoreRuntimeException
-	 */
-//	public List<EupsCusAgent> qryCusAgentInfo(Context context) throws CoreException, CoreRuntimeException{
-////		select count(*) cnt1 from Gascusall491 where UserNo='%s'
-//		EupsCusAgent cusAgent = new EupsCusAgent();
-//		cusAgent.setCusNo(context.getData("cusNo").toString());
-//		List<EupsCusAgent> cusInfoList = get(EupsCusAgentRepository.class).find(cusAgent);
-//		return cusInfoList;
-//	}
 	
 	/**
 	 * 无论增删改用户协议表，均向燃气每天动态协议表插入一条数据，  tCommd可表示增删改
@@ -240,6 +242,8 @@ public class OprGasCusAgentAction extends BaseAction{
 	 */
 	public void insertCusInfo(Context context) throws CoreException, CoreRuntimeException{
 		GdGasCusDay insCusInfo = BeanUtils.toObject(context.getDataMap(), GdGasCusDay.class);
+		String sqn = get(BBIPPublicService.class).getBBIPSequence();
+		insCusInfo.setSequence(sqn);		
 		get(GdGasCusDayRepository.class).insert(insCusInfo);
 	}
 }
