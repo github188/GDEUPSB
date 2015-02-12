@@ -613,4 +613,6 @@ public final class GDParamKeys {
 	/************** 中山文件批量系统 ************/
 	public static final String FBPD_TXN_OBJ = "txnObj";
 
+	public static final String GSS_BAT_PKG_FLG = "pkgFlg";
+
 }
