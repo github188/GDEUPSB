@@ -7,21 +7,27 @@
 	
 
 <!-- <Head>
-      <Item name="AA"      length="20"/>  批量代收信息标识
-      AddItem name="FPAA" length="3" value="RMB"/>     币种固定为RMB
-      <Item name="FPAA"    length="3"/>   货币符号
-      <Item name="FPBB"    length="1"/>   收付标志,固定为收1
-      <Item name="BB"      length="3"/>   费项代码
-      <Item name="CC"      length="10"/>  总记录数
-      <Item name="DD"      length="14"/>  总金额
-      <Item name="SetDat"  length="8"/>   送银行日期
-      <Item name="TxnDat"  length="8"/>   应划款日期
-      <Item name="RSFLD1"  length="128" expression="DELBOTHSPACE($RSFLD1)"/> 处理说明
-      <Item name="RSFLD2"  length="16"  expression="DELBOTHSPACE($RSFLD2)"/> 流水号
-      <Item name="OldAct"  length="12"/>   银行代码
+      <Item name="AA"       length="20" value=" "/>  批量代收信息标识
+      <AddItem name="FPAA"  length="3" value="RMB"/>     币种固定为RMB
+      <Item name="FPAA"     length="3"/>   货币符号
+      <AddItem name="FPBB"  length="1" value="1"/>
+      <Item name="FPBB"     length="1"/>   收付标志,固定为收1
+      <Item name="BB"       length="3" value=" "/>   费项代码
+      <Item name="TotCnt"   length="10"/>  总记录数
+      <Item name="TotAmt"   length="14"/>  总金额
+      <Item name="STotCnt"  length="10"/>  已划款户数
+      <Item name="STotAmt"  length="14"/>  已划款金额
+      <Item name="FTotCnt"  length="10"/>  失败户数
+      <Item name="FTotAmt"  length="14"/>  失败金额
+      <Item name="ActDat"   length="8"/>   划款日期
+      <AddItem name="FPCC"  length="4" value="0000"/>     处理结果一般为固定值，需与电力确认
+      <Item name="FPCC"     length="4"/>    处理结果
+      <AddItem name="FPDD"  length="128" value="处理成功"/> 处理结果一般为固定值，需与电力确认
+      <Item name="FPDD"     length="128"/> 处理说明
+      <Item name="OldAct"   length="12" value=" "/>   银行代码
+      <Item name="DskNo"    length="30"/>  唯一识别码
     </Head>
  -->
-
 	 
 	 
 	<fixString name="batFlg" length="20" />

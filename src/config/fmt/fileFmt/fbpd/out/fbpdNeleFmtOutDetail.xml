@@ -5,28 +5,35 @@
 	encoding="GBK" trace="true">
 	<segment name="detail" encoding="GBK">
 	
-<!-- 
-	<Data extend_flag="Y">
-      <Item name="EE"      length="10" /> 编号
+<!-- <Data>
+      <Item name="EE"  length="10" /> 编号
       <Item name="FF"  length="32"/> 缴费号
-      <Item name="GG"      length="12"/> 客户开户行行号
+      <Item name="GG"  length="12"/> 客户开户行行号
       <Item name="ActNo"   length="32" expression="DELBOTHSPACE($ActNo)"/>  帐号
-      <Item name="ActNam"  length="40"/> 客户账号名称
-      <Item name="TxnAmt"  length="12"/>  金额
-      <Item name="HH"      length="1"/>   扣款方式
+      <Item name="TxnAmt"  length="12"/>  应扣金额
+      <SwitchCode name="HRspCd" new_name="SucFlg" tab_name="H2T_NELE_484" col_name="HRspCd"/> 注意转换
+      <Item name="SucFlg"  length="01"/>    标识
+      <Item name="TxnAmt"  length="12"/>  实扣电费
+      <Item name="LogNo"   length="16"/> 银行收费流水号
       <Item name="RsFld3"  length="40"/>  说明
-      <Item name="II"      length="8"/>   用户所在部门
-      <Item name="JJ"      length="6"/>   电费月份
-      <Item name="KK"      length="2"/>   电费次数
+      <Item name="TlrId"   length="8"/>   收费员,需要与对方确认，是否是银行柜员号
+      <Item name="ActDat"  length="8"/>   扣款日期
+      <AddItem name="TrTime" length="6" expression="GETDATETIME(HHMISS)"/>     收费时间
+      <Item name="TrTime" length="6"/>     收费时间
+      <Item name="II"  length="8"/>        用户所在部门
+      <Item name="JJ"  length="6"/>   电费月份
+      <Item name="KK"  length="2"/>   电费次数
+      <Item name="CrpCod"  length="5"/>   计量点号
+      <Item name="MM"  length="16"/>  应收凭证号
+      <Item name="FSeqNo"     length="12"/>  实收违约金
+      <Item name="FrzAmt"  length="12"/>  实收电费   需要与电力确定
       <Item name="TcusNm"  length="40"/>  客户名称
       <Item name="LL"      length="32"/>  供电企业账号
-      <Item name="FrzAmt"  length="12"/>  应扣电费
-      <Item name="FSeqNo"     length="12"/>  违约金
-      <Item name="CrpCod"      length="5"/>   计量点号
-      <Item name="MM"      length="16"/>  应收凭证号
-      <AddItem name="SeqNo"    expression="ADDCHAR($SeqNo,5,0,1)"/>
+      <AddItem name="FPDD"  length="15" value=" "/>
+      <Item name="FPDD"  length="15"/>  银行方号
+      <Item name="ActNo"  length="32"/>  银行方客户账号
     </Data>
- -->
+  </Process> -->
 	 
 	 
 	<fixString name="serNo" length="10" />
