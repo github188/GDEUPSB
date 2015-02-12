@@ -9,7 +9,7 @@
 		 <fixString name="comNO"  length="8"  /><!--单位编码-->
 		 <fixString name="electricityYearMonth"  length="6"  /><!--电费日期-->
 		 <fixString name="payNo"  length="20"  /><!--缴费号"-->
-		 <fixString name=”thdCusNme“  length="64"  /><!--结算户名称-->
+		 <fixString name="thdCusNme" length="64"  /><!--结算户名称-->
 		 <fixString name="bankNo"  length="4"  /><!--扣款银行代码-->
 		 <fixString name="cusNo"  length="32"  /><!--对方账户-->
 		 <fixString name="cusNme"  length="128"  /><!--对方账户名称	-->
