@@ -142,10 +142,11 @@ public class BathFileDealAction implements BatchAcpService {
         // List<Map<String, Object>> parseMap = operateFile.pareseFile(eupsThdFtpInf, "eleGzBatFmt"); // 解析只有detail文件
         for (Map<String, Object> orgMap : parseMap) {
             GdFbpeFileBatchTmp batchTem = new GdFbpeFileBatchTmp();
+            batchTem.setSqn(context.getData(ParamKeys.SEQUENCE).toString());
             batchTem.setAccAmt(orgMap.get("accAmt").toString());
             batchTem.setAccNo(orgMap.get("accNo").toString());
             batchTem.setActNo(orgMap.get("actNo").toString());
-            batchTem.setSqn(orgMap.get("sqn").toString());
+            batchTem.setRsvFld6(orgMap.get("smsSqn").toString()); //SMS交易流水号
             batchTem.setTxnNo(orgMap.get("txnNo").toString());
             batchTem.setOrgCde(orgMap.get("orgCde").toString());
             batchTem.setTlrNo(orgMap.get("tlrNo").toString());
@@ -159,7 +160,7 @@ public class BathFileDealAction implements BatchAcpService {
             batchTem.setBankNo(orgMap.get("bankNo").toString());
             batchTem.setBankNam(orgMap.get("bankNam").toString());
             batchTem.setRsvFld8(batNo);//预留字段8作为批次号，
-            batchTem.setRsvFld7(comNo);//预留字段8作为批次号，
+            batchTem.setRsvFld7(comNo);//预留字段7作为单位编号，用来判断哪个交易
             
             fileBatchTmpRepository.insert(batchTem);
             payDetailLst.add(batchTem);

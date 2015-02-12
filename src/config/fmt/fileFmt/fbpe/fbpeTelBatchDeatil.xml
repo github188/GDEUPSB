@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
     encoding="utf-8" trace="true">
     <segment name="detail" encoding="GBK">
-        <fixString name="sqn" length="20" />  <!-- 交易流水号-->
+        <fixString name="smsSqn" length="20" />  <!-- 交易流水号-->
         <fixString name="cusNo" length="20" />  <!-- 客户编号-->
         <fixString name="rsvFld1" length="16" />  <!-- 备用字段1 代表号码,同一交费编号中的某一号码 -->
         <fixString name="cusNam" length="20" />  <!-- 客户姓名-->

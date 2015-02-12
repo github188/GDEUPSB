@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
     encoding="utf-8" trace="true">
     <segment name="" encoding="GBK">
-        <fixString name="sqn" length="20" />  <!-- 交易流水号-->
+        <fixString name="smsSqn" length="20" />  <!-- 交易流水号-->
         <fixString name="rsvFld1" length="14" />  <!-- 备用字段1 代表手机号码,-->
         <fixString name="cusNam" length="20" />  <!-- 客户姓名-->
         <Item name="months" length="6"/>  <!--话费月份-->
