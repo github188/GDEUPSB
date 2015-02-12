@@ -48,10 +48,10 @@ import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
 
 /**
- * ÖĞÉ½ÎÄ¼şÅúÁ¿ÏµÍ³¡ª¡ªÎÄ¼şµ¼Èë¼°¼ì²é
- * Ä¿±ê£ºÊı¾İ×¼±¸¼°Éú³ÉÅúÁ¿ÎÄ¼ş
- * Íøµã¾­°ìÈËÔ±½Óµ½Î¯ÍĞµ¥Î»½»À´µÄ´úÊÕÊı¾İÅÌ£¬²åÈëÖ¸¶¨µÄÉè±¸²å¿Ú£¬
- * Æô¶¯¡°481201 ÎÄ¼şÂ¼Èë¼°¼ì²é¡±£¬ÊäÈëµ¥Î»±àºÅ¡¢×Ü±ÊÊı¡¢×Ü½ğ¶î¡£Ñ¡Ôñ U ÅÌ¶ÁÈë»ñÈ¡Êı¾İ£¬½»Ò×³É¹¦ºó´òÓ¡¸öÈËÒµÎñÊÜÀíÍ¨ÖªÊé£¬ ´òÓ¡Åú´ÎºÅ¡£
+ * ä¸­å±±æ–‡ä»¶æ‰¹é‡ç³»ç»Ÿâ€”â€”æ–‡ä»¶å¯¼å…¥åŠæ£€æŸ¥
+ * ç›®æ ‡ï¼šæ•°æ®å‡†å¤‡åŠç”Ÿæˆæ‰¹é‡æ–‡ä»¶
+ * ç½‘ç‚¹ç»åŠäººå‘˜æ¥åˆ°å§”æ‰˜å•ä½äº¤æ¥çš„ä»£æ”¶æ•°æ®ç›˜ï¼Œæ’å…¥æŒ‡å®šçš„è®¾å¤‡æ’å£ï¼Œ
+ * å¯åŠ¨â€œ481201 æ–‡ä»¶å½•å…¥åŠæ£€æŸ¥â€ï¼Œè¾“å…¥å•ä½ç¼–å·ã€æ€»ç¬”æ•°ã€æ€»é‡‘é¢ã€‚é€‰æ‹© U ç›˜è¯»å…¥è·å–æ•°æ®ï¼Œäº¤æ˜“æˆåŠŸåæ‰“å°ä¸ªäººä¸šåŠ¡å—ç†é€šçŸ¥ä¹¦ï¼Œ æ‰“å°æ‰¹æ¬¡å·ã€‚
  * @author WangMQ
  *
  */
@@ -98,35 +98,35 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 		
 		context.setData(GDParamKeys.FBPD_TXN_OBJ, "OFTDFBPA");
 		String fleNme = context.getData("fleNme").toString().trim();
-		//¼ì²éÅú´ÎÎÄ¼şÊÇ·ñÖØ¸´Â¼Èë
+		//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ç·ï¿½ï¿½Ø¸ï¿½Â¼ï¿½ï¿½
 //		SELECT DskNo FROM pubbatinf WHERE ActDat='%s' AND DskNam='%s' AND Status='P'
-//		ActDat:ÎÄ¼şÌá½»ÈÕÆÚ
+//		ActDat:ï¿½Ä¼ï¿½ï¿½á½»ï¿½ï¿½ï¿½ï¿½
 		GdBatchConsoleInfo batchConsoleInfo = new GdBatchConsoleInfo();
 		batchConsoleInfo.setSubDte(new Date());
 		batchConsoleInfo.setFleNme(fleNme);
 		List<GdBatchConsoleInfo> batInfoList = gdBatchConsoleInfoRepository.find(batchConsoleInfo);
 		if(!CollectionUtils.isEmpty(batInfoList)){
 			context.setData(GDParamKeys.GDEUPSB_RSP_COD, GDConstants.FDPD_RSP_COD);
-			context.setData(GDParamKeys.GDEUPSB_RSP_MSG, "¸ÃÅú´ÎÒÑÂ¼Èë£¬Åú´ÎºÅÎª" + batInfoList.get(0).getBatNo());
+			context.setData(GDParamKeys.GDEUPSB_RSP_MSG, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ë£¬ï¿½ï¿½Îºï¿½Îª" + batInfoList.get(0).getBatNo());
 			throw new CoreRuntimeException(GDErrorCodes.EUPS_CKDB_FAIL);
 		}
-		logger.info("============ÎŞÖØ¸´Â¼ÈëÎÄ¼ş");
+		logger.info("============ï¿½ï¿½ï¿½Ø¸ï¿½Â¼ï¿½ï¿½ï¿½Ä¼ï¿½");
 		context.setData(GDParamKeys.GDEUPSB_RSP_COD, GDConstants.GDEUPSB_TXN_SUCC_CODE);
 		
 /*     
-		//»ñÈ¡FTPÅäÖÃ	(º¬ÓĞÔ¶³Ì¡¢±¾µØÎÄ¼şÂ·¾¶ÒÔ¼°ÎÄ¼şÃû)
+		//ï¿½ï¿½È¡FTPï¿½ï¿½ï¿½ï¿½	(ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½Ì¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½Â·ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½)
 		EupsThdFtpConfig eupsThdFtpInf = eupsThdFtpConfigRepository.findOne("ZSAG00");
 		eupsThdFtpInf.setRmtFleNme(context.getData("fleNme").toString());
 		eupsThdFtpInf.setLocFleNme(context.getData("fleNme").toString());
 		operateFTPAction.getFileFromFtp(eupsThdFtpInf);
-		logger.info("============ÎÄ¼şÒÑ»ñÈ¡²¢·ÅÖÃÓÚ±¾µØÄ¿Â¼");
+		logger.info("============ï¿½Ä¼ï¿½ï¿½Ñ»ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú±ï¿½ï¿½ï¿½Ä¿Â¼");
 */
 		
 /*
- * Íøµã¾­°ìÈËÔ±½Óµ½Î¯ÍĞµ¥Î»½»À´µÄ´úÊÕÊı¾İÅÌ£¬²åÈëÖ¸¶¨µÄÉè±¸²å¿Ú£¬
- * Æô¶¯¡°481201 ÎÄ¼şÂ¼Èë¼°¼ì²é¡±£¬ÊäÈëµ¥Î»±àºÅ¡¢×Ü±ÊÊı¡¢×Ü½ğ¶î¡£Ñ¡Ôñ U ÅÌ¶ÁÈë»ñÈ¡Êı¾İ£¬½»Ò×³É¹¦ºó´òÓ¡¸öÈËÒµÎñÊÜÀíÍ¨ÖªÊé£¬ ´òÓ¡Åú´ÎºÅ¡£
+ * ï¿½ï¿½ã¾­ï¿½ï¿½ï¿½ï¿½Ô±ï¿½Óµï¿½Î¯ï¿½Ğµï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì£ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½è±¸ï¿½ï¿½Ú£ï¿½
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½481201 ï¿½Ä¼ï¿½Â¼ï¿½ë¼°ï¿½ï¿½é¡±ï¿½ï¿½ï¿½ï¿½ï¿½ëµ¥Î»ï¿½ï¿½Å¡ï¿½ï¿½Ü±ï¿½ï¿½ï¿½ï¿½Ü½ï¿½î¡£Ñ¡ï¿½ï¿½ U ï¿½Ì¶ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½İ£ï¿½ï¿½ï¿½ï¿½×³É¹ï¿½ï¿½ï¿½ï¿½Ó¡ï¿½ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¨Öªï¿½é£¬ ï¿½ï¿½Ó¡ï¿½ï¿½ÎºÅ¡ï¿½
  */
-		//TODO ÎÄ¼şÂ·¾¶
+		//TODO ï¿½Ä¼ï¿½Â·ï¿½ï¿½
 		 String srcFilName= "D:/fbpdTest/recv/"+fleNme;
 	     String objFilName ="D:/fbpdTest/fbpd/"+fleNme;
 	       
@@ -135,22 +135,22 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 	        
 	        try {
 	            FileUtils.copyFile(srcFil, objFil);
-	            logger.info("============ÎÄ¼şÒÑ»ñÈ¡²¢·ÅÖÃÓÚÖ¸¶¨Ä¿Â¼£¬´ıÈë¿â¡£¡£¡£¡£¡£¡£");
+	            logger.info("============ï¿½Ä¼ï¿½ï¿½Ñ»ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½Ä¿Â¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â¡£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 	        } catch (IOException e) {
 	            // TODO Auto-generated catch block
 	            e.printStackTrace();
 	        }
 		
-	    //²»Í¬ÒµÎñÓĞ²»Í¬ÎÄ¼ş¸ñÊ½£¬Ë®µçÈ¼Ãº¡¢ÓĞÏßµçÊÓ¡¢ÒÆ¶¯pos£¬£¬£¬£¬£¬£¬ÓÃµ¥Î»±àºÅÇø·Ö
-		//½âÎöÎÄ¼ş£¬²ğ·ÖÈë¿â£¨·Å½øÁÙÊ±±í£©
-	    //´ÓÁÙÊ±±íÖĞÈ¡Êı¾İ£¬Éú³ÉÖ¸¶¨¸ñÊ½µÄÎÄ¼ş
+	    //ï¿½ï¿½Í¬Òµï¿½ï¿½ï¿½Ğ²ï¿½Í¬ï¿½Ä¼ï¿½ï¿½ï¿½Ê½ï¿½ï¿½Ë®ï¿½ï¿½È¼Ãºï¿½ï¿½ï¿½ï¿½ï¿½ßµï¿½ï¿½Ó¡ï¿½ï¿½Æ¶ï¿½posï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½Î»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		//ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½â£¨ï¿½Å½ï¿½ï¿½ï¿½Ê±ï¿½?
+	    //ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½İ£ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½ï¿½Ä¼ï¿½
 	         
 	        //Resource resource = new FileSystemResource(TransferUtils.resolveFilePath(eupsThdFtpInf.getLocDir().trim(), eupsThdFtpInf.getLocFleNme().trim()));
 	        Resource resource = new FileSystemResource(objFil);
 	        Map<String, List<Map<String, Object>>> map = new HashMap<String, List<Map<String, Object>>>(); 
 	        FileMarshaller fileMarshaller = new FileMarshaller();
 	        
-	        if("WATR".equals(context.getData("comNo"))){	//ÖĞÉ½Ë®·Ñ WATR   fbpdWaterFmtIn
+	        if("WATR".equals(context.getData("comNo"))){	//ï¿½ï¿½É½Ë®ï¿½ï¿½ WATR   fbpdWaterFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdWaterFmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -159,7 +159,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 	        	String fileName = "waterFile";
 	        	parseOthrMapList(map, payOthrDetailLst, context, fileName);
 	        }
-	        if("NELE1".equals(context.getData("comNo"))){	//NELE_in_484999_1 µç·Ñ fbpdNele1FmtIn
+	        if("NELE1".equals(context.getData("comNo"))){	//NELE_in_484999_1 ï¿½ï¿½ï¿½ fbpdNele1FmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdNele1FmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -168,7 +168,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 	        	String fileName = "nele1File";
 	        	parseOthrMapList(map, payOthrDetailLst, context, fileName);
 	        }
-	        if("NELE".equals(context.getData("comNo"))){	//NELE_in_484999 µç·Ñ	fbpdNeleFmtIn
+	        if("NELE".equals(context.getData("comNo"))){	//NELE_in_484999 ï¿½ï¿½ï¿½	fbpdNeleFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdNeleFmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -177,7 +177,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 	        	String fileName = "neleFile";
 	        	parseNeleMapList(map, payNeleDetailLst, context, fileName);
 	        }
-	        if("GGAS".equals(context.getData("comNo"))){	//GGAS_in_484999 ÖĞÉ½ÃºÆø·Ñ	fbpdGgasFmtIn
+	        if("GGAS".equals(context.getData("comNo"))){	//GGAS_in_484999 ï¿½ï¿½É½Ãºï¿½ï¿½ï¿½	fbpdGgasFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdGgasFmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -186,7 +186,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 	        	String fileName = "ggasFile";
 	        	parseOthrMapList(map, payOthrDetailLst, context, fileName);
 	        }
-	        if("VANK".equals(context.getData("comNo"))){	//VANK_out_484999ÖĞÉ½ÎïÒµ¹ÜÀí·Ñ fbpdVankFmtIn
+	        if("VANK".equals(context.getData("comNo"))){	//VANK_out_484999ï¿½ï¿½É½ï¿½ï¿½Òµï¿½ï¿½ï¿½ï¿½ï¿½ fbpdVankFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdVankFmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -195,7 +195,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 	        	String fileName = "vankFile";
 	        	parseOthrMapList(map, payOthrDetailLst, context, fileName);
 	        }
-	        if("TTOM".equals(context.getData("comNo"))){	//TTOM_in_484999ÖĞÉ½ÌúÍ¨ fbpdTtomFmtIn
+	        if("TTOM".equals(context.getData("comNo"))){	//TTOM_in_484999ï¿½ï¿½É½ï¿½ï¿½Í¨ fbpdTtomFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdTtomFmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -204,7 +204,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 	        	String fileName = "ttomFile";
 	        	parseOthrMapList(map, payOthrDetailLst, context, fileName);
 	        }
-	        if("CTTV".equals(context.getData("comNo"))){	//CTTV_in_484999 ÖĞÉ½ÓĞÏßµçÊÓ fbpdCttvFmtIn
+	        if("CTTV".equals(context.getData("comNo"))){	//CTTV_in_484999 ï¿½ï¿½É½ï¿½ï¿½ï¿½ßµï¿½ï¿½ï¿½ fbpdCttvFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdCttvFmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -213,7 +213,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 	        	String fileName = "cttvFile";
 	        	parseOthrMapList(map, payOthrDetailLst, context, fileName);
 	        }
-	        if("NQTV".equals(context.getData("comNo"))){	//NQTV_in_484999ÄÏÇøÓĞÏßµçÊÓ fbpdNqtvFmtIn
+	        if("NQTV".equals(context.getData("comNo"))){	//NQTV_in_484999ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ßµï¿½ï¿½ï¿½ fbpdNqtvFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdNqtvFmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -222,7 +222,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 	        	String fileName = "nqtvFile";
 	        	parseOthrMapList(map, payOthrDetailLst, context, fileName);
 	        }
-	        if("XIND".equals(context.getData("comNo"))){	//XIND_in_484999 ĞÂ¶¼ÎïÒµ¹ÜÀí fbpdXindFmtIn
+	        if("XIND".equals(context.getData("comNo"))){	//XIND_in_484999 ï¿½Â¶ï¿½ï¿½ï¿½Òµï¿½ï¿½ï¿½ï¿½ fbpdXindFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdXindFmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -231,7 +231,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 	        	String fileName = "xindFile";
 	        	parseOthrMapList(map, payOthrDetailLst, context, fileName);
 	        }
-	        if("MPOS".equals(context.getData("comNo"))){	//MPOS_in_484999 ÖĞÉ½ÒÆ¶¯POS fbpdMposFmtIn
+	        if("MPOS".equals(context.getData("comNo"))){	//MPOS_in_484999 ï¿½ï¿½É½ï¿½Æ¶ï¿½POS fbpdMposFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdMposFmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -246,7 +246,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 	
 	
 	/**
-	 * ½âÎöÅúÁ¿ÎÄ¼ş²¢Èë¿â£¬½«´øÉú³ÉÅúÁ¿ÎÄ¼şµÄÊı¾İset½øcontext--µç·ÑNELE
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½â£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½setï¿½ï¿½context--ï¿½ï¿½ï¿½NELE
 	 * @param map
 	 * @param payNeleDetailLst
 	 * @param context
@@ -256,10 +256,10 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 	private List<Map<String, Object>> parseNeleMapList( Map<String, List<Map<String, Object>>> map,	List<GdFbpdNeleBatchTmp> payNeleDetailLst, Context context, String fileName) {
 		Map<String, Object> orgHeadMap = (Map<String, Object>) map.get("header");
 
-		// Ñ­»·Æ´×°´úÊÕ¸¶ÎÄ¼şÃ÷Ï¸map
-		List<Map<String, Object>> agtDeatil = new ArrayList<Map<String, Object>>(); // ´úÊÕ¸¶Ã÷Ï¸Ìå
+		// Ñ­ï¿½ï¿½Æ´×°ï¿½ï¿½ï¿½Õ¸ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½Ï¸map
+		List<Map<String, Object>> agtDeatil = new ArrayList<Map<String, Object>>(); // ï¿½ï¿½ï¿½Õ¸ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½
 		
-		List<Map<String, Object>> parseMap = (List<Map<String, Object>>) map.get("detail"); // ÎÄ¼şÌå
+		List<Map<String, Object>> parseMap = (List<Map<String, Object>>) map.get("detail"); // ï¿½Ä¼ï¿½ï¿½ï¿½
 		
 		List<GdFbpdNeleBatchTmp> bthTmpSession = new ArrayList<GdFbpdNeleBatchTmp>();
 		
@@ -274,20 +274,20 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 			
 		}
 		
-		// Æ´×°´úÊÕ¸¶Map
+		// Æ´×°ï¿½ï¿½ï¿½Õ¸ï¿½Map
 				Map<String, Object> agtMap = new HashMap<String, Object>();
 				Map<String, Object> agtHeaderMap = new HashMap<String, Object>(); // Í·
 
-				String totCnt = (String) orgHeadMap.get("TotCnt"); // ×Ü±ÊÊı
-				String totAmt = (String) orgHeadMap.get("TotAmt"); // ×Ü½ğ¶î
-				BigDecimal totAmtD = NumberUtils.centToYuan(totAmt); // ×Ü½ğ¶î
+				String totCnt = (String) orgHeadMap.get("TotCnt"); // ï¿½Ü±ï¿½ï¿½ï¿½
+				String totAmt = (String) orgHeadMap.get("TotAmt"); // ï¿½Ü½ï¿½ï¿½
+				BigDecimal totAmtD = NumberUtils.centToYuan(totAmt); // ï¿½Ü½ï¿½ï¿½
 
-				// Æ´×°´úÊÕ¸¶Í·ÎÄ¼ş
-				agtHeaderMap.put("totCount", totCnt); // ×Ü±ÈÊı
-				agtHeaderMap.put("totAmt", totAmtD.toString()); // ×Ü½ğ¶î
-//				agtHeaderMap.put("comNo", comNo); // µ¥Î»±àºÅ
+				// Æ´×°ï¿½ï¿½ï¿½Õ¸ï¿½Í·ï¿½Ä¼ï¿½
+				agtHeaderMap.put("totCount", totCnt); // ï¿½Ü±ï¿½ï¿½ï¿½
+				agtHeaderMap.put("totAmt", totAmtD.toString()); // ï¿½Ü½ï¿½ï¿½
+//				agtHeaderMap.put("comNo", comNo); // ï¿½ï¿½Î»ï¿½ï¿½ï¿½
 
-				// Æ´×°Õû¸ö´úÊÕ¸¶ÎÄ¼ş
+				// Æ´×°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õ¸ï¿½ï¿½Ä¼ï¿½
 				agtMap.put("header", agtHeaderMap);
 				agtMap.put("detail", agtDeatil);
 
@@ -299,7 +299,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 
 	
 	/**
-	 * ½âÎöÅúÁ¿ÎÄ¼ş²¢Èë¿â£¬½«´øÉú³ÉÅúÁ¿ÎÄ¼şµÄÊı¾İset½øcontext--ÖĞÉ½ÒÆ¶¯POS
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½â£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½setï¿½ï¿½context--ï¿½ï¿½É½ï¿½Æ¶ï¿½POS
 	 * @param map
 	 * @param payMposDetailLst
 	 * @param context
@@ -308,8 +308,8 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 	private List<Map<String, Object>> parseMposMapList( Map<String, List<Map<String, Object>>> map,
 			List<GdFbpdMposBatchTmp> payMposDetailLst, Context context, String fileName, String formatName) {
 		  // Map<String,Object> orgHeadMap=(Map<String, Object>) map.get("header");
-        List<Map<String, Object>> parseMap = (List<Map<String, Object>>) map.get("detail");  //ÎÄ¼şÌå
-        // List<Map<String, Object>> parseMap = operateFile.pareseFile(eupsThdFtpInf, "eleGzBatFmt"); // ½âÎöÖ»ÓĞdetailÎÄ¼ş
+        List<Map<String, Object>> parseMap = (List<Map<String, Object>>) map.get("detail");  //ï¿½Ä¼ï¿½ï¿½ï¿½
+        // List<Map<String, Object>> parseMap = operateFile.pareseFile(eupsThdFtpInf, "eleGzBatFmt"); // ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½detailï¿½Ä¼ï¿½
         for (Map<String, Object> orgMap : parseMap) {
         	
         	GdFbpdMposBatchTmp batchTmp = new GdFbpdMposBatchTmp();
@@ -326,7 +326,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
         	batchTmp.setTxnRnt((String) orgMap.get("txnRnt"));
         	batchTmp.setChkDate((String) orgMap.get("chkDate"));
         	batchTmp.setSeqNo((String) orgMap.get("seqNo"));
-        	batchTmp.setPosFld1(formatName);	//±¸ÓÃ×Ö¶Î1	Éú³ÉÎÄ¼ş¸ñÊ½Ãû
+        	batchTmp.setPosFld1(formatName);	//ï¿½ï¿½ï¿½ï¿½ï¿½Ö¶ï¿½1	ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½Ê½ï¿½ï¿½
         	batchTmp.setPosFld2((String) orgMap.get("posFld2"));
         	batchTmp.setPosFld3((String) orgMap.get("posFld3"));
         	batchTmp.setPosFld4((String) orgMap.get("posFld4"));
@@ -344,7 +344,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 
 	
 	/**
-	 * ½âÎöÅúÁ¿ÎÄ¼ş²¢Èë¿â£¬½«´øÉú³ÉÅúÁ¿ÎÄ¼şµÄÊı¾İset½øcontext--ÆäËû
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½â£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½setï¿½ï¿½context--ï¿½ï¿½ï¿½ï¿½
 	 * @param map
 	 * @param payOthrDetailLst
 	 * @param context
@@ -352,8 +352,8 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 	 */
 	private List<Map<String, Object>> parseOthrMapList( Map<String, List<Map<String, Object>>> map, List<GdFbpdObusBatchTmp> payOthrDetailLst, Context context, String fileName){
 		  // Map<String,Object> orgHeadMap=(Map<String, Object>) map.get("header");
-        List<Map<String, Object>> parseMap = (List<Map<String, Object>>) map.get("detail");  //ÎÄ¼şÌå
-        // List<Map<String, Object>> parseMap = operateFile.pareseFile(eupsThdFtpInf, "eleGzBatFmt"); // ½âÎöÖ»ÓĞdetailÎÄ¼ş
+        List<Map<String, Object>> parseMap = (List<Map<String, Object>>) map.get("detail");  //ï¿½Ä¼ï¿½ï¿½ï¿½
+        // List<Map<String, Object>> parseMap = operateFile.pareseFile(eupsThdFtpInf, "eleGzBatFmt"); // ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½detailï¿½Ä¼ï¿½
         for (Map<String, Object> orgMap : parseMap) {
         	
 //        	GdFbpdObusBatchTmp batchTmp = new GdFbpdObusBatchTmp();
