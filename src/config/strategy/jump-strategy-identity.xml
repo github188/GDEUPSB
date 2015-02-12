@@ -155,7 +155,14 @@
 	<!-- 第三方对账  对总账-->
 			<bean id="eups.checkThdSumAcctServiceActionELEC00"  
 					class="com.bocom.bbip.gdeupsb.strategy.efek.checkThdAcct.CheckThdSumAcctAction"/>	
-				
+					
+	<!-- 批量文件 准备(定时) -->
+				<bean id="eups.autoBatchPayCreateDataInitActionELEC00"  
+					class="com.bocom.bbip.gdeupsb.action.efek.batch.BatchDataFileAction"/>
+	<!-- 批量文件 返回-->
+				<bean id="eups.afterBatchAcpServiceActionELEC00"  
+					class="com.bocom.bbip.gdeupsb.action.efek.batch.BatchDataResultFileAction"/>
+					
 	<!-- 第三方对账  对明细-->
 			<bean id="eups.checkThdDetlAcctServiceActionELEC00"  
 					class="com.bocom.bbip.gdeupsb.strategy.efek.checkThdAcct.CheckThdDetlAcctAction"/>		
@@ -200,6 +207,14 @@
 		
 	<bean class="com.bocom.bbip.gdeupsb.strategy.trsp.AftPayToBankStrategyAction"
 		id="eups.aftPayToBankStrategyActionTRSP00" />
+	
+	<!-- ************广州文本************************* -->
+	<!-- 批量文件 准备(柜面) -->
+				<bean id="eups.fileBatchPayCreateDataServiceActionGZAG00"  
+					class="com.bocom.bbip.gdeupsb.action.gzag.batch.GzagBatchDataFileAction"/>
+	<!-- 批量文件 返回-->
+				<bean id="eups.autoFileBatchPayCreateDataServiceActionGZAG00"  
+					class="com.bocom.bbip.gdeupsb.action.gzag.batch.GzagBatchDataResultFileAction"/>
 	
 	
 </beans>
