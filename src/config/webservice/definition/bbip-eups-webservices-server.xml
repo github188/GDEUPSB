@@ -110,6 +110,10 @@
 	<!-- 珠海路桥 -->
 	<server-side-ws-def wsdl="ZHEUPSTransportService.wsdl"
 		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/Schema" />
+		
+	<!-- 华商一卡通 -->
+	<server-side-ws-def wsdl="HSSCChargeTestService.wsdl"
+		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.HSSCChargeTestService/Schema" />
 	
 		
 		
