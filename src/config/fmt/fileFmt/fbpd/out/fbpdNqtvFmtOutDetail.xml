@@ -5,27 +5,23 @@
 	encoding="GBK" trace="true">
 	<segment name="detail" encoding="GBK">
 	
-<!-- 
-  <Process name="NQTV_in_484999"  desc="南区有线电视" begin_ignore_line="1" sqn_flag="Y" sqn_node_name="SeqNo">   有线电视输入
-		<Data extend_flag="Y">
-			<Item name="TCusId" deli_asc="124"/>	  户号
-			<Item name="TCusNm" deli_asc="124"/>	  户名
-			<Item name="ActNo"  deli_asc="124"/>	  账号
-			<Item name="TxnAmt" deli_asc="124" expression="FMUL($TxnAmt,100,0)"/>	金额
-			<AddItem name="SeqNo"  expression="ADDCHAR($SeqNo,5,0,1)"/>
+<!-- <Process name="NQTV_out_484999"   desc="南区有线电视">   南区有线输出
+		<Data>
+			<Item name="TCusId" deli_asc="124" expression="ADDCHAR(DELSPACE($TCusId,all),20, ,0)"/>	  户号
+			<Item name="TCusNm" deli_asc="124" expression="ADDCHAR(DELSPACE($TCusNm,all),10, ,0)"/>	  户名
+			<Item name="ActNo"  deli_asc="124" expression="ADDCHAR(DELSPACE($ActNo,all),25, ,0)"/>	  账号
+			<Item name="TxnAmt" deli_asc="124" expression="ADDCHAR(AMTSIMPLEFMT($TxnAmt),12, ,1)"/>	金额       先将金额转换成123.12形式然后左边补空格共12位
+			<SwitchCode name="HRspCd" new_name="SucFlg" tab_name="H2T_NQTV_484" col_name="HRspCd"/>
+			<Item name="SucFlg"	deli_asc="124"/>	  标识 1成功 2失败
 		</Data>
 	</Process>
  -->
-
-	<varString name="thdCusNo" type="D|" />
-	<varString name="cusAc" type="D|" />
-	<varString name="cusNme" type="D|" />
-	<varString name="txnAmt" type="D|" referred="true" expression="exp:@com.bocom.bbip.utils.NumberUtils@yuanToCent(this.txnAMt)" />
+ 
+	<varString name="thdCusNo" type="D|" referred="true" expression='exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@DeleteAllSpaceAndADDChar(this.thdCusNo, 20, " ", 0)'/>
+	<varString name="cusNme" type="D|" referred="true" expression='exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@DeleteAllSpaceAndADDChar(this.cusNme, 10, " ", 0)'/>
+	<varString name="cusAc" type="D|" referred="true" expression='exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@DeleteAllSpaceAndADDChar(this.cusAc, 25, " ", 0)'/>
+	<varString name="txnAmt" type="D|" referred="true" expression='exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@FmtAmtAndAddChar(this.txnAmt, 12," ", 1)' /> 
+	<varString name="sucFlg" type="D|" />
 	
-	
-	<!-- <fixString name="seqNo"  referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GDExpCommonUtils@AddChar(this.seqNo,5,0,1)"/>
-	 -->
-		
-		
 	</segment>
 </message>

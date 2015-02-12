@@ -5,28 +5,29 @@
 	encoding="GBK" trace="true">
 	<segment name="detail" encoding="GBK">
 	
-	<!-- 
-	<Process name="NELE_in_484999_1"   desc="电费" sqn_flag="Y" sqn_node_name="SeqNo">   电费输入
-		<Data extend_flag="Y">
-			<Item name="AA"	     length="4" />	单位代码
-			<Item name="ActNo"	 length="26" expression="DELBOTHSPACE($ActNo)"/>	帐号
-			<Item name="BB"	length="3" />	币种
-			<Item name="TxnAmt"	 length="15"/>	金额
-			<Item name="CC"	     length="4" />	编号
-			<Item name="DD"	     length="12" />	编号
-			<Item name="EE"	     length="6" />	编号
+<!-- 	
+<Process name="NELE_out_484999_1" desc="电费">   电费输出
+		<Data>
+			<Item name="AA"	    length="4" />	单位代码
+			<Item name="ActNo"  length="26" align_mode="right" /> 帐号
+			<Item name="BB"	    length="3" />	币种
+			<Item name="TxnAmt" length="15" />	金额
+			<Item name="CC"	    length="4" value="0000"/>	编号
+			<Item name="DD"     length="12" />	编号
+			<Item name="EE"	    length="6" />	编号
+			<SwitchCode name="HRspCd" new_name="SucFlg" tab_name="H2T_NELE_484" col_name="HRspCd"/>
+			<Item name="SucFlg"	 length="01"/>	  标识
 		</Data>
 	</Process>
-	 -->
-	 
+	  -->
 	 
 	<fixString name="comNo" length="4" />
-	<fixString name="cusAc" length="26" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GDExpCommonUtils@AddChar(this.seqNo,5,0,1)"/>
+	<fixString name="cusAc" length="26" />
 	<fixString name="ccy" length="3" />
 	<fixString name="txnAmt" length="15" />
-	<fixString name="tmpFld1" length="4" />
+	<fixString name="tmpFld1" length="4" default="0000" />
 	<fixString name="tmpFld2" length="12" />
 	<fixString name="tmpFld3" length="6" />
-		
+	<fixString name="sucFlg" length="1" />
 	</segment>
 </message>

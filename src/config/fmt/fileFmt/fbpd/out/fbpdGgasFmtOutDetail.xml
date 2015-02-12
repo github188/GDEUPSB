@@ -5,19 +5,20 @@
 	encoding="GBK" trace="true">
 	<segment name="detail" encoding="GBK">
 	
-<!-- 
-	<Process name="GGAS_in_484999" desc="中山煤气费" sqn_flag="Y" sqn_node_name="SeqNo">   煤气输入
-		<Data extend_flag="Y">
+
+<!-- <Process name="GGAS_out_484999" desc="中山煤气费">   煤气输出
+		<Data>
 			<Item name="AA"	     length="20"/>	  机构号
 			<Item name="TCusId"	 length="32"/>	  户号
 			<Item name="ActNo"	 length="25"/>	  账号
-			<Item name="TxnAmt"	 length="13" expression="FMUL($TxnAmt,100,0)"/>	金额
+			<Item name="TxnAmt"	 length="13" expression="ADDCHAR(AMTSIMPLEFMT($TxnAmt),11,0,1)"/>	金额
 			<Item name="BB"	     length="25"/>	  发单日期
 			<Item name="CC"	     length="8"/>	    提交日期
-			<AddItem name="SeqNo"    expression="ADDCHAR($SeqNo,5,0,1)"/>
+			<SwitchCode name="HRspCd" new_name="SucFlg" tab_name="H2T_GGAS_484" col_name="HRspCd"/>
+			<Item name="SucFlg"	 length="05"/>	  标识
 		</Data>
 	</Process>
---> 
+  -->
 
 	<fixString name="comNo" length="20" />
 	<fixString name="thdCusNo" length="32" />
@@ -25,7 +26,6 @@
 	<fixString name="txnAmt" length="13" referred="true" expression="exp:@com.bocom.bbip.utils.NumberUtils@yuanToCent(this.txnAMt)" />
 	<fixString name="chrDte" length="25" />
 	<fixString name="subDte" length="8" />
-	<!-- <fixString name="seqNo" length="5" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GDExpCommonUtils@AddChar(this.seqNo,5,0,1)"/> -->
-		
+	<fixString name="sucFlg" length="5" />		
 	</segment>
 </message>

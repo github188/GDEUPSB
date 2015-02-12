@@ -5,22 +5,21 @@
 	encoding="GBK" trace="true">
 	<segment name="detail" encoding="GBK">
 	
-<!-- 
-   <Process name="CTTV_in_484999"  desc="中山有线电视"  sqn_flag="Y" sqn_node_name="SeqNo">   有线电视输入
-		<Data extend_flag="Y">
-			<Item name="TCusId" length="10"/>	    户号
-			<Item name="ActNo"  length="30"/>   	  账号
-			<Item name="TxnAmt" deli_asc="10" expression="FMUL($TxnAmt,100,0)"/>	金额
-			<AddItem name="SeqNo"    expression="ADDCHAR($SeqNo,5,0,1)"/>
+ <!--  <Process name="CTTV_out_484999"   desc="中山有线电视">   铁通输出
+		<Data>
+      <Item name="TCusId" length="10"/>      户号
+      <Item name="ActNo"  length="30"/>       账号
+	<Item name="TxnAmt" length="13" expression="AMTSIMPLEFMT($TxnAmt)" align_mode="left"/>	金额
+		<SwitchCode name="HRspCd" new_name="SucFlg" tab_name="H2T_CTTV_484" col_name="HRspCd"/>
+		<Item name="SucFlg" length="01"/>	  标识 1成功 2失败
 		</Data>
 	</Process>
  -->
-
+ 
 	<fixString name="thdCusNo" length="10" />
 	<fixString name="cusAc" length="30" />
-	<varString name="txnAmt" type="D\n" referred="true" expression="exp:@com.bocom.bbip.utils.NumberUtils@yuanToCent(this.txnAMt)" />
-	<!-- <fixString name="seqNo" length="5" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GDExpCommonUtils@AddChar(this.seqNo,5,0,1)"/> -->
-	
+	<fixString name="txnAmt" length="13" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AMTFMT2(this.txnAMt)" />
+	<fixString name="sucFlg" length="1" />
 		
 		
 	</segment>

@@ -5,25 +5,25 @@
 	encoding="GBK" trace="true">
 	<segment name="detail" encoding="GBK">
 	
-
-<!-- 	<Process name="TTOM_in_484999"  desc="中山铁通"  sqn_flag="Y" sqn_node_name="SeqNo">   铁通输入
-		<Data extend_flag="Y">
+<!-- 
+<Process name="TTOM_out_484999" desc="中山铁通">   铁通输出
+		<Data>
 			<Item name="AA"     deli_asc="44"/>	  机构号
-			<Item name="TCusId"	deli_asc="44"/>	  户号
-			<Item name="TCusNm"	deli_asc="44"/>	  户名
-			<Item name="ActNo"	deli_asc="44"/>	  账号
-			<Item name="TxnAmt"	deli_asc="44" expression="FMUL($TxnAmt,100,0)"/>	金额
-			<AddItem name="SeqNo"    expression="ADDCHAR($SeqNo,5,0,1)"/>
+			<Item name="TCusId" deli_asc="44"/>	  户号
+			<Item name="TCusNm" deli_asc="44"/>	  户名
+			<Item name="ActNo"  deli_asc="44"/>	  账号
+			<Item name="TxnAmt" deli_asc="44" expression="AMTSIMPLEFMT($TxnAmt)"/>	金额
+			<SwitchCode name="HRspCd" new_name="SucFlg" tab_name="H2T_TTOM_484" col_name="HRspCd"/>
+			<Item name="SucFlg"	length="04"/>	  标识
 		</Data>
 	</Process>
  -->
-
+ 
 	<varString name="comNo" type="D," />
 	<varString name="thdCusNo" type="D," />
 	<varString name="cusNme" type="D," />
 	<varString name="cusAc" type="D," />
-	<varString name="txnAmt" type="D," referred="true" expression="exp:@com.bocom.bbip.utils.NumberUtils@yuanToCent(this.txnAMt)" />
-	<!-- <varString name="seqNo" type="D," referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GDExpCommonUtils@AddChar(this.seqNo,5,0,1)"/> -->
-	
+	<varString name="txnAmt" type="D," referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AMTFMT2(this.txnAMt)" />
+	<fixString name="sucFlg" length="4" />
 	</segment>
 </message>
