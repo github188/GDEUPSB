@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
-import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
@@ -36,7 +36,7 @@ public class CancelBatchAction extends BaseAction {
 	   //判断状态和返回
 	   if("S".equals(batSts)){
 		   context.setData(GDParamKeys.MSGTYP, "N");
-		   context.setData(ParamKeys.RSP_CDE, Constants.HOST_RESPONSE_CODE_SUCC);
+		   context.setData(ParamKeys.RSP_CDE, GDConstants.SUCCESS_CODE);
 		   context.setData(ParamKeys.RSP_MSG, "批次【批次号："+batNo+"】【交易日期："+rsvFld2+"】【交易时间："+rsvFld3+"】已扣款，取消失败");
 		   context.setData(ParamKeys.RSV_FLD4, context.getData(ParamKeys.RSP_MSG));
 		   logger.info("~~~~~~~~~~~账务处理完成");
@@ -46,14 +46,14 @@ public class CancelBatchAction extends BaseAction {
 		   gdEupsBatchConsoleInfoRepository.updateConsoleInfo(gdEupsBatchConsoleInfo);
 
 		   context.setData(GDParamKeys.MSGTYP, "N");
-		   context.setData(ParamKeys.RSP_CDE, Constants.HOST_RESPONSE_CODE_SUCC);
+		   context.setData(ParamKeys.RSP_CDE, GDConstants.SUCCESS_CODE);
 		   context.setData(ParamKeys.RSP_MSG, "批次批次【批次号："+batNo+"】【交易日期："+rsvFld2+"】【交易时间："+rsvFld3+"】取消成功");
 		   context.setData(GDParamKeys.CANCEL_SIGN, "1");
 		   context.setData(ParamKeys.RSV_FLD4, context.getData(ParamKeys.RSP_MSG));
 		   logger.info("~~~~~~~~~~~~~~~~取消成功");
 	   }else if("C".equals(batSts)){
 		   context.setData(GDParamKeys.MSGTYP, "N");
-		   context.setData(ParamKeys.RSP_CDE, Constants.HOST_RESPONSE_CODE_SUCC);
+		   context.setData(ParamKeys.RSP_CDE, GDConstants.SUCCESS_CODE);
 		   context.setData(ParamKeys.RSP_MSG, "批次【批次号："+batNo+"】【交易日期："+rsvFld2+"】【交易时间："+rsvFld3+"】已经撤销");
 		   context.setData(GDParamKeys.CANCEL_SIGN, "1");
 		   context.setData(ParamKeys.RSV_FLD4, context.getData(ParamKeys.RSP_MSG));
