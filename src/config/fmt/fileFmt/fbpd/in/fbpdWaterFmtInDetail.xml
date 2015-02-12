@@ -25,7 +25,6 @@
 	<fixString name="cusNme" length="30" />
 	<fixString name="thdCusNo" length="10" />
 	<fixString name="txnAmt" length="13" referred="true" expression="exp:@com.bocom.bbip.utils.NumberUtils@yuanToCent(this.txnAMt)" />
-	<!-- <fixString name="seqNo" length="5" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GDExpCommonUtils@AddChar(this.seqNo,5,0,1)"/> -->
 		
 	</segment>
 </message>

@@ -21,7 +21,7 @@
 	 
 	 
 	<fixString name="comNo" length="4" />
-	<fixString name="cusAc" length="26" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GDExpCommonUtils@AddChar(this.seqNo,5,0,1)"/>
+	<fixString name="cusAc" length="26" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@DeleteSpace(this.cusAc)"/>
 	<fixString name="ccy" length="3" />
 	<fixString name="txnAmt" length="15" />
 	<fixString name="tmpFld1" length="4" />
