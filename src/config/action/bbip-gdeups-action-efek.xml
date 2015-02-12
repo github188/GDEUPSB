@@ -33,9 +33,6 @@
 	<!--  供电批量代扣取消交易-->
 	<action   class="com.bocom.bbip.gdeupsb.action.efek.batch.CancelBatchAction"
 		id="gdeupsb.CancelBatchAction" />		
-	<!--  供电批量批量数据准备-->
-	<action   class="com.bocom.bbip.gdeupsb.action.efek.batch.BatchDataFileAction"
-		id="gdeupsb.batchDataFileAction" />			
 		
 		
 </x:beans>
