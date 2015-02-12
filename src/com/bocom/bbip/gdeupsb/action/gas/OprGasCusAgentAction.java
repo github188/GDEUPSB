@@ -80,7 +80,7 @@ public class OprGasCusAgentAction extends BaseAction{
 				throw new CoreException(ErrorCodes.EUPS_CANCEL_CHECK_AUTH_FAIL);
 			}
 		}
-
+	logger.info("已授权，可进行交易");
 		//无需查询单位协议 now
 //查询单位协议   SELECT TActNo,BBusTyp,CrpCod FROM savcrpagr where CAgtNo='%s' and SvrSts='1'      //comNo    useSts
 //		EupsThdBaseInfo thdBaseInfo = BeanUtils.toObject(context.getDataMap(), EupsThdBaseInfo.class);
@@ -129,6 +129,7 @@ public class OprGasCusAgentAction extends BaseAction{
 				}
 				context.setDataMap(accessObject.getPayload());
 				context.setData("tCommd", "Add");
+				logger.info("可以新增签约");
 			}
 			
 			if("2".equals(context.getData("optFlg"))){ 	// optFlg = 2 	修改
@@ -141,6 +142,7 @@ public class OprGasCusAgentAction extends BaseAction{
 				}
 				context.setDataMap(accessObject.getPayload());
 				context.setData("tCommd", "Edit");
+				logger.info("============可以对签约协议进行修改");
 			}
 			
 			if("3".equals(context.getData("optFlg"))){ 	// optFlg = 3	删除
@@ -153,6 +155,7 @@ public class OprGasCusAgentAction extends BaseAction{
 				}
 				context.setDataMap(accessObject.getPayload());
 				context.setData("tCommd", "Stop");
+				logger.info("===========无法删除");
 			}
 			
 			String date = DateUtils.format(new Date(), DateUtils.STYLE_SIMPLE_DATE);
@@ -162,6 +165,8 @@ public class OprGasCusAgentAction extends BaseAction{
 				context.setData("regDat", date);
 				context.setData("txnCod", "GASHXY");
 				context.setData("objSvr", "STDHGAS1");
+				
+				logger.info("=========context=" + context);
 				
 				Map<String, Object> tradeMap1 = get(ThirdPartyAdaptor.class).trade(context);
 				context.setDataMap(tradeMap1);
@@ -179,6 +184,8 @@ public class OprGasCusAgentAction extends BaseAction{
 					context.setData("msgTyp", "N");
 					context.setData("rspCod", GDConstants.GDEUPSB_TXN_SUCC_CODE);
 					context.setData("rspMsg", "新增成功");
+					
+					logger.info("============新增成功");
 				}
 				if("EditOK".equals(context.getData("rtnCod").toString().trim())){	 //第三方返回修改成功，更新协议表，动态协议表插入数据
 					//代扣协议管理-修改和新增 maintainAgentCollectAgreement
@@ -188,6 +195,8 @@ public class OprGasCusAgentAction extends BaseAction{
 					context.setData("msgTyp", "N");
 					context.setData("rspCod", GDConstants.GDEUPSB_TXN_SUCC_CODE);
 					context.setData("rspMsg", "修改成功");
+					
+					logger.info("============修改成功");
 				}
 				if("StopOK".equals(context.getData("rtnCod").toString().trim())){	////第三方返回删除成功，delete协议表相关数据，动态协议表插入数据
 					//代扣协议管理-删除	deleteAgentCollectAgreement
@@ -197,6 +206,8 @@ public class OprGasCusAgentAction extends BaseAction{
 					context.setData("msgTyp", "N");
 					context.setData("rspCod", GDConstants.GDEUPSB_TXN_SUCC_CODE);
 					context.setData("rspMsg", "删除成功");
+					
+					logger.info("============删除成功");
 				}
 				if("Double".equals(context.getData("rtnCod").toString().trim())){		//燃气返回已存在协议
 					context.setData("msgTyp", "E");
