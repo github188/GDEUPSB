@@ -5,8 +5,8 @@ import java.util.Date;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
@@ -26,7 +26,7 @@ public class AftPayFeeAction implements Executable{
 		logger.info("============Start AftPayFeeAction");
 
 		String rspCod=context.getData(ParamKeys.RSP_CDE).toString().trim();
-		if(rspCod.equals(Constants.HOST_RESPONSE_CODE_SUCC)){
+		if(rspCod.equals(GDConstants.SUCCESS_CODE)){
 					context.setData(ParamKeys.TXN_STS, "S");
 					context.setData("ApCode", "46");
 					context.setData("OFmtCd", "999");
