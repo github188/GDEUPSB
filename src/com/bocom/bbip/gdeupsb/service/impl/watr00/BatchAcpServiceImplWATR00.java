@@ -55,7 +55,7 @@ public class BatchAcpServiceImplWATR00 implements BatchAcpService {
 	BTPService BTPservice;
 	
 	@Override
-	public List<EupsBatchPayEntity> prepareBatchDeal(	PrepareBatchAcpDomain domain, Context context) throws CoreException {
+	public void prepareBatchDeal(	PrepareBatchAcpDomain domain, Context context) throws CoreException {
 		logger.info("BatchAcpServiceImplWATR00 prepareBatchDeal start ... ...");
 		String br = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.BR, ErrorCodes.EUPS_FIELD_EMPTY);//机构号
 		String tlr = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.TELLER, ErrorCodes.EUPS_FIELD_EMPTY);//柜员号
@@ -78,7 +78,6 @@ public class BatchAcpServiceImplWATR00 implements BatchAcpService {
 		context.setData(ParamKeys.TOT_CNT, map.get(ParamKeys.TOT_CNT));
 		context.setData(ParamKeys.TOT_AMT, map.get(ParamKeys.TOT_AMT));
 		logger.info("BatchAcpServiceImplWATR00 prepareBatchDeal end ... ...");
-		return null;
 	}
 	
 	private Map<String,Object> buildBatchFile(Context context,String filNam,String dir,String comNo) throws CoreException{
