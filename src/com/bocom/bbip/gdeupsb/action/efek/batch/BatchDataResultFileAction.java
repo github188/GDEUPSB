@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
@@ -22,6 +24,7 @@ import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
 public class BatchDataResultFileAction implements AfterBatchAcpService{
+	private final static Log logger=LogFactory.getLog(BatchDataResultFileAction.class);
 	@Autowired
 	OperateFileAction operateFile;
 	@Autowired
@@ -36,7 +39,8 @@ public class BatchDataResultFileAction implements AfterBatchAcpService{
 	 * 南方电网 结果文件处理
 	 */
 	public void afterBatchDeal(AfterBatchAcpDomain afterbatchacpdomain, Context context) throws CoreException {
-			//
+		logger.info("===============Start  BatchDataResultFileAction");	
+		//
 			Map<String, Object> resultMap = new HashMap<String, Object>();
 			
 			String batNo=context.getData(ParamKeys.BAT_NO).toString();
@@ -60,5 +64,7 @@ public class BatchDataResultFileAction implements AfterBatchAcpService{
 			eupsThdFtpConfig.setLocFleNme(fileName);
 			eupsThdFtpConfig.setRmtFleNme(fileName);
 			operateFTP.putCheckFile(eupsThdFtpConfig);
+			
+			logger.info("===============End  BatchDataResultFileAction");	
 		}
 }
