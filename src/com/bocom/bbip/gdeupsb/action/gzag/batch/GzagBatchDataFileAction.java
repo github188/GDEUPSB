@@ -10,12 +10,13 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.comp.BBIPPublicService;
-import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdBaseInfoRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
+import com.bocom.bbip.eups.spi.service.batch.BatchAcpService;
+import com.bocom.bbip.eups.spi.vo.PrepareBatchAcpDomain;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.AgtFileBatchDetail;
 import com.bocom.bbip.gdeupsb.entity.GDEupsGzagBatchTmp;
@@ -26,9 +27,8 @@ import com.bocom.bbip.thd.org.apache.commons.collections.CollectionUtils;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
-import com.bocom.jump.bp.core.CoreRuntimeException;
 
-public class GzagBatchDataFileAction extends BaseAction{
+public class GzagBatchDataFileAction implements BatchAcpService{
 	private final static Log logger=LogFactory.getLog(GzagBatchDataFileAction.class);
 		/**
 		 * 广州文本  数据准备
@@ -41,11 +41,20 @@ public class GzagBatchDataFileAction extends BaseAction{
 	GDEupsEleTmpRepository gdEupsEleTmpRepository;
 	@Autowired
 	EupsThdBaseInfoRepository eupsThdBaseInfoRepository;
-	public void execute(Context context)throws CoreException,CoreRuntimeException{
+	@Autowired
+	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
+	@Autowired
+	BBIPPublicService bbipPublicService;
+	@Autowired
+	OperateFileAction operateFileAction;
+	@Override
+	public void prepareBatchDeal(PrepareBatchAcpDomain preparebatchacpdomain,
+			Context context) throws CoreException {
+		
 			logger.info("==========Start  BatchDataFileAction");
 			context.setData(ParamKeys.WS_TRANS_CODE, "99");
 			String comNo=context.getData(ParamKeys.COMPANY_NO).toString();
-			EupsThdFtpConfig eupsThdFtpConfig=get(EupsThdFtpConfigRepository.class).findOne("gzagBatch");
+			EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("gzagBatch");
 			//文件名称
 			String fileName=eupsThdFtpConfig.getLocFleNme();
 			String fileId="";
@@ -63,13 +72,13 @@ public class GzagBatchDataFileAction extends BaseAction{
 				logger.info("没有该单位编号");
 			}
 			context.setData("fileId", fileId);
-			List<Map<String, Object>> mapList=get(OperateFileAction.class).pareseFile(eupsThdFtpConfig, fileId);
+			List<Map<String, Object>> mapList=operateFileAction.pareseFile(eupsThdFtpConfig, fileId);
 			if(CollectionUtils.isEmpty(mapList)){
 					throw new CoreException("~~~~~~~~~~~~处理状态异常");
 			}
 			for (Map<String, Object> map : mapList) {
 					map.put(ParamKeys.EUPS_FILE_HEADER, BeanUtils.toMap(context));
-					map.put(ParamKeys.SEQUENCE, get(BBIPPublicService.class).getBBIPSequence());
+					map.put(ParamKeys.SEQUENCE, bbipPublicService.getBBIPSequence());
 					GDEupsGzagBatchTmp gdEupsGzagBatchTmp=BeanUtils.toObject(map,GDEupsGzagBatchTmp.class);
 					gdEupsGzagBatchTmp.setBakFld(comNo);
 					gdEupsGzagBatchTmpRepository.insert(gdEupsGzagBatchTmp);
