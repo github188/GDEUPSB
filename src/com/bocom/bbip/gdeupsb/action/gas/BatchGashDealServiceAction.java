@@ -1,4 +1,4 @@
-﻿package com.bocom.bbip.gdeupsb.action.gas;
+package com.bocom.bbip.gdeupsb.action.gas;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
