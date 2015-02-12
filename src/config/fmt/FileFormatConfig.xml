@@ -162,6 +162,7 @@
 	
 	
 	<!-- 中山文件批扣Start! -->
+	<!-- IN-START -->
 	<!-- 水费文件格式fbpdWaterFmtIn -->
 	<file id="fbpdWaterFmtIn" name="fbpdWaterFmtIn" encoding="GBK"
 		lineSeparator="\n">
@@ -223,6 +224,72 @@
 		lineSeparator="\n">
 		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/in/fbpdMposFmtInDetail.xml" encoding="GBK" />
 	</file>
+	<!-- IN-END -->
+	
+	
+	<!-- OUT-START -->
+	<!-- 水费文件格式fbpdWaterFmtOut -->
+	<file id="fbpdWaterFmtOut" name="fbpdWaterFmtOut" encoding="GBK"
+		lineSeparator="\n">
+		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/out/fbpdWaterFmtOutDetail.xml" encoding="GBK" />
+	</file>
+	
+	<!-- 电费1 fbpdNele1FmtOut-->
+	<file id="fbpdNele1FmtOut" name="fbpdNele1FmtOut" encoding="GBK"
+		lineSeparator="\n">
+		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/out/fbpdNele1FmtOutDetail.xml" encoding="GBK" />
+	</file>
+	
+	<!-- 电费 fbpdNeleFmtOut--><!-- head && detail  -->
+	<file id="fbpdNeleFmtOut" name="fbpdNeleFmtOut" encoding="GBK"
+		lineSeparator="\n">
+		<line name="header" ref="config/fmt/fileFmt/fbpd/out/fbpdNeleFmtOutHeader.xml" encoding="GBK" />
+		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/out/fbpdNeleFmtOutDetail.xml" encoding="GBK" />
+	</file>
+	
+	
+	<!-- 中山煤气费	fbpdGgasFmtOut -->
+	<file id="fbpdGgasFmtOut" name="fbpdGgasFmtOut" encoding="GBK"
+		lineSeparator="\n">
+		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/out/fbpdGgasFmtOutDetail.xml" encoding="GBK" />
+	</file>
+	
+	<!-- 中山物业管理费 fbpdVankFmtOut -->
+	<file id="fbpdVankFmtOut" name="fbpdVankFmtOut" encoding="GBK"
+		lineSeparator="\n">
+		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/out/fbpdVankFmtOutDetail.xml" encoding="GBK" />
+	</file>
+	
+	<!-- 中山铁通 fbpdTtomFmtOut -->
+	<file id="fbpdTtomFmtOut" name="fbpdTtomFmtOut" encoding="GBK"
+		lineSeparator="\n">
+		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/out/fbpdTtomFmtOutDetail.xml" encoding="GBK" />
+	</file>
+	
+	<!-- 中山有线电视 fbpdCttvFmtOut -->
+	<file id="fbpdCttvFmtOut" name="fbpdCttvFmtOut" encoding="GBK"
+		lineSeparator="\n">
+		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/out/fbpdCttvFmtOutDetail.xml" encoding="GBK" />
+	</file>
+	
+	<!-- 南区有线电视 fbpdNqtvFmtOut -->
+	<file id="fbpdNqtvFmtOut" name="fbpdNqtvFmtOut" encoding="GBK"
+		lineSeparator="\n">
+		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/out/fbpdNqtvFmtOutDetail.xml" encoding="GBK" />
+	</file>
+	
+	 <!-- 新都物业管理 fbpdXindFmtOut -->
+	 <file id="fbpdXindFmtOut" name="fbpdXindFmtOut" encoding="GBK"
+		lineSeparator="\n">
+		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/out/fbpdXindFmtOutDetail.xml" encoding="GBK" />
+	</file>
+	
+	<!-- 中山移动POS fbpdMposFmtOut -->
+	<file id="fbpdMposFmtOut" name="fbpdMposFmtOut" encoding="GBK"
+		lineSeparator="\n">
+		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/out/fbpdMposFmtOutDetail.xml" encoding="GBK" />
+	</file>
+	<!-- OUT-END -->
 	<!-- 中山文件批扣End! -->
 	
 	<!-- 汕头水费批扣文件解析 start  -->
