@@ -377,7 +377,10 @@ public class ThdTransMainInterceptorExt implements Interceptor {
         }
         log.info("================get sqn:context=" + context);
 
-        Date rspTime = context.getData(ParamKeys.TXN_DATE);
+        Date rspTime = null;
+        if(null !=context.getData(ParamKeys.TXN_DATE)){
+        	rspTime=DateUtils.parse(context.getData(ParamKeys.TXN_DATE).toString());
+        }
         if (null != rspTime) {
             context.setData(ParamKeys.RESPONSE_TIME, rspTime);
         } else {
