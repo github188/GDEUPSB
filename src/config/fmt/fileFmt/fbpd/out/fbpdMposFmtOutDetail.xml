@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet spacket.xsd"
+	encoding="GBK" trace="true">
+	<segment name="detail" encoding="GBK">
+	
+<!-- <Process name="MPOS_in_484999"  desc="中山移动POS" begin_ignore_line="1" end_ignore_line="1" sqn_flag="Y" sqn_node_name="SeqNo">   移动POS输入
+    <Data extend_flag="Y">
+			<Item name="AA"       length="8"/>	  清算日期
+		  <Item name="BB"       length="15"/>	  支付终端编号
+			<Item name="ActNo"	  length="21" expression="DELBOTHSPACE($ActNo)"/>	  签约商户卡号
+			<Item name="CC"	      length="21"/>	  刷卡卡号
+			<Item name="DD"	      length="8"/>	  刷卡交易日期
+			<Item name="EE"	      length="6"/>	  刷卡交易时间
+			<Item name="FF"	      length="12"/>	  刷卡交易系统跟踪号
+			<Item name="GG"	      length="21" expression="FMUL($FF,1,0)"/>	刷卡金额
+			<Item name="TCusId"	  length="15" expression="DELBOTHSPACE($TCusId)"/>	  刷卡商户编号
+			<Item name="TxnAmt"   length="21" expression="FMUL($TxnAmt,1,0)"/>	本金
+			<Item name="HH"	      length="21" expression="FMUL($HH,1,0)"/>	手续费
+			<Item name="II"	      length="21" expression="FMUL($II,1,0)"/>	租金
+			<AddItem name="SeqNo"    expression="ADDCHAR($SeqNo,5,0,1)"/>
+		</Data>
+	</Process>
+ -->
+ 
+ <!-- 
+	<fixString name="thdCusNo" length="10" />
+	<fixString name="cusAc" length="30" />
+	<varString name="txnAmt" type="" referred="true" expression="exp:@com.bocom.bbip.utils.NumberUtils@yuanToCent(this.txnAMt)" />
+	<fixString name="seqNo" length="5" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GDExpCommonUtils@AddChar(this.seqNo,5,0,1)"/>
+	 -->
+	
+	
+	<fixString name="chkDate" length="8" />
+	<fixString name="posNo" length="15" />
+	<fixString name="comAc" length="21" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GDExpCommonUtils@trimBothSpace(this.comAc)"/>
+	<fixString name="cusAc" length="21" />
+	<fixString name="txnDte" length="8" />
+	<fixString name="txnTme" length="6" />
+	<fixString name="thdSqn" length="12" />
+	<fixString name="txnFee" length="21" />
+	<fixString name="comNo" length="15" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GDExpCommonUtils@trimBothSpace(this.comNo)"/>
+	<fixString name="txnAmt" length="21" />
+	<fixString name="txnChr" length="21" />
+	<fixString name="txnRnt" length="21" />
+	
+	
+		
+		
+	</segment>
+</message>

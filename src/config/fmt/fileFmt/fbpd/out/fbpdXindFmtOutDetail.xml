@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet spacket.xsd"
+	encoding="GBK" trace="true">
+	<segment name="detail" encoding="GBK">
+	
+ 
+<!--  	<Process name="XIND_in_484999"  desc="新都物业管理" sqn_flag="Y" sqn_node_name="SeqNo">   新都物业管理输入
+		<Data extend_flag="Y">
+			<Item name="ActNo"  deli_asc="44"/>	  账号
+			<Item name="TxnAmt" deli_asc="44" expression="FMUL($TxnAmt,100,0)"/>	金额
+			<Item name="TCusNm" deli_asc="10"/>	  户名
+			<AddItem name="SeqNo"    expression="ADDCHAR($SeqNo,5,0,1)"/>
+		</Data>
+	</Process>
+ -->
+ 
+	<varString name="cusAc" type="D," />
+	<varString name="txnAmt" type="D," referred="true" expression="exp:@com.bocom.bbip.utils.NumberUtils@yuanToCent(this.txnAMt)" />
+	<varString name="cusNme" type="D," />
+	
+	<!-- <fixString name="seqNo" length="5" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GDExpCommonUtils@AddChar(this.seqNo,5,0,1)"/> -->
+	
+		
+		
+	</segment>
+</message>
