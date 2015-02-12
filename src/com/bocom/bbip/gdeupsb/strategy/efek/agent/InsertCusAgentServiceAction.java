@@ -21,6 +21,7 @@ import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.eups.spi.service.agent.CommInsertCusAgentService;
 import com.bocom.bbip.eups.spi.vo.CusAgentCollectDomain;
 import com.bocom.bbip.eups.spi.vo.CustomerDomain;
+import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
@@ -58,11 +59,11 @@ public class InsertCusAgentServiceAction implements CommInsertCusAgentService{
 				                context.setData(ParamKeys.RESPONSE_CODE, responseCode);
 				                
 				             // 第三方交易成功
-					                if (Constants.RESPONSE_CODE_SUCC.equals(responseCode)) {
+					                if (GDConstants.SUCCESS_CODE.equals(responseCode)) {
 					                    logger.info("The third process response successful.");
 					                    context.setData(ParamKeys.TXN_STS, Constants.TXNSTS_SUCCESS);
 					                    context.setData(ParamKeys.THD_TXN_STS, Constants.THD_TXNSTS_SUCCESS);
-					                    context.setData(ParamKeys.RSP_CDE, Constants.HOST_RESPONSE_CODE_SUCC);
+					                    context.setData(ParamKeys.RSP_CDE, GDConstants.SUCCESS_CODE);
 					                    context.setData(ParamKeys.RSP_MSG, "交易成功");
 					                }else if(BPState.isBPStateReversalFail(context)){
 					                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
@@ -156,7 +157,7 @@ public class InsertCusAgentServiceAction implements CommInsertCusAgentService{
 	    	throw new CoreException("解约第三方系统错误");
 	    }
 	    String thdRspCde=map.get(ParamKeys.RESPONSE_CODE).toString();
-	    if(!thdRspCde.equals(Constants.HOST_RESPONSE_CODE_SUCC) ){
+	    if(!thdRspCde.equals(GDConstants.SUCCESS_CODE) ){
 	    	throw new CoreException("解约失败");
 	    }
     	return null;
