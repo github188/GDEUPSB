@@ -20,6 +20,7 @@ import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsTransJournal;
 import com.bocom.bbip.eups.repository.EupsAmountInfoRepository;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
+import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.QryCusInformation;
 import com.bocom.bbip.utils.DateUtils;
@@ -138,11 +139,11 @@ public class QryCusBaseMsgAction extends BaseAction{
 							                context.setData(ParamKeys.RESPONSE_CODE, responseCode);
 							                
 							             // 第三方交易成功
-								                if (Constants.RESPONSE_CODE_SUCC.equals(responseCode)) {
+								                if (GDConstants.SUCCESS_CODE.equals(responseCode)) {
 								                    log.info("The third process response successful.");
 								                    context.setData(ParamKeys.TXN_STS, Constants.TXNSTS_SUCCESS);
 								                    context.setData(ParamKeys.THD_TXN_STS, Constants.THD_TXNSTS_SUCCESS);
-								                    context.setData(ParamKeys.RSP_CDE, Constants.HOST_RESPONSE_CODE_SUCC);
+								                    context.setData(ParamKeys.RSP_CDE, GDConstants.SUCCESS_CODE);
 								                    context.setData(ParamKeys.RSP_MSG, "交易成功");
 								                }else if(BPState.isBPStateReversalFail(context)){
 								                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);

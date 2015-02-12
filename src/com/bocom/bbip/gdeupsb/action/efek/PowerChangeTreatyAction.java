@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.eupspayment.BuaPayment;
-import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -119,8 +119,8 @@ public class PowerChangeTreatyAction extends BaseAction{
 //		          <Return/>
 //		        </Default>
 //		      </Switch>
-			context.setData("PKGCNT", Constants.HOST_RESPONSE_CODE_SUCC);
+			context.setData("PKGCNT", GDConstants.SUCCESS_CODE);
 			context.setData(ParamKeys.MESSAGE_TYPE, "N");
-			context.setData(ParamKeys.RSP_CDE, Constants.HOST_RESPONSE_CODE_SUCC);
+			context.setData(ParamKeys.RSP_CDE, GDConstants.SUCCESS_CODE);
 		}
 }
