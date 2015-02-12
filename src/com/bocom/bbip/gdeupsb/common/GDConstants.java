@@ -283,7 +283,7 @@ public class GDConstants {
 	public static final String HZ_GAS_BNK_OIFLAG_1 = "1";
 	/** 往来标志 0：发出 */
 	public static final String HZ_GAS_BNK_OIFLAG_0 = "0";
-	public static final String GAS_THD_TXN_CDE = "491800012620190029499";
+	public static final String GAS_THD_TXN_NO = "491800012620190029499";
 	public static final String GAS_PAY_CHL_0 = "0";
 	public static final String GAS_TXN_TYP_N = "N";
 	public static final String GAS_TLR_ID = "N";
