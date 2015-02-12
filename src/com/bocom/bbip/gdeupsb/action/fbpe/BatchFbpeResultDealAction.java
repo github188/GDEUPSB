@@ -21,7 +21,6 @@ import com.bocom.bbip.gdeupsb.entity.GdFbpeFileBatchTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GdFbpeFileBatchTmpRepository;
 import com.bocom.bbip.utils.BeanUtils;
-import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -33,58 +32,57 @@ import com.bocom.jump.bp.core.CoreException;
  */
 public class BatchFbpeResultDealAction implements AfterBatchAcpService {
 
-	@Autowired
-	GDEupsBatchConsoleInfoRepository eupsBatchConsoleInfoRepository;
+    @Autowired
+    GDEupsBatchConsoleInfoRepository eupsBatchConsoleInfoRepository;
 
-	@Autowired
-	GdFbpeFileBatchTmpRepository fileRepository;
+    @Autowired
+    GdFbpeFileBatchTmpRepository fileRepository;
 
-	@Autowired
-	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
+    @Autowired
+    EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
 
-	@Autowired
-	OperateFileAction operateFile;
+    @Autowired
+    OperateFileAction operateFile;
 
-	@Autowired
-	OperateFTPAction operateFTP;
+    @Autowired
+    OperateFTPAction operateFTP;
 
-	private final static Logger log = LoggerFactory.getLogger(BatchFbpeResultDealAction.class);
+    private final static Logger log = LoggerFactory.getLogger(BatchFbpeResultDealAction.class);
 
-	@Override
-	public Map<String, Object> afterBatchDeal(AfterBatchAcpDomain afterbatchacpdomain, Context context) throws CoreException {
-	    log.info("BatchFbpeResultDealAction Start! ");
+  
+    @Override
+    public void afterBatchDeal(AfterBatchAcpDomain arg0, Context context) throws CoreException {
+        log.info("BatchFbpeResultDealAction Start! ");
+        String batNo = (String) context.getData("dskNo");
+        GDEupsBatchConsoleInfo eupsBatchConsoleInfo = eupsBatchConsoleInfoRepository.findOne(batNo);
+        if ("S" !=eupsBatchConsoleInfo.getBatSts()) {
+            context.setData(ParamKeys.RSP_CDE, "481299");
+            context.setData(ParamKeys.RSP_MSG, "批次未处理完毕，请稍后!");
+        }
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        // 生成返回头信息
+        Map<String, Object> resultMapHead = BeanUtils.toMap(eupsBatchConsoleInfo);
+        
+        resultMap.put(ParamKeys.EUPS_FILE_HEADER, resultMapHead);
+        // 生成返回明细信息
+        List<Map<String, Object>> detailList = new ArrayList<Map<String, Object>>();
+        GdFbpeFileBatchTmp fileBatchTmp = new GdFbpeFileBatchTmp();
+        fileBatchTmp.setRsvFld8(batNo);
+        List<GdFbpeFileBatchTmp> batchDetailList = fileRepository.find(fileBatchTmp);
+        for (GdFbpeFileBatchTmp batchDetail : batchDetailList) {
+            Map<String, Object> detailMap = new HashMap<String, Object>();
+            detailMap.put("TCusId", batchDetail.getCusNo());// 第三方客户标识
+            
+            
+            
+            detailList.add(detailMap);
+        }
+        resultMap.put("detail", detailList);
 
-		Map<String, Object> resultMap = new HashMap<String, Object>();
-		// 生成返回头信息
-		String batNo = (String) context.getData("dskNo");
-		GDEupsBatchConsoleInfo eupsBatchConsoleInfo = eupsBatchConsoleInfoRepository.findOne(batNo);
-		Map<String, Object> resultMapHead = BeanUtils.toMap(eupsBatchConsoleInfo);
-		
-		resultMap.put(ParamKeys.EUPS_FILE_HEADER, resultMapHead);
-		// 生成返回明细信息
-		List<Map<String, Object>> detailList = new ArrayList<Map<String, Object>>();
-		GdFbpeFileBatchTmp fileBatchTmp = new GdFbpeFileBatchTmp();
-		fileBatchTmp.setRsvFld8(batNo);
-		List<GdFbpeFileBatchTmp> batchDetailList = fileRepository.find(fileBatchTmp);
-		for (GdFbpeFileBatchTmp batchDetail : batchDetailList) {
-			Map<String, Object> detailMap = new HashMap<String, Object>();
-			detailMap.put("TCusId", batchDetail.getCusNo());// 第三方客户标识
-
-    
-			
-			
-			
-			
-			
-			
-			detailList.add(detailMap);
-		}
-		resultMap.put("detail", detailList);
-
-		//根据单位编号寻找返盘格式文件解析
-		String comNo = batchDetailList.get(0).getRsvFld7();
-		String fmtFileName =null;
-		 
+        //根据单位编号寻找返盘格式文件解析
+        String comNo = batchDetailList.get(0).getRsvFld7();
+        String fmtFileName =null;
+         
         if(comNo.equals("tv")) {  //TODO comNo 确定后更改
             fmtFileName="tvFbpeBatResultFmt";
         } else if (comNo.equals("gas")) {
@@ -94,19 +92,19 @@ public class BatchFbpeResultDealAction implements AfterBatchAcpService {
         } else if (comNo.equals("tel")) {
             fmtFileName="telFbpeBatResultFmt";
         }
-		EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("fbpeBathReturnFmt");
+        EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("fbpeBathReturnFmt");
 
-		String fileName = context.getData("filNam");
+        String fileName = context.getData("filNam");
 
-		// 生成文件
-		operateFile.createCheckFile(eupsThdFtpConfig, fmtFileName, fileName, resultMap);
+        // 生成文件
+        operateFile.createCheckFile(eupsThdFtpConfig, fmtFileName, fileName, resultMap);
 
-		// 将生成的文件上传至指定服务器
-		eupsThdFtpConfig.setLocFleNme(fileName);
-		eupsThdFtpConfig.setRmtFleNme(fileName);
-		operateFTP.putCheckFile(eupsThdFtpConfig);
+        // 将生成的文件上传至指定服务器
+        eupsThdFtpConfig.setLocFleNme(fileName);
+        eupsThdFtpConfig.setRmtFleNme(fileName);
+        operateFTP.putCheckFile(eupsThdFtpConfig);
 
-		return null;
-	}
+        
+    }
 
 }

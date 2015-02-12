@@ -60,8 +60,7 @@ public class BathFileDealAction implements BatchAcpService {
     GdFbpeFileBatchTmpRepository fileBatchTmpRepository;
     @SuppressWarnings("unchecked")
     @Override
-    public List<EupsBatchPayEntity> prepareBatchDeal(PrepareBatchAcpDomain preparebatchacpdomain, Context context)
-            throws CoreException {
+    public void prepareBatchDeal(PrepareBatchAcpDomain arg0, Context context) throws CoreException {
         //TODO 调用吴艳辉方法；
         String batNo=context.getData("batNo");
         log.info("BathFileDealAction start!..");
@@ -105,7 +104,6 @@ public class BathFileDealAction implements BatchAcpService {
             log.info("cope File Error"+ e);
             context.setData(ParamKeys.RSP_CDE,"478007");
             context.setData(ParamKeys.RSP_MSG,"拷贝文件失败");
-            return null;
         }
       //自行实现解析文件
       //Resource resource = new FileSystemResource(TransferUtils.resolveFilePath(eupsThdFtpInf.getLocDir().trim(), eupsThdFtpInf.getLocFleNme().trim()));
@@ -168,6 +166,7 @@ public class BathFileDealAction implements BatchAcpService {
         }
         context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_NAME, localFileName);
         context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_MAP, payDetailLst);
-        return null;
     }
+
+
 }
