@@ -10,11 +10,12 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.comp.BBIPPublicService;
-import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
+import com.bocom.bbip.eups.spi.service.batch.BatchAcpService;
+import com.bocom.bbip.eups.spi.vo.PrepareBatchAcpDomain;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.AgtFileBatchDetail;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
@@ -26,9 +27,8 @@ import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
-import com.bocom.jump.bp.core.CoreRuntimeException;
 
-public class BatchDataFileAction extends BaseAction{
+public class BatchDataFileAction implements BatchAcpService{
 	private final static Log logger=LogFactory.getLog(BatchDataFileAction.class);
 		/**
 		 * 批量代收付  数据准备
@@ -37,19 +37,28 @@ public class BatchDataFileAction extends BaseAction{
 	GDEupsBatchConsoleInfoRepository gdEupsBatchConsoleInfoRepository;
 	@Autowired
 	GDEupsEleTmpRepository gdEupsEleTmpRepository;
-	public void execute(Context context)throws CoreException,CoreRuntimeException{
+	@Autowired
+	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
+	@Autowired
+	OperateFileAction operateFileAction;
+	@Autowired
+	BBIPPublicService bbipPublicService;
+	@Override
+	public void prepareBatchDeal(PrepareBatchAcpDomain preparebatchacpdomain,
+			Context context) throws CoreException {
+		
 			logger.info("==========Start  BatchDataFileAction");
 			context.setData(ParamKeys.WS_TRANS_CODE, "20");
 			//判断是否处理过
 			//文件名
 			String fleNme=context.getData(ParamKeys.FLE_NME).toString();
 					
-					EupsThdFtpConfig eupsThdFtpConfig=get(EupsThdFtpConfigRepository.class).findOne("elecBatch");
+					EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecBatch");
 					//文件下载
 //					downloadFileToThird(eupsThdFtpConfig);
 					String fileId="batchFile";
 					//获取文件并解析入库   数据库文件名
-					List<Map<String, Object>> mapList=get(OperateFileAction.class).pareseFile(eupsThdFtpConfig, fileId);
+					List<Map<String, Object>> mapList=operateFileAction.pareseFile(eupsThdFtpConfig, fileId);
 						if(CollectionUtils.isEmpty(mapList)){
 								throw new CoreException("~~~~~~~~~~~~处理状态异常");
 						}
@@ -58,9 +67,9 @@ public class BatchDataFileAction extends BaseAction{
 							Map<String, Object> map=new HashMap<String, Object>();
 							if(i==0){
 									GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=BeanUtils.toObject(map, GDEupsBatchConsoleInfo.class);
-									get(GDEupsBatchConsoleInfoRepository.class).insert(gdEupsBatchConsoleInfo);
+									gdEupsBatchConsoleInfoRepository.insert(gdEupsBatchConsoleInfo);
 							}else{
-									map.put(ParamKeys.SEQUENCE, get(BBIPPublicService.class).getBBIPSequence());
+									map.put(ParamKeys.SEQUENCE, bbipPublicService.getBBIPSequence());
 									 GDEupsEleTmp gdEupsEleTmp=BeanUtils.toObject(map, GDEupsEleTmp.class);
 									 gdEupsEleTmp.setRsvFld5(batNo);
 									 logger.info("~~~~~map~~~~"+map);
