@@ -57,7 +57,7 @@
 		class="com.bocom.bbip.gdeupsb.action.BuaPaymentCancelUsingReversalExt" />
 
 	<!-- 自动区分抹账：根据流水表第三方状态和主机状态 -->
-	<process id="eups.automaticCancelProcessExt" template="eups.autoCancelTemplateExt"
+	<process id="eups.automaticCancelProcessExt" template="eups.autoCancelTemplate"
 		interceptors="eups.thdTransInterceptor">
 		<actions>
 			<!-- 第三方抹账前处理 -->
@@ -74,7 +74,7 @@
 
 	<!-- 联机银行方单边记账（银行记帐系统自带冲正，无需发起冲正） -->
 	<process id="eups.payUnilateralToBankExt" template="eups.payUnilateralNoRvsTemplateExt"
-		interceptors="eups.thdTransInterceptor">
+		interceptors="eups.thdTransInterceptorExt">
 		<actions>
 			<!-- 交易前服务处理 -->
 			<!-- <action id="preCheckAction" ref="eups.prepareCheckDealStrategyAction" 
@@ -114,7 +114,7 @@
 
 	<!-- 联机银行方单边抹账 -->
 	<process id="eups.cancelUnilateralToBankExt" template="eups.cancelUnilateralTemplate"
-		interceptors="eups.thdTransInterceptor">
+		interceptors="eups.thdTransInterceptorExt">
 		<actions>
 			<!-- 交易前检查 -->
 			<!-- 第三方交易控制检查（默认正常交易） -->
