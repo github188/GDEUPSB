@@ -8,7 +8,7 @@ package com.bocom.bbip.gdeupsb.common;
  * @author q.c
  * @since 1.0.0
  */
-public class GDConstants {
+public final class GDConstants {
 
 	/********************* 公共start **********************/
 

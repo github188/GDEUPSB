@@ -8,7 +8,7 @@ package com.bocom.bbip.gdeupsb.common;
  * @modify
  * @since 1.0.0
  */
-public final class GDParamKeys {
+public class GDParamKeys {
 
 	/** 检查签到状态标志 */
 	public static final String GZ_COM_CHECK_SIGN_FLAG = "checkSignFlg";
