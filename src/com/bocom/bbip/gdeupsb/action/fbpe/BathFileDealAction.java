@@ -161,7 +161,7 @@ public class BathFileDealAction implements BatchAcpService {
             batchTem.setBankNo(orgMap.get("bankNo").toString());
             batchTem.setBankNam(orgMap.get("bankNam").toString());
             batchTem.setRsvFld8(batNo);//预留字段8作为批次号，
-            batchTem.setRsvFld7("tvFbpeBatFmt");//预留字段8作为批次号，
+            batchTem.setRsvFld7(comNo);//预留字段8作为批次号，
             
             fileBatchTmpRepository.insert(batchTem);
             payDetailLst.add(batchTem);

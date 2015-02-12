@@ -21,6 +21,7 @@ import com.bocom.bbip.gdeupsb.entity.GdFbpeFileBatchTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GdFbpeFileBatchTmpRepository;
 import com.bocom.bbip.utils.BeanUtils;
+import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -57,10 +58,9 @@ public class BatchFbpeResultDealAction implements AfterBatchAcpService {
 		// 生成返回头信息
 		String batNo = (String) context.getData("dskNo");
 		GDEupsBatchConsoleInfo eupsBatchConsoleInfo = eupsBatchConsoleInfoRepository.findOne(batNo);
-		Map<String, Object> resultMapHead = BeanUtils.toMap(eupsBatchConsoleInfo); // 供电局批号，使用RSV_FLD2字段，划款日期，使用SUB_DTE
-
+		Map<String, Object> resultMapHead = BeanUtils.toMap(eupsBatchConsoleInfo);
+		
 		resultMap.put(ParamKeys.EUPS_FILE_HEADER, resultMapHead);
-		String orgFileName = eupsBatchConsoleInfo.getFleNme(); // 
 		// 生成返回明细信息
 		List<Map<String, Object>> detailList = new ArrayList<Map<String, Object>>();
 		GdFbpeFileBatchTmp fileBatchTmp = new GdFbpeFileBatchTmp();
@@ -70,26 +70,36 @@ public class BatchFbpeResultDealAction implements AfterBatchAcpService {
 			Map<String, Object> detailMap = new HashMap<String, Object>();
 			detailMap.put("TCusId", batchDetail.getCusNo());// 第三方客户标识
 
-		
-		/* // 响应代码：目前标准版批次明细表中没有返回码，只有返回状态及描述
-			String sts = batchDetail.getSts(); // 状态
-			if (Constants.TRADE_STATUS_SUCCESS.equals(sts)) {
-				detailMap.put("RspFlg", "0000");
-			}
-			else {
-				// TODO:待确认，目前生产有余额不足，帐号信息错误及其他信息错误三类。标准版拿不到返回码
-				detailMap.put("RspFlg", "0009");
-			}*/
+    
+			
+			
+			
+			
+			
+			
 			detailList.add(detailMap);
 		}
 		resultMap.put("detail", detailList);
 
-		EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("eleGzBatchResult");
+		//根据单位编号寻找返盘格式文件解析
+		String comNo = batchDetailList.get(0).getRsvFld7();
+		String fmtFileName =null;
+		 
+        if(comNo.equals("tv")) {  //TODO comNo 确定后更改
+            fmtFileName="tvFbpeBatResultFmt";
+        } else if (comNo.equals("gas")) {
+            fmtFileName="gasFbpeBatResultFmt";
+        }  else if (comNo.equals("mob")) {
+            fmtFileName="mobFbpeBatResultFmt";
+        } else if (comNo.equals("tel")) {
+            fmtFileName="telFbpeBatResultFmt";
+        }
+		EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("fbpeBathReturnFmt");
 
-		String fileName = "1001" + orgFileName.substring(4, 26) + ".cb";
+		String fileName = context.getData("filNam");
 
 		// 生成文件
-		operateFile.createCheckFile(eupsThdFtpConfig, "eleGzBatchResult", fileName, resultMap);
+		operateFile.createCheckFile(eupsThdFtpConfig, fmtFileName, fileName, resultMap);
 
 		// 将生成的文件上传至指定服务器
 		eupsThdFtpConfig.setLocFleNme(fileName);
