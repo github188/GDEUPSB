@@ -26,13 +26,11 @@ public class PreCclToTHDAction implements Executable {
 	public void execute(Context context) throws CoreException,
 			CoreRuntimeException {
 			logger.info("==========Start  PreCclToTHDAction");
-			if(context.getData(GDParamKeys.NET_NAME) != null){
-					context.setData(ParamKeys.BR, context.getData(GDParamKeys.NET_NAME));
-			}
 			context.setData(GDParamKeys.TOTNUM, "1");
 			context.setData(ParamKeys.TXN_DAT, DateUtils.formatAsSimpleDate(new Date()));
-			context.setData(ParamKeys.TXN_TME, DateUtils.formatAsHHmmss(new Date()));
+			context.setData(ParamKeys.TXN_TME, DateUtils.formatAsTranstime(new Date()));
 			System.out.println(context.getData(ParamKeys.TXN_TME));
 			context.setData(ParamKeys.THD_CUS_NO, context.getData(GDParamKeys.PAY_NO));
+
 		}
 }
