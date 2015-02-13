@@ -16,7 +16,7 @@
  	<fixString  name="Deli1" length="1" default=","/>
  	 -->
  	 
- 	 <String name="thdTxnCde" length="6" />
+ 	 <fixString name="thdTxnCde" length="6" />
  	 <!-- <fixString  name="Deli1" length="1" default=","/> -->
  	
  	 
@@ -28,7 +28,7 @@
  	 <select name="hzGasReqBody" key="tccode" default="N">
 		<include name="N" keys="thdTxnCde" encodePrefix="req" decodePrefix="rsp" />
 	</select>
- 	
- 	
- 	
+	
+ 		<!-- 	<include keys="thdTxnCde" encodePrefix="rsp"/> -->
+ 		
 </message>

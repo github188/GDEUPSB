@@ -4,11 +4,13 @@
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
 	name="04Response">
 <!-- 
-起始位置		说明			长度			备注
-	1		指令			10			QryUser或NOUser或UserStop[QryUser 为有用户信息/NOUser 为无此用户（用户编码错误）/UserStop为此用户已报停]
-	12		用户编码		12	
-	25		用户名		60	
-	86		用户地址		80	
+起始位置	说明	长度	备注
+1	指令	10	Double或AddOK或AddNo或EditOK或EditNo或StopOK或StopNo   Double为已存在协议 AddOK为代扣协议新增成功  AddNo为新增失败 EditOK为变更成功 EditNo为变更失败 StopOK为撤消成功 StopNo 为撤消失败 12	银行标志	4	CNJT
+17	用户编码	12	
+31	银行帐号	32	
+64	证件类型	2	
+67	证件号	32	
+
 -->
 
 	<!-- <fixString name="rtnCod" length="10"/>
