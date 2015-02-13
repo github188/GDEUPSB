@@ -17,6 +17,10 @@
 	<!-- 无操作Action -->
 	<action   class="com.bocom.bbip.gdeupsb.action.efek.NullAction"
 		id="gdeupsb.nullAction"/>
+	<action   class="com.bocom.bbip.gdeupsb.action.efek.AdvanceTradeTimeAction"
+		id="gdeupsb.advanceTradeTimeAction"/>	
+		<action   class="com.bocom.bbip.gdeupsb.action.efek.AdvanceTradeStrCastDateAction"
+		id="gdeupsb.advanceTradeStrCastDateAction"/>			
 	<!--  交费记录查询-->
 	<action   class="com.bocom.bbip.gdeupsb.action.efek.QryCusPayRecordAction"
 		id="gdeupsb.qryCusPayRecordAction" />
