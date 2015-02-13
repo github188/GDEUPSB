@@ -11,6 +11,7 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
 
 public class AdvanceTradeTimeAction extends BaseAction{
 		public void execute(Context context)throws CoreException,CoreRuntimeException {
+			
 				log.info("==========Start AdvanceTradeTimeAction");
 				String txnDte=DateUtils.format((Date)context.getData(ParamKeys.TXN_DTE),DateUtils.STYLE_yyyyMMdd);
 				context.setData(ParamKeys.TXN_DTE, txnDte);

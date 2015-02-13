@@ -62,6 +62,7 @@ public class AdvanceTradeAction extends BaseAction {
 		// <Set>ActNod=SUBSTR($InAcNo,1,6)</Set>
 		String ActNod = context.getData(ParamKeys.CUS_AC).toString().substring(1, 6);
 		String ActSqn = context.getData(ParamKeys.CUS_AC).toString().substring(14, 19);
+		
 		if ("0".equals(ActFlg)) { // 对公
 			// 需要GDContants定义常量
 			context.setData(ParamKeys.THD_TXN_CDE, "451240");

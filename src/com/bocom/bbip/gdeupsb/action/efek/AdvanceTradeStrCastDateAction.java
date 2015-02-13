@@ -20,6 +20,6 @@ public class AdvanceTradeStrCastDateAction extends BaseAction{
 				String thdTxnTime=thdTxnDate+context.getData(ParamKeys.THD_TXN_TIME).toString();
 				context.setData(ParamKeys.THD_TXN_DATE, DateUtils.parse(thdTxnDate,DateUtils.STYLE_yyyyMMdd));
 				context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse(thdTxnTime,DateUtils.STYLE_yyyyMMddHHmmss));
-				System.out.println(context.getData(ParamKeys.THD_TXN_DATE)+"                   "+context.getData(ParamKeys.THD_TXN_TIME));
+
 		}
 }
