@@ -4,7 +4,17 @@ import com.bocom.bbip.data.annotation.GeneratedValue;
 import com.bocom.bbip.data.annotation.Id;
 
 public class GdGasCusDay {
-    @Id
+    @Override
+	public String toString() {
+		return "GdGasCusDay [sequence=" + sequence + ", cusNo=" + cusNo
+				+ ", tCommd=" + tCommd + ", cusAc=" + cusAc + ", cusNme="
+				+ cusNme + ", accTyp=" + accTyp + ", optDat=" + optDat
+				+ ", optNod=" + optNod + ", idTyp=" + idTyp + ", idNo=" + idNo
+				+ ", thdCusNam=" + thdCusNam + ", cmuTel=" + cmuTel
+				+ ", thdCusAdr=" + thdCusAdr + "]";
+	}
+
+	@Id
     @GeneratedValue
     private String sequence;
 
