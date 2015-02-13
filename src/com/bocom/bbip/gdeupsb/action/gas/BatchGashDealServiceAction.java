@@ -91,12 +91,6 @@ public class BatchGashDealServiceAction implements BatchAcpService  {
 		gasBatThdFtpConfig.setLocDir(batFileName);
 		gasBatThdFtpConfig.setRmtFleNme(batFileName);
 		
-//		context.setData("FFilNam", batFileName);
-//		context.setData(GDParamKeys.GAS_DSK_NAM, batFileName);
-//		
-//		context.setData(ParamKeys.THD_TXN_CDE, "SMPCPAYTXT");
-//		context.setData(GDParamKeys.GSS_BAT_PKG_FLG, "1");
-		
 		//取电子柜员
 		String ETeller = bbipPublicService.getETeller(GDConstants.PGAS00);
 		context.setData(ParamKeys.TELLER, ETeller);
