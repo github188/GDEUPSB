@@ -48,17 +48,19 @@ public class OprGasCusAgentAction extends BaseAction{
 		logger.info("Enter in OprGasCusAgentAction!...........");
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 		
-		context.setData("thdTxnCde", "460701");
-		context.setData("eupsBusTyp", "PGAS00");
-		context.setData("comNo", "PGAS00");
-		context.setData("bk", "CNJT");
-		
+//		context.setData("thdTxnCde", "460701");
+//		context.setData("eupsBusTyp", "PGAS00");
+//		context.setData("comNo", "PGAS00");
+		context.setData(ParamKeys.BK, "CNJT");
+		context.setData(ParamKeys.CUS_NO, context.getData("thdCusNo"));
+		logger.info("================now context =" + context);
 		Map<String, Object> cusInfoMap = new HashMap<String, Object>();
-		cusInfoMap.put("comNo",  "PGAS00");
-		cusInfoMap.put("bk", "CNJT");
-		cusInfoMap.put("cusNo", context.getData("cusNo").toString().trim());
-		cusInfoMap.put("idNo", context.getData("idNo").toString().trim());
+		cusInfoMap.put(ParamKeys.COMPANY_NO,  context.getData("comNo"));
+		cusInfoMap.put(ParamKeys.BK, "CNJT");
+		cusInfoMap.put(ParamKeys.CUS_NO, context.getData("thdCusNo"));
+		cusInfoMap.put(ParamKeys.ID_NO, context.getData("idNo"));
 		
+		logger.info("=======交易类型(1-新增 2-修改 3-删除 4-查询):" + context.getData("authLvl"));
 		
 		if("4".equals(context.getData("optFlg"))){		//4:查询交易, 先进行用户签约状态的查询
 //			select * from Gascusall491 where UserNo='%s' or idno='%s'
@@ -77,7 +79,8 @@ public class OprGasCusAgentAction extends BaseAction{
 		if(!"4".equals(context.getData("optFlg"))){		//非查询交易要授权
 			String authTlr = context.getData(ParamKeys.AUTHOR_LEVEL);
 			if (StringUtils.isEmpty(authTlr)) {
-				throw new CoreException(ErrorCodes.EUPS_CANCEL_CHECK_AUTH_FAIL);
+				throw new CoreException("未授权，不能进行交易");
+//				throw new CoreException(ErrorCodes.EUPS_CANCEL_CHECK_AUTH_FAIL);
 			}
 		}
 	logger.info("已授权，可进行交易");
@@ -118,7 +121,10 @@ public class OprGasCusAgentAction extends BaseAction{
 		Map<String, Object> thdRspMsg = get(ThirdPartyAdaptor.class).trade(context);
 		context.setDataMap(thdRspMsg);
 		logger.info("======================context========" + context);
+		System.out.println();
+		System.out.println("~~~~~~~~~~~~~~~~~~~~"+thdRspMsg);
 		//处理燃气返回的信息
+		logger.info("==============rtnCod=" + context.getData("rtnCod") + "============opoptFlg=" +context.getData("optFlg"));
 		if("QryUser".equals(context.getData("rtnCod").toString().trim())){
 			if("1".equals(context.getData("optFlg"))){ 	// optFlg = 1 	新增
 				Result accessObject = get(BGSPServiceAccessObject.class).callServiceFlatting("queryDetailAgentCollectAgreement", cusInfoMap);
@@ -155,7 +161,7 @@ public class OprGasCusAgentAction extends BaseAction{
 				}
 				context.setDataMap(accessObject.getPayload());
 				context.setData("tCommd", "Stop");
-				logger.info("===========无法删除");
+				logger.info("===========可以删除");
 			}
 			
 			String date = DateUtils.format(new Date(), DateUtils.STYLE_SIMPLE_DATE);
@@ -173,9 +179,9 @@ public class OprGasCusAgentAction extends BaseAction{
 				
 				context.setData("optDat", date);
 				context.setData("optNod", context.getData("NodNo"));
-				
+				logger.info("========context=" + context);
 				cusInfoMap = BeanUtils.toFlatMap(context.getDataMap());
-				
+				logger.info("===========cusInfoMap=" + cusInfoMap);
 				if("AddOK".equals(context.getData("rtnCod").toString().trim())){	//第三方返回新增成功，协议表、动态协议表插入新增数据
 					//代扣协议管理-修改和新增 maintainAgentCollectAgreement
 					get(BGSPServiceAccessObject.class).callServiceFlatting("maintainAgentCollectAgreement", cusInfoMap);
@@ -228,7 +234,8 @@ public class OprGasCusAgentAction extends BaseAction{
 			context.setData("rspCod", GDConstants.GAS_ERROR_CODE);
 			context.setData("rspMsg", "无此用户或用户编码错误!");
 			throw new CoreRuntimeException("无此用户或用户编码错误!");
-		}else if("UserStop".equals(context.getData("rtnCod").toString().trim())){  //UserStop为此用户已报停
+		}
+		else if("UserStop".equals(context.getData("rtnCod").toString().trim())){  //UserStop为此用户已报停
 			context.setData("msgTyp", "E");
 			context.setData("rspCod", GDConstants.GAS_ERROR_CODE);
 			context.setData("rspMsg", "此用户已报停!");
@@ -242,6 +249,7 @@ public class OprGasCusAgentAction extends BaseAction{
 		}
 		
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
+		
 	}
 	
 	
@@ -254,7 +262,7 @@ public class OprGasCusAgentAction extends BaseAction{
 	public void insertCusInfo(Context context) throws CoreException, CoreRuntimeException{
 		GdGasCusDay insCusInfo = BeanUtils.toObject(context.getDataMap(), GdGasCusDay.class);
 		String sqn = get(BBIPPublicService.class).getBBIPSequence();
-		insCusInfo.setSequence(sqn);		
+		insCusInfo.setSequence(sqn);	
 		get(GdGasCusDayRepository.class).insert(insCusInfo);
 	}
 }
