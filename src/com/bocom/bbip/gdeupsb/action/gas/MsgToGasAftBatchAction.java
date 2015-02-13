@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.eups.action.BaseAction;
@@ -21,6 +22,8 @@ import com.bocom.bbip.eups.entity.EupsTransJournal;
 import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
+import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
+import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
@@ -33,10 +36,26 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
  * @author WangMQ
  *
  */
-public class MsgToGasAftBatchAction extends BaseAction{
+public class MsgToGasAftBatchAction implements AfterBatchAcpService {
+	@Autowired
+	EupsTransJournalRepository eupsTransJournalRepository;
+	
+	@Autowired
+	OperateFTPAction operateFTPAction;
+	
+	@Autowired
+	OperateFileAction operateFileAction;
+
+	@Autowired
+	EupsBatchConsoleInfoRepository eupsBatchConsoleInfoRepository;
+	
+	@Autowired
+	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
+	
 	private Logger logger = LoggerFactory.getLogger(MsgToGasAftBatchAction.class);
 	
-	public void execute(Context context) throws CoreException, CoreRuntimeException{
+	@Override
+	public void afterBatchDeal(AfterBatchAcpDomain afterbatchacpdomain,	Context context) throws CoreException {
 		logger.info("Enter in MsgToGasAftBatchAction!");
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 		
@@ -56,7 +75,7 @@ public class MsgToGasAftBatchAction extends BaseAction{
 		String batNo = context.getData("batNo");
 		EupsBatchConsoleInfo eupsBatchConsoleInfo = new EupsBatchConsoleInfo();
 		eupsBatchConsoleInfo.setBatNo(batNo);
-		List<EupsBatchConsoleInfo> batchConsoleInfos = get(EupsBatchConsoleInfoRepository.class).find(eupsBatchConsoleInfo);
+		List<EupsBatchConsoleInfo> batchConsoleInfos = eupsBatchConsoleInfoRepository.find(eupsBatchConsoleInfo);
 		if(CollectionUtils.isEmpty(batchConsoleInfos)){		//无批次信息
 			throw new CoreRuntimeException("无该批次信息");
 		}
@@ -68,7 +87,7 @@ public class MsgToGasAftBatchAction extends BaseAction{
 		EupsThdFtpConfig ftpCfg = new EupsThdFtpConfig();
 		ftpCfg.setComNo(comNo);
 		ftpCfg.setLocFleNme(locFileName);
-		List<EupsThdFtpConfig> getFileCfgInfo = get(EupsThdFtpConfigRepository.class).find(ftpCfg);
+		List<EupsThdFtpConfig> getFileCfgInfo = eupsThdFtpConfigRepository.find(ftpCfg);
 		if(CollectionUtils.isEmpty(getFileCfgInfo)){
 			throw new CoreRuntimeException("无FTP配置信息");
 		}
@@ -78,10 +97,10 @@ public class MsgToGasAftBatchAction extends BaseAction{
 		
         try {
             // 生成批量结果到指定路径
-            get(OperateFileAction.class).createCheckFile(ftpCfg, "msgToGasFileFmt", locFileName, map);
-            log.info("批量结果文件生成成功！");
+            operateFileAction.createCheckFile(ftpCfg, "msgToGasFileFmt", locFileName, map);
+            logger.info("批量结果文件生成成功！");
         } catch (Exception e) {
-            log.error("File create error : " + e.getMessage());
+            logger.error("File create error : " + e.getMessage());
             throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
         } 
         
@@ -89,37 +108,34 @@ public class MsgToGasAftBatchAction extends BaseAction{
         
         
      // 向指定FTP路径放文件
-        get(OperateFTPAction.class).putCheckFile(ftpCfg);
-        log.info("批量结果文件FTP放置成功！");
+       operateFTPAction.putCheckFile(ftpCfg);
+        logger.info("批量结果文件FTP放置成功！");
 		
 /*      <Exec func="PUB:ExecSql" error="IGNORE">
         <Arg name="SqlCmd" value="UpEfeStatus"/>    <!--更新PkgFlg为批量扣收已发送--> <!--   UPDATE Gastxnjnl491 set PkgFlg='2' where dskno='%s' and PkgFlg='1' -->
         </Exec>*/
         
-        
-        
-        
-        
 	}
 	
 	
-    /**
+	 /**
      * 拼装文件Map 
-     * 
      * @param context
      * @return
      */
     private Map<String, Object> encodeFileMap(Context context, String batNo) throws CoreException {
         Map<String, Object> map = new HashMap<String, Object>();
+        //从流水表中根据批次号取流水信息
         EupsTransJournal etj=new EupsTransJournal();
         etj.setBatNo(batNo);
-        
-        List<EupsTransJournal> chkEupsTransJournalList = get(EupsTransJournalRepository.class).find(etj);
+        List<EupsTransJournal> chkEupsTransJournalList = eupsTransJournalRepository.find(etj);
         if (null == chkEupsTransJournalList && CollectionUtils.isEmpty(chkEupsTransJournalList)) {
-            log.info("There are no records for select check trans journal ");
+            logger.info("There are no records for select check trans journal ");
             throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
         }
         map.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(chkEupsTransJournalList));
         return map;
     }
+
+
 }
