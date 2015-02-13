@@ -1,6 +1,5 @@
 package com.bocom.bbip.gdeupsb.action.efek;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,12 +16,12 @@ import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.eups.entity.EupsTransJournal;
 import com.bocom.bbip.eups.repository.EupsAmountInfoRepository;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.QryCusInformation;
+import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
@@ -55,48 +54,7 @@ public class QryCusBaseMsgAction extends BaseAction{
 			}
 			context.setData(GDParamKeys.SVRCOD, "45");
 			context.setData(GDParamKeys.TOTNUM, "1");
-			String payNo=context.getData(GDParamKeys.PAY_NO).toString();
-			EupsTransJournal eupsTransJournals=new EupsTransJournal();
-			eupsTransJournals.setThdCusNo(payNo);
-			eupsTransJournals.setEupsBusTyp(context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
-			List<EupsTransJournal> eupsTransJournalList=eupsTransJournalRepository.find(eupsTransJournals);
-			List<QryCusInformation> list=new ArrayList<QryCusInformation>(); 
-			for (EupsTransJournal eupsTransJournal : eupsTransJournalList) {
-					String[] s=null;
-				 	QryCusInformation qryCusInformation=new QryCusInformation();
-				 	qryCusInformation.setAccountsSerialNo(eupsTransJournals.getMfmVchNo());//账务流水
-				 	qryCusInformation.setBankNo(eupsTransJournals.getBk());
-				 	if(StringUtils.isNotEmpty(eupsTransJournal.getBakFld2())){
-				 		s=eupsTransJournal.getBakFld2().split("&&");
-				 		qryCusInformation.setBusType(s[0]);
-				 		qryCusInformation.setPfeType(s[1]);
-				 	}
-				 	if(StringUtils.isNotEmpty(eupsTransJournal.getRsvFld3())){
-				 			s=eupsTransJournal.getRsvFld3().split("&&");
-						 	qryCusInformation.setCapital(new BigDecimal(s[1]));
-				 	}
-				 	qryCusInformation.setCapital(eupsTransJournal.getReqTxnAmt());
-				 	qryCusInformation.setComNo(eupsTransJournal.getComNo());
-				 	qryCusInformation.setCusAc(eupsTransJournal.getCusAc());
-				 	qryCusInformation.setCusNme(eupsTransJournal.getCusNme());
-				 	String electricityYearMonth=DateUtils.format(eupsTransJournal.getTxnDte(),DateUtils.STYLE_yyyyMMdd).substring(0, 6);
-				 	qryCusInformation.setElectricityYearMonth(electricityYearMonth);
-				 	qryCusInformation.setFulDedFlg(eupsTransJournal.getFulDedFlg());
-				 	qryCusInformation.setOldTxnSqn(eupsTransJournal.getOldTxnSqn());
-				 	qryCusInformation.setPayNo(payNo);
-				 	qryCusInformation.setRsvFld6(eupsTransJournal.getRsvFld6());
-				 	qryCusInformation.setSqn(eupsTransJournal.getSqn());
-				 	qryCusInformation.setThdCusNme(eupsTransJournal.getThdCusNme());
-				 	qryCusInformation.setThdTxnDte(eupsTransJournal.getThdTxnDte());
-				 	qryCusInformation.setThdTxnTme(eupsTransJournal.getThdTxnTme());
-				 	qryCusInformation.setTxnDte(eupsTransJournal.getTxnDte());
-				 	qryCusInformation.setTxnTme(eupsTransJournal.getTxnTme());
-				 	
-				 	list.add(qryCusInformation);
-			}
-					context.setData(ParamKeys.THD_TXN_DATE, DateUtils.format(new Date(), DateUtils.STYLE_SIMPLE_DATE));
-					context.setData("qryCusInformation", list);
-					callThd(context);
+			callThd(context);
 			log.info("============End   QryCusBaseMsgAction");
 		}
 	/**
@@ -129,6 +87,7 @@ public class QryCusBaseMsgAction extends BaseAction{
 									if(null !=rspMap){
 										 	context.setDataMap(rspMap);
 							                context.setData(ParamKeys.THIRD_RETURN_MESSAGE, rspMap);
+							               context.setData("qryCusInformation", rspMap.get("qryCusInformation"));
 							                //第三方返回码
 							                CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
 							                String responseCode = rspCdeAction.getThdRspCde(rspMap, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
