@@ -297,7 +297,7 @@
 						<array>
 							<bean class="com.bocom.jump.bp.channel.interceptors.EncoderTransform">
 								<!-- 渠道返回报文体，参数配置于sys.properties文件 -->
-								<constructor-arg value="${HSCard01.encoderTransform}" />
+								<constructor-arg value="packet://WEB-INF/classes/config/stream/HSCard/HSCard01RspHeader.xml" />
 							</bean>
 
 							<bean class="com.bocom.jump.bp.channel.interceptors.ResponseTransform" />
@@ -309,7 +309,7 @@
 
 							<bean class="com.bocom.jump.bp.channel.interceptors.DecoderTransform">
 								<!-- 渠道请求报文头，参数配置于sys.properties文件 -->
-								<constructor-arg value="${HSCard01.decoderTransform}" />
+								<constructor-arg value="packet://WEB-INF/classes/config/stream/HSCard/HSCard01ReqHeader.xml" />
 							</bean>
 						</array>
 					</property>
