@@ -18,8 +18,8 @@
 			  <actions>
 			   			<action id="preCheckAction"  ref="gdeupsb.advanceTradeAction" />
 		   				<action id="preHostAction"   ref="gdeupsb.nullAction" />
-		   				<action id="preThdAction"   ref="gdeupsb.nullAction" />
-			   			<action id="aftThdAction"   ref="gdeupsb.nullAction" /> 
+		   				<action id="preThdAction"   ref="gdeupsb.advanceTradeTimeAction" />
+			   			<action id="aftThdAction"   ref="gdeupsb.advanceTradeStrCastDateAction" /> 
 			   </actions>
 			</process>	
 
