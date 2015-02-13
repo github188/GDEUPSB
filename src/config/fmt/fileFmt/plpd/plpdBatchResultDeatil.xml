@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+    encoding="utf-8" trace="true">
+    <segment name="detail" encoding="GBK">
+        <fixString name="savAct" length="21" />   <!--储蓄账号-->
+        <fixString name="flg" length="1" />   <!--分隔符-->
+        <fixString name="txnAmt" length="15" />   <!--金额-->
+        <fixString name="txnFlg" length="1" />   <!--标志-->
+        <fixString name="txnStg"  length="1"/> <!--标志    -->
+    </segment>
+</message>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+    encoding="utf-8" trace="true">
+    <segment name="detail" encoding="GBK">
+    
+        <fixString name="cusAct" length="21" />   <!--储蓄账号-->
+        <fixString name="flg" length="1" />   <!--分隔符-->
+       <!--  <Item name="Del"     length="1"  value="-"/>   分隔符-->
+        <fixString name="txnAmt" length="15" />   <!--金额-->
+        <fixString name="loaAct" length="10" />   <!--贷款账号-->
+        <fixString name="loaNo" length="8" />   <!--贷款编号-->
+        <fixString name="stlAct" length="10" /> <!--结算账号-->
+        <fixString name="capAmt" length="15" />   <!--本金金额-->
+        <fixString name="txnFlg" length="1" />   <!--标志-->
+      <!--  
+        <If condition="$TxnFlg=2">
+          <AddItem name="TxnStg"  length="1" expression="$TxnFlg" /> 标志
+        </If>
+        <select name="body" key="txnFlg" default="N">
+            <addString name="2" keys="txnStg" encodePrefix="f"/>
+        </select> -->
+    </segment>
+</message>

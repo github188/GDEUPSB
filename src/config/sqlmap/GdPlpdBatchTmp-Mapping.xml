@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdPlpdBatchTmp" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdPlpdBatchTmp" >
+    <id column="SQN" property="sqn" jdbcType="CHAR" />
+    <result column="CUS_AC" property="cusAc" jdbcType="CHAR" />
+    <result column="DEL" property="del" jdbcType="CHAR" />
+    <result column="TXN_AMT" property="txnAmt" jdbcType="CHAR" />
+    <result column="LOA_ACT" property="loaAct" jdbcType="CHAR" />
+    <result column="LOA_NO" property="loaNo" jdbcType="CHAR" />
+    <result column="STL_ACT" property="stlAct" jdbcType="CHAR" />
+    <result column="CAP_AMT" property="capAmt" jdbcType="CHAR" />
+    <result column="TXN_FLG" property="txnFlg" jdbcType="CHAR" />
+    <result column="TXN_STG" property="txnStg" jdbcType="CHAR" />
+    <result column="RSV_FLD1" property="rsvFld1" jdbcType="VARCHAR" />
+    <result column="RSV_FLD2" property="rsvFld2" jdbcType="VARCHAR" />
+    <result column="RSV_FLD3" property="rsvFld3" jdbcType="VARCHAR" />
+    <result column="RSV_FLD4" property="rsvFld4" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    SQN, CUS_AC, DEL, TXN_AMT, LOA_ACT, LOA_NO, STL_ACT, CAP_AMT, TXN_FLG, TXN_STG, RSV_FLD1, 
+    RSV_FLD2, RSV_FLD3, RSV_FLD4
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_PLPD_BATCH_TMP
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="cusAc!=null" >
+        AND  CUS_AC=#{cusAc,jdbcType=CHAR}
+      </if>
+      <if test="del!=null" >
+        AND  DEL=#{del,jdbcType=CHAR}
+      </if>
+      <if test="txnAmt!=null" >
+        AND  TXN_AMT=#{txnAmt,jdbcType=CHAR}
+      </if>
+      <if test="loaAct!=null" >
+        AND  LOA_ACT=#{loaAct,jdbcType=CHAR}
+      </if>
+      <if test="loaNo!=null" >
+        AND  LOA_NO=#{loaNo,jdbcType=CHAR}
+      </if>
+      <if test="stlAct!=null" >
+        AND  STL_ACT=#{stlAct,jdbcType=CHAR}
+      </if>
+      <if test="capAmt!=null" >
+        AND  CAP_AMT=#{capAmt,jdbcType=CHAR}
+      </if>
+      <if test="txnFlg!=null" >
+        AND  TXN_FLG=#{txnFlg,jdbcType=CHAR}
+      </if>
+      <if test="txnStg!=null" >
+        AND  TXN_STG=#{txnStg,jdbcType=CHAR}
+      </if>
+      <if test="rsvFld1!=null" >
+        AND  RSV_FLD1=#{rsvFld1,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld2!=null" >
+        AND  RSV_FLD2=#{rsvFld2,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld3!=null" >
+        AND  RSV_FLD3=#{rsvFld3,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld4!=null" >
+        AND  RSV_FLD4=#{rsvFld4,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_PLPD_BATCH_TMP
+    where SQN = #{sqn,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from ${GDEUPSB_SCHEMA}.GDEUPS_PLPD_BATCH_TMP
+    where SQN = #{sqn,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdPlpdBatchTmp" >
+    insert into ${GDEUPSB_SCHEMA}.GDEUPS_PLPD_BATCH_TMP
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sqn != null" >
+        SQN,
+      </if>
+      <if test="cusAc != null" >
+        CUS_AC,
+      </if>
+      <if test="del != null" >
+        DEL,
+      </if>
+      <if test="txnAmt != null" >
+        TXN_AMT,
+      </if>
+      <if test="loaAct != null" >
+        LOA_ACT,
+      </if>
+      <if test="loaNo != null" >
+        LOA_NO,
+      </if>
+      <if test="stlAct != null" >
+        STL_ACT,
+      </if>
+      <if test="capAmt != null" >
+        CAP_AMT,
+      </if>
+      <if test="txnFlg != null" >
+        TXN_FLG,
+      </if>
+      <if test="txnStg != null" >
+        TXN_STG,
+      </if>
+      <if test="rsvFld1 != null" >
+        RSV_FLD1,
+      </if>
+      <if test="rsvFld2 != null" >
+        RSV_FLD2,
+      </if>
+      <if test="rsvFld3 != null" >
+        RSV_FLD3,
+      </if>
+      <if test="rsvFld4 != null" >
+        RSV_FLD4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sqn != null" >
+        #{sqn,jdbcType=CHAR},
+      </if>
+      <if test="cusAc != null" >
+        #{cusAc,jdbcType=CHAR},
+      </if>
+      <if test="del != null" >
+        #{del,jdbcType=CHAR},
+      </if>
+      <if test="txnAmt != null" >
+        #{txnAmt,jdbcType=CHAR},
+      </if>
+      <if test="loaAct != null" >
+        #{loaAct,jdbcType=CHAR},
+      </if>
+      <if test="loaNo != null" >
+        #{loaNo,jdbcType=CHAR},
+      </if>
+      <if test="stlAct != null" >
+        #{stlAct,jdbcType=CHAR},
+      </if>
+      <if test="capAmt != null" >
+        #{capAmt,jdbcType=CHAR},
+      </if>
+      <if test="txnFlg != null" >
+        #{txnFlg,jdbcType=CHAR},
+      </if>
+      <if test="txnStg != null" >
+        #{txnStg,jdbcType=CHAR},
+      </if>
+      <if test="rsvFld1 != null" >
+        #{rsvFld1,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld2 != null" >
+        #{rsvFld2,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld3 != null" >
+        #{rsvFld3,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld4 != null" >
+        #{rsvFld4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_PLPD_BATCH_TMP
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="cusAc!=null" >
+        AND  CUS_AC=#{cusAc,jdbcType=CHAR}
+      </if>
+      <if test="del!=null" >
+        AND  DEL=#{del,jdbcType=CHAR}
+      </if>
+      <if test="txnAmt!=null" >
+        AND  TXN_AMT=#{txnAmt,jdbcType=CHAR}
+      </if>
+      <if test="loaAct!=null" >
+        AND  LOA_ACT=#{loaAct,jdbcType=CHAR}
+      </if>
+      <if test="loaNo!=null" >
+        AND  LOA_NO=#{loaNo,jdbcType=CHAR}
+      </if>
+      <if test="stlAct!=null" >
+        AND  STL_ACT=#{stlAct,jdbcType=CHAR}
+      </if>
+      <if test="capAmt!=null" >
+        AND  CAP_AMT=#{capAmt,jdbcType=CHAR}
+      </if>
+      <if test="txnFlg!=null" >
+        AND  TXN_FLG=#{txnFlg,jdbcType=CHAR}
+      </if>
+      <if test="txnStg!=null" >
+        AND  TXN_STG=#{txnStg,jdbcType=CHAR}
+      </if>
+      <if test="rsvFld1!=null" >
+        AND  RSV_FLD1=#{rsvFld1,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld2!=null" >
+        AND  RSV_FLD2=#{rsvFld2,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld3!=null" >
+        AND  RSV_FLD3=#{rsvFld3,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld4!=null" >
+        AND  RSV_FLD4=#{rsvFld4,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdPlpdBatchTmp" >
+    update ${GDEUPSB_SCHEMA}.GDEUPS_PLPD_BATCH_TMP
+    <set >
+      <if test="cusAc != null" >
+        CUS_AC = #{cusAc,jdbcType=CHAR},
+      </if>
+      <if test="del != null" >
+        DEL = #{del,jdbcType=CHAR},
+      </if>
+      <if test="txnAmt != null" >
+        TXN_AMT = #{txnAmt,jdbcType=CHAR},
+      </if>
+      <if test="loaAct != null" >
+        LOA_ACT = #{loaAct,jdbcType=CHAR},
+      </if>
+      <if test="loaNo != null" >
+        LOA_NO = #{loaNo,jdbcType=CHAR},
+      </if>
+      <if test="stlAct != null" >
+        STL_ACT = #{stlAct,jdbcType=CHAR},
+      </if>
+      <if test="capAmt != null" >
+        CAP_AMT = #{capAmt,jdbcType=CHAR},
+      </if>
+      <if test="txnFlg != null" >
+        TXN_FLG = #{txnFlg,jdbcType=CHAR},
+      </if>
+      <if test="txnStg != null" >
+        TXN_STG = #{txnStg,jdbcType=CHAR},
+      </if>
+      <if test="rsvFld1 != null" >
+        RSV_FLD1 = #{rsvFld1,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld2 != null" >
+        RSV_FLD2 = #{rsvFld2,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld3 != null" >
+        RSV_FLD3 = #{rsvFld3,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld4 != null" >
+        RSV_FLD4 = #{rsvFld4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SQN = #{sqn,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_PLPD_BATCH_TMP
+    <if test="_parameter" >
+      where SQN in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
+</mapper>

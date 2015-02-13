@@ -12,5 +12,6 @@
         <fixString name="cusNam" length="$length3" />   <!-- DVB客户姓名-->
         <fixString name="length4" length="3" />  
         <fixString name="txnAmt" length="$length4" />   <!-- 应缴金额(带小数点)-->
+
     </segment>
 </message>
