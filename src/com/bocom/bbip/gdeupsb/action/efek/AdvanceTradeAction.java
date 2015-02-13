@@ -1,7 +1,6 @@
 package com.bocom.bbip.gdeupsb.action.efek;
 
 import java.util.Date;
-import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -10,16 +9,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
-import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
-import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
-import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.utils.DateUtils;
-import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -42,6 +36,7 @@ public class AdvanceTradeAction extends BaseAction {
 		logger.info("===========Start  AdvanceTradeAction");
 		context.setData(GDParamKeys.TOTNUM, "1");
 		context.setData(ParamKeys.SEQUENCE, bbipPublicService.getBBIPSequence());
+		context.setData(ParamKeys.REQ_JRN_NO, context.getData(ParamKeys.SEQUENCE));
 		// 第三方客户标识
 		context.setData(ParamKeys.THD_CUS_NO,context.getData(GDParamKeys.PAY_NO));
 		
@@ -54,8 +49,8 @@ public class AdvanceTradeAction extends BaseAction {
 		context.setData(ParamKeys.TXN_AMT,context.getData(GDParamKeys.PAYMENTIN_ADVANCE_MONEY));
 		context.setData(ParamKeys.PAYFEE_TYPE, context.getData(ParamKeys.PAY_MDE));
 		
-		context.setData(ParamKeys.TXN_DAT,DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())));
-		context.setData(ParamKeys.TXN_TME,DateUtils.parse(DateUtils.formatAsTranstime(new Date())));
+		context.setData(ParamKeys.TXN_DTE,DateUtils.parse(DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMdd)));
+		context.setData(ParamKeys.TXN_TME,DateUtils.formatAsTranstime(new Date()));
 		// 柜员号 
 		// 记账
 		String ActFlg = (String) context.getData(ParamKeys.ACC_TYPE); // 银行内部账务类型
@@ -110,10 +105,10 @@ public class AdvanceTradeAction extends BaseAction {
 
 			context.setData("GthFlg", "N");// <Set>GthFlg=N</Set>
 		}
-			context.setData(GDParamKeys.TOTNUM, "13");
+			context.setData(GDParamKeys.SVRCOD, "13");
 			callThd(context);
 			
-		logger.info("~~~~~~~~~~~~End AdvanceTradeAction");
+			logger.info("~~~~~~~~~~~~End AdvanceTradeAction");
 	}
 	/**
 	 *报文信息  外发第三方
@@ -137,7 +132,7 @@ public class AdvanceTradeAction extends BaseAction {
 				context.setData(GDParamKeys.TRADE_RECEIVE, "030600");//交易接收方
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, "");//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, "");//交易目标地址
-				
+	/*		
 				try{
 					Map<String, Object> rspMap = callThdTradeManager.trade(context);
 					
@@ -205,8 +200,6 @@ public class AdvanceTradeAction extends BaseAction {
 					context.setData(ParamKeys.THD_TXN_STS, Constants.TXNSTS_FAIL);
 					context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 				}
-				
+		*/	
 	}
-
-
 }
