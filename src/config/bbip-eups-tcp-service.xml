@@ -257,7 +257,7 @@
 		<property name="mapping">
 			<map>
 				<!-- 渠道接入端口，参数配置于sys.properties文件 -->
-				<entry key="tcp://*:${HSCard01.port}" value-ref="absIn_TcpEndpoint" />
+				<entry key="tcp://*:32038" value-ref="absIn_TcpEndpoint" />
 			</map>
 		</property>
 	</bean>
@@ -269,7 +269,7 @@
 	<bean id="absIn" class="com.bocom.jump.bp.channel.tcp.SocketServer">
 		<!-- property name="host" value="${local.ip}"/> -->
 		<!-- 渠道接入端口，参数配置于sys.properties文件 -->
-		<property name="port" value="${HSCard01.port}" />
+		<property name="port" value="32038" />
 		<property name="mapping" ref="absIn_TcpMapping" />
 		<property name="threadPool" ref="absIn_TcpThreadPool" />
 	</bean>
