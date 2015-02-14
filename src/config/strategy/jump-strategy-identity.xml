@@ -27,12 +27,29 @@
 		class="com.bocom.bbip.gdeupsb.action.gas.MsgToGasAftBatchAction">
 	</bean>
 
-	
+	 <!-- 佛山文本： 文件批扣数据准备 -->
+    <bean id="eups.fileBatchPayCreateDataServiceActionFSAG00"
+        class="com.bocom.bbip.gdeupsb.action.fbpe.FbpeBathFileDealAction">
+    </bean>
+    
+    <!-- 佛山文本：文件批量托收完成通知前端  --> 
+    <bean id="eups.afterBatchAcpServiceActionFSAG00"
+        class="com.bocom.bbip.gdeupsb.action.fbpe.FbpeBatchResultDealAction">
+    </bean>
+    
+     <!-- 个人代扣：数据准备 交易类型未知TODO -->
+    <bean id="eups.fileBatchPayCreateDataServiceActionPlpd"
+        class="com.bocom.bbip.gdeupsb.action.plpd.PlpdBathFileDealAction">
+    </bean>
+    
+    <!--  个人代扣：文件批量托收完成通知前端   交易类型未知TODO --> 
+    <bean id="eups.afterBatchAcpServiceActionPlpd"
+        class="com.bocom.bbip.gdeupsb.action.plpd.PlpdBatchResultDealAction">
+    </bean>
 	
 	<bean id="eups.qryDealStrategyActionELEC01"
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.QueryElecUserStrategyAction">
 	</bean>
-
 
 	<bean id="eups.prepareCheckDealStrategyActionELEC01"
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.PreInitElecStrategyAction">
