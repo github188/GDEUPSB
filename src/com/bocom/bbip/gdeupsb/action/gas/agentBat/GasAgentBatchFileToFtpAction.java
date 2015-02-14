@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.eups.action.BaseAction;
@@ -16,6 +17,8 @@ import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
+import com.bocom.bbip.eups.spi.service.batch.BatchAcpService;
+import com.bocom.bbip.eups.spi.vo.PrepareBatchAcpDomain;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdGasCusDay;
@@ -36,11 +39,27 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
  * @author WangMQ
  *
  */
-public class GasAgentBatchFileToFtpAction extends BaseAction{
+public class GasAgentBatchFileToFtpAction implements BatchAcpService{
 	private static Logger logger = LoggerFactory.getLogger(GasAgentBatchFileToFtpAction.class);
 	
+	@Autowired
+	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
+	
+	@Autowired
+	GdGasCusDayRepository gdGasCusDayRepository;
+	
+	@Autowired
+	BGSPServiceAccessObject bgspServiceAccessObject;
+	
+	@Autowired
+	OperateFTPAction operateFTPAction;
+	
+	@Autowired
+	OperateFileAction operateFileAction;
+	
 	@Override
-	public void execute(Context context) throws CoreException, CoreRuntimeException {
+	public void prepareBatchDeal(PrepareBatchAcpDomain prepareBatchAcpDomain, Context context)
+			throws CoreException {
 		logger.info("Enter in GasAgentBatchFileToFtpAction.......");
 		
 //		String comNo = context.getData(ParamKeys.COMPANY_NO);
@@ -70,7 +89,7 @@ public class GasAgentBatchFileToFtpAction extends BaseAction{
 		 * 1、从FTP配置表中获取信息
 		 * 2、修改文件名对应字段
 		 */
-		EupsThdFtpConfig ftpConfig = get(EupsThdFtpConfigRepository.class).findOne(comNo);
+		EupsThdFtpConfig ftpConfig = eupsThdFtpConfigRepository.findOne(comNo);
 		// TODO 文件路径（本地，远程）
 		
 		
@@ -87,14 +106,14 @@ public class GasAgentBatchFileToFtpAction extends BaseAction{
 		
 		try {
 	            // 生成文件到指定路径
-	            get(OperateFileAction.class).createCheckFile(ftpConfig, "gasAllAgentBatFmt", hdFileName, hdMap);
+	            operateFileAction.createCheckFile(ftpConfig, "gasAllAgentBatFmt", hdFileName, hdMap);
 	            logger.info("hdCNJTyyyyMMdd.txt文件生成成功！");
 	        } catch (Exception e) {
 	        	logger.error("File create error : " + e.getMessage());
 	            throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
 	        }
 		
-		get(OperateFTPAction.class).putCheckFile(ftpConfig);
+		operateFTPAction.putCheckFile(ftpConfig);
         logger.info("hdCNJTyyyyMMdd.txt文件FTP放置成功！");
 		
         
@@ -111,20 +130,21 @@ public class GasAgentBatchFileToFtpAction extends BaseAction{
 		
 		try {
             // 生成文件到指定路径
-            get(OperateFileAction.class).createCheckFile(ftpConfig, "gasDayAgentBatFmt", rxyFileName, rxyMap);
+            operateFileAction.createCheckFile(ftpConfig, "gasDayAgentBatFmt", rxyFileName, rxyMap);
             logger.info("rxyCNJTyyyyMMdd.txt文件生成成功！");
         } catch (Exception e) {
         	logger.error("File create error : " + e.getMessage());
             throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
         }
 		
-		get(OperateFTPAction.class).putCheckFile(ftpConfig);
+		operateFTPAction.putCheckFile(ftpConfig);
 		logger.info("rxyCNJTyyyyMMdd.txt文件FTP放置成功！");
 		
 		
 		
 	}
-
+	
+	
 	
 	/**
 	 * 调代收接口查询燃气用户协议拼装待生成文件map
@@ -139,7 +159,7 @@ public class GasAgentBatchFileToFtpAction extends BaseAction{
         Map<String, Object> agtMap = new HashMap<String, Object>();
         agtMap.put(ParamKeys.BK, bk);
         agtMap.put(ParamKeys.COMPANY_NO, comNo);
-        Result accessObject = get(BGSPServiceAccessObject.class).callServiceFlatting("queryDetailAgentCollectAgreement",agtMap);
+        Result accessObject = bgspServiceAccessObject.callServiceFlatting("queryDetailAgentCollectAgreement",agtMap);
         if (CollectionUtils.isEmpty(accessObject.getPayload())) {
             logger.info("There are no records for select check trans journal ");
             throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
@@ -159,7 +179,7 @@ public class GasAgentBatchFileToFtpAction extends BaseAction{
     	Map<String, Object> map = new HashMap<String, Object>();
     	GdGasCusDay cusDayAgt = new GdGasCusDay();
     	cusDayAgt.setOptDat(optDat);
-    	List<GdGasCusDay> rxyCusDayList = get(GdGasCusDayRepository.class).find(cusDayAgt);
+    	List<GdGasCusDay> rxyCusDayList = gdGasCusDayRepository.find(cusDayAgt);
     	if (CollectionUtils.isEmpty(rxyCusDayList)) {
             logger.info("There are no records for select check trans journal ");
             throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
@@ -168,5 +188,8 @@ public class GasAgentBatchFileToFtpAction extends BaseAction{
     	logger.info("查询每天动态协议表信息拼装待生成文件map完成>>>>>>>>>" + map.toString());
 		return map;
     }
+
+
+
 	    
 }
