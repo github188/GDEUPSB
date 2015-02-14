@@ -410,8 +410,6 @@
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
       <xs:element ref="tns:pageableResponse" minOccurs="0"/>
       <xs:element name="resultList" type="tns:resultList_CType" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="apCode" type="tns:apCode_SType" minOccurs="0"/>
-      <xs:element name="ofmtCd" type="tns:ofmtCd_SType" minOccurs="0"/>
       <xs:element name="ttl" type="tns:ttl_SType" minOccurs="0"/>
       <xs:element name="subTtl" type="tns:subTtl_SType" minOccurs="0"/>
     </xs:sequence>
@@ -470,22 +468,6 @@
       <xs:element name="status" type="tns:status_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="apCode_SType">
-    <xs:annotation>
-      <xs:documentation>ap代码</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="2"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="ofmtCd_SType">
-    <xs:annotation>
-      <xs:documentation>ofmt代码</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="3"/>
-    </xs:restriction>
-  </xs:simpleType>
   <xs:simpleType name="ttl_SType">
     <xs:annotation>
       <xs:documentation>社保卡申请数据查询</xs:documentation>
@@ -1030,8 +1012,6 @@
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
       <xs:element ref="tns:pageableResponse" minOccurs="0"/>
       <xs:element name="npResultList" type="tns:npResultList_CType" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="apCode" type="tns:apCode_SType" minOccurs="0"/>
-      <xs:element name="ofmtCd" type="tns:ofmtCd_SType" minOccurs="0"/>
       <xs:element name="ttl" type="tns:ttl_SType" minOccurs="0"/>
       <xs:element name="subTtl" type="tns:subTtl_SType" minOccurs="0"/>
     </xs:sequence>
