@@ -55,10 +55,6 @@
                 <qname-mappings />
         </server-side-ws-def>
         
-       <server-side-ws-def wsdl="GDEUPSEfekQryFeeService.wsdl"
-        		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekQryFeeService/Schema">
-                <qname-mappings />
-        </server-side-ws-def>
        <!-- 珠海路桥 --> 
        <server-side-ws-def wsdl="GDEUPSTrspService.wsdl"
         		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSTrspService/Schema">
