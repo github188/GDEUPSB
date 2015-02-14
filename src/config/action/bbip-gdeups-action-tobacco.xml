@@ -5,7 +5,7 @@
 
     <!--广东烟草客户余额信息查询 -->
     <action class="com.bocom.bbip.gdeupsb.action.tbc.FindClientRemainingMoney"
-        id="gdeupsb.FindClientRemainingMoney" /
+        id="gdeupsb.FindClientRemainingMoney" />
     <!--广东烟草签到-->
     <action class="com.bocom.bbip.gdeupsb.action.tbc.SignInAction"
         id="gdeupsb.TbcSignInAction" />
