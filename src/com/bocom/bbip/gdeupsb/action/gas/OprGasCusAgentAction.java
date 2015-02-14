@@ -133,6 +133,7 @@ public class OprGasCusAgentAction extends BaseAction{
 					context.setData("rspMsg", "该用户编号已经签约,无法新增签约!");
 					throw new CoreRuntimeException("该用户编号已经签约,无法新增签约!");
 				}
+				logger.info("============accessObject=" + accessObject);
 				context.setDataMap(accessObject.getPayload());
 				context.setData("tCommd", "Add");
 				logger.info("可以新增签约");
