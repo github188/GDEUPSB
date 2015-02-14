@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGzagService" xmlns:gdeupsb="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGzagService/Schema" name="GDEUPSGzagService" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGzagService">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGzagService">
+      <xsd:import namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGzagService/Schema" schemaLocation="GDEUPSGzagService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="batchCancelRequestMessage">
+    <wsdl:part name="batchCancelRequest" element="gdeupsb:batchCancel"/>
+  </wsdl:message>
+  <wsdl:message name="batchCancelResponseMessage">
+    <wsdl:part name="batchCancelResponse" element="gdeupsb:batchCancelResponse"/>
+  </wsdl:message>
+  <wsdl:message name="fileSubmitRequestMessage">
+    <wsdl:part name="fileSubmitRequest" element="gdeupsb:fileSubmit"/>
+  </wsdl:message>
+  <wsdl:message name="fileSubmitResponseMessage">
+    <wsdl:part name="fileSubmitResponse" element="gdeupsb:fileSubmitResponse"/>
+  </wsdl:message>
+  <wsdl:message name="fileInRequestMessage">
+    <wsdl:part name="fileInRequest" element="gdeupsb:fileIn"/>
+  </wsdl:message>
+  <wsdl:message name="fileInResponseMessage">
+    <wsdl:part name="fileInResponse" element="gdeupsb:fileInResponse"/>
+  </wsdl:message>
+  <wsdl:message name="qryComInformationRequestMessage">
+    <wsdl:part name="qryComInformationRequest" element="gdeupsb:qryComInformation"/>
+  </wsdl:message>
+  <wsdl:message name="qryComInformationResponseMessage">
+    <wsdl:part name="qryComInformationResponse" element="gdeupsb:qryComInformationResponse"/>
+  </wsdl:message>
+  <wsdl:message name="fileOutRequestMessage">
+    <wsdl:part name="fileOutRequest" element="gdeupsb:fileOut"/>
+  </wsdl:message>
+  <wsdl:message name="fileOutResponseMessage">
+    <wsdl:part name="fileOutResponse" element="gdeupsb:fileOutResponse"/>
+  </wsdl:message>
+  <wsdl:message name="qryBatInformationRequestMessage">
+    <wsdl:part name="qryBatInformationRequest" element="gdeupsb:qryBatInformation"/>
+  </wsdl:message>
+  <wsdl:message name="qryBatInformationResponseMessage">
+    <wsdl:part name="qryBatInformationResponse" element="gdeupsb:qryBatInformationResponse"/>
+  </wsdl:message>
+  <wsdl:message name="queryBatStsRequestMessage">
+    <wsdl:part name="queryBatStsRequest" element="gdeupsb:queryBatSts"/>
+  </wsdl:message>
+  <wsdl:message name="queryBatStsResponseMessage">
+    <wsdl:part name="queryBatStsResponse" element="gdeupsb:queryBatStsResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="GDEUPSGzagServicePortType">
+    <wsdl:operation name="batchCancel">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:batchCancelRequestMessage"/>
+      <wsdl:output message="tns:batchCancelResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="fileSubmit">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:fileSubmitRequestMessage"/>
+      <wsdl:output message="tns:fileSubmitResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="fileIn">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:fileInRequestMessage"/>
+      <wsdl:output message="tns:fileInResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="qryComInformation">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:qryComInformationRequestMessage"/>
+      <wsdl:output message="tns:qryComInformationResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="fileOut">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:fileOutRequestMessage"/>
+      <wsdl:output message="tns:fileOutResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="qryBatInformation">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:qryBatInformationRequestMessage"/>
+      <wsdl:output message="tns:qryBatInformationResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="queryBatSts">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:queryBatStsRequestMessage"/>
+      <wsdl:output message="tns:queryBatStsResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GDEUPSGzagServiceSoapBinding" type="tns:GDEUPSGzagServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="batchCancel">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGzagService/batchCancel"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="fileSubmit">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGzagService/fileSubmit"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="fileIn">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGzagService/fileIn"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="qryComInformation">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGzagService/qryComInformation"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="fileOut">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGzagService/fileOut"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="qryBatInformation">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGzagService/qryBatInformation"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryBatSts">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGzagService/queryBatSts"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GDEUPSGzagService">
+    <wsdl:port name="GDEUPSGzagServicePort" binding="tns:GDEUPSGzagServiceSoapBinding">
+      <soap:address location="http://127.0.0.1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
