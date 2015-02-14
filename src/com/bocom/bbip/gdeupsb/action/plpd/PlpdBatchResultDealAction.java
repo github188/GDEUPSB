@@ -46,7 +46,6 @@ public class PlpdBatchResultDealAction implements AfterBatchAcpService {
 
     private final static Logger log = LoggerFactory.getLogger(PlpdBatchResultDealAction.class);
 
-  
     @Override
     public void afterBatchDeal(AfterBatchAcpDomain arg0, Context context) throws CoreException {
         log.info("BatchFbpeResultDealAction Start! ");

@@ -186,7 +186,7 @@
 		<step id="cbDfDealStep" useCtxState="true" transactional="txTemplate">  <!-- 垫款处理 -->
 			<action id="dfPayDel" place-holder="true" />
 			<action id="updDfRst" place-holder="true" />
-			<next on="BP_STATE_REVAL" to="rollback" /> 
+			<next on="BP_STATE_REVAL" to="rollback" />
 			<next on="*" to="cbGcDealStep" /> 
 		</step>
 		<step id="cbGcDealStep"   useCtxState="true" transactional="txTemplate">  <!-- 轧差处理 -->
