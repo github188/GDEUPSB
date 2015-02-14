@@ -38,7 +38,7 @@
 	
 	
 			<!-- 联机单笔抹帐  -->
-	<process id="eups.automaticCancelExt" template="eups.cancelOnlineExtTemplate"  interceptors="eups.thdTransInterceptorExt" >
+	<process id="eups.automaticCancelExt" template="eups.cancelOnlineTemplate"  interceptors="eups.thdTransInterceptorExt" >
 	   <actions>
 	       <!-- 第三方抹账前处理 -->
 	       <action id="preCalAction" ref="eups.preCancelStrategyAction"/>
