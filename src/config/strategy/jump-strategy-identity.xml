@@ -79,7 +79,7 @@
 	<bean id="eups.checkBkFileToThirdServiceActionELEC01"
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.CheckBkEleGzFileToThirdAction">
 	</bean>
-    <!--广东烟草发起对账-->
+	 <!--广东烟草发起对账-->
     <bean class="com.bocom.bbip.gdeupsb.action.tbc.CheckFileToThirdAction"
         id="eups.checkBkFileToThirdServiceActionSGRT00" />
 	<!-- 签约一站通-协议维护-水务 -->
