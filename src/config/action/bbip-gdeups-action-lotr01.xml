@@ -18,8 +18,7 @@
 	<action id="eups.payAmtServiceActionLOTR01" class="com.bocom.bbip.gdeupsb.service.impl.lotr01.PayAmtServiceActionLOTR01"/>
 	
 	 <!--投注查询-->
-    <action class="com.bocom.bbip.gdeupsb.action.lot.QueryCathecticAction"
-        id="gdeupsb.QueryCathecticAction" />
+    <action class="com.bocom.bbip.gdeupsb.action.lot.QueryCathecticAction" id="gdeupsb.QueryCathecticAction" />
     <!--用户注册信息查询 -->
     <action class="com.bocom.bbip.gdeupsb.action.lot.QueryRegisterAction" id="gdeupsb.QueryRegisterAction" />
     <!--用户实时投注 -->

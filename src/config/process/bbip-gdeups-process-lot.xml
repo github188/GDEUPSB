@@ -51,13 +51,5 @@
             <action id="act" ref="gdeupsb.DeductMoneyAction"/>
         </actions>
     </process>
-    
-    
-    <!-- 奖期查询  -->
-	<!--  <process id="eups.queryJQ" template="eups.simpleTran"
-		interceptors="eups.thdTransInterceptor">
-		<actions>
-		</actions>
-	</process> -->
-    
+
 </x:beans>
