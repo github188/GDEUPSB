@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
@@ -50,6 +51,8 @@ public class PlpdBathFileDealAction implements BatchAcpService {
     Marshaller marshaller;
     @Autowired
     GdPlpdBatchTmpRepository plpdBatchTmpRepository;
+    @Autowired
+    BBIPPublicService publicService;
     @SuppressWarnings("unchecked")
     @Override
     public void prepareBatchDeal(PrepareBatchAcpDomain arg0, Context context) throws CoreException {
@@ -67,6 +70,8 @@ public class PlpdBathFileDealAction implements BatchAcpService {
             context.setData("bBusTyp",thdBaseInfo.getEupsBusTyp());
             context.setData("crpNam",thdBaseInfo.getComNme());
         }
+        //上锁
+        publicService.tryLock(fileName, (long)0, (long)10);
       
         String localFileName=fileName+"."+context.getData(ParamKeys.BK);
         // @PARA.RcvMod 为0 磁盘拷贝
@@ -106,11 +111,13 @@ public class PlpdBathFileDealAction implements BatchAcpService {
             batchTem.setStlAct(orgMap.get("stlAct").toString());
             batchTem.setCapAmt(orgMap.get("capAmt").toString());
             batchTem.setTxnFlg(orgMap.get("txnFlg").toString());
-            batchTem.setTxnStg(orgMap.get("txnStg").toString());
+            //batchTem.setTxnStg(orgMap.get("txnStg").toString());
             batchTem.setRsvFld1(batNo); //备用字段1 表示批次号；
             plpdBatchTmpRepository.insert(batchTem);
             payDetailLst.add(batchTem);
         }
+      //解锁
+        publicService.unlock(batNo);
         context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_NAME, localFileName);
         context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_MAP, payDetailLst);
     }

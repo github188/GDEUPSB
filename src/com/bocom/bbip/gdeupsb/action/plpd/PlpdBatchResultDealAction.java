@@ -64,11 +64,11 @@ public class PlpdBatchResultDealAction implements AfterBatchAcpService {
             detailMap.put("txnAmt", batchDetail.getTxnAmt());
             String txnFlg = batchDetail.getTxnFlg();
             detailMap.put("txnFlg", txnFlg);
-            if (txnFlg.equals("Y")){
+           /* if (txnFlg.equals("Y")){
                 detailMap.put("txnStg","Y");
             }else {
                 detailMap.put("txnStg", "E");
-            }
+            }*/
             detailList.add(detailMap);
         }
         resultMap.put("detail", detailList);
