@@ -16,4 +16,20 @@
 	<action id="eups.payPlanServiceActionLOTR01" class="com.bocom.bbip.gdeupsb.service.impl.lotr01.PayPlanServiceActionLOTR01"/>
 	<!-- 定投返奖：从代发内部户转账到中奖人账户 -->
 	<action id="eups.payAmtServiceActionLOTR01" class="com.bocom.bbip.gdeupsb.service.impl.lotr01.PayAmtServiceActionLOTR01"/>
+	
+	 <!--投注查询-->
+    <action class="com.bocom.bbip.gdeupsb.action.lot.QueryCathecticAction"
+        id="gdeupsb.QueryCathecticAction" />
+    <!--用户注册信息查询 -->
+    <action class="com.bocom.bbip.gdeupsb.action.lot.QueryRegisterAction" id="gdeupsb.QueryRegisterAction" />
+    <!--用户实时投注 -->
+    <action class="com.bocom.bbip.gdeupsb.action.lot.CathecticOnTimeAction" id="gdeupsb.CathecticOnTimeAction" />
+    <!--用户登录 -->
+    <action class="com.bocom.bbip.gdeupsb.action.lot.LoginAction" id="gdeupsb.LoginAction" />
+    <!--用户注册-->
+    <action class="com.bocom.bbip.gdeupsb.action.lot.RegistAction" id="gdeupsb.RegistAction" />
+    <!--用户更新注册-->
+    <action class="com.bocom.bbip.gdeupsb.action.lot.UpdateRegistInfoAction" id="gdeupsb.UpdateRegistInfoAction" />
+    <!-- 游戏对账  -->
+    <action class="com.bocom.bbip.gdeupsb.action.lot.DeductMoneyAction" id="gdeupsb.DeductMoneyAction" />
 	</x:beans>
