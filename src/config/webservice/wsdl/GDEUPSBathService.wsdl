@@ -193,7 +193,7 @@
   </wsdl:binding>
   <wsdl:service name="GDEUPSBathService">
     <wsdl:port name="GDEUPSBathServicePort" binding="tns:GDEUPSBathServiceSoapBinding">
-      <soap:address location="http://127.0.0.1"/>
+      <soap:address location="http://127.0.0.1:8080/GDEUPSB/ws/"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

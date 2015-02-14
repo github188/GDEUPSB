@@ -133,7 +133,7 @@
   </wsdl:binding>
   <wsdl:service name="HZGasCoreService">
     <wsdl:port name="HZGasCoreServicePort" binding="tns:HZGasCoreServiceSoapBinding">
-      <soap:address location="http://127.0.0.1"/>
+      <soap:address location="http://127.0.0.1:8080/GDEUPSB/ws/"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
