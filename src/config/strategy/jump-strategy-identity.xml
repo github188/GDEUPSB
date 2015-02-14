@@ -27,8 +27,7 @@
     <bean id="eups.afterBatchAcpServiceActionPlpd"
         class="com.bocom.bbip.gdeupsb.action.plpd.PlpdBatchResultDealAction">
     </bean>
-	
->>>>>>> .r11175
+	    
 	<bean id="eups.qryDealStrategyActionELEC01"
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.QueryElecUserStrategyAction">
 	</bean>
