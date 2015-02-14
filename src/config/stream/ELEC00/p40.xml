@@ -19,7 +19,7 @@
         <fixString name="CusNme"    length="128" /><!-- 扣款账户名称 -->
        <fixString name="txnAmt"     length="16" /><!-- 实扣金额 -->
         <fixString name="payMde"    length="1" /><!-- 付款方式 -->
-        	<loop name="Information">
+        	<loop name="CusInformation">
         			<segment name="List">
 					       <fixString name="particularNo"       length=" 7" /><!-- 明细序号 -->
 					        <fixString name="nullField"      length=" 6" /><!-- 缺失字段，内容未知 -->
