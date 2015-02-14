@@ -18,6 +18,5 @@
 	<!-- HZ燃气：文件批量托收完成通知燃气  --> 
 	<x:bean id="eups.afterBatchAcpServiceActionPGAS00"
 		class="com.bocom.bbip.gdeupsb.action.gas.MsgToGasAftBatchAction"/>
-	
-	
+
 </x:beans>
