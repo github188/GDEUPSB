@@ -841,7 +841,7 @@
       <xs:element name="CusNme" type="tns:CusNme_SType" minOccurs="0"/>
       <xs:element name="txnAmt" type="tns:txnAmt_SType" minOccurs="0"/>
       <xs:element name="payMde" type="tns:payMde_SType" minOccurs="0"/>
-      <xs:element name="Information" type="tns:Information_CType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="CusInformation" type="tns:CusInformation_CType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="rspCde" type="tns:rspCde_SType" minOccurs="0"/>
       <xs:element name="rspMsg" type="tns:rspMsg_SType" minOccurs="0"/>
     </xs:sequence>
@@ -985,7 +985,7 @@
       <xs:maxLength value="20"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:complexType name="Information_CType">
+  <xs:complexType name="CusInformation_CType">
     <xs:sequence>
       <xs:element name="particularNo" type="tns:particularNo_SType" minOccurs="0"/>
       <xs:element name="nullField" type="tns:nullField_SType" minOccurs="0"/>
