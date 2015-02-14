@@ -12,13 +12,14 @@
 			<action id="act" ref="oprGasCusAgentAction" />
 		</actions>
 	</process>
+	
 	<!-- 用户协议文件上传（0全部，1新增） -->
-	<process id="gdeupsb.gasAgentBatchFileToFTP" template="eups.simpleTran"
+<!-- 	<process id="gdeupsb.gasAgentBatchFileToFTP" template="eups.simpleTran"
 		interceptors="eups.transMessageInterceptor">
 		<actions>
 			<action id="act" ref="gasAgentBatchFileToFTP" />
 		</actions>
-	</process>
+	</process> -->
 
 
 
