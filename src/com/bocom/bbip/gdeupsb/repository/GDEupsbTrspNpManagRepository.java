@@ -1,7 +1,6 @@
 package com.bocom.bbip.gdeupsb.repository;
 
 import java.util.List;
-import java.util.Map;
 
 import com.bocom.bbip.data.domain.Page;
 import com.bocom.bbip.data.domain.Pageable;
