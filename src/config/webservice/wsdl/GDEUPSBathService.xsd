@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBathService/Schema" xmlns:gsp="http://gsp.bankcomm.com" xmlns:bbip="http://bbip.bankcomm.com" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBathService/Schema" elementFormDefault="qualified">
+  <xs:import namespace="http://gsp.bankcomm.com" schemaLocation="headerOfSOAP.xsd"/>
+  <xs:import namespace="http://bbip.bankcomm.com" schemaLocation="headerOfBbip.xsd"/>
+  <xs:element name="prlBatchRect" type="tns:prlBatchRectReq_CType"/>
+  <xs:element name="prlBatchRectResponse" type="tns:prlBatchRectRsp_CType"/>
+  <xs:complexType name="prlBatchRectReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:prlBatchRectRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="prlBatchRectRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:prlBatchRectResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="printBathInfo" type="tns:printBathInfoReq_CType"/>
+  <xs:element name="printBathInfoResponse" type="tns:printBathInfoRsp_CType"/>
+  <xs:complexType name="printBathInfoReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:printBathInfoRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="printBathInfoRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:printBathInfoResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="qryBatInfoByBatNo" type="tns:qryBatInfoByBatNoReq_CType"/>
+  <xs:element name="qryBatInfoByBatNoResponse" type="tns:qryBatInfoByBatNoRsp_CType"/>
+  <xs:complexType name="qryBatInfoByBatNoReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:qryBatInfoByBatNoRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="qryBatInfoByBatNoRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:qryBatInfoByBatNoResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="qryComInfoByComNo" type="tns:qryComInfoByComNoReq_CType"/>
+  <xs:element name="qryComInfoByComNoResponse" type="tns:qryComInfoByComNoRsp_CType"/>
+  <xs:complexType name="qryComInfoByComNoReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:qryComInfoByComNoRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="qryComInfoByComNoRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:qryComInfoByComNoResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="qryStatsBathInfo" type="tns:qryStatsBathInfoReq_CType"/>
+  <xs:element name="qryStatsBathInfoResponse" type="tns:qryStatsBathInfoRsp_CType"/>
+  <xs:complexType name="qryStatsBathInfoReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:qryStatsBathInfoRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="qryStatsBathInfoRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:qryStatsBathInfoResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="qryBathInfo" type="tns:qryBathInfoReq_CType"/>
+  <xs:element name="qryBathInfoResponse" type="tns:qryBathInfoRsp_CType"/>
+  <xs:complexType name="qryBathInfoReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:qryBathInfoRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="qryBathInfoRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:qryBathInfoResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="bathSqnInfo" type="tns:bathSqnInfoReq_CType"/>
+  <xs:element name="bathSqnInfoResponse" type="tns:bathSqnInfoRsp_CType"/>
+  <xs:complexType name="bathSqnInfoReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:bathSqnInfoRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bathSqnInfoRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:bathSqnInfoResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="bathCusExe" type="tns:bathCusExeReq_CType"/>
+  <xs:element name="bathCusExeResponse" type="tns:bathCusExeRsp_CType"/>
+  <xs:complexType name="bathCusExeReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:bathCusExeRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bathCusExeRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:bathCusExeResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="prlFbpdMonRep" type="tns:prlFbpdMonRepReq_CType"/>
+  <xs:element name="prlFbpdMonRepResponse" type="tns:prlFbpdMonRepRsp_CType"/>
+  <xs:complexType name="prlFbpdMonRepReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:prlFbpdMonRepRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="prlFbpdMonRepRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:prlFbpdMonRepResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="requestHeader" type="tns:requestHeader_CType"/>
+  <xs:element name="responseHeader" type="tns:responseHeader_CType"/>
+  <xs:element name="sortingInfo" type="tns:sortingInfo_CType"/>
+  <xs:element name="pageableRequest" type="tns:pageableRequest_CType"/>
+  <xs:element name="pageableResponse" type="tns:pageableResponse_CType"/>
+  <xs:complexType name="requestHeader_CType">
+    <xs:sequence>
+      <xs:element ref="bbip:bbipRequestHead"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="responseHeader_CType">
+    <xs:sequence>
+      <xs:element ref="bbip:bbipResponseHead"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="property_SType">
+    <xs:annotation>
+      <xs:documentation>排序数据域</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="32"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="direction_SType">
+    <xs:annotation>
+      <xs:documentation>排序方式</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="sortingInfo_CType">
+    <xs:sequence>
+      <xs:element name="property" type="tns:property_SType"/>
+      <xs:element name="direction" type="tns:direction_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="pageNum_SType">
+    <xs:annotation>
+      <xs:documentation>页数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+  <xs:simpleType name="pageSize_SType">
+    <xs:annotation>
+      <xs:documentation>每页显示数据数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+  <xs:complexType name="pageableRequest_CType">
+    <xs:sequence>
+      <xs:element name="pageNum" type="tns:pageNum_SType"/>
+      <xs:element name="pageSize" type="tns:pageSize_SType"/>
+      <xs:element ref="tns:sortingInfo" minOccurs="0" maxOccurs="10"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="totalElements_SType">
+    <xs:annotation>
+      <xs:documentation>总记录数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:long"/>
+  </xs:simpleType>
+  <xs:simpleType name="totalPages_SType">
+    <xs:annotation>
+      <xs:documentation>总页数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:long"/>
+  </xs:simpleType>
+  <xs:complexType name="pageableResponse_CType">
+    <xs:sequence>
+      <xs:element name="totalElements" type="tns:totalElements_SType"/>
+      <xs:element name="totalPages" type="tns:totalPages_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="prlBatchRectRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="busTyp" type="tns:busTyp_SType" minOccurs="0"/>
+      <xs:element name="txnDte" type="tns:txnDte_SType" minOccurs="0"/>
+      <xs:element name="cusAc" type="tns:cusAc_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="prlBatchRectResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="fleNme" type="tns:fleNme_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="busTyp_SType">
+    <xs:annotation>
+      <xs:documentation>业务类型</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="txnDte_SType">
+    <xs:annotation>
+      <xs:documentation>记账日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="cusAc_SType">
+    <xs:annotation>
+      <xs:documentation>客户账号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="21"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="fleNme_SType">
+    <xs:annotation>
+      <xs:documentation>文件名</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="printBathInfoRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="busTyp" type="tns:busTyp_SType" minOccurs="0"/>
+      <xs:element name="dskNo" type="tns:dskNo_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="printBathInfoResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="FilNam" type="tns:FilNam_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="dskNo_SType">
+    <xs:annotation>
+      <xs:documentation>批次号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="12"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FilNam_SType">
+    <xs:annotation>
+      <xs:documentation>文件名</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="qryBatInfoByBatNoRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="busTyp" type="tns:busTyp_SType" minOccurs="0"/>
+      <xs:element name="dskNo" type="tns:dskNo_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="qryBatInfoByBatNoResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="dskNo" type="tns:dskNo_SType"/>
+      <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
+      <xs:element name="comNam" type="tns:comNam_SType" minOccurs="0"/>
+      <xs:element name="busTyp" type="tns:busTyp_SType" minOccurs="0"/>
+      <xs:element name="ornCnt" type="tns:ornCnt_SType" minOccurs="0"/>
+      <xs:element name="ornAmt" type="tns:ornAmt_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="comNo_SType">
+    <xs:annotation>
+      <xs:documentation>单位编号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="comNam_SType">
+    <xs:annotation>
+      <xs:documentation>单位名称</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ornCnt_SType">
+    <xs:annotation>
+      <xs:documentation>总笔数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="5"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ornAmt_SType">
+    <xs:annotation>
+      <xs:documentation>总金额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="qryComInfoByComNoRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="busTyp" type="tns:busTyp_SType" minOccurs="0"/>
+      <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="qryComInfoByComNoResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
+      <xs:element name="comNam" type="tns:comNam_SType" minOccurs="0"/>
+      <xs:element name="busTyp" type="tns:busTyp_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="qryStatsBathInfoRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="busTyp" type="tns:busTyp_SType" minOccurs="0"/>
+      <xs:element name="dskNo" type="tns:dskNo_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="qryStatsBathInfoResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="dskNo" type="tns:dskNo_SType" minOccurs="0"/>
+      <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
+      <xs:element name="comNam" type="tns:comNam_SType" minOccurs="0"/>
+      <xs:element name="busTyp" type="tns:busTyp_SType" minOccurs="0"/>
+      <xs:element name="ornCnt" type="tns:ornCnt_SType" minOccurs="0"/>
+      <xs:element name="ornAmt" type="tns:ornAmt_SType" minOccurs="0"/>
+      <xs:element name="status" type="tns:status_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="status_SType">
+    <xs:annotation>
+      <xs:documentation>状态</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="qryBathInfoRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="busTyp" type="tns:busTyp_SType" minOccurs="0"/>
+      <xs:element name="comNo" type="tns:comNo_SType"/>
+      <xs:element name="ornCnt" type="tns:ornCnt_SType"/>
+      <xs:element name="ornAmt" type="tns:ornAmt_SType"/>
+      <xs:element name="filNam" type="tns:filNam_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="qryBathInfoResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="dskNo" type="tns:dskNo_SType"/>
+      <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
+      <xs:element name="comNam" type="tns:comNam_SType" minOccurs="0"/>
+      <xs:element name="busTyp" type="tns:busTyp_SType" minOccurs="0"/>
+      <xs:element name="ornCnt" type="tns:ornCnt_SType" minOccurs="0"/>
+      <xs:element name="ornAmt" type="tns:ornAmt_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="filNam_SType">
+    <xs:annotation>
+      <xs:documentation>文件名</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="bathSqnInfoRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="busTyp" type="tns:busTyp_SType" minOccurs="0"/>
+      <xs:element name="actNo" type="tns:actNo_SType"/>
+      <xs:element name="actNam" type="tns:actNam_SType"/>
+      <xs:element name="staDat" type="tns:staDat_SType" minOccurs="0"/>
+      <xs:element name="endNo" type="tns:endNo_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bathSqnInfoResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="actNo_SType">
+    <xs:annotation>
+      <xs:documentation>客户账号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="21"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="actNam_SType">
+    <xs:annotation>
+      <xs:documentation>客户名称</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="staDat_SType">
+    <xs:annotation>
+      <xs:documentation>起始交易日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="14"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="endNo_SType">
+    <xs:annotation>
+      <xs:documentation>终止交易日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="14"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="bathCusExeRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="busTyp" type="tns:busTyp_SType" minOccurs="0"/>
+      <xs:element name="actNo" type="tns:actNo_SType"/>
+      <xs:element name="actNam" type="tns:actNam_SType"/>
+      <xs:element name="txnDat" type="tns:txnDat_SType" minOccurs="0"/>
+      <xs:element name="hLogNo" type="tns:hLogNo_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bathCusExeResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="txnDat_SType">
+    <xs:annotation>
+      <xs:documentation>交易日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="14"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="hLogNo_SType">
+    <xs:annotation>
+      <xs:documentation>主机交易流水号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="14"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="prlFbpdMonRepRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="busTyp" type="tns:busTyp_SType" minOccurs="0"/>
+      <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
+      <xs:element name="beginDate" type="tns:beginDate_SType" minOccurs="0"/>
+      <xs:element name="endDate" type="tns:endDate_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="prlFbpdMonRepResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="fleNme" type="tns:fleNme_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="beginDate_SType">
+    <xs:annotation>
+      <xs:documentation>开始日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="14"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="endDate_SType">
+    <xs:annotation>
+      <xs:documentation>结束日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="14"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

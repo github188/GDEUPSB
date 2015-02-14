@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBathService" xmlns:gdeupsb="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBathService/Schema" name="GDEUPSBathService" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBathService">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBathService">
+      <xsd:import namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBathService/Schema" schemaLocation="GDEUPSBathService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="prlBatchRectRequestMessage">
+    <wsdl:part name="prlBatchRectRequest" element="gdeupsb:prlBatchRect"/>
+  </wsdl:message>
+  <wsdl:message name="prlBatchRectResponseMessage">
+    <wsdl:part name="prlBatchRectResponse" element="gdeupsb:prlBatchRectResponse"/>
+  </wsdl:message>
+  <wsdl:message name="printBathInfoRequestMessage">
+    <wsdl:part name="printBathInfoRequest" element="gdeupsb:printBathInfo"/>
+  </wsdl:message>
+  <wsdl:message name="printBathInfoResponseMessage">
+    <wsdl:part name="printBathInfoResponse" element="gdeupsb:printBathInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="qryBatInfoByBatNoRequestMessage">
+    <wsdl:part name="qryBatInfoByBatNoRequest" element="gdeupsb:qryBatInfoByBatNo"/>
+  </wsdl:message>
+  <wsdl:message name="qryBatInfoByBatNoResponseMessage">
+    <wsdl:part name="qryBatInfoByBatNoResponse" element="gdeupsb:qryBatInfoByBatNoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="qryComInfoByComNoRequestMessage">
+    <wsdl:part name="qryComInfoByComNoRequest" element="gdeupsb:qryComInfoByComNo"/>
+  </wsdl:message>
+  <wsdl:message name="qryComInfoByComNoResponseMessage">
+    <wsdl:part name="qryComInfoByComNoResponse" element="gdeupsb:qryComInfoByComNoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="qryStatsBathInfoRequestMessage">
+    <wsdl:part name="qryStatsBathInfoRequest" element="gdeupsb:qryStatsBathInfo"/>
+  </wsdl:message>
+  <wsdl:message name="qryStatsBathInfoResponseMessage">
+    <wsdl:part name="qryStatsBathInfoResponse" element="gdeupsb:qryStatsBathInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="qryBathInfoRequestMessage">
+    <wsdl:part name="qryBathInfoRequest" element="gdeupsb:qryBathInfo"/>
+  </wsdl:message>
+  <wsdl:message name="qryBathInfoResponseMessage">
+    <wsdl:part name="qryBathInfoResponse" element="gdeupsb:qryBathInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="bathSqnInfoRequestMessage">
+    <wsdl:part name="bathSqnInfoRequest" element="gdeupsb:bathSqnInfo"/>
+  </wsdl:message>
+  <wsdl:message name="bathSqnInfoResponseMessage">
+    <wsdl:part name="bathSqnInfoResponse" element="gdeupsb:bathSqnInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="bathCusExeRequestMessage">
+    <wsdl:part name="bathCusExeRequest" element="gdeupsb:bathCusExe"/>
+  </wsdl:message>
+  <wsdl:message name="bathCusExeResponseMessage">
+    <wsdl:part name="bathCusExeResponse" element="gdeupsb:bathCusExeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="prlFbpdMonRepRequestMessage">
+    <wsdl:part name="prlFbpdMonRepRequest" element="gdeupsb:prlFbpdMonRep"/>
+  </wsdl:message>
+  <wsdl:message name="prlFbpdMonRepResponseMessage">
+    <wsdl:part name="prlFbpdMonRepResponse" element="gdeupsb:prlFbpdMonRepResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="GDEUPSBathServicePortType">
+    <wsdl:operation name="prlBatchRect">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:prlBatchRectRequestMessage"/>
+      <wsdl:output message="tns:prlBatchRectResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="printBathInfo">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:printBathInfoRequestMessage"/>
+      <wsdl:output message="tns:printBathInfoResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="qryBatInfoByBatNo">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:qryBatInfoByBatNoRequestMessage"/>
+      <wsdl:output message="tns:qryBatInfoByBatNoResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="qryComInfoByComNo">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:qryComInfoByComNoRequestMessage"/>
+      <wsdl:output message="tns:qryComInfoByComNoResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="qryStatsBathInfo">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:qryStatsBathInfoRequestMessage"/>
+      <wsdl:output message="tns:qryStatsBathInfoResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="qryBathInfo">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:qryBathInfoRequestMessage"/>
+      <wsdl:output message="tns:qryBathInfoResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="bathSqnInfo">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:bathSqnInfoRequestMessage"/>
+      <wsdl:output message="tns:bathSqnInfoResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="bathCusExe">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:bathCusExeRequestMessage"/>
+      <wsdl:output message="tns:bathCusExeResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="prlFbpdMonRep">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:prlFbpdMonRepRequestMessage"/>
+      <wsdl:output message="tns:prlFbpdMonRepResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GDEUPSBathServiceSoapBinding" type="tns:GDEUPSBathServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="prlBatchRect">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBathService/prlBatchRect"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="printBathInfo">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBathService/printBathInfo"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="qryBatInfoByBatNo">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBathService/qryBatInfoByBatNo"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="qryComInfoByComNo">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBathService/qryComInfoByComNo"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="qryStatsBathInfo">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBathService/qryStatsBathInfo"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="qryBathInfo">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBathService/qryBathInfo"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="bathSqnInfo">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBathService/bathSqnInfo"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="bathCusExe">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBathService/bathCusExe"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="prlFbpdMonRep">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBathService/prlFbpdMonRep"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GDEUPSBathService">
+    <wsdl:port name="GDEUPSBathServicePort" binding="tns:GDEUPSBathServiceSoapBinding">
+      <soap:address location="http://127.0.0.1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
