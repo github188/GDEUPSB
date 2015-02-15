@@ -33,7 +33,7 @@
 	<fixString name="subDte" length="8" />
 	<fixString name="txnDte" length="8" />
 	<fixString name="rsFld1" length="128" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GDExpCommonUtils@trimBothSpace(this.rsFld1)"/>
-	<fixString name="thdSqn" length="16" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GDExpCommonUtils@trimBothSpace(this.thdSqn)"/>
+	<fixString name="sqn" length="16" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GDExpCommonUtils@trimBothSpace(this.sqn)"/>
 	<fixString name="bk" length="12" />
 		
 	</segment>
