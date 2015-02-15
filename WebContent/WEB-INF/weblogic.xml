@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <weblogic-web-app xmlns="http://www.bea.com/ns/weblogic/weblogic-web-app" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.bea.com/ns/weblogic/weblogic-web-app http://www.bea.com/ns/weblogic/weblogic-web-app/1.0/weblogic-web-app.xsd">
-  <context-root>GDEUPS</context-root>
+  <context-root>GDEUPSB</context-root>
+  <!--BBIP的组件共享库.-->
+  <library-ref>
+   <library-name>BBIPRE</library-name>
+   <specification-version>1.0</specification-version>
+   <exact-match>false</exact-match>
+   </library-ref>  
 </weblogic-web-app>
