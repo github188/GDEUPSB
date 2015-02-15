@@ -40,6 +40,7 @@ import com.bocom.bbip.gdeupsb.repository.GdFbpdMposBatchTmpRepository;
 import com.bocom.bbip.gdeupsb.repository.GdFbpdNeleBatchTmpRepository;
 import com.bocom.bbip.gdeupsb.repository.GdFbpdObusBatchTmpRepository;
 import com.bocom.bbip.utils.BeanUtils;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.FileUtils;
 import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.jump.bp.JumpException;
@@ -99,8 +100,6 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 		context.setData(GDParamKeys.FBPD_TXN_OBJ, "OFTDFBPA");
 		String fleNme = context.getData("fleNme").toString().trim();
 		//检查批次文件是否重复录入
-//		SELECT DskNo FROM pubbatinf WHERE ActDat='%s' AND DskNam='%s' AND Status='P'
-//		ActDat:文件提交日期
 		GdBatchConsoleInfo batchConsoleInfo = new GdBatchConsoleInfo();
 		batchConsoleInfo.setSubDte(new Date());
 		batchConsoleInfo.setFleNme(fleNme);
@@ -127,14 +126,14 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
  * 启动“481201 文件录入及检查”，输入单位编号、总笔数、总金额。选择 U 盘读入获取数据，交易成功后打印个人业务受理通知书， 打印批次号。
  */
 		//TODO 文件路径
-		 String srcFilName= "D:/fbpdTest/recv/"+fleNme;
-	     String objFilName ="D:/fbpdTest/fbpd/"+fleNme;
+		 String srcFil= "D:/fbpdTest/recv/"+fleNme;
+	     String objFil ="D:/fbpdTest/fbpd/"+fleNme;
 	       
-	        File srcFil =new File(srcFilName);
-	        File objFil =new File(objFilName);
+	        File srcFilPath =new File(srcFil);
+	        File objFilPath =new File(objFil);
 	        
 	        try {
-	            FileUtils.copyFile(srcFil, objFil);
+	            FileUtils.copyFile(srcFilPath, objFilPath);
 	            logger.info("============文件已获取并放置于指定目录，待入库。。。。。。");
 	        } catch (IOException e) {
 	            // TODO Auto-generated catch block
@@ -145,19 +144,21 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 		//解析文件，拆分入库（放进临时表）
 	    //从临时表中取数据，生成指定格式的文件
 	         
+	        
+	        //解析文件
 	        //Resource resource = new FileSystemResource(TransferUtils.resolveFilePath(eupsThdFtpInf.getLocDir().trim(), eupsThdFtpInf.getLocFleNme().trim()));
 	        Resource resource = new FileSystemResource(objFil);
 	        Map<String, List<Map<String, Object>>> map = new HashMap<String, List<Map<String, Object>>>(); 
 	        FileMarshaller fileMarshaller = new FileMarshaller();
 	        
-	        if("WATR".equals(context.getData("comNo"))){	//中山水费 WATR   fbpdWaterFmtIn
+	        if("WATR".equals(context.getData("comNo")) ){	//中山水费 WATR   fbpdWaterFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdWaterFmtIn", resource, Map.class);
 				} catch (JumpException e) {
 					e.printStackTrace();
 				}
-	        	String fileName = "waterFile";
-	        	parseOthrMapList(map, payOthrDetailLst, context, fileName);
+//	        	String fileName = "waterFile";
+	        	parseOthrMapList(map, payOthrDetailLst, context, fleNme);
 	        }
 	        if("NELE1".equals(context.getData("comNo"))){	//NELE_in_484999_1 电费 fbpdNele1FmtIn
 	        	try {
@@ -165,8 +166,8 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 				} catch (JumpException e) {
 					e.printStackTrace();
 				}
-	        	String fileName = "nele1File";
-	        	parseOthrMapList(map, payOthrDetailLst, context, fileName);
+//	        	String fileName = "nele1File";
+	        	parseOthrMapList(map, payOthrDetailLst, context, fleNme);
 	        }
 	        if("NELE".equals(context.getData("comNo"))){	//NELE_in_484999 电费	fbpdNeleFmtIn
 	        	try {
@@ -174,8 +175,8 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 				} catch (JumpException e) {
 					e.printStackTrace();
 				}
-	        	String fileName = "neleFile";
-	        	parseNeleMapList(map, payNeleDetailLst, context, fileName);
+//	        	String fileName = "neleFile";
+	        	parseNeleMapList(map, payNeleDetailLst, context, fleNme);
 	        }
 	        if("GGAS".equals(context.getData("comNo"))){	//GGAS_in_484999 中山煤气费	fbpdGgasFmtIn
 	        	try {
@@ -183,8 +184,8 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 				} catch (JumpException e) {
 					e.printStackTrace();
 				}
-	        	String fileName = "ggasFile";
-	        	parseOthrMapList(map, payOthrDetailLst, context, fileName);
+//	        	String fileName = "ggasFile";
+	        	parseOthrMapList(map, payOthrDetailLst, context, fleNme);
 	        }
 	        if("VANK".equals(context.getData("comNo"))){	//VANK_out_484999中山物业管理费 fbpdVankFmtIn
 	        	try {
@@ -192,8 +193,8 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 				} catch (JumpException e) {
 					e.printStackTrace();
 				}
-	        	String fileName = "vankFile";
-	        	parseOthrMapList(map, payOthrDetailLst, context, fileName);
+//	        	String fileName = "vankFile";
+	        	parseOthrMapList(map, payOthrDetailLst, context, fleNme);
 	        }
 	        if("TTOM".equals(context.getData("comNo"))){	//TTOM_in_484999中山铁通 fbpdTtomFmtIn
 	        	try {
@@ -201,8 +202,8 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 				} catch (JumpException e) {
 					e.printStackTrace();
 				}
-	        	String fileName = "ttomFile";
-	        	parseOthrMapList(map, payOthrDetailLst, context, fileName);
+//	        	String fileName = "ttomFile";
+	        	parseOthrMapList(map, payOthrDetailLst, context, fleNme);
 	        }
 	        if("CTTV".equals(context.getData("comNo"))){	//CTTV_in_484999 中山有线电视 fbpdCttvFmtIn
 	        	try {
@@ -210,8 +211,8 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 				} catch (JumpException e) {
 					e.printStackTrace();
 				}
-	        	String fileName = "cttvFile";
-	        	parseOthrMapList(map, payOthrDetailLst, context, fileName);
+//	        	String fileName = "cttvFile";
+	        	parseOthrMapList(map, payOthrDetailLst, context, fleNme);
 	        }
 	        if("NQTV".equals(context.getData("comNo"))){	//NQTV_in_484999南区有线电视 fbpdNqtvFmtIn
 	        	try {
@@ -219,8 +220,8 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 				} catch (JumpException e) {
 					e.printStackTrace();
 				}
-	        	String fileName = "nqtvFile";
-	        	parseOthrMapList(map, payOthrDetailLst, context, fileName);
+//	        	String fileName = "nqtvFile";
+	        	parseOthrMapList(map, payOthrDetailLst, context, fleNme);
 	        }
 	        if("XIND".equals(context.getData("comNo"))){	//XIND_in_484999 新都物业管理 fbpdXindFmtIn
 	        	try {
@@ -228,8 +229,8 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 				} catch (JumpException e) {
 					e.printStackTrace();
 				}
-	        	String fileName = "xindFile";
-	        	parseOthrMapList(map, payOthrDetailLst, context, fileName);
+//	        	String fileName = "xindFile";
+	        	parseOthrMapList(map, payOthrDetailLst, context, fleNme);
 	        }
 	        if("MPOS".equals(context.getData("comNo"))){	//MPOS_in_484999 中山移动POS fbpdMposFmtIn
 	        	try {
@@ -238,8 +239,8 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 					e.printStackTrace();
 				}
 	        	String formatName = "fbpdMposFmtIn";
-	        	String fileName = "mposFile";
-	        	parseMposMapList(map, payMposDetailLst, context, fileName, formatName);
+//	        	String fileName = "mposFile";
+	        	parseMposMapList(map, payMposDetailLst, context, fleNme, formatName);
 	        }
 	        
 	    }
@@ -253,47 +254,28 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 	 * @param fileName 
 	 * @return
 	 */
-	private List<Map<String, Object>> parseNeleMapList( Map<String, List<Map<String, Object>>> map,	List<GdFbpdNeleBatchTmp> payNeleDetailLst, Context context, String fileName) {
+	private List<Map<String, Object>> parseNeleMapList( Map<String, List<Map<String, Object>>> map,	List<GdFbpdNeleBatchTmp> payNeleDetailLst, Context context, String fleNme) {
+		
 		Map<String, Object> orgHeadMap = (Map<String, Object>) map.get("header");
-
-		// 循环拼装代收付文件明细map
-		List<Map<String, Object>> agtDeatil = new ArrayList<Map<String, Object>>(); // 代收付明细体
+		//header部分放进  	table	GdBatchConsoleInfo    
+		GdBatchConsoleInfo gdBatchConsoleInfo =BeanUtils.toObject(orgHeadMap, GdBatchConsoleInfo.class); 
+		gdBatchConsoleInfoRepository.insert(gdBatchConsoleInfo);
 		
-		List<Map<String, Object>> parseMap = (List<Map<String, Object>>) map.get("detail"); // 文件体
+		List<Map<String, Object>> parseMapdDetail = (List<Map<String, Object>>) map.get("detail"); 
 		
-		List<GdFbpdNeleBatchTmp> bthTmpSession = new ArrayList<GdFbpdNeleBatchTmp>();
+//		List<GdFbpdNeleBatchTmp> bthTmpSession = new ArrayList<GdFbpdNeleBatchTmp>();
 		
-		for (Map<String, Object> orgMap : parseMap) {
-			
-			GdFbpdNeleBatchTmp eupsFbpdNeleBatchTmp = BeanUtils.toObject(orgMap, GdFbpdNeleBatchTmp.class);
-			eupsFbpdNeleBatchTmp.setSqn(bbipPublicService.getBBIPSequence());
-			
+		for (Map<String, Object> orgMap : parseMapdDetail) {
+			GdFbpdNeleBatchTmp batchTmp = BeanUtils.toObject(orgMap, GdFbpdNeleBatchTmp.class);
+			batchTmp.setSqn(bbipPublicService.getBBIPSequence());
 			
 			
-			
-			
+			eupsFbpdNeleBatchTmpRepository.insert(batchTmp);
+			payNeleDetailLst.add(batchTmp);
 		}
-		
-		// 拼装代收付Map
-				Map<String, Object> agtMap = new HashMap<String, Object>();
-				Map<String, Object> agtHeaderMap = new HashMap<String, Object>(); // 头
-
-				String totCnt = (String) orgHeadMap.get("TotCnt"); // 总笔数
-				String totAmt = (String) orgHeadMap.get("TotAmt"); // 总金额
-				BigDecimal totAmtD = NumberUtils.centToYuan(totAmt); // 总金额
-				// 拼装代收付头文件
-				agtHeaderMap.put("totCount", totCnt); // 总比数
-				agtHeaderMap.put("totAmt", totAmtD.toString()); // 总金额
-//				agtHeaderMap.put("comNo", comNo); // 单位编号
-
-				// 拼装整个代收付文件
-				agtMap.put("header", agtHeaderMap);
-				agtMap.put("detail", agtDeatil);
-
-				context.setVariable(GDParamKeys.BATCH_COM_FILE_NAME, "neleFile");
-				context.setVariable("agtFileMap", agtMap);
-				
-				
+			context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_NAME, fleNme);
+		    context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_MAP, payNeleDetailLst);
+		        
 		return null;
 		
 	}
@@ -307,13 +289,13 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 	 * @return
 	 */
 	private List<Map<String, Object>> parseMposMapList( Map<String, List<Map<String, Object>>> map,
-			List<GdFbpdMposBatchTmp> payMposDetailLst, Context context, String fileName, String formatName) {
+			List<GdFbpdMposBatchTmp> payMposDetailLst, Context context, String fleNme, String formatName) {
 		  // Map<String,Object> orgHeadMap=(Map<String, Object>) map.get("header");
         List<Map<String, Object>> parseMap = (List<Map<String, Object>>) map.get("detail");  //文件体
         // List<Map<String, Object>> parseMap = operateFile.pareseFile(eupsThdFtpInf, "eleGzBatFmt"); // 解析只有detail文件
         for (Map<String, Object> orgMap : parseMap) {
-        	
         	GdFbpdMposBatchTmp batchTmp = new GdFbpdMposBatchTmp();
+        	batchTmp.setSqn(bbipPublicService.getBBIPSequence());
         	batchTmp.setThdSqn((String) orgMap.get("thdSqn"));
         	batchTmp.setPosNo((String) orgMap.get("posNo"));
         	batchTmp.setComAc((String) orgMap.get("comAc"));
@@ -328,7 +310,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
         	batchTmp.setChkDate((String) orgMap.get("chkDate"));
         	batchTmp.setSeqNo((String) orgMap.get("seqNo"));
         	batchTmp.setPosFld1(formatName);	//备用字段1	生成文件格式名
-        	batchTmp.setPosFld2((String) orgMap.get("posFld2"));
+        	batchTmp.setPosFld2(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));	//提交日期
         	batchTmp.setPosFld3((String) orgMap.get("posFld3"));
         	batchTmp.setPosFld4((String) orgMap.get("posFld4"));
         	batchTmp.setPosFld5((String) orgMap.get("posFld5"));
@@ -337,7 +319,10 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
         	eupsFbpdMposBatchTmpRepository.insert(batchTmp);
             payMposDetailLst.add(batchTmp);
         }
-        context.setData(ParamKeys.EUPS_BATCH_PAY_ENTITY_LIST, payMposDetailLst);
+        context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_NAME, fleNme);
+        context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_MAP, payMposDetailLst);
+        
+//        context.setData(ParamKeys.EUPS_BATCH_PAY_ENTITY_LIST, payMposDetailLst);
 				
 		return null;
 		
@@ -351,7 +336,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 	 * @param context
 	 * @return
 	 */
-	private List<Map<String, Object>> parseOthrMapList( Map<String, List<Map<String, Object>>> map, List<GdFbpdObusBatchTmp> payOthrDetailLst, Context context, String fileName){
+	private List<Map<String, Object>> parseOthrMapList( Map<String, List<Map<String, Object>>> map, List<GdFbpdObusBatchTmp> payOthrDetailLst, Context context, String fleNme){
 		  // Map<String,Object> orgHeadMap=(Map<String, Object>) map.get("header");
         List<Map<String, Object>> parseMap = (List<Map<String, Object>>) map.get("detail");  //文件体
         // List<Map<String, Object>> parseMap = operateFile.pareseFile(eupsThdFtpInf, "eleGzBatFmt"); // 解析只有detail文件
@@ -376,10 +361,13 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 //        	batchTmp.setTmpFld5((String)orgMap.get("tmpFld5"));
         	
         	GdFbpdObusBatchTmp batchTmp = BeanUtils.toObject(orgMap, GdFbpdObusBatchTmp.class);
+        	batchTmp.setSeqNo(bbipPublicService.getBBIPSequence());
             eupsFbpdObusBatchTmpRepository.insert(batchTmp);
             payOthrDetailLst.add(batchTmp);
         }
-        context.setData(ParamKeys.EUPS_BATCH_PAY_ENTITY_LIST, payOthrDetailLst);
+        
+        context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_NAME, fleNme);
+        context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_MAP, payOthrDetailLst);
 		
 		return null;
 	}
