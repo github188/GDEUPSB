@@ -33,6 +33,9 @@ public class PrePayToBankAction implements Executable{
 			String time=DateUtils.format(new Date(),DateUtils.STYLE_TRANS_TIME);
 			Date txnTme=DateUtils.parse(time);
 			context.setData(ParamKeys.TXN_TME, txnTme);
+			
+			String tmlNo=context.getData(ParamKeys.BBIP_TERMINAL_NO).toString().substring(0,6);
+			context.setData(ParamKeys.TERMINAL_NO, tmlNo);
 			//TODO 待定  
 			String ActFlg=(String)context.getData(ParamKeys.ACC_TYPE);
 			//TODO 
