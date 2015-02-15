@@ -46,7 +46,7 @@
 		</process>
 		
 	<!-- 南方电网  查询客户基本信息-->
-		<process id="gdeupsb.qryCusBaseMsg"  template="eups.simpleTran"  interceptors="eups.thdTransInterceptorExt">
+		<process id="gdeupsb.qryCusBaseMsg"  template="eups.simpleTran"  interceptors="eups.transMessageInterceptor">
 			  <actions>
 			   			  <action id="act"  ref="gdeupsb.qryCusBaseMsgAction"/>
 			   </actions>
