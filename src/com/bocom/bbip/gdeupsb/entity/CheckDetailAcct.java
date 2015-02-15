@@ -1,7 +1,6 @@
 package com.bocom.bbip.gdeupsb.entity;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 public class CheckDetailAcct {
 		private String sqn;
@@ -12,7 +11,7 @@ public class CheckDetailAcct {
 		private String bankNo;
 		private String cusAc;
 		private String cusNme;
-		private Date txnDte;
+		private String  txnDte;
 		public String getThdCusNme() {
 			return thdCusNme;
 		}
@@ -66,10 +65,10 @@ public class CheckDetailAcct {
 			this.cusNme = cusNme;
 		}
 
-		public Date getTxnDte() {
+		public String getTxnDte() {
 			return txnDte;
 		}
-		public void setTxnDte(Date txnDte) {
+		public void setTxnDte(String txnDte) {
 			this.txnDte = txnDte;
 		}
 		public BigDecimal getTxnAmt() {
