@@ -13,6 +13,7 @@ import org.springframework.util.CollectionUtils;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
+import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
@@ -141,7 +142,7 @@ public class GasAgentBatchFileToFtpAction implements BatchAcpService{
 		logger.info("rxyCNJTyyyyMMdd.txt文件FTP放置成功！");
 		
 		
-		
+		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
 	}
 	
 	
