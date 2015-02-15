@@ -85,8 +85,8 @@
 		   </actions>
 		</process>
 	<!-- add by hefw 20150120 end -->
-<!-- add by guilin.li 20150210 start -->
- <!--投注查询-->
+    <!-- add by guilin.li 20150210 start -->
+    <!--投注查询-->
     <process id="queryCathecticAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
         <actions>
             <action id="act" ref="gdeupsb.QueryCathecticAction"/>
@@ -135,4 +135,5 @@
         </actions>
     </process>
     <!-- add by guilin.li 20150210 end -->
+    
 </x:beans>
