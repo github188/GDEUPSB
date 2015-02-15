@@ -12,8 +12,6 @@
 		<x:property name="locations">
 			<x:list>
 				<x:value>classpath:/config/bbip-eups_config_dev.properties</x:value>
-				 <x:value>classpath*:config/bbip-eups_config_common.properties</x:value> 
-				 <x:value>classpath*:config/transportConfig.properties</x:value> 
 			</x:list>
 		</x:property>
 	</x:bean>

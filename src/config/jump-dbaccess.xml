@@ -8,10 +8,10 @@
 						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd
 						">
 
-	<!-- <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+	<!--<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName" value="BBIPDS" />
-	</bean> -->
-
+	</bean>  -->
+	<!-- -->
 	<bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource"
 		init-method="createPool">
 		<property name="name" value="dataSource" />
@@ -31,7 +31,7 @@
 		<property name="fairQueue" value="false" />
 		<property name="jmxEnabled" value="true" />
 		<property name="jdbcInterceptors" value="SlowQueryReport(threshold=500)" />
-	</bean>
+	</bean> 
 	
 	<!-- add by hefw 20150120 start 生成10位顺序号 -->
 	<bean id="logNoFactory" class="com.bocom.jump.bp.service.id.seq.StepSequenceFactory">
