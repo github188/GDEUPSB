@@ -123,12 +123,12 @@
 	
 	
 	<!-- 惠州燃气用户协议文件上传（0全部，1新增） -->
-	<server-side-ws-def wsdl="HZGasCoreService.wsdl"
+	<!-- <server-side-ws-def wsdl="HZGasCoreService.wsdl"
 		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.HZGasCoreService/Schema">
 		<qname-mappings>
 			<qname-mapping operation="uploadCusAgentFile"  process-id="gdeupsb.gasAgentBatchFileToFTP" />
 		</qname-mappings>
-	</server-side-ws-def>
+	</server-side-ws-def> -->
 	
 	<!-- 惠州燃气代扣流水信息查询 -->
 	<server-side-ws-def wsdl="HZGasCoreService.wsdl"
