@@ -85,7 +85,8 @@ public class CheckTrspFileAction extends BaseAction{
 		        int numErr=0;
 		        BigDecimal AmtErr=new BigDecimal("0.00");
 		        String chkErr="";
-		        String ErrFile=context.getData("ChkErr")+context.getData(GDParamKeys.END_DATE).toString();
+		        //TODO 文件名
+//		        String ErrFile=context.getData("ChkErr")+context.getData(GDParamKeys.END_DATE).toString();
 		        List<TrspCheckTmp> list=trspCheckTmpRepository.findAll();
 		        int chkFlg=-1;
 		        //轮询对账
@@ -110,12 +111,10 @@ public class CheckTrspFileAction extends BaseAction{
 			        		chkErr="核对成功";
 		        			chkFlg=1;
 			        	}
-			        	
+			        	gdEupsbTrspFeeInfo.setTcusNm(chkErr);
 			        	if(1 !=chkFlg){
 			        		numErr=numErr+1;
 			        		AmtErr=AmtErr.add(trspCheckTmp.getTxnAmt());
-			        		context.setData(ParamKeys.TXN_AMT, context.getData(ParamKeys.TXN_AMT));
-			        		System.out.println(chkErr);
 					        //TODO 写文件  io写入文件
 			        		String chkErrFile="checkTrspResp.txt";
 			        		//TODO File file=new File("I://dat//term//send//"+chkErr);
@@ -126,9 +125,10 @@ public class CheckTrspFileAction extends BaseAction{
 			        			get(OperateFileAction.class).createCheckFile(eupsThdFtpConfig, "trspCheckFile", chkErrFile, map);
 			        			//换行
 //									银行交易日期|银行流水号|发生额|发票号|缴费月数|车辆类型|车牌号|状态|
-								System.out.println(2);
 				        	//跟新表中对账状态 
-				        	gdEupsbTrspFeeInfo.setChkFlg(chkFlg+"");
+			        		String checkFlg=chkFlg+"";
+			        		gdEupsbTrspFeeInfo.setTcusNm("");
+				        	gdEupsbTrspFeeInfo.setChkFlg(checkFlg);
 				        	gdEupsbTrspFeeInfo.setTchkNo(tChkNo);
 				        	gdEupsbTrspFeeInfoRepository.update(gdEupsbTrspFeeInfo);
 			        	}
@@ -151,8 +151,10 @@ public class CheckTrspFileAction extends BaseAction{
 		        context.setData(ParamKeys.RSP_CDE, "000000");
 		        context.setData(ParamKeys.RSP_MSG, "交易成功");
 		        
-		        context.setData("chkErr", chkErr);
 		        ret=get(BBIPPublicService.class).unlock(tChkNo);
+		        
+				//放到指定位置
+		        
 		        logger.info("============对账结束");
 		   }
 	/**
@@ -162,8 +164,8 @@ public class CheckTrspFileAction extends BaseAction{
 			logger.info("~~~~~~~~~~~Start  CheckTrspFile   callThd");
 			try {
 				Map<String, Object> rspMap=callThdTradeManager.trade(context);
-				 CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
-	             String responseCode = rspCdeAction.getThdRspCde(rspMap, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
+				System.out.println("~~~~~~~~~~"+rspMap);
+				String responseCode=rspMap.get(ParamKeys.THIRD_RETURN_CODE).toString();
 	             context.setData(GDParamKeys.RETCOD, responseCode);
 
 	             if(!Constants.RESPONSE_CODE_SUCC.equals(responseCode)){
@@ -186,7 +188,6 @@ public class CheckTrspFileAction extends BaseAction{
 			} catch (CoreException e) {
 					logger.info("CheckTrspFile   callThd  error="+e);
 			}
-			
 	}
 	/**
 	 * 将文件拆分入对账表
