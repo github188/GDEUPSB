@@ -16,16 +16,17 @@
 81	交易时间	19	YYYY-MM-DD HH:MM:SS
 101	代扣网点号	10	
 112	备注	60	交易情况详细信息
- -->	  
-	  
-	 
+ -->	
+   
+	  <fixString name="rtnCod" length="10" />
+ 	  <!-- <fixString  name="Deli2" length="1" default=","/> -->
 	  <fixString name="thdSqn" length="18"  />
 	  <!-- <fixString  name="Deli2" length="1" default=","/> -->
 	  <fixString name="sqn" length="18"   />
 	  <!-- <fixString  name="Deli3" length="1" default=","/> -->
 	  <fixString name="cusNo" length="12"   />
 	  <!-- <fixString  name="Deli4" length="1" default=","/> -->
-	  <fixString name="bakFld1" length="6"   />
+	  <fixString name="bakFld3" length="6"   />
 	  <!-- <fixString  name="Deli5" length="1" default=","/> -->
 	  <fixString name="txnAmt" length="10"   />
 	  <!-- <fixString  name="Deli6" length="1" default=","/> -->
@@ -33,7 +34,7 @@
 	  <!-- <fixString  name="Deli7" length="1" default=","/> -->
 	  <fixString name="br" length="10"   />
 	  <!-- <fixString  name="Deli8" length="1" default=","/> -->
-	  <fixString name="bakFld2" length="60"   />
+	  <fixString name="bakFld4" length="60"   />
 	  <!-- <fixString  name="Deli9" length="1"  /> -->
 
 </segment>
