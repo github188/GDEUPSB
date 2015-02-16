@@ -12,6 +12,6 @@
 				<varString name="carTyp"  type="D|"></varString>
 				<varString name="carNo"  type="D|"></varString>
 				<varString name="statue"  type="D|"></varString>
-				<varString name="chkErr"  type="D|"></varString>
+				<varString name="tcusNm"  type="D|"></varString>
 		</segment>
 </message>		
