@@ -5,17 +5,17 @@
 	
 
 	<!-- 根据单位编号查询单位信息 -->
-	<process id="gdeupsb.QryComInformation" template="eups.simpleTran"   interceptors="eups.transMessageInterceptor">
+	<process id="gdeupsb.qryComInformation" template="eups.simpleTran"   interceptors="eups.transMessageInterceptor">
 		<actions>
 		    <action id="act" ref="gdeupsb.QryComInformationAction"/>
 		</actions>
 	</process> 
 	
-	<!-- 根据批次号查询信息 
-	<process id="ggdeupsb.qryBatInformation" template="eups.simpleTran"   interceptors="eups.transMessageInterceptor">
+	<!-- 根据批次号查询信息 -->
+	<process id="gdeupsb.qryBatchStatue" template="eups.simpleTran"   interceptors="eups.transMessageInterceptor">
 		<actions>
-		    <action id="act" ref="gdeupsb.qryBatInformationAction"/>
+		    <action id="act" ref="gdeupsb.qryBatchStatueAction"/>
 		</actions>
 	</process> 
-	-->
+	
 </x:beans>
