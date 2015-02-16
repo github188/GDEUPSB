@@ -3,7 +3,6 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
 	name="03Request">
-	<!-- 惠州燃气单笔冲正  -->
 <!-- 惠州燃气QryUser  -->
 <!-- 
 起始位置	说明	长度	备注
