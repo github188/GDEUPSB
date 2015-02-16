@@ -615,4 +615,6 @@ public class GDParamKeys {
 
 	public static final String GSS_BAT_PKG_FLG = "pkgFlg";
 
+	public static final String TXN_AMT1 = "txnAmt1";
+
 }
