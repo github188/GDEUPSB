@@ -140,7 +140,7 @@
 	<file name="trspCheckFile" id="trspCheckFile" encoding="UTF-8"
 		lineSeparator="\n">
 		<line name="head" ref="config/fmt/fileFmt/TRSP00/CheckFileDtlHead.xml" />
-		<foreach name="detail" ref="config/fmt/fTileFmt/TRSP00/CheckFileDetail.xml" />
+		<foreach name="detail" ref="config/fmt/fileFmt/TRSP00/CheckFileDetail.xml" />
 	</file>
 	
 		
