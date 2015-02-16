@@ -14,12 +14,12 @@
 	</process>
 	
 	<!-- 用户协议文件上传（0全部，1新增） -->
-<!-- 	<process id="gdeupsb.gasAgentBatchFileToFTP" template="eups.simpleTran"
+<!--  	<process id="gdeupsb.gasAgentBatchFileToFTP" template="eups.simpleTran"
 		interceptors="eups.transMessageInterceptor">
 		<actions>
 			<action id="act" ref="gasAgentBatchFileToFTP" />
 		</actions>
-	</process> -->
+	</process>  -->
 
 
 
@@ -68,9 +68,11 @@
 	</process>  -->
 
 	<!-- 惠州燃气对账文件上传 -->
-	<!-- <process id="gdeupsb.checkFileToThdHzAction" template="eups.simpleTran" 
-		interceptors="eups.transMessageInterceptor"> <actions> <action id="act" ref="checkFileToThdHzAction" 
-		/> </actions> </process> -->
+	<process id="gdeupsb.checkFileToThdHzAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">
+	 <actions>
+		<action id="act" ref="checkFileToThdHzAction" />
+	</actions>
+	</process> 
 
 
 	<!-- 福彩中奖查询 -->
