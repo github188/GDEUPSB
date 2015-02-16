@@ -60,8 +60,11 @@
         		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSTrspService/Schema">
                 <qname-mappings />
         </server-side-ws-def>
-		
-		
+		<!-- 广州文本 -->
+	     <server-side-ws-def wsdl="GDEUPSGzagService.wsdl"
+        		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGzagService/Schema">
+                <qname-mappings />
+        </server-side-ws-def>	
 		
 		<!-- 线上联机交易 -->
 	<server-side-ws-def wsdl="GDEUPSGdEleService.wsdl"
