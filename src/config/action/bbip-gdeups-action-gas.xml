@@ -8,7 +8,7 @@
  <!-- 惠州燃气用户协议维护 -->
  <action id="oprGasCusAgentAction" class="com.bocom.bbip.gdeupsb.action.gas.OprGasCusAgentAction" />
  <!-- 惠州燃气用户协议文件上传（0全部，1新增） -->
-<!--  <action id="gasAgentBatchFileToFTP" class="com.bocom.bbip.gdeupsb.action.gas.agentBat.GasAgentBatchFileToFtpAction"/> -->
+ <!--  <action id="gasAgentBatchFileToFTP" class="com.bocom.bbip.gdeupsb.action.gas.agentBat.GasAgentBatchFileToFtpAction"/>  -->
  
  <!-- 惠州燃气代扣流水信息查询  -->
   <action id="qryHzThdJnlInfoAction" class="com.bocom.bbip.gdeupsb.action.gas.QryHzThdJnlInfoAction" />
@@ -24,8 +24,8 @@
    <action id="preReversePaymentThdAction" class="com.bocom.bbip.gdeupsb.action.gas.PreReversePaymentThdAction" /> 
   <!-- Hz燃气单笔冲正上主机后 -->
   <action id="aftReversePaymentThdAction" class="com.bocom.bbip.gdeupsb.action.gas.AftReversePaymentThdAction" /> 
-  
-  
+  <!-- HZ燃氣对账文件下载 -->
+  <action id="checkFileToThdHzAction" class="com.bocom.bbip.gdeupsb.action.gas.CheckFileToThdHzAction" />
   
   <!-- 福彩中奖查询 -->
   <action id="qryWinLotRecordAction" class="com.bocom.bbip.gdeupsb.action.lot.QryLotWinRecordAction" />
