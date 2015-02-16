@@ -15,10 +15,10 @@
   <!-- 惠州燃气代扣用户信息查询 -->
   <action id="qryHzThdCusInfoAction" class="com.bocom.bbip.gdeupsb.action.gas.QryHzThdCusInfoAction" />
  
- <!-- Hz燃气单笔缴费上主机前 -->
- <action id="preparePayHstHzAction" class="com.bocom.bbip.gdeupsb.action.gas.PreparePayHstHzAction" /> 
+<!--  Hz燃气单笔缴费上主机前  -->
+<!--  <action id="preparePayHstHzAction" class="com.bocom.bbip.gdeupsb.action.gas.PreparePayHstHzAction" />  -->
  <!-- Hz燃气单笔缴费上主机后 --> 
- <action id="aftPayFeeThdHzAction" class="com.bocom.bbip.gdeupsb.action.gas.AftPayFeeThdHzAction" />  	
+ <!-- <action id="aftPayFeeThdHzAction" class="com.bocom.bbip.gdeupsb.action.gas.AftPayFeeThdHzAction" />  	 -->
  
   <!-- Hz燃气单笔冲正上主机前 -->
    <action id="preReversePaymentThdAction" class="com.bocom.bbip.gdeupsb.action.gas.PreReversePaymentThdAction" /> 
