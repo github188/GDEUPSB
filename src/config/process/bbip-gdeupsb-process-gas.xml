@@ -42,14 +42,14 @@
 
 
 	<!-- 惠州燃气单笔托收 460710 -->
-	<process id="gdeupsb.hzPGasSmpcPayOnlineAction" template="eups.simpleTran"
+<!-- 	<process id="gdeupsb.hzPGasSmpcPayOnlineAction" template="eups.simpleTran"
 		interceptors="eups.transMessageInterceptor">
 		<actions>
 			<action id="act" ref="preparePayHstHzAction" />
 			<action id="act" ref="aftPayFeeThdHzAction" />
 		</actions>
 	</process>
-
+ -->
 	<!-- 惠州燃气单笔冲正 460711 -->
 	<process id="gdeupsb.hzPGasReversePaymentThdAction" template="eups.simpleTran"
 		interceptors="eups.transMessageInterceptor">
