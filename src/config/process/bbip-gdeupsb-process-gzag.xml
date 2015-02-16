@@ -10,4 +10,12 @@
 		    <action id="act" ref="gdeupsb.QryComInformationAction"/>
 		</actions>
 	</process> 
+	
+	<!-- 根据批次号查询信息 
+	<process id="ggdeupsb.qryBatInformation" template="eups.simpleTran"   interceptors="eups.transMessageInterceptor">
+		<actions>
+		    <action id="act" ref="gdeupsb.qryBatInformationAction"/>
+		</actions>
+	</process> 
+	-->
 </x:beans>
