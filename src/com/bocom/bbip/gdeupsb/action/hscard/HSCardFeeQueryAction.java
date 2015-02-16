@@ -23,7 +23,7 @@ public class HSCardFeeQueryAction extends BaseAction{
 				// 判断账户是否余额不足
 				// TODO: for test,先注释掉
  DefaultGemsServiceAccessObject gemsServiceAccessObject = get(DefaultGemsServiceAccessObject.class);
-				 GIA gia = gemsServiceAccessObject.build(ctx, "TP9000");
+				 GIA gia = gemsServiceAccessObject.build(ctx, "CD8000");
 				 GemsResult gemsResult = gemsServiceAccessObject.callService(gia,
 				 ctx.getDataMap());
 				 Map<String, Object> balQry = gemsResult.getPayload();
