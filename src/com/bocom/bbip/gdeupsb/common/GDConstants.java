@@ -312,4 +312,12 @@ public final class GDConstants {
 	/*********** 中山批量文件系统 *******************/
 	public static final String FDPD_RSP_COD = "481299";
 
+	/** 燃气返回第三方状态： (B0为扣费成功 B1为金额不足扣费失败 B2为无此帐号或账号与用户编号匹配错误扣费失败 B3其它原因扣费失败) */
+	public static final String THD_STS_B0 = "B0";
+	public static final String THD_STS_B1 = "B1";
+	public static final String THD_STS_B2 = "B2";
+	public static final String THD_STS_B3 = "B3";
+
+
+
 }
