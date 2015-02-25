@@ -38,6 +38,7 @@ import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdElecFileBatchTmp;
 import com.bocom.bbip.gdeupsb.repository.GdElecFileBatchTmpRepository;
+import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
@@ -95,8 +96,8 @@ public class BatchAcpElecDealServiceAction implements BatchAcpService {
 
 		log.info("BatchFileDealPreAction initDeal start!hahahahaha..");
 
-		// TODO：单位编号根据配型部类型转换获得
-		String comNo = "ELEC01";
+		String dpTyp=context.getData(GDParamKeys.GZ_ELE_DPT_TYP);
+		String comNo=CodeSwitchUtils.codeGenerator("eleGzComNoGen",dpTyp);
 
 		// 检查签到签退
 		EupsThdTranCtlInfo eupsThdTranCtlInfo = eupsThdTranCtlInfoRepository.findOne(comNo);
@@ -162,10 +163,6 @@ public class BatchAcpElecDealServiceAction implements BatchAcpService {
 		context.setData(ParamKeys.TXN_MDE, Constants.TXN_MDE_FILE); // 文件批扣
 
 		context.setData("flePreInf", BeanUtils.toMaps(payDetailLst));
-
-		System.out.println("context=" + context);
-
-
 	}
 
 	/**

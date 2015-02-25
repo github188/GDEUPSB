@@ -9,6 +9,8 @@ import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
+import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -30,7 +32,9 @@ public class PreInitElecStrategyAction implements Executable {
 	public void execute(Context context) throws CoreException, CoreRuntimeException {
 
 		// 设置缴费方式为1-缴费
-		context.setData(ParamKeys.PAYFEE_TYPE, Constants.TXN_PAYFEE_TYPE_PAYMENT);
+		if(null!=context.getData(ParamKeys.OLD_TXN_SEQUENCE)){
+			context.setData(ParamKeys.PAYFEE_TYPE, Constants.TXN_PAYFEE_TYPE_PAYMENT);
+		}
 
 		// 设置备用字段2为电费月份，保存入库
 		context.setData(ParamKeys.BAK_FLD2, context.getData("eleMonth"));
@@ -40,7 +44,10 @@ public class PreInitElecStrategyAction implements Executable {
 		context.setData(ParamKeys.BAK_FLD3, context.getData("prdCde"));
 
 		// TODO：单位编号根据配型部类型查找
-		String comNo = "ELEC01";
+		String dpTyp=context.getData(GDParamKeys.GZ_ELE_DPT_TYP);
+		String comNo=CodeSwitchUtils.codeGenerator("eleGzComNoGen",dpTyp);
+		
+//		String comNo = "ELEC01";
 
 		// 检查签到签退
 		EupsThdTranCtlInfo eupsThdTranCtlInfo = eupsThdTranCtlInfoRepository.findOne(comNo);

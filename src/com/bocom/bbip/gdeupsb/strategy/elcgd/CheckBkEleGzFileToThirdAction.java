@@ -64,8 +64,6 @@ public class CheckBkEleGzFileToThirdAction implements CheckBkFileToThirdService 
 			clearDteStr = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
 		}
 
-		System.out.println("!!!!!!!!!!!!!!!clearDteStr=" + clearDteStr);
-
 		Date clearDte = DateUtils.parse(clearDteStr);
 
 		// TODO：单位编号根据配型部类型查找

@@ -28,6 +28,7 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
 import com.bocom.jump.bp.core.Executable;
 
 /**
+ * 查询用户缴费信息
  * 
  * @author qc.w
  * 
@@ -64,7 +65,7 @@ public class QueryElecUserStrategyAction implements Executable {
 		context.setData(ParamKeys.CCY, GDConstants.GZ_ELE_CCY); // 货币代码
 		context.setData(GDParamKeys.GZ_ELE_TTRM_ID, StringUtils.leftPad(tmlId, 8, ' ')); // 受理方终端标识码
 		context.setData(GDParamKeys.GZ_ELE_TDL_ID, StringUtils.leftPad(tlr, 15, ' '));// 受理方标识码
-		context.setData("traTyp", GDConstants.GZ_ELE_TXN_TYP_JF); // 交易类别]
+		context.setData("traTyp", GDConstants.GZ_ELE_TXN_TYP_JF); // 交易类别
 
 		String thdCusNo = context.getData(ParamKeys.THD_CUS_NO).toString().trim();
 		thdCusNo = StringUtils.leftPad(thdCusNo, 21, ' ');
@@ -99,6 +100,9 @@ public class QueryElecUserStrategyAction implements Executable {
 			context.setData("eleThdSqn37", "0101201501201123001");
 			context.setData("thdRspCde", "00");
 			context.setData("remarkData48", "此处为空，后续需要处理mac");
+			context.setData("chkTim", DateUtils.format(new Date(), DateUtils.STYLE_MMddHHmmss));  //交易时间
+			context.setData("dptTyp", "0001");  //配型部类型
+			context.setData("cusNme", "帅哥琛");  //配型部类型
 		}
 
 		// TODO:用电地址，用户名称处理
@@ -107,7 +111,6 @@ public class QueryElecUserStrategyAction implements Executable {
 		context.setData("oweFeeAmt", new BigDecimal(context.getData("amount4").toString()));
 		context.setData("thdCusAdr", context.getData("remarkData48"));
 		// context.setData(ParamKeys.RAP_TYPE, arg1); //收付类型
-		
 
 	}
 
