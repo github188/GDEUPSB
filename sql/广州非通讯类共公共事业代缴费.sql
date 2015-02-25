@@ -694,7 +694,7 @@ INDEX IN  "BBIP_APP_INDEX";
 drop table GDEUPSB.TRSP_FEE_INFO;
 -------------路桥代收费缴费记录表
 CREATE TABLE GDEUPSB.TRSP_FEE_INFO
-(               
+(
    BR_NO       CHAR(06)     NOT NULL,                                                            
                                                                              
    THD_KEY     CHAR(20)     NOT NULL,                                        
