@@ -12,11 +12,29 @@
   <wsdl:message name="batchAccountFileSubmitResponseMessage">
     <wsdl:part name="batchAccountFileSubmitResponse" element="gdeupsb:batchAccountFileSubmitResponse"/>
   </wsdl:message>
+  <wsdl:message name="eleaBnkPayFeeCancleRequestMessage">
+    <wsdl:part name="eleaBnkPayFeeCancleRequest" element="gdeupsb:eleaBnkPayFeeCancle"/>
+  </wsdl:message>
+  <wsdl:message name="eleaBnkPayFeeCancleResponseMessage">
+    <wsdl:part name="eleaBnkPayFeeCancleResponse" element="gdeupsb:eleaBnkPayFeeCancleResponse"/>
+  </wsdl:message>
   <wsdl:message name="batchAccountFilePreRequestMessage">
     <wsdl:part name="batchAccountFilePreRequest" element="gdeupsb:batchAccountFilePre"/>
   </wsdl:message>
   <wsdl:message name="batchAccountFilePreResponseMessage">
     <wsdl:part name="batchAccountFilePreResponse" element="gdeupsb:batchAccountFilePreResponse"/>
+  </wsdl:message>
+  <wsdl:message name="eleaBnkPayFeeRequestMessage">
+    <wsdl:part name="eleaBnkPayFeeRequest" element="gdeupsb:eleaBnkPayFee"/>
+  </wsdl:message>
+  <wsdl:message name="eleaBnkPayFeeResponseMessage">
+    <wsdl:part name="eleaBnkPayFeeResponse" element="gdeupsb:eleaBnkPayFeeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="eleaQryUsrPayInfoRequestMessage">
+    <wsdl:part name="eleaQryUsrPayInfoRequest" element="gdeupsb:eleaQryUsrPayInfo"/>
+  </wsdl:message>
+  <wsdl:message name="eleaQryUsrPayInfoResponseMessage">
+    <wsdl:part name="eleaQryUsrPayInfoResponse" element="gdeupsb:eleaQryUsrPayInfoResponse"/>
   </wsdl:message>
   <wsdl:portType name="GDEUPSGdEleServicePortType">
     <wsdl:operation name="batchAccountFileSubmit">
@@ -24,10 +42,25 @@
       <wsdl:input message="tns:batchAccountFileSubmitRequestMessage"/>
       <wsdl:output message="tns:batchAccountFileSubmitResponseMessage"/>
     </wsdl:operation>
+    <wsdl:operation name="eleaBnkPayFeeCancle">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:eleaBnkPayFeeCancleRequestMessage"/>
+      <wsdl:output message="tns:eleaBnkPayFeeCancleResponseMessage"/>
+    </wsdl:operation>
     <wsdl:operation name="batchAccountFilePre">
       <wsdl:documentation/>
       <wsdl:input message="tns:batchAccountFilePreRequestMessage"/>
       <wsdl:output message="tns:batchAccountFilePreResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="eleaBnkPayFee">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:eleaBnkPayFeeRequestMessage"/>
+      <wsdl:output message="tns:eleaBnkPayFeeResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="eleaQryUsrPayInfo">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:eleaQryUsrPayInfoRequestMessage"/>
+      <wsdl:output message="tns:eleaQryUsrPayInfoResponseMessage"/>
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="GDEUPSGdEleServiceSoapBinding" type="tns:GDEUPSGdEleServicePortType">
@@ -41,8 +74,35 @@
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="eleaBnkPayFeeCancle">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdEleService/eleaBnkPayFeeCancle"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="batchAccountFilePre">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdEleService/batchAccountFilePre"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="eleaBnkPayFee">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdEleService/eleaBnkPayFee"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="eleaQryUsrPayInfo">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdEleService/eleaQryUsrPayInfo"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>

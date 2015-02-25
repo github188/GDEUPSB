@@ -17,6 +17,20 @@
       <xs:element name="response" type="tns:batchAccountFileSubmitResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:element name="eleaBnkPayFeeCancle" type="tns:eleaBnkPayFeeCancleReq_CType"/>
+  <xs:element name="eleaBnkPayFeeCancleResponse" type="tns:eleaBnkPayFeeCancleRsp_CType"/>
+  <xs:complexType name="eleaBnkPayFeeCancleReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:eleaBnkPayFeeCancleRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="eleaBnkPayFeeCancleRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:eleaBnkPayFeeCancleResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:element name="batchAccountFilePre" type="tns:batchAccountFilePreReq_CType"/>
   <xs:element name="batchAccountFilePreResponse" type="tns:batchAccountFilePreRsp_CType"/>
   <xs:complexType name="batchAccountFilePreReq_CType">
@@ -28,7 +42,35 @@
   <xs:complexType name="batchAccountFilePreRsp_CType">
     <xs:sequence>
       <xs:element ref="gsp:replyInformation"/>
-      <xs:element name="response" type="tns:batchAccountFilePreResponse_CType" maxOccurs="1" minOccurs="0"/>
+      <xs:element name="response" type="tns:batchAccountFilePreResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="eleaBnkPayFee" type="tns:eleaBnkPayFeeReq_CType"/>
+  <xs:element name="eleaBnkPayFeeResponse" type="tns:eleaBnkPayFeeRsp_CType"/>
+  <xs:complexType name="eleaBnkPayFeeReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:eleaBnkPayFeeRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="eleaBnkPayFeeRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:eleaBnkPayFeeResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="eleaQryUsrPayInfo" type="tns:eleaQryUsrPayInfoReq_CType"/>
+  <xs:element name="eleaQryUsrPayInfoResponse" type="tns:eleaQryUsrPayInfoRsp_CType"/>
+  <xs:complexType name="eleaQryUsrPayInfoReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:eleaQryUsrPayInfoRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="eleaQryUsrPayInfoRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:eleaQryUsrPayInfoResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
   <xs:element name="requestHeader" type="tns:requestHeader_CType"/>
@@ -445,12 +487,12 @@
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="comNo" type="tns:comNo_SType"/>
       <xs:element name="txnMde" type="tns:txnMde_SType"/>
-      <xs:element ref="tns:flePreInf" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="tns:flePreInf" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="batchAccountFileSubmitResponse_CType">
     <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
       <xs:element name="batchNo" type="tns:batchNo_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
@@ -486,6 +528,54 @@
       <xs:maxLength value="20"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:complexType name="eleaBnkPayFeeCancleRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="oldTxnSqn" type="tns:oldTxnSqn_SType"/>
+      <xs:element name="dptTyp" type="tns:dptTyp_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="eleaBnkPayFeeCancleResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="thdSqn" type="tns:thdSqn_SType" minOccurs="0"/>
+      <xs:element name="eleClrDte" type="tns:eleClrDte_SType" minOccurs="0"/>
+      <xs:element name="txnAmt" type="tns:txnAmt_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="oldTxnSqn_SType">
+    <xs:annotation>
+      <xs:documentation>原流水号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="32"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="dptTyp_SType">
+    <xs:annotation>
+      <xs:documentation>配型部类型</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="thdSqn_SType">
+    <xs:annotation>
+      <xs:documentation>第三方流水号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="eleClrDte_SType">
+    <xs:annotation>
+      <xs:documentation>供电公司清算日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:complexType name="batchAccountFilePreRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
@@ -495,10 +585,10 @@
   </xs:complexType>
   <xs:complexType name="batchAccountFilePreResponse_CType">
     <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
       <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
       <xs:element name="txnMde" type="tns:txnMde_SType" minOccurs="0"/>
-      <xs:element ref="tns:flePreInf" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="tns:flePreInf" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="filNam_SType">
@@ -507,6 +597,134 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="35"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="eleaBnkPayFeeRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="cusAc" type="tns:cusAc_SType" minOccurs="0"/>
+      <xs:element name="thdCusNo" type="tns:thdCusNo_SType"/>
+      <xs:element name="cusNme" type="tns:cusNme_SType" minOccurs="0"/>
+      <xs:element name="lChkTm" type="tns:lChkTm_SType" minOccurs="0"/>
+      <xs:element name="dptTyp" type="tns:dptTyp_SType" minOccurs="0"/>
+      <xs:element name="txnAmt" type="tns:txnAmt_SType"/>
+      <xs:element name="fee" type="tns:fee_SType" minOccurs="0"/>
+      <xs:element name="vchTyp" type="tns:vchTyp_SType" minOccurs="0"/>
+      <xs:element name="vchNo" type="tns:vchNo_SType" minOccurs="0"/>
+      <xs:element name="bilDte" type="tns:bilDte_SType" minOccurs="0"/>
+      <xs:element name="password" type="tns:password_SType" minOccurs="0"/>
+      <xs:element name="oldTxnSqn" type="tns:oldTxnSqn_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="eleaBnkPayFeeResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="thdSqn" type="tns:thdSqn_SType" minOccurs="0"/>
+      <xs:element name="sqn" type="tns:sqn_SType" minOccurs="0"/>
+      <xs:element name="eleClrDte" type="tns:eleClrDte_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="thdCusNo_SType">
+    <xs:annotation>
+      <xs:documentation>第三方客户标识</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="40"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="lChkTm_SType">
+    <xs:annotation>
+      <xs:documentation>电费月份</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="fee_SType">
+    <xs:annotation>
+      <xs:documentation>手续费</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal"/>
+  </xs:simpleType>
+  <xs:simpleType name="vchTyp_SType">
+    <xs:annotation>
+      <xs:documentation>结算凭证</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="5"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="vchNo_SType">
+    <xs:annotation>
+      <xs:documentation>凭证号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="bilDte_SType">
+    <xs:annotation>
+      <xs:documentation>凭证日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:date"/>
+  </xs:simpleType>
+  <xs:simpleType name="password_SType">
+    <xs:annotation>
+      <xs:documentation>密码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="40"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="sqn_SType">
+    <xs:annotation>
+      <xs:documentation>交易流水号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="32"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="eleaQryUsrPayInfoRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="cusAc" type="tns:cusAc_SType" minOccurs="0"/>
+      <xs:element name="thdCusNo" type="tns:thdCusNo_SType"/>
+      <xs:element name="lChkTm" type="tns:lChkTm_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="eleaQryUsrPayInfoResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="oweFeeAmt" type="tns:oweFeeAmt_SType" minOccurs="0"/>
+      <xs:element name="chkTim" type="tns:chkTim_SType" minOccurs="0"/>
+      <xs:element name="dptTyp" type="tns:dptTyp_SType" minOccurs="0"/>
+      <xs:element name="cusNme" type="tns:cusNme_SType" minOccurs="0"/>
+      <xs:element name="thdCusAdr" type="tns:thdCusAdr_SType" minOccurs="0"/>
+      <xs:element name="sqn" type="tns:sqn_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="oweFeeAmt_SType">
+    <xs:annotation>
+      <xs:documentation>应缴金额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal"/>
+  </xs:simpleType>
+  <xs:simpleType name="chkTim_SType">
+    <xs:annotation>
+      <xs:documentation>交易日期时间</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="thdCusAdr_SType">
+    <xs:annotation>
+      <xs:documentation>用电地址</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="32"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>
