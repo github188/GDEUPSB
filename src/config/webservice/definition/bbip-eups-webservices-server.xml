@@ -7,13 +7,13 @@
                 http://www.bocom.com/schema/bbip-channel http://www.bocom.com/schema/bbip-channel-1.0.xsd">
 
 	<!-- 定义BGSP Server -->
-	<!-- 线上联机交易-->
-	<server-side-ws-def wsdl="GDEUPSOffChanAddService.wsdl"
+	
+<!-- 	<server-side-ws-def wsdl="GDEUPSOffChanAddService.wsdl"
 		namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSOffChanAddService/Schema">
 		<qname-mappings>
 			<qname-mapping operation="queryThirdFeeOffChan"  process-id="eups.queryThirdFeeOnline" />
 		</qname-mappings>
-	</server-side-ws-def>
+	</server-side-ws-def> -->
 	
 		<!-- 线上联机交易-->
 	<server-side-ws-def wsdl="GDEUPSGdEleService.wsdl"
@@ -44,11 +44,6 @@
 		
 		
 		
-		<!-- 南方电网 -->
-       <server-side-ws-def wsdl="GDEUPSOffChanAddService.wsdl"
-        		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSOffChanAddService/Schema">
-                <qname-mappings />
-        </server-side-ws-def>
         
         <server-side-ws-def wsdl="GDEUPSEfekService.wsdl"
         		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/Schema">
