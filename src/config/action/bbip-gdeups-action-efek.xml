@@ -24,7 +24,7 @@
 	<!--  交费记录查询-->
 	<action   class="com.bocom.bbip.gdeupsb.action.efek.QryCusPayRecordAction"
 		id="gdeupsb.qryCusPayRecordAction" />
-	<!--  交费记录查询-->
+	<!--  供电方发起供电到银行变更代扣协议请求-->
 	<action   class="com.bocom.bbip.gdeupsb.action.efek.PowerChangeTreatyAction"
 		id="gesupsb.powerChangeTreatyAction" />	
 	<!--  代收付日志服务记录-->
