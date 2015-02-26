@@ -108,28 +108,28 @@
     </process>
     
     <!--用户登录 -->
-     <process id="loginAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+    <process id="loginAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
         <actions>
             <action id="act" ref="gdeupsb.LoginAction"/>
         </actions>
     </process>
     
     <!--用户注册 -->
-     <process id="registAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+    <process id="registAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
         <actions>
             <action id="act" ref="gdeupsb.RegistAction"/>
         </actions>
     </process>
     
-     <!--用户更新注册 -->
-     <process id="updateRegistInfoAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+    <!--用户更新注册 -->
+    <process id="updateRegistInfoAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
         <actions>
             <action id="act" ref="gdeupsb.UpdateRegistInfoAction"/>
         </actions>
     </process>
     
-      <!--游戏对账-->
-     <process id="deductMoneyAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+    <!--游戏对账-->
+    <process id="deductMoneyAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
         <actions>
             <action id="act" ref="gdeupsb.DeductMoneyAction"/>
         </actions>
