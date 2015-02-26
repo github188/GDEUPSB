@@ -6,5 +6,7 @@
 	<interceptors id="eups.thdTransInterceptorExt">
 		<interceptor class="com.bocom.bbip.gdeupsb.channel.tcp.ThdTransMainInterceptorExt" />
 	</interceptors>	
-	
+	<interceptors id="eups.thdELEC00Interceptor">
+		<interceptor class="com.bocom.bbip.gdeupsb.channel.tcp.ThdELEC00Interceptor" />
+	</interceptors>	
 </x:beans>
