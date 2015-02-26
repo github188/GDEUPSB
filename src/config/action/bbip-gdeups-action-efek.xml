@@ -34,6 +34,10 @@
 	<action   class="com.bocom.bbip.gdeupsb.action.efek.QryCusMsgAction"
 		id="gdeupsb.qryCusMsgAction" />	
 		
+		<!--  协议新增修改注销-->
+	<action   class="com.bocom.bbip.gdeupsb.action.efek.CusAgentServiceAction"
+		id="gdeupsb.cusAgentServiceAction" />	
+		
 	<!--  供电批量代扣取消交易-->
 	<action   class="com.bocom.bbip.gdeupsb.action.efek.batch.CancelBatchAction"
 		id="gdeupsb.CancelBatchAction" />		
