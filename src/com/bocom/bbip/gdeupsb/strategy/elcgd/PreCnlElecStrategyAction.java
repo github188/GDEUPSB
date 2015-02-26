@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
@@ -16,6 +17,7 @@ import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.NumberUtils;
@@ -37,19 +39,17 @@ public class PreCnlElecStrategyAction implements Executable {
 
 	@Autowired
 	EupsTransJournalRepository eupsTransJournalRepository;
+	
+	@Autowired
+	BBIPPublicService bbipPublicService;
 
 	@Override
 	public void execute(Context context) throws CoreException, CoreRuntimeException {
 		log.info("PreCnlElecStrategyAction start!..");
 		
-		//TODO:配型部类型使用第三方地区编号，有问题
 		String dptTyp = context.getData(GDParamKeys.GZ_ELE_DPT_TYP);
-		// String comNo = CodeSwitchUtils.codeGenerator("eleTable", dptTyp);
+		String comNo=CodeSwitchUtils.codeGenerator("eleGzComNoGen",dptTyp);
 
-		// TODO: vipQc for test:codeSwitchUtils不能用！ 待修改完善
-		String comNo = "ELEC01";
-
-		// String comNo=context.getData(ParamKeys.COMPANY_NO);
 		String bk = context.getData(ParamKeys.BK);
 
 		// 授权原因码并校验是否已授权
@@ -60,14 +60,19 @@ public class PreCnlElecStrategyAction implements Executable {
 		context.setData(GDConstants.AUTH_REASON, "EFE000");// 授权原因码 EFE000
 
 		// 校验凭单号是否存在，此处用THD_SUB_CUS_NO作为凭单号
-		String tckNo = context.getData(ParamKeys.THD_SUB_CUS_NO);
-		if (StringUtils.isEmpty(tckNo)) {
-			throw new CoreException(GDErrorCodes.EUPS_ELE_GZ_TCK_ERROR);
-		}
+//		String tckNo = context.getData(ParamKeys.THD_SUB_CUS_NO);
+//		if (StringUtils.isEmpty(tckNo)) {
+//			throw new CoreException(GDErrorCodes.EUPS_ELE_GZ_TCK_ERROR);
+//		}
+		
+		Date actDte=bbipPublicService.getAcDate();
+		
+		System.out.println("actDte="+DateUtils.format(actDte, "yyyyMMDD"));
+		
 		EupsTransJournal eupsTransJournal = new EupsTransJournal();
-		eupsTransJournal.setThdSubCusNo(tckNo);
+//		eupsTransJournal.setThdSubCusNo(tckNo);
 		eupsTransJournal.setComNo(comNo);
-		eupsTransJournal.setTxnDte(new Date());
+		eupsTransJournal.setTxnDte(actDte);     //会计日期
 		eupsTransJournal.setBk(bk);
 		eupsTransJournal.setSqn((String)context.getData(ParamKeys.OLD_TXN_SEQUENCE));
 		List<EupsTransJournal> resultInf = eupsTransJournalRepository.find(eupsTransJournal);
@@ -86,12 +91,12 @@ public class PreCnlElecStrategyAction implements Executable {
 				throw new CoreException(GDErrorCodes.EUPS_ELE_GZ_CANCLE_INFO_ERROR); 
 			}
 		}
-		String thdSubCusNo = context.getData(ParamKeys.THD_SUB_CUS_NO);
-		if (StringUtils.isNotEmpty(thdSubCusNo)) {
-			if (!eupsTransJournal.getThdSubCusNo().trim().equals(thdSubCusNo.trim()) ) {
-				throw new CoreException(GDErrorCodes.EUPS_ELE_GZ_CANCLE_INFO_ERROR); 
-			}
-		}
+//		String thdSubCusNo = context.getData(ParamKeys.THD_SUB_CUS_NO);
+//		if (StringUtils.isNotEmpty(thdSubCusNo)) {
+//			if (!eupsTransJournal.getThdSubCusNo().trim().equals(thdSubCusNo.trim()) ) {
+//				throw new CoreException(GDErrorCodes.EUPS_ELE_GZ_CANCLE_INFO_ERROR); 
+//			}
+//		}
 		BigDecimal fTxnAmt = (BigDecimal) context.getData(ParamKeys.TXN_AMT);
 		if (null != fTxnAmt) {
 			if (0!=eupsTransJournal.getTxnAmt().compareTo(fTxnAmt)) {
@@ -166,7 +171,7 @@ public class PreCnlElecStrategyAction implements Executable {
 
 		context.setData("pwrFee", tFee);
 		context.setData("txnDateTime", DateUtils.formatAsMMddHHmmss(new Date()));
-
+		
 		// TODO:备用字段及mac处理
 		// String rmk1=oldJnlInf.getRsvFld1();
 		// if("10".equals(rmk1.substring(43, 45))){

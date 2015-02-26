@@ -11,6 +11,7 @@ import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -43,12 +44,19 @@ public class PreInitElecStrategyAction implements Executable {
 		// 设置备用字段3为产品代码，保存入库
 		context.setData(ParamKeys.BAK_FLD3, context.getData("prdCde"));
 
-		// TODO：单位编号根据配型部类型查找
 		String dpTyp=context.getData(GDParamKeys.GZ_ELE_DPT_TYP);
 		String comNo=CodeSwitchUtils.codeGenerator("eleGzComNoGen",dpTyp);
 		
-//		String comNo = "ELEC01";
-
+		//TODO:支付方式paymde判断:目前根据是否传客户帐号分为现金和卡
+		String cusAc=context.getData(ParamKeys.CUS_AC);  //客户帐号判断
+		String payMde=new String();
+		if(StringUtils.isEmpty(cusAc)){
+			payMde=Constants.PAY_MDE_0;  //现金
+		}else{
+			payMde=Constants.PAY_MDE_4;  //卡
+		}
+		context.setData(ParamKeys.PAY_MDE, payMde);
+		
 		// 检查签到签退
 		EupsThdTranCtlInfo eupsThdTranCtlInfo = eupsThdTranCtlInfoRepository.findOne(comNo);
 		if (!eupsThdTranCtlInfo.isTxnCtlStsSignin()) {
