@@ -32,7 +32,7 @@ public class QryCusMsgAction extends BaseAction{
 	 */
 	public void execute(Context context)throws CoreException,CoreRuntimeException{
 		log.info("==============Start  QryCusMsgAction");
-		context.setData(GDParamKeys.SVRCOD,"43");
+		context.setData(GDParamKeys.SVRCOD,"44");
 		callThd(context);
 	}
 	/**
