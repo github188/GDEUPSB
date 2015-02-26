@@ -139,7 +139,7 @@ public final class GDConstants {
 	/** 人民币 */
 	public final static String RENMINBI = "RMB";
 	/**第三方响应成功*/
-	public final static String SUCCESS_CODE="00000";
+	public final static String SUCCESS_CODE="000000";
 	// ~~~~~~~~~~~~~~~银行代码~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	/** 102 中国工商银行 */
 	public final static String Industrial_Commercial_Bank = "102";
