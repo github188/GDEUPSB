@@ -1,5 +1,7 @@
 package com.bocom.bbip.gdeupsb.strategy.efek.cancelFeeOnline;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Date;
 
 import org.apache.commons.logging.Log;
@@ -29,8 +31,13 @@ public class PreCclToTHDAction implements Executable {
 			context.setData(GDParamKeys.TOTNUM, "1");
 			context.setData(ParamKeys.TXN_DTE, DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())));
 			context.setData(ParamKeys.TXN_TME, DateUtils.parse(DateUtils.formatAsTranstime(new Date())));
-			System.out.println(context.getData(ParamKeys.TXN_TME));
 			context.setData(ParamKeys.THD_CUS_NO, context.getData(GDParamKeys.PAY_NO));
-
+			
+			double i=Integer.parseInt(context.getData(ParamKeys.TXN_AMT).toString());
+			double d=i/100;
+			DecimalFormat df=new DecimalFormat("#.00");
+			BigDecimal txnAmt=new BigDecimal(df.format(d));
+			System.out.println(txnAmt);
+			context.setData(ParamKeys.TXN_AMT,txnAmt );
 		}
 }
