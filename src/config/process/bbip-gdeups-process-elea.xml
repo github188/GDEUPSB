@@ -4,7 +4,7 @@
 						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
 
 
-	<action id="eups.bbipPaymentExt" class="com.bocom.bbip.gdeupsb.action.BuaPaymentExt" />
+	 <action id="eups.bbipPaymentExt" class="com.bocom.bbip.gdeupsb.action.BuaPaymentExt" />
 
 
 
@@ -57,7 +57,7 @@
 		class="com.bocom.bbip.gdeupsb.action.BuaPaymentCancelUsingReversalExt" />
 
 	<!-- 自动区分抹账：根据流水表第三方状态和主机状态 -->
-	<process id="eups.automaticCancelProcessExt" template="eups.autoCancelTemplate"
+	<process id="eups.automaticCancelProcessExt" template="eups.autoCancelTemplateExt"
 		interceptors="eups.thdTransInterceptor">
 		<actions>
 			<!-- 第三方抹账前处理 -->
@@ -100,7 +100,7 @@
 			<!-- 联机记账预处理 -->
 			<action id="initAction" ref="eups.initPaymentInfoAction" />
 			<!-- 联机531代收付交易主机记账 （自调冲正） -->
-			<action id="businessAction" ref="eups.bbipPaymentExt" />
+			<action id="businessAction" ref="eups.bbipPayment" />
 			<action id="businessAction" ref="eups.saveCBPaymentResultAction" />
 			<!-- 交易结果 -->
 			<!-- 记账后返回处理 -->
