@@ -18,6 +18,13 @@ import com.bocom.bbip.service.Result;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
+
+/**
+ * 烟草划扣
+ * Date 2015-1-22
+ * @author GuiLin.Li
+ * @version 1.0.0
+ */
 public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBankService{
 
     private final static Logger log = LoggerFactory.getLogger(FindClientRemainingMoney.class);

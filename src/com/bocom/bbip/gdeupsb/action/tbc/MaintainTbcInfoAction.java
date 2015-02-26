@@ -53,12 +53,12 @@ public class MaintainTbcInfoAction extends BaseAction {
                 return;
             }
             break;
-        case 1: // <!--multiquery-->
+        case 1: // multiquery
             List <EupsThdBaseInfo> thdBaseInfos = get(EupsThdBaseInfoRepository.class).findAll();
             List<Map<String,Object>> resultList=(List<Map<String, Object>>) BeanUtils.toMaps(thdBaseInfos);
             context.setData("rec", resultList);
             break;
-        case 2: // <!--delete-->
+        case 2: // delete
             EupsThdBaseInfo NewEupsThdBaseInfo = get(EupsThdBaseInfoRepository.class).findOne(context
                     .getData(ParamKeys.COMPANY_NO).toString());
             if (StringUtil.isEmptyOrNull(NewEupsThdBaseInfo.getComNo())) { // --检测单位是否存在--

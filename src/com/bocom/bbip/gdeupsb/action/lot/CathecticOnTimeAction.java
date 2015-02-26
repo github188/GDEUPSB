@@ -199,7 +199,7 @@ public class CathecticOnTimeAction extends BaseAction{
         context.setData("","");
        
         
-        //<!--取前置流水号-->
+        //取前置流水号
         String sqn = get(BBIPPublicService.class).getBBIPSequence();
         if (StringUtils.isEmpty(sqn)) {
             log.info("送主机记账失败（无法获取前置流水号）!!!");
