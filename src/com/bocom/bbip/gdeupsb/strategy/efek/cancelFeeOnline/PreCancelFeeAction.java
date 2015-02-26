@@ -54,15 +54,17 @@ public class PreCancelFeeAction implements Executable{
 				context.setData("TIATyp", "C");      //不明 TIATyp 是什么
 				//TODO	    <Set>TTxnCd=STRCAT(SUBSTR($OTTxnCd,1,5),9)</Set>	    <Set>HTxnCd=STRCAT(SUBSTR($OHTxnCd,1,5),9)</Set>
 				String txnCd=(String)context.getData(ParamKeys.TXN_CODE);
-				
-				context.setData(ParamKeys.THD_TXN_CDE, txnCd.substring(1, 6)+"9");
-				context.setData(ParamKeys.TXN_CODE, txnCd.substring(1, 6)+"9");
+				//TODO  是否需要
+//				context.setData(ParamKeys.THD_TXN_CDE, txnCd.substring(1, 6)+"9");
+//				context.setData(ParamKeys.TXN_CODE, txnCd.substring(1, 6)+"9");
 
+				logger.info("==========End  PreCancelFeeAction  ");
 		 }
 /**
  *报文信息
  */
 	public void callThd(Context context){
+		logger.info("==========Start  PreCancelFeeAction  callThd");
 				context.setData(GDParamKeys.TREATY_VERSION, "1.0.0");//协议版本
 				context.setData(GDParamKeys.TRADE_PERSON_IDENTIFY, "301_030600");//交易人标识
 				context.setData(GDParamKeys.BAG_TYPE, "0");//数据包类型
@@ -72,12 +74,13 @@ public class PreCancelFeeAction implements Executable{
 				context.setData(GDParamKeys.TRADE_SEND_TIME, DateUtils.formatAsHHmmss(new Date()));//交易发送时间
 				context.setData(GDParamKeys.REDUCE_SIGN, "0");//压缩标志
 				context.setData(GDParamKeys.TRADE_RETURN_CODE, "00");//交易返回代码
-		
+				
 				context.setData(GDParamKeys.NET_NAME, "@BCFG.BrNam");//网点名称
 				context.setData(GDParamKeys.SECRETKEY_INDEX, "0");//密钥索引
 				context.setData(GDParamKeys.SECRETKEY_INIT, "");//密钥初始向量
 				context.setData(GDParamKeys.TRADE_RECEIVE, "030600");//交易接收方
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, "");//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, "");//交易目标地址
+				
 	}
 }
