@@ -48,8 +48,14 @@
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.AftThdElecStrategyAction">
 	</bean>
 
+	<!-- 联机抹帐，广州电力，抹第三方前处理 -->
 	<bean id="eups.preCancelStrategyActionELEC01"
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.PreCnlElecStrategyAction">
+	</bean>
+	
+	<!-- 联机抹帐，广州电力，抹第三方后处理 -->
+	<bean id="eups.aftCancelStrategyActionELEC01"
+		class="com.bocom.bbip.gdeupsb.strategy.elcgd.AftCnlElecStrategyAction">
 	</bean>
 
 	<!-- <bean id="eups.prepareCheckDealStrategyActionELEC01"
