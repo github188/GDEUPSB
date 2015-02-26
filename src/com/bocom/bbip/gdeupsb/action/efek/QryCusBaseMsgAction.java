@@ -1,8 +1,6 @@
 package com.bocom.bbip.gdeupsb.action.efek;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +18,6 @@ import com.bocom.bbip.eups.repository.EupsAmountInfoRepository;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
-import com.bocom.bbip.gdeupsb.entity.QryCusInformation;
-import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
@@ -49,9 +45,7 @@ public class QryCusBaseMsgAction extends BaseAction{
 			context.setData(ParamKeys.SEQUENCE, bbipPublicService.getBBIPSequence());
 			context.setData(ParamKeys.TXN_DTE, DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())));
 			context.setData(ParamKeys.TXN_TME, DateUtils.parse(DateUtils.formatAsTranstime(new Date())));
-			if(null != context.getData(GDParamKeys.NET_NAME)){
-					context.setData(ParamKeys.BR, context.getData(GDParamKeys.NET_NAME));
-			}
+			
 			context.setData(GDParamKeys.SVRCOD, "45");
 			context.setData(GDParamKeys.TOTNUM, "1");
 			callThd(context);
