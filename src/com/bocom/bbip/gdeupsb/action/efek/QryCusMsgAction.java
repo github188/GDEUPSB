@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
@@ -33,6 +34,13 @@ public class QryCusMsgAction extends BaseAction{
 	public void execute(Context context)throws CoreException,CoreRuntimeException{
 		log.info("==============Start  QryCusMsgAction");
 		context.setData(GDParamKeys.SVRCOD,"44");
+		String sqn=get(BBIPPublicService.class).getBBIPSequence();
+		context.setData(ParamKeys.SEQUENCE, sqn);
+		String txnDte=DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
+		String txnTme=DateUtils.formatAsHHmmss(new Date());
+		context.setData(ParamKeys.TXN_DTE, txnDte);
+		context.setData(ParamKeys.TXN_TME, txnTme);
+		
 		callThd(context);
 	}
 	/**
