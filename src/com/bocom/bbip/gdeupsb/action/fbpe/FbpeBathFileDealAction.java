@@ -55,7 +55,7 @@ public class FbpeBathFileDealAction implements BatchAcpService {
     @SuppressWarnings("unchecked")
     @Override
     public void prepareBatchDeal(PrepareBatchAcpDomain arg0, Context context) throws CoreException {
-        //TODO 调用吴艳辉方法；
+
         String batNo=context.getData("batNo");
         log.info("BathFileDealAction start!..");
         List <GdFbpeFileBatchTmp> payDetailLst = new ArrayList<GdFbpeFileBatchTmp>();

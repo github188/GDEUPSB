@@ -56,7 +56,6 @@ public class PlpdBathFileDealAction implements BatchAcpService {
     @SuppressWarnings("unchecked")
     @Override
     public void prepareBatchDeal(PrepareBatchAcpDomain arg0, Context context) throws CoreException {
-        //TODO 调用吴艳辉方法；
         String batNo=context.getData("batNo");
         log.info("BathFileDealAction start!..");
         List <GdPlpdBatchTmp> payDetailLst = new ArrayList<GdPlpdBatchTmp>();
@@ -74,7 +73,7 @@ public class PlpdBathFileDealAction implements BatchAcpService {
         publicService.tryLock(fileName, (long)0, (long)10);
       
         String localFileName=fileName+"."+context.getData(ParamKeys.BK);
-        // @PARA.RcvMod 为0 磁盘拷贝
+        //  磁盘拷贝
         String srcFilName= "dat/term/recv/"+fileName;
         String objFilName ="dat/fbp/"+localFileName;
        

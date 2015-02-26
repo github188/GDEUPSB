@@ -75,8 +75,7 @@ public class FindClientRemainingMoney extends BaseAction {
                 String tlr = get(BBIPPublicService.class).getETeller(bankId);
                 context.setData(ParamKeys.TELLER,tlr);
                 context.setData(ParamKeys.BK,"483803");
-                
-                //TODO; --对公对私判断 待确定--
+
                 context.setData(GDParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
                 context.setData(GDParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
             }
