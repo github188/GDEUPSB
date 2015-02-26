@@ -11,7 +11,7 @@
 		<fixString name="oldTxnDte" length="8" /><!--  原交易日期-->
 		<fixString name="oldTxnTme" length="6" /><!-- 原交易时间 -->
 		<fixString name="payNo" length="20" /><!--  缴费号-->
-		<fixString name="electricityYearMonth" length="16" /><!--  电费年月-->
+		<fixString name="electricityYearMonth" length="6" /><!--  电费年月-->
 		<fixString name="txnAmt" length="16" /><!--  实扣金额-->
 		<fixString name="paymentResult" length="128" /><!-- 缴费结果说明 -->
 	
