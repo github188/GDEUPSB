@@ -67,10 +67,22 @@
 			   </actions>
 		</process>		
 	<!-- 南方电网  供电批量代扣取消交易-->		
-		<process id="gdeupsb.cancelBatch"  template="eups.simpleTran"  interceptors="eups.thdTransInterceptorExt">
+		<process id="gdeupsb.cancelBatch"  template="eups.simpleTran"  interceptors="eups.thdELEC00Interceptor">
 				  <actions>
 				   			  <action id="act"  ref="gdeupsb.CancelBatchAction"/>
 				   </actions>
-			</process>					
+			</process>			
+					
+	<!-- 联机单笔抹帐  -->
+	<process id="eups.automaticCancelELEC00" template="eups.cancelOnlineTemplate"  interceptors="eups.thdELEC00Interceptor" >
+	   <actions>
+	       <!-- 第三方抹账前处理 -->
+	       <action id="preCalAction" ref="eups.preCancelStrategyAction"/>
+	       <!-- 第三方抹账后处理 -->
+	       <action id="aftCalAction" ref="eups.aftCancelStrategyAction"/>
+	   </actions>
+	</process>
+	
+	
 
 </x:beans>
