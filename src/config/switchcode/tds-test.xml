@@ -7,7 +7,7 @@
 
 	 <!-- 广州电力根据适配类型转换为对应的单位编号 -->	
 	  <table id="eleGzComNoGen" >
-	       <key name="3"   value="this is tds,key=3,value=5"/>
+	       <key name="0001"   value="GDELEC01"/>
 	       <key name="2"   value="this is tds,key=2,value=6"/>
 	       <key name="4"   value="this is tds,key=4,value=7"/>
 	  </table> 
