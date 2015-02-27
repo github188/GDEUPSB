@@ -67,22 +67,22 @@ public class ThdTransMainInterceptorExt implements Interceptor {
     public void onRequest(Context context) throws CoreException, CoreRuntimeException {
         log.info("=================interceptor start!context=" + context);
         
-        //String 日期装换成时间类型
-        context.setData(ParamKeys.TXN_DTE, DateUtils.parse(context.getData(ParamKeys.TXN_DATE).toString(),DateUtils.STYLE_yyyyMMdd));
-        context.setData(ParamKeys.TXN_TME, DateUtils.parse(DateUtils.format(new Date(),DateUtils.STYLE_TRANS_TIME)));
-        if(null != context.getData(ParamKeys.THD_TXN_DATE)){
-            Date thdTxnDte=DateUtils.parse(context.getData(ParamKeys.THD_TXN_DATE).toString(),DateUtils.STYLE_yyyyMMdd);
-            context.setData(ParamKeys.THD_TXN_DATE, thdTxnDte);
-        }else{
-        	 context.setData(ParamKeys.THD_TXN_DATE, DateUtils.parse(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)));
-        }
-        String thdTxnDte=DateUtils.format((Date)context.getData(ParamKeys.THD_TXN_DATE),DateUtils.STYLE_yyyyMMdd);
-        if(null != context.getData(ParamKeys.THD_TXN_TIME)){
-            Date thdTxnTme=DateUtils.parse(thdTxnDte+context.getData(ParamKeys.THD_TXN_TIME).toString(),DateUtils.STYLE_yyyyMMddHHmmss);
-            context.setData(ParamKeys.THD_TXN_TIME, thdTxnTme);
-        }else{
-        	context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse(DateUtils.formatAsTranstime(new Date())));
-        }
+        //TODO：String 日期装换成时间类型
+//        context.setData(ParamKeys.TXN_DTE, DateUtils.parse(context.getData(ParamKeys.TXN_DATE).toString(),DateUtils.STYLE_yyyyMMdd));
+//        context.setData(ParamKeys.TXN_TME, DateUtils.parse(DateUtils.format(new Date(),DateUtils.STYLE_TRANS_TIME)));
+//        if(null != context.getData(ParamKeys.THD_TXN_DATE)){
+//            Date thdTxnDte=DateUtils.parse(context.getData(ParamKeys.THD_TXN_DATE).toString(),DateUtils.STYLE_yyyyMMdd);
+//            context.setData(ParamKeys.THD_TXN_DATE, thdTxnDte);
+//        }else{
+//        	 context.setData(ParamKeys.THD_TXN_DATE, DateUtils.parse(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)));
+//        }
+//        String thdTxnDte=DateUtils.format((Date)context.getData(ParamKeys.THD_TXN_DATE),DateUtils.STYLE_yyyyMMdd);
+//        if(null != context.getData(ParamKeys.THD_TXN_TIME)){
+//            Date thdTxnTme=DateUtils.parse(thdTxnDte+context.getData(ParamKeys.THD_TXN_TIME).toString(),DateUtils.STYLE_yyyyMMddHHmmss);
+//            context.setData(ParamKeys.THD_TXN_TIME, thdTxnTme);
+//        }else{
+//        	context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse(DateUtils.formatAsTranstime(new Date())));
+//        }
         
         log.info("start!loadMap=" + this.loadMap);
         // 请求字段处理
@@ -377,10 +377,7 @@ public class ThdTransMainInterceptorExt implements Interceptor {
         }
         log.info("================get sqn:context=" + context);
 
-        Date rspTime = null;
-        if(null !=context.getData(ParamKeys.TXN_DATE)){
-        	rspTime=DateUtils.parse(context.getData(ParamKeys.TXN_DATE).toString());
-        }
+        Date rspTime = context.getData(ParamKeys.TXN_DATE);
         if (null != rspTime) {
             context.setData(ParamKeys.RESPONSE_TIME, rspTime);
         } else {
