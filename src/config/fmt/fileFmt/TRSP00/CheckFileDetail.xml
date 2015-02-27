@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet spacket.xsd"
 	encoding="utf-8" trace="true">
 	<segment name="detail" encoding="utf-8">
-				<varString name="payDate"  type="D|"></varString>
+				<varString name="payDat"  type="D|"></varString>
 				<varString name="thdKey"  type="D|"></varString>
 				<varString name="txnAmt"  type="D|"></varString>
 				<varString name="invNo"  type="D|"></varString>
