@@ -59,7 +59,7 @@ public class CheckThdSumAcctAction implements  CheckThdSumAcctService{
 		context.setData(ParamKeys.SEQUENCE, sqn);
 		context.setData(ParamKeys.TXN_DTE, txnDte);
 		context.setData(ParamKeys.TXN_TME, txnTme);
-		if(null == context.getData(GDParamKeys.CHECKTIME)){
+		if(StringUtils.isEmpty(context.getData(GDParamKeys.CHECKTIME).toString())){
 				context.setData(GDParamKeys.CHECKTIME, DateUtils.formatAsHHmmss(txnTme));
 		}
 		
@@ -75,10 +75,8 @@ public class CheckThdSumAcctAction implements  CheckThdSumAcctService{
 				chkDte=DateUtils.format(com.bocom.bbip.thd.org.apache.commons.lang.time.DateUtils.addDays(new Date(), -1),DateUtils.STYLE_yyyyMMdd);
 		}
 		Date acDate=DateUtils.parse(chkDte);
-		context.setData(GDParamKeys.CHECKDATE, acDate);
+		context.setData(GDParamKeys.CHECKDATE, chkDte);
 		
-		System.out.println("~~~~~~~CHECKDATE~~~~~"+chkDte);
-		System.out.println("~~~~~~CHECKTIME~~~~~~"+context.getData(GDParamKeys.CHECKTIME));
 		//统计交易
 		EupsTransJournal eupsTransJournal=new EupsTransJournal();
 		eupsTransJournal.setTxnDte(acDate);
@@ -132,7 +130,13 @@ public class CheckThdSumAcctAction implements  CheckThdSumAcctService{
         context.setData("totAmt", totAmt.abs());
         //SendThirdOther
         callThd(context);
-        
+        //修改时间格式s
+        String thdTxnDate=context.getData(ParamKeys.THD_TXN_DATE).toString();
+        String thdTxnTime=context.getData(ParamKeys.THD_TXN_TIME).toString();
+        Date thdTxnDte = DateUtils.parse(thdTxnDate,DateUtils.STYLE_yyyyMMdd);
+        Date thdTxnTme = DateUtils.parse(thdTxnTime,DateUtils.STYLE_HHmmss);
+        context.setData(ParamKeys.THD_TXN_DATE, thdTxnDte);
+        context.setData(ParamKeys.THD_TXN_TIME, thdTxnTme);
         return null;
 	}
 			
