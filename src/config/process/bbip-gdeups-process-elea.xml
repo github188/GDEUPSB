@@ -100,7 +100,7 @@
 			<!-- 联机记账预处理 -->
 			<action id="initAction" ref="eups.initPaymentInfoAction" />
 			<!-- 联机531代收付交易主机记账 （自调冲正） -->
-			<action id="businessAction" ref="eups.bbipPayment" />
+			<action id="businessAction" ref="eups.bbipPaymentExt" />
 			<action id="businessAction" ref="eups.saveCBPaymentResultAction" />
 			<!-- 交易结果 -->
 			<!-- 记账后返回处理 -->
@@ -129,7 +129,7 @@
 			<!-- 联机抹账预处理 -->
 			<action id="initAction" ref="eups.initCancelInfoAction" />
 			<!-- 联机531代收付交易主机抹账 -->
-			<action id="businessAction" ref="eups.bbipPaymentCancelUsingReversalExt" />
+			<action id="businessAction" ref="eups.bbipPaymentCancelUsingReversal" />
 			<action id="businessAction" ref="eups.processCBCancelResultAction" />
 			<!-- 交易结果 -->
 			<!-- 抹账后返回处理 -->
@@ -184,7 +184,7 @@
 
 
 	<!-- 银行发起银行代扣代收电费对帐交易 -->
-	<process id="gdeupsb.eleCmuBnkTestProcess" template="eups.simpleTran"
+	<process id="gdeupsb.bnkcheckFileToEle" template="eups.simpleTran"
 		interceptors="bbip.defaultInterceptors">
 		<actions>
 			<action id="act" ref="gdeupsb.synExcCheckEleGzFileAction" />
