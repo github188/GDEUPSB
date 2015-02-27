@@ -104,11 +104,10 @@
     <process id="cathecticOnTimeAction" template="gdeups.lotCathecticTemplate"
         interceptors="bbip.defaultInterceptors">
         <actions>
-            <action id="initPre" ref="gdeups.lotClrDatPreAction" />
-            <action id="prePayDel" ref="gdeups.lotClrDfPayAction" />  <!-- 垫付资金还款 -->
-            <action id="payDel" ref="gdeups.lotClrDfUpdAction" />  <!-- 更新还款结果 -->
-            <action id="gcPayDel" ref="gdeups.lotClrGcPayAction" />  <!-- 轧差资金处理 -->
-            <action id="updGcRst" ref="gdeups.lotClrGcUpdAction" />  <!-- 更新轧差结果 -->
+            <action id="initPre" ref="gdeupsb.cathecticPreAction" />
+            <action id="prePayDel" ref="gdeupsb.cathecticPreExecuteAction" />  
+            <action id="payDel" ref="gdeupsb.cathecticExeAction" /> 
+            <action id="aftpayDel" ref="gdeupsb.cathecticCallThdAction" />  <!-- 更新轧差结果 -->
         </actions>
     </process>
     <!--用户登录 -->

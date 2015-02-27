@@ -282,17 +282,20 @@
     <flow-template id="gdeups.lotCathecticTemplate">
         <step id="init" useCtxState="true" transactional="txTemplate">       <!-- 数据准备，获取系统配置等 -->
             <action id="initPre" place-holder="false" />  
-            <next on="*" to="cbDfDealStep" />  
+            <next on="*" to="prePayDel" />  
         </step>
-        <step id="cbDfDealStep" useCtxState="true" transactional="txTemplate">  <!-- 垫款处理 -->
-            <action id="dfPayDel" place-holder="true" />
-            <action id="updDfRst" place-holder="true" />
+        <step id="prePayDel" useCtxState="true" transactional="txTemplate">  
+            <action id="prePayDel" place-holder="true" />
             <next on="BP_STATE_REVAL" to="rollback" />
-            <next on="*" to="cbGcDealStep" /> 
+            <next on="*" to="payDel" /> 
         </step>
-        <step id="cbGcDealStep"   useCtxState="true" transactional="txTemplate">  <!-- 轧差处理 -->
-            <action id="gcPayDel" place-holder="true" />
-            <action id="updGcRst" place-holder="true"  />
+        <step id="payDel"   useCtxState="true" transactional="txTemplate">  <!-- 轧差处理 -->
+            <action id="payDel" place-holder="true" />
+            <next on="BP_STATE_REVAL" to="rollback" />  
+            <next on="*" to="aftpayDel" /> 
+        </step>
+         <step id="aftpayDel"   useCtxState="true" transactional="txTemplate">  <!-- 轧差处理 -->
+            <action id="aftpayDel" place-holder="true" />
             <next on="BP_STATE_REVAL" to="rollback" />  
             <end on="*"/>
         </step>

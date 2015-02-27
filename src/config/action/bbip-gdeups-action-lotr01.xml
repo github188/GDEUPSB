@@ -35,7 +35,7 @@
 	<!--实时投注前处理 -->
     <action class="com.bocom.bbip.gdeupsb.action.lot.CathecticPreExecuteAction" id="gdeupsb.cathecticPreExecuteAction" />
     <!--实时投记账处理 -->
-    <action class="com.bocom.bbip.gdeupsb.action.lot.CathecticExeAction" id="gdeupsb.cathecticPreExeAction" />
+    <action class="com.bocom.bbip.gdeupsb.action.lot.CathecticExeAction" id="gdeupsb.cathecticExeAction" />
     <!--实时投记账后处理 -->
     <action class="com.bocom.bbip.gdeupsb.action.lot.CathecticCallThdAction" id="gdeupsb.cathecticCallThdAction" />
     
