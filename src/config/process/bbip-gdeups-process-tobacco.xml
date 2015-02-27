@@ -10,13 +10,7 @@
         </actions>
     </process>
     
-   <!--  第三方对账 引用公共
-    <process id="gdeupsb.checkFileToThird" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
-        <actions>
-            <action id="act" ref="eups.checkBkFileToThirdServiceActionSGRT00"/>
-        </actions>
-    </process> -->
-    
+
     <!--烟草签到-->
     <process id="gdeupsb.signIn" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
         <actions>
@@ -41,7 +35,6 @@
     <!--烟草公司对开户、销户、划扣的校正检查-->
     <process id="gdeupsb.verifyToThirdAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
         <actions>
-            <!-- 签到状态检查 -引用公共版 -->
             <action id="act" ref="gdeupsb.TbcVerifyToThirdAction"/>
         </actions>
     </process>

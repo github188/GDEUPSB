@@ -29,4 +29,14 @@
     <action class="com.bocom.bbip.gdeupsb.action.lot.UpdateRegistInfoAction" id="gdeupsb.UpdateRegistInfoAction" />
     <!-- 游戏对账  -->
     <action class="com.bocom.bbip.gdeupsb.action.lot.DeductMoneyAction" id="gdeupsb.DeductMoneyAction" />
+	
+	<!--实时投注初始化 -->
+    <action class="com.bocom.bbip.gdeupsb.action.lot.CathecticPreAction" id="gdeupsb.cathecticPreAction" />
+	<!--实时投注前处理 -->
+    <action class="com.bocom.bbip.gdeupsb.action.lot.CathecticPreExecuteAction" id="gdeupsb.cathecticPreExecuteAction" />
+    <!--实时投记账处理 -->
+    <action class="com.bocom.bbip.gdeupsb.action.lot.CathecticExeAction" id="gdeupsb.cathecticPreExeAction" />
+    <!--实时投记账后处理 -->
+    <action class="com.bocom.bbip.gdeupsb.action.lot.CathecticCallThdAction" id="gdeupsb.cathecticCallThdAction" />
+    
 	</x:beans>

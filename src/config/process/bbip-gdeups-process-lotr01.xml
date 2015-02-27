@@ -105,8 +105,8 @@
         interceptors="bbip.defaultInterceptors">
         <actions>
             <action id="initPre" ref="gdeups.lotClrDatPreAction" />
-            <action id="dfPayDel" ref="gdeups.lotClrDfPayAction" />  <!-- 垫付资金还款 -->
-            <action id="updDfRst" ref="gdeups.lotClrDfUpdAction" />  <!-- 更新还款结果 -->
+            <action id="prePayDel" ref="gdeups.lotClrDfPayAction" />  <!-- 垫付资金还款 -->
+            <action id="payDel" ref="gdeups.lotClrDfUpdAction" />  <!-- 更新还款结果 -->
             <action id="gcPayDel" ref="gdeups.lotClrGcPayAction" />  <!-- 轧差资金处理 -->
             <action id="updGcRst" ref="gdeups.lotClrGcUpdAction" />  <!-- 更新轧差结果 -->
         </actions>
