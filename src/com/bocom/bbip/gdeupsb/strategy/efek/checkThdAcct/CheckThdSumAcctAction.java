@@ -59,7 +59,9 @@ public class CheckThdSumAcctAction implements  CheckThdSumAcctService{
 		context.setData(ParamKeys.SEQUENCE, sqn);
 		context.setData(ParamKeys.TXN_DTE, txnDte);
 		context.setData(ParamKeys.TXN_TME, txnTme);
-		context.setData(GDParamKeys.CHECKTIME, txnTme);
+		if(null == context.getData(GDParamKeys.CHECKTIME)){
+				context.setData(GDParamKeys.CHECKTIME, DateUtils.formatAsHHmmss(txnTme));
+		}
 		
 		context.setData(GDParamKeys.TOTNUM, "1");
 		context.setData("PKGCNT", "000001");
@@ -67,12 +69,16 @@ public class CheckThdSumAcctAction implements  CheckThdSumAcctService{
 		
 		//对账日期
 		String chkDte=null;
-		if(StringUtils.isEmpty(context.getData(GDParamKeys.CHECKDATE).toString())){
-			chkDte=com.bocom.bbip.thd.org.apache.commons.lang.time.DateUtils.addDays(txnDte, -1).toString();
+		if(StringUtils.isNotEmpty(context.getData(GDParamKeys.CHECKDATE).toString())){
+				chkDte=context.getData(GDParamKeys.CHECKDATE).toString();
 		}else{
-			chkDte=context.getData(GDParamKeys.CHECKDATE).toString();
+				chkDte=DateUtils.format(com.bocom.bbip.thd.org.apache.commons.lang.time.DateUtils.addDays(new Date(), -1),DateUtils.STYLE_yyyyMMdd);
 		}
 		Date acDate=DateUtils.parse(chkDte);
+		context.setData(GDParamKeys.CHECKDATE, acDate);
+		
+		System.out.println("~~~~~~~CHECKDATE~~~~~"+chkDte);
+		System.out.println("~~~~~~CHECKTIME~~~~~~"+context.getData(GDParamKeys.CHECKTIME));
 		//统计交易
 		EupsTransJournal eupsTransJournal=new EupsTransJournal();
 		eupsTransJournal.setTxnDte(acDate);
