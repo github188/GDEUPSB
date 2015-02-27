@@ -2,18 +2,44 @@
 <segment xmlns="http://www.bocom.com/jump/transformer/packet"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
-	name="0200Response">
+	name="0200Request">
+	<!-- <fixString name="cusAc"   length="21"/>   cusAcEx2
+	<fixString name="thdPayTyp" length="6"  default="020000"/>   thdPayTyp
+	<fixString name="thdTxnAmt" length="12"  />   amount4
+	<fixString name="txnDateTime" length="10" />  MMDDhhmmss   txnDateTime7
+	<fixString name="pwrtxnDate" length="4" />   清算日期 MMDD    pwrtxnDate15
+	<fixString name="pwrThdSub18" length="4" /> 配型部类型    pwrThdSub18
+	<fixString name="pwrFee" length="12" />    交易手续费   pwrFee28
+	<fixString name="eleBkNo" length="11" />    受理方机构标识码   pwrFee28
+	<fixString name="thdSqn" length="12" />    供电公司系统参考号   eleThdSqn37
+	<fixString name="tTrmId" length="8" />    供电公司终端标识码   tTrmId41
+	<fixString name="delTdlId42" length="15" />    供电公司标识码   delTdlId42
+	<fixString name="remarkData" length="99" />    供电公司终端标识码   remarkData48 
+	<fixString name="CCY" length="3"  default="001"/>    交易货币代码
+	<fixString name="password" length="4" />    密码
+	<fixString name="thdRgnNo100" length="11"  default="333333"/>    接收机构标识代码
+	<fixString name="traTyp104" length="2"  default="HZ"/>    交易类别 -->
+	
+	
 	<fixString name="cusAc"   length="21"/>   <!-- cusAcEx2 -->
 	<fixString name="thdPayTyp" length="6"  default="020000"/>   <!-- thdPayTyp -->
 	<fixString name="thdTxnAmt" length="12"  />   <!-- amount4 -->
 	<fixString name="txnDateTime" length="10" />  <!-- MMDDhhmmss -->   <!-- txnDateTime7 -->
+	<fixString name="transJournal11" length="32" />   <!-- 银行交易流水号 -->   
+	
+	<fixString name="bnkTxnTime12"  length="6"/>  <!-- 受理方所在地时间 -->
+	<fixString name="bnkTxnDate13"   length="4" />   <!-- 受理方所在地日期 -->
+	
+	
 	<fixString name="pwrtxnDate" length="4" />   <!-- 清算日期 MMDD-->    <!-- pwrtxnDate15 -->
-	<fixString name="pwrThdSub" length="4" /> <!-- 配型部类型 -->    <!-- pwrThdSub18 -->
+	<fixString name="pwrThdSub18" length="4" /> <!-- 配型部类型 -->    <!-- pwrThdSub18 -->
 	<fixString name="pwrFee" length="12" />    <!-- 交易手续费 -->   <!-- pwrFee28 -->
-	<fixString name="eleBkNo" length="11" />    <!-- 受理方机构标识码 -->   <!-- pwrFee28 -->
+	<fixString name="eleBkNo" length="11" />    <!-- 受理方机构标识码 -->   <!--eleBkNo32 -->
 	<fixString name="thdSqn" length="12" />    <!-- 供电公司系统参考号 -->   <!-- eleThdSqn37 -->
+	<fixString name="thdRspCde" length="12" />    <!-- 39,响应码 -->
+	
 	<fixString name="tTrmId" length="8" />    <!-- 供电公司终端标识码 -->   <!-- tTrmId41 -->
-	<fixString name="thdCusNo" length="15" />    <!-- 供电公司标识码 -->   <!-- delTdlId -->
+	<fixString name="delTdlId42" length="15" />    <!-- 供电公司标识码 -->   <!-- delTdlId42 -->
 	<fixString name="remarkData" length="99" />    <!-- 供电公司终端标识码 -->   <!--remarkData48  -->
 	<fixString name="CCY" length="3"  default="001"/>    <!-- 交易货币代码 -->
 	<fixString name="password" length="4" />    <!-- 密码 -->

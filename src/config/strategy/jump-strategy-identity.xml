@@ -32,7 +32,8 @@
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.QueryElecUserStrategyAction">
 	</bean>
 
-	<bean id="eups.prepareCheckDealStrategyActionELEC01"
+	<!-- 单笔缴费 -->
+	<!-- <bean id="eups.prepareCheckDealStrategyActionELEC01"
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.PreInitElecStrategyAction">
 	</bean>
 
@@ -46,7 +47,7 @@
 
 	<bean id="eups.aftPayFeeStrategyActionELEC01"
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.AftThdElecStrategyAction">
-	</bean>
+	</bean> -->
 
 	<!-- 联机抹帐，广州电力，抹第三方前处理 -->
 	<bean id="eups.preCancelStrategyActionELEC01"
@@ -62,9 +63,9 @@
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.PreEleCheckDealStrategyAction">
 	</bean> -->
 
-	<bean id="eups.aftPayToBankStrategyActionELEC01"
+<!-- 	<bean id="eups.aftPayToBankStrategyActionELEC01"
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.AftPayDealStrategyAction">
-	</bean>
+	</bean> -->
 
 	<bean id="eups.preCclToBankStrategyActionELEC01"
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.PreCnlBnkSglDealStrategyAction">
@@ -221,6 +222,13 @@
 	<!-- 批量文件 返回-->
 				<bean id="eups.autoFileBatchPayCreateDataServiceActionGZAG00"  
 					class="com.bocom.bbip.gdeupsb.action.gzag.batch.GzagBatchDataResultFileAction"/>
-	
+				
+		<!--广州电力单笔缴费  -->
+	<bean class="com.bocom.bbip.gdeupsb.strategy.elcgd.PayFeeOnlineServiceAction"
+		id="eups.payFeeOnlineServiceActionELEC01" />				
+					
+	<!--广州电力单边划扣  -->
+	<bean class="com.bocom.bbip.gdeupsb.strategy.elcgd.PayUnilateralToBankServiceAction"
+		id="eups.payUnilateralToBankServiceActionELEC01" />				
 	
 </beans>

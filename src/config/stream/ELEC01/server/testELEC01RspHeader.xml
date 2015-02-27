@@ -6,5 +6,5 @@
 	<segment name="agenthead">
 		<fixString name="TransCode" length="4"  referred="true"  mapping="true"/>
 	</segment> 
-	<include keys="TransCode" encodePrefix="f" />
+	<include keys="TransCode" encodePrefix="p" />
 </message>
