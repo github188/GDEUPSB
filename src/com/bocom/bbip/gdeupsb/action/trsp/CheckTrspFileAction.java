@@ -86,7 +86,7 @@ public class CheckTrspFileAction extends BaseAction{
 		        BigDecimal AmtErr=new BigDecimal("0.00");
 		        String chkErr="";
 		        //TODO 文件名
-//		        String ErrFile=context.getData("ChkErr")+context.getData(GDParamKeys.END_DATE).toString();
+		        String fileName=context.getData("fileName").toString();
 		        List<TrspCheckTmp> list=trspCheckTmpRepository.findAll();
 		        int chkFlg=-1;
 		        //轮询对账
@@ -116,9 +116,9 @@ public class CheckTrspFileAction extends BaseAction{
 			        		numErr=numErr+1;
 			        		AmtErr=AmtErr.add(trspCheckTmp.getTxnAmt());
 					        //TODO 写文件  io写入文件
-			        		String chkErrFile="checkTrspResp.txt";
+			        		String chkErrFile=fileName+".txt";
 			        		//TODO File file=new File("I://dat//term//send//"+chkErr);
-			        		File file=new File("I://"+chkErrFile);
+			        		File file=new File("H://"+chkErrFile);
 			        			EupsThdFtpConfig eupsThdFtpConfig=get(EupsThdFtpConfigRepository.class).findOne("trspCheckFile");
 			        			Map<String, Object> map =  new HashMap<String, Object>();
 			        	        map.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(list));
