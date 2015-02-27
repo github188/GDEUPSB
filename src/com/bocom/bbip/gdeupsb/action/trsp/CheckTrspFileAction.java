@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -84,60 +85,67 @@ public class CheckTrspFileAction extends BaseAction{
 		        
 		        int numErr=0;
 		        BigDecimal AmtErr=new BigDecimal("0.00");
-		        String chkErr="";
+		        String chkErr=""; //错误信息
 		        //TODO 文件名
-		        String fileName=context.getData("fileName").toString();
+		        String fileName=context.getData("fileName").toString()+".txt";
 		        List<TrspCheckTmp> list=trspCheckTmpRepository.findAll();
 		        int chkFlg=-1;
 		        //轮询对账
+		    	List<GDEupsbTrspFeeInfo> detailList=new ArrayList<GDEupsbTrspFeeInfo>();
 		        for (TrspCheckTmp trspCheckTmp : list) {
 						 	//根据流水得到每条数据
 			        	GDEupsbTrspFeeInfo  gdEupsbTrspFeeInfo=gdEupsbTrspFeeInfoRepository.findOne(trspCheckTmp.getSqn());
 			        	if(gdEupsbTrspFeeInfo == null){
 			        			context.setData(ParamKeys.RSP_MSG, "企业多账");
 			        			chkFlg=3;
-			        	}else if(!gdEupsbTrspFeeInfo.getCarNo().equals(trspCheckTmp.getCarNo()) 
-			        			||  !gdEupsbTrspFeeInfo.getCarTyp().equals(trspCheckTmp.getCarTyp())){
-			        			chkErr="企业车牌号或车辆类型不符";
-			        			chkFlg=2;
-			        	}else if(!gdEupsbTrspFeeInfo.getInvNo().equals(trspCheckTmp.getInvNo())){
-			        		chkErr="交易状态不符";
-		        			chkFlg=2;
-			        	}else if(gdEupsbTrspFeeInfo.getTxnAmt().compareTo(trspCheckTmp.getTxnAmt()) !=0
-			        			|| !gdEupsbTrspFeeInfo.getPayMon().equals(trspCheckTmp.getPayMon()) ){
-			        		chkErr="金额或月数不符";
-		        			chkFlg=2;
 			        	}else{
-			        		chkErr="核对成功";
-		        			chkFlg=1;
-			        	}
-			        	gdEupsbTrspFeeInfo.setTcusNm(chkErr);
-			        	if(1 !=chkFlg){
-			        		numErr=numErr+1;
-			        		AmtErr=AmtErr.add(trspCheckTmp.getTxnAmt());
-					        //TODO 写文件  io写入文件
-			        		String chkErrFile=fileName+".txt";
-			        		//TODO File file=new File("I://dat//term//send//"+chkErr);
-			        		File file=new File("H://"+chkErrFile);
-			        			EupsThdFtpConfig eupsThdFtpConfig=get(EupsThdFtpConfigRepository.class).findOne("trspCheckFile");
-			        			Map<String, Object> map =  new HashMap<String, Object>();
-			        	        map.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(list));
-			        			get(OperateFileAction.class).createCheckFile(eupsThdFtpConfig, "trspCheckFile", chkErrFile, map);
-			        			//换行
-//									银行交易日期|银行流水号|发生额|发票号|缴费月数|车辆类型|车牌号|状态|
-				        	//跟新表中对账状态 
-			        		String checkFlg=chkFlg+"";
-			        		gdEupsbTrspFeeInfo.setTcusNm("");
-				        	gdEupsbTrspFeeInfo.setChkFlg(checkFlg);
-				        	gdEupsbTrspFeeInfo.setTchkNo(tChkNo);
-				        	gdEupsbTrspFeeInfoRepository.update(gdEupsbTrspFeeInfo);
-			        	}
-		        	}
+					        		if(!gdEupsbTrspFeeInfo.getCarNo().equals(trspCheckTmp.getCarNo()) 
+					        				||  !gdEupsbTrspFeeInfo.getCarTyp().equals(trspCheckTmp.getCarTyp())){
+						        			chkErr="企业车牌号或车辆类型不符";
+						        			chkFlg=2;
+							        	}else if(!gdEupsbTrspFeeInfo.getInvNo().equals(trspCheckTmp.getInvNo())){
+							        		chkErr="交易状态不符";
+						        			chkFlg=2;
+							        	}else if(gdEupsbTrspFeeInfo.getTxnAmt().compareTo(trspCheckTmp.getTxnAmt()) !=0
+							        			|| !gdEupsbTrspFeeInfo.getPayMon().equals(trspCheckTmp.getPayMon()) ){
+							        		chkErr="金额或月数不符";
+						        			chkFlg=2;
+							        	}else{
+							        		chkErr="核对成功";
+						        			chkFlg=1;
+							        	}
+					        		GDEupsbTrspFeeInfo  gdEupsbTrspFeeInfoNew=new GDEupsbTrspFeeInfo();
+					        		gdEupsbTrspFeeInfoNew.setTcusNm(chkErr);
+					        		gdEupsbTrspFeeInfoNew.setThdKey(trspCheckTmp.getSqn());
+					        		gdEupsbTrspFeeInfoNew.setTxnAmt(gdEupsbTrspFeeInfo.getTxnAmt());
+					        		gdEupsbTrspFeeInfoNew.setPayMon(gdEupsbTrspFeeInfo.getPayMon());
+					        		gdEupsbTrspFeeInfoNew.setCarTyp(gdEupsbTrspFeeInfo.getCarTyp());
+					        		gdEupsbTrspFeeInfoNew.setCarNo(gdEupsbTrspFeeInfo.getCarNo());
+					        		gdEupsbTrspFeeInfoNew.setStatus(gdEupsbTrspFeeInfo.getStatus());
+					        		gdEupsbTrspFeeInfoNew.setPayDat(gdEupsbTrspFeeInfo.getPayDat());
+					        		gdEupsbTrspFeeInfoNew.setInvNo(gdEupsbTrspFeeInfo.getInvNo());
+					        	if(1 !=chkFlg){
+						        		numErr=numErr+1;
+						        		AmtErr=AmtErr.add(trspCheckTmp.getTxnAmt());
+//			                           银行交易日期|银行流水号|发生额|发票号|缴费月数|车辆类型|车牌号|状态|
+					        			detailList.add(gdEupsbTrspFeeInfoNew);
+					        	}
+					        	String checkFlg=chkFlg+"";
+					        	gdEupsbTrspFeeInfo.setChkFlg(checkFlg);
+					        	gdEupsbTrspFeeInfo.setTchkNo(tChkNo);
+					        	gdEupsbTrspFeeInfoRepository.update(gdEupsbTrspFeeInfo);
+				       }
+		        }
+		        EupsThdFtpConfig eupsThdFtpConfig=get(EupsThdFtpConfigRepository.class).findOne("trspCheckFile");
+		        Map<String, Object> map =  new HashMap<String, Object>();
+    	        map.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(detailList));
+    	        //换行
+    			get(OperateFileAction.class).createCheckFile(eupsThdFtpConfig, "trspCheckFile", fileName, map);
+	        	//跟新表中对账状态 
 		        //更新银行单边账
 		        gdEupsbTrspFeeInfoRepository.updateChkFlg(tChkNo);
 		        
 		        context.setData(ParamKeys.TXN_AMT, AmtErr);
-		        
 		        List<GDEupsbTrspFeeInfo> gdEupsbTrspFeeInfoList=gdEupsbTrspFeeInfoRepository.findNotCheck(tChkNo);
 		        if(CollectionUtils.isEmpty(gdEupsbTrspFeeInfoList)){
 		        	context.setData(ParamKeys.RSP_CDE, "329999");
@@ -164,10 +172,10 @@ public class CheckTrspFileAction extends BaseAction{
 			logger.info("~~~~~~~~~~~Start  CheckTrspFile   callThd");
 			try {
 				Map<String, Object> rspMap=callThdTradeManager.trade(context);
-				System.out.println("~~~~~~~~~~"+rspMap);
 				String responseCode=rspMap.get(ParamKeys.THIRD_RETURN_CODE).toString();
 	             context.setData(GDParamKeys.RETCOD, responseCode);
-
+	             context.setData("fileName", rspMap.get("fileName"));
+	             
 	             if(!Constants.RESPONSE_CODE_SUCC.equals(responseCode)){
 						context.setData(GDParamKeys.MSGTYP, "E");
 						context.setData(ParamKeys.RSP_CDE, "329999");
