@@ -85,7 +85,7 @@ public class GzagBatchDataFileAction implements BatchAcpService{
 					gdEupsGzagBatchTmp.setBakFld(comNo);
 					gdEupsGzagBatchTmpRepository.insert(gdEupsGzagBatchTmp);
 			}
-			logger.info("~~~~~~~~~~~~~End  insert");
+			logger.info("~~~~~~~~~~~~~End  insert  (获取文件并解析入库)");
 
 			//文件内容
 			Map<String, Object> resultMap=createFileMap(context);
