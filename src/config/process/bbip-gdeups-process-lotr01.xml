@@ -100,13 +100,17 @@
         </actions>
     </process>
     
-    <!--用户实时投注 -->
-    <process id="cathecticOnTimeAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+    <!--福彩用户实时投注-->
+    <process id="cathecticOnTimeAction" template="gdeups.lotCathecticTemplate"
+        interceptors="bbip.defaultInterceptors">
         <actions>
-            <action id="act" ref="gdeupsb.CathecticOnTimeAction"/>
+            <action id="initPre" ref="gdeups.lotClrDatPreAction" />
+            <action id="dfPayDel" ref="gdeups.lotClrDfPayAction" />  <!-- 垫付资金还款 -->
+            <action id="updDfRst" ref="gdeups.lotClrDfUpdAction" />  <!-- 更新还款结果 -->
+            <action id="gcPayDel" ref="gdeups.lotClrGcPayAction" />  <!-- 轧差资金处理 -->
+            <action id="updGcRst" ref="gdeups.lotClrGcUpdAction" />  <!-- 更新轧差结果 -->
         </actions>
     </process>
-    
     <!--用户登录 -->
     <process id="loginAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
         <actions>

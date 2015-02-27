@@ -52,7 +52,7 @@ public class DeductMoneyAction extends BaseAction {
         }
         CommonLotAction commAction = new CommonLotAction();
         if (CollectionUtils.isEmpty(lotChkCtls)) {
-            //无信息则下载对账信息 //TODO;
+            //无信息则下载对账信息 
             Map <String, String> map = commAction.downloadFile("3", gameId, drawId);
             if (map.get("downloadStatus").equals("0")) {
                 context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
@@ -188,7 +188,7 @@ public class DeductMoneyAction extends BaseAction {
             context.setData(ParamKeys.RSP_MSG, "对账更新状态失败!");
             return;
         }
-        //  生成对账报表  代码为空
+        //生成对账报表  代码为空
         //TODO; 计算轧差 
         commAction.calcLotDifAmt(context);
         context.setData("msgTyp", Constants.RESPONSE_TYPE_SUCC);

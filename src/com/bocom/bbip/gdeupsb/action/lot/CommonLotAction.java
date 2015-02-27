@@ -1,8 +1,19 @@
 package com.bocom.bbip.gdeupsb.action.lot;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.gdeupsb.common.GDConstants;
+import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.entity.GdLotSysCfg;
+import com.bocom.bbip.gdeupsb.repository.GdLotSysCfgRepository;
+import com.bocom.bbip.service.BGSPServiceAccessObject;
+import com.bocom.bbip.service.Result;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 
 /**
@@ -12,6 +23,11 @@ import com.bocom.jump.bp.core.Context;
  * @author GuiLin.Li
  */
 public class CommonLotAction {
+    
+    @Autowired
+    GdLotSysCfgRepository lotSysCfgRepository;
+    @Autowired
+    BGSPServiceAccessObject bgspServiceAccessObject;
     
     /**
      * 计算时差
@@ -87,7 +103,7 @@ public class CommonLotAction {
         <Function name="DownloadFile" desc="下载不同的文件并入库">
         <Input>FilTyp|GameId|DrawId|FTxnTm|</Input>
         <Output>DownloadStatus|DownloadMsg|FilTyp|</Output>
-        <DynSentence name="GetSysCfg" desc="获取系统配置">
+        <DynSentence name="ggetSysCfg" desc="获取系统配置">
             <Sentence>
                 select DealId,UsrPam,UsrPas,SigTim,LclTim,LotTim,DiffTm
                 from LotSysCfg
@@ -312,132 +328,26 @@ public class CommonLotAction {
     /**
      * 获取系统配置
      */
-    private void GetSysCfg() {
-        
+    public void GetSysCfg(Context context) {
+        String dealId = GDConstants.LOT_DEAL_ID; // 运营商编号
+        GdLotSysCfg gdLotSysCfg = lotSysCfgRepository.findOne(dealId);
+
+        // 查询代收单位协议信息
+        String dscAgtNo = gdLotSysCfg.getDsCAgtNo(); // 代收单位编号
+        Map<String, Object> inpara = new HashMap<String, Object>();
+        inpara.put(ParamKeys.COMPANY_NO, dscAgtNo);
+        inpara.put("inqBusLstFlg", "N");
+
+         Result dsResult = bgspServiceAccessObject.callServiceFlatting("queryCorporInfo", inpara);
+        Map<String, Object> dsMap = new HashMap<String, Object>();
+        dsMap = dsResult.getPayload();
+
+        String fCActNo = (String) dsMap.get("hfeStlAc"); // 代收结算账户,用于处理轧差入账帐号
+        String curTim = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMddHHmmss); // 当前时间
+
+        context.setVariable(GDParamKeys.GD_LOT_SYS_CFG, gdLotSysCfg);
+        context.setVariable(GDParamKeys.LOT_CURTIM, curTim);
+        context.setVariable(GDParamKeys.LOT_FC_ACT_NO, fCActNo);
 
     }
-    /**
-     * 获取彩票时间
-     */
-    private void getLotTime() {
-      /*  <Function name="GetFcTim" desc="根据与福彩之间的时差获取福彩时间">
-        <Input>DealId|NodNo|BrNo|</Input>
-        <Output>FcTim|</Output>
-        <DynSentence name="GetSysCfg" desc="获取系统配置">
-           <Sentence>
-               select DealId,UsrPam,UsrPas,SigTim,LclTim,LotTim,DiffTm
-               from LotSysCfg
-               where DealId='%s'
-           </Sentence>
-           <Fields>DealId|</Fields>
-        </DynSentence>
-        <Process>
-           <!-- 查询系统参数，获取当前本地与福彩系统的时差 -->
-           <Exec func="PUB:ReadRecord" error="IGNORE">
-              <Arg name="SqlCmd" value="GetSysCfg"/>
-           </Exec>
-           <If condition="IS_NOEQUAL_STRING(~RetCod,0)">
-               <Set>DiffTm=0</Set><!-- 如果无法获取时差，则默认时差为0 -->
-           </If>
-           
-           <!-- 根据时差计算当前福彩系统时间 -->
-           <Set>CurTim=GETDATETIME(YYYYMMDDHHMISS)</Set>
-           
-           <!-- 技术难题待解决，暂时默认时间差为0 -->
-           <Set>SrcDate=$CurTim</Set>
-           <Set>DifTim=$DiffTm</Set>
-           <Call package="LOT_PKG" function="CalTim" desc="根据时差计算时间"/>
-           <Set>FcTim=$DesDate</Set>*/
-    }
-    
-    /**
-     * --计算时间
-     */
-    private void calTime(){
-    /*  
-           NodNo:网点号
-           BrNo:分行号
-           SrcDate:原时间
-           DifTim:时差（秒）
-        OUTPUT:
-           DesDate:计算后的时间
-        -->
-        <Function name="CalTim" desc="计算时间">
-           <Input>NodNo|BrNo|SrcDate|DifTim|</Input>
-           <Output>DesDate|</Output>
-           <Process>
-               <!-- 检查分行号是否存在 -->
-               <If condition="IS_EQUAL_STRING($BrNo,)">
-                  <Exec func="PUB:GetBranchNoByNodeNo" error="IGNORE"></Exec>
-                  <If condition="IS_EQUAL_STRING(~RetCod,)">
-                      <Set>BrNo=441999</Set>
-                  </If>
-               </If>
-               
-               <!-- 获取调用序号 
-               <Exec func="PUB:nGetPubSeqNo" desc="获得$SelVal">
-                  <Arg name="SeqNam" value="LOT:CALLID"/>
-                  <Arg name="Len" value="9"/>
-                  <Arg name="CycCnd" value="D"/>
-               </Exec>
-               -->
-               <Set>SelVal=000000001</Set>
-               
-               <!-- 调用外部命令获取结果 -->
-               <Set>ResultFile=STRCAT(/app/ics/dat/lot/,TIMEc,$SelVal,.dat)</Set>
-               <System command="java -cp /app/ics/app/lot/bin TimeCalTool " error="IGNORE">
-                  <Arg name="funcTyp" value="c"/>
-                  <Arg name="callId" value="$SelVal"/>
-                  <Arg name="resultPath" value="/app/ics/dat/lot"/>
-                  <Arg name="date1Fmt" value="yyyyMMddHHmmss"/>
-                  <Arg name="date1" value="$SrcDate"/>
-                  <Arg name="date2Fmt" value="yyyyMMddHHmmss"/>
-                  <Arg name="DifTim" value="$DifTim"/>
-               </System> 
-               
-               <!-- 读取结果 -->
-               <Exec func="PUB:OpenFile">
-                  <Arg name="FileName" value="$ResultFile"/>
-                  <Arg name="Mode" value="r"/>
-               </Exec>
-               <Exec func="PUB:ReadFile">
-                  <Arg name="FieldName" value="CallResult"/>
-                  <Arg name="ReadLen" value="20"/>
-               </Exec>
-               <Exec func="PUB:CloseFile">
-               </Exec>
-               
-               <!-- 返回结果 -->
-               <Set>DesDate=DELBOTHSPACE($CallResult)</Set>
-
-           </Process>
-        </Function>*/
-    }
-    /**
-     * 获取购彩流水号
-     */
-    private void getTxnLogNo() {
-        
-       /* <Function name="GetTxnLogNo" desc="获取购彩流水号">
-        <Input>DealId|</Input>
-        <Output>SelVal|</Output>
-        <DynSentence name="CndSts" desc="条件">
-           <Sentence>
-               DealId='%s'
-           </Sentence>
-           <Fields>DealId|</Fields>
-        </DynSentence>
-        <Process>
-           <Exec func="PUB:GetSeqNoCircle" desc="获得$SelVal">
-               <Arg name="TblNam" value="LotSysCfg"/>
-               <Arg name="SeqCol" value="LOGSEQ"/>
-               <Arg name="Len" value="9"/>
-               <Arg name="CndSts" value="CndSts"/>
-               <Arg name="ColNam" value="SelVal"/>
-           </Exec>
-           <Set>SelVal=STRCAT($DealId,$SelVal)</Set>
-        </Process>
-    </Function>*/
-    }
-
 }
