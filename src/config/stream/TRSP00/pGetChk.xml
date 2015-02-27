@@ -4,5 +4,5 @@
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
 	name="body" >
 			<varString name="thdRspCde"  type="D|"></varString><!--  返回码-->
-			<varString name="chkErr"  type="D|"></varString><!--  对帐文件名-->
+			<varString name="fileName"  type="D|"></varString><!--  对帐文件名-->
 </segment>
