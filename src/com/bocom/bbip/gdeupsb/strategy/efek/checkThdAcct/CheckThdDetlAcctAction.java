@@ -81,12 +81,13 @@ public class CheckThdDetlAcctAction implements Executable {
 			context.setData(ParamKeys.TXN_CTL_TYP, Constants.TXN_CTL_TYP_CHKBANKFILE_THD);  
 			//对账日期
 			String chkDte=null;
-			if(null !=context.getData(GDParamKeys.CHECKDATE)){
+			if(StringUtils.isNotEmpty(context.getData(GDParamKeys.CHECKDATE).toString())){
 					chkDte=context.getData(GDParamKeys.CHECKDATE).toString();
 			}else{
-					chkDte=com.bocom.bbip.thd.org.apache.commons.lang.time.DateUtils.addDays(new Date(), -1).toString();
+					chkDte=DateUtils.format(com.bocom.bbip.thd.org.apache.commons.lang.time.DateUtils.addDays(new Date(), -1),DateUtils.STYLE_yyyyMMdd);
 			}
 			Date acDate=DateUtils.parse(chkDte);
+			
 			context.setData(ParamKeys.AC_DATE, acDate);  
 			try{
 					//生成对账文件
@@ -109,7 +110,7 @@ public class CheckThdDetlAcctAction implements Executable {
 //					费用类型（3位）_+银行代码(4位)+单位编码（8位）+日期（yyyymmdd）
 					String fileName = "DZ05"+busType+payType+"_"+bankNo+companyNo+chkDte+".txt";
 					eupsThdFtpConfig.setLocFleNme(fileName);
-					System.out.println("~~~~~~~~eupsThdFtpConfig~~~~~~~"+eupsThdFtpConfig);
+					logger.info("~~~~~~~~eupsThdFtpConfig~~~~~~~"+eupsThdFtpConfig);
 					logger.info("CheckBkFileMbusCardStrategy fileName is :"+ fileName);
 					
 					//生成对账文件到指定路径
@@ -139,16 +140,19 @@ public class CheckThdDetlAcctAction implements Executable {
 		Map<String, Object> map=new HashMap<String, Object>();
 		//查找对应数据
 		EupsStreamNo eupsStreamNos=new EupsStreamNo();
+		
 		eupsStreamNos.setEupsBusTyp(context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
 		eupsStreamNos.setComNo(context.getData(ParamKeys.COMPANY_NO).toString());
+		
 		String busTyp=(String)context.getData(GDParamKeys.BUS_TYPE);
 		String payType=context.getData(ParamKeys.PAY_TYPE).toString();
+		
 //		String bakFld2=busTyp+"&&"+payType;
 //		eupsStreamNos.setBakFld2(bakFld2);
-		String chkDte=context.getData(GDParamKeys.CHECKDATE).toString();
-		Date acDate=DateUtils.parse(chkDte);
-		eupsStreamNos.setTxnDte(acDate);
+		String chkDte=DateUtils.format((Date)context.getData(ParamKeys.AC_DATE),DateUtils.STYLE_yyyyMMdd);
+		eupsStreamNos.setTxnDte((Date)context.getData(ParamKeys.AC_DATE));
 		eupsStreamNos.setTxnSts("S");
+		
 //		eupsStreamNos.setIsBatFlg("S");
 		
 		List<EupsStreamNo> eupsStreamNoList=eupsStreamNoRepository.find(eupsStreamNos);
@@ -159,17 +163,22 @@ public class CheckThdDetlAcctAction implements Executable {
 				logger.info("~~~~~~~~~~~统计明细记录总数出错");
 				throw new CoreException("~~~~~~~~~~~统计明细记录总数出错");
 		}
+		
 		BigDecimal allmoney=new BigDecimal("0.00");
 		List<CheckDetailAcct> list=new ArrayList<CheckDetailAcct>();
+		
 		for (EupsStreamNo eupsStreamNo : eupsStreamNoList) {
+			
 			BigDecimal txnAmt=eupsStreamNo.getTxnAmt();
 			allmoney=allmoney.add(txnAmt);
 			eupsStreamNo.setTxnAmt(allmoney);
+			
 			CheckDetailAcct checkDetailAcct =new CheckDetailAcct();
-			//BK
-			checkDetailAcct.setBankNo(eupsStreamNo.getBk().substring(0,4));
+			//BK						
+			checkDetailAcct.setBankNo(eupsStreamNo.getBk().substring(0,4));			
 			checkDetailAcct.setComNo(eupsStreamNo.getComNo());
 			checkDetailAcct.setCusAc(eupsStreamNo.getCusAc());
+			
 			checkDetailAcct.setCusNme(eupsStreamNo.getCusNme());
 			checkDetailAcct.setBakFld1(eupsStreamNo.getBakFld1());
 			String electricityYearMonth=chkDte.substring(0, 6);
@@ -187,19 +196,23 @@ public class CheckThdDetlAcctAction implements Executable {
 			checkDetailAcct.setOnlySignCode(context.getData(ParamKeys.SEQUENCE).toString());
 			list.add(checkDetailAcct);
 		}
-		
+		logger.info("~~~~~~~~~~~~list~~~~"+list);
 		//header  部分
 		Map<String, Object> headerMap=new HashMap<String, Object>();
 		headerMap.put("SQN", context.getData(ParamKeys.SEQUENCE));
 		headerMap.put("enterBankNo",context.getData(ParamKeys.BANK_NO));
+		
         headerMap.put("comNo", context.getData(ParamKeys.COMPANY_NO));
         headerMap.put("busTyp", busTyp);
         headerMap.put("payType", payType);
+        
         headerMap.put("amount", eupsStreamNoList.size());
         headerMap.put("allMoney", allmoney);
-        String checkDate=DateUtils.format(acDate, DateUtils.STYLE_yyyyMMdd);
+        String checkDate=DateUtils.format((Date)context.getData(ParamKeys.AC_DATE), DateUtils.STYLE_yyyyMMdd);
+        
         headerMap.put("checkDate", checkDate);
         String checkTime=DateUtils.formatAsHHmmss((Date)context.getData(GDParamKeys.CHECKTIME));
+        
         headerMap.put("checkTime",checkTime);
         
         map.put(ParamKeys.EUPS_FILE_HEADER, headerMap);
