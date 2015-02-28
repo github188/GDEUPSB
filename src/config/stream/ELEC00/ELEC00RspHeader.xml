@@ -13,7 +13,7 @@
 		<!-- 协议版本号	XYBBH	Varchar2(5)  -->
 					<fixString name="treVersion" length="5" />
 		<!-- 业务标识号	YWBSH	Varchar2(6)  -->
-					<fixString name="tmlNo" length="6" />
+					<fixString name="busIdentify" length="6" />
 		<!-- 交易标识号	JYBSH	Varchar2(20)  -->
 					<fixString name="thdCusNo" length="20" />
 		<!-- 交易人标识	JYRBS	Varchar2(20)  -->
