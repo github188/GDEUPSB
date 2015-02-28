@@ -22,7 +22,6 @@
         	<loop name="CusInformation">
         			<segment name="List">
 					       <fixString name="particularNo"       length=" 7" /><!-- 明细序号 -->
-					        <fixString name="nullField"      length=" 6" /><!-- 缺失字段，内容未知 -->
 					         <fixString name="bakFld4"      length=" 8" /><!--抄表日期  -->
 					         <fixString name="bakFld5"     length="16" /><!--本次预存  -->
 					          <fixString name="bakFld6"     length="15" /><!-- 本月示数 -->
