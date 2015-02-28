@@ -31,6 +31,20 @@
       <xs:element name="response" type="tns:eleaBnkPayFeeCancleResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:element name="bnkcheckFileToEle" type="tns:bnkcheckFileToEleReq_CType"/>
+  <xs:element name="bnkcheckFileToEleResponse" type="tns:bnkcheckFileToEleRsp_CType"/>
+  <xs:complexType name="bnkcheckFileToEleReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:bnkcheckFileToEleRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bnkcheckFileToEleRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:bnkcheckFileToEleResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:element name="batchAccountFilePre" type="tns:batchAccountFilePreReq_CType"/>
   <xs:element name="batchAccountFilePreResponse" type="tns:batchAccountFilePreRsp_CType"/>
   <xs:complexType name="batchAccountFilePreReq_CType">
@@ -576,6 +590,36 @@
       <xs:maxLength value="4"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:complexType name="bnkcheckFileToEleRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="clrDat" type="tns:clrDat_SType"/>
+      <xs:element name="dptTyp" type="tns:dptTyp_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bnkcheckFileToEleResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="responseMessage" type="tns:responseMessage_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="clrDat_SType">
+    <xs:annotation>
+      <xs:documentation>对账日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="responseMessage_SType">
+    <xs:annotation>
+      <xs:documentation>返回信息</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="50"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:complexType name="batchAccountFilePreRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
@@ -588,7 +632,7 @@
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
       <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
       <xs:element name="txnMde" type="tns:txnMde_SType" minOccurs="0"/>
-      <xs:element ref="tns:flePreInf" minOccurs="0"/>
+      <xs:element ref="tns:flePreInf" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="filNam_SType">

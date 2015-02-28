@@ -18,6 +18,12 @@
   <wsdl:message name="eleaBnkPayFeeCancleResponseMessage">
     <wsdl:part name="eleaBnkPayFeeCancleResponse" element="gdeupsb:eleaBnkPayFeeCancleResponse"/>
   </wsdl:message>
+  <wsdl:message name="bnkcheckFileToEleRequestMessage">
+    <wsdl:part name="bnkcheckFileToEleRequest" element="gdeupsb:bnkcheckFileToEle"/>
+  </wsdl:message>
+  <wsdl:message name="bnkcheckFileToEleResponseMessage">
+    <wsdl:part name="bnkcheckFileToEleResponse" element="gdeupsb:bnkcheckFileToEleResponse"/>
+  </wsdl:message>
   <wsdl:message name="batchAccountFilePreRequestMessage">
     <wsdl:part name="batchAccountFilePreRequest" element="gdeupsb:batchAccountFilePre"/>
   </wsdl:message>
@@ -46,6 +52,11 @@
       <wsdl:documentation/>
       <wsdl:input message="tns:eleaBnkPayFeeCancleRequestMessage"/>
       <wsdl:output message="tns:eleaBnkPayFeeCancleResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="bnkcheckFileToEle">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:bnkcheckFileToEleRequestMessage"/>
+      <wsdl:output message="tns:bnkcheckFileToEleResponseMessage"/>
     </wsdl:operation>
     <wsdl:operation name="batchAccountFilePre">
       <wsdl:documentation/>
@@ -76,6 +87,15 @@
     </wsdl:operation>
     <wsdl:operation name="eleaBnkPayFeeCancle">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdEleService/eleaBnkPayFeeCancle"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="bnkcheckFileToEle">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdEleService/bnkcheckFileToEle"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
