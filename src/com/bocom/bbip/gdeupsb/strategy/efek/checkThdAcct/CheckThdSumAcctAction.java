@@ -32,7 +32,9 @@ import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
-
+/**
+ * @author lyw_i7iiiiii
+ */
 public class CheckThdSumAcctAction implements  CheckThdSumAcctService{
 	private final static Log logger=LogFactory.getLog(CheckThdSumAcctAction.class);
 	@Autowired
@@ -146,23 +148,25 @@ public class CheckThdSumAcctAction implements  CheckThdSumAcctService{
 	 */
 	public void callThd(Context context){  
 		
-		context.setData(GDParamKeys.TREATY_VERSION, "1.0.0");//协议版本
-		context.setData(GDParamKeys.TRADE_PERSON_IDENTIFY, "301_030600");//交易人标识
-		context.setData(GDParamKeys.BAG_TYPE, "0");//数据包类型
-		context.setData(GDParamKeys.TRADE_START, "301");//交易发起方
+		context.setData(GDParamKeys.TREATY_VERSION, GDConstants.TREATY_VERSION);//协议版本
+		context.setData(GDParamKeys.TRADE_PERSON_IDENTIFY, GDConstants.TRADE_PERSON_IDENTIFY);//交易人标识
+		context.setData(GDParamKeys.BAG_TYPE, GDConstants.BAG_TYPE);//数据包类型
+		context.setData(GDParamKeys.TRADE_START,GDConstants.TRADE_START);//交易发起方
 		
 				context.setData(GDParamKeys.TRADE_SEND_DATE,DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMdd));//交易发送日期
 				context.setData(GDParamKeys.TRADE_SEND_TIME, DateUtils.formatAsHHmmss(new Date()));//交易发送时间
-				context.setData(GDParamKeys.TRADE_PRIORITY, "2");//交易优先
-				context.setData(GDParamKeys.REDUCE_SIGN, "0");//压缩标志
-				context.setData(GDParamKeys.TRADE_RETURN_CODE, "00");//交易返回代码
+				context.setData(GDParamKeys.TRADE_PRIORITY, GDConstants.TRADE_PRIORITY);//交易优先
+				context.setData(GDParamKeys.REDUCE_SIGN, GDConstants.REDUCE_SIGN);//压缩标志
+				context.setData(GDParamKeys.TRADE_RETURN_CODE, GDConstants.TRADE_RETURN_CODE);//交易返回代码
+
 		
-				context.setData(GDParamKeys.NET_NAME, "@BCFG.BrNam");//网点名称
-				context.setData(GDParamKeys.SECRETKEY_INDEX, "0");//密钥索引
-				context.setData(GDParamKeys.SECRETKEY_INIT, "");//密钥初始向量
-				context.setData(GDParamKeys.TRADE_RECEIVE, "030600");//交易接收方
-				context.setData(GDParamKeys.TRADE_SOURCE_ADD, "");//交易源地址
-				context.setData(GDParamKeys.TRADE_AIM_ADD, "");//交易目标地址
+				context.setData(GDParamKeys.NET_NAME, GDConstants.NET_NAME);//网点名称
+				context.setData(GDParamKeys.SECRETKEY_INDEX, GDConstants.SECRETKEY_INDEX);//密钥索引
+				context.setData(GDParamKeys.SECRETKEY_INIT, GDConstants.SECRETKEY_INIT);//密钥初始向量
+				context.setData(GDParamKeys.TRADE_RECEIVE, GDConstants.TRADE_RECEIVE);//交易接收方
+				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
+				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
+
 				
 				try{
 					Map<String, Object> rspMap = callThdTradeManager.trade(context);
