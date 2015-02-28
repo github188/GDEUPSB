@@ -230,7 +230,35 @@ public final class GDConstants {
 	/** 09 银行代收失败日志文件 */
 	/** 10 银行批量托收已扣文件 */
 	/** 11 银行批量跨行托收已扣文件 */
-
+	//~~~~~~~~~~~~~~~~~~~南方电网 报文常量~~~~~~~~~~~~~~~~~~~~~~·
+	
+	/** 协议版本 */
+	public final static String TREATY_VERSION = "1.0.0";
+	/** 交易人标识 */
+	public final static String TRADE_PERSON_IDENTIFY = "301_030600";
+	/** 数据包类型 */
+	public final static String BAG_TYPE = "0";
+	/** 交易发起方 */
+	public final static String TRADE_START = "301";
+	/** 交易优先 */
+	public final static String TRADE_PRIORITY = "2";
+	/** 压缩标志 */
+	public final static String REDUCE_SIGN = "0";
+	/** 交易返回代码 */
+	public final static String TRADE_RETURN_CODE = "00";
+	/** 网点名称 */
+	public final static String NET_NAME = "@BCFG.BrNam";
+	/** 密钥索引 */
+	public final static String SECRETKEY_INDEX = "0";
+	/** 密钥初始向量 */
+	public final static String SECRETKEY_INIT = "";
+	/** 交易接收方 */
+	public final static String TRADE_RECEIVE = "030600";
+	/** 交易源地址 */
+	public final static String TRADE_SOURCE_ADD = "";
+	/** 交易目标地址 */
+	public final static String TRADE_AIM_ADD = "";
+	
 	// ~~~~~~~~~~~~~~~~~~证件类型~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 	/** 01 居民身份证 */
 	/** 02 临时身份证 */
