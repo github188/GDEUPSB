@@ -71,27 +71,27 @@
 	</server-side-ws-def>
 
 	<!-- 线上联机交易 -->
-	<server-side-ws-def wsdl="GDEUPSGdEleAddService.wsdl"
+<!-- 	<server-side-ws-def wsdl="GDEUPSGdEleAddService.wsdl"
 		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdEleAddService/Schema">
 		<qname-mappings>
-			<!-- <qname-mapping operation="batchAccountFilePre" process-id="eups.fileBatchPayCreateDataProcess" 
-				/> -->
+			<qname-mapping operation="batchAccountFilePre" process-id="eups.fileBatchPayCreateDataProcess" 
+				/>
 		</qname-mappings>
-	</server-side-ws-def>
+	</server-side-ws-def> -->
 
 	<!-- 签约一站通 -->
-	<server-side-ws-def wsdl="GDEUPSNrmSignStationService.wsdl"
-		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignStationService/Schema">
+	<server-side-ws-def wsdl="GDEUPSNrmSignService.wsdl"
+		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignService/Schema">
 		<qname-mappings>
 		</qname-mappings>
 	</server-side-ws-def>
 
 	<!-- 签约一站通测试 -->
-	<server-side-ws-def wsdl="GDEUPSNrmSignStationTestService.wsdl"
+	<!-- <server-side-ws-def wsdl="GDEUPSNrmSignStationTestService.wsdl"
 		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignStationTestService/Schema">
 		<qname-mappings>
 		</qname-mappings>
-	</server-side-ws-def>
+	</server-side-ws-def> -->
 
 
 	<!-- 福彩相关-->
