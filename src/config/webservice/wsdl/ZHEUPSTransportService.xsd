@@ -171,18 +171,18 @@
       <xs:element name="response" type="tns:transportWyFeeQueryResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="hsscCheckFile" type="tns:hsscCheckFileReq_CType"/>
-  <xs:element name="hsscCheckFileResponse" type="tns:hsscCheckFileRsp_CType"/>
-  <xs:complexType name="hsscCheckFileReq_CType">
+  <xs:element name="checkTrspFile" type="tns:checkTrspFileReq_CType"/>
+  <xs:element name="checkTrspFileResponse" type="tns:checkTrspFileRsp_CType"/>
+  <xs:complexType name="checkTrspFileReq_CType">
     <xs:sequence>
       <xs:element ref="gsp:requestInformation"/>
-      <xs:element name="request" type="tns:hsscCheckFileRequest_CType"/>
+      <xs:element name="request" type="tns:checkTrspFileRequest_CType"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="hsscCheckFileRsp_CType">
+  <xs:complexType name="checkTrspFileRsp_CType">
     <xs:sequence>
       <xs:element ref="gsp:replyInformation"/>
-      <xs:element name="response" type="tns:hsscCheckFileResponse_CType"/>
+      <xs:element name="response" type="tns:checkTrspFileResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
   <xs:element name="transportFeeCharge" type="tns:transportFeeChargeReq_CType"/>
@@ -211,6 +211,20 @@
     <xs:sequence>
       <xs:element ref="gsp:replyInformation"/>
       <xs:element name="response" type="tns:trspBillCancelResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ptPrintQry" type="tns:ptPrintQryReq_CType"/>
+  <xs:element name="ptPrintQryResponse" type="tns:ptPrintQryRsp_CType"/>
+  <xs:complexType name="ptPrintQryReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:ptPrintQryRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ptPrintQryRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:ptPrintQryResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
   <xs:element name="trspNpDelet" type="tns:trspNpDeletReq_CType"/>
@@ -313,6 +327,8 @@
     <xs:sequence>
       <xs:element name="totalElements" type="tns:totalElements_SType"/>
       <xs:element name="totalPages" type="tns:totalPages_SType"/>
+      <xs:element name="pageNum" type="tns:pageNum_SType" minOccurs="0"/>
+      <xs:element name="pageSize" type="tns:pageSize_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="trspFeeMonQryRequest_CType">
@@ -793,7 +809,7 @@
       <xs:documentation>汽车编号</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:maxLength value="8"/>
+      <xs:maxLength value="20"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="plateType_SType">
@@ -801,7 +817,7 @@
       <xs:documentation>汽车类型</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:maxLength value="2"/>
+      <xs:maxLength value="3"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="monthCount_SType">
@@ -914,25 +930,43 @@
       <xs:maxLength value="2"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:complexType name="hsscCheckFileRequest_CType">
+  <xs:complexType name="checkTrspFileRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader" minOccurs="0"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
-      <xs:element name="ftpNo" type="tns:ftpNo_SType"/>
+      <xs:element name="startDate" type="tns:startDate_SType"/>
+      <xs:element name="endDate" type="tns:endDate_SType"/>
+      <xs:element name="journalModel" type="tns:journalModel_SType"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="hsscCheckFileResponse_CType">
+  <xs:complexType name="checkTrspFileResponse_CType">
     <xs:sequence>
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
       <xs:element name="returnMessage" type="tns:returnMessage_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="ftpNo_SType">
+  <xs:simpleType name="startDate_SType">
     <xs:annotation>
-      <xs:documentation>ftp号</xs:documentation>
+      <xs:documentation>起始日期</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:maxLength value="20"/>
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="endDate_SType">
+    <xs:annotation>
+      <xs:documentation>终止日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="journalModel_SType">
+    <xs:annotation>
+      <xs:documentation>统计方式</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="transportFeeChargeRequest_CType">
@@ -977,6 +1011,24 @@
     <xs:sequence>
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
       <xs:element name="txnAmt" type="tns:txnAmt_SType" minOccurs="0"/>
+      <xs:element name="sqn" type="tns:sqn_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ptPrintQryRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
+      <xs:element name="carNo" type="tns:carNo_SType"/>
+      <xs:element name="carTyp" type="tns:carTyp_SType" minOccurs="0"/>
+      <xs:element name="actNo" type="tns:actNo_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ptPrintQryResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="carNo" type="tns:carNo_SType" minOccurs="0"/>
+      <xs:element name="carTyp" type="tns:carTyp_SType" minOccurs="0"/>
+      <xs:element name="payMon" type="tns:payMon_SType" minOccurs="0"/>
+      <xs:element name="actDat" type="tns:actDat_SType" minOccurs="0"/>
       <xs:element name="sqn" type="tns:sqn_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
