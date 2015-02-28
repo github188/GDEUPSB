@@ -92,5 +92,44 @@
 	</process>
 	
 	
-
+	<!-- 联机银行方单边记账（银行记帐系统自带冲正，无需发起冲正） -->
+	<process id="eups.payUnilateralToBankELEC00" template="eups.payUnilateralNoRvsTemplateExt"
+		interceptors="eups.thdELEC00Interceptor">
+		<actions>
+			<!-- 交易前服务处理 -->
+			<!-- <action id="preCheckAction" ref="eups.prepareCheckDealStrategyAction" 
+				/> -->
+			<action id="preCheckAction" ref="eups.payUnilateralToBankServiceAction"
+				operations="prepareCheckDeal" />
+			<!-- 交易前检查 -->
+			<action id="preAction" ref="eups.checkComTxnCtlAction"
+				operations="checkThdTxnCtlNormal" />
+			<action id="preAction" ref="eups.checkCusAgrAction" />
+			<!-- 记账前处理 -->
+			<!-- <action id="preAction" ref="eups.prePayToBankStrategyAction"/> -->
+			<action id="preAction" ref="eups.payUnilateralToBankServiceAction"
+				operations="prePayToBank" />
+			<action id="preAction" ref="eups.checkThdReqJnlAction" />
+			<action id="preAction" ref="eups.queryCusAcInfAction"
+				operations="cusAcOldToNew" />
+			<action id="preAction" ref="eups.queryCusAcInfAction"
+				operations="queryCusAcTyp" />
+			<action id="preAction" ref="eups.preparePaymentInfoAction" />
+			<!-- 检查渠道限额，如果配置了渠道限额则检查 -->
+			<action id="preAction" ref="eups.checkChlAmtLimAction" />
+			<!-- 联机记账预处理 -->
+			<action id="initAction" ref="eups.initPaymentInfoAction" />
+			<!-- 联机531代收付交易主机记账 （自调冲正） -->
+			<action id="businessAction" ref="eups.bbipPaymentExt" />
+			<action id="businessAction" ref="eups.saveCBPaymentResultAction" />
+			<!-- 交易结果 -->
+			<!-- 记账后返回处理 -->
+			<!-- <action id="finalizeAction" ref="eups.aftPayToBankStrategyAction"/> -->
+			<action id="finalizeAction" ref="eups.payUnilateralToBankServiceAction"
+				operations="aftPayToBank" />
+			<action id="finalizeAction" ref="eups.setTransJournalStateAction" />
+			<action id="finalizeAction" ref="eups.savePaymentResultAction" />
+		</actions>
+	</process>
+	
 </x:beans>
