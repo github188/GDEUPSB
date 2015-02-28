@@ -51,10 +51,25 @@
         </actions>
     </process>
     
+     <!--广东烟草公司查询客户余额-->
+    <process id="gdeupsb.qryRemainingAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <action id="act" ref="gdeupsb.QryRemainingAction"/>
+        </actions>
+    </process>
+    
     <!--广东烟草公司信息维护-->
-    <process id="maintainTbcInfo" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+    <process id="gdeupsb.maintainTbcInfo" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
         <actions>
             <action id="act" ref="gdeupsb.TbcMaintainTbcInfo"/>
         </actions>
     </process>
+    
+    <!--银行对烟草公司余额查询-->
+    <process id="gdeupsb.qryClearAccountAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <action id="act" ref="gdeupsb.TbcQryClearAccountAction"/>
+        </actions>
+    </process>
+
 </x:beans>

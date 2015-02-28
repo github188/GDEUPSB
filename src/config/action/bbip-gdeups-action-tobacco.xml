@@ -26,7 +26,15 @@
     <action class="com.bocom.bbip.gdeupsb.action.tbc.DestroyAccountAction"
         id="gdeupsb.DestroyAccountAction" />
         
+    <!--广东烟草公司查询客户余额-->
+    <action class="com.bocom.bbip.gdeupsb.action.tbc.QryRemainingAction"
+        id="gdeupsb.QryRemainingAction" />
+        
     <!--银行对烟草公司信息维护-->
     <action class="com.bocom.bbip.gdeupsb.action.tbc.MaintainTbcInfoAction"
         id="gdeupsb.TbcMaintainTbcInfo" />
+        
+    <!--银行对烟草公司清算金额查询-->
+    <action class="com.bocom.bbip.gdeupsb.action.tbc.QryClearAccountAction"
+        id="gdeupsb.TbcQryClearAccountAction" />
 </x:beans>
