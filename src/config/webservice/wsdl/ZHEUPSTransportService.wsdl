@@ -78,11 +78,11 @@
   <wsdl:message name="transportWyFeeQueryResponseMessage">
     <wsdl:part name="transportWyFeeQueryResponse" element="gdeupsb:transportWyFeeQueryResponse"/>
   </wsdl:message>
-  <wsdl:message name="hsscCheckFileRequestMessage">
-    <wsdl:part name="hsscCheckFileRequest" element="gdeupsb:hsscCheckFile"/>
+  <wsdl:message name="checkTrspFileRequestMessage">
+    <wsdl:part name="checkTrspFileRequest" element="gdeupsb:checkTrspFile"/>
   </wsdl:message>
-  <wsdl:message name="hsscCheckFileResponseMessage">
-    <wsdl:part name="hsscCheckFileResponse" element="gdeupsb:hsscCheckFileResponse"/>
+  <wsdl:message name="checkTrspFileResponseMessage">
+    <wsdl:part name="checkTrspFileResponse" element="gdeupsb:checkTrspFileResponse"/>
   </wsdl:message>
   <wsdl:message name="transportFeeChargeRequestMessage">
     <wsdl:part name="transportFeeChargeRequest" element="gdeupsb:transportFeeCharge"/>
@@ -95,6 +95,12 @@
   </wsdl:message>
   <wsdl:message name="trspBillCancelResponseMessage">
     <wsdl:part name="trspBillCancelResponse" element="gdeupsb:trspBillCancelResponse"/>
+  </wsdl:message>
+  <wsdl:message name="ptPrintQryRequestMessage">
+    <wsdl:part name="ptPrintQryRequest" element="gdeupsb:ptPrintQry"/>
+  </wsdl:message>
+  <wsdl:message name="ptPrintQryResponseMessage">
+    <wsdl:part name="ptPrintQryResponse" element="gdeupsb:ptPrintQryResponse"/>
   </wsdl:message>
   <wsdl:message name="trspNpDeletRequestMessage">
     <wsdl:part name="trspNpDeletRequest" element="gdeupsb:trspNpDelet"/>
@@ -169,10 +175,10 @@
       <wsdl:input message="tns:transportWyFeeQueryRequestMessage"/>
       <wsdl:output message="tns:transportWyFeeQueryResponseMessage"/>
     </wsdl:operation>
-    <wsdl:operation name="hsscCheckFile">
+    <wsdl:operation name="checkTrspFile">
       <wsdl:documentation/>
-      <wsdl:input message="tns:hsscCheckFileRequestMessage"/>
-      <wsdl:output message="tns:hsscCheckFileResponseMessage"/>
+      <wsdl:input message="tns:checkTrspFileRequestMessage"/>
+      <wsdl:output message="tns:checkTrspFileResponseMessage"/>
     </wsdl:operation>
     <wsdl:operation name="transportFeeCharge">
       <wsdl:documentation/>
@@ -183,6 +189,11 @@
       <wsdl:documentation/>
       <wsdl:input message="tns:trspBillCancelRequestMessage"/>
       <wsdl:output message="tns:trspBillCancelResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="ptPrintQry">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:ptPrintQryRequestMessage"/>
+      <wsdl:output message="tns:ptPrintQryResponseMessage"/>
     </wsdl:operation>
     <wsdl:operation name="trspNpDelet">
       <wsdl:documentation/>
@@ -305,8 +316,8 @@
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="hsscCheckFile">
-      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/hsscCheckFile"/>
+    <wsdl:operation name="checkTrspFile">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/checkTrspFile"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -325,6 +336,15 @@
     </wsdl:operation>
     <wsdl:operation name="trspBillCancel">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/trspBillCancel"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ptPrintQry">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/ptPrintQry"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
