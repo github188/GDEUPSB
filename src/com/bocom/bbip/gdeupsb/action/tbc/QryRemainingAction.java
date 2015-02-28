@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
@@ -68,123 +69,47 @@ public class QryRemainingAction extends BaseAction {
             context.setData("tCusNm", accessObject.getData("cusNme"));
             context.setData("actNo", accessObject.getData("cusAc"));
             context.setData("dbPasWrd", accessObject.getData("pwd"));
+            //构成网点号
+            int brNo = context.getData("brNo");
+            int nodNo = 0;
+            switch (brNo) {
+                case 441999:
+                    nodNo=441800;
+                    break;
+                case 444999:
+                    nodNo=444800;
+                    break;
+                case 446999:
+                    nodNo=446800;
+                    break;
+                case 445999:
+                    nodNo=445800;
+                    break;
+                case 483999:
+                    nodNo=483800;
+                    break;
+                case 484999:
+                    nodNo=484800;
+                    break;
+                case 485999:
+                    nodNo=485800;
+                    break;
+                case 476999:
+                    nodNo=476800;
+                    break;
+                case 491999:
+                    nodNo=491800;
+                    break;
+            }
+            context.setData("nodNo",nodNo);
+            // 取电子柜员号
+            String bankId = context.getData("brNo").toString();
+            String tlr = get(BBIPPublicService.class).getETeller(bankId);
+            context.setData(ParamKeys.TELLER,tlr);
+            context.setData("tTxnCd","483803");
+            //向主机查询账户信息  已经查询 且存放在accessObject
             
-            /*
-             *     <!--构成网点号-->
-     <Switch  expression="$BrNo">
-       <Case value="441999">
-         <Set>NodNo=441800</Set>
-         <Break/>
-       </Case>
-       <Case value="444999">
-         <Set>NodNo=444800</Set>
-         <Break/>
-       </Case>
-       <Case value="446999">
-         <Set>NodNo=446800</Set>
-         <Break/>
-       </Case>
-       <Case value="445999">
-         <Set>NodNo=445800</Set>
-         <Break/>
-       </Case>
-       <Case value="483999">
-         <Set>NodNo=483800</Set>
-         <Break/>
-       </Case>
-       <Case value="484999">
-         <Set>NodNo=484800</Set>
-         <Break/>
-       </Case>
-       <Case value="485999">
-         <Set>NodNo=485800</Set>
-         <Break/>
-       </Case>
-       <Case value="491999">
-         <Set>NodNo=491800</Set>
-         <Break/>
-       </Case>
-       <Case value="476999">
-         <Set>NodNo=476800</Set>
-         <Break/>
-       </Case>
-     </Switch>
-      <!--取电子柜员号-->
-      <Set>TxnCnl=TBC</Set>       <!--取电子柜员号用-->
-      <Set>TxnObj=OFRTTBCA</Set>
-      <Exec func="PUB:GetVirtualTeller">
-        <Arg name="TxnCnl" value="TBC"/>
-      </Exec>
-      <Set>TlrId=$TlrId</Set>
-      <Set>TTxnCd=483803</Set>
-           
-      <!--校验各分行账号-->
-      <!--441999广东省分行-->
-      <!--444999珠海分行-->
-      <!--446999佛山分行-->
-      <!--445999汕头分行-->
-      <!--483999东莞分行-->
-      <!--484999中山分行-->
-      <!--485999揭阳支行-->
-      <!--491999惠州分行-->
-      <!--761999江门分行-->
-      <!--只有广州、珠海、佛山和中山有Acjud_行号函数，其他分行要加-->
-      <Set>AcJudFunc=STRCAT(AcJud_,$BrNo)</Set>
-      <Call function="$AcJudFunc">
-        <Input name="ActNo|NewFlg|"/>
-        <Output name="OActNo|ActCls|"/>
-      </Call>
-      <!--向主机查询账户信息-->
-      <Switch expression="$ActCls">
-        <Case value="2" /> <!-- 对私 -->
-        <Case value="3" />
-        <Case value="5" >
-          <If condition="INTCMP($ActCls,3,3)">
-             <Set>ActFlg=4</Set>  <!--对私卡号-->
-             <Set>ActTyp=4</Set>
-          </If>
-          <Else>
-             <Set>ActFlg=2</Set>  <!--对私帐号-->
-             <Set>ActTyp=2</Set>
-          </Else>
-          <Set>CcyCod=CNY</Set>
 
-          <!--上主机查询客户资料-->
-          <Exec func="PUB:CallHostOther" error="IGNORE">
-            <Arg name="HTxnCd" value="476520"/>
-            <Arg name="ObjSvr" value="SHSTPUB1"/>
-          </Exec>
-          <If condition="$MsgTyp!=N">
-            <Set>RspCod=460399</Set>
-            <Set>RspMsg=帐户不存在</Set>
-            <Set>Bal=0</Set>
-            <Return/>
-          </If>
-          <Break/>
-        </Case>
-        <Case value="0" /> <!-- 对公 -->
-        <Case value="4" >
-          <Set>ActTyp=1</Set>
-          <!--上主机查询客户资料-->
-          <Exec func="PUB:CallHostOther" error="IGNORE">
-            <Arg name="HTxnCd" value="109000"/>
-            <Arg name="ObjSvr" value="SHSTPUB1"/>
-          </Exec>
-          <If condition="$MsgTyp!=N">
-            <Set>RspCod=9999</Set>
-            <Set>RspMsg=帐户不存在</Set>
-            <Set>Bal=0</Set>
-            <Return/>
-          </If>
-          <Break/>
-        </Case>
-        <Default>
-            <Set>RspCod=9999</Set>
-            <Set>RspMsg=帐户类型不存在</Set>
-            <Set>Bal=0</Set>
-            <Return/>
-        </Default>
-      </Switch>*/
             context.setData(ParamKeys.RSP_CDE,"0000");
             context.setData(ParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
             context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
