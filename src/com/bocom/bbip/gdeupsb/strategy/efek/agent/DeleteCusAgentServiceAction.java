@@ -23,7 +23,7 @@ import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 /**
- * @author lyw_i7iiiiii
+ * @author liyawei
  */
 public class DeleteCusAgentServiceAction implements CommDelCusAgentService{
 	private final static Log logger=LogFactory.getLog(DeleteCusAgentServiceAction.class);

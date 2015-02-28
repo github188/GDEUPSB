@@ -28,7 +28,7 @@ import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 /**
- * @author lyw_i7iiiiii
+ * @author liyawei
  */
 public class InsertCusAgentServiceAction implements CommInsertCusAgentService{
 	private final static Log logger=LogFactory.getLog(InsertCusAgentServiceAction.class);

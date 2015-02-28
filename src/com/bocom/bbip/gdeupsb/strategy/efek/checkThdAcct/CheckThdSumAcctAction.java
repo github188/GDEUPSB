@@ -33,7 +33,7 @@ import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 /**
- * @author lyw_i7iiiiii
+ * @author liyawei
  */
 public class CheckThdSumAcctAction implements  CheckThdSumAcctService{
 	private final static Log logger=LogFactory.getLog(CheckThdSumAcctAction.class);

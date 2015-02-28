@@ -26,7 +26,7 @@ import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 /**
  *银行到供电变更代扣协议业务 
- *@author lyw_i7iiiiii
+ *@author liyawei
  */
 public class UpdateCusAgentServiceAction implements CommUpdateCusAgentService{
 	@Autowired

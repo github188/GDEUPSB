@@ -18,7 +18,7 @@ import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
 import com.bocom.jump.bp.core.Executable;
 /**
- * @author lyw_i7iiiiii
+ * @author liyawei
  */
 public class PreCancelFeeAction implements Executable{
 	private final static Log logger=LogFactory.getLog(PreCancelFeeAction.class);
