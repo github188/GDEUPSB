@@ -23,7 +23,7 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
 
 /**
  *银行查询客户交费记录 
- * @author lyw_i7iiiiii
+ * @author liyawei
  */
 public class QryCusPayRecordAction extends BaseAction{
 	@Autowired

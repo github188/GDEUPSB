@@ -19,7 +19,7 @@ import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
 /**
- * @author lyw_i7iiiiii
+ * @author liyawei
  */
 public class AdvanceTradeAction extends BaseAction {
 	@Autowired
