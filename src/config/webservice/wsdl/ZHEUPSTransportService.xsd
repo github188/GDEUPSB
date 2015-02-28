@@ -1028,10 +1028,10 @@
     <xs:sequence>
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
       <xs:element ref="tns:pageableResponse" minOccurs="0"/>
-      <xs:element name="resultList" type="tns:resultList_CType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="ptResultList" type="tns:ptResultList_CType" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="resultList_CType">
+  <xs:complexType name="ptResultList_CType">
     <xs:sequence>
       <xs:element name="carNo" type="tns:carNo_SType" minOccurs="0"/>
       <xs:element name="carTyp" type="tns:carTyp_SType" minOccurs="0"/>
