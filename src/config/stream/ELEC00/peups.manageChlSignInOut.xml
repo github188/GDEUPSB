@@ -2,6 +2,16 @@
 <segment xmlns="http://www.bocom.com/jump/transformer/packet"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
-	name="460491Resp">
-		<!-- 返回数据包为空 -->
-</segment>
+	name="460491Req">
+		
+		<fixString name="sqn"  length="24" /><!--  交易流水号	JYLSH	Varchar2(24)-->
+		<fixString name="txnDte"  length="8" /><!--  交易日期	JYRQ	Varchar2(8)-->
+		<fixString name="txnTme"  length="6" /><!--  交易时间	JYSJ	Varchar2 (6)-->
+		<fixString name="comNo"  length="8" /><!--  单位编码	DWBM	Varchar2(8)-->
+		<fixString name="eupsBusTyp"  length="6" /> <!--  业务标示符 YWBSH  Varchar2(6)-->
+		
+		<fixString name="tlr"  length="20" /> <!--  操作人员	CZRY	Varchar2(20)	20-->
+		<fixString name="txnTyp"  length="1" /> <!--  状态	ZT	Varchar2(1)	1-->
+		<fixString name="bakFld1"  length="128" />  <!-- 备注	BZ	Varchar2(128)	128-->
+		
+	</segment>
