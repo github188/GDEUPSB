@@ -50,11 +50,7 @@
                 <qname-mappings />
         </server-side-ws-def>
         
-       <!-- 珠海路桥 --> 
-       <server-side-ws-def wsdl="GDEUPSTrspService.wsdl"
-        		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSTrspService/Schema">
-                <qname-mappings />
-        </server-side-ws-def>
+       
 		<!-- 广州文本 -->
 	     <server-side-ws-def wsdl="GDEUPSGzagService.wsdl"
         		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGzagService/Schema">
