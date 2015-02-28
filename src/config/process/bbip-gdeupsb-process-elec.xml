@@ -63,7 +63,7 @@
 		<process id="gdeupsb.qryCusMsg"  template="eups.simpleTran"  interceptors="eups.transMessageInterceptor">
 			  <actions>
 			   			  <action id="act"  ref="gdeupsb.qryCusMsgAction"/>
-			   			  <action id="act" ref="eups.registerUnAccServiceAction"/>
+			   	<!-- 		  <action id="act" ref="eups.registerUnAccServiceAction"/>   -->
 			   </actions>
 		</process>		
 	<!-- 南方电网  供电批量代扣取消交易-->		
