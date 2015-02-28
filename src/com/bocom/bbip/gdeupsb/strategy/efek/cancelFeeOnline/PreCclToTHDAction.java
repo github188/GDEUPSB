@@ -33,7 +33,7 @@ public class PreCclToTHDAction implements Executable {
 			context.setData(ParamKeys.TXN_TME, DateUtils.parse(DateUtils.formatAsTranstime(new Date())));
 			context.setData(ParamKeys.THD_CUS_NO, context.getData(GDParamKeys.PAY_NO));
 			
-			double i=Integer.parseInt(context.getData(ParamKeys.TXN_AMT).toString());
+			double i=Double.parseDouble(context.getData(ParamKeys.TXN_AMT).toString());
 			double d=i/100;
 			DecimalFormat df=new DecimalFormat("#.00");
 			BigDecimal txnAmt=new BigDecimal(df.format(d));
