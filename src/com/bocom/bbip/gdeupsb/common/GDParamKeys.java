@@ -356,7 +356,7 @@ public class GDParamKeys {
 	/** 协议版本号 */
 	public final static String TREATY_VERSION = "treVersion";
 	/** 业务标识号 */
-	public final static String BUS_IDENTIFY = "tmlNo";
+	public final static String BUS_IDENTIFY = "busIdentify";
 	/** 交易标识号 */
 	public final static String TRADE_IDENTIFY = "traIdentify";
 	/** 交易人标识 */
