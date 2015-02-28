@@ -123,7 +123,6 @@
   <xs:complexType name="batchCancelResponse_CType">
     <xs:sequence>
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
-      <xs:element name="ApFmt" type="tns:ApFmt_SType" minOccurs="0"/>
       <xs:element name="batNo" type="tns:batNo_SType" minOccurs="0"/>
       <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
       <xs:element name="subDte" type="tns:subDte_SType" minOccurs="0"/>
@@ -147,14 +146,6 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="12"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="ApFmt_SType">
-    <xs:annotation>
-      <xs:documentation>格式码</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="5"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="comNo_SType">
@@ -216,7 +207,6 @@
   <xs:complexType name="fileSubmitResponse_CType">
     <xs:sequence>
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
-      <xs:element name="ApFmt" type="tns:ApFmt_SType" minOccurs="0"/>
       <xs:element name="batNo" type="tns:batNo_SType" minOccurs="0"/>
       <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
       <xs:element name="subDte" type="tns:subDte_SType" minOccurs="0"/>
@@ -239,7 +229,6 @@
   <xs:complexType name="fileInResponse_CType">
     <xs:sequence>
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
-      <xs:element name="ApFmt" type="tns:ApFmt_SType" minOccurs="0"/>
       <xs:element name="batNo" type="tns:batNo_SType" minOccurs="0"/>
       <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
       <xs:element name="subDte" type="tns:subDte_SType" minOccurs="0"/>
@@ -259,7 +248,6 @@
   <xs:complexType name="qryComInformationResponse_CType">
     <xs:sequence>
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
-      <xs:element name="ApFmt" type="tns:ApFmt_SType" minOccurs="0"/>
       <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
       <xs:element name="comNme" type="tns:comNme_SType" minOccurs="0"/>
     </xs:sequence>
@@ -274,7 +262,6 @@
   <xs:complexType name="fileOutResponse_CType">
     <xs:sequence>
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
-      <xs:element name="ApFmt" type="tns:ApFmt_SType" minOccurs="0"/>
       <xs:element name="batNo" type="tns:batNo_SType" minOccurs="0"/>
       <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
       <xs:element name="subDte" type="tns:subDte_SType" minOccurs="0"/>
@@ -313,7 +300,6 @@
   <xs:complexType name="qryBatInformationResponse_CType">
     <xs:sequence>
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
-      <xs:element name="ApFmt" type="tns:ApFmt_SType" minOccurs="0"/>
       <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
       <xs:element name="subDte" type="tns:subDte_SType" minOccurs="0"/>
       <xs:element name="comNme" type="tns:comNme_SType" minOccurs="0"/>
@@ -344,7 +330,6 @@
   <xs:complexType name="queryBatStsResponse_CType">
     <xs:sequence>
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
-      <xs:element name="ApFmt" type="tns:ApFmt_SType" minOccurs="0"/>
       <xs:element name="batNo" type="tns:batNo_SType" minOccurs="0"/>
       <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
       <xs:element name="subDte" type="tns:subDte_SType" minOccurs="0"/>
