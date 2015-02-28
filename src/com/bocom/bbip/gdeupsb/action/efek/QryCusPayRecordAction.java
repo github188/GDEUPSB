@@ -22,8 +22,8 @@ import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
 
 /**
- * @author lyw_i7iiiiii
  *银行查询客户交费记录 
+ * @author lyw_i7iiiiii
  */
 public class QryCusPayRecordAction extends BaseAction{
 	@Autowired
