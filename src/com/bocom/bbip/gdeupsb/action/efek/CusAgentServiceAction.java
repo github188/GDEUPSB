@@ -64,7 +64,7 @@ public class CusAgentServiceAction extends BaseAction{
 				//签约时间
 				context.setData("agrTme",DateUtils.parse(DateUtils.formatAsTranstime(new Date())));
 				//0-个人;1-单位
-				context.setData("cusTyp", ParamKeys.ACC_TYPE);
+				context.setData("cusTyp", context.getData(ParamKeys.ACC_TYPE));
 				//证件号码
 				context.setData(ParamKeys.ID_NO, context.getData(ParamKeys.ECIF_REF_NUM));
 				//第三方客户标识
