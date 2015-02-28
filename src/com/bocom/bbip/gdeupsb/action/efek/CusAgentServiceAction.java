@@ -47,14 +47,14 @@ public class CusAgentServiceAction extends BaseAction{
 				String payNo=context.getData(GDParamKeys.PAY_NO).toString();
 				context.setData(ParamKeys.AGD_AGR_NO,payNo);
 				//证件类型	
-				String IdTpCd=context.getData("IdTpCd").toString();
+				String IdTpCd=context.getData(ParamKeys.ECIF_ID_TYPE_CD).toString();
 				context.setData(ParamKeys.ID_TYPE,IdTpCd);
 				//代理服务客户标识
-				context.setData("agtSrvCusId", context.getData("cusAc"));
+				context.setData("agtSrvCusId", context.getData(ParamKeys.CUS_AC));
 				//代收付种类
 				context.setData(ParamKeys.BUS_TYP, "2");
-				//业务种类
-				context.setData(ParamKeys.BUSS_KIND, "4399");
+				//TODO  业务种类
+				context.setData(ParamKeys.BUSS_KIND, "A087");
 				//代理服务客户标识
 				context.setData(ParamKeys.AGT_SRV_CUS_PNM, context.getData(ParamKeys.BR));
 				//协议生效日期
@@ -64,11 +64,11 @@ public class CusAgentServiceAction extends BaseAction{
 				//签约时间
 				context.setData("agrTme",DateUtils.parse(DateUtils.formatAsTranstime(new Date())));
 				//0-个人;1-单位
-				context.setData("cusTyp", "0");
+				context.setData("cusTyp", ParamKeys.ACC_TYPE);
 				//证件号码
-				context.setData(ParamKeys.ID_NO, context.getData("RefNum"));
+				context.setData(ParamKeys.ID_NO, context.getData(ParamKeys.ECIF_REF_NUM));
 				//第三方客户标识
-				context.setData(ParamKeys.THD_CUS_NO, context.getData("newCusAc"));
+				context.setData(ParamKeys.THD_CUS_NO, context.getData(GDParamKeys.NEWCUSAC));
 				//创建日期
 				context.setData(ParamKeys.CRE_DTE, DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())));
 				//扩展标志
