@@ -16,3 +16,4 @@ TransCode.gdeupsb.signIn=8910
 TransCode.gdeupsb.signOut=8911
 TransCode.gdeupsb.establishAccountAction=8912
 TransCode.gdeupsb.destroyAccountAction=8913
+TransCode.gdeupsb.qryRemainingAction=8924
