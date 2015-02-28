@@ -82,7 +82,7 @@ public class CheckFileToThirdAction implements CheckThdFileToBkService {
 
         GdEupsTransJournal transJournal = new GdEupsTransJournal();
         Date date = DateUtils.parse(context.getData("txnDte").toString(),DateUtils.STYLE_yyyyMMdd);
-        transJournal.setTxnDte((date));
+        transJournal.setTxnDte(date);
         transJournal.setComNo(context.getData(ParamKeys.COMPANY_NO).toString());
         transJournal.setSqn(context.getData("oLogNo").toString());
         List<Map<String, Object>> resultList =transJournalRepository.findTbcTransJournals(transJournal);

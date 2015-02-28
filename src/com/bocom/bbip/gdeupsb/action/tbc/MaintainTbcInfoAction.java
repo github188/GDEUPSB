@@ -19,7 +19,8 @@ import com.bocom.jump.bp.core.CoreException;
 /**
  * 广东烟草公司信息维护
  * 
- * @version 1.0.0 DateTime 2015-01-16
+ * @version 1.0.0 
+ * DateTime 2015-01-16
  * @author GuiLin.Li
  * 
  */

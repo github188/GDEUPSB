@@ -25,7 +25,6 @@ public class CathecticPreExecuteAction extends BaseAction{
     public void execute(Context context) throws CoreException {
        
         //<!-- 检查当前是否有可用奖期，如果没有则下载一次，下载后再检查一次，如果没有则返回错误 -->
-        //<Exec func="PUB:CodeSwitching">
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("isKeno", context.getData("isKeno"));
         map.put("gameId", context.getData("gameId"));
