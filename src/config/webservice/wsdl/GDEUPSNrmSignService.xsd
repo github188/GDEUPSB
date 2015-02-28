@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignStationService/Schema" xmlns:gsp="http://gsp.bankcomm.com" xmlns:bbip="http://bbip.bankcomm.com" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignStationService/Schema" elementFormDefault="qualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignService/Schema" xmlns:gsp="http://gsp.bankcomm.com" xmlns:bbip="http://bbip.bankcomm.com" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignService/Schema" elementFormDefault="qualified">
   <xs:import namespace="http://gsp.bankcomm.com" schemaLocation="headerOfSOAP.xsd"/>
   <xs:import namespace="http://bbip.bankcomm.com" schemaLocation="headerOfBbip.xsd"/>
   <xs:element name="agentUpdate" type="tns:agentUpdateReq_CType"/>
@@ -71,6 +71,20 @@
     <xs:sequence>
       <xs:element ref="gsp:replyInformation"/>
       <xs:element name="response" type="tns:agentFleSndUnSureDelResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="agtListCrpInf" type="tns:agtListCrpInfReq_CType"/>
+  <xs:element name="agtListCrpInfResponse" type="tns:agtListCrpInfRsp_CType"/>
+  <xs:complexType name="agtListCrpInfReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:agtListCrpInfRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="agtListCrpInfRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:agtListCrpInfResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
   <xs:element name="requestHeader" type="tns:requestHeader_CType"/>
@@ -641,6 +655,73 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="agtListCrpInfRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
+      <xs:element name="func" type="tns:func_SType" minOccurs="0"/>
+      <xs:element name="orgCod" type="tns:orgCod_SType"/>
+      <xs:element name="orgNam" type="tns:orgNam_SType" minOccurs="0"/>
+      <xs:element name="cityCd" type="tns:cityCd_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="agtListCrpInfResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="orgNam" type="tns:orgNam_SType" minOccurs="0"/>
+      <xs:element name="cityCd" type="tns:cityCd_SType" minOccurs="0"/>
+      <xs:element name="tBusTp" type="tns:tBusTp_SType" minOccurs="0"/>
+      <xs:element name="txnKnd" type="tns:txnKnd_SType" minOccurs="0"/>
+      <xs:element name="ccyCod" type="tns:ccyCod_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="orgCod_SType">
+    <xs:annotation>
+      <xs:documentation>机构代码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="12"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="orgNam_SType">
+    <xs:annotation>
+      <xs:documentation>机构名称</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="cityCd_SType">
+    <xs:annotation>
+      <xs:documentation>城市代码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="tBusTp_SType">
+    <xs:annotation>
+      <xs:documentation>业务种类</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="5"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="txnKnd_SType">
+    <xs:annotation>
+      <xs:documentation>第三方交易类别</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="6"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ccyCod_SType">
+    <xs:annotation>
+      <xs:documentation>币种</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="3"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>

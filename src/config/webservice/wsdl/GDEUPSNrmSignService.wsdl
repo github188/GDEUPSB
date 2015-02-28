@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignStationService" xmlns:gdeupsb="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignStationService/Schema" name="GDEUPSNrmSignStationService" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignStationService">
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignService" xmlns:gdeupsb="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignService/Schema" name="GDEUPSNrmSignService" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignService">
   <wsdl:types>
-    <xsd:schema targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignStationService">
-      <xsd:import namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignStationService/Schema" schemaLocation="GDEUPSNrmSignStationService.xsd"/>
+    <xsd:schema targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignService">
+      <xsd:import namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignService/Schema" schemaLocation="GDEUPSNrmSignService.xsd"/>
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="agentUpdateRequestMessage">
@@ -36,7 +36,13 @@
   <wsdl:message name="agentFleSndUnSureDelResponseMessage">
     <wsdl:part name="agentFleSndUnSureDelResponse" element="gdeupsb:agentFleSndUnSureDelResponse"/>
   </wsdl:message>
-  <wsdl:portType name="GDEUPSNrmSignStationServicePortType">
+  <wsdl:message name="agtListCrpInfRequestMessage">
+    <wsdl:part name="agtListCrpInfRequest" element="gdeupsb:agtListCrpInf"/>
+  </wsdl:message>
+  <wsdl:message name="agtListCrpInfResponseMessage">
+    <wsdl:part name="agtListCrpInfResponse" element="gdeupsb:agtListCrpInfResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="GDEUPSNrmSignServicePortType">
     <wsdl:operation name="agentUpdate">
       <wsdl:documentation/>
       <wsdl:input message="tns:agentUpdateRequestMessage"/>
@@ -62,11 +68,16 @@
       <wsdl:input message="tns:agentFleSndUnSureDelRequestMessage"/>
       <wsdl:output message="tns:agentFleSndUnSureDelResponseMessage"/>
     </wsdl:operation>
+    <wsdl:operation name="agtListCrpInf">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:agtListCrpInfRequestMessage"/>
+      <wsdl:output message="tns:agtListCrpInfResponseMessage"/>
+    </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name="GDEUPSNrmSignStationServiceSoapBinding" type="tns:GDEUPSNrmSignStationServicePortType">
+  <wsdl:binding name="GDEUPSNrmSignServiceSoapBinding" type="tns:GDEUPSNrmSignServicePortType">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     <wsdl:operation name="agentUpdate">
-      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignStationService/agentUpdate"/>
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignService/agentUpdate"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -75,7 +86,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="agentBatchOperate">
-      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignStationService/agentBatchOperate"/>
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignService/agentBatchOperate"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -84,7 +95,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="agentFileSend">
-      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignStationService/agentFileSend"/>
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignService/agentFileSend"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -93,7 +104,7 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="agentScanPrint">
-      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignStationService/agentScanPrint"/>
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignService/agentScanPrint"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -102,7 +113,16 @@
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="agentFleSndUnSureDel">
-      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignStationService/agentFleSndUnSureDel"/>
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignService/agentFleSndUnSureDel"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="agtListCrpInf">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignService/agtListCrpInf"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -111,8 +131,8 @@
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
-  <wsdl:service name="GDEUPSNrmSignStationService">
-    <wsdl:port name="GDEUPSNrmSignStationServicePort" binding="tns:GDEUPSNrmSignStationServiceSoapBinding">
+  <wsdl:service name="GDEUPSNrmSignService">
+    <wsdl:port name="GDEUPSNrmSignServicePort" binding="tns:GDEUPSNrmSignServiceSoapBinding">
       <soap:address location="http://127.0.0.1"/>
     </wsdl:port>
   </wsdl:service>
