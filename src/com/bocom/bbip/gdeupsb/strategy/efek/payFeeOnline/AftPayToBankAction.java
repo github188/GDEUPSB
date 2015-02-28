@@ -22,7 +22,5 @@ public class AftPayToBankAction implements Executable{
 			logger.info("==============Start   AftPayToBankAction");
 			context.setData(ParamKeys.TXN_DTE, DateUtils.format((Date)context.getData(ParamKeys.TXN_DTE),DateUtils.STYLE_yyyyMMdd));
 			context.setData(ParamKeys.TXN_TME, DateUtils.formatAsHHmmss((Date)context.getData(ParamKeys.TXN_TME)));
-			//TODO  tmlNo  长度
-			context.setData(ParamKeys.TERMINAL_NO, context.getData(ParamKeys.TERMINAL_NO).toString().substring(0,6));
 	}
 }

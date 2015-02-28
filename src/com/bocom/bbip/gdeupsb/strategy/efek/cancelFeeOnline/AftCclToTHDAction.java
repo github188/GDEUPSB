@@ -13,7 +13,9 @@ import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
 import com.bocom.jump.bp.core.Executable;
-
+/**
+ * @author liyawei 
+ */
 public class AftCclToTHDAction implements Executable {
 	private final static Log logger=LogFactory.getLog(AftCclToTHDAction.class);
 	@Autowired
