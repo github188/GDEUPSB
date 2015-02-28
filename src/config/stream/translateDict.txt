@@ -14,7 +14,7 @@
 TransCode.eups.manageChlSignInOut=91
 
 ##南方电网 单边记账
-TransCode.eups.payUnilateralToBankExt=22
+TransCode.eups.payUnilateralToBankELEC00=22
 
 ##南方电网 单边抹账
 TransCode.eups.cancelUnilateralToBankExt=23
