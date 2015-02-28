@@ -74,6 +74,11 @@ public class CusAgentServiceAction extends BaseAction{
 				//扩展标志
 				context.setData(ParamKeys.FIL_FLG, "0");
 				
+				//电话邮箱 签约状态
+				context.setData(ParamKeys.ORDER_TEL_NO, context.getData(GDParamKeys.MOBPHONE));
+				context.setData("eml", context.getData(GDParamKeys.EMAIL));
+				context.setData(ParamKeys.TPS_STS, context.getData(GDParamKeys.AGT_STS));
+				
 				Map<String, Object> agentMap = new HashMap<String, Object>();
 				agentMap.putAll(context.getDataMap());
 				
