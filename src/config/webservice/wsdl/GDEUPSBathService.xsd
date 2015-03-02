@@ -31,6 +31,20 @@
       <xs:element name="response" type="tns:printBathInfoResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:element name="cancelBatch" type="tns:cancelBatchReq_CType"/>
+  <xs:element name="cancelBatchResponse" type="tns:cancelBatchRsp_CType"/>
+  <xs:complexType name="cancelBatchReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:cancelBatchRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="cancelBatchRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:cancelBatchResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:element name="qryBatInfoByBatNo" type="tns:qryBatInfoByBatNoReq_CType"/>
   <xs:element name="qryBatInfoByBatNoResponse" type="tns:qryBatInfoByBatNoRsp_CType"/>
   <xs:complexType name="qryBatInfoByBatNoReq_CType">
@@ -276,6 +290,25 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="cancelBatchRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="batNo" type="tns:batNo_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="cancelBatchResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="batNo_SType">
+    <xs:annotation>
+      <xs:documentation>批次号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="18"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="qryBatInfoByBatNoRequest_CType">
