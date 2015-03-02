@@ -6,56 +6,78 @@
       <xsd:import namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotService/Schema" schemaLocation="GDEUPSBLotService.xsd"/>
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="downloadLotPrzFileRequestMessage">
-    <wsdl:part name="downloadLotPrzFileRequest" element="gdeupsb:downloadLotPrzFile"/>
+  <wsdl:message name="lotDeductMoneyRequestMessage">
+    <wsdl:part name="lotDeductMoneyRequest" element="gdeupsb:lotDeductMoney"/>
   </wsdl:message>
-  <wsdl:message name="downloadLotPrzFileResponseMessage">
-    <wsdl:part name="downloadLotPrzFileResponse" element="gdeupsb:downloadLotPrzFileResponse"/>
+  <wsdl:message name="lotDeductMoneyResponseMessage">
+    <wsdl:part name="lotDeductMoneyResponse" element="gdeupsb:lotDeductMoneyResponse"/>
   </wsdl:message>
-  <wsdl:message name="qryLotWinRecordRequestMessage">
-    <wsdl:part name="qryLotWinRecordRequest" element="gdeupsb:qryLotWinRecord"/>
+  <wsdl:message name="qryLotTxnJnlInfoRequestMessage">
+    <wsdl:part name="qryLotTxnJnlInfoRequest" element="gdeupsb:qryLotTxnJnlInfo"/>
   </wsdl:message>
-  <wsdl:message name="qryLotWinRecordResponseMessage">
-    <wsdl:part name="qryLotWinRecordResponse" element="gdeupsb:qryLotWinRecordResponse"/>
+  <wsdl:message name="qryLotTxnJnlInfoResponseMessage">
+    <wsdl:part name="qryLotTxnJnlInfoResponse" element="gdeupsb:qryLotTxnJnlInfoResponse"/>
   </wsdl:message>
-  <wsdl:message name="downloadLotChkFileRequestMessage">
-    <wsdl:part name="downloadLotChkFileRequest" element="gdeupsb:downloadLotChkFile"/>
+  <wsdl:message name="cathecticOnTimeRequestMessage">
+    <wsdl:part name="cathecticOnTimeRequest" element="gdeupsb:cathecticOnTime"/>
   </wsdl:message>
-  <wsdl:message name="downloadLotChkFileResponseMessage">
-    <wsdl:part name="downloadLotChkFileResponse" element="gdeupsb:downloadLotChkFileResponse"/>
+  <wsdl:message name="cathecticOnTimeResponseMessage">
+    <wsdl:part name="cathecticOnTimeResponse" element="gdeupsb:cathecticOnTimeResponse"/>
   </wsdl:message>
-  <wsdl:message name="qryLotBetRecordRequestMessage">
-    <wsdl:part name="qryLotBetRecordRequest" element="gdeupsb:qryLotBetRecord"/>
+  <wsdl:message name="lotRegistRequestMessage">
+    <wsdl:part name="lotRegistRequest" element="gdeupsb:lotRegist"/>
   </wsdl:message>
-  <wsdl:message name="qryLotBetRecordResponseMessage">
-    <wsdl:part name="qryLotBetRecordResponse" element="gdeupsb:qryLotBetRecordResponse"/>
+  <wsdl:message name="lotRegistResponseMessage">
+    <wsdl:part name="lotRegistResponse" element="gdeupsb:lotRegistResponse"/>
+  </wsdl:message>
+  <wsdl:message name="lotUpdateRegistInfoActionRequestMessage">
+    <wsdl:part name="lotUpdateRegistInfoActionRequest" element="gdeupsb:lotUpdateRegistInfoAction"/>
+  </wsdl:message>
+  <wsdl:message name="lotUpdateRegistInfoActionResponseMessage">
+    <wsdl:part name="lotUpdateRegistInfoActionResponse" element="gdeupsb:lotUpdateRegistInfoActionResponse"/>
+  </wsdl:message>
+  <wsdl:message name="queryRegisterRequestMessage">
+    <wsdl:part name="queryRegisterRequest" element="gdeupsb:queryRegister"/>
+  </wsdl:message>
+  <wsdl:message name="queryRegisterResponseMessage">
+    <wsdl:part name="queryRegisterResponse" element="gdeupsb:queryRegisterResponse"/>
   </wsdl:message>
   <wsdl:portType name="GDEUPSBLotServicePortType">
-    <wsdl:operation name="downloadLotPrzFile">
+    <wsdl:operation name="lotDeductMoney">
       <wsdl:documentation/>
-      <wsdl:input message="tns:downloadLotPrzFileRequestMessage"/>
-      <wsdl:output message="tns:downloadLotPrzFileResponseMessage"/>
+      <wsdl:input message="tns:lotDeductMoneyRequestMessage"/>
+      <wsdl:output message="tns:lotDeductMoneyResponseMessage"/>
     </wsdl:operation>
-    <wsdl:operation name="qryLotWinRecord">
+    <wsdl:operation name="qryLotTxnJnlInfo">
       <wsdl:documentation/>
-      <wsdl:input message="tns:qryLotWinRecordRequestMessage"/>
-      <wsdl:output message="tns:qryLotWinRecordResponseMessage"/>
+      <wsdl:input message="tns:qryLotTxnJnlInfoRequestMessage"/>
+      <wsdl:output message="tns:qryLotTxnJnlInfoResponseMessage"/>
     </wsdl:operation>
-    <wsdl:operation name="downloadLotChkFile">
+    <wsdl:operation name="cathecticOnTime">
       <wsdl:documentation/>
-      <wsdl:input message="tns:downloadLotChkFileRequestMessage"/>
-      <wsdl:output message="tns:downloadLotChkFileResponseMessage"/>
+      <wsdl:input message="tns:cathecticOnTimeRequestMessage"/>
+      <wsdl:output message="tns:cathecticOnTimeResponseMessage"/>
     </wsdl:operation>
-    <wsdl:operation name="qryLotBetRecord">
+    <wsdl:operation name="lotRegist">
       <wsdl:documentation/>
-      <wsdl:input message="tns:qryLotBetRecordRequestMessage"/>
-      <wsdl:output message="tns:qryLotBetRecordResponseMessage"/>
+      <wsdl:input message="tns:lotRegistRequestMessage"/>
+      <wsdl:output message="tns:lotRegistResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="lotUpdateRegistInfoAction">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:lotUpdateRegistInfoActionRequestMessage"/>
+      <wsdl:output message="tns:lotUpdateRegistInfoActionResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="queryRegister">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:queryRegisterRequestMessage"/>
+      <wsdl:output message="tns:queryRegisterResponseMessage"/>
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="GDEUPSBLotServiceSoapBinding" type="tns:GDEUPSBLotServicePortType">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <wsdl:operation name="downloadLotPrzFile">
-      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotService/downloadLotPrzFile"/>
+    <wsdl:operation name="lotDeductMoney">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotService/lotDeductMoney"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -63,8 +85,8 @@
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="qryLotWinRecord">
-      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotService/qryLotWinRecord"/>
+    <wsdl:operation name="qryLotTxnJnlInfo">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotService/qryLotTxnJnlInfo"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -72,8 +94,8 @@
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="downloadLotChkFile">
-      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotService/downloadLotChkFile"/>
+    <wsdl:operation name="cathecticOnTime">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotService/cathecticOnTime"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -81,8 +103,26 @@
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="qryLotBetRecord">
-      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotService/qryLotBetRecord"/>
+    <wsdl:operation name="lotRegist">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotService/lotRegist"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="lotUpdateRegistInfoAction">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotService/lotUpdateRegistInfoAction"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryRegister">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotService/queryRegister"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -93,7 +133,7 @@
   </wsdl:binding>
   <wsdl:service name="GDEUPSBLotService">
     <wsdl:port name="GDEUPSBLotServicePort" binding="tns:GDEUPSBLotServiceSoapBinding">
-      <soap:address location="http://127.0.0.1:8080/GDEUPSB/ws/"/>
+      <soap:address location="http://127.0.0.1"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

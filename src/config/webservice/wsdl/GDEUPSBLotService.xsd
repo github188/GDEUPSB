@@ -3,69 +3,95 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotService/Schema" xmlns:gsp="http://gsp.bankcomm.com" xmlns:bbip="http://bbip.bankcomm.com" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotService/Schema" elementFormDefault="qualified">
   <xs:import namespace="http://gsp.bankcomm.com" schemaLocation="headerOfSOAP.xsd"/>
   <xs:import namespace="http://bbip.bankcomm.com" schemaLocation="headerOfBbip.xsd"/>
-  <xs:element name="downloadLotPrzFile" type="tns:downloadLotPrzFileReq_CType"/>
-  <xs:element name="downloadLotPrzFileResponse" type="tns:downloadLotPrzFileRsp_CType"/>
-  <xs:complexType name="downloadLotPrzFileReq_CType">
+  <xs:element name="lotDeductMoney" type="tns:lotDeductMoneyReq_CType"/>
+  <xs:element name="lotDeductMoneyResponse" type="tns:lotDeductMoneyRsp_CType"/>
+  <xs:complexType name="lotDeductMoneyReq_CType">
     <xs:sequence>
       <xs:element ref="gsp:requestInformation"/>
-      <xs:element name="request" type="tns:downloadLotPrzFileRequest_CType"/>
+      <xs:element name="request" type="tns:lotDeductMoneyRequest_CType"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="downloadLotPrzFileRsp_CType">
+  <xs:complexType name="lotDeductMoneyRsp_CType">
     <xs:sequence>
       <xs:element ref="gsp:replyInformation"/>
-      <xs:element name="response" type="tns:downloadLotPrzFileResponse_CType"/>
+      <xs:element name="response" type="tns:lotDeductMoneyResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="qryLotWinRecord" type="tns:qryLotWinRecordReq_CType"/>
-  <xs:element name="qryLotWinRecordResponse" type="tns:qryLotWinRecordRsp_CType"/>
-  <xs:complexType name="qryLotWinRecordReq_CType">
+  <xs:element name="qryLotTxnJnlInfo" type="tns:qryLotTxnJnlInfoReq_CType"/>
+  <xs:element name="qryLotTxnJnlInfoResponse" type="tns:qryLotTxnJnlInfoRsp_CType"/>
+  <xs:complexType name="qryLotTxnJnlInfoReq_CType">
     <xs:sequence>
       <xs:element ref="gsp:requestInformation"/>
-      <xs:element name="request" type="tns:qryLotWinRecordRequest_CType"/>
+      <xs:element name="request" type="tns:qryLotTxnJnlInfoRequest_CType"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="qryLotWinRecordRsp_CType">
+  <xs:complexType name="qryLotTxnJnlInfoRsp_CType">
     <xs:sequence>
       <xs:element ref="gsp:replyInformation"/>
-      <xs:element name="response" type="tns:qryLotWinRecordResponse_CType"/>
+      <xs:element name="response" type="tns:qryLotTxnJnlInfoResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="downloadLotChkFile" type="tns:downloadLotChkFileReq_CType"/>
-  <xs:element name="downloadLotChkFileResponse" type="tns:downloadLotChkFileRsp_CType"/>
-  <xs:complexType name="downloadLotChkFileReq_CType">
+  <xs:element name="cathecticOnTime" type="tns:cathecticOnTimeReq_CType"/>
+  <xs:element name="cathecticOnTimeResponse" type="tns:cathecticOnTimeRsp_CType"/>
+  <xs:complexType name="cathecticOnTimeReq_CType">
     <xs:sequence>
       <xs:element ref="gsp:requestInformation"/>
-      <xs:element name="request" type="tns:downloadLotChkFileRequest_CType"/>
+      <xs:element name="request" type="tns:cathecticOnTimeRequest_CType"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="downloadLotChkFileRsp_CType">
+  <xs:complexType name="cathecticOnTimeRsp_CType">
     <xs:sequence>
       <xs:element ref="gsp:replyInformation"/>
-      <xs:element name="response" type="tns:downloadLotChkFileResponse_CType"/>
+      <xs:element name="response" type="tns:cathecticOnTimeResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="qryLotBetRecord" type="tns:qryLotBetRecordReq_CType"/>
-  <xs:element name="qryLotBetRecordResponse" type="tns:qryLotBetRecordRsp_CType"/>
-  <xs:complexType name="qryLotBetRecordReq_CType">
+  <xs:element name="lotRegist" type="tns:lotRegistReq_CType"/>
+  <xs:element name="lotRegistResponse" type="tns:lotRegistRsp_CType"/>
+  <xs:complexType name="lotRegistReq_CType">
     <xs:sequence>
       <xs:element ref="gsp:requestInformation"/>
-      <xs:element name="request" type="tns:qryLotBetRecordRequest_CType"/>
+      <xs:element name="request" type="tns:lotRegistRequest_CType"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="qryLotBetRecordRsp_CType">
+  <xs:complexType name="lotRegistRsp_CType">
     <xs:sequence>
       <xs:element ref="gsp:replyInformation"/>
-      <xs:element name="response" type="tns:qryLotBetRecordResponse_CType"/>
+      <xs:element name="response" type="tns:lotRegistResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="lotUpdateRegistInfoAction" type="tns:lotUpdateRegistInfoActionReq_CType"/>
+  <xs:element name="lotUpdateRegistInfoActionResponse" type="tns:lotUpdateRegistInfoActionRsp_CType"/>
+  <xs:complexType name="lotUpdateRegistInfoActionReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:lotUpdateRegistInfoActionRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="lotUpdateRegistInfoActionRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:lotUpdateRegistInfoActionResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="queryRegister" type="tns:queryRegisterReq_CType"/>
+  <xs:element name="queryRegisterResponse" type="tns:queryRegisterRsp_CType"/>
+  <xs:complexType name="queryRegisterReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:queryRegisterRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryRegisterRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:queryRegisterResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
   <xs:element name="requestHeader" type="tns:requestHeader_CType"/>
   <xs:element name="responseHeader" type="tns:responseHeader_CType"/>
   <xs:element name="sortingInfo" type="tns:sortingInfo_CType"/>
   <xs:element name="pageableRequest" type="tns:pageableRequest_CType"/>
-  <xs:element name="pageableRsponse" type="tns:pageableRsponse_CType"/>
-  <xs:element name="customerAccountInfo" type="tns:customerAccountInfo_CType"/>
-  <xs:element name="terminalInfo" type="tns:terminalInfo_CType"/>
+  <xs:element name="pageableResponse" type="tns:pageableResponse_CType"/>
   <xs:complexType name="requestHeader_CType">
     <xs:sequence>
       <xs:element ref="bbip:bbipRequestHead"/>
@@ -123,284 +149,33 @@
     </xs:annotation>
     <xs:restriction base="xs:long"/>
   </xs:simpleType>
-  <xs:complexType name="pageableRsponse_CType">
+  <xs:simpleType name="totalPages_SType">
+    <xs:annotation>
+      <xs:documentation>总页数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:long"/>
+  </xs:simpleType>
+  <xs:complexType name="pageableResponse_CType">
     <xs:sequence>
       <xs:element name="totalElements" type="tns:totalElements_SType"/>
+      <xs:element name="totalPages" type="tns:totalPages_SType"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="acTyp_SType">
-    <xs:annotation>
-      <xs:documentation>账户类型</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="2"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="cusAc_SType">
-    <xs:annotation>
-      <xs:documentation>客户账号</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="40"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="cusNme_SType">
-    <xs:annotation>
-      <xs:documentation>账号户名</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="60"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="acSeq_SType">
-    <xs:annotation>
-      <xs:documentation>账号序号</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="5"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="acoAc_SType">
-    <xs:annotation>
-      <xs:documentation>记账账号</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="24"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="ccy_SType">
-    <xs:annotation>
-      <xs:documentation>币种</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="3"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="ctfFlg_SType">
-    <xs:annotation>
-      <xs:documentation>钞汇标志</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="1"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="bvCde_SType">
-    <xs:annotation>
-      <xs:documentation>凭证代码</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="3"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="bvNo_SType">
-    <xs:annotation>
-      <xs:documentation>凭证号码</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="35"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="iseDte_SType">
-    <xs:annotation>
-      <xs:documentation>签发日期</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="8"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="pswCekFlg_SType">
-    <xs:annotation>
-      <xs:documentation>密码校验标志</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="1"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="payPsw_SType">
-    <xs:annotation>
-      <xs:documentation>支付密码</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="16"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="pin_SType">
-    <xs:annotation>
-      <xs:documentation>PIN</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="20"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="carVld_SType">
-    <xs:annotation>
-      <xs:documentation>卡有效期</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="4"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="trk2_SType">
-    <xs:annotation>
-      <xs:documentation>磁道2</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="40"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="trk3_SType">
-    <xs:annotation>
-      <xs:documentation>磁道3</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="104"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="carSeq_SType">
-    <xs:annotation>
-      <xs:documentation>卡序号</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="3"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="fld55ActLen_SType">
-    <xs:annotation>
-      <xs:documentation>55域实际长度</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:int"/>
-  </xs:simpleType>
-  <xs:simpleType name="fld55_SType">
-    <xs:annotation>
-      <xs:documentation>55域</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="504"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="obkBk_SType">
-    <xs:annotation>
-      <xs:documentation>支付系统开户行行号</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="14"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="dbtAgrNo_SType">
-    <xs:annotation>
-      <xs:documentation>借记多方协议号</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="60"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="infExtFld_SType">
-    <xs:annotation>
-      <xs:documentation>账户信息扩展字段</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="200"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="customerAccountInfo_CType">
-    <xs:sequence>
-      <xs:element name="acTyp" type="tns:acTyp_SType" minOccurs="0"/>
-      <xs:element name="cusAc" type="tns:cusAc_SType"/>
-      <xs:element name="cusNme" type="tns:cusNme_SType" minOccurs="0"/>
-      <xs:element name="acSeq" type="tns:acSeq_SType" minOccurs="0"/>
-      <xs:element name="acoAc" type="tns:acoAc_SType" minOccurs="0"/>
-      <xs:element name="ccy" type="tns:ccy_SType"/>
-      <xs:element name="ctfFlg" type="tns:ctfFlg_SType" minOccurs="0"/>
-      <xs:element name="bvCde" type="tns:bvCde_SType" minOccurs="0"/>
-      <xs:element name="bvNo" type="tns:bvNo_SType" minOccurs="0"/>
-      <xs:element name="iseDte" type="tns:iseDte_SType" minOccurs="0"/>
-      <xs:element name="pswCekFlg" type="tns:pswCekFlg_SType" minOccurs="0"/>
-      <xs:element name="payPsw" type="tns:payPsw_SType" minOccurs="0"/>
-      <xs:element name="pin" type="tns:pin_SType" minOccurs="0"/>
-      <xs:element name="carVld" type="tns:carVld_SType" minOccurs="0"/>
-      <xs:element name="trk2" type="tns:trk2_SType" minOccurs="0"/>
-      <xs:element name="trk3" type="tns:trk3_SType" minOccurs="0"/>
-      <xs:element name="carSeq" type="tns:carSeq_SType" minOccurs="0"/>
-      <xs:element name="fld55ActLen" type="tns:fld55ActLen_SType" minOccurs="0"/>
-      <xs:element name="fld55" type="tns:fld55_SType" minOccurs="0"/>
-      <xs:element name="obkBk" type="tns:obkBk_SType" minOccurs="0"/>
-      <xs:element name="dbtAgrNo" type="tns:dbtAgrNo_SType" minOccurs="0"/>
-      <xs:element name="infExtFld" type="tns:infExtFld_SType" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:simpleType name="svcEntModCod_SType">
-    <xs:annotation>
-      <xs:documentation>服务点输入方式码</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="3"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="posTml_SType">
-    <xs:annotation>
-      <xs:documentation>受卡机终端标识码</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="8"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="posSpl_SType">
-    <xs:annotation>
-      <xs:documentation>受卡方标识码</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="15"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="accAdr_SType">
-    <xs:annotation>
-      <xs:documentation>受卡方名称地址</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="48"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="icFlag_SType">
-    <xs:annotation>
-      <xs:documentation>终端读取能力</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="1"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="terminalInfo_CType">
-    <xs:sequence>
-      <xs:element name="svcEntModCod" type="tns:svcEntModCod_SType"/>
-      <xs:element name="posTml" type="tns:posTml_SType"/>
-      <xs:element name="posSpl" type="tns:posSpl_SType"/>
-      <xs:element name="accAdr" type="tns:accAdr_SType"/>
-      <xs:element name="icFlag" type="tns:icFlag_SType"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="downloadLotPrzFileRequest_CType">
+  <xs:complexType name="lotDeductMoneyRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
-      <xs:element name="busTyp" type="tns:busTyp_SType"/>
       <xs:element name="gameId" type="tns:gameId_SType"/>
       <xs:element name="drawId" type="tns:drawId_SType"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="downloadLotPrzFileResponse_CType">
+  <xs:complexType name="lotDeductMoneyResponse_CType">
     <xs:sequence>
       <xs:element ref="tns:responseHeader"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="busTyp_SType">
-    <xs:annotation>
-      <xs:documentation>交易类型</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="10"/>
-    </xs:restriction>
-  </xs:simpleType>
   <xs:simpleType name="gameId_SType">
     <xs:annotation>
-      <xs:documentation>游戏编码</xs:documentation>
+      <xs:documentation>游戏编号</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="2"/>
@@ -414,24 +189,36 @@
       <xs:maxLength value="5"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:complexType name="qryLotWinRecordRequest_CType">
+  <xs:complexType name="qryLotTxnJnlInfoRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
-      <xs:element name="busTyp" type="tns:busTyp_SType"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="crdNo" type="tns:crdNo_SType"/>
       <xs:element name="betTyp" type="tns:betTyp_SType" minOccurs="0"/>
       <xs:element name="begDat" type="tns:begDat_SType" minOccurs="0"/>
       <xs:element name="endDat" type="tns:endDat_SType" minOccurs="0"/>
+      <xs:element ref="tns:pageableRequest"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="qryLotWinRecordResponse_CType">
+  <xs:complexType name="qryLotTxnJnlInfoResponse_CType">
     <xs:sequence>
       <xs:element ref="tns:responseHeader"/>
+      <xs:element name="pageNo" type="tns:pageNo_SType" minOccurs="0"/>
+      <xs:element name="varSize" type="tns:varSize_SType" minOccurs="0"/>
       <xs:element name="ttl" type="tns:ttl_SType" minOccurs="0"/>
       <xs:element name="subTtl" type="tns:subTtl_SType" minOccurs="0"/>
-      <xs:element name="rec" type="tns:rec_CType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="tns:pageableResponse"/>
+      <xs:element name="rec" type="tns:rec_CType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:simpleType name="eupsBusTyp_SType">
+    <xs:annotation>
+      <xs:documentation>业务类型</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:simpleType name="crdNo_SType">
     <xs:annotation>
       <xs:documentation>客户银行卡号</xs:documentation>
@@ -452,21 +239,33 @@
     <xs:annotation>
       <xs:documentation>起始日期</xs:documentation>
     </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="8"/>
-    </xs:restriction>
+    <xs:restriction base="xs:date"/>
   </xs:simpleType>
   <xs:simpleType name="endDat_SType">
     <xs:annotation>
       <xs:documentation>结束日期</xs:documentation>
     </xs:annotation>
+    <xs:restriction base="xs:date"/>
+  </xs:simpleType>
+  <xs:simpleType name="pageNo_SType">
+    <xs:annotation>
+      <xs:documentation>PageNo</xs:documentation>
+    </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:maxLength value="8"/>
+      <xs:maxLength value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="varSize_SType">
+    <xs:annotation>
+      <xs:documentation>VarSize</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="ttl_SType">
     <xs:annotation>
-      <xs:documentation>浏览</xs:documentation>
+      <xs:documentation>Ttl</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="3"/>
@@ -474,21 +273,37 @@
   </xs:simpleType>
   <xs:simpleType name="subTtl_SType">
     <xs:annotation>
-      <xs:documentation>查询内容</xs:documentation>
+      <xs:documentation>SubTtl</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="3"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="txnLog_SType">
+  <xs:simpleType name="GAMEID_SType">
     <xs:annotation>
-      <xs:documentation>投注交易流水号</xs:documentation>
+      <xs:documentation>游戏编号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PLAYID_SType">
+    <xs:annotation>
+      <xs:documentation>玩法编号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="5"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TXNLOG_SType">
+    <xs:annotation>
+      <xs:documentation>投注流水号</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="32"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="drawID_SType">
+  <xs:simpleType name="DRAWID_SType">
     <xs:annotation>
       <xs:documentation>当前大期</xs:documentation>
     </xs:annotation>
@@ -496,9 +311,124 @@
       <xs:maxLength value="5"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="kenoID_SType">
+  <xs:simpleType name="KENOID_SType">
     <xs:annotation>
       <xs:documentation>当前小期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="5"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BETMUL_SType">
+    <xs:annotation>
+      <xs:documentation>投注倍数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="3"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BETLIN_SType">
+    <xs:annotation>
+      <xs:documentation>投注号码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="128"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TXNAMT_SType">
+    <xs:annotation>
+      <xs:documentation>投注金额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="rec_CType">
+    <xs:sequence>
+      <xs:element name="GAMEID" type="tns:GAMEID_SType"/>
+      <xs:element name="PLAYID" type="tns:PLAYID_SType"/>
+      <xs:element name="TXNLOG" type="tns:TXNLOG_SType"/>
+      <xs:element name="DRAWID" type="tns:DRAWID_SType"/>
+      <xs:element name="KENOID" type="tns:KENOID_SType"/>
+      <xs:element name="BETMUL" type="tns:BETMUL_SType"/>
+      <xs:element name="BETLIN" type="tns:BETLIN_SType"/>
+      <xs:element name="TXNAMT" type="tns:TXNAMT_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="cathecticOnTimeRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="crdNo" type="tns:crdNo_SType"/>
+      <xs:element name="betTyp" type="tns:betTyp_SType" minOccurs="0"/>
+      <xs:element name="schTyp" type="tns:schTyp_SType" minOccurs="0"/>
+      <xs:element name="secLev" type="tns:secLev_SType" minOccurs="0"/>
+      <xs:element name="gameId" type="tns:gameId_SType"/>
+      <xs:element name="payId" type="tns:payId_SType"/>
+      <xs:element name="drawId" type="tns:drawId_SType" minOccurs="0"/>
+      <xs:element name="kenoId" type="tns:kenoId_SType" minOccurs="0"/>
+      <xs:element name="betMod" type="tns:betMod_SType" minOccurs="0"/>
+      <xs:element name="betMet" type="tns:betMet_SType" minOccurs="0"/>
+      <xs:element name="betMul" type="tns:betMul_SType"/>
+      <xs:element name="betAmt" type="tns:betAmt_SType"/>
+      <xs:element name="grpNum" type="tns:grpNum_SType"/>
+      <xs:element name="betNum" type="tns:betNum_SType"/>
+      <xs:element name="betLin" type="tns:betLin_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="cathecticOnTimeResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="txnLog" type="tns:txnLog_SType"/>
+      <xs:element name="cipher" type="tns:cipher_SType"/>
+      <xs:element name="verify" type="tns:verify_SType"/>
+      <xs:element name="lotNam" type="tns:lotNam_SType"/>
+      <xs:element name="lotBal" type="tns:lotBal_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="schTyp_SType">
+    <xs:annotation>
+      <xs:documentation>方案类型</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="secLev_SType">
+    <xs:annotation>
+      <xs:documentation>方案等级</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="payId_SType">
+    <xs:annotation>
+      <xs:documentation>玩法编号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="5"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="kenoId_SType">
+    <xs:annotation>
+      <xs:documentation>当前小期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="5"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="betMod_SType">
+    <xs:annotation>
+      <xs:documentation>投注方式</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="5"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="betMet_SType">
+    <xs:annotation>
+      <xs:documentation>投注方法</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="5"/>
@@ -512,6 +442,30 @@
       <xs:maxLength value="3"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:simpleType name="betAmt_SType">
+    <xs:annotation>
+      <xs:documentation>投注金额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="grpNum_SType">
+    <xs:annotation>
+      <xs:documentation>号码组个数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="betNum_SType">
+    <xs:annotation>
+      <xs:documentation>总号码个数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:simpleType name="betLin_SType">
     <xs:annotation>
       <xs:documentation>投注号码</xs:documentation>
@@ -520,94 +474,12 @@
       <xs:maxLength value="128"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="betMod_SType">
+  <xs:simpleType name="txnLog_SType">
     <xs:annotation>
-      <xs:documentation>投注方式</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="5"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="przAmt_SType">
-    <xs:annotation>
-      <xs:documentation>返奖金额</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="15"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="rec_CType">
-    <xs:sequence>
-      <xs:element name="txnLog" type="tns:txnLog_SType" minOccurs="0"/>
-      <xs:element name="drawID" type="tns:drawID_SType" minOccurs="0"/>
-      <xs:element name="kenoID" type="tns:kenoID_SType" minOccurs="0"/>
-      <xs:element name="betMul" type="tns:betMul_SType" minOccurs="0"/>
-      <xs:element name="betLin" type="tns:betLin_SType" minOccurs="0"/>
-      <xs:element name="betMod" type="tns:betMod_SType" minOccurs="0"/>
-      <xs:element name="przAmt" type="tns:przAmt_SType" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="downloadLotChkFileRequest_CType">
-    <xs:sequence>
-      <xs:element ref="tns:requestHeader"/>
-      <xs:element name="busTyp" type="tns:busTyp_SType"/>
-      <xs:element name="gameId" type="tns:gameId_SType"/>
-      <xs:element name="drawId" type="tns:drawId_SType"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="downloadLotChkFileResponse_CType">
-    <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="qryLotBetRecordRequest_CType">
-    <xs:sequence>
-      <xs:element ref="tns:requestHeader"/>
-      <xs:element name="busTyp" type="tns:busTyp_SType"/>
-      <xs:element name="crdNo" type="tns:crdNo_SType"/>
-      <xs:element name="txnLog" type="tns:txnLog_SType" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="qryLotBetRecordResponse_CType">
-    <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
-      <xs:element name="txnLog" type="tns:txnLog_SType" minOccurs="0"/>
-      <xs:element name="schId" type="tns:schId_SType" minOccurs="0"/>
-      <xs:element name="tLogNo" type="tns:tLogNo_SType" minOccurs="0"/>
-      <xs:element name="cipher" type="tns:cipher_SType" minOccurs="0"/>
-      <xs:element name="verify" type="tns:verify_SType" minOccurs="0"/>
-      <xs:element name="schTyp" type="tns:schTyp_SType" minOccurs="0"/>
-      <xs:element name="schTit" type="tns:schTit_SType" minOccurs="0"/>
-      <xs:element name="secLev" type="tns:secLev_SType" minOccurs="0"/>
-      <xs:element name="lotTxnTim" type="tns:lotTxnTim_SType" minOccurs="0"/>
-      <xs:element name="cityId" type="tns:cityId_SType" minOccurs="0"/>
-      <xs:element name="gameId" type="tns:gameId_SType" minOccurs="0"/>
-      <xs:element name="drawId" type="tns:drawId_SType" minOccurs="0"/>
-      <xs:element name="kenoId" type="tns:kenoId_SType" minOccurs="0"/>
-      <xs:element name="betMod" type="tns:betMod_SType" minOccurs="0"/>
-      <xs:element name="betMul" type="tns:betMul_SType" minOccurs="0"/>
-      <xs:element name="betAmt" type="tns:betAmt_SType" minOccurs="0"/>
-      <xs:element name="grpNum" type="tns:grpNum_SType" minOccurs="0"/>
-      <xs:element name="betNum" type="tns:betNum_SType" minOccurs="0"/>
-      <xs:element name="recMsg" type="tns:recMsg_CType" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="schSts" type="tns:schSts_SType" minOccurs="0"/>
-      <xs:element name="bonAmt" type="tns:bonAmt_SType" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:simpleType name="schId_SType">
-    <xs:annotation>
-      <xs:documentation>方案编号</xs:documentation>
+      <xs:documentation>投注流水号</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="32"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="tLogNo_SType">
-    <xs:annotation>
-      <xs:documentation>彩票流水号</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="15"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="cipher_SType">
@@ -626,97 +498,137 @@
       <xs:maxLength value="30"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="schTyp_SType">
+  <xs:simpleType name="lotNam_SType">
     <xs:annotation>
-      <xs:documentation>方案类型</xs:documentation>
+      <xs:documentation>彩民标识</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:maxLength value="1"/>
+      <xs:maxLength value="30"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="schTit_SType">
+  <xs:simpleType name="lotBal_SType">
     <xs:annotation>
-      <xs:documentation>方案标题</xs:documentation>
+      <xs:documentation>彩民余额</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:maxLength value="1"/>
+      <xs:maxLength value="18"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="secLev_SType">
-    <xs:annotation>
-      <xs:documentation>方案等级</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="1"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="lotTxnTim_SType">
-    <xs:annotation>
-      <xs:documentation>生成时间</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="14"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="cityId_SType">
-    <xs:annotation>
-      <xs:documentation>地市编码</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="4"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="kenoId_SType">
-    <xs:annotation>
-      <xs:documentation>当前小期</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="5"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="betAmt_SType">
-    <xs:annotation>
-      <xs:documentation>投注金额</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="15"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="grpNum_SType">
-    <xs:annotation>
-      <xs:documentation>号码组个数</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="8"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="betNum_SType">
-    <xs:annotation>
-      <xs:documentation>总号码个数</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="8"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="recMsg_CType">
+  <xs:complexType name="lotRegistRequest_CType">
     <xs:sequence>
-      <xs:element name="betLin" type="tns:betLin_SType" minOccurs="0"/>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="cusNam" type="tns:cusNam_SType"/>
+      <xs:element name="crdNo" type="tns:crdNo_SType"/>
+      <xs:element name="idTyp" type="tns:idTyp_SType"/>
+      <xs:element name="idNo" type="tns:idNo_SType"/>
+      <xs:element name="actNo" type="tns:actNo_SType"/>
+      <xs:element name="nodNo" type="tns:nodNo_SType"/>
+      <xs:element name="mobTel" type="tns:mobTel_SType"/>
+      <xs:element name="email" type="tns:email_SType" minOccurs="0"/>
+      <xs:element name="fixTel" type="tns:fixTel_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="schSts_SType">
+  <xs:complexType name="lotRegistResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="lotNam" type="tns:lotNam_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="cusNam_SType">
     <xs:annotation>
-      <xs:documentation>方案状态</xs:documentation>
+      <xs:documentation>客户姓名</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="idTyp_SType">
+    <xs:annotation>
+      <xs:documentation>证件类型</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="2"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="bonAmt_SType">
+  <xs:simpleType name="idNo_SType">
     <xs:annotation>
-      <xs:documentation>中奖金额</xs:documentation>
+      <xs:documentation>证件号码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="actNo_SType">
+    <xs:annotation>
+      <xs:documentation>客户银行帐号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="21"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="nodNo_SType">
+    <xs:annotation>
+      <xs:documentation>开户网点</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="6"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="mobTel_SType">
+    <xs:annotation>
+      <xs:documentation>移动联系电话</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="15"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:simpleType name="email_SType">
+    <xs:annotation>
+      <xs:documentation>电子邮箱</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="fixTel_SType">
+    <xs:annotation>
+      <xs:documentation>固定联系电话</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="lotUpdateRegistInfoActionRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="cusNam" type="tns:cusNam_SType"/>
+      <xs:element name="crdNo" type="tns:crdNo_SType"/>
+      <xs:element name="idTyp" type="tns:idTyp_SType"/>
+      <xs:element name="idNo" type="tns:idNo_SType"/>
+      <xs:element name="mobTel" type="tns:mobTel_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="lotUpdateRegistInfoActionResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="mobTel" type="tns:mobTel_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryRegisterRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="crdNo" type="tns:crdNo_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryRegisterResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="cusNam" type="tns:cusNam_SType"/>
+      <xs:element name="crdNo" type="tns:crdNo_SType"/>
+      <xs:element name="idTyp" type="tns:idTyp_SType"/>
+      <xs:element name="idNo" type="tns:idNo_SType"/>
+      <xs:element name="mobTel" type="tns:mobTel_SType"/>
+      <xs:element name="lotNam" type="tns:lotNam_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
 </xs:schema>
