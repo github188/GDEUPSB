@@ -109,24 +109,24 @@
 	<server-side-ws-def wsdl="HZGasCoreService.wsdl"
 		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.HZGasCoreService/Schema">
 		<qname-mappings>
-			<qname-mapping operation="vinGasCusAgent"  process-id="gdeupsb.oprGasCusAgentAction" />
+			<qname-mapping operation="vinGasCusAgent"  process-id="gdeupsb.oprGasCusAgent" />
 		</qname-mappings>
 	</server-side-ws-def>
 	
 	
 	<!-- 惠州燃气用户协议文件上传（0全部，1新增） -->
-	<!-- <server-side-ws-def wsdl="HZGasCoreService.wsdl"
+	<server-side-ws-def wsdl="HZGasCoreService.wsdl"
 		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.HZGasCoreService/Schema">
 		<qname-mappings>
 			<qname-mapping operation="uploadCusAgentFile"  process-id="gdeupsb.gasAgentBatchFileToFTP" />
 		</qname-mappings>
-	</server-side-ws-def> -->
+	</server-side-ws-def>
 	
 	<!-- 惠州燃气代扣流水信息查询 -->
 	<server-side-ws-def wsdl="HZGasCoreService.wsdl"
 		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.HZGasCoreService/Schema">
 		<qname-mappings>
-			<qname-mapping operation="qryJnlInfo"  process-id="gdeupsb.qryHzThdJnlInfoAction" />
+			<qname-mapping operation="qryJnlInfo"  process-id="gdeupsb.qryHzThdJnlInfo" />
 		</qname-mappings>
 	</server-side-ws-def>
 	
@@ -134,7 +134,7 @@
 	<server-side-ws-def wsdl="HZGasCoreService.wsdl"
 		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.HZGasCoreService/Schema">
 		<qname-mappings>
-			<qname-mapping operation="qryCusInfo"  process-id="gdeupsb.qryHzThdCusInfoAction" />
+			<qname-mapping operation="qryCusInfo"  process-id="gdeupsb.qryHzThdCusInfo" />
 		</qname-mappings>
 	</server-side-ws-def>
 	
@@ -146,38 +146,38 @@
 		</qname-mappings>
 	</server-side-ws-def>
 	
-	
 	<!-- 福彩中奖查询 -->
-	<!-- <server-side-ws-def wsdl="GDEUPSBLotService.wsdl"
-		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotService/Schema">
+	<server-side-ws-def wsdl="GDEUPSBLotLclService.wsdl"
+		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotLclService/Schema">
 		<qname-mappings>
-			<qname-mapping operation="qryLotWinRecord"  process-id="gdeupsb.qryLotWinRecordAction" />
+			<qname-mapping operation="qryLotWinRecord"  process-id="gdeupsb.qryLotWinRecord" />
 		</qname-mappings>
-	</server-side-ws-def> -->
+	</server-side-ws-def>
 	
 	<!-- 福彩实时投注查询 -->
-	<!-- <server-side-ws-def wsdl="GDEUPSBLotService.wsdl"
-		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotService/Schema">
+	<server-side-ws-def wsdl="GDEUPSBLotLclService.wsdl"
+		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotLclService/Schema">
 		<qname-mappings>
-			<qname-mapping operation="qryLotBetRecord"  process-id="gdeupsb.qryLotBetRecordAction" />
+			<qname-mapping operation="qryLotBetRecord"  process-id="gdeupsb.qryLotBetRecord" />
 		</qname-mappings>
-	</server-side-ws-def> -->
+	</server-side-ws-def>
 	
 	<!-- 福彩对账文件下载 -->
-	<!-- <server-side-ws-def wsdl="GDEUPSBLotService.wsdl"
-		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotService/Schema">
+	<server-side-ws-def wsdl="GDEUPSBLotLclService.wsdl"
+		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotLclService/Schema">
 		<qname-mappings>
-			<qname-mapping operation="downloadLotChkFile"  process-id="gdeupsb.downloadLotChkFilAction" />
+			<qname-mapping operation="downloadLotChkFile"  process-id="gdeupsb.downloadLotChkFil" />
 		</qname-mappings>
-	</server-side-ws-def> -->
+	</server-side-ws-def>
 	
 	<!-- 福彩返奖文件下载 -->
-	<!-- <server-side-ws-def wsdl="GDEUPSBLotService.wsdl"
-		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotService/Schema">
+	<server-side-ws-def wsdl="GDEUPSBLotLclService.wsdl"
+		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotLclService/Schema">
 		<qname-mappings>
-			<qname-mapping operation="downloadLotPrzFile"  process-id="gdeupsb.downloadLotPrzFilAction" />
+			<qname-mapping operation="downloadLotPrzFile"  process-id="gdeupsb.downloadLotPrzFil" />
 		</qname-mappings>
-	</server-side-ws-def> -->
+	</server-side-ws-def>
+	
 	<!-- 珠海路桥 -->
 	<server-side-ws-def wsdl="ZHEUPSTransportService.wsdl"
 		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/Schema" />
