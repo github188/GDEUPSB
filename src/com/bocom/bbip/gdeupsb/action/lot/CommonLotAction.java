@@ -36,7 +36,6 @@ public class CommonLotAction {
         brNo:分行号
         lotTim:福彩时间
         lclTim:本地时间
-     * 
      * @return  difTim:时差（秒）
      */
     public String difTime(String nodNo, String brNo,String lotTim, String lclTim) {
