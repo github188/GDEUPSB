@@ -35,9 +35,9 @@ public class PreparePayHstHzAction extends BaseAction{
 	private static final Log logger=LogFactory.getLog(PreparePayHstHzAction.class);
 	
 	public void execute(Context context) throws CoreException, CoreRuntimeException{
-		logger.info("Enter in PreparePayHstHzAction...........");
-		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
-		
+//		logger.info("Enter in PreparePayHstHzAction...........");
+//		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
+//		
 		
 //		  <Transaction code="460710" desc="单笔托收">
 //		    
@@ -89,29 +89,29 @@ public class PreparePayHstHzAction extends BaseAction{
 //		      <Set>RspMsg=扣款失败</Set>
 //		      <Set>ErrMsg=扣款失败</Set>
 		
-				BigDecimal txnAmt = new BigDecimal(0.0) ;
-				BigDecimal txnAmt1 = new BigDecimal(0.0) ;
+//				BigDecimal txnAmt = new BigDecimal(0.0) ;
+//				BigDecimal txnAmt1 = new BigDecimal(0.0) ;
 //				txnAmt = txnAmt.add((BigDecimal)context.getData(ParamKeys.TXN_AMOUNT));
 //				txnAmt1 = txnAmt1.add((BigDecimal) context.getData(ParamKeys.REQUEST_TXN_AMOUNT));
 				
-				context.setData(GDParamKeys.GAS_APL_CLS, "207");
-				context.setData(ParamKeys.EUPS_BUSS_TYPE, GDParamKeys.EUPS_BUS_TYP_GAS);
-				context.setData(GDParamKeys.GAS_MASK, "GASH");	// <Set>Mask=GASH</Set>
+//				context.setData(GDParamKeys.GAS_APL_CLS, "207");
+//				context.setData(ParamKeys.EUPS_BUSS_TYPE, GDParamKeys.EUPS_BUS_TYP_GAS);
+//				context.setData(GDParamKeys.GAS_MASK, "GASH");	// <Set>Mask=GASH</Set>
 				
 //				context.setData(ParamKeys.TXN_TME, DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMddHHmmss));
 //				context.setData(ParamKeys.TXN_DTE, DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
 				
-				context.setData(ParamKeys.TXN_TME, new Date());
-				context.setData(ParamKeys.TXN_DTE, new Date());
-				
-				context.setData(ParamKeys.THD_TXN_CDE, GDParamKeys.GAS_SMPCPAY);
-				context.setData(ParamKeys.TXN_AMOUNT, txnAmt);	//OptAmt=0 
-				context.setData(ParamKeys.BAK_FLD3, String.valueOf(txnAmt1));	//OptAmt1=0  备用字段3
-				context.setData(ParamKeys.BAK_FLD4, GDConstants.GAS_THDSTS_TYP_B3);	//ThdSts=B3
-				context.setData(ParamKeys.BAK_FLD5, "0");	//Status=0 
-				
-				context.setData(ParamKeys.RSP_MSG, "扣款失败");	//<Set>RspMsg=扣款失败</Set>
-				context.setData(ParamKeys.BAK_FLD2, "扣款失败");	//<Set>ErrMsg=扣款失败</Set>
+//				context.setData(ParamKeys.TXN_TME, new Date());
+//				context.setData(ParamKeys.TXN_DTE, new Date());
+//				
+//				context.setData(ParamKeys.THD_TXN_CDE, GDParamKeys.GAS_SMPCPAY);
+//				context.setData(ParamKeys.TXN_AMOUNT, txnAmt);	//OptAmt=0 
+//				context.setData(ParamKeys.BAK_FLD3, String.valueOf(txnAmt1));	//OptAmt1=0  备用字段3
+//				context.setData(ParamKeys.BAK_FLD4, GDConstants.GAS_THDSTS_TYP_B3);	//ThdSts=B3
+//				context.setData(ParamKeys.BAK_FLD5, "0");	//Status=0 
+//				
+//				context.setData(ParamKeys.RSP_MSG, "扣款失败");	//<Set>RspMsg=扣款失败</Set>
+//				context.setData(ParamKeys.BAK_FLD2, "扣款失败");	//<Set>ErrMsg=扣款失败</Set>
 				
 //		      <Exec func="PUB:InitTransaction" error="IGNORE"/>    <!--交易初始化,20140609cjx优化-->
 //		      <If condition="~RetCod!=0">
@@ -123,27 +123,27 @@ public class PreparePayHstHzAction extends BaseAction{
 //		      <!--取前置流水号-->
 //		      <Exec func="PUB:GetLogNo" error="IGNORE"/>
 			
-		String sqn = context.getData(ParamKeys.SEQUENCE);
-		
-		context.setData(ParamKeys.SEQUENCE, "20150126000001");
-		context.setData(ParamKeys.EUPS_BUSS_TYPE, "PGAS00");
-		context.setData(ParamKeys.ITG_TYP, "0");
-		context.setData(ParamKeys.TXN_STS, "U");
-		context.setData(ParamKeys.BR, "1");
-		context.setData(ParamKeys.ORG_CDE, "1");
-		context.setData(ParamKeys.TERMINAL_NO, "1");
-		context.setData(ParamKeys.TXN_TLR, "1");
-		context.setData(ParamKeys.SERVICE_NAME, "1");
-		context.setData(ParamKeys.COMPANY_NO, "12354");
-		context.setData(ParamKeys.CCY, "1");
-		context.setData(ParamKeys.FIL_FLG, "1");
-		
-		String thdTxnCde = context.getData(ParamKeys.THD_TXN_CDE);
+//		String sqn = context.getData(ParamKeys.SEQUENCE);
+//		
+//		context.setData(ParamKeys.SEQUENCE, "20150126000001");
+//		context.setData(ParamKeys.EUPS_BUSS_TYPE, "PGAS00");
+//		context.setData(ParamKeys.ITG_TYP, "0");
+//		context.setData(ParamKeys.TXN_STS, "U");
+//		context.setData(ParamKeys.BR, "1");
+//		context.setData(ParamKeys.ORG_CDE, "1");
+//		context.setData(ParamKeys.TERMINAL_NO, "1");
+//		context.setData(ParamKeys.TXN_TLR, "1");
+//		context.setData(ParamKeys.SERVICE_NAME, "1");
+//		context.setData(ParamKeys.COMPANY_NO, "12354");
+//		context.setData(ParamKeys.CCY, "1");
+//		context.setData(ParamKeys.FIL_FLG, "1");
+//		
+//		String thdTxnCde = context.getData(ParamKeys.THD_TXN_CDE);
 //		燃气托收流水号	18	年月日（8位）+银行标志（4位）+6位流水号  示例：20130927CNJT000001 (会传)
-		String thdSqn = context.getData(ParamKeys.THD_SQN);
-		String bk = context.getData(ParamKeys.BK);
-		String cusNo = context.getData(ParamKeys.CUS_NO);
-		String cusAc = context.getData(ParamKeys.CUS_AC);
+//		String thdSqn = context.getData(ParamKeys.THD_SQN);
+//		String bk = context.getData(ParamKeys.BK);
+//		String cusNo = context.getData(ParamKeys.CUS_NO);
+//		String cusAc = context.getData(ParamKeys.CUS_AC);
 //		//PayYea 备用字段1
 //		String bakFld1 = context.getData(GDParamKeys.GAS_PAY_YEA);
 //		context.setData(ParamKeys.BAK_FLD1, bakFld1);
@@ -169,9 +169,9 @@ public class PreparePayHstHzAction extends BaseAction{
 		/*INSERT INTO Gastxnjnl491(ActNam,HTxnCd,TxnTyp,LogNo,CLogNo,OptDat,OptTim,UserNo,ActNo,OptAmt,OptAmt1,PayAmt,PayYea,Status,TTxnCd,ThdSts,ErrMsg)
 	     VALUES(' ',' ',' ','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')
 		*/	
-		EupsTransJournal etj = new EupsTransJournal();
-		etj = BeanUtils.toObject(context.getDataMap(), EupsTransJournal.class);
-		
+//		EupsTransJournal etj = new EupsTransJournal();
+//		etj = BeanUtils.toObject(context.getDataMap(), EupsTransJournal.class);
+//		
 //		etj.setCusNme("");	//ActNam
 //		etj.setMfmTxnCde("");	//HTxnCd
 //		etj.setTxnTyp("");	//TxnTyp
@@ -218,24 +218,24 @@ public class PreparePayHstHzAction extends BaseAction{
 //						<Arg name="SqlCmd" value="QrycusallActNam"/>
 //					</Exec>
 //		SQL:select ActNam from Gascusall491 where UserNo='%s' and ActNo='%s'
-		EupsCusAgent eca = new EupsCusAgent();
-		eca = BeanUtils.toObject(context.getDataMap(), EupsCusAgent.class);
-		
+//		EupsCusAgent eca = new EupsCusAgent();
+//		eca = BeanUtils.toObject(context.getDataMap(), EupsCusAgent.class);
+//		
 //		eca.setCusNo(context.getData(ParamKeys.CUS_NO).toString());
 //		eca.setCusAc(context.getData(ParamKeys.CUS_AC).toString());
-		List<EupsCusAgent> ecaList =  new ArrayList<EupsCusAgent>();
-		try{
-			ecaList = get(EupsCusAgentRepository.class).find(eca);
-			if(CollectionUtils.isEmpty(ecaList) || ecaList==null){
-				context.setData(ParamKeys.MESSAGE_TYPE, "E");
-				context.setData(ParamKeys.RSP_CDE, GDConstants.GAS_ERROR_CODE);
-				context.setData(ParamKeys.RSP_MSG, "单位协议不存在");
-			}
-		}catch(Exception e){
-			context.setData(ParamKeys.MESSAGE_TYPE, "E");
-			context.setData(ParamKeys.RSP_CDE, GDConstants.GAS_ERROR_CODE);
-			context.setData(ParamKeys.RSP_MSG, "系统出错-请联系银行中心处理");
-		}
+//		List<EupsCusAgent> ecaList =  new ArrayList<EupsCusAgent>();
+//		try{
+//			ecaList = get(EupsCusAgentRepository.class).find(eca);
+//			if(CollectionUtils.isEmpty(ecaList) || ecaList==null){
+//				context.setData(ParamKeys.MESSAGE_TYPE, "E");
+//				context.setData(ParamKeys.RSP_CDE, GDConstants.GAS_ERROR_CODE);
+//				context.setData(ParamKeys.RSP_MSG, "单位协议不存在");
+//			}
+//		}catch(Exception e){
+//			context.setData(ParamKeys.MESSAGE_TYPE, "E");
+//			context.setData(ParamKeys.RSP_CDE, GDConstants.GAS_ERROR_CODE);
+//			context.setData(ParamKeys.RSP_MSG, "系统出错-请联系银行中心处理");
+//		}
 // 查第三方基本信息表
 //					<Exec func="PUB:ReadRecord">
 //						<Arg name="SqlCmd" value="QryCrpAgr"/>
@@ -248,21 +248,21 @@ public class PreparePayHstHzAction extends BaseAction{
 //		        <Return/>
 //		      </If>   
 //		String comNo = context.getData(ParamKeys.COMPANY_NO).toString();
-		context.setData(ParamKeys.USE_STS, "0");
-		
+//		context.setData(ParamKeys.USE_STS, "0");
+//		
 //		get(QryThdBaseInfo.class).qryThdbaseinfo(context);
 		
-		EupsThdBaseInfo etbi = new EupsThdBaseInfo();
-		etbi = BeanUtils.toObject(context.getDataMap(), EupsThdBaseInfo.class);
-		
-		List<EupsThdBaseInfo> etbiList = get(EupsThdBaseInfoRepository.class).find(etbi);
-		if(CollectionUtils.isEmpty(etbiList) && etbiList==null ){
-			context.setData(ParamKeys.MESSAGE_TYPE, "E");
-			context.setData(ParamKeys.RSP_CDE, GDConstants.GAS_ERROR_CODE);
-			context.setData(ParamKeys.RSP_MSG, "单位协议不存在");
-		}
-		
-		
+//		EupsThdBaseInfo etbi = new EupsThdBaseInfo();
+//		etbi = BeanUtils.toObject(context.getDataMap(), EupsThdBaseInfo.class);
+//		
+//		List<EupsThdBaseInfo> etbiList = get(EupsThdBaseInfoRepository.class).find(etbi);
+//		if(CollectionUtils.isEmpty(etbiList) && etbiList==null ){
+//			context.setData(ParamKeys.MESSAGE_TYPE, "E");
+//			context.setData(ParamKeys.RSP_CDE, GDConstants.GAS_ERROR_CODE);
+//			context.setData(ParamKeys.RSP_MSG, "单位协议不存在");
+//		}
+//		
+//		
 	
 		//TODO TActNo 第三方银行账号 不确定是流水表中的哪个字段
 //		       <Set>TActNo=491800012620190029499</Set>
@@ -277,28 +277,28 @@ public class PreparePayHstHzAction extends BaseAction{
 //		eca.setCusNo(cusNo);
 //		eca.setCusAc(cusAc);
 		
-		logger.info("++++++++++++++++++++++++++++++++++++++++++++++");
-		logger.info(context.getData(ParamKeys.CUS_AC));
-		logger.info(context.getData(ParamKeys.CUS_NO));
-		eca = BeanUtils.toObject(context.getDataMap(), EupsCusAgent.class);
-
-		ecaList = new ArrayList<EupsCusAgent>();
-		try{
-			ecaList = get(EupsCusAgentRepository.class).find(eca);
-			
-		}catch(Exception e ){
-			context.setData(ParamKeys.MESSAGE_TYPE, "E");
-			context.setData(ParamKeys.RSP_CDE, GDConstants.GAS_ERROR_CODE);
-			context.setData(ParamKeys.RSP_MSG, "用户编号查询失败!");
-		}
-		if(ecaList == null && CollectionUtils.isEmpty(ecaList)){
-			context.setData(ParamKeys.MESSAGE_TYPE, "E");
-			context.setData(ParamKeys.RSP_CDE, GDConstants.GAS_ERROR_CODE);
-			context.setData(ParamKeys.RSP_MSG, "该用户编号未与该卡号绑定签约!");
-		}
-		
-		Map<String, Object> ecaListMap = BeanUtils.toMap(ecaList);
-		context.setDataMap(ecaListMap);
+//		logger.info("++++++++++++++++++++++++++++++++++++++++++++++");
+//		logger.info(context.getData(ParamKeys.CUS_AC));
+//		logger.info(context.getData(ParamKeys.CUS_NO));
+//		eca = BeanUtils.toObject(context.getDataMap(), EupsCusAgent.class);
+//
+//		ecaList = new ArrayList<EupsCusAgent>();
+//		try{
+//			ecaList = get(EupsCusAgentRepository.class).find(eca);
+//			
+//		}catch(Exception e ){
+//			context.setData(ParamKeys.MESSAGE_TYPE, "E");
+//			context.setData(ParamKeys.RSP_CDE, GDConstants.GAS_ERROR_CODE);
+//			context.setData(ParamKeys.RSP_MSG, "用户编号查询失败!");
+//		}
+//		if(ecaList == null && CollectionUtils.isEmpty(ecaList)){
+//			context.setData(ParamKeys.MESSAGE_TYPE, "E");
+//			context.setData(ParamKeys.RSP_CDE, GDConstants.GAS_ERROR_CODE);
+//			context.setData(ParamKeys.RSP_MSG, "该用户编号未与该卡号绑定签约!");
+//		}
+//		
+//		Map<String, Object> ecaListMap = BeanUtils.toMap(ecaList);
+//		context.setDataMap(ecaListMap);
 //		          <If condition="~RetCod!=0">
 //		          	<Set>MsgTyp=E</Set>
 //		          <Set>RspCod=GAS999</Set>
@@ -386,28 +386,28 @@ public class PreparePayHstHzAction extends BaseAction{
 		
 //			context.setData(ParamKeys.TXN_AMOUNT, reqTxnAmt.multiply(multiplicand, mc));
 //			context.setData(ParamKeys.CUS_NME, context.getData(arg0));
-			context.setData(ParamKeys.PAY_CHANNEL, GDConstants.GAS_PAY_CHL_0);	// <Set>PayMod=0</Set>
-			context.setData(ParamKeys.CHL_TYP, "L");	//TODO <Set>CnlTyp=L</Set> 疑问：CHL_TYP的取值（渠道类型:参考531数据标准）
+//			context.setData(ParamKeys.PAY_CHANNEL, GDConstants.GAS_PAY_CHL_0);	// <Set>PayMod=0</Set>
+//			context.setData(ParamKeys.CHL_TYP, "L");	//TODO <Set>CnlTyp=L</Set> 疑问：CHL_TYP的取值（渠道类型:参考531数据标准）
 			//context.setData(arg0, arg1);	//TODO <Set>VchChk=1</Set><!--监督标志由业务上确定--> 流水表中有几个标志，不确定监督标志用哪个
 			//context.setData(arg0, arg1);	//TODO <Set>VchCod=00000000</Set> 监督码？
 			
 			
 //		      <Set>MstChk=1</Set>  
-			context.setData(GDParamKeys.MST_CHK, "1");
+//			context.setData(GDParamKeys.MST_CHK, "1");
 //		      <Set>FRspCd= </Set>  
 			
 //		      <Set>ItgTyp=0</Set>  <!-- 完整性类型 -->
-			context.setData(ParamKeys.ITG_TYP, "0");
+//			context.setData(ParamKeys.ITG_TYP, "0");
 //		      <Set>TxnTyp=N</Set> 	<!-- 交易类型 -->
-			context.setData(ParamKeys.TXN_TYP, GDConstants.GAS_TXN_TYP_N);
+//			context.setData(ParamKeys.TXN_TYP, GDConstants.GAS_TXN_TYP_N);
 //		      <Set>TlrId=ERQTDT1</Set>
-			context.setData(ParamKeys.TELLER_ID, GDConstants.GAS_TLR_ID);
+//			context.setData(ParamKeys.TELLER_ID, GDConstants.GAS_TLR_ID);
 //		      <Set>NodNo=491800</Set> <!--br -->
-			context.setData(ParamKeys.BR, GDConstants.GAS_BR);
+//			context.setData(ParamKeys.BR, GDConstants.GAS_BR);
 //		      <Set>CcyTyp=0</Set>
-			context.setData(ParamKeys.CCY, "0");
+//			context.setData(ParamKeys.CCY, "0");
 //		      <Set>TTxnCd=460710</Set>
-			context.setData(ParamKeys.THD_TXN_CDE, GDConstants.GAS_SMPC_TXN_CDE);
+//			context.setData(ParamKeys.THD_TXN_CDE, GDConstants.GAS_SMPC_TXN_CDE);
 			
 			
 	/**		
@@ -492,6 +492,6 @@ public class PreparePayHstHzAction extends BaseAction{
 	
 	
 	*/
-			context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);	
+//			context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);	
 			}
 		}
