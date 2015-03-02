@@ -14,13 +14,12 @@
 	</process>
 	
 	<!-- 用户协议文件上传（0全部，1新增） -->
-<!--  	<process id="gdeupsb.gasAgentBatchFileToFTP" template="eups.simpleTran"
+  	<!-- <process id="gdeupsb.gasAgentBatchFileToFTP" template="eups.simpleTran"
 		interceptors="eups.transMessageInterceptor">
 		<actions>
 			<action id="act" ref="gasAgentBatchFileToFTP" />
 		</actions>
 	</process>   -->
-
 	<!-- 惠州燃气单笔托收 460710 -->
 <!-- 	<process id="gdeupsb.hzPGasSmpcPayOnlineAction" template="eups.simpleTran"
 		interceptors="eups.transMessageInterceptor">
