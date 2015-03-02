@@ -13,6 +13,10 @@
 	
 	<!-- HZ燃气单笔托收 -->
 	<x:bean id="eups.payUnilateralToBankServiceImplPGAS00" class="com.bocom.bbip.gdeupsb.action.gas.PayUnilateralToBankServiceImplPGAS00" />
+	<!-- HZ燃气单笔冲正 -->
+	<x:bean id="gdeupsb.cnlPayUnilateralToBankServicePGAS00" class="com.bocom.bbip.gdeupsb.action.gas.CnlPayUnilateralToBankServicePGAS00" />
+	<!-- HZ燃气对账文件上传 -->
+	<x:bean id="gdeupsb.checkFileToThdHzAction" class="com.bocom.bbip.gdeupsb.action.gas.CheckFileToThdHzAction" />
 	
 	<!-- 用户协议文件上传（0全部，1新增） -->
 	<x:bean id="gdeupsb.gasAgentBatchFileToFTP" class="com.bocom.bbip.gdeupsb.action.gas.agentBat.GasAgentBatchFileToFtpAction" />
@@ -22,7 +26,7 @@
 		class="com.bocom.bbip.gdeupsb.action.gas.BatchGashDealServiceAction"/>
 	
 	<!-- HZ燃气：文件批量托收完成通知燃气  --> 
-	<x:bean id="eups.afterBatchAcpServiceActionPGAS00"
+	<x:bean id="eups.afterBatchAcpServicePGAS00"
 		class="com.bocom.bbip.gdeupsb.action.gas.MsgToGasAftBatchAction"/>
 	
 	
