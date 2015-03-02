@@ -14,7 +14,7 @@
 
 		
 	<!-- 南方电网  银行发起存入预付款-->
-	 		<process id="gdeupsb.advanceTrade"  template="eups.payOnlineTemplateExt"  interceptors="eups.thdTransInterceptor">
+	 		<process id="gdeupsb.advanceTrade"  template="eups.payOnlineTemplate"  interceptors="eups.thdTransInterceptor">
 			  <actions>
 			   			<action id="preCheckAction"  ref="gdeupsb.advanceTradeAction" />
 		   				<action id="preHostAction"   ref="gdeupsb.nullAction" />
@@ -93,7 +93,7 @@
 	
 	
 	<!-- 联机银行方单边记账（银行记帐系统自带冲正，无需发起冲正） -->
-	<process id="eups.payUnilateralToBankELEC00" template="eups.payUnilateralNoRvsTemplateExt"
+	<process id="eups.payUnilateralToBankELEC00" template="eups.payUnilateralNoRvsTemplate"
 		interceptors="eups.thdELEC00Interceptor">
 		<actions>
 			<!-- 交易前服务处理 -->
@@ -120,7 +120,7 @@
 			<!-- 联机记账预处理 -->
 			<action id="initAction" ref="eups.initPaymentInfoAction" />
 			<!-- 联机531代收付交易主机记账 （自调冲正） -->
-			<action id="businessAction" ref="eups.bbipPaymentExt" />
+			<action id="businessAction" ref="eups.bbipPayment" />
 			<action id="businessAction" ref="eups.saveCBPaymentResultAction" />
 			<!-- 交易结果 -->
 			<!-- 记账后返回处理 -->
