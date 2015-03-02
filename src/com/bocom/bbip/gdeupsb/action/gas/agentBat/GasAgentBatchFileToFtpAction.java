@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.eups.action.BaseAction;
@@ -18,8 +17,6 @@ import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
-import com.bocom.bbip.eups.spi.service.batch.BatchAcpService;
-import com.bocom.bbip.eups.spi.vo.PrepareBatchAcpDomain;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdGasCusDay;
@@ -36,31 +33,29 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
 /**
  * 用户协议文件上传（0全部，1新增）
  * 生成文件hdCNJTyyyyMMdd.txt、rxyCNJTyyyyMMdd.txt
+ * TODO 将两份文件分别上传至FTPA：182.140.200.41，FTPB: 182.53.13.13！！
  * 放进ftp://BANK/银行标志/agrement/ 目录下
  * @author WangMQ
  *
  */
-public class GasAgentBatchFileToFtpAction implements BatchAcpService{
+public class GasAgentBatchFileToFtpAction extends BaseAction{
 	private static Logger logger = LoggerFactory.getLogger(GasAgentBatchFileToFtpAction.class);
 	
-	@Autowired
-	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
-	
-	@Autowired
-	GdGasCusDayRepository gdGasCusDayRepository;
-	
-	@Autowired
+//	@Autowired
+//	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
+//	
+//	@Autowired
+//	GdGasCusDayRepository gdGasCusDayRepository;
+//	
 	BGSPServiceAccessObject bgspServiceAccessObject;
+//	
+//	@Autowired
+//	get(OperateFTPAction.class) get(OperateFTPAction.class);
+//	
+//	@Autowired
+//	OperateFileAction operateFileAction;
 	
-	@Autowired
-	OperateFTPAction operateFTPAction;
-	
-	@Autowired
-	OperateFileAction operateFileAction;
-	
-	@Override
-	public void prepareBatchDeal(PrepareBatchAcpDomain prepareBatchAcpDomain, Context context)
-			throws CoreException {
+	public void execute(Context context) throws CoreException {
 		logger.info("Enter in GasAgentBatchFileToFtpAction.......");
 		
 //		String comNo = context.getData(ParamKeys.COMPANY_NO);
@@ -90,13 +85,22 @@ public class GasAgentBatchFileToFtpAction implements BatchAcpService{
 		 * 1、从FTP配置表中获取信息
 		 * 2、修改文件名对应字段
 		 */
-		EupsThdFtpConfig ftpConfig = eupsThdFtpConfigRepository.findOne(comNo);
+		
+		String gasAgtFilCfgA = "PGAS00Agt1";	//FTP_NO
+		String gasAgtFilCfgB = "PGAS00Agt2";
+		
+		EupsThdFtpConfig ftpConfigA = get(EupsThdFtpConfigRepository.class).findOne(gasAgtFilCfgA); 
+		EupsThdFtpConfig ftpConfigB = get(EupsThdFtpConfigRepository.class).findOne(gasAgtFilCfgB);
 		// TODO 文件路径（本地，远程）
 		
 		
 		// 文件名
-		ftpConfig.setLocFleNme(hdFileName);
-		ftpConfig.setRmtFleNme(hdFileName);
+		ftpConfigA.setLocFleNme(hdFileName);
+		ftpConfigA.setRmtFleNme(hdFileName);
+		
+		ftpConfigB.setLocFleNme(hdFileName);
+		ftpConfigB.setRmtFleNme(hdFileName);
+		
 		
 		
 		//拼装hd文件map   
@@ -107,22 +111,26 @@ public class GasAgentBatchFileToFtpAction implements BatchAcpService{
 		
 		try {
 	            // 生成文件到指定路径
-	            operateFileAction.createCheckFile(ftpConfig, "gasAllAgentBatFmt", hdFileName, hdMap);
+	            get(OperateFileAction.class).createCheckFile(ftpConfigA, "gasAllAgentBatFmt", hdFileName, hdMap);
 	            logger.info("hdCNJTyyyyMMdd.txt文件生成成功！");
 	        } catch (Exception e) {
 	        	logger.error("File create error : " + e.getMessage());
 	            throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
 	        }
 		
-		operateFTPAction.putCheckFile(ftpConfig);
+		get(OperateFTPAction.class).putCheckFile(ftpConfigA);
+		get(OperateFTPAction.class).putCheckFile(ftpConfigB);
         logger.info("hdCNJTyyyyMMdd.txt文件FTP放置成功！");
 		
         
         ////////////////////////////////////////////////////////////    文件 rxyCNJTyyyyMMdd.txt
         
         
-        ftpConfig.setLocFleNme(rxyFileName);
-        ftpConfig.setRmtFleNme(rxyFileName);
+        ftpConfigA.setLocFleNme(rxyFileName);
+        ftpConfigA.setRmtFleNme(rxyFileName);
+        
+        ftpConfigB.setLocFleNme(rxyFileName);
+        ftpConfigB.setRmtFleNme(rxyFileName);
                 
 		//拼装rxy文件map  
         //生成增量协议文件 rxyCNJTyyyyMMdd.txt  FMT: gasDayAgentBatFmt
@@ -131,14 +139,15 @@ public class GasAgentBatchFileToFtpAction implements BatchAcpService{
 		
 		try {
             // 生成文件到指定路径
-            operateFileAction.createCheckFile(ftpConfig, "gasDayAgentBatFmt", rxyFileName, rxyMap);
+            get(OperateFileAction.class).createCheckFile(ftpConfigA, "gasDayAgentBatFmt", rxyFileName, rxyMap);
             logger.info("rxyCNJTyyyyMMdd.txt文件生成成功！");
         } catch (Exception e) {
         	logger.error("File create error : " + e.getMessage());
             throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
         }
 		
-		operateFTPAction.putCheckFile(ftpConfig);
+		get(OperateFTPAction.class).putCheckFile(ftpConfigA);
+		get(OperateFTPAction.class).putCheckFile(ftpConfigB);
 		logger.info("rxyCNJTyyyyMMdd.txt文件FTP放置成功！");
 		
 		
@@ -154,7 +163,6 @@ public class GasAgentBatchFileToFtpAction implements BatchAcpService{
 	 * @return
 	 * @throws CoreException
 	 */
-    @SuppressWarnings("null")
 	private Map<String, Object> encodeAgtHdFileMap(String bk, String comNo) throws CoreException, CoreRuntimeException {
     	Map<String, Object> map = new HashMap<String, Object>();
         Map<String, Object> agtMap = new HashMap<String, Object>();
@@ -180,7 +188,7 @@ public class GasAgentBatchFileToFtpAction implements BatchAcpService{
     	Map<String, Object> map = new HashMap<String, Object>();
     	GdGasCusDay cusDayAgt = new GdGasCusDay();
     	cusDayAgt.setOptDat(optDat);
-    	List<GdGasCusDay> rxyCusDayList = gdGasCusDayRepository.find(cusDayAgt);
+    	List<GdGasCusDay> rxyCusDayList = get(GdGasCusDayRepository.class).find(cusDayAgt);
     	if (CollectionUtils.isEmpty(rxyCusDayList)) {
             logger.info("There are no records for select check trans journal ");
             throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
