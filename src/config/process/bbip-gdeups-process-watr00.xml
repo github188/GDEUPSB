@@ -5,31 +5,31 @@
 	
 	<!-- add by hefw 20150114 start 汕头水费 -->
 	<!-- 户号查询 -->
-	<process id="gdeupsb.GDEUPSWATR00Service.queryThirdCus" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	<process id="gdeupsb.queryThirdCus" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
 	   <actions>
 	        <action id="act" ref="eups.queryThirdCusServiceAction"/>
 	   </actions>
 	</process>
 	<!-- 会计流水查询 -->
-	<process id="gdeupsb.GDEUPSWATR00Service.queryJournalOffChan" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	<process id="gdeupsb.queryJournalOffChan" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
 	   <actions>
 	        <action id="act" ref="eups.queryJournalOffChanServiceAction"/>
 	   </actions>
 	</process>
 	<!-- 历史水费查询 -->
-	<process id="gdeupsb.GDEUPSWATR00Service.queryHistoryMsg" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	<process id="gdeupsb.queryHistoryMsg" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
 	   <actions>
 	        <action id="act" ref="eups.queryHistoryMsgServiceActionWATR00"/>
 	   </actions>
 	</process>
 	<!-- 水费流水打印 -->
-	<process id="gdeupsb.GDEUPSWATR00Service.printTransJournal" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">	
+	<process id="gdeupsb.printTransJournal" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">	
 	   <actions>
 	        <action id="act" ref="eups.printTransJournalServiceActionWATR00"/>
 	   </actions>
 	</process>
 	<!-- 对公缴费记账回执打印 -->
-	<process id="gdeupsb.GDEUPSWATR00Service.printPublicMsg" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">	
+	<process id="gdeupsb.printPublicMsg" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">	
 	   <actions>
 	        <action id="act" ref="eups.printPublicMsgServiceActionWATR00"/>
 	   </actions>

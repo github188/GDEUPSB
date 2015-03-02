@@ -5,7 +5,7 @@
 	
 	<!-- add by hefw 20150114 start 汕头电力 -->
 	<!-- 会计流水查询 -->
-	<process id="gdeupsb.GDEUPSELEC02Service.queryJournalOffChan" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	<process id="gdeupsb.queryJournalOffChan" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
 	   <actions>
 	        <action id="act" ref="eups.queryJournalOffChanServiceAction"/>
 	   </actions>
