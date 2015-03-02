@@ -2,33 +2,40 @@
 <segment xmlns="http://www.bocom.com/jump/transformer/packet"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
-	name="01Request">
+	name="02Response">
 	<!-- 惠州燃气单笔托收  -->
-<!-- 
+
+<!-- 	  
 起始位置	说明	长度	备注
-1	指令	10	SMPCPAY
-12	燃气托收流水号	18	年月日（8位）+银行标志（4位）+6位流水号 示例：20130927CNJT000001
-31	银行标志	4	CNJT
-36	用户编码	12	
-49	银行帐号	32	
-82	费用年月	6	YYYYMM  示例：201309
-89	应缴费用	10	示例：123.23
- -->
-
-	<fixString name="txnCde" length="10" />
-	<!-- <fixString  name="DeliA" length="1" default=","/> -->
-	<fixString name="thdsqn" length="18"    />
-	<!-- <fixString  name="DeliA" length="1" default=","/> -->
-	<fixString name="bk" length="4"   />
-	<!-- <fixString  name="DeliA" length="1" default=","/> -->
-	<fixString name="cusNo" length="12"   /> 
-	<!-- <fixString  name="DeliA" length="1" default=","/> -->
-	<fixString name="cusAc" length="32"   />
-	<!-- <fixString  name="DeliA" length="1" default=","/> -->
-	<fixString name="bakFld3" length="6"   />
-	<!-- <fixString  name="DeliA" length="1" default=","/> -->
-	<fixString name="reqTxnAmt" length="10"   />
-	<!-- <fixString  name="DeliA" length="1"  /> -->
-
+1	指令	10	B0或B1或B2或B3  B0为扣费成功 B1为金额不足扣费失败 B2为无此帐号或账号与用户编号匹配错误扣费失败 B3其它原因扣费失败
+12	燃气托收流水号	18	年月日（8位）+银行标志（4位）+6位流水号
+示例：20130927CNJT000001
+31	交易流水号	18	银行方的交易流水号
+50	用户编码	12	
+63	费用年月	6	YYYYMM  示例：201309
+70	已扣费用	10	
+81	交易时间	19	YYYY-MM-DD HH:MM:SS
+101	代扣网点号	10	
+112	备注	60	交易情况详细信息
+ -->	
+   
+	  <fixString name="bakFld1" length="10" />
+ 	  <!-- <fixString  name="Deli2" length="1" default=","/> -->
+	  <fixString name="thdSqn" length="18"  />
+	  <!-- <fixString  name="Deli2" length="1" default=","/> -->
+	  <fixString name="sqn" length="18"   />
+	  <!-- <fixString  name="Deli3" length="1" default=","/> -->
+	  <fixString name="cusNo" length="12"   />
+	  <!-- <fixString  name="Deli4" length="1" default=","/> -->
+	  <fixString name="bakFld3" length="6"   />
+	  <!-- <fixString  name="Deli5" length="1" default=","/> -->
+	  <fixString name="txnAmt" length="10"   />
+	  <!-- <fixString  name="Deli6" length="1" default=","/> -->
+	  <fixString name="txntme" length="19"   />
+	  <!-- <fixString  name="Deli7" length="1" default=","/> -->
+	  <fixString name="br" length="10"   />
+	  <!-- <fixString  name="Deli8" length="1" default=","/> -->
+	  <fixString name="bakFld4" length="60"   />
+	  <!-- <fixString  name="Deli9" length="1"  /> -->
 
 </segment> 

@@ -8,35 +8,35 @@
 #  filter="parse,packets/translateDict.txt"
 
 #这里应该是EUPSprocessId
-#thdTxnCde.gdeupsb.hzPGasSmpcPayOnlineAction=460710
-#thdTxnCde.460710=gdeupsb.hzPGasSmpcPayOnlineAction
-thdTxnCde.eups.payUnilateralToBank=460710
-thdTxnCde.460710=eups.payUnilateralToBank
+#TransCode.gdeupsb.hzPGasSmpcPayOnlineAction=460710
+#TransCode.460710=gdeupsb.hzPGasSmpcPayOnlineAction
+TransCode.eups.payUnilateralToBank=460710
+TransCode.460710=eups.payUnilateralToBank
 
-#thdTxnCde.gdeupsb.hzPGasReversePaymentThdAction=460711
-#thdTxnCde.460711=gdeupsb.hzPGasReversePaymentThdAction
-thdTxnCde.eups.cancelUnilateralToBank=460711
-thdTxnCde.460711=eups.cancelUnilateralToBank
+#TransCode.gdeupsb.hzPGasReversePaymentThdAction=460711
+#TransCode.460711=gdeupsb.hzPGasReversePaymentThdAction
+TransCode.eups.cancelUnilateralToBank=460711
+TransCode.460711=eups.cancelUnilateralToBank
 
 
 
-thdTxnCde.gdeupsb.preBatchGashDealServiceAction=460716
-thdTxnCde.460716=gdeupsb.preBatchGashDealServiceAction
+TransCode.gdeupsb.preBatchGashDealServiceAction=460716
+TransCode.460716=gdeupsb.preBatchGashDealServiceAction
 
-#thdTxnCde.gdeupsb.oprGasCusAgentAction=460701
-#thdTxnCde.460701=gdeupsb.oprGasCusAgentAction
+#TransCode.gdeupsb.oprGasCusAgentAction=460701
+#TransCode.460701=gdeupsb.oprGasCusAgentAction
 
-#thdTxnCde.gdeupsb.oprGasCusAgentAction=Add
-#thdTxnCde.gdeupsb.oprGasCusAgentAction=AddNo
-#thdTxnCde.Add=gdeupsb.oprGasCusAgentAction
-#thdTxnCde.AddNo=gdeupsb.oprGasCusAgentAction
+#TransCode.gdeupsb.oprGasCusAgentAction=Add
+#TransCode.gdeupsb.oprGasCusAgentAction=AddNo
+#TransCode.Add=gdeupsb.oprGasCusAgentAction
+#TransCode.AddNo=gdeupsb.oprGasCusAgentAction
 
-#thdTxnCde.gdeupsb.oprGasCusAgentAction=Edit
-#thdTxnCde.gdeupsb.oprGasCusAgentAction=EditNo
-#thdTxnCde.Edit=gdeupsb.oprGasCusAgentAction
-#thdTxnCde.EditNo=gdeupsb.oprGasCusAgentAction
+#TransCode.gdeupsb.oprGasCusAgentAction=Edit
+#TransCode.gdeupsb.oprGasCusAgentAction=EditNo
+#TransCode.Edit=gdeupsb.oprGasCusAgentAction
+#TransCode.EditNo=gdeupsb.oprGasCusAgentAction
 
-#thdTxnCde.gdeupsb.oprGasCusAgentAction=Stop
-#thdTxnCde.gdeupsb.oprGasCusAgentAction=StopNo
-#thdTxnCde.Stop=gdeupsb.oprGasCusAgentAction
-#thdTxnCde.StopNo=gdeupsb.oprGasCusAgentAction
+#TransCode.gdeupsb.oprGasCusAgentAction=Stop
+#TransCode.gdeupsb.oprGasCusAgentAction=StopNo
+#TransCode.Stop=gdeupsb.oprGasCusAgentAction
+#TransCode.StopNo=gdeupsb.oprGasCusAgentAction
