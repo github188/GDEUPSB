@@ -40,19 +40,17 @@ public class PreCheckDealAction implements Executable{
 		
 			context.setData(ParamKeys.THD_CUS_NO, context.getData(GDParamKeys.PAY_NO));
 
-//			comNo=comNo.substring(1,5);         
-			
 			//验证单位协议
-			 Map<String,Object> rspMap = new HashMap<String, Object>();
-			 String comNo=context.getData(ParamKeys.COMPANY_NO).toString();
-			 rspMap.put(ParamKeys.COMPANY_NO, comNo);
-		    Result respData = bgspServiceAccessObject.callServiceFlatting("queryCorporInfo", rspMap);
-			
-			 if(CollectionUtils.isEmpty(respData.getPayload())){			
-				    context.setData(GDParamKeys.MSGTYP, "E");                  //  Contants常量   
-					context.setData(ParamKeys.RSP_CDE,"EFE999");        //  Contants常量   
-					throw new CoreRuntimeException("该单位未签约");
-			}
+//			 Map<String,Object> rspMap = new HashMap<String, Object>();
+//			 String comNo=context.getData(ParamKeys.COMPANY_NO).toString();
+//			 rspMap.put(ParamKeys.COMPANY_NO, comNo);
+//		    Result respData = bgspServiceAccessObject.callServiceFlatting("queryCorporInfo", rspMap);
+//			
+//			 if(CollectionUtils.isEmpty(respData.getPayload())){			
+//				    context.setData(GDParamKeys.MSGTYP, "E");                  //  Contants常量   
+//					context.setData(ParamKeys.RSP_CDE,"EFE999");        //  Contants常量   
+//					throw new CoreRuntimeException("该单位未签约");
+//			}
 				context.setData(GDParamKeys.TOTNUM, "1");
 				//日期时间格式修改
 				context.setData(ParamKeys.CCY, GDConstants.RENMINBI);
