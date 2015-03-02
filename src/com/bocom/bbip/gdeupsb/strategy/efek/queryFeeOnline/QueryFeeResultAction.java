@@ -1,6 +1,9 @@
 package com.bocom.bbip.gdeupsb.strategy.efek.queryFeeOnline;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -110,8 +113,17 @@ public class QueryFeeResultAction implements Executable{
 										if(null !=rspMap){
 											 	context.setDataMap(rspMap);
 								                context.setData(ParamKeys.THIRD_RETURN_MESSAGE, rspMap);
+								                BigDecimal oweFeeAmt=new BigDecimal("0.00");
+								                List<Map<String, Object>> list=(List<Map<String, Object>>)rspMap.get("Information");
+								                for (Map<String, Object> map : list) {
+								                	double  amt=Double.parseDouble(map.get(ParamKeys.OWE_FEE_AMT).toString());
+								                		amt=amt/100;
+								                		DecimalFormat df=new DecimalFormat("#.00");
+								                		BigDecimal amtAdd=new BigDecimal(df.format(amt));
+								                		oweFeeAmt=oweFeeAmt.add(amtAdd);
+												}
 								                //TODO 怎样得到欠费金额
-								                context.setData(ParamKeys.OWE_FEE_AMT, "13222");
+								                context.setData(ParamKeys.OWE_FEE_AMT, oweFeeAmt);
 								                //第三方返回码
 								                CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
 								                String responseCode = rspCdeAction.getThdRspCde(rspMap, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
