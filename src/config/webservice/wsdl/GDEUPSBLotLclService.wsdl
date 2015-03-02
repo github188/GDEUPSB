@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotLclService" xmlns:gdeupsb="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotLclService/Schema" name="GDEUPSBLotLclService" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotLclService">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotLclService">
+      <xsd:import namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotLclService/Schema" schemaLocation="GDEUPSBLotLclService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="downloadLotPrzFileRequestMessage">
+    <wsdl:part name="downloadLotPrzFileRequest" element="gdeupsb:downloadLotPrzFile"/>
+  </wsdl:message>
+  <wsdl:message name="downloadLotPrzFileResponseMessage">
+    <wsdl:part name="downloadLotPrzFileResponse" element="gdeupsb:downloadLotPrzFileResponse"/>
+  </wsdl:message>
+  <wsdl:message name="qryLotWinRecordRequestMessage">
+    <wsdl:part name="qryLotWinRecordRequest" element="gdeupsb:qryLotWinRecord"/>
+  </wsdl:message>
+  <wsdl:message name="qryLotWinRecordResponseMessage">
+    <wsdl:part name="qryLotWinRecordResponse" element="gdeupsb:qryLotWinRecordResponse"/>
+  </wsdl:message>
+  <wsdl:message name="downloadLotChkFileRequestMessage">
+    <wsdl:part name="downloadLotChkFileRequest" element="gdeupsb:downloadLotChkFile"/>
+  </wsdl:message>
+  <wsdl:message name="downloadLotChkFileResponseMessage">
+    <wsdl:part name="downloadLotChkFileResponse" element="gdeupsb:downloadLotChkFileResponse"/>
+  </wsdl:message>
+  <wsdl:message name="qryLotBetRecordRequestMessage">
+    <wsdl:part name="qryLotBetRecordRequest" element="gdeupsb:qryLotBetRecord"/>
+  </wsdl:message>
+  <wsdl:message name="qryLotBetRecordResponseMessage">
+    <wsdl:part name="qryLotBetRecordResponse" element="gdeupsb:qryLotBetRecordResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="GDEUPSBLotLclServicePortType">
+    <wsdl:operation name="downloadLotPrzFile">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:downloadLotPrzFileRequestMessage"/>
+      <wsdl:output message="tns:downloadLotPrzFileResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="qryLotWinRecord">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:qryLotWinRecordRequestMessage"/>
+      <wsdl:output message="tns:qryLotWinRecordResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="downloadLotChkFile">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:downloadLotChkFileRequestMessage"/>
+      <wsdl:output message="tns:downloadLotChkFileResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="qryLotBetRecord">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:qryLotBetRecordRequestMessage"/>
+      <wsdl:output message="tns:qryLotBetRecordResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GDEUPSBLotLclServiceSoapBinding" type="tns:GDEUPSBLotLclServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="downloadLotPrzFile">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotLclService/downloadLotPrzFile"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="qryLotWinRecord">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotLclService/qryLotWinRecord"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="downloadLotChkFile">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotLclService/downloadLotChkFile"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="qryLotBetRecord">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotLclService/qryLotBetRecord"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GDEUPSBLotLclService">
+    <wsdl:port name="GDEUPSBLotLclServicePort" binding="tns:GDEUPSBLotLclServiceSoapBinding">
+      <soap:address location="http://127.0.0.1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
