@@ -101,7 +101,7 @@ public class OprGasCusAgentAction extends BaseAction{
 //		<Set>TActNo=491800012620190029499</Set>  
 //	      <Set>@MSG.OIP=$HstIp</Set>  <!--第三方IP-->
 //	      <Set>@MSG.OPT=$HstPrt</Set> <!--第三方PORT-->
-		context.setData("tTxnNo", GDConstants.GAS_THD_TXN_NO);
+		context.setData("tTxnNo", GDConstants.GAS_THD_ACT_NO);
 //		context.setData("@MSG.OIP", context.getData("hstIp"));
 //		context.setData("@MSG.OPT", context.getData("HstPrt"));
 		
