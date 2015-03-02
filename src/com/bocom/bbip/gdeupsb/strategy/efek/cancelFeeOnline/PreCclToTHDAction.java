@@ -37,7 +37,7 @@ public class PreCclToTHDAction implements Executable {
 			double d=i/100;
 			DecimalFormat df=new DecimalFormat("#.00");
 			BigDecimal txnAmt=new BigDecimal(df.format(d));
-			System.out.println(txnAmt);
 			context.setData(ParamKeys.TXN_AMT,txnAmt );
+			
 		}
 }
