@@ -66,6 +66,12 @@
   <wsdl:message name="prlFbpdMonRepResponseMessage">
     <wsdl:part name="prlFbpdMonRepResponse" element="gdeupsb:prlFbpdMonRepResponse"/>
   </wsdl:message>
+  <wsdl:message name="commitBatchRequestMessage">
+    <wsdl:part name="commitBatchRequest" element="gdeupsb:commitBatch"/>
+  </wsdl:message>
+  <wsdl:message name="commitBatchResponseMessage">
+    <wsdl:part name="commitBatchResponse" element="gdeupsb:commitBatchResponse"/>
+  </wsdl:message>
   <wsdl:portType name="GDEUPSBathServicePortType">
     <wsdl:operation name="prlBatchRect">
       <wsdl:documentation/>
@@ -116,6 +122,11 @@
       <wsdl:documentation/>
       <wsdl:input message="tns:prlFbpdMonRepRequestMessage"/>
       <wsdl:output message="tns:prlFbpdMonRepResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="commitBatch">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:commitBatchRequestMessage"/>
+      <wsdl:output message="tns:commitBatchResponseMessage"/>
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="GDEUPSBathServiceSoapBinding" type="tns:GDEUPSBathServicePortType">
@@ -203,6 +214,15 @@
     </wsdl:operation>
     <wsdl:operation name="prlFbpdMonRep">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBathService/prlFbpdMonRep"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="commitBatch">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBathService/commitBatch"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>

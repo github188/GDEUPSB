@@ -143,6 +143,20 @@
       <xs:element name="response" type="tns:prlFbpdMonRepResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:element name="commitBatch" type="tns:commitBatchReq_CType"/>
+  <xs:element name="commitBatchResponse" type="tns:commitBatchRsp_CType"/>
+  <xs:complexType name="commitBatchReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:commitBatchRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="commitBatchRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:commitBatchResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:element name="requestHeader" type="tns:requestHeader_CType"/>
   <xs:element name="responseHeader" type="tns:responseHeader_CType"/>
   <xs:element name="sortingInfo" type="tns:sortingInfo_CType"/>
@@ -220,7 +234,7 @@
   <xs:complexType name="prlBatchRectRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
-      <xs:element name="busTyp" type="tns:busTyp_SType" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="txnDte" type="tns:txnDte_SType" minOccurs="0"/>
       <xs:element name="cusAc" type="tns:cusAc_SType"/>
     </xs:sequence>
@@ -231,7 +245,7 @@
       <xs:element name="fleNme" type="tns:fleNme_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="busTyp_SType">
+  <xs:simpleType name="eupsBusTyp_SType">
     <xs:annotation>
       <xs:documentation>业务类型</xs:documentation>
     </xs:annotation>
@@ -266,7 +280,7 @@
   <xs:complexType name="printBathInfoRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
-      <xs:element name="busTyp" type="tns:busTyp_SType" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="dskNo" type="tns:dskNo_SType"/>
     </xs:sequence>
   </xs:complexType>
@@ -295,6 +309,7 @@
   <xs:complexType name="cancelBatchRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="batNo" type="tns:batNo_SType"/>
     </xs:sequence>
   </xs:complexType>
@@ -314,7 +329,7 @@
   <xs:complexType name="qryBatInfoByBatNoRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
-      <xs:element name="busTyp" type="tns:busTyp_SType" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="dskNo" type="tns:dskNo_SType"/>
     </xs:sequence>
   </xs:complexType>
@@ -324,7 +339,7 @@
       <xs:element name="dskNo" type="tns:dskNo_SType"/>
       <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
       <xs:element name="comNam" type="tns:comNam_SType" minOccurs="0"/>
-      <xs:element name="busTyp" type="tns:busTyp_SType" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType" minOccurs="0"/>
       <xs:element name="ornCnt" type="tns:ornCnt_SType" minOccurs="0"/>
       <xs:element name="ornAmt" type="tns:ornAmt_SType" minOccurs="0"/>
     </xs:sequence>
@@ -364,7 +379,7 @@
   <xs:complexType name="qryComInfoByComNoRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
-      <xs:element name="busTyp" type="tns:busTyp_SType" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
@@ -373,13 +388,13 @@
       <xs:element ref="tns:responseHeader"/>
       <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
       <xs:element name="comNam" type="tns:comNam_SType" minOccurs="0"/>
-      <xs:element name="busTyp" type="tns:busTyp_SType" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="qryStatsBathInfoRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
-      <xs:element name="busTyp" type="tns:busTyp_SType" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="dskNo" type="tns:dskNo_SType"/>
     </xs:sequence>
   </xs:complexType>
@@ -389,7 +404,7 @@
       <xs:element name="dskNo" type="tns:dskNo_SType" minOccurs="0"/>
       <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
       <xs:element name="comNam" type="tns:comNam_SType" minOccurs="0"/>
-      <xs:element name="busTyp" type="tns:busTyp_SType" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType" minOccurs="0"/>
       <xs:element name="ornCnt" type="tns:ornCnt_SType" minOccurs="0"/>
       <xs:element name="ornAmt" type="tns:ornAmt_SType" minOccurs="0"/>
       <xs:element name="status" type="tns:status_SType" minOccurs="0"/>
@@ -406,7 +421,7 @@
   <xs:complexType name="qryBathInfoRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
-      <xs:element name="busTyp" type="tns:busTyp_SType" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="comNo" type="tns:comNo_SType"/>
       <xs:element name="ornCnt" type="tns:ornCnt_SType"/>
       <xs:element name="ornAmt" type="tns:ornAmt_SType"/>
@@ -419,7 +434,7 @@
       <xs:element name="dskNo" type="tns:dskNo_SType"/>
       <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
       <xs:element name="comNam" type="tns:comNam_SType" minOccurs="0"/>
-      <xs:element name="busTyp" type="tns:busTyp_SType" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType" minOccurs="0"/>
       <xs:element name="ornCnt" type="tns:ornCnt_SType" minOccurs="0"/>
       <xs:element name="ornAmt" type="tns:ornAmt_SType" minOccurs="0"/>
     </xs:sequence>
@@ -435,7 +450,7 @@
   <xs:complexType name="bathSqnInfoRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
-      <xs:element name="busTyp" type="tns:busTyp_SType" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="actNo" type="tns:actNo_SType"/>
       <xs:element name="actNam" type="tns:actNam_SType"/>
       <xs:element name="staDat" type="tns:staDat_SType" minOccurs="0"/>
@@ -482,7 +497,7 @@
   <xs:complexType name="bathCusExeRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
-      <xs:element name="busTyp" type="tns:busTyp_SType" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="actNo" type="tns:actNo_SType"/>
       <xs:element name="actNam" type="tns:actNam_SType"/>
       <xs:element name="txnDat" type="tns:txnDat_SType" minOccurs="0"/>
@@ -513,7 +528,7 @@
   <xs:complexType name="prlFbpdMonRepRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
-      <xs:element name="busTyp" type="tns:busTyp_SType" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
       <xs:element name="beginDate" type="tns:beginDate_SType" minOccurs="0"/>
       <xs:element name="endDate" type="tns:endDate_SType" minOccurs="0"/>
@@ -541,4 +556,22 @@
       <xs:maxLength value="14"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:complexType name="commitBatchRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="batNo" type="tns:batNo_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="commitBatchResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="batNo" type="tns:batNo_SType" minOccurs="0"/>
+      <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
+      <xs:element name="comNam" type="tns:comNam_SType" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType" minOccurs="0"/>
+      <xs:element name="ornCnt" type="tns:ornCnt_SType" minOccurs="0"/>
+      <xs:element name="ornAmt" type="tns:ornAmt_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
 </xs:schema>
