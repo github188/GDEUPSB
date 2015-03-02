@@ -5,6 +5,96 @@
 						http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-2.0-m1.xsd
 						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
 
+
+
+
+ 	<!-- ========================= -->
+	<!-- TCP CHANNEL COMMON CONFIG -->
+	<!-- =======pgas00 start====== -->
+	<!-- ========================= -->
+  
+    <bean id="pgas00_TcpMapping" class="com.bocom.jump.bp.channel.tcp.SocketURIEndpointMapping">
+        <property name="mapping">
+            <map>
+                <!-- 渠道接入端口，参数配置于sys.properties文件 
+                 <entry key="tcp://*:${abs.listen.port}" value-ref="pgas00_TcpEndpoint"/>
+           -->
+                <entry key="tcp://*:8889" value-ref="pgas00_TcpEndpoint"/>
+            </map>
+        </property>
+    </bean>
+    <bean id="pgas00" class="com.bocom.jump.bp.channel.tcp.SocketServer">
+        <!-- property name="host" value="${local.ip}"/>  -->
+        <!-- 渠道接入端口，参数配置于sys.properties文件 -->
+        <property name="port"         value="8889"/>
+        <property name="mapping"      ref="pgas00_TcpMapping"/>
+        <property name="threadPool"   ref="pgas00_TcpThreadPool"/>
+    </bean>
+    
+    <bean id="pgas00_TcpThreadPool" class="com.bocom.jump.bp.util.Jdk15ThreadPool">
+        <property name="name"         value="pgas00"/>
+        <property name="poolSize"     value="10"/>
+        <property name="workQueueSize" value="1024"/>
+    </bean>
+    
+    <bean id="pgas00_TcpEndpoint" class="com.bocom.jump.bp.channel.DefaultEndpoint">
+        <property name="interceptors">
+            <array>
+                <bean class="com.bocom.jump.bp.channel.interceptors.RequestTracingInterceptor"/>
+               <bean class="com.bocom.jump.bp.channel.tcp.interceptors.PayloadChannelInterceptor">
+                    
+                     <property name="lengthSize" value="4"/>
+                </bean> 
+       
+                  <!--   <bean class="com.bocom.net.tangdi.core.tcp.TdPayLoadInterceptor">
+                        <property name="MaxBufSize" value="8192"/>
+                    </bean> -->
+                
+                <bean class="com.bocom.jump.bp.channel.interceptors.TransformInterceptor">
+                    <property name="encodeTransforms"> <!-- unpack response -->
+
+                        <array>
+                            <bean class="com.bocom.jump.bp.channel.interceptors.EncoderTransform">
+                                <!-- 渠道返回报文体，参数配置于sys.properties文件 -->
+                               	<constructor-arg value="packet://WEB-INF/classes/config/stream/PGAS00/PGAS00RspHeader.xml" />
+                                
+                                </bean>
+                            
+                            <bean class="com.bocom.jump.bp.channel.interceptors.ResponseTransform"/>
+                        </array>
+                    </property>
+                    <property name="decodeTransforms"> <!-- unpack request -->
+                        <array>
+                            <bean class="com.bocom.jump.bp.channel.interceptors.RequestTransform"/>
+                            
+                            <bean class="com.bocom.jump.bp.channel.interceptors.DecoderTransform">
+                                <!-- 渠道请求报文头，参数配置于sys.properties文件 -->
+                          <constructor-arg
+									value="packet://WEB-INF/classes/config/stream/PGAS00/PGAS00ReqHeader.xml" />
+                            </bean>
+                        </array>
+                    </property>
+                    <property name="exceptionHandler" ref="exceptionHandler"/>
+                </bean>
+                <bean class="com.bocom.jump.bp.channel.interceptors.ContextInterceptor"/>
+            		<bean class="com.bocom.bbip.eups.interceptor.ServiceThdInterceptor">
+									<constructor-arg value="8889" />
+								</bean>  
+            </array>
+        </property>
+    </bean> 
+    
+  	<!-- ========================= -->
+	<!-- TCP CHANNEL COMMON CONFIG -->
+	<!-- =======pgas00 end=========-->
+	<!-- ========================= -->
+
+
+
+
+
+
+
 	<bean id="tcpThreadPool_WATR00" class="com.bocom.jump.bp.util.Jdk15ThreadPool">
 		<property name="name" value="tcpChannel_watr00" />
 		<property name="poolSize" value="10" />
