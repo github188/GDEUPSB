@@ -6,6 +6,7 @@
 	<process id="gdeupsb.hSCardSignIn" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">
 		<actions>
 		    <action id="act" class="com.bocom.bbip.gdeupsb.action.hscard.HScardSignInAction"/>
+		    <action id="act" ref="eups.eupsManageThdTranCtlDetailAction" />
 		</actions>
 	</process> 
 	
@@ -14,6 +15,7 @@
 		interceptors="eups.transMessageInterceptor">
 		<actions>
 		    <action id="act" class="com.bocom.bbip.gdeupsb.action.hscard.HScardSignOutAction"/>
+		    <action id="act" ref="eups.eupsManageThdTranCtlDetailAction" />
 		</actions>
 	</process> 
 	
