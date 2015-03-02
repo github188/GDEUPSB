@@ -33,7 +33,7 @@
 56	已扣费用	10	
 67	交易日期	10	YYYY-MM-DD
  -->
- 	<fixString name="thdTxnCde" length="10" />
+ 	<fixString name="bakFld2" length="10" />
  	<fixString  name="DeliA"      length="1" default=","/>
  	<fixString name="bk" length="4" />
  	<fixString  name="DeliA"      length="1" default=","/>
@@ -41,12 +41,12 @@
  	<fixString  name="DeliA"      length="1" default=","/>
  	<fixString name="cusNo" length="12" />
  	<fixString  name="DeliA"      length="1" default=","/>
- 	<fixString name="bakFld1" length="6" />
+ 	<fixString name="bakFld3" length="6" />
  	<fixString  name="DeliA"      length="1" default=","/>
  	<fixString name="txnAmt" length="10" />
  	<fixString  name="DeliA"      length="1" default=","/>
 	<fixString name="txnDte" length="10" />
- 	<fixString  name="DeliA"      length="1" default=","/>
+ 	<fixString  name="DeliA"      length="1" default=""/>
 	    
 	    
 	</segment>
