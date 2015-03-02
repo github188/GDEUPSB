@@ -19,8 +19,41 @@
 		<actions>
 			<action id="act" ref="gasAgentBatchFileToFTP" />
 		</actions>
+	</process>   -->
+
+	<!-- 惠州燃气单笔托收 460710 -->
+<!-- 	<process id="gdeupsb.hzPGasSmpcPayOnlineAction" template="eups.simpleTran"
+		interceptors="eups.transMessageInterceptor">
+		<actions>
+			<action id="act" ref="preparePayHstHzAction" />
+			<action id="act" ref="aftPayFeeThdHzAction" />
+		</actions>
+	</process>
+ -->
+	<!-- 惠州燃气单笔冲正 460711 -->
+<!-- 	<process id="gdeupsb.hzPGasReversePaymentThdAction" template="eups.simpleTran"
+		interceptors="eups.transMessageInterceptor">
+		<actions>
+			<action id="act" ref="preReversePaymentThdAction" />
+			<action id="act" ref="aftReversePaymentThdAction" />
+		
+		</actions>
+	</process> -->
+
+
+	<!-- 惠州燃气批量托收数据准备 -->
+<!-- 	 <process id="gdeupsb.preBatchGashDealServiceAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor"> 
+	 	<beans>
+			<bean id="act" ref="preBatchGashDealServiceAction" />
+		</beans>
 	</process>  -->
 
+	<!-- 惠州燃气对账文件上传 -->
+<!-- 	<process id="gdeupsb.checkFileToThdHzAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">
+	 <actions>
+		<action id="act" ref="checkFileToThdHzAction" />
+	</actions>
+	</process>  -->
 
 
 	<!-- 惠州燃气代扣流水信息查询 -->
@@ -39,40 +72,6 @@
 		</actions>
 	</process>
 
-
-
-	<!-- 惠州燃气单笔托收 460710 -->
-<!-- 	<process id="gdeupsb.hzPGasSmpcPayOnlineAction" template="eups.simpleTran"
-		interceptors="eups.transMessageInterceptor">
-		<actions>
-			<action id="act" ref="preparePayHstHzAction" />
-			<action id="act" ref="aftPayFeeThdHzAction" />
-		</actions>
-	</process>
- -->
-	<!-- 惠州燃气单笔冲正 460711 -->
-	<process id="gdeupsb.hzPGasReversePaymentThdAction" template="eups.simpleTran"
-		interceptors="eups.transMessageInterceptor">
-		<actions>
-			<action id="act" ref="preReversePaymentThdAction" />
-			<action id="act" ref="aftReversePaymentThdAction" />
-		</actions>
-	</process>
-
-
-	<!-- 惠州燃气批量托收数据准备 -->
-<!-- 	 <process id="gdeupsb.preBatchGashDealServiceAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor"> 
-	 	<beans>
-			<bean id="act" ref="preBatchGashDealServiceAction" />
-		</beans>
-	</process>  -->
-
-	<!-- 惠州燃气对账文件上传 -->
-	<process id="gdeupsb.checkFileToThdHzAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">
-	 <actions>
-		<action id="act" ref="checkFileToThdHzAction" />
-	</actions>
-	</process> 
 
 
 	<!-- 福彩中奖查询 -->
