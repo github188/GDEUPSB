@@ -132,4 +132,32 @@
 		</actions>
 	</process>
 	
+	<!-- 联机银行方单边抹账 -->
+	<process id="eups.cancelUnilateralToBankELEC00" template="eups.cancelUnilateralTemplate"
+		interceptors="eups.thdELEC00Interceptor">
+		<actions>
+			<!-- 交易前检查 -->
+			<!-- 第三方交易控制检查（默认正常交易） -->
+			<action id="preAction" ref="eups.checkComTxnCtlAction"
+				operations="checkThdTxnCtlNormal" />
+			<!-- 抹账前处理 -->
+			<!-- <action id="preAction" ref="eups.preCclToBankStrategyAction"/> -->
+			<action id="preAction" ref="eups.cancelUnilateralToBankServiceAction"
+				operations="preCclToBank" />
+			<action id="preAction" ref="eups.checkBeforeCancelAction"
+				operations="checkBeforeCancelBank" />
+			<!-- 联机抹账预处理 -->
+			<action id="initAction" ref="eups.initCancelInfoAction" />
+			<!-- 联机531代收付交易主机抹账 -->
+			<action id="businessAction" ref="eups.bbipPaymentCancelUsingReversal" />
+			<action id="businessAction" ref="eups.processCBCancelResultAction" />
+			<!-- 交易结果 -->
+			<!-- 抹账后返回处理 -->
+			<!-- <action id="finalizeAction" ref="eups.aftCclToBankStrategyAction"/> -->
+			<action id="finalizeAction" ref="eups.cancelUnilateralToBankServiceAction"
+				operations="aftCclToBank" />
+			<action id="finalizeAction" ref="eups.saveCancelResultAction" />
+		</actions>
+	</process>
+	
 </x:beans>
