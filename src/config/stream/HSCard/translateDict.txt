@@ -9,7 +9,7 @@
 TransCode.gdeupsb.hSCardSignIn=000101
 TransCode.gdeupsb.hSCardSignOut=000102
 TransCode.eups.payUnilateralToBank=000202
-TransCode.gdeupsb.trspPrintInvoic=484004
+TransCode.gdeupsb.hsCardFeeQuery=000201
 
 
 
