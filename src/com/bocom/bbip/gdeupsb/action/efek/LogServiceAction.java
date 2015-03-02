@@ -82,7 +82,6 @@ public class LogServiceAction extends BaseAction{
 				//TODO MD5
 				eupsStreamNo.setRsvFld5("加密");
 			}
-			
 			//
 			EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecLogService");
 			eupsThdFtpConfig.setLocFleNme(fileName);
