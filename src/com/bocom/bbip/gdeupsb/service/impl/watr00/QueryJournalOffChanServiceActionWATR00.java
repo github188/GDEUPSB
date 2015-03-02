@@ -18,7 +18,11 @@ import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
-
+/**
+ * 根据会计流水号查询流水信息
+ * @author hefengwen
+ *
+ */
 public class QueryJournalOffChanServiceActionWATR00 extends BaseAction {
 	private static Logger logger = LoggerFactory.getLogger(QueryJournalOffChanServiceActionWATR00.class);
 	
