@@ -6,7 +6,7 @@
 	 <fixString length="6" name="DCC_TIME"  /> <!-- 交易时间 -->
 	<fixString length="6" name="DCC_LS"  /> <!-- 校方流水号-->
 	    <fixString length="10" name="DCC_ID_NO" /> <!-- 终端编号 -->
-	     <fixString length="4" name="DCC_GYDM"  /> <!-- 柜员编号 -->
+	     <fixString length="4" name="tlr"  /> <!-- 柜员编号 -->
 	    <fixString length="32" name="DCC_DDP_RMRK" /> <!-- 备注1 -->
       
 </segment>
