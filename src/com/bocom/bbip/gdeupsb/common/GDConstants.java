@@ -345,7 +345,105 @@ public final class GDConstants {
 	public static final String THD_STS_B1 = "B1";
 	public static final String THD_STS_B2 = "B2";
 	public static final String THD_STS_B3 = "B3";
-
-
-
+	/**公共批量 公共方法*/
+	public static final String BATCH_FILE_COMMON_UTILS="BatchFileCommon";
+	/**公共批量 代收付文件格式*/
+	public static final String BATCH_FILE_FORMAT="agtFileBatchFmt";
+	/**公共批量 批次状态初始状态*/
+	 public static final String BBIP_PUBLIC_SERVICE="bbipPublicService";
+	/**公共批量 批次状态初始状态*/
+	 public static final String BATCH_STATUS_INIT="I";
+	 /**公共批量 批次状态待提交状态*/
+	 public static final String BATCH_STATUS_WAIT="W";
+	 /**公共批量 批次状态完成状态*/
+	 public static final String BATCH_STATUS_COMPLETE="S";
+	 /**公共批量 批次状态已撤销状态*/
+	 public static final String BATCH_STATUS_CANCEL="C";
+	 /**福彩GameId 类型 双色球-5 快乐十分-7*/
+	 public static final String LOTR_GAMEID_DOUBLE_COLOUR_BALL="5";
+	 public static final String LOTR_GAMEID_HAPPY_TEN_MINUTE="7";
+	 /** gbk编码  */
+	 public static final String CHARSET_ENCODING_GBK="gbk"; 
+	 
+	 /*********** elec02 *******************/
+		public static final String GD_ELE_APPNAM_GZ="GZ_EFE1";
+		public static final String GD_ELE_APPNAM_ZH="ZH_EFE1";
+		public static final String GD_ELE_APPNAM_FS="FS_EFE1";
+		public static final String GD_ELE_APPNAM_ST="ST_EFE1";
+		public static final String GD_ELE_APPNAM_DG="DG_EFE1";
+		public static final String GD_ELE_APPNAM_ZS="ZS_EFE1";
+		public static final String GD_ELE_APPNAM_JY="JY_EFE1";
+		public static final String GD_ELE_APPNAM_JY2="JY_EFE2";
+		public static final String GD_ELE_APPNAM_HZ="HZ_EFE1";
+		public static final String GD_ELE_APPNAM_JM="JM_EFE1";
+		
+		public static final String GD_ELE_CAgtNo_GZ="4410000560";
+		public static final String GD_ELE_CAgtNo_ZH="xxxxxxxxxx";
+		public static final String GD_ELE_CAgtNo_FS="xxxxxxxxxx";
+		public static final String GD_ELE_CAgtNo_ST="4450000002";
+		public static final String GD_ELE_CAgtNo_DG="xxxxxxxxxx";
+		public static final String GD_ELE_CAgtNo_ZS="xxxxxxxxxx";
+		public static final String GD_ELE_CAgtNo_JY="4850000060";
+		public static final String GD_ELE_CAgtNo_JY2="4850000061";
+		public static final String GD_ELE_CAgtNo_HZ="xxxxxxxxxx";
+		public static final String GD_ELE_CAgtNo_JM="xxxxxxxxxx";
+		
+		public static final String GD_ELE_IActNo_GZ="4410000560";
+		public static final String GD_ELE_IActNo_ZH="xxxxxxxxxx";
+		public static final String GD_ELE_IActNo_FS="xxxxxxxxxx";
+		public static final String GD_ELE_IActNo_ST="4450000002";
+		public static final String GD_ELE_IActNo_DG="xxxxxxxxxx";
+		public static final String GD_ELE_IActNo_ZS="xxxxxxxxxx";
+		public static final String GD_ELE_IActNo_JY="4850000060";
+		public static final String GD_ELE_IActNo_JY2="4850000061";
+		public static final String GD_ELE_IActNo_HZ="xxxxxxxxxx";
+		public static final String GD_ELE_IActNo_JM="xxxxxxxxxx";
+		
+		public static final String GD_ELE_IActNm_GZ="4410000560";
+		public static final String GD_ELE_IActNm_ZH="xxxxxxxxxx";
+		public static final String GD_ELE_IActNm_FS="xxxxxxxxxx";
+		public static final String GD_ELE_IActNm_ST="4450000002";
+		public static final String GD_ELE_IActNm_DG="xxxxxxxxxx";
+		public static final String GD_ELE_IActNm_ZS="xxxxxxxxxx";
+		public static final String GD_ELE_IActNm_JY="4850000060";
+		public static final String GD_ELE_IActNm_JY2="4850000061";
+		public static final String GD_ELE_IActNm_HZ="xxxxxxxxxx";
+		public static final String GD_ELE_IActNm_JM="xxxxxxxxxx";
+	 
+	 /*********** elec02 *******************/
+		
+		/*********** 珠海文本 *******************/
+		 /** 管理机构代号  */
+		public static final String MANAGE_ORG_445012="445012";   
+		
+		 /** 珠海代发工资新旧账号转换的账号开头  */
+		public static final String GD_ZH_WAGE_ACTNO_PREFIX_4449="4449";  
+		
+		 /** 珠海代发工资新旧账号18位转换的账号开头  */
+		public static final String GD_ZH_WAGE_ACTNO_PREFIX_18_63420="63420"; 
+		
+		 /** 珠海代发工资新旧账号20位转换的账号开头  */
+		public static final String GD_ZH_WAGE_ACTNO_PREFIX_20_078="078";   
+		
+		/** 珠海代发工资新旧账号转换的账号结尾  */
+		public static final String GD_ZH_WAGE_ACTNO_SUFFIX_202="202";  
+		
+		/** 珠海代发工资新旧账号转换的账号结尾  */
+		public static final String GD_ZH_WAGE_ACTNO_SUFFIX_20_9999="9999"; 
+		
+		 /** 发送短信手机号码        */
+	    public static final String ZH_FILE_SMS_MOBILE_NO="mobileNo";
+	    /**  发送短信内容       */
+	    public static final String ZH_FILE_SMS_MOBILE_MSG="msg";
+	    /** 文件账号查询  */
+		public static final String GD_ZH_OPERATE_QUERY = "0";
+		/** 文件账号修改  */
+		public static final String GD_ZH_OPERATE_MODIFY = "1";
+		/** 文件账号新增  */
+		public static final String GD_ZH_OPERATE_ADD = "2";
+		/** 文件账号删除  */
+		public static final String GD_ZH_OPERATE_DELETE = "3";
+		/*********** 珠海文本 *******************/
+		
+		
 }
