@@ -18,6 +18,12 @@
   <wsdl:message name="printBathInfoResponseMessage">
     <wsdl:part name="printBathInfoResponse" element="gdeupsb:printBathInfoResponse"/>
   </wsdl:message>
+  <wsdl:message name="cancelBatchRequestMessage">
+    <wsdl:part name="cancelBatchRequest" element="gdeupsb:cancelBatch"/>
+  </wsdl:message>
+  <wsdl:message name="cancelBatchResponseMessage">
+    <wsdl:part name="cancelBatchResponse" element="gdeupsb:cancelBatchResponse"/>
+  </wsdl:message>
   <wsdl:message name="qryBatInfoByBatNoRequestMessage">
     <wsdl:part name="qryBatInfoByBatNoRequest" element="gdeupsb:qryBatInfoByBatNo"/>
   </wsdl:message>
@@ -71,6 +77,11 @@
       <wsdl:input message="tns:printBathInfoRequestMessage"/>
       <wsdl:output message="tns:printBathInfoResponseMessage"/>
     </wsdl:operation>
+    <wsdl:operation name="cancelBatch">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:cancelBatchRequestMessage"/>
+      <wsdl:output message="tns:cancelBatchResponseMessage"/>
+    </wsdl:operation>
     <wsdl:operation name="qryBatInfoByBatNo">
       <wsdl:documentation/>
       <wsdl:input message="tns:qryBatInfoByBatNoRequestMessage"/>
@@ -120,6 +131,15 @@
     </wsdl:operation>
     <wsdl:operation name="printBathInfo">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBathService/printBathInfo"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cancelBatch">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBathService/cancelBatch"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
