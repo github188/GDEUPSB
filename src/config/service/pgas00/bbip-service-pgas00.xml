@@ -19,7 +19,7 @@
 	<x:bean id="gdeupsb.checkFileToThdHzAction" class="com.bocom.bbip.gdeupsb.action.gas.CheckFileToThdHzAction" />
 	
 	<!-- 用户协议文件上传（0全部，1新增） -->
-	<x:bean id="gdeupsb.gasAgentBatchFileToFTP" class="com.bocom.bbip.gdeupsb.action.gas.agentBat.GasAgentBatchFileToFtpAction" />
+	<!-- <x:bean id="gdeupsb.gasAgentBatchFileToFTP" class="com.bocom.bbip.gdeupsb.action.gas.agentBat.GasAgentBatchFileToFtpAction" /> -->
 	
 	 <!-- HZ燃气： 文件批扣数据准备 -->
   	<x:bean id="eups.fileBatchPayCreateDataServiceActionPGAS00"
