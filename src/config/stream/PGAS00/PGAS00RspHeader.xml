@@ -12,8 +12,6 @@
 	<fixString name="comNo" length="10" />
 	<fixString  name="Deli1" length="1" default=","/>
 	
-	<fixString name="thdTxnCde" length="10" />
- 	<fixString  name="Deli1" length="1" default=","/>
  	 -->
  	 
  	 <fixString name="thdTxnCde" length="6" />
@@ -29,6 +27,5 @@
 		<include name="N" keys="thdTxnCde" encodePrefix="req" decodePrefix="rsp" />
 	</select>
 	
- 		<!-- 	<include keys="thdTxnCde" encodePrefix="rsp"/> -->
  		
 </message>
