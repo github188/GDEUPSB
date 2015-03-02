@@ -64,7 +64,7 @@ public class PayUnilateralToBankServiceImplPGAS00 implements PayUnilateralToBank
 		
 		//预置返回第三方状态为失败 (使用备用字段2)
 		context.setData(ParamKeys.BAK_FLD2, GDConstants.THD_STS_B3);
-		//预置状物状态status为0 (使用备用字段1)
+		//预置账务状态status为0 (使用备用字段1)
 		context.setData(ParamKeys.BAK_FLD1, "0");
 		
 		context.setData(ParamKeys.RSP_MSG, "扣款失败");
@@ -180,7 +180,7 @@ public class PayUnilateralToBankServiceImplPGAS00 implements PayUnilateralToBank
 			context.setData(ParamKeys.BAK_FLD5, "扣款成功");
 			
 			//更新流水
-			EupsTransJournal etj = new EupsTransJournal();
+			EupsTransJournal etj = context.getData(ParamKeys.CONSOLE_LCLJNL_LIST);
 			etj.setTxnTyp(context.getData(ParamKeys.TXN_TYP).toString());	//TxnTyp='%s'
 			etj.setCusNme(context.getData(ParamKeys.CUS_NME).toString());	//ActNam='%s'
 			etj.setTxnAmt(new BigDecimal(context.getData(ParamKeys.TXN_AMOUNT).toString()));	//OptAmt='%s'	
