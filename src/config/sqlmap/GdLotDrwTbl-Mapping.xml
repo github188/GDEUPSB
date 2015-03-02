@@ -54,6 +54,21 @@
      fetch first 1 rows only
   </select>
 
+ <!--福彩明细查询 -->
+  <select id="qryUnPrzDrw" resultMap="basicResultMap">
+          select GAME_ID, DRAW_ID 
+                from  gdeupsb.GDEUPS_LOT_DRW_TBL
+                where KENO_ID='AAAAA' and PRZ_AMT='' and FLW_CTL !='10'
+  </select>
+  <!--福彩明细总数查询 -->
+  <select id="statUnPrzDrw"  resultType="java.util.Map"
+        parameterType="com.bocom.bbip.gdeupsb.entity.GdLotDrwTbl">
+          select count(*) unPrzCnt 
+                from  gdeupsb.GDEUPS_LOT_DRW_TBL
+                where GAME_ID =#{gameId,jdbcType=CHAR} AND DRAW_ID=#{drawId,jdbcType=CHAR}
+                AND KENO_ID !='AAAAA' and PRZ_AMT='' and FLW_CTL !='10'
+  </select>
+
   <select id="find" resultMap="basicResultMap" >
     select
     <include refid="baseColumnList" />

@@ -53,7 +53,13 @@ public interface GdLotDrwTblRepository extends PagingAndSortingRepository<GdLotD
 	
 	/** 福彩清算-更新轧差状态  */
 	public void updateTolDifInf(GdLotDrwTbl gdLotDrwTbl);
+   
+	/** 福彩查询奖期信息表  */
+	@Find
+    public List<GdLotDrwTbl> qryUnPrzDrw();
 	
-	
-	
+	/** 查询福彩奖期信息总数 */
+    @Find
+    public Map<String, String> statUnPrzDrw(GdLotDrwTbl gdLotDrwTbl);
+
 }

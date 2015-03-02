@@ -31,12 +31,7 @@
   		</if>
   	</trim>
  </delete>
- 
- 
- 
- 
- 
-  
+
   <select id="find" resultMap="basicResultMap" >
     select
     <include refid="baseColumnList" />

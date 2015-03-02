@@ -1,18 +1,27 @@
 package com.bocom.bbip.gdeupsb.action.lot;
 
+import java.text.CollationElementIterator;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bea.common.security.xacml.CollectionUtil;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.entity.GDEupsbLotDrwInf;
+import com.bocom.bbip.gdeupsb.entity.GdLotDrwTbl;
 import com.bocom.bbip.gdeupsb.entity.GdLotSysCfg;
+import com.bocom.bbip.gdeupsb.repository.GdLotDrwTblRepository;
 import com.bocom.bbip.gdeupsb.repository.GdLotSysCfgRepository;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.bbip.service.Result;
+import com.bocom.bbip.utils.BeanUtils;
+import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 
@@ -28,7 +37,8 @@ public class CommonLotAction {
     GdLotSysCfgRepository lotSysCfgRepository;
     @Autowired
     BGSPServiceAccessObject bgspServiceAccessObject;
-    
+    @Autowired
+    GdLotDrwTblRepository lotDrwInfRepository;
     /**
      * 计算时差
      * INPUT:
@@ -229,33 +239,23 @@ public class CommonLotAction {
                 where a.GameId='%s' and a.DrawId='%s' and a.KenoId = 'AAAAA'
             </Sentence>
             <Fields>PrzSumAmt|GameId|DrawId|</Fields>
-        </DynSentence>
-        <Process>
-        
-            <!-- 处理Keno期记录，如果某期的所有Keno期都完成返奖，则更新改期的返奖总金额和返奖标志 -->
-            <Exec func="PUB:OpenCursor" error="IGNORE">
-                <Arg name="sql" value="QryUnPrzDrw"/>
-                <Arg name="CursorName" value="CURSOR_PRZ"/>
-            </Exec>
-            <If condition="AND(IS_NOEQUAL_STRING(~RetCod,0),IS_NOEQUAL_STRING(~RetCod,-2))">
-                <Set>CalStat=-1</Set>
-                <Set>CalMsg=更新返奖汇总信息失败</Set>
-                <Return/>
-            </If>
-            <While>
-                <Delete>ROOT.GameId</Delete>
-                <Delete>ROOT.DrawId</Delete>
-                <Exec func="PUB:FetchCursor" error="IGNORE">
-                    <Arg name="CursorName" value="CURSOR_PRZ"/>
-                </Exec>
-                <If condition="~RetCod=100">
-                    <Break/>
-                </If>
+        </DynSentence>*/
+        //处理Keno期记录，如果某期的所有Keno期都完成返奖，则更新改期的返奖总金额和返奖标志
+        List <GdLotDrwTbl> lotDrwInfos = lotDrwInfRepository.qryUnPrzDrw();
+        if(CollectionUtils.isEmpty(lotDrwInfos)) {
+            context.setData("calStat", "-1");
+            context.setData("calMsg", "查询返奖汇总信息失败!");
+        }
+        for (GdLotDrwTbl gdLotDrwTbl : lotDrwInfos) {
+            context.setData("gameId", null);
+            context.setData("drawId", null);
+            Map <String, String> drwTblMap = lotDrwInfRepository.statUnPrzDrw(gdLotDrwTbl);
+            if (drwTblMap.get("unPrzCnt")=="0") {
+                //该期的所有Keno期都已经返奖完成，更新AAAAA记录的汇总信息 
                 
-                <Exec func="PUB:ReadRecord" error="IGNORE">
-                   <Arg name="SqlCmd" value="StatUnPrzDrw"/>
-                </Exec>
-                <If condition="IS_EQUAL_STRING($UnPrzCnt,0)">
+            }
+        }
+/*                <If condition="IS_EQUAL_STRING($UnPrzCnt,0)">
                     <!-- 该期的所有Keno期都已经返奖完成，更新AAAAA记录的汇总信息 -->
                     <Exec func="PUB:ReadRecord" error="IGNORE">
                        <Arg name="SqlCmd" value="SumPrzDrw"/>
@@ -328,6 +328,7 @@ public class CommonLotAction {
     /**
      * 获取系统配置
      */
+    
     public void GetSysCfg(Context context) {
         String dealId = GDConstants.LOT_DEAL_ID; // 运营商编号
         GdLotSysCfg gdLotSysCfg = lotSysCfgRepository.findOne(dealId);

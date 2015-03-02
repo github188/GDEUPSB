@@ -10,4 +10,5 @@ public interface GDEupsbLotDrwInfRepository extends PagingAndSortingRepository<G
 
     @Find
     public GDEupsbLotDrwInf qryLotDrwInf(Map<String, Object> map);
+
 }
