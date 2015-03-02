@@ -17,7 +17,7 @@ TransCode.eups.manageChlSignInOut=91
 TransCode.eups.payUnilateralToBankELEC00=22
 
 ##南方电网 单边抹账
-TransCode.eups.cancelUnilateralToBankExt=23
+TransCode.eups.cancelUnilateralToBankELEC00=23
 
 ##南方电网  供电方发起供电到银行变更代扣协议请求
 TransCode.gdeupsb.powerChangeTreaty=32
