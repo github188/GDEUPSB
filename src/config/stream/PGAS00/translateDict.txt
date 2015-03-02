@@ -7,12 +7,12 @@
 #  filter="format,packets/translateDict.txt"
 #  filter="parse,packets/translateDict.txt"
 
-##thdTxnCde.gdeupsb.hzPGasSmpcPayOnlineAction=460710
-#thdTxnCde.460710=gdeupsb.hzPGasSmpcPayOnlineAction
-#thdTxnCde.gdeupsb.hzPGasReversePaymentThdAction=460711
-#thdTxnCde.460711=gdeupsb.hzPGasReversePaymentThdAction
-#thdTxnCde.gdeupsb.preBatchGashDealServiceAction=460716
-#thdTxnCde.460716=gdeupsb.preBatchGashDealServiceAction
+thdTxnCde.gdeupsb.hzPGasSmpcPayOnlineAction=460710
+thdTxnCde.460710=gdeupsb.hzPGasSmpcPayOnlineAction
+thdTxnCde.gdeupsb.hzPGasReversePaymentThdAction=460711
+thdTxnCde.460711=gdeupsb.hzPGasReversePaymentThdAction
+thdTxnCde.gdeupsb.preBatchGashDealServiceAction=460716
+thdTxnCde.460716=gdeupsb.preBatchGashDealServiceAction
 
 #thdTxnCde.gdeupsb.oprGasCusAgentAction=460701
 #thdTxnCde.460701=gdeupsb.oprGasCusAgentAction

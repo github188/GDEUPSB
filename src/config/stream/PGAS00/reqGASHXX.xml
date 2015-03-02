@@ -2,7 +2,7 @@
 <segment xmlns="http://www.bocom.com/jump/transformer/packet"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
-	name="01Request">
+	name="07Request">
 
 
 <!-- 惠州燃气QryUser  -->

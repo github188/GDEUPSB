@@ -2,7 +2,7 @@
 <segment xmlns="http://www.bocom.com/jump/transformer/packet"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
-	name="02Response">
+	name="08Response">
 <!-- 
 起始位置		说明			长度			备注
 	1		指令			10			QryUser或NOUser或UserStop[QryUser 为有用户信息/NOUser 为无此用户（用户编码错误）/UserStop为此用户已报停]
