@@ -10,7 +10,6 @@
         </actions>
     </process>
     
-
     <!--烟草签到-->
     <process id="gdeupsb.tbcSignIn" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
         <actions>

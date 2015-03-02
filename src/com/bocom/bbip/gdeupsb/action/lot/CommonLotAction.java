@@ -161,7 +161,8 @@ public class CommonLotAction {
     </Function>*/
         return map;
     }
-    /**
+  
+     /**
      * 计算轧差
      * CalStat 轧差状态（0：成功  -1：失败）
      *  CalMsg:轧差结果描述
