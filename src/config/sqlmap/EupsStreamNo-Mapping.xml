@@ -1745,6 +1745,6 @@
 				from ${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL
 					where EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
 					AND   COM_NO=#{comNo,jdbcType=CHAR}
-					AND   MFM_TXN_STS !='S'
+					AND   TXN_STS !='S'
 		</select>	
 </mapper>
