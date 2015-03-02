@@ -75,7 +75,7 @@
 
 
 	<!-- 福彩中奖查询 -->
-	<process id="gdeupsb.qryLotWinRecordAction" template="eups.simpleTran"
+	<process id="gdeupsb.qryLotWinRecord" template="eups.simpleTran"
 		interceptors="eups.transMessageInterceptor">
 		<actions>
 			<action id="act" ref="qryWinLotRecordAction" />
@@ -83,7 +83,7 @@
 	</process>
 
 	<!-- 福彩实时投注查询 -->
-	<process id="gdeupsb.qryLotBetRecordAction" template="eups.simpleTran"
+	<process id="gdeupsb.qryLotBetRecord" template="eups.simpleTran"
 		interceptors="eups.transMessageInterceptor">
 		<actions>
 			<action id="act" ref="qryLotBetRecordAction" />
@@ -93,7 +93,7 @@
 
 
 	<!-- 福彩对账文件下载 -->
-	<process id="gdeupsb.downloadLotChkFilAction" template="eups.simpleTran"
+	<process id="gdeupsb.downloadLotChkFil" template="eups.simpleTran"
 		interceptors="eups.transMessageInterceptor">
 		<actions>
 			<!-- 进入福彩对账文件下载交易，准备数据 -->
@@ -110,7 +110,7 @@
 	</process>
 
 	<!-- 福彩返奖（中奖）文件下载 -->
-	<process id="gdeupsb.downloadLotPrzFilAction" template="eups.simpleTran"
+	<process id="gdeupsb.downloadLotPrzFil" template="eups.simpleTran"
 		interceptors="eups.transMessageInterceptor">
 		<actions>
 			<!-- 进入福彩对账文件下载交易，准备数据 -->
