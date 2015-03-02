@@ -22,7 +22,6 @@ import com.bocom.jump.bp.util.Hex;
 
 public class HScardSignInAction extends BaseAction{
 	public void execute(Context context) throws CoreException,CoreRuntimeException{
-		System.out.println("111111111111111111111111111111111111111111111111");
 		context.setData(ParamKeys.TXN_TYP, Constants.SIGN_SET_TYPE_SIGNIN);
 		Assert.hasLengthInData(context, ParamKeys.COMPANY_NO, ErrorCodes.EUPS_FIELD_EMPTY, "单位编号");
 		Assert.hasLengthInData(context, ParamKeys.TXN_TYP, ErrorCodes.EUPS_FIELD_EMPTY, "交易状态");
