@@ -1,34 +1,37 @@
 package com.bocom.bbip.gdeupsb.action.hscard;
 
-import java.util.Map;
+import java.math.BigDecimal;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import com.bocom.bbip.comp.gems.GIA;
-import com.bocom.bbip.comp.gems.GemsResult;
-import com.bocom.bbip.comp.gems.service.DefaultGemsServiceAccessObject;
+import com.bocom.bbip.comp.CommonRequest;
+import com.bocom.bbip.comp.account.AccountService;
+import com.bocom.bbip.comp.account.support.CusActInfResult;
 import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
 
-public class HSCardFeeQueryAction extends BaseAction{
-	
-	private final static Log log = LogFactory.getLog(HSCardFeeQueryAction.class);
-	
-	public void execute(Context ctx) throws CoreException,CoreRuntimeException{
-		log.info("HSCardFeeQueryAction start......");
-		// 查询内部账户余额
-				// 判断账户是否余额不足
-				// TODO: for test,先注释掉
- DefaultGemsServiceAccessObject gemsServiceAccessObject = get(DefaultGemsServiceAccessObject.class);
-				 GIA gia = gemsServiceAccessObject.build(ctx, "CD8000");
-				 GemsResult gemsResult = gemsServiceAccessObject.callService(gia,
-				 ctx.getDataMap());
-				 Map<String, Object> balQry = gemsResult.getPayload();
-				 String curBal = (String) balQry.get("bal"); // 余额
+public class HSCardFeeQueryAction extends BaseAction {
 
+	private final static Log log = LogFactory.getLog(HSCardFeeQueryAction.class);
+
+	@Autowired
+	AccountService accountService;
+
+	public void execute(Context ctx) throws CoreException, CoreRuntimeException {
+		log.info("HSCardFeeQueryAction start......");
+		// 判断账户是否余额不足
+		
+		// 查询内部账户余额
+		String cusAc = ctx.getData(ParamKeys.CUS_AC);
+		CommonRequest comRequest=CommonRequest.build(ctx);
+		CusActInfResult acResult = accountService.getAcInf(comRequest, cusAc);
+		BigDecimal actBal = acResult.getActBal();
+		log.info("actBal=" + actBal);
 	}
 
 }
