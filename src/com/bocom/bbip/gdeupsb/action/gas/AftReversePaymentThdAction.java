@@ -20,14 +20,14 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
 
 public class AftReversePaymentThdAction extends BaseAction{
 
-	private static final Log logger=LogFactory.getLog(PreReversePaymentThdAction.class);
+	private static final Log logger=LogFactory.getLog(AftReversePaymentThdAction.class);
 
 
 	private EupsTransJournal etj;
 	
 	public void execute(Context context) throws CoreException, CoreRuntimeException{
 		
-		logger.info("there is nothing to show u");
+//		logger.info("there is nothing to show u");
  		//    <If condition="IS_EQUAL_STRING(~RetCod,0)">    <!--上主机冲正成功-->
 		//    <Set>HTxnSt=C</Set>   <!--  U-预计,S-成功,F-失败,T-超时,R-已冲正,C-抹账  -->
 		//    <Set>TxnSts=C</Set>
@@ -72,7 +72,7 @@ public class AftReversePaymentThdAction extends BaseAction{
 		
 		//
 		//
-		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
+//		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
 	
 	}
 }
