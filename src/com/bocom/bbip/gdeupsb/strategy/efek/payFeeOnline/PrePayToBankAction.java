@@ -38,9 +38,6 @@ public class PrePayToBankAction implements Executable{
 			String ActFlg=(String)context.getData(ParamKeys.ACC_TYPE);
 			//TODO 
 			ActFlg="0";
-			// <Set>ActSqn=SUBSTR($InAcNo,14,5)</Set>　　 <Set>ActNod=SUBSTR($InAcNo,1,6)</Set>
-			String ActNod=context.getData(ParamKeys.CUS_AC).toString().substring(1, 7);
-			String ActSqn=context.getData(ParamKeys.CUS_AC).toString().substring(14, 19);
 			if("0".equals(ActFlg)){              //对公
 				//GDContants定义常量
 				context.setData(ParamKeys.TXN_CODE,"451240");
@@ -54,8 +51,6 @@ public class PrePayToBankAction implements Executable{
 				context.setData(ParamKeys.TXN_DAT,(Date)context.getData(ParamKeys.TXN_DTE));
 				context.setData(ParamKeys.CCY_NO,Constants.EUPS_PAYMENT_TO_ACPS_CCY_CDE);
 				context.setData(GDParamKeys.ACCMOD, "1");
-				context.setData("ActSqn",ActSqn);//	 <Set>ActSqn=SUBSTR($InAcNo,14,5)</Set>   InAcNo日间记账账号
-				context.setData("ActNod",ActNod);//   <Set>ActNod=SUBSTR($InAcNo,1,6)</Set>
 				context.setData(ParamKeys.BAK_FLD1,"代扣电费");
 			}else if("2".equals(ActFlg) || "4".equals(ActFlg)){                  //卡
 				context.setData(ParamKeys.TXN_CODE,"471140");
@@ -72,7 +67,6 @@ public class PrePayToBankAction implements Executable{
 				context.setData(GDParamKeys.CCYTYP,"1");
 				context.setData(GDParamKeys.VCHCHK, "0");
 				
-				context.setData("ActSeq",ActSqn);  //	<Set>ActSeq=SUBSTR($InAcNo,14,5)</Set>   InAcNo日间记账账号
 				context.setData("CAgtNo","EFE9999999");  //清算单位协议号要改 
 				
 				context.setData("GthFlg", "N");//			<Set>GthFlg=N</Set>
