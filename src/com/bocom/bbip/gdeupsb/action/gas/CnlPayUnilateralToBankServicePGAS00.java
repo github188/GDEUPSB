@@ -1,31 +1,23 @@
 package com.bocom.bbip.gdeupsb.action.gas;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
 
-import com.bocom.bbip.comp.BBIPPublicService;
-import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsTransJournal;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
-import com.bocom.bbip.eups.spi.service.online.AutomaticCancelService;
 import com.bocom.bbip.eups.spi.service.single.PayUnilateralToBankService;
-import com.bocom.bbip.eups.spi.vo.CancelDomain;
 import com.bocom.bbip.eups.spi.vo.CommHeadDomain;
 import com.bocom.bbip.eups.spi.vo.PayFeeOnlineDomain;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
-import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
-import com.bocom.jump.bp.core.CoreRuntimeException;
 
 /**
  * 惠州燃气 单笔冲正
@@ -40,7 +32,7 @@ public class CnlPayUnilateralToBankServicePGAS00 implements
 	EupsTransJournalRepository eupsTransJournalRepository;
 	
 	private static final Log logger = LogFactory
-			.getLog(PayUnilateralToBankService.class);
+			.getLog(CnlPayUnilateralToBankServicePGAS00.class);
 
 	/**
 	 * public void execute(Context context) throws CoreException,
@@ -195,6 +187,7 @@ public class CnlPayUnilateralToBankServicePGAS00 implements
 			EupsTransJournal etj = context.getData("lclJnlList");
 			eupsTransJournalRepository.update(etj);
 		} else {
+			context.setData(GDParamKeys.GAS_RESULT, "NoPay");
 			context.setData(ParamKeys.MESSAGE_TYPE, "E");
 			context.setData(ParamKeys.RSP_CDE,
 					context.getData(ParamKeys.MFM_RSP_CDE));
