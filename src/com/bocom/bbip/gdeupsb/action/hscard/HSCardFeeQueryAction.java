@@ -32,6 +32,7 @@ public class HSCardFeeQueryAction extends BaseAction {
 		CusActInfResult acResult = accountService.getAcInf(comRequest, cusAc);
 		BigDecimal actBal = acResult.getActBal();
 		log.info("actBal=" + actBal);
+
 	}
 
 }
