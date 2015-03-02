@@ -4,7 +4,8 @@
     xmlns:xx="http://www.springframework.org/schema/beans"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
         http://spring.tangdi.net/schema/tds http://spring.tangdi.net/schema/tds/tds.xsd" >
-
+     
+     <!-- Summary  CodeSwitch中所有的Default在代码中编写，判断CodeSwitch返回的是null -->
 	 <!-- 广州电力根据适配类型转换为对应的单位编号 -->	
 	  <table id="eleGzComNoGen" >
 	       <key name="0001"   value="GDELEC01"/>
@@ -21,9 +22,214 @@
 	       <key name="1300"   value="xxxxxxxxxx"/>
 	  </table> 
     
-        <table id="tds2" >
+      <table id="tds2" >
 	       <key name="3"   value="this is tds2,key=3,value=a"/>
 	       <key name="2"   value="this is tds2,key=2,value=b"/>
 	  </table>
+<!--  TBC CodeSwitch Start.. ADD By GuiLin 20150302-->
+    <table id="GDYC_IActNo">
+        <key name="2001"    value="xxxxxxxxxx"/>    <!--441999广东省分行-->
+        <key name=""        value="xxxxxxxxxx"/>    <!--444999珠海分行-->
+        <key name=""        value="xxxxxxxxxx"/>    <!--446999佛山分行-->
+        <key name="2032"    value="445006011018170039247"/>    <!--445999汕头分行-->
+        <key name=""        value="xxxxxxxxxx"/>    <!--483999东莞分行-->
+        <key name=""        value="xxxxxxxxxx"/>    <!--484999中山分行-->
+        <key name=""        value="xxxxxxxxxx"/>    <!--485999揭阳支行-->
+        <key name=""        value="xxxxxxxxxx"/>    <!--491999惠州分行-->
+        <key name=""        value="xxxxxxxxxx"/>    <!--761999江门分行-->
+  </table>
+
+  <table id="GDYC_IActNm">
+        <key name="2001"    value="广州市烟草专卖局（公司）"/>
+        <key name=""        value="xxxxxxxxxx"/>
+        <key name=""        value="xxxxxxxxxx"/>
+        <key name="2032"    value="广东省烟草局汕头市公司"/>
+        <key name=""        value="xxxxxxxxxx"/>
+        <key name=""        value="xxxxxxxxxx"/>
+        <key name=""        value="xxxxxxxxxx"/>
+        <key name=""        value="xxxxxxxxxx"/>
+        <key name=""        value="xxxxxxxxxx"/>
+    </table>
+
+    <!-- 转换为协议号 -->
+    <table id="GDYC_DPTID">
+        <key name="2001"    value="4410000560"/>    <!--441999广东省分行-->
+        <key name=""    value="xxxxxxxxxx"/>    <!--444999珠海分行-->
+        <key name=""    value="xxxxxxxxxx"/>    <!--446999佛山分行-->
+        <key name="2032"    value="4450000262"/>    <!--445999汕头分行-->
+        <key name=""    value="xxxxxxxxxx"/>    <!--483999东莞分行-->
+        <key name=""    value="xxxxxxxxxx"/>    <!--484999中山分行-->
+        <key name=""    value="xxxxxxxxxx"/>    <!--485999揭阳供电局-->
+        <key name=""    value="xxxxxxxxxx"/>    <!--491999惠州分行-->
+        <key name=""    value="xxxxxxxxxx"/>    <!--761999江门分行-->
+  </table>
+
+  <table id="DL_BrNo2DstCod">
+        <key name="441999"    value="5810"/>    <!--441999广东省分行-->
+        <key name="444999"    value="5850"/>    <!--444999珠海分行-->
+        <key name="446999"    value="5880"/>    <!--446999佛山分行-->
+        <key name="445999"    value="5860"/>    <!--445999汕头分行-->
+        <key name="483999"    value="6020"/>    <!--483999东莞分行-->
+        <key name="484999"    value="6030"/>    <!--484999中山分行-->
+        <key name="485999"    value="5865"/>    <!--485999揭阳支行-->
+        <key name="491999"    value="5950"/>    <!--491999惠州分行-->
+        <key name="761999"    value="5990"/>    <!--761999江门分行-->
+  </table>
+
+
+  <!--电力-->
+  <table id="RspCod2TRspCd_DL">
+        <key name="000000" value="00"/>
+        <key name="481908" value="79"/>
+        <key name="478608" value="79"/>
+        <key name="481906" value="79"/>
+        <key name="481905" value="79"/>
+        <key name="CD5205" value="75"/>
+        <key name="PD5100" value="75"/>
+        <key name="SD5200" value="75"/>
+        <key name="331012" value="50"/>
+        <key name="481299" value="79"/>
+        <key name="CD5002" value="76"/>
+        <key name="SD5002" value="76"/>
+        <key name="SC6086" value="79"/>
+        <key name="CI6018" value="79"/>
+        <key name="CI1557" value="79"/>
+        <key name="PC3119" value="79"/>
+        <key name="PA1097" value="79"/>
+        <key name="SD3038" value="79"/>
+        <key name="SC6026" value="79"/>
+        <key name="PD3605" value="79"/>
+        <key name="PD3610" value="63"/>
+        <key name="CD5205" value="75"/>
+        <key name="PD5100" value="75"/>
+        <key name="SD5200" value="75"/>
+        <key name="PD3607" value="62"/>
+        <key name="PD3608" value="62"/>
+        <key name="AG7001" value="62"/>
+        <key name="460298" value="79"/>
+        <key name="460297" value="79"/>
+        <key name="460296" value="79"/>
+        <key name="460295" value="79"/>
+  </table>
+
+  <table id="RspCod2TRspMsg_YC">
+        <key name="000000" value="交易成功"/>
+        <key name="481908" value="金额不符"/>
+        <key name="478608" value="此流水的交易已经处理过"/>
+        <key name="481906" value="已冲正"/>
+        <key name="481905" value="无冲正记录"/>
+        <key name="CD5205" value="可用余额不足"/>
+        <key name="PD5100" value="可用余额不足"/>
+        <key name="SD5200" value="可用余额不足"/>
+        <key name="331012" value="查询条件不符数据库无对应记录"/>
+        <key name="481299" value="该批次已经做过"/>
+        <key name="PD3602" value="该卡状态为已制未发，无效"/>
+        <key name="PD3603" value="该卡状态为销卡"/>
+        <key name="PD3605" value="借记卡帐户状态不正常"/>
+        <key name="PD3606" value="该卡状态为已口头挂失"/>
+        <key name="PD3607" value="该卡状态为已正式挂失"/>
+        <key name="PD3608" value="该卡状态为已挂失"/>
+        <key name="PD3609" value="该卡状态为已法律冻结"/>
+        <key name="PD3610" value="该卡状态为已冻结"/>
+        <key name="PD3611" value="该卡状态为已止付"/>
+        <key name="PD3612" value="该卡状态为已止付"/>
+        <key name="PD3613" value="该卡状态为已止付"/>
+        <key name="PD3755" value="帐户状态不正常，止付"/>
+        <key name="CI1557" value="客户账户关系不存在"/>
+        <key name="PA1017" value="货币不正确"/>
+        <key name="SD3038" value="非对私活期帐号"/>
+        <key name="PA1097" value="储蓄非个人结算账户不支持外部账户转帐"/>
+        <key name="AG7001" value="扣账账号有错误"/>
+        <key name="CI6018" value="新旧账号对照记录不存在"/>
+        <key name="460298" value="检查批次状态时系统错误"/>
+        <key name="460297" value="检查批次状态时未发现该批次"/>
+        <key name="460296" value="扣费完成并已返回结果无法撤销"/>
+        <key name="460295" value="已开始扣费无法撤销"/>
+  </table>
+
+  <table id="EFE_TRspCd2RspMsg">
+        <key name="00" value="交易成功，未发生任何错误"/>
+        <key name="0a" value="调用服务出错"/>
+        <key name="0b" value="银行数据包长度小于交易代码长度"/>
+        <key name="0c" value="非法交易代码"/>
+        <key name="0d" value="无法打开银行传来文件"/>
+        <key name="0e" value="电力端服务发生内部错误"/>
+        <key name="0f" value="协议以外错误 "/>
+        <key name="0g" value="解析银行文件错误"/>
+        <key name="0h" value="解析包头错误"/>
+        <key name="0i" value="解析包体或文件错误"/>
+        <key name="0j" value="数据包长度错误"/>
+        <key name="0k" value="数据字段个数错误"/>
+        <key name="0l" value="字段类型错误"/>
+        <key name="0m" value="数据库操作错误"/>
+        <key name="0n" value="电力方生成文件错误"/>
+        <key name="0p" value="产生返回包错误"/>
+        <key name="0q" value="数据溢出错误"/>
+        <key name="01" value="对方程序失效，应答方处理"/>
+        <key name="03" value="供电无此户号"/>
+        <key name="04" value="发起工作站到发起方前置机网络不通"/>
+        <key name="05" value="双方前置机之间无法通讯，网络连接故障"/>
+        <key name="06" value="用户无欠费信息"/>
+        <key name="07" value="用户所在营业区域没在该银行开户"/>
+        <key name="08" value="用户没欠费信息（不含当天在银行缴费）"/>
+        <key name="09" value="用户需到供电交费，在供电有其它业务"/>
+        <key name="13" value="银行方交易码错误，银行端数据格式或内容错误"/>
+        <key name="14" value="抹帐业务,抹帐日期非当天日期"/>
+        <key name="15" value="抹帐业务,处理失败,供电无此银行的收费记录"/>
+        <key name="18" value="正在进行批量代扣业务，需等本业务完成后才能办理本手续"/>
+        <key name="19" value="签订电费代扣协议，该用户没有委托代扣业务"/>
+        <key name="20" value="签订电费代扣协议，该用户没有在该行办理委托代扣业务，但在其他行有办理。"/>
+        <key name="25" value="开户操作时，开户不成功"/>
+        <key name="26" value="签退操作时，签退不成功"/>
+        <key name="27" value="用户欠费需全部缴清，不允许部分缴费"/>
+        <key name="28" value="该户是欠费停电户，交费后，须到供电办理复电手续 "/>
+        <key name="29" value="供电方执行入帐失败"/>
+        <key name="50" value="数据库处理数据出错"/>
+        <key name="51" value="供电尚未开工"/>
+        <key name="59" value="未知交易码"/>
+        <key name="62" value="用户帐户挂失"/>
+        <key name="63" value="用户帐号冻结"/>
+        <key name="70" value="批量代扣,产生扣款文件错，银行应扣款文件未处理完"/>
+        <key name="71" value="批量代扣,产生扣款文件错,没有可扣款电费数据"/>
+        <key name="73" value="回填收费信息或冲帐时,电量(电费)发生变动"/>
+        <key name="74" value="单笔扣款,供电方提供用户帐号不存在"/>
+        <key name="75" value="单笔扣款,用户在银行存款余额不足"/>
+        <key name="76" value="单笔扣款,用户帐户存在，但已销户"/>
+        <key name="77" value="单笔扣款,用户帐户存在，但未与银行方签扣款协议"/>
+        <key name="78" value="银行提供交易字符串错误，与联网协议约定不符"/>
+        <key name="79" value="单笔扣款，银行自定义返回错误提示"/>
+        <key name="81" value="供电签订代扣协议,用户帐号不存在或已销户"/>
+        <key name="83" value="供电签订代扣协议,银行自定义异常信息"/>
+        <key name="99" value="前置机无法登录服务器，登录失败"/>
+    </table>
+
+  <!--广东电费第三方返回码 -->
+    <table id="H2T_EFE_441">
+        <key name="SC0000" value="1"/>
+        <key name="PD5100" value="2"/>
+        <key name="CD5200" value="2"/>
+        <key name="SD5200" value="2"/>
+        <key name="CD5205" value="2"/>
+        <key name="SD5205" value="2"/>
+        <key name="400004" value="3"/>
+        <!--  Default value="5"-->
+    </table>
+
+    <table id="TxnSrc2CnlTyp">
+        <key name="TE441" value="1"/>  <!--电话银行-->
+        <key name="MT441" value="5"/>  <!--多媒体-->
+        <key name="WE441" value="2"/>  <!--网上银行-->
+        <key name="MB441" value="6"/>  <!--手机银行-->
+         <!--  Default value="0"-->       
+    </table>
+
+    <table id="TxnSrc2TxnCnl">
+        <key name="MB441" value="MOB"/>
+        <key name="MT441" value="MMT"/>
+        <key name="WE441" value="WEB"/>
+         <!--  Default value="TRM"-->
+    </table>
+      
+<!--  TBC CodeSwitch End  ADD By GuiLin 20150302-->
 
 </xx:beans>

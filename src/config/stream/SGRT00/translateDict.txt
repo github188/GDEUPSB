@@ -7,13 +7,13 @@
 #  filter="format,packets/translateDict.txt"
 #  filter="parse,packets/translateDict.txt"
 
-TransCode.gdeupsb.communicateStateTest=8888
-TransCode.gdeupsb.verifyToThirdAction=8926
-TransCode.eups.payUnilateralToBank=8914
-TransCode.gdeupsb.findClientRemainingMoney=8924
-TransCode.eups.checkThirdFileForBank=8918
-TransCode.gdeupsb.signIn=8910
-TransCode.gdeupsb.signOut=8911
-TransCode.gdeupsb.establishAccountAction=8912
-TransCode.gdeupsb.destroyAccountAction=8913
-TransCode.gdeupsb.qryRemainingAction=8924
+TransCode.gdeupsb.tbcCommunicateStateTest=8888
+TransCode.gdeupsb.tbcVerifyToThird=8926
+TransCode.eups.tbcPayUnilateralToBank=8914
+TransCode.gdeupsb.tbcFindClientRemainingMoney=8924
+TransCode.eups.tbcCheckThirdFileForBank=8918
+TransCode.gdeupsb.tbcSignIn=8910
+TransCode.gdeupsb.tbcSignOut=8911
+TransCode.gdeupsb.tbcEstablishAccount=8912
+TransCode.gdeupsb.tbcDestroyAccount=8913
+TransCode.gdeupsb.tbcQryRemaining=8924

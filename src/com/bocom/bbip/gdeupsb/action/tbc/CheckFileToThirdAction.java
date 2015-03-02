@@ -23,6 +23,7 @@ import com.bocom.bbip.eups.spi.service.check.CheckThdFileToBkService;
 import com.bocom.bbip.eups.spi.vo.CheckDomain;
 import com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal;
 import com.bocom.bbip.gdeupsb.repository.GdEupsTransJournalRepository;
+import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
@@ -59,12 +60,16 @@ public class CheckFileToThirdAction implements CheckThdFileToBkService {
         //上面公共报文头，下面报文体
         context.setData("oLogNo", context.getData("BANK_SEQ"));
         context.setData("txnDte", context.getData("TRADE_DATE"));
-        //TODO;以此确定comNo 现在测试直接传的是comNo
         context.setData("DevId", context.getData("DEV_ID"));
         context.setData("teller", context.getData("TELLER"));
 
+        String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
+        if (null == cAgtNo) {
+            cAgtNo ="441";
+        }
+        String comNo = cAgtNo.substring(0,3)+"999";
         //检查用户状态
-        EupsThdTranCtlInfo thdTranCtlInfo = thdTranCtlInfoRepository.findOne(context.getData(ParamKeys.COMPANY_NO).toString());
+        EupsThdTranCtlInfo thdTranCtlInfo = thdTranCtlInfoRepository.findOne(comNo);
         if (thdTranCtlInfo == null) {
             throw new CoreException(ErrorCodes.THD_CHL_NOT_FOUND);
         } 

@@ -4,7 +4,7 @@
                         http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
                         
     <!--烟草客户余额查询-->
-    <process id="gdeupsb.findClientRemainingMoney" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+    <process id="gdeupsb.tbcFindClientRemainingMoney" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
         <actions>
             <action id="act" ref="gdeupsb.FindClientRemainingMoney"/>
         </actions>
@@ -12,61 +12,61 @@
     
 
     <!--烟草签到-->
-    <process id="gdeupsb.signIn" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+    <process id="gdeupsb.tbcSignIn" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
         <actions>
             <action id="act" ref="gdeupsb.TbcSignInAction"/>
         </actions>
     </process>
     
     <!--烟草签退-->
-    <process id="gdeupsb.signOut" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+    <process id="gdeupsb.tbcSignOut" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
         <actions>
             <action id="act" ref="gdeupsb.TbcSignOutAction"/>
         </actions>
     </process>
     
     <!--烟草通讯状态测试-->
-    <process id="gdeupsb.communicateStateTest" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+    <process id="gdeupsb.tbcCommunicateStateTest" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
         <actions>
             <action id="act" ref="gdeupsb.TbcCommunicateStateTest"/>
         </actions>
     </process>
     
     <!--烟草公司对开户、销户、划扣的校正检查-->
-    <process id="gdeupsb.verifyToThirdAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+    <process id="gdeupsb.tbcVerifyToThird" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
         <actions>
             <action id="act" ref="gdeupsb.TbcVerifyToThirdAction"/>
         </actions>
     </process>
     <!--烟草开户-->
-    <process id="gdeupsb.establishAccountAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+    <process id="gdeupsb.tbcEstablishAccount" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
         <actions>
             <action id="act" ref="gdeupsb.EstablishAccountAction"/>
         </actions>
     </process>
     <!--烟草销户-->
-    <process id="gdeupsb.destroyAccountAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+    <process id="gdeupsb.tbcDestroyAccount" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
         <actions>
             <action id="act" ref="gdeupsb.DestroyAccountAction"/>
         </actions>
     </process>
     
      <!--广东烟草公司查询客户余额-->
-    <process id="gdeupsb.qryRemainingAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+    <process id="gdeupsb.tbcQryRemaining" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
         <actions>
             <action id="act" ref="gdeupsb.QryRemainingAction"/>
         </actions>
     </process>
     
     <!--广东烟草公司信息维护-->
-    <process id="gdeupsb.maintainTbcInfo" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+    <process id="gdeupsb.tbcMaintainTbcInfo" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
         <actions>
             <action id="act" ref="gdeupsb.TbcMaintainTbcInfo"/>
         </actions>
     </process>
     
     <!--银行对烟草公司余额查询-->
-    <process id="gdeupsb.qryClearAccountAction" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+    <process id="gdeupsb.tbcQryClearAccount" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
         <actions>
             <action id="act" ref="gdeupsb.TbcQryClearAccountAction"/>
         </actions>
