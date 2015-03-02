@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <x:beans xmlns:x="http://www.springframework.org/schema/beans"
-	xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd       http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+    xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd       http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
 	
 
  
  <!-- 惠州燃气用户协议维护 -->
- <action id="oprGasCusAgentAction" class="com.bocom.bbip.gdeupsb.action.gas.OprGasCusAgentAction" />
+ 	<action id="oprGasCusAgentAction" class="com.bocom.bbip.gdeupsb.action.gas.OprGasCusAgentAction" />
  <!-- 惠州燃气用户协议文件上传（0全部，1新增） -->
- <!--  <action id="gasAgentBatchFileToFTP" class="com.bocom.bbip.gdeupsb.action.gas.agentBat.GasAgentBatchFileToFtpAction"/>  -->
+<!--   <action id="gasAgentBatchFileToFTP" class="com.bocom.bbip.gdeupsb.action.gas.agentBat.GasAgentBatchFileToFtpAction"/>   -->
  
  <!-- 惠州燃气代扣流水信息查询  -->
   <action id="qryHzThdJnlInfoAction" class="com.bocom.bbip.gdeupsb.action.gas.QryHzThdJnlInfoAction" />
@@ -20,12 +20,12 @@
  <!-- Hz燃气单笔缴费上主机后 --> 
  <!-- <action id="aftPayFeeThdHzAction" class="com.bocom.bbip.gdeupsb.action.gas.AftPayFeeThdHzAction" />  	 -->
  
-  <!-- Hz燃气单笔冲正上主机前 -->
-   <action id="preReversePaymentThdAction" class="com.bocom.bbip.gdeupsb.action.gas.PreReversePaymentThdAction" /> 
+  <!-- Hz燃气单笔冲正 -->
+ <!--   <action id="preReversePaymentThdAction" class="com.bocom.bbip.gdeupsb.action.gas.PreReversePaymentThdAction" />  -->
   <!-- Hz燃气单笔冲正上主机后 -->
-  <action id="aftReversePaymentThdAction" class="com.bocom.bbip.gdeupsb.action.gas.AftReversePaymentThdAction" /> 
-  <!-- HZ燃氣对账文件下载 -->
-  <action id="checkFileToThdHzAction" class="com.bocom.bbip.gdeupsb.action.gas.CheckFileToThdHzAction" />
+ <!--  <action id="aftReversePaymentThdAction" class="com.bocom.bbip.gdeupsb.action.gas.AftReversePaymentThdAction" />  -->
+  <!-- HZ燃气对账文件上传 -->
+ <!--  <action id="checkFileToThdHzAction" class="com.bocom.bbip.gdeupsb.action.gas.CheckFileToThdHzAction" /> -->
   
   <!-- 福彩中奖查询 -->
   <action id="qryWinLotRecordAction" class="com.bocom.bbip.gdeupsb.action.lot.QryLotWinRecordAction" />
