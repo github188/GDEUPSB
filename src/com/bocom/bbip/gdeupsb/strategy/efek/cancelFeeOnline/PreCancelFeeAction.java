@@ -55,9 +55,8 @@ public class PreCancelFeeAction implements Executable{
 					callThd(context);
 				
 				context.setData("TIATyp", "C");      //不明 TIATyp 是什么
-				//TODO	    <Set>TTxnCd=STRCAT(SUBSTR($OTTxnCd,1,5),9)</Set>	    <Set>HTxnCd=STRCAT(SUBSTR($OHTxnCd,1,5),9)</Set>
-				String txnCd=(String)context.getData(ParamKeys.TXN_CODE);
-				//TODO  是否需要
+				//TODO 是否需要	    <Set>TTxnCd=STRCAT(SUBSTR($OTTxnCd,1,5),9)</Set>	    <Set>HTxnCd=STRCAT(SUBSTR($OHTxnCd,1,5),9)</Set>
+//				String txnCd=(String)context.getData(ParamKeys.TXN_CODE);
 //				context.setData(ParamKeys.THD_TXN_CDE, txnCd.substring(1, 6)+"9");
 //				context.setData(ParamKeys.TXN_CODE, txnCd.substring(1, 6)+"9");
 
