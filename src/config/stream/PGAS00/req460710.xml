@@ -25,7 +25,7 @@
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
 	<fixString name="cusAc" length="32"   />
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
-	<fixString name="bakFld1" length="6"   />
+	<fixString name="bakFld3" length="6"   />
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
 	<fixString name="reqTxnAmt" length="10"   />
 	<!-- <fixString  name="DeliA" length="1"  /> -->
