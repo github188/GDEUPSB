@@ -7,10 +7,19 @@
 #  filter="format,packets/translateDict.txt"
 #  filter="parse,packets/translateDict.txt"
 
-thdTxnCde.gdeupsb.hzPGasSmpcPayOnlineAction=460710
-thdTxnCde.460710=gdeupsb.hzPGasSmpcPayOnlineAction
-thdTxnCde.gdeupsb.hzPGasReversePaymentThdAction=460711
-thdTxnCde.460711=gdeupsb.hzPGasReversePaymentThdAction
+#这里应该是EUPSprocessId
+#thdTxnCde.gdeupsb.hzPGasSmpcPayOnlineAction=460710
+#thdTxnCde.460710=gdeupsb.hzPGasSmpcPayOnlineAction
+thdTxnCde.eups.payUnilateralToBank=460710
+thdTxnCde.460710=eups.payUnilateralToBank
+
+#thdTxnCde.gdeupsb.hzPGasReversePaymentThdAction=460711
+#thdTxnCde.460711=gdeupsb.hzPGasReversePaymentThdAction
+thdTxnCde.eups.cancelUnilateralToBank=460711
+thdTxnCde.460711=eups.cancelUnilateralToBank
+
+
+
 thdTxnCde.gdeupsb.preBatchGashDealServiceAction=460716
 thdTxnCde.460716=gdeupsb.preBatchGashDealServiceAction
 
