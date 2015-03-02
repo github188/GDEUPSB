@@ -163,6 +163,8 @@ public class CheckTrspFileAction extends BaseAction{
 		        
 				//放到指定位置
 		        
+		      //清除对账表中的信息
+		        get(TrspCheckTmpRepository.class).deleteAll("1");
 		        logger.info("============对账结束");
 		   }
 	/**
