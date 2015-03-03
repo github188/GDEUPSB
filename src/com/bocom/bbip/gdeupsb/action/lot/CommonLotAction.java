@@ -123,7 +123,7 @@ public class CommonLotAction extends BaseAction{
      /**
      * 计算轧差
      * CalStat 轧差状态（0：成功  -1：失败）
-     *  CalMsg:轧差结果描述
+     * CalMsg:轧差结果描述
      */
     public void calcLotDifAmt(Context context) throws CoreException{
         //处理Keno期记录，如果某期的所有Keno期都完成返奖，则更新改期的返奖总金额和返奖标志
