@@ -163,7 +163,7 @@ public class CheckThdDetlAcctAction implements Executable {
 				context.setData(ParamKeys.RSP_CDE,"EFE999");
 				context.setData(ParamKeys.RSP_MSG, "统计明细记录总数出错");
 				logger.info("~~~~~~~~~~~统计明细记录总数出错");
-				throw new CoreException("~~~~~~~~~~~统计明细记录总数出错");
+				throw new CoreException("统计明细记录总数出错");
 		}
 		
 		BigDecimal allmoney=new BigDecimal("0.00");
