@@ -182,7 +182,7 @@
     </set>
     where T_LOG_NO = #{tLogNo,jdbcType=CHAR}
   </update>
-  <select id="findAll" resultMap="basicResultMap" >
+  <select id="findAll" parameterType="java.util.List" >
     select 
     <include refid="baseColumnList" />
     from gdeupsb.GDEUPS_LOT_PRZ_CTL
@@ -192,5 +192,17 @@
         #{item}
       </foreach>
     </if>
+  </select>
+  
+  
+  
+  <select id="LotCtlBatchInsert" resultMap="basicResultMap" >
+    insert into  gdeupsb.GDEUPS_LOT_PRZ_CTL (
+    <include refid="baseColumnList" />) values
+    	<foreach collection="list" item="item" index="index" separator=",">
+			( #{item.tLogNo}, #{item.gameId},
+			#{item.drawId}, #{item.kenoId}, #{item.cipher}, #{item.bigBon},
+			#{item.totPrz}, #{item.txnlog}, #{item.termId})
+      </foreach>
   </select>
 </mapper>
