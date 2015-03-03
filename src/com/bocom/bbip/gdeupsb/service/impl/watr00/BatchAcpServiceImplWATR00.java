@@ -55,7 +55,7 @@ public class BatchAcpServiceImplWATR00 implements BatchAcpService {
 	BTPService BTPservice;
 	
 	@Override
-	public void prepareBatchDeal(	PrepareBatchAcpDomain domain, Context context) throws CoreException {
+	public void prepareBatchDeal(PrepareBatchAcpDomain domain, Context context) throws CoreException {
 		logger.info("BatchAcpServiceImplWATR00 prepareBatchDeal start ... ...");
 		String br = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.BR, ErrorCodes.EUPS_FIELD_EMPTY);//机构号
 		String tlr = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.TELLER, ErrorCodes.EUPS_FIELD_EMPTY);//柜员号
@@ -79,7 +79,15 @@ public class BatchAcpServiceImplWATR00 implements BatchAcpService {
 		context.setData(ParamKeys.TOT_AMT, map.get(ParamKeys.TOT_AMT));
 		logger.info("BatchAcpServiceImplWATR00 prepareBatchDeal end ... ...");
 	}
-	
+	/**
+	 * 创建批扣文件
+	 * @param context
+	 * @param filNam
+	 * @param dir
+	 * @param comNo
+	 * @return
+	 * @throws CoreException
+	 */
 	private Map<String,Object> buildBatchFile(Context context,String filNam,String dir,String comNo) throws CoreException{
 		Map<String,Object> ret = CollectionUtils.createMap();
 		Map<String,Object> header = CollectionUtils.createMap();
@@ -125,7 +133,13 @@ public class BatchAcpServiceImplWATR00 implements BatchAcpService {
 		ret.put(ParamKeys.TOT_AMT, srcHeader.get(ParamKeys.TOT_AMT));
 		return ret;
 	}
-	
+	/**
+	 * 解析第三方批扣文件
+	 * @param filePath
+	 * @param fileName
+	 * @param fileId
+	 * @return
+	 */
 	private Map<String,Object> parseFileByPath(String filePath,String fileName,String fileId){
 		Map<String,Object> map = null;
 		Resource resource = new ClassPathResource("config/fmt/FileFormatConfig.xml");
@@ -144,6 +158,14 @@ public class BatchAcpServiceImplWATR00 implements BatchAcpService {
 		}
 		return map;
 	}
+	/**
+	 * 生成代收付批扣文件
+	 * @param object
+	 * @param path
+	 * @param createFileNam
+	 * @param fileId
+	 * @param header
+	 */
 	private void createBatchFileByPath(List<Object> object,String path,String createFileNam,
 			String fileId,Map<String,Object> header){
 		Map<String,Object> map = new HashMap<String,Object>();

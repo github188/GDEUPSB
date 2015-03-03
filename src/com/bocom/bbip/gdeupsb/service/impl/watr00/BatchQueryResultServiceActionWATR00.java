@@ -9,7 +9,7 @@ import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
 /**
- * 第三方发起批量扣款查询结果请求
+ * 第三方发起批量扣款请求
  * 1.第三方接收到银行发起的批量扣款查询请求
  * 2.第三方将批量扣款文件放到FTP服务器，发起批量扣款查询结果请求
  * 3.银行返回批量扣款查询结果请求应答报文
