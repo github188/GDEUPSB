@@ -16,6 +16,7 @@
        <fixString name="PASSWORD" length="2"/>  <!-- 密码-->
        <fixString name="ADDR" length="1"/>  <!--联系地址-->
        <fixString name="TEL" length="4"/>  <!--电话号码-->
-       <fixString name="comNo" length="6"/>
+       <fixString name="DEV_ID" length="10"  />
+       <fixString name="TELLER" length="10"  />
        
 </segment>

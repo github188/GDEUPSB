@@ -4,7 +4,6 @@
     xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
     name="f001">
        <fixString name="CUST_ID" length="20"/>  <!-- 客户号 -->
-       <fixString name="DEV_ID" length="15"  />
-       <fixString name="TELLER" length="30"  /> 
-       <fixString name="comNo" length="6"/>
+       <fixString name="DEV_ID" length="10"  />
+       <fixString name="TELLER" length="10"  />
 </segment>
