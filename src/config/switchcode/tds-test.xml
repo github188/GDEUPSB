@@ -27,6 +27,18 @@
 	       <key name="2"   value="this is tds2,key=2,value=b"/>
 	  </table>
 <!--  TBC CodeSwitch Start.. ADD By GuiLin 20150302-->
+    <table id ="GDYC_nodSwitch">
+        <key name="441999"    value="441800"/>    <!--441999广东省分行-->
+        <key name="444999"    value="444800"/>    <!--444999珠海分行-->
+        <key name="446999"    value="446800"/>    <!--446999佛山分行-->
+        <key name="445999"    value="445800"/>    <!--445999汕头分行-->
+        <key name="483999"    value="483800"/>    <!--483999东莞分行-->
+        <key name="484999"    value="484800"/>    <!--484999中山分行-->
+        <key name="485999"    value="485800"/>    <!--485999揭阳支行-->
+        <key name="476999"    value="476800"/>    
+        <key name="491999"    value="491800"/>   
+    </table>
+
     <table id="GDYC_IActNo">
         <key name="2001"    value="xxxxxxxxxx"/>    <!--441999广东省分行-->
         <key name=""        value="xxxxxxxxxx"/>    <!--444999珠海分行-->

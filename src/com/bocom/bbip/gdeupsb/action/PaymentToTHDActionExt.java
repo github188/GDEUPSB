@@ -3,10 +3,8 @@
 package com.bocom.bbip.gdeupsb.action;
 
 import com.bocom.bbip.eups.action.BaseAction;
-import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.action.eupsonline.PaymentToTHDAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
-import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.entity.EupsTransJournal;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.eups.utils.ExpCommonUtils;

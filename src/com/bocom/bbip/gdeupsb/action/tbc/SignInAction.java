@@ -7,10 +7,10 @@ import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
-import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.utils.*;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -31,12 +31,16 @@ public class SignInAction extends BaseAction {
         context.setData("txnTme", context.getData("TRAN_TIME"));
         context.setData("bk", context.getData("BANK_ID"));
         context.setData("dptId", context.getData("DPT_ID"));
-        //TODO;以此确定comNo 现在测试直接传的是comNo
         context.setData("DevId", context.getData("DEV_ID"));
         context.setData("teller", context.getData("TELLER"));
         
+        String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
+        if (null == cAgtNo) {
+            cAgtNo ="441";
+        }
+        String comNo = cAgtNo.substring(0,3)+"999";
         EupsThdTranCtlInfo eupsThdTranCtlInfo = BeanUtils.toObject(context.getDataMap(), EupsThdTranCtlInfo.class);
-        EupsThdTranCtlInfo resultThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(context.getData(ParamKeys.COMPANY_NO).toString());
+        EupsThdTranCtlInfo resultThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(comNo);
         if (resultThdTranCtlInfo == null) {
             throw new CoreException(ErrorCodes.THD_CHL_NOT_FOUND);
         } 
@@ -104,13 +108,13 @@ public class SignInAction extends BaseAction {
      * @param para
      * @return
      */
-    private String buildReadyStr(Context context) {
+   /* private String buildReadyStr(Context context) {
         String strDate = DateUtils.formatAsMMddHHmmss(new Date());
         String strPreifx = "MAC";
         StringBuffer beforeMAC = new StringBuffer();
         beforeMAC.append(strPreifx).append(context.getData(ParamKeys.THD_REGION_NO))
                 .append(context.getData(ParamKeys.TXN_CHL)).append(strDate);
         return beforeMAC.toString();
-    }
+    }*/
 
 }

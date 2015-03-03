@@ -14,6 +14,7 @@ import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.bbip.service.Result;
 import com.bocom.jump.bp.core.Context;
@@ -43,11 +44,15 @@ public class FindClientRemainingMoney extends BaseAction {
         //TODO;以此确定comNo 现在测试直接传的是comNo
         context.setData("DevId", context.getData("DEV_ID"));
         context.setData("teller", context.getData("TELLER"));
-        
         context.setData(ParamKeys.TXN_DTE, context.getData(ParamKeys.TXN_TME).toString().substring(0,8));
-        //<Set>BrNo=STRCAT(SUBSTR($CAgtNo,1,3),999)</Set>根据后面业务分析应为交易马
+        
+        String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
+        if (null == cAgtNo) {
+            cAgtNo ="441";
+        }
+        String comNo = cAgtNo.substring(0,3)+"999";
         //检查系统签到状态
-        EupsThdTranCtlInfo eupsThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(context.getData(ParamKeys.COMPANY_NO).toString());
+        EupsThdTranCtlInfo eupsThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(comNo);
         if (eupsThdTranCtlInfo == null) {
             throw new CoreException(ErrorCodes.THD_CHL_NOT_FOUND);
         } 

@@ -16,6 +16,7 @@ import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.bbip.service.Result;
 import com.bocom.jump.bp.core.Context;
@@ -47,12 +48,17 @@ public class VerifyToThirdAction extends BaseAction {
         context.setData("oTLogNo", context.getData("TRADE_SEQ_OLD"));
         context.setData("oTTxnCd", context.getData("TRADE_ID_OLD"));
         context.setData("custId", context.getData("CUST_ID_OLD"));
-        //TODO;以此确定comNo 现在测试直接传的是comNo
         context.setData("DevId", context.getData("DEV_ID"));
         context.setData("teller", context.getData("TELLER"));
         context.setData(ParamKeys.TXN_DTE, context.getData(ParamKeys.TXN_TME).toString().substring(0,8));
         
-        EupsThdTranCtlInfo eupsThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(context.getData(ParamKeys.COMPANY_NO).toString());
+        String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
+        if (null == cAgtNo) {
+            cAgtNo ="441";
+        }
+        String comNo = cAgtNo.substring(0,3)+"999";
+
+        EupsThdTranCtlInfo eupsThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(comNo);
         if (null == eupsThdTranCtlInfo) {
             throw new CoreException(ErrorCodes.THD_CHL_NOT_FOUND);
         } 

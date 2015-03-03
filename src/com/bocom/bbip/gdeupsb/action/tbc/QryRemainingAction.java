@@ -13,6 +13,7 @@ import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
+import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.bbip.service.Result;
 import com.bocom.jump.bp.core.Context;
@@ -42,12 +43,14 @@ public class QryRemainingAction extends BaseAction {
         context.setData("bk", context.getData("BANK_ID"));
         context.setData("dptId", context.getData("DPT_ID"));
         context.setData("custId", context.getData("CUST_ID"));
-        //TODO;以此确定comNo 现在测试直接传的是comNo
         context.setData("DevId", context.getData("DEV_ID"));
         context.setData("teller", context.getData("TELLER"));
-        context.setData("brNo",context.getData("dptId").toString().substring(0, 3)+"999");
-        
-        EupsThdTranCtlInfo resultThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(context.getData(ParamKeys.COMPANY_NO).toString());
+        String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
+        if (null == cAgtNo) {
+            cAgtNo ="441";
+        }
+        String comNo = cAgtNo.substring(0,3)+"999";
+        EupsThdTranCtlInfo resultThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(comNo);
         if (resultThdTranCtlInfo == null) {
             throw new CoreException(ErrorCodes.THD_CHL_NOT_FOUND);
         } 
@@ -70,36 +73,9 @@ public class QryRemainingAction extends BaseAction {
             context.setData("actNo", accessObject.getData("cusAc"));
             context.setData("dbPasWrd", accessObject.getData("pwd"));
             //构成网点号
-            int brNo = context.getData("brNo");
-            int nodNo = 0;
-            switch (brNo) {
-                case 441999:
-                    nodNo=441800;
-                    break;
-                case 444999:
-                    nodNo=444800;
-                    break;
-                case 446999:
-                    nodNo=446800;
-                    break;
-                case 445999:
-                    nodNo=445800;
-                    break;
-                case 483999:
-                    nodNo=483800;
-                    break;
-                case 484999:
-                    nodNo=484800;
-                    break;
-                case 485999:
-                    nodNo=485800;
-                    break;
-                case 476999:
-                    nodNo=476800;
-                    break;
-                case 491999:
-                    nodNo=491800;
-                    break;
+            String nodNo = CodeSwitchUtils.codeGenerator("GDYC_nodSwitch", comNo);
+            if (null == nodNo) {
+                nodNo ="441800";
             }
             context.setData("nodNo",nodNo);
             // 取电子柜员号

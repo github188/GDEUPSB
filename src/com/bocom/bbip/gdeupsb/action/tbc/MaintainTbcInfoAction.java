@@ -34,7 +34,7 @@ public class MaintainTbcInfoAction extends BaseAction {
         switch (transactionFig) {
         case 0: // insert--检测单位是否存在
             EupsThdBaseInfo eupsThdBaseInfo = get(EupsThdBaseInfoRepository.class).findOne(context.getData(ParamKeys.COMPANY_NO).toString());
-            if (null == eupsThdBaseInfo) { // --检测单位是否存在--
+            if (null == eupsThdBaseInfo) { 
                 EupsThdBaseInfo eupsThdBase = new EupsThdBaseInfo();
                 eupsThdBase.setComNo(context.getData(ParamKeys.COMPANY_NO).toString());
                 eupsThdBase.setComNme(context.getData(ParamKeys.COMPANY_NAME).toString());
