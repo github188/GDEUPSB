@@ -51,7 +51,7 @@ public class SignOutAction  extends BaseAction {
                 EupsThdTranCtlInfo eupsThdTranCtlInfo = new EupsThdTranCtlInfo();
                 eupsThdTranCtlInfo.setTxnCtlSts(Constants.TXN_CTL_STS_SIGNOUT);
                 eupsThdTranCtlInfo.setTxnDte(new Date());
-                eupsThdTranCtlInfo.setComNo(context.getData(ParamKeys.COMPANY_NO).toString());
+                eupsThdTranCtlInfo.setComNo(comNo);
                 get (EupsThdTranCtlInfoRepository.class).update(eupsThdTranCtlInfo);
             } catch (Exception e) {
                 throw new CoreException("数据库处理错误 !"+ e);

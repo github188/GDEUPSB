@@ -51,6 +51,7 @@ public class SignInAction extends BaseAction {
         } else {
 
             eupsThdTranCtlInfo.setTxnCtlSts(Constants.TXN_CTL_STS_SIGNIN);
+            eupsThdTranCtlInfo.setComNo(comNo);
             // 根据默认算法生成一个密钥
             Date timeStp = new Date();
             String mainkey = DateUtils.format(timeStp, DateUtils.STYLE_yyyyMMddHHmmss);
@@ -85,7 +86,7 @@ public class SignInAction extends BaseAction {
                     eupsThdFtpConfig.setLocFleNme(DatFileName);
                     eupsThdFtpConfig.setRmtFleNme(DatFileName);
     
-                    // 生成对账文件到指定路径
+                    
                     get(OperateFileAction.class)
                             .createCheckFile(eupsThdFtpConfig, "TBCMainKeyFileFormat", DatFileName, map);
                     log.info("create file end!..");
@@ -95,6 +96,7 @@ public class SignInAction extends BaseAction {
                 } catch (NoSuchAlgorithmException e) {
                     throw new CoreException(ErrorCodes.EUPS_GEN_KEY_ERROR);
                 }*/
+                get(EupsThdTranCtlInfoRepository.class).update(eupsThdTranCtlInfo);
             } else {
                 throw new CoreException("主密钥不存在 !!");
             }
