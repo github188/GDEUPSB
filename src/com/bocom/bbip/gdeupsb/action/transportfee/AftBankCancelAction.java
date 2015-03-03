@@ -32,7 +32,9 @@ public class AftBankCancelAction extends BaseAction{
 	public void execute(Context ctx) throws CoreException,CoreRuntimeException{
 		log.info("AftBankCancelAction start.......");
 		String ohTxnSt = "ohTxnSt";
-		String oTxnSt = "oTxnSt";
+		//TODO:for test
+//		String oTxnSt = "oTxnSt";
+		String oTxnSt=ctx.getData("oTxnSt");
 		GDEupsbTrspTxnJnl gdEupsbTrspTxnJnl = new GDEupsbTrspTxnJnl();
 		if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL)){
 			ctx.setData(GDParamKeys.TXN_ST, Constants.TXNSTS_CANCEL);
@@ -43,6 +45,7 @@ public class AftBankCancelAction extends BaseAction{
 			gdEupsbTrspTxnJnlRepository.update(gdEupsbTrspTxnJnl);
 			ctx.setData(ParamKeys.RSP_CDE, Constants.RESPONSE_CODE_SUCC);
 		}else if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_FAIL)){
+			//TODO:for test
 			if("aaaaaa".equals(ctx.getData(GDParamKeys.HRSP_CD).toString())){
 				ctx.setData(GDParamKeys.TXN_ST, Constants.TXNSTS_CANCEL);
 				ctx.setData(GDParamKeys.HTXN_ST, Constants.TXNSTS_CANCEL);
@@ -52,7 +55,7 @@ public class AftBankCancelAction extends BaseAction{
 				gdEupsbTrspTxnJnlRepository.update(gdEupsbTrspTxnJnl);
 				ctx.setData(ParamKeys.RSP_CDE, Constants.RESPONSE_CODE_SUCC);
 			}else{
-				ctx.setData(GDParamKeys.TXN_ST, ctx.getData(oTxnSt));
+				ctx.setData(GDParamKeys.TXN_ST, oTxnSt);
 				ctx.setData(GDParamKeys.HTXN_ST,ctx.getData(ohTxnSt));
 				gdEupsbTrspTxnJnl.setSqn(ParamKeys.OLD_TXN_SQN);
 				gdEupsbTrspTxnJnl.setHtxnSt(ctx.getData(GDParamKeys.HTXN_ST).toString());
@@ -62,7 +65,7 @@ public class AftBankCancelAction extends BaseAction{
 				ctx.setData(ParamKeys.RSP_MSG, "请重新抹账");
 			}
 		}else{
-			ctx.setData(GDParamKeys.TXN_ST, ctx.getData(oTxnSt));
+			ctx.setData(GDParamKeys.TXN_ST, oTxnSt);
 			ctx.setData(GDParamKeys.HTXN_ST,ctx.getData(ohTxnSt));
 			gdEupsbTrspTxnJnl.setSqn(ParamKeys.OLD_TXN_SQN);
 			gdEupsbTrspTxnJnl.setHtxnSt(ctx.getData(GDParamKeys.HTXN_ST).toString());
@@ -83,8 +86,9 @@ public class AftBankCancelAction extends BaseAction{
 			gdEupsbTrspTxnJnl.setSqn(ParamKeys.OLD_TXN_SQN);
 			gdEupsbTrspTxnJnl.setRvsRsp(ctx.getData(GDParamKeys.RVS_RSP).toString());
 			gdEupsbTrspTxnJnlRepository.update(gdEupsbTrspTxnJnl);
-			String exiFlg = "exiFlg";
-			if(ctx.getData(exiFlg).toString().equals("1")){
+			//TODO: for test
+			String exiFlg = ctx.getData("exiFlg");
+			if(exiFlg.toString().equals("1")){
 			GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
 			gdEupsbTrspFeeInfo.setThdKey(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
 			gdEupsbTrspFeeInfo.setStatus(GDConstants.TF);
