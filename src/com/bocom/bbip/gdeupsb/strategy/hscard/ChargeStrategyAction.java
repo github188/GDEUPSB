@@ -1,6 +1,8 @@
 package com.bocom.bbip.gdeupsb.strategy.hscard;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -42,16 +44,17 @@ public class ChargeStrategyAction implements Executable{
 //		      <Set>TTxnCd=$TxnCod</Set>
 //		      <Set>TxnTim=GETDATETIME(YYYYMMDDHHMISS)</Set>
 		
-		String tTxnDte=context.getData(ParamKeys.THD_TXN_DATE);//第三方交易日期
+		Date tTxnDte=DateUtils.parse(context.getData(ParamKeys.THD_TXN_DATE).toString());//第三方交易日期
 		String thdCusNo = context.getData(GDParamKeys.TML_NO);
 		context.setData(ParamKeys.THD_CUS_NO, thdCusNo);
+		context.setData(ParamKeys.THD_TXN_DATE, tTxnDte);
 //		TODO:现在先设置一个柜员号，以后需要删除。
 		context.setData(ParamKeys.TELLER, "0007");
 		context.setData(ParamKeys.TXN_TLR, "0007");
 //		检查报文是否重复
 		EupsTransJournal eups = new EupsTransJournal();
 		eups.setBakFld1((String)context.getData(ParamKeys.BAK_FLD1));//备用字段1，学校代号。
-		eups.setTxnDte(DateUtils.parse(tTxnDte)); //第三方交易日期
+		eups.setTxnDte(tTxnDte); //第三方交易日期
 		eups.setThdSqn((String)context.getData(ParamKeys.THD_SEQUENCE));//此处的第三方流水号即校方流水号，请求方流水号也赋值为校方流水号。
 		List<EupsTransJournal> journal = eupsTransJournalRepository.find(eups);
 		if(!CollectionUtils.isEmpty(journal)){
@@ -61,19 +64,16 @@ public class ChargeStrategyAction implements Executable{
 			throw new CoreException(ErrorCodes.EUPS_SQN_IS_EXIST);
 		}
 		 //金额控制，不能超过400.但标准版交易流水表中有交易金额和请求交易金额两个字段，应该用交易金额。
-     
-	      BigDecimal txnAmt = new BigDecimal(context.getData(ParamKeys.TXN_AMT).toString());
-	      if((txnAmt.compareTo(new BigDecimal(40000)))>0){
+			double i=Double.parseDouble(context.getData(ParamKeys.TXN_AMT).toString());
+			double d=i/100;
+			DecimalFormat df=new DecimalFormat("#.00");
+			BigDecimal txnAmt=new BigDecimal(df.format(d));
+			context.setData(ParamKeys.TXN_AMT,txnAmt );
+	      if((txnAmt.compareTo(new BigDecimal(400)))>0){
 	  
 	    	  context.setData(ParamKeys.RSP_CDE, ErrorCodes.EUPS_CHECK_TXN_AMT_FAIL);
 	    	  context.setData(ParamKeys.RSP_MSG, "金额超限");
-	    	System.out.println("111111111111111111111111111111111111111111111111111111111");
-//	    	TODO:
 	    	  throw new CoreException(ErrorCodes.EUPS_LIM_AMT_FULL);
 	      }
-	      
-	      System.out.println("22222222222222222222222222222222222222222222222");
-	      
-//	     
 	}
 }
