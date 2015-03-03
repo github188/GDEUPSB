@@ -16,7 +16,9 @@
  	 
  	 <fixString name="TransCode" length="6" mapping="true"/>
  	 <!-- <fixString  name="Deli1" length="1" default=","/> -->
- 	
+ 	 
+ 	<fixString name="tlr" length="3" />
+ 	<fixString name="tmlId" length="3" />
  	 
  	 
  	 
