@@ -46,5 +46,36 @@
 	        <action id="act" ref="eups.invoiceCancelGrantManagerServiceActionPROF00"/>
 	   </actions>
 	</process>
+	
+	<!-- 发票柜员改密 -->
+	<process id="gdeupsb.updateTlrPasswd" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	   <actions>
+	        <action id="act" ref="eups.updateTlrPasswdServiceActionPROF00"/>
+	   </actions>
+	</process>
+	<!-- 发票柜员验密 -->
+	<process id="gdeupsb.checkTlrPasswd" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	   <actions>
+	        <action id="act" ref="eups.checkTlrPasswdServiceActionPROF00"/>
+	   </actions>
+	</process>
+	<!-- 发票柜员校验 -->
+	<process id="gdeupsb.checkTlrInf" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	   <actions>
+	        <action id="act" ref="eups.checkTlrInfServiceActionPROF00"/>
+	   </actions>
+	</process>
+	<!-- 路桥凭条打印查询 -->
+	<process id="gdeupsb.queryPrintInvoice" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	   <actions>
+	        <action id="act" ref="eups.queryPrintInvoiceServiceActionPROF00"/>
+	   </actions>
+	</process>
+	<!-- 自助通发票使用情况明细表查询打印 -->
+	<process id="gdeupsb.atmInvDtl" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	   <actions>
+	        <action id="act" ref="eups.atmInvDtlServiceActionPROF00"/>
+	   </actions>
+	</process>
 	<!-- add by hefw 20150126 end -->
 </x:beans>
