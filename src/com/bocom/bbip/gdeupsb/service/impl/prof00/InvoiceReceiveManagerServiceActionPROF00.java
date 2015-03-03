@@ -65,12 +65,12 @@ public class InvoiceReceiveManagerServiceActionPROF00 extends BaseAction  {
 		gdeupsInvTermInf.setClrNum("0");
 		gdeupsInvTermInf.setUseNum("0");
 		gdeupsInvTermInf.setSeqNo(seqNo);
-		gdeupsInvTermInf.setUseDat(DateUtils.formatAsSimpleDate(new Date()));
+		gdeupsInvTermInf.setUseDat(DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMdd));
 		get(GdeupsInvTermInfRepository.class).insert(gdeupsInvTermInf);
 		
 		GdeupsInvDtlBok gdeupsInvDtlBoktmp = new GdeupsInvDtlBok();
 		gdeupsInvDtlBoktmp.setStatus("1");
-		gdeupsInvDtlBoktmp.setUseDat(DateUtils.formatAsSimpleDate(new Date()));
+		gdeupsInvDtlBoktmp.setUseDat(DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMdd));
 		gdeupsInvDtlBoktmp.setSeqNo(seqNo);
 		gdeupsInvDtlBoktmp.setInvTyp(invTyp);
 		gdeupsInvDtlBoktmp.setIvBegNo(ivBegNo);
@@ -85,7 +85,7 @@ public class InvoiceReceiveManagerServiceActionPROF00 extends BaseAction  {
 		eupsInvTxnInf.setUseSeq("0");
 		eupsInvTxnInf.setStlNum(gdeupsInvTermInf.getInvNum());
 		eupsInvTxnInf.setStlFlg("U");
-		eupsInvTxnInf.setActDat(DateUtils.formatAsSimpleDate(new Date()));
+		eupsInvTxnInf.setActDat(DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMdd));
 		eupsInvTxnInf.setTlrId(context.getData("tlr").toString());
 		eupsInvTxnInf.setNodno(context.getData("br").toString());
 		get(GdeupsInvTxnInfRepository.class).insert(eupsInvTxnInf);

@@ -1,5 +1,8 @@
 package com.bocom.bbip.gdeupsb.service.impl.watr00;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,8 +30,14 @@ public class BatchQueryResultServiceActionWATR00 extends BaseAction {
 		String filename = context.getData("filename");
 		String filesize = context.getData("filesize");
 		logger.info("path["+path+"]filename["+filename+"]filesize["+filesize+"]");
+		context.setData("TransCode", "Y008");
+		context.setData("ErrorNum", "0000");
+//		Map<String,Object> map = new HashMap<String,Object>();
+//		map.put("jopSchedulingData", "汕头水费批扣交易");
+//		context.getAttribute("");// setVariable("PARAMETERS", map);
+		
 		//异步调用文件批量处理交易
-		get(BBIPPublicService.class).asynExecute("eups.autoFleBchPayCrtDatProcess", context);
+		get(BBIPPublicService.class).synExecute("eups.fileBatchPayCreateDataProcess", context);
 		logger.info("BatchQueryResultServiceActionWATR00 end ... ...");
 	}
 

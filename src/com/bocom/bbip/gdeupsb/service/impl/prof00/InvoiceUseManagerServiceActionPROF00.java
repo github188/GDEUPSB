@@ -75,7 +75,7 @@ public class InvoiceUseManagerServiceActionPROF00 extends BaseAction  {
 		gdeupsInvTxnInf.setUseSeq(useSeq);
 		gdeupsInvTxnInf.setStlNum(stlNum);
 		gdeupsInvTxnInf.setStlFlg(stlFlg);
-		gdeupsInvTxnInf.setActDat(DateUtils.formatAsSimpleDate(new Date()));
+		gdeupsInvTxnInf.setActDat(DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMdd));
 		gdeupsInvTxnInf.setTlrId(gdeupsInvTermInf.getTlrId());
 		gdeupsInvTxnInf.setNodno(gdeupsInvTermInf.getNodno());
 		gdeupsInvTxnInf.setQyNo(qyNo);
@@ -83,7 +83,7 @@ public class InvoiceUseManagerServiceActionPROF00 extends BaseAction  {
 		gdeupsInvTxnInf.setOldTrDate(oldTrdate);
 		get(GdeupsInvTxnInfRepository.class).insert(gdeupsInvTxnInf);
 		context.setData("seqNo", useSeq);
-		context.setData("actDat", DateUtils.formatAsSimpleDate(new Date()));
+		context.setData("actDat", DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMdd));
 		logger.info("InvoiceUseManagerServiceActionPROF00 end ... ...");
 	}
 

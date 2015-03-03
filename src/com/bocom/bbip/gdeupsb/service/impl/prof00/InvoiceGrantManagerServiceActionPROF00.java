@@ -78,7 +78,7 @@ public class InvoiceGrantManagerServiceActionPROF00 extends BaseAction {
 		gdeupsInvDtlBok.setTolNum(tolNum);
 		gdeupsInvDtlBok.setRegTlr(regTlr);
 		gdeupsInvDtlBok.setNodno(nodno);
-		gdeupsInvDtlBok.setRegDat(DateUtils.formatAsSimpleDate(new Date()));
+		gdeupsInvDtlBok.setRegDat(DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMdd));
 		gdeupsInvDtlBok.setUseNum("0");//使用张数
 		gdeupsInvDtlBok.setClrNum("0");//作废张数
 		get(GdeupsInvDtlBokRepository.class).insert(gdeupsInvDtlBok);

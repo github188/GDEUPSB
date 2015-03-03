@@ -54,7 +54,7 @@ public class InvoiceCheckManagerServiceActionPROF00 extends BaseAction {
 		gdeupsInvDtlBok.setStatus("2");
 		gdeupsInvDtlBok.setUseNum(gdeupsInvTermInf.getUseNum());
 		gdeupsInvDtlBok.setClrNum(gdeupsInvTermInf.getClrNum());
-		gdeupsInvDtlBok.setChkDat(DateUtils.formatAsSimpleDate(new Date()));
+		gdeupsInvDtlBok.setChkDat(DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMdd));
 		get(GdeupsInvDtlBokRepository.class).updateCheck(gdeupsInvDtlBok);
 		
 		get(GdeupsInvTermInfRepository.class).deleteInvTermInf(gdeupsInvTermInf);
@@ -62,7 +62,7 @@ public class InvoiceCheckManagerServiceActionPROF00 extends BaseAction {
 		context.setData("useDat", gdeupsInvTermInf.getUseDat());
 		context.setData("useNum", gdeupsInvTermInf.getUseNum());
 		context.setData("clrNum", gdeupsInvTermInf.getClrNum());
-		context.setData("actDat", DateUtils.formatAsSimpleDate(new Date()));
+		context.setData("actDat", DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMdd));
 		context.setData("ivBegNo", gdeupsInvTermInf.getIvBegNo());
 		logger.info("InvoiceCheckManagerServiceActionPROF00 end ... ...");
 	}

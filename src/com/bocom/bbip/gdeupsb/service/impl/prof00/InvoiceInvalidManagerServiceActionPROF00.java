@@ -67,7 +67,7 @@ public class InvoiceInvalidManagerServiceActionPROF00 extends BaseAction  {
 		gdeupsInvTxnInf.setUseSeq(useSeq);
 		gdeupsInvTxnInf.setStlNum(stlNum);
 		gdeupsInvTxnInf.setStlFlg(stlFlg);
-		gdeupsInvTxnInf.setActDat(DateUtils.formatAsSimpleDate(new Date()));
+		gdeupsInvTxnInf.setActDat(DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMdd));
 		gdeupsInvTxnInf.setTlrId(gdeupsInvTermInf.getTlrId());
 		gdeupsInvTxnInf.setNodno(gdeupsInvTermInf.getNodno());
 		get(GdeupsInvTxnInfRepository.class).insert(gdeupsInvTxnInf);
