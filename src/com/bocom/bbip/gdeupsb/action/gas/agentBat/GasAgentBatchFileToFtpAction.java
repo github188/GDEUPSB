@@ -166,6 +166,7 @@ public class GasAgentBatchFileToFtpAction extends BaseAction{
 	private Map<String, Object> encodeAgtHdFileMap(String bk, String comNo) throws CoreException, CoreRuntimeException {
     	Map<String, Object> map = new HashMap<String, Object>();
         Map<String, Object> agtMap = new HashMap<String, Object>();
+        //TODO：不对，查询个人协议怎么会输入分行号跟单位编号？
         agtMap.put(ParamKeys.BK, bk);
         agtMap.put(ParamKeys.COMPANY_NO, comNo);
         Result accessObject = bgspServiceAccessObject.callServiceFlatting("queryDetailAgentCollectAgreement",agtMap);
