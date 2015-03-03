@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.Zero" >
+  <resultMap id="BaseResultMap" type="com.bocom.bbip.gdeupsb.entity.Zero">
+	<result column="ZreAct" property="ZreAct" jdbcType="CHAR" />
+	<result column="ZActNam" property="ZActNam" jdbcType="CHAR" />
+	<result column="ZActNodNo" property="ZActNodNo" jdbcType="CHAR" />
+	<result column="CAgtNo" property="CAgtNo" jdbcType="CHAR" />
+	<result column="CAgtNm" property="CAgtNm" jdbcType="CHAR" />
+	<result column="CActNo" property="CActNo" jdbcType="CHAR" />
+	<result column="CActNm" property="CActNm" jdbcType="CHAR" />
+	<result column="CActNodNo" property="CActNodNo" jdbcType="CHAR" />
+	<result column="CActNodNm" property="CActNodNm" jdbcType="CHAR" />
+	<result column="PayCod" property="PayCod" jdbcType="CHAR" />
+	<result column="PayNam" property="PayNam" jdbcType="CHAR" />
+</resultMap>
+  	
+  
+  <insert id="addZero" parameterType="com.bocom.bbip.gdeupsb.entity.Zero" >
+    insert into ZERO_ACT_AGR
+    values (#{username,jdbcType=INTEGER}, #{age,jdbcType=INTEGER})
+  </insert>
+  
+ 
+  
+  <select id="findZero" resultMap="BaseResultMap"  parameterType="com.bocom.bbip.gdeupsb.entity.Zero">
+    select * from gdeupsb.ZERO_ACT_AGR  WHERE
+     ZreAct=#{ZreAct} AND CAgtNo=#{CAgtNo} and CActNo=#{CActNo}
+  </select>
+  <delete id="deleteZero"  parameterType="com.bocom.bbip.gdeupsb.entity.Zero">
+  DELETE FROM gdeupsb.ZERO_ACT_AGR WHERE
+     ZreAct=#{ZreAct} AND CAgtNo=#{CAgtNo} and CActNo=#{CActNo}
+  
+  </delete>
+ 
+  <select id="updateZero"   parameterType="com.bocom.bbip.gdeupsb.entity.Zero">
+    UPDATE gdeupsb.ZERO_ACT_AGR SET PayCod=#{PayCod},PayNam=#{PayNam}  WHERE
+     ZreAct=#{ZreAct} AND CAgtNo=#{CAgtNo} and CActNo=#{CActNo}
+  </select>
+  
+  <select id="findZeroCount" resultType="java.lang.Integer"  >
+    select count(*) from gdeupsb.ZERO_ACT_AGR 
+  </select>
+</mapper>
