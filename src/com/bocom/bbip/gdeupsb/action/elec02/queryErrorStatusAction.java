@@ -42,6 +42,7 @@ public class queryErrorStatusAction extends BaseAction {
 		final String CAgtNo = switchCode(AppNm);
 		Assert.isFalse(StringUtils.isBlank(CAgtNo), ErrorCodes.EUPS_FIELD_EMPTY);
 		/** 检查单位协议是否存在 */
+		//TODO：不对！！！！！
 		EupsCorpAgent corpAgent=get(EupsCorpAgentRepository.class).findOne(CAgtNo);
 		Assert.isFalse(null==corpAgent, ErrorCodes.EUPS_FIELD_EMPTY, "单位协议不存在");
 		EupsTransJournal journal = new EupsTransJournal();
