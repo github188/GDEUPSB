@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GDEupsZhAGBatchTemp">
+	<resultMap id="BaseResultMap" type="com.bocom.bbip.gdeupsb.entity.GDEupsZhAGBatchTemp">
+		<id column="SQN" property="sqn" jdbcType="INTEGER" />
+		<result column="BAT_NO" property="batNo" jdbcType="CHAR" />
+		<result column="COM_NO" property="comNo" jdbcType="CHAR" />
+		<result column="TXN_TLR" property="txnTlr" jdbcType="CHAR" />
+		<result column="SUB_DTE" property="subDte" jdbcType="DATE" />
+		<result column="CUS_AC" property="cusAc" jdbcType="VARCHAR" />
+		<result column="CUS_NME" property="cusNme" jdbcType="VARCHAR" />
+		<result column="TXN_AMT" property="txnAmt" jdbcType="VARCHAR" />
+		<result column="THD_CUS_NO" property="thdCusNo" jdbcType="VARCHAR" />
+		<result column="THD_CUS_NME" property="thdCusNme" jdbcType="VARCHAR" />
+		<result column="RSV_FLD1" property="rsvFld1" jdbcType="VARCHAR" />
+		<result column="RSV_FLD2" property="rsvFld2" jdbcType="VARCHAR" />
+		<result column="RSV_FLD3" property="rsvFld3" jdbcType="VARCHAR" />
+		<result column="RSV_FLD4" property="rsvFld4" jdbcType="VARCHAR" />
+	</resultMap>
+<resultMap id="BaseResultMap2" type="java.util.Map">
+		<id column="SQN" property="sqn" jdbcType="INTEGER" />
+		<result column="BAT_NO" property="batNo" jdbcType="CHAR" />
+		<result column="COM_NO" property="comNo" jdbcType="CHAR" />
+		<result column="TXN_TLR" property="txnTlr" jdbcType="CHAR" />
+		<result column="SUB_DTE" property="subDte" jdbcType="DATE" />
+		<result column="CUS_AC" property="cusAc" jdbcType="VARCHAR" />
+		<result column="CUS_NME" property="cusNme" jdbcType="VARCHAR" />
+		<result column="TXN_AMT" property="txnAmt" jdbcType="VARCHAR" />
+		<result column="THD_CUS_NO" property="thdCusNo" jdbcType="VARCHAR" />
+		<result column="THD_CUS_NME" property="thdCusNme" jdbcType="VARCHAR" />
+		<result column="RSV_FLD1" property="rsvFld1" jdbcType="VARCHAR" />
+		<result column="RSV_FLD2" property="rsvFld2" jdbcType="VARCHAR" />
+		<result column="RSV_FLD3" property="rsvFld3" jdbcType="VARCHAR" />
+		<result column="RSV_FLD4" property="rsvFld4" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="findByBatNo" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select * from ${GDEUPS_SCHEMA}.GDEUPS_ZHAG_BATCH_TEMP where BAT_NO=#{batNo}
+
+	</select>
+     <select id="findByBatNo2" resultMap="BaseResultMap2"
+		parameterType="java.lang.String">
+		select * from ${GDEUPS_SCHEMA}.GDEUPS_ZHAG_BATCH_TEMP where BAT_NO=#{batNo}
+
+	</select>
+	<delete id="deleteByBatNo" parameterType="java.lang.String">
+		delete from ${GDEUPS_SCHEMA}.GDEUPS_ZHAG_BATCH_TEMP
+		where BAT_NO = #{batNo,jdbcType=CHAR}
+  </delete>
+	<delete id="deleteAll">
+		delete from ${GDEUPS_SCHEMA}.GDEUPS_ZHAG_BATCH_TEMP
+    
+  </delete>
+	<select id="batchInsert" parameterType="java.util.List">
+		insert into ${GDEUPS_SCHEMA}.GDEUPS_ZHAG_BATCH_TEMP ( BAT_NO, COM_NO,
+		TXN_TLR, SUB_DTE, CUS_AC, CUS_NME,
+		TXN_AMT, THD_CUS_NO, THD_CUS_NME,
+		RSV_FLD1, RSV_FLD2, RSV_FLD3,
+		RSV_FLD4)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			( #{item.batNo}, #{item.comNo},
+			#{item.txnTlr}, #{item.subDte}, #{item.cusAc}, #{item.cusNme},
+			#{item.txnAmt}, #{item.thdCusNo}, #{item.thdCusNme},
+			#{item.rsvFld1}, #{item.rsvFld2}, #{item.rsvFld3},
+			#{item.rsvFld4})
+      </foreach>
+	</select>
+
+
+
+</mapper>
