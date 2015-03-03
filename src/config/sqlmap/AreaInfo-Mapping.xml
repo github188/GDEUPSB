@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.AreaInfo" >
+  <resultMap id="BaseResultMap" type="com.bocom.bbip.gdeupsb.entity.AreaInfo" >
+    <result column="AreaNam" property="AreaNam" jdbcType="CHAR"  />
+    <result column="AreaCod" property="AreaCod" jdbcType="CHAR"  />
+  </resultMap>
+  
+  <select id="findByAreaName" resultMap="BaseResultMap" parameterType="java.lang.String">
+     SELECT AreaNam,AreaCod FROM AreaInfo WHERE  AreaNam like  CONCAT(CONCAT('%',  #{AreaNam}), '%')   
+  </select>
+  <select id="findByAreaNameCount" resultType="java.lang.Integer" >
+    select count(*) from AreaInfo
+    </select>
+  
+</mapper>
