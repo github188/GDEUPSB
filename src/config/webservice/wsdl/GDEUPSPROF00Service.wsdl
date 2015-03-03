@@ -6,6 +6,12 @@
       <xsd:import namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/Schema" schemaLocation="GDEUPSPROF00Service.xsd"/>
     </xsd:schema>
   </wsdl:types>
+  <wsdl:message name="queryPrintInvoiceRequestMessage">
+    <wsdl:part name="queryPrintInvoiceRequest" element="gdeupsb:queryPrintInvoice"/>
+  </wsdl:message>
+  <wsdl:message name="queryPrintInvoiceResponseMessage">
+    <wsdl:part name="queryPrintInvoiceResponse" element="gdeupsb:queryPrintInvoiceResponse"/>
+  </wsdl:message>
   <wsdl:message name="invoiceStatusQueryManagerRequestMessage">
     <wsdl:part name="invoiceStatusQueryManagerRequest" element="gdeupsb:invoiceStatusQueryManager"/>
   </wsdl:message>
@@ -51,6 +57,12 @@
   <wsdl:message name="invoiceCheckManagerResponseMessage">
     <wsdl:part name="invoiceCheckManagerResponse" element="gdeupsb:invoiceCheckManagerResponse"/>
   </wsdl:message>
+  <wsdl:message name="atmInvDtlRequestMessage">
+    <wsdl:part name="atmInvDtlRequest" element="gdeupsb:atmInvDtl"/>
+  </wsdl:message>
+  <wsdl:message name="atmInvDtlResponseMessage">
+    <wsdl:part name="atmInvDtlResponse" element="gdeupsb:atmInvDtlResponse"/>
+  </wsdl:message>
   <wsdl:message name="updateTlrPasswdRequestMessage">
     <wsdl:part name="updateTlrPasswdRequest" element="gdeupsb:updateTlrPasswd"/>
   </wsdl:message>
@@ -58,6 +70,11 @@
     <wsdl:part name="checkTlrInfRequest" element="gdeupsb:checkTlrInf"/>
   </wsdl:message>
   <wsdl:portType name="GDEUPSPROF00ServicePortType">
+    <wsdl:operation name="queryPrintInvoice">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:queryPrintInvoiceRequestMessage"/>
+      <wsdl:output message="tns:queryPrintInvoiceResponseMessage"/>
+    </wsdl:operation>
     <wsdl:operation name="invoiceStatusQueryManager">
       <wsdl:documentation/>
       <wsdl:input message="tns:invoiceStatusQueryManagerRequestMessage"/>
@@ -96,6 +113,11 @@
       <wsdl:input message="tns:invoiceCheckManagerRequestMessage"/>
       <wsdl:output message="tns:invoiceCheckManagerResponseMessage"/>
     </wsdl:operation>
+    <wsdl:operation name="atmInvDtl">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:atmInvDtlRequestMessage"/>
+      <wsdl:output message="tns:atmInvDtlResponseMessage"/>
+    </wsdl:operation>
     <wsdl:operation name="updateTlrPasswd">
       <wsdl:input message="tns:updateTlrPasswdRequestMessage"/>
     </wsdl:operation>
@@ -105,6 +127,15 @@
   </wsdl:portType>
   <wsdl:binding name="GDEUPSPROF00ServiceSoapBinding" type="tns:GDEUPSPROF00ServicePortType">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="queryPrintInvoice">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/queryPrintInvoice"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="invoiceStatusQueryManager">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/invoiceStatusQueryManager"/>
       <wsdl:input>
@@ -167,6 +198,15 @@
     </wsdl:operation>
     <wsdl:operation name="invoiceCheckManager">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/invoiceCheckManager"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="atmInvDtl">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/atmInvDtl"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
