@@ -20,7 +20,15 @@
     TXN_LOG, CHK_DAT, GAME_ID, DRAW_ID, KENO_ID, SEQ_NO, SCH_ID, LOT_NAM, PLAY_ID, TXN_TIM, 
     TXN_AMT, CHK_FLG, CHK_TIM
   </sql>
-  
+  <select id="LotDtlBatchInsert" resultMap="basicResultMap" >
+    insert into  gdeupsb.GDEUPS_LOT_CHK_DTL (
+    <include refid="baseColumnList" />) values
+    	<foreach collection="list" item="item" index="index" separator=",">
+			( #{item.tLogNo}, #{item.gameId},
+			#{item.drawId}, #{item.kenoId}, #{item.txnLog}, #{item.betMod},
+			#{item.betMul}, #{item.classNo}, #{item.przAmt}, #{item.betLin})
+      </foreach>
+  </select>
    <update id="updateByGameIdAndDrawId" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotChkDtl" >
     update gdeupsb.GDEUPS_LOT_CHK_DTL
        set CHK_FLG = #{chkFlg,jdbcType=CHAR}, CHK_TIM = #{chkTim,jdbcType=CHAR}
