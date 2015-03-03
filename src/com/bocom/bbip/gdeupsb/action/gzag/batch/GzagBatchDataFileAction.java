@@ -57,21 +57,21 @@ public class GzagBatchDataFileAction implements BatchAcpService{
 			EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("gzagBatch");
 			//文件名称
 			String fileName=eupsThdFtpConfig.getLocFleNme();
-			String fileId="";
+			String fileId=comNo+"BatchFile";
 			//TODO  根据单位名称判断fieId 选择生成文件格式
-			if("insu".equals(comNo)){
-					 fileId="insuBatchFile";
-			}else if("lott".equals(comNo)){
-					 fileId="lottBatchFile";
-			} else if("yct".equals(comNo)){
-					 fileId="yctBatchFile";
-			}else if("ykt".equals(comNo)){
-					 fileId="yktBatchFile";
-			}else if("sptlt".equals(comNo)){
-					 fileId="sptltBatchFile";
-			}else{
-				logger.info("没有该单位编号");
-			}
+//			if("insu".equals(comNo)){
+//					 fileId="insuBatchFile";
+//			}else if("lott".equals(comNo)){
+//					 fileId="lottBatchFile";
+//			} else if("yct".equals(comNo)){
+//					 fileId="yctBatchFile";
+//			}else if("ykt".equals(comNo)){
+//					 fileId="yktBatchFile";
+//			}else if("sptlt".equals(comNo)){
+//					 fileId="sptltBatchFile";
+//			}else{
+//				logger.info("没有该单位编号");
+//			}
 			context.setData("fileId", fileId);
 			//获取文件并解析入库
 			List<Map<String, Object>> mapList=operateFileAction.pareseFile(eupsThdFtpConfig, fileId);
