@@ -193,34 +193,26 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 			
 
 			// 更新流水
-			// EupsTransJournal etj = context
-			// .getData(ParamKeys.CONSOLE_LCLJNL_LIST);
-			// etj.setTxnTyp(context.getData(ParamKeys.TXN_TYP).toString()); //
-			// TxnTyp='%s'
-			// etj.setCusNme(context.getData(ParamKeys.CUS_NME).toString()); //
-			// ActNam='%s'
-			// etj.setTxnAmt(new
-			// BigDecimal(context.getData(ParamKeys.TXN_AMOUNT)
-			// .toString())); // OptAmt='%s'
+			// EupsTransJournal etj = context.getData(ParamKeys.CONSOLE_LCLJNL_LIST);
+			// etj.setTxnTyp(context.getData(ParamKeys.TXN_TYP).toString()); //TxnTyp='%s'
+			// etj.setCusNme(context.getData(ParamKeys.CUS_NME).toString()); //ActNam='%s'
+			// etj.setTxnAmt(new BigDecimal(context.getData(ParamKeys.TXN_AMOUNT).toString())); // OptAmt='%s'
 			// etj.setBakFld6(optAmt1); // OptAmt1='%s'
-			// etj.setBakFld2(context.getData(ParamKeys.BAK_FLD2).toString());
-			// // ThdSts='%s'
-			// etj.setBakFld1(context.getData(ParamKeys.BAK_FLD1).toString());
-			// // Status='%s'
-			// TODO HTxnCd='%s' 主机交易码
-			// etj.setMfmRspCde(context.getData(ParamKeys.MFM_RSP_CDE).toString());
-			// // HRspCd='%s'
-			// etj.setMfmTxnSts(context.getData(ParamKeys.MFM_TXN_STS).toString());
-			// // HTxnSt='%s'
-			// TODO HLogNo='%s' 主机流水号
-			// etj.setMfmVchNo(context.getData(ParamKeys.MFM_VCH_NO).toString());
-			// // TckNo='%s'
-			// // 会计流水号
-			// etj.setBakFld5(context.getData(ParamKeys.BAK_FLD5).toString());
-			// // ErrMsg='%s'
-			// etj.setSqn(context.getData(ParamKeys.SEQUENCE).toString()); //
-			// LogNo='%s'
-			//
+			// etj.setBakFld2(context.getData(ParamKeys.BAK_FLD2).toString());// ThdSts='%s'
+			// etj.setBakFld1(context.getData(ParamKeys.BAK_FLD1).toString());// Status='%s'
+			
+			// HTxnCd='%s' 主机交易码
+			
+			// etj.setMfmRspCde(context.getData(ParamKeys.MFM_RSP_CDE).toString());// HRspCd='%s'
+			// etj.setMfmTxnSts(context.getData(ParamKeys.MFM_TXN_STS).toString());// HTxnSt='%s'
+			
+			// HLogNo='%s' 主机流水号
+			
+			// etj.setMfmVchNo(context.getData(ParamKeys.MFM_VCH_NO).toString());// TckNo='%s' 会计流水号
+			
+			// etj.setBakFld5(context.getData(ParamKeys.BAK_FLD5).toString());// ErrMsg='%s'
+			// etj.setSqn(context.getData(ParamKeys.SEQUENCE).toString()); // LogNo='%s'
+
 			// eupsTransJournalRepository.update(etj);
 
 		}
