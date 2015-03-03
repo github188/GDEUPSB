@@ -396,23 +396,23 @@ public final class GDErrorCodes {
 
 	/*************************公共汽车***********************/
 	/**0	成功*/
-	public static final String EUPS_VECH00_0_ERROR="BBIP4400EU080";
+	public static final String EUPS_VECH00_0_ERROR="BBIP4400EU08000";
 	/**	系统异常*/
-	public static final String EUPS_VECH00_99_ERROR="BBIP4400EU08099";
+	public static final String EUPS_VECH00_99_ERROR="BBIP4400EU0899";
 	/**	签名验证失败*/
-	public static final String EUPS_VECH00_1001_ERROR="BBIP4400EU08011";
+	public static final String EUPS_VECH00_1001_ERROR="BBIP4400EU0811";
 	/**	不是本系统的终端*/
-	public static final String EUPS_VECH00_1002_ERROR="BBIP4400EU08012";
+	public static final String EUPS_VECH00_1002_ERROR="BBIP4400EU0812";
 	/**	客户端IP验证失败*/
 	public static final String EUPS_VECH00_1003_ERROR="BBIP4400EU08013";
 	/**	没有对应查询数据*/
-	public static final String EUPS_VECH00_1004_ERROR="BBIP4400EU08014";
+	public static final String EUPS_VECH00_1004_ERROR="BBIP4400EU0814";
 	/**	参数不正确*/
-	public static final String EUPS_VECH00_1005_ERROR="BBIP4400EU08015";
+	public static final String EUPS_VECH00_1005_ERROR="BBIP4400EU0815";
 	/**	提交的订单和预提交订单信息不一致*/
-	public static final String EUPS_VECH00_1006_ERROR="BBIP4400EU08016";
+	public static final String EUPS_VECH00_1006_ERROR="BBIP4400EU0816";
 	/**	订单信息错误*/
-	public static final String EUPS_VECH00_1008_ERROR="BBIP4400EU08018";
+	public static final String EUPS_VECH00_1008_ERROR="BBIP4400EU0818";
 	/**	没有找到确认支付的订单*/
-	public static final String EUPS_VECH00_1009_ERROR="BBIP4400EU08019";
+	public static final String EUPS_VECH00_1009_ERROR="BBIP4400EU0819";
 }
