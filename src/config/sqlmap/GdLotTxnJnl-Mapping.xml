@@ -880,24 +880,6 @@
  			
   
   
-  <select id="qryLotTxnJnl"  parameterType="map" resultMap="basicResultMap" >
-    select
-    <include refid="baseColumnList" />
-    from GDEUPSB.GDEUPS_Lot_Txn_Jnl
-     <where>
-        <choose>
-          <when test="betTyp !=null and betTyp != ''">
-             Crd_No=#{crdNo} AND Bet_Typ=#{betTyp} AND Bet_Dat between #{begDat} and #{endDat} AND Txn_Sts='S'
-          </when>
-          <otherwise>
-             Crd_No=#{crdNo} AND Bet_Dat between #{begDat} and #{endDat} AND Txn_Sts='S'
-         </otherwise>
-        </choose>
-     </where>
-     order by Txn_Tim desc
-  </select>
-  
-  
   
   
 </mapper>
