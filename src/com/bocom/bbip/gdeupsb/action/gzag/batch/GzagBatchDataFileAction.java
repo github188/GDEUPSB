@@ -76,7 +76,7 @@ public class GzagBatchDataFileAction implements BatchAcpService{
 			//获取文件并解析入库
 			List<Map<String, Object>> mapList=operateFileAction.pareseFile(eupsThdFtpConfig, fileId);
 			if(CollectionUtils.isEmpty(mapList)){
-					throw new CoreException("~~~~~~~~~~~~处理状态异常");
+					throw new CoreException("处理状态异常");
 			}
 			for (Map<String, Object> map : mapList) {
 					map.put(ParamKeys.EUPS_FILE_HEADER, BeanUtils.toMap(context));
