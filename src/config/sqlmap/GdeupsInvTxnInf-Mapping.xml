@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdeupsInvTxnInf" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdeupsInvTxnInf" >
+    <id column="INV_TYP" property="invTyp" jdbcType="CHAR" />
+    <id column="IV_BEG_NO" property="ivBegNo" jdbcType="CHAR" />
+    <id column="IV_END_NO" property="ivEndNo" jdbcType="CHAR" />
+    <id column="USE_SEQ" property="useSeq" jdbcType="CHAR" />
+    <result column="STL_NUM" property="stlNum" jdbcType="CHAR" />
+    <result column="STL_FLG" property="stlFlg" jdbcType="CHAR" />
+    <result column="ACT_DAT" property="actDat" jdbcType="CHAR" />
+    <result column="TLR_ID" property="tlrId" jdbcType="CHAR" />
+    <result column="NODNO" property="nodno" jdbcType="CHAR" />
+    <result column="QY_NO" property="qyNo" jdbcType="CHAR" />
+    <result column="OLD_SEQ" property="oldSeq" jdbcType="CHAR" />
+    <result column="OLD_TR_DATE" property="oldTrDate" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    INV_TYP, IV_BEG_NO, IV_END_NO, USE_SEQ, STL_NUM, STL_FLG, ACT_DAT, TLR_ID, NODNO, 
+    QY_NO, OLD_SEQ, OLD_TR_DATE
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_INV_TXN_INF
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="invTyp!=null" >
+        AND  INV_TYP=#{invTyp,jdbcType=CHAR}
+      </if>
+      <if test="ivBegNo!=null" >
+        AND  IV_BEG_NO=#{ivBegNo,jdbcType=CHAR}
+      </if>
+      <if test="ivEndNo!=null" >
+        AND  IV_END_NO=#{ivEndNo,jdbcType=CHAR}
+      </if>
+      <if test="useSeq!=null" >
+        AND  USE_SEQ=#{useSeq,jdbcType=CHAR}
+      </if>
+      <if test="stlNum!=null" >
+        AND  STL_NUM=#{stlNum,jdbcType=CHAR}
+      </if>
+      <if test="stlFlg!=null" >
+        AND  STL_FLG=#{stlFlg,jdbcType=CHAR}
+      </if>
+      <if test="actDat!=null" >
+        AND  ACT_DAT=#{actDat,jdbcType=CHAR}
+      </if>
+      <if test="tlrId!=null" >
+        AND  TLR_ID=#{tlrId,jdbcType=CHAR}
+      </if>
+      <if test="nodno!=null" >
+        AND  NODNO=#{nodno,jdbcType=CHAR}
+      </if>
+      <if test="qyNo!=null" >
+        AND  QY_NO=#{qyNo,jdbcType=CHAR}
+      </if>
+      <if test="oldSeq!=null" >
+        AND  OLD_SEQ=#{oldSeq,jdbcType=CHAR}
+      </if>
+      <if test="oldTrDate!=null" >
+        AND  OLD_TR_DATE=#{oldTrDate,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="com.bocom.bbip.gdeupsb.entity.GdeupsInvTxnInfKey" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_INV_TXN_INF
+    where INV_TYP = #{invTyp,jdbcType=CHAR}
+      and IV_BEG_NO = #{ivBegNo,jdbcType=CHAR}
+      and IV_END_NO = #{ivEndNo,jdbcType=CHAR}
+      and USE_SEQ = #{useSeq,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="com.bocom.bbip.gdeupsb.entity.GdeupsInvTxnInfKey" >
+    delete from ${GDEUPSB_SCHEMA}.GDEUPS_INV_TXN_INF
+    where INV_TYP = #{invTyp,jdbcType=CHAR}
+      and IV_BEG_NO = #{ivBegNo,jdbcType=CHAR}
+      and IV_END_NO = #{ivEndNo,jdbcType=CHAR}
+      and USE_SEQ = #{useSeq,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdeupsInvTxnInf" >
+    insert into ${GDEUPSB_SCHEMA}.GDEUPS_INV_TXN_INF
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="invTyp != null" >
+        INV_TYP,
+      </if>
+      <if test="ivBegNo != null" >
+        IV_BEG_NO,
+      </if>
+      <if test="ivEndNo != null" >
+        IV_END_NO,
+      </if>
+      <if test="useSeq != null" >
+        USE_SEQ,
+      </if>
+      <if test="stlNum != null" >
+        STL_NUM,
+      </if>
+      <if test="stlFlg != null" >
+        STL_FLG,
+      </if>
+      <if test="actDat != null" >
+        ACT_DAT,
+      </if>
+      <if test="tlrId != null" >
+        TLR_ID,
+      </if>
+      <if test="nodno != null" >
+        NODNO,
+      </if>
+      <if test="qyNo != null" >
+        QY_NO,
+      </if>
+      <if test="oldSeq != null" >
+        OLD_SEQ,
+      </if>
+      <if test="oldTrDate != null" >
+        OLD_TR_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="invTyp != null" >
+        #{invTyp,jdbcType=CHAR},
+      </if>
+      <if test="ivBegNo != null" >
+        #{ivBegNo,jdbcType=CHAR},
+      </if>
+      <if test="ivEndNo != null" >
+        #{ivEndNo,jdbcType=CHAR},
+      </if>
+      <if test="useSeq != null" >
+        #{useSeq,jdbcType=CHAR},
+      </if>
+      <if test="stlNum != null" >
+        #{stlNum,jdbcType=CHAR},
+      </if>
+      <if test="stlFlg != null" >
+        #{stlFlg,jdbcType=CHAR},
+      </if>
+      <if test="actDat != null" >
+        #{actDat,jdbcType=CHAR},
+      </if>
+      <if test="tlrId != null" >
+        #{tlrId,jdbcType=CHAR},
+      </if>
+      <if test="nodno != null" >
+        #{nodno,jdbcType=CHAR},
+      </if>
+      <if test="qyNo != null" >
+        #{qyNo,jdbcType=CHAR},
+      </if>
+      <if test="oldSeq != null" >
+        #{oldSeq,jdbcType=CHAR},
+      </if>
+      <if test="oldTrDate != null" >
+        #{oldTrDate,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_INV_TXN_INF
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="invTyp!=null" >
+        AND  INV_TYP=#{invTyp,jdbcType=CHAR}
+      </if>
+      <if test="ivBegNo!=null" >
+        AND  IV_BEG_NO=#{ivBegNo,jdbcType=CHAR}
+      </if>
+      <if test="ivEndNo!=null" >
+        AND  IV_END_NO=#{ivEndNo,jdbcType=CHAR}
+      </if>
+      <if test="useSeq!=null" >
+        AND  USE_SEQ=#{useSeq,jdbcType=CHAR}
+      </if>
+      <if test="stlNum!=null" >
+        AND  STL_NUM=#{stlNum,jdbcType=CHAR}
+      </if>
+      <if test="stlFlg!=null" >
+        AND  STL_FLG=#{stlFlg,jdbcType=CHAR}
+      </if>
+      <if test="actDat!=null" >
+        AND  ACT_DAT=#{actDat,jdbcType=CHAR}
+      </if>
+      <if test="tlrId!=null" >
+        AND  TLR_ID=#{tlrId,jdbcType=CHAR}
+      </if>
+      <if test="nodno!=null" >
+        AND  NODNO=#{nodno,jdbcType=CHAR}
+      </if>
+      <if test="qyNo!=null" >
+        AND  QY_NO=#{qyNo,jdbcType=CHAR}
+      </if>
+      <if test="oldSeq!=null" >
+        AND  OLD_SEQ=#{oldSeq,jdbcType=CHAR}
+      </if>
+      <if test="oldTrDate!=null" >
+        AND  OLD_TR_DATE=#{oldTrDate,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdeupsInvTxnInf" >
+    update ${GDEUPSB_SCHEMA}.GDEUPS_INV_TXN_INF
+    <set >
+      <if test="stlNum != null" >
+        STL_NUM = #{stlNum,jdbcType=CHAR},
+      </if>
+      <if test="stlFlg != null" >
+        STL_FLG = #{stlFlg,jdbcType=CHAR},
+      </if>
+      <if test="actDat != null" >
+        ACT_DAT = #{actDat,jdbcType=CHAR},
+      </if>
+      <if test="tlrId != null" >
+        TLR_ID = #{tlrId,jdbcType=CHAR},
+      </if>
+      <if test="nodno != null" >
+        NODNO = #{nodno,jdbcType=CHAR},
+      </if>
+      <if test="qyNo != null" >
+        QY_NO = #{qyNo,jdbcType=CHAR},
+      </if>
+      <if test="oldSeq != null" >
+        OLD_SEQ = #{oldSeq,jdbcType=CHAR},
+      </if>
+      <if test="oldTrDate != null" >
+        OLD_TR_DATE = #{oldTrDate,jdbcType=CHAR},
+      </if>
+    </set>
+    where INV_TYP = #{invTyp,jdbcType=CHAR}
+      and IV_BEG_NO = #{ivBegNo,jdbcType=CHAR}
+      and IV_END_NO = #{ivEndNo,jdbcType=CHAR}
+      and USE_SEQ = #{useSeq,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_INV_TXN_INF
+    <if test="_parameter" >
+      where 
+      <foreach item="item" index="index" collection="list" separator="or" >
+        (INV_TYP=#{item.invTyp,jdbcType=CHAR} AND IV_BEG_NO=#{item.ivBegNo,jdbcType=CHAR} AND IV_END_NO=#{item.ivEndNo,jdbcType=CHAR} AND USE_SEQ=#{item.useSeq,jdbcType=CHAR})
+      </foreach>
+    </if>
+  </select>
+</mapper>

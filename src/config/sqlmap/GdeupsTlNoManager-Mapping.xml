@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdeupsTlNoManager" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdeupsTlNoManager" >
+    <result column="GYDM" property="gydm" jdbcType="CHAR" />
+    <result column="PASSWD" property="passwd" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    GYDM, PASSWD
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_TL_NO_MANAGER
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="gydm!=null" >
+        AND  GYDM=#{gydm,jdbcType=CHAR}
+      </if>
+      <if test="passwd!=null" >
+        AND  PASSWD=#{passwd,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdeupsTlNoManager" >
+    insert into ${GDEUPSB_SCHEMA}.GDEUPS_TL_NO_MANAGER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="gydm != null" >
+        GYDM,
+      </if>
+      <if test="passwd != null" >
+        PASSWD,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="gydm != null" >
+        #{gydm,jdbcType=CHAR},
+      </if>
+      <if test="passwd != null" >
+        #{passwd,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_TL_NO_MANAGER
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="gydm!=null" >
+        AND  GYDM=#{gydm,jdbcType=CHAR}
+      </if>
+      <if test="passwd!=null" >
+        AND  PASSWD=#{passwd,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_TL_NO_MANAGER
+  </select>
+  <update id="updatePwd" parameterType="com.bocom.bbip.gdeupsb.entity.GdeupsTlNoManager" >
+	    update ${GDEUPSB_SCHEMA}.GDEUPS_TL_NO_MANAGER
+	    <set >
+	    	PASSWD=#{passwd,jdbcType=CHAR}
+	   </set>
+   	   where GYDM = #{gydm,jdbcType=CHAR}
+   </update>
+</mapper>

@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdeupsTyfInvRec" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdeupsTyfInvRec" >
+    <result column="TR_TYPE" property="trType" jdbcType="CHAR" />
+    <result column="REC_CNT" property="recCnt" jdbcType="CHAR" />
+    <result column="THD_KEY" property="thdKey" jdbcType="CHAR" />
+    <result column="ACT_NO" property="actNo" jdbcType="CHAR" />
+    <result column="TCUS_ID" property="tcusId" jdbcType="CHAR" />
+    <result column="FCUS_ID" property="fcusId" jdbcType="CHAR" />
+    <result column="TR_DATE" property="trDate" jdbcType="CHAR" />
+    <result column="TCUS_NM" property="tcusNm" jdbcType="CHAR" />
+    <result column="IPRN_CNT" property="iprnCnt" jdbcType="CHAR" />
+    <result column="BILL_DATE" property="billDate" jdbcType="CHAR" />
+    <result column="TXN_AMT" property="txnAmt" jdbcType="CHAR" />
+    <result column="LAST_BAL" property="lastBal" jdbcType="CHAR" />
+    <result column="THIS_BAL" property="thisBal" jdbcType="CHAR" />
+    <result column="IPAY_AMT" property="ipayAmt" jdbcType="CHAR" />
+    <result column="ITOT_AMT" property="itotAmt" jdbcType="CHAR" />
+    <result column="EINV_NO" property="einvNo" jdbcType="CHAR" />
+    <result column="STA_MON" property="staMon" jdbcType="CHAR" />
+    <result column="END_MON" property="endMon" jdbcType="CHAR" />
+    <result column="TMP01" property="tmp01" jdbcType="CHAR" />
+    <result column="TMP02" property="tmp02" jdbcType="CHAR" />
+    <result column="MX_COUNT" property="mxCount" jdbcType="CHAR" />
+    <result column="FP_INF" property="fpInf" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    TR_TYPE, REC_CNT, THD_KEY, ACT_NO, TCUS_ID, FCUS_ID, TR_DATE, TCUS_NM, IPRN_CNT, 
+    BILL_DATE, TXN_AMT, LAST_BAL, THIS_BAL, IPAY_AMT, ITOT_AMT, EINV_NO, STA_MON, END_MON, 
+    TMP01, TMP02, MX_COUNT, FP_INF
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_TYF_INV_REC
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="trType!=null" >
+        AND  TR_TYPE=#{trType,jdbcType=CHAR}
+      </if>
+      <if test="recCnt!=null" >
+        AND  REC_CNT=#{recCnt,jdbcType=CHAR}
+      </if>
+      <if test="thdKey!=null" >
+        AND  THD_KEY=#{thdKey,jdbcType=CHAR}
+      </if>
+      <if test="actNo!=null" >
+        AND  ACT_NO=#{actNo,jdbcType=CHAR}
+      </if>
+      <if test="tcusId!=null" >
+        AND  TCUS_ID=#{tcusId,jdbcType=CHAR}
+      </if>
+      <if test="fcusId!=null" >
+        AND  FCUS_ID=#{fcusId,jdbcType=CHAR}
+      </if>
+      <if test="trDate!=null" >
+        AND  TR_DATE=#{trDate,jdbcType=CHAR}
+      </if>
+      <if test="tcusNm!=null" >
+        AND  TCUS_NM=#{tcusNm,jdbcType=CHAR}
+      </if>
+      <if test="iprnCnt!=null" >
+        AND  IPRN_CNT=#{iprnCnt,jdbcType=CHAR}
+      </if>
+      <if test="billDate!=null" >
+        AND  BILL_DATE=#{billDate,jdbcType=CHAR}
+      </if>
+      <if test="txnAmt!=null" >
+        AND  TXN_AMT=#{txnAmt,jdbcType=CHAR}
+      </if>
+      <if test="lastBal!=null" >
+        AND  LAST_BAL=#{lastBal,jdbcType=CHAR}
+      </if>
+      <if test="thisBal!=null" >
+        AND  THIS_BAL=#{thisBal,jdbcType=CHAR}
+      </if>
+      <if test="ipayAmt!=null" >
+        AND  IPAY_AMT=#{ipayAmt,jdbcType=CHAR}
+      </if>
+      <if test="itotAmt!=null" >
+        AND  ITOT_AMT=#{itotAmt,jdbcType=CHAR}
+      </if>
+      <if test="einvNo!=null" >
+        AND  EINV_NO=#{einvNo,jdbcType=CHAR}
+      </if>
+      <if test="staMon!=null" >
+        AND  STA_MON=#{staMon,jdbcType=CHAR}
+      </if>
+      <if test="endMon!=null" >
+        AND  END_MON=#{endMon,jdbcType=CHAR}
+      </if>
+      <if test="tmp01!=null" >
+        AND  TMP01=#{tmp01,jdbcType=CHAR}
+      </if>
+      <if test="tmp02!=null" >
+        AND  TMP02=#{tmp02,jdbcType=CHAR}
+      </if>
+      <if test="mxCount!=null" >
+        AND  MX_COUNT=#{mxCount,jdbcType=CHAR}
+      </if>
+      <if test="fpInf!=null" >
+        AND  FP_INF=#{fpInf,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdeupsTyfInvRec" >
+    insert into ${GDEUPSB_SCHEMA}.GDEUPS_TYF_INV_REC
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="trType != null" >
+        TR_TYPE,
+      </if>
+      <if test="recCnt != null" >
+        REC_CNT,
+      </if>
+      <if test="thdKey != null" >
+        THD_KEY,
+      </if>
+      <if test="actNo != null" >
+        ACT_NO,
+      </if>
+      <if test="tcusId != null" >
+        TCUS_ID,
+      </if>
+      <if test="fcusId != null" >
+        FCUS_ID,
+      </if>
+      <if test="trDate != null" >
+        TR_DATE,
+      </if>
+      <if test="tcusNm != null" >
+        TCUS_NM,
+      </if>
+      <if test="iprnCnt != null" >
+        IPRN_CNT,
+      </if>
+      <if test="billDate != null" >
+        BILL_DATE,
+      </if>
+      <if test="txnAmt != null" >
+        TXN_AMT,
+      </if>
+      <if test="lastBal != null" >
+        LAST_BAL,
+      </if>
+      <if test="thisBal != null" >
+        THIS_BAL,
+      </if>
+      <if test="ipayAmt != null" >
+        IPAY_AMT,
+      </if>
+      <if test="itotAmt != null" >
+        ITOT_AMT,
+      </if>
+      <if test="einvNo != null" >
+        EINV_NO,
+      </if>
+      <if test="staMon != null" >
+        STA_MON,
+      </if>
+      <if test="endMon != null" >
+        END_MON,
+      </if>
+      <if test="tmp01 != null" >
+        TMP01,
+      </if>
+      <if test="tmp02 != null" >
+        TMP02,
+      </if>
+      <if test="mxCount != null" >
+        MX_COUNT,
+      </if>
+      <if test="fpInf != null" >
+        FP_INF,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="trType != null" >
+        #{trType,jdbcType=CHAR},
+      </if>
+      <if test="recCnt != null" >
+        #{recCnt,jdbcType=CHAR},
+      </if>
+      <if test="thdKey != null" >
+        #{thdKey,jdbcType=CHAR},
+      </if>
+      <if test="actNo != null" >
+        #{actNo,jdbcType=CHAR},
+      </if>
+      <if test="tcusId != null" >
+        #{tcusId,jdbcType=CHAR},
+      </if>
+      <if test="fcusId != null" >
+        #{fcusId,jdbcType=CHAR},
+      </if>
+      <if test="trDate != null" >
+        #{trDate,jdbcType=CHAR},
+      </if>
+      <if test="tcusNm != null" >
+        #{tcusNm,jdbcType=CHAR},
+      </if>
+      <if test="iprnCnt != null" >
+        #{iprnCnt,jdbcType=CHAR},
+      </if>
+      <if test="billDate != null" >
+        #{billDate,jdbcType=CHAR},
+      </if>
+      <if test="txnAmt != null" >
+        #{txnAmt,jdbcType=CHAR},
+      </if>
+      <if test="lastBal != null" >
+        #{lastBal,jdbcType=CHAR},
+      </if>
+      <if test="thisBal != null" >
+        #{thisBal,jdbcType=CHAR},
+      </if>
+      <if test="ipayAmt != null" >
+        #{ipayAmt,jdbcType=CHAR},
+      </if>
+      <if test="itotAmt != null" >
+        #{itotAmt,jdbcType=CHAR},
+      </if>
+      <if test="einvNo != null" >
+        #{einvNo,jdbcType=CHAR},
+      </if>
+      <if test="staMon != null" >
+        #{staMon,jdbcType=CHAR},
+      </if>
+      <if test="endMon != null" >
+        #{endMon,jdbcType=CHAR},
+      </if>
+      <if test="tmp01 != null" >
+        #{tmp01,jdbcType=CHAR},
+      </if>
+      <if test="tmp02 != null" >
+        #{tmp02,jdbcType=CHAR},
+      </if>
+      <if test="mxCount != null" >
+        #{mxCount,jdbcType=CHAR},
+      </if>
+      <if test="fpInf != null" >
+        #{fpInf,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_TYF_INV_REC
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="trType!=null" >
+        AND  TR_TYPE=#{trType,jdbcType=CHAR}
+      </if>
+      <if test="recCnt!=null" >
+        AND  REC_CNT=#{recCnt,jdbcType=CHAR}
+      </if>
+      <if test="thdKey!=null" >
+        AND  THD_KEY=#{thdKey,jdbcType=CHAR}
+      </if>
+      <if test="actNo!=null" >
+        AND  ACT_NO=#{actNo,jdbcType=CHAR}
+      </if>
+      <if test="tcusId!=null" >
+        AND  TCUS_ID=#{tcusId,jdbcType=CHAR}
+      </if>
+      <if test="fcusId!=null" >
+        AND  FCUS_ID=#{fcusId,jdbcType=CHAR}
+      </if>
+      <if test="trDate!=null" >
+        AND  TR_DATE=#{trDate,jdbcType=CHAR}
+      </if>
+      <if test="tcusNm!=null" >
+        AND  TCUS_NM=#{tcusNm,jdbcType=CHAR}
+      </if>
+      <if test="iprnCnt!=null" >
+        AND  IPRN_CNT=#{iprnCnt,jdbcType=CHAR}
+      </if>
+      <if test="billDate!=null" >
+        AND  BILL_DATE=#{billDate,jdbcType=CHAR}
+      </if>
+      <if test="txnAmt!=null" >
+        AND  TXN_AMT=#{txnAmt,jdbcType=CHAR}
+      </if>
+      <if test="lastBal!=null" >
+        AND  LAST_BAL=#{lastBal,jdbcType=CHAR}
+      </if>
+      <if test="thisBal!=null" >
+        AND  THIS_BAL=#{thisBal,jdbcType=CHAR}
+      </if>
+      <if test="ipayAmt!=null" >
+        AND  IPAY_AMT=#{ipayAmt,jdbcType=CHAR}
+      </if>
+      <if test="itotAmt!=null" >
+        AND  ITOT_AMT=#{itotAmt,jdbcType=CHAR}
+      </if>
+      <if test="einvNo!=null" >
+        AND  EINV_NO=#{einvNo,jdbcType=CHAR}
+      </if>
+      <if test="staMon!=null" >
+        AND  STA_MON=#{staMon,jdbcType=CHAR}
+      </if>
+      <if test="endMon!=null" >
+        AND  END_MON=#{endMon,jdbcType=CHAR}
+      </if>
+      <if test="tmp01!=null" >
+        AND  TMP01=#{tmp01,jdbcType=CHAR}
+      </if>
+      <if test="tmp02!=null" >
+        AND  TMP02=#{tmp02,jdbcType=CHAR}
+      </if>
+      <if test="mxCount!=null" >
+        AND  MX_COUNT=#{mxCount,jdbcType=CHAR}
+      </if>
+      <if test="fpInf!=null" >
+        AND  FP_INF=#{fpInf,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_TYF_INV_REC
+  </select>
+</mapper>

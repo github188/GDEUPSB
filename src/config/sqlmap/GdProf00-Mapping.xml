@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="prof00" >
+  	<!-- 自助通发票使用情况明细表查询 -->
+	<select id="atmInvDtl" resultType="map">
+		SELECT a.ACT_DAT,a.TLR_ID,a.INV_TYP,a.IV_BEG_NO,a.IV_END_NO,b.TOL_NUM,b.REG_TLR,
+                 SUM(bigint(case when a.STL_FLG='U' then a.STL_NUM else '0' end)) as LOD_NUM,
+                 SUM(bigint(case when a.STL_FLG='0' then a.STL_NUM else '0' end)) as USE_NUM,
+                 SUM(bigint(case when a.STL_FLG='1' then a.STL_NUM else '0' end)) as CLR_NUM,
+                 (bigint(b.TOL_NUM)-SUM(bigint(case when a.STL_FLG!='U' then a.STL_NUM else '0' end))) as INV_NUM
+          FROM   ${GDEUPSB_SCHEMA}.GDEUPS_INV_TXN_INF as a ,${GDEUPSB_SCHEMA}.GDEUPS_INV_DTL_BOK as b
+          WHERE  a.NODNO=#{br,jdbcType=CHAR}  and (a.ACT_DAT between #{begDat,jdbcType=CHAR} and #{endDat,jdbcType=CHAR}) 
+                 and a.INV_TYP=b.INV_TYP and a.IV_BEG_NO=b.IV_BEG_NO and a.IV_END_NO=b.IV_END_NO
+          GROUP BY a.ACT_DAT,a.TLR_ID,a.INV_TYP,a.IV_BEG_NO,a.IV_END_NO,b.TOL_NUM,b.REG_TLR
+          ORDER BY ACT_DAT,TLR_ID
+	</select>
+</mapper>
