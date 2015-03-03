@@ -404,7 +404,7 @@ public final class GDErrorCodes {
 	/**	不是本系统的终端*/
 	public static final String EUPS_VECH00_1002_ERROR="BBIP4400EU0812";
 	/**	客户端IP验证失败*/
-	public static final String EUPS_VECH00_1003_ERROR="BBIP4400EU08013";
+	public static final String EUPS_VECH00_1003_ERROR="BBIP4400EU0813";
 	/**	没有对应查询数据*/
 	public static final String EUPS_VECH00_1004_ERROR="BBIP4400EU0814";
 	/**	参数不正确*/
