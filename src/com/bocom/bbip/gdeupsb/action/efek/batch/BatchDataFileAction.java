@@ -60,21 +60,21 @@ public class BatchDataFileAction implements BatchAcpService{
 					//获取文件并解析入库   数据库文件名
 					List<Map<String, Object>> mapList=operateFileAction.pareseFile(eupsThdFtpConfig, fileId);
 						if(CollectionUtils.isEmpty(mapList)){
-								throw new CoreException("~~~~~~~~~~~~处理状态异常");
+								throw new CoreException("处理状态异常");
 						}
 						String batNo=context.getData(ParamKeys.BAT_NO).toString();
 						for (int i=0;i<mapList.size();i++) {
 							Map<String, Object> map=new HashMap<String, Object>();
-							if(i==0){
-									GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=BeanUtils.toObject(map, GDEupsBatchConsoleInfo.class);
-									gdEupsBatchConsoleInfoRepository.insert(gdEupsBatchConsoleInfo);
-							}else{
+//							if(i==0){
+//									GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=BeanUtils.toObject(map, GDEupsBatchConsoleInfo.class);
+//									gdEupsBatchConsoleInfoRepository.insert(gdEupsBatchConsoleInfo);
+//							}else{
 									map.put(ParamKeys.SEQUENCE, bbipPublicService.getBBIPSequence());
 									 GDEupsEleTmp gdEupsEleTmp=BeanUtils.toObject(map, GDEupsEleTmp.class);
 									 gdEupsEleTmp.setRsvFld5(batNo);
 									 logger.info("~~~~~map~~~~"+map);
 									 gdEupsEleTmpRepository.insert(gdEupsEleTmp);
-							}
+//							}
 						}
 				//生成文件
 						
@@ -103,7 +103,6 @@ public class BatchDataFileAction implements BatchAcpService{
 			headMap.put(ParamKeys.COMPANY_NO, context.getData(ParamKeys.COMPANY_NO).toString());
 			headMap.put(GDParamKeys.TOT_COUNT, context.getData(GDParamKeys.TOT_CNT));
 			headMap.put(ParamKeys.TOT_AMT, context.getData(ParamKeys.TOT_AMT));
-			System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 			//detail
 			GDEupsEleTmp gdEupsEleTmps=new GDEupsEleTmp();
 			gdEupsEleTmps.setComNo(context.getData(ParamKeys.COMPANY_NO).toString());
@@ -135,8 +134,7 @@ public class BatchDataFileAction implements BatchAcpService{
 			resultMap.put(ParamKeys.EUPS_FILE_HEADER, headMap);
 			resultMap.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMap(detailList));
 			
-			System.out.println("================================="+BeanUtils.toMaps(detailList));
-			System.out.println("~~~~~~~~resultMap~~~~~~~~"+resultMap.get(ParamKeys.EUPS_FILE_DETAIL));
+			logger.info("~~~~~~~~resultMap~~~~~~~~"+resultMap.get(ParamKeys.EUPS_FILE_DETAIL));
 			logger.info("=================End  BatchDataFileAction  createFileMap ");
 			return resultMap;
 		}
