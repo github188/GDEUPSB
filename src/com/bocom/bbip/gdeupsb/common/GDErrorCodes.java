@@ -394,4 +394,25 @@ public final class GDErrorCodes {
 	/**供电账户锁定，无法进行缴费，请致电供电95598 */
 	public static final String EUPS_ELEC00_100_ERROR="BBIP4400EU0002";
 
+	/*************************公共汽车***********************/
+	/**0	成功*/
+	public static final String EUPS_VECH00_0_ERROR="BBIP4400EU080";
+	/**	系统异常*/
+	public static final String EUPS_VECH00_99_ERROR="BBIP4400EU08099";
+	/**	签名验证失败*/
+	public static final String EUPS_VECH00_1001_ERROR="BBIP4400EU08011";
+	/**	不是本系统的终端*/
+	public static final String EUPS_VECH00_1002_ERROR="BBIP4400EU08012";
+	/**	客户端IP验证失败*/
+	public static final String EUPS_VECH00_1003_ERROR="BBIP4400EU08013";
+	/**	没有对应查询数据*/
+	public static final String EUPS_VECH00_1004_ERROR="BBIP4400EU08014";
+	/**	参数不正确*/
+	public static final String EUPS_VECH00_1005_ERROR="BBIP4400EU08015";
+	/**	提交的订单和预提交订单信息不一致*/
+	public static final String EUPS_VECH00_1006_ERROR="BBIP4400EU08016";
+	/**	订单信息错误*/
+	public static final String EUPS_VECH00_1008_ERROR="BBIP4400EU08018";
+	/**	没有找到确认支付的订单*/
+	public static final String EUPS_VECH00_1009_ERROR="BBIP4400EU08019";
 }
