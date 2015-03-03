@@ -31,7 +31,7 @@ public class AftPayFeeAction implements Executable{
 					context.setData("ApCode", "46");
 					context.setData("OFmtCd", "999");
 		}else{
-					throw new CoreException("~~~~~~~~~~失败~~~"+context.getData(GDParamKeys.SUCFLG));
+					throw new CoreException("失败~~~"+context.getData(GDParamKeys.SUCFLG));
 		}
 		
 		Date txnDte=DateUtils.parse(context.getData(ParamKeys.TXN_DTE).toString());
