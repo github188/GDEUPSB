@@ -16,4 +16,15 @@
 	<action id="eups.invoiceStatusQueryManagerServiceActionPROF00" class="com.bocom.bbip.gdeupsb.service.impl.prof00.InvoiceStatusQueryManagerServiceActionPROF00"/>
 	<!-- 凭证取消发放 -->
 	<action id="eups.invoiceCancelGrantManagerServiceActionPROF00" class="com.bocom.bbip.gdeupsb.service.impl.prof00.InvoiceCancelGrantManagerServiceActionPROF00"/>
+	
+	<!-- 路桥凭条打印查询 -->
+	<action id="eups.queryPrintInvoiceServiceActionPROF00" class="com.bocom.bbip.gdeupsb.service.impl.prof00.QueryPrintInvoiceServiceActionPROF00"/>
+	<!-- 发票柜员改密 -->
+	<action id="eups.updateTlrPasswdServiceActionPROF00" class="com.bocom.bbip.gdeupsb.service.impl.prof00.UpdateTlrPasswdServiceActionPROF00"/>
+	<!-- 发票柜员验密 -->
+	<action id="eups.checkTlrPasswdServiceActionPROF00" class="com.bocom.bbip.gdeupsb.service.impl.prof00.CheckTlrPasswdServiceActionPROF00"/>
+	<!-- 发票柜员校验 -->
+	<action id="eups.checkTlrInfServiceActionPROF00" class="com.bocom.bbip.gdeupsb.service.impl.prof00.CheckTlrInfServiceActionPROF00"/>
+	<!-- 自助通发票使用情况明细表查询打印 -->
+	<action id="eups.atmInvDtlServiceActionPROF00" class="com.bocom.bbip.gdeupsb.service.impl.prof00.AtmInvDtlServiceActionPROF00"/>
 </x:beans>
