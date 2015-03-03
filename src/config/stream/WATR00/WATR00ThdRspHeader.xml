@@ -2,7 +2,7 @@
 <message xmlns="http://www.bocom.com/jump/transformer/packet"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
-	type="LLLL" encoding="GBK" trace="true"> 
+	type="LLLL" encoding="GBK" trace="true" filter="none,classpath:config/stream/translateDict.txt"> 
 	<segment name="thdResponseHead">
 		<fixString name="TransCode"              length="4"/> <!-- 数据报类型 -->
 		<fixString name="accountdate"   length="8"/><!-- 记账日期 -->
@@ -12,7 +12,7 @@
 		<fixString name="salesdepart"    length="6"/><!-- 营业点 -->
 		<fixString name="salesperson"    length="6"/><!-- 营业员 -->
 		<fixString name="busitime"         length="14"/><!-- 交易时间 -->
-		<fixString name="thdRspCde"      length="4"/><!-- 错误码，0-成功，非0-有错误 -->
+		<fixString name="ErrorNum"      length="4"/><!-- 错误码，0-成功，非0-有错误 -->
 		<fixString name="zprice"            length="11"/><!-- 本次缴费总金额 -->
 		<fixString name="months"           length="4"/><!-- 未缴费月数 -->
 		<fixString name="operano"          length="4"/><!-- 业务代码 -->
