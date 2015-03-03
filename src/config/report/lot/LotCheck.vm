@@ -1,0 +1,32 @@
+#report(50)
+#rh(5)
+ 			                           
+                                                                                                                                         福彩对账$f.conv('type',$v.type)清单
+                                                 ========================================
+           游戏类型:$d.GameId - $d.GameNme              期号:$d.DrawId                期名:$d.DrawNme                          打印日期：$f.fmt($currentTime,'yyyy')年 $f.fmt($currentTime,'MM')月  $f.fmt($currentTime,'dd')日   
+#end
+#th(2)
+
+       KENO期号            投注流水号         会计流水号          彩民标识           投注卡号                 玩法编号                 投注金额                     投注时间
+#end 
+#td(1,$d.eles)
+#para($f.rpad($str.trim($ele.kenoId),2,' ')) 
+#para($str.trim($ele.txnLog))  
+#para($str.trim($ele.tckNo))
+#para($str.trim($ele.lotNam))
+#para($str.trim($ele.crdNo)) 
+#para($str.trim($ele.playId))
+#para($num.fmt($num.parse($str.trim($ele.txnAmt)),'0,000.00'))
+#para($f.center($ele.txnTim,15))
+
+       ?            ?         ?         ?          ?           ?  ?                           ?
+
+#end     
+#tf(2)     
+ ----------------------------------------------------------------------------------------------------------------------
+总计行数:$d.SumCnt
+#end
+#rf(2)
+制表人：$d.tlr                                                       共$totalPages页   第$pageNumber页
+#end
+#end
