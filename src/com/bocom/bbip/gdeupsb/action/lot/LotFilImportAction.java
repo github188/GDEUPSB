@@ -11,14 +11,14 @@ import utils.getProperty;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
-import com.bocom.bbip.gdeupsb.entity.GDEupsbLotChkCtl;
-import com.bocom.bbip.gdeupsb.entity.GDEupsbLotChkDtl;
-import com.bocom.bbip.gdeupsb.entity.GDEupsbLotPrzCtl;
-import com.bocom.bbip.gdeupsb.entity.GDEupsbLotPrzDtl;
-import com.bocom.bbip.gdeupsb.repository.GDEupsbLotChkCtlRepository;
-import com.bocom.bbip.gdeupsb.repository.GDEupsbLotChkDtlRepository;
-import com.bocom.bbip.gdeupsb.repository.GDEupsbLotPrzCtlRepository;
-import com.bocom.bbip.gdeupsb.repository.GDEupsbLotPrzDtlRepository;
+import com.bocom.bbip.gdeupsb.entity.GdLotChkCtl;
+import com.bocom.bbip.gdeupsb.entity.GdLotChkDtl;
+import com.bocom.bbip.gdeupsb.entity.GdLotPrzCtl;
+import com.bocom.bbip.gdeupsb.entity.GdLotPrzDtl;
+import com.bocom.bbip.gdeupsb.repository.GdLotChkCtlRepository;
+import com.bocom.bbip.gdeupsb.repository.GdLotChkDtlRepository;
+import com.bocom.bbip.gdeupsb.repository.GdLotPrzCtlRepository;
+import com.bocom.bbip.gdeupsb.repository.GdLotPrzDtlRepository;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
@@ -50,17 +50,17 @@ public class LotFilImportAction extends BaseAction{
 		/*delete from LotPrzDtl
 		where GameId='%s' and DrawId='%s' and KenoId='%s'*/
 		//删除中奖记录控制表、中奖记录明细表中的相关数据
-		GDEupsbLotPrzCtl deletePrzCtl = new GDEupsbLotPrzCtl();
+		GdLotPrzCtl deletePrzCtl = new GdLotPrzCtl();
 		deletePrzCtl.setGameId(context.getData("gameId").toString());
 		deletePrzCtl.setDrawId(context.getData("drawId").toString());
 		deletePrzCtl.setKenoId(context.getData("kenoId").toString());
-		get(GDEupsbLotPrzCtlRepository.class).delete(deletePrzCtl);
+		get(GdLotPrzCtlRepository.class).delete(deletePrzCtl);
 		
-		GDEupsbLotPrzDtl deletePrzDtl = new GDEupsbLotPrzDtl();
+		GdLotPrzDtl deletePrzDtl = new GdLotPrzDtl();
 		deletePrzDtl.setGameId(context.getData("gameId").toString());
 		deletePrzDtl.setDrawId(context.getData("drawId").toString());
 		deletePrzDtl.setKenoId(context.getData("kenoId").toString());
-		get(GDEupsbLotPrzDtlRepository.class).delete(deletePrzDtl);
+		get(GdLotPrzDtlRepository.class).delete(deletePrzDtl);
 		
 		//新增记录
 		int cnt = 1;
@@ -76,8 +76,8 @@ public class LotFilImportAction extends BaseAction{
 			context.setData("ROOT.TxnLog", context.getData("ROOT.bonusItem_" + cnt + ".TxnLog"));
 			context.setData("ROOT.BonsNodCnt", context.getData("ROOT.bonusItem_" + cnt + ".BonsNodCnt"));
 			
-			GDEupsbLotPrzCtl insLotPrzCtl = BeanUtils.toObject(context.getDataMap(), GDEupsbLotPrzCtl.class);
-			get(GDEupsbLotPrzCtlRepository.class).insert(insLotPrzCtl);
+			GdLotPrzCtl insLotPrzCtl = BeanUtils.toObject(context.getDataMap(), GdLotPrzCtl.class);
+			get(GdLotPrzCtlRepository.class).insert(insLotPrzCtl);
 		
 			int nodCnt = 1;
 			while(nodCnt <= Integer.parseInt((String)context.getData("ROOT.BonsNodCnt"))){
@@ -87,9 +87,9 @@ public class LotFilImportAction extends BaseAction{
 				context.setData("ROOT.classNo", context.getData("ROOT.bonusItem_" + cnt + ".classNo"));
 				context.setData("ROOT.PrzAmt", context.getData("ROOT.bonusItem_" + cnt + ".PrzAmt"));
 				context.setData("ROOT.BetLin", context.getData("ROOT.bonusItem_" + cnt + ".BetLin"));
-				//insert into GDEupsbLotPrzDtl
-				GDEupsbLotPrzDtl insLotPrzDtl = BeanUtils.toObject(context.getDataMap(), GDEupsbLotPrzDtl.class);
-				get(GDEupsbLotPrzDtlRepository.class).insert(insLotPrzDtl);
+				//insert into GdLotPrzDtl
+				GdLotPrzDtl insLotPrzDtl = BeanUtils.toObject(context.getDataMap(), GdLotPrzDtl.class);
+				get(GdLotPrzDtlRepository.class).insert(insLotPrzDtl);
 				
 				nodCnt++;
 			}
@@ -118,19 +118,19 @@ public class LotFilImportAction extends BaseAction{
 		//删除删除对账控制表和对账明细表中对应的数据
 		/*delete from LotChkCtl
 		where GameId='%s' and DrawId='%s' and KenoId='%s'*/
-		GDEupsbLotChkCtl delLotChkCtl = new GDEupsbLotChkCtl();
+		GdLotChkCtl delLotChkCtl = new GdLotChkCtl();
 		delLotChkCtl.setGameId(context.getData("gameId").toString());
 		delLotChkCtl.setDrawId(context.getData("drawId").toString());
 		delLotChkCtl.setKenoId(context.getData("kenoId").toString());
-		get(GDEupsbLotChkCtlRepository.class).delete(delLotChkCtl);
+		get(GdLotChkCtlRepository.class).delete(delLotChkCtl);
 		
 		/*delete from LotChkDtl
 		where GameId='%s' and DrawId='%s' and KenoId='%s'*/
-		GDEupsbLotChkDtl delLotChkDtl = new GDEupsbLotChkDtl();
+		GdLotChkDtl delLotChkDtl = new GdLotChkDtl();
 		delLotChkDtl.setGameId(context.getData("gameId").toString());
 		delLotChkDtl.setDrawId(context.getData("drawId").toString());
 		delLotChkDtl.setKenoId(context.getData("kenoId").toString());
-		get(GDEupsbLotChkDtlRepository.class).delete(delLotChkDtl);
+		get(GdLotChkDtlRepository.class).delete(delLotChkDtl);
 		
 		//新增对账控制表
 		/*insert into LotChkCtl (ChkDat, GameId, DrawId, KenoId, TotNum, TotAmt, ChkFlg, ChkTim)
@@ -143,8 +143,8 @@ public class LotFilImportAction extends BaseAction{
 		context.setData("totNum", context.getData("successNum"));
 		context.setData("totAmt", context.getData("totalMoney"));
 		
-		GDEupsbLotChkCtl insertLotChkCtl = BeanUtils.toObject(context.getDataMap(), GDEupsbLotChkCtl.class);
-		get(GDEupsbLotChkCtlRepository.class).insert(insertLotChkCtl);
+		GdLotChkCtl insertLotChkCtl = BeanUtils.toObject(context.getDataMap(), GdLotChkCtl.class);
+		get(GdLotChkCtlRepository.class).insert(insertLotChkCtl);
 	 
 		
 		if("Y".equals(context.getData("isKeno"))){
@@ -168,16 +168,16 @@ public class LotFilImportAction extends BaseAction{
 					 * insert into LotChkDtl (ChkDat, GameId, DrawId, KenoId, SeqNo, SchId, LotNam, TxnLog, PlayId, TxnTim, TxnAmt, ChkFlg, ChkTim)
 				values('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')
 					 */
-					GDEupsbLotChkDtl insertLotChkDtl = BeanUtils.toObject(context.getDataMap(), GDEupsbLotChkDtl.class);
-					get(GDEupsbLotChkDtlRepository.class).insert(insertLotChkDtl);
+					GdLotChkDtl insertLotChkDtl = BeanUtils.toObject(context.getDataMap(), GdLotChkDtl.class);
+					get(GdLotChkDtlRepository.class).insert(insertLotChkDtl);
 					
 					subCnt++;
 				}
 				cnt++;
 			}
 		}else{ //新增对账明细表数据
-			GDEupsbLotChkDtl insertLotChkDtl = BeanUtils.toObject(context.getDataMap(), GDEupsbLotChkDtl.class);
-			get(GDEupsbLotChkDtlRepository.class).insert(insertLotChkDtl);
+			GdLotChkDtl insertLotChkDtl = BeanUtils.toObject(context.getDataMap(), GdLotChkDtl.class);
+			get(GdLotChkDtlRepository.class).insert(insertLotChkDtl);
 		}
 		context.setData("fileImportStatus", "0");
 		context.setData("fileImportMsg", "对账信息入库成功");

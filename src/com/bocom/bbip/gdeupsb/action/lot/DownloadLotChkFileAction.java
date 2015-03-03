@@ -1,15 +1,10 @@
 package com.bocom.bbip.gdeupsb.action.lot;
 
-import java.util.List;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
-import com.bocom.bbip.gdeupsb.entity.GDEupsbLotSysCfgInfo;
-import com.bocom.bbip.gdeupsb.repository.GDEupsbLotSysCfgInfoRepository;
-import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;

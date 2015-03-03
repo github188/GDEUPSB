@@ -15,7 +15,7 @@ import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 
 
-import com.bocom.bbip.gdeupsb.repository.GDEupsbLotTxnJnlRepository;
+import com.bocom.bbip.gdeupsb.repository.GdLotTxnJnlRepository;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
@@ -70,7 +70,7 @@ public class QryLotWinRecordAction extends BaseAction {
 			
 	        logger.info("=========MAP===========MAP======="+map.toString());
 	        
-	        List<Map<String, Object>> winMap = get(GDEupsbLotTxnJnlRepository.class).qryLotWinRecord(map);
+	        List<Map<String, Object>> winMap = get(GdLotTxnJnlRepository.class).qryLotWinRecord(map);
 	        logger.info("==========查询结果winMap========"+winMap.toString());
 	        
 /*	        ==========查询结果winMap========

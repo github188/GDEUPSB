@@ -5,17 +5,14 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.gdeupsb.entity.GDEupsbLotCusInf;
-import com.bocom.bbip.gdeupsb.entity.GDEupsbLotTxnJnl;
-import com.bocom.bbip.gdeupsb.repository.GDEupsbLotCusInfRepository;
-import com.bocom.bbip.gdeupsb.repository.GDEupsbLotTxnJnlRepository;
+import com.bocom.bbip.gdeupsb.entity.GdLotCusInf;
+import com.bocom.bbip.gdeupsb.repository.GdLotCusInfRepository;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -36,11 +33,11 @@ public class QryLotBetRecordAction extends BaseAction{
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 		
 		//<!-- 检查客户注册信息 -->
-		GDEupsbLotCusInf lotCusInfo = new GDEupsbLotCusInf();
-		lotCusInfo = BeanUtils.toObject(context.getDataMap(), GDEupsbLotCusInf.class);
+		GdLotCusInf lotCusInfo = new GdLotCusInf();
+		lotCusInfo = BeanUtils.toObject(context.getDataMap(), GdLotCusInf.class);
 		lotCusInfo.setStatus("1");
 		
-		List<GDEupsbLotCusInf> lotCusInfoList = get(GDEupsbLotCusInfRepository.class).find(lotCusInfo);
+		List<GdLotCusInf> lotCusInfoList = get(GdLotCusInfRepository.class).find(lotCusInfo);
 		if(CollectionUtils.isEmpty(lotCusInfoList)){ 	//客户未注册或状态异常，返回错误
 			context.setData(ParamKeys.MESSAGE_TYPE, "E");
 			context.setData(ParamKeys.RSP_CDE, "LOT999");

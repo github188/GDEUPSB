@@ -10,8 +10,8 @@ import org.springframework.util.CollectionUtils;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
-import com.bocom.bbip.gdeupsb.entity.GDEupsbLotSysCfgInfo;
-import com.bocom.bbip.gdeupsb.repository.GDEupsbLotSysCfgInfoRepository;
+import com.bocom.bbip.gdeupsb.entity.GdLotSysCfg;
+import com.bocom.bbip.gdeupsb.repository.GdLotSysCfgRepository;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -34,8 +34,8 @@ public class QryFilDownloadAdrAction extends BaseAction{
 		logger.info("===========context=========="+ context);
 		
 		//根据运营商ID查平台参数配置   DealId,UsrPam,UsrPas,SigTim,LclTim,LotTim,DiffTm
-		GDEupsbLotSysCfgInfo lotSysCfgInfo = BeanUtils.toObject(context.getDataMap(), GDEupsbLotSysCfgInfo.class);
-		List<GDEupsbLotSysCfgInfo> cfgList= get(GDEupsbLotSysCfgInfoRepository.class).find(lotSysCfgInfo);
+		GdLotSysCfg lotSysCfgInfo = BeanUtils.toObject(context.getDataMap(), GdLotSysCfg.class);
+		List<GdLotSysCfg> cfgList= get(GdLotSysCfgRepository.class).find(lotSysCfgInfo);
 		context.setData("dealId", cfgList.get(0).getDealId());
 		context.setData("usrPam", cfgList.get(0).getUsrPam());
 		context.setData("usrPas", cfgList.get(0).getUsrPas());
