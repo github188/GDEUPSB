@@ -172,17 +172,18 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 		logger.info("======context:" + context);
 //		B0为扣费成功 B1为金额不足扣费失败 B2为无此帐号或账号与用户编号匹配错误扣费失败 B3其它原因扣费失败
 		if ("000000".equals(context.getData(ParamKeys.RSP_CDE))) { // 扣款成功
-			context.setData(ParamKeys.TXN_AMOUNT, context.getData("reqTxnAmt"));
-
-			BigDecimal reqTxnAmt = new BigDecimal(
-					(String) context.getData("reqTxnAmt"));
-			reqTxnAmt = reqTxnAmt.multiply(new BigDecimal(100));
-			int len = 12;
-			char des = '0';
-			char LorR = '1';
-			String optAmt1 = GdExpCommonUtils.AddChar(
-					String.valueOf(reqTxnAmt), len, des, LorR);
-			context.setData(ParamKeys.BAK_FLD6, optAmt1); // 使用备用字段6
+			
+//			context.setData(ParamKeys.TXN_AMOUNT, context.getData("reqTxnAmt"));
+//
+//			BigDecimal reqTxnAmt = new BigDecimal(
+//					(String) context.getData("reqTxnAmt"));
+//			reqTxnAmt = reqTxnAmt.multiply(new BigDecimal(100));
+//			int len = 12;
+//			char des = '0';
+//			char LorR = '1';
+//			String optAmt1 = GdExpCommonUtils.AddChar(
+//					String.valueOf(reqTxnAmt), len, des, LorR);
+//			context.setData(ParamKeys.BAK_FLD6, optAmt1); // 使用备用字段6
 
 			context.setData(ParamKeys.BAK_FLD2, "B0");
 			context.setData(ParamKeys.MFM_TXN_STS, "S");
