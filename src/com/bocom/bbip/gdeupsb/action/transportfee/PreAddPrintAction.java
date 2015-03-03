@@ -46,6 +46,7 @@ public class PreAddPrintAction extends BaseAction{
 		String prtFlg = "prtFlg"; //打印标志
 		String oprtFlg = "oprtFlg"; //前端输入的打印标志
 		ctx.setData("transCode", "484005");
+		//TODO:for test:前端要传柜员号，若没有则取虚拟柜员
 		ctx.setData(GDParamKeys.TLR_ID, "0356");
 //		TODO:
 //			<!-- 通过加锁控制批次状态 -->
