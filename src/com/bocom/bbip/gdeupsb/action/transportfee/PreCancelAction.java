@@ -35,8 +35,7 @@ public class PreCancelAction extends BaseAction{
 	public void execute(Context ctx) throws CoreException,CoreRuntimeException{
 		log.info("PreCancelAction start......");
 		ctx.setData(GDParamKeys.BR_NO, GDConstants.BR_NO);
-		Date actDt = new Date();
-		actDt= DateUtils.parse(DateUtils.format(actDt, "yyyy-MM-dd"));
+		Date actDt = DateUtils.parse(DateUtils.format(new Date(), "yyyy-MM-dd"));
 		System.out.println(actDt);
 		ctx.setData(GDParamKeys.ACT_DAT, actDt);
 		ctx.setData(GDParamKeys.NOD_NO, "123");
