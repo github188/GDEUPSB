@@ -125,70 +125,7 @@ public class CommonLotAction extends BaseAction{
      * CalStat 轧差状态（0：成功  -1：失败）
      *  CalMsg:轧差结果描述
      */
-    public void calcLotDifAmt(Context context) {
-       
-        /* 
-    <Function name="CalcLotDifAmt" desc="计算轧差">
-        <Output>CalStat|CalMsg|</Output>
-        <DynSentence name="CalcLotDifAmt" desc="计算轧差">
-            <Sentence>
-                select GameId, DrawId, KenoId, TotAmt, PrzAmt
-                from LotDrwTbl 
-                where PrzAmt!='' and TotAmt!='' and ChkFlg='2' and FlwCtl='10' and KenoId in ('','AAAAA')
-                    and (DifAmt='' or DifFlg='')
-            </Sentence>
-            <Fields></Fields>
-        </DynSentence>
-        <DynSentence name="UpdLotDifAmt" desc="更新轧差">
-            <Sentence>
-                update LotDrwTbl
-                set DifAmt='%s', DifFlg='%s'
-                where GameId='%s' and DrawId='%s' and KenoId='%s'
-            </Sentence>
-            <Fields>DifAmt|DifFlg|GameId|DrawId|KenoId|</Fields>
-        </DynSentence>
-        <DynSentence name="QryUnPrzDrw" desc="查询未汇总返奖的记录">
-            <Sentence>
-                select GameId, DrawId 
-                from LotDrwTbl 
-                where KenoId='AAAAA' and PrzAmt='' and FlwCtl!='10'
-            </Sentence>
-            <Fields></Fields>
-        </DynSentence>
-        <DynSentence name="StatUnPrzDrw" desc="统计Keno期未返奖的数量">
-            <Sentence>
-                select count(*) UnPrzCnt 
-                from LotDrwTbl 
-                where GameId='%s' and DrawId='%s' and PrzAmt='' and FlwCtl!='10' and KenoId != 'AAAAA'
-            </Sentence>
-            <Fields>GameId|DrawId|</Fields>
-        </DynSentence>
-        <DynSentence name="StatUnPrzDrw" desc="统计Keno期未返奖的数量">
-            <Sentence>
-                select count(*) UnPrzCnt 
-                from LotDrwTbl 
-                where GameId='%s' and DrawId='%s' and PrzAmt='' and FlwCtl!='10' and KenoId != 'AAAAA'
-            </Sentence>
-            <Fields>GameId|DrawId|</Fields>
-        </DynSentence>
-        <DynSentence name="SumPrzDrw" desc="汇总返奖金额">
-            <Sentence>
-                select COALESCE(sum(bigint(PrzAmt)),0) PrzSumAmt
-                from LotDrwTbl 
-                where GameId='%s' and DrawId='%s' and PrzAmt!='' and FlwCtl='10' and KenoId != 'AAAAA'
-            </Sentence>
-            <Fields>GameId|DrawId|</Fields>
-        </DynSentence>
-        <DynSentence name="UpdDrwPrzInf" desc="更新汇总返奖金额">
-            <Sentence>
-                update LotDrwTbl a
-                set a.PrzAmt='%s', a.FlwCtl='10',
-                    a.PayAmt = (select cast(sum(bigint(case when b.PayAmt = '' then '0' else b.PayAmt end)) as char(15)) from LotDrwTbl b where a.GameId = b.GameId and a.DrawId = b.DrawId and b.KenoId != 'AAAAA'),
-                    a.PayFlg = ( select (case when exists(select 'Y' from LotDrwTbl c where c.GameId = a.GameId and c.DrawId = a.DrawId and c.KenoId != 'AAAAA' and c.PayFlg = '1') then '1' else '0' end) from LotDrwTbl d where d.GameId=a.GameId and d.DrawId=a.DrawId and d.KenoId='AAAAA')
-                where a.GameId='%s' and a.DrawId='%s' and a.KenoId = 'AAAAA'
-            </Sentence>
-            <Fields>PrzSumAmt|GameId|DrawId|</Fields>
-        </DynSentence>*/
+    public void calcLotDifAmt(Context context) throws CoreException{
         //处理Keno期记录，如果某期的所有Keno期都完成返奖，则更新改期的返奖总金额和返奖标志
         List <GdLotDrwTbl> lotDrwInfos = lotDrwInfRepository.qryUnPrzDrw();
         if(CollectionUtils.isEmpty(lotDrwInfos)) {
@@ -201,77 +138,54 @@ public class CommonLotAction extends BaseAction{
             Map <String, String> drwTblMap = lotDrwInfRepository.statUnPrzDrw(gdLotDrwTbl);
             if (drwTblMap.get("unPrzCnt")=="0") {
                 //该期的所有Keno期都已经返奖完成，更新AAAAA记录的汇总信息 
-                
+                Map<String, String> sumPrzDrwMap = lotDrwInfRepository.findSumPrzDrw(gdLotDrwTbl);
+                if (sumPrzDrwMap.get("przSumAmt") !="0") {
+                    gdLotDrwTbl.setPayAmt(sumPrzDrwMap.get("przSumAmt"));
+                    try{
+                        lotDrwInfRepository.upateDrwPrzTbl(gdLotDrwTbl);
+                    } catch (Exception e) {
+                        context.setData("calStat", "-1");
+                        context.setData("calMsg", "更新汇总返奖信息失败["+gdLotDrwTbl.getGameId()+"-"+gdLotDrwTbl.getDrawId()+"]");
+                        throw new CoreException("更新汇总返奖信息失败["+gdLotDrwTbl.getGameId()+"-"+gdLotDrwTbl.getDrawId()+"]");
+                    }
+                }
             }
         }
-/*                <If condition="IS_EQUAL_STRING($UnPrzCnt,0)">
-                    <!-- 该期的所有Keno期都已经返奖完成，更新AAAAA记录的汇总信息 -->
-                    <Exec func="PUB:ReadRecord" error="IGNORE">
-                       <Arg name="SqlCmd" value="SumPrzDrw"/>
-                    </Exec>
-                    <Exec func="PUB:ExecSql" error="IGNORE">
-                        <Arg name="SqlCmd"    value="UpdDrwPrzInf"/>
-                    </Exec>
-                    <If condition="IS_NOEQUAL_STRING(~RetCod,0)">
-                        <Set>CalStat=-1</Set>
-                        <Set>CalMsg=STRCAT(更新汇总返奖信息失败[,$GameId,-,$DrawId,])</Set>
-                        <Return/>
-                    </If>
-                </If>
-            </While>
-            <Exec func="PUB:CloseCursor" error="IGNORE">
-                <Arg name="CursorName" value="CURSOR_PRZ"/>
-            </Exec>
-        
-            <!-- 查询是否有符合条件的未计算轧差的记录 -->
-            <Exec func="PUB:OpenCursor" error="IGNORE">
-                <Arg name="sql" value="CalcLotDifAmt"/>
-                <Arg name="CursorName" value="CURSOR_CAL"/>
-            </Exec>
-            <If condition="AND(IS_NOEQUAL_STRING(~RetCod,0),IS_NOEQUAL_STRING(~RetCod,-2))">
-                <Set>CalStat=-1</Set>
-                <Set>CalMsg=统计轧差失败</Set>
-                <Return/>
-            </If>
-            <While>
-                <Delete>ROOT.GameId</Delete>
-                <Delete>ROOT.DrawId</Delete>
-                <Delete>ROOT.KenoId</Delete>
-                <Delete>ROOT.TotAmt</Delete>
-                <Delete>ROOT.PrzAmt</Delete>
-                <Exec func="PUB:FetchCursor" error="IGNORE">
-                    <Arg name="CursorName" value="CURSOR_CAL"/>
-                </Exec>
-                <If condition="~RetCod=100">
-                    <Break/>
-                </If>
-                
-                <If condition="INTCMP($TotAmt,5,$PrzAmt)">
-                    <!-- 1借方（购彩总金额大于返奖总金额） -->
-                    <Set>DifFlg=1</Set>
-                    <Set>DifAmt=SUB($TotAmt,$PrzAmt)</Set>
-                </If>
-                <Else>
-                    <!-- 0贷方（购彩总金额小于奖总金额） -->
-                    <Set>DifFlg=0</Set>
-                    <Set>DifAmt=SUB($PrzAmt,$TotAmt)</Set>
-                </Else>
-                
-                <Exec func="PUB:ExecSql" error="IGNORE">
-                    <Arg name="SqlCmd"    value="UpdLotDifAmt"/>
-                </Exec>
-                <If condition="IS_NOEQUAL_STRING(~RetCod,0)">
-                    <Set>CalStat=-1</Set>
-                    <Set>CalMsg=STRCAT(更新轧差失败[,$GameId,-,$DrawId,])</Set>
-                    <Return/>
-                </If>
-                
-            </While>
-            <Exec func="PUB:CloseCursor" error="IGNORE">
-                <Arg name="CursorName" value="CURSOR_CAL"/>
-            </Exec>
-        </Process>
-    </Function> */
+        //查询是否有符合条件的未计算轧差的记录
+        List <GdLotDrwTbl> lotDrwTbls = lotDrwInfRepository.qryLotDrwDifAmt();
+        if (CollectionUtils.isEmpty(lotDrwTbls)) {
+            context.setData("calStat", "-1");
+            context.setData("calMsg", "统计轧差失败!");
+            return;
+        }
+        for (GdLotDrwTbl lotDrwTbl : lotDrwTbls) {
+            context.setData("gameId", null);
+            context.setData("drawId", null);
+            context.setData("totAmt", null);
+            context.setData("przAmt", null);
+            context.setData("kenoId", null);
+            int totAmt = Integer.parseInt(lotDrwTbl.getTotAmt());
+            int przAmt = Integer.parseInt(lotDrwTbl.getPrzAmt());
+            if (totAmt > przAmt) {
+                //1借方（购彩总金额大于返奖总金额）
+                lotDrwTbl.setDifFlg("1");
+                int difAmt = totAmt - przAmt;
+                lotDrwTbl.setDifAmt(String.valueOf(difAmt));
+            } else {
+                // 0贷方（购彩总金额小于奖总金额）
+                lotDrwTbl.setDifFlg("0");
+                int difAmt = przAmt - totAmt;
+                lotDrwTbl.setDifAmt(String.valueOf(difAmt));
+            }
+            try{
+                lotDrwInfRepository.UpdLotDifAmt(lotDrwTbl);
+            } catch (Exception e) {
+                context.setData("calStat", "-1");
+                context.setData("calMsg", "更新轧差失败["+lotDrwTbl.getGameId()+"-"+lotDrwTbl.getDrawId()+"]");
+                throw new CoreException("更新轧差失败["+lotDrwTbl.getGameId()+"-"+lotDrwTbl.getDrawId()+"]");
+            }
+        }
+
     }
 
 	public void fileImport(Context context) throws CoreException {
@@ -301,7 +215,8 @@ public class CommonLotAction extends BaseAction{
 		dtl.setKenoId((String)context.getData("KenoId"));
 		get(GdLotPrzDtlRepository.class).delete(dtl);
 		/**新增中奖控制信息*/
-		List<GdLotPrzCtl>ctlList=(List<GdLotPrzCtl>) BeanUtils.toObjects(
+		@SuppressWarnings("unchecked")
+        List<GdLotPrzCtl>ctlList=(List<GdLotPrzCtl>) BeanUtils.toObjects(
 				(List<Map<String,Object>>)context.getData("bonusItem"), GdLotPrzCtl.class);
 		Assert.isNotEmpty(ctlList, ErrorCodes.EUPS_QUERY_NO_DATA);
 		((SqlMap)get("sqlMap")).insert("com.bocom.bbip.gdeupsb.entity.GdLotPrzCtl.LotCtlBatchInsert", ctlList);

@@ -60,5 +60,20 @@ public interface GdLotDrwTblRepository extends PagingAndSortingRepository<GdLotD
 	/** 查询福彩奖期信息总数 */
     @Find
     public Map<String, String> statUnPrzDrw(GdLotDrwTbl gdLotDrwTbl);
+    
+    /** 查询返奖金额汇总 */
+    @Find
+    public Map<String, String>  findSumPrzDrw(GdLotDrwTbl gdLotDrwTbl);
+    /** 更新汇总返奖信息 */
+    @Update
+    public void upateDrwPrzTbl(GdLotDrwTbl gdLotDrwTbl);
+   
+    /** 查询返奖轧差 */
+    @Find
+    public List<GdLotDrwTbl> qryLotDrwDifAmt();
+    
+    /** 更新更新轧差信息 */
+    @Update
+    public void UpdLotDifAmt(GdLotDrwTbl lotDrwTbl);
 
 }
