@@ -561,7 +561,7 @@
     </select>
 
  <!--查询返奖金额汇总 -->
-  <select id="findSumPrzDrw"  resultType="basicResultMap"
+  <select id="findSumPrzDrw"  resultMap="basicResultMap"
         parameterType="com.bocom.bbip.gdeupsb.entity.GdLotDrwTbl">
           select  COALESCE(sum(bigint(PRZ_AMT)),0) przSumAmt
                 from  gdeupsb.GDEUPS_LOT_DRW_TBL
@@ -570,7 +570,7 @@
   </select>
 
   <!--查询返奖轧差 -->
-  <select id="qryLotDrwDifAmt"  resultType="basicResultMap">
+  <select id="qryLotDrwDifAmt"  resultMap="basicResultMap">
   select GAME_ID, DRAW_ID, KENO_ID, TOT_AMT, PRZ_AMT
       from  gdeupsb.GDEUPS_LOT_DRW_TBL
           where PRZ_AMT!='' and TOT_AMT!='' and CHK_FLG='2' and FLW_CTL='10' and KENO_ID in ('','AAAAA')
