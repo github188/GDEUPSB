@@ -2,12 +2,8 @@ package com.bocom.bbip.gdeupsb.action.lot;
 
 import java.util.Date;
 
-import javax.ejb.EnterpriseBean;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import utils.getProperty;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
