@@ -1031,12 +1031,42 @@
       <xs:element name="ptResultList" type="tns:ptResultList_CType" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:simpleType name="tmp01_SType">
+    <xs:annotation>
+      <xs:documentation>车牌号码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="tmp02_SType">
+    <xs:annotation>
+      <xs:documentation>车牌类别</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="3"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="mxCount_SType">
+    <xs:annotation>
+      <xs:documentation>缴费月数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="trDate_SType">
+    <xs:annotation>
+      <xs:documentation>交易日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:dateTime"/>
+  </xs:simpleType>
   <xs:complexType name="ptResultList_CType">
     <xs:sequence>
-      <xs:element name="carNo" type="tns:carNo_SType" minOccurs="0"/>
-      <xs:element name="carTyp" type="tns:carTyp_SType" minOccurs="0"/>
-      <xs:element name="payMon" type="tns:payMon_SType" minOccurs="0"/>
-      <xs:element name="actDat" type="tns:actDat_SType" minOccurs="0"/>
+      <xs:element name="tmp01" type="tns:tmp01_SType" minOccurs="0"/>
+      <xs:element name="tmp02" type="tns:tmp02_SType" minOccurs="0"/>
+      <xs:element name="mxCount" type="tns:mxCount_SType" minOccurs="0"/>
+      <xs:element name="trDate" type="tns:trDate_SType" minOccurs="0"/>
       <xs:element name="sqn" type="tns:sqn_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
