@@ -1061,13 +1061,21 @@
     </xs:annotation>
     <xs:restriction base="xs:dateTime"/>
   </xs:simpleType>
+  <xs:simpleType name="thdKey_SType">
+    <xs:annotation>
+      <xs:documentation>流水号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:complexType name="ptResultList_CType">
     <xs:sequence>
       <xs:element name="tmp01" type="tns:tmp01_SType" minOccurs="0"/>
       <xs:element name="tmp02" type="tns:tmp02_SType" minOccurs="0"/>
       <xs:element name="mxCount" type="tns:mxCount_SType" minOccurs="0"/>
       <xs:element name="trDate" type="tns:trDate_SType" minOccurs="0"/>
-      <xs:element name="sqn" type="tns:sqn_SType" minOccurs="0"/>
+      <xs:element name="thdKey" type="tns:thdKey_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="trspNpDeletRequest_CType">
