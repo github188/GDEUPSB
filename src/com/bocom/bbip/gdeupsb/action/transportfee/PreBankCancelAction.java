@@ -49,6 +49,8 @@ private final static Log log = LogFactory.getLog(PreBankCancelAction.class);
 		if(!today.equals(actDat)){
 			ctx.setData(ParamKeys.RSP_CDE, GDErrorCodes.DATE_ERROR);
 			ctx.setData(ParamKeys.RSP_MSG, "该笔交易帐务日期与此时帐务日期不等，不能交易");
+			//TODO:待考虑是否要抛异常！！！！！！！！！！！！！！！！！！！！！！
+//			throw new CoreException(arg0);
 			log.info("2222222222222222222222222222222222222222222222222222dateError");
 		}
 		
