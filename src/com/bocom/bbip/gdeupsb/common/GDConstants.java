@@ -444,6 +444,10 @@ public final class GDConstants {
 		/** 文件账号删除  */
 		public static final String GD_ZH_OPERATE_DELETE = "3";
 		/*********** 珠海文本 *******************/
+
+		public static final String GAS_VCH_COD = "00000000";
+
+		public static final Object GAS_NOD_NO = "491800";
 		
 		
 }

@@ -675,5 +675,15 @@ public class GDParamKeys {
 	public static final String  RESP_DESC= "respDesc";
 	/**返回时间*/
 	public static final String  RESP_TIME= "respTime";
+
+	public static final String GAS_VCH_CHK = "vchChk";
+
+	public static final String GAS_VCH_COD = "vchCod";
+
+	public static final String GAS_MST_CHK = "mstChk";
+
+	public static final String GAS_F_RSP_CD = "FRspCd";
+
+	public static final String GAS_NOD_NO = "nodNo";
 	
 }
