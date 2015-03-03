@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.ZHActNoInf" >
+  <resultMap id="BaseResultMap" type="com.bocom.bbip.gdeupsb.entity.ZHActNoInf" >
+    <result column="Old_Act" property="OldAct" jdbcType="CHAR"  />
+    <result column="Act_No" property="ActNo" jdbcType="CHAR"  />
+    <result column="Act_Sqn" property="ActSqn" jdbcType="CHAR"  />
+    <result column="Cus_Id" property="CusId" jdbcType="CHAR"  />
+    <result column="Act_Typ" property="ActTyp" jdbcType="CHAR"  />
+    <result column="Act_Nam" property="ActNam" jdbcType="CHAR"  />
+     <result column="Opn_Nod" property="OpnNod" jdbcType="CHAR"  />
+    <result column="Tck_No" property="TckNo" jdbcType="CHAR"  />
+  </resultMap>
+  
+  <select id="queryNewByOld" resultMap="BaseResultMap" parameterType="java.lang.String">
+      Select Act_No FROM GDEUPSB.ZH_ActNo_Inf WHERE Old_Act=#{OldAct}  
+  </select>
+ 
+  <delete id="deleteInfo"  parameterType="map">
+      delete  FROM GDEUPSB.ZH_ActNo_Inf WHERE Old_Act=#{OldAct}  and Act_No=#{ActNo}
+  </delete>
+  <update id="updateInfo"  parameterType="map">
+      UPDATE GDEUPSB.ZH_ActNo_Inf SET Act_No=#{ActNo} WHERE Act_No=#{OldAct}
+  </update>
+  
+  <insert id="insertInfo"  parameterType="com.bocom.bbip.gdeupsb.entity.ZHActNoInf">
+      insert into GDEUPSB.ZH_ActNo_Inf values Act_No=#{ActNo} WHERE Act_No=#{OldAct}
+  </insert>
+</mapper>
