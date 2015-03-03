@@ -2,7 +2,8 @@
 <segment xmlns="http://www.bocom.com/jump/transformer/packet"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
-    name="p001">
+    name="OUT">
         <fixString name="RET_CODE"  length="15" />
         <fixString name="MSG"  length="300" />
+        <fixString name="ACCOUNT" length="15"  /> 
 </segment>
