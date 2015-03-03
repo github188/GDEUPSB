@@ -47,32 +47,12 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 	@Autowired
 	EupsTransJournalRepository eupsTransJournalRepository;
 
-	// 交易前服务处理 暂不实现
+	// 交易前服务处理
 	@Override
 	public Map<String, Object> prepareCheckDeal(CommHeadDomain commHeadDomain,
 			PayFeeOnlineDomain payFeeOnlineDomain, Context context)
 			throws CoreException {
 		logger.info("PayUnilateralToBankServiceImplPGAS00@prepareCheckDeal start!");
-		// 交易日期，时间
-		// context.setData(ParamKeys.TXN_DATE, DateUtils.format(new Date(),
-		// DateUtils.STYLE_SIMPLE_DATE));
-		// context.setData(ParamKeys.TXN_TME, DateUtils.format(new Date(),
-		// DateUtils.STYLE_yyyyMMddHHmmss));
-
-		// 交易费用，初始化为0
-		// BigDecimal txnAmt = new BigDecimal(0.0);
-		// BigDecimal optAmt1 = new BigDecimal(0.0);
-		// context.setData(ParamKeys.TXN_AMT, txnAmt);
-		// context.setData(ParamKeys.BAK_FLD6, optAmt1); //使用备用字段6
-
-		// 预置返回第三方状态为失败 (使用备用字段2)
-		 context.setData(ParamKeys.BAK_FLD2, GDConstants.THD_STS_B3);
-		// 预置账务状态status为0 (使用备用字段1)
-		 context.setData(ParamKeys.BAK_FLD1, "0");
-
-		 context.setData(ParamKeys.RSP_MSG, "扣款失败");
-		 context.setData(GDParamKeys.ERR_MSG, "扣款失败");
-
 		logger.info("======context:" + context);
 		logger.info("PayUnilateralToBankServiceImplPGAS00@prepareCheckDeal end!");
 		return null;
@@ -87,42 +67,54 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 		logger.info("=============context=" + context);
 
+		// 交易日期，时间
+		// context.setData(ParamKeys.TXN_DATE, DateUtils.format(new Date(),
+		// DateUtils.STYLE_SIMPLE_DATE));
+		// context.setData(ParamKeys.TXN_TME, DateUtils.format(new Date(),
+		// DateUtils.STYLE_yyyyMMddHHmmss));
 
+		// 交易费用，初始化为0
+		// BigDecimal txnAmt = new BigDecimal(0.0);
+		// BigDecimal optAmt1 = new BigDecimal(0.0);
+		// context.setData(ParamKeys.TXN_AMT, txnAmt);
+		// context.setData(ParamKeys.BAK_FLD6, optAmt1); //使用备用字段6
 
-		// 取流水号
-		// context.setData(ParamKeys.SEQUENCE,
-		// bbipPublicService.getBBIPSequence());
+		// 预置返回第三方状态为失败B3 (使用备用字段2)
+		context.setData(ParamKeys.BAK_FLD2, GDConstants.THD_STS_B3);
+		// 预置账务状态status为0 (使用备用字段1)
+		context.setData(ParamKeys.BAK_FLD1, "0");
+
+		context.setData(ParamKeys.RSP_MSG, "扣款失败");
+		context.setData(ParamKeys.BAK_FLD5, "扣款失败");
+
 
 		// 查询用户信息（签约状态）select ActNam from Gascusall491 where UserNo='%s' and
 		// ActNo='%s'
-		
-//		Map<String, Object> cusMap = new HashMap<String, Object>();
-//		cusMap.put(ParamKeys.CUS_NO, context.getData("cusNo"));
-//		cusMap.put(ParamKeys.CUS_AC, context.getData("cusAc"));
-//
-//		Result accessObject = bgspServiceAccessObject.callServiceFlatting(
-//				"queryDetailAgentCollectAgreement", cusMap);
-//		if (CollectionUtils.isEmpty(accessObject.getPayload())) { // accessObject为空，未签约
-//			context.setData(ParamKeys.MESSAGE_TYPE, "E");
-//			context.setData(ParamKeys.RSP_CDE, GDConstants.GAS_ERROR_CODE);
-//			context.setData(ParamKeys.RSP_MSG, "该用户未签约，交易失败");
-//			throw new CoreException("该用户未签约，交易失败");
-//		}
+
+		// Map<String, Object> cusMap = new HashMap<String, Object>();
+		// cusMap.put(ParamKeys.CUS_NO, context.getData("cusNo"));
+		// cusMap.put(ParamKeys.CUS_AC, context.getData("cusAc"));
+		//
+		// Result accessObject = bgspServiceAccessObject.callServiceFlatting(
+		// "queryDetailAgentCollectAgreement", cusMap);
+		// if (CollectionUtils.isEmpty(accessObject.getPayload())) { //
+		// accessObject为空，未签约
+		// context.setData(ParamKeys.MESSAGE_TYPE, "E");
+		// context.setData(ParamKeys.RSP_CDE, GDConstants.GAS_ERROR_CODE);
+		// context.setData(ParamKeys.RSP_MSG, "该用户未签约，交易失败");
+		// throw new CoreException("该用户未签约，交易失败");
+		// }
 
 		// 将交易数据入 流水表，预置为交易失败F
-//		EupsTransJournal eupsTxnJnl = BeanUtils.toObject(context.getDataMap(),
-//				EupsTransJournal.class);
-//		eupsTxnJnl.setTxnSts("F");
-//		eupsTransJournalRepository.insert(eupsTxnJnl);
+		// EupsTransJournal eupsTxnJnl =
+		// BeanUtils.toObject(context.getDataMap(),
+		// EupsTransJournal.class);
+		// eupsTxnJnl.setTxnSts("F");
+		// eupsTransJournalRepository.insert(eupsTxnJnl);
 
 		// <Set>TActNo=491800012620190029499</Set>
 		context.setData("TActNo", GDConstants.GAS_THD_ACT_NO);
 
-		// TODO
-		// <Exec func="PUB:ReadModuleCfg">
-		// <Arg name="Application" value="GAS_DB"/><!--可以使用单位编号-->
-		// <Arg name="Transaction" value="460710"/><!--可以用交易码或者模块名-->
-		// </Exec>
 
 		// <Set>TxnAmt=ADDCHAR(MUL(100,$PayAmt),12,0,1)</Set> <!--
 		// payAmt*100,左补0共12位-->
@@ -143,13 +135,13 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 		context.setData(ParamKeys.CHL_TYP, "L");
 
 		context.setData(ParamKeys.PAY_MODE, "0");
-		// TODO <Set>VchChk=1</Set><!--监督标志由业务上确定-->
+		// <Set>VchChk=1</Set><!--监督标志由业务上确定-->
 		context.setData(GDParamKeys.GAS_VCH_CHK, "1");
-		// TODO <Set>VchCod=00000000</Set>
+		// <Set>VchCod=00000000</Set>
 		context.setData(GDParamKeys.GAS_VCH_COD, GDConstants.GAS_VCH_COD);
-		// TODO <Set>MstChk=1</Set>
+		// <Set>MstChk=1</Set>
 		context.setData(GDParamKeys.GAS_MST_CHK, "1");
-		// TODO <Set>FRspCd= </Set>
+		// <Set>FRspCd= </Set>
 		context.setData(GDParamKeys.GAS_F_RSP_CD, "");
 		// <Set>ItgTyp=0</Set>
 		context.setData(ParamKeys.ITG_TYP, "0");
@@ -157,7 +149,7 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 		context.setData(ParamKeys.TXN_TYP, "N");
 		// <Set>TlrId=ERQTDT1</Set>
 		context.setData(ParamKeys.TELLER_ID, "ERQTDT1");
-		// TODO <Set>NodNo=491800</Set>
+		// <Set>NodNo=491800</Set>
 		context.setData(GDParamKeys.GAS_NOD_NO, GDConstants.GAS_NOD_NO);
 		// <Set>CcyTyp=0</Set>
 		context.setData(ParamKeys.CCY, "0");
@@ -178,7 +170,7 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 		logger.info("Enter in PayUnilateralToBankServiceImplPGAS00@aftPayToBank!....");
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 		logger.info("======context:" + context);
-
+//		B0为扣费成功 B1为金额不足扣费失败 B2为无此帐号或账号与用户编号匹配错误扣费失败 B3其它原因扣费失败
 		if ("000000".equals(context.getData(ParamKeys.RSP_CDE))) { // 扣款成功
 			context.setData(ParamKeys.TXN_AMOUNT, context.getData("reqTxnAmt"));
 
@@ -192,11 +184,13 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 					String.valueOf(reqTxnAmt), len, des, LorR);
 			context.setData(ParamKeys.BAK_FLD6, optAmt1); // 使用备用字段6
 
-			context.setData(ParamKeys.BAK_FLD1, "B0");
+			context.setData(ParamKeys.BAK_FLD2, "B0");
 			context.setData(ParamKeys.MFM_TXN_STS, "S");
 			context.setData(ParamKeys.MFM_RSP_CDE, GDConstants.GAS_MFM_RSP_CD);
 			context.setData(ParamKeys.RSP_MSG, "扣款成功");
 			context.setData(ParamKeys.BAK_FLD5, "扣款成功");
+			
+			
 
 			// 更新流水
 			// EupsTransJournal etj = context
@@ -229,8 +223,18 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 			//
 			// eupsTransJournalRepository.update(etj);
 
-		} else { // 扣款失败
-			context.setData(ParamKeys.RSP_MSG, "扣款失败");
+		}
+		
+//TODO 区分交易结果		
+//		else if(){	// B1为金额不足扣费失败
+//			context.setData(ParamKeys.BAK_FLD2, "B1");
+//		}
+//		else if(){ //  B2为无此帐号或账号与用户编号匹配错误扣费失败
+//			context.setData(ParamKeys.BAK_FLD2, "B2");
+//		}
+		
+		else{	//	B3其它原因扣费失败
+			context.setData(ParamKeys.BAK_FLD2, "B3");
 		}
 
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
