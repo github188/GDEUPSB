@@ -58,7 +58,7 @@ public class ChargeStrategyAction implements Executable{
 			
 			context.setData(ParamKeys.RSP_CDE, ErrorCodes.EUPS_SQN_IS_EXIST);
 			context.setData(ParamKeys.RSP_MSG, "报文重复");
-			return;
+			throw new CoreException(ErrorCodes.EUPS_SQN_IS_EXIST);
 		}
 		 //金额控制，不能超过400.但标准版交易流水表中有交易金额和请求交易金额两个字段，应该用交易金额。
      
@@ -69,7 +69,7 @@ public class ChargeStrategyAction implements Executable{
 	    	  context.setData(ParamKeys.RSP_MSG, "金额超限");
 	    	System.out.println("111111111111111111111111111111111111111111111111111111111");
 //	    	TODO:
-	    	  throw new CoreException("");
+	    	  throw new CoreException(ErrorCodes.EUPS_LIM_AMT_FULL);
 	      }
 	      
 	      System.out.println("22222222222222222222222222222222222222222222222");
