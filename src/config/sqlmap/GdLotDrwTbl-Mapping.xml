@@ -538,7 +538,78 @@
 		DIF_AMT!='0')
 	</update>
 
+<!-- add By Guilin Start -->
+  <select id="qryLotDrwInf" parameterType="map" resultMap="basicResultMap">
+        select
+        <include refid="baseColumnList" />
+        from ${BBIPADM_SCHEMA}.GDEUPS_LOT_DRW_TBL
+        <where>
+            <choose>
+                <when test="isKeno == Y">
+                    FLW_CTL='0' and GAME_ID=#{gameId} and KENO_ID != 'AAAAA'
+                    and K_SAL_ST &lt; #{lotTime} and K_SAL_ED &gt;#{lotTime}
+                    order by K_SAL_ST asc
+                </when>
+                <otherwise>
+                    FLW_CTL='0' and GAME_ID=#{gameId} and KENO_ID != 'AAAAA'
+                    and SAL_STR &lt; #{lotTime} and SAL_END &gt;#{lotTime}
+                    order by SAL_STR asc
+                </otherwise>
+            </choose>
+        </where>
+        fetch first 1 rows only
+    </select>
 
+ <!--查询返奖金额汇总 -->
+  <select id="findSumPrzDrw"  resultType="basicResultMap"
+        parameterType="com.bocom.bbip.gdeupsb.entity.GdLotDrwTbl">
+          select  COALESCE(sum(bigint(PRZ_AMT)),0) przSumAmt
+                from  gdeupsb.GDEUPS_LOT_DRW_TBL
+                where GAME_ID =#{gameId,jdbcType=CHAR} AND DRAW_ID=#{drawId,jdbcType=CHAR}
+                AND KENO_ID !='AAAAA' and PRZ_AMT !='' and FLW_CTL ='10'
+  </select>
 
+  <!--查询返奖轧差 -->
+  <select id="qryLotDrwDifAmt"  resultType="basicResultMap">
+  select GAME_ID, DRAW_ID, KENO_ID, TOT_AMT, PRZ_AMT
+      from  gdeupsb.GDEUPS_LOT_DRW_TBL
+          where PRZ_AMT!='' and TOT_AMT!='' and CHK_FLG='2' and FLW_CTL='10' and KENO_ID in ('','AAAAA')
+              and (DIF_AMT='' or DIF_FLG='')
+  </select>
+ <!--更新汇总返奖信息 -->
+<update id="upateDrwPrzTbl" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotDrwTbl" >
+    update gdeupsb.GDEUPS_LOT_DRW_TBL a
+        set a.PRZ_AMT=#{przAmt,jdbcType=CHAR}, a.FLW_CTL='10',
+            a.PAY_AMT = (select cast(sum(bigint(case when b.PAY_AMT = '' then '0' else b.PAY_AMT end)) as char(15)) from gdeupsb.GDEUPS_LOT_DRW_TBL b where a.GAME_ID = b.GAME_ID and a.DRAW_ID = b.DRAW_ID and b.KENO_ID != 'AAAAA'),
+            a.PAY_FLG = (select (case when exists(select 'Y' from gdeupsb.GDEUPS_LOT_DRW_TBL c where c.GAME_ID = a.GAME_ID and c.DRAW_ID = a.DRAW_ID and c.KENO_ID != 'AAAAA' and c.PAY_FLG = '1') then '1' else '0' end) from gdeupsb.GDEUPS_LOT_DRW_TBL d where d.GAME_ID=a.GAME_ID and d.DRAW_ID=a.DRAW_ID and d.KENO_ID='AAAAA')
+    where GAME_ID = #{gameId,jdbcType=CHAR}
+       and DRAW_ID = #{drawId,jdbcType=CHAR}
+       and  KENO_ID ='AAAAA'
+  </update>
+
+  <!--更新更新轧差信息  -->
+  <update id="updLotDifAmt" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotDrwTbl" >
+    update gdeupsb.GDEUPS_LOT_DRW_TBL 
+    set DIF_AMT= #{difAmt,jdbcType=CHAR}, DIF_FLG= #{difFlg,jdbcType=CHAR}
+       where GAME_ID = #{gameId,jdbcType=CHAR}
+       and DRAW_ID = #{drawId,jdbcType=CHAR}
+       and  KENO_ID =#{kenoId,jdbcType=CHAR}
+  </update>
+
+    <!--福彩明细查询 -->
+    <select id="qryUnPrzDrw" resultMap="basicResultMap">
+        select GAME_ID, DRAW_ID
+        from gdeupsb.GDEUPS_LOT_DRW_TBL
+        where KENO_ID='AAAAA' and PRZ_AMT='' and FLW_CTL !='10'
+    </select>
+    <!--福彩明细总数查询 -->
+    <select id="statUnPrzDrw" resultType="java.util.Map"
+        parameterType="com.bocom.bbip.gdeupsb.entity.GdLotDrwTbl">
+        select count(*) unPrzCnt
+        from gdeupsb.GDEUPS_LOT_DRW_TBL
+        where GAME_ID =#{gameId,jdbcType=CHAR} AND DRAW_ID=#{drawId,jdbcType=CHAR}
+        AND KENO_ID !='AAAAA' and PRZ_AMT='' and FLW_CTL !='10'
+    </select>
+<!-- add By Guilin End -->
 
 </mapper>
