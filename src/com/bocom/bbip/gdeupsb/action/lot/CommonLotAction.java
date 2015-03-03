@@ -7,18 +7,32 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
+import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.entity.GdLotChkCtl;
+import com.bocom.bbip.gdeupsb.entity.GdLotChkDtl;
+import com.bocom.bbip.gdeupsb.entity.GdLotPrzCtl;
+import com.bocom.bbip.gdeupsb.entity.GdLotPrzDtl;
 import com.bocom.bbip.gdeupsb.entity.GdLotDrwTbl;
 import com.bocom.bbip.gdeupsb.entity.GdLotSysCfg;
+import com.bocom.bbip.gdeupsb.repository.GdLotChkCtlRepository;
+import com.bocom.bbip.gdeupsb.repository.GdLotPrzCtlRepository;
+import com.bocom.bbip.gdeupsb.repository.GdLotPrzDtlRepository;
 import com.bocom.bbip.gdeupsb.repository.GdLotDrwTblRepository;
 import com.bocom.bbip.gdeupsb.repository.GdLotSysCfgRepository;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.bbip.service.Result;
+import com.bocom.bbip.utils.Assert;
+import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
+import com.bocom.jump.bp.core.CoreException;
+import com.bocom.jump.bp.service.sqlmap.SqlMap;
 
 /**
  *  提供福彩公共方法调用
@@ -26,7 +40,7 @@ import com.bocom.jump.bp.core.Context;
  * Date 2015-01-26
  * @author GuiLin.Li
  */
-public class CommonLotAction {
+public class CommonLotAction extends BaseAction{
     
     @Autowired
     GdLotSysCfgRepository lotSysCfgRepository;
@@ -101,68 +115,8 @@ public class CommonLotAction {
      * @param drawId 期号
      * @return map 1.文件下载状态（0：成功  -1：失败） 2.文件下载结果描述
      */
-    public Map<String, String> downloadFile(String FileType,String gameId,String drawId){
+    public Map<String, String> downloadFile(String type,String gameId,String drawId){
         Map<String, String>  map =new HashMap<String, String>();
-        /*
-        <Function name="DownloadFile" desc="下载不同的文件并入库">
-        <Input>FilTyp|GameId|DrawId|FTxnTm|</Input>
-        <Output>DownloadStatus|DownloadMsg|FilTyp|</Output>
-        <DynSentence name="ggetSysCfg" desc="获取系统配置">
-            <Sentence>
-                select DealId,UsrPam,UsrPas,SigTim,LclTim,LotTim,DiffTm
-                from LotSysCfg
-                where DealId='%s'
-            </Sentence>
-            <Fields>DealId|</Fields>
-        </DynSentence>
-        <Process>
-
-            <!--发送文件下载地址查询报文，获取文件地址-->
-            <Exec func="PUB:CallThirdOther" error="IGNORE">
-               <Arg name="HTxnCd" value="237" />
-               <Arg name="ObjSvr" value="STHDLOTA" />
-            </Exec>
-            <If condition="IS_NOEQUAL_STRING(~RetCod,0)">
-                <Set>DownloadStatus=-1</Set>
-                <Set>DownloadMsg=查询文件下载地址失败</Set>
-                <Return/>
-            </If>
-            <If condition="IS_NOEQUAL_STRING($RRspCod,0)">
-                <Set>DownloadStatus=-1</Set>
-                <Set>DownloadMsg=STRCAT(查询文件下载地址失败[,$RRspCod,])</Set>
-                <Return/>
-            </If>
-            
-            <!--发送文件下载报文，下载文件-->
-            <Set>FilNam=$Fil</Set>
-            <Exec func="PUB:CallThirdOther" error="IGNORE">
-               <Arg name="HTxnCd" value="STRCAT(238_,$FilTyp)" />
-               <Arg name="ObjSvr" value="STHDLOTA" />
-            </Exec>
-            <If condition="IS_NOEQUAL_STRING(~RetCod,0)">
-                <Set>DownloadStatus=-1</Set>
-                <Set>DownloadMsg=下载文件失败</Set>
-                <Return/>
-            </If>
-            <If condition="IS_NOEQUAL_STRING($RRspCod,0)">
-                <Set>DownloadStatus=-1</Set>
-                <Set>DownloadMsg=STRCAT(下载文件失败[,$RRspCod,])</Set>
-                <Return/>
-            </If>
-            
-            <!-- 文件入库 -->
-            <Call package="LOT_PKG" function="STRCAT(FileImport,$FilTyp)" desc="文件明细入库"/>
-            <If condition="IS_EQUAL_STRING($FileImportStatus,0)">
-                <Set>DownloadStatus=0</Set>
-                <Set>DownloadMsg=文件下载入库成功</Set>
-            </If>
-            <Else>
-                <Set>DownloadStatus=-1</Set>
-                <Set>DownloadMsg=$FileImportMsg</Set>
-            </Else>
-            
-        </Process>
-    </Function>*/
         return map;
     }
   
@@ -320,6 +274,87 @@ public class CommonLotAction {
     </Function> */
     }
 
+	public void fileImport(Context context) throws CoreException {
+		final String filetyp = context.getData(ParamKeys.FILE_TYPE);
+		if ("2".equals(filetyp)) {
+			/** 中奖文件入库 */
+			fileImport2(context);
+		}
+		if ("3".equals(filetyp)) {
+			/** 对账文件入库 */
+			fileImport2(context);
+		} else {
+			throw new CoreException("");
+		}
+
+	}
+	public void fileImport2(Context context)throws CoreException{
+		/**-- 删除旧记录 */
+		GdLotPrzCtl ctl=new GdLotPrzCtl();
+		ctl.setGameId((String)context.getData("GameId"));
+		ctl.setDrawId((String)context.getData("DrawId"));
+		ctl.setKenoId((String)context.getData("KenoId"));
+		get(GdLotPrzCtlRepository.class).delete(ctl);
+		GdLotPrzDtl dtl=new GdLotPrzDtl();
+		dtl.setGameId((String)context.getData("GameId"));
+		dtl.setDrawId((String)context.getData("DrawId"));
+		dtl.setKenoId((String)context.getData("KenoId"));
+		get(GdLotPrzDtlRepository.class).delete(dtl);
+		/**新增中奖控制信息*/
+		List<GdLotPrzCtl>ctlList=(List<GdLotPrzCtl>) BeanUtils.toObjects(
+				(List<Map<String,Object>>)context.getData("bonusItem"), GdLotPrzCtl.class);
+		Assert.isNotEmpty(ctlList, ErrorCodes.EUPS_QUERY_NO_DATA);
+		((SqlMap)get("sqlMap")).insert("com.bocom.bbip.gdeupsb.entity.GdLotPrzCtl.LotCtlBatchInsert", ctlList);
+		
+		/**新增明细信息*/
+		
+		for(Map<String, Object> temp:(List<Map<String,Object>>)context.getData("bonusItem")){
+			List<GdLotPrzDtl>dtlList=(List<GdLotPrzDtl>) BeanUtils.toObjects(
+					(List<Map<String,Object>>)temp.get("bonusNode"), GdLotPrzDtl.class);
+			Assert.isNotEmpty(dtlList, ErrorCodes.EUPS_QUERY_NO_DATA);
+			for(GdLotPrzDtl tmp:dtlList){
+				tmp.setGameId((String)context.getData("GameId"));
+				tmp.setDrawId((String)context.getData("drawId"));
+				tmp.setKenoId((String)context.getData("kenoId"));
+				tmp.settLogNo((String)temp.get("TLogNo"));
+				tmp.setTxnLog((String)temp.get("txnLog"));
+			}
+			((SqlMap)get("sqlMap")).insert("com.bocom.bbip.gdeupsb.entity.GdLotPrzDtl.LotDtlBatchInsert", dtlList);
+
+		}
+		
+	}
+    public void fileImport3(Context context)throws CoreException{
+    	/**-- 删除旧记录 */
+		GdLotPrzCtl ctl=new GdLotPrzCtl();
+		ctl.setGameId((String)context.getData("GameId"));
+		ctl.setDrawId((String)context.getData("DrawId"));
+		ctl.setKenoId((String)context.getData("KenoId"));
+		get(GdLotPrzCtlRepository.class).delete(ctl);
+		GdLotPrzDtl dtl=new GdLotPrzDtl();
+		dtl.setGameId((String)context.getData("GameId"));
+		dtl.setDrawId((String)context.getData("DrawId"));
+		dtl.setKenoId((String)context.getData("KenoId"));
+		get(GdLotPrzDtlRepository.class).delete(dtl);
+		/**新增对账控制信息*/
+		GdLotChkCtl ChkCtl=new GdLotChkCtl();
+		ChkCtl.setChkDat(DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMdd));
+		ChkCtl.setChkFlg("0");
+		ChkCtl.setTotAmt((String)context.getData("totalMoney"));
+		ChkCtl.setTotNum((String)context.getData("sucessNum"));
+		get(GdLotChkCtlRepository.class).insert(ChkCtl);
+		if("Y".equals((String)(context).getData("IsKeno"))){
+			List<GdLotChkDtl>dtlList=(List<GdLotChkDtl>) BeanUtils.toObjects(
+					(List<Map<String,Object>>)context.getData("scheme"), GdLotChkDtl.class);
+			((SqlMap)get("sqlMap")).insert("com.bocom.bbip.gdeupsb.entity.GdLotChkDtl.LotDtlBatchInsert", dtlList);
+		}
+		else{
+			List<GdLotChkDtl>dtlList=(List<GdLotChkDtl>) BeanUtils.toObjects(
+					(List<Map<String,Object>>)context.getData("scheme"), GdLotChkDtl.class);
+			((SqlMap)get("sqlMap")).insert("com.bocom.bbip.gdeupsb.entity.GdLotChkDtl.LotDtlBatchInsert", dtlList);
+
+		}
+	}
     /**
      * 获取系统配置
      */
