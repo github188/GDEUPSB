@@ -25,7 +25,7 @@
 	  <!-- <fixString  name="Deli2" length="1" default=","/> -->
 	  <fixString name="sqn" length="18"   />
 	  <!-- <fixString  name="Deli3" length="1" default=","/> -->
-	  <fixString name="cusNo" length="12"   />
+	  <fixString name="thdCusNo" length="12"   />
 	  <!-- <fixString  name="Deli4" length="1" default=","/> -->
 	  <fixString name="bakFld3" length="6"   />
 	  <!-- <fixString  name="Deli5" length="1" default=","/> -->

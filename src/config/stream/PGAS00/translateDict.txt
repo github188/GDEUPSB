@@ -11,7 +11,7 @@
 #TransCode.gdeupsb.hzPGasSmpcPayOnlineAction=460710
 #TransCode.460710=gdeupsb.hzPGasSmpcPayOnlineAction
 TransCode.eups.payUnilateralToBank=460710
-TransCode.460710=eups.payUnilateralToBank
+#TransCode.460710=eups.payUnilateralToBank
 
 #TransCode.gdeupsb.hzPGasReversePaymentThdAction=460711
 #TransCode.460711=gdeupsb.hzPGasReversePaymentThdAction

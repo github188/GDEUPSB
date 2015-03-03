@@ -12,7 +12,7 @@
 	<fixString name="comNo"  length="10" />
 	<fixString name="DeliA" length="1" default="," /> -->
 	
- 	<fixString name="TransCode" length="6" /> 
+ 	<fixString name="TransCode" length="6" mapping="true" /> 
  	<!-- <fixString name="DeliA"      length="1" default=","/> -->
  	
  	

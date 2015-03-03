@@ -14,7 +14,7 @@
 	
  	 -->
  	 
- 	 <fixString name="TransCode" length="6" />
+ 	 <fixString name="TransCode" length="6" mapping="true"/>
  	 <!-- <fixString  name="Deli1" length="1" default=","/> -->
  	
  	 

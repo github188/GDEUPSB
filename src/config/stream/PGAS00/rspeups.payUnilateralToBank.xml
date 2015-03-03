@@ -17,17 +17,17 @@
 
 	<fixString name="thdTxnCde" length="10" /> 
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
-	<fixString name="thdsqn" length="18"    />
+	<fixString name="thdSqn" length="18"    />
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
 	<fixString name="bk" length="4"   />
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
-	<fixString name="cusNo" length="12"   /> 
+	<fixString name="thdCusNo" length="12"   /> 
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
 	<fixString name="cusAc" length="32"   />
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
 	<fixString name="bakFld3" length="6"   />
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
-	<fixString name="reqTxnAmt" length="10"   />
+	<fixString name="txnAmt" length="10"   />
 	<!-- <fixString  name="DeliA" length="1"  /> -->
 
 </segment>
