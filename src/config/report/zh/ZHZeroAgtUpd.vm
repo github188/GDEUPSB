@@ -1,0 +1,27 @@
+#report(50)
+#rh(10)
+ 		                                                                              珠海分行       
+ 			                                                                                                        
+                                                              $f.fmt($currentTime,'yyyy-MM-dd HH:mm:ss')
+                 
+              481216                          零余额账户托收协议管理       
+              
+              
+              
+              
+                                             功能：$f.conv('zhzero',$d.oprTyp)
+		     零余额账户帐号: $str.trim($d.ZreAct)        零余额账户名:$str.trim($d.ZActNam)
+		     零余额账户开户行网点号:$str.trim($d.ZActNodNo)   零余额账户开户行名:$str.trim($d.ZActNodNm) 
+		     托收单位编号:$str.trim($d.CAgtNo)             托收单位名:$str.trim($d.CAgtNm) 
+		     托收暂收户账号:$str.trim($d.CActNo)           托收暂收户名:$str.trim($d.CActNm) 
+		     托收暂收户开户行网点号:$str.trim($d.CActNodNo)   托收暂收户开户行名:$str.trim($d.CActNodNm) 
+		     原支付编码:$str.trim($d.payCod)              原托收费用名:$str.trim($d.payNam)
+		     新支付编码:$str.trim($d.payCod1)              新托收费用名:$str.trim($d.payNam1) 
+	      
+	      
+	      
+	      
+	      
+	                                      $d.tlr                                          $d.tlr                                                                                         
+#end   
+#end
