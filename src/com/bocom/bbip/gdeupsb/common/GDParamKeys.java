@@ -617,4 +617,63 @@ public class GDParamKeys {
 
 	public static final String TXN_AMT1 = "txnAmt1";
 
+	/***************** 公共汽车 *************************/
+	
+	/**商家ID*/
+	public static final String  STORE_ID= "storeId";
+	/**终端ID*/
+	public static final String  TEMINAL_ID= "terminalId";
+	/**商户帐户*/
+	public static final String  ACCOUNT= "account";
+	/**请求时间*/
+	public static final String REQUES_TTIME = "requestTime";
+	/**订单信息*/
+	public static final String  E_TICEET_ORDER= "eTicketOrder";
+	/**操作类型*/
+	public static final String  OPER_TYPE= "operType";
+	/**签名*/
+	public static final String  SIGN= "sign";
+	/**商户订单号*/
+	public static final String  STORE_SEQ= "storeSeq";
+	/**系统订单号（系统返回）*/
+	public static final String  ORDER_ID= "orderId";
+	/**卡ID*/
+	public static final String  CARD_ID= "cardId";
+	/**面值ID*/
+	public static final String  PRICE_ID= "priceId";
+	/**购买数量*/
+	public static final String  COUNT= "count";
+	/**产品销售总金额（传入以分为单位产品总金额）*/
+	public static final String  SALE_AMOUNT= "saleAmount";
+	/**产品供货总金额（系统返回以分为单位）*/
+	public static final String  SETT_AMOUNT= "settAmount";
+	/**订购用户姓名*/
+	public static final String  USER_NAME= "userName";
+	/**订购用户手机号码(必填，用于接收短信)*/
+	public static final String MOBILE = "mobile";
+	/**使用时间yyyyMMdd*/
+	public static final String  USE_DATE= "useDate";
+	/**订单时间yyyyMMddHHmmss*/
+	public static final String  ORDER_TIME= "orderTime";
+	/**支付状态 	0:未支付，1已支付(订单成功) 2,已作废 3：已提交支付请求*/
+	public static final String  ORDER_STATE= "orderState";
+	/**取货凭证类型*/
+	public static final String  VOUCHER= "voucher";
+	/**取货凭证号（voucher=1时由系统返回）*/
+	public static final String  COUCHER_CODE= "voucherCode";
+	/**支付方式*/
+	public static final String  PAY_TYPE= "payType";
+	/**下载批次号*/
+	public static final String  DOWN_BATCH_NO= "downBatchNo";
+	/**购买到的电子票产品凭证号和有效期（下单成功由系统返回）以“,”分隔*/
+	public static final String  PRO_DATE= "ProductData";
+	/**门票编码|门票名称|门票类型*/
+	public static final String  OTHER_INFO= "otherInfo";
+	/**返回码*/
+	public static final String  RESP_CODE= "respCode";
+	/**返回说明*/
+	public static final String  RESP_DESC= "respDesc";
+	/**返回时间*/
+	public static final String  RESP_TIME= "respTime";
+	
 }
