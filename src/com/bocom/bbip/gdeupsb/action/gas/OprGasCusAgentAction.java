@@ -54,6 +54,7 @@ public class OprGasCusAgentAction extends BaseAction{
 		context.setData(ParamKeys.BK, "CNJT");
 		context.setData(ParamKeys.CUS_NO, context.getData("thdCusNo"));
 		logger.info("================now context =" + context);
+		//TODO: 个人协议查询方法错误！！！！！
 		Map<String, Object> cusInfoMap = new HashMap<String, Object>();
 		cusInfoMap.put(ParamKeys.COMPANY_NO,  context.getData("comNo"));
 		cusInfoMap.put(ParamKeys.BK, "CNJT");
