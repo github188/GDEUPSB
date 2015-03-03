@@ -17,6 +17,16 @@
     T_LOG_NO, GAME_ID, DRAW_ID, KENO_ID, TXN_LOG, BET_MOD, BET_MUL, CLASS_NO, PRZ_AMT, 
     BET_LIN
   </sql>
+  
+  <select id="LotDtlBatchInsert" resultMap="basicResultMap" >
+    insert into  gdeupsb.GDEUPS_LOT_PRZ_DTL (
+    <include refid="baseColumnList" />) values
+    	<foreach collection="list" item="item" index="index" separator=",">
+			( #{item.tLogNo}, #{item.gameId},
+			#{item.drawId}, #{item.kenoId}, #{item.txnLog}, #{item.betMod},
+			#{item.betMul}, #{item.classNo}, #{item.przAmt}, #{item.betLin})
+      </foreach>
+  </select>
   <select id="find" resultMap="basicResultMap" >
     select
     <include refid="baseColumnList" />
