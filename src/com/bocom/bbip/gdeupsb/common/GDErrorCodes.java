@@ -40,6 +40,10 @@ public final class GDErrorCodes {
 	/** 广东电力原交易流水信息错误 */
 	public static final String EUPS_ELE_GZ_CANCLE_INFO_ERROR = "BBIP4400EU0104";
 
+	/** 广东电力不存在清算日期参数 */
+	public static final String EUPS_ELE_GZ_CLEAR_INFO_ERROR = "BBIP4400EU0105";
+
+	
 	/** 供电局系统:无效交易(数据格式) */
 	public static final String EUPS_ELE_GZ_DATE_FORMAT_ERROR = "BBIP4400EU0190";
 
