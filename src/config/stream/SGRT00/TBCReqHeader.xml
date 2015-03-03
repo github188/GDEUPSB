@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
      filter="both,WEB-INF/classes/config/stream/SGRT00/translateDict.txt"
     type="LLLL" encoding="UTF-8"  trace="true">
-    <segment name="agenthead">
+    <segment name="PUB">
        <fixString name="TransCode" length="4" referred="true" mapping="true"/>
      <!--  <fixString name="TRADE_ID" length="4" referred="true" mapping="true"/>   //[JUMPCO7000] no_process_id -->
         <fixString name="TRAN_TIME" length="14" />

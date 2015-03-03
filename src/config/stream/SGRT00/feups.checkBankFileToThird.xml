@@ -5,6 +5,7 @@
     name="f001">
        <fixString name="BANK_SEQ" length="6"/> <!-- //TODO;XML时候最大20 为了测试先6位 -->
        <fixString name="TRADE_DATE" length="8"/>
-       <fixString name="comNo" length="6"/>
+       <fixString name="DEV_ID" length="10"/>
+       <fixString name="TELLER" length="10"/>
     
 </segment>
