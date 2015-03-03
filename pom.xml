@@ -35,6 +35,7 @@
 					<forkMode>once</forkMode>
 				</configuration>
 			</plugin>
+			<!-- 
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
@@ -60,7 +61,7 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
+			</plugin> -->
 		</plugins>
 	</build>
 	<dependencies>
@@ -75,8 +76,8 @@
 			<artifactId>bbip-runtime</artifactId>
 			<version>1.0-SNAPSHOT</version>
 			<type>pom</type>
-			<!-- <scope>provided</scope> -->
-			<scope>compiler</scope>
+			 <scope>provided</scope>
+			<!--<scope>compiler</scope> -->
 		</dependency>
 
 		<dependency>
