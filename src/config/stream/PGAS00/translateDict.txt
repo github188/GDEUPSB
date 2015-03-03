@@ -7,21 +7,18 @@
 #  filter="format,packets/translateDict.txt"
 #  filter="parse,packets/translateDict.txt"
 
-#这里应该是EUPSprocessId
 #TransCode.gdeupsb.hzPGasSmpcPayOnlineAction=460710
 #TransCode.460710=gdeupsb.hzPGasSmpcPayOnlineAction
 TransCode.eups.payUnilateralToBank=460710
-#TransCode.460710=eups.payUnilateralToBank
+TransCode.460710=eups.payUnilateralToBank
 
 #TransCode.gdeupsb.hzPGasReversePaymentThdAction=460711
 #TransCode.460711=gdeupsb.hzPGasReversePaymentThdAction
 TransCode.eups.cancelUnilateralToBank=460711
 TransCode.460711=eups.cancelUnilateralToBank
 
-
-
-TransCode.gdeupsb.preBatchGashDealServiceAction=460716
-TransCode.460716=gdeupsb.preBatchGashDealServiceAction
+TransCode.eups.fileBatchPayCreateDataProcess=460716
+TransCode.460716=eups.fileBatchPayCreateDataProcess
 
 #TransCode.gdeupsb.oprGasCusAgentAction=460701
 #TransCode.460701=gdeupsb.oprGasCusAgentAction
