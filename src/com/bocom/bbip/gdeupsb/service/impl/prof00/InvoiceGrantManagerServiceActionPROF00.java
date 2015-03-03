@@ -9,8 +9,9 @@ import org.slf4j.LoggerFactory;
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
-import com.bocom.bbip.gdeupsb.entity.EupsInvDtlBok;
-import com.bocom.bbip.gdeupsb.repository.EupsInvDtlBokRepository;
+import com.bocom.bbip.gdeupsb.entity.GdeupsInvDtlBok;
+import com.bocom.bbip.gdeupsb.repository.GdeupsInvDtlBokRepository;
+import com.bocom.bbip.thd.org.apache.commons.collections.CollectionUtils;
 import com.bocom.bbip.thd.org.apache.commons.lang.StringUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
@@ -45,12 +46,12 @@ public class InvoiceGrantManagerServiceActionPROF00 extends BaseAction {
 		String oprTlr = context.getData("oprTlr");//领用柜员
 		
 		logger.info("invTyp["+invTyp+"]oprTlr["+oprTlr+"]");
-		EupsInvDtlBok eupsInvDtlBok = new EupsInvDtlBok();
-		eupsInvDtlBok.setInvtyp(invTyp);
-		eupsInvDtlBok.setOprtlr(oprTlr);
-		eupsInvDtlBok.setStatus("0");
-		List<EupsInvDtlBok> eupsInvDtlBoks = get(EupsInvDtlBokRepository.class).find(eupsInvDtlBok);
-		if(!(eupsInvDtlBoks==null||eupsInvDtlBoks.size()==0)){//存在已下发凭证
+		GdeupsInvDtlBok gdeupsInvDtlBok = new GdeupsInvDtlBok();
+		gdeupsInvDtlBok.setInvTyp(invTyp);
+		gdeupsInvDtlBok.setOprTlr(oprTlr);
+		gdeupsInvDtlBok.setStatus("0");
+		List<GdeupsInvDtlBok> gdeupsInvDtlBoks = get(GdeupsInvDtlBokRepository.class).find(gdeupsInvDtlBok);
+		if(!CollectionUtils.isEmpty(gdeupsInvDtlBoks)){//存在已下发凭证
 			logger.error("该柜员"+oprTlr+"已存在已发放的凭证，不允许多次发放!");
 			throw new CoreException(GDErrorCodes.EUPS_PROF00_02_ERROR);
 		}
@@ -59,28 +60,28 @@ public class InvoiceGrantManagerServiceActionPROF00 extends BaseAction {
 		String ivBegNo = context.getData("ivBegNo");//凭证开始号码
 		String ivEndNo = context.getData("ivEndNo");//凭证结束号码
 		
-		eupsInvDtlBok.setIvbegno(ivBegNo);
-		eupsInvDtlBok.setIvendno(ivEndNo);
-		eupsInvDtlBoks = get(EupsInvDtlBokRepository.class).findIsExist(eupsInvDtlBok);
-		if(!(eupsInvDtlBoks==null||eupsInvDtlBoks.size()==0)){//凭证已使用
+		gdeupsInvDtlBok.setIvBegNo(ivBegNo);
+		gdeupsInvDtlBok.setIvEndNo(ivEndNo);
+		gdeupsInvDtlBoks = get(GdeupsInvDtlBokRepository.class).findIsExist(gdeupsInvDtlBok);
+		if(!CollectionUtils.isEmpty(gdeupsInvDtlBoks)){//凭证已使用
 			logger.error("["+ivBegNo+"-"+"ivEndNo"+"]存在已经登记使用过的发票!");
 			throw new CoreException(GDErrorCodes.EUPS_PROF00_03_ERROR);
 		}
 		//TODO:申请非会计流水
 		String tckno = get(BBIPPublicService.class).getBBIPSequence();
-		eupsInvDtlBok.setTckno(tckno);
+		gdeupsInvDtlBok.setTckNo(tckno);
 		context.setData("tckNo", tckno);//非会计流水号
 		//TODO:登记发票记录
 		String tolNum = context.getData("tolNum");//张数
 		String regTlr = context.getData("sup1Id");//授权柜员
 		String nodno = context.getData("br");//机构号
-		eupsInvDtlBok.setTolnum(tolNum);
-		eupsInvDtlBok.setRegtlr(regTlr);
-		eupsInvDtlBok.setNodno(nodno);
-		eupsInvDtlBok.setRegdat(DateUtils.formatAsSimpleDate(new Date()));
-		eupsInvDtlBok.setUsenum("0");//使用张数
-		eupsInvDtlBok.setClrnum("0");//作废张数
-		get(EupsInvDtlBokRepository.class).insert(eupsInvDtlBok);
+		gdeupsInvDtlBok.setTolNum(tolNum);
+		gdeupsInvDtlBok.setRegTlr(regTlr);
+		gdeupsInvDtlBok.setNodno(nodno);
+		gdeupsInvDtlBok.setRegDat(DateUtils.formatAsSimpleDate(new Date()));
+		gdeupsInvDtlBok.setUseNum("0");//使用张数
+		gdeupsInvDtlBok.setClrNum("0");//作废张数
+		get(GdeupsInvDtlBokRepository.class).insert(gdeupsInvDtlBok);
 		context.setData("tckNo", tckno);
 		logger.info("InvoiceGrantManagerServiceActionPROF00 end ... ...");
 	}

@@ -8,10 +8,11 @@ import org.slf4j.LoggerFactory;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
-import com.bocom.bbip.gdeupsb.entity.EupsInvDtlBok;
-import com.bocom.bbip.gdeupsb.entity.EupsInvTermInf;
-import com.bocom.bbip.gdeupsb.repository.EupsInvDtlBokRepository;
-import com.bocom.bbip.gdeupsb.repository.EupsInvTermInfRepository;
+import com.bocom.bbip.gdeupsb.entity.GdeupsInvDtlBok;
+import com.bocom.bbip.gdeupsb.entity.GdeupsInvTermInf;
+import com.bocom.bbip.gdeupsb.repository.GdeupsInvDtlBokRepository;
+import com.bocom.bbip.gdeupsb.repository.GdeupsInvTermInfRepository;
+import com.bocom.bbip.thd.org.apache.commons.collections.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -32,37 +33,37 @@ public class InvoiceCheckManagerServiceActionPROF00 extends BaseAction {
 		String tlrId = context.getData("tlr");
 		String nodno = context.getData("br");
 		logger.info("invType["+invTyp+"]tlrId["+tlrId+"]nodno["+nodno+"]");
-		EupsInvTermInf eupsInvTermInf = new EupsInvTermInf();
-		eupsInvTermInf.setInvtyp(invTyp);
-		eupsInvTermInf.setTlrid(tlrId);
-		eupsInvTermInf.setNodno(nodno);
-		List<EupsInvTermInf> eupsInvTermInfs = get(EupsInvTermInfRepository.class).find(eupsInvTermInf);
-		if(eupsInvTermInfs==null||eupsInvTermInfs.size()==0){
+		GdeupsInvTermInf gdeupsInvTermInf = new GdeupsInvTermInf();
+		gdeupsInvTermInf.setInvTyp(invTyp);
+		gdeupsInvTermInf.setTlrId(tlrId);
+		gdeupsInvTermInf.setNodno(nodno);
+		List<GdeupsInvTermInf> gdeupsInvTermInfs = get(GdeupsInvTermInfRepository.class).find(gdeupsInvTermInf);
+		if(CollectionUtils.isEmpty(gdeupsInvTermInfs)){
 			//TODO:当前终端无凭证
 			throw new CoreException(GDErrorCodes.EUPS_PROF00_04_ERROR);
 		}
-		eupsInvTermInf = eupsInvTermInfs.get(0);
-		if(Integer.parseInt(eupsInvTermInf.getInvnum())!=0){
+		gdeupsInvTermInf = gdeupsInvTermInfs.get(0);
+		if(Integer.parseInt(gdeupsInvTermInf.getInvNum())!=0){
 			//TODO:剩余发票，不能结算
 			throw new CoreException(GDErrorCodes.EUPS_PROF00_10_ERROR);
 		}
-		EupsInvDtlBok eupsInvDtlBok = new EupsInvDtlBok();
-		eupsInvDtlBok.setInvtyp(invTyp);
-		eupsInvDtlBok.setIvbegno(eupsInvTermInf.getIvbegno());
-		eupsInvDtlBok.setIvendno(eupsInvTermInf.getIvendno());
-		eupsInvDtlBok.setStatus("2");
-		eupsInvDtlBok.setUsenum(eupsInvTermInf.getUsenum());
-		eupsInvDtlBok.setClrnum(eupsInvTermInf.getClrnum());
-		eupsInvDtlBok.setChkdat(DateUtils.formatAsSimpleDate(new Date()));
-		get(EupsInvDtlBokRepository.class).updateCheck(eupsInvDtlBok);
+		GdeupsInvDtlBok gdeupsInvDtlBok = new GdeupsInvDtlBok();
+		gdeupsInvDtlBok.setInvTyp(invTyp);
+		gdeupsInvDtlBok.setIvBegNo(gdeupsInvTermInf.getIvBegNo());
+		gdeupsInvDtlBok.setIvEndNo(gdeupsInvTermInf.getIvEndNo());
+		gdeupsInvDtlBok.setStatus("2");
+		gdeupsInvDtlBok.setUseNum(gdeupsInvTermInf.getUseNum());
+		gdeupsInvDtlBok.setClrNum(gdeupsInvTermInf.getClrNum());
+		gdeupsInvDtlBok.setChkDat(DateUtils.formatAsSimpleDate(new Date()));
+		get(GdeupsInvDtlBokRepository.class).updateCheck(gdeupsInvDtlBok);
 		
-		get(EupsInvTermInfRepository.class).deleteInvTermInf(eupsInvTermInf);
+		get(GdeupsInvTermInfRepository.class).deleteInvTermInf(gdeupsInvTermInf);
 		
-		context.setData("useDat", eupsInvTermInf.getUsedat());
-		context.setData("useNum", eupsInvTermInf.getUsenum());
-		context.setData("clrNum", eupsInvTermInf.getClrnum());
+		context.setData("useDat", gdeupsInvTermInf.getUseDat());
+		context.setData("useNum", gdeupsInvTermInf.getUseNum());
+		context.setData("clrNum", gdeupsInvTermInf.getClrNum());
 		context.setData("actDat", DateUtils.formatAsSimpleDate(new Date()));
-		context.setData("ivBegNo", eupsInvTermInf.getIvbegno());
+		context.setData("ivBegNo", gdeupsInvTermInf.getIvBegNo());
 		logger.info("InvoiceCheckManagerServiceActionPROF00 end ... ...");
 	}
 

@@ -8,10 +8,11 @@ import org.slf4j.LoggerFactory;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
-import com.bocom.bbip.gdeupsb.entity.EupsInvTermInf;
-import com.bocom.bbip.gdeupsb.entity.EupsInvTxnInf;
-import com.bocom.bbip.gdeupsb.repository.EupsInvTermInfRepository;
-import com.bocom.bbip.gdeupsb.repository.EupsInvTxnInfRepository;
+import com.bocom.bbip.gdeupsb.entity.GdeupsInvTermInf;
+import com.bocom.bbip.gdeupsb.entity.GdeupsInvTxnInf;
+import com.bocom.bbip.gdeupsb.repository.GdeupsInvTermInfRepository;
+import com.bocom.bbip.gdeupsb.repository.GdeupsInvTxnInfRepository;
+import com.bocom.bbip.thd.org.apache.commons.collections.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -40,17 +41,17 @@ public class InvoiceUseManagerServiceActionPROF00 extends BaseAction  {
 				context.getData("oldSeq")+"]oldTrdate:["+
 				context.getData("oldTrdate")+"]");
 		
-		EupsInvTermInf  eupsInvTermInf = new EupsInvTermInf();
-		eupsInvTermInf.setTlrid(context.getData("tlr").toString());
-		List<EupsInvTermInf> eupsInvTermInfs = get(EupsInvTermInfRepository.class).find(eupsInvTermInf);
-		if(eupsInvTermInfs==null||eupsInvTermInfs.size()==0){
+		GdeupsInvTermInf  gdeupsInvTermInf = new GdeupsInvTermInf();
+		gdeupsInvTermInf.setTlrId(context.getData("tlr").toString());
+		List<GdeupsInvTermInf> eupsInvTermInfs = get(GdeupsInvTermInfRepository.class).find(gdeupsInvTermInf);
+		if(CollectionUtils.isEmpty(eupsInvTermInfs)){
 			//TODO:当前终端无凭证信息
 			throw new CoreException(GDErrorCodes.EUPS_PROF00_04_ERROR);
 		}
-		eupsInvTermInf = eupsInvTermInfs.get(0);
-		String invNum = eupsInvTermInf.getInvnum();//可用发票数
-		String useNum = eupsInvTermInf.getUsenum();//已用发票数
-		String clrNum = eupsInvTermInf.getClrnum();//作废发票数
+		gdeupsInvTermInf = eupsInvTermInfs.get(0);
+		String invNum = gdeupsInvTermInf.getInvNum();//可用发票数
+		String useNum = gdeupsInvTermInf.getUseNum();//已用发票数
+		String clrNum = gdeupsInvTermInf.getClrNum();//作废发票数
 		
 		if(Integer.parseInt(invNum)<1){
 			//TODO:凭证不足
@@ -61,26 +62,26 @@ public class InvoiceUseManagerServiceActionPROF00 extends BaseAction  {
 		invNum = (Integer.parseInt(invNum)-1)+"";
 		useNum = (Integer.parseInt(useNum)+1)+"";
 		String useSeq = (Integer.parseInt(useNum)+Integer.parseInt(clrNum))+"";
-		EupsInvTermInf eupsInvTermInftmp = new EupsInvTermInf();
-		eupsInvTermInftmp.setTlrid(context.getData("tlr").toString());
-		eupsInvTermInftmp.setInvnum(invNum);
-		eupsInvTermInftmp.setUsenum(useNum);
-		get(EupsInvTermInfRepository.class).updateNum(eupsInvTermInftmp);
+		GdeupsInvTermInf gdeupsInvTermInftmp = new GdeupsInvTermInf();
+		gdeupsInvTermInftmp.setTlrId(context.getData("tlr").toString());
+		gdeupsInvTermInftmp.setInvNum(invNum);
+		gdeupsInvTermInftmp.setUseNum(useNum);
+		get(GdeupsInvTermInfRepository.class).updateNum(gdeupsInvTermInftmp);
 		//TODO:登记发票交易信息表
-		EupsInvTxnInf eupsInvTxnInf = new EupsInvTxnInf();
-		eupsInvTxnInf.setInvtyp(invTyp);
-		eupsInvTxnInf.setIvbegno(eupsInvTermInf.getIvbegno());
-		eupsInvTxnInf.setIvendno(eupsInvTermInf.getIvendno());
-		eupsInvTxnInf.setUseseq(useSeq);
-		eupsInvTxnInf.setStlnum(stlNum);
-		eupsInvTxnInf.setStlflg(stlFlg);
-		eupsInvTxnInf.setActdat(DateUtils.formatAsSimpleDate(new Date()));
-		eupsInvTxnInf.setTlrid(eupsInvTermInf.getTlrid());
-		eupsInvTxnInf.setNodno(eupsInvTermInf.getNodno());
-		eupsInvTxnInf.setQyno(qyNo);
-		eupsInvTxnInf.setOldseq(oldSeq);
-		eupsInvTxnInf.setOldtrdate(oldTrdate);
-		get(EupsInvTxnInfRepository.class).insert(eupsInvTxnInf);
+		GdeupsInvTxnInf gdeupsInvTxnInf = new GdeupsInvTxnInf();
+		gdeupsInvTxnInf.setInvTyp(invTyp);
+		gdeupsInvTxnInf.setIvBegNo(gdeupsInvTermInf.getIvBegNo());
+		gdeupsInvTxnInf.setIvEndNo(gdeupsInvTermInf.getIvEndNo());
+		gdeupsInvTxnInf.setUseSeq(useSeq);
+		gdeupsInvTxnInf.setStlNum(stlNum);
+		gdeupsInvTxnInf.setStlFlg(stlFlg);
+		gdeupsInvTxnInf.setActDat(DateUtils.formatAsSimpleDate(new Date()));
+		gdeupsInvTxnInf.setTlrId(gdeupsInvTermInf.getTlrId());
+		gdeupsInvTxnInf.setNodno(gdeupsInvTermInf.getNodno());
+		gdeupsInvTxnInf.setQyNo(qyNo);
+		gdeupsInvTxnInf.setOldSeq(oldSeq);
+		gdeupsInvTxnInf.setOldTrDate(oldTrdate);
+		get(GdeupsInvTxnInfRepository.class).insert(gdeupsInvTxnInf);
 		context.setData("seqNo", useSeq);
 		context.setData("actDat", DateUtils.formatAsSimpleDate(new Date()));
 		logger.info("InvoiceUseManagerServiceActionPROF00 end ... ...");

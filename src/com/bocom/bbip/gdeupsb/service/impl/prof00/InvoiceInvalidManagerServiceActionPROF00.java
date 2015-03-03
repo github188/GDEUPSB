@@ -8,10 +8,10 @@ import org.slf4j.LoggerFactory;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
-import com.bocom.bbip.gdeupsb.entity.EupsInvTermInf;
-import com.bocom.bbip.gdeupsb.entity.EupsInvTxnInf;
-import com.bocom.bbip.gdeupsb.repository.EupsInvTermInfRepository;
-import com.bocom.bbip.gdeupsb.repository.EupsInvTxnInfRepository;
+import com.bocom.bbip.gdeupsb.entity.GdeupsInvTermInf;
+import com.bocom.bbip.gdeupsb.entity.GdeupsInvTxnInf;
+import com.bocom.bbip.gdeupsb.repository.GdeupsInvTermInfRepository;
+import com.bocom.bbip.gdeupsb.repository.GdeupsInvTxnInfRepository;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -36,41 +36,41 @@ public class InvoiceInvalidManagerServiceActionPROF00 extends BaseAction  {
 			//TODO:凭证数量为0
 			throw new CoreException(GDErrorCodes.EUPS_PROF00_07_ERROR);
 		}
-		EupsInvTermInf eupsInvTermInf = new EupsInvTermInf();
-		eupsInvTermInf.setTlrid(context.getData("tlr").toString());
-		List<EupsInvTermInf> eupsInvTermInfs = get(EupsInvTermInfRepository.class).find(eupsInvTermInf);
+		GdeupsInvTermInf gdeupsInvTermInf = new GdeupsInvTermInf();
+		gdeupsInvTermInf.setTlrId(context.getData("tlr").toString());
+		List<GdeupsInvTermInf> eupsInvTermInfs = get(GdeupsInvTermInfRepository.class).find(gdeupsInvTermInf);
 		if(eupsInvTermInfs==null||eupsInvTermInfs.size()==0){
 			//TODO:当前终端没有凭证
 			throw new CoreException(GDErrorCodes.EUPS_PROF00_04_ERROR);
 		}
-		eupsInvTermInf = eupsInvTermInfs.get(0);
-		if(Integer.parseInt(stlNum)>Integer.parseInt(eupsInvTermInf.getInvnum())){
+		gdeupsInvTermInf = eupsInvTermInfs.get(0);
+		if(Integer.parseInt(stlNum)>Integer.parseInt(gdeupsInvTermInf.getInvNum())){
 			//TODO:作废发票数大于剩余发票数
 			throw new CoreException(GDErrorCodes.EUPS_PROF00_08_ERROR);
 		}
 		String stlFlg = "1";
-		String useSeq = Integer.parseInt(eupsInvTermInf.getUsenum())+
-				Integer.parseInt(eupsInvTermInf.getClrnum())+1+"";
-		String invNum = Integer.parseInt(eupsInvTermInf.getInvnum())-Integer.parseInt(stlNum)+"";
-		String clrNum = Integer.parseInt(eupsInvTermInf.getClrnum())+Integer.parseInt(stlNum)+"";
-		EupsInvTermInf eupsInvTermInftmp = new EupsInvTermInf();
-		eupsInvTermInftmp.setInvnum(invNum);
-		eupsInvTermInftmp.setClrnum(clrNum);
-		eupsInvTermInftmp.setTlrid(eupsInvTermInf.getTlrid());
-		eupsInvTermInftmp.setNodno(eupsInvTermInf.getNodno());
-		get(EupsInvTermInfRepository.class).updateInvalidNum(eupsInvTermInftmp);
+		String useSeq = Integer.parseInt(gdeupsInvTermInf.getUseNum())+
+				Integer.parseInt(gdeupsInvTermInf.getClrNum())+1+"";
+		String invNum = Integer.parseInt(gdeupsInvTermInf.getInvNum())-Integer.parseInt(stlNum)+"";
+		String clrNum = Integer.parseInt(gdeupsInvTermInf.getClrNum())+Integer.parseInt(stlNum)+"";
+		GdeupsInvTermInf gdeupsInvTermInftmp = new GdeupsInvTermInf();
+		gdeupsInvTermInftmp.setInvNum(invNum);
+		gdeupsInvTermInftmp.setClrNum(clrNum);
+		gdeupsInvTermInftmp.setTlrId(gdeupsInvTermInf.getTlrId());
+		gdeupsInvTermInftmp.setNodno(gdeupsInvTermInf.getNodno());
+		get(GdeupsInvTermInfRepository.class).updateInvalidNum(gdeupsInvTermInftmp);
 		
-		EupsInvTxnInf eupsInvTxnInf = new EupsInvTxnInf();
-		eupsInvTxnInf.setInvtyp(invTyp);
-		eupsInvTxnInf.setIvbegno(eupsInvTermInf.getIvbegno());
-		eupsInvTxnInf.setIvendno(eupsInvTermInf.getIvendno());
-		eupsInvTxnInf.setUseseq(useSeq);
-		eupsInvTxnInf.setStlnum(stlNum);
-		eupsInvTxnInf.setStlflg(stlFlg);
-		eupsInvTxnInf.setActdat(DateUtils.formatAsSimpleDate(new Date()));
-		eupsInvTxnInf.setTlrid(eupsInvTermInf.getTlrid());
-		eupsInvTxnInf.setNodno(eupsInvTermInf.getNodno());
-		get(EupsInvTxnInfRepository.class).insert(eupsInvTxnInf);
+		GdeupsInvTxnInf gdeupsInvTxnInf = new GdeupsInvTxnInf();
+		gdeupsInvTxnInf.setInvTyp(invTyp);
+		gdeupsInvTxnInf.setIvBegNo(gdeupsInvTermInf.getIvBegNo());
+		gdeupsInvTxnInf.setIvEndNo(gdeupsInvTermInf.getIvEndNo());
+		gdeupsInvTxnInf.setUseSeq(useSeq);
+		gdeupsInvTxnInf.setStlNum(stlNum);
+		gdeupsInvTxnInf.setStlFlg(stlFlg);
+		gdeupsInvTxnInf.setActDat(DateUtils.formatAsSimpleDate(new Date()));
+		gdeupsInvTxnInf.setTlrId(gdeupsInvTermInf.getTlrId());
+		gdeupsInvTxnInf.setNodno(gdeupsInvTermInf.getNodno());
+		get(GdeupsInvTxnInfRepository.class).insert(gdeupsInvTxnInf);
 		logger.info("InvoiceInvalidManagerServiceActionPROF00 end ... ...");
 	}
 
