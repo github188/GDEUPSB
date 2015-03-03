@@ -396,7 +396,7 @@ public final class GDErrorCodes {
 
 	/*************************公共汽车***********************/
 	/**0	成功*/
-	public static final String EUPS_VECH00_0_ERROR="BBIP4400EU08000";
+	public static final String EUPS_VECH00_0_ERROR="BBIP4400EU0800";
 	/**	系统异常*/
 	public static final String EUPS_VECH00_99_ERROR="BBIP4400EU0899";
 	/**	签名验证失败*/
