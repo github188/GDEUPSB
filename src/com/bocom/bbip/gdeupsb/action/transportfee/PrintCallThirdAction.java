@@ -58,6 +58,7 @@ public class PrintCallThirdAction extends BaseAction{
 
 			ctx.setData(ParamKeys.RSP_CDE, ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
 			ctx.setData(ParamKeys.RSP_MSG, "路桥方交易超时");
+			//TODO:此处throw待考虑是否放开
 //			throw new CoreRuntimeException( ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
 		}else if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_TRANS_FAIL)){
 			ctx.setData(GDParamKeys.TXN_ST, "X");
