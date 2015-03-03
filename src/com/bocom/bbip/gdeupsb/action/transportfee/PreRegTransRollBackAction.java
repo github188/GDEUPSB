@@ -47,6 +47,7 @@ public class PreRegTransRollBackAction extends BaseAction{
 		}else{
 			ctx.setDataMap(BeanUtils.toMap(txnJnlList.get(0)));
 		}
+		//TODO:for test！！！！！！不能直接用.equals判断date类型是否相同
 		if(!toDay.equals(ctx.getData(GDParamKeys.ACT_DAT))){
 			ctx.setData(ParamKeys.RSP_MSG, "该笔交易帐务日期与此时帐务日期不等，不能交易");
 			throw new CoreRuntimeException(GDErrorCodes.DATE_ERROR);
