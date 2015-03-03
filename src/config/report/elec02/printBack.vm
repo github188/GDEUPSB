@@ -1,0 +1,24 @@
+#report(45)
+#rh(10)
+                                                                               业务    名称：代收付业务                       业务    种类：电力缴费
+
+
+付款人   帐号：$str.trim($d.actNo)
+付款人   名称：$str.trim($d.actNm)
+
+
+
+收款人   帐号：$str.trim($d.IActNo)
+收款人   名称：$str.trim($d.IActNm)
+
+
+交易       币种：$str.trim($d.tlr)                    交易    金额：$num.fmt($num.parse($str.trim($d.txnAmt)),'0,000.00')
+交易金额大写：$str.amountInWords($str.trim($d.txnAmt))
+摘               要：代收电费 $str.trim($d.tlr)
+
+入帐         日期：$f.fmt($currentTime,'yyyy-MM-dd')      入帐    柜员：$str.trim($d.tlr)                          入帐流水号：$str.trim($d.tlr)
+打印         日期：$f.fmt($currentTime,'yyyy-MM-dd')      打印    柜员：$str.trim($d.tlr)                          打印     机构：$str.trim($d.br)
+
+
+#end
+#end
