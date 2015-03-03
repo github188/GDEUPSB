@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+    encoding="gbk" trace="true">
+	<segment name="detail" encoding="GBK">
+      <varString name="cusAc"   type="D|" />    <!-- 帐号 -->
+      <varString name="thdCusNme"   type="D|" expression='exp:str.trim($c.thdCusNme)'/>    <!-- 客户名称 -->
+      <varString name="txnAmt"   type="D|"  />   <!-- 来盘金额元为单位，含小数点 -->
+      <varString name="rsvFld1"       type="X"  />    <!-- 保单号 -->
+      
+			
+			
+
+	</segment>
+</message>
+

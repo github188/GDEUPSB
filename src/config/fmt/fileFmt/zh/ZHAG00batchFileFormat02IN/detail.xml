@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+    encoding="gbk" trace="true">
+	<segment name="detail" encoding="GBK">
+      <fixString name="cusAc"   length="21" />    <!-- 帐号 -->
+      <fixString name="rsvFld1"       length="1" />     <!-- 收付标志 -->
+      <fixString name="txnAmt"   length="15" />   <!-- 来盘金额元为单位，含小数点 -->
+      <fixString name="rsvFld2"       length="28" />    <!-- 其他 -->
+      <fixString name="rsvFld3"       length="15" />    <!-- 其他 -->
+      <fixString name="rsvFld4"   length="1"  />    <!-- 标识,1-成功,2-失败 -->
+			
+
+	</segment>
+</message>
+

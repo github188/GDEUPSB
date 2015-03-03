@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+    encoding="gbk" trace="true">
+	<segment name="header" encoding="gbk">
+	  <fixString name="rsvFld1"       length="2" />   <!--交易码，来盘为73-->
+      <fixString name="rsvFld2"       length="3" />   <!--银行代号-->
+      <fixString name="totCnt"       length="8" />   <!--记录条数-->
+      <fixString name="rsvFld3"       length="16"/>   <!--交易流水号-->
+      <fixString name="rsvFld4"       length="8" />   <!--营业日期-->
+      <fixString name="totAmt"       length="14"/>   <!--应扣费总额，金额元为单位，含小数点-->
+			
+		
+	</segment>
+</message>
+

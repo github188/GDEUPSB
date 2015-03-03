@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+    encoding="gbk" trace="true">
+	<segment name="detail" encoding="GBK">
+      <fixString name="cusAc"   length="23" />    <!-- 帐号 -->
+      <fixString name="rsvFld1"  length="1"  />
+      <fixString name="txnAmt"   length="12"  expression='exp:str.leftPad(num.centToYuanAsString(this.txnAmt),12," ")'/>   <!-- 来盘金额元为单位，含小数点 -->
+      <fixString name="thdCusNme"  length="60" expression='exp:str.leftPad(this.thdCusNme,60," ")' />	   
+	  <fixString name="SucFlg"   length="1"  />	
+
+	</segment>
+</message>
+

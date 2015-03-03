@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+    encoding="gbk" trace="true">
+	<segment name="detail" encoding="GBK">
+	 <fixString name="rsvFld1"   length="10" /> 
+      <fixString name="rsvFld2"   length="20" /> 
+		<fixString name="rsvFld3"   length="5" /> 	
+	  <fixString name="rsvFld4"   length="5" />    
+      <fixString name="thdCusNme"   length="14" />        
+      <fixString name="rsvFld5"   length="14" />
+      <fixString name="txnAmt"   length="12" expression='exp:str.leftPad(this.txnAmt,12," ")'/>
+      <fixString name="sqn"   length="32"  /> 
+      <fixString name="cusAc"   length="40" expression='exp:str.leftPad(this.cusAc,40," ")'/>   
+      <fixString name="ActDat"   length="14"  /> 
+      <fixString name="SucFlg"   length="1"  /> <!-- 标识 0成功，1余额不足，2帐户冻结，3帐户错，4其他 -->
+	</segment>
+</message>
+

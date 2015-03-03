@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+    encoding="gbk" trace="true">
+	<segment name="header" encoding="gbk">
+	 <fixString name="rsvFld1"       length="10" />   <!-- 话费年月 -->
+      <fixString name="rsvFld2"       length="5" />   <!-- 生成日期 -->
+      
+	<fixString name="STotCnt"  expression='exp:str.leftPad(this.STotCnt,10," ")' />   <!-- 批扣成功记录数 -->
+      <fixString name="STotAmt"  expression='exp:str.leftPad(this.STotAmt,14," ")' />   <!-- 返盘金额元为单位，含小数点-->
+      <fixString name="FTotCnt"  expression='exp:str.leftPad(this.FTotCnt,10," ")' />   <!-- 批扣失败记录数 -->
+      <fixString name="FTotAmt"  expression='exp:str.leftPad(this.FTotAmt,14," ")' />   <!-- 返盘金额元为单位，含小数点-->
+	</segment>
+</message>
+

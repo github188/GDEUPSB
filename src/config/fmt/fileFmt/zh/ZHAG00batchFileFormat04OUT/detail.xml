@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+    encoding="gbk" trace="true">
+	<segment name="detail" encoding="GBK">
+	
+	
+     <fixString name="rsvFld1"  length="5"  />
+      <fixString name="thdCusNme"  length="20" expression='exp:str.leftPad($c.thdCusNme,20," ")' />
+      <fixString name="rsvFld2"  length="14"  />
+      <fixString name="rsvFld3"  length="14"  />
+      <fixString name="rsvFld4"  length="14"  />
+      <fixString name="txnAmt"   length="15"  expression='exp:str.leftPad($c.txnAmt,15," ")'/>   
+      <fixString name="rsvFld5"  length="15"  />
+	  <fixString name="cusAc"   length="30" expression='exp:str.leftPad($c.cusAc,30," ")'/>	
+
+
+     <fixString name="ActDat"   length="14" />    <!-- 会计日期 -->
+      <fixString name="txnAmt"   length="15" />
+      <fixString name="SucFlg"   length="1"  />   
+	</segment>
+</message>
+

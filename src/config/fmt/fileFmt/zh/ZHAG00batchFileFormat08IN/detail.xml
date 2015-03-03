@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+    encoding="gbk" trace="true">
+	<segment name="detail" encoding="GBK">
+      <fixString name="cusAc"   length="21" />    <!-- 帐号 -->
+      <fixString name="rsvFld1"   length="1" /> 
+      <fixString name="txnAmt"   length="15"  />   <!-- 来盘金额元为单位，含小数点 -->
+      <fixString name="thdCusNo"  length="30"  expression='exp:str.trim($c.thdCusNme)'/>    
+      
+			
+			
+
+	</segment>
+</message>
+

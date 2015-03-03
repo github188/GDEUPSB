@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+    encoding="gbk" trace="true">
+	<segment name="header" encoding="gbk">
+	  <varString name="rsvFld1"       type="D|" />   <!-- 协议编号 -->
+      <varString name="totCnt"       type="D|" />   <!-- 总笔数 -->
+      <varString name="totAmt"       type="D|"  />   <!-- 总金额 -->
+	 <varString name="stotAmt"       type="X"  />   <!-- 总金额 -->	
+		
+	</segment>
+</message>
+

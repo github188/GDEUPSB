@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+    encoding="gbk" trace="true">
+	<segment name="detail" encoding="GBK">
+       <Item name="HLogNo"   length="16" />    <!-- 银行流水号 -->
+      <Item name="TlrId"    length="5"  />    <!-- 操作员号 -->
+      <Item name="ActDat"   length="8"  />    <!-- 银行入帐日期 -->
+      <Item name="TrTime"   length="6"  />    <!-- 收费时间 -->
+      <Item name="rsvFld1"       length="8"  />    <!-- 供电公司编号 -->
+      <Item name="thdCusNo"   length="15" />    <!-- 户号 -->
+      <Item name="rsvFld2"       length="6"  />    <!-- 电费月份 -->
+      <Item name="rsvFld3"       length="2"  />    <!-- 电费次数 -->
+      <Item name="txnAmt"   length="12" expression='exp:str.leftPad(num.centToYuanAsString(this.txnAmt),12," ")'/>    <!-- 欠费总额，金额元为单位，含小数点，右补空格 -->
+      <Item name="cusAc"   length="32" expression='exp:str.leftPad(this.cusAc),32," ")'/>    <!-- 客户帐号 -->
+      <Item name="thdCusNme"   length="32" expression='exp:str.leftPad(this.thdCusNme),32," ")'/>    <!-- 客户帐户名称 -->
+      <Item name="SucFlg"   length="1"  />    <!-- 标识 1成功，2余额不足，3帐户不符，4帐户已销，5坏帐号及其他 -->
+      <Item name="rsvFld5"       length="32" />    <!-- 供电公司在银行开户帐号 -->
+      <Item name="rsvFld6"       length="5" />     <!-- 供电公司计量点号 -->
+      <Item name="rsvFld7"       length="16" />    <!-- 供电公司应收凭证号 -->
+      
+			
+			
+
+	</segment>
+</message>
+
