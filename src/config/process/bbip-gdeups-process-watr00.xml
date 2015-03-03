@@ -70,6 +70,7 @@
 	        <action id="act" ref="eups.sendBatchResultServiceActionWATR00"/>
 	   </actions>
 	</process>
+	
 	<!-- 第三方发起批量扣款请求，该交易与D013相同 -->
 	<process id="D008" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
 	   <actions>
