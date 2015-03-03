@@ -860,4 +860,44 @@
       </foreach>
     </if>
   </select>
+  
+  
+ <select id="qryLotWinRecord" parameterType="java.util.Map" resultType="java.util.Map" >
+			select a.T_Log_No, a.Draw_Id, a.Keno_Id, a.Play_Id,a.Bet_Mul, a.Bet_Lin, a.Bet_Mod, b.Tot_Prz, a.Txn_Tim, a.Txn_Log
+			from GDEUPSB.GDEUPS_Lot_Prz_Ctl b, GDEUPSB.GDEUPS_Lot_Txn_Jnl a
+			<where>
+				<choose>
+				 <when test='betTyp != ""'>
+				 	a.Game_Id=b.Game_Id and a.Draw_Id=b.Draw_Id and a.Keno_Id=b.Keno_Id and a.Txn_Log=b.Txn_Log and a.T_Log_No=b.TLogNo and Crd_No=#{crdNo} and Bet_Dat between #{begDat} and #{endDat} and Bet_Typ=#{betTyp} and Txn_Sts='S' and a.Game_Id=#{gameId}
+				 </when>
+				 <otherwise>
+				 	a.Game_Id=b.Game_Id and a.Draw_Id=b.Draw_Id and a.Keno_Id=b.Keno_Id and a.Txn_Log=b.Txn_Log and a.T_Log_No=b.TLogNo and Crd_No=#{crdNo} and Bet_Dat between #{begDat} and #{endDat}  and Txn_Sts='S' and a.Game_Id=#{gameId}
+				 </otherwise>
+				</choose>
+			</where>
+			order by Txn_Tim desc
+ </select>
+ 			
+  
+  
+  <select id="qryLotTxnJnl"  parameterType="map" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from GDEUPSB.GDEUPS_Lot_Txn_Jnl
+     <where>
+        <choose>
+          <when test="betTyp !=null and betTyp != ''">
+             Crd_No=#{crdNo} AND Bet_Typ=#{betTyp} AND Bet_Dat between #{begDat} and #{endDat} AND Txn_Sts='S'
+          </when>
+          <otherwise>
+             Crd_No=#{crdNo} AND Bet_Dat between #{begDat} and #{endDat} AND Txn_Sts='S'
+         </otherwise>
+        </choose>
+     </where>
+     order by Txn_Tim desc
+  </select>
+  
+  
+  
+  
 </mapper>
