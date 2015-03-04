@@ -32,7 +32,7 @@ public class AutomaticCancelServiceActionWATR00 implements	AutomaticCancelServic
 	public Map<String, Object> preCancel(CancelDomain canceldomain,Context context) throws CoreException {
 		logger.info("AutomaticCancelServiceActionWATR00 preCancel  start ... ...");
 		// TODO :第三方抹帐前报文接口字段处理
-		context.setData("type", "Y002");
+		context.setData("type", "Y003");
 		context.setData("accountdate", DateUtils.format((Date)context.getData(ParamKeys.AC_DATE), DateUtils.STYLE_yyyyMMdd));
 		
 		StepSequenceFactory s = context.getService("logNoService");

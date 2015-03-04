@@ -53,6 +53,7 @@ public class QueryJournalOffChanServiceActionWATR00 extends BaseAction {
 		String cusAc = eupsTransJournal.getCusAc();
 		logger.info("oldTxnSqn["+oldTxnSqn+"]thdCusNo["+thdCusNo+"]thdCusNme["+thdCusNme+"]txnSts["+txnSts+"]txnTlr["+txnTlr+"]" +
 				"txnAmt["+txnAmt+"]txnTme["+txnTme+"]comNo["+comNo+"]cusAc["+cusAc+"]");
+		context.setData("oldTxnSqn", oldTxnSqn);
 		context.setDataMap(BeanUtils.toMap(eupsTransJournal));
 		logger.info("QueryJournalOffChanServiceActionWATR00 end ... ...");
 	}
