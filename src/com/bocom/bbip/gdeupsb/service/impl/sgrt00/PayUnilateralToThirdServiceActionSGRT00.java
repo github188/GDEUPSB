@@ -42,7 +42,7 @@ public class PayUnilateralToThirdServiceActionSGRT00 implements PayUnilateralToT
         context.setData("bk", context.getData("BANK_ID"));
         context.setData("dptId", context.getData("DPT_ID"));
         //上面公共报文头，下面报文体
-        context.setData("custId", context.getData("CUST_ID"));
+        context.setData(ParamKeys.THD_CUSTOMER_NO, context.getData("CUST_ID"));
         context.setData("tCusNm", context.getData("CUST_NAME"));
         context.setData("cusTyp", context.getData("CUST_TYPE"));
         context.setData("pasId", context.getData("PASS_ID"));
