@@ -12,7 +12,6 @@ import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.spi.service.single.PayUnilateralToBankService;
 import com.bocom.bbip.eups.spi.vo.CommHeadDomain;
 import com.bocom.bbip.eups.spi.vo.PayFeeOnlineDomain;
-import com.bocom.bbip.gdeupsb.action.tbc.FindClientRemainingMoney;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.bbip.service.Result;
 import com.bocom.jump.bp.core.Context;
@@ -27,7 +26,7 @@ import com.bocom.jump.bp.core.CoreException;
  */
 public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBankService{
 
-    private final static Logger log = LoggerFactory.getLogger(FindClientRemainingMoney.class);
+    private final static Logger log = LoggerFactory.getLogger(PayUnilateralToBankServiceActionSGRT00.class);
     
     @Autowired
     BGSPServiceAccessObject serviceAccess;

@@ -33,7 +33,7 @@ public class QryClearAccountAction extends BaseAction {
     public void execute(Context context) throws CoreException {
         log.info("QryClearAccount Action start!");
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
-        context.setData(ParamKeys.COMPANY_NO, context.getData("dptId")); //TODO dptId转换 comNo
+        context.setData(ParamKeys.COMPANY_NO, context.getData("dptId")); 
         //检查清算分行与选择清算单位是否一致
         String bankNo = context.getData(ParamKeys.BK).toString().substring(0,3);
         String dptId = context.getData("cAgtNo").toString().substring(0,3);
