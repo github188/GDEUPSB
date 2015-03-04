@@ -24,6 +24,9 @@ public class HScardSignOutAction extends BaseAction {
 		context.setData(ParamKeys.TXN_TYP, Constants.SIGN_SET_TYPE_SIGNOUT);
 		Assert.hasLengthInData(context, ParamKeys.COMPANY_NO, ErrorCodes.EUPS_FIELD_EMPTY, "单位编号");
 		Assert.hasLengthInData(context, ParamKeys.TXN_TYP, ErrorCodes.EUPS_FIELD_EMPTY, "交易状态");
+		
+		String DCC_ID_NO = context.getData("DCC_ID_NO").toString().trim();
+		context.setData("DCC_ID_NO", DCC_ID_NO);
 
 		EupsThdTranCtlInfo eupsThdTranCtlInfo = BeanUtils.toObject(context.getDataMap(), EupsThdTranCtlInfo.class);
 		EupsThdTranCtlInfo resultThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(eupsThdTranCtlInfo.getComNo());
