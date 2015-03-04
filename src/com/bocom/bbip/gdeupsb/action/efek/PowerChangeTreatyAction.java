@@ -48,7 +48,7 @@ public class PowerChangeTreatyAction extends BaseAction{
 			
 			Result comResult= get(BGSPServiceAccessObject.class).callServiceFlatting("queryCorporInfo",comMap);
 			//判断是否签约   conSign=2
-			if(!CollectionUtils.isEmpty(comResult.getPayload()) && conSign.equals("1")){
+			if(!CollectionUtils.isEmpty(comResult.getPayload()) && conSign.equals("2")){
 					context.setData(ParamKeys.BANK_NO, context.getData(GDParamKeys.NEWBANKNO));
 					context.setData(ParamKeys.CUS_AC, context.getData(GDParamKeys.NEWCUSAC));
 					context.setData(GDParamKeys.CUSACNAME, context.getData(GDParamKeys.NEWCUSACNAME));
