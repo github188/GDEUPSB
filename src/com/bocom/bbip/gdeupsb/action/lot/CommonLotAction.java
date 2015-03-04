@@ -184,7 +184,6 @@ public class CommonLotAction extends BaseAction{
                 throw new CoreException("更新轧差失败["+lotDrwTbl.getGameId()+"-"+lotDrwTbl.getDrawId()+"]");
             }
         }
-
     }
 
 	public void fileImport(Context context) throws CoreException {
@@ -234,9 +233,7 @@ public class CommonLotAction extends BaseAction{
 				tmp.setTxnLog((String)temp.get("txnLog"));
 			}
 			((SqlMap)get("sqlMap")).insert("com.bocom.bbip.gdeupsb.entity.GdLotPrzDtl.LotDtlBatchInsert", dtlList);
-
 		}
-		
 	}
     @SuppressWarnings("unchecked")
     public void fileImport3(Context context)throws CoreException{
@@ -267,7 +264,6 @@ public class CommonLotAction extends BaseAction{
 			List<GdLotChkDtl>dtlList=(List<GdLotChkDtl>) BeanUtils.toObjects(
 					(List<Map<String,Object>>)context.getData("scheme"), GdLotChkDtl.class);
 			((SqlMap)get("sqlMap")).insert("com.bocom.bbip.gdeupsb.entity.GdLotChkDtl.LotDtlBatchInsert", dtlList);
-
 		}
 	}
     /**
