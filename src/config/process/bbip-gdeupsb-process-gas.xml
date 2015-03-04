@@ -6,7 +6,7 @@
 
 
 	<!-- 惠州燃气用户协议维护 -->
-	<process id="gdeupsb.oprGasCusAgentAction" template="eups.simpleTran"
+	<process id="gdeupsb.oprGasCusAgent" template="eups.simpleTran"
 		interceptors="eups.transMessageInterceptor">
 		<actions>
 			<action id="act" ref="oprGasCusAgentAction" />
@@ -57,7 +57,7 @@
 
 
 	<!-- 惠州燃气代扣流水信息查询 -->
-	<process id="gdeupsb.qryHzThdJnlInfoAction" template="eups.simpleTran"
+	<process id="gdeupsb.qryHzThdJnlInfo" template="eups.simpleTran"
 		interceptors="eups.transMessageInterceptor">
 		<actions>
 			<action id="act" ref="qryHzThdJnlInfoAction" />
@@ -65,7 +65,7 @@
 	</process>
 
 	<!-- 惠州燃气代扣用户信息查询 -->
-	<process id="gdeupsb.qryHzThdCusInfoAction" template="eups.simpleTran"
+	<process id="gdeupsb.qryHzThdCusInfo" template="eups.simpleTran"
 		interceptors="eups.transMessageInterceptor">
 		<actions>
 			<action id="act" ref="qryHzThdCusInfoAction" />
