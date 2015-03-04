@@ -675,7 +675,47 @@ public class GDParamKeys {
 	public static final String  RESP_DESC= "respDesc";
 	/**返回时间*/
 	public static final String  RESP_TIME= "respTime";
-
+	/**票源客运站编码 */
+	public static final String  DEPOT= "depot";
+	/** 班次（或者线路）编号*/
+	public static final String  NO= "no";
+	/**班次（或者线路）名称 */
+	public static final String  LINE_NAME= "lineName";
+	/**班次时间 */
+	public static final String  LINE_TIME= "time";
+	/**班次性质 */
+	public static final String  LINE_NATURE= "lineNature";
+	/**班次类别*/
+	public static final String  LINE_TYPE= "lineType";
+	/**营运方式*/
+	public static final String  TRANSPORT_TYPE= "transportType";
+	/**班次档次 */
+	public static final String  LINE_LEVEL= "lineLevel";
+	/**到站站点编码 */
+	public static final String  STATION_ARRIVE_CODE= "StCode";
+	/**到站站点名称 */
+	public static final String  STATION_ARRIVE= "Station";
+	/**终点站点名称 */
+	public static final String  STATION_FINAL= "stationFinal";
+	/**发车区域名称 */
+	public static final String  AREA= "area";
+	/**剩余票数，返回剩余的车票数量 */
+	public static final String  TICKET_NO= "ticketNo";
+	/**上车客运站编码  */
+	public static final String  STATION_GET_ON= "stationGetOn";
+	/**班次所属客运站编码  */
+	public static final String  OWNER_DEPOT= "ownerdepot";
+	/** 备注*/
+	public static final String  REMARK= "remark";
+	/** 商户编号*/
+	public static final String  STORE_NO= "storeNo";
+	/** 终端编号*/
+	public static final String  TERMINAL_NO= "terminalNo";
+	/** 日期*/
+	public static final String  LINE_DATE= "date";
+	/** 详细信息*/
+	public static final String  INFORMATION= "Information";
+	
 	public static final String GAS_VCH_CHK = "vchChk";
 
 	public static final String GAS_VCH_COD = "vchCod";
