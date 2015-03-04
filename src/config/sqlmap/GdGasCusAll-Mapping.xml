@@ -1,239 +1,269 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdGasCusAll" >
-  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdGasCusAll" >
-    <id column="CUS_NO" property="cusNo" jdbcType="CHAR" />
-    <result column="CUS_AC" property="cusAc" jdbcType="CHAR" />
-    <result column="CUS_NME" property="cusNme" jdbcType="CHAR" />
-    <result column="CUS_TYP" property="cusTyp" jdbcType="CHAR" />
-    <result column="OPT_DAT" property="optDat" jdbcType="CHAR" />
-    <result column="OPT_NOD" property="optNod" jdbcType="CHAR" />
-    <result column="ID_TYP" property="idTyp" jdbcType="CHAR" />
-    <result column="ID_NO" property="idNo" jdbcType="CHAR" />
-    <result column="THD_CUS_NME" property="thdCusNme" jdbcType="CHAR" />
-    <result column="CMU_TEL" property="cmuTel" jdbcType="CHAR" />
-    <result column="THD_CUS_ADR" property="thdCusAdr" jdbcType="CHAR" />
-  </resultMap>
-  <sql id="baseColumnList" >
-    CUS_NO, CUS_AC, CUS_NME, CUS_TYP, OPT_DAT, OPT_NOD, ID_TYP, ID_NO, THD_CUS_NME, CMU_TEL, 
-    THD_CUS_ADR
-  </sql>
-  <select id="find" resultMap="basicResultMap" >
-    select
-    <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_ALL
-    <trim prefix="WHERE" prefixOverrides="AND" >
-      <if test="cusNo!=null" >
-        AND  CUS_NO=#{cusNo,jdbcType=CHAR}
-      </if>
-      <if test="cusAc!=null" >
-        AND  CUS_AC=#{cusAc,jdbcType=CHAR}
-      </if>
-      <if test="cusNme!=null" >
-        AND  CUS_NME=#{cusNme,jdbcType=CHAR}
-      </if>
-      <if test="cusTyp!=null" >
-        AND  CUS_TYP=#{cusTyp,jdbcType=CHAR}
-      </if>
-      <if test="optDat!=null" >
-        AND  OPT_DAT=#{optDat,jdbcType=CHAR}
-      </if>
-      <if test="optNod!=null" >
-        AND  OPT_NOD=#{optNod,jdbcType=CHAR}
-      </if>
-      <if test="idTyp!=null" >
-        AND  ID_TYP=#{idTyp,jdbcType=CHAR}
-      </if>
-      <if test="idNo!=null" >
-        AND  ID_NO=#{idNo,jdbcType=CHAR}
-      </if>
-      <if test="thdCusNme!=null" >
-        AND  THD_CUS_NME=#{thdCusNme,jdbcType=CHAR}
-      </if>
-      <if test="cmuTel!=null" >
-        AND  CMU_TEL=#{cmuTel,jdbcType=CHAR}
-      </if>
-      <if test="thdCusAdr!=null" >
-        AND  THD_CUS_ADR=#{thdCusAdr,jdbcType=CHAR}
-      </if>
-    </trim>
-  </select>
-  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_ALL
-    where CUS_NO = #{cusNo,jdbcType=CHAR}
-  </select>
-  <delete id="delete" parameterType="java.lang.String" >
-    delete from ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_ALL
-    where CUS_NO = #{cusNo,jdbcType=CHAR}
-  </delete>
-  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdGasCusAll" >
-    insert into ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_ALL
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="cusNo != null" >
-        CUS_NO,
-      </if>
-      <if test="cusAc != null" >
-        CUS_AC,
-      </if>
-      <if test="cusNme != null" >
-        CUS_NME,
-      </if>
-      <if test="cusTyp != null" >
-        CUS_TYP,
-      </if>
-      <if test="optDat != null" >
-        OPT_DAT,
-      </if>
-      <if test="optNod != null" >
-        OPT_NOD,
-      </if>
-      <if test="idTyp != null" >
-        ID_TYP,
-      </if>
-      <if test="idNo != null" >
-        ID_NO,
-      </if>
-      <if test="thdCusNme != null" >
-        THD_CUS_NME,
-      </if>
-      <if test="cmuTel != null" >
-        CMU_TEL,
-      </if>
-      <if test="thdCusAdr != null" >
-        THD_CUS_ADR,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="cusNo != null" >
-        #{cusNo,jdbcType=CHAR},
-      </if>
-      <if test="cusAc != null" >
-        #{cusAc,jdbcType=CHAR},
-      </if>
-      <if test="cusNme != null" >
-        #{cusNme,jdbcType=CHAR},
-      </if>
-      <if test="cusTyp != null" >
-        #{cusTyp,jdbcType=CHAR},
-      </if>
-      <if test="optDat != null" >
-        #{optDat,jdbcType=CHAR},
-      </if>
-      <if test="optNod != null" >
-        #{optNod,jdbcType=CHAR},
-      </if>
-      <if test="idTyp != null" >
-        #{idTyp,jdbcType=CHAR},
-      </if>
-      <if test="idNo != null" >
-        #{idNo,jdbcType=CHAR},
-      </if>
-      <if test="thdCusNme != null" >
-        #{thdCusNme,jdbcType=CHAR},
-      </if>
-      <if test="cmuTel != null" >
-        #{cmuTel,jdbcType=CHAR},
-      </if>
-      <if test="thdCusAdr != null" >
-        #{thdCusAdr,jdbcType=CHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="findCount" resultType="java.lang.Integer" >
-    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_ALL
-    <trim prefix="WHERE" prefixOverrides="AND" >
-      <if test="cusNo!=null" >
-        AND  CUS_NO=#{cusNo,jdbcType=CHAR}
-      </if>
-      <if test="cusAc!=null" >
-        AND  CUS_AC=#{cusAc,jdbcType=CHAR}
-      </if>
-      <if test="cusNme!=null" >
-        AND  CUS_NME=#{cusNme,jdbcType=CHAR}
-      </if>
-      <if test="cusTyp!=null" >
-        AND  CUS_TYP=#{cusTyp,jdbcType=CHAR}
-      </if>
-      <if test="optDat!=null" >
-        AND  OPT_DAT=#{optDat,jdbcType=CHAR}
-      </if>
-      <if test="optNod!=null" >
-        AND  OPT_NOD=#{optNod,jdbcType=CHAR}
-      </if>
-      <if test="idTyp!=null" >
-        AND  ID_TYP=#{idTyp,jdbcType=CHAR}
-      </if>
-      <if test="idNo!=null" >
-        AND  ID_NO=#{idNo,jdbcType=CHAR}
-      </if>
-      <if test="thdCusNme!=null" >
-        AND  THD_CUS_NME=#{thdCusNme,jdbcType=CHAR}
-      </if>
-      <if test="cmuTel!=null" >
-        AND  CMU_TEL=#{cmuTel,jdbcType=CHAR}
-      </if>
-      <if test="thdCusAdr!=null" >
-        AND  THD_CUS_ADR=#{thdCusAdr,jdbcType=CHAR}
-      </if>
-    </trim>
-  </select>
-  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdGasCusAll" >
-    update ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_ALL
-    <set >
-      <if test="cusAc != null" >
-        CUS_AC = #{cusAc,jdbcType=CHAR},
-      </if>
-      <if test="cusNme != null" >
-        CUS_NME = #{cusNme,jdbcType=CHAR},
-      </if>
-      <if test="cusTyp != null" >
-        CUS_TYP = #{cusTyp,jdbcType=CHAR},
-      </if>
-      <if test="optDat != null" >
-        OPT_DAT = #{optDat,jdbcType=CHAR},
-      </if>
-      <if test="optNod != null" >
-        OPT_NOD = #{optNod,jdbcType=CHAR},
-      </if>
-      <if test="idTyp != null" >
-        ID_TYP = #{idTyp,jdbcType=CHAR},
-      </if>
-      <if test="idNo != null" >
-        ID_NO = #{idNo,jdbcType=CHAR},
-      </if>
-      <if test="thdCusNme != null" >
-        THD_CUS_NME = #{thdCusNme,jdbcType=CHAR},
-      </if>
-      <if test="cmuTel != null" >
-        CMU_TEL = #{cmuTel,jdbcType=CHAR},
-      </if>
-      <if test="thdCusAdr != null" >
-        THD_CUS_ADR = #{thdCusAdr,jdbcType=CHAR},
-      </if>
-    </set>
-    where CUS_NO = #{cusNo,jdbcType=CHAR}
-  </update>
-  <select id="findAll" resultMap="basicResultMap" >
-    select 
-    <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_ALL
-    <if test="_parameter" >
-      where CUS_NO in
-      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
-        #{item}
-      </foreach>
-    </if>
-  </select>
-  
-  
-  
-  <select id="findDataBeforeOptDat" resultMap="basicResultMap" >
-    select
-    <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_ALL WHERE OPT_DAT &lt;=#{optDat,jdbcType=CHAR}
-  </select>
-  
-  
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdGasCusAll">
+	<resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdGasCusAll">
+		<id column="CUS_NO" property="cusNo" jdbcType="CHAR" />
+		<result column="CUS_AC" property="cusAc" jdbcType="CHAR" />
+		<result column="CUS_NME" property="cusNme" jdbcType="CHAR" />
+		<result column="CUS_TYP" property="cusTyp" jdbcType="CHAR" />
+		<result column="OPT_DAT" property="optDat" jdbcType="CHAR" />
+		<result column="OPT_NOD" property="optNod" jdbcType="CHAR" />
+		<result column="ID_TYP" property="idTyp" jdbcType="CHAR" />
+		<result column="ID_NO" property="idNo" jdbcType="CHAR" />
+		<result column="THD_CUS_NME" property="thdCusNme" jdbcType="CHAR" />
+		<result column="CMU_TEL" property="cmuTel" jdbcType="CHAR" />
+		<result column="THD_CUS_ADR" property="thdCusAdr" jdbcType="CHAR" />
+	</resultMap>
+	<sql id="baseColumnList">
+		CUS_NO, CUS_AC, CUS_NME, CUS_TYP, OPT_DAT, OPT_NOD, ID_TYP,
+		ID_NO,
+		THD_CUS_NME, CMU_TEL,
+		THD_CUS_ADR
+	</sql>
+	<select id="find" resultMap="basicResultMap">
+		select
+		<include refid="baseColumnList" />
+		from ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_ALL
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="cusNo!=null">
+				AND CUS_NO=#{cusNo,jdbcType=CHAR}
+			</if>
+			<if test="cusAc!=null">
+				AND CUS_AC=#{cusAc,jdbcType=CHAR}
+			</if>
+			<if test="cusNme!=null">
+				AND CUS_NME=#{cusNme,jdbcType=CHAR}
+			</if>
+			<if test="cusTyp!=null">
+				AND CUS_TYP=#{cusTyp,jdbcType=CHAR}
+			</if>
+			<if test="optDat!=null">
+				AND OPT_DAT=#{optDat,jdbcType=CHAR}
+			</if>
+			<if test="optNod!=null">
+				AND OPT_NOD=#{optNod,jdbcType=CHAR}
+			</if>
+			<if test="idTyp!=null">
+				AND ID_TYP=#{idTyp,jdbcType=CHAR}
+			</if>
+			<if test="idNo!=null">
+				AND ID_NO=#{idNo,jdbcType=CHAR}
+			</if>
+			<if test="thdCusNme!=null">
+				AND THD_CUS_NME=#{thdCusNme,jdbcType=CHAR}
+			</if>
+			<if test="cmuTel!=null">
+				AND CMU_TEL=#{cmuTel,jdbcType=CHAR}
+			</if>
+			<if test="thdCusAdr!=null">
+				AND THD_CUS_ADR=#{thdCusAdr,jdbcType=CHAR}
+			</if>
+		</trim>
+	</select>
+	<select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String">
+		select
+		<include refid="baseColumnList" />
+		from ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_ALL
+		where CUS_NO =
+		#{cusNo,jdbcType=CHAR}
+	</select>
+	<delete id="delete" parameterType="java.lang.String">
+		delete from
+		${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_ALL
+		where CUS_NO =
+		#{cusNo,jdbcType=CHAR}
+	</delete>
+	<insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdGasCusAll">
+		insert into ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_ALL
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cusNo != null">
+				CUS_NO,
+			</if>
+			<if test="cusAc != null">
+				CUS_AC,
+			</if>
+			<if test="cusNme != null">
+				CUS_NME,
+			</if>
+			<if test="cusTyp != null">
+				CUS_TYP,
+			</if>
+			<if test="optDat != null">
+				OPT_DAT,
+			</if>
+			<if test="optNod != null">
+				OPT_NOD,
+			</if>
+			<if test="idTyp != null">
+				ID_TYP,
+			</if>
+			<if test="idNo != null">
+				ID_NO,
+			</if>
+			<if test="thdCusNme != null">
+				THD_CUS_NME,
+			</if>
+			<if test="cmuTel != null">
+				CMU_TEL,
+			</if>
+			<if test="thdCusAdr != null">
+				THD_CUS_ADR,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cusNo != null">
+				#{cusNo,jdbcType=CHAR},
+			</if>
+			<if test="cusAc != null">
+				#{cusAc,jdbcType=CHAR},
+			</if>
+			<if test="cusNme != null">
+				#{cusNme,jdbcType=CHAR},
+			</if>
+			<if test="cusTyp != null">
+				#{cusTyp,jdbcType=CHAR},
+			</if>
+			<if test="optDat != null">
+				#{optDat,jdbcType=CHAR},
+			</if>
+			<if test="optNod != null">
+				#{optNod,jdbcType=CHAR},
+			</if>
+			<if test="idTyp != null">
+				#{idTyp,jdbcType=CHAR},
+			</if>
+			<if test="idNo != null">
+				#{idNo,jdbcType=CHAR},
+			</if>
+			<if test="thdCusNme != null">
+				#{thdCusNme,jdbcType=CHAR},
+			</if>
+			<if test="cmuTel != null">
+				#{cmuTel,jdbcType=CHAR},
+			</if>
+			<if test="thdCusAdr != null">
+				#{thdCusAdr,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="findCount" resultType="java.lang.Integer">
+		select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_ALL
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="cusNo!=null">
+				AND CUS_NO=#{cusNo,jdbcType=CHAR}
+			</if>
+			<if test="cusAc!=null">
+				AND CUS_AC=#{cusAc,jdbcType=CHAR}
+			</if>
+			<if test="cusNme!=null">
+				AND CUS_NME=#{cusNme,jdbcType=CHAR}
+			</if>
+			<if test="cusTyp!=null">
+				AND CUS_TYP=#{cusTyp,jdbcType=CHAR}
+			</if>
+			<if test="optDat!=null">
+				AND OPT_DAT=#{optDat,jdbcType=CHAR}
+			</if>
+			<if test="optNod!=null">
+				AND OPT_NOD=#{optNod,jdbcType=CHAR}
+			</if>
+			<if test="idTyp!=null">
+				AND ID_TYP=#{idTyp,jdbcType=CHAR}
+			</if>
+			<if test="idNo!=null">
+				AND ID_NO=#{idNo,jdbcType=CHAR}
+			</if>
+			<if test="thdCusNme!=null">
+				AND THD_CUS_NME=#{thdCusNme,jdbcType=CHAR}
+			</if>
+			<if test="cmuTel!=null">
+				AND CMU_TEL=#{cmuTel,jdbcType=CHAR}
+			</if>
+			<if test="thdCusAdr!=null">
+				AND THD_CUS_ADR=#{thdCusAdr,jdbcType=CHAR}
+			</if>
+		</trim>
+	</select>
+	<update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdGasCusAll">
+		update ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_ALL
+		<set>
+			<if test="cusAc != null">
+				CUS_AC = #{cusAc,jdbcType=CHAR},
+			</if>
+			<if test="cusNme != null">
+				CUS_NME = #{cusNme,jdbcType=CHAR},
+			</if>
+			<if test="cusTyp != null">
+				CUS_TYP = #{cusTyp,jdbcType=CHAR},
+			</if>
+			<if test="optDat != null">
+				OPT_DAT = #{optDat,jdbcType=CHAR},
+			</if>
+			<if test="optNod != null">
+				OPT_NOD = #{optNod,jdbcType=CHAR},
+			</if>
+			<if test="idTyp != null">
+				ID_TYP = #{idTyp,jdbcType=CHAR},
+			</if>
+			<if test="idNo != null">
+				ID_NO = #{idNo,jdbcType=CHAR},
+			</if>
+			<if test="thdCusNme != null">
+				THD_CUS_NME = #{thdCusNme,jdbcType=CHAR},
+			</if>
+			<if test="cmuTel != null">
+				CMU_TEL = #{cmuTel,jdbcType=CHAR},
+			</if>
+			<if test="thdCusAdr != null">
+				THD_CUS_ADR = #{thdCusAdr,jdbcType=CHAR},
+			</if>
+		</set>
+		where CUS_NO = #{cusNo,jdbcType=CHAR}
+	</update>
+	<select id="findAll" resultMap="basicResultMap">
+		select
+		<include refid="baseColumnList" />
+		from ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_ALL
+		<if test="_parameter">
+			where CUS_NO in
+			<foreach item="item" index="index" collection="list" open="("
+				separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+	</select>
+
+
+
+	<select id="findDataBeforeOptDat" resultMap="basicResultMap">
+		SELECT
+		<include refid="baseColumnList" />
+		FROM ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_ALL WHERE OPT_DAT
+		&lt;=#{optDat,jdbcType=CHAR}
+	</select>
+
+	<select id="findDataByOptDate" parameterType="java.util.Map"
+		resultType="java.util.Map">
+		SELECT
+		<include refid="baseColumnList" />
+		FROM ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_ALL
+		<trim prefix="WHERE" prefixOverrides="AND">
+			OPT_DAT &gt;=#{beginDate} AND OPT_DAT &lt;=#{endDate}
+			<if test="cusNo!=null">
+				AND CUS_NO=#{cusNo}
+			</if>
+			<if test="cusAc!=null">
+				AND CUS_AC=#{cusAc}
+			</if>
+			<if test="cusNme!=null">
+				AND CUS_NME=#{cusNme}
+			</if>
+			<if test="idNo!=null">
+				AND ID_NO=#{idNo}
+			</if>
+		</trim>
+	</select>
+
+
+
 </mapper>
