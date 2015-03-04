@@ -1,5 +1,8 @@
 package com.bocom.bbip.gdeupsb.action.transportfee;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.util.Date;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -9,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
+import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -69,17 +74,36 @@ public class TrspWyFeeQryAction extends BaseAction{
         	 String plateNo = (String)thdReturnMessage.get("plateNo");
              String plateType = (String)thdReturnMessage.get("plateType");
              String monthCount = (String)thdReturnMessage.get("monthCount");
-             String begDat = (String)thdReturnMessage.get("begDat");
-             String endDat = (String)thdReturnMessage.get("endDat");
+             
              String carName = (String)thdReturnMessage.get("carName");
             String sumMon = (String)thdReturnMessage.get("monthCount");
             String carOwner = (String)thdReturnMessage.get("custName");
+            Date begDat = DateUtils.parse((String)thdReturnMessage.get("begDat"), DateUtils.STYLE_yyyyMMdd);
+            Date endDat = DateUtils.parse((String)thdReturnMessage.get("endDat"), DateUtils.STYLE_yyyyMMdd);
+            
+            double i=Double.parseDouble((String)thdReturnMessage.get("corpus"));
+			double d=i/100;
+			DecimalFormat df=new DecimalFormat("#.00");
+			BigDecimal corpus=new BigDecimal(df.format(d));
+			
+			double j=Double.parseDouble((String)thdReturnMessage.get("delayFee"));
+			double a=j/100;
+			BigDecimal lateFee=new BigDecimal(df.format(a));
+			
+			double k=Double.parseDouble((String)thdReturnMessage.get("oweAmount"));
+			double b=k/100;
+			BigDecimal totalAmt=new BigDecimal(df.format(b));
         	ctx.setData("display_zone", "该车辆具体信息如下：车牌号码：" + plateNo + ",车牌类别:" + plateType + ",缴费月数:" + monthCount
         			+ ",有效起始日期:" + begDat + ",有效结束日期:" + endDat + ",车型说明:" + carName);
         	ctx.setData(GDParamKeys.CAR_NO, plateNo);
         	ctx.setData(GDParamKeys.CAR_TYP, plateType);
         	ctx.setData("sumMon", sumMon);
         	ctx.setData("carOwner", carOwner);
+        	ctx.setData(GDParamKeys.BEG_DAT, begDat);
+        	ctx.setData(GDParamKeys.END_DAT, endDat);
+        	ctx.setData("corpus", corpus);
+        	ctx.setData("lateFee", lateFee);
+        	ctx.setData("totalAmt", totalAmt);
         }
         
 //        <Set>MsgTyp=E</Set>
