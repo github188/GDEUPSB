@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="Y007Request">
+			<fixString name="hno" length="9"/>   <!-- 户号 -->
+			<fixString name="name" length="40"/>   <!-- 户名 -->
+			<fixString name="addr" length="40"/>   <!-- 水表地址 -->
+			<fixString name="wtno" length="10"/>   <!-- 委托书号 -->
+			<fixString name="bank" length="10"/>   <!-- 委托银行 -->
+			<fixString name="czman" length="10"/>   <!-- 存在持有人 -->
+			<fixString name="bcount" length="40"/>   <!-- 账号 -->
+			<fixString name="byyno" length="6"/>   <!-- 营业网点号 -->
+			<fixString name="byyman" length="6"/>   <!-- 营业员代号 -->
+			<fixString name="wtdate" length="8"/>   <!-- 委托时间 -->
+			<fixString name="wtman" length="8"/>   <!-- 委托人 -->
+			<fixString name="idno" length="20"/>   <!-- 身份证号码 -->
+			<fixString name="haddr" length="40"/>   <!-- 家庭地址 -->
+			<fixString name="hphone" length="15"/>   <!-- 家庭电话 -->
+			<fixString name="lphone" length="15"/>   <!-- 手机号码 -->
+			<fixString name="post" length="1"/>   <!-- 邮寄标识：T-邮寄T-不邮寄 -->
+			<fixString name="sjman" length="10"/>   <!-- 收件人姓名 -->
+			<fixString name="postno" length="6"/>   <!-- 邮政编码 -->
+			<fixString name="taddr" length="40"/>   <!-- 邮寄地址 -->
+			<fixString name="status" length="1"/>   <!-- 状态：A-增加D-删除U-更新 -->
+			<fixString name="reserved" length="10"/>   <!-- 保留字段 -->
+</segment>
