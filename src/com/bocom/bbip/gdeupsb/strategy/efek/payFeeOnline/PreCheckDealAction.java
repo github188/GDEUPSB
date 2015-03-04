@@ -67,6 +67,7 @@ public class PreCheckDealAction implements Executable{
 				//TODO 
 				context.setData(ParamKeys.BUS_TYP, "2");
 				context.setData(ParamKeys.TELLER, "ABIR148");
+				context.setData(ParamKeys.BBIP_TERMINAL_NO, "ABIR148");
 				context.setData(ParamKeys.BR,"01441131999");
 				context.setData(ParamKeys.BK,"01441999999");
 //				context.setData(ParamKeys.REQ_JRN_NO, context.getData(ParamKeys.SEQUENCE));
