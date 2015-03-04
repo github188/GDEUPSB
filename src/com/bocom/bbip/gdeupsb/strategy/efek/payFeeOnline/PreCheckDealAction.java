@@ -65,6 +65,10 @@ public class PreCheckDealAction implements Executable{
 				logger.info("~~~~~~~~~~~交易日期："+context.getData(ParamKeys.TXN_DATE)
 						+"~~~~~~~~~~~交易时间："+context.getData(ParamKeys.TXN_TIME));
 				//TODO 
+				context.setData(ParamKeys.BUS_TYP, "2");
+				context.setData(ParamKeys.TELLER, "ABIR148");
+				context.setData(ParamKeys.BR,"01441131999");
+				context.setData(ParamKeys.BK,"01441999999");
 //				context.setData(ParamKeys.REQ_JRN_NO, context.getData(ParamKeys.SEQUENCE));
 	}
 }

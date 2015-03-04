@@ -1,5 +1,7 @@
 package com.bocom.bbip.gdeupsb.strategy.efek.payFeeOnline;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Date;
 
 import org.apache.commons.logging.Log;
@@ -22,5 +24,11 @@ public class AftPayToBankAction implements Executable{
 			logger.info("==============Start   AftPayToBankAction");
 			context.setData(ParamKeys.TXN_DTE, DateUtils.format((Date)context.getData(ParamKeys.TXN_DTE),DateUtils.STYLE_yyyyMMdd));
 			context.setData(ParamKeys.TXN_TME, DateUtils.formatAsHHmmss((Date)context.getData(ParamKeys.TXN_TME)));
+			
+			double i=Double.parseDouble(context.getData(ParamKeys.TXN_AMT).toString());
+			double d=i/100;
+			DecimalFormat df=new DecimalFormat("#");
+			BigDecimal txnAmt=new BigDecimal(df.format(d));
+			context.setData(ParamKeys.TXN_AMT,txnAmt );
 	}
 }

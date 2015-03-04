@@ -1,5 +1,7 @@
 package com.bocom.bbip.gdeupsb.strategy.efek.payFeeOnline;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Date;
 
 import org.apache.commons.logging.Log;
@@ -71,7 +73,11 @@ public class PrePayToBankAction implements Executable{
 				
 				context.setData("GthFlg", "N");//			<Set>GthFlg=N</Set>
 			}
-			
-			context.setData(ParamKeys.TXN_TLR, "4430");
+			//TODO xtnAmt
+			double i=Double.parseDouble(context.getData(ParamKeys.TXN_AMT).toString());
+			double d=i/100;
+			DecimalFormat df=new DecimalFormat("#.00");
+			BigDecimal txnAmt=new BigDecimal(df.format(d));
+			context.setData(ParamKeys.TXN_AMT,txnAmt );
 		}
 }
