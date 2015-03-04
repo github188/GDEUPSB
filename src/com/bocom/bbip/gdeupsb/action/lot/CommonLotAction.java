@@ -1,8 +1,5 @@
 package com.bocom.bbip.gdeupsb.action.lot;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,7 +9,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.eups.action.BaseAction;
-import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
@@ -43,6 +39,7 @@ import com.bocom.jump.bp.service.sqlmap.SqlMap;
  * @version 1.0.0
  * Date 2015-01-26
  * @author GuiLin.Li
+ * @Update Wuyanhui 2015-02-28
  */
 public class CommonLotAction extends BaseAction{
     
@@ -165,7 +162,8 @@ public class CommonLotAction extends BaseAction{
 		}
 
 	}
-	public void fileImport2(Context context)throws CoreException{
+	@SuppressWarnings("unchecked")
+    public void fileImport2(Context context)throws CoreException{
 		/**-- 删除旧记录 */
 		GdLotPrzCtl ctl=new GdLotPrzCtl();
 		ctl.setGameId((String)context.getData("GameId"));
@@ -178,8 +176,7 @@ public class CommonLotAction extends BaseAction{
 		dtl.setKenoId((String)context.getData("KenoId"));
 		get(GdLotPrzDtlRepository.class).delete(dtl);
 		/**新增中奖控制信息*/
-		@SuppressWarnings("unchecked")
-        List<GdLotPrzCtl>ctlList=(List<GdLotPrzCtl>) BeanUtils.toObjects(
+		List<GdLotPrzCtl>ctlList=(List<GdLotPrzCtl>) BeanUtils.toObjects(
 				(List<Map<String,Object>>)context.getData("bonusItem"), GdLotPrzCtl.class);
 		Assert.isNotEmpty(ctlList, ErrorCodes.EUPS_QUERY_NO_DATA);
 		((SqlMap)get("sqlMap")).insert("com.bocom.bbip.gdeupsb.entity.GdLotPrzCtl.LotCtlBatchInsert", ctlList);
@@ -202,6 +199,7 @@ public class CommonLotAction extends BaseAction{
 		}
 		
 	}
+    @SuppressWarnings("unchecked")
     public void fileImport3(Context context)throws CoreException{
     	/**-- 删除旧记录 */
 		GdLotPrzCtl ctl=new GdLotPrzCtl();
