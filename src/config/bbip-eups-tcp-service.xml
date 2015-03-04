@@ -214,7 +214,9 @@
 					<property name="exceptionHandler" ref="exceptionHandler" />
 				</bean>
 				<bean class="com.bocom.jump.bp.channel.interceptors.ContextInterceptor" />
-
+                 <bean class="com.bocom.bbip.eups.interceptor.ServiceThdInterceptor">
+                    <constructor-arg value="9997" />
+                </bean>
 			</array>
 		</property>
 	</bean>
