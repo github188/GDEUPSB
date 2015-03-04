@@ -309,7 +309,7 @@
 					class="com.bocom.jump.bp.channel.interceptors.RequestTracingInterceptor" />
 				<bean
 					class="com.bocom.jump.bp.channel.tcp.interceptors.PayloadChannelInterceptor">
-					<property name="lengthSize" value="4" />
+					<property name="lengthSize" value="10" />
 				</bean>
 				<bean class="com.bocom.jump.bp.channel.interceptors.TransformInterceptor">
 					<property name="encodeTransforms"><!-- 发送报文编码配置 -->
