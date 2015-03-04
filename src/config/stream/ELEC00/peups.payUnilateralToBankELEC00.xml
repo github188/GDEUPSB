@@ -13,7 +13,7 @@
 <!--交易时间	JYSJ	Varchar2 (6)-->
 		<fixString name="txnTme"  length="6"/>
 <!--收费方式	SFFS	Varchar2(3)-->
-		<fixString name="busTyp"  length="3"/>          <!--业务种类(代收付接口使用：0-代收、1-代付、2-代缴)  -->
+		<fixString name="payMde"  length="3"/>          <!--业务种类(代收付接口使用：0-代收、1-代付、2-代缴)  -->
 <!--费用类型	FYLX	Varchar2(3)-->
 		<fixString name="costType"  length="3"/>           <!-- 缴费类型 -->
 <!--入账银行代码	RZYHDM	Varchar2(4)-->
