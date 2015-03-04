@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="0820Response">
+	<fixString name="txnDateTime" length="10" />  <!-- MMDDhhmmss -->   <!-- txnDateTime7 -->
+	<fixString name="transJournal11" length="12" />  <!-- 系统参考号 -->   <!-- transJournal11 -->
+	<fixString name="sndFlg33"  length="11"/>    <!-- 	发送机构标识码 -->	
+	<fixString name="thdRspCde" length="2"/>     <!-- 响应码39 -->
+	<fixString name="cmuCde70"  length="3"/>        <!-- 网管信息-->	
+</segment>
