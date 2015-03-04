@@ -6,7 +6,6 @@ import java.util.Date;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
-import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
@@ -37,12 +36,18 @@ public class SignInAction extends BaseAction {
         EupsThdTranCtlInfo eupsThdTranCtlInfo = BeanUtils.toObject(context.getDataMap(), EupsThdTranCtlInfo.class);
         EupsThdTranCtlInfo resultThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(comNo);
         if (resultThdTranCtlInfo == null) {
-            throw new CoreException(ErrorCodes.THD_CHL_NOT_FOUND);
+            context.setData(GDParamKeys.RSP_CDE,"9999");
+            context.setData(GDParamKeys.RSP_MSG,"你的数据不存在!");
+            return;
         } 
         if (resultThdTranCtlInfo.getTxnCtlSts().equals(Constants.TXN_CTL_STS_SIGNIN)) {
-            throw new CoreException(ErrorCodes.THD_CHL_ALDEAY_SIGN_IN);
+            context.setData(GDParamKeys.RSP_CDE,"9999");
+            context.setData(GDParamKeys.RSP_MSG,"第三方渠道已签到!");
+            return;
         } else if (resultThdTranCtlInfo.getTxnCtlSts().equals(Constants.TXN_CTL_STS_CHECKBILL_ING)) {
-            throw new CoreException(ErrorCodes.THD_CHL_SIGNIN_NOT_ALLOWWED);
+            context.setData(GDParamKeys.RSP_CDE,"9999");
+            context.setData(GDParamKeys.RSP_MSG,"不是签到时间不允许第三方签到!");
+            return;
         } else {
 
             eupsThdTranCtlInfo.setTxnCtlSts(Constants.TXN_CTL_STS_SIGNIN);

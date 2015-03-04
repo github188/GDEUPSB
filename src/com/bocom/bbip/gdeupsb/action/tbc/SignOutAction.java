@@ -31,14 +31,21 @@ public class SignOutAction  extends BaseAction {
         context.setData("teller", context.getData("TELLER"));
 
         String comNo =context.getData("dptId").toString();
+        
         EupsThdTranCtlInfo resultThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(comNo);
         if (resultThdTranCtlInfo == null) {
-            throw new CoreException(ErrorCodes.THD_CHL_NOT_FOUND);
+            context.setData(GDParamKeys.RSP_CDE,"9999");
+            context.setData(GDParamKeys.RSP_MSG,"你的数据不存在!");
+            return;
         } 
         if (resultThdTranCtlInfo.getTxnCtlSts().equals(Constants.TXN_CTL_STS_SIGNOUT)) {
-            throw new CoreException(ErrorCodes.THD_CHL_ALDEAY_SIGN_OUT);
+            context.setData(GDParamKeys.RSP_CDE,"9999");
+            context.setData(GDParamKeys.RSP_MSG,"第三方渠道已签退!");
+            return;
         } else if (resultThdTranCtlInfo.getTxnCtlSts().equals(Constants.TXN_CTL_STS_CHECKBILL_ING)) {
-            throw new CoreException(ErrorCodes.THD_CHL_SIGNIN_NOT_ALLOWWED);
+            context.setData(GDParamKeys.RSP_CDE,"9999");
+            context.setData(GDParamKeys.RSP_MSG,"不是签退时间不允许第三方签退!");
+            return;
         } else {
             try {
                 EupsThdTranCtlInfo eupsThdTranCtlInfo = new EupsThdTranCtlInfo();
