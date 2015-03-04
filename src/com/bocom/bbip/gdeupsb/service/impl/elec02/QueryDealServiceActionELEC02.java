@@ -94,9 +94,10 @@ public class QueryDealServiceActionELEC02 implements QueryDealService {
 				}
 				throw new CoreException(responseCode);
 			}
-			String txnAmt = thdReturnMessage.get("QFM").toString().trim();
-			callThdMap.put(ParamKeys.OWE_FEE_AMT, txnAmt);
-			context.setData(ParamKeys.OWE_FEE_AMT, txnAmt);
+//			String txnAmt = thdReturnMessage.get("QFM").toString().trim();
+//			callThdMap.put(ParamKeys.OWE_FEE_AMT, txnAmt);
+//			context.setData(ParamKeys.OWE_FEE_AMT, txnAmt);
+			context.setDataMap(thdReturnMessage);
 		}else{
 			logger.error("QueryDealServiceImplELEC00 return has error!");
 			throw new CoreException(ErrorCodes.EUPS_THD_SYS_ERROR);
