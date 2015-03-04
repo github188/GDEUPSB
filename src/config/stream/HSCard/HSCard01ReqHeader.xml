@@ -4,6 +4,8 @@
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
 	type="LLLL" encoding="GBK" trace="true"  filter="both,WEB-INF/classes/config/stream/HSCard/translateDict.txt">
 	<segment name="head">
+		<fixString name="thdRspCde" length="4"/>  <!--返回码 -->
+		<fixString name="responseMessage" length="100"/>  <!--返回信息 -->
 		<fixString name="TransCode" length="6"  referred="true" mapping="true"/>  
 		<fixString name="DCC_SCHID" length="10"/>  <!--学校代号 -->
 		<fixString name="thdTxnDte" length="8"/>  <!--交易日期 -->
