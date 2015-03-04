@@ -28,14 +28,14 @@ public class HSCardFeeQueryAction extends BaseAction {
 
 	public void execute(Context ctx) throws CoreException, CoreRuntimeException {
 		log.info("HSCardFeeQueryAction start......");
-		// 判断账户是否余额不足
 		
+		ctx.setData("traceNo", bbipPublicService.getTraceNo());
 		// 查询内部账户余额
 		ctx.setData(ParamKeys.BK, bbipPublicService.getParam("BBIP", "BK"));
 		ctx.setData(ParamKeys.BR, "12");
 		ctx.setData(ParamKeys.TELLER, "123");
 		ctx.setData(ParamKeys.CHANNEL, "1234");
-		ctx.setData(ParamKeys.TRACE_NO, ctx.getData(ParamKeys.SEQUENCE));
+//		ctx.setData(ParamKeys.TRACE_NO, ctx.getData(ParamKeys.SEQUENCE));
 		String cusAc = ctx.getData(ParamKeys.CUS_AC);
 		CommonRequest comRequest=CommonRequest.build(ctx);
 		CusActInfResult acResult = accountService.getAcInf(comRequest, cusAc);
