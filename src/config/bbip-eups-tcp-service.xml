@@ -142,7 +142,7 @@
 					</property>
 					<property name="exceptionHandler" ref="exceptionHandler" />
 				</bean>
-				<bean class="com.bocom.bbip.gdeupsb.channel.tcp.ContextInterceptorEx"></bean>
+				<bean class="com.bocom.jump.bp.channel.interceptors.ContextInterceptor"></bean>
 				<bean class="com.bocom.jump.bp.channel.interceptors.ContextInterceptor"></bean>
 				<bean class="com.bocom.bbip.eups.interceptor.ServiceThdInterceptor">
 					<constructor-arg value="6000" />
@@ -332,7 +332,7 @@
 					</property>
 					<property name="exceptionHandler" ref="exceptionHandler" />
 				</bean>
-				<bean class="com.bocom.bbip.gdeupsb.channel.tcp.ContextInterceptorExt"></bean>
+				<bean class="com.bocom.jump.bp.channel.interceptors.ContextInterceptor"></bean>
 				<bean class="com.bocom.bbip.eups.interceptor.ServiceThdInterceptor">
 					<constructor-arg value="9001" />
 				</bean>
