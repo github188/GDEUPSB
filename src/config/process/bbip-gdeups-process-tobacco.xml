@@ -3,13 +3,6 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
                         http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
                         
-    <!--烟草客户余额查询-->
-    <process id="gdeupsb.tbcFindClientRemainingMoney" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
-        <actions>
-            <action id="act" ref="gdeupsb.FindClientRemainingMoney"/>
-        </actions>
-    </process>
-    
     <!--烟草签到-->
     <process id="gdeupsb.tbcSignIn" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
         <actions>

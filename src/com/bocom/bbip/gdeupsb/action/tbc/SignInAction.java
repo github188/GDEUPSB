@@ -10,7 +10,6 @@ import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
-import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.utils.*;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -31,14 +30,10 @@ public class SignInAction extends BaseAction {
         context.setData("txnTme", context.getData("TRAN_TIME"));
         context.setData("bk", context.getData("BANK_ID"));
         context.setData("dptId", context.getData("DPT_ID"));
-        context.setData("DevId", context.getData("DEV_ID"));
+        context.setData("devId", context.getData("DEV_ID"));
         context.setData("teller", context.getData("TELLER"));
-        
-        String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
-        if (null == cAgtNo) {
-            cAgtNo ="441";
-        }
-        String comNo = cAgtNo.substring(0,3)+"999";
+
+        String comNo =context.getData("dptId").toString();
         EupsThdTranCtlInfo eupsThdTranCtlInfo = BeanUtils.toObject(context.getDataMap(), EupsThdTranCtlInfo.class);
         EupsThdTranCtlInfo resultThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(comNo);
         if (resultThdTranCtlInfo == null) {
@@ -102,6 +97,7 @@ public class SignInAction extends BaseAction {
             }
             context.setData(GDParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
             context.setData(GDParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
+            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
         }
     }
 

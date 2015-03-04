@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.asn1c.core.Int32;
 import com.bocom.bbip.service.Result;
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
@@ -55,14 +54,10 @@ public class EstablishAccountAction extends BaseAction {
         context.setData("pasWrd", context.getData("PASSWORD"));
         context.setData("addres", context.getData("ADDR"));
         context.setData("telNum", context.getData("TEL"));
-        context.setData("DevId", context.getData("DEV_ID"));
+        context.setData("devId", context.getData("DEV_ID"));
         context.setData("teller", context.getData("TELLER"));
 
-        String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
-        if (null == cAgtNo) {
-            cAgtNo ="441";
-        }
-        String comNo = cAgtNo.substring(0,3)+"999";
+        String comNo = context.getData("dptId").toString();
         //检查系统签到状态
         EupsThdTranCtlInfo eupsThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(comNo);
         if (null == eupsThdTranCtlInfo) {
@@ -73,7 +68,12 @@ public class EstablishAccountAction extends BaseAction {
         }
         
         //构成网点号
-        String nodNo = CodeSwitchUtils.codeGenerator("GDYC_nodSwitch", comNo);
+        String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
+        if (null == cAgtNo) {
+            cAgtNo ="441";
+        }
+        String brNo = cAgtNo.substring(0,3)+"999";
+        String nodNo = CodeSwitchUtils.codeGenerator("GDYC_nodSwitch",brNo);
         if (null == nodNo) {
             nodNo ="441800";
         }

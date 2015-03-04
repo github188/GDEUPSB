@@ -46,7 +46,7 @@
         <key name="2032"    value="445006011018170039247"/>    <!--445999汕头分行-->
         <key name=""        value="xxxxxxxxxx"/>    <!--483999东莞分行-->
         <key name=""        value="xxxxxxxxxx"/>    <!--484999中山分行-->
-        <key name=""        value="xxxxxxxxxx"/>    <!--485999揭阳支行-->
+        <key name="2072"        value="xxxxxxxxxx"/>    <!--485999揭阳支行-->
         <key name=""        value="xxxxxxxxxx"/>    <!--491999惠州分行-->
         <key name=""        value="xxxxxxxxxx"/>    <!--761999江门分行-->
   </table>

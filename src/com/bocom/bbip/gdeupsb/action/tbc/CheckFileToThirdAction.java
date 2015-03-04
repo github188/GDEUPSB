@@ -60,7 +60,7 @@ public class CheckFileToThirdAction implements CheckThdFileToBkService {
         //上面公共报文头，下面报文体
         context.setData("oLogNo", context.getData("BANK_SEQ"));
         context.setData("txnDte", context.getData("TRADE_DATE"));
-        context.setData("DevId", context.getData("DEV_ID"));
+        context.setData("devId", context.getData("DEV_ID"));
         context.setData("teller", context.getData("TELLER"));
 
         String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());

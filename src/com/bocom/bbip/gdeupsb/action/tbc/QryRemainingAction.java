@@ -43,13 +43,11 @@ public class QryRemainingAction extends BaseAction {
         context.setData("bk", context.getData("BANK_ID"));
         context.setData("dptId", context.getData("DPT_ID"));
         context.setData("custId", context.getData("CUST_ID"));
-        context.setData("DevId", context.getData("DEV_ID"));
+        context.setData("devId", context.getData("DEV_ID"));
         context.setData("teller", context.getData("TELLER"));
-        String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
-        if (null == cAgtNo) {
-            cAgtNo ="441";
-        }
-        String comNo = cAgtNo.substring(0,3)+"999";
+        context.setData(ParamKeys.TXN_DTE, context.getData(ParamKeys.TXN_TME).toString().substring(0,8));
+
+        String comNo = context.getData("dptId").toString();
         EupsThdTranCtlInfo resultThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(comNo);
         if (resultThdTranCtlInfo == null) {
             throw new CoreException(ErrorCodes.THD_CHL_NOT_FOUND);
@@ -73,7 +71,12 @@ public class QryRemainingAction extends BaseAction {
             context.setData("actNo", accessObject.getData("cusAc"));
             context.setData("dbPasWrd", accessObject.getData("pwd"));
             //构成网点号
-            String nodNo = CodeSwitchUtils.codeGenerator("GDYC_nodSwitch", comNo);
+            String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
+            if (null == cAgtNo) {
+                cAgtNo ="441";
+            }
+            String brNo = cAgtNo.substring(0,3)+"999";
+            String nodNo = CodeSwitchUtils.codeGenerator("GDYC_nodSwitch", brNo);
             if (null == nodNo) {
                 nodNo ="441800";
             }
@@ -84,8 +87,7 @@ public class QryRemainingAction extends BaseAction {
             context.setData(ParamKeys.TELLER,tlr);
             context.setData("tTxnCd","483803");
             //向主机查询账户信息  已经查询 且存放在accessObject
-            
-
+           
             context.setData(ParamKeys.RSP_CDE,"0000");
             context.setData(ParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
             context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
