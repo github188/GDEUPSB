@@ -124,8 +124,9 @@ public class GasAgentBatchFileToFtpAction extends BaseAction{
 		try {
 	            // 生成文件到指定路径
 	            get(OperateFileAction.class).createCheckFile(ftpConfigA, "gasAllAgentBatFmt", hdFileName, hdMap);
+	            logger.info("hdCNJTyyyyMMdd.txt文件生成成功！ftpConfigA");
 	            get(OperateFileAction.class).createCheckFile(ftpConfigB, "gasAllAgentBatFmt", hdFileName, hdMap);
-	            logger.info("hdCNJTyyyyMMdd.txt文件生成成功！");
+	            logger.info("hdCNJTyyyyMMdd.txt文件生成成功！ftpConfigB");
 	        } catch (Exception e) {
 	        	logger.error("File create error : " + e.getMessage());
 	            throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
@@ -153,8 +154,9 @@ public class GasAgentBatchFileToFtpAction extends BaseAction{
 		try {
             // 生成文件到指定路径
             get(OperateFileAction.class).createCheckFile(ftpConfigA, "gasDayAgentBatFmt", rxyFileName, rxyMap);
+            logger.info("rxyCNJTyyyyMMdd.txt文件生成成功！ftpConfigA");
             get(OperateFileAction.class).createCheckFile(ftpConfigB, "gasDayAgentBatFmt", rxyFileName, rxyMap);
-            logger.info("rxyCNJTyyyyMMdd.txt文件生成成功！");
+            logger.info("rxyCNJTyyyyMMdd.txt文件生成成功！ftpConfigB");
         } catch (Exception e) {
         	logger.error("File create error : " + e.getMessage());
             throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
