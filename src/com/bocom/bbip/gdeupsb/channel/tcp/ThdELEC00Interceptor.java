@@ -107,6 +107,11 @@ public class ThdELEC00Interceptor implements Interceptor {
     public void onResponse(Context context, Throwable arg1) {
         log.info("==============================onResponse start!!");
         log.info("this is onresponse start context" + context);
+        if("eups.payUnilateralToBankELEC00".equals(context.getData("svrNme"))){
+		        Date txnTme=(Date)context.getData(ParamKeys.TXN_TME);
+		        String txnTime=DateUtils.format(txnTme, DateUtils.STYLE_HHmmss);
+		        context.setData(ParamKeys.TXN_TME, txnTime);
+        }
         // 返回字段处理
         switchChannelCodeRsp(context);
 
