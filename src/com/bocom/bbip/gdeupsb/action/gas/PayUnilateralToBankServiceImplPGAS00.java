@@ -192,7 +192,7 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 			context.setData(ParamKeys.BAK_FLD5, "扣款成功");
 			
 			
-
+			//EUPS有相应处理
 			// 更新流水
 			// EupsTransJournal etj = context.getData(ParamKeys.CONSOLE_LCLJNL_LIST);
 			// etj.setTxnTyp(context.getData(ParamKeys.TXN_TYP).toString()); //TxnTyp='%s'
