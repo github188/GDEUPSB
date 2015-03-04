@@ -8,7 +8,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlDetailRepository;
@@ -23,8 +22,6 @@ public class PrePayToBankAction implements Executable{
 		private final static Log logger=LogFactory.getLog(PrePayToBankAction.class);
 		@Autowired
 		EupsThdTranCtlDetailRepository eupsThdTranCtlDetailRepository;
-		@Autowired
-		BBIPPublicService bbipPublicService;
 		/**
 		 * 第三方单边记账处理前
 		 */
