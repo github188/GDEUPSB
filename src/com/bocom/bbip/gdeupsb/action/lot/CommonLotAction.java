@@ -50,6 +50,26 @@ public class CommonLotAction extends BaseAction{
     @Autowired
     GdLotDrwTblRepository lotDrwInfRepository;
     /**
+     * 根据与福彩之间的时差获取福彩时间
+     * INPUT:
+        brNo:分行号
+        dealId:福彩时间
+        lclTim:本地时间
+     * @return  fcTim 福彩时间
+     */
+    public String getFcTim(String dealId, String brNo) {
+        //查询系统参数，获取当前本地与福彩系统的时差
+        GdLotSysCfg gdLotSysCfg = lotSysCfgRepository.findOne(dealId);
+        String difTim = "0";
+        if (null != gdLotSysCfg) {
+            difTim= gdLotSysCfg.getDiffTm();
+        }
+        String srcDate = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMddHHmmss);
+        String fcTim = calTim(brNo,srcDate,difTim);
+        return fcTim.trim();
+    }
+    
+    /**
      * 计算时差
      * INPUT:
         nodNo:网点号
@@ -64,9 +84,28 @@ public class CommonLotAction extends BaseAction{
             brNo="441999";
         }
         //计算时间
-        String [] arr={"d","yyyyMMddHHmmss",lotTim,"yyyyMMddHHmmss",lclTim};
+        String [] arr={"d",lotTim,lclTim};
         String difTim = timeDifTools(arr);
         return difTim.trim();
+    }
+    
+    /**
+     * 计算时间
+     * INPUT:
+        brNo:分行号
+        srcDate:原时间
+        difTim:时差（秒）
+     * @return  desDate:计算后的时间
+     */
+    public String calTim(String brNo,String srcDate, String difTim) {
+        //检查分行号是否存在
+        if (null == brNo) {
+            brNo="441999";
+        }
+        //计算时间
+        String [] arr={"c",srcDate,difTim};
+        String desDate = timeDifTools(arr);
+        return desDate.trim();
     }
     /**
      * 下载不同的文件并入库
@@ -278,14 +317,14 @@ public class CommonLotAction extends BaseAction{
       return difTime;
     }
     private String difTime(String[] paramArrayOfString) throws Exception {
-        Date localDate1 = new SimpleDateFormat(paramArrayOfString[1]).parse(paramArrayOfString[2]);
-        Date localDate2 = new SimpleDateFormat(paramArrayOfString[3]).parse(paramArrayOfString[4]);
+        Date localDate1 = new SimpleDateFormat("yyyyMMddHHmmss").parse(paramArrayOfString[1]);
+        Date localDate2 = new SimpleDateFormat("yyyyMMddHHmmss").parse(paramArrayOfString[2]);
         return (localDate1.getTime() - localDate2.getTime()) / 1000L + "";
     }
 
     private String calTime(String[] paramArrayOfString) throws Exception {
-         Date localDate1 = new SimpleDateFormat(paramArrayOfString[1]).parse(paramArrayOfString[2]);
-         Date localDate2 = new Date(localDate1.getTime() + Long.parseLong(paramArrayOfString[4]) * 1000L);
-        return new SimpleDateFormat(paramArrayOfString[3]).format(localDate2);
+         Date localDate1 = new SimpleDateFormat("yyyyMMddHHmmss").parse(paramArrayOfString[1]);
+         Date localDate2 = new Date(localDate1.getTime() + Long.parseLong(paramArrayOfString[2]) * 1000L);
+        return new SimpleDateFormat("yyyyMMddHHmmss").format(localDate2);
     }
 }
