@@ -1,5 +1,9 @@
 package com.bocom.bbip.gdeupsb.action.lot;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.lang.reflect.Array;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -58,55 +62,14 @@ public class CommonLotAction extends BaseAction{
      * @return  difTim:时差（秒）
      */
     public String difTime(String nodNo, String brNo,String lotTim, String lclTim) {
-        
-       /*
-        <Process>
-            <!-- 检查分行号是否存在 -->
-            <If condition="IS_EQUAL_STRING($BrNo,)">
-                <Exec func="PUB:GetBranchNoByNodeNo" error="IGNORE"></Exec>
-                <If condition="IS_EQUAL_STRING(~RetCod,)">
-                    <Set>BrNo=441999</Set>
-                </If>
-            </If>
-            
-            <!-- 获取调用序号 
-            <Exec func="PUB:nGetPubSeqNo" desc="获得$SelVal">
-                <Arg name="SeqNam" value="LOT:CALLID"/>
-                <Arg name="Len" value="9"/>
-                <Arg name="CycCnd" value="D"/>
-            </Exec>
-            -->
-            <Set>SelVal=000000001</Set>
-            
-            <!-- 调用外部命令获取结果 -->
-            <Set>ResultFile=STRCAT(/app/ics/dat/lot/,TIMEd,$SelVal,.dat)</Set>
-            <System command="java -cp /app/ics/app/lot/bin TimeCalTool " error="IGNORE">
-                <Arg name="funcTyp" value="d"/>
-                <Arg name="callId" value="$SelVal"/>
-                <Arg name="resultPath" value="/app/ics/dat/lot"/>
-                <Arg name="date1Fmt" value="yyyyMMddHHmmss"/>
-                <Arg name="date1" value="$Date1"/>
-                <Arg name="date2Fmt" value="yyyyMMddHHmmss"/>
-                <Arg name="date2" value="$Date2"/>
-            </System> 
-            
-            <!-- 读取结果 -->
-            <Exec func="PUB:OpenFile">
-                <Arg name="FileName" value="$ResultFile"/>
-                <Arg name="Mode" value="r"/>
-            </Exec>
-            <Exec func="PUB:ReadFile">
-                <Arg name="FieldName" value="CallResult"/>
-                <Arg name="ReadLen" value="20"/>
-            </Exec>
-            <Exec func="PUB:CloseFile">
-            </Exec>
-            
-            <!-- 返回结果 -->
-            <Set>DifTim=DELBOTHSPACE($CallResult)</Set>
-        </Process>
-          */
-        return null;
+        //检查分行号是否存在
+        if (null == brNo) {
+            brNo="441999";
+        }
+        //计算时间
+        String [] arr={"d","yyyyMMddHHmmss",lotTim,"yyyyMMddHHmmss",lclTim};
+        String difTim = timeDifTools(arr);
+        return difTim.trim();
     }
     /**
      * 下载不同的文件并入库
@@ -295,5 +258,36 @@ public class CommonLotAction extends BaseAction{
         context.setVariable(GDParamKeys.LOT_CURTIM, curTim);
         context.setVariable(GDParamKeys.LOT_FC_ACT_NO, fCActNo);
 
+    }
+    /**
+     * 时差计算方法
+     * @param paramArrayOfString
+     */
+    private String timeDifTools (String[] paramArrayOfString)
+    {
+        String funcTyp = paramArrayOfString[0];
+        String difTime = "";
+        try {
+            if ("d".equals(funcTyp)) {
+                difTime =difTime(paramArrayOfString);
+            } else if ("c".equals(funcTyp)) {
+                difTime = calTime(paramArrayOfString);
+            }
+        } catch (Exception localException1) {
+            localException1.printStackTrace();
+        }
+
+      return difTime;
+    }
+    private String difTime(String[] paramArrayOfString) throws Exception {
+        Date localDate1 = new SimpleDateFormat(paramArrayOfString[1]).parse(paramArrayOfString[2]);
+        Date localDate2 = new SimpleDateFormat(paramArrayOfString[3]).parse(paramArrayOfString[4]);
+        return (localDate1.getTime() - localDate2.getTime()) / 1000L + "";
+    }
+
+    private String calTime(String[] paramArrayOfString) throws Exception {
+         Date localDate1 = new SimpleDateFormat(paramArrayOfString[1]).parse(paramArrayOfString[2]);
+         Date localDate2 = new Date(localDate1.getTime() + Long.parseLong(paramArrayOfString[4]) * 1000L);
+        return new SimpleDateFormat(paramArrayOfString[3]).format(localDate2);
     }
 }
