@@ -1,17 +1,20 @@
 package com.bocom.bbip.gdeupsb.service.impl.sgrt00;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.spi.service.single.PayUnilateralToThirdService;
 import com.bocom.bbip.eups.spi.vo.CommHeadDomain;
 import com.bocom.bbip.eups.spi.vo.PayFeeOnlineDomain;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.jump.bp.core.Context;
+import com.bocom.bbip.service.Result;
 import com.bocom.jump.bp.core.CoreException;
 
 public class PayUnilateralToThirdServiceActionSGRT00 implements PayUnilateralToThirdService{
@@ -57,7 +60,25 @@ public class PayUnilateralToThirdServiceActionSGRT00 implements PayUnilateralToT
         context.setData("comNo",context.getData("dptId"));
         context.setData(ParamKeys.TXN_DATE, context.getData(ParamKeys.TXN_TIME).toString().substring(0, 8));
 
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("cusAc", context.getData("actNo").toString());
+        Result accessObject =  serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", map);
+        if (null != accessObject) {
+            context.setDataMap(accessObject.getPayload());
+        } else {
+            throw new CoreException("用户未开户！");
+        }
         
+        context.setData("payMod","0");
+        context.setData(ParamKeys.CHL_TYP,"L");//<!--交易渠道类型：L第三方系统-->
+        context.setData("vchChk","1");//<!--监督标志由业务上确定-->
+        context.setData("cchCod","00000000");
+        context.setData("aplCls","438");
+        context.setData("mstChk","1");
+        context.setData("itgTyp","0");
+        context.setData(ParamKeys.TXN_TYP,Constants.RESPONSE_TYPE_SUCC);
+
         return null;
     }
 
