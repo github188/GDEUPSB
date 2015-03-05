@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+    name="fhuakou">
+       <fixString name="CUST_ID" length="20"/>  <!-- 客户号 -->
+      <!--  <addString name="thdCusNo"   expression='exp:str.trim(CUST_ID)'/> -->
+       <fixString name="CO_NUM" length="8"/> <!--  定单号-->
+       <fixString name="PASS_FLAG" length="1"/> <!-- 密码校验标志（0） -->
+       <fixString name="PASSWORD" length="8"/> <!-- 密码（PASS_FLAG=0：为空） -->
+       <fixString name="QTY_TRADE" length="8"/> <!-- 支付金额 -->
+       <fixString name="DEV_ID" length="10"/>
+       <fixString name="TELLER" length="10"/>
+       
+</segment>
