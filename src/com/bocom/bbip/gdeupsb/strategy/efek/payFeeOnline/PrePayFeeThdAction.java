@@ -27,6 +27,7 @@ public class PrePayFeeThdAction implements Executable{
 			CoreRuntimeException {
 		logger.info("==============Start   PrePayFeeThdAction");
 		
+			context.setData(GDParamKeys.BAG_TYPE, "1");
 			context.setData(GDParamKeys.SVRCOD, "11");             //GDConstants 常量
 			constantOfSoapUI(context);
 	}
