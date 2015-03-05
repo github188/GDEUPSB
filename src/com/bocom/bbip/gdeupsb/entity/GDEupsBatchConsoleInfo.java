@@ -1,10 +1,14 @@
 package com.bocom.bbip.gdeupsb.entity;
 
+import com.bocom.bbip.data.annotation.GeneratedValue;
+import com.bocom.bbip.data.annotation.Id;
 import java.math.BigDecimal;
 import java.util.Date;
 
 public class GDEupsBatchConsoleInfo {
-	private String batNo;
+    @Id
+    @GeneratedValue
+    private String batNo;
 
     private String txnMde;
 
@@ -65,7 +69,7 @@ public class GDEupsBatchConsoleInfo {
     }
 
     public void setBatNo(String batNo) {
-        this.batNo = batNo == null ? null : batNo.trim();
+        this.batNo = batNo;
     }
 
     public String getTxnMde() {
@@ -73,7 +77,7 @@ public class GDEupsBatchConsoleInfo {
     }
 
     public void setTxnMde(String txnMde) {
-        this.txnMde = txnMde == null ? null : txnMde.trim();
+        this.txnMde = txnMde;
     }
 
     public String getRapTyp() {
@@ -81,7 +85,7 @@ public class GDEupsBatchConsoleInfo {
     }
 
     public void setRapTyp(String rapTyp) {
-        this.rapTyp = rapTyp == null ? null : rapTyp.trim();
+        this.rapTyp = rapTyp;
     }
 
     public String getComNo() {
@@ -89,7 +93,7 @@ public class GDEupsBatchConsoleInfo {
     }
 
     public void setComNo(String comNo) {
-        this.comNo = comNo == null ? null : comNo.trim();
+        this.comNo = comNo;
     }
 
     public String getComNme() {
@@ -97,7 +101,7 @@ public class GDEupsBatchConsoleInfo {
     }
 
     public void setComNme(String comNme) {
-        this.comNme = comNme == null ? null : comNme.trim();
+        this.comNme = comNme;
     }
 
     public String getBusKnd() {
@@ -105,7 +109,7 @@ public class GDEupsBatchConsoleInfo {
     }
 
     public void setBusKnd(String busKnd) {
-        this.busKnd = busKnd == null ? null : busKnd.trim();
+        this.busKnd = busKnd;
     }
 
     public String getTxnOrgCde() {
@@ -113,7 +117,7 @@ public class GDEupsBatchConsoleInfo {
     }
 
     public void setTxnOrgCde(String txnOrgCde) {
-        this.txnOrgCde = txnOrgCde == null ? null : txnOrgCde.trim();
+        this.txnOrgCde = txnOrgCde;
     }
 
     public String getTxnTlr() {
@@ -121,7 +125,7 @@ public class GDEupsBatchConsoleInfo {
     }
 
     public void setTxnTlr(String txnTlr) {
-        this.txnTlr = txnTlr == null ? null : txnTlr.trim();
+        this.txnTlr = txnTlr;
     }
 
     public Date getSubDte() {
@@ -145,7 +149,7 @@ public class GDEupsBatchConsoleInfo {
     }
 
     public void setBatSts(String batSts) {
-        this.batSts = batSts == null ? null : batSts.trim();
+        this.batSts = batSts;
     }
 
     public String getFleNme() {
@@ -153,7 +157,7 @@ public class GDEupsBatchConsoleInfo {
     }
 
     public void setFleNme(String fleNme) {
-        this.fleNme = fleNme == null ? null : fleNme.trim();
+        this.fleNme = fleNme;
     }
 
     public Integer getTotCnt() {
@@ -217,7 +221,7 @@ public class GDEupsBatchConsoleInfo {
     }
 
     public void setRsvFld1(String rsvFld1) {
-        this.rsvFld1 = rsvFld1 == null ? null : rsvFld1.trim();
+        this.rsvFld1 = rsvFld1;
     }
 
     public String getRsvFld2() {
@@ -225,7 +229,7 @@ public class GDEupsBatchConsoleInfo {
     }
 
     public void setRsvFld2(String rsvFld2) {
-        this.rsvFld2 = rsvFld2 == null ? null : rsvFld2.trim();
+        this.rsvFld2 = rsvFld2;
     }
 
     public String getRsvFld3() {
@@ -233,7 +237,7 @@ public class GDEupsBatchConsoleInfo {
     }
 
     public void setRsvFld3(String rsvFld3) {
-        this.rsvFld3 = rsvFld3 == null ? null : rsvFld3.trim();
+        this.rsvFld3 = rsvFld3;
     }
 
     public String getRsvFld4() {
@@ -241,7 +245,7 @@ public class GDEupsBatchConsoleInfo {
     }
 
     public void setRsvFld4(String rsvFld4) {
-        this.rsvFld4 = rsvFld4 == null ? null : rsvFld4.trim();
+        this.rsvFld4 = rsvFld4;
     }
 
     public String getRsvFld5() {
@@ -249,7 +253,7 @@ public class GDEupsBatchConsoleInfo {
     }
 
     public void setRsvFld5(String rsvFld5) {
-        this.rsvFld5 = rsvFld5 == null ? null : rsvFld5.trim();
+        this.rsvFld5 = rsvFld5;
     }
 
     public String getRsvFld6() {
@@ -257,7 +261,7 @@ public class GDEupsBatchConsoleInfo {
     }
 
     public void setRsvFld6(String rsvFld6) {
-        this.rsvFld6 = rsvFld6 == null ? null : rsvFld6.trim();
+        this.rsvFld6 = rsvFld6;
     }
 
     public String getRsvFld7() {
@@ -265,7 +269,7 @@ public class GDEupsBatchConsoleInfo {
     }
 
     public void setRsvFld7(String rsvFld7) {
-        this.rsvFld7 = rsvFld7 == null ? null : rsvFld7.trim();
+        this.rsvFld7 = rsvFld7;
     }
 
     public String getRsvFld8() {
@@ -273,7 +277,7 @@ public class GDEupsBatchConsoleInfo {
     }
 
     public void setRsvFld8(String rsvFld8) {
-        this.rsvFld8 = rsvFld8 == null ? null : rsvFld8.trim();
+        this.rsvFld8 = rsvFld8;
     }
 
     public String getRsvFld9() {
@@ -281,6 +285,6 @@ public class GDEupsBatchConsoleInfo {
     }
 
     public void setRsvFld9(String rsvFld9) {
-        this.rsvFld9 = rsvFld9 == null ? null : rsvFld9.trim();
+        this.rsvFld9 = rsvFld9;
     }
 }
