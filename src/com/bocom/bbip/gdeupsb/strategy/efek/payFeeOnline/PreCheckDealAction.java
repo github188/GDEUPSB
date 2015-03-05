@@ -70,6 +70,9 @@ public class PreCheckDealAction implements Executable{
 				context.setData(ParamKeys.BBIP_TERMINAL_NO, "ABIR148");
 				context.setData(ParamKeys.BR,"01441131999");
 				context.setData(ParamKeys.BK,"01441999999");
+				String traceNo=bbipPublicService.getTraceNo();
+				//TODO 要删
+				context.setData(ParamKeys.TRACE_NO, traceNo);
 //				context.setData(ParamKeys.REQ_JRN_NO, context.getData(ParamKeys.SEQUENCE));
 	}
 }

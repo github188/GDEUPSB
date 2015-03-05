@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.strategy.efek.payFeeOnline;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import org.apache.commons.logging.Log;
@@ -30,6 +31,9 @@ public class PrePayFeeThdAction implements Executable{
 			context.setData(GDParamKeys.BAG_TYPE, "1");
 			context.setData(GDParamKeys.SVRCOD, "11");             //GDConstants 常量
 			constantOfSoapUI(context);
+			
+			BigDecimal txnAmt=new BigDecimal(context.getData(ParamKeys.TXN_AMT).toString());
+			context.setData(ParamKeys.TXN_AMT, txnAmt.scaleByPowerOfTen(1));
 	}
 	/**
 	 *报文信息 

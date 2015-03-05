@@ -1,5 +1,7 @@
 package com.bocom.bbip.gdeupsb.strategy.efek.payFeeOnline;
 
+import java.math.BigDecimal;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -23,7 +25,7 @@ public class PrePayFeeAction implements Executable{
 			logger.info("============Start  PrePayFeeAction");
 					String ActFlg=(String)context.getData(ParamKeys.ACC_TYPE);          //银行内部账务类型
 					
-					
+					context.setData(GDParamKeys.BUS_TYPE, "010");
 					if("0".equals(ActFlg)){              //对公
 						//需要GDContants定义常量
 						context.setData(ParamKeys.THD_TXN_CDE,"451240");

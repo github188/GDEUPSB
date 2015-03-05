@@ -1,5 +1,7 @@
 package com.bocom.bbip.gdeupsb.strategy.efek.payFeeOnline;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Date;
 
 import org.apache.commons.logging.Log;
@@ -24,7 +26,12 @@ public class AftPayFeeAction implements Executable{
 			CoreRuntimeException {
 		// TODO Auto-generated method stub
 		logger.info("============Start AftPayFeeAction");
-
+		double i=Double.parseDouble(context.getData(ParamKeys.TXN_AMT).toString());
+		double d=i/100;
+		DecimalFormat df=new DecimalFormat("#.00");
+		BigDecimal txnAmt=new BigDecimal(df.format(d));
+		context.setData(ParamKeys.TXN_AMT,txnAmt );
+		
 		String rspCod=context.getData(ParamKeys.RSP_CDE).toString().trim();
 		if(rspCod.equals(Constants.HOST_RESPONSE_CODE_SUCC)){
 					context.setData(ParamKeys.TXN_STS, "S");
