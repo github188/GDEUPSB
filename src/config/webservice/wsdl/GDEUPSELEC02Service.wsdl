@@ -12,11 +12,41 @@
   <wsdl:message name="queryJournalOffChanResponseMessage">
     <wsdl:part name="queryJournalOffChanResponse" element="gdeupsb:queryJournalOffChanResponse"/>
   </wsdl:message>
+  <wsdl:message name="queryAgtInfoRequestMessage">
+    <wsdl:part name="queryAgtInfoRequest" element="gdeupsb:queryAgtInfo"/>
+  </wsdl:message>
+  <wsdl:message name="queryAgtInfoResponseMessage">
+    <wsdl:part name="queryAgtInfoResponse" element="gdeupsb:queryAgtInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="modifyStatusRequestMessage">
+    <wsdl:part name="modifyStatusRequest" element="gdeupsb:modifyStatus"/>
+  </wsdl:message>
+  <wsdl:message name="modifyStatusResponseMessage">
+    <wsdl:part name="modifyStatusResponse" element="gdeupsb:modifyStatusResponse"/>
+  </wsdl:message>
+  <wsdl:message name="queryStatusRequestMessage">
+    <wsdl:part name="queryStatusRequest" element="gdeupsb:queryStatus"/>
+  </wsdl:message>
+  <wsdl:message name="queryStatusResponseMessage">
+    <wsdl:part name="queryStatusResponse" element="gdeupsb:queryStatusResponse"/>
+  </wsdl:message>
   <wsdl:message name="payFeeOffChanRequestMessage">
     <wsdl:part name="payFeeOffChanRequest" element="gdeupsb:payFeeOffChan"/>
   </wsdl:message>
   <wsdl:message name="payFeeOffChanResponseMessage">
     <wsdl:part name="payFeeOffChanResponse" element="gdeupsb:payFeeOffChanResponse"/>
+  </wsdl:message>
+  <wsdl:message name="printCompanyBackRequestMessage">
+    <wsdl:part name="printCompanyBackRequest" element="gdeupsb:printCompanyBack"/>
+  </wsdl:message>
+  <wsdl:message name="printCompanyBackResponseMessage">
+    <wsdl:part name="printCompanyBackResponse" element="gdeupsb:printCompanyBackResponse"/>
+  </wsdl:message>
+  <wsdl:message name="queryCheckInfoRequestMessage">
+    <wsdl:part name="queryCheckInfoRequest" element="gdeupsb:queryCheckInfo"/>
+  </wsdl:message>
+  <wsdl:message name="queryCheckInfoResponseMessage">
+    <wsdl:part name="queryCheckInfoResponse" element="gdeupsb:queryCheckInfoResponse"/>
   </wsdl:message>
   <wsdl:message name="payCancelOffChanRequestMessage">
     <wsdl:part name="payCancelOffChanRequest" element="gdeupsb:payCancelOffChan"/>
@@ -30,16 +60,53 @@
   <wsdl:message name="queryThirdFeeOffChanResponseMessage">
     <wsdl:part name="queryThirdFeeOffChanResponse" element="gdeupsb:queryThirdFeeOffChanResponse"/>
   </wsdl:message>
+  <wsdl:message name="checkInBankRequestMessage">
+    <wsdl:part name="checkInBankRequest" element="gdeupsb:checkInBank"/>
+  </wsdl:message>
+  <wsdl:message name="checkInBankResponseMessage">
+    <wsdl:part name="checkInBankResponse" element="gdeupsb:checkInBankResponse"/>
+  </wsdl:message>
+  <wsdl:message name="manageAgtRequestMessage">
+    <wsdl:part name="manageAgtRequest" element="gdeupsb:manageAgt"/>
+  </wsdl:message>
+  <wsdl:message name="manageAgtResponseMessage">
+    <wsdl:part name="manageAgtResponse" element="gdeupsb:manageAgtResponse"/>
+  </wsdl:message>
   <wsdl:portType name="GDEUPSELEC02ServicePortType">
     <wsdl:operation name="queryJournalOffChan">
       <wsdl:documentation/>
       <wsdl:input message="tns:queryJournalOffChanRequestMessage"/>
       <wsdl:output message="tns:queryJournalOffChanResponseMessage"/>
     </wsdl:operation>
+    <wsdl:operation name="queryAgtInfo">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:queryAgtInfoRequestMessage"/>
+      <wsdl:output message="tns:queryAgtInfoResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="modifyStatus">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:modifyStatusRequestMessage"/>
+      <wsdl:output message="tns:modifyStatusResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="queryStatus">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:queryStatusRequestMessage"/>
+      <wsdl:output message="tns:queryStatusResponseMessage"/>
+    </wsdl:operation>
     <wsdl:operation name="payFeeOffChan">
       <wsdl:documentation/>
       <wsdl:input message="tns:payFeeOffChanRequestMessage"/>
       <wsdl:output message="tns:payFeeOffChanResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="printCompanyBack">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:printCompanyBackRequestMessage"/>
+      <wsdl:output message="tns:printCompanyBackResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="queryCheckInfo">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:queryCheckInfoRequestMessage"/>
+      <wsdl:output message="tns:queryCheckInfoResponseMessage"/>
     </wsdl:operation>
     <wsdl:operation name="payCancelOffChan">
       <wsdl:documentation/>
@@ -50,6 +117,16 @@
       <wsdl:documentation/>
       <wsdl:input message="tns:queryThirdFeeOffChanRequestMessage"/>
       <wsdl:output message="tns:queryThirdFeeOffChanResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="checkInBank">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:checkInBankRequestMessage"/>
+      <wsdl:output message="tns:checkInBankResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="manageAgt">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:manageAgtRequestMessage"/>
+      <wsdl:output message="tns:manageAgtResponseMessage"/>
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="GDEUPSELEC02ServiceSoapBinding" type="tns:GDEUPSELEC02ServicePortType">
@@ -63,8 +140,53 @@
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="queryAgtInfo">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/queryAgtInfo"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="modifyStatus">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/modifyStatus"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryStatus">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/queryStatus"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="payFeeOffChan">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/payFeeOffChan"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="printCompanyBack">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/printCompanyBack"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryCheckInfo">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/queryCheckInfo"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -83,6 +205,24 @@
     </wsdl:operation>
     <wsdl:operation name="queryThirdFeeOffChan">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/queryThirdFeeOffChan"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="checkInBank">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/checkInBank"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="manageAgt">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/manageAgt"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
