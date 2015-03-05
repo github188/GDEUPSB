@@ -84,6 +84,7 @@ public class PayFeeOnlineServiceActionELEC02 implements PayFeeOnlineService {
 		context.setData("QFG", context.getData("rsvFld3"));
 		context.setData("STO", context.getData("tlr"));
 		
+		context.setData("txnSqn", context.getData("sqn"));//保存缴费交易流水号，返回给前端，用于抹帐
 		logger.info("PayFeeOnlineServiceActionELEC02 preThdDeal end ... ...");
 		return null;
 	}

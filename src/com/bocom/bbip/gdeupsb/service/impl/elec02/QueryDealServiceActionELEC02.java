@@ -55,9 +55,9 @@ public class QueryDealServiceActionELEC02 implements QueryDealService {
 		String date = DateUtils.format(new Date(), "yyyyMMdd");
 		String time = DateUtils.format(new Date(),"yyyyMMddHHmmss");
 		context.setData("AppTradeCode", "10");//业务交易码
-		context.setData("StartAddr", "");
-		context.setData("DestAddr", "");
-		context.setData("MesgID", "");
+		context.setData("StartAddr", "BANK");
+		context.setData("DestAddr", "ELEC");
+		context.setData("MesgID", "MesgID");
 		context.setData("WorkDate", date);
 		context.setData("SendTime", time);
 		context.setData("mesgPRI", "9");
@@ -65,20 +65,20 @@ public class QueryDealServiceActionELEC02 implements QueryDealService {
 		context.setData("FileName", "");
 		context.setData("zipFlag", "0");
 		
-		context.setData("WTC", "");
+		context.setData("WTC", "WTC");
 		context.setData("TMN", context.getData("brno"));
 		context.setData("WD0", date);
-		context.setData("CLZ", "");
-		context.setData("ECD", "");
-		context.setData("8ED", context.getData("rsvFld1"));
+		context.setData("CLZ", "1001");
+		context.setData("ECD", "BOCOM");
+		context.setData("8ED", "300");
 		context.setData("JFH", context.getData("thdCusNo"));
-		context.setData("FYM", context.getData("rsvFld2"));
-		context.setData("QFG", context.getData("rsvFld3"));
+		context.setData("FYM", context.getData("FYM"));
+		context.setData("QFG", context.getData("QFG"));
 		context.setData("STO", context.getData("tlr"));
 		
-		context.setData("owePrd", context.getData("rsvFld2"));
-		context.setData("bakFld1", context.getData("rsvFld1"));
-		context.setData("bakFld3", context.getData("rsvFld3"));
+//		context.setData("owePrd", context.getData("rsvFld2"));
+//		context.setData("bakFld1", context.getData("rsvFld1"));
+//		context.setData("bakFld3", context.getData("rsvFld3"));
 		
 		Map<String,Object> thdReturnMessage = callThdTradeManager.trade(context);
 		
@@ -88,6 +88,8 @@ public class QueryDealServiceActionELEC02 implements QueryDealService {
 			logger.info("responseCode:["+responseCode+"]");
 			if(Constants.RESPONSE_CODE_SUCC.equals(responseCode)){
 				logger.info("QryDealStrategyActionELEC00 success!");
+				context.setDataMap(thdReturnMessage);
+				context.setData("txnSqn", context.getData("sqn"));//保存查询交易流水号，返回给前端，用于缴费
 			}else{
 				if(StringUtil.isEmpty(responseCode)){
 					responseCode = ErrorCodes.EUPS_THD_RSP_CODE_ERROR;
@@ -97,7 +99,7 @@ public class QueryDealServiceActionELEC02 implements QueryDealService {
 //			String txnAmt = thdReturnMessage.get("QFM").toString().trim();
 //			callThdMap.put(ParamKeys.OWE_FEE_AMT, txnAmt);
 //			context.setData(ParamKeys.OWE_FEE_AMT, txnAmt);
-			context.setDataMap(thdReturnMessage);
+//			context.setDataMap(thdReturnMessage);
 		}else{
 			logger.error("QueryDealServiceImplELEC00 return has error!");
 			throw new CoreException(ErrorCodes.EUPS_THD_SYS_ERROR);

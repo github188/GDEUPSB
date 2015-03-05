@@ -70,6 +70,7 @@ public class AutomaticCancelServiceActionWATR00 implements	AutomaticCancelServic
 			eupsTransJournal.setOldTxnSqn(oldTxnSqn.trim());
 	        context.setData("lclJnlList", eupsTransJournal);
 		}
+		context.setData("txnSqn", context.getData("sqn"));
 		logger.info("AutomaticCancelServiceActionWATR00 aftCancel  end ... ...");
 		return null;
 	}

@@ -50,6 +50,7 @@ public class QueryJournalOffChanServiceActionELEC02 extends BaseAction {
 		logger.info("oldTxnSqn["+oldTxnSqn+"]thdCusNo["+thdCusNo+"]thdCusNme["+thdCusNme+"]txnSts["+txnSts+"]txnTlr["+txnTlr+"]" +
 				"txnAmt["+txnAmt+"]txnTme["+txnTme+"]comNo["+comNo+"]cusAc["+cusAc+"]");
 		context.setDataMap(BeanUtils.toMap(eupsTransJournal));
+		context.setData("oldTxnSqn", oldTxnSqn);
 		logger.info("QueryJournalOffChanServiceActionELEC02 end ... ...");
 	}
 }

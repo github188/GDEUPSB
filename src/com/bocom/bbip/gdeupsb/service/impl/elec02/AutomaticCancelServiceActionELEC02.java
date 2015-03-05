@@ -52,7 +52,7 @@ public class AutomaticCancelServiceActionELEC02 implements	AutomaticCancelServic
 	@Override
 	public Map<String, Object> aftCancel(CancelDomain canceldomain,Context context) throws CoreException {
 		logger.info("AutomaticCancelServiceActionWATR00 aftCancel  start ... ...");
-		
+		context.setData("txnSqn", context.getData("sqn"));
 		logger.info("AutomaticCancelServiceActionWATR00 aftCancel  end ... ...");
 		return null;
 	}
