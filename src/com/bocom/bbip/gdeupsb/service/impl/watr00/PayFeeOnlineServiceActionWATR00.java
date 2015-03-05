@@ -82,6 +82,8 @@ public class PayFeeOnlineServiceActionWATR00 implements PayFeeOnlineService {
 		context.setData("je", context.getData("txnAmt"));
 		context.setData("jffs", "0");
 		context.setData("thdSqn", context.getData("waterno"));
+		
+		context.setData("txnSqn", context.getData("sqn"));//保存缴费交易流水号，返回给前端，用于抹帐
 		logger.info("PayFeeOnlineServiceActionWATR00 preThdDeal end ... ...");
 		return null;
 	}

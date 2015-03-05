@@ -3,7 +3,6 @@ package com.bocom.bbip.gdeupsb.service.impl.watr00;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
 import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
 import com.bocom.jump.bp.core.Context;

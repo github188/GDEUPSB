@@ -1,6 +1,8 @@
 package com.bocom.bbip.gdeupsb.service.impl.watr00;
 
 import java.io.File;
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +18,8 @@ import com.bocom.bbip.comp.account.AccountService;
 import com.bocom.bbip.comp.btp.BTPService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
+import com.bocom.bbip.eups.action.common.OperateFileAction;
+import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
@@ -23,11 +27,16 @@ import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.BatchAcpService;
 import com.bocom.bbip.eups.spi.vo.PrepareBatchAcpDomain;
 import com.bocom.bbip.file.fmt.FileMarshaller;
-import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
+import com.bocom.bbip.gdeupsb.common.GDConstants;
+import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
+import com.bocom.bbip.gdeupsb.entity.GdeupsWatBatInfTmp;
+import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
+import com.bocom.bbip.gdeupsb.repository.GdeupsWatBatInfTmpRepository;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.ContextUtils;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -42,6 +51,8 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 	private static Logger logger = LoggerFactory.getLogger(BatchAcpServiceImplWATR00.class);
 	/**代扣文件指定存放路径前缀*/
 	private static final String FILE_DIR_PREFIX = "/home/bbipadm/data/mftp/BBIP/GDEUPS/";
+	/**批量加锁KEY*/
+	private static final String lockKey = "BatchAcpServiceImplWATR00";
 	@Autowired
 	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
 	@Autowired
@@ -53,25 +64,43 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 	@Autowired
 	BTPService BTPservice;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void prepareBatchDeal(PrepareBatchAcpDomain domain, Context context) throws CoreException {
 		logger.info("BatchAcpServiceImplWATR00 prepareBatchDeal start ... ...");
-//		get(BatchFileCommon.class).Lock("BatchAcpServiceImplWATR00");
+		service.tryLock(lockKey, 60*1000L, 600L);//加锁
 		String br = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.BR, ErrorCodes.EUPS_FIELD_EMPTY);//机构号
 		String tlr = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.TELLER, ErrorCodes.EUPS_FIELD_EMPTY);//柜员号
 		String comNo = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.COMPANY_NO, ErrorCodes.EUPS_FIELD_EMPTY);//代理单位号
-		String acDate = DateUtils.format(service.getAcDate(), DateUtils.STYLE_SIMPLE_DATE);//会计日期
+		String acDate = DateUtils.format(service.getAcDate(), DateUtils.STYLE_yyyyMMdd);//会计日期
+		
 		//代扣文件名称 BATC+单位编号(代收付)+0(代收付类型，代扣0)+.txt
-		String filNam = "BATC"+comNo+"0"+".txt";
+		String filNam = "BATC"+comNo+context.getData(ParamKeys.EUPS_BUSS_TYPE)+".txt";
 		context.setVariable(ParamKeys.FLE_NME, filNam);
 		//代扣文件放置目录
 		// /home/bbipadm/data/mftp/BBIP/请求系统/机构号/柜员号/会计日期
 		String dir = FILE_DIR_PREFIX+br+File.separator+tlr+File.separator+acDate+File.separator;
-		
+		logger.info("dir_filNam["+dir+filNam+"]");
+		//获取第三方批量文件并解析
 		buildBatchFile(context);
+		
+		String fileName = ContextUtils.assertVariableNotEmptyAndGet(context,ParamKeys.FLE_NME, ErrorCodes.EUPS_FILE_CREATE_NAME_ISEMPTY);
+		Map<String, Object> fileMap = (Map<String, Object>) ContextUtils.assertVariableNotNullAndGet(context, "agtFileMap","agtFileMap不能为空");
+		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne("BatchFileFtpNo");
+		Assert.isNotNull(config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST,"第三方配置信息不存在");
+		config.setLocFleNme(fileName);
+		config.setRmtFleNme(fileName);
+//		config.setRmtWay(dir);
+		/** 产生代收付格式文件 */
+		((OperateFileAction)get("opeFile")).createCheckFile(config, GDConstants.BATCH_FILE_FORMAT, fileName, fileMap);
+		/** 发送到指定路径 */
+		((OperateFTPAction)get("opeFTP")).putCheckFile(config);
+		
+		
+		
 //		get(BatchFileCommon.class).sendBatchFileToACP(context);
-		BatchFileCommon com = get("eups.batchFileCommon");
-		com.sendBatchFileToACP(context);
+//		BatchFileCommon com = get("eups.batchFileCommon");
+//		com.sendBatchFileToACP(context);
 //		//设置接下来context中必须的值
 //		context.setData(ParamKeys.TXN_MDE, Constants.TXN_MDE_FILE);
 //		context.setData(ParamKeys.FLE_NME, filNam);
@@ -80,6 +109,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 //		context.setData(ParamKeys.EUPS_BUSS_TYPE, "WATR00");
 //		context.setData(ParamKeys.TOT_CNT, map.get(ParamKeys.TOT_CNT));
 //		context.setData(ParamKeys.TOT_AMT, map.get(ParamKeys.TOT_AMT));
+		service.unlock(lockKey);
 		logger.info("BatchAcpServiceImplWATR00 prepareBatchDeal end ... ...");
 	}
 	/**
@@ -93,6 +123,33 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 	 */
 	@SuppressWarnings("unchecked")
 	private void buildBatchFile(Context context) throws CoreException{
+		
+		String path = context.getData("path");
+		String filename = context.getData("filename");
+		
+		/** 检查批次是否存在 */
+		GDEupsBatchConsoleInfo info = new GDEupsBatchConsoleInfo();
+		info.setRsvFld1(filename);//第三方文件名
+		info.setComNo((String)context.getData(ParamKeys.COMPANY_NO));
+		List<GDEupsBatchConsoleInfo> infos =get(GDEupsBatchConsoleInfoRepository.class).find(info);
+		Assert.isNotNull(infos, "批次信息已经存在");
+		/** 插入批次控制表 */
+		String batNo =((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
+		info.setBatNo(batNo);//批次号
+		info.setBatSts(GDConstants.BATCH_STATUS_INIT);//批次状态
+		info.setFleNme((String)context.getVariable(ParamKeys.FLE_NME));//代收付批量文件名称
+		info.setRsvFld1(filename);//第三方文件名
+//		info.setComNo((String) context.getData(ParamKeys.COMPANY_NO));
+		info.setSubDte(new Date());
+		info.setTxnTlr((String) context.getData(ParamKeys.TELLER));
+		info.setTxnMde(Constants.TXN_MDE_FILE);
+		info.setRapTyp("0");//代收
+		info.setComNme((String)context.getData(ParamKeys.COMPANY_NAME));
+		info.setBusKnd((String)context.getData(ParamKeys.BUSS_KIND));
+		info.setTxnOrgCde((String) context.getData(ParamKeys.BR));
+		get(GDEupsBatchConsoleInfoRepository.class).insert(info);
+		context.getDataMapDirectly().putAll(BeanUtils.toFlatMap(info));
+		
 		Map<String,Object> ret = CollectionUtils.createMap();
 		Map<String,Object> header = CollectionUtils.createMap();
 		List<Object> detail = CollectionUtils.createList();
@@ -100,8 +157,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		//根据ftpNo查找第三方FTP配置信息
 		EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("waterBatchFile");
 		Assert.isNotNull(eupsThdFtpConfig, ErrorCodes.EUPS_FTP_INFO_NOTEXIST);
-		String path = context.getData("path");
-		String filename = context.getData("filename");
+		
 		eupsThdFtpConfig.setRmtFleNme(filename);
 		eupsThdFtpConfig.setRmtWay(path);
 		logger.info("start get batch file now,thd ftp info=["+BeanUtils.toFlatMap(eupsThdFtpConfig)+"]");
@@ -119,8 +175,22 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		header.put(ParamKeys.COMPANY_NO, eupsThdFtpConfig.getComNo());
 		header.put("totCount", srcHeader.get(ParamKeys.TOT_CNT));
 		header.put(ParamKeys.TOT_AMT, srcHeader.get(ParamKeys.TOT_AMT));
+		GDEupsBatchConsoleInfo newInfo = new GDEupsBatchConsoleInfo();
+		newInfo.setBatNo(info.getBatNo());
+		String totCnt = (String)srcHeader.get(ParamKeys.TOT_CNT);
+		String totAmt = (String)srcHeader.get(ParamKeys.TOT_AMT);//分为单位
+		newInfo.setTotCnt(Integer.parseInt(totCnt));
+		newInfo.setTotAmt(NumberUtils.centToYuan(totAmt));//转换为以元为单位
+		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(newInfo);
 		//生成代扣文件体信息
 		List<Map<String,Object>> srcDetail = (List<Map<String, Object>>) srcFile.get(ParamKeys.EUPS_FILE_DETAIL);
+		GdeupsWatBatInfTmp tmp = new GdeupsWatBatInfTmp();
+		tmp.setBatNo(info.getBatNo());
+		tmp.setBkNo(info.getTxnOrgCde());
+		tmp.setComNo(info.getComNo());
+		tmp.setActDat(info.getSubDte());
+		tmp.setStatus("U");
+		int i = 0;
 		for(Map<String,Object> map:srcDetail){
 			Map<String,Object> temp = CollectionUtils.createMap();
 			temp.put("CUSAC", map.get("bcount"));
@@ -134,6 +204,15 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 			temp.put("RMK1", "");
 			temp.put("RMK2", "");
 			detail.add(temp);
+			
+			String sqn = get(BBIPPublicService.class).getBBIPSequence();
+			tmp.setSqn(sqn);
+			tmp.setSeqNo(i++);
+			tmp.setHno((String)map.get("hno"));
+			tmp.setSj((String)map.get("sj"));
+			tmp.setJe((String)map.get("je"));
+			tmp.setBcount((String)map.get("bcount"));
+			get(GdeupsWatBatInfTmpRepository.class).insert(tmp);
 		}
 		ret.put("header", header);
 		ret.put("detail", detail);
@@ -150,6 +229,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 	 * @param fileId
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	private Map<String,Object> parseFileByPath(String filePath,String fileName,String fileId){
 		Map<String,Object> map = null;
 		Resource resource = new ClassPathResource("config/fmt/FileFormatConfig.xml");
