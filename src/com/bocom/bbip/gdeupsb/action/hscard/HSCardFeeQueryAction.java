@@ -32,16 +32,19 @@ public class HSCardFeeQueryAction extends BaseAction {
 		ctx.setData("traceNo", bbipPublicService.getTraceNo());
 		// 查询内部账户余额
 		ctx.setData(ParamKeys.BK, bbipPublicService.getParam("BBIP", "BK"));
-		ctx.setData(ParamKeys.BR, "12");
-		ctx.setData(ParamKeys.TELLER, "123");
-		ctx.setData(ParamKeys.CHANNEL, "1234");
+		ctx.setData(ParamKeys.BR, "01441131999");
+		
+		ctx.setData(ParamKeys.TELLER, "ABIR148");
+		ctx.setData(ParamKeys.CHANNEL, "00");
 //		ctx.setData(ParamKeys.TRACE_NO, ctx.getData(ParamKeys.SEQUENCE));
 		String cusAc = ctx.getData(ParamKeys.CUS_AC);
 		CommonRequest comRequest=CommonRequest.build(ctx);
 		CusActInfResult acResult = accountService.getAcInf(comRequest, cusAc);
 		BigDecimal actBal = acResult.getActBal();
+		BigDecimal avaBal = acResult.getAvaBal();
+		ctx.setData("avaBal", avaBal);
+		ctx.setData("actBal", actBal);
 		log.info("actBal=" + actBal);
-
 	}
 
 }
