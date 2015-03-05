@@ -33,7 +33,9 @@ public class PrePayFeeThdAction implements Executable{
 			constantOfSoapUI(context);
 			
 			BigDecimal txnAmt=new BigDecimal(context.getData(ParamKeys.TXN_AMT).toString());
-			context.setData(ParamKeys.TXN_AMT, txnAmt.scaleByPowerOfTen(1));
+			context.setData(ParamKeys.TXN_AMT, txnAmt.scaleByPowerOfTen(2));
+			BigDecimal oweFeeAmt=new BigDecimal(context.getData(ParamKeys.OWE_FEE_AMT).toString());
+			context.setData(ParamKeys.OWE_FEE_AMT, oweFeeAmt.scaleByPowerOfTen(2));
 	}
 	/**
 	 *报文信息 
@@ -51,14 +53,12 @@ public class PrePayFeeThdAction implements Executable{
 				context.setData(GDParamKeys.REDUCE_SIGN, GDConstants.REDUCE_SIGN);//压缩标志
 				context.setData(GDParamKeys.TRADE_RETURN_CODE, GDConstants.TRADE_RETURN_CODE);//交易返回代码
 
-		
 				context.setData(GDParamKeys.NET_NAME, GDConstants.NET_NAME);//网点名称
 				context.setData(GDParamKeys.SECRETKEY_INDEX, GDConstants.SECRETKEY_INDEX);//密钥索引
 				context.setData(GDParamKeys.SECRETKEY_INIT, GDConstants.SECRETKEY_INIT);//密钥初始向量
 				context.setData(GDParamKeys.TRADE_RECEIVE, GDConstants.TRADE_RECEIVE);//交易接收方
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
-
 				
 				Date txnDte=context.getData(ParamKeys.TXN_DATE);
 				Date txnTme=context.getData(ParamKeys.TXN_TIME);
@@ -66,5 +66,10 @@ public class PrePayFeeThdAction implements Executable{
 				String txnTime=DateUtils.formatAsHHmmss(txnTme);
 				context.setData(ParamKeys.TXN_DATE, txnDate);
 				context.setData(ParamKeys.TXN_TIME, txnTime);
+				
+				//TODO 
+				context.setData(GDParamKeys.BUS_IDENTIFY, "");
+				context.setData(ParamKeys.PAY_TYPE, "110");
+				
 	}
 }
