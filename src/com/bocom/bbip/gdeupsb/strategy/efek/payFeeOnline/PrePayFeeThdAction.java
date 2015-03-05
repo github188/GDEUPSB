@@ -42,7 +42,7 @@ public class PrePayFeeThdAction implements Executable{
 		
 		context.setData(GDParamKeys.TREATY_VERSION, GDConstants.TREATY_VERSION);//协议版本
 		context.setData(GDParamKeys.TRADE_PERSON_IDENTIFY, GDConstants.TRADE_PERSON_IDENTIFY);//交易人标识
-		context.setData(GDParamKeys.BAG_TYPE, GDConstants.BAG_TYPE);//数据包类型
+		context.setData(GDParamKeys.BAG_TYPE, "0");//数据包类型
 		context.setData(GDParamKeys.TRADE_START,GDConstants.TRADE_START);//交易发起方
 		
 				context.setData(GDParamKeys.TRADE_SEND_DATE,DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMdd));//交易发送日期
