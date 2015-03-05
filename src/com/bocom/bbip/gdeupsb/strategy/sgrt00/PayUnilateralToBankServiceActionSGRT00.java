@@ -1,4 +1,4 @@
-package com.bocom.bbip.gdeupsb.service.impl.sgrt00;
+package com.bocom.bbip.gdeupsb.strategy.sgrt00;
 
 import java.util.HashMap;
 import java.util.Map;

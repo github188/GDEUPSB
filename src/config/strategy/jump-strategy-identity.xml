@@ -231,4 +231,8 @@
 	<bean class="com.bocom.bbip.gdeupsb.strategy.elcgd.PayUnilateralToBankServiceAction"
 		id="eups.payUnilateralToBankServiceActionELEC01" />				
 	
+	 <!-- 广东烟草划扣联机单笔记 -->
+     <bean class="com.bocom.bbip.gdeupsb.strategy.sgrt00.PayUnilateralToBankServiceActionSGRT00"
+        id="eups.payUnilateralToBankServiceActionSGRT00" />
+	
 </beans>
