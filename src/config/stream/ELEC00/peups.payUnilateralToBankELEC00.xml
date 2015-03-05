@@ -7,7 +7,7 @@
 <!--网点名称	WDMC	Varchar2(64)-->
 		<fixString name="netName"  length="64"/>
 <!--交易流水号	JYLSH	Varchar2(24)-->
-		<fixString name="thdSqn"  length="24"/>
+		<fixString name="sqn"  length="24"/>
 <!--交易日期	JYRQ	Varchar2(8)-->
 		<fixString name="txnDte"  length="8"/>
 <!--交易时间	JYSJ	Varchar2 (6)-->

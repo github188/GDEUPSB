@@ -29,9 +29,9 @@
 		<!-- 交易目标地址	JYMBDZ	Varchar2(24)  -->
 					<fixString name="traAimAdd" length="24" />
 		<!-- 交易发送日期	JYFSRQ	Varchar2(8)  -->
-					<fixString name="thdTxnDte" length="8" />
+					<fixString name="traSendDate" length="8" />
 		<!-- 交易发送时间	JYFSSJ	Varchar2(6)  -->
-					<fixString name="thdTxnTme" length="6" />
+					<fixString name="traSendTime" length="6" />
 		<!-- 交易优先级	JYYXJ	Varchar2(1)  -->
 					<fixString name="traPry" length="1" />
 		<!-- 交易返回代码	JYFHDM	Varchar2(5)  -->
