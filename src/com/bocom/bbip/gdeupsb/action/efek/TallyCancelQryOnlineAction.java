@@ -3,8 +3,6 @@ package com.bocom.bbip.gdeupsb.action.efek;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import a.a.a.s;
-
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsTransJournal;
@@ -50,6 +48,8 @@ public class TallyCancelQryOnlineAction extends BaseAction{
 //TODO						context.setData(GDParamKeys.ELECTRICITY_YEARMONTH, );
 						context.setData(ParamKeys.CCY, eupsTransJournal.getCcy());
 						context.setData(ParamKeys.TXN_AMT, eupsTransJournal.getTxnAmt());
+						context.setData(GDParamKeys.BUS_TYPE, eupsTransJournal.getRsvFld1());
+						context.setData(GDParamKeys.PAY_TYPE, eupsTransJournal.getRsvFld2());
 				}else{
 					log.error("~~~~~~~~~~没有记录");
 					throw new CoreException("没有记录");
