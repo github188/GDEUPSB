@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdeupsWatBatInfTmp" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdeupsWatBatInfTmp" >
+    <id column="SQN" property="sqn" jdbcType="CHAR" />
+    <result column="BAT_NO" property="batNo" jdbcType="CHAR" />
+    <result column="BK_NO" property="bkNo" jdbcType="CHAR" />
+    <result column="COM_NO" property="comNo" jdbcType="CHAR" />
+    <result column="SEQ_NO" property="seqNo" jdbcType="INTEGER" />
+    <result column="ACT_DAT" property="actDat" jdbcType="DATE" />
+    <result column="HNO" property="hno" jdbcType="CHAR" />
+    <result column="SJ" property="sj" jdbcType="CHAR" />
+    <result column="JE" property="je" jdbcType="CHAR" />
+    <result column="BCOUNT" property="bcount" jdbcType="CHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="ERR_MSG" property="errMsg" jdbcType="VARCHAR" />
+    <result column="RMK1" property="rmk1" jdbcType="VARCHAR" />
+    <result column="RMK2" property="rmk2" jdbcType="VARCHAR" />
+    <result column="RMK3" property="rmk3" jdbcType="VARCHAR" />
+    <result column="RMK4" property="rmk4" jdbcType="VARCHAR" />
+    <result column="RMK5" property="rmk5" jdbcType="VARCHAR" />
+    <result column="RMK6" property="rmk6" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    SQN, BAT_NO, BK_NO, COM_NO, SEQ_NO, ACT_DAT, HNO, SJ, JE, BCOUNT, STATUS, ERR_MSG, 
+    RMK1, RMK2, RMK3, RMK4, RMK5, RMK6
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_WAT_BAT_INF_TMP
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="batNo!=null" >
+        AND  BAT_NO=#{batNo,jdbcType=CHAR}
+      </if>
+      <if test="bkNo!=null" >
+        AND  BK_NO=#{bkNo,jdbcType=CHAR}
+      </if>
+      <if test="comNo!=null" >
+        AND  COM_NO=#{comNo,jdbcType=CHAR}
+      </if>
+      <if test="seqNo!=null" >
+        AND  SEQ_NO=#{seqNo,jdbcType=INTEGER}
+      </if>
+      <if test="actDat!=null" >
+        AND  ACT_DAT=#{actDat,jdbcType=DATE}
+      </if>
+      <if test="hno!=null" >
+        AND  HNO=#{hno,jdbcType=CHAR}
+      </if>
+      <if test="sj!=null" >
+        AND  SJ=#{sj,jdbcType=CHAR}
+      </if>
+      <if test="je!=null" >
+        AND  JE=#{je,jdbcType=CHAR}
+      </if>
+      <if test="bcount!=null" >
+        AND  BCOUNT=#{bcount,jdbcType=CHAR}
+      </if>
+      <if test="status!=null" >
+        AND  STATUS=#{status,jdbcType=CHAR}
+      </if>
+      <if test="errMsg!=null" >
+        AND  ERR_MSG=#{errMsg,jdbcType=VARCHAR}
+      </if>
+      <if test="rmk1!=null" >
+        AND  RMK1=#{rmk1,jdbcType=VARCHAR}
+      </if>
+      <if test="rmk2!=null" >
+        AND  RMK2=#{rmk2,jdbcType=VARCHAR}
+      </if>
+      <if test="rmk3!=null" >
+        AND  RMK3=#{rmk3,jdbcType=VARCHAR}
+      </if>
+      <if test="rmk4!=null" >
+        AND  RMK4=#{rmk4,jdbcType=VARCHAR}
+      </if>
+      <if test="rmk5!=null" >
+        AND  RMK5=#{rmk5,jdbcType=VARCHAR}
+      </if>
+      <if test="rmk6!=null" >
+        AND  RMK6=#{rmk6,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_WAT_BAT_INF_TMP
+    where SQN = #{sqn,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from ${GDEUPSB_SCHEMA}.GDEUPS_WAT_BAT_INF_TMP
+    where SQN = #{sqn,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdeupsWatBatInfTmp" >
+    insert into ${GDEUPSB_SCHEMA}.GDEUPS_WAT_BAT_INF_TMP
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sqn != null" >
+        SQN,
+      </if>
+      <if test="batNo != null" >
+        BAT_NO,
+      </if>
+      <if test="bkNo != null" >
+        BK_NO,
+      </if>
+      <if test="comNo != null" >
+        COM_NO,
+      </if>
+      <if test="seqNo != null" >
+        SEQ_NO,
+      </if>
+      <if test="actDat != null" >
+        ACT_DAT,
+      </if>
+      <if test="hno != null" >
+        HNO,
+      </if>
+      <if test="sj != null" >
+        SJ,
+      </if>
+      <if test="je != null" >
+        JE,
+      </if>
+      <if test="bcount != null" >
+        BCOUNT,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="errMsg != null" >
+        ERR_MSG,
+      </if>
+      <if test="rmk1 != null" >
+        RMK1,
+      </if>
+      <if test="rmk2 != null" >
+        RMK2,
+      </if>
+      <if test="rmk3 != null" >
+        RMK3,
+      </if>
+      <if test="rmk4 != null" >
+        RMK4,
+      </if>
+      <if test="rmk5 != null" >
+        RMK5,
+      </if>
+      <if test="rmk6 != null" >
+        RMK6,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sqn != null" >
+        #{sqn,jdbcType=CHAR},
+      </if>
+      <if test="batNo != null" >
+        #{batNo,jdbcType=CHAR},
+      </if>
+      <if test="bkNo != null" >
+        #{bkNo,jdbcType=CHAR},
+      </if>
+      <if test="comNo != null" >
+        #{comNo,jdbcType=CHAR},
+      </if>
+      <if test="seqNo != null" >
+        #{seqNo,jdbcType=INTEGER},
+      </if>
+      <if test="actDat != null" >
+        #{actDat,jdbcType=DATE},
+      </if>
+      <if test="hno != null" >
+        #{hno,jdbcType=CHAR},
+      </if>
+      <if test="sj != null" >
+        #{sj,jdbcType=CHAR},
+      </if>
+      <if test="je != null" >
+        #{je,jdbcType=CHAR},
+      </if>
+      <if test="bcount != null" >
+        #{bcount,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="errMsg != null" >
+        #{errMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="rmk1 != null" >
+        #{rmk1,jdbcType=VARCHAR},
+      </if>
+      <if test="rmk2 != null" >
+        #{rmk2,jdbcType=VARCHAR},
+      </if>
+      <if test="rmk3 != null" >
+        #{rmk3,jdbcType=VARCHAR},
+      </if>
+      <if test="rmk4 != null" >
+        #{rmk4,jdbcType=VARCHAR},
+      </if>
+      <if test="rmk5 != null" >
+        #{rmk5,jdbcType=VARCHAR},
+      </if>
+      <if test="rmk6 != null" >
+        #{rmk6,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_WAT_BAT_INF_TMP
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="batNo!=null" >
+        AND  BAT_NO=#{batNo,jdbcType=CHAR}
+      </if>
+      <if test="bkNo!=null" >
+        AND  BK_NO=#{bkNo,jdbcType=CHAR}
+      </if>
+      <if test="comNo!=null" >
+        AND  COM_NO=#{comNo,jdbcType=CHAR}
+      </if>
+      <if test="seqNo!=null" >
+        AND  SEQ_NO=#{seqNo,jdbcType=INTEGER}
+      </if>
+      <if test="actDat!=null" >
+        AND  ACT_DAT=#{actDat,jdbcType=DATE}
+      </if>
+      <if test="hno!=null" >
+        AND  HNO=#{hno,jdbcType=CHAR}
+      </if>
+      <if test="sj!=null" >
+        AND  SJ=#{sj,jdbcType=CHAR}
+      </if>
+      <if test="je!=null" >
+        AND  JE=#{je,jdbcType=CHAR}
+      </if>
+      <if test="bcount!=null" >
+        AND  BCOUNT=#{bcount,jdbcType=CHAR}
+      </if>
+      <if test="status!=null" >
+        AND  STATUS=#{status,jdbcType=CHAR}
+      </if>
+      <if test="errMsg!=null" >
+        AND  ERR_MSG=#{errMsg,jdbcType=VARCHAR}
+      </if>
+      <if test="rmk1!=null" >
+        AND  RMK1=#{rmk1,jdbcType=VARCHAR}
+      </if>
+      <if test="rmk2!=null" >
+        AND  RMK2=#{rmk2,jdbcType=VARCHAR}
+      </if>
+      <if test="rmk3!=null" >
+        AND  RMK3=#{rmk3,jdbcType=VARCHAR}
+      </if>
+      <if test="rmk4!=null" >
+        AND  RMK4=#{rmk4,jdbcType=VARCHAR}
+      </if>
+      <if test="rmk5!=null" >
+        AND  RMK5=#{rmk5,jdbcType=VARCHAR}
+      </if>
+      <if test="rmk6!=null" >
+        AND  RMK6=#{rmk6,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdeupsWatBatInfTmp" >
+    update ${GDEUPSB_SCHEMA}.GDEUPS_WAT_BAT_INF_TMP
+    <set >
+      <if test="batNo != null" >
+        BAT_NO = #{batNo,jdbcType=CHAR},
+      </if>
+      <if test="bkNo != null" >
+        BK_NO = #{bkNo,jdbcType=CHAR},
+      </if>
+      <if test="comNo != null" >
+        COM_NO = #{comNo,jdbcType=CHAR},
+      </if>
+      <if test="seqNo != null" >
+        SEQ_NO = #{seqNo,jdbcType=INTEGER},
+      </if>
+      <if test="actDat != null" >
+        ACT_DAT = #{actDat,jdbcType=DATE},
+      </if>
+      <if test="hno != null" >
+        HNO = #{hno,jdbcType=CHAR},
+      </if>
+      <if test="sj != null" >
+        SJ = #{sj,jdbcType=CHAR},
+      </if>
+      <if test="je != null" >
+        JE = #{je,jdbcType=CHAR},
+      </if>
+      <if test="bcount != null" >
+        BCOUNT = #{bcount,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="errMsg != null" >
+        ERR_MSG = #{errMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="rmk1 != null" >
+        RMK1 = #{rmk1,jdbcType=VARCHAR},
+      </if>
+      <if test="rmk2 != null" >
+        RMK2 = #{rmk2,jdbcType=VARCHAR},
+      </if>
+      <if test="rmk3 != null" >
+        RMK3 = #{rmk3,jdbcType=VARCHAR},
+      </if>
+      <if test="rmk4 != null" >
+        RMK4 = #{rmk4,jdbcType=VARCHAR},
+      </if>
+      <if test="rmk5 != null" >
+        RMK5 = #{rmk5,jdbcType=VARCHAR},
+      </if>
+      <if test="rmk6 != null" >
+        RMK6 = #{rmk6,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SQN = #{sqn,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_WAT_BAT_INF_TMP
+    <if test="_parameter" >
+      where SQN in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
+</mapper>
