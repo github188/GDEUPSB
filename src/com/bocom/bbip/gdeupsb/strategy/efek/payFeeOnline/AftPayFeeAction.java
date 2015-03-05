@@ -41,15 +41,10 @@ public class AftPayFeeAction implements Executable{
 					throw new CoreException("失败~~~"+context.getData(GDParamKeys.SUCFLG));
 		}
 		
-		Date txnDte=DateUtils.parse(context.getData(ParamKeys.TXN_DTE).toString());
-		Date txnTme=DateUtils.parse(context.getData(ParamKeys.TXN_DTE).toString()+context.getData(ParamKeys.TXN_DTE).toString(),DateUtils.STYLE_yyyyMMddHHmmss);
+		String txnDate=context.getData(ParamKeys.TXN_DTE).toString();
+		Date txnDte=DateUtils.parse(txnDate);
+		Date txnTme=DateUtils.parse(txnDate+context.getData(ParamKeys.TXN_DTE).toString(),DateUtils.STYLE_yyyyMMddHHmmss);
 		context.setData(ParamKeys.TXN_DTE, txnDte);
 		context.setData(ParamKeys.TXN_TME, txnTme);
-		
-		Date thdTxnDte=DateUtils.parse(context.getData(ParamKeys.THD_TXN_DATE).toString());
-		Date thdTxnTme=DateUtils.parse(context.getData(ParamKeys.THD_TXN_DATE).toString()+context.getData(ParamKeys.THD_TXN_TIME).toString(),DateUtils.STYLE_yyyyMMddHHmmss);
-		context.setData(ParamKeys.THD_TXN_DATE, thdTxnDte);
-		context.setData(ParamKeys.THD_TXN_TIME, thdTxnTme);
-
 	}
 }
