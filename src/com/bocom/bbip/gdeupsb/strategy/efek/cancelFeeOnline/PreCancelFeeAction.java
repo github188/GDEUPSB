@@ -60,6 +60,7 @@ public class PreCancelFeeAction implements Executable{
 //				context.setData(ParamKeys.THD_TXN_CDE, txnCd.substring(1, 6)+"9");
 //				context.setData(ParamKeys.TXN_CODE, txnCd.substring(1, 6)+"9");
 
+				context.setData(GDParamKeys.BAG_TYPE, "0");
 				logger.info("==========End  PreCancelFeeAction  ");
 		 }
 /**
