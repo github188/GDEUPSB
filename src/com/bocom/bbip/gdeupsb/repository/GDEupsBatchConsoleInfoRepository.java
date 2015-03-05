@@ -7,8 +7,7 @@ import com.bocom.bbip.data.annotation.Update;
 import com.bocom.bbip.data.repository.PagingAndSortingRepository;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 
-
-public interface GDEupsBatchConsoleInfoRepository extends PagingAndSortingRepository<GDEupsBatchConsoleInfo, String>  {
+public interface GDEupsBatchConsoleInfoRepository extends PagingAndSortingRepository<GDEupsBatchConsoleInfo, String> {
 	
 	@FindOne
 	public GDEupsBatchConsoleInfo findConsoleInfo(GDEupsBatchConsoleInfo info);
@@ -21,7 +20,5 @@ public interface GDEupsBatchConsoleInfoRepository extends PagingAndSortingReposi
 
 	@Insert
 	public void insertConsoleInfo(GDEupsBatchConsoleInfo info);
-    
-    
-   
+	
 }
