@@ -26,7 +26,6 @@ import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdPlpdBatchTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GdPlpdBatchTmpRepository;
-import com.bocom.bbip.gdeupsb.strategy.elcgd.AftCnlBnkSglDealStrategyAction;
 import com.bocom.bbip.utils.FileUtils;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.core.Context;
@@ -40,7 +39,7 @@ import com.bocom.jump.bp.core.CoreException;
  */
 public class PlpdBathFileDealAction implements BatchAcpService {
 
-    private final static Logger log = LoggerFactory.getLogger(AftCnlBnkSglDealStrategyAction.class);
+    private final static Logger log = LoggerFactory.getLogger(PlpdBathFileDealAction.class);
     @Autowired
     EupsThdTranCtlInfoRepository thdTranCtlInfoRepository;
     @Autowired
