@@ -985,7 +985,6 @@
   <xs:complexType name="payFeeOffChanResponse_CType">
     <xs:sequence>
       <xs:element ref="tns:responseHeader"/>
-      <xs:element name="txnSqn" type="tns:txnSqn_SType" minOccurs="0"/>
       <xs:element name="mfmVchNo" type="tns:mfmVchNo_SType" minOccurs="0"/>
       <xs:element name="thdSqn" type="tns:thdSqn_SType" minOccurs="0"/>
       <xs:element name="thdCusNo" type="tns:thdCusNo_SType" minOccurs="0"/>
@@ -1605,7 +1604,6 @@
     <xs:sequence>
       <xs:element ref="tns:responseHeader"/>
       <xs:element name="thdCusNo" type="tns:thdCusNo_SType" minOccurs="0"/>
-      <xs:element name="txnSqn" type="tns:txnSqn_SType" minOccurs="0"/>
       <xs:element name="month" type="tns:month_SType" minOccurs="0"/>
       <xs:element name="name" type="tns:name_SType" minOccurs="0"/>
       <xs:element name="addr" type="tns:addr_SType" minOccurs="0"/>
