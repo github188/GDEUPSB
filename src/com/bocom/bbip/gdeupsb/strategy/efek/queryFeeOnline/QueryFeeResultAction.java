@@ -114,14 +114,22 @@ public class QueryFeeResultAction implements Executable{
 											 	context.setDataMap(rspMap);
 								                context.setData(ParamKeys.THIRD_RETURN_MESSAGE, rspMap);
 								                BigDecimal oweFeeAmt=new BigDecimal("0.00");
+								                BigDecimal pbd=new BigDecimal("0.00");
 								                List<Map<String, Object>> list=(List<Map<String, Object>>)rspMap.get("Information");
+								                DecimalFormat df=new DecimalFormat("#.00");
 								                for (Map<String, Object> map : list) {
-								                	double  amt=Double.parseDouble(map.get(ParamKeys.OWE_FEE_AMT).toString());
+								                		double  amt=Double.parseDouble(map.get(ParamKeys.OWE_FEE_AMT).toString());
 								                		amt=amt/100;
-								                		DecimalFormat df=new DecimalFormat("#.00");
 								                		BigDecimal amtAdd=new BigDecimal(df.format(amt));
 								                		oweFeeAmt=oweFeeAmt.add(amtAdd);
+								                		double  detit=Double.parseDouble(map.get(GDParamKeys.DEDIT).toString());
+								                		detit=detit/100;
+								                		BigDecimal detitAdd=new BigDecimal(df.format(detit));
+								                		pbd=pbd.add(detitAdd);
 												}
+								                context.setData(ParamKeys.RSV_FLD2, list.get(0).get(GDParamKeys.ACCOUNTS_SERIAL_NO));
+								                context.setData(ParamKeys.RSV_FLD1,list.get(0).get(GDParamKeys.ELECTRICITY_YEARMONTH));
+								                context.setData("pbd",pbd );
 								                //TODO 怎样得到欠费金额
 								                context.setData(ParamKeys.OWE_FEE_AMT, oweFeeAmt);
 								                //第三方返回码
