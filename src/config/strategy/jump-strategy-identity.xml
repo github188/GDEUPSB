@@ -251,7 +251,7 @@
 	<!-- 惠州燃气单边抹帐冲正 -->
 	<bean class="com.bocom.bbip.gdeupsb.strategy.gash.CnlPayUnilateralToBankServicePGAS00"
 		id="eups.cancelUnilateralToBankServiceActionPGAS00" />
-				
+				    
 	
 	 <!-- 广东烟草划扣联机单笔记 -->
      <bean class="com.bocom.bbip.gdeupsb.strategy.sgrt00.PayUnilateralToBankServiceActionSGRT00"
