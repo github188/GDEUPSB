@@ -3,6 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
 	name="body" >
+	<fixString name="thdTxnDte" length="8"/>  <!--交易日期 -->
 	 <fixString length="6" name="DCC_TIME"  /> <!-- 交易时间 -->
 	 <fixString length="6" name="DCC_LS"  /> <!-- 校方流水号-->
 	    <fixString length="10" name="DCC_ID_NO" /> <!-- 终端编号 -->
