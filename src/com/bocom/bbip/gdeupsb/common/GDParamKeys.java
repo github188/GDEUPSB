@@ -725,5 +725,9 @@ public class GDParamKeys {
 	public static final String GAS_F_RSP_CD = "FRspCd";
 
 	public static final String GAS_NOD_NO = "nodNo";
+
+	public static final String TXN_TME1 = "txnTme1";
+
+	public static final String CCY_TYP = "ccyTyp";
 	
 }
