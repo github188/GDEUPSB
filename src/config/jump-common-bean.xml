@@ -12,6 +12,9 @@
 	<!--for FTP and File -->
 	<bean id="opeFTP" class="com.bocom.bbip.eups.action.common.OperateFTPAction" />
 	<bean id="opeFile" class="com.bocom.bbip.eups.action.common.OperateFileAction" />
+	<!-- for file batch common utils-->
+	
+	<bean id="BatchFileCommon" class="com.bocom.bbip.gdeupsb.action.common.BatchFileCommon" />
 	
 	<bean id="reportHelper" class="com.bocom.bbip.eups.action.eupsreport.ReportHelper" />
 	<!-- 解析第三方文件 -->
