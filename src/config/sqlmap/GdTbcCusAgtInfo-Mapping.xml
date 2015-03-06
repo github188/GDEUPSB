@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdTbcCusAgtInfo" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdTbcCusAgtInfo" >
+    <id column="CUST_ID" property="custId" jdbcType="CHAR" />
+    <result column="BRNO" property="brno" jdbcType="CHAR" />
+    <result column="COM_NO" property="comNo" jdbcType="CHAR" />
+    <result column="DPT_ID" property="dptId" jdbcType="CHAR" />
+    <result column="COM_ID" property="comId" jdbcType="CHAR" />
+    <result column="CUS_NM" property="cusNm" jdbcType="CHAR" />
+    <result column="PAS_TYP" property="pasTyp" jdbcType="CHAR" />
+    <result column="PAS_ID" property="pasId" jdbcType="CHAR" />
+    <result column="ACC_TYP" property="accTyp" jdbcType="CHAR" />
+    <result column="ACT_NO" property="actNo" jdbcType="CHAR" />
+    <result column="PAS_FLG" property="pasFlg" jdbcType="CHAR" />
+    <result column="PAS_WRD" property="pasWrd" jdbcType="CHAR" />
+    <result column="ADDR" property="addr" jdbcType="CHAR" />
+    <result column="TEL_NUM" property="telNum" jdbcType="CHAR" />
+    <result column="DEV_ID" property="devId" jdbcType="CHAR" />
+    <result column="TELLER" property="teller" jdbcType="CHAR" />
+    <result column="OPN_DAT" property="opnDat" jdbcType="CHAR" />
+    <result column="CLS_DAT" property="clsDat" jdbcType="CHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    CUST_ID, BRNO, COM_NO, DPT_ID, COM_ID, CUS_NM, PAS_TYP, PAS_ID, ACC_TYP, ACT_NO, 
+    PAS_FLG, PAS_WRD, ADDR, TEL_NUM, DEV_ID, TELLER, OPN_DAT, CLS_DAT, STATUS
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_TBC_CUS_AGT_INFO
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="custId!=null" >
+        AND  CUST_ID=#{custId,jdbcType=CHAR}
+      </if>
+      <if test="brno!=null" >
+        AND  BRNO=#{brno,jdbcType=CHAR}
+      </if>
+      <if test="comNo!=null" >
+        AND  COM_NO=#{comNo,jdbcType=CHAR}
+      </if>
+      <if test="dptId!=null" >
+        AND  DPT_ID=#{dptId,jdbcType=CHAR}
+      </if>
+      <if test="comId!=null" >
+        AND  COM_ID=#{comId,jdbcType=CHAR}
+      </if>
+      <if test="cusNm!=null" >
+        AND  CUS_NM=#{cusNm,jdbcType=CHAR}
+      </if>
+      <if test="pasTyp!=null" >
+        AND  PAS_TYP=#{pasTyp,jdbcType=CHAR}
+      </if>
+      <if test="pasId!=null" >
+        AND  PAS_ID=#{pasId,jdbcType=CHAR}
+      </if>
+      <if test="accTyp!=null" >
+        AND  ACC_TYP=#{accTyp,jdbcType=CHAR}
+      </if>
+      <if test="actNo!=null" >
+        AND  ACT_NO=#{actNo,jdbcType=CHAR}
+      </if>
+      <if test="pasFlg!=null" >
+        AND  PAS_FLG=#{pasFlg,jdbcType=CHAR}
+      </if>
+      <if test="pasWrd!=null" >
+        AND  PAS_WRD=#{pasWrd,jdbcType=CHAR}
+      </if>
+      <if test="addr!=null" >
+        AND  ADDR=#{addr,jdbcType=CHAR}
+      </if>
+      <if test="telNum!=null" >
+        AND  TEL_NUM=#{telNum,jdbcType=CHAR}
+      </if>
+      <if test="devId!=null" >
+        AND  DEV_ID=#{devId,jdbcType=CHAR}
+      </if>
+      <if test="teller!=null" >
+        AND  TELLER=#{teller,jdbcType=CHAR}
+      </if>
+      <if test="opnDat!=null" >
+        AND  OPN_DAT=#{opnDat,jdbcType=CHAR}
+      </if>
+      <if test="clsDat!=null" >
+        AND  CLS_DAT=#{clsDat,jdbcType=CHAR}
+      </if>
+      <if test="status!=null" >
+        AND  STATUS=#{status,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_TBC_CUS_AGT_INFO
+    where CUST_ID = #{custId,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from ${GDEUPSB_SCHEMA}.GDEUPS_TBC_CUS_AGT_INFO
+    where CUST_ID = #{custId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdTbcCusAgtInfo" >
+    insert into ${GDEUPSB_SCHEMA}.GDEUPS_TBC_CUS_AGT_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="custId != null" >
+        CUST_ID,
+      </if>
+      <if test="brno != null" >
+        BRNO,
+      </if>
+      <if test="comNo != null" >
+        COM_NO,
+      </if>
+      <if test="dptId != null" >
+        DPT_ID,
+      </if>
+      <if test="comId != null" >
+        COM_ID,
+      </if>
+      <if test="cusNm != null" >
+        CUS_NM,
+      </if>
+      <if test="pasTyp != null" >
+        PAS_TYP,
+      </if>
+      <if test="pasId != null" >
+        PAS_ID,
+      </if>
+      <if test="accTyp != null" >
+        ACC_TYP,
+      </if>
+      <if test="actNo != null" >
+        ACT_NO,
+      </if>
+      <if test="pasFlg != null" >
+        PAS_FLG,
+      </if>
+      <if test="pasWrd != null" >
+        PAS_WRD,
+      </if>
+      <if test="addr != null" >
+        ADDR,
+      </if>
+      <if test="telNum != null" >
+        TEL_NUM,
+      </if>
+      <if test="devId != null" >
+        DEV_ID,
+      </if>
+      <if test="teller != null" >
+        TELLER,
+      </if>
+      <if test="opnDat != null" >
+        OPN_DAT,
+      </if>
+      <if test="clsDat != null" >
+        CLS_DAT,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="custId != null" >
+        #{custId,jdbcType=CHAR},
+      </if>
+      <if test="brno != null" >
+        #{brno,jdbcType=CHAR},
+      </if>
+      <if test="comNo != null" >
+        #{comNo,jdbcType=CHAR},
+      </if>
+      <if test="dptId != null" >
+        #{dptId,jdbcType=CHAR},
+      </if>
+      <if test="comId != null" >
+        #{comId,jdbcType=CHAR},
+      </if>
+      <if test="cusNm != null" >
+        #{cusNm,jdbcType=CHAR},
+      </if>
+      <if test="pasTyp != null" >
+        #{pasTyp,jdbcType=CHAR},
+      </if>
+      <if test="pasId != null" >
+        #{pasId,jdbcType=CHAR},
+      </if>
+      <if test="accTyp != null" >
+        #{accTyp,jdbcType=CHAR},
+      </if>
+      <if test="actNo != null" >
+        #{actNo,jdbcType=CHAR},
+      </if>
+      <if test="pasFlg != null" >
+        #{pasFlg,jdbcType=CHAR},
+      </if>
+      <if test="pasWrd != null" >
+        #{pasWrd,jdbcType=CHAR},
+      </if>
+      <if test="addr != null" >
+        #{addr,jdbcType=CHAR},
+      </if>
+      <if test="telNum != null" >
+        #{telNum,jdbcType=CHAR},
+      </if>
+      <if test="devId != null" >
+        #{devId,jdbcType=CHAR},
+      </if>
+      <if test="teller != null" >
+        #{teller,jdbcType=CHAR},
+      </if>
+      <if test="opnDat != null" >
+        #{opnDat,jdbcType=CHAR},
+      </if>
+      <if test="clsDat != null" >
+        #{clsDat,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_TBC_CUS_AGT_INFO
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="custId!=null" >
+        AND  CUST_ID=#{custId,jdbcType=CHAR}
+      </if>
+      <if test="brno!=null" >
+        AND  BRNO=#{brno,jdbcType=CHAR}
+      </if>
+      <if test="comNo!=null" >
+        AND  COM_NO=#{comNo,jdbcType=CHAR}
+      </if>
+      <if test="dptId!=null" >
+        AND  DPT_ID=#{dptId,jdbcType=CHAR}
+      </if>
+      <if test="comId!=null" >
+        AND  COM_ID=#{comId,jdbcType=CHAR}
+      </if>
+      <if test="cusNm!=null" >
+        AND  CUS_NM=#{cusNm,jdbcType=CHAR}
+      </if>
+      <if test="pasTyp!=null" >
+        AND  PAS_TYP=#{pasTyp,jdbcType=CHAR}
+      </if>
+      <if test="pasId!=null" >
+        AND  PAS_ID=#{pasId,jdbcType=CHAR}
+      </if>
+      <if test="accTyp!=null" >
+        AND  ACC_TYP=#{accTyp,jdbcType=CHAR}
+      </if>
+      <if test="actNo!=null" >
+        AND  ACT_NO=#{actNo,jdbcType=CHAR}
+      </if>
+      <if test="pasFlg!=null" >
+        AND  PAS_FLG=#{pasFlg,jdbcType=CHAR}
+      </if>
+      <if test="pasWrd!=null" >
+        AND  PAS_WRD=#{pasWrd,jdbcType=CHAR}
+      </if>
+      <if test="addr!=null" >
+        AND  ADDR=#{addr,jdbcType=CHAR}
+      </if>
+      <if test="telNum!=null" >
+        AND  TEL_NUM=#{telNum,jdbcType=CHAR}
+      </if>
+      <if test="devId!=null" >
+        AND  DEV_ID=#{devId,jdbcType=CHAR}
+      </if>
+      <if test="teller!=null" >
+        AND  TELLER=#{teller,jdbcType=CHAR}
+      </if>
+      <if test="opnDat!=null" >
+        AND  OPN_DAT=#{opnDat,jdbcType=CHAR}
+      </if>
+      <if test="clsDat!=null" >
+        AND  CLS_DAT=#{clsDat,jdbcType=CHAR}
+      </if>
+      <if test="status!=null" >
+        AND  STATUS=#{status,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdTbcCusAgtInfo" >
+    update ${GDEUPSB_SCHEMA}.GDEUPS_TBC_CUS_AGT_INFO
+    <set >
+      <if test="brno != null" >
+        BRNO = #{brno,jdbcType=CHAR},
+      </if>
+      <if test="comNo != null" >
+        COM_NO = #{comNo,jdbcType=CHAR},
+      </if>
+      <if test="dptId != null" >
+        DPT_ID = #{dptId,jdbcType=CHAR},
+      </if>
+      <if test="comId != null" >
+        COM_ID = #{comId,jdbcType=CHAR},
+      </if>
+      <if test="cusNm != null" >
+        CUS_NM = #{cusNm,jdbcType=CHAR},
+      </if>
+      <if test="pasTyp != null" >
+        PAS_TYP = #{pasTyp,jdbcType=CHAR},
+      </if>
+      <if test="pasId != null" >
+        PAS_ID = #{pasId,jdbcType=CHAR},
+      </if>
+      <if test="accTyp != null" >
+        ACC_TYP = #{accTyp,jdbcType=CHAR},
+      </if>
+      <if test="actNo != null" >
+        ACT_NO = #{actNo,jdbcType=CHAR},
+      </if>
+      <if test="pasFlg != null" >
+        PAS_FLG = #{pasFlg,jdbcType=CHAR},
+      </if>
+      <if test="pasWrd != null" >
+        PAS_WRD = #{pasWrd,jdbcType=CHAR},
+      </if>
+      <if test="addr != null" >
+        ADDR = #{addr,jdbcType=CHAR},
+      </if>
+      <if test="telNum != null" >
+        TEL_NUM = #{telNum,jdbcType=CHAR},
+      </if>
+      <if test="devId != null" >
+        DEV_ID = #{devId,jdbcType=CHAR},
+      </if>
+      <if test="teller != null" >
+        TELLER = #{teller,jdbcType=CHAR},
+      </if>
+      <if test="opnDat != null" >
+        OPN_DAT = #{opnDat,jdbcType=CHAR},
+      </if>
+      <if test="clsDat != null" >
+        CLS_DAT = #{clsDat,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+    </set>
+    where CUST_ID = #{custId,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_TBC_CUS_AGT_INFO
+    <if test="_parameter" >
+      where CUST_ID in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
+</mapper>

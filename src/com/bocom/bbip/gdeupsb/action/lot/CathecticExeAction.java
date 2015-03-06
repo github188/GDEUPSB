@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
@@ -35,7 +36,7 @@ public class CathecticExeAction extends BaseAction{
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("cusAc", context.getData("actNo").toString());
         Result accessObject = serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", map);
-        if (null == accessObject) {
+        if (CollectionUtils.isEmpty(accessObject.getPayload())) {
             context.setData(ParamKeys.RSP_CDE,"LOT999");
             context.setData(ParamKeys.RSP_MSG,"送主机记账失败（无法获取代收协议信息）");
             context.setData("tzCod", "TZ9006");

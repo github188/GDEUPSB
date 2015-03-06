@@ -15,6 +15,8 @@ import com.bocom.bbip.eups.spi.service.single.PayUnilateralToBankService;
 import com.bocom.bbip.eups.spi.vo.CommHeadDomain;
 import com.bocom.bbip.eups.spi.vo.PayFeeOnlineDomain;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.entity.GdTbcCusAgtInfo;
+import com.bocom.bbip.gdeupsb.repository.GdTbcCusAgtInfoRepository;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -27,6 +29,8 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
     BGSPServiceAccessObject serviceAccess;
     @Autowired
     BBIPPublicServiceImpl publicService;
+    @Autowired
+    GdTbcCusAgtInfoRepository cusAgtInfoRepository;
     @Override
     public Map<String, Object> aftPayToBank(CommHeadDomain commheaddomain, PayFeeOnlineDomain payfeeonlinedomain,
             Context context) throws CoreException {
@@ -45,7 +49,7 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
        /* Map<String, Object> map = new HashMap<String, Object>();
         map.put("cusAc", context.getData(ParamKeys.CUS_AC));
         Result accessObject =  serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", map);
-        if (null != accessObject) {
+        if (CollectionUtils.isEmpty(accessObject.getPayload())) {
             context.setDataMap(accessObject.getPayload());
         } else {
             throw new CoreException("用户未开户！");
@@ -77,15 +81,17 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
         //context.setData(ParamKeys.TXN_AMT,  context.getData("QTY_TRADE"));
         //context.setData(ParamKeys.TELLER, context.getData("TELLER"));
         //context.setData(ParamKeys.THD_CUS_NO, context.getData("CUST_ID"));
+        GdTbcCusAgtInfo cusAgtInfo = cusAgtInfoRepository.findOne(context.getData("CUST_ID").toString());
+        context.setData(ParamKeys.CUS_AC, cusAgtInfo.getActNo());
+        context.setData(ParamKeys.THD_SEQUENCE, publicService.getBBIPSequence());
         // 测试
         context.setData(ParamKeys.BR, "01441131999");
         context.setData(ParamKeys.BK, "01441999999");
         context.setData(ParamKeys.TELLER, "ABIR148");
-        context.setData(ParamKeys.CUS_AC, "6222620780003804748");
         context.setData(ParamKeys.TXN_AMT, 1);
         context.setData(ParamKeys.THD_CUS_NO, "123456789");
 
-        context.setData(ParamKeys.THD_SEQUENCE, publicService.getBBIPSequence());
+       
 
         context.setData(ParamKeys.EUPS_BUSS_TYPE, "SGRT00");
         context.setData(ParamKeys.THD_TXN_CDE,"483805");

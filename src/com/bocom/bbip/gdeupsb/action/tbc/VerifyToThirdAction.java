@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
@@ -71,7 +72,7 @@ public class VerifyToThirdAction extends BaseAction {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("cusAc", context.getData("actNo").toString());
             Result accessObject =  serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", map);
-            if (null == accessObject) {
+            if (CollectionUtils.isEmpty(accessObject.getPayload())) {
                 context.setData(ParamKeys.RSP_CDE,"9999");
                 context.setData(ParamKeys.RSP_MSG,"客户已注销或未开户!!");
                 context.setData(ParamKeys.OLD_TXN_SEQUENCE, null);
@@ -84,8 +85,8 @@ public class VerifyToThirdAction extends BaseAction {
             //   检查该客户是否已签约
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("cusAc", context.getData("actNo").toString());
-            Result accessObject =  serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", map);
-            if (null != accessObject) {
+            Result accessObject = serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", map);
+            if (CollectionUtils.isEmpty(accessObject.getPayload())) {
                 context.setData(ParamKeys.RSP_CDE,"9999");
                 context.setData(ParamKeys.RSP_MSG,"客户未注销!!");
                 context.setData(ParamKeys.OLD_TXN_SEQUENCE, null);

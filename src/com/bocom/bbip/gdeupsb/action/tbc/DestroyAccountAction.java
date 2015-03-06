@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
@@ -61,7 +62,7 @@ public class DestroyAccountAction extends BaseAction {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("cusAc", context.getData("actNo").toString());
         Result accessObject = serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", map);
-        if (null == accessObject) {
+        if (CollectionUtils.isEmpty(accessObject.getPayload())){
             context.setData(GDParamKeys.RSP_MSG,"账号已注销!！！");
             return; 
         }

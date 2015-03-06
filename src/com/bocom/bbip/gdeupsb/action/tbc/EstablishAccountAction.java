@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.service.Result;
 import com.bocom.bbip.comp.BBIPPublicService;
@@ -89,7 +90,7 @@ public class EstablishAccountAction extends BaseAction {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("cusAc", context.getData("actNo").toString());
         Result accessObject =  serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", map);
-        if (null == accessObject) {
+        if (CollectionUtils.isEmpty(accessObject.getPayload())) {
             Map<String, Object> establishMap = new HashMap<String, Object>();
             establishMap.put("agrChl","01");
             establishMap.put("oprTyp", "0");
