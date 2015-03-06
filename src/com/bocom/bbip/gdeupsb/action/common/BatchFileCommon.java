@@ -37,18 +37,20 @@ public class BatchFileCommon extends BaseAction {
 	private static final Log logger = LogFactory.getLog(BatchFileCommon.class);
 	public void BeforeBatchProcess(final Context context)throws CoreException {
 		String comNo=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.COMPANY_NO, ErrorCodes.EUPS_COM_NO_NOTEXIST);
-		String fleNme="BATC"+comNo+"0.txt";
+		String fleNme=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.FLE_NME, ErrorCodes.EUPS_COM_NO_NOTEXIST);
+		String eupsBusTyp=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.EUPS_BUSS_TYPE, ErrorCodes.EUPS_COM_NO_NOTEXIST);
+
 		/** 检查批次是否存在 */
 		GDEupsBatchConsoleInfo info = new GDEupsBatchConsoleInfo();
 		info.setFleNme(fleNme);
+		info.setBusKnd(eupsBusTyp);
 		GDEupsBatchConsoleInfo ret =get(GDEupsBatchConsoleInfoRepository.class).findConsoleInfo(info);
-		Assert.isNotNull(ret, "批次信息已经存在");
+		Assert.isTrue(null==ret, "批次信息已经存在");
 		/** 插入批次控制表 */
 		String batNo =((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
 		info.setBatNo(batNo);
 		info.setBatSts(GDConstants.BATCH_STATUS_INIT);
 		info.setFleNme(fleNme);
-		info.setComNo((String) context.getData(ParamKeys.COMPANY_NO));
 		info.setSubDte(new Date());
 		info.setTxnTlr((String) context.getData(ParamKeys.TELLER));
 		info.setTxnMde(Constants.TXN_MDE_FILE);
@@ -73,12 +75,21 @@ public class BatchFileCommon extends BaseAction {
 		String fileName = ContextUtils.assertVariableNotEmptyAndGet(context,ParamKeys.FLE_NME, ErrorCodes.EUPS_FILE_CREATE_NAME_ISEMPTY);
 		Map<String, Object> fileMap = (Map<String, Object>) ContextUtils.assertVariableNotNullAndGet(context, "agtFileMap","agtFileMap不能为空");
 		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne("BatchFileFtpNo");
-		Assert.isNotNull(config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST,"第三方配置信息不存在");
+		Assert.isNotNull(config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST,"代收付配置信息不存在");
 		config.setLocFleNme(fileName);
 		config.setRmtFleNme(fileName);
 		/** 产生代收付格式文件 */
 		((OperateFileAction)get("opeFile")).createCheckFile(config, GDConstants.BATCH_FILE_FORMAT, fileName, fileMap);
 		/** 发送到指定路径 */
 		((OperateFTPAction)get("opeFTP")).putCheckFile(config);
+	}
+	public void afterBatchProcess(Context context)throws CoreException{
+		final String batNo=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.BAT_NO, ErrorCodes.EUPS_QUERY_NO_DATA);
+		GDEupsBatchConsoleInfo info = new GDEupsBatchConsoleInfo();
+		info.setBatNo(batNo);
+		GDEupsBatchConsoleInfo ret =get(GDEupsBatchConsoleInfoRepository.class).findConsoleInfo(info);
+		Assert.isFalse(null==ret, "批次信息不存在");
+		ret.setBatSts(GDConstants.BATCH_STATUS_COMPLETE);
+		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(ret);
 	}
 }
