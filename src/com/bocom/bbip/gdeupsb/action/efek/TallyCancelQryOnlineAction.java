@@ -48,8 +48,10 @@ public class TallyCancelQryOnlineAction extends BaseAction{
 //TODO						context.setData(GDParamKeys.ELECTRICITY_YEARMONTH, );
 						context.setData(ParamKeys.CCY, eupsTransJournal.getCcy());
 						context.setData(ParamKeys.TXN_AMT, eupsTransJournal.getTxnAmt());
-						context.setData(GDParamKeys.BUS_TYPE, eupsTransJournal.getRsvFld1());
-						context.setData(GDParamKeys.PAY_TYPE, eupsTransJournal.getRsvFld2());
+						
+						context.setData(GDParamKeys.BUS_TYPE, eupsTransJournal.getRsvFld4());
+						context.setData(GDParamKeys.PAY_TYPE, eupsTransJournal.getRsvFld5());
+						context.setData(GDParamKeys.ELECTRICITY_YEARMONTH, eupsTransJournal.getRsvFld6());
 				}else{
 					log.error("~~~~~~~~~~没有记录");
 					throw new CoreException("没有记录");
