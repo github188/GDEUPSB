@@ -58,7 +58,7 @@ public class PayFeeOnlineServiceActionELEC02 extends BaseAction implements PayFe
 		context.setData("CUN", context.getData("CUN"));
 //		String jna = context.getData("JNA");
 //		BigDecimal txnAmt = NumberUtils.centToYuan(jna);
-//		context.setData("txnAmt", txnAmt);
+		context.setData("thdSqn", context.getData("CLZ"));
 		context.setData("JJM", context.getData("JJM"));
 		
 		logger.info("PayFeeOnlineServiceActionELEC02 aftThdDeal end ... ...");

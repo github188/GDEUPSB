@@ -4,7 +4,7 @@
   	<!-- 根据业务类型和交易日期统计笔数,金额 -->
 	<select id="findCountAmt" resultType="map">
 		select count(*) count , sum(txn_amt) je from
-		${GDEUPSB_SCHEMA}.EUPS_TRANS_JOURNAL
+		${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL
 		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="eupsBusTyp!=null">
 				AND EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=VARCHAR}
@@ -17,13 +17,16 @@
 			</if>
 			<if test="txnSts!=null">
 				AND TXN_STS =#{txnSts,jdbcType=VARCHAR}
+			</if>
+			<if test="txnTyp!=null">
+				AND TXN_TYP =#{txnTyp,jdbcType=VARCHAR}
 			</if>
 		</trim>
 	</select>
 	<!-- 根据业务类型和交易日期查询明细笔数,金额 -->
 	<select id="findDetailAmt" resultType="map">
 		select * from
-		${GDEUPSB_SCHEMA}.EUPS_TRANS_JOURNAL
+		${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL
 		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="eupsBusTyp!=null">
 				AND EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=VARCHAR}
@@ -37,12 +40,15 @@
 			<if test="txnSts!=null">
 				AND TXN_STS =#{txnSts,jdbcType=VARCHAR}
 			</if>
+			<if test="txnTyp!=null">
+				AND TXN_TYP =#{txnTyp,jdbcType=VARCHAR}
+			</if>
 		</trim>
 	</select>
 	<!-- 查询对公回执信息 -->
 	<select id="queryPublicMsg" resultType="map" parameterType="map">
 		select * from
-		${GDEUPSB_SCHEMA}.EUPS_TRANS_JOURNAL
+		${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL
 		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="eupsBusTyp!=null">
 				AND EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=VARCHAR}

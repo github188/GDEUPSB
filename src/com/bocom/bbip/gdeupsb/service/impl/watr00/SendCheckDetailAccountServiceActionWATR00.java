@@ -22,15 +22,19 @@ import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsCheckControl;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
+import com.bocom.bbip.eups.entity.EupsTransJournal;
 import com.bocom.bbip.eups.repository.EupsCheckControlRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
+import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.eups.utils.SupportFtpUtils;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.euif.component.util.StringUtil;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
+import com.bocom.jump.bp.service.id.seq.StepSequenceFactory;
 import com.bocom.jump.bp.service.sqlmap.SqlMap;
 /**
  * 银行发送明细对账文件
@@ -61,6 +65,7 @@ public class SendCheckDetailAccountServiceActionWATR00 extends BaseAction {
 		logger.info("hno:["+hno+"]beginDate:["+beginDate+"]endDate:["+endDate+"]");
 		context.setData("eupeBusTyp", "WATR00");
 		context.setData("txnSts", "S");
+		context.setData("txnTyp", "N");
 		
 		Map<String,Object> map =((SqlMap)get("sqlMap")).queryForObject("watr00.findCountAmt", context.getDataMap());//查询总金额、总笔数
 		String je = String.valueOf(map.get("JE"));
@@ -68,10 +73,13 @@ public class SendCheckDetailAccountServiceActionWATR00 extends BaseAction {
 			je = "0";
 		}
 		String count = String.valueOf( map.get("COUNT"));
-		context.setData("je", je);
+		context.setData("je", NumberUtils.yuanToCentString(je));
 		context.setData("count", count);
 		logger.info("je:["+je+"]count:["+count+"]");
 		List<Map<String,Object>> list =((SqlMap)get("sqlMap")).queryForList("watr00.findDetailAmt", context.getDataMap());//查询明细信息
+		
+//		EupsTransJournal eupsTransJournal = new EupsTransJournal();
+//		List<EupsTransJournal> eupsTransJournals = get(EupsTransJournalRepository.class).find(eupsTransJournal);
 		
 		String filename = "WATR00"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";
 		File file = new File(filename);
@@ -96,6 +104,10 @@ public class SendCheckDetailAccountServiceActionWATR00 extends BaseAction {
 				writer.print(String.format("%40s",cusAc));
 				writer.print("\t");
 			}
+			writer.println();
+			writer.print(count);
+			writer.print("\t");
+			writer.print(je);
 			writer.close();
 			logger.info("filename:["+file.getName()+"]");
 		} catch (FileNotFoundException e) {
@@ -104,7 +116,7 @@ public class SendCheckDetailAccountServiceActionWATR00 extends BaseAction {
 			e.printStackTrace();
 		}
 		
-		//TODO:获取FTP信息
+		//TODO:获取FTP信息，修改对账文件存放目录
 		EupsCheckControl eupsCheckControl = BeanUtils.toObject(context.getDataMap(), EupsCheckControl.class);
 		List<EupsCheckControl> eupsCheckControls = get(EupsCheckControlRepository.class).find(eupsCheckControl);
 		if(eupsCheckControls==null||eupsCheckControls.size()==0){
@@ -135,18 +147,22 @@ public class SendCheckDetailAccountServiceActionWATR00 extends BaseAction {
 		}
 		
 		context.setData("type", "Y014");
-		context.setData("accountdate", "20150123");
-		context.setData("waterno", "JH201501230000000001");//TODO:流水号生成
-		context.setData("bankcode", "COMM");
-		context.setData("salesdepart", "327103");
-		context.setData("salesperson", "327103");
-		context.setData("busitime", "20150123104100");
-		context.setData("thdRspCde", "0");
-		context.setData("zprice", "10000");
-		context.setData("months", "3");
-		context.setData("operano", "0001");
-		context.setData("password", "123123");
-		context.setData("md5digest", "0000000");
+		context.setData("accountdate", DateUtils.format((Date)context.getData(ParamKeys.AC_DATE), DateUtils.STYLE_yyyyMMdd));
+		
+		StepSequenceFactory s = context.getService("logNoService");
+		String logNo = s.create().toString();
+		context.setData("waterno", "JH"+logNo);//流水号生成
+		
+		context.setData("bankcode", "JT");
+		context.setData("salesdepart",((String)context.getData(ParamKeys.BR)).substring(2, 8));
+		context.setData("salesperson", ((String)context.getData(ParamKeys.TELLER)).substring(4, 7));
+		context.setData("busitime", DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMddHHmmss));
+		context.setData("thdRspCde", "0000");
+		context.setData("zprice", "");
+		context.setData("months", "");
+		context.setData("operano", "");
+		context.setData("password", "        ");
+		context.setData("md5digest", " ");
 		
 		Map<String,Object> thdReturnMessage = callThdTradeManager.trade(context);
 		

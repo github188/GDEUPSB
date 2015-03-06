@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.service.impl.watr00;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import com.bocom.bbip.eups.entity.EupsTransJournal;
 import com.bocom.bbip.eups.spi.service.online.AutomaticCancelService;
 import com.bocom.bbip.eups.spi.vo.CancelDomain;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.service.id.seq.StepSequenceFactory;
@@ -52,8 +54,9 @@ public class AutomaticCancelServiceActionWATR00 implements	AutomaticCancelServic
 		
 		
 		context.setData("hno", context.getData("thdCusNo"));
-		context.setData("je", context.getData("txnAmt"));
-		context.setData("lsh", context.getData("thdSql"));
+		BigDecimal txnAmt = context.getData("txnAmt");
+		context.setData("je", NumberUtils.yuanToCentString(txnAmt));
+		context.setData("lsh", context.getData("thdSqn"));
 		logger.info("AutomaticCancelServiceActionWATR00 preCancel  end ... ...");
 		return null;
 	}

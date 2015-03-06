@@ -85,7 +85,7 @@ public class AutomaticCancelServiceActionELEC02 implements	AutomaticCancelServic
 //		<fixString name="OLZ" length="16"/>   <!-- 原冲销业务流水-->
 		context.setData("WTC", context.getData("WTC"));
 		context.setData("WD0", context.getData("WD0"));
-		context.setData("CLZ", context.getData("CLZ"));
+		context.setData("thdSqn", context.getData("CLZ"));
 		context.setData("OCN", context.getData("OCN"));
 		context.setData("OCD", context.getData("OCD"));
 		context.setData("OLZ", context.getData("OLZ"));

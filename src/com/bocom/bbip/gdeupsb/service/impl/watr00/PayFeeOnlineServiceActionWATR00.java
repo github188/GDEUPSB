@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.service.impl.watr00;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import com.bocom.bbip.eups.spi.vo.CommHeadDomain;
 import com.bocom.bbip.eups.spi.vo.PayFeeOnlineDomain;
 import com.bocom.bbip.eups.spi.vo.PayFeeOnlineRetDomain;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.service.id.seq.StepSequenceFactory;
@@ -79,7 +81,8 @@ public class PayFeeOnlineServiceActionWATR00 implements PayFeeOnlineService {
 		context.setData("md5digest", " ");
 		
 		context.setData("hno", context.getData("thdCusNo"));
-		context.setData("je", context.getData("txnAmt"));
+		BigDecimal txnAmt = context.getData("txnAmt");
+		context.setData("je", NumberUtils.yuanToCentString(txnAmt));
 		context.setData("jffs", "0");
 		context.setData("thdSqn", context.getData("waterno"));
 		

@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -31,6 +32,7 @@ public class CheckSumAccountServiceActionWATR00 extends BaseAction {
 		logger.info("beginDate:["+beginDate+"]endDate:["+endDate+"]");
 		context.setData("eupeBusTyp", "WATR00");
 		context.setData("txnSts", "S");
+		context.setData("txnTyp", "N");
 		context.setData("TransCode", "Y005");
 		
 		Map<String,Object> map =((SqlMap)get("sqlMap")).queryForObject("watr00.findCountAmt", context.getDataMap());//查询总金额、总笔数
@@ -40,7 +42,7 @@ public class CheckSumAccountServiceActionWATR00 extends BaseAction {
 			je = "0";
 		}
 		String count = String.valueOf( map.get("COUNT"));
-		context.setData("je", je);
+		context.setData("je", NumberUtils.yuanToCentString(je));
 		context.setData("count", count);
 		logger.info("je:["+je+"]count:["+count+"]");
 		
