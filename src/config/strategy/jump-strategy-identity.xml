@@ -67,13 +67,20 @@
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.AftPayDealStrategyAction">
 	</bean> -->
 
-	<bean id="eups.preCclToBankStrategyActionELEC01"
+	<!-- <bean id="eups.preCclToBankStrategyActionELEC01"
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.PreCnlBnkSglDealStrategyAction">
 	</bean>
 
 	<bean id="eups.aftCclToBankStrategyActionELEC01"
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.AftCnlBnkSglDealStrategyAction">
 	</bean>
+	 -->
+	
+	
+	<bean id="eups.cancelUnilateralToBankServiceActionELEC01"
+		class="com.bocom.bbip.gdeupsb.strategy.elcgd.CancelUnilateralToBankServiceAction">
+	</bean>
+	
 
 	<bean id="eups.fileBatchPayCreateDataServiceActionELEC01"
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.BatchAcpElecDealServiceAction">
@@ -86,6 +93,12 @@
 	<bean id="eups.checkBkFileToThirdServiceActionELEC01"
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.CheckBkEleGzFileToThirdAction">
 	</bean>
+
+	<bean id="eups.chlAutoSignInOutServiceActionExtELEC01"
+		class="com.bocom.bbip.gdeupsb.strategy.elcgd.ChlEleSignInOutAction">
+	</bean>
+	
+	
 	 <!--广东烟草发起对账-->
     <bean class="com.bocom.bbip.gdeupsb.action.tbc.CheckFileToThirdAction"
         id="eups.checkBkFileToThirdServiceActionSGRT00" />
