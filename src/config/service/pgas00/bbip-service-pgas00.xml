@@ -12,9 +12,9 @@
 		class="com.bocom.bbip.gdeupsb.action.fbpd.DealFbpdBatchResultAction"/>
 	
 	<!-- HZ燃气单笔托收 -->
-	<x:bean id="eups.payUnilateralToBankServiceImplPGAS00" class="com.bocom.bbip.gdeupsb.action.gas.PayUnilateralToBankServiceImplPGAS00" />
+	<!-- <x:bean id="eups.payUnilateralToBankServiceImplPGAS00" class="com.bocom.bbip.gdeupsb.action.gas.PayUnilateralToBankServiceImplPGAS00" /> -->
 	<!-- HZ燃气单笔冲正 -->
-	<x:bean id="gdeupsb.cnlPayUnilateralToBankServicePGAS00" class="com.bocom.bbip.gdeupsb.action.gas.CnlPayUnilateralToBankServicePGAS00" />
+	<!-- <x:bean id="gdeupsb.cnlPayUnilateralToBankServicePGAS00" class="com.bocom.bbip.gdeupsb.action.gas.CnlPayUnilateralToBankServicePGAS00" /> -->
 	<!-- HZ燃气对账文件上传 -->
 	<x:bean id="gdeupsb.checkFileToThdHzAction" class="com.bocom.bbip.gdeupsb.action.gas.CheckFileToThdHzAction" />
 	
