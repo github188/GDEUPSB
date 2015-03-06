@@ -24,7 +24,9 @@ import com.bocom.bbip.eups.repository.EupsThdBaseInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.entity.GdGasCusAll;
 import com.bocom.bbip.gdeupsb.entity.GdGasCusDay;
+import com.bocom.bbip.gdeupsb.repository.GdGasCusAllRepository;
 import com.bocom.bbip.gdeupsb.repository.GdGasCusDayRepository;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.bbip.service.Result;
@@ -58,7 +60,7 @@ public class OprGasCusAgentAction extends BaseAction{
 		
 		//TODO 根据cusAc 代扣协议管理-列表查询queryListAgentCollectAgreement 得协议编号
 		//TODO 根据协议编号代扣协议管理-明细查询queryDetailAgentCollectAgreement
-
+		//TODO 新增协议则新增代收付协议，新增燃气每天动态协议，新增燃气协议
 		
 		Map<String, Object> cusListMap = new HashMap<String, Object>();
 		cusListMap.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
@@ -200,35 +202,6 @@ public class OprGasCusAgentAction extends BaseAction{
 //				logger.info("===========cusInfoMap=" + cusInfoMap);
 				
 				Map<String, Object> addOrEditMap = new HashMap<String, Object>();
-//前端输入				
-//				输入	交易类型	eupsBusTyp
-//				输入	功能选择	optFlg
-//				输入	单位编号	comNo
-//				输入	用户编号	thdCusNo
-//				输入	证件类型	idTyp
-//				输入	证件号码	idNo
-//				输入	账户类型	cusTyp
-//				输入	客户账号	cusAc
-//				输入	账号户名	cusNme
-//				输入	手机号码	cmuTel
-//				输入	联系人名称	thdCusNme
-//				输入	联系人地址	thdCusAdr
-
-//				客户信息	<customerInfo>
-//				客户ID	agtCllCusId
-//				客户类型	cusTyp
-//				客户号	cusNo
-//				客户账号	cusAc
-//				客户名称	cusNme
-//				币种	ccy
-//				证件种类	idTyp
-//				证件号码	idNo
-//				支取方式	drwMde
-//				凭证代码	bvCde
-//				凭证号码	bvNo
-//				本他行标志	ourOthFlg
-//				开户行号	obkBk
-//				客户信息	</customerInfo>
 				addOrEditMap.put("agtCllCusId", context.getData("agtCllCusId"));
 				addOrEditMap.put("cusTyp", context.getData("cusTyp"));
 				addOrEditMap.put("cusNo", context.getData(ParamKeys.CUS_NO));
@@ -248,6 +221,11 @@ public class OprGasCusAgentAction extends BaseAction{
 					//代扣协议管理-修改和新增 maintainAgentCollectAgreement
 					get(BGSPServiceAccessObject.class).callServiceFlatting("maintainAgentCollectAgreement", addOrEditMap);
 					insertCusInfo(context);
+					
+					GdGasCusAll addGasCusAll = BeanUtils.toObject(context.getDataMap(), GdGasCusAll.class);
+					addGasCusAll.setOptDat(DateUtils.format((Date) context.getData(ParamKeys.CRE_DTE), DateUtils.STYLE_yyyyMMdd));
+					addGasCusAll.setOptNod((String)context.getData(ParamKeys.OBK_BR));
+					get(GdGasCusAllRepository.class).insert(addGasCusAll);
 					
 					context.setData("msgTyp", "N");
 					context.setData("rspCod", GDConstants.GDEUPSB_TXN_SUCC_CODE);
