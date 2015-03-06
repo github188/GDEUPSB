@@ -44,7 +44,11 @@ public class PreCancelFeeAction implements Executable{
 		
 		context.setData(ParamKeys.CUS_NME, context.getData("CusNme"));
 		context.setData(ParamKeys.BUS_TYP, context.getData(ParamKeys.RSV_FLD4));
-		context.setData(ParamKeys.PAY_TYPE, context.getData(ParamKeys.RSV_FLD5));
+		if(null !=context.getData(ParamKeys.RSV_FLD5)){
+				context.setData(ParamKeys.PAY_TYPE, context.getData(ParamKeys.RSV_FLD5));
+		}else{
+				context.setData(ParamKeys.PAY_TYPE, "");
+		}
 		//TODO 
 		context.setData(ParamKeys.BANK_NO, "301");
 			 	//TODO   comNo
