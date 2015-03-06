@@ -19,19 +19,19 @@
 112	备注	60	交易情况详细信息
  -->	
    
-	  <fixString name="bakFld1" length="10" />
+	  <fixString name="bakFld2" length="10" />
  	  <!-- <fixString  name="Deli2" length="1" default=","/> -->
 	  <fixString name="thdSqn" length="18"  />
 	  <!-- <fixString  name="Deli2" length="1" default=","/> -->
-	  <fixString name="sqn" length="18"   />
+	  <fixString name="sqn" length="18"  expression='exp:str.substring(this.sqn,2,20)' />
 	  <!-- <fixString  name="Deli3" length="1" default=","/> -->
 	  <fixString name="thdCusNo" length="12"   />
 	  <!-- <fixString  name="Deli4" length="1" default=","/> -->
-	  <fixString name="bakFld3" length="6"   />
+	  <fixString name="bakFld3" length="6"  expression='exp:str.substring(this.sqn,0,6)' />
 	  <!-- <fixString  name="Deli5" length="1" default=","/> -->
 	  <fixString name="txnAmt" length="10"   />
 	  <!-- <fixString  name="Deli6" length="1" default=","/> -->
-	  <fixString name="txntme" length="19"   />
+	  <fixString name="txnTme" length="19" />
 	  <!-- <fixString  name="Deli7" length="1" default=","/> -->
 	  <fixString name="br" length="10"   />
 	  <!-- <fixString  name="Deli8" length="1" default=","/> -->
