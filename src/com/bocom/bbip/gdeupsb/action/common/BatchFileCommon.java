@@ -1,6 +1,7 @@
 package com.bocom.bbip.gdeupsb.action.common;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -44,8 +45,8 @@ public class BatchFileCommon extends BaseAction {
 		GDEupsBatchConsoleInfo info = new GDEupsBatchConsoleInfo();
 		info.setFleNme(fleNme);
 		info.setBusKnd(eupsBusTyp);
-		GDEupsBatchConsoleInfo ret =get(GDEupsBatchConsoleInfoRepository.class).findConsoleInfo(info);
-		Assert.isTrue(null==ret, "批次信息已经存在");
+		List<GDEupsBatchConsoleInfo> ret =get(GDEupsBatchConsoleInfoRepository.class).find(info);
+		Assert.isTrue(null==ret||0==ret.size(), "批次信息已经存在");
 		/** 插入批次控制表 */
 		String batNo =((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
 		info.setBatNo(batNo);
