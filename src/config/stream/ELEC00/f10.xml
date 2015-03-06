@@ -5,7 +5,7 @@
 	name="460410Req">
 		
       
-		<fixString name="br" length="64" /><!-- 网点名称 -->
+		<fixString name="netName" length="64" /><!-- 网点名称 -->
 		<fixString name="busTyp" length="3" /><!--  收费方式-->
 		<fixString name="payNo" length="20" /><!-- 缴费号 -->
       <fixString name="electricityYearMonth" length="16" /><!--  电费年月-->
