@@ -10,7 +10,7 @@
 		<fixString name="responseMessage" length="100"/>  <!--返回信息 -->
 	    <fixString name="TransCode" length="6"  referred="true" mapping="true"/>  
 		<fixString name="DCC_SCHID" length="10"/>  <!--学校代号 -->
-		<fixString name="thdTxnDte" length="8"/>  <!--交易日期 -->
+		
 	</segment>
 		<include  keys="TransCode" encodePrefix="f" />
 	
