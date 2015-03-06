@@ -12,34 +12,57 @@
 				<loop name="rspList" count="LLLL">
 					<segment name="rspRecord">
 						<fixString name="responseIndex"  length="4"/>   <!-- 包序号-->
-						<fixString name="je"                    length="11"/>   <!-- 水费收缴总金额，以分为单位-->
+						<fixString name="oje"                    length="11"  referred="true"/>   <!-- 水费收缴总金额，以分为单位-->
+						<addString name="je"  expression="exp:@com.bocom.bbip.utils.NumberUtils@centToYuan(this.oje)" />
 						<fixString name="pnum"                length="11"/>   <!-- 本月行码-->
 						<fixString name="lnum"                 length="11"/>   <!-- 上月行码-->
 						<fixString name="xzsl"                 length="11"/>   <!-- 校正水量-->
 						<fixString name="quanty"              length="11"/>   <!-- 本月水量 -->
 						<fixString name="usort"               length="4"/>   <!-- 用水性质-->
-						<fixString name="uprice"              length="11"/>   <!-- 水价，以厘为单位-->
-						<fixString name="pwuprice"          length="11"/>   <!-- 污水单价，以厘为单位-->
-						<fixString name="price"                length="11"/>   <!-- 水费，以分为单位-->
-						<fixString name="pwf"                  length="11"/>   <!-- 污水费，以分为单位-->
-						<fixString name="pprice"              length="11"/>   <!-- 邮寄费，以分为单位-->
+						<fixString name="oouprice"              length="11"  referred="true"/>   <!-- 水价，以厘为单位-->
+						<addString name="ouprice"  referred="true"  expression="exp:@com.bocom.bbip.utils.NumberUtils@centToYuan(this.oouprice)" />
+						<addString name="uprice"  referred="true"  expression="exp:@com.bocom.bbip.utils.NumberUtils@centToYuan(this.ouprice)" />
+						<fixString name="oopwuprice"          length="11"  referred="true"/>   <!-- 污水单价，以厘为单位-->
+						<addString name="opwuprice"  referred="true"  expression="exp:@com.bocom.bbip.utils.NumberUtils@centToYuan(this.oopwuprice)" />
+						<addString name="pwuprice"  referred="true"  expression="exp:@com.bocom.bbip.utils.NumberUtils@centToYuan(this.opwuprice)" />
+						<fixString name="oprice"                length="11"  referred="true"/>   <!-- 水费，以分为单位-->
+						<addString name="price"  referred="true"  expression="exp:@com.bocom.bbip.utils.NumberUtils@centToYuan(this.oprice)" />
+						<fixString name="opwf"                  length="11"  referred="true"/>   <!-- 污水费，以分为单位-->
+						<addString name="pwf"  referred="true"  expression="exp:@com.bocom.bbip.utils.NumberUtils@centToYuan(this.opwf)" />
+						<fixString name="opprice"              length="11"  referred="true"/>   <!-- 邮寄费，以分为单位-->
+						<addString name="pprice"  referred="true"  expression="exp:@com.bocom.bbip.utils.NumberUtils@centToYuan(this.opprice)" />
 						<fixString name="cdate"               length="14"/>   <!-- 抄表日期YYYYMMDDHH24MISS-->
 						<fixString name="kk"                   length="1"/>   <!-- 扣款标志-->
-						<fixString name="cnjxs"               length="11"/>   <!-- 违约金系数，以厘为单位-->
-						<fixString name="ljprice"             length="11"/>   <!-- 垃圾费，以分为单位-->
+						<fixString name="oocnjxs"               length="11"  referred="true"/>   <!-- 违约金系数，以厘为单位-->
+						<addString name="ocnjxs"  referred="true"  expression="exp:@com.bocom.bbip.utils.NumberUtils@centToYuan(this.oocnjxs)" />
+						<addString name="cnjxs"  referred="true"  expression="exp:@com.bocom.bbip.utils.NumberUtils@centToYuan(this.ocnjxs)" />
+						<fixString name="oljprice"             length="11"  referred="true"/>   <!-- 垃圾费，以分为单位-->
+						<addString name="ljprice"   referred="true" expression="exp:@com.bocom.bbip.utils.NumberUtils@centToYuan(this.oljprice)" />
 						<fixString name="ljbz"                 length="1"/>   <!-- 垃圾免征标志-->
-						<fixString name="ljcnj"                 length="11"/>   <!-- 垃圾滞纳金，以分为单位-->
-						<fixString name="cnj"                   length="11"/>   <!-- 水费违约金，以分为单位-->
-						<fixString name="pwcnj"               length="11"/>   <!-- 污水滞纳金，以分为单位-->
+						<fixString name="oljcnj"                 length="11"  referred="true"/>   <!-- 垃圾滞纳金，以分为单位-->
+						<addString name="ljcnj"  referred="true"  expression="exp:@com.bocom.bbip.utils.NumberUtils@centToYuan(this.oljcnj)" />
+						<fixString name="ocnj"                   length="11"  referred="true"/>   <!-- 水费违约金，以分为单位-->
+						<addString name="cnj"   referred="true" expression="exp:@com.bocom.bbip.utils.NumberUtils@centToYuan(this.ocnj)" />
+						<fixString name="opwcnj"               length="11"  referred="true"/>   <!-- 污水滞纳金，以分为单位-->
+						<addString name="pwcnj"  referred="true"  expression="exp:@com.bocom.bbip.utils.NumberUtils@centToYuan(this.opwcnj)" />
 						<fixString name="ladderquanty1"   length="11"/>   <!-- 第一阶梯水量-->
 						<fixString name="ladderquanty2"  length="11"/>   <!-- 第二阶梯水量-->
 						<fixString name="ladderquanty3"  length="11"/>   <!-- 第三阶梯水量-->
-						<fixString name="ladderuprice1"  length="11"/>   <!-- 第一阶梯水价，以厘为单位-->
-						<fixString name="ladderuprice2"  length="11"/>   <!-- 第二阶梯水价，以厘为单位-->
-						<fixString name="ladderuprice3"  length="11"/>   <!-- 第三阶梯水价，以厘为单位-->
-						<fixString name="ladderprice1"    length="11"/>   <!-- 第一阶梯水费，以分为单位-->
-						<fixString name="ladderprice2"   length="11"/>   <!-- 第二阶梯水费，以分为单位-->
-						<fixString name="ladderprice3"   length="11"/>   <!-- 第三阶梯水费，以分为单位-->
+						<fixString name="ooladderuprice1"  length="11"  referred="true"/>   <!-- 第一阶梯水价，以厘为单位-->
+						<addString name="oladderuprice1"  referred="true"  expression="exp:@com.bocom.bbip.utils.NumberUtils@centToYuan(this.ooladderuprice1)" />
+						<addString name="ladderuprice1"  referred="true"  expression="exp:@com.bocom.bbip.utils.NumberUtils@centToYuan(this.oladderuprice1)" />
+						<fixString name="ooladderuprice2"  length="11"  referred="true"/>   <!-- 第二阶梯水价，以厘为单位-->
+						<addString name="oladderuprice2"  referred="true"  expression="exp:@com.bocom.bbip.utils.NumberUtils@centToYuan(this.ooladderuprice2)" />
+						<addString name="ladderuprice2"  referred="true"  expression="exp:@com.bocom.bbip.utils.NumberUtils@centToYuan(this.oladderuprice2)" />
+						<fixString name="ooladderuprice3"  length="11"  referred="true"/>   <!-- 第三阶梯水价，以厘为单位-->
+						<addString name="oladderuprice3"  referred="true"  expression="exp:@com.bocom.bbip.utils.NumberUtils@centToYuan(this.ooladderuprice3)" />
+						<addString name="ladderuprice3"  referred="true"  expression="exp:@com.bocom.bbip.utils.NumberUtils@centToYuan(this.oladderuprice3)" />
+						<fixString name="oladderprice1"    length="11"  referred="true"/>   <!-- 第一阶梯水费，以分为单位-->
+						<addString name="ladderprice1"  referred="true"  expression="exp:@com.bocom.bbip.utils.NumberUtils@centToYuan(this.oladderprice1)" />
+						<fixString name="oladderprice2"   length="11"  referred="true"/>   <!-- 第二阶梯水费，以分为单位-->
+						<addString name="ladderprice2"  referred="true"  expression="exp:@com.bocom.bbip.utils.NumberUtils@centToYuan(this.oladderprice2)" />
+						<fixString name="oladderprice3"   length="11"  referred="true"/>   <!-- 第三阶梯水费，以分为单位-->
+						<addString name="ladderprice3"  referred="true"  expression="exp:@com.bocom.bbip.utils.NumberUtils@centToYuan(this.oladderprice3)" />
 						<fixString name="reserved1"       length="10"/>   <!-- 保留字段1-->
 						<fixString name="reserved2"      length="10"/>   <!-- 保留字段2-->
 					</segment>
