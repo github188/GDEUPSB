@@ -9,6 +9,6 @@
 		<fixString name="busTyp" length="3" /><!--  收费方式-->
 		<fixString name="payNo" length="20" /><!-- 缴费号 -->
       <fixString name="electricityYearMonth" length="16" /><!--  电费年月-->
-      <fixString name="queryMode" length="1" /><!--  查询方式-->
+      <fixString name="checkType" length="1" /><!--  查询方式-->
       
 	</segment>
