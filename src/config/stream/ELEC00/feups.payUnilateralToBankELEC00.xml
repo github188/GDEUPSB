@@ -21,7 +21,7 @@
 <!--收费方式	SFFS	Varchar2(3)-->
 		<fixString name="payMde"  length="3"/>
 <!--费用类型	FYLX	Varchar2(3)-->
-		<fixString name="costType"  length="3"/>
+		<fixString name="payType"  length="3"/>
 <!--入账银行代码	RZYHDM	Varchar2(4)-->
 		<fixString name="bankNo"  length="4"/>
 <!--单位编码	DWBM	Varchar2(8)-->
@@ -35,11 +35,11 @@
 <!--扣款账户	KKZH	Varchar2(32)-->
 		<fixString name="cusAc"  length="32"/>
 <!--扣款账户名称	KKZHMC	Varchar2(128)-->
-		<fixString name="CusNme"  length="128"/>
+		<fixString name="cusNme"  length="128"/>
 <!--部分缴费标志	BFJFBZ	Varchar2(1)-->
 		<fixString name="fulDedFlg"  length="1"/>
 <!--账务流水号	ZWLSH	Varchar2(16)-->
-		<fixString name="accountsSerialNo"  length="16"/>
+		<fixString name="mfmVchNo"  length="16"/>
 <!--电费年月	DFNY	Varchar2(6)-->
 		<fixString name="electricityYearMonth"  length="6"/>
 <!--货币符号	HBFH	Varchar2(5)-->

@@ -9,8 +9,8 @@
 		<fixString name="traSendDate" length="8" /><!-- 交易日期 -->
 		<fixString name="traSendTime" length="6" /><!--  交易时间-->
 		<fixString name="oldTxnSqn" length="24" /><!--  原交易流水号-->
-		<fixString name="oldTxnDte" length="8" /><!--  原交易日期-->
-		<fixString name="oldTxnTme" length="6" /><!-- 原交易时间 -->
+		<fixString name="thdTxnDte" length="8" /><!--  原交易日期-->
+		<fixString name="thdTxnTme" length="6" /><!-- 原交易时间 -->
 		<fixString name="busTyp" length="3" /><!--  收费方式-->
 		<fixString name="payType" length="3" /><!--  费用类型-->
 		<fixString name="comNo" length="8" /><!--  单位编码-->
@@ -20,7 +20,7 @@
 	      <fixString name="cusAc" length="32" /><!-- 扣款账户 -->
 	      <fixString name="cusNme" length="128" /><!--  扣款账户名称-->
 	      <fixString name="fulDedFlg" length="1" /><!-- 部分缴费标志 -->
-	      <fixString name="accountsSerialNo" length="16" /><!-- 账务流水号 -->
+	      <fixString name="mfmVchNo" length="16" /><!-- 账务流水号 -->
 	      <fixString name="electricityYearMonth" length="16" /><!--  电费年月-->
 	      <fixString name="ccy" length="5" /><!--  货币符号-->
 	      <fixString name="txnAmt" length="16" /><!-- 原实扣金额 -->
