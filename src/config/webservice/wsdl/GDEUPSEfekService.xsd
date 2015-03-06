@@ -1284,7 +1284,7 @@
     <xs:sequence>
       <xs:element ref="tns:requestHeader" minOccurs="0"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
-      <xs:element name="busType" type="tns:busType_SType"/>
+      <xs:element name="busType" type="tns:busType_SType" minOccurs="0"/>
       <xs:element name="comNo" type="tns:comNo_SType"/>
       <xs:element name="payNo" type="tns:payNo_SType"/>
       <xs:element name="bankNo" type="tns:bankNo_SType"/>
@@ -1295,14 +1295,14 @@
       <xs:element name="dedit" type="tns:dedit_SType" minOccurs="0"/>
       <xs:element name="payMde" type="tns:payMde_SType"/>
       <xs:element name="txnAmt" type="tns:txnAmt_SType"/>
-      <xs:element name="ActFlg" type="tns:ActFlg_SType"/>
-      <xs:element name="accTyp" type="tns:accTyp_SType"/>
-      <xs:element name="VchCod" type="tns:VchCod_SType"/>
-      <xs:element name="cusAc" type="tns:cusAc_SType"/>
-      <xs:element name="CusNme" type="tns:CusNme_SType"/>
-      <xs:element name="BActSq" type="tns:BActSq_SType"/>
-      <xs:element name="choNo" type="tns:choNo_SType"/>
-      <xs:element name="bvKnd" type="tns:bvKnd_SType"/>
+      <xs:element name="ActFlg" type="tns:ActFlg_SType" minOccurs="0"/>
+      <xs:element name="accTyp" type="tns:accTyp_SType" minOccurs="0"/>
+      <xs:element name="VchCod" type="tns:VchCod_SType" minOccurs="0"/>
+      <xs:element name="cusAc" type="tns:cusAc_SType" minOccurs="0"/>
+      <xs:element name="CusNme" type="tns:CusNme_SType" minOccurs="0"/>
+      <xs:element name="BActSq" type="tns:BActSq_SType" minOccurs="0"/>
+      <xs:element name="choNo" type="tns:choNo_SType" minOccurs="0"/>
+      <xs:element name="bvKnd" type="tns:bvKnd_SType" minOccurs="0"/>
       <xs:element name="bvNo" type="tns:bvNo_SType" minOccurs="0"/>
       <xs:element name="BilDat" type="tns:BilDat_SType" minOccurs="0"/>
       <xs:element name="password" type="tns:password_SType" minOccurs="0"/>
