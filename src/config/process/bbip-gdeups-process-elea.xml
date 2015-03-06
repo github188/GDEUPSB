@@ -428,6 +428,37 @@
 			<action id="updGcRst" ref="gdeups.lotClrGcUpdAction" />	 <!-- 更新轧差结果 -->
 		</actions>
 	</process>
-
+	
+	
+	
+	
+	<!--签约一站通：代理协议校验拓展点 -->
+	<action class="com.bocom.bbip.gdeupsb.ext.ChlAutoSignInOutServiceActionExt"
+		id="eups.chlAutoSignInOutServiceActionExt">
+		<x:property name="executableBeanResolver">
+			<x:bean
+				class="com.bocom.bbip.eups.spi.resolver.DefaultExecutableBeanResolver">
+				<x:property name="strategyKey" value="comNo" />
+			</x:bean>
+		</x:property>
+	</action>
+	
+	
+	
+		<!--清算轧差-更新轧差结果 -->
+	<action class="com.bocom.bbip.gdeupsb.ext.ManageChlSignInOutActionExt"
+		id="eups.eupsManageChlSignInOutActionExt" />
+	
+	 <!-- 需传3个参数：签到签退标识：sigInOutFlg(0:第三方、1:渠道、2:第三方+渠道);单位编号：comNo;交易类型：txnTyp(0-签到;1-签退)-->
+	<process id="eups.chlAutoSignInOutExt" template="eups.simpleTran"
+		interceptors="bbip.bbipSchedulerInterceptor">
+		<actions>
+		    <action id="act" ref="eups.chlAutoSignInOutInitAction" />
+			<action id="act" ref="eups.eupsManageChlSignInOutActionExt" />
+			<action id="act" ref="eups.eupsManageThdTranCtlDetailAction" />
+			<action id="act" ref="eups.chlAutoSignInOutServiceActionExt" operations="signInOutDeal" />
+		</actions>
+	</process>	
+	
 </x:beans>
 
