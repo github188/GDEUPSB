@@ -43,14 +43,15 @@ public class ChargeStrategyAction implements Executable{
 //		      Set>RspCod=CPL999</Set>
 //		      <Set>TTxnCd=$TxnCod</Set>
 //		      <Set>TxnTim=GETDATETIME(YYYYMMDDHHMISS)</Set>
-		
-		Date tTxnDte=DateUtils.parse(context.getData(ParamKeys.THD_TXN_DATE).toString());//第三方交易日期
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+context);
+		Date tTxnDte=DateUtils.parse(context.getData("tTxnDte").toString(), DateUtils.STYLE_yyyyMMdd);//第三方交易日期
 		String thdCusNo = context.getData(GDParamKeys.TML_NO);
 		context.setData(ParamKeys.THD_CUS_NO, thdCusNo);
 		context.setData(ParamKeys.THD_TXN_DATE, tTxnDte);
 //		TODO:现在先设置一个柜员号，以后需要删除。
 		context.setData(ParamKeys.TELLER, "0007");
 		context.setData(ParamKeys.TXN_TLR, "0007");
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+context);
 //		检查报文是否重复
 		EupsTransJournal eups = new EupsTransJournal();
 		eups.setBakFld1((String)context.getData(ParamKeys.BAK_FLD1));//备用字段1，学校代号。
