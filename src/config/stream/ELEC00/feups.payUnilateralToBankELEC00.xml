@@ -45,7 +45,7 @@
 <!--货币符号	HBFH	Varchar2(5)-->
 		<fixString name="ccy"  length="5"/>
 <!--扣费金额	KFJE	Number(14,2)-->
-		<fixString name="txnAmt"  length="16"/>
+		<fixString name="respTxnAmt"  length="16"/>
 <!--本金	BJ	Number(14,2)-->
 		<fixString name="capital"  length="16"/>
 <!--违约金	WYJ	Number(14,2)-->
