@@ -242,7 +242,16 @@
 					
 	<!--广州电力单边划扣  -->
 	<bean class="com.bocom.bbip.gdeupsb.strategy.elcgd.PayUnilateralToBankServiceAction"
-		id="eups.payUnilateralToBankServiceActionELEC01" />				
+		id="eups.payUnilateralToBankServiceActionELEC01" />		
+		
+		
+	<!-- 惠州燃气单边划扣 -->
+	<bean class="com.bocom.bbip.gdeupsb.strategy.gash.PayUnilateralToBankServiceImplPGAS00"
+		id="eups.payUnilateralToBankServiceActionPGAS00" />
+	<!-- 惠州燃气单边抹帐冲正 -->
+	<bean class="com.bocom.bbip.gdeupsb.strategy.gash.CnlPayUnilateralToBankServicePGAS00"
+		id="eups.cancelUnilateralToBankServiceActionPGAS00" />
+				
 	
 	 <!-- 广东烟草划扣联机单笔记 -->
      <bean class="com.bocom.bbip.gdeupsb.strategy.sgrt00.PayUnilateralToBankServiceActionSGRT00"
