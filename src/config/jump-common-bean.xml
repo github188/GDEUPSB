@@ -22,8 +22,7 @@
 	<bean id="mftpTransfer" class="com.bocom.bbip.file.transfer.mftp.MftpTransferImpl">
 	</bean>
 	
-	<bean id="buaServer" class="com.bocom.bbip.comp.bua.service.BUAServiceAccessObject">
-	</bean>
+	<bean id="buaServiceAccessObject" class="com.bocom.bbip.comp.bua.service.BUAServiceAccessObject" />
 	
 		<bean id="cardBINService" class="com.bocom.bbip.comp.account.AccountService">
 	</bean>
