@@ -50,14 +50,15 @@ public class QueryDealServiceActionELEC02 implements QueryDealService {
 	public Map<String, Object> qryDeal(CommHeadDomain commheaddomain,PreQryDomain preqrydomain, Context context) throws CoreException {
 		logger.info("QueryDealServiceActionELEC02 qryDeal start ... ...");
 		logger.info("SQN:"+context.getData("sqn"));
+		String sqn = context.getData("sqn");
 		Map<String,Object> callThdMap = new HashMap<String,Object>();//拼接外发第三方Map
 		
 		String date = DateUtils.format(new Date(), "yyyyMMdd");
 		String time = DateUtils.format(new Date(),"yyyyMMddHHmmss");
 		context.setData("AppTradeCode", "10");//业务交易码
-		context.setData("StartAddr", "BANK");
-		context.setData("DestAddr", "ELEC");
-		context.setData("MesgID", "MesgID");
+		context.setData("StartAddr", "301");
+		context.setData("DestAddr", "");
+		context.setData("MesgID", sqn);
 		context.setData("WorkDate", date);
 		context.setData("SendTime", time);
 		context.setData("mesgPRI", "9");
@@ -65,12 +66,12 @@ public class QueryDealServiceActionELEC02 implements QueryDealService {
 		context.setData("FileName", "");
 		context.setData("zipFlag", "0");
 		
-		context.setData("WTC", "WTC");
-		context.setData("TMN", context.getData("brno"));
+		context.setData("WTC", "301");
+		context.setData("TMN", context.getData(ParamKeys.BR));
 		context.setData("WD0", date);
-		context.setData("CLZ", "1001");
-		context.setData("ECD", "BOCOM");
-		context.setData("8ED", "300");
+		context.setData("CLZ", sqn.substring(4));
+		context.setData("ECD", "");
+		context.setData("8ED", context.getData("EDD"));
 		context.setData("JFH", context.getData("thdCusNo"));
 		context.setData("FYM", context.getData("FYM"));
 		context.setData("QFG", context.getData("QFG"));

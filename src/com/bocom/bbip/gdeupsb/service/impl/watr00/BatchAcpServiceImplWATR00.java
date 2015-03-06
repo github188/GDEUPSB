@@ -90,7 +90,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		Assert.isNotNull(config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST,"第三方配置信息不存在");
 		config.setLocFleNme(fileName);
 		config.setRmtFleNme(fileName);
-//		config.setRmtWay(dir);
+		config.setRmtWay(dir);
 		/** 产生代收付格式文件 */
 		((OperateFileAction)get("opeFile")).createCheckFile(config, GDConstants.BATCH_FILE_FORMAT, fileName, fileMap);
 		/** 发送到指定路径 */

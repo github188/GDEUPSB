@@ -5,10 +5,10 @@
 	name="11Request">
 			<fixString name="WTC" length="12"/>   <!-- 委托节点代码 -->
 			<fixString name="TMN" length="12"/>   <!-- 经办网点号 -->
-			<fixString name="ST0" length="8"/>   <!-- 经办柜员号 -->
+			<fixString name="STO" length="8"/>   <!-- 经办柜员号 -->
 			<fixString name="CLZ"  length="16"/>   <!-- 流水 -->
 			<fixString name="WD0"  length="8"/>   <!-- 工作日期 -->
-			<fixString name="OWC"  length="5"/>   <!-- 原委托节点代码 -->
+			<fixString name="OWC"  length="12"/>   <!-- 原委托节点代码 -->
 			<fixString name="051"  length="8"/>   <!-- 原委托日期 -->
 			<fixString name="OLZ"  length="12"/>   <!-- 原业务流水-->
 			<fixString name="ECD"  length="12"/>   <!-- 收费企业代码 -->
@@ -30,12 +30,12 @@
 					<segment name="JF">
 						<fixString name="JFXH"  length="2"/>   <!-- 缴费项序号 -->
 						<fixString name="JFJE"   length="12"/>   <!-- 缴费项金额 -->
-						<fixString name="YF"       length="6"/>   <!-- 月份 -->
-						<fixString name="JLDH"  length="5"/>   <!-- 计量点号 -->
-						<fixString name="YSPZ"   length="16"/>   <!-- 应收凭证号 -->
-						<fixString name="BJ"      length="12"/>   <!-- 本金 -->
-						<fixString name="DFCS"  length="2"/>   <!-- 电费次数 -->
-						<fixString name="WYJ"   length="12"/>   <!-- 违约金 -->
+						<fixString name="MON"       length="6"/>   <!-- 月份 -->
+						<fixString name="JLD"  length="5"/>   <!-- 计量点号 -->
+						<fixString name="YSH"   length="16"/>   <!-- 应收凭证号 -->
+						<fixString name="CPS"      length="12"/>   <!-- 本金 -->
+						<fixString name="MNS"  length="2"/>   <!-- 电费次数 -->
+						<fixString name="PCC"   length="12"/>   <!-- 违约金 -->
 					</segment>
 				</loop>
 			</segment>
