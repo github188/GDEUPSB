@@ -39,6 +39,7 @@ public class TrspWyFeeChargeAction extends BaseAction{
 		ctx.setData(GDParamKeys.ACT_NO, ctx.getData(cardNo));
 		ctx.setData(GDParamKeys.TXN_AMT, ctx.getData(totalAmt));
 		ctx.setData(GDParamKeys.PAY_MON, ctx.getData("monthCount"));
+		ctx.setData(GDParamKeys.PAY_DAT, new Date());
 //		<Set>BrNo=444999</Set>
 //        <Set>CCSCod=TLU6</Set>
 //        <Set>TTxnCd=484002</Set>
@@ -80,6 +81,7 @@ public class TrspWyFeeChargeAction extends BaseAction{
 //		 INSERT INTO wbgtxnjnl444 VALUES('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')
 //	       </Sentence>
 //	       <Fields>BrNo|ActDat|FTxnTm|CrdNo|TxnAmt|Fee|PCusId|TxnCnl|TxnSrc|TxnCod|PayTyp|TxnSts|NodTrc|PmpTrc|TckNo|ThdTrc|</Fields>
+		
 //		GDEupsbTrspTxnJnl gdEupsbTrspTxnJnl = new GDEupsbTrspTxnJnl();
 //		gdEupsbTrspTxnJnl.setFtxnTm((Date)ctx.getData(GDParamKeys.FTXN_TM));
 //		gdEupsbTrspTxnJnl.setBrNo(ctx.getData(GDParamKeys.BR_NO).toString());
@@ -88,17 +90,25 @@ public class TrspWyFeeChargeAction extends BaseAction{
 //		gdEupsbTrspTxnJnl.setPayMon(ctx.getData(monthCount).toString());
 //		gdEupsbTrspTxnJnl.setCarTyp(ctx.getData(plateType).toString());
 //		gdEupsbTrspTxnJnl.setSqn(ctx.getData(GDParamKeys.SQN).toString());
+//		gdEupsbTrspTxnJnl.setActDat((Date)ctx.getData(GDParamKeys.ACT_DAT));
+//		gdEupsbTrspTxnJnl.setFee((BigDecimal)ctx.getData("fee"));
+//		
 //		
 ////		TODO: <Set>PCusId=$pmpCustId</Set>  <!--收付通宝客户编号-->
 //		gdEupsbTrspTxnJnlRepository.insert(gdEupsbTrspTxnJnl);
 		ctx.setData(ParamKeys.ACCOUNT_DATE, DateUtils.format((Date)ctx.getData(ParamKeys.ACCOUNT_DATE), DateUtils.STYLE_yyyyMMdd));
 		ctx.setData(ParamKeys.AC_DATE, DateUtils.format((Date)ctx.getData(ParamKeys.AC_DATE), DateUtils.STYLE_yyyyMMdd));
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@"+ctx.getDataMap());
+		
+		
 		get(BBIPPublicService.class).synExecute(CHARGE_PROCESS, ctx);
 		
-//		TODO:
-//		<Exec func="PUB:ExecSql" error="IGNORE">
-//        <Arg name="SqlCmd" value="Updwbgjnl" />
-//      </Exec>
+	
+		
+//		 UPDATE wbgtxnjnl444 SET TxnSts='%s',TckNo='%s',ThdTrc='%s' WHERE PmpTrc='%s'
+//			       </Sentence>
+//			       <Fields>TxnSts|TckNo|ThdTrc|PmpTrc|</Fields>
+		
+
 	}
 }
