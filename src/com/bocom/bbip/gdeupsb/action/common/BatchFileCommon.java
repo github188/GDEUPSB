@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.action.common;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -106,14 +107,31 @@ public class BatchFileCommon extends BaseAction {
 		context.setData(ParamKeys.TXN_MDE, Constants.TXN_MDE_FILE);
 		context.setData(ParamKeys.TOT_CNT, context.getData(ParamKeys.TOT_CNT));
 		context.setData(ParamKeys.TOT_AMT, context.getData(ParamKeys.TOT_AMT));
+		final String thdBatNo=((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getBBIPSequence();
+		context.setData(ParamKeys.THD_BAT_NO,thdBatNo);
 	}
 	public void afterBatchProcess(Context context)throws CoreException{
 		final String batNo=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.BAT_NO, ErrorCodes.EUPS_QUERY_NO_DATA);
 		GDEupsBatchConsoleInfo info = new GDEupsBatchConsoleInfo();
 		info.setBatNo(batNo);
 		GDEupsBatchConsoleInfo ret =get(GDEupsBatchConsoleInfoRepository.class).findConsoleInfo(info);
-		Assert.isFalse(null==ret, "批次信息不存在");
+		Assert.isFalse(null==ret, "BBIP0004EU0706", "代收付返回的批次号不存在");
+		Integer totCnt = ret.getTotCnt();
+	    BigDecimal totAmt = ret.getTotAmt();
+		Integer sucTotCnt = (Integer)context.getData("sucTotCnt");
+	    BigDecimal sucTotAmt = (BigDecimal)context.getData("sucTotAmt");
+
+	    Integer falTotCnt = Integer.valueOf(totCnt.intValue() - sucTotCnt.intValue());
+	    double falTotAmtdouble = totAmt.doubleValue() - sucTotAmt.doubleValue();
+	    BigDecimal falTotAmt = new BigDecimal(falTotAmtdouble);
+
+	    ret.setSucTotCnt(sucTotCnt);
+	    ret.setSucTotAmt(sucTotAmt);
+	    ret.setFalTotCnt(falTotCnt);
+	    ret.setFalTotAmt(falTotAmt);
+	    ret.setExeDte(new Date());
 		ret.setBatSts(GDConstants.BATCH_STATUS_COMPLETE);
 		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(ret);
+		context.getDataMapDirectly().putAll(BeanUtils.toMap(ret));
 	}
 }
