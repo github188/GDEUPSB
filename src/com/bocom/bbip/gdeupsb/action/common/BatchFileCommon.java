@@ -83,7 +83,6 @@ public class BatchFileCommon extends BaseAction {
         final String AcDate=DateUtils.format(
         	((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getAcDate(),DateUtils.STYLE_yyyyMMdd);
         final String systemCode=((SystemConfig)get(SystemConfig.class)).getSystemCode();;
-        final String busTyp=(String)context.getData("busTyp");
         final String dir="/home/bbipadm/data/mftp/BBIP/"+systemCode+"/"+br+"/"+tlr+"/"+AcDate+"/";
         EupsActSysPara eupsActSysPara = new EupsActSysPara();
         eupsActSysPara.setActSysTyp("0");
@@ -91,7 +90,7 @@ public class BatchFileCommon extends BaseAction {
         List resultList = ((EupsActSysParaRepository)get(EupsActSysParaRepository.class)).find(eupsActSysPara);
         Assert.isNotEmpty(resultList, ErrorCodes.EUPS_QUERY_NO_DATA);
         final String comNoAcps =((EupsActSysPara)resultList.get(0)).getSplNo();
-        final String fleNme="BATC"+comNoAcps+busTyp+".txt";
+        final String fleNme="BATC"+comNoAcps+"0.txt";
 
         Map<String, Object> fileMap = (Map<String, Object>) ContextUtils.assertVariableNotNullAndGet(context, "agtFileMap","agtFileMap不能为空");
 		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne("BatchFileFtpNo");
