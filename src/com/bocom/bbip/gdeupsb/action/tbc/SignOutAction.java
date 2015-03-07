@@ -1,14 +1,12 @@
 package com.bocom.bbip.gdeupsb.action.tbc;
 
-import java.util.Date;
-
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
-import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 /**
@@ -31,11 +29,10 @@ public class SignOutAction  extends BaseAction {
         context.setData("teller", context.getData("TELLER"));
 
         String comNo =context.getData("dptId").toString();
-        
         EupsThdTranCtlInfo resultThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(comNo);
         if (resultThdTranCtlInfo == null) {
             context.setData(GDParamKeys.RSP_CDE,"9999");
-            context.setData(GDParamKeys.RSP_MSG,"你的数据不存在!");
+            context.setData(GDParamKeys.RSP_MSG,"数据不存在!");
             return;
         } 
         if (resultThdTranCtlInfo.getTxnCtlSts().equals(Constants.TXN_CTL_STS_SIGNOUT)) {
@@ -50,7 +47,7 @@ public class SignOutAction  extends BaseAction {
             try {
                 EupsThdTranCtlInfo eupsThdTranCtlInfo = new EupsThdTranCtlInfo();
                 eupsThdTranCtlInfo.setTxnCtlSts(Constants.TXN_CTL_STS_SIGNOUT);
-                eupsThdTranCtlInfo.setTxnDte(new Date());
+                eupsThdTranCtlInfo.setTxnDte(DateUtils.parse(context.getData("txnTme").toString(),DateUtils.STYLE_yyyyMMddHHmmss));
                 eupsThdTranCtlInfo.setComNo(comNo);
                 get (EupsThdTranCtlInfoRepository.class).update(eupsThdTranCtlInfo);
             } catch (Exception e) {
@@ -61,5 +58,4 @@ public class SignOutAction  extends BaseAction {
         context.setData(GDParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
     }
-
 }

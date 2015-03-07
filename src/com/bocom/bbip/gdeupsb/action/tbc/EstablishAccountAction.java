@@ -16,6 +16,8 @@ import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.entity.GdTbcCusAgtInfo;
+import com.bocom.bbip.gdeupsb.repository.GdTbcCusAgtInfoRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.jump.bp.core.Context;
@@ -31,6 +33,8 @@ public class EstablishAccountAction extends BaseAction {
    
     @Autowired
     BGSPServiceAccessObject serviceAccess;
+    @Autowired
+    GdTbcCusAgtInfoRepository cusAgtInfoRepository;
     
     @Override
      public void execute(Context context) throws CoreException {
@@ -101,6 +105,17 @@ public class EstablishAccountAction extends BaseAction {
             establishMap.put("idTyp",context.getData("pasTyp"));
             establishMap.put("ccy","156");
             establishMap.put("cusAc",context.getData("actNo"));
+            
+            //GDEUPS协议临时表添加数据
+            GdTbcCusAgtInfo  cusAgtInfo =new  GdTbcCusAgtInfo();
+            cusAgtInfo.setActNo(context.getData("actNo").toString());
+            cusAgtInfo.setCustId(context.getData("custId").toString());
+            cusAgtInfo.setCusNm(context.getData("tCusNm").toString());
+            cusAgtInfo.setPasId(context.getData("pasId").toString());
+            cusAgtInfo.setComId(context.getData("comId").toString());
+            cusAgtInfo.setAccTyp(context.getData("accTyp").toString());
+            cusAgtInfoRepository.insert(cusAgtInfo);
+            //代收付系统接口调用增加协议
             try {
                 serviceAccess.callServiceFlatting("maintainAgentCollectAgreement", establishMap);
             } catch(Exception e) {

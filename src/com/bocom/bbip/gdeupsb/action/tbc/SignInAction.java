@@ -51,6 +51,7 @@ public class SignInAction extends BaseAction {
         } else {
 
             eupsThdTranCtlInfo.setTxnCtlSts(Constants.TXN_CTL_STS_SIGNIN);
+            eupsThdTranCtlInfo.setTxnDte(DateUtils.parse(context.getData("txnTme").toString(),DateUtils.STYLE_yyyyMMddHHmmss));
             eupsThdTranCtlInfo.setComNo(comNo);
             // 根据默认算法生成一个密钥
             Date timeStp = new Date();
@@ -59,7 +60,7 @@ public class SignInAction extends BaseAction {
                 mainkey = resultThdTranCtlInfo.getManKey() + mainkey;
             }
             //;加密秘钥
-           // String readyMD5 = buildReadyStr(context);
+            //String readyMD5 = buildReadyStr(context);
            // String beforeMacChk =GDEUPSConstants.EUPS_TBC_BLANK, macChk =GDEUPSConstants.EUPS_TBC_BLANK;
             if (StringUtils.isNotEmpty(mainkey)) {
                 //TODO;加密
