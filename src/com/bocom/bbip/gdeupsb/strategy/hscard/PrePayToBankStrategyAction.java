@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.comp.BBIPPublicService;
+import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
@@ -40,6 +41,7 @@ public class PrePayToBankStrategyAction implements Executable{
 	public void execute(Context context) throws CoreException,CoreRuntimeException{
 		
 		logger.info("PrePayToBankStrategyAction start......");
+		
 //		产生银行处理流水号,返回给第三方
 
 
@@ -83,8 +85,9 @@ public class PrePayToBankStrategyAction implements Executable{
 	      Map<String,Object> resultMap=accessObject.getPayload();
 	      if (CollectionUtils.isEmpty(resultMap)) {
 	            logger.info("There are no records for select check trans journal ");
-	            context.setData(ParamKeys.RESPONSE_CODE, "000001");
+//	            context.setData(ParamKeys.RESPONSE_CODE, "000001");
         		context.setData(ParamKeys.RSP_MSG, "未查到协议信息");
+        		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 	            throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
 	        }else{
 	        	List<Map<String,Object>> customerInfoList=(List<Map<String,Object>>)resultMap.get("customerInfo");
@@ -94,11 +97,13 @@ public class PrePayToBankStrategyAction implements Executable{
 	        	if(!context.getData(ParamKeys.CUS_NME).toString().equals(cusNme)){
 	        		context.setData(ParamKeys.RESPONSE_CODE, "000001");
 	        		context.setData(ParamKeys.RSP_MSG, "姓名匹配失败");
+	        		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 	        		throw new CoreException(ErrorCodes.EUPS_AGENT_CHK_ERROR);
 	        	}
 	        	if(!context.getData(ParamKeys.ID_NO).toString().equals(idNo)){
 	        		context.setData(ParamKeys.RESPONSE_CODE, "000001");
 	        		context.setData(ParamKeys.RSP_MSG, "证件号码匹配失败");
+	        		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 	        		throw new CoreException(ErrorCodes.EUPS_AGENT_CHK_ERROR);
 	        	}
 	        	
