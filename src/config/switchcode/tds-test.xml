@@ -40,27 +40,24 @@
     </table>
 
     <table id="GDYC_IActNo">
-        <key name="2001"    value="xxxxxxxxxx"/>    <!--441999广东省分行-->
-        <key name=""        value="xxxxxxxxxx"/>    <!--444999珠海分行-->
-        <key name=""        value="xxxxxxxxxx"/>    <!--446999佛山分行-->
+        <key name="2001"    value=""/>    <!--441999广东省分行-->
+        <key name=""        value=""/>    <!--444999珠海分行-->
+        <key name=""        value=""/>    <!--446999佛山分行-->
         <key name="2032"    value="445006011018170039247"/>    <!--445999汕头分行-->
-        <key name=""        value="xxxxxxxxxx"/>    <!--483999东莞分行-->
-        <key name=""        value="xxxxxxxxxx"/>    <!--484999中山分行-->
-        <key name="2072"        value="xxxxxxxxxx"/>    <!--485999揭阳支行-->
-        <key name=""        value="xxxxxxxxxx"/>    <!--491999惠州分行-->
-        <key name=""        value="xxxxxxxxxx"/>    <!--761999江门分行-->
+        <key name=""        value=""/>    <!--483999东莞分行-->
+        <key name=""        value=""/>    <!--484999中山分行-->
+        <key name="2072"        value=""/>    <!--485999揭阳支行-->
+        <key name=""        value=""/>    <!--491999惠州分行-->
+        <key name=""        value=""/>    <!--761999江门分行-->
   </table>
 
   <table id="GDYC_IActNm">
         <key name="2001"    value="广州市烟草专卖局（公司）"/>
-        <key name=""        value="xxxxxxxxxx"/>
-        <key name=""        value="xxxxxxxxxx"/>
+        <key name=""        value=""/>
+        <key name=""        value=""/>
         <key name="2032"    value="广东省烟草局汕头市公司"/>
-        <key name=""        value="xxxxxxxxxx"/>
-        <key name=""        value="xxxxxxxxxx"/>
-        <key name=""        value="xxxxxxxxxx"/>
-        <key name=""        value="xxxxxxxxxx"/>
-        <key name=""        value="xxxxxxxxxx"/>
+        <key name=""        value=""/>
+        <key name=""        value=""/>
     </table>
 
     <!-- 转换为协议号 -->
@@ -69,11 +66,12 @@
         <key name=""    value="xxxxxxxxxx"/>    <!--444999珠海分行-->
         <key name=""    value="xxxxxxxxxx"/>    <!--446999佛山分行-->
         <key name="2032"    value="4450000262"/>    <!--445999汕头分行-->
-        <key name=""    value="xxxxxxxxxx"/>    <!--483999东莞分行-->
-        <key name=""    value="xxxxxxxxxx"/>    <!--484999中山分行-->
-        <key name=""    value="xxxxxxxxxx"/>    <!--485999揭阳供电局-->
-        <key name=""    value="xxxxxxxxxx"/>    <!--491999惠州分行-->
-        <key name=""    value="xxxxxxxxxx"/>    <!--761999江门分行-->
+        <key name=""    value=""/>    <!--483999东莞分行-->
+        <key name=""    value=""/>    <!--484999中山分行-->
+        <key name=""    value=""/>    <!--485999揭阳供电局-->
+        <key name=""    value=""/>    <!--491999惠州分行-->
+        <key name=""    value=""/>    <!--761999江门分行-->
+        <key name="2008" value="4410009020" />  <!--广东省烟草公司清远市公司 -->
   </table>
 
   <table id="DL_BrNo2DstCod">
@@ -87,8 +85,7 @@
         <key name="491999"    value="5950"/>    <!--491999惠州分行-->
         <key name="761999"    value="5990"/>    <!--761999江门分行-->
   </table>
-
-
+  
   <!--电力-->
   <table id="RspCod2TRspCd_DL">
         <key name="000000" value="00"/>

@@ -6,6 +6,7 @@ import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -28,8 +29,12 @@ public class SignOutAction  extends BaseAction {
         context.setData("devId", context.getData("DEV_ID"));
         context.setData("teller", context.getData("TELLER"));
 
-        String comNo =context.getData("dptId").toString();
-        EupsThdTranCtlInfo resultThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(comNo);
+        String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
+        if (null == cAgtNo) {
+            cAgtNo ="4410000560";
+        }
+        context.setData("cAgtNo", cAgtNo);
+        EupsThdTranCtlInfo resultThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(cAgtNo);
         if (resultThdTranCtlInfo == null) {
             context.setData(GDParamKeys.RSP_CDE,"9999");
             context.setData(GDParamKeys.RSP_MSG,"数据不存在!");
@@ -48,7 +53,7 @@ public class SignOutAction  extends BaseAction {
                 EupsThdTranCtlInfo eupsThdTranCtlInfo = new EupsThdTranCtlInfo();
                 eupsThdTranCtlInfo.setTxnCtlSts(Constants.TXN_CTL_STS_SIGNOUT);
                 eupsThdTranCtlInfo.setTxnDte(DateUtils.parse(context.getData("txnTme").toString(),DateUtils.STYLE_yyyyMMddHHmmss));
-                eupsThdTranCtlInfo.setComNo(comNo);
+                eupsThdTranCtlInfo.setComNo(cAgtNo);
                 get (EupsThdTranCtlInfoRepository.class).update(eupsThdTranCtlInfo);
             } catch (Exception e) {
                 throw new CoreException("数据库处理错误 !"+ e);

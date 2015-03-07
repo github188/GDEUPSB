@@ -13,6 +13,7 @@ import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.bbip.service.Result;
 import com.bocom.jump.bp.core.Context;
@@ -49,9 +50,13 @@ public class DestroyAccountAction extends BaseAction {
         context.setData("devId", context.getData("DEV_ID"));
         context.setData("teller", context.getData("TELLER"));
 
-        String comNo = context.getData("dptId").toString();
+        String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
+        if (null == cAgtNo) {
+            cAgtNo ="4410000560";
+        }
+        context.setData("cAgtNo", cAgtNo);
         //检查系统签到状态
-        EupsThdTranCtlInfo eupsThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(comNo);
+        EupsThdTranCtlInfo eupsThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(cAgtNo);
         if (null == eupsThdTranCtlInfo) {
             throw new CoreException(ErrorCodes.THD_CHL_NOT_FOUND);
         } 

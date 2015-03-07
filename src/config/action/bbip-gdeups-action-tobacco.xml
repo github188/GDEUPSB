@@ -27,6 +27,10 @@
     <action class="com.bocom.bbip.gdeupsb.action.tbc.QryRemainingAction"
         id="gdeupsb.QryRemainingAction" />
         
+    <!--广东烟草业务签到检查-->
+    <action class="com.bocom.bbip.gdeupsb.action.tbc.CheckComTxnCtlAction"
+        id="gdeups.checkComTxnCtlAction" />
+
     <!--银行对烟草公司信息维护-->
     <action class="com.bocom.bbip.gdeupsb.action.tbc.MaintainTbcInfoAction"
         id="gdeupsb.TbcMaintainTbcInfo" />

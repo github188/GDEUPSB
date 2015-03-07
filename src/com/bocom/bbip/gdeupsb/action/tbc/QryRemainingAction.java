@@ -48,8 +48,12 @@ public class QryRemainingAction extends BaseAction {
         context.setData("teller", context.getData("TELLER"));
         context.setData(ParamKeys.TXN_DTE, context.getData(ParamKeys.TXN_TME).toString().substring(0,8));
 
-        String comNo = context.getData("dptId").toString();
-        EupsThdTranCtlInfo resultThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(comNo);
+        String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
+        if (null == cAgtNo) {
+            cAgtNo ="4410000560";
+        }
+        context.setData("cAgtNo", cAgtNo);
+        EupsThdTranCtlInfo resultThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(cAgtNo);
         if (resultThdTranCtlInfo == null) {
             throw new CoreException(ErrorCodes.THD_CHL_NOT_FOUND);
         } 
@@ -72,10 +76,6 @@ public class QryRemainingAction extends BaseAction {
             context.setData("actNo", accessObject.getData("cusAc"));
             context.setData("dbPasWrd", accessObject.getData("pwd"));
             //构成网点号
-            String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
-            if (null == cAgtNo) {
-                cAgtNo ="441";
-            }
             String brNo = cAgtNo.substring(0,3)+"999";
             String nodNo = CodeSwitchUtils.codeGenerator("GDYC_nodSwitch", brNo);
             if (null == nodNo) {

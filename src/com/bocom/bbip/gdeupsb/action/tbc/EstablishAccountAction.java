@@ -62,9 +62,13 @@ public class EstablishAccountAction extends BaseAction {
         context.setData("devId", context.getData("DEV_ID"));
         context.setData("teller", context.getData("TELLER"));
 
-        String comNo = context.getData("dptId").toString();
+        String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
+        if (null == cAgtNo) {
+            cAgtNo ="4410000560";
+        }
+        context.setData("cAgtNo", cAgtNo);
         //检查系统签到状态
-        EupsThdTranCtlInfo eupsThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(comNo);
+        EupsThdTranCtlInfo eupsThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(cAgtNo);
         if (null == eupsThdTranCtlInfo) {
             throw new CoreException(ErrorCodes.THD_CHL_NOT_FOUND);
         } 
@@ -73,10 +77,6 @@ public class EstablishAccountAction extends BaseAction {
         }
         
         //构成网点号
-        String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
-        if (null == cAgtNo) {
-            cAgtNo ="441";
-        }
         String brNo = cAgtNo.substring(0,3)+"999";
         String nodNo = CodeSwitchUtils.codeGenerator("GDYC_nodSwitch",brNo);
         if (null == nodNo) {

@@ -55,11 +55,10 @@ public class VerifyToThirdAction extends BaseAction {
         
         String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
         if (null == cAgtNo) {
-            cAgtNo ="441";
+            cAgtNo ="4410000560";
         }
-        String comNo = cAgtNo.substring(0,3)+"999";
-
-        EupsThdTranCtlInfo eupsThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(comNo);
+        context.setData("cAgtNo", cAgtNo);
+        EupsThdTranCtlInfo eupsThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(cAgtNo);
         if (null == eupsThdTranCtlInfo) {
             throw new CoreException(ErrorCodes.THD_CHL_NOT_FOUND);
         } 

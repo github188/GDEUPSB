@@ -65,11 +65,12 @@ public class CheckFileToThirdAction implements CheckThdFileToBkService {
 
         String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
         if (null == cAgtNo) {
-            cAgtNo ="441";
+            cAgtNo ="4410000560";
         }
-        String comNo = cAgtNo.substring(0,3)+"999";
+        context.setData("cAgtNo", cAgtNo);
+        
         //检查用户状态
-        EupsThdTranCtlInfo thdTranCtlInfo = thdTranCtlInfoRepository.findOne(comNo);
+        EupsThdTranCtlInfo thdTranCtlInfo = thdTranCtlInfoRepository.findOne(cAgtNo);
         if (thdTranCtlInfo == null) {
             throw new CoreException(ErrorCodes.THD_CHL_NOT_FOUND);
         } 

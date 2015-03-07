@@ -9,6 +9,7 @@ import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.utils.*;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -32,12 +33,16 @@ public class SignInAction extends BaseAction {
         context.setData("devId", context.getData("DEV_ID"));
         context.setData("teller", context.getData("TELLER"));
 
-        String comNo =context.getData("dptId").toString();
+        String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
+        if (null == cAgtNo) {
+            cAgtNo ="4410000560";
+        }
+        context.setData("cAgtNo", cAgtNo);
         EupsThdTranCtlInfo eupsThdTranCtlInfo = BeanUtils.toObject(context.getDataMap(), EupsThdTranCtlInfo.class);
-        EupsThdTranCtlInfo resultThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(comNo);
+        EupsThdTranCtlInfo resultThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(cAgtNo);
         if (resultThdTranCtlInfo == null) {
             context.setData(GDParamKeys.RSP_CDE,"9999");
-            context.setData(GDParamKeys.RSP_MSG,"你的数据不存在!");
+            context.setData(GDParamKeys.RSP_MSG,"你提供的数据不存在!");
             return;
         } 
         if (resultThdTranCtlInfo.getTxnCtlSts().equals(Constants.TXN_CTL_STS_SIGNIN)) {
@@ -49,10 +54,9 @@ public class SignInAction extends BaseAction {
             context.setData(GDParamKeys.RSP_MSG,"不是签到时间不允许第三方签到!");
             return;
         } else {
-
             eupsThdTranCtlInfo.setTxnCtlSts(Constants.TXN_CTL_STS_SIGNIN);
             eupsThdTranCtlInfo.setTxnDte(DateUtils.parse(context.getData("txnTme").toString(),DateUtils.STYLE_yyyyMMddHHmmss));
-            eupsThdTranCtlInfo.setComNo(comNo);
+            eupsThdTranCtlInfo.setComNo(cAgtNo);
             // 根据默认算法生成一个密钥
             Date timeStp = new Date();
             String mainkey = DateUtils.format(timeStp, DateUtils.STYLE_yyyyMMddHHmmss);
@@ -64,7 +68,7 @@ public class SignInAction extends BaseAction {
            // String beforeMacChk =GDEUPSConstants.EUPS_TBC_BLANK, macChk =GDEUPSConstants.EUPS_TBC_BLANK;
             if (StringUtils.isNotEmpty(mainkey)) {
                 //TODO;加密
-          /* try {
+             /* try {
                     //得到主密钥
                     mainkey = mainkey.trim();
                     MessageDigest md = MessageDigest.getInstance(GDEUPSConstants.EUPS_TBC_MD5);
@@ -86,10 +90,8 @@ public class SignInAction extends BaseAction {
                     EupsThdFtpConfig eupsThdFtpConfig = context.getData(ParamKeys.CONSOLE_THD_FTP_CONFIG_LIST);
                     eupsThdFtpConfig.setLocFleNme(DatFileName);
                     eupsThdFtpConfig.setRmtFleNme(DatFileName);
-    
-                    
-                    get(OperateFileAction.class)
-                            .createCheckFile(eupsThdFtpConfig, "TBCMainKeyFileFormat", DatFileName, map);
+
+                    get(OperateFileAction.class).createCheckFile(eupsThdFtpConfig, "TBCMainKeyFileFormat", DatFileName, map);
                     log.info("create file end!..");
                     // 更新数据库签到签退状态
                     get(EupsThdTranCtlInfoRepository.class).update(eupsThdTranCtlInfo);
@@ -116,8 +118,7 @@ public class SignInAction extends BaseAction {
         String strDate = DateUtils.formatAsMMddHHmmss(new Date());
         String strPreifx = "MAC";
         StringBuffer beforeMAC = new StringBuffer();
-        beforeMAC.append(strPreifx).append(context.getData(ParamKeys.THD_REGION_NO))
-                .append(context.getData(ParamKeys.TXN_CHL)).append(strDate);
+        beforeMAC.append(strPreifx).append(context.getData(ParamKeys.THD_REGION_NO)).append(context.getData(ParamKeys.TXN_CHL)).append(strDate);
         return beforeMAC.toString();
     }*/
 
