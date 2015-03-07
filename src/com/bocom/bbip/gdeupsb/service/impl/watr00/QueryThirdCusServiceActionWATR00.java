@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.service.impl.watr00;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -14,9 +15,11 @@ import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.euif.component.util.StringUtil;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
+import com.bocom.jump.bp.service.id.seq.StepSequenceFactory;
 
 /**
  * 汕头水费户号查询
@@ -36,18 +39,22 @@ public class QueryThirdCusServiceActionWATR00 extends BaseAction{
 		
 		logger.info("thdCusNo:["+context.getData("thdCusNo")+"]");
 		context.setData("type", "Y015");
-		context.setData("accountdate", "20150123");
-		context.setData("waterno", "JH201501230000000001");//TODO:流水号生成
-		context.setData("bankcode", "COMM");
-		context.setData("salesdepart", "327103");
-		context.setData("salesperson", "327103");
-		context.setData("busitime", "20150123104100");
+		context.setData("accountdate", DateUtils.format((Date)context.getData(ParamKeys.AC_DATE), DateUtils.STYLE_yyyyMMdd));
+		
+		StepSequenceFactory s = context.getService("logNoService");
+		String logNo = s.create().toString();
+		context.setData("waterno", "JH"+logNo);//流水号生成
+		
+		context.setData("bankcode", "JT");
+		context.setData("salesdepart",((String)context.getData(ParamKeys.BR)).substring(2, 8));
+		context.setData("salesperson", ((String)context.getData(ParamKeys.TELLER)).substring(4, 7));
+		context.setData("busitime", DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMddHHmmss));
 		context.setData("thdRspCde", "0");
-		context.setData("zprice", "10000");
-		context.setData("months", "3");
-		context.setData("operano", "0001");
-		context.setData("password", "123123");
-		context.setData("md5digest", "0000000");
+		context.setData("zprice", "");
+		context.setData("months", "");
+		context.setData("operano", "");
+		context.setData("password", "        ");
+		context.setData("md5digest", " ");
 		
 		context.setData("hno", context.getData("thdCusNo"));
 		
@@ -59,18 +66,18 @@ public class QueryThirdCusServiceActionWATR00 extends BaseAction{
 			logger.info("responseCode:["+responseCode+"]");
 			if(Constants.RESPONSE_CODE_SUCC.equals(responseCode)){
 				logger.info("QueryThirdCusServiceActionWATR00 success!");
-				
-				String hno = (String) thdReturnMessage.get("hno");
-				String month = (String) thdReturnMessage.get("month");
-				String name = (String) thdReturnMessage.get("name");
-				String addr = (String) thdReturnMessage.get("addr");
-				String newaddr = (String) thdReturnMessage.get("newaddr");
+				context.setDataMap(thdReturnMessage);
+				String hno = context.getData("hno");
+				String month = context.getData("month");
+				String name = context.getData("name");
+				String addr = context.getData("addr");
+				String newaddr = context.getData("newaddr");
 				logger.info("thdCusNo:["+hno+"]month:["+month+"]thdCusNme:["+name+"]address:["+addr+"]newAddress:["+newaddr+"]");
 				context.setData("thdCusNo", hno);
 				context.setData("month", month);
 				context.setData("thdCusNme", name);
-				context.setData("address", addr);
-				context.setData("newAddress", newaddr);
+				context.setData("addr", addr);
+				context.setData("newaddr", newaddr);
 				
 			}else{
 				if(StringUtil.isEmpty(responseCode)){

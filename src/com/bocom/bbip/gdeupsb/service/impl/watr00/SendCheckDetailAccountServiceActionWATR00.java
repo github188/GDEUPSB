@@ -139,7 +139,7 @@ public class SendCheckDetailAccountServiceActionWATR00 extends BaseAction {
         try {
 			ftp.connect(eupsThdFtpConfig.getThdIpAdr(), Integer.parseInt(eupsThdFtpConfig.getBidPot()),
 					eupsThdFtpConfig.getOppNme(), eupsThdFtpConfig.getOppUsrPsw(), false);
-			ftp.upload("/home/eups/"+filename, file);
+			ftp.upload(eupsThdFtpConfig.getRmtWay()+filename, file);
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -163,6 +163,11 @@ public class SendCheckDetailAccountServiceActionWATR00 extends BaseAction {
 		context.setData("operano", "");
 		context.setData("password", "        ");
 		context.setData("md5digest", " ");
+		
+		context.setData("path", eupsThdFtpConfig.getRmtWay());
+		context.setData("filename", filename);
+		context.setData("filesize", file.length());
+		context.setData("reserved", "");
 		
 		Map<String,Object> thdReturnMessage = callThdTradeManager.trade(context);
 		
