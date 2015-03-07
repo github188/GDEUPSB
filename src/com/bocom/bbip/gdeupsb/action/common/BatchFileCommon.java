@@ -61,6 +61,8 @@ public class BatchFileCommon extends BaseAction {
 		info.setTxnTlr((String) context.getData(ParamKeys.TELLER));
 		info.setTxnMde(Constants.TXN_MDE_FILE);
 		info.setTxnOrgCde((String) context.getData(ParamKeys.BR));
+		/**该字段保存ParamKeys.THD_BAT_NO*/
+		info.setRsvFld9(((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getBBIPSequence());
 		get(GDEupsBatchConsoleInfoRepository.class).insertConsoleInfo(info);
 		context.getDataMapDirectly().putAll(BeanUtils.toFlatMap(info));
 	}
@@ -111,12 +113,12 @@ public class BatchFileCommon extends BaseAction {
 		context.setData(ParamKeys.THD_BAT_NO,thdBatNo);
 	}
 	public void afterBatchProcess(Context context)throws CoreException{
-		final String batNo=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.BAT_NO, ErrorCodes.EUPS_QUERY_NO_DATA);
+		final String thdbatNo=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.THD_BAT_NO, ErrorCodes.EUPS_QUERY_NO_DATA);
 		GDEupsBatchConsoleInfo info = new GDEupsBatchConsoleInfo();
-		info.setBatNo(batNo);
-		GDEupsBatchConsoleInfo ret =get(GDEupsBatchConsoleInfoRepository.class).findConsoleInfo(info);
-		Assert.isFalse(null==ret, "BBIP0004EU0706", "代收付返回的批次号不存在");
-		
+		info.setRsvFld9(thdbatNo);
+		List<GDEupsBatchConsoleInfo> result =get(GDEupsBatchConsoleInfoRepository.class).find(info);
+		Assert.isNotEmpty(result, "BBIP0004EU0706", "代收付返回的批次号不存在");
+		GDEupsBatchConsoleInfo ret=result.get(0);
 		Integer totCnt = ret.getTotCnt();
 	    BigDecimal totAmt = ret.getTotAmt();
 		Integer sucTotCnt = (Integer)context.getData("sucTotCnt");
