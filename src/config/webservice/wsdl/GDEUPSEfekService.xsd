@@ -570,7 +570,7 @@
     <xs:sequence>
       <xs:element ref="tns:requestHeader" minOccurs="0"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
-      <xs:element name="br" type="tns:br_SType" minOccurs="0"/>
+      <xs:element name="netName" type="tns:netName_SType" minOccurs="0"/>
       <xs:element name="busType" type="tns:busType_SType" minOccurs="0"/>
       <xs:element name="payNo" type="tns:payNo_SType"/>
       <xs:element name="checkType" type="tns:checkType_SType"/>
@@ -585,7 +585,7 @@
       <xs:element ref="tns:pageableResponse" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="br_SType">
+  <xs:simpleType name="netName_SType">
     <xs:annotation>
       <xs:documentation>网点名称</xs:documentation>
     </xs:annotation>
@@ -694,7 +694,7 @@
   </xs:simpleType>
   <xs:complexType name="Information_CType">
     <xs:sequence>
-      <xs:element name="br" type="tns:br_SType" minOccurs="0"/>
+      <xs:element name="netName" type="tns:netName_SType" minOccurs="0"/>
       <xs:element name="sqn" type="tns:sqn_SType" minOccurs="0"/>
       <xs:element name="txnDte" type="tns:txnDte_SType" minOccurs="0"/>
       <xs:element name="txnTme" type="tns:txnTme_SType" minOccurs="0"/>
@@ -752,14 +752,6 @@
       <xs:element name="qryCusInformation" type="tns:qryCusInformation_CType" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="netName_SType">
-    <xs:annotation>
-      <xs:documentation>网点名称</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="64"/>
-    </xs:restriction>
-  </xs:simpleType>
   <xs:simpleType name="txnTlr_SType">
     <xs:annotation>
       <xs:documentation>操作员</xs:documentation>
@@ -1056,7 +1048,7 @@
       <xs:element name="accountsSerialNo" type="tns:accountsSerialNo_SType" minOccurs="0"/>
       <xs:element name="electricityYearMonth" type="tns:electricityYearMonth_SType" minOccurs="0"/>
       <xs:element name="ccy" type="tns:ccy_SType" minOccurs="0"/>
-      <xs:element name="txnAmt" type="tns:txnAmt_SType" minOccurs="0"/>
+      <xs:element name="txnAmt" type="tns:txnAmt_SType"/>
       <xs:element name="CXMoney" type="tns:CXMoney_SType" minOccurs="0"/>
       <xs:element name="CXReason" type="tns:CXReason_SType" minOccurs="0"/>
     </xs:sequence>
@@ -1345,7 +1337,7 @@
       <xs:documentation>会计流水号</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:maxLength value="11"/>
+      <xs:maxLength value="16"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="paymentResult_SType">
