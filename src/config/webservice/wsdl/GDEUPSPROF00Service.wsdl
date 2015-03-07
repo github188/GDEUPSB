@@ -12,12 +12,6 @@
   <wsdl:message name="queryPrintInvoiceResponseMessage">
     <wsdl:part name="queryPrintInvoiceResponse" element="gdeupsb:queryPrintInvoiceResponse"/>
   </wsdl:message>
-  <wsdl:message name="invoiceStatusQueryManagerRequestMessage">
-    <wsdl:part name="invoiceStatusQueryManagerRequest" element="gdeupsb:invoiceStatusQueryManager"/>
-  </wsdl:message>
-  <wsdl:message name="invoiceStatusQueryManagerResponseMessage">
-    <wsdl:part name="invoiceStatusQueryManagerResponse" element="gdeupsb:invoiceStatusQueryManagerResponse"/>
-  </wsdl:message>
   <wsdl:message name="invoiceCancelGrantManagerRequestMessage">
     <wsdl:part name="invoiceCancelGrantManagerRequest" element="gdeupsb:invoiceCancelGrantManager"/>
   </wsdl:message>
@@ -75,11 +69,6 @@
       <wsdl:input message="tns:queryPrintInvoiceRequestMessage"/>
       <wsdl:output message="tns:queryPrintInvoiceResponseMessage"/>
     </wsdl:operation>
-    <wsdl:operation name="invoiceStatusQueryManager">
-      <wsdl:documentation/>
-      <wsdl:input message="tns:invoiceStatusQueryManagerRequestMessage"/>
-      <wsdl:output message="tns:invoiceStatusQueryManagerResponseMessage"/>
-    </wsdl:operation>
     <wsdl:operation name="invoiceCancelGrantManager">
       <wsdl:documentation/>
       <wsdl:input message="tns:invoiceCancelGrantManagerRequestMessage"/>
@@ -129,15 +118,6 @@
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     <wsdl:operation name="queryPrintInvoice">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/queryPrintInvoice"/>
-      <wsdl:input>
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal"/>
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="invoiceStatusQueryManager">
-      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/invoiceStatusQueryManager"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>

@@ -17,20 +17,6 @@
       <xs:element name="response" type="tns:queryPrintInvoiceResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="invoiceStatusQueryManager" type="tns:invoiceStatusQueryManagerReq_CType"/>
-  <xs:element name="invoiceStatusQueryManagerResponse" type="tns:invoiceStatusQueryManagerRsp_CType"/>
-  <xs:complexType name="invoiceStatusQueryManagerReq_CType">
-    <xs:sequence>
-      <xs:element ref="gsp:requestInformation"/>
-      <xs:element name="request" type="tns:invoiceStatusQueryManagerRequest_CType"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="invoiceStatusQueryManagerRsp_CType">
-    <xs:sequence>
-      <xs:element ref="gsp:replyInformation"/>
-      <xs:element name="response" type="tns:invoiceStatusQueryManagerResponse_CType"/>
-    </xs:sequence>
-  </xs:complexType>
   <xs:element name="invoiceCancelGrantManager" type="tns:invoiceCancelGrantManagerReq_CType"/>
   <xs:element name="invoiceCancelGrantManagerResponse" type="tns:invoiceCancelGrantManagerRsp_CType"/>
   <xs:complexType name="invoiceCancelGrantManagerReq_CType">
@@ -343,14 +329,15 @@
       <xs:maxLength value="2"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:complexType name="invoiceStatusQueryManagerRequest_CType">
+  <xs:complexType name="invoiceCancelGrantManagerRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="func" type="tns:func_SType"/>
       <xs:element name="tckNo" type="tns:tckNo_SType"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="invoiceStatusQueryManagerResponse_CType">
+  <xs:complexType name="invoiceCancelGrantManagerResponse_CType">
     <xs:sequence>
       <xs:element ref="tns:responseHeader"/>
       <xs:element name="invTyp" type="tns:invTyp_SType" minOccurs="0"/>
@@ -358,9 +345,17 @@
       <xs:element name="ivBegNo" type="tns:ivBegNo_SType" minOccurs="0"/>
       <xs:element name="ivEndNo" type="tns:ivEndNo_SType" minOccurs="0"/>
       <xs:element name="tolNum" type="tns:tolNum_SType" minOccurs="0"/>
-      <xs:element name="status" type="tns:status_SType" minOccurs="0"/>
+      <xs:element name="tckNo" type="tns:tckNo_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:simpleType name="func_SType">
+    <xs:annotation>
+      <xs:documentation>功能码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:simpleType name="tckNo_SType">
     <xs:annotation>
       <xs:documentation>平台流水号</xs:documentation>
@@ -409,27 +404,6 @@
       <xs:maxLength value="8"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="status_SType">
-    <xs:annotation>
-      <xs:documentation>状态</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="1"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:complexType name="invoiceCancelGrantManagerRequest_CType">
-    <xs:sequence>
-      <xs:element ref="tns:requestHeader"/>
-      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
-      <xs:element name="tckNo" type="tns:tckNo_SType"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="invoiceCancelGrantManagerResponse_CType">
-    <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
-      <xs:element name="tckNo" type="tns:tckNo_SType" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="invoiceReceiveManagerRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
@@ -632,6 +606,7 @@
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="func" type="tns:func_SType"/>
       <xs:element name="invTyp" type="tns:invTyp_SType"/>
       <xs:element name="begDat" type="tns:begDat_SType"/>
       <xs:element name="endDat" type="tns:endDat_SType"/>
@@ -642,7 +617,10 @@
   <xs:complexType name="atmInvDtlResponse_CType">
     <xs:sequence>
       <xs:element ref="tns:responseHeader"/>
-      <xs:element name="rspList" type="tns:rspList_CType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="tol" type="tns:tol_SType" minOccurs="0"/>
+      <xs:element name="rec1" type="tns:rec1_CType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="rec2" type="tns:rec2_CType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="rec3" type="tns:rec3_CType" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="begDat_SType">
@@ -677,6 +655,14 @@
       <xs:maxLength value="1"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:simpleType name="tol_SType">
+    <xs:annotation>
+      <xs:documentation>总笔数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:simpleType name="regTlr_SType">
     <xs:annotation>
       <xs:documentation>发放柜员</xs:documentation>
@@ -701,7 +687,7 @@
       <xs:maxLength value="8"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:complexType name="rspList_CType">
+  <xs:complexType name="rec1_CType">
     <xs:sequence>
       <xs:element name="actDat" type="tns:actDat_SType" minOccurs="0"/>
       <xs:element name="oprTlr" type="tns:oprTlr_SType" minOccurs="0"/>
@@ -713,6 +699,31 @@
       <xs:element name="useNum" type="tns:useNum_SType" minOccurs="0"/>
       <xs:element name="clrNum" type="tns:clrNum_SType" minOccurs="0"/>
       <xs:element name="invNum" type="tns:invNum_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="nodno_SType">
+    <xs:annotation>
+      <xs:documentation>网点号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="rec2_CType">
+    <xs:sequence>
+      <xs:element name="nodno" type="tns:nodno_SType" minOccurs="0"/>
+      <xs:element name="oprTlr" type="tns:oprTlr_SType" minOccurs="0"/>
+      <xs:element name="invTyp" type="tns:invTyp_SType" minOccurs="0"/>
+      <xs:element name="lodNum" type="tns:lodNum_SType" minOccurs="0"/>
+      <xs:element name="useNum" type="tns:useNum_SType" minOccurs="0"/>
+      <xs:element name="clrNum" type="tns:clrNum_SType" minOccurs="0"/>
+      <xs:element name="invNum" type="tns:invNum_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="rec3_CType">
+    <xs:sequence>
+      <xs:element name="qyNo" type="tns:qyNo_SType" minOccurs="0"/>
+      <xs:element name="useNum" type="tns:useNum_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="updateTlrPasswdRequest_CType">
