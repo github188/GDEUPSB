@@ -79,34 +79,34 @@ public class PrePayToBankStrategyAction implements Executable{
 	      context.setData(ParamKeys.BR, "01441131999");
 	      context.setData(ParamKeys.BK, "01441999999");
 	      context.setData(ParamKeys.CHANNEL, "00");
-	      Map<String, Object> agtMap = new HashMap<String, Object>();
-	      agtMap.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
-	      Result accessObject = bgspServiceAccessObject.callServiceFlatting("queryListAgentCollectAgreement",agtMap);
-	      Map<String,Object> resultMap=accessObject.getPayload();
-	      if (CollectionUtils.isEmpty(resultMap)) {
-	            logger.info("There are no records for select check trans journal ");
-//	            context.setData(ParamKeys.RESPONSE_CODE, "000001");
-        		context.setData(ParamKeys.RSP_MSG, "未查到协议信息");
-        		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
-	            throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
-	        }else{
-	        	List<Map<String,Object>> customerInfoList=(List<Map<String,Object>>)resultMap.get("customerInfo");
-	        	Map<String,Object> map=customerInfoList.get(0);
-	        	String cusNme = (String)map.get(ParamKeys.CUS_NME);
-	        	String idNo = (String)map.get(ParamKeys.ID_NO);
-	        	if(!context.getData(ParamKeys.CUS_NME).toString().equals(cusNme)){
-	        		context.setData(ParamKeys.RESPONSE_CODE, "000001");
-	        		context.setData(ParamKeys.RSP_MSG, "姓名匹配失败");
-	        		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
-	        		throw new CoreException(ErrorCodes.EUPS_AGENT_CHK_ERROR);
-	        	}
-	        	if(!context.getData(ParamKeys.ID_NO).toString().equals(idNo)){
-	        		context.setData(ParamKeys.RESPONSE_CODE, "000001");
-	        		context.setData(ParamKeys.RSP_MSG, "证件号码匹配失败");
-	        		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
-	        		throw new CoreException(ErrorCodes.EUPS_AGENT_CHK_ERROR);
-	        	}
-	        	
-	        }
+//	      Map<String, Object> agtMap = new HashMap<String, Object>();
+//	      agtMap.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
+//	      Result accessObject = bgspServiceAccessObject.callServiceFlatting("queryListAgentCollectAgreement",agtMap);
+//	      Map<String,Object> resultMap=accessObject.getPayload();
+//	      if (CollectionUtils.isEmpty(resultMap)) {
+//	            logger.info("There are no records for select check trans journal ");
+////	            context.setData(ParamKeys.RESPONSE_CODE, "000001");
+//        		context.setData(ParamKeys.RSP_MSG, "未查到协议信息");
+//        		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
+//	            throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
+//	        }else{
+//	        	List<Map<String,Object>> customerInfoList=(List<Map<String,Object>>)resultMap.get("customerInfo");
+//	        	Map<String,Object> map=customerInfoList.get(0);
+//	        	String cusNme = (String)map.get(ParamKeys.CUS_NME);
+//	        	String idNo = (String)map.get(ParamKeys.ID_NO);
+//	        	if(!context.getData(ParamKeys.CUS_NME).toString().equals(cusNme)){
+//	        		context.setData(ParamKeys.RESPONSE_CODE, "000001");
+//	        		context.setData(ParamKeys.RSP_MSG, "姓名匹配失败");
+//	        		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
+//	        		throw new CoreException(ErrorCodes.EUPS_AGENT_CHK_ERROR);
+//	        	}
+//	        	if(!context.getData(ParamKeys.ID_NO).toString().equals(idNo)){
+//	        		context.setData(ParamKeys.RESPONSE_CODE, "000001");
+//	        		context.setData(ParamKeys.RSP_MSG, "证件号码匹配失败");
+//	        		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
+//	        		throw new CoreException(ErrorCodes.EUPS_AGENT_CHK_ERROR);
+//	        	}
+//	        	
+//	        }
 	}
 }
