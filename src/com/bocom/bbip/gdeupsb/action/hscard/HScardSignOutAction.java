@@ -35,6 +35,7 @@ public class HScardSignOutAction extends BaseAction {
 		Assert.isTrue(!Constants.TXN_CTL_STS_CHECKBILL_ING.equals(resultThdTranCtlInfo.getTxnCtlSts()), ErrorCodes.THD_CHL_SIGNOUT_NOT_ALLOWWED);
 		if (resultThdTranCtlInfo.getTxnCtlSts().equals(Constants.SIGN_SET_TYPE_SIGNIN)) {
 			// TODO://标准版里没此方法eupsThdTranCtlInfo.signOutKeepKey();
+			eupsThdTranCtlInfo.setTxnCtlSts(Constants.TXN_CTL_STS_SIGNOUT);
 			get(EupsThdTranCtlInfoRepository.class).update(eupsThdTranCtlInfo);
 		}
 
