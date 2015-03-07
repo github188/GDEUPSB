@@ -94,7 +94,7 @@ public class BatchFileCommon extends BaseAction {
         final String fleNme="BATC"+comNoAcps+"0.txt";
 
         Map<String, Object> fileMap = (Map<String, Object>) ContextUtils.assertVariableNotNullAndGet(context, "agtFileMap","agtFileMap不能为空");
-		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne("BatchFileFtpNo");
+		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne(ParamKeys.FTPID_BATCH_PAY_FILE_TO_ACP);
 		Assert.isFalse(null==config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST,"代收付FTP配置信息不存在");
 		config.setLocFleNme(fleNme);
 		config.setRmtFleNme(fleNme);
@@ -116,6 +116,7 @@ public class BatchFileCommon extends BaseAction {
 		info.setBatNo(batNo);
 		GDEupsBatchConsoleInfo ret =get(GDEupsBatchConsoleInfoRepository.class).findConsoleInfo(info);
 		Assert.isFalse(null==ret, "BBIP0004EU0706", "代收付返回的批次号不存在");
+		
 		Integer totCnt = ret.getTotCnt();
 	    BigDecimal totAmt = ret.getTotAmt();
 		Integer sucTotCnt = (Integer)context.getData("sucTotCnt");
@@ -134,4 +135,5 @@ public class BatchFileCommon extends BaseAction {
 		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(ret);
 		context.getDataMapDirectly().putAll(BeanUtils.toMap(ret));
 	}
+	
 }
