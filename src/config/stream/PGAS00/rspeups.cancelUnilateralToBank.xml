@@ -18,7 +18,7 @@
 	<fixString name="thdTxnCde" length="10" />
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
 	
-	<fixString name="thdsqn" length="18"    />
+	<fixString name="thdSqn" length="18"    />
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
 	
 	<fixString name="bk" length="4"   />

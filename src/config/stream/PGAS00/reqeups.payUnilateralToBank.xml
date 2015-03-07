@@ -31,11 +31,11 @@
 	  <!-- <fixString  name="Deli5" length="1" default=","/> -->
 	  <fixString name="txnAmt" length="10"   />
 	  <!-- <fixString  name="Deli6" length="1" default=","/> -->
-	  <fixString name="txnTme" length="19" />
+	  <fixString name="txnTme1" length="19" />
 	  <!-- <fixString  name="Deli7" length="1" default=","/> -->
-	  <fixString name="br" length="10"   />
+	  <fixString name="br1" length="10"   />
 	  <!-- <fixString  name="Deli8" length="1" default=","/> -->
-	  <fixString name="bakFld4" length="60"   />
+	  <fixString name="reMark1" length="60"   />
 	  <!-- <fixString  name="Deli9" length="1"  /> -->
 
 </segment> 
