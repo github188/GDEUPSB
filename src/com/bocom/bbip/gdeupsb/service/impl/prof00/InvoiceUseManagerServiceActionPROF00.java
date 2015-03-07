@@ -58,7 +58,7 @@ public class InvoiceUseManagerServiceActionPROF00 extends BaseAction  {
 			throw new CoreException(GDErrorCodes.EUPS_PROF00_09_ERROR);
 		}
 		String stlNum = "1";//使用张数
-		String stlFlg = "1";//使用方式
+		String stlFlg = "0";//使用方式
 		invNum = (Integer.parseInt(invNum)-1)+"";
 		useNum = (Integer.parseInt(useNum)+1)+"";
 		String useSeq = (Integer.parseInt(useNum)+Integer.parseInt(clrNum))+"";

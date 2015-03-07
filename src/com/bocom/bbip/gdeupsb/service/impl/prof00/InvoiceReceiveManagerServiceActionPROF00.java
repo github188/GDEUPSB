@@ -18,6 +18,7 @@ import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
+import com.bocom.jump.bp.service.id.seq.StepSequenceFactory;
 /**
  * 凭证领用
  * @author hefengwen
@@ -56,7 +57,11 @@ public class InvoiceReceiveManagerServiceActionPROF00 extends BaseAction  {
 		}
 		
 		//TODO:取流水号
-		String seqNo = "";
+		StepSequenceFactory s = context.getService("logNoService");
+		String seqNo = s.create().toString();
+		seqNo = DateUtils.format(new Date(),DateUtils.STYLE_MMdd)+seqNo.substring(14);
+		context.setData("actDat", DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMdd));
+		context.setData("seqNo", seqNo);
 		
 		gdeupsInvTermInf.setInvTyp(invTyp);
 		gdeupsInvTermInf.setIvBegNo(ivBegNo);

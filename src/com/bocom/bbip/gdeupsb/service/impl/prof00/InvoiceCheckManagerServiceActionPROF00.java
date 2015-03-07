@@ -62,6 +62,7 @@ public class InvoiceCheckManagerServiceActionPROF00 extends BaseAction {
 		context.setData("useDat", gdeupsInvTermInf.getUseDat());
 		context.setData("useNum", gdeupsInvTermInf.getUseNum());
 		context.setData("clrNum", gdeupsInvTermInf.getClrNum());
+		context.setData("lostNum", "0");
 		context.setData("actDat", DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMdd));
 		context.setData("ivBegNo", gdeupsInvTermInf.getIvBegNo());
 		logger.info("InvoiceCheckManagerServiceActionPROF00 end ... ...");

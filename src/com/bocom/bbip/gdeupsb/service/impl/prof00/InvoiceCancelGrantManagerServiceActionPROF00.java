@@ -25,8 +25,24 @@ public class InvoiceCancelGrantManagerServiceActionPROF00 extends BaseAction {
 	
 	@Override
 	public void execute(Context context) throws CoreException,	CoreRuntimeException {
-		logger.info("InvoiceCancelGrantManagerServiceActionPROF00 start ... ...");
-		String tckNo = context.getData("tckNo").toString();
+		logger.info("InvoiceCancelGrantManagerServiceActionPROF00 execute start ... ...");
+		String func = context.getData("func");
+		logger.info("func["+func+"]");
+		if("1".equals(func)){//根据功能码判断处理方法
+			cancel(context);
+		}else{
+			query(context);
+		}
+		logger.info("InvoiceCancelGrantManagerServiceActionPROF00 execute end ... ...");
+	}
+	/**
+	 * 凭证发放撤销
+	 * @param context
+	 * @throws CoreException
+	 */
+	private void cancel(Context context) throws CoreException{
+		logger.info("InvoiceCancelGrantManagerServiceActionPROF00 cancel start ... ...");
+		String tckNo = context.getData("tckNo");
 		logger.info("tckNo["+tckNo+"]");
 		GdeupsInvDtlBok gdeupsInvDtlBok = new GdeupsInvDtlBok();
 		gdeupsInvDtlBok.setTckNo(tckNo);
@@ -57,7 +73,32 @@ public class InvoiceCancelGrantManagerServiceActionPROF00 extends BaseAction {
 //		context.setData("ivEndNo",eupsInvDtlBok.getIvendno());
 //		context.setData("tolNum",eupsInvDtlBok.getTolnum());
 //		context.setData("status",eupsInvDtlBok.getStatus());
-		logger.info("InvoiceCancelGrantManagerServiceActionPROF00 end ... ...");
+		logger.info("InvoiceCancelGrantManagerServiceActionPROF00 cancel end ... ...");
+	}
+	/**
+	 * 凭证状态查询
+	 * @param context
+	 * @throws CoreException
+	 */
+	private void query(Context context) throws CoreException{
+		logger.info("InvoiceCancelGrantManagerServiceActionPROF00 query start ... ...");
+		String tckNo = context.getData("tckNo");
+		logger.info("tckNo["+tckNo+"]");
+		GdeupsInvDtlBok gdeupsInvDtlBok = new GdeupsInvDtlBok();
+		gdeupsInvDtlBok.setTckNo(tckNo);
+		List<GdeupsInvDtlBok> gdeupsInvDtlBoks = get(GdeupsInvDtlBokRepository.class).find(gdeupsInvDtlBok);
+		if(gdeupsInvDtlBoks==null||gdeupsInvDtlBoks.size()==0){
+			//TODO：凭证信息不存在
+			throw new CoreException(GDErrorCodes.EUPS_PROF00_04_ERROR);
+		}
+		gdeupsInvDtlBok = gdeupsInvDtlBoks.get(0);
+		context.setData("invTyp",gdeupsInvDtlBok.getInvTyp());
+		context.setData("oprTlr",gdeupsInvDtlBok.getOprTlr());
+		context.setData("ivBegNo",gdeupsInvDtlBok.getIvBegNo());
+		context.setData("ivEndNo",gdeupsInvDtlBok.getIvEndNo());
+		context.setData("tolNum",gdeupsInvDtlBok.getTolNum());
+		context.setData("status",gdeupsInvDtlBok.getStatus());
+		logger.info("InvoiceCancelGrantManagerServiceActionPROF00 query end ... ...");
 	}
 
 }

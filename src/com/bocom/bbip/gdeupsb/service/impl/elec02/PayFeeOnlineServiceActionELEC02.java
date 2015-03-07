@@ -1,7 +1,11 @@
 package com.bocom.bbip.gdeupsb.service.impl.elec02;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -17,8 +21,10 @@ import com.bocom.bbip.eups.spi.service.online.PayFeeOnlineService;
 import com.bocom.bbip.eups.spi.vo.CommHeadDomain;
 import com.bocom.bbip.eups.spi.vo.PayFeeOnlineDomain;
 import com.bocom.bbip.eups.spi.vo.PayFeeOnlineRetDomain;
+import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.NumberUtils;
+import com.bocom.jump.bp.channel.http.support.JsonUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -40,7 +46,28 @@ public class PayFeeOnlineServiceActionELEC02 extends BaseAction implements PayFe
 		String bakFld1 = context.getData("ECD");
 		EupsTransJournal journal = new EupsTransJournal();
 		journal.setSqn(sqn);
-		journal.setBakFld1(bakFld1);
+		journal.setBakFld1(bakFld1);//流水表备用字段1用于保存收付费企业代码（供电公司编号），抹帐时使用
+		
+		List<Map<String,Object>> jfList = context.getData("JFLIST");//流水表预留字段3中保存对账信息，采用JSON的格式保存
+		List<Map<String,Object>> newList = new ArrayList<Map<String,Object>>();
+		for(Map<String,Object> m:jfList){
+			Map<String,Object> map = new HashMap<String,Object>();
+			map.put("ECD", bakFld1);
+			map.put("WD0", context.getData("WD0"));
+			map.put("OAN", context.getData("OAN"));
+			map.put("KAT", "");
+			map.put("YSH", m.get("YSH"));
+			map.put("JLD", m.get("JLD"));
+			map.put("MNS", m.get("MNS"));
+			map.put("MON", m.get("MON"));
+			newList.add(map);
+		}
+		byte[] buf = JsonUtils.jsonFromObject(newList, "UTF8");
+		try {
+			journal.setRsvFld3(new String(buf,"UTF8"));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		get(EupsTransJournalRepository.class).update(journal);
 //		<fixString name="WTC" length="12"/>   <!-- 委托节点代码-->
 //		<fixString name="CLZ"  length="16"/>   <!-- 流水-->
@@ -73,11 +100,11 @@ public class PayFeeOnlineServiceActionELEC02 extends BaseAction implements PayFe
 		logger.info("PayFeeOnlineServiceActionELEC02 preCheckDeal start ... ...");
 		Date acDte = context.getData(ParamKeys.ACCOUNT_DATE);
 		context.setData(ParamKeys.ACCOUNT_DATE, DateUtils.format(acDte, DateUtils.STYLE_yyyyMMdd));
-		String busTyp = context.getData(ParamKeys.BUS_TYP);
-		context.setData(ParamKeys.BUS_TYP, null);
+//		String busTyp = context.getData(ParamKeys.BUS_TYP);
+//		context.setData(ParamKeys.BUS_TYP, null);
 //		get(BBIPPublicService.class).synExecute("eups.queryThirdFeeOnline", context);
 		get(QueryDealServiceActionELEC02.class).qryDeal(null, null, context);
-		context.setData(ParamKeys.BUS_TYP, busTyp);
+//		context.setData(ParamKeys.BUS_TYP, busTyp);
 		logger.info("PayFeeOnlineServiceActionELEC02 preCheckDeal end ... ...");
 		return null;
 	}
@@ -148,5 +175,18 @@ public class PayFeeOnlineServiceActionELEC02 extends BaseAction implements PayFe
 		logger.info("PayFeeOnlineServiceActionELEC02 preThdDeal end ... ...");
 		return null;
 	}
+	
+//	public static void main(String[] args) throws UnsupportedEncodingException {
+//		List<Map<String,Object>> list = new ArrayList<Map<String,Object>>();
+//		for(int i=0;i<5;i++){
+//			Map<String,Object> map = new HashMap<String,Object>();
+//			map.put("one", "hhh");
+//			map.put("two", "fff");
+//			map.put("three", "www");
+//			list.add(map);
+//		}
+//		byte[] buf = JsonUtils.jsonFromObject(list, "UTF8");
+//		System.out.println(new String(buf,"UTF8"));
+//	}
 
 }

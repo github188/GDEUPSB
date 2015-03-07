@@ -62,9 +62,9 @@ public class InsertPlanPayServiceActionLOTR01 extends BaseAction {
 		logger.info("InsertPlanPayStrategyActionLOTR01 start ... ...");
 		
 		//检查用户注册信息
-//		String planNm = context.getData("planNm");
+		String planNm = context.getData("planNm");
 		String gameId = context.getData("gameId");
-//		String gamNam = context.getData("gamNam");
+		String gamNam = context.getData("gamNam");
 		String playId = context.getData("playId");
 		String betPer = context.getData("betPer");
 		String betMet = context.getData("betMet");
@@ -78,11 +78,11 @@ public class InsertPlanPayServiceActionLOTR01 extends BaseAction {
 		GdLotCusInf gdLotCusInf = new GdLotCusInf();
 		gdLotCusInf.setCrdNo(crdNo);
 		gdLotCusInf.setStatus("1");
-		List<GdLotCusInf> eupsLotCusInfs = get(GdLotCusInfRepository.class).find(gdLotCusInf);
-		if(eupsLotCusInfs==null||eupsLotCusInfs.size()==0){
+		List<GdLotCusInf> gdLotCusInfs = get(GdLotCusInfRepository.class).find(gdLotCusInf);
+		if(gdLotCusInfs==null||gdLotCusInfs.size()==0){
 			throw new CoreException(GDErrorCodes.EUPS_LOTR01_00_ERROR);//如果用户注册信息不存在，报错返回
 		}
-		
+		gdLotCusInf = gdLotCusInfs.get(0);
 		//判断是否为双色球游戏
 		logger.info("gameId:["+gameId+"]");//游戏编号，5:双色球
 		if(!"5".equals(gameId)){
@@ -105,15 +105,17 @@ public class InsertPlanPayServiceActionLOTR01 extends BaseAction {
 		gdLotAutPln.setBetLin(betLin);
 		gdLotAutPln.setCrdNo(crdNo);
 		gdLotAutPln.setTxnCnl(txnCnl);
+		gdLotAutPln.setLotNam(gdLotCusInf.getMobTel());
+		gdLotAutPln.setMobTel(gdLotCusInf.getMobTel());
 		//生成20位长度定投计划编号，99+日期(yyyymmdd)+10位顺序号
 		StepSequenceFactory service = context.getService("logNoService");
 		String logno = service.create().toString();
 		String planno = "99"+logno;
 		logger.info("planno:["+planno+"]");
 		gdLotAutPln.setPlanNo(planno);
-		gdLotAutPln.setPlanNm("BOCPLAN");//定投计划名称
-		gdLotAutPln.setGamNam( "双色球");//游戏名称
-		gdLotAutPln.setBetDat(DateUtils.formatAsSimpleDate(new Date()));//定投日期
+		gdLotAutPln.setPlanNm(planNm);//定投计划名称
+		gdLotAutPln.setGamNam(gamNam);//游戏名称
+		gdLotAutPln.setBetDat(DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMdd));//定投日期
 		gdLotAutPln.setBetTim(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMddHHmmss));//定投时间
 		gdLotAutPln.setStatus("0");//定投状态
 		

@@ -48,6 +48,10 @@ public class InvoiceInvalidManagerServiceActionPROF00 extends BaseAction  {
 			//TODO:作废发票数大于剩余发票数
 			throw new CoreException(GDErrorCodes.EUPS_PROF00_08_ERROR);
 		}
+		
+		context.setData("actDat", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
+		context.setData("ivBegNo", gdeupsInvTermInf.getIvBegNo());
+		
 		String stlFlg = "1";
 		String useSeq = Integer.parseInt(gdeupsInvTermInf.getUseNum())+
 				Integer.parseInt(gdeupsInvTermInf.getClrNum())+1+"";
