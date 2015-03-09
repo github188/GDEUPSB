@@ -568,9 +568,13 @@ public class GDParamKeys {
 
 	/**************** 华商一卡通字段相关 ****************/
 	public final static String TML_NO = "tmlNo";
+	/** 学校编码 */
 	public final static String SCH_COD = "schCod";
+	/** 学籍编码 */
 	public final static String STU_COD = "stuCod";
+	/** 缴费学期(一学年:01 第一学期:02 第二学期:03 第三学期:04) */
 	public final static String PAY_TEM = "payTem";
+	/** 缴费年份 */
 	public final static String PAY_YEA = "payYea";
 
 	public static final String GDEUPSB_RSP_COD = "rspCod";
