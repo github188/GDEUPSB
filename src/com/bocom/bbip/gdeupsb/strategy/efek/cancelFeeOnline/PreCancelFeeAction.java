@@ -6,7 +6,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
@@ -24,8 +23,6 @@ public class PreCancelFeeAction implements Executable{
 	private final static Log logger=LogFactory.getLog(PreCancelFeeAction.class);
 	@Autowired
 	EupsThdTranCtlInfoRepository eupsThdTranCtlInfoRepository;
-	@Autowired
-	BBIPPublicService bbipPublicService;
 	/**
 	 *抹账前处理 
 	 */
@@ -42,8 +39,6 @@ public class PreCancelFeeAction implements Executable{
 //		context.setData(ParamKeys.TXN_TME, txnTme);
 		
 		context.setData(GDParamKeys.SVRCOD, "12");
-		String sqn=bbipPublicService.getBBIPSequence();
-		context.setData(ParamKeys.SEQUENCE, sqn);
 		context.setData(ParamKeys.THD_CUS_NO, context.getData(GDParamKeys.PAY_NO));
 		
 		context.setData(ParamKeys.CUS_NME, context.getData("CusNme"));
