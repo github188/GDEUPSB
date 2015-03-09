@@ -38,6 +38,6 @@ public interface GdEupsTransJournalRepository extends PagingAndSortingRepository
     @Find
     public Map<String, Object> qryClearAccount(GdEupsTransJournal transJournal);
     
-    public Map<String, Object> findSumTxnAmt(GdEupsTransJournal transJournal);
+    public List<Map<String, Object>> findSumTxnAmt(GDEupsbTransJournal transJournal);
 
 }
