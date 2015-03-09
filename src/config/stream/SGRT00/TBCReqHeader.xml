@@ -8,7 +8,7 @@
        <fixString name="TransCode" length="4" referred="true" mapping="true"/>
      <!--  <fixString name="TRADE_ID" length="4" referred="true" mapping="true"/>   //[JUMPCO7000] no_process_id -->
         <fixString name="TRAN_TIME" length="14" />
-        <fixString name="BANK_ID" length="6" />  <!-- //TODO最多十位的 需求 -->
+        <fixString name="BANK_ID" length="6" />  
         <fixString name="DPT_ID" length="4" />
         <fixString name="TRADE_SEQ" length="30" />
         <fixString name="APP_TYPE" length="15" />
