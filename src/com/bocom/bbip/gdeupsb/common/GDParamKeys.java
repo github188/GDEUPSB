@@ -568,6 +568,10 @@ public class GDParamKeys {
 
 	/**************** 华商一卡通字段相关 ****************/
 	public final static String TML_NO = "tmlNo";
+	public final static String SCH_COD = "schCod";
+	public final static String STU_COD = "stuCod";
+	public final static String PAY_TEM = "payTem";
+	public final static String PAY_YEA = "payYea";
 
 	public static final String GDEUPSB_RSP_COD = "rspCod";
 	public static final String GDEUPSB_RSP_MSG = "rspMsg";
