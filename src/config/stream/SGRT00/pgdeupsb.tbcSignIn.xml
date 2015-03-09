@@ -5,6 +5,8 @@
     name="OUT">
         <fixString name="RET_CODE"  length="15" />
         <fixString name="MSG"  length="300" />
+        <fixString name="NEW_KEY"  length="32" />
+        
 </segment>
 
 

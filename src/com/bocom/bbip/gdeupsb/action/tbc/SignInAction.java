@@ -1,6 +1,5 @@
 package com.bocom.bbip.gdeupsb.action.tbc;
 
-
 import java.util.Date;
 
 import com.bocom.bbip.eups.action.BaseAction;
@@ -65,16 +64,16 @@ public class SignInAction extends BaseAction {
                 mainkey = resultThdTranCtlInfo.getManKey() + mainkey;
             }
             //;加密秘钥
-            //String readyMD5 = buildReadyStr(context);
+           // String readyMD5 = buildReadyStr(context);
            // String beforeMacChk =GDEUPSConstants.EUPS_TBC_BLANK, macChk =GDEUPSConstants.EUPS_TBC_BLANK;
             if (StringUtils.isNotEmpty(mainkey)) {
                 //TODO;加密
-             /* try {
+                /*try {
                     //得到主密钥
                     mainkey = mainkey.trim();
-                    MessageDigest md = MessageDigest.getInstance(GDEUPSConstants.EUPS_TBC_MD5);
+                    MessageDigest md = MessageDigest.getInstance("MD5");
                     md.update(readyMD5.getBytes());
-                    // 待加密的字符串生成MD5码
+                     // 待加密的字符串生成MD5码
                     String afterMD5 = Hex.encode(md.digest());
                     beforeMacChk = afterMD5.substring(0, 16);
                     // 用主密钥Des加密转成MD5码的串
@@ -106,21 +105,8 @@ public class SignInAction extends BaseAction {
             }
             context.setData(GDParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
             context.setData(GDParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
+            context.setData("NEW_KEY", mainkey);
             context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
         }
     }
-
-    /**
-     * 根据MAC加区域编号，渠道编号，交易时间生成签到待加密的字符串
-     * @param para
-     * @return
-     */
-   /* private String buildReadyStr(Context context) {
-        String strDate = DateUtils.formatAsMMddHHmmss(new Date());
-        String strPreifx = "MAC";
-        StringBuffer beforeMAC = new StringBuffer();
-        beforeMAC.append(strPreifx).append(context.getData(ParamKeys.THD_REGION_NO)).append(context.getData(ParamKeys.TXN_CHL)).append(strDate);
-        return beforeMAC.toString();
-    }*/
-
 }

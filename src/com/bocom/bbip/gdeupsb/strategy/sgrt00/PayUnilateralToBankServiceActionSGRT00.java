@@ -40,7 +40,11 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
     public Map<String, Object> aftPayToBank(CommHeadDomain commheaddomain, PayFeeOnlineDomain payfeeonlinedomain,
             Context context) throws CoreException {
         context.setData(GDParamKeys.RSP_CDE, context.getData("responseCode"));
-        context.setData(GDParamKeys.RSP_MSG, context.getData("responseMessage"));
+        if (Constants.RESPONSE_CODE_SUCC.equals(context.getData("responseCode").toString())) {
+            context.setData(GDParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
+        } else {
+            context.setData(GDParamKeys.RSP_MSG, context.getData("responseMessage"));
+        }
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
         context.setData("BANK_SEQ", context.getData("sqn"));
         return null;
@@ -75,9 +79,7 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
             Context context) throws CoreException {
         log.info("PayUnilateralToBankServiceActionSGRT00 start!");
         // 转换
-        // context.setData("txnTme", context.getData("TRAN_TIME"));
         context.setData("txnTme", DateUtils.parse(context.getData("TRAN_TIME").toString(), DateUtils.STYLE_yyyyMMddHHmmss));
-        // context.setData("bk", context.getData("BANK_ID"));
         String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("DPT_ID").toString());
         if (null == cAgtNo) {
             cAgtNo ="4410000560";
@@ -88,21 +90,16 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
         // TODO; 待确定
         context.setData("rsFld2", context.getData("dptId"));
         context.setData(ParamKeys.TXN_DATE, DateUtils.parse(context.getData("TRAN_TIME").toString().substring(0, 8), DateUtils.STYLE_yyyyMMdd));
-        context.setData(ParamKeys.TXN_AMT, context.getData("QTY_TRADE"));
-       // context.setData(ParamKeys.TELLER, context.getData("TELLER"));
         context.setData(ParamKeys.THD_CUS_NO, context.getData("CUST_ID"));
         GdTbcCusAgtInfo cusAgtInfo = cusAgtInfoRepository.findOne(context.getData("CUST_ID").toString());
         context.setData(ParamKeys.CUS_AC, cusAgtInfo.getActNo());
         context.setData(ParamKeys.THD_SEQUENCE, publicService.getBBIPSequence());
-        // 测试
         context.setData(ParamKeys.BR, "01441131999");
-        // context.setData(ParamKeys.BK, "01441999999");
         context.setData(ParamKeys.TELLER, "ABIR148");
         context.setData(ParamKeys.EUPS_BUSS_TYPE, "SGRT00");
-        //context.setData(ParamKeys.TXN_AMT, 1);
-       // context.setData(ParamKeys.THD_CUS_NO, "123456789");
+        //context.setData(ParamKeys.TXN_AMT, context.getData("QTY_TRADE"));
+        context.setData(ParamKeys.TXN_AMT, 0.01);// 测试
         
-
         context.setData(ParamKeys.EUPS_BUSS_TYPE, "SGRT00");
         context.setData(ParamKeys.THD_TXN_CDE, "483805");
         return null;
