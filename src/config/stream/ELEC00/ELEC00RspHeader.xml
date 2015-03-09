@@ -2,7 +2,7 @@
 <message xmlns="http://www.bocom.com/jump/transformer/packet"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
-	encoding="GBK" trace="true"  filter="both,WEB-INF/classes/config/stream/translateDict.txt">
+	type="LLLLLLLLLL" encoding="GBK" trace="true"  filter="both,WEB-INF/classes/config/stream/translateDict.txt">
 	<segment name="head">
 		<!-- 密钥索引	MYSY	Varchar2(3)  -->
 					<fixString name="seckeyIndex" length="3" />
