@@ -5,7 +5,7 @@
 	name="460412Resp">
 	
 	
-		<fixString name="sqn" length="24" /><!-- 交易流水号 -->
+		<fixString name="thdSqn" length="24" /><!-- 交易流水号 -->
 		<fixString name="traSendDate" length="8" /><!-- 交易日期 -->
 		<fixString name="traSendTime" length="6" /><!--  交易时间-->
 		<fixString name="oldTxnSqn" length="24" /><!--  原交易流水号-->
