@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="08Response">
+<!-- 
+起始位置		说明			长度			备注
+	1		指令			10			QryUser或NOUser或UserStop[QryUser 为有用户信息/NOUser 为无此用户（用户编码错误）/UserStop为此用户已报停]
+	12		用户编码		12	
+	25		用户名		60	
+	86		用户地址		80	
+-->
+<!--  <Item name="RtnCod"   length="10"  type="deli" deli_asc="44" expression="DELBOTHSPACE($RtnCod)"/>返回指令
+      <Item name="UserNo"   length="12"  type="deli" deli_asc="44" />用户编号
+      <Item name="UserNam"  length="60"  type="deli" deli_asc="44" />
+      <Item name="UserAddr" length="80"  type="deli" deli_asc="44" />
+      <AddItem name="TRspCd"   value="000000"  /> -->
+
+
+	<!-- <fixString name="rtnCod" length="10"/>
+	<fixString name="Deli2" length="1" default="," />
+ 	-->
+ 	<fixString name="rtnCod" length="10" />
+ 	 <!-- <fixString  name="Deli2" length="1" default=","/> -->
+ 	
+	<fixString name="cusNo" length="12"    />
+	<!-- <fixString  name="Deli3" length="1" default=","/> -->
+	
+	<fixString name="cusNme" length="60"    />
+	<!-- <fixString  name="Deli4" length="1" default=","/> -->
+	
+	<fixString name="thdCusAdr" length="80"    />
+	<!-- <fixString  name="Deli5" length="1" /> -->
+</segment>
