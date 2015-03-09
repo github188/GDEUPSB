@@ -60,6 +60,9 @@ public class PayUnilateralToBankServiceAction implements PayUnilateralToBankServ
 
 		// 检查签到签退
 		EupsThdTranCtlInfo eupsThdTranCtlInfo = eupsThdTranCtlInfoRepository.findOne(comNo);
+		if(null==eupsThdTranCtlInfo){
+			throw new CoreException(ErrorCodes.THD_CHL_TRADE_NOT_ALLOWWED);
+		}
 		if (!eupsThdTranCtlInfo.isTxnCtlStsSignin()) {
 			throw new CoreException(ErrorCodes.THD_CHL_TRADE_NOT_ALLOWWED);
 		}
