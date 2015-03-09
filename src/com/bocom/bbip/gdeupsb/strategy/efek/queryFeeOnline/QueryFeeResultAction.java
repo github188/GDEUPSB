@@ -75,8 +75,8 @@ public class QueryFeeResultAction implements Executable{
 			*/
 			callThd(context);
 			context.setData(ParamKeys.RAP_TYPE, "2");
-			Date thdTxnDate=DateUtils.parse(context.getData(ParamKeys.THD_TXN_DATE).toString(),DateUtils.STYLE_yyyyMMdd);
-	        Date thdTxnTme = DateUtils.parse(context.getData(ParamKeys.THD_TXN_TIME).toString(),DateUtils.STYLE_HHmmss);
+			Date thdTxnDate=DateUtils.parse(context.getData(GDParamKeys.TRADE_SEND_DATE).toString(),DateUtils.STYLE_yyyyMMdd);
+	        Date thdTxnTme = DateUtils.parse(context.getData(GDParamKeys.TRADE_SEND_TIME).toString(),DateUtils.STYLE_HHmmss);
 	        context.setData(ParamKeys.THD_TXN_DATE, thdTxnDate);
 	        context.setData(ParamKeys.THD_TXN_TIME, thdTxnTme);
 		}
@@ -105,8 +105,9 @@ public class QueryFeeResultAction implements Executable{
 				context.setData(GDParamKeys.TRADE_RECEIVE, GDConstants.TRADE_RECEIVE);//交易接收方
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
-
-						
+				//TODO 
+				context.setData(GDParamKeys.BUS_IDENTIFY, "");		
+				context.setData(ParamKeys.THD_CUS_NO, context.getData(GDParamKeys.PAY_NO));
 						try{
 							Map<String, Object> rspMap = callThdTradeManager.trade(context);
 								if(BPState.isBPStateNormal(context)){
@@ -128,7 +129,9 @@ public class QueryFeeResultAction implements Executable{
 								                		pbd=pbd.add(detitAdd);
 												}
 								                context.setData(ParamKeys.RSV_FLD2, list.get(0).get(GDParamKeys.ACCOUNTS_SERIAL_NO));
-								                context.setData(ParamKeys.RSV_FLD1,list.get(0).get(GDParamKeys.ELECTRICITY_YEARMONTH));
+								                context.setData(ParamKeys.RSV_FLD3, list.get(0).get(ParamKeys.FULL_DED_FLAG));
+								                context.setData(ParamKeys.RSV_FLD4,  list.get(0).get(ParamKeys.BANK_NO));
+								                context.setData("CusNme",  list.get(0).get(ParamKeys.CUS_NME));
 								                context.setData("pbd",pbd );
 								                //TODO 怎样得到欠费金额
 								                context.setData(ParamKeys.OWE_FEE_AMT, oweFeeAmt);
