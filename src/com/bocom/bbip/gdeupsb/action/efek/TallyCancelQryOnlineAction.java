@@ -1,6 +1,8 @@
 package com.bocom.bbip.gdeupsb.action.efek;
 
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.eups.action.BaseAction;
@@ -8,6 +10,7 @@ import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsTransJournal;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -31,10 +34,13 @@ public class TallyCancelQryOnlineAction extends BaseAction{
 
 						context.setData(ParamKeys.TRADE_TXN_DIR, "C");//交易方向
 						context.setData(ParamKeys.SEQUENCE, eupsTransJournal.getSqn());
-						context.setData(ParamKeys.TXN_TME, eupsTransJournal.getTxnTme());
-						context.setData(ParamKeys.OLD_TXN_SQN, eupsTransJournal.getOldTxnSqn());
-						context.setData(ParamKeys.THD_TXN_DATE, eupsTransJournal.getThdTxnDte());
-						context.setData(ParamKeys.THD_TXN_TIME, eupsTransJournal.getThdTxnTme());
+						//本次交易日期时间
+						context.setData(ParamKeys.TXN_DTE, DateUtils.format(new Date(),DateUtils.STYLE_SIMPLE_DATE));
+						context.setData(ParamKeys.TXN_TME, DateUtils.format(new Date(),DateUtils.STYLE_TRANS_TIME));
+						//原交易流水日期时间
+						context.setData(ParamKeys.OLD_TXN_SQN, eupsTransJournal.getSqn());
+						context.setData(ParamKeys.THD_TXN_DATE, eupsTransJournal.getTxnDte());
+						context.setData(ParamKeys.THD_TXN_TIME, eupsTransJournal.getTxnTme());
 //TODO						context.setData(ParamKeys.BUS_TYP, );
 						context.setData(GDParamKeys.PAY_NO, eupsTransJournal.getThdCusNo());
 						context.setData(ParamKeys.PAYFEE_TYPE, eupsTransJournal.getPfeTyp());
