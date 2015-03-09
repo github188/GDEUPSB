@@ -738,6 +738,8 @@ public class GDParamKeys {
 	public static final String  BUY_NUMBER= "buyNumber";
 	/** 身份证*/
 	public static final String  CUS_ID= "cusId";
+	/** 手机号*/
+	public static final String  TEL= "tel";
 	
 	public static final String GAS_VCH_CHK = "vchChk";
 
