@@ -55,7 +55,7 @@ public class TallyCancelQryOnlineAction extends BaseAction{
 //TODO						context.setData(GDParamKeys.ELECTRICITY_YEARMONTH, );
 						context.setData(ParamKeys.CCY, eupsTransJournal.getCcy());
 						context.setData(ParamKeys.TXN_AMT, eupsTransJournal.getTxnAmt());
-						
+						context.setData(ParamKeys.CUS_AC, eupsTransJournal.getCusAc());
 						context.setData(GDParamKeys.BUS_TYPE, eupsTransJournal.getRsvFld4());
 						context.setData(GDParamKeys.PAY_TYPE, eupsTransJournal.getRsvFld5());
 						context.setData(GDParamKeys.ELECTRICITY_YEARMONTH, eupsTransJournal.getRsvFld6());
