@@ -8,8 +8,8 @@
 		<fixString name="thdTxnDate" length="8" /><!--  交易日期-->
 		<fixString name="thdTxnTime" length="6" /><!-- 交易时间 -->
 		<fixString name="sqn" length="24" /><!--  原交易流水号-->
-		<fixString name="thdTxnDte" length="8" /><!--  原交易日期-->
-		<fixString name="thdTxnTme" length="6" /><!-- 原交易时间 -->
+		<fixString name="oldTxnDte" length="8" /><!--  原交易日期-->
+		<fixString name="oldTxnTme" length="6" /><!-- 原交易时间 -->
 		<fixString name="comNo" length="8" /><!--  单位编码-->
 		<fixString name="payNo" length="20" /><!--  缴费号-->
 		<fixString name="electricityYearMonth" length="6" /><!--  电费年月-->
