@@ -40,7 +40,7 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
     public Map<String, Object> aftPayToBank(CommHeadDomain commheaddomain, PayFeeOnlineDomain payfeeonlinedomain,
             Context context) throws CoreException {
         context.setData(GDParamKeys.RSP_CDE, context.getData("responseCode"));
-        context.setData(GDParamKeys.RSP_MSG, context.getData("thdRspMsg"));
+        context.setData(GDParamKeys.RSP_MSG, context.getData("responseMessage"));
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
         context.setData("BANK_SEQ", context.getData("sqn"));
         return null;

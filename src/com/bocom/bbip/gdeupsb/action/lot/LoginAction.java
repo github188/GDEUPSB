@@ -45,6 +45,9 @@ public class LoginAction extends BaseAction {
         context.setData("action", "212");
         // context.setData("usrPam", "tangdi"); 测试
         // context.setData("usrPas", "123456");
+        context.setData("usrPam", lotSysCfgInfo.getUsrPam());
+        context.setData("usrPas",  lotSysCfgInfo.getUsrPas());
+        
 
         Transport ts = context.getService("STHDLOT1");
         Map<String,Object> resultMap = null;//申请当前期号，奖期信息下载
