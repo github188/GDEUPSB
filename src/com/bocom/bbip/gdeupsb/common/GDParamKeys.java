@@ -231,7 +231,7 @@ public class GDParamKeys {
 	/** 凭证日期 */
 	public final static String BILDAT = "BilDat";
 	/** 密码 */
-	public final static String PINKLK = "PinBlk";
+	public final static String PINKLK = "PinKlk";
 	/** 交易流水号 */
 	public final static String BUS_STREAM_NO = "busStreamNo";
 	/** 交易日期 */
@@ -660,7 +660,7 @@ public class GDParamKeys {
 	/**取货凭证类型*/
 	public static final String  VOUCHER= "voucher";
 	/**取货凭证号（voucher=1时由系统返回）*/
-	public static final String  COUCHER_CODE= "voucherCode";
+	public static final String  VOUCHER_CODE= "voucherCode";
 	/**支付方式*/
 	public static final String  PAY_TYPE= "payType";
 	/**下载批次号*/
@@ -694,9 +694,13 @@ public class GDParamKeys {
 	/**到站站点编码 */
 	public static final String  STATION_ARRIVE_CODE= "StCode";
 	/**到站站点名称 */
-	public static final String  STATION_ARRIVE= "Station";
+	public static final String  STATION_ARRIVE= "station";
 	/**终点站点名称 */
 	public static final String  STATION_FINAL= "stationFinal";
+	/**目的站点 */
+	public static final String  STATION_AIM= "stationAim";
+	/**出发站点 */
+	public static final String  STATION_START= "stationStart";
 	/**发车区域名称 */
 	public static final String  AREA= "area";
 	/**剩余票数，返回剩余的车票数量 */
