@@ -33,7 +33,6 @@ public class TallyCancelQryOnlineAction extends BaseAction{
 						context.setData("OFmtCd", "999");
 
 						context.setData(ParamKeys.TRADE_TXN_DIR, "C");//交易方向
-						context.setData(ParamKeys.SEQUENCE, eupsTransJournal.getSqn());
 						//本次交易日期时间
 						context.setData(ParamKeys.TXN_DTE, DateUtils.format(new Date(),DateUtils.STYLE_SIMPLE_DATE));
 						context.setData(ParamKeys.TXN_TME, DateUtils.format(new Date(),DateUtils.STYLE_TRANS_TIME));
@@ -58,6 +57,7 @@ public class TallyCancelQryOnlineAction extends BaseAction{
 						context.setData(GDParamKeys.BUS_TYPE, eupsTransJournal.getRsvFld4());
 						context.setData(GDParamKeys.PAY_TYPE, eupsTransJournal.getRsvFld5());
 						context.setData(GDParamKeys.ELECTRICITY_YEARMONTH, eupsTransJournal.getRsvFld6());
+						context.setData(GDParamKeys.ACCOUNTS_SERIAL_NO, eupsTransJournal.getMfmVchNo());
 				}else{
 					log.error("~~~~~~~~~~没有记录");
 					throw new CoreException("没有记录");
