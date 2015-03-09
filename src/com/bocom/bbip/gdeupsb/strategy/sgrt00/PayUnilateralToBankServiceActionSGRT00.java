@@ -53,16 +53,6 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
     @Override
     public Map<String, Object> prePayToBank(CommHeadDomain commheaddomain, PayFeeOnlineDomain payfeeonlinedomain,
             Context context) throws CoreException {
-
-       /* Map<String, Object> map = new HashMap<String, Object>();
-        map.put("cusAc", context.getData(ParamKeys.CUS_AC));
-        Result accessObject = serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", map);
-        if (CollectionUtils.isEmpty(accessObject.getPayload())) {
-            context.setDataMap(accessObject.getPayload());
-        } else {
-            throw new CoreException("用户未开户！");
-        }*/
-
         context.setData("payMod", "0");
         context.setData(ParamKeys.CHL_TYP, "L");// <!--交易渠道类型：L第三方系统-->
         context.setData("vchChk", "1");// <!--监督标志由业务上确定-->
