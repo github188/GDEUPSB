@@ -21,10 +21,10 @@
 	<fixString name="thdSqn" length="18"    />
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
 	
-	<fixString name="bk" length="4"   />
+	<fixString name="bk1" length="4"   />
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
 
-	<fixString name="txnAmt" length="10"   />
+	<fixString name="txnAmt1" length="10"   />
 	<!-- <fixString  name="DeliA" length="1"  /> -->
 
 
