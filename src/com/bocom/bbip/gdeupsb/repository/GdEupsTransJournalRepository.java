@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.bocom.bbip.data.annotation.Find;
 import com.bocom.bbip.data.repository.PagingAndSortingRepository;
-import com.bocom.bbip.gdeupsb.entity.GDEupsbTransJournal;
 import com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal;
 
 public interface GdEupsTransJournalRepository extends PagingAndSortingRepository<GdEupsTransJournal, String> {
@@ -23,7 +22,7 @@ public interface GdEupsTransJournalRepository extends PagingAndSortingRepository
 	public List<Map<String, Object>> findGzEleChkHKInfo(GdEupsTransJournal gdEupsTransJournal);
 
 	@Find	
-	public List<GDEupsbTransJournal> findCheck(GDEupsbTransJournal gdEupsTransJournal);
+	public List<GdEupsTransJournal> findCheck(GdEupsTransJournal gdEupsTransJournal);
 
 	
 	/** 惠州燃气代扣流水信息查询*/
@@ -38,6 +37,6 @@ public interface GdEupsTransJournalRepository extends PagingAndSortingRepository
     @Find
     public Map<String, Object> qryClearAccount(GdEupsTransJournal transJournal);
     
-    public List<Map<String, Object>> findSumTxnAmt(GDEupsbTransJournal transJournal);
+    public List<Map<String, Object>> findSumTxnAmt(GdEupsTransJournal transJournal);
 
 }
