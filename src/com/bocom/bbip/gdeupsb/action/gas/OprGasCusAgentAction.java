@@ -56,7 +56,7 @@ public class OprGasCusAgentAction extends BaseAction{
 		context.setData(ParamKeys.BK, "CNJT");
 		context.setData(ParamKeys.CUS_NO, context.getData("thdCusNo"));
 		logger.info("================now context =" + context);
-		//TODO: 个人协议查询方法错误！！！！！queryDetailAgentCollectAgreement  输入协议编号agdAgrNo
+		//TODO: 个人协议查询方法错误！！！！！queryDetailAgentCollectAgreement  输入协议编号agdAgrNo  已处理
 		
 		//TODO 根据cusAc 代扣协议管理-列表查询queryListAgentCollectAgreement 得协议编号
 		//TODO 根据协议编号代扣协议管理-明细查询queryDetailAgentCollectAgreement
