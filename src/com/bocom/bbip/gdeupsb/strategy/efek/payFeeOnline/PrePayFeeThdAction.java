@@ -32,6 +32,9 @@ public class PrePayFeeThdAction implements Executable{
 			context.setData(GDParamKeys.SVRCOD, "11");             //GDConstants 常量
 			constantOfSoapUI(context);
 			context.setData(ParamKeys.RSV_FLD6, context.getData(GDParamKeys.ELECTRICITY_YEARMONTH));
+			//TODO 0 客户到银行主动缴费 1 银行定时发起  0 不打，默认方式 1 需打 
+			context.setData("busWay", "0");
+			context.setData("inv", "0");
 			
 			BigDecimal txnAmt=new BigDecimal(context.getData(ParamKeys.TXN_AMT).toString());
 			context.setData(ParamKeys.TXN_AMT, txnAmt.scaleByPowerOfTen(2));
