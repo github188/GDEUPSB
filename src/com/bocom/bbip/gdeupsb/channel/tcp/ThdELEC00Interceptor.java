@@ -100,6 +100,11 @@ public class ThdELEC00Interceptor implements Interceptor {
         // 系统内部数据生成
         systemDateGen(context);
         
+        String svrNme=context.getData(ParamKeys.SERVICE_NAME).toString();
+        if(svrNme.equals("eups.automaticCancelELEC00")){
+        	Date txnDate=DateUtils.parse(thdTxnDte,DateUtils.STYLE_yyyyMMdd);
+        	context.setData(ParamKeys.TXN_DTE, txnDate);
+        }
         log.info("============on request end,context=" + context);
     }
 
