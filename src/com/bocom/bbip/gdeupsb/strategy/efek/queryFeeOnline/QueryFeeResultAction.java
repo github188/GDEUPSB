@@ -75,8 +75,8 @@ public class QueryFeeResultAction implements Executable{
 			*/
 			callThd(context);
 			context.setData(ParamKeys.RAP_TYPE, "2");
-			Date thdTxnDate=DateUtils.parse(context.getData(ParamKeys.THD_TXN_DATE).toString(),DateUtils.STYLE_yyyyMMdd);
-	        Date thdTxnTme = DateUtils.parse(context.getData(ParamKeys.THD_TXN_TIME).toString(),DateUtils.STYLE_HHmmss);
+			Date thdTxnDate=DateUtils.parse(context.getData(GDParamKeys.TRADE_SEND_DATE).toString(),DateUtils.STYLE_yyyyMMdd);
+	        Date thdTxnTme = DateUtils.parse(context.getData(GDParamKeys.TRADE_SEND_TIME).toString(),DateUtils.STYLE_HHmmss);
 	        context.setData(ParamKeys.THD_TXN_DATE, thdTxnDate);
 	        context.setData(ParamKeys.THD_TXN_TIME, thdTxnTme);
 		}
@@ -107,7 +107,6 @@ public class QueryFeeResultAction implements Executable{
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
 				//TODO 
 				context.setData(GDParamKeys.BUS_IDENTIFY, "");		
-				context.setData(ParamKeys.THD_CUS_NO, context.getData(GDParamKeys.PAY_NO));
 						try{
 							Map<String, Object> rspMap = callThdTradeManager.trade(context);
 								if(BPState.isBPStateNormal(context)){
@@ -118,6 +117,7 @@ public class QueryFeeResultAction implements Executable{
 								                BigDecimal pbd=new BigDecimal("0.00");
 								                List<Map<String, Object>> list=(List<Map<String, Object>>)rspMap.get("Information");
 								                DecimalFormat df=new DecimalFormat("#.00");
+								                context.setData(ParamKeys.CUS_AC, list.get(0).get(ParamKeys.CUS_AC));
 								                for (Map<String, Object> map : list) {
 								                		double  amt=Double.parseDouble(map.get(ParamKeys.OWE_FEE_AMT).toString());
 								                		amt=amt/100;
