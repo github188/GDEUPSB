@@ -65,12 +65,12 @@
     </process>
 
 <!-- 广东烟草公司单边记账（银行记帐系统自带冲正，无需发起冲正）  -->
-    <process id="gdeups.payUnilateralToBank" template="eups.payUnilateralNoRvsTemplate" interceptors="eups.thdTransInterceptor" >
+    <process id="gdeupsb.tbcPayUnilateralToBank" template="eups.payUnilateralNoRvsTemplate" interceptors="eups.thdTransInterceptor" >
        <actions>
            <!-- 交易前服务处理 -->
             <action id="preCheckAction" ref="eups.payUnilateralToBankServiceAction" operations="prepareCheckDeal"/>
            <!-- 交易前检查  -->
-           <action id="preAction" ref="gdeups.checkComTxnCtlAction" operations="checkThdTxnCtlNormal"/>
+           <action id="preAction" ref="gdeupsb.checkComTxnCtlAction" operations="checkThdTxnCtlNormal"/>
            <action id="preAction" ref="eups.checkCusAgrAction"/>
            <!-- 记账前处理 -->
            <action id="preAction" ref="eups.payUnilateralToBankServiceAction" operations="prePayToBank"/>

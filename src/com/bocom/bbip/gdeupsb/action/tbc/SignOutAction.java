@@ -52,7 +52,8 @@ public class SignOutAction  extends BaseAction {
             try {
                 EupsThdTranCtlInfo eupsThdTranCtlInfo = new EupsThdTranCtlInfo();
                 eupsThdTranCtlInfo.setTxnCtlSts(Constants.TXN_CTL_STS_SIGNOUT);
-                eupsThdTranCtlInfo.setTxnDte(DateUtils.parse(context.getData("txnTme").toString(),DateUtils.STYLE_yyyyMMddHHmmss));
+                eupsThdTranCtlInfo.setTxnDte(DateUtils.parse(context.getData("txnTme").toString().substring(0,8),DateUtils.STYLE_yyyyMMdd));
+                eupsThdTranCtlInfo.setTxnTme(DateUtils.parse(context.getData("txnTme").toString(),DateUtils.STYLE_yyyyMMddHHmmss));
                 eupsThdTranCtlInfo.setComNo(cAgtNo);
                 get (EupsThdTranCtlInfoRepository.class).update(eupsThdTranCtlInfo);
             } catch (Exception e) {

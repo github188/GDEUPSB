@@ -11,7 +11,12 @@ import com.bocom.bbip.eups.utils.CommonUtil;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
-
+/**
+ * 烟草公司签到检查
+ * @version 1.0.0
+ * @date 2015-03-05
+ * @author GuiLin.Li
+ */
 public class CheckComTxnCtlAction  extends BaseAction {
 
     /**

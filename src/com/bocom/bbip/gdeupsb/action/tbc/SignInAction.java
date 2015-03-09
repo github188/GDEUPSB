@@ -55,7 +55,8 @@ public class SignInAction extends BaseAction {
             return;
         } else {
             eupsThdTranCtlInfo.setTxnCtlSts(Constants.TXN_CTL_STS_SIGNIN);
-            eupsThdTranCtlInfo.setTxnDte(DateUtils.parse(context.getData("txnTme").toString(),DateUtils.STYLE_yyyyMMddHHmmss));
+            eupsThdTranCtlInfo.setTxnDte(DateUtils.parse(context.getData("txnTme").toString().substring(0,8),DateUtils.STYLE_yyyyMMdd));
+            eupsThdTranCtlInfo.setTxnTme(DateUtils.parse(context.getData("txnTme").toString(),DateUtils.STYLE_yyyyMMddHHmmss));
             eupsThdTranCtlInfo.setComNo(cAgtNo);
             // 根据默认算法生成一个密钥
             Date timeStp = new Date();
