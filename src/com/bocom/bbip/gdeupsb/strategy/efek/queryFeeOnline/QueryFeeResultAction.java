@@ -122,6 +122,7 @@ public class QueryFeeResultAction implements Executable{
 								                		double  amt=Double.parseDouble(map.get(ParamKeys.OWE_FEE_AMT).toString());
 								                		amt=amt/100;
 								                		BigDecimal amtAdd=new BigDecimal(df.format(amt));
+								                		map.put(ParamKeys.OWE_FEE_AMT, amtAdd);
 								                		oweFeeAmt=oweFeeAmt.add(amtAdd);
 								                		if(StringUtils.isNotEmpty((String)map.get(GDParamKeys.DEDIT))){
 										                		double  detit=Double.parseDouble(map.get(GDParamKeys.DEDIT).toString());
