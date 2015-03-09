@@ -693,7 +693,7 @@ public class GDParamKeys {
 	/**票源客运站编码 */
 	public static final String  DEPOT= "depot";
 	/** 班次（或者线路）编号*/
-	public static final String  NO= "no";
+	public static final String  LINE_NO= "lineNo";
 	/**班次（或者线路）名称 */
 	public static final String  LINE_NAME= "lineName";
 	/**班次时间 */
@@ -734,6 +734,10 @@ public class GDParamKeys {
 	public static final String  LINE_DATE= "date";
 	/** 详细信息*/
 	public static final String  INFORMATION= "Information";
+	/** 购买数量*/
+	public static final String  BUY_NUMBER= "buyNumber";
+	/** 身份证*/
+	public static final String  CUS_ID= "cusId";
 	
 	public static final String GAS_VCH_CHK = "vchChk";
 
