@@ -75,8 +75,8 @@ public class QueryFeeResultAction implements Executable{
 			*/
 			callThd(context);
 			context.setData(ParamKeys.RAP_TYPE, "2");
-			Date thdTxnDate=DateUtils.parse(context.getData(GDParamKeys.TRADE_SEND_DATE).toString(),DateUtils.STYLE_yyyyMMdd);
-	        Date thdTxnTme = DateUtils.parse(context.getData(GDParamKeys.TRADE_SEND_TIME).toString(),DateUtils.STYLE_HHmmss);
+			Date thdTxnDate=DateUtils.parse(context.getData(ParamKeys.THD_TXN_DATE).toString(),DateUtils.STYLE_yyyyMMdd);
+	        Date thdTxnTme = DateUtils.parse(context.getData(ParamKeys.THD_TXN_TIME).toString(),DateUtils.STYLE_HHmmss);
 	        context.setData(ParamKeys.THD_TXN_DATE, thdTxnDate);
 	        context.setData(ParamKeys.THD_TXN_TIME, thdTxnTme);
 		}
@@ -123,10 +123,12 @@ public class QueryFeeResultAction implements Executable{
 								                		amt=amt/100;
 								                		BigDecimal amtAdd=new BigDecimal(df.format(amt));
 								                		oweFeeAmt=oweFeeAmt.add(amtAdd);
-								                		double  detit=Double.parseDouble(map.get(GDParamKeys.DEDIT).toString());
-								                		detit=detit/100;
-								                		BigDecimal detitAdd=new BigDecimal(df.format(detit));
-								                		pbd=pbd.add(detitAdd);
+								                		if(StringUtils.isNotEmpty((String)map.get(GDParamKeys.DEDIT))){
+										                		double  detit=Double.parseDouble(map.get(GDParamKeys.DEDIT).toString());
+										                		detit=detit/100;
+										                		BigDecimal detitAdd=new BigDecimal(df.format(detit));
+										                		pbd=pbd.add(detitAdd);
+								                		}
 												}
 								                context.setData(ParamKeys.RSV_FLD2, list.get(0).get(GDParamKeys.ACCOUNTS_SERIAL_NO));
 								                context.setData(ParamKeys.RSV_FLD3, list.get(0).get(ParamKeys.FULL_DED_FLAG));
