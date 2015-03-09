@@ -44,7 +44,7 @@
 		
 		
 		
-        
+        <!-- 南方电网 -->
         <server-side-ws-def wsdl="GDEUPSEfekService.wsdl"
         		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/Schema">
                 <qname-mappings />
@@ -181,6 +181,9 @@
 	<!-- 珠海路桥 -->
 	<server-side-ws-def wsdl="ZHEUPSTransportService.wsdl"
 		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/Schema" />
-		
-		
+	
+	<!-- 长途汽车 -->
+     <server-side-ws-def wsdl="GDEUPSVechService.wsdl"
+        		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSVechService/Schema">
+        </server-side-ws-def>
 </x:beans>
