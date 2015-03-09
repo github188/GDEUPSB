@@ -28,7 +28,7 @@ public class PayFeeOnlineServiceActionVECH00 implements PayFeeOnlineService{
 					throws CoreException {
 				log.info("===========Start   PayFeeOnlineServiceActionVECH00  preCheckDeal");
 				//TODO 短信验证码
-				
+//				Map<String, Object> map=callService
 				return null;
 			}
 			@Override
