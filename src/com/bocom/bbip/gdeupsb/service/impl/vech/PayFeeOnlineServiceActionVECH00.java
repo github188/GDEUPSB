@@ -75,6 +75,7 @@ public class PayFeeOnlineServiceActionVECH00 implements PayFeeOnlineService{
 				String cusId=context.getData(GDParamKeys.CUS_ID).toString();
 				String tel=context.getData(GDParamKeys.TEL).toString();
 				if(Constants.RESPONSE_CODE_SUCC.equals(context.getData(ParamKeys.RESPONSE_CODE).toString())){
+						log.info("===========update  GDEUPS_VECH_INDENT ");
 //						GDEupsVechIndent gdEupsVechIndent=gdEupsVechIndentRepository.findOne(orderId);
 //				 		gdEupsVechIndent.setCusNme(cusName);
 //					 	gdEupsVechIndent.setCusId(cusId);
@@ -82,6 +83,7 @@ public class PayFeeOnlineServiceActionVECH00 implements PayFeeOnlineService{
 //						gdEupsVechIndent.setPayType(context.getDate(ParamKeys.PAY_TYPE));
 //						gdEupsVechIndentRepository.update(gdEupsVechIndents);
 				}
+				log.info("===========End   PayFeeOnlineServiceActionVECH00  aftThdDeal");
 				return null;
 			}
 }
