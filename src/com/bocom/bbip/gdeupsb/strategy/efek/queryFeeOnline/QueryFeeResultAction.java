@@ -130,13 +130,12 @@ public class QueryFeeResultAction implements Executable{
 										                		pbd=pbd.add(detitAdd);
 								                		}
 												}
+								                context.setData(ParamKeys.OWE_FEE_AMT, oweFeeAmt);
+								                context.setData("pbd",pbd );
 								                context.setData(ParamKeys.RSV_FLD2, list.get(0).get(GDParamKeys.ACCOUNTS_SERIAL_NO));
 								                context.setData(ParamKeys.RSV_FLD3, list.get(0).get(ParamKeys.FULL_DED_FLAG));
 								                context.setData(ParamKeys.RSV_FLD4,  list.get(0).get(ParamKeys.BANK_NO));
 								                context.setData("CusNme",  list.get(0).get(ParamKeys.CUS_NME));
-								                context.setData("pbd",pbd );
-								                //TODO 怎样得到欠费金额
-								                context.setData(ParamKeys.OWE_FEE_AMT, oweFeeAmt);
 								                //第三方返回码
 								                CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
 								                String responseCode = rspCdeAction.getThdRspCde(rspMap, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
