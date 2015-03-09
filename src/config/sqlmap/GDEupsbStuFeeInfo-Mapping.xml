@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GDEupsbStuFeeInfo" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GDEupsbStuFeeInfo" >
+    <id column="STU_COD" property="stuCod" jdbcType="CHAR" />
+    <result column="STU_NAM" property="stuNam" jdbcType="CHAR" />
+    <result column="SCH_COD" property="schCod" jdbcType="CHAR" />
+    <result column="SCH_NAM" property="schNam" jdbcType="CHAR" />
+    <result column="PAY_YEA" property="payYea" jdbcType="CHAR" />
+    <result column="PAY_TEM" property="payTem" jdbcType="CHAR" />
+    <result column="XZF_AMT" property="xzfAmt" jdbcType="DECIMAL" />
+    <result column="ROM_AMT" property="romAmt" jdbcType="DECIMAL" />
+    <result column="LRN_AMT" property="lrnAmt" jdbcType="DECIMAL" />
+    <result column="OTH_AMT" property="othAmt" jdbcType="CHAR" />
+    <result column="TXN_AMT" property="txnAmt" jdbcType="DECIMAL" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="FLAG" property="flag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    STU_COD, STU_NAM, SCH_COD, SCH_NAM, PAY_YEA, PAY_TEM, XZF_AMT, ROM_AMT, LRN_AMT, 
+    OTH_AMT, TXN_AMT, STATUS, FLAG
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.STU_FEE_INFO
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="stuCod!=null" >
+        AND  STU_COD=#{stuCod,jdbcType=CHAR}
+      </if>
+      <if test="stuNam!=null" >
+        AND  STU_NAM=#{stuNam,jdbcType=CHAR}
+      </if>
+      <if test="schCod!=null" >
+        AND  SCH_COD=#{schCod,jdbcType=CHAR}
+      </if>
+      <if test="schNam!=null" >
+        AND  SCH_NAM=#{schNam,jdbcType=CHAR}
+      </if>
+      <if test="payYea!=null" >
+        AND  PAY_YEA=#{payYea,jdbcType=CHAR}
+      </if>
+      <if test="payTem!=null" >
+        AND  PAY_TEM=#{payTem,jdbcType=CHAR}
+      </if>
+      <if test="xzfAmt!=null" >
+        AND  XZF_AMT=#{xzfAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="romAmt!=null" >
+        AND  ROM_AMT=#{romAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="lrnAmt!=null" >
+        AND  LRN_AMT=#{lrnAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="othAmt!=null" >
+        AND  OTH_AMT=#{othAmt,jdbcType=CHAR}
+      </if>
+      <if test="txnAmt!=null" >
+        AND  TXN_AMT=#{txnAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="status!=null" >
+        AND  STATUS=#{status,jdbcType=CHAR}
+      </if>
+      <if test="flag!=null" >
+        AND  FLAG=#{flag,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.STU_FEE_INFO
+    where STU_COD = #{stuCod,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from ${GDEUPSB_SCHEMA}.STU_FEE_INFO
+    where STU_COD = #{stuCod,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbStuFeeInfo" >
+    insert into ${GDEUPSB_SCHEMA}.STU_FEE_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stuCod != null" >
+        STU_COD,
+      </if>
+      <if test="stuNam != null" >
+        STU_NAM,
+      </if>
+      <if test="schCod != null" >
+        SCH_COD,
+      </if>
+      <if test="schNam != null" >
+        SCH_NAM,
+      </if>
+      <if test="payYea != null" >
+        PAY_YEA,
+      </if>
+      <if test="payTem != null" >
+        PAY_TEM,
+      </if>
+      <if test="xzfAmt != null" >
+        XZF_AMT,
+      </if>
+      <if test="romAmt != null" >
+        ROM_AMT,
+      </if>
+      <if test="lrnAmt != null" >
+        LRN_AMT,
+      </if>
+      <if test="othAmt != null" >
+        OTH_AMT,
+      </if>
+      <if test="txnAmt != null" >
+        TXN_AMT,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="flag != null" >
+        FLAG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stuCod != null" >
+        #{stuCod,jdbcType=CHAR},
+      </if>
+      <if test="stuNam != null" >
+        #{stuNam,jdbcType=CHAR},
+      </if>
+      <if test="schCod != null" >
+        #{schCod,jdbcType=CHAR},
+      </if>
+      <if test="schNam != null" >
+        #{schNam,jdbcType=CHAR},
+      </if>
+      <if test="payYea != null" >
+        #{payYea,jdbcType=CHAR},
+      </if>
+      <if test="payTem != null" >
+        #{payTem,jdbcType=CHAR},
+      </if>
+      <if test="xzfAmt != null" >
+        #{xzfAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="romAmt != null" >
+        #{romAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lrnAmt != null" >
+        #{lrnAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="othAmt != null" >
+        #{othAmt,jdbcType=CHAR},
+      </if>
+      <if test="txnAmt != null" >
+        #{txnAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSB_SCHEMA}.STU_FEE_INFO
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="stuCod!=null" >
+        AND  STU_COD=#{stuCod,jdbcType=CHAR}
+      </if>
+      <if test="stuNam!=null" >
+        AND  STU_NAM=#{stuNam,jdbcType=CHAR}
+      </if>
+      <if test="schCod!=null" >
+        AND  SCH_COD=#{schCod,jdbcType=CHAR}
+      </if>
+      <if test="schNam!=null" >
+        AND  SCH_NAM=#{schNam,jdbcType=CHAR}
+      </if>
+      <if test="payYea!=null" >
+        AND  PAY_YEA=#{payYea,jdbcType=CHAR}
+      </if>
+      <if test="payTem!=null" >
+        AND  PAY_TEM=#{payTem,jdbcType=CHAR}
+      </if>
+      <if test="xzfAmt!=null" >
+        AND  XZF_AMT=#{xzfAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="romAmt!=null" >
+        AND  ROM_AMT=#{romAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="lrnAmt!=null" >
+        AND  LRN_AMT=#{lrnAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="othAmt!=null" >
+        AND  OTH_AMT=#{othAmt,jdbcType=CHAR}
+      </if>
+      <if test="txnAmt!=null" >
+        AND  TXN_AMT=#{txnAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="status!=null" >
+        AND  STATUS=#{status,jdbcType=CHAR}
+      </if>
+      <if test="flag!=null" >
+        AND  FLAG=#{flag,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbStuFeeInfo" >
+    update ${GDEUPSB_SCHEMA}.STU_FEE_INFO
+    <set >
+      <if test="stuNam != null" >
+        STU_NAM = #{stuNam,jdbcType=CHAR},
+      </if>
+      <if test="schCod != null" >
+        SCH_COD = #{schCod,jdbcType=CHAR},
+      </if>
+      <if test="schNam != null" >
+        SCH_NAM = #{schNam,jdbcType=CHAR},
+      </if>
+      <if test="payYea != null" >
+        PAY_YEA = #{payYea,jdbcType=CHAR},
+      </if>
+      <if test="payTem != null" >
+        PAY_TEM = #{payTem,jdbcType=CHAR},
+      </if>
+      <if test="xzfAmt != null" >
+        XZF_AMT = #{xzfAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="romAmt != null" >
+        ROM_AMT = #{romAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="lrnAmt != null" >
+        LRN_AMT = #{lrnAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="othAmt != null" >
+        OTH_AMT = #{othAmt,jdbcType=CHAR},
+      </if>
+      <if test="txnAmt != null" >
+        TXN_AMT = #{txnAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="flag != null" >
+        FLAG = #{flag,jdbcType=CHAR},
+      </if>
+    </set>
+    where STU_COD = #{stuCod,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.STU_FEE_INFO
+    <if test="_parameter" >
+      where STU_COD in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
+</mapper>
