@@ -33,9 +33,13 @@ public class PreCancelFeeAction implements Executable{
 	public void execute(Context context) throws CoreException,CoreRuntimeException{
 		logger.info("==========Start  PreCancelFeeAction");
 		context.setData(ParamKeys.TRADE_TXN_DIR, "O");   //交易方向
-		if(context.getData(GDParamKeys.NET_NAME) != null){
-				context.setData(ParamKeys.BR, context.getData(GDParamKeys.NET_NAME));
-		}
+//		String txnDte=context.getData(ParamKeys.TXN_DTE).toString();
+//		txnDte=DateUtils.format(DateUtils.parse(txnDte),DateUtils.STYLE_yyyyMMdd);
+//		context.setData(ParamKeys.TXN_DTE, txnDte);
+//		
+//		String txnTme=context.getData(ParamKeys.TXN_TME).toString();
+//		txnTme=DateUtils.format(DateUtils.parse(txnTme),DateUtils.STYLE_HHmmss);
+//		context.setData(ParamKeys.TXN_TME, txnTme);
 		
 		context.setData(GDParamKeys.SVRCOD, "12");
 		String sqn=bbipPublicService.getBBIPSequence();
@@ -95,7 +99,8 @@ public class PreCancelFeeAction implements Executable{
 				context.setData(GDParamKeys.TRADE_RECEIVE, GDConstants.TRADE_RECEIVE);//交易接收方
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
-
 				
+				context.setData(ParamKeys.THD_TXN_DATE, DateUtils.format((Date)context.getData("thdTxnDte"), DateUtils.STYLE_yyyyMMdd));
+				context.setData(ParamKeys.THD_TXN_TIME, DateUtils.format((Date)context.getData("thdTxnTme"), DateUtils.STYLE_HHmmss));
 	}
 }
