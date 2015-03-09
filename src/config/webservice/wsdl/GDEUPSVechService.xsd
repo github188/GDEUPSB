@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSVechService/Schema" xmlns:gsp="http://gsp.bankcomm.com" xmlns:bbip="http://bbip.bankcomm.com" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSVechService/Schema" elementFormDefault="qualified">
+  <xs:import namespace="http://gsp.bankcomm.com" schemaLocation="headerOfSOAP.xsd"/>
+  <xs:import namespace="http://bbip.bankcomm.com" schemaLocation="headerOfBbip.xsd"/>
+  <xs:element name="ticketPayFee" type="tns:ticketPayFeeReq_CType"/>
+  <xs:element name="ticketPayFeeResponse" type="tns:ticketPayFeeRsp_CType"/>
+  <xs:complexType name="ticketPayFeeReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:ticketPayFeeRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ticketPayFeeRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:ticketPayFeeResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="requestHeader" type="tns:requestHeader_CType"/>
+  <xs:element name="responseHeader" type="tns:responseHeader_CType"/>
+  <xs:complexType name="requestHeader_CType">
+    <xs:sequence>
+      <xs:element ref="bbip:bbipRequestHead"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="responseHeader_CType">
+    <xs:sequence>
+      <xs:element ref="bbip:bbipResponseHead"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ticketPayFeeRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType" minOccurs="0"/>
+      <xs:element name="orderId" type="tns:orderId_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ticketPayFeeResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="respDesc" type="tns:respDesc_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="eupsBusTyp_SType">
+    <xs:annotation>
+      <xs:documentation>业务类型</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="orderId_SType">
+    <xs:annotation>
+      <xs:documentation>系统订单号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="24"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="respDesc_SType">
+    <xs:annotation>
+      <xs:documentation>返回说明</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+</xs:schema>

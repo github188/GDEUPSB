@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSVechService" xmlns:gdeupsb="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSVechService/Schema" name="GDEUPSVechService" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSVechService">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSVechService">
+      <xsd:import namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSVechService/Schema" schemaLocation="GDEUPSVechService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ticketPayFeeRequestMessage">
+    <wsdl:part name="ticketPayFeeRequest" element="gdeupsb:ticketPayFee"/>
+  </wsdl:message>
+  <wsdl:message name="ticketPayFeeResponseMessage">
+    <wsdl:part name="ticketPayFeeResponse" element="gdeupsb:ticketPayFeeResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="GDEUPSVechServicePortType">
+    <wsdl:operation name="ticketPayFee">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:ticketPayFeeRequestMessage"/>
+      <wsdl:output message="tns:ticketPayFeeResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GDEUPSVechServiceSoapBinding" type="tns:GDEUPSVechServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="ticketPayFee">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSVechService/ticketPayFee"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GDEUPSVechService">
+    <wsdl:port name="GDEUPSVechServicePort" binding="tns:GDEUPSVechServiceSoapBinding">
+      <soap:address location="http://127.0.0.1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
