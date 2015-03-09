@@ -576,6 +576,13 @@ public class GDParamKeys {
 	public final static String PAY_TEM = "payTem";
 	/** 缴费年份 */
 	public final static String PAY_YEA = "payYea";
+	/** 学生姓名 */
+	public final static String STU_NAM = "stuNam";
+	/** 学费 */
+	public final static String XZF_AMT = "xzfAmt";
+	/** 住宿费 */
+	public final static String ROM_AMT = "romAmt";
+	
 
 	public static final String GDEUPSB_RSP_COD = "rspCod";
 	public static final String GDEUPSB_RSP_MSG = "rspMsg";
