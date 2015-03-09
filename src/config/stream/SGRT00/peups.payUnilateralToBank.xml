@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<segment xmlns="http://www.bocom.com/jump/transformer/packet"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
-    name="p007">
-        <fixString name="RET_CODE"  length="15" />
-        <fixString name="MSG"  length="300" />
-        <fixString name="BANK_SEQ"  length="20" />  <!-- 银行流水号 -->
-</segment>
