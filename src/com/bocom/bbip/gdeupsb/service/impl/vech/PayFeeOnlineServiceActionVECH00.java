@@ -60,6 +60,7 @@ public class PayFeeOnlineServiceActionVECH00 implements PayFeeOnlineService{
 				context.setData(ParamKeys.RSV_FLD1, context.getData(GDParamKeys.LINE_NO));
 				context.setData(ParamKeys.TXN_AMT, context.getData(GDParamKeys.ALL_MONEY));
 				context.setData(ParamKeys.BV_KIND, context.getData(GDParamKeys.VOUCHER));
+				context.setData(ParamKeys.CMU_TEL, context.getData(GDParamKeys.TEL));
 				log.info("===========End   PayFeeOnlineServiceActionVECH00  preThdDeal");
 				return null;
 			}
@@ -70,8 +71,13 @@ public class PayFeeOnlineServiceActionVECH00 implements PayFeeOnlineService{
 				log.info("===========Start   PayFeeOnlineServiceActionVECH00  aftThdDeal");
 				String orderId=context.getData(ParamKeys.SEQUENCE).toString();
 				String lineNo=context.getData(GDParamKeys.LINE_NO).toString();
+				String cusName=context.getData(ParamKeys.CUS_NME).toString();
+				String cusId=context.getData(GDParamKeys.CUS_ID).toString();
+				String tel=context.getData(GDParamKeys.TEL).toString();
 				if(Constants.RESPONSE_CODE_SUCC.equals(context.getData(ParamKeys.RESPONSE_CODE).toString())){
 //						GDEupsVechIndent gdEupsVechIndent=gdEupsVechIndentRepository.findOne(orderId);
+//				 		gdEupsVechIndent.setCusNme(cusName);
+//					 	gdEupsVechIndent.setCusId(cusId);
 //						gdEupsVechIndent.setOrderState(context.getDate(GDParamKeys.ORDER_STATE));
 //						gdEupsVechIndent.setPayType(context.getDate(ParamKeys.PAY_TYPE));
 //						gdEupsVechIndentRepository.update(gdEupsVechIndents);
