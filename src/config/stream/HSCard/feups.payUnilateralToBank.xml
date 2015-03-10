@@ -7,7 +7,7 @@
 	 <fixString length="8" name="tmlNo"  /> <!-- 终端号 -->
 	 <fixString length="6" name="thdSqn" /> <!-- 圈存流水 -->
       <fixString length="20" name="sqn" /> <!-- 交易流水-->
-      <fixString length="18" name="DCC_ID_NO" /> <!-- 学工号 -->
+      <fixString length="18" name="thdCusNo" /> <!-- 学工号 -->
       <fixString length="20" name="cusAc" /> <!-- 银行卡号 -->
       <fixString length="1" name="idTyp" /> <!-- 证件类型 -->
       <fixString length="20" name="idNo" /> <!-- 证件号码 -->
