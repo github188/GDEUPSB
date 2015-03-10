@@ -27,7 +27,7 @@
 	  <!-- <fixString  name="Deli3" length="1" default=","/> -->
 	  <fixString name="thdCusNo" length="12"   />
 	  <!-- <fixString  name="Deli4" length="1" default=","/> -->
-	  <fixString name="bakFld3" length="6"  expression='exp:str.substring(this.sqn,0,6)' />
+	  <fixString name="payMon" length="6"  />
 	  <!-- <fixString  name="Deli5" length="1" default=","/> -->
 	  <fixString name="txnAmt" length="10"   />
 	  <!-- <fixString  name="Deli6" length="1" default=","/> -->
@@ -35,7 +35,7 @@
 	  <!-- <fixString  name="Deli7" length="1" default=","/> -->
 	  <fixString name="br1" length="10"   />
 	  <!-- <fixString  name="Deli8" length="1" default=","/> -->
-	  <fixString name="reMark1" length="60"   />
+	  <fixString name="reMark1" length="60"  /> <!-- expression='exp:str.substring(this.reMark1,0,60)' -->
 	  <!-- <fixString  name="Deli9" length="1"  /> -->
 
 </segment> 
