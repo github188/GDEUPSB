@@ -251,6 +251,10 @@
 	<!-- 惠州燃气单边抹帐冲正 -->
 	<bean class="com.bocom.bbip.gdeupsb.strategy.gash.CnlPayUnilateralToBankServicePGAS00"
 		id="eups.cancelUnilateralToBankServiceActionPGAS00" />
+	<!-- 惠州燃气对账文件上传 -->
+	<bean id="eups.checkBkFileToThirdServiceActionPGAS00"
+		class="com.bocom.bbip.gdeupsb.strategy.gash.CheckFileToThdHzActionPGAS00">
+	</bean>
 				    
 	
 	 <!-- 广东烟草划扣联机单笔记 -->
