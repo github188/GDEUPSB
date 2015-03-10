@@ -26,6 +26,7 @@ import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.service.Result;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
+import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.ContextUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
@@ -49,9 +50,8 @@ public class BatchFileCommon extends BaseAction {
 		/** 检查批次是否存在 */
 		GDEupsBatchConsoleInfo info = new GDEupsBatchConsoleInfo();
 		info.setFleNme(fleNme);
-		info.setBusKnd(eupsBusTyp);
-		List<GDEupsBatchConsoleInfo> ret =get(GDEupsBatchConsoleInfoRepository.class).find(info);
-		Assert.isTrue(null==ret||0==ret.size(), "批次信息已经存在");
+		GDEupsBatchConsoleInfo ret =get(GDEupsBatchConsoleInfoRepository.class).findConsoleInfo(info);
+		Assert.isTrue(null==ret, "批次信息已经存在");
 		/** 插入批次控制表 */
 		String batNo =((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
 		info.setBatNo(batNo);
@@ -63,7 +63,18 @@ public class BatchFileCommon extends BaseAction {
 		info.setTxnOrgCde((String) context.getData(ParamKeys.BR));
 		/**该字段保存ParamKeys.THD_BAT_NO*/
 		info.setRsvFld9(((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getBBIPSequence());
+		context.setData(ParamKeys.THD_BAT_NO, info.getRsvFld9());
 		get(GDEupsBatchConsoleInfoRepository.class).insertConsoleInfo(info);
+		/**查询代收付ComNo*/
+		     String comNoAcps=null;
+		    EupsActSysPara eupsActSysPara = new EupsActSysPara();
+		    eupsActSysPara.setActSysTyp("0");
+		    eupsActSysPara.setComNo(comNo);
+		    List resultList = ((EupsActSysParaRepository)get(EupsActSysParaRepository.class)).find(eupsActSysPara);
+		    if (CollectionUtils.isNotEmpty(resultList)) {
+		       comNoAcps = ((EupsActSysPara)resultList.get(0)).getSplNo();
+		    }
+		context.setData("comNoAcps", comNoAcps);
 		context.getDataMapDirectly().putAll(BeanUtils.toFlatMap(info));
 	}
 
@@ -85,7 +96,7 @@ public class BatchFileCommon extends BaseAction {
 		final String br=(String)context.getData(ParamKeys.BR);
         final String AcDate=DateUtils.format(
         	((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getAcDate(),DateUtils.STYLE_yyyyMMdd);
-        final String systemCode=((SystemConfig)get(SystemConfig.class)).getSystemCode();;
+        final String systemCode=((SystemConfig)get(SystemConfig.class)).getSystemCode();
         final String dir="/home/bbipadm/data/mftp/BBIP/"+systemCode+"/"+br+"/"+tlr+"/"+AcDate+"/";
         EupsActSysPara eupsActSysPara = new EupsActSysPara();
         eupsActSysPara.setActSysTyp("0");
@@ -99,18 +110,10 @@ public class BatchFileCommon extends BaseAction {
 		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne(ParamKeys.FTPID_BATCH_PAY_FILE_TO_ACP);
 		Assert.isFalse(null==config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST,"代收付FTP配置信息不存在");
 		config.setLocFleNme(fleNme);
-		config.setRmtFleNme(fleNme);
-		config.setRmtWay(dir);
+		config.setLocDir(dir);
 		/** 产生代收付格式文件 */
 		((OperateFileAction)get("opeFile")).createCheckFile(config, GDConstants.BATCH_FILE_FORMAT, fleNme, fileMap);
-		/** 发送到指定路径 */
-		((OperateFTPAction)get("opeFTP")).putCheckFile(config);
-		context.setData(ParamKeys.FLE_NME, fleNme);
-		context.setData(ParamKeys.TXN_MDE, Constants.TXN_MDE_FILE);
-		context.setData(ParamKeys.TOT_CNT, context.getData(ParamKeys.TOT_CNT));
-		context.setData(ParamKeys.TOT_AMT, context.getData(ParamKeys.TOT_AMT));
-		final String thdBatNo=((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getBBIPSequence();
-		context.setData(ParamKeys.THD_BAT_NO,thdBatNo);
+		
 	}
 	public void afterBatchProcess(Context context)throws CoreException{
 		final String thdbatNo=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.THD_BAT_NO, ErrorCodes.EUPS_QUERY_NO_DATA);
