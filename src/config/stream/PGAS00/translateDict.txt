@@ -20,8 +20,10 @@ TransCode.460711=eups.cancelUnilateralToBank
 TransCode.eups.fileBatchPayCreateDataProcess=460716
 TransCode.460716=eups.fileBatchPayCreateDataProcess
 
-#TransCode.gdeupsb.oprGasCusAgentAction=460701
-#TransCode.460701=gdeupsb.oprGasCusAgentAction
+#TransCode.gdeupsb.oprGasCusAgentAction=GASHXX
+#TransCode.GASHXX=gdeupsb.oprGasCusAgentAction
+#TransCode.gdeupsb.oprGasCusAgentAction1=GASHXY
+#TransCode.GASHXY=gdeupsb.oprGasCusAgentAction1
 
 #TransCode.gdeupsb.oprGasCusAgentAction=Add
 #TransCode.gdeupsb.oprGasCusAgentAction=AddNo
