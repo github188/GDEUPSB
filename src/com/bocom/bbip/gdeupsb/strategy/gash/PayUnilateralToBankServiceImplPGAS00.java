@@ -4,13 +4,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.taglibs.standard.tag.el.sql.SetDataSourceTag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
-import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.spi.service.single.PayUnilateralToBankService;
 import com.bocom.bbip.eups.spi.vo.CommHeadDomain;
@@ -20,7 +18,6 @@ import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdGasCusAll;
 import com.bocom.bbip.gdeupsb.repository.GdGasCusAllRepository;
 import com.bocom.bbip.utils.DateUtils;
-import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -63,7 +60,7 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 		logger.info("=============context=" + context);
 
 		context.setData("AplCls", "207");
-//		context.setData("BusTyp", "GASH1");
+		// context.setData("BusTyp", "GASH1");
 		context.setData("Mask", "GASH");
 
 		// 预置返回第三方状态为失败B3 (使用备用字段2)
@@ -71,7 +68,7 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 		// 预置账务状态status为0 (使用备用字段1)
 		context.setData(ParamKeys.BAK_FLD1, "0");
 		// 预置交易扣款失败
-//		context.setData(ParamKeys.RSP_MSG, "扣款失败");
+		// context.setData(ParamKeys.RSP_MSG, "扣款失败");
 		context.setData(ParamKeys.BAK_FLD5, "扣款失败");
 
 		// 查询用户信息（签约状态）select ActNam from Gascusall491 where UserNo='%s' and
@@ -116,9 +113,10 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 		// <Set>CnlTyp=L</Set><!--交易渠道类型：L第三方系统-->
 		// context.setData(ParamKeys.CHL_TYP, "L");
 
-//		 <Set>PayMod=0</Set>
-		// context.setData(ParamKeys.PAY_MODE, "0");//payMod=0,现金，会将cusAc转换为00000000 
-		
+		// <Set>PayMod=0</Set>
+		// context.setData(ParamKeys.PAY_MODE,
+		// "0");//payMod=0,现金，会将cusAc转换为00000000
+
 		// <Set>VchChk=1</Set><!--监督标志由业务上确定-->
 		context.setData(GDParamKeys.GAS_VCH_CHK, "1");
 		// <Set>VchCod=00000000</Set>
@@ -140,7 +138,8 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 
 		// <Set>TTxnCd=460710</Set>
 		// context.setData(ParamKeys.THD_TXN_CDE, "460710");
-		logger.info("=========PayUnilateralToBankServiceImplPGAS00@prePayToBank end with conetxt:" + context);
+		logger.info("=========PayUnilateralToBankServiceImplPGAS00@prePayToBank end with conetxt:"
+				+ context);
 		return null;
 	}
 
@@ -158,19 +157,30 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 				"yyyy-MM-dd HH:mm:ss"));
 		// context.setData(ParamKeys.BK,
 		// context.getData(ParamKeys.BK).toString().substring(2, 8));
-		context.setData(GDParamKeys.BR1, context.getData(ParamKeys.BR).toString()
-				.substring(2));
-		
-		
-		
+		context.setData(GDParamKeys.BR1, context.getData(ParamKeys.BR)
+				.toString().substring(2));
 
+		
+		logger.info("=================context.state:" + context.getData("state"));
+		
 		// B0为扣费成功 B1为金额不足扣费失败 B2为无此帐号或账号与用户编号匹配错误扣费失败 B3其它原因扣费失败
 		// TODO 区分交易结果
-//		&& "S".equals(context.getData(ParamKeys.MFM_TXN_STS))  && "S".equals(context.getData(ParamKeys.THD_TXN_STS))
-		if (GDConstants.GAS_MFM_RSP_CD.equals(context.getData(ParamKeys.MFM_RSP_CDE))
-				&& "S".equals(context.getData(ParamKeys.TXN_STS))) { // 扣款成功
-																			// :MFM_RSP_CDE=SC0000
-																			// TXN_STS=S
+		// && "S".equals(context.getData(ParamKeys.MFM_TXN_STS)) &&
+		// "S".equals(context.getData(ParamKeys.THD_TXN_STS))
+		
+		
+		
+//		if (GDConstants.GAS_MFM_RSP_CD.equals(context.getData(ParamKeys.RESPONSE_CODE))
+//				&& "N".equals(context.getData(ParamKeys.RESPONSE_TYPE))) {
+		// "responseCode" : "SC0000",
+		// "responseType" : "N"
+//		if (BPState.BUSINESS_PROCESSNIG_STATE_NORMAL.equals(context.getData("state"))) { 
+			
+		logger.info("=================context.responseCode:" + context.getData(ParamKeys.RESPONSE_CODE));
+		logger.info("=================context.responseType:" + context.getData(ParamKeys.RESPONSE_TYPE));
+		if ("000000".equals(context.getData(ParamKeys.RESPONSE_CODE))) {
+//			 && "N".equals(context.getData(ParamKeys.RESPONSE_TYPE))
+			// 扣款成功
 
 			// context.setData(ParamKeys.TXN_AMOUNT,
 			// context.getData("reqTxnAmt"));
@@ -194,33 +204,37 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 
 			// 更新流水 BBIP有相应处理
 			logger.info("=========交易成功了啊！！！！！！！！！！！！！！！context=" + context);
-		} else if (StringUtils.isNotEmpty(context.getData(ParamKeys.RESPONSE_MESSAGE).toString()) 
-				&& "余额不足".contains(context.getData(ParamKeys.RESPONSE_MESSAGE).toString())) { // B1为金额不足扣费失败
-			context.setData(ParamKeys.BAK_FLD2, "B1");
-			logger.info("=========交易失败了啊！！！余额不足啊！！！！！！！！！！！！context=" + context);
-		} else if (StringUtils.isNotEmpty(context.getData(ParamKeys.RESPONSE_MESSAGE).toString()) 
-				&& "客户账号不存在".equals(context.getData(ParamKeys.RESPONSE_MESSAGE).toString().trim())
-				&& !(GDConstants.GAS_TXN_BY_CASH.equals(context.getData(ParamKeys.CUS_AC)))) {
-			// B2为无此帐号或账号与用户编号匹配错误扣费失败
-			// "RESPONSE_MESSAGE" :
-			// "客户账号不存在                                            ",
-			// "客户账号不存在                                            ":payMod为0时（即现金交易，也会返回此消息，需要区分开这情况,检测cusAc不为00000000且RESPONSE_MESSAGE为"客户账号不存在                                            "）
-			context.setData(ParamKeys.BAK_FLD2, "B2");
-			logger.info("=========交易失败了啊！！！！！客户账号不存在啊！！！！！快去签约！！！！！context="
-					+ context);
-		} else { // B3其它原因扣费失败
-			context.setData(ParamKeys.BAK_FLD2, "B3");
-			logger.info("=========交易失败了啊！！！！！！！！坑坑坑！！context=" + context);
-		}
-		
-		context.setData("reMark1", context.getData(ParamKeys.RSP_MSG).toString());
-		
-		if(context.getData(ParamKeys.RSP_MSG).toString().length() >= 60){
-			context.setData("reMark1", context.getData(ParamKeys.RSP_MSG).toString().substring(0, 60));
-		}else{
-			context.setData("reMark1", context.getData(ParamKeys.RSP_MSG).toString());
-		}
-		
+		} else {
+			if ("GEMS0004TP0017".equals(context.getData(ParamKeys.RESPONSE_CODE))) { // B1为金额不足扣费失败
+				context.setData(ParamKeys.BAK_FLD2, "B1");
+				context.setData("reMark1", "余额不足");
+				logger.info("=========交易失败了啊！！！余额不足啊！！！！！！！！！！！！context=" + context);
+			} else if ("GEMS0004CB0042".equals(context.getData(ParamKeys.RESPONSE_CODE)) 
+					&& !(GDConstants.GAS_TXN_BY_CASH.equals(context.getData(ParamKeys.CUS_AC)))) {
+				// B2为无此帐号或账号与用户编号匹配错误扣费失败
+				// "RESPONSE_MESSAGE" :
+				// "客户账号不存在                                            ",
+				// "客户账号不存在                                            ":payMod为0时（即现金交易，也会返回此消息，需要区分开这情况,检测cusAc不为00000000且RESPONSE_MESSAGE为"客户账号不存在                                            "）
+				context.setData(ParamKeys.BAK_FLD2, "B2");
+				context.setData("reMark1", "客户账号不存在");
+				logger.info("=========交易失败了啊！！！！！客户账号不存在啊！！！！！快去签约！！！！！context="
+						+ context);
+			} else { // B3其它原因扣费失败
+				context.setData(ParamKeys.BAK_FLD2, "B3");
+				
+				logger.info("=========交易失败了啊！！！！！！！！context=" + context);
+			}
+//			int a=60;
+//			if (context.getData(ParamKeys.RESPONSE_MESSAGE).toString().length() >= a) {
+//				logger.info("here the "+ ParamKeys.RESPONSE_MESSAGE + ":" +context.getData(ParamKeys.RESPONSE_MESSAGE).toString() + "【length>=60】");
+//				context.setData("reMark1", context.getData(ParamKeys.RESPONSE_MESSAGE).toString().substring(0, 60));
+//			} else {
+//				logger.info("here the "+ ParamKeys.RESPONSE_MESSAGE + ":" +context.getData(ParamKeys.RESPONSE_MESSAGE).toString() + "【length<60】");
+//				context.setData("reMark1", context.getData(ParamKeys.RESPONSE_MESSAGE).toString());
+//			}
+			
+		} 
+
 		return null;
 	}
 }
