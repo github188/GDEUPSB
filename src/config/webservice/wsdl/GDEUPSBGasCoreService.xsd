@@ -296,14 +296,6 @@
       <xs:maxLength value="60"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="thdCusNo_SType">
-    <xs:annotation>
-      <xs:documentation>用户编号</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="12"/>
-    </xs:restriction>
-  </xs:simpleType>
   <xs:simpleType name="acTyp_SType">
     <xs:annotation>
       <xs:documentation>代扣对象类型</xs:documentation>
@@ -352,7 +344,7 @@
   </xs:simpleType>
   <xs:complexType name="loopDtl_CType">
     <xs:sequence>
-      <xs:element name="thdCusNo" type="tns:thdCusNo_SType"/>
+      <xs:element name="cusNo" type="tns:cusNo_SType"/>
       <xs:element name="cusAc" type="tns:cusAc_SType" minOccurs="0"/>
       <xs:element name="cusNme" type="tns:cusNme_SType" minOccurs="0"/>
       <xs:element name="acTyp" type="tns:acTyp_SType" minOccurs="0"/>
@@ -373,7 +365,7 @@
       <xs:element name="thdCusNo" type="tns:thdCusNo_SType"/>
       <xs:element name="idTyp" type="tns:idTyp_SType"/>
       <xs:element name="idNo" type="tns:idNo_SType"/>
-      <xs:element name="cusTyp" type="tns:cusTyp_SType" minOccurs="0"/>
+      <xs:element name="cusTyp" type="tns:cusTyp_SType"/>
       <xs:element name="cusAc" type="tns:cusAc_SType" minOccurs="0"/>
       <xs:element name="cusNme" type="tns:cusNme_SType" minOccurs="0"/>
       <xs:element name="cmuTel" type="tns:cmuTel_SType" minOccurs="0"/>
@@ -412,6 +404,14 @@
       <xs:maxLength value="15"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:simpleType name="thdCusNo_SType">
+    <xs:annotation>
+      <xs:documentation>用户编号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="12"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:simpleType name="cusTyp_SType">
     <xs:annotation>
       <xs:documentation>账户类型</xs:documentation>
@@ -440,6 +440,7 @@
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="ftpNo" type="tns:ftpNo_SType"/>
       <xs:element name="txnDte" type="tns:txnDte_SType"/>
     </xs:sequence>
   </xs:complexType>
@@ -450,6 +451,14 @@
       <xs:element name="rspMsg" type="tns:rspMsg_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:simpleType name="ftpNo_SType">
+    <xs:annotation>
+      <xs:documentation>FTP编号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="32"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:simpleType name="txnDte_SType">
     <xs:annotation>
       <xs:documentation>交易日期</xs:documentation>
@@ -580,6 +589,7 @@
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="ftpNo" type="tns:ftpNo_SType"/>
       <xs:element name="txnDte" type="tns:txnDte_SType"/>
     </xs:sequence>
   </xs:complexType>
