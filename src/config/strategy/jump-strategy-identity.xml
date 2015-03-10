@@ -100,7 +100,9 @@
 	
 	
 	 <!--广东烟草发起对账-->
-    <bean class="com.bocom.bbip.gdeupsb.strategy.sgrt00.CheckThdFileToBkServiceAction"id="eups.checkThdFileToBkStrategyActionSGRT00" />
+    <bean id="eups.checkThdFileToBkStrategyActionSGRT00"
+    class="com.bocom.bbip.gdeupsb.strategy.sgrt00.CheckThdFileToBkServiceAction" >
+     </bean>
 	<!-- 签约一站通-协议维护-水务 -->
 	<bean id="gdeups.agtMdyDealImlServiceActionWAT00"
 		class="com.bocom.bbip.gdeupsb.strategy.sign.WaterAgtMdyDealImlAction">
