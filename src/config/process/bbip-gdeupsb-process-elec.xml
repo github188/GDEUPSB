@@ -160,4 +160,11 @@
 		</actions>
 	</process>
 	
+		<!-- 南方电网  异步调用对总账-->		
+		<process id="gdeupsb.checkThdSumAcct"  template="eups.simpleTran"  interceptors="bbip.bbipSchedulerInterceptor">
+				  <actions>
+				   			  <action id="act"  ref="gdeupsb.checkThdSumAcctAction"/>
+				   </actions>
+			</process>		
+			
 </x:beans>
