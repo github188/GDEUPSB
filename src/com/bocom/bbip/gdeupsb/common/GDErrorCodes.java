@@ -346,6 +346,21 @@ public final class GDErrorCodes {
 	public static final String EUPS_LOTR01_12_ERROR = "BBIP4400EU1012";
 	/** 返奖记录表有返奖记录存在异常 */
 	public static final String EUPS_LOTR01_13_ERROR = "BBIP4400EU1013";
+	
+	/** 福彩系统配置信息不存在 */
+	public static final String EUPS_LOTR01_14_ERROR = "BBIP4400EU1014";
+	/** 代收内部户不存在 */
+	public static final String EUPS_LOTR01_15_ERROR = "BBIP4400EU1015";
+	/** 代发内部户不存在 */
+	public static final String EUPS_LOTR01_16_ERROR = "BBIP4400EU1016";
+	/** 福彩系统登录失败 */
+	public static final String EUPS_LOTR01_17_ERROR = "BBIP4400EU1017";
+	/** 奖期信息下载失败 */
+	public static final String EUPS_LOTR01_18_ERROR = "BBIP4400EU1018";
+	/** 不存在未返奖奖期 */
+	public static final String EUPS_LOTR01_19_ERROR = "BBIP4400EU1019";
+	
+	
 
 	public static final String EUPS_THD_ERROR_TIMEOUT = "BBIP4400EU0701";
 	public static final String EUPS_THD_ERROR_SENDFAILURE = "BBIP4400EU0702";

@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.service.impl.lotr01;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
+import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.entity.GdLotDrwTbl;
 import com.bocom.bbip.gdeupsb.entity.GdLotSysCfg;
 import com.bocom.bbip.gdeupsb.repository.GdLotDrwTblRepository;
@@ -47,25 +49,25 @@ public class ProPlanPayServiceActionLOTR01 extends BaseAction {
 		gdLotSysCfg.setDealId(dealId);
 		List<GdLotSysCfg> gdLotSysCfgs = get(GdLotSysCfgRepository.class).find(gdLotSysCfg);
 		if(CollectionUtils.isEmpty(gdLotSysCfgs)){
-			//TODO:系统配置信息不存在
+			//系统配置信息不存在
 			logger.error("福彩系统配置信息不存在!");
-			throw new CoreException("");
+			throw new CoreException(GDErrorCodes.EUPS_LOTR01_14_ERROR);
 		}
 		gdLotSysCfg = gdLotSysCfgs.get(0);
 		//查询代收内部户
 		Map<String,Object> m1 = ((SqlMap)get("sqlMap")).queryForObject("lotr01.findDsActNo", gdLotSysCfg);
 		logger.info("dsActNo["+m1.get("DSACTNO")+"]");
 		if(m1==null||m1.get("DSACTNO")==null){
-			//TODO:代收内部户不存在
+			//代收内部户不存在
 			logger.error("代收内部户不存在!");
-			throw new CoreException("");
+			throw new CoreException(GDErrorCodes.EUPS_LOTR01_15_ERROR);
 		}
 		//查询代发内部户
 		Map<String,Object> m2 = ((SqlMap)get("sqlMap")).queryForObject("lotr01.findDfActNo", gdLotSysCfg);
 		if(m2==null||m2.get("DFACTNO")==null){
-			//TODO:代发内部户不存在
+			//代发内部户不存在
 			logger.error("代发内部户不存在!");
-			throw new CoreException("");
+			throw new CoreException(GDErrorCodes.EUPS_LOTR01_16_ERROR);
 		}
 		String dsActNo = (String) m1.get("DSACTNO");
 		String dfActNo = (String) m2.get("DFACTNO");
@@ -84,9 +86,9 @@ public class ProPlanPayServiceActionLOTR01 extends BaseAction {
 		gdLotDrwTbl.setCshStr(sysTim);
 		List<GdLotDrwTbl> gdLotDrwTbls = get(GdLotDrwTblRepository.class).query(gdLotDrwTbl);
 		if(CollectionUtils.isEmpty(gdLotDrwTbls)){
-			//TODO:不存在未返奖奖期
+			//不存在未返奖奖期
 			logger.error("不存在未返奖奖期!");
-			throw new CoreException("");
+			throw new CoreException(GDErrorCodes.EUPS_LOTR01_19_ERROR);
 		}
 		context.setData("gdLotDrwTbls", gdLotDrwTbls);
 		logger.info("未返奖奖期数量["+gdLotDrwTbls.size()+"]");
@@ -121,7 +123,25 @@ public class ProPlanPayServiceActionLOTR01 extends BaseAction {
 	public void updAmt1(Context context){
 		logger.info("ProPlanPayServiceActionLOTR01 updAmt1 start ... ...");
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
-		
+		GdLotDrwTbl gdLotDrwTbl = new GdLotDrwTbl();
+		gdLotDrwTbl.setKenoId("AAAAA");
+		gdLotDrwTbl.setPrzAmt("");
+		gdLotDrwTbl.setFlwCtl("10");
+		List<GdLotDrwTbl> gdLotDrwTbls = get(GdLotDrwTblRepository.class).queryKeno(gdLotDrwTbl);
+		for(GdLotDrwTbl drw:gdLotDrwTbls){
+			drw.setKenoId("AAAAA");
+			drw.setPrzAmt("");
+			drw.setFlwCtl("10");
+			List<GdLotDrwTbl> drws = get(GdLotDrwTblRepository.class).queryKenoCnt(drw);
+			if(CollectionUtils.isEmpty(drws)){
+				//该期的所有Keno期都已经返奖完成，更新AAAAA记录的汇总信息
+				Map<String,Object> map = get(GdLotDrwTblRepository.class).sumPrzDrw(gdLotDrwTbl);
+				context.setData("przSumAmt", map.get("PRZSUMAMT"));
+				context.setData("gameId", drw.getGameId());
+				context.setData("drawId", drw.getDrawId());
+				get(GdLotDrwTblRepository.class).updDrwPrzInf(context.getDataMap());
+			}
+		}
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
 		logger.info("ProPlanPayServiceActionLOTR01 updAmt1 end ... ...");
 	}
@@ -143,7 +163,23 @@ public class ProPlanPayServiceActionLOTR01 extends BaseAction {
 	public void updAmt3(Context context){
 		logger.info("ProPlanPayServiceActionLOTR01 updAmt3 start ... ...");
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
-		
+		List<GdLotDrwTbl> gdLotDrwTbls = get(GdLotDrwTblRepository.class).calcLotDifAmt(context.getDataMap());
+		for(GdLotDrwTbl gdLotDrwTbl:gdLotDrwTbls){
+			String totAmt = gdLotDrwTbl.getTotAmt();
+			String przAmt = gdLotDrwTbl.getPrzAmt();
+			String difFlg = null;
+			BigDecimal difAmt = null;
+			if(totAmt.compareTo(przAmt)>=0){//借方，购彩总金额大于返奖总金额
+				difFlg = "1";
+				difAmt = new BigDecimal(totAmt).subtract(new BigDecimal(przAmt));
+			}else{
+				difFlg = "0";
+				difAmt = new BigDecimal(przAmt).subtract(new BigDecimal(totAmt));
+			}
+			gdLotDrwTbl.setDifAmt(difAmt.toString());
+			gdLotDrwTbl.setDifFlg(difFlg);
+			get(GdLotDrwTblRepository.class).updLotDifAmt(gdLotDrwTbl);
+		}
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
 		logger.info("ProPlanPayServiceActionLOTR01 updAmt3 end ... ...");
 	}

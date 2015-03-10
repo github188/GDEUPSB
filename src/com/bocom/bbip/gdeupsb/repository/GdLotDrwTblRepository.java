@@ -17,6 +17,42 @@ public interface GdLotDrwTblRepository extends PagingAndSortingRepository<GdLotD
 	 */
 	List<GdLotDrwTbl> query(GdLotDrwTbl gdLotDrwTbl);
 	/**
+	 * 查询快乐十分keno期都完成返奖的奖期信息
+	 * @param eupsLotDrwTbl
+	 * @return
+	 */
+	List<GdLotDrwTbl> queryKeno(GdLotDrwTbl gdLotDrwTbl);
+	/**
+	 * 查询快乐十分keno期未返奖的数量
+	 * @param eupsLotDrwTbl
+	 * @return
+	 */
+	List<GdLotDrwTbl> queryKenoCnt(GdLotDrwTbl gdLotDrwTbl);
+	/**
+	 * 汇总返奖金额
+	 * @param eupsLotDrwTbl
+	 * @return
+	 */
+	Map<String,Object> sumPrzDrw(GdLotDrwTbl gdLotDrwTbl);
+	/**
+	 * 更新汇总返奖金额
+	 * @param eupsLotDrwTbl
+	 * @return
+	 */
+	void updDrwPrzInf(Map<String,Object> map);
+	/**
+	 * 更新轧差
+	 * @param eupsLotDrwTbl
+	 * @return
+	 */
+	void updLotDifAmt(GdLotDrwTbl gdLotDrwTbl);
+	/**
+	 * 计算轧差
+	 * @param eupsLotDrwTbl
+	 * @return
+	 */
+	List<GdLotDrwTbl> calcLotDifAmt(Map<String,Object> map);
+	/**
 	 * 更新返奖流程控制标志
 	 * @param eupsLotDrwTbl
 	 */
