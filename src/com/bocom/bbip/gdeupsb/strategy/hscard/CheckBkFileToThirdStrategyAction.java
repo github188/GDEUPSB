@@ -93,13 +93,13 @@ public class CheckBkFileToThirdStrategyAction implements Executable{
 	private Map<String,Object> encodeFileMap(Context context) throws CoreException{
 		Map<String,Object> map = new HashMap<String, Object>();
 		
-		GDEupsbTransJournal gdeups = new GDEupsbTransJournal();
+		GdEupsTransJournal gdeups = new GdEupsTransJournal();
 		//TODO:时间需要改成当前日期前一天
 		gdeups.setThdTxnDte(new Date());
 		gdeups.setTxnSts("S");
 		gdeups.setMfmTxnSts("S");
 		
-		List<GDEupsbTransJournal> chkGDEupsTransJournal = gdEupsTransJournalRepository.findCheck(gdeups);
+		List<GdEupsTransJournal> chkGDEupsTransJournal = gdEupsTransJournalRepository.findCheck(gdeups);
 
 		if( CollectionUtils.isEmpty(chkGDEupsTransJournal)){
 			 logger.info("There are no records for select check trans journal ");
