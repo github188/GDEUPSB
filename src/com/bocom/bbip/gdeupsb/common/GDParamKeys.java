@@ -583,6 +583,8 @@ public class GDParamKeys {
 	/** 住宿费 */
 	public final static String ROM_AMT = "romAmt";
 	
+	/** 对账日期 */
+	public final static String TTXN_DT = "ttxnDt";
 
 	public static final String GDEUPSB_RSP_COD = "rspCod";
 	public static final String GDEUPSB_RSP_MSG = "rspMsg";
