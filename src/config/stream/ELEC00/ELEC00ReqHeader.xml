@@ -4,6 +4,8 @@
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
 	type="LLLLLLLLLL" encoding="GBK" trace="true"  filter="both,WEB-INF/classes/config/stream/translateDict.txt"> 
 	<segment name="head">
+				<!-- 数据包长度	SJBCD	Number(9)  -->
+					<fixString name="bagLen" length="10" />
 		<!-- 密钥索引	MYSY	Varchar2(3)  -->
 					<fixString name="seckeyIndex" length="3" />
 		<!-- 密钥初始向量	MYCSXL	Varchar2(32)  -->
