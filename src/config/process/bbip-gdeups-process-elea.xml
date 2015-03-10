@@ -172,7 +172,7 @@
 
 	<!-- 银行发出网管信息 -->
 	<process id="gdeups.eleCmuBnkTestProcess" template="eups.simpleTran"
-		interceptors="bbip.defaultInterceptors">
+		interceptors="bbip.bbipSchedulerInterceptor">
 		<actions>
 			<action id="act" ref="eleGzBnkCmuTestAction" />
 		</actions>
