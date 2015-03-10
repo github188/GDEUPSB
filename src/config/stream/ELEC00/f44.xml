@@ -2,7 +2,7 @@
 <segment xmlns="http://www.bocom.com/jump/transformer/packet"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
-	name="460443Req">
+	name="460444Req">
 		
        <fixString name="netName"  length="64" /><!--网点名称-->     
 		<fixString name="sqn" length="24" /><!--交易流水号--> 
