@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="gbk"?>
 <configuration>
     <property name="SYSTEM_CODE" value="GDEUPSB" />
 	<property name="LOG_DIR" value="${BBIP_LOG_DIR}/${SYSTEM_CODE}" />

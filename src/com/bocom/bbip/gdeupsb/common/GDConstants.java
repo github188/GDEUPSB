@@ -86,6 +86,19 @@ public final class GDConstants {
 
 	/** 业务种类-代扣电费 */
 	public static final String GZ_ELE_BUS_KND_ELEC = "CRP";
+	
+	/** 收费类型:10现金*/
+	public static final String THD_PAY_TYP_CASH = "10";
+	
+	/** 收费类型:11支票预交*/
+	public static final String THD_PAY_TYP_PRCK = "11";
+	
+	/** 收费类型:12支票实交*/
+	public static final String THD_PAY_TYP_RLCK = "12";
+	
+	/** 广州电力，广州分行行号标志441999*/
+	public static final String GZ_ELE_BK_GZ = "441999";
+	
 
 	/********************* 广州电力end **********************/
 

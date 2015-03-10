@@ -1,6 +1,5 @@
 package com.bocom.bbip.gdeupsb.strategy.elcgd;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Map;
 
@@ -8,19 +7,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.bocom.bbip.comp.account.AccountService;
 import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.eups.entity.EupsAmountInfo;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
-import com.bocom.bbip.utils.BeanUtils;
+import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -76,42 +74,49 @@ public class QueryElecUserStrategyAction implements Executable {
 		// <Set>OData=STRCAT($TCusId,$LChkTm,01,SPACE(12),SPACE(56))</Set>
 		String rmk = thdCusNo + payMonth + "01" + String.format("%-68s", " "); // 附加数据
 
-		// TODO: for test 为了缴费测试，此处先设好固定值,实际中需要去掉try catch
-		try {
-			Map<String, Object> resultInfo = thirdPartyAdaptor.trade(context);
-			// 获取返回码
-			CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
-			String responseCode = rspCdeAction.getThdRspCde(resultInfo, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
-			if (BPState.isBPStateOvertime(context)) {
-				throw new CoreException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
-			} else if (!Constants.RESPONSE_CODE_SUCC.equals(responseCode)) {
-				if (StringUtils.isEmpty(responseCode)) {
-					// 未知错误
-					throw new CoreException(GDErrorCodes.EUPS_ELE_GZ_UNKNOWN_ERROR);
-				}
-				throw new CoreException(responseCode);
+		Map<String, Object> resultInfo = thirdPartyAdaptor.trade(context);
+		// 获取返回码
+		CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
+		String responseCode = rspCdeAction.getThdRspCde(resultInfo, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
+		if (BPState.isBPStateOvertime(context)) {
+			throw new CoreException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
+		} else if (!Constants.RESPONSE_CODE_SUCC.equals(responseCode)) {
+			if (StringUtils.isEmpty(responseCode)) {
+				// 未知错误
+				throw new CoreException(GDErrorCodes.EUPS_ELE_GZ_UNKNOWN_ERROR);
 			}
-		} catch (Exception e) {
-			context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
-			context.setData("responseCode", "SC0000");
-			context.setData("amount4", "21.00");
-			context.setData("txnDateTime7", "1501092630");
-			context.setData("pwrThdSub18", "9527");
-			context.setData("eleThdSqn37", "0101201501201123001");
-			context.setData("thdRspCde", "00");
-			context.setData("remarkData48", "此处为空，后续需要处理mac");
-			context.setData("chkTim", DateUtils.format(new Date(), DateUtils.STYLE_MMddHHmmss));  //交易时间
-			context.setData("dptTyp", "0001");  //配型部类型
-			context.setData("cusNme", "帅哥琛");  //配型部类型
+			throw new CoreException(responseCode);
 		}
 
-		// TODO:用电地址，用户名称处理
-		// <Set>UsrAdd=DELSPACE(SUBSTR($UsrDat,1,SUB(GETSTRPOS($UsrDat,^),1)),all)</Set><!--
-		// <Set>UsrNam=DELSPACE(SUBSTR($UsrDat,ADD(GETSTRPOS($UsrDat,^),1),SUB(STRLEN($UsrDat),GETSTRPOS($UsrDat,^))),all)</Set>
-		context.setData("oweFeeAmt", new BigDecimal(context.getData("amount4").toString()));
-		context.setData("thdCusAdr", context.getData("remarkData48"));
-		// context.setData(ParamKeys.RAP_TYPE, arg1); //收付类型
+		// 配型部类型处理
+		context.setData("dptTyp", resultInfo.get("pwrThdSub18"));
 
+		// 交易日期时间
+		String chkTim = (String) resultInfo.get("txnDateTime7");
+		context.setData("chkTim", chkTim);
+
+		String remarkData = (String) resultInfo.get("remarkData48"); // 附加字段
+		// 客户编号21+电费月份6+产品代码2+原系统参考号12+用电地址用户56
+		// String thdCusId=remarkData.substring(0,21);
+		log.info("#########remarkData=" + remarkData);
+		String lChkTm = remarkData.substring(21, 27);
+		String prdCde = remarkData.substring(27, 29);
+		// String oThdSqn=remarkData.substring(29,41); //原系统参考号
+		String thdExtInfo = remarkData.substring(41, remarkData.length()); // 用电地址户名
+
+		String usrAdd = thdExtInfo.substring(0, thdExtInfo.indexOf("^")); // 用电地址
+		String usrNme = thdExtInfo.substring(thdExtInfo.indexOf("^") + 1); // 户名
+
+		context.setData("bakFld2", lChkTm); // 电费月份
+		context.setData("bakFld4", prdCde); // 用电地址
+		if (StringUtils.isNotEmpty(usrAdd)) {
+			context.setData("thdCusAdr", usrAdd.trim()); // 用电地址
+		}
+		if (StringUtils.isNotEmpty(usrNme)) {
+			context.setData("cusNme", usrNme.trim()); // 户名
+		}
+		context.setData("oweFeeAmt", NumberUtils.centToYuan(resultInfo.get("amount4")));
+		log.info("QueryElecUserStrategyAction end!..context=" + context.getDataMap());
 	}
 
 }
