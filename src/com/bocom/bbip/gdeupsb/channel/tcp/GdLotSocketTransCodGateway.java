@@ -136,7 +136,7 @@ public class GdLotSocketTransCodGateway extends SocketGateway{
 		try {
 			String sndData = new String(sendBuffer,"GBK");
 			//去掉root节点
-			sndData = sndData.replaceAll("<root>", "").replaceAll("</root>", "");
+//			sndData = sndData.replaceAll("<root>", "").replaceAll("</root>", "");
 			logger.info("sndData:["+sndData+"]");
 			
 			socket.getOutputStream().write(sndData.getBytes("GBK"));
@@ -149,7 +149,7 @@ public class GdLotSocketTransCodGateway extends SocketGateway{
 			String rcvData = new String(rcvBuffer,"GBK");
 			logger.info("rcvData:["+rcvData+"]");
 			//添加root节点
-			rcvData = "<root>"+rcvData+"</root>";
+//			rcvData = "<root>"+rcvData+"</root>";
 			return rcvData.getBytes("GBK");
 		} catch (JumpRuntimeException jumpe) {
 			Throwable localThrowable = jumpe.getCause();

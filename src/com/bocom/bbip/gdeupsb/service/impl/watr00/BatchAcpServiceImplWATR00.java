@@ -1,6 +1,7 @@
 package com.bocom.bbip.gdeupsb.service.impl.watr00;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -23,7 +24,9 @@ import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsActSysPara;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
+import com.bocom.bbip.eups.repository.EupsActSysParaRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.BatchAcpService;
 import com.bocom.bbip.eups.spi.vo.PrepareBatchAcpDomain;
@@ -33,8 +36,6 @@ import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.entity.GdeupsWatBatInfTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GdeupsWatBatInfTmpRepository;
-import com.bocom.bbip.service.BGSPServiceAccessObject;
-import com.bocom.bbip.service.Result;
 import com.bocom.bbip.thd.org.apache.commons.collections.CollectionUtils;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
@@ -53,7 +54,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 	
 	private static Logger logger = LoggerFactory.getLogger(BatchAcpServiceImplWATR00.class);
 	/**代扣文件指定存放路径前缀*/
-	private static final String FILE_DIR_PREFIX = "/home/bbipadm/data/mftp/BBIP/GDEUPS/";
+	private static final String FILE_DIR_PREFIX = "~/home/bbipadm/data/mftp/BBIP/GDEUPSB/";
 	/**批量加锁KEY*/
 	private static final String lockKey = "BatchAcpServiceImplWATR00";
 	@Autowired
@@ -76,8 +77,20 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		String tlr = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.TELLER, ErrorCodes.EUPS_FIELD_EMPTY);//柜员号
 		String comNo = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.COMPANY_NO, ErrorCodes.EUPS_FIELD_EMPTY);//代理单位号
 		String acDate = DateUtils.format(service.getAcDate(), DateUtils.STYLE_yyyyMMdd);//会计日期
+		
+		
+		EupsActSysPara eupsActSysPara = new EupsActSysPara();
+		eupsActSysPara.setComNo(comNo);
+		eupsActSysPara.setUseSts("0");
+		List<EupsActSysPara> eupsActSysParas = get(EupsActSysParaRepository.class).find(eupsActSysPara);
+		if(CollectionUtils.isEmpty(eupsActSysParas)){
+			
+			throw new CoreException("");
+		}
+		eupsActSysPara = eupsActSysParas.get(0);
+		String splNo = eupsActSysPara.getSplNo();
 		//代扣文件名称 BATC+单位编号(代收付)+0(代收付类型，代扣0)+.txt
-		String filNam = "BATC"+comNo+context.getData(ParamKeys.EUPS_BUSS_TYPE)+".txt";
+		String filNam = "BATC"+splNo+"0"+".txt";
 		context.setVariable(ParamKeys.FLE_NME, filNam);
 		//代扣文件放置目录
 		// /home/bbipadm/data/mftp/BBIP/请求系统/机构号/柜员号/会计日期
@@ -99,6 +112,10 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		((OperateFileAction)get("opeFile")).createCheckFile(config, GDConstants.BATCH_FILE_FORMAT, fileName, fileMap);
 		/** 发送到指定路径 */
 		((OperateFTPAction)get("opeFTP")).putCheckFile(config);
+		
+		context.setData(ParamKeys.TXN_MDE, "0");
+		context.setData(ParamKeys.TXN_CHL, "1");
+		context.setData(ParamKeys.THD_BAT_NO, context.getData("sqn"));
 		
 		get(BBIPPublicService.class).asynExecute("eups.batchPaySubmitDataProcess", context);
 //		Result result = get(BGSPServiceAccessObject.class).callServiceFlatting("", context.getDataMap());
@@ -193,6 +210,10 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		newInfo.setBatNo(info.getBatNo());
 		String totCnt = (String)srcHeader.get(ParamKeys.TOT_CNT);
 		String totAmt = (String)srcHeader.get(ParamKeys.TOT_AMT);//分为单位
+		
+		context.setData(ParamKeys.TOT_CNT, Integer.parseInt(totCnt));
+		context.setData(ParamKeys.TOT_AMT, NumberUtils.centToYuan(totAmt));
+		
 		newInfo.setTotCnt(Integer.parseInt(totCnt));
 		newInfo.setTotAmt(NumberUtils.centToYuan(totAmt));//转换为以元为单位
 		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(newInfo);

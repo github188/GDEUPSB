@@ -137,7 +137,7 @@ public class GdLotTransCodTransport implements Transport{
 			sw = new StringWriter();
 			factory = XMLOutputFactory.newInstance();
 			w = factory.createXMLStreamWriter(sw);
-			w.writeStartElement("root");
+			w.writeStartElement("pkg");
 				w.writeStartElement("pkgH");
 					w.writeStartElement("type");
 					w.writeCharacters("3");
