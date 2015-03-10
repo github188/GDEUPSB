@@ -7,5 +7,5 @@
        <fixString name="TRADE_DATE" length="8"/>
        <fixString name="DEV_ID" length="10"/>
        <fixString name="TELLER" length="10"/>
-    
+       <fixString name ="ftpNo" length="12" />
 </segment>
