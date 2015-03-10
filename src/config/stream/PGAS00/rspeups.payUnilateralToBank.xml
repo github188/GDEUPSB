@@ -25,7 +25,7 @@
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
 	<fixString name="cusAc" length="32"   />
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
-	<fixString name="payMon" length="6"   />
+	<fixString name="rsvFld6" length="6"   />
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
 	<fixString name="txnAmt" length="10"   />
 	<!-- <fixString  name="DeliA" length="1"  /> -->
