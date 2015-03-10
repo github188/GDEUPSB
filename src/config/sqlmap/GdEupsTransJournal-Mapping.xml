@@ -261,7 +261,7 @@
 		</trim>
 	</select>
 
-	<select id="findCheck" resultMap="basicResultMap">
+	<select id="findCheck" resultMap="basicResultMap" parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
 		select
 		<include refid="baseColumnList" />
 		from EUPS.EUPS_TRANS_JOURNAL
