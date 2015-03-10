@@ -7,7 +7,7 @@
 		<fixString name="thdRspCde" length="4"/>  <!--返回码 -->
 		<fixString name="responseMessage" length="100"/>  <!--返回信息 -->
 		<fixString name="TransCode" length="6"  referred="true" mapping="true"/>  
-		<fixString name="DCC_SCHID" length="10"/>  <!--学校代号 -->
+		<fixString name="bakFld1" length="10"/>  <!--学校代号 -->
 		
 	</segment>
  	<include keys="TransCode" decodePrefix="p"/> 
