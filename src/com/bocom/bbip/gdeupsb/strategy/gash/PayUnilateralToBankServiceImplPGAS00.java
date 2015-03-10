@@ -163,42 +163,12 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 		
 		logger.info("=================context.state:" + context.getData("state"));
 		
-		// B0为扣费成功 B1为金额不足扣费失败 B2为无此帐号或账号与用户编号匹配错误扣费失败 B3其它原因扣费失败
-		// TODO 区分交易结果
-		// && "S".equals(context.getData(ParamKeys.MFM_TXN_STS)) &&
-		// "S".equals(context.getData(ParamKeys.THD_TXN_STS))
-		
-		
-		
-//		if (GDConstants.GAS_MFM_RSP_CD.equals(context.getData(ParamKeys.RESPONSE_CODE))
-//				&& "N".equals(context.getData(ParamKeys.RESPONSE_TYPE))) {
-		// "responseCode" : "SC0000",
-		// "responseType" : "N"
-//		if (BPState.BUSINESS_PROCESSNIG_STATE_NORMAL.equals(context.getData("state"))) { 
 			
 		logger.info("=================context.responseCode:" + context.getData(ParamKeys.RESPONSE_CODE));
 		logger.info("=================context.responseType:" + context.getData(ParamKeys.RESPONSE_TYPE));
-		if ("000000".equals(context.getData(ParamKeys.RESPONSE_CODE))) {
-//			 && "N".equals(context.getData(ParamKeys.RESPONSE_TYPE))
-			// 扣款成功
-
-			// context.setData(ParamKeys.TXN_AMOUNT,
-			// context.getData("reqTxnAmt"));
-			//
-			// BigDecimal reqTxnAmt = new BigDecimal(
-			// (String) context.getData("reqTxnAmt"));
-			// reqTxnAmt = reqTxnAmt.multiply(new BigDecimal(100));
-			// int len = 12;
-			// char des = '0';
-			// char LorR = '1';
-			// String optAmt1 = GdExpCommonUtils.AddChar(
-			// String.valueOf(reqTxnAmt), len, des, LorR);
-			// context.setData(ParamKeys.BAK_FLD6, optAmt1); // 使用备用字段6
+		if ("000000".equals(context.getData(ParamKeys.RESPONSE_CODE)) && "S".equals(context.getData(ParamKeys.MFM_TXN_STS))) {
 
 			context.setData(ParamKeys.BAK_FLD2, "B0");
-			// context.setData(ParamKeys.MFM_TXN_STS, "S");
-			// context.setData(ParamKeys.MFM_RSP_CDE,
-			// GDConstants.GAS_MFM_RSP_CD);
 			context.setData(ParamKeys.RSP_MSG, "扣款成功");
 			context.setData(ParamKeys.BAK_FLD5, "扣款成功");
 
@@ -221,18 +191,9 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 						+ context);
 			} else { // B3其它原因扣费失败
 				context.setData(ParamKeys.BAK_FLD2, "B3");
-				
+				context.setData("reMark1", context.getData(ParamKeys.RESPONSE_MESSAGE).toString());
 				logger.info("=========交易失败了啊！！！！！！！！context=" + context);
 			}
-//			int a=60;
-//			if (context.getData(ParamKeys.RESPONSE_MESSAGE).toString().length() >= a) {
-//				logger.info("here the "+ ParamKeys.RESPONSE_MESSAGE + ":" +context.getData(ParamKeys.RESPONSE_MESSAGE).toString() + "【length>=60】");
-//				context.setData("reMark1", context.getData(ParamKeys.RESPONSE_MESSAGE).toString().substring(0, 60));
-//			} else {
-//				logger.info("here the "+ ParamKeys.RESPONSE_MESSAGE + ":" +context.getData(ParamKeys.RESPONSE_MESSAGE).toString() + "【length<60】");
-//				context.setData("reMark1", context.getData(ParamKeys.RESPONSE_MESSAGE).toString());
-//			}
-			
 		} 
 
 		return null;
