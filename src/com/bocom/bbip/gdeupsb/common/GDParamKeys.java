@@ -85,6 +85,9 @@ public class GDParamKeys {
 
 	/** 对账日期 */
 	public static final String GZ_ELE_CHECK_DTE = "eleCheckDte";
+	
+	/** 收费类型 */
+	public static final String GZ_ELE_FEE_WAY = "thdFeeWay";
 
 	/********************* 广州电力end **********************/
 
