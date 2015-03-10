@@ -35,7 +35,7 @@ public class QryCusMsgAction extends BaseAction{
 	 */
 	public void execute(Context context)throws CoreException,CoreRuntimeException{
 		log.info("==============Start  QryCusMsgAction");
-		context.setData(GDParamKeys.SVRCOD,"43");
+		context.setData(GDParamKeys.SVRCOD,"44");
 		String sqn=get(BBIPPublicService.class).getBBIPSequence();
 		context.setData(ParamKeys.SEQUENCE, sqn);
 		String txnDte=DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
