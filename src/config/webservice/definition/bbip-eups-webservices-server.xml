@@ -186,4 +186,8 @@
      <server-side-ws-def wsdl="GDEUPSVechService.wsdl"
         		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSVechService/Schema">
         </server-side-ws-def>
+        
+     <!-- 华商一卡通 -->
+	<server-side-ws-def wsdl="HSSCService.wsdl"
+		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.HSSCService/Schema" />
 </x:beans>
