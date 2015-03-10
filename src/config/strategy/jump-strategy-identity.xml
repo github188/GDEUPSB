@@ -252,8 +252,8 @@
 	<bean class="com.bocom.bbip.gdeupsb.strategy.gash.CnlPayUnilateralToBankServicePGAS00"
 		id="eups.cancelUnilateralToBankServiceActionPGAS00" />
 	<!-- 惠州燃气对账文件上传 -->
-	<bean id="eups.checkBkFileToThirdServiceActionPGAS00"
-		class="com.bocom.bbip.gdeupsb.strategy.gash.CheckFileToThdHzActionPGAS00">
+	<bean id="eups.checkBkFileToThirdStrategyActionPGAS00"
+		class="com.bocom.bbip.gdeupsb.strategy.gash.CheckBkFileToThirdStrategyAction">
 	</bean>
 				    
 	
