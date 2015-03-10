@@ -583,7 +583,7 @@
 	</select>
 	
 <select id="findSumTxnAmt" resultType="java.util.Map" parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
-		select count(txnAmt) as totNum ,sum(TXN_AMT) as totAmt from EUPS.EUPS_TRANS_JOURNAL
+		select count(TXN_AMT) as totNum ,sum(TXN_AMT) as totAmt from EUPS.EUPS_TRANS_JOURNAL
 		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="sqn!=null">
 				AND SQN=#{sqn,jdbcType=CHAR}
