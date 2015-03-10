@@ -10,7 +10,7 @@
 TransCode.gdeupsb.tbcCommunicateStateTest=8888
 TransCode.gdeupsb.tbcVerifyToThird=8926
 TransCode.gdeupsb.tbcPayUnilateralToBank=8914
-TransCode.eups.checkBankFileToThird=8918
+TransCode.eups.checkThirdFileForBank=8918
 TransCode.gdeupsb.tbcSignIn=8910
 TransCode.gdeupsb.tbcSignOut=8911
 TransCode.gdeupsb.tbcEstablishAccount=8912
