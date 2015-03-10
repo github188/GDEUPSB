@@ -2,14 +2,14 @@
 <message xmlns="http://www.bocom.com/jump/transformer/8583packet"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/8583packet iso8583.xsd"
-	encoding="GBK" trace="true">
+	encoding="UTF-8" trace="true">
 	
  <!-- 主账号,磁条卡的第二磁道或第三磁道上获取的账号，或在交易时输入的主账户号，或读IC卡获得的卡号 -->
 	<varString name="cusAcEx2" index="2" type="C"  format="bcd" bcdLeftJustified="true" dynBitSet="true" /> 
 	<!-- 交易处理码 -->
 	<fixString name="thdPayTyp3" index="3" length="6"  format="bcd"  />
 	<!-- 交易金额  -->
-	<fixString name="amount4" index="4" length="12"  format="bcd"  dynBitSet="true"/>
+	<fixString name="amount4" index="4" length="12"   dynBitSet="true"/>
 	<!-- 交易传输时间 -->
 	<fixString name="txnDateTime7" index="7"  length="10" format="bcd" dynBitSet="true"/>
  	<!-- 受卡方系统跟踪号 -->
@@ -19,7 +19,7 @@
 	<!-- 受卡方所在地日期 -->
 	<fixString name="bnkTxnDate13" index="13"  length="4" format="bcd" dynBitSet="true"/>
 	<!-- 清算日期. -->
-	<fixString name="pwrtxnDate15" index="15"  length="8" format="bcd" dynBitSet="true"/>
+	<fixString name="pwrtxnDate15" index="15"  length="4" format="bcd" dynBitSet="true"/>
 	<!-- 配营部类型 -->
 	<fixString name="pwrThdSub18" index="18" length="4" filling="0x00" dynBitSet="true"/>    <!--配营部类型-->
 		<!--交易手续费-->
@@ -27,9 +27,10 @@
 	<!-- 受理方机构标识码 -->
 	<varString name="eleBkNo32" index="32" type="C"  format="bcd" dynBitSet="true"/>
 		<!-- 发送机构标识码-->
-	<varString name="sndFlg33" index="32" type="C"  format="bcd" dynBitSet="true"/>
+	<varString name="sndFlg33" index="33" type="C"  format="bcd" dynBitSet="true"/>
 	<!-- 供电公司系统参考号-->
-	<fixString name="eleThdSqn37" index="37" length="12"  format="bcd"   dynBitSet="true"/>
+	<fixString name="eleThdSqn37" index="37" length="12"   dynBitSet="true"/>
+	<!-- <fixString name="eleThdSqn37" index="37" length="12"  format="bcd"   dynBitSet="true"/> -->
 	<!--应答码.-->
 	<fixString name="thdRspCde" index="39" length="2" dynBitSet="true"/>
 	<!-- 受理方终端标识码-->
