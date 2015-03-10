@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.HSSCService/Schema" xmlns:gsp="http://gsp.bankcomm.com" xmlns:bbip="http://bbip.bankcomm.com" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.HSSCService/Schema" elementFormDefault="qualified">
+  <xs:import namespace="http://gsp.bankcomm.com" schemaLocation="headerOfSOAP.xsd"/>
+  <xs:import namespace="http://bbip.bankcomm.com" schemaLocation="headerOfBbip.xsd"/>
+  <xs:element name="hsscStuFeeQuery" type="tns:hsscStuFeeQueryReq_CType"/>
+  <xs:element name="hsscStuFeeQueryResponse" type="tns:hsscStuFeeQueryRsp_CType"/>
+  <xs:complexType name="hsscStuFeeQueryReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:hsscStuFeeQueryRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="hsscStuFeeQueryRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:hsscStuFeeQueryResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="requestHeader" type="tns:requestHeader_CType"/>
+  <xs:element name="responseHeader" type="tns:responseHeader_CType"/>
+  <xs:complexType name="requestHeader_CType">
+    <xs:sequence>
+      <xs:element ref="bbip:bbipRequestHead"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="responseHeader_CType">
+    <xs:sequence>
+      <xs:element ref="bbip:bbipResponseHead"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="hsscStuFeeQueryRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="schCod" type="tns:schCod_SType"/>
+      <xs:element name="stuCod" type="tns:stuCod_SType"/>
+      <xs:element name="payYea" type="tns:payYea_SType"/>
+      <xs:element name="payTem" type="tns:payTem_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="hsscStuFeeQueryResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="schCod" type="tns:schCod_SType" minOccurs="0"/>
+      <xs:element name="stuCod" type="tns:stuCod_SType" minOccurs="0"/>
+      <xs:element name="stuNam" type="tns:stuNam_SType" minOccurs="0"/>
+      <xs:element name="payYea" type="tns:payYea_SType" minOccurs="0"/>
+      <xs:element name="payTem" type="tns:payTem_SType" minOccurs="0"/>
+      <xs:element name="xzfAmt" type="tns:xzfAmt_SType" minOccurs="0"/>
+      <xs:element name="romAmt" type="tns:romAmt_SType" minOccurs="0"/>
+      <xs:element name="txnAmt" type="tns:txnAmt_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="eupsBusTyp_SType">
+    <xs:annotation>
+      <xs:documentation>业务类型</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="schCod_SType">
+    <xs:annotation>
+      <xs:documentation>学校编码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="stuCod_SType">
+    <xs:annotation>
+      <xs:documentation>学籍编码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="payYea_SType">
+    <xs:annotation>
+      <xs:documentation>缴费年份</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="payTem_SType">
+    <xs:annotation>
+      <xs:documentation>缴费学期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="stuNam_SType">
+    <xs:annotation>
+      <xs:documentation>学生姓名</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="xzfAmt_SType">
+    <xs:annotation>
+      <xs:documentation>学费</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="18"/>
+      <xs:fractionDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="romAmt_SType">
+    <xs:annotation>
+      <xs:documentation>住宿费</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="18"/>
+      <xs:fractionDigits value="3"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="txnAmt_SType">
+    <xs:annotation>
+      <xs:documentation>总费用</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="18"/>
+      <xs:fractionDigits value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
