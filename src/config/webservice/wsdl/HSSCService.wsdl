@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.HSSCService" xmlns:gdeupsb="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.HSSCService/Schema" name="HSSCService" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.HSSCService">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.HSSCService">
+      <xsd:import namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.HSSCService/Schema" schemaLocation="HSSCService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="hsscStuFeeQueryRequestMessage">
+    <wsdl:part name="hsscStuFeeQueryRequest" element="gdeupsb:hsscStuFeeQuery"/>
+  </wsdl:message>
+  <wsdl:message name="hsscStuFeeQueryResponseMessage">
+    <wsdl:part name="hsscStuFeeQueryResponse" element="gdeupsb:hsscStuFeeQueryResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="HSSCServicePortType">
+    <wsdl:operation name="hsscStuFeeQuery">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:hsscStuFeeQueryRequestMessage"/>
+      <wsdl:output message="tns:hsscStuFeeQueryResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="HSSCServiceSoapBinding" type="tns:HSSCServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="hsscStuFeeQuery">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.HSSCService/hsscStuFeeQuery"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="HSSCService">
+    <wsdl:port name="HSSCServicePort" binding="tns:HSSCServiceSoapBinding">
+      <soap:address location="http://127.0.0.1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
