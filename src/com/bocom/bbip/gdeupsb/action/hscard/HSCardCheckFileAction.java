@@ -26,6 +26,7 @@ public class HSCardCheckFileAction extends BaseAction{
 		
 		ctx.setData(GDParamKeys.TTXN_DT, ttxnDt);
 		ctx.setData("ftpNo", "hsscCheckFile");
+		ctx.setData(ParamKeys.BAK_FLD1, "5291353");
 		get(BBIPPublicService.class).synExecute(EXECUTE_PROCESS, ctx);
 	}
 }
