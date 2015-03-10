@@ -1,8 +1,9 @@
 package com.bocom.bbip.gdeupsb.service.impl.watr00;
 
 import java.io.File;
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +33,9 @@ import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.entity.GdeupsWatBatInfTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GdeupsWatBatInfTmpRepository;
+import com.bocom.bbip.service.BGSPServiceAccessObject;
+import com.bocom.bbip.service.Result;
+import com.bocom.bbip.thd.org.apache.commons.collections.CollectionUtils;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.ContextUtils;
@@ -40,7 +44,6 @@ import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
-import com.bocom.jump.bp.support.CollectionUtils;
 /**
  * 汕头水费批量扣款数据准备
  * @author hefengwen
@@ -73,7 +76,6 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		String tlr = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.TELLER, ErrorCodes.EUPS_FIELD_EMPTY);//柜员号
 		String comNo = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.COMPANY_NO, ErrorCodes.EUPS_FIELD_EMPTY);//代理单位号
 		String acDate = DateUtils.format(service.getAcDate(), DateUtils.STYLE_yyyyMMdd);//会计日期
-		
 		//代扣文件名称 BATC+单位编号(代收付)+0(代收付类型，代扣0)+.txt
 		String filNam = "BATC"+comNo+context.getData(ParamKeys.EUPS_BUSS_TYPE)+".txt";
 		context.setVariable(ParamKeys.FLE_NME, filNam);
@@ -81,6 +83,8 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		// /home/bbipadm/data/mftp/BBIP/请求系统/机构号/柜员号/会计日期
 		String dir = FILE_DIR_PREFIX+br+File.separator+tlr+File.separator+acDate+File.separator;
 		logger.info("dir_filNam["+dir+filNam+"]");
+		
+		
 		//获取第三方批量文件并解析
 		buildBatchFile(context);
 		
@@ -96,8 +100,8 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		/** 发送到指定路径 */
 		((OperateFTPAction)get("opeFTP")).putCheckFile(config);
 		
-		
-		
+		get(BBIPPublicService.class).asynExecute("eups.batchPaySubmitDataProcess", context);
+//		Result result = get(BGSPServiceAccessObject.class).callServiceFlatting("", context.getDataMap());
 //		get(BatchFileCommon.class).sendBatchFileToACP(context);
 //		BatchFileCommon com = get("eups.batchFileCommon");
 //		com.sendBatchFileToACP(context);
@@ -132,9 +136,14 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		info.setRsvFld1(filename);//第三方文件名
 		info.setComNo((String)context.getData(ParamKeys.COMPANY_NO));
 		List<GDEupsBatchConsoleInfo> infos =get(GDEupsBatchConsoleInfoRepository.class).find(info);
-		Assert.isNotNull(infos, "批次信息已经存在");
+//		Assert.isNotNull(infos, "批次信息已经存在");
+		if(CollectionUtils.isNotEmpty(infos)){
+			//已存在，报错
+			logger.error("批次信息已存在");
+			throw new CoreException("");
+		}
 		/** 插入批次控制表 */
-		String batNo =((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
+		String batNo =((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);//申请代收批次号
 		info.setBatNo(batNo);//批次号
 		info.setBatSts(GDConstants.BATCH_STATUS_INIT);//批次状态
 		info.setFleNme((String)context.getVariable(ParamKeys.FLE_NME));//代收付批量文件名称
@@ -150,13 +159,18 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		get(GDEupsBatchConsoleInfoRepository.class).insert(info);
 		context.getDataMapDirectly().putAll(BeanUtils.toFlatMap(info));
 		
-		Map<String,Object> ret = CollectionUtils.createMap();
-		Map<String,Object> header = CollectionUtils.createMap();
-		List<Object> detail = CollectionUtils.createList();
+		Map<String,Object> ret = new HashMap<String,Object>();
+		Map<String,Object> header = new HashMap<String,Object>();
+		List<Object> detail = new ArrayList<Object>();
 		
 		//根据ftpNo查找第三方FTP配置信息
 		EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("waterBatchFile");
-		Assert.isNotNull(eupsThdFtpConfig, ErrorCodes.EUPS_FTP_INFO_NOTEXIST);
+		if(eupsThdFtpConfig==null){
+			//第三方FTP信息不存在
+			logger.error("第三方FTP配置信息不存在");
+			throw new CoreException(ErrorCodes.EUPS_FTP_INFO_NOTEXIST);
+		}
+//		Assert.isNotNull(eupsThdFtpConfig, ErrorCodes.EUPS_FTP_INFO_NOTEXIST);
 		
 		eupsThdFtpConfig.setRmtFleNme(filename);
 		eupsThdFtpConfig.setRmtWay(path);
@@ -192,7 +206,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		tmp.setStatus("U");
 		int i = 0;
 		for(Map<String,Object> map:srcDetail){
-			Map<String,Object> temp = CollectionUtils.createMap();
+			Map<String,Object> temp = new HashMap<String,Object>();
 			temp.put("CUSAC", map.get("bcount"));
 			temp.put("CUSNME", "");
 			temp.put("TXNAMT", map.get("je"));

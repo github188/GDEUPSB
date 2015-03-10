@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -32,6 +33,7 @@ public class BatchQueryResultServiceActionWATR00 extends BaseAction {
 		logger.info("path["+path+"]filename["+filename+"]filesize["+filesize+"]");
 		context.setData("TransCode", "Y008");
 		context.setData("ErrorNum", "0000");
+		context.setData(ParamKeys.RESPONSE_CODE, "000000");
 //		Map<String,Object> map = new HashMap<String,Object>();
 //		map.put("jopSchedulingData", "汕头水费批扣交易");
 //		context.getAttribute("");// setVariable("PARAMETERS", map);
