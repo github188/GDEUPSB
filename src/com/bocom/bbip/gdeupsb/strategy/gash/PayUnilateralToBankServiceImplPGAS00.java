@@ -191,7 +191,7 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 						+ context);
 			} else { // B3其它原因扣费失败
 				context.setData(ParamKeys.BAK_FLD2, "B3");
-				context.setData("reMark1", context.getData(ParamKeys.RESPONSE_MESSAGE).toString());
+//				context.setData("reMark1", context.getData(ParamKeys.RESPONSE_MESSAGE).toString());
 				logger.info("=========交易失败了啊！！！！！！！！context=" + context);
 			}
 		} 

@@ -1,7 +1,5 @@
 package com.bocom.bbip.gdeupsb.strategy.gash;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -38,7 +36,7 @@ import com.bocom.jump.bp.core.CoreException;
  * @author WMQ
  * 
  */
-public class CheckFileToThdHzActionPGAS00 implements CheckBkFileToThirdService {
+public class CheckBkFileToThirdStrategyAction implements CheckBkFileToThirdService{
 
 	@Autowired
 	OperateFileAction operateFileAction;
@@ -52,7 +50,7 @@ public class CheckFileToThdHzActionPGAS00 implements CheckBkFileToThirdService {
 	@Autowired
 	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
 
-	private static final Log logger = LogFactory.getLog(CheckFileToThdHzActionPGAS00.class);
+	private static final Log logger = LogFactory.getLog(CheckBkFileToThirdStrategyAction.class);
 
 
 	/**
@@ -79,6 +77,7 @@ public class CheckFileToThdHzActionPGAS00 implements CheckBkFileToThirdService {
 		for (EupsTransJournal etjnl : chkEtjList) {
 			// 判断chkEtjList中的交易状态，取状态为“S”、“F”、的record
 			if ("S".equals(etjnl.getTxnSts()) || "F".equals(etjnl.getTxnSts())) {
+				etjnl.setBk("CNJT");
 				etjLst.add(etjnl);
 			}
 		}
@@ -87,10 +86,24 @@ public class CheckFileToThdHzActionPGAS00 implements CheckBkFileToThirdService {
 		return map;
 	}
 
+	public Date getYesterDay(){
+		Calendar canl = Calendar.getInstance();
+		Date date = new Date();
+		canl.setTime(date);
+		canl.add(Calendar.DATE,-1);
+		date = canl.getTime();
+		return date;
+	}
+
+//	public void execute(Context context) throws CoreException,
+//			CoreRuntimeException {
+//
+//
+//	}
+
 	@Override
 	public Map<String, Object> checkBkFileToThird(CheckDomain checkdomain,
 			Context context) throws CoreException {
-
 		/*
 		 * 根据有无交易日期判断交易是否自动发起 (自动发起则设置实际交易日期) done   
 		 * 根据交易日期设定对账文件名  done
@@ -108,9 +121,9 @@ public class CheckFileToThdHzActionPGAS00 implements CheckBkFileToThirdService {
 //		String thdTxnCde = "460707";
 //		context.setData(ParamKeys.THD_TXN_CDE, thdTxnCde);
 //		String sqn = context.getData(ParamKeys.SEQUENCE);
-
+		context.setData(ParamKeys.BK, "CNJT");
 		// 交易日期
-		String txnDte1 = context.getData(ParamKeys.TXN_DTE);
+		String txnDte1 = DateUtils.format((Date) context.getData(ParamKeys.TXN_DTE), DateUtils.STYLE_yyyyMMdd);
 		if (null == txnDte1) {
 			Date txnDte = getYesterDay();
 			context.setData(ParamKeys.TXN_DTE, txnDte);
@@ -118,14 +131,14 @@ public class CheckFileToThdHzActionPGAS00 implements CheckBkFileToThirdService {
 		}
 		
 		//前端传入的日期是String形式的，转换为Date类型 
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		try {
-			Date txnDte = sdf.parse((String) context.getData(ParamKeys.TXN_DTE));
-			context.setData(ParamKeys.TXN_DTE, txnDte);
-		} catch (ParseException e1) {
-			e1.printStackTrace();
-		}
-		txnDte1 = txnDte1.replace("-", "");
+//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//		try {
+//			Date txnDte = sdf.parse((String) context.getData(ParamKeys.TXN_DTE));
+//			context.setData(ParamKeys.TXN_DTE, txnDte);
+//		} catch (ParseException e1) {
+//			e1.printStackTrace();
+//		}
+//		txnDte1 = txnDte1.replace("-", "");
 		// 银行编号
 		String bk = context.getData(ParamKeys.BK);
 		// //拼接文件名 ssCNJT20141231.txt
@@ -171,18 +184,7 @@ public class CheckFileToThdHzActionPGAS00 implements CheckBkFileToThirdService {
 		logger.info("对账文件FTP放置成功！");
 
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
-
 		return null;
-	}
-
-	
-	public Date getYesterDay(){
-		Calendar canl = Calendar.getInstance();
-		Date date = new Date();
-		canl.setTime(date);
-		canl.add(Calendar.DATE,-1);
-		date = canl.getTime();
-		return date;
 	}
 	
 }
