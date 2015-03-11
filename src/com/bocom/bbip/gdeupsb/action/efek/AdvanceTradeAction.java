@@ -38,7 +38,7 @@ public class AdvanceTradeAction extends BaseAction {
 
 		logger.info("===========Start  AdvanceTradeAction");
 		context.setData(GDParamKeys.TOTNUM, "1");
-		context.setData(ParamKeys.SEQUENCE, bbipPublicService.getBBIPSequence());
+//		context.setData(ParamKeys.SEQUENCE, bbipPublicService.getBBIPSequence());
 		context.setData(ParamKeys.REQ_JRN_NO, context.getData(ParamKeys.SEQUENCE));
 		// 第三方客户标识
 		context.setData(ParamKeys.THD_CUS_NO,context.getData(GDParamKeys.PAY_NO));
@@ -63,8 +63,8 @@ public class AdvanceTradeAction extends BaseAction {
 		// TODO InAcNo 不确定 日间记账账号
 		// <Set>ActSqn=SUBSTR($InAcNo,14,5)</Set>　　
 		// <Set>ActNod=SUBSTR($InAcNo,1,6)</Set>
-		String ActNod = context.getData(ParamKeys.CUS_AC).toString().substring(1, 6);
-		String ActSqn = context.getData(ParamKeys.CUS_AC).toString().substring(14, 19);
+//		String ActNod = context.getData(ParamKeys.CUS_AC).toString().substring(1, 6);
+//		String ActSqn = context.getData(ParamKeys.CUS_AC).toString().substring(14, 19);
 		
 		if ("0".equals(ActFlg)) { // 对公
 			// 需要GDContants定义常量
@@ -83,9 +83,9 @@ public class AdvanceTradeAction extends BaseAction {
 			context.setData(ParamKeys.CCY_NO,Constants.EUPS_PAYMENT_TO_ACPS_CCY_CDE);
 
 			context.setData(GDParamKeys.ACCMOD, "1");
-			context.setData("ActSqn", ActSqn);// <Set>ActSqn=SUBSTR($InAcNo,14,5)</Set>
-												// InAcNo日间记账账号
-			context.setData("ActNod", ActNod);// <Set>ActNod=SUBSTR($InAcNo,1,6)</Set>
+//			context.setData("ActSqn", ActSqn);// <Set>ActSqn=SUBSTR($InAcNo,14,5)</Set>
+//												// InAcNo日间记账账号
+//			context.setData("ActNod", ActNod);// <Set>ActNod=SUBSTR($InAcNo,1,6)</Set>
 			context.setData(ParamKeys.BAK_FLD1, "代扣电费");
 		} else if ("4".equals(ActFlg)) { // 卡
 			context.setData(ParamKeys.TXN_CODE, "471140");
@@ -103,7 +103,7 @@ public class AdvanceTradeAction extends BaseAction {
 			context.setData(GDParamKeys.CCYTYP, "1");
 			context.setData(GDParamKeys.VCHCHK, "0");
 
-			context.setData("ActSeq", ActSqn); // <Set>ActSeq=SUBSTR($InAcNo,14,5)</Set>
+//			context.setData("ActSeq", ActSqn); // <Set>ActSeq=SUBSTR($InAcNo,14,5)</Set>
 												// InAcNo日间记账账号
 			context.setData("CAgtNo", "EFE9999999"); // 清算单位协议号要改
 
