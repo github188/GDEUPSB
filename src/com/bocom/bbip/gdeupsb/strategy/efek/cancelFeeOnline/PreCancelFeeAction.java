@@ -84,8 +84,5 @@ public class PreCancelFeeAction implements Executable{
 				context.setData("PKGCNT", "000001");
 				context.setData(ParamKeys.THD_TXN_DATE, DateUtils.format((Date)context.getData("thdTxnDte"), DateUtils.STYLE_yyyyMMdd));
 				context.setData(ParamKeys.THD_TXN_TIME, DateUtils.format((Date)context.getData("thdTxnTme"), DateUtils.STYLE_HHmmss));
-				context.setData("", arg1);
-				context.setData("", arg1);
-				
 	}
 }
