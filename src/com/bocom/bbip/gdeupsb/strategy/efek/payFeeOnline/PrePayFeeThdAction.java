@@ -40,7 +40,7 @@ public class PrePayFeeThdAction implements Executable{
 			context.setData(ParamKeys.TXN_AMT, txnAmt.scaleByPowerOfTen(2));
 			BigDecimal oweFeeAmt=new BigDecimal(context.getData(ParamKeys.OWE_FEE_AMT).toString());
 			context.setData(ParamKeys.OWE_FEE_AMT, oweFeeAmt.scaleByPowerOfTen(2));
-			
+			context.setData("PKGCNT", "000001");
 	}
 	/**
 	 *报文信息 
