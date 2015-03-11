@@ -68,16 +68,15 @@ public class ThdELEC00Interceptor implements Interceptor {
         log.info("=================interceptor start!context=" + context);
         
         //String 日期装换成时间类型
-        context.setData(ParamKeys.TXN_DTE, DateUtils.parse(context.getData(ParamKeys.TXN_DATE).toString(),DateUtils.STYLE_yyyyMMdd));
-        context.setData(ParamKeys.TXN_TME, DateUtils.parse(DateUtils.format(new Date(),DateUtils.STYLE_TRANS_TIME)));
-        if(null != context.getData(ParamKeys.THD_TXN_DATE)){
+        String thdTxnDate=context.getData(ParamKeys.THD_TXN_DATE);
+        if(null != thdTxnDate){
             Date thdTxnDte=DateUtils.parse(context.getData(ParamKeys.THD_TXN_DATE).toString(),DateUtils.STYLE_yyyyMMdd);
             context.setData(ParamKeys.THD_TXN_DATE, thdTxnDte);
         }else{
         	 context.setData(ParamKeys.THD_TXN_DATE, DateUtils.parse(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)));
         }
         String thdTxnDte=DateUtils.format((Date)context.getData(ParamKeys.THD_TXN_DATE),DateUtils.STYLE_yyyyMMdd);
-        if(null != context.getData(ParamKeys.THD_TXN_TIME)){
+        if(null != context.getData(ParamKeys.THD_TXN_TIME) && null !=thdTxnDate){
             Date thdTxnTme=DateUtils.parse(thdTxnDte+context.getData(ParamKeys.THD_TXN_TIME).toString(),DateUtils.STYLE_yyyyMMddHHmmss);
             context.setData(ParamKeys.THD_TXN_TIME, thdTxnTme);
         }else{
@@ -127,6 +126,10 @@ public class ThdELEC00Interceptor implements Interceptor {
         } catch (IOException e) {
             e.printStackTrace();
             log.info(e.getMessage());
+        }
+        if(context.getData(ParamKeys.SERVICE_NAME).toString().equals("eups.payUnilateralToBankELEC00")){
+        		context.setData(ParamKeys.THD_TXN_DATE, DateUtils.format((Date)context.getData(ParamKeys.THD_TXN_DATE), DateUtils.STYLE_yyyyMMdd));
+        		context.setData(ParamKeys.THD_TXN_TIME, DateUtils.formatAsHHmmss((Date)context.getData(ParamKeys.THD_TXN_TIME)));
         }
         log.info("interceptor end !!!!!context=" + context);
     }
