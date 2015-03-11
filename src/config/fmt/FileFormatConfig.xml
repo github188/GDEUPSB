@@ -176,13 +176,13 @@
 	<!-- 惠州燃气增量代扣协议文件 -->
 	<file id="gasDayAgentBatFmt" name="gasDayAgentBatFmt" encoding="GBK"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/gas/gasDayAgentBatFmtDetail.xml" encoding="GBK" />
+		<foreach name="detail" ref="config/fmt/fileFmt/gash/gasDayAgentBatFmtDetail.xml" encoding="GBK" />
 	</file>
 	
 	<!-- 惠州燃气全量代扣协议文件 -->
 	<file id="gasAllAgentBatFmt" name="gasAllAgentBatFmt" encoding="GBK"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/gas/gasAllAgentBatFmtDetail.xml" encoding="GBK" />
+		<foreach name="detail" ref="config/fmt/fileFmt/gash/gasAllAgentBatFmtDetail.xml" encoding="GBK" />
 	</file>
 	
 	
