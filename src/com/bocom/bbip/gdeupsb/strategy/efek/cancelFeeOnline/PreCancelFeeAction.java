@@ -30,13 +30,6 @@ public class PreCancelFeeAction implements Executable{
 	public void execute(Context context) throws CoreException,CoreRuntimeException{
 		logger.info("==========Start  PreCancelFeeAction");
 		context.setData(ParamKeys.TRADE_TXN_DIR, "O");   //交易方向
-//		String txnDte=context.getData(ParamKeys.TXN_DTE).toString();
-//		txnDte=DateUtils.format(DateUtils.parse(txnDte),DateUtils.STYLE_yyyyMMdd);
-//		context.setData(ParamKeys.TXN_DTE, txnDte);
-//		
-//		String txnTme=context.getData(ParamKeys.TXN_TME).toString();
-//		txnTme=DateUtils.format(DateUtils.parse(txnTme),DateUtils.STYLE_HHmmss);
-//		context.setData(ParamKeys.TXN_TME, txnTme);
 		
 		context.setData(GDParamKeys.SVRCOD, "12");
 		context.setData(ParamKeys.THD_CUS_NO, context.getData(GDParamKeys.PAY_NO));
@@ -88,7 +81,7 @@ public class PreCancelFeeAction implements Executable{
 				context.setData(GDParamKeys.TRADE_RETURN_CODE, GDConstants.TRADE_RETURN_CODE);//交易返回代码
 
 				
-				context.setData(GDParamKeys.NET_NAME, GDConstants.NET_NAME);//网点名称
+//				context.setData(GDParamKeys.NET_NAME, GDConstants.NET_NAME);//网点名称
 				context.setData(GDParamKeys.SECRETKEY_INDEX, GDConstants.SECRETKEY_INDEX);//密钥索引
 				context.setData(GDParamKeys.SECRETKEY_INIT, GDConstants.SECRETKEY_INIT);//密钥初始向量
 				context.setData(GDParamKeys.TRADE_RECEIVE, GDConstants.TRADE_RECEIVE);//交易接收方
