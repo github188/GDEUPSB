@@ -2,7 +2,6 @@ package com.bocom.bbip.gdeupsb.strategy.efek.payFeeOnline;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -10,7 +9,6 @@ import org.apache.commons.logging.LogFactory;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
-import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -40,11 +38,5 @@ public class AftPayFeeAction implements Executable{
 		}else{
 					throw new CoreException("失败~~~"+context.getData(GDParamKeys.SUCFLG));
 		}
-		
-		String txnDate=context.getData(ParamKeys.TXN_DTE).toString();
-		Date txnDte=DateUtils.parse(txnDate);
-		Date txnTme=DateUtils.parse(txnDate+context.getData(ParamKeys.TXN_TME).toString(),DateUtils.STYLE_yyyyMMddHHmmss);
-		context.setData(ParamKeys.TXN_DTE, txnDte);
-		context.setData(ParamKeys.TXN_TME, txnTme);
 	}
 }
