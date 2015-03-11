@@ -69,9 +69,11 @@ public class CheckBkFileToThirdStrategyAction implements Executable{
 		
 		List<Map<String, Object>> detailList = (List<Map<String, Object>>)map.get(ParamKeys.EUPS_FILE_DETAIL);
 		for(int i=0;i<detailList.size();i++){
-			detailList.get(i).put(ParamKeys.THD_TXN_DATE, (String)DateUtils.format((Date)detailList.get(i).get(ParamKeys.THD_TXN_DATE), DateUtils.STYLE_yyyyMMdd));
+			detailList.get(i).put(ParamKeys.THD_TXN_DATE, DateUtils.format((Date)detailList.get(i).get(ParamKeys.THD_TXN_DATE), DateUtils.STYLE_yyyyMMdd));
+			detailList.get(i).put(ParamKeys.TXN_TIME, DateUtils.formatAsHHmmss((Date)detailList.get(i).get(ParamKeys.TXN_TIME)));
 		}
 		map.put(ParamKeys.EUPS_FILE_DETAIL, detailList);
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+map);
 		
 		//设置文件名
 		String date = DateUtils.format((Date)context.getData(GDParamKeys.TTXN_DT), DateUtils.STYLE_yyyyMMdd);
