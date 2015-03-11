@@ -96,8 +96,8 @@ public class TrspWyFeeChargeAction extends BaseAction{
 //		
 ////		TODO: <Set>PCusId=$pmpCustId</Set>  <!--收付通宝客户编号-->
 //		gdEupsbTrspTxnJnlRepository.insert(gdEupsbTrspTxnJnl);
-		ctx.setData(ParamKeys.ACCOUNT_DATE, DateUtils.format((Date)ctx.getData(ParamKeys.ACCOUNT_DATE), DateUtils.STYLE_yyyyMMdd));
-		ctx.setData(ParamKeys.AC_DATE, DateUtils.format((Date)ctx.getData(ParamKeys.AC_DATE), DateUtils.STYLE_yyyyMMdd));
+//		ctx.setData(ParamKeys.ACCOUNT_DATE, DateUtils.format((Date)ctx.getData(ParamKeys.ACCOUNT_DATE), DateUtils.STYLE_yyyyMMdd));
+//		ctx.setData(ParamKeys.AC_DATE, DateUtils.format((Date)ctx.getData(ParamKeys.AC_DATE), DateUtils.STYLE_yyyyMMdd));
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@"+ctx.getDataMap());
 		
 		
