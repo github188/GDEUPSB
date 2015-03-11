@@ -43,14 +43,33 @@ public class StuPayFeeAction extends BaseAction{
 //			<Set>RspCod=478399</Set>
 //			<Set>RspMsg=学籍编码不存在</Set>
 			throw new CoreException(ErrorCodes.EUPS_FIND_ISEMPTY);
+		
+		}
+		//判断收费标志
+		if("1".equals(feeInfoList.get(0).getFlag())){
+			//TODO:
+//			<Set>MsgTyp=E</Set>
+//			<Set>RspCod=478399</Set>
+			throw new CoreException(ErrorCodes.EUPS_CHECK_FAIL);
 		}
 //		TODO:<Set>StuNam=$FeeNam</Set>
-//		<If condition="$DtlSts=1">
-//		<Set>MsgTyp=E</Set>
-//		<Set>RspCod=478399</Set>
-//		<Set>RspMsg=正在缴费,不能重复缴费!</Set>
-//		<Return/>
-//	</If>
+		
+		if("1".equals(feeInfoList.get(0).getStatus())){
+			//TODO:
+//			<Set>MsgTyp=E</Set>
+//			<Set>RspCod=478399</Set>
+//			<Set>RspMsg=正在缴费,不能重复缴费!</Set>
+			throw new CoreException(ErrorCodes.EUPS_CHECK_FAIL);
+		}
+
+//		UPDATE srfdtlrec441 SET (Status,Flag) = ('%s','%s') WHERE SchCod='%s' and StuCod='%s' and PayTem='%s' and PayYea='%s'
+//				</Sentence>
+//				<Fields>DtlSts|DtlFlg|SchCod|StuCod|PayTem|PayYea|</Fields>
+		
+		//修改教委收费凭证表中的状态，处于正在缴费状态
+		gdEupsbStuFeeInfo.setStatus("1");
+		gdEupsbStuFeeInfoRepository.update(gdEupsbStuFeeInfo);
+		
 	}
 
 }
