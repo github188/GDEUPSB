@@ -23,10 +23,8 @@ import com.bocom.bbip.eups.repository.EupsThdTranCtlDetailRepository;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.eups.spi.service.check.CheckThdSumAcctService;
 import com.bocom.bbip.eups.spi.vo.CheckDomain;
-import com.bocom.bbip.eups.utils.CommonUtil;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
-import com.bocom.bbip.thd.org.apache.commons.collections.CollectionUtils;
 import com.bocom.bbip.thd.org.apache.commons.lang.StringUtils;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
@@ -55,23 +53,18 @@ public class CheckThdSumAcctAction implements  CheckThdSumAcctService{
 		logger.info("=========Start  CheckThdSumAcctAction");
 		
 		//流水日期时间
-		String sqn =bbipPublicService.getBBIPSequence();
 		Date txnDte=DateUtils.parse(DateUtils.formatAsSimpleDate(new Date()));
 		Date txnTme=DateUtils.parse(DateUtils.formatAsTranstime(new Date()));
-		context.setData(ParamKeys.SEQUENCE, sqn);
 		context.setData(ParamKeys.TXN_DTE, txnDte);
 		context.setData(ParamKeys.TXN_TME, txnTme);
-		if(StringUtils.isEmpty(context.getData(GDParamKeys.CHECKTIME).toString())){
-				context.setData(GDParamKeys.CHECKTIME, DateUtils.formatAsHHmmss(txnTme));
-		}
-		
+		//其他
 		context.setData(GDParamKeys.TOTNUM, "1");
 		context.setData("PKGCNT", "000001");
 		context.setData(GDParamKeys.SVRCOD, "50");
 		
 		//对账日期
 		String chkDte=null;
-		if(StringUtils.isNotEmpty(context.getData(GDParamKeys.CHECKDATE).toString())){
+		if(StringUtils.isNotEmpty((String)context.getData(GDParamKeys.CHECKDATE))){
 				chkDte=context.getData(GDParamKeys.CHECKDATE).toString();
 		}else{
 				chkDte=DateUtils.format(com.bocom.bbip.thd.org.apache.commons.lang.time.DateUtils.addDays(new Date(), -1),DateUtils.STYLE_yyyyMMdd);
@@ -79,46 +72,61 @@ public class CheckThdSumAcctAction implements  CheckThdSumAcctService{
 		Date acDate=DateUtils.parse(chkDte);
 		context.setData(GDParamKeys.CHECKDATE, chkDte);
 		
+//		context.setData(ParamKeys.RSV_FLD4, context.getData(ParamKeys.BUS_TYP));
+//		context.setData(ParamKeys.RSV_FLD5, context.getData(ParamKeys.PAY_TYPE));
 		//统计交易
 		EupsTransJournal eupsTransJournal=new EupsTransJournal();
 		eupsTransJournal.setTxnDte(acDate);
 		eupsTransJournal.setComNo(context.getData(ParamKeys.COMPANY_NO).toString());
 		eupsTransJournal.setEupsBusTyp(context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
 		eupsTransJournal.setTxnSts(Constants.TXNSTS_SUCCESS);
-		StringBuffer bakFld2=new StringBuffer("");
-		if(!context.getData(GDParamKeys.BUS_TYPE).toString().isEmpty()){
-				bakFld2.append(context.getData(GDParamKeys.BUS_TYPE).toString());
-		}
-		if(!context.getData(ParamKeys.PAY_TYPE).toString().isEmpty()){
-				bakFld2.append("&&"+context.getData(ParamKeys.PAY_TYPE).toString());
-		}
-		if(StringUtils.isNotEmpty(bakFld2.toString())){
-				eupsTransJournal.setBakFld2(bakFld2.toString());
-		}
+//		StringBuffer bakFld2=new StringBuffer("");
+//		if(!context.getData(GDParamKeys.BUS_TYPE).toString().isEmpty()){
+//				bakFld2.append(context.getData(GDParamKeys.BUS_TYPE).toString());
+//		}
+//		if(!context.getData(ParamKeys.PAY_TYPE).toString().isEmpty()){
+//				bakFld2.append("&&"+context.getData(ParamKeys.PAY_TYPE).toString());
+//		}
+//		if(StringUtils.isNotEmpty(bakFld2.toString())){
+//				eupsTransJournal.setBakFld2(bakFld2.toString());
+//		}
 		//得到记录
 		List<EupsTransJournal> eupsTransJournalList=eupsTransJournalRepository.sumLocalAcctAmt(eupsTransJournal);
 		//总笔数  总金额
-		int amount=0;
+		int amount=eupsTransJournalList.size();
 		BigDecimal allmoney=new BigDecimal("0.00");	
-		if(CollectionUtils.isEmpty(eupsTransJournalList)){
+		if(0==amount){
 				context.setData(GDParamKeys.AMOUNT, amount);
 				context.setData(GDParamKeys.ALL_MONEY, allmoney);
 		}else{
-				amount = eupsTransJournalList.get(0).getTotalCount();
-				context.setData(GDParamKeys.AMOUNT, amount);
-				allmoney = eupsTransJournalList.get(0).getTotalAmt();
-	            context.setData(GDParamKeys.ALL_MONEY, allmoney);     
+				for (EupsTransJournal eupsTransJournals : eupsTransJournalList) {
+					BigDecimal txnAmt=eupsTransJournals.getTxnAmt();
+					allmoney.add(txnAmt);
+				}
 		}
+			context.setData(GDParamKeys.AMOUNT, amount);
+	        context.setData(GDParamKeys.ALL_MONEY, allmoney);     
 		// 输入的总笔数和总金额 
-		int thdAmount =Integer.valueOf(context.getData(GDParamKeys.THD_AMOUNT).toString().trim());
-        
-        BigDecimal thdAllMoney = new BigDecimal(context.getData(GDParamKeys.THD_ALL_MONEY).toString()).divide(new BigDecimal(100));
+//		int thdAmount =Integer.valueOf(context.getData(GDParamKeys.THD_AMOUNT).toString().trim());
+//        
+//        BigDecimal thdAllMoney = new BigDecimal(context.getData(GDParamKeys.THD_ALL_MONEY).toString()).divide(new BigDecimal(100));
         //相等 设置0否则1
-        if (amount == thdAmount && allmoney.compareTo(thdAllMoney) == 0) {
-            context.setData(ParamKeys.TXN_STS, Constants.TXN_THD_STS_CHECKSUMACCT_EQUALS);
-        } else {
-            context.setData(ParamKeys.TXN_STS, Constants.TXN_THD_STS_CHECKSUMACCT_NOT_EQUALS);
-        }
+//        if (amount == thdAmount && allmoney.compareTo(thdAllMoney) == 0) {
+//            context.setData(ParamKeys.TXN_STS, Constants.TXN_THD_STS_CHECKSUMACCT_EQUALS);
+//        } else {
+//            context.setData(ParamKeys.TXN_STS, Constants.TXN_THD_STS_CHECKSUMACCT_NOT_EQUALS);
+//        }
+	        //外发第三方 
+	       callThd(context);
+	       
+	        //修改时间格式s
+	        String thdTxnDate=context.getData(ParamKeys.THD_TXN_DATE).toString();
+	        String thdTxnTime=context.getData(ParamKeys.THD_TXN_TIME).toString();
+	        Date thdTxnDte = DateUtils.parse(thdTxnDate,DateUtils.STYLE_yyyyMMdd);
+	        Date thdTxnTme = DateUtils.parse(thdTxnTime,DateUtils.STYLE_HHmmss);
+	        context.setData(ParamKeys.THD_TXN_DATE, thdTxnDte);
+	        context.setData(ParamKeys.THD_TXN_TIME, thdTxnTme);
+	        
 		//把信息保存到第三方明细表中
         eupsThdTranCtlDetailRepository.insert(BeanUtils.toObject(context.getDataMap(), EupsThdTranCtlDetail.class));
         //更改status状态
@@ -128,17 +136,9 @@ public class CheckThdSumAcctAction implements  CheckThdSumAcctService{
         		context.setData("status", "MMM");
         }
         //得到相差的金额
-        BigDecimal totAmt = CommonUtil.decimalFormat(allmoney).subtract(CommonUtil.decimalFormat(thdAllMoney));
-        context.setData("totAmt", totAmt.abs());
-        //SendThirdOther
-        callThd(context);
-        //修改时间格式s
-        String thdTxnDate=context.getData(ParamKeys.THD_TXN_DATE).toString();
-        String thdTxnTime=context.getData(ParamKeys.THD_TXN_TIME).toString();
-        Date thdTxnDte = DateUtils.parse(thdTxnDate,DateUtils.STYLE_yyyyMMdd);
-        Date thdTxnTme = DateUtils.parse(thdTxnTime,DateUtils.STYLE_HHmmss);
-        context.setData(ParamKeys.THD_TXN_DATE, thdTxnDte);
-        context.setData(ParamKeys.THD_TXN_TIME, thdTxnTme);
+//        BigDecimal totAmt = CommonUtil.decimalFormat(allmoney).subtract(CommonUtil.decimalFormat(thdAllMoney));
+//        context.setData("totAmt", totAmt.abs());
+
         return null;
 	}
 			
