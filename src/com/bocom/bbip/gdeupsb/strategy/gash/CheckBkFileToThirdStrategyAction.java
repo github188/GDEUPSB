@@ -95,12 +95,6 @@ public class CheckBkFileToThirdStrategyAction implements CheckBkFileToThirdServi
 		return date;
 	}
 
-//	public void execute(Context context) throws CoreException,
-//			CoreRuntimeException {
-//
-//
-//	}
-
 	@Override
 	public Map<String, Object> checkBkFileToThird(CheckDomain checkdomain,
 			Context context) throws CoreException {
@@ -143,25 +137,9 @@ public class CheckBkFileToThirdStrategyAction implements CheckBkFileToThirdServi
 		String bk = context.getData(ParamKeys.BK);
 		// //拼接文件名 ssCNJT20141231.txt
 		String filNam = "ss" + bk + txnDte1 + ".txt";
-//		context.setData("LclFil", filNam);
-//		context.setData("ObjFil", filNam);
-//		context.setData("FilNam", filNam);
+		logger.info("========================fileName" + filNam);
 
-		// <!--文件路径-->本地/远程 文件路径可配置在FTP配置表
-		
-		// 本地文件路径
-//		String objDir = "ftp://bank/" + bk + "/reckoning/";
-//		context.setData("ObjDir", objDir);
-//		String lclDir = context.getData("SendDir") + bk;
-//		context.setData("LclDir", lclDir);
-//		String datFil = lclDir + lclFilNam;
-//		context.setData("DatFil", datFil);
-
-		// 获取FTP信息,发送文件到指定路径
-		// EupsThdFtpConfig eupsThdFtpConfig =
-		// context.getData(ParamKeys.CONSOLE_THD_FTP_CONFIG_LIST);
-
-		// 设置生成文件的名字，路径
+		// 设置生成文件的名字
 		// EupsThdFtpConfig eupsThdFtpConfig = new EupsThdFtpConfig();
 		EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("gasCheckFilToThd");	//FTP_NO
 		eupsThdFtpConfig.setLocFleNme(filNam);
