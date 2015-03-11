@@ -4,7 +4,6 @@
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
 	name="460411Req">
 		
-		<fixString name="TxnCnl" length="3" default="TRM"/>
 		<fixString name="busTyp" length="3" /><!--  收费方式-->
 		<fixString name="payType" length="3" /><!--  费用类型-->
 		<fixString name="comNo" length="8" /><!--  单位编码-->
@@ -20,19 +19,14 @@
       <fixString name="txnAmt" length="16" /><!-- 实扣金额 -->
       
 		<fixString name="ActFlg" length="1" /><!-- 账户种类 -->
-		<fixString name="AVchTp" length="3" /><!-- 账户凭证种类 -->
+		<fixString name="accTyp" length="3" /><!-- 账户凭证种类 -->
 		<fixString name="VchCod" length="8" /><!-- 存折号码 -->
       <fixString name="cusAc" length="21" /><!-- 扣款账户 -->
 		<fixString name="thdCusNme" length="64" /><!-- 结算户名称 -->
 		<fixString name="BActSq" length="5" /><!-- 一本通账户序号 -->
-		<fixString name="RvsNo" length="12" /><!--  销账号-->
-		<fixString name="VchTyp" length="3" /><!--  凭证种类-->
-		<fixString name="VchNo" length="8" /><!-- 凭证号-->
+		<fixString name="choNo" length="12" /><!--  销账号-->
+		<fixString name="bvKnd" length="3" /><!--  凭证种类-->
+		<fixString name="bvNo" length="8" /><!-- 凭证号-->
 		<fixString name="BilDat" length="8" /><!-- 凭证日期-->
-		
-		<fixString name="TxnSrc" length="3" default="TRM"/>
-		<fixString name="OIFlag" length="1"  default="O" />
-		<fixString name="BatFlg" length="1" default="S" />
-		<fixString name="XH" length="10" default="0000000001" />
 		
 	</segment>
