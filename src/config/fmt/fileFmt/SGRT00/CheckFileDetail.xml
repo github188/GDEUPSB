@@ -3,12 +3,12 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/xml xml.xsd"
 	encoding="utf-8" trace="true">
-	<segment name="detail" encoding="utf-8">
-				<varString name="sqn" ></varString>
-			    <varString name="actNo" ></varString><!-- TODO weizhi -->
-		        <varString name="txnTme"  ></varString>
-		        <varString name="thdCusNo" ></varString>
-				<varString name="cusAc" ></varString>
-			    <varString name="txnAmt" ></varString>
+	<segment name="detail" encoding="GBK">
+				<varString name="sqn"  type="D|"></varString>
+			    <varString name="actNo"  type="D|"></varString><!-- TODO weizhi -->
+		        <varString name="txnTme"  type="D|" ></varString>
+		        <varString name="thdCusNo"  type="D|" ></varString>
+				<varString name="cusAc"  type="D|" ></varString>
+			    <varString name="txnAmt"  type="D|"></varString>
 		</segment>
 </message>		

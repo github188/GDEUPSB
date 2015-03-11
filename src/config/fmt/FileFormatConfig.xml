@@ -57,7 +57,7 @@
     </file>
     <!-- 广东烟草对账-->
     <file id="tbcCheckFile" name="tbcCheckFile" encoding="GBK" lineSeparator="\n">
-        <line name="top" ref="config/fmt/fileFmt/SGRT00/CheckFileDtlHead.xml"
+        <line name="tops" ref="config/fmt/fileFmt/SGRT00/CheckFileDtlHead.xml"
             encoding="GBK" />
         <foreach name="detail" ref="config/fmt/fileFmt/SGRT00/CheckFileDeatil.xml"
             encoding="GBK" />

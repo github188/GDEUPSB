@@ -177,7 +177,7 @@
     </select>
     
     <!--广东烟草信息统计查询 -->
-    <select id="findTbcTransJournals" resultType="java.util.Map"
+    <select id="findTbcTransJournal" resultType="java.util.Map"
         parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
         SELECT Count(*) totSum, COALESCE(sum(CAST(TXN_AMT AS BIGINT)),0) totAmt
         FROM eups.EUPS_TRANS_JOURNAL

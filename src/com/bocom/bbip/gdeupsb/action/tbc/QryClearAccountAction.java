@@ -1,6 +1,7 @@
 package com.bocom.bbip.gdeupsb.action.tbc;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,14 +48,14 @@ public class QryClearAccountAction extends BaseAction {
         Date date = DateUtils.parse(context.getData("txnDat").toString(),DateUtils.STYLE_yyyyMMdd);
         transJournal.setTxnDte(date);
         transJournal.setComNo(context.getData(ParamKeys.COMPANY_NO).toString());
-        Map<String, Object> resultMap = transJournalRepository.qryClearAccount(transJournal);
-         if ("0"== resultMap.get("totCnt")) {
+        List<Map<String, Object>> resultMap = transJournalRepository.qryClearAccount(transJournal);
+         if ("0"== resultMap.get(0).get("totCnt")) {
              context.setData(ParamKeys.RSP_CDE, "331012");
              context.setData(ParamKeys.RSP_MSG,"没有清算数据");
              return;
          }
-        context.setData("sumAmt", resultMap.get("sumAmt"));
-        context.setData("totCnt", resultMap.get("totCnt"));
+        context.setData("sumAmt", resultMap.get(0).get("sumAmt"));
+        context.setData("totCnt", resultMap.get(0).get("totCnt"));
         
         context.setData(ParamKeys.RSP_CDE, Constants.RESPONSE_CODE_SUCC);
         context.setData(ParamKeys.RSP_MSG, Constants.RESPONSE_MSG);

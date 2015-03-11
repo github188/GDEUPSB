@@ -86,30 +86,37 @@ public class CheckThdFileToBkServiceAction  implements CheckThdFileToBkService {
         transJournal.setTxnDte(DateUtils.parse(context.getData("TRADE_DATE").toString(), DateUtils.STYLE_yyyyMMdd));
         transJournal.setComNo(cAgtNo);
         transJournal.setSqn(context.getData("oLogNo").toString());
-        Map<String, Object> resultMap =transJournalRepository.findTbcTransJournals(transJournal);
-        if (null == resultMap){
+        List<Map<String, Object>>resultList =transJournalRepository.findTbcTransJournal(transJournal);
+        if (null == resultList){
             throw new CoreException("无此交易信息");
         }
         Map<String, Object> fileMap = new HashMap<String, Object>();
-      
-        String header ="<?xml version='1.0' encoding='UTF-8'?>\n<DLMAPS>\n<PUB>\n<TRADE_ID>8918</TRADE_ID>\n<TRAN_TIME>"+
-        dateString+"</TRAN_TIME>\n<BANK_ID>"+context.getData("BANK_ID")+"</BANK_ID>\n<DPT_ID>"+
-                context.getData("DPT_ID")+"</DPT_ID>\n<TRADE_SEQ>"+
-                context.getData("oLogNo").toString()+"</TRADE_SEQ>\n<APP_TYPE> </APP_TYPE>\n</PUB>\n<OUT>\n<RET_CODE>000000</RET_CODE>\n<MSG>交易成功</MSG>\n<RE>\n";
-        fileMap.put("top", header);
+        Map<String, Object> fileHeader = new HashMap<String, Object>();
+        Map<String, Object> fileBottom = new HashMap<String, Object>();
+        
+        fileHeader.put("top","<?xml version='1.0' encoding='UTF-8'?>\n<DLMAPS>\n<PUB>\n");
+        fileHeader.put("TRADE_ID", "<TRADE_ID>8918</TRADE_ID>\n");
+        fileHeader.put("TRAN_TIME", "<TRAN_TIME>"+context.getData("txnDte").toString()+"</TRAN_TIME>\n");
+        fileHeader.put("BANK_ID", "<BANK_ID>"+context.getData("BANK_ID")+"</BANK_ID>\n");
+        fileHeader.put("DPT_ID", "<DPT_ID>"+context.getData("DPT_ID")+"</DPT_ID>\n");
+        fileHeader.put("TRADE_SEQ", "<TRADE_SEQ>"+resultList.get(0).get("tLogNo")+"</TRADE_SEQ>\n");
+        fileHeader.put("APP_TYPE", "<APP_TYPE> </APP_TYPE>\n");
+        fileHeader.put("pubEnd","</PUB>\n<OUT>\n");
+        fileHeader.put("RET_CODE", "<RET_CODE>000000</RET_CODE>\n");
+        fileHeader.put("MSG", "<MSG>交易成功</MSG>\n<RE>\n");
+        fileMap.put("tops", fileHeader);
         GdEupsTransJournal eupsTransJournal = new GdEupsTransJournal();
         eupsTransJournal.setTxnDte( DateUtils.parse(context.getData("TRADE_DATE").toString(), DateUtils.STYLE_yyyyMMdd));
-        eupsTransJournal.setComNo(cAgtNo);
+        eupsTransJournal.setComNo(context.getData(ParamKeys.COMPANY_NO).toString());
         eupsTransJournal.setSqn(context.getData("oLogNo").toString());
         List<GdEupsTransJournal> transJournalList =transJournalRepository.findTbcTransJournalDetails(eupsTransJournal);
         fileMap.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(transJournalList));
-        String bottomString ="\n</RE>\n<TOTAL>\n<DEV_ID>"+context.getData("devId")+"</DEV_ID>\n<Teller>"+
-                context.getData("teller") +"</Teller>\n<SUCC_COUNT>"+resultMap.get("totSum")+"</SUCC_COUNT>\n<SUCC_AMT>"+
-                resultMap.get("totAmt")+"</SUCC_AMT>\n</TOTAL>\n</OUT>\n</DLMAPS>";
-        fileMap.put("bottom", bottomString);
-        System.out.println(")))))))))))))))))))))))))))))))))))))))))))");
-        System.out.println(fileMap);
-        System.out.println("))))))))))))))))))))))))))))))))");
+        fileBottom.put("REEND", "\n</RE>\n<TOTAL>\n");
+        fileBottom.put("DEV_ID", "<DEV_ID>"+context.getData("devId")+"</DEV_ID>\n");
+        fileBottom.put("Teller", "<Teller>"+context.getData("teller") +"</Teller>\n");
+        fileBottom.put("SUCC_COUNT", "<SUCC_COUNT>"+resultList.get(0).get("totSum")+"</SUCC_COUNT>\n");
+        fileBottom.put("SUCC_AMT", "<SUCC_AMT>"+resultList.get(0).get("totAmt")+"</SUCC_AMT>\n</TOTAL>\n</OUT>\n</DLMAPS>");
+        fileMap.put("bottom", fileBottom);
         operateFile.createCheckFile(eupsThdFtpConfig, "tbcCheckFile", locFileName, fileMap);
 
         operateFTPAction.putCheckFile(eupsThdFtpConfig);

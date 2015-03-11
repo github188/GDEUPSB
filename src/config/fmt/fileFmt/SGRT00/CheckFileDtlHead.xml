@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
     trace="true" encoding="GBK">
-    <segment >
+    <segment name="tops">
         
         <varString name="top" type="D|"></varString>
         <varString name="TRADE_ID" type="D|"></varString>

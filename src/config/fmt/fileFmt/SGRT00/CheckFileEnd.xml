@@ -3,11 +3,11 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
     trace="true" encoding="GBK">
-    <segment >
-        <varString name="REEND" type="D|"></varString>
-        <varString name="DEV_ID" type="D|"></varString>
+    <segment name="bottom"  encoding="GBK">
+        <varString name="REEND"  type="D|"></varString>
+        <varString name="DEV_ID"  type="D|"></varString>
         <varString name="Teller"  type="D|"></varString>
         <varString name="SUCC_COUNT"  type="D|"></varString>
-        <varString name="SUCC_AMT"  type="D|"></varString>
+        <varString name="SUCC_AMT" type="D|"></varString>
     </segment>
 </message>
