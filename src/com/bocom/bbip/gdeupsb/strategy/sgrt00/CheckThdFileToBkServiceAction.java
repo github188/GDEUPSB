@@ -21,7 +21,6 @@ import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.eups.spi.service.check.CheckThdFileToBkService;
 import com.bocom.bbip.eups.spi.vo.CheckDomain;
-import com.bocom.bbip.gdeupsb.action.tbc.CheckFileToThirdAction;
 import com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal;
 import com.bocom.bbip.gdeupsb.repository.GdEupsTransJournalRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
@@ -32,7 +31,7 @@ import com.bocom.jump.bp.core.CoreException;
 
 public class CheckThdFileToBkServiceAction  implements CheckThdFileToBkService {
 
-    private final static Logger log = LoggerFactory.getLogger(CheckFileToThirdAction.class);
+    private final static Logger log = LoggerFactory.getLogger(CheckThdFileToBkServiceAction.class);
    
     @Autowired
     OperateFileAction operateFile;
