@@ -40,6 +40,7 @@
 					<fixString name="thdRspCde" length="5" />
 		<!-- 压缩标志	YSBZ	Varchar2(1)  -->
 					<fixString name="redSign" length="1" />
+					<fixString name="PKGCNT" length="6" />
 	</segment>
 					<include keys="TransCode" decodePrefix="p"/>
 </message>
