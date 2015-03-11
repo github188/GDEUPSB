@@ -6,8 +6,8 @@
 	
 	
 		<fixString name="thdSqn" length="24" /><!-- 交易流水号 -->
-		<fixString name="traSendDate" length="8" /><!-- 交易日期 -->
-		<fixString name="traSendTime" length="6" /><!--  交易时间-->
+		<fixString name="thdTxnDte" length="8" /><!-- 交易日期 -->
+		<fixString name="thdTxnTme" length="6" /><!--  交易时间-->
 		<fixString name="oldTxnSqn" length="24" /><!--  原交易流水号-->
 		<fixString name="oldTxnDte" length="8" /><!--  原交易日期-->
 		<fixString name="oldTxnTme" length="6" /><!-- 原交易时间 -->
