@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.action.gas.agentBat;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -23,8 +24,6 @@ import com.bocom.bbip.gdeupsb.entity.GdGasCusAll;
 import com.bocom.bbip.gdeupsb.entity.GdGasCusDay;
 import com.bocom.bbip.gdeupsb.repository.GdGasCusAllRepository;
 import com.bocom.bbip.gdeupsb.repository.GdGasCusDayRepository;
-import com.bocom.bbip.service.BGSPServiceAccessObject;
-import com.bocom.bbip.service.Result;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
@@ -69,37 +68,39 @@ public class GasAgentBatchFileToFtpAction extends BaseAction{
 	
 	public void execute(Context context) throws CoreException {
 		logger.info("Enter in GasAgentBatchFileToFtpAction.......");
-		
+		logger.info("=================================context:" + context);
 //		String comNo = context.getData(ParamKeys.COMPANY_NO);
 //		String bk = context.getData(ParamKeys.BK);
 		
-		String comNo = "PGAS00";
 		String bk = "CNJT";
 		//判断是否自动发起
-		String txnDte = context.getData("txnDte");
+//		String txnDte = DateUtils.format((Date)context.getData("txnDte"),DateUtils.STYLE_SIMPLE_DATE);
+		String txnDte = DateUtils.format(getYesterDay(), DateUtils.STYLE_SIMPLE_DATE);
+		
+		logger.info("=================txnDte:" + txnDte);
 		String dealTyp = null;
 		if(StringUtils.isNotEmpty(txnDte)){		//交易日期非空，手动发起
 			dealTyp = GDConstants.COM_BATCH_DEAL_TYP_PE; 
 		} else {		// 自动
 			dealTyp = GDConstants.COM_BATCH_DEAL_TYP_AU; 
-			txnDte = DateUtils.format(new Date(), DateUtils.STYLE_SIMPLE_DATE);
+			txnDte = DateUtils.format(getYesterDay(), DateUtils.STYLE_SIMPLE_DATE);
 		}
 		context.setData(GDParamKeys.COM_BATCH_DEAL_TYP, dealTyp);
 		
 		
 		//文件名     
-		txnDte = txnDte.replace("-", "");
-		String hdFileName = "hd" + bk + txnDte + ".txt";
-		String rxyFileName = "rxy" + bk + txnDte + ".txt";
-		
+		String fileDte = txnDte.replace("-", "");
+		String hdFileName = "hd" + bk + fileDte + ".txt";
+		String rxyFileName = "rxy" + bk + fileDte + ".txt";
+		logger.info("================file name:[hdFileName:" + hdFileName + "][rxyFileName:" + rxyFileName + "]");
 		/*
 		 * FTP配置
 		 * 1、从FTP配置表中获取信息
 		 * 2、修改文件名对应字段
 		 */
 		
-		String gasAgtFilCfgA = "PGAS00Agt1";	//FTP_NO
-		String gasAgtFilCfgB = "PGAS00Agt2";
+		String gasAgtFilCfgA = "PGAS00AgtA";	//FTP_NO
+		String gasAgtFilCfgB = "PGAS00AgtB";
 		
 		EupsThdFtpConfig ftpConfigA = get(EupsThdFtpConfigRepository.class).findOne(gasAgtFilCfgA); 
 		EupsThdFtpConfig ftpConfigB = get(EupsThdFtpConfigRepository.class).findOne(gasAgtFilCfgB);
@@ -124,9 +125,9 @@ public class GasAgentBatchFileToFtpAction extends BaseAction{
 		try {
 	            // 生成文件到指定路径
 	            get(OperateFileAction.class).createCheckFile(ftpConfigA, "gasAllAgentBatFmt", hdFileName, hdMap);
-	            logger.info("hdCNJTyyyyMMdd.txt文件生成成功！ftpConfigA");
-	            get(OperateFileAction.class).createCheckFile(ftpConfigB, "gasAllAgentBatFmt", hdFileName, hdMap);
-	            logger.info("hdCNJTyyyyMMdd.txt文件生成成功！ftpConfigB");
+	            logger.info("hdCNJTyyyyMMdd.txt文件生成成功！");
+//	            get(OperateFileAction.class).createCheckFile(ftpConfigB, "gasAllAgentBatFmt", hdFileName, hdMap);
+//	            logger.info("hdCNJTyyyyMMdd.txt文件生成成功！ftpConfigB");
 	        } catch (Exception e) {
 	        	logger.error("File create error : " + e.getMessage());
 	            throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
@@ -154,9 +155,9 @@ public class GasAgentBatchFileToFtpAction extends BaseAction{
 		try {
             // 生成文件到指定路径
             get(OperateFileAction.class).createCheckFile(ftpConfigA, "gasDayAgentBatFmt", rxyFileName, rxyMap);
-            logger.info("rxyCNJTyyyyMMdd.txt文件生成成功！ftpConfigA");
-            get(OperateFileAction.class).createCheckFile(ftpConfigB, "gasDayAgentBatFmt", rxyFileName, rxyMap);
-            logger.info("rxyCNJTyyyyMMdd.txt文件生成成功！ftpConfigB");
+            logger.info("rxyCNJTyyyyMMdd.txt文件生成成功！");
+//            get(OperateFileAction.class).createCheckFile(ftpConfigB, "gasDayAgentBatFmt", rxyFileName, rxyMap);
+//            logger.info("rxyCNJTyyyyMMdd.txt文件生成成功！ftpConfigB");
         } catch (Exception e) {
         	logger.error("File create error : " + e.getMessage());
             throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
@@ -225,7 +226,14 @@ public class GasAgentBatchFileToFtpAction extends BaseAction{
 		return map;
     }
 
-
+	public Date getYesterDay(){
+		Calendar canl = Calendar.getInstance();
+		Date date = new Date();
+		canl.setTime(date);
+		canl.add(Calendar.DATE,-1);
+		date = canl.getTime();
+		return date;
+	}
 
 	    
 }
