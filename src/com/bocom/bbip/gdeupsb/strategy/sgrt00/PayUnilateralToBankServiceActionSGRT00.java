@@ -1,12 +1,10 @@
 package com.bocom.bbip.gdeupsb.strategy.sgrt00;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.comp.BBIPPublicServiceImpl;
 import com.bocom.bbip.eups.common.BPState;
@@ -20,7 +18,6 @@ import com.bocom.bbip.gdeupsb.entity.GdTbcCusAgtInfo;
 import com.bocom.bbip.gdeupsb.repository.GdTbcCusAgtInfoRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
-import com.bocom.bbip.service.Result;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -75,6 +72,7 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
             cAgtNo ="4410000560";
         }
         context.setData("cAgtNo", cAgtNo);
+        context.setData(ParamKeys.THD_TXN_CDE, "483805");
         // TODO; 不知何用
         context.setData("tCusId", context.getData("CUST_ID"));
         // TODO; 待确定

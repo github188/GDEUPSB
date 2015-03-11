@@ -179,11 +179,20 @@
     <!--广东烟草信息统计查询 -->
     <select id="findTbcTransJournals" resultType="java.util.Map"
         parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
-        SELECT Count(*) totSum, COALESCE(sum(CAST(TXN_AMT AS BIGINT)),0) totAmt,THD_SQN tLogNo
+        SELECT Count(*) totSum, COALESCE(sum(CAST(TXN_AMT AS BIGINT)),0) totAmt
         FROM eups.EUPS_TRANS_JOURNAL
         WHERE COM_NO = #{comNo,jdbcType=CHAR}
         AND TXN_DTE=#{txnDte,jdbcType=DATE} AND MFM_TXN_STS='S' 
-        AND MFM_RSP_CDE='SC0000' AND TXN_CDE='483805' and SQN  &gt;=#{sqn,jdbcType=CHAR}
+        AND MFM_RSP_CDE='SC0000' AND TXN_CDE='gdeupsb.tb' and SQN  &gt;=#{sqn,jdbcType=CHAR}
+    </select>
+     <!--广东烟草流水详细信息查询 -->
+    <select id="findTbcTransJournalDetails" resultMap="basicResultMap"
+        parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
+        SELECT *
+        FROM eups.EUPS_TRANS_JOURNAL
+        WHERE COM_NO = #{comNo,jdbcType=CHAR}
+        AND TXN_DTE=#{txnDte,jdbcType=DATE} AND MFM_TXN_STS='S' 
+        AND MFM_RSP_CDE='SC0000' AND TXN_CDE='gdeupsb.tb' and SQN  &gt;=#{sqn,jdbcType=CHAR}
     </select>
 
 	<!--广州电力划扣对账统计信息查询 -->

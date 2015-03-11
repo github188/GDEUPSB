@@ -31,12 +31,15 @@ public interface GdEupsTransJournalRepository extends PagingAndSortingRepository
 
 	/** 广东烟草流水信息查询*/
 	@Find
-    public List<Map<String, Object>> findTbcTransJournals(GdEupsTransJournal transJournal);
+    public Map<String, Object> findTbcTransJournals(GdEupsTransJournal transJournal);
    
     /** 广东烟草清算信息查询*/
     @Find
     public Map<String, Object> qryClearAccount(GdEupsTransJournal transJournal);
     
     public List<Map<String, Object>> findSumTxnAmt(GdEupsTransJournal transJournal);
+    /** 广东烟草流水详细信息查询*/
+    @Find
+    public List<GdEupsTransJournal> findTbcTransJournalDetails(GdEupsTransJournal eupsTransJournal);
 
 }

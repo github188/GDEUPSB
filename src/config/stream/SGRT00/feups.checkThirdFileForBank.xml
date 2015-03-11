@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
     name="f001">
-       <fixString name="BANK_SEQ" length="6"/>
+       <fixString name="BANK_SEQ" length="20"/>
        <fixString name="TRADE_DATE" length="8"/>
        <fixString name="DEV_ID" length="10"/>
        <fixString name="TELLER" length="10"/>
