@@ -4,53 +4,32 @@
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
 	encoding="GBK" trace="true">
 	<segment name="detail" encoding="GBK">
-	
-	
-	<!-- <fixString name="tCusID"  length="12"  referred="true" expression="exp:@com.bocom.bbip.hbeups.utils.ExpCommonUtils@DeleteAllSpace(this.tCusID)" />
-	<fixString name="sqn"   length="20"  referred="true" expression="exp:@com.bocom.bbip.hbeups.utils.ExpCommonUtils@AddChar(this.sqn,20,' ',1)"/>
-	<fixString name="txnAmt"  length="10"  referred="true" expression="exp:@com.bocom.bbip.hbeups.utils.ExpCommonUtils@AMTADDDOTandADDCHAR(this.txnAmt,10,' ',1,'1')"/>
-	<fixString name="txnTme"  length="15"  referred="true"  expression="exp:@com.bocom.bbip.hbeups.utils.ExpCommonUtils@StrCatDte(this.txnTme)"/> -->
-<!-- 		<fixString name="thdCusNo"  length="12"   referred="true" expression="exp:@com.bocom.bbip.hbeups.utils.ExpCommonUtils@DeleteAllSpace(this.thdCusNo)"  /> 煤气使用证号
-        <fixString name="sqn"   length="20"   referred="true" expression="exp:@com.bocom.bbip.hbeups.utils.ExpCommonUtils@AddChar(this.sqn,20,' ','1')"/> 交易流水号，14位补空格
-        <fixString name="txnAmt"  length="10" referred="true" expression="exp:@com.bocom.bbip.hbeups.utils.ExpCommonUtils@AddChar(this.txnAmt,10,' ','1')"/> 金额，左补空格
-        <fixString name="txnTme"  length="15" referred="true"  expression="exp:@com.bocom.bbip.hbeups.utils.ExpCommonUtils@StrCatDte(this.txnTme,'yyyyMMdd HHmmss')"/> 缴费时间：YYYYMMDD HHmmSS中间有个空格
-         -->
-         
-<!--          
-         字符串格式报文，由一些指定长度的字符串
-         （字符串没有达到指定长度的在右边以空格补足）组合而成中间以半角的逗号“,”为分割符，
-      
-         报文前10字符为报文指令，确定报文进行的业务类型
-  -->        
-	    
-<!-- 	
-起始位置	说明	长度	备注
-1	指令	10	B0或B1或B2或B3  B0为扣费成功 B1为金额不足扣费失败 B2为无此帐号或账号与用户编号匹配错误扣费失败 B3其它原因扣费失败
-12	银行标志	4	CNJT
-17	燃气托收流水号	18	年月日（8位）+银行标志（4位）+6位流水号 示例：20130927CNJT000001
-36	用户编码	12	 
-49	费用年月	6	YYYYMM  示例：201309
-56	已扣费用	10	
-67	交易日期	10	YYYY-MM-DD
- -->
- 	<fixString name="bakFld2" length="10" />
- 	<!-- <fixString  name="DeliA"      length="1" default=","/> -->
- 	
- 	<fixString name="bk" length="4" />
- <!-- 	<fixString  name="DeliA"      length="1" default=","/> -->
- 
- 	<fixString name="thdSqn" length="18" />
- 	<!-- <fixString  name="DeliA"      length="1" default=","/> -->
- 	
- 	<fixString name="thdCusNo" length="12" />
- <!-- 	<fixString  name="DeliA"      length="1" default=","/> -->
- 	<fixString name="rsvFld6" length="6" expression='exp:str.substring(this.rsvFld6,0,6)'/>
- 	<!-- <fixString  name="DeliA"      length="1" default=","/> -->
- 	<fixString name="txnAmt" length="10" />
- 	<!-- <fixString  name="DeliA"      length="1" default=","/> -->
-	<fixString name="txnDte" length="10" referred="true" expression='exp:@com.bocom.bbip.utils.DateUtils@format(this.txnDte,"yyyy-MM-dd")'/>
- 	<!-- <fixString  name="DeliA"      length="1" default=""/> -->
-	    
-	    
+
+		<!-- 字符串格式报文，由一些指定长度的字符串 （字符串没有达到指定长度的在右边以空格补足）组合而成中间以半角的逗号“,”为分割符， -->
+
+		<!-- 起始位置 说明 长度 备注 1 指令 10 B0或B1或B2或B3 B0为扣费成功 B1为金额不足扣费失败 B2为无此帐号或账号与用户编号匹配错误扣费失败 
+			B3其它原因扣费失败 12 银行标志 4 CNJT 17 燃气托收流水号 18 年月日（8位）+银行标志（4位）+6位流水号 示例：20130927CNJT000001 
+			36 用户编码 12 49 费用年月 6 YYYYMM 示例：201309 56 已扣费用 10 67 交易日期 10 YYYY-MM-DD -->
+		<varString name="bakFld2" type="D," referred="true"
+			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.bakFld2, 10, ' ','0')" />
+
+		<varString name="bk" type="D," referred="true"
+			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.bk, 4, ' ','0')" />
+
+		<varString name="thdSqn" type="D," referred="true"
+			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.thdSqn, 18, ' ','0')" />
+
+		<varString name="thdCusNo" type="D," referred="true"
+			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.thdCusNo, 12, ' ','0')" />
+
+		<varString name="rsvFld6" type="D," referred="true"
+			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.rsvFld6, 6, ' ','0')" />
+
+		<varString name="txnAmt" type="D," referred="true"
+			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.txnAmt, 10, ' ','0')" />
+
+		<fixString name="txnDte" length="10" referred="true"
+			expression='exp:@com.bocom.bbip.utils.DateUtils@format(this.txnDte,"yyyy-MM-dd")' />
+
 	</segment>
 </message>

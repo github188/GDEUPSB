@@ -40,28 +40,42 @@
 
 	<fixString name="tCommd" length="10"/>	<!-- 交易代码 -->
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	<!-- <varString name="tCommd" type="D," referred="true"
+			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.tCommd, 10, ' ','0')" /> -->
 	
-	
-	<fixString name="bk" length="4"   />	<!-- 承办行代码 -->
+	<fixString name="bk" length="4"  default="CNJT" /><!-- 承办行代码 -->
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	<!-- <varString name="bk" type="D," referred="true"
+			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.bk, 4, ' ','0')" /> -->
 	
-	<fixString name="cusNo" length="12"   /> <!-- 用户编号 -->
+	<fixString name="cusNo" length="12"   /><!-- 用户编号 -->
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	<!-- <varString name="cusNo" type="D," referred="true"
+			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.cusNo, 12, ' ','0')" /> -->
 	
-	<fixString name="cmuTel" length="50"    /> <!-- 手机号码 -->
+	<fixString name="cmuTel" length="50"    /><!-- 手机号码 -->
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	<!-- <varString name="cmuTel" type="D," referred="true"
+			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.cmuTel, 50, ' ','0')" /> -->
 	
-	<fixString name="cusAc" length="32"   />	<!-- 付款账号 -->
+	<fixString name="cusAc" length="32"   /><!-- 付款账号 -->
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	<!-- <varString name="cusAc" type="D," referred="true"
+			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.cusAc, 32, ' ','0')" /> -->
 	
-	<fixString name="idTyp" length="2" />		<!-- 证件类型 --> 
+	<fixString name="idTyp" length="2" />	<!-- 证件类型 --> 
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+<!-- 	<varString name="idTyp" type="D," referred="true"
+			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.idTyp, 2, ' ','0')" /> -->
 	 
-	<fixString name="idNo" length="32" />		<!-- 证件号码 -->
+	<fixString name="idNo" length="32" /><!-- 证件号码 -->
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+<!-- 	<varString name="idNo" type="D," referred="true"
+			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.idNo, 32, ' ','0')" /> -->
 	
 	<fixString name="optDat" length="10"   />	<!-- 签约日期 -->
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	
 	
 	</segment>
 </message>
