@@ -56,7 +56,10 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 		String dpTyp = context.getData(GDParamKeys.GZ_ELE_DPT_TYP);
 		String comNo = CodeSwitchUtils.codeGenerator("eleGzComNoGen", dpTyp);
 		log.info("after codeSwitch, dptTyp change from [" + dpTyp + "],to [" + comNo + "]");
-
+		if(StringUtils.isEmpty(comNo)){
+			throw new CoreException(ErrorCodes.EUPS_COM_NO_NOTEXIST);
+		}
+		
 		// 检查签到签退
 		EupsThdTranCtlInfo eupsThdTranCtlInfo = eupsThdTranCtlInfoRepository.findOne(comNo);
 		if (!eupsThdTranCtlInfo.isTxnCtlStsSignin()) {
