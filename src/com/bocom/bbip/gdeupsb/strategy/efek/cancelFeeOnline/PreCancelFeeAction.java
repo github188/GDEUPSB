@@ -35,12 +35,6 @@ public class PreCancelFeeAction implements Executable{
 		context.setData(ParamKeys.THD_CUS_NO, context.getData(GDParamKeys.PAY_NO));
 		
 		context.setData(ParamKeys.CUS_NME, context.getData("CusNme"));
-		context.setData(ParamKeys.BUS_TYP, context.getData(ParamKeys.RSV_FLD4));
-		if(null !=context.getData(ParamKeys.RSV_FLD5)){
-				context.setData(ParamKeys.PAY_TYPE, context.getData(ParamKeys.RSV_FLD5));
-		}else{
-				context.setData(ParamKeys.PAY_TYPE, "");
-		}
 		//TODO 
 		context.setData(ParamKeys.BANK_NO, "301");
 			 	//TODO   comNo
@@ -81,14 +75,17 @@ public class PreCancelFeeAction implements Executable{
 				context.setData(GDParamKeys.TRADE_RETURN_CODE, GDConstants.TRADE_RETURN_CODE);//交易返回代码
 
 				
-//				context.setData(GDParamKeys.NET_NAME, GDConstants.NET_NAME);//网点名称
+				context.setData(GDParamKeys.NET_NAME, GDConstants.NET_NAME);//网点名称
 				context.setData(GDParamKeys.SECRETKEY_INDEX, GDConstants.SECRETKEY_INDEX);//密钥索引
 				context.setData(GDParamKeys.SECRETKEY_INIT, GDConstants.SECRETKEY_INIT);//密钥初始向量
 				context.setData(GDParamKeys.TRADE_RECEIVE, GDConstants.TRADE_RECEIVE);//交易接收方
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
-				
+				context.setData("PKGCNT", "000001");
 				context.setData(ParamKeys.THD_TXN_DATE, DateUtils.format((Date)context.getData("thdTxnDte"), DateUtils.STYLE_yyyyMMdd));
 				context.setData(ParamKeys.THD_TXN_TIME, DateUtils.format((Date)context.getData("thdTxnTme"), DateUtils.STYLE_HHmmss));
+				context.setData("", arg1);
+				context.setData("", arg1);
+				
 	}
 }
