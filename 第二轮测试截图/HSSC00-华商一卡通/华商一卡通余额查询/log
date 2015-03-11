@@ -1,0 +1,475 @@
+20150306_17:31:21.144 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.messageTracing][708435]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] Request Message Data : 0207                                                                                                        000201123456789020140526123456781234561234567891234567896222600710008248926 I362502197511100835  ????
+20150306_17:31:21.164 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][708455]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  - Message
+20150306_17:31:21.164 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][708455]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  -   Segment:head
+20150306_17:31:21.164 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][708455]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  -     thdRspCde       =
+20150306_17:31:21.164 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][708455]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  -     responseMessage =
+20150306_17:31:21.164 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][708455]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  -     TransCode       =000201
+20150306_17:31:21.164 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][708455]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  -     DCC_SCHID       =1234567890
+20150306_17:31:21.164 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][708455]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  -   Segment:body
+20150306_17:31:21.164 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][708455]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  -     thdTxnDte       =20140526
+20150306_17:31:21.164 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][708455]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  -     tmlNo           =12345678
+20150306_17:31:21.165 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][708456]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  -     thdSqn          =123456
+20150306_17:31:21.165 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][708456]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  -     DCC_ID_NO       =123456789123456789
+20150306_17:31:21.165 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][708456]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  -     cusAc           =6222600710008248926
+20150306_17:31:21.165 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][708456]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  -     idTyp           =I
+20150306_17:31:21.165 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][708456]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  -     idNo            =362502197511100835
+20150306_17:31:21.165 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][708456]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  -     DCC_NAME        =杨志平
+20150306_17:31:21.165 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][708456]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  -     DCC_DDP_RMRK    =
+20150306_17:31:21.188 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][708479]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  -     DCC_DEP_RMRK    =
+20150306_17:31:21.188 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][708479]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  -     DCC_DRW_RMRK    =
+20150306_17:31:21.188 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][708479]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  -     DCC_MAC         =
+20150306_17:31:21.188 [0.0.0.0/0.0.0.0:32038-Handler-2] [org.springframework.jdbc.datasource.DataSourceUtils][708479]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] Fetching JDBC Connection from DataSource
+20150306_17:31:21.189 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.service.sqlmap.support.SqlSessionUtils][708480]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] Creating SqlSession with JDBC Connection [ProxyConnection[PooledConnection[com.ibm.db2.jcc.t4.b@d7c608]]]
+20150306_17:31:21.189 [0.0.0.0/0.0.0.0:32038-Handler-2] [java.sql.Connection][708480]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] ooo Connection Opened
+20150306_17:31:21.189 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.service.sqlmap.support.SpringManagedTransaction][708480]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] JDBC Connection [ProxyConnection[PooledConnection[com.ibm.db2.jcc.t4.b@d7c608]]] will not be managed by Spring
+20150306_17:31:21.189 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.service.sqlmap.support.SqlSessionUtils][708480]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@a4f3e] was not registered for synchronization because synchronization is not active
+20150306_17:31:21.189 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.service.sqlmap.impl.SqlMapImpl][708480]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] Opened SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@a4f3e] for iBATIS operation
+20150306_17:31:21.237 [0.0.0.0/0.0.0.0:32038-Handler-2] [java.sql.PreparedStatement][708528]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] ==>  Executing: select COM_NO, BUS_KND, EUPS_BUS_TYP, CMU_MDE, PKG_LEN_TYP, PKG_LEN_POS_LEN, THD_IP_ADR, BID_POT, LSD_POT, COM_NME, SIG_SET_TYP, SIG_TME, SIG_OUT_TME, THD_RCN_TME, TXN_TME_CTL1, TXN_TME_CTL2, TXN_DTE_CTL1, TXN_DTE_CTL2, TXN_DTE_CTL3, CMT_FLG, BIL_VOU_FLG, THD_RVS_FLG, CMU_UNM, CMU_PSW, TME_OUT, CMU_STS, CMU_KEY, USE_STS from EUPS.EUPS_THD_BASE_INFO WHERE LSD_POT=? 
+20150306_17:31:21.237 [0.0.0.0/0.0.0.0:32038-Handler-2] [java.sql.PreparedStatement][708528]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] ==> Parameters: 32038(String)
+20150306_17:31:21.242 [0.0.0.0/0.0.0.0:32038-Handler-2] [java.sql.ResultSet][708533]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] <==    Columns: COM_NO, BUS_KND, EUPS_BUS_TYP, CMU_MDE, PKG_LEN_TYP, PKG_LEN_POS_LEN, THD_IP_ADR, BID_POT, LSD_POT, COM_NME, SIG_SET_TYP, SIG_TME, SIG_OUT_TME, THD_RCN_TME, TXN_TME_CTL1, TXN_TME_CTL2, TXN_DTE_CTL1, TXN_DTE_CTL2, TXN_DTE_CTL3, CMT_FLG, BIL_VOU_FLG, THD_RVS_FLG, CMU_UNM, CMU_PSW, TME_OUT, CMU_STS, CMU_KEY, USE_STS
+20150306_17:31:21.242 [0.0.0.0/0.0.0.0:32038-Handler-2] [java.sql.ResultSet][708533]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] <==        Row: GDHSSC0001     , A087, HSSC00    , TCP                 , 0, 0, 127.0.0.1           , 9999                , 32038               , 华商一卡通, null, null, null, null, null, null, null, null, null, null, null, Y, null, null, 30.000, null, null, 0
+20150306_17:31:21.245 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.service.sqlmap.support.SqlSessionUtils][708536]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] Closing no transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@a4f3e]
+20150306_17:31:21.245 [0.0.0.0/0.0.0.0:32038-Handler-2] [org.springframework.jdbc.datasource.DataSourceUtils][708536]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] Returning JDBC Connection to DataSource
+20150306_17:31:21.247 [0.0.0.0/0.0.0.0:32038-Handler-2] [org.springframework.beans.factory.support.DefaultListableBeanFactory][708538]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] Returning cached instance of singleton bean 'commonService'
+20150306_17:31:21.247 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.eups.spi.support.CommonService][708538]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] >>>>>getComNo from EupsBusTypThdMap start!>>>>>
+20150306_17:31:21.247 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.eups.spi.support.CommonService][708538]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] Context DataMap:{idNo=362502197511100835, responseCode=000000, thdRspCde=, thdSqn=123456, tmlNo=12345678, cusAc=6222600710008248926, DCC_DEP_RMRK=, DCC_ID_NO=123456789123456789, DCC_DRW_RMRK=, responseMessage=, TransCode=gdeupsb.hsCardFeeQuery, DCC_MAC=, idTyp=I, thdTxnDte=20140526, DCC_NAME=杨志平, DCC_SCHID=1234567890, DCC_DDP_RMRK=}
+20150306_17:31:21.247 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.eups.spi.support.CommonService][708538]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] >>>>>>comNo in Context:[null]>>>>>>comNo get:[null]
+20150306_17:31:21.247 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.eups.interceptor.ServiceThdInterceptor][708538]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] comNo=GDHSSC0001,and eupsBusTyp=HSSC00
+20150306_17:31:21.247 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.eups.interceptor.ServiceThdInterceptor][708538]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] new txnDte:Fri Mar 06 17:31:21 CST 2015
+20150306_17:31:21.248 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.comp.BBIPPublicServiceImpl][708539]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] Get Param for SystemCode [BBIP] ParamName[BK].
+20150306_17:31:21.248 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.comp.BBIPPublicServiceImpl][708539]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] Get Param for SystemCode [BBIP] ParamName[BK].
+20150306_17:31:21.248 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.eups.interceptor.ServiceThdInterceptor][708539]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] BK:01441999999
+20150306_17:31:21.248 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.comp.BBIPPublicServiceImpl][708539]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] Get Param for SystemCode [GDEUPSB] ParamName[THD_BR].
+20150306_17:31:21.248 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.eups.interceptor.ServiceThdInterceptor][708539]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] BR:01441999999
+20150306_17:31:21.248 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.comp.BBIPPublicServiceImpl][708539]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] Get Param for SystemCode [GDEUPSB] ParamName[THD_BR].
+20150306_17:31:21.248 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.comp.BBIPPublicServiceImpl][708539]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] getETeller for org:01441999999
+20150306_17:31:21.249 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.eups.interceptor.ServiceThdInterceptor][708540]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] on request interceptor,listen port=32038,and eupsBusTyp=HSSC00
+20150306_17:31:21.251 [0.0.0.0/0.0.0.0:32038-Handler-2] [org.springframework.beans.factory.support.DefaultListableBeanFactory][708542]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] Returning cached instance of singleton bean 'coreDispatcher'
+20150306_17:31:21.254 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.support.TRACER][708545]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] ::TRACER:: dispatching with context 
+context[id=gdeupsb.hsCardFeeQuery, locale=zh_CN, timestamp=2015-03-06 17:31:12.912, requestId=EE6CA693-FF00-0036-01D1-C17819DB27DB]
+  dataMap: {tmlId=EDUA004, thdRspCde=, thdSqn=123456, tmlNo=12345678, cusAc=6222600710008248926, reqJrnNo=20150306000000009605, DCC_DEP_RMRK=, DCC_ID_NO=123456789123456789, busTyp=2, br=01441999999, version=SZXEUPS-1.0.0, txnDte=Fri Mar 06 17:31:21 CST 2015, responseMessage=, pswCekFlg=1, bk=01441999999, thdTxnDte=20140526, DCC_NAME=杨志平, eupsBusTyp=HSSC00, DCC_DDP_RMRK=, idNo=362502197511100835, responseCode=000000, txnCde=gdeupsb.hs, chlTyp=90, reqSysCde=HSSC00, tlr=EDUA004, sqn=20150306000000009607, DCC_DRW_RMRK=, comNo=GDHSSC0001, TransCode=gdeupsb.hsCardFeeQuery, DCC_MAC=, idTyp=I, reqTime=Fri Mar 06 17:31:21 CST 2015, accountType=0, traceNo=3003440020150306000000009606, chn=90, DCC_SCHID=1234567890}
+  rawData: {tmlId=EDUA004, thdSqn=123456, thdRspCde=, tmlNo=12345678, reqJrnNo=20150306000000009605, cusAc=6222600710008248926, DCC_DEP_RMRK=, DCC_ID_NO=123456789123456789, busTyp=2, br=01441999999, txnDte=Fri Mar 06 17:31:21 CST 2015, version=SZXEUPS-1.0.0, responseMessage=, pswCekFlg=1, thdTxnDte=20140526, bk=01441999999, DCC_NAME=杨志平, eupsBusTyp=HSSC00, DCC_DDP_RMRK=, idNo=362502197511100835, responseCode=000000, chlTyp=90, txnCde=gdeupsb.hs, reqSysCde=HSSC00, tlr=EDUA004, sqn=20150306000000009607, DCC_DRW_RMRK=, comNo=GDHSSC0001, TransCode=gdeupsb.hsCardFeeQuery, DCC_MAC=, idTyp=I, reqTime=Fri Mar 06 17:31:21 CST 2015, accountType=0, traceNo=3003440020150306000000009606, chn=90, DCC_SCHID=1234567890}
+20150306_17:31:21.254 [0.0.0.0/0.0.0.0:32038-Handler-2] [org.springframework.beans.factory.support.DefaultListableBeanFactory][708545]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] Returning cached instance of singleton bean 'gdeupsb.hsCardFeeQuery'
+20150306_17:31:21.254 [0.0.0.0/0.0.0.0:32038-Handler-2] [org.springframework.beans.factory.support.DefaultListableBeanFactory][708545]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] Returning cached instance of singleton bean 'eups.transMessageInterceptor'
+20150306_17:31:21.254 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.processTracing][708545]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] 
+20150306_17:31:21.255 [0.0.0.0/0.0.0.0:32038-Handler-2] [org.springframework.jdbc.datasource.DataSourceUtils][708546]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] Fetching JDBC Connection from DataSource
+20150306_17:31:21.255 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.service.sqlmap.support.SqlSessionUtils][708546]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] Creating SqlSession with JDBC Connection [ProxyConnection[PooledConnection[com.ibm.db2.jcc.t4.b@83822a]]]
+20150306_17:31:21.255 [0.0.0.0/0.0.0.0:32038-Handler-2] [java.sql.Connection][708546]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] ooo Connection Opened
+20150306_17:31:21.255 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.service.sqlmap.support.SpringManagedTransaction][708546]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] JDBC Connection [ProxyConnection[PooledConnection[com.ibm.db2.jcc.t4.b@83822a]]] will not be managed by Spring
+20150306_17:31:21.255 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.service.sqlmap.support.SqlSessionUtils][708546]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1d6d136] was not registered for synchronization because synchronization is not active
+20150306_17:31:21.255 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.service.sqlmap.impl.SqlMapImpl][708546]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] Opened SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1d6d136] for iBATIS operation
+20150306_17:31:21.263 [0.0.0.0/0.0.0.0:32038-Handler-2] [java.sql.PreparedStatement][708554]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] ==>  Executing: select COM_NO, BUS_KND, EUPS_BUS_TYP, CMU_MDE, PKG_LEN_TYP, PKG_LEN_POS_LEN, THD_IP_ADR, BID_POT, LSD_POT, COM_NME, SIG_SET_TYP, SIG_TME, SIG_OUT_TME, THD_RCN_TME, TXN_TME_CTL1, TXN_TME_CTL2, TXN_DTE_CTL1, TXN_DTE_CTL2, TXN_DTE_CTL3, CMT_FLG, BIL_VOU_FLG, THD_RVS_FLG, CMU_UNM, CMU_PSW, TME_OUT, CMU_STS, CMU_KEY, USE_STS from EUPS.EUPS_THD_BASE_INFO WHERE EUPS_BUS_TYP=? AND USE_STS=? 
+20150306_17:31:21.264 [0.0.0.0/0.0.0.0:32038-Handler-2] [java.sql.PreparedStatement][708555]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] ==> Parameters: HSSC00(String), 0(String)
+20150306_17:31:21.269 [0.0.0.0/0.0.0.0:32038-Handler-2] [java.sql.ResultSet][708560]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] <==    Columns: COM_NO, BUS_KND, EUPS_BUS_TYP, CMU_MDE, PKG_LEN_TYP, PKG_LEN_POS_LEN, THD_IP_ADR, BID_POT, LSD_POT, COM_NME, SIG_SET_TYP, SIG_TME, SIG_OUT_TME, THD_RCN_TME, TXN_TME_CTL1, TXN_TME_CTL2, TXN_DTE_CTL1, TXN_DTE_CTL2, TXN_DTE_CTL3, CMT_FLG, BIL_VOU_FLG, THD_RVS_FLG, CMU_UNM, CMU_PSW, TME_OUT, CMU_STS, CMU_KEY, USE_STS
+20150306_17:31:21.279 [0.0.0.0/0.0.0.0:32038-Handler-2] [java.sql.ResultSet][708570]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] <==        Row: GDHSSC0001     , A087, HSSC00    , TCP                 , 0, 0, 127.0.0.1           , 9999                , 32038               , 华商一卡通, null, null, null, null, null, null, null, null, null, null, null, Y, null, null, 30.000, null, null, 0
+20150306_17:31:21.280 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.service.sqlmap.support.SqlSessionUtils][708571]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] Closing no transactional SqlSession [org.apache.ibatis.session.defaults.DefaultSqlSession@1d6d136]
+20150306_17:31:21.281 [0.0.0.0/0.0.0.0:32038-Handler-2] [org.springframework.jdbc.datasource.DataSourceUtils][708572]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] Returning JDBC Connection to DataSource
+20150306_17:31:21.281 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.eups.spi.support.CommonService][708572]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] >>>>>getComNo from EupsBusTypThdMap start!>>>>>
+20150306_17:31:21.281 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.eups.spi.support.CommonService][708572]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] Context DataMap:{tmlId=EDUA004, thdSqn=123456, thdRspCde=, tmlNo=12345678, reqJrnNo=20150306000000009605, cusAc=6222600710008248926, DCC_DEP_RMRK=, DCC_ID_NO=123456789123456789, busTyp=2, txnTme=2015-03-06 17:31:21, br=01441999999, txnDte=Fri Mar 06 17:31:21 CST 2015, version=SZXEUPS-1.0.0, responseMessage=, pswCekFlg=1, thdTxnDte=20140526, bk=01441999999, DCC_NAME=杨志平, eupsBusTyp=HSSC00, DCC_DDP_RMRK=, idNo=362502197511100835, responseCode=000000, chlTyp=90, txnCde=gdeupsb.hs, reqSysCde=HSSC00, tlr=EDUA004, sqn=20150306000000009607, DCC_DRW_RMRK=, comNo=GDHSSC0001, TransCode=gdeupsb.hsCardFeeQuery, DCC_MAC=, idTyp=I, reqTime=Fri Mar 06 17:31:21 CST 2015, accountType=0, traceNo=3003440020150306000000009606, chn=90, DCC_SCHID=1234567890}
+20150306_17:31:21.281 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.eups.spi.support.CommonService][708572]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] >>>>>>comNo in Context:[GDHSSC0001]>>>>>>comNo get:[null]
+20150306_17:31:21.281 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.eups.interceptor.TransMessageInterceptor][708572]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] sqn is:20150306000000009607
+20150306_17:31:21.281 [0.0.0.0/0.0.0.0:32038-Handler-2] [org.springframework.beans.factory.support.DefaultListableBeanFactory][708572]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] Returning cached instance of singleton bean 'eups.simpleTran'
+20150306_17:31:21.281 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.support.TRACER][708572]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] ::TRACER:: @starting actions template 'eups.simpleTran'
+20150306_17:31:21.281 [0.0.0.0/0.0.0.0:32038-Handler-2] [org.springframework.jdbc.datasource.DataSourceTransactionManager][708572]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] Creating new transaction with name [null]: PROPAGATION_REQUIRED,ISOLATION_DEFAULT
+20150306_17:31:21.281 [0.0.0.0/0.0.0.0:32038-Handler-2] [org.springframework.jdbc.datasource.DataSourceTransactionManager][708572]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] Acquired Connection [ProxyConnection[PooledConnection[com.ibm.db2.jcc.t4.b@c11d39]]] for JDBC transaction
+20150306_17:31:21.281 [0.0.0.0/0.0.0.0:32038-Handler-2] [org.springframework.jdbc.datasource.DataSourceTransactionManager][708572]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] Switching JDBC Connection [ProxyConnection[PooledConnection[com.ibm.db2.jcc.t4.b@c11d39]]] to manual commit
+20150306_17:31:21.282 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.support.TRACER][708573]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] ::TRACER:: Starting executable action 'act', class:com.bocom.bbip.gdeupsb.action.hscard.HSCardFeeQueryAction
+20150306_17:31:21.282 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.gdeupsb.action.hscard.HSCardFeeQueryAction][708573]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] HSCardFeeQueryAction start......
+20150306_17:31:21.282 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.comp.BBIPPublicServiceImpl][708573]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] Get Param for SystemCode [BBIP] ParamName[BK].
+20150306_17:31:21.282 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.service.support.JMSServiceAccessObject][708573]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] Access service [BBIPPUBSVR]-[queryCusActInfoProcess].
+20150306_17:31:21.282 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.service.support.JMSServiceAccessObject][708573]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] availableDestinationNameMap contains reply destination [BBIPPUBSVR.RSP]
+20150306_17:31:21.283 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.service.support.JMSServiceAccessObject][708574]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] Random get destination [1]
+20150306_17:31:21.283 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.service.support.JMSServiceAccessObject][708574]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] Reply destination is [JMS_CLUSTER_SVR_02@BBIPPUBSVR.RSP].
+20150306_17:31:21.283 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transportTracing][708574]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] <<<<<< Transport Send <<<<<<
+20150306_17:31:21.284 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transportTracing][708575]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] send Message:{
+  "REQ_HEAD" : {
+    "TRAN_PROCESS" : "queryCusActInfoProcess",
+    "TRAN_TO" : "BBIPPUBSVR",
+    "TRAN_FROM" : "GDEUPSB"
+  },
+  "REQ_BODY" : {
+    "bk" : "01441999999",
+    "TRAN_TO" : "BBIPPUBSVR",
+    "cusAc" : "6222600710008248926",
+    "TRAN_FROM" : "GDEUPSB",
+    "tlr" : "ABIR148",
+    "traceNo" : "3003440020150306000000009608",
+    "chn" : "00",
+    "br" : "01441131999"
+  }
+}
+20150306_17:31:21.290 [0.0.0.0/0.0.0.0:32038-Handler-2] [org.springframework.jms.core.JmsTemplate][708581]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] Executing callback on JMS Session: weblogic.jms.client.WLSessionImpl@1762a9e
+20150306_17:31:21.291 [0.0.0.0/0.0.0.0:32038-Handler-2] [org.springframework.jms.core.JmsTemplate][708582]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] Sending created message: BytesMessage[null]
+20150306_17:31:21.297 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.service.support.JMSServiceAccessObject][708588]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] Receive message from [JMS_CLUSTER_SVR_02@BBIPPUBSVR.RSP] with jmsID[ID:<524029.1425634150218.0>]
+20150306_17:31:21.298 [0.0.0.0/0.0.0.0:32038-Handler-2] [org.springframework.jms.core.JmsTemplate][708589]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] Executing callback on JMS Session: weblogic.jms.client.WLSessionImpl@1762a9e
+20150306_17:31:21.298 [0.0.0.0/0.0.0.0:32038-Handler-2] [org.springframework.jndi.JndiTemplate][708589]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] Looking up JNDI object with name [JMS_CLUSTER_SVR_02@BBIPPUBSVR.RSP]
+20150306_17:31:21.305 [0.0.0.0/0.0.0.0:32038-Handler-2] [org.springframework.jms.support.destination.JndiDestinationResolver][708596]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] Located object with JNDI name [JMS_CLUSTER_SVR_02@BBIPPUBSVR.RSP]
+20150306_17:31:21.732 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.service.support.JMSServiceAccessObject][709023]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] response message is [[B@9b4ec2]
+20150306_17:31:21.732 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transportTracing][709023]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] <<<<<< Transport Receive,consumed time:449 <<<<<<
+20150306_17:31:21.739 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transportTracing][709030]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] receive Message:{
+  "RSP_BODY" : {
+    "gemsTransCode" : "PD8013",
+    "idNo" : "362502197511100835",
+    "ccy" : "CNY",
+    "responseCode" : "SC0000",
+    "cusAcSts" : "00",
+    "cdSts" : "00",
+    "opnBk" : "01441999999",
+    "actBal" : 19.84,
+    "payload" : {
+      "GOA-VCH-NO" : "                ",
+      "GOA-AC-DATE" : "20150216",
+      "GOA-ERR-SYS-ID" : "GEMS0004",
+      "GOA-FIN-FLAG" : " ",
+      "GOA-TR-DATE" : 20150306,
+      "GOA-MSG-LEN" : 8169,
+      "GOA-JRN-NO" : 1304732,
+      "GOA-MSG-CODE" : "0000",
+      "GOA-TR-BK" : "01441999999",
+      "GOA-SUP2-ID" : "       ",
+      "GOA-TR-BR" : "01441131999",
+      "GOA-MSG-AP-MMO" : "GE",
+      "PDF8S2" : [ {
+        "CRE-DTE" : 20100110,
+        "RNW-DEP-PER" : " ",
+        "APP-BK" : "01441999999",
+        "OWN-BR" : "01441026999",
+        "FMT-CDE" : "PDF8S2",
+        "OWN-BK" : "01441999999",
+        "IMM-RNM-FLG" : "2",
+        "TFI-CUS-AC-TYP" : " ",
+        "APP-BR" : "01441026999",
+        "FMT-LEN" : 4551,
+        "PNM" : "YANG ZHI PING",
+        "ADP-AGR-FLG" : " ",
+        "TFI-ACO-AC" : " ",
+        "AC-PPY" : "01",
+        "DEP-CUS-CLS" : " ",
+        "YFE-CLT-MOL" : "0",
+        "CDS-AMT" : 19.84,
+        "CUS-TYP" : "0",
+        "AVA-BAL" : 19.84,
+        "NML-RDP-FD-ACU" : 0.00,
+        "FUL-LFZ-CNT" : 0,
+        "FX-PPY-CDE" : " ",
+        "ANL-FEE-DTE" : 20160110,
+        "DEP-PER" : "0000",
+        "ACC-PAM-CDE" : "999000003790",
+        "ANL-FEE-FLG" : "100",
+        "AC-STW" : "000000010000001000000000000000000000000000000000000000000000",
+        "LST-FIN-TXN-DTE" : 20150130,
+        "ISS-CD-DTE" : 20100110,
+        "CUS-WLH-LVL" : " ",
+        "CD-CGY" : "0508",
+        "MAT-RNW-PSS-FLG" : " ",
+        "AC-STS" : "00",
+        "CUS-STW-2" : "000000000000000000000000000000000000000000000000000000000000",
+        "PID" : " ",
+        "CUS-STW-1" : "000000000000000000000000100000000000000000000000000000000000",
+        "LOS-DTE" : 0,
+        "CTF-FLG" : " ",
+        "ACD-CHL" : "00",
+        "PAD-INT" : 0.00,
+        "BUS-INF" : " ",
+        "CD-RGN-CDE" : "071",
+        "SPC-MNY-AMT" : 0.00,
+        "TFI-CUS-AC" : " ",
+        "ANL-FEE-RCV-MDE" : "0",
+        "TSL-DTE" : 0,
+        "ANL-FEE-PFR-EDT" : 0,
+        "CUS-ATR" : "P",
+        "LOS-DEP-NOP" : 0,
+        "ACO-AC-TYP" : "201",
+        "LFZ-DUE-DTE" : 0,
+        "WTH-RCN-BOK-FLG" : "0",
+        "NML-RDP-NOP" : 0,
+        "ACD-MDE" : "0",
+        "COL-FLG" : "0",
+        "ICD-TLR" : "4412196",
+        "MAT-YAR-MON" : 0,
+        "CUS-NME" : "杨志平                                                                                            ",
+        "VAL-DTE" : 20141221,
+        "CD-ACS-AC" : "128982014441000018561760",
+        "ID-NO" : "362502197511100835",
+        "CD-NO" : "6222600710008248926",
+        "ACT-DRW-INT-TAX" : 0.00,
+        "CRE-BR" : "01441026999",
+        "ANL-FEE-PFR-SDT" : 0,
+        "RNW-AMT" : 0.00,
+        "PSW-TYP" : "1",
+        "LD-BAL" : 62.21,
+        "LOS-RDP-ACU" : 0.00,
+        "CRE-BK" : "01441999999",
+        "LST-FIN-TXN-TLR" : "EPA0BI6",
+        "ID-TYP" : "0102",
+        "ATH-CD-FLG" : " ",
+        "INT-FLG" : "0",
+        "FLD-55" : " ",
+        "LOS-RDP-NOP" : 0,
+        "DAY-DPC-AMT" : 0.00,
+        "SPY-NO" : "000000000000",
+        "DAY-DWC-AMT" : 0.00,
+        "CDS-VAL-DTE" : 0,
+        "FRZ-NO" : "000000000000",
+        "AC-NUM" : 1,
+        "CD-CLS" : " ",
+        "LST-RDP-DTE" : 0,
+        "CD-STW-2" : "000000000000000000000000000000000000000000000000000000000000",
+        "RSV-AMT" : 0.00,
+        "ITG-RNW-FLG" : " ",
+        "CD-STW-1" : "000001000000000000000000000000000000000000000000000000000000",
+        "CD-SEQ" : 1,
+        "DWI-NOP" : 0,
+        "DWI-PER" : " ",
+        "LST-DWI-DTE" : 0,
+        "NML-RDP-DD-ACU" : 0.00,
+        "ICD-ORG" : " ",
+        "LOS-NO" : " ",
+        "CUS-NO" : "0115614718904038",
+        "CD-PLD" : 0.00,
+        "DUE-DTE" : 0,
+        "JOI-CUS-NO" : " ",
+        "FLD-55-ACT-LEN" : 0,
+        "PSS-SEQ" : 0,
+        "MAN-CD-NO" : " ",
+        "CD-MED" : "0",
+        "DAY-TFO-AMT" : 42.37,
+        "INT-RAT" : 0.35000000,
+        "OPT-PRD-CDE" : " ",
+        "NCD-DTE" : 0,
+        "UCW-FLG" : "1",
+        "ACD-DTE" : 20100110,
+        "MAN-CD-FLG" : "0",
+        "NCD-TLR" : " ",
+        "CCY" : "CNY",
+        "SPP-CD-CNT" : 0,
+        "COM-CUS-NO" : " ",
+        "AC-SEQ" : 1,
+        "DWI-LMT" : 0.00,
+        "TFI-AC-SEQ" : 0,
+        "DRW-MDE" : " ",
+        "CD-KND" : "19",
+        "INT-PAM-CDE" : 527,
+        "EMP-FLG" : "0",
+        "CUS-SRV-LVL" : "509",
+        "UNP-RGN-CDE" : "5810",
+        "BAL" : 0.00,
+        "LST-CD-NO" : " ",
+        "RDP-PER" : " ",
+        "PDR-CNT" : 0,
+        "ACT-DRW-INT-AMT" : 0.00,
+        "DUE-INT" : 0.00,
+        "FRZ-AMT" : 0.00,
+        "END-DTE" : 0,
+        "AC-BAL" : 19.84,
+        "TFA-AMT" : 0.00,
+        "DAY-FLT-AMT" : 0.00,
+        "PDR-DTE" : 0,
+        "LOS-CHL" : " ",
+        "JOI-FLG" : " ",
+        "SPY-DUE-DTE" : 0,
+        "PDF8S2-GROUP1" : [ {
+          "CD-PRD" : "PTJJK000"
+        }, {
+          "CD-PRD" : " "
+        }, {
+          "CD-PRD" : " "
+        }, {
+          "CD-PRD" : " "
+        }, {
+          "CD-PRD" : " "
+        } ],
+        "PDF8S2-GROUP2" : [ {
+          "SPP-CD-STS" : " ",
+          "FAM-RLN" : " ",
+          "SPP-CD-NO" : " "
+        }, {
+          "SPP-CD-STS" : " ",
+          "FAM-RLN" : " ",
+          "SPP-CD-NO" : " "
+        }, {
+          "SPP-CD-STS" : " ",
+          "FAM-RLN" : " ",
+          "SPP-CD-NO" : " "
+        }, {
+          "SPP-CD-STS" : " ",
+          "FAM-RLN" : " ",
+          "SPP-CD-NO" : " "
+        }, {
+          "SPP-CD-STS" : " ",
+          "FAM-RLN" : " ",
+          "SPP-CD-NO" : " "
+        }, {
+          "SPP-CD-STS" : " ",
+          "FAM-RLN" : " ",
+          "SPP-CD-NO" : " "
+        }, {
+          "SPP-CD-STS" : " ",
+          "FAM-RLN" : " ",
+          "SPP-CD-NO" : " "
+        }, {
+          "SPP-CD-STS" : " ",
+          "FAM-RLN" : " ",
+          "SPP-CD-NO" : " "
+        }, {
+          "SPP-CD-STS" : " ",
+          "FAM-RLN" : " ",
+          "SPP-CD-NO" : " "
+        }, {
+          "SPP-CD-STS" : " ",
+          "FAM-RLN" : " ",
+          "SPP-CD-NO" : " "
+        } ],
+        "PDF8S2-GROUP3" : [ {
+          "OPP-CD-NO" : " ",
+          "SGL-MIN-AMT" : 0.00,
+          "TMP-DTO-MIN-AMT" : 0.00,
+          "TMP-SGL-MAX-AMT" : 0.00,
+          "TMP-LMT-SDT" : 0,
+          "CUR-TOT-AMT" : 0.00,
+          "DTO-MIN-AMT" : 0.00,
+          "TMP-DAY-LMT-EDT" : 0,
+          "TMP-DAY-LMT-SDT" : 0,
+          "LMT-AMT-BUS-TYP" : " ",
+          "TMP-DTO-MAX-AMT" : 0.00,
+          "SGL-MAX-AMT" : 0.00,
+          "DTO-MAX-AMT" : 0.00,
+          "TMP-LMT-EDT" : 0,
+          "LMT-CCY" : " ",
+          "TMP-SGL-MIN-AMT" : 0.00
+        }, {
+          "OPP-CD-NO" : " ",
+          "SGL-MIN-AMT" : 0.00,
+          "TMP-DTO-MIN-AMT" : 0.00,
+          "TMP-SGL-MAX-AMT" : 0.00,
+          "TMP-LMT-SDT" : 0,
+          "CUR-TOT-AMT" : 0.00,
+          "DTO-MIN-AMT" : 0.00,
+          "TMP-DAY-LMT-EDT" : 0,
+          "TMP-DAY-LMT-SDT" : 0,
+          "LMT-AMT-BUS-TYP" : " ",
+          "TMP-DTO-MAX-AMT" : 0.00,
+          "SGL-MAX-AMT" : 0.00,
+          "DTO-MAX-AMT" : 0.00,
+          "TMP-LMT-EDT" : 0,
+          "LMT-CCY" : " ",
+          "TMP-SGL-MIN-AMT" : 0.00
+        }, {
+          "OPP-CD-NO" : " ",
+          "SGL-MIN-AMT" : 0.00,
+          "TMP-DTO-MIN-AMT" : 0.00,
+          "TMP-SGL-MAX-AMT" : 0.00,
+          "TMP-LMT-SDT" : 0,
+          "CUR-TOT-AMT" : 0.00,
+          "DTO-MIN-AMT" : 0.00,
+          "TMP-DAY-LMT-EDT" : 0,
+          "TMP-DAY-LMT-SDT" : 0,
+          "LMT-AMT-BUS-TYP" : " ",
+          "TMP-DTO-MAX-AMT" : 0.00,
+          "SGL-MAX-AMT" : 0.00,
+          "DTO-MAX-AMT" : 0.00,
+          "TMP-LMT-EDT" : 0,
+          "LMT-CCY" : " ",
+          "TMP-SGL-MIN-AMT" : 0.00
+        }, {
+          "OPP-CD-NO" : " ",
+          "SGL-MIN-AMT" : 0.00,
+          "TMP-DTO-MIN-AMT" : 0.00,
+          "TMP-SGL-MAX-AMT" : 0.00,
+          "TMP-LMT-SDT" : 0,
+          "CUR-TOT-AMT" : 0.00,
+          "DTO-MIN-AMT" : 0.00,
+          "TMP-DAY-LMT-EDT" : 0,
+          "TMP-DAY-LMT-SDT" : 0,
+          "LMT-AMT-BUS-TYP" : " ",
+          "TMP-DTO-MAX-AMT" : 0.00,
+          "SGL-MAX-AMT" : 0.00,
+          "DTO-MAX-AMT" : 0.00,
+          "TMP-LMT-EDT" : 0,
+          "LMT-CCY" : " ",
+          "TMP-SGL-MIN-AMT" : 0.00
+        }, {
+          "OPP-CD-NO" : " ",
+          "SGL-MIN-AMT" : 0.00,
+          "TMP-DTO-MIN-AMT" : 0.00,
+          "TMP-SGL-MAX-AMT" : 0.00,
+          "TMP-LMT-SDT" : 0,
+          "CUR-TOT-AMT" : 0.00,
+          "DTO-MIN-AMT" : 0.00,
+          "TMP-DAY-LMT-EDT" : 0,
+          "TMP-DAY-LMT-SDT" : 0,
+          "LMT-AMT-BUS-TYP" : " ",
+          "TMP-DTO-MAX-AMT" : 0.00,
+          "SGL-MAX-AMT" : 0.00,
+          "DTO-MAX-AMT" : 0.00,
+          "TMP-LMT-EDT" : 0,
+          "LMT-CCY" : " ",
+          "TMP-SGL-MIN-AMT" : 0.00
+        } ],
+        "CD-STS" : "00",
+        "RDP-LMT" : 0.00,
+        "NIN-AMT" : 0.00
+      } ],
+      "GOA-NEXT-SRV-CODE" : "      ",
+      "GOA-AUTH-LOG" : " ",
+      "GOA-FILLER" : "                                                                       ",
+      "GOA-SUP1-ID" : "       ",
+      "GOA-AUTH" : "  ",
+      "GOA-TR-JRN-NO" : "001304732",
+      "GOA-BAK" : "                          ",
+      "GOA-MSG-TYPE" : "N",
+      "GOA-CURS-POS" : "    ",
+      "GOA-TIME-ZONE" : 8,
+      "GOA-TR-TIME" : 172910,
+      "GOA-NEXT-SYS-NO" : "    "
+    },
+    "opnBr" : "01441026999",
+    "idTyp" : "0102",
+    "responseType" : "N",
+    "cusName" : "杨志平                                                                                            ",
+    "cusAcTyp" : "204",
+    "replyInformation" : {
+      "responseCode" : "SC0000",
+      "responseType" : "N"
+    },
+    "avaBal" : 19.84,
+    "cusNo" : "0115614718904038"
+  },
+  "RSP_HEAD" : {
+    "RESPONSE_TYPE" : "N",
+    "RESPONSE_MESSAGE" : null,
+    "RESPONSE_CODE" : "SC0000"
+  }
+}
+20150306_17:31:21.795 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.gdeupsb.action.hscard.HSCardFeeQueryAction][709086]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] actBal=19.84
+20150306_17:31:21.796 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.support.TRACER][709087]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] ::TRACER:: Finished action 'act'
+20150306_17:31:21.798 [0.0.0.0/0.0.0.0:32038-Handler-2] [org.springframework.jdbc.datasource.DataSourceTransactionManager][709089]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] Initiating transaction commit
+20150306_17:31:21.798 [0.0.0.0/0.0.0.0:32038-Handler-2] [org.springframework.jdbc.datasource.DataSourceTransactionManager][709089]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] Committing JDBC transaction on Connection [ProxyConnection[PooledConnection[com.ibm.db2.jcc.t4.b@c11d39]]]
+20150306_17:31:21.799 [0.0.0.0/0.0.0.0:32038-Handler-2] [org.springframework.jdbc.datasource.DataSourceTransactionManager][709090]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] Releasing JDBC Connection [ProxyConnection[PooledConnection[com.ibm.db2.jcc.t4.b@c11d39]]] after transaction
+20150306_17:31:21.799 [0.0.0.0/0.0.0.0:32038-Handler-2] [org.springframework.jdbc.datasource.DataSourceUtils][709090]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] Returning JDBC Connection to DataSource
+20150306_17:31:21.799 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.support.TRACER][709090]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB processId_gdeupsb.hsCardFeeQuery  ] ::TRACER:: @finished actions template 'eups.simpleTran'
+20150306_17:31:21.799 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.eups.interceptor.ServiceThdInterceptor][709090]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] this is onPrsponse!000000
+20150306_17:31:21.799 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.eups.interceptor.ServiceThdInterceptor][709090]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] responseCode=000000
+20150306_17:31:21.800 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.bbip.eups.interceptor.ServiceThdInterceptor][709091]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] responseCodeTHD=0000
+20150306_17:31:21.800 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][709091]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  + Message
+20150306_17:31:21.800 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][709091]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  +   Segment:head
+20150306_17:31:21.800 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][709091]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  +     thdRspCde       =0000
+20150306_17:31:21.800 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][709091]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  +     responseMessage =
+20150306_17:31:21.800 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][709091]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  +     TransCode       =000201
+20150306_17:31:21.800 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][709091]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  +     DCC_SCHID       =1234567890
+20150306_17:31:21.800 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][709091]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  +   Segment:0001Response
+20150306_17:31:21.801 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][709092]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  +     thdTxnDte       =20140526
+20150306_17:31:21.801 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][709092]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  +     tmlNo           =12345678
+20150306_17:31:21.801 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][709092]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  +     thdSqn          =123456
+20150306_17:31:21.801 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][709092]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  +     sqn             =20150306000000009607
+20150306_17:31:21.801 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][709092]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  +     DCC_ID_NO       =123456789123456789
+20150306_17:31:21.801 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][709092]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  +     cusAc           =6222600710008248926
+20150306_17:31:21.801 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][709092]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  +     idTyp           =I
+20150306_17:31:21.801 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][709092]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  +     idNo            =362502197511100835
+20150306_17:31:21.802 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][709093]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  +     DCC_NAME        =杨志平
+20150306_17:31:21.802 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][709093]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  +     actBal          =19.84
+20150306_17:31:21.802 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][709093]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  +     avaBal          =19.84
+20150306_17:31:21.802 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][709093]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  +     DCC_MEMO        =null
+20150306_17:31:21.802 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.transform.util.TraceListener][709093]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ]  +     DCC_MAC         =
+20150306_17:31:21.802 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.messageTracing][709093]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB   ] Response Message Data : 03250000                                                                                                    00020112345678902014052612345678123456201503060000000096071234567891234567896222600710008248926 I362502197511100835  ????              19.84             19.84                                                             
+20150306_17:31:21.803 [0.0.0.0/0.0.0.0:32038-Handler-2] [com.bocom.jump.bp.requestTracing][709094]     [hostName:QH-20150212LILX requestId:EE6CA693-FF00-0036-01D1-C17819DB27DB  service.timing:8888 ] 
