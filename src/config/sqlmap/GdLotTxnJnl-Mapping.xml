@@ -863,19 +863,19 @@
   
   
  <select id="qryLotWinRecord" parameterType="java.util.Map" resultType="java.util.Map" >
-			select a.T_Log_No, a.Draw_Id, a.Keno_Id, a.Play_Id,a.Bet_Mul, a.Bet_Lin, a.Bet_Mod, b.Tot_Prz, a.Txn_Tim, a.Txn_Log
-			from GDEUPSB.GDEUPS_Lot_Prz_Ctl b, GDEUPSB.GDEUPS_Lot_Txn_Jnl a
+			SELECT A.T_LOG_NO, A.DRAW_ID, A.KENO_ID, A.PLAY_ID,A.BET_MUL, A.BET_LIN, A.BET_MOD, B.TOT_PRZ, A.TXN_TIM, A.TXN_LOg, C.PRZ_AMT
+			FROM GDEUPSB.GDEUPS_LOT_PRZ_CTL B, GDEUPSB.GDEUPS_LOT_TXN_JNL A, GDEUPSB.GDEUPS_LOT_PRZ_DTL C
 			<where>
 				<choose>
 				 <when test='betTyp != ""'>
-				 	a.Game_Id=b.Game_Id and a.Draw_Id=b.Draw_Id and a.Keno_Id=b.Keno_Id and a.Txn_Log=b.Txn_Log and a.T_Log_No=b.TLogNo and Crd_No=#{crdNo} and Bet_Dat between #{begDat} and #{endDat} and Bet_Typ=#{betTyp} and Txn_Sts='S' and a.Game_Id=#{gameId}
+				 	A.GAME_ID=B.GAME_ID AND A.DRAW_ID=B.DRAW_ID AND A.KENO_ID=B.KENO_ID AND A.TXN_LOG=B.TXN_LOG AND A.T_LOG_NO=B.T_LOG_NO AND A.T_LOG_NO=C.T_LOG_NO AND A.TXN_LOG=C.TXN_LOG AND CRD_NO=#{crdNo} AND BET_DAT BETWEEN #{begDat} AND #{endDat} AND BET_TYP=#{betTyp} AND TXN_STS='S' AND A.GAME_ID=#{gameId}
 				 </when>
 				 <otherwise>
-				 	a.Game_Id=b.Game_Id and a.Draw_Id=b.Draw_Id and a.Keno_Id=b.Keno_Id and a.Txn_Log=b.Txn_Log and a.T_Log_No=b.TLogNo and Crd_No=#{crdNo} and Bet_Dat between #{begDat} and #{endDat}  and Txn_Sts='S' and a.Game_Id=#{gameId}
+				 	A.GAME_ID=B.GAME_ID AND A.DRAW_ID=B.DRAW_ID AND A.KENO_ID=B.KENO_ID AND A.TXN_LOG=B.TXN_LOG AND A.T_LOG_NO=B.T_LOG_NO AND A.T_LOG_NO=C.T_LOG_NO AND A.TXN_LOG=C.TXN_LOG AND CRD_NO=#{crdNo} AND BET_DAT BETWEEN #{begDat} AND #{endDat}  AND TXN_STS='S' AND A.GAME_ID=#{gameId}
 				 </otherwise>
 				</choose>
 			</where>
-			order by Txn_Tim desc
+			ORDER BY A.TXN_TIM DESC
  </select>
  			
   
