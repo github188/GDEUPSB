@@ -54,7 +54,7 @@ public class ChargeStrategyAction implements Executable{
 //		检查报文是否重复
 		EupsTransJournal eups = new EupsTransJournal();
 		eups.setBakFld1((String)context.getData(ParamKeys.BAK_FLD1));//备用字段1，学校代号。
-		eups.setTxnDte(tTxnDte); //第三方交易日期
+		eups.setThdTxnDte(tTxnDte); //第三方交易日期
 		eups.setThdSqn((String)context.getData(ParamKeys.THD_SEQUENCE));//此处的第三方流水号即校方流水号，请求方流水号也赋值为校方流水号。
 		List<EupsTransJournal> journal = eupsTransJournalRepository.find(eups);
 		if(!CollectionUtils.isEmpty(journal)){
