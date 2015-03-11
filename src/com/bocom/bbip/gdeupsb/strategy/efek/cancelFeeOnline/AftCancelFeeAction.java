@@ -43,7 +43,7 @@ public class AftCancelFeeAction implements Executable{
 						context.setData(ParamKeys.RSP_MSG, "原记录【"+context.getData(ParamKeys.OLD_TXN_SQN).toString()+"】已经抹账");
 				}else if("b".equals(txnSts) || "B".equals(txnSts)){
 				}else if("s".equals(txnSts) || "S".equals(txnSts)){
-						logger.info("~~~~~~~~~~发送成功");
+						logger.info("~~~~~~~~~~正在抹账");
 						context.setData(ParamKeys.RESPONSE_MESSAGE, "交易成功");
 						context.setData(ParamKeys.RESPONSE_CODE, GDConstants.SUCCESS_CODE);
 						context.setData(ParamKeys.RSP_MSG, "原记录【"+context.getData(ParamKeys.OLD_TXN_SQN).toString()+"】准备抹账");
