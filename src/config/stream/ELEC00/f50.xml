@@ -14,8 +14,8 @@
       <fixString name="busTyp" length="3" /><!--  收费方式-->
      <fixString name="payType" length="3" /><!--  费用类型-->
      
-     <fixString name="thdAmount" length="11" /><!--  总笔数-->
-     <fixString name="thdAllMoney" length="16" /><!--  总金额-->
+     <fixString name="amount" length="11" /><!--  总笔数-->
+     <fixString name="allMoney" length="16" /><!--  总金额-->
      <fixString name="checkDate" length="8" /><!--  达账日期-->
      <fixString name="checkTime" length="6" /><!--  达账时间-->
      <fixString name="checkCode" length="32" /><!--  对账唯一标识码-->
