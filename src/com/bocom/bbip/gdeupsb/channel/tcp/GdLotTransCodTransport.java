@@ -470,7 +470,7 @@ public class GdLotTransCodTransport implements Transport{
 				action = r.getElementText().trim();
 				map.put("action", action);
 			}
-			String body = data.substring(data.indexOf("<pkgC>"),data.indexOf("</root>"));
+			String body = data.substring(data.indexOf("<pkgC>"),data.indexOf("</pkg>"));
 			logger.info("body:["+body+"]");
 			sr = new StringReader(body);
 			r = factory.createXMLStreamReader(sr);
