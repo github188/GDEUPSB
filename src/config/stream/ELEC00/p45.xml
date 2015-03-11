@@ -24,7 +24,7 @@
 				      <fixString name="cusNme" length="128" /><!--  扣款账户名称-->
 			          <fixString name="fulDedFlg" length="1" /><!-- 部分缴费标志 -->
 				      <fixString name="accountsSerialNo" length="16" /><!-- 账务流水号 -->
-			          <fixString name="electricityYearMonth" length="16" /><!--  电费年月-->
+			          <fixString name="electricityYearMonth" length="6" /><!--  电费年月-->
 			          <fixString name="oweFeeAmt" length="16" /><!--  欠费金额-->
 			      <fixString name="capital" length="16" /><!--  本金-->
 			      <fixString name="dedit" length="16" /><!-- 违约金 -->
