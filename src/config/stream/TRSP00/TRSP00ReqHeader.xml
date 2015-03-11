@@ -2,10 +2,14 @@
 <message xmlns="http://www.bocom.com/jump/transformer/packet"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
-	 encoding="GBK" trace="true" type="LLLL"
+	 encoding="GBK" trace="true" 
 	 filter="both,classpath:config/stream/translateDict.txt">
 	<segment name="head" encoding="GBK">
-	     <varString type="D|"  name="transCode" referred="true" mapping="true" /> <!-- 交易码-->
+	     <varString type="D|"  name="transCode" referred="true"  /> <!-- 交易码-->
+	     <varString type="D|"  name="bk"  default="100" /> <!-- 银行代码-->
+	     <varString type="D|"  name="tlr"   /> <!-- 机构代码-->
+	     <varString type="D|"  name="tlrTmlId"   /> <!-- 操作员号-->
+	     <varString type="D|"  name="sup1Id" default=" "   /> <!-- 授权号-->
     </segment>
   <include keys="transCode" encodePrefix="f"/> 
 </message>
