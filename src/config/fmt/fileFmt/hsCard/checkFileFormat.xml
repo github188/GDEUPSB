@@ -10,7 +10,7 @@
         <fixString name="tmlNo"  length="8" referred="true" /> <!--终端号-->
         <fixString name="thdSqn"  length="6" referred="true" /> <!--圈存流水号-->
         <fixString name="thdTxnDte"  length="8"   referred="true" /> <!--交易日期-->
-        <fixString name="thdTxnTme"   length="6"   referred="true" /> <!--交易时间-->
+        <fixString name="txnTme"   length="6"   referred="true" /> <!--交易时间-->
         <fixString name="bakFld1"  length="10" referred="true" /> <!--学校代码-->
         <fixString name="mfmVchNo"  length="20" referred="true" /> <!--银行流水号-->
         <fixString name="txnAmt"  length="18" referred="true" /> <!--交易金额-->
