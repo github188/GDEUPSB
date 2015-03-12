@@ -5,25 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.python.parser.ast.listcompType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
-import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
-import com.bocom.bbip.gdeupsb.entity.GdEupsCusAgent;
-import com.bocom.bbip.gdeupsb.entity.GdGasCusAll;
-import com.bocom.bbip.gdeupsb.entity.GdGasCusDay;
 import com.bocom.bbip.gdeupsb.repository.GdGasCusAllRepository;
-import com.bocom.bbip.gdeupsb.repository.GdGasCusDayRepository;
-import com.bocom.bbip.service.BGSPServiceAccessObject;
-import com.bocom.bbip.service.Result;
-import com.bocom.bbip.utils.BeanUtils;
-import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -39,33 +29,12 @@ public class QryHzThdCusInfoAction extends BaseAction{
 	public void execute(Context context) throws CoreException, CoreRuntimeException{
 		logger.info("Enter in QryHzThdCusInfoAction!.......");
 		logger.info("context=" + context);
-		//拼装外发代收付map
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		if(!(null==context.getData("thdCusNo") || "".equals(context.getData("thdCusNo")) || "?".equals(context.getData("thdCusNo"))  )){
-//			map.put("thdCusNo", context.getData("thdCusNo").toString());
-//		}
-//		if(!(null==context.getData("cusAc") || "".equals(context.getData("cusAc")) || "?".equals(context.getData("cusAc"))  )){
-//			map.put("cusAc", context.getData("cusAc").toString());
-//		}
-//		if(!(null==context.getData("cusNme") || "".equals(context.getData("cusNme")) || "?".equals(context.getData("cusNme"))  )){
-//			map.put("cusNme", context.getData("cusNme").toString());
-//		}
-//		if(!(null==context.getData("idNo") || "".equals(context.getData("idNo")) || "?".equals(context.getData("idNo"))  )){
-//			map.put("idNo", context.getData("idNo").toString());
-//		}
 		
-		//惠州燃气代扣用户信息查询  查询明细
-//		Result accessObject = get(BGSPServiceAccessObject.class).callServiceFlatting("queryDetailAgentCollectAgreement", map);
-		
-//		select * from gascusall491 where (userno='%s' or '%s'='') and (actno='%s' or '%s'='') 
-//        and (actnam='%s' or '%s'='') and (idno='%s' or '%s'='') and OPTDAT &gt;='%s' and OPTDAT &lt;='%s'
-		
-		
-//		GdGasCusAll cusAll = new GdGasCusAll();
+		//由于存在燃气协议表，所以无需上代收付查协议，直接查燃气协议表即可
 		
 		Map<String, Object> map = new HashMap<String, Object>();
-		if(!(null==context.getData("thdCusNo") || "".equals(context.getData("thdCusNo")) || "?".equals(context.getData("thdCusNo"))  )){
-			map.put("thdCusNo", context.getData("thdCusNo").toString());
+		if(!(null==context.getData("cusNo") || "".equals(context.getData("cusNo")) || "?".equals(context.getData("cusNo"))  )){
+			map.put("cusNo", context.getData("cusNo").toString());
 		}
 		if(!(null==context.getData("cusAc") || "".equals(context.getData("cusAc")) || "?".equals(context.getData("cusAc"))  )){
 			map.put("cusAc", context.getData("cusAc").toString());
@@ -93,21 +62,19 @@ public class QryHzThdCusInfoAction extends BaseAction{
 		logger.info("==========context=" + context);
 		
 		List<Map<String, Object>> gasCusAllListDtl = new ArrayList<Map<String,Object>>();
-		for(int i=0; i<gasCusAllList.size(); i++){
+		for(Map<String, Object> maps:gasCusAllList){
 			Map<String, Object> cusAllDtlTemp = new HashMap<String, Object>();
-			logger.info("gasCusAllList["+ i + "]:CUS_NO:" + gasCusAllList.get(i).get("CUS_NO"));
-			cusAllDtlTemp.put("cusNo", gasCusAllList.get(i).get("CUS_NO"));
-			cusAllDtlTemp.put("cusAc", gasCusAllList.get(i).get("CUS_AC"));
-			cusAllDtlTemp.put("cusNme", gasCusAllList.get(i).get("CUS_NME"));
-			cusAllDtlTemp.put("acTyp", gasCusAllList.get(i).get("CUS_TYP"));
-			cusAllDtlTemp.put("creDte", gasCusAllList.get(i).get("OPT_DAT"));
-			cusAllDtlTemp.put("agrTme", gasCusAllList.get(i).get("OPT_NOD"));
-			cusAllDtlTemp.put("idTyp", gasCusAllList.get(i).get("ID_TYP"));
-			cusAllDtlTemp.put("idNo", gasCusAllList.get(i).get("ID_NO"));
-			cusAllDtlTemp.put("thdCusNme", gasCusAllList.get(i).get("THD_CUS_NME"));
-			cusAllDtlTemp.put("cmuTel", gasCusAllList.get(i).get("CMU_TEL"));
+			cusAllDtlTemp.put("cusNo", maps.get("CUS_NO"));
+			cusAllDtlTemp.put("cusAc", maps.get("CUS_AC"));
+			cusAllDtlTemp.put("cusNme", maps.get("CUS_NME"));
+			cusAllDtlTemp.put("acTyp", maps.get("CUS_TYP"));
+			cusAllDtlTemp.put("creDte", maps.get("OPT_DAT"));
+			cusAllDtlTemp.put("agrTme", maps.get("OPT_NOD"));
+			cusAllDtlTemp.put("idTyp", maps.get("ID_TYP"));
+			cusAllDtlTemp.put("idNo", maps.get("ID_NO"));
+			cusAllDtlTemp.put("thdCusNme", maps.get("THD_CUS_NME"));
+			cusAllDtlTemp.put("cmuTel", maps.get("CMU_TEL"));
 			gasCusAllListDtl.add(cusAllDtlTemp);
-			logger.info("gasCusAllListDtl["+ i + "]:cusNo:" + gasCusAllListDtl.get(i).get("cusNo"));
 		}
 		
 		context.setData("loopDtl", gasCusAllListDtl);

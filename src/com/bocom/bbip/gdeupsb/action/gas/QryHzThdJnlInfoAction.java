@@ -1,6 +1,8 @@
 package com.bocom.bbip.gdeupsb.action.gas;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +45,7 @@ public class QryHzThdJnlInfoAction extends BaseAction{
 //        and OPTDAT &gt;='%s' and OPTDAT &lt;='%s' and HTxnSt='S' and HRspCd='SC0000' and Status='1' and ThdSts='B0'
 //														主机交易状态		主机返回码		账务状态1正常扣款	返回第三方状态B0扣费成功
 
-//eups流水表无status， thdSts, payyea使用备1， 备2, 备3
+//eups流水表无status， thdSts, payyea使用备1， 备2, 预留6
 //不能使用	BeanUtils.toObject();
 			
 	
@@ -88,8 +90,23 @@ public class QryHzThdJnlInfoAction extends BaseAction{
 				context.setData(GDParamKeys.GAS_RSP_COD, GDConstants.GAS_ERROR_CODE);
 				throw new CoreRuntimeException("系统异常");
 			}else{
-		        context.setData("loop", resultList);
-		        
+				List<Map<String,Object>> resultListTmp = new ArrayList<Map<String,Object>>();
+				for(Map<String,Object> maps : resultList){
+			        Map<String, Object> tempMap = new HashMap<String, Object>();
+			        tempMap.put("thdCusNo", maps.get("thdCusNo"));
+			        tempMap.put("payYea", maps.get("rsvFld6"));
+			        tempMap.put("cusAc", maps.get("cusAc"));
+			        tempMap.put("cusNme", maps.get("cusNme"));
+			        tempMap.put("txnAmt", maps.get("txnAmt"));
+			        tempMap.put("txnTme", maps.get("txnTme"));
+			        tempMap.put("acDte", maps.get("acDte"));
+			        tempMap.put("mfmVchNo", maps.get("mfmVchNo"));
+			        tempMap.put("sqn", maps.get("sqn"));
+			        tempMap.put("thdSqn", maps.get("thdSqn"));
+					resultListTmp.add(tempMap);
+				}
+		        context.setData("loop", resultListTmp);
+		        logger.info("=======resultListTmp in context ======" + context);
 		        context.setData(GDParamKeys.GAS_AP_CDE, "32");
 		        context.setData(GDParamKeys.GAS_OFMT_COD, "z01");
 		        context.setData(GDParamKeys.GAS_PAGE_NO, "0001");
