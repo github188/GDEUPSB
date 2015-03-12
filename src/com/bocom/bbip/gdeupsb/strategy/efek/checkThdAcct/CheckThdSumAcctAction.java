@@ -90,21 +90,23 @@ public class CheckThdSumAcctAction implements  CheckThdSumAcctService{
 				context.setData(GDParamKeys.ALL_MONEY, allmoney);  
 				context.setData(GDParamKeys.BUS_TYPE, map.get("RSV_FLD4"));
 				context.setData(GDParamKeys.PAY_TYPE, map.get("RSV_FLD5"));
-		}
-	        //外发第三方 
-	       callThd(context);
-	       
-	        //修改时间格式s
-	        String thdTxnDate=context.getData(GDParamKeys.TRADE_SEND_DATE).toString();
-	        String thdTxnTime=context.getData(GDParamKeys.TRADE_SEND_TIME).toString();
-	        Date thdTxnDte = DateUtils.parse(thdTxnDate,DateUtils.STYLE_yyyyMMdd);
-	        Date thdTxnTme = DateUtils.parse(thdTxnDate+thdTxnTime,DateUtils.STYLE_yyyyMMddHHmmss);
-	        context.setData(ParamKeys.THD_TXN_DATE, thdTxnDte);
-	        context.setData(ParamKeys.THD_TXN_TIME, thdTxnTme);
-	        
-		//把信息保存到第三方明细表中
-        eupsThdTranCtlDetailRepository.insert(BeanUtils.toObject(context.getDataMap(), EupsThdTranCtlDetail.class));
 
+			        //外发第三方 
+			       callThd(context);
+			       
+			        //修改时间格式s
+			        String thdTxnDate=context.getData(GDParamKeys.TRADE_SEND_DATE).toString();
+			        String thdTxnTime=context.getData(GDParamKeys.TRADE_SEND_TIME).toString();
+			        Date thdTxnDte = DateUtils.parse(thdTxnDate,DateUtils.STYLE_yyyyMMdd);
+			        Date thdTxnTme = DateUtils.parse(thdTxnDate+thdTxnTime,DateUtils.STYLE_yyyyMMddHHmmss);
+			        context.setData(ParamKeys.THD_TXN_DATE, thdTxnDte);
+			        context.setData(ParamKeys.THD_TXN_TIME, thdTxnTme);
+			        //TODO 
+			        context.setData(ParamKeys.TXN_TLR, "ABIR148");
+			        context.setData(ParamKeys.CHL_TYP, "90");
+				//把信息保存到第三方明细表中
+		        eupsThdTranCtlDetailRepository.insert(BeanUtils.toObject(context.getDataMap(), EupsThdTranCtlDetail.class));
+		}
         return null;
 	}
 			
