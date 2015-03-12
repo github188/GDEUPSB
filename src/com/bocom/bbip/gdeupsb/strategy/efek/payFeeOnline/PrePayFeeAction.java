@@ -60,7 +60,7 @@ public class PrePayFeeAction implements Executable{
 					}
 					context.setData(ParamKeys.CUS_NME, context.getData("CusNme"));
 					context.setData(ParamKeys.RSV_FLD4, context.getData(ParamKeys.BUS_TYP));
-					context.setData(ParamKeys.RSV_FLD5, context.getData(ParamKeys.PAY_TYPE));
+					context.setData(ParamKeys.RSV_FLD5, context.getData(GDParamKeys.BUS_TYPE));
 					context.setData(ParamKeys.RSV_FLD6, context.getData(GDParamKeys.ELECTRICITY_YEARMONTH));
 			}
 }

@@ -9,6 +9,7 @@ import org.apache.commons.logging.LogFactory;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -38,5 +39,11 @@ public class AftPayFeeAction implements Executable{
 		}else{
 					throw new CoreException("失败~~~"+context.getData(GDParamKeys.SUCFLG));
 		}
+		String thdTxnDte=context.getData(ParamKeys.THD_TXN_DATE).toString();
+		context.setData(ParamKeys.THD_TXN_DATE, DateUtils.parse(thdTxnDte,DateUtils.STYLE_yyyyMMdd));
+		context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse(thdTxnDte+context.getData(ParamKeys.TXN_TME).toString(),DateUtils.STYLE_yyyyMMddHHmmss));
+		String txnDte=context.getData(ParamKeys.TXN_DTE).toString();
+		context.setData(ParamKeys.TXN_DTE, DateUtils.parse(txnDte,DateUtils.STYLE_yyyyMMdd));
+		context.setData(ParamKeys.TXN_TME, DateUtils.parse(txnDte+context.getData(ParamKeys.TXN_TME).toString(),DateUtils.STYLE_yyyyMMddHHmmss));
 	}
 }
