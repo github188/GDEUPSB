@@ -12,11 +12,22 @@
   <wsdl:message name="maintainTbcInfoResponseMessage">
     <wsdl:part name="maintainTbcInfoResponse" element="gdeupsb:maintainTbcInfoResponse"/>
   </wsdl:message>
+  <wsdl:message name="qryClearAccountActionRequestMessage">
+    <wsdl:part name="qryClearAccountActionRequest" element="gdeupsb:qryClearAccountAction"/>
+  </wsdl:message>
+  <wsdl:message name="qryClearAccountActionResponseMessage">
+    <wsdl:part name="qryClearAccountActionResponse" element="gdeupsb:qryClearAccountActionResponse"/>
+  </wsdl:message>
   <wsdl:portType name="GDEUPSBTbcServicePortType">
     <wsdl:operation name="maintainTbcInfo">
       <wsdl:documentation/>
       <wsdl:input message="tns:maintainTbcInfoRequestMessage"/>
       <wsdl:output message="tns:maintainTbcInfoResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="qryClearAccountAction">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:qryClearAccountActionRequestMessage"/>
+      <wsdl:output message="tns:qryClearAccountActionResponseMessage"/>
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="GDEUPSBTbcServiceSoapBinding" type="tns:GDEUPSBTbcServicePortType">
@@ -30,10 +41,19 @@
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="qryClearAccountAction">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBTbcService/qryClearAccountAction"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="GDEUPSBTbcService">
     <wsdl:port name="GDEUPSBTbcServicePort" binding="tns:GDEUPSBTbcServiceSoapBinding">
-      <soap:address location="http://127.0.0.1:8080/GDEUPSB/ws/"/>
+      <soap:address location="http://127.0.0.1"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

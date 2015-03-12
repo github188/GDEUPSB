@@ -17,6 +17,20 @@
       <xs:element name="response" type="tns:maintainTbcInfoResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:element name="qryClearAccountAction" type="tns:qryClearAccountActionReq_CType"/>
+  <xs:element name="qryClearAccountActionResponse" type="tns:qryClearAccountActionRsp_CType"/>
+  <xs:complexType name="qryClearAccountActionReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:qryClearAccountActionRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="qryClearAccountActionRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:qryClearAccountActionResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:element name="requestHeader" type="tns:requestHeader_CType"/>
   <xs:element name="responseHeader" type="tns:responseHeader_CType"/>
   <xs:element name="sortingInfo" type="tns:sortingInfo_CType"/>
@@ -162,4 +176,51 @@
       <xs:element name="comNme" type="tns:comNme_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="qryClearAccountActionRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="dptId" type="tns:dptId_SType"/>
+      <xs:element name="txnDat" type="tns:txnDat_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="qryClearAccountActionResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="sumAmt" type="tns:sumAmt_SType" minOccurs="0"/>
+      <xs:element name="totCnt" type="tns:totCnt_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="dptId_SType">
+    <xs:annotation>
+      <xs:documentation>单位编码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="6"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="txnDat_SType">
+    <xs:annotation>
+      <xs:documentation>交易日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="sumAmt_SType">
+    <xs:annotation>
+      <xs:documentation>交易总金额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="totCnt_SType">
+    <xs:annotation>
+      <xs:documentation>交易总笔数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="5"/>
+    </xs:restriction>
+  </xs:simpleType>
 </xs:schema>

@@ -167,7 +167,7 @@
 		RSV_FLD6, FIL_FLG
 	</sql>
     <!--广东烟草清算信息查询-->
-    <select id="qryClearAccount " resultType="java.util.Map"
+    <select id="qryClearAccount" resultType="java.util.Map"
         parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
         SELECT sum(cast(TXN_AMT as bigint)) as sumAmt,coalesce(COUNT(*),0) totCnt 
         FROM eups.EUPS_TRANS_JOURNAL

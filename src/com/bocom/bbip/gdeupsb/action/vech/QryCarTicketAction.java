@@ -16,6 +16,6 @@ public class QryCarTicketAction extends BaseAction{
     @Override
    public void execute(Context context) throws CoreException, CoreRuntimeException {
        log.info("QryCarTicketAction Start!!");
-       
+
    }
 }
