@@ -1,0 +1,20 @@
+<x:beans xmlns:x="http://www.springframework.org/schema/beans"
+	xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+
+
+
+<process id="gdeups.cancelBatch" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
+		<actions>
+			  <action id="act" ref="beforeCancelCheck"   operations="check"/>
+			  <action id="act" ref="cancelBatchProcess"   />
+			  <action id="act" ref="beforeCancelCheck"   operations="unLock"/>
+		</actions>
+	</process>
+	
+	
+	
+	
+</x:beans>
+
