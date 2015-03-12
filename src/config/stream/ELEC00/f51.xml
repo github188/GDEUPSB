@@ -10,7 +10,7 @@
 		
 		<fixString name="batNo" length="27" /><!--  对账批次流水号-->
 	      <fixString name="comNo" length="8" /><!--  单位编码-->
-	      <fixString name="busTyp" length="3" /><!--  收费方式-->
+	      <fixString name="busType" length="3" /><!--  收费方式-->
 	     <fixString name="payType" length="3" /><!--  费用类型-->
 	     <fixString name="checkDate" length="8" /><!--  达账日期-->
 	     <fixString name="checkTime" length="6" /><!--  达账时间-->
