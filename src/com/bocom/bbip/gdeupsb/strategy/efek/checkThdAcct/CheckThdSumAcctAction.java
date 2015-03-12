@@ -80,8 +80,9 @@ public class CheckThdSumAcctAction implements  CheckThdSumAcctService{
 		List<Map<String, Object>> mapList=eupsStreamNoRepository.findMsgToChkTot(maps);
 		for(Map<String, Object> map:mapList){
 				String sqn=bbipPublicService.getBBIPSequence();
+				context.setData(ParamKeys.COMPANY_NO, map.get("COM_NO").toString().substring(0, 6));
 				context.setData(ParamKeys.SEQUENCE, sqn);
-				context.setData("rcnBat", sqn);
+//				context.setData("rcnBat", sqn);
 				long amount =Long.parseLong(map.get("TOT_COUNT").toString());
 				BigDecimal allmoney=new BigDecimal(map.get("ALL_MONEY").toString());	
 				context.setData(ParamKeys.BANK_NO, "301");
