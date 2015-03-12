@@ -17,9 +17,12 @@ import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.entity.GdTbcCusAgtInfo;
+import com.bocom.bbip.gdeupsb.repository.GdTbcCusAgtInfoRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.bbip.service.Result;
+import com.bocom.euif.component.util.StringUtil;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -36,7 +39,9 @@ public class VerifyToThirdAction extends BaseAction {
     EupsTransJournalRepository eupsTransJournalRepository;
     @Autowired
     BGSPServiceAccessObject serviceAccess;
-
+    @Autowired
+    GdTbcCusAgtInfoRepository cusAgtInfoRepository;
+    
     @Override
     public void execute(Context context) throws CoreException  {
         log.info(" VerifyToThirdAction is start!");
@@ -67,9 +72,16 @@ public class VerifyToThirdAction extends BaseAction {
         }
         String txnCode = context.getData("oTTxnCd");
         if("8912".equals(txnCode)) {  //检查开户
-            //   检查该客户是否已签约
+            // 检查该客户临时表信息
+            String cusAcNo = qryCusAcNo(context.getData("custId").toString());
+            if (StringUtil.isEmptyOrNull(cusAcNo)) {
+                context.setData(GDParamKeys.RSP_CDE,"9999");
+                context.setData(GDParamKeys.RSP_MSG,"无此用户信息 !");
+                return;
+            }
+            // 检查该客户在代收付是否已签约
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put("cusAc", context.getData("actNo").toString());
+            map.put("cusAc", cusAcNo);
             Result accessObject =  serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", map);
             if (CollectionUtils.isEmpty(accessObject.getPayload())) {
                 context.setData(ParamKeys.RSP_CDE,"9999");
@@ -81,9 +93,16 @@ public class VerifyToThirdAction extends BaseAction {
                 context.setData(ParamKeys.OLD_TXN_SEQUENCE, null);
             }
         } else if("8913".equals(txnCode)) { // 检查销户
-            //   检查该客户是否已签约
+           
+         // 检查该客户临时表信息
+            String cusAcNo = qryCusAcNo(context.getData("custId").toString());
+            if (StringUtil.isEmptyOrNull(cusAcNo)) {
+                context.setData(GDParamKeys.RSP_CDE,"9999");
+                context.setData(GDParamKeys.RSP_MSG,"无此用户信息 !");
+            }
+            // 检查该客户在代收付是否已销户
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put("cusAc", context.getData("actNo").toString());
+            map.put("cusAc", cusAcNo);
             Result accessObject = serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", map);
             if (CollectionUtils.isEmpty(accessObject.getPayload())) {
                 context.setData(ParamKeys.RSP_CDE,"9999");
@@ -131,6 +150,9 @@ public class VerifyToThirdAction extends BaseAction {
         context.setData(GDParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
         context.setData(GDParamKeys.RSP_MSG,"交易处理成功 !");
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
-        
+    }
+    private String qryCusAcNo(String custId){
+        GdTbcCusAgtInfo cusAgtInfo = cusAgtInfoRepository.findOne(custId);
+        return cusAgtInfo.getActNo();
     }
 }
