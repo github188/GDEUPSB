@@ -167,4 +167,10 @@
 				   </actions>
 			</process>		
 			
+		<!-- 南方电网  异步调用对明细-->		
+		<process id="gdeupsb.checkThdDetlAcct"  template="eups.simpleTran"  interceptors="bbip.bbipSchedulerInterceptor">
+				  <actions>
+				   			  <action id="act"  ref="gdeupsb.checkThdDetlAcctAction"/>
+				   </actions>
+			</process>			
 </x:beans>
