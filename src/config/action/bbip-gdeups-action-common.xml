@@ -4,4 +4,15 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd       http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
 	<!-- 批量处理公共类 -->
 	<action id="eups.batchFileCommon" class="com.bocom.bbip.gdeupsb.action.common.BatchFileCommon"/>
+
+
+<action id="beforeCancelCheck" class="com.bocom.bbip.gdeupsb.action.common.CancelBatchCheckAction" />
+<action id="cancelBatchProcess" class="com.bocom.bbip.comp.action.strategy.StrategyDelegatorAction">
+			<x:property name="executableBeanResolver"> 
+		 <x:bean class="com.bocom.bbip.comp.action.strategy.support.DefaultExecutableBeanResolver">
+		 <x:property name="strategyKey" value="eupsBusTyp" />
+		 </x:bean>
+		</x:property>
+	</action>
+
 </x:beans>
