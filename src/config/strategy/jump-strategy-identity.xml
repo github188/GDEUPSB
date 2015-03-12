@@ -5,82 +5,59 @@
 						http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
 						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
-	
 
 
-	 <!-- 佛山文本： 文件批扣数据准备 -->
-    <bean id="eups.fileBatchPayCreateDataServiceActionFSAG00"
-        class="com.bocom.bbip.gdeupsb.action.fbpe.FbpeBathFileDealAction">
-    </bean>
-    
-    <!-- 佛山文本：文件批量托收完成通知前端  --> 
-    <bean id="eups.afterBatchAcpServiceActionFSAG00"
-        class="com.bocom.bbip.gdeupsb.action.fbpe.FbpeBatchResultDealAction">
-    </bean>
-    
-     <!-- 个人代扣：数据准备 交易类型未知TODO -->
-    <bean id="eups.fileBatchPayCreateDataServiceActionPlpd"
-        class="com.bocom.bbip.gdeupsb.action.plpd.PlpdBathFileDealAction">
-    </bean>
-    
-    <!--  个人代扣：文件批量托收完成通知前端   交易类型未知TODO --> 
-    <bean id="eups.afterBatchAcpServiceActionPlpd"
-        class="com.bocom.bbip.gdeupsb.action.plpd.PlpdBatchResultDealAction">
-    </bean>
-	    
+
+	<!-- 佛山文本： 文件批扣数据准备 -->
+	<bean id="eups.fileBatchPayCreateDataServiceActionFSAG00"
+		class="com.bocom.bbip.gdeupsb.action.fbpe.FbpeBathFileDealAction">
+	</bean>
+
+	<!-- 佛山文本：文件批量托收完成通知前端 -->
+	<bean id="eups.afterBatchAcpServiceActionFSAG00"
+		class="com.bocom.bbip.gdeupsb.action.fbpe.FbpeBatchResultDealAction">
+	</bean>
+
+	<!-- 个人代扣：数据准备 交易类型未知TODO -->
+	<bean id="eups.fileBatchPayCreateDataServiceActionPlpd"
+		class="com.bocom.bbip.gdeupsb.action.plpd.PlpdBathFileDealAction">
+	</bean>
+
+	<!-- 个人代扣：文件批量托收完成通知前端 交易类型未知TODO -->
+	<bean id="eups.afterBatchAcpServiceActionPlpd"
+		class="com.bocom.bbip.gdeupsb.action.plpd.PlpdBatchResultDealAction">
+	</bean>
+
 	<bean id="eups.qryDealStrategyActionELEC01"
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.QueryElecUserStrategyAction">
 	</bean>
 
 	<!-- 单笔缴费 -->
-	<!-- <bean id="eups.prepareCheckDealStrategyActionELEC01"
-		class="com.bocom.bbip.gdeupsb.strategy.elcgd.PreInitElecStrategyAction">
-	</bean>
+	<!-- <bean id="eups.prepareCheckDealStrategyActionELEC01" class="com.bocom.bbip.gdeupsb.strategy.elcgd.PreInitElecStrategyAction"> 
+		</bean> <bean id="eups.preparePayStrategyActionELEC01" class="com.bocom.bbip.gdeupsb.strategy.elcgd.PrePayElecStrategyAction"> 
+		</bean> <bean id="eups.prePayFeeStrategyActionELEC01" class="com.bocom.bbip.gdeupsb.strategy.elcgd.PreThdElecStrategyAction"> 
+		</bean> <bean id="eups.aftPayFeeStrategyActionELEC01" class="com.bocom.bbip.gdeupsb.strategy.elcgd.AftThdElecStrategyAction"> 
+		</bean> -->
 
-	<bean id="eups.preparePayStrategyActionELEC01"
-		class="com.bocom.bbip.gdeupsb.strategy.elcgd.PrePayElecStrategyAction">
-	</bean>
+	<!-- <bean id="eups.preCancelStrategyActionELEC01" class="com.bocom.bbip.gdeupsb.strategy.elcgd.PreCnlElecStrategyAction"> 
+		</bean> <bean id="eups.aftCancelStrategyActionELEC01" class="com.bocom.bbip.gdeupsb.strategy.elcgd.AftCnlElecStrategyAction"> 
+		</bean> -->
 
-	<bean id="eups.prePayFeeStrategyActionELEC01"
-		class="com.bocom.bbip.gdeupsb.strategy.elcgd.PreThdElecStrategyAction">
-	</bean>
+	<!-- <bean id="eups.prepareCheckDealStrategyActionELEC01" class="com.bocom.bbip.gdeupsb.strategy.elcgd.PreEleCheckDealStrategyAction"> 
+		</bean> -->
 
-	<bean id="eups.aftPayFeeStrategyActionELEC01"
-		class="com.bocom.bbip.gdeupsb.strategy.elcgd.AftThdElecStrategyAction">
-	</bean> -->
+	<!-- <bean id="eups.aftPayToBankStrategyActionELEC01" class="com.bocom.bbip.gdeupsb.strategy.elcgd.AftPayDealStrategyAction"> 
+		</bean> -->
 
-	<!-- 联机抹帐，广州电力，抹第三方前处理 -->
-	<bean id="eups.preCancelStrategyActionELEC01"
-		class="com.bocom.bbip.gdeupsb.strategy.elcgd.PreCnlElecStrategyAction">
-	</bean>
-	
-	<!-- 联机抹帐，广州电力，抹第三方后处理 -->
-	<bean id="eups.aftCancelStrategyActionELEC01"
-		class="com.bocom.bbip.gdeupsb.strategy.elcgd.AftCnlElecStrategyAction">
-	</bean>
+	<!-- <bean id="eups.preCclToBankStrategyActionELEC01" class="com.bocom.bbip.gdeupsb.strategy.elcgd.PreCnlBnkSglDealStrategyAction"> 
+		</bean> <bean id="eups.aftCclToBankStrategyActionELEC01" class="com.bocom.bbip.gdeupsb.strategy.elcgd.AftCnlBnkSglDealStrategyAction"> 
+		</bean> -->
 
-	<!-- <bean id="eups.prepareCheckDealStrategyActionELEC01"
-		class="com.bocom.bbip.gdeupsb.strategy.elcgd.PreEleCheckDealStrategyAction">
-	</bean> -->
 
-<!-- 	<bean id="eups.aftPayToBankStrategyActionELEC01"
-		class="com.bocom.bbip.gdeupsb.strategy.elcgd.AftPayDealStrategyAction">
-	</bean> -->
-
-	<!-- <bean id="eups.preCclToBankStrategyActionELEC01"
-		class="com.bocom.bbip.gdeupsb.strategy.elcgd.PreCnlBnkSglDealStrategyAction">
-	</bean>
-
-	<bean id="eups.aftCclToBankStrategyActionELEC01"
-		class="com.bocom.bbip.gdeupsb.strategy.elcgd.AftCnlBnkSglDealStrategyAction">
-	</bean>
-	 -->
-	
-	
 	<bean id="eups.cancelUnilateralToBankServiceActionELEC01"
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.CancelUnilateralToBankServiceAction">
 	</bean>
-	
+
 
 	<bean id="eups.fileBatchPayCreateDataServiceActionELEC01"
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.BatchAcpElecDealServiceAction">
@@ -97,12 +74,18 @@
 	<bean id="eups.chlAutoSignInOutServiceActionExtELEC01"
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.ChlEleSignInOutAction">
 	</bean>
-	
-	
-	 <!--广东烟草发起对账-->
-    <bean id="eups.checkThdFileToBkStrategyActionSGRT00"
-    class="com.bocom.bbip.gdeupsb.strategy.sgrt00.CheckThdFileToBkServiceAction" >
-     </bean>
+
+
+	<!-- 缴费抹帐 -->
+	<bean id="eups.automaticCancelServiceActionELEC01"
+		class="com.bocom.bbip.gdeupsb.strategy.elcgd.CancelPayServiceAction">
+	</bean>
+
+
+	<!--广东烟草发起对账 -->
+	<bean id="eups.checkThdFileToBkStrategyActionSGRT00"
+		class="com.bocom.bbip.gdeupsb.strategy.sgrt00.CheckThdFileToBkServiceAction">
+	</bean>
 	<!-- 签约一站通-协议维护-水务 -->
 	<bean id="gdeups.agtMdyDealImlServiceActionWAT00"
 		class="com.bocom.bbip.gdeupsb.strategy.sign.WaterAgtMdyDealImlAction">
@@ -112,154 +95,158 @@
 	<bean id="gdeups.agtFileSendImlServiceActionWAT00"
 		class="com.bocom.bbip.gdeupsb.strategy.sign.WaterAgtFileSendImlAction">
 	</bean>
-	
-		<!-- 签约一站通-协议校验-水务 -->
+
+	<!-- 签约一站通-协议校验-水务 -->
 	<bean id="gdeups.agtValidCheckServiceActionWAT00"
 		class="com.bocom.bbip.gdeupsb.strategy.sign.WaterAgtValidCheckImlAction">
 	</bean>
-	
-			<!-- 签约一站通-协议更新-水务 -->
+
+	<!-- 签约一站通-协议更新-水务 -->
 	<bean id="gdeups.agtDateUpdServiceActionWAT00"
 		class="com.bocom.bbip.gdeupsb.strategy.sign.WaterDateUpdImlAction">
 	</bean>
-	
-	
-	<!-- 费用查询处理前-->
-			<bean id="eups.prepareQueryDealStrategyActionELEC00"  
-					class="com.bocom.bbip.gdeupsb.strategy.efek.queryFeeOnline.QueryFeeAction"/>		
 
-	<!-- 费用查询结果返回信息-->
-			<bean id="eups.qryDealStrategyActionELEC00"  
-					class="com.bocom.bbip.gdeupsb.strategy.efek.queryFeeOnline.QueryFeeResultAction" />		
-			
-			
-	<!-- 交易前 处理-->
-			<bean id="eups.prepareCheckDealStrategyActionELEC00"  
-					class="com.bocom.bbip.gdeupsb.strategy.efek.payFeeOnline.PreCheckDealAction"/>	
-			
-			
-	<!-- 联机单笔记账前处理-->
-			<bean id="eups.preparePayStrategyActionELEC00"  
-					class="com.bocom.bbip.gdeupsb.strategy.efek.payFeeOnline.PrePayFeeAction"/>
-			
-	<!-- 联机单笔记账，第三方处理前-->
-			<bean id="eups.prePayFeeStrategyActionELEC00"  
-					class="com.bocom.bbip.gdeupsb.strategy.efek.payFeeOnline.PrePayFeeThdAction"/>
-			
-	<!-- 联机单笔记账后处理-->
-			<bean id="eups.aftPayFeeStrategyActionELEC00"  
-					class="com.bocom.bbip.gdeupsb.strategy.efek.payFeeOnline.AftPayFeeAction"/>
-			
-	<!-- 联机单笔抹账 前处理-->
-			<bean id="eups.preCancelStrategyActionELEC00"  
-					class="com.bocom.bbip.gdeupsb.strategy.efek.cancelFeeOnline.PreCancelFeeAction"/>
-			
-	<!-- 联机单笔抹账 后处理-->
-			<bean id="eups.aftCancelStrategyActionELEC00"  
-					class="com.bocom.bbip.gdeupsb.strategy.efek.cancelFeeOnline.AftCancelFeeAction"/>	
-			
-	<!-- 联机单笔记账 前处理-->	
-			<bean id="eups.prePayToBankStrategyActionELEC00"  
-					class="com.bocom.bbip.gdeupsb.strategy.efek.payFeeOnline.PrePayToBankAction"/>		
-	<!-- 联机单笔记账 后处理-->	
-			<bean id="eups.aftPayToBankStrategyActionELEC00"  
-					class="com.bocom.bbip.gdeupsb.strategy.efek.payFeeOnline.AftPayToBankAction"/>		
-		
-	<!-- 联机单边抹账 前处理-->
-			<bean id="eups.preCclToBankStrategyActionELEC00"  
-					class="com.bocom.bbip.gdeupsb.strategy.efek.cancelFeeOnline.PreCclToTHDAction"/>	
-			
-	<!-- 联机单边抹账 后处理	-->
-			<bean id="eups.aftCclToBankStrategyActionELEC00"  
-					class="com.bocom.bbip.gdeupsb.strategy.efek.cancelFeeOnline.AftCclToTHDAction"/>		
 
-	<!-- 第三方对账  对总账-->
-			<bean id="eups.checkThdSumAcctServiceActionELEC00"  
-					class="com.bocom.bbip.gdeupsb.strategy.efek.checkThdAcct.CheckThdSumAcctAction"/>	
-					
+	<!-- 费用查询处理前 -->
+	<bean id="eups.prepareQueryDealStrategyActionELEC00"
+		class="com.bocom.bbip.gdeupsb.strategy.efek.queryFeeOnline.QueryFeeAction" />
+
+	<!-- 费用查询结果返回信息 -->
+	<bean id="eups.qryDealStrategyActionELEC00"
+		class="com.bocom.bbip.gdeupsb.strategy.efek.queryFeeOnline.QueryFeeResultAction" />
+
+
+	<!-- 交易前 处理 -->
+	<bean id="eups.prepareCheckDealStrategyActionELEC00"
+		class="com.bocom.bbip.gdeupsb.strategy.efek.payFeeOnline.PreCheckDealAction" />
+
+
+	<!-- 联机单笔记账前处理 -->
+	<bean id="eups.preparePayStrategyActionELEC00"
+		class="com.bocom.bbip.gdeupsb.strategy.efek.payFeeOnline.PrePayFeeAction" />
+
+	<!-- 联机单笔记账，第三方处理前 -->
+	<bean id="eups.prePayFeeStrategyActionELEC00"
+		class="com.bocom.bbip.gdeupsb.strategy.efek.payFeeOnline.PrePayFeeThdAction" />
+
+	<!-- 联机单笔记账后处理 -->
+	<bean id="eups.aftPayFeeStrategyActionELEC00"
+		class="com.bocom.bbip.gdeupsb.strategy.efek.payFeeOnline.AftPayFeeAction" />
+
+	<!-- 联机单笔抹账 前处理 -->
+	<bean id="eups.preCancelStrategyActionELEC00"
+		class="com.bocom.bbip.gdeupsb.strategy.efek.cancelFeeOnline.PreCancelFeeAction" />
+
+	<!-- 联机单笔抹账 后处理 -->
+	<bean id="eups.aftCancelStrategyActionELEC00"
+		class="com.bocom.bbip.gdeupsb.strategy.efek.cancelFeeOnline.AftCancelFeeAction" />
+
+	<!-- 联机单笔记账 前处理 -->
+	<bean id="eups.prePayToBankStrategyActionELEC00"
+		class="com.bocom.bbip.gdeupsb.strategy.efek.payFeeOnline.PrePayToBankAction" />
+	<!-- 联机单笔记账 后处理 -->
+	<bean id="eups.aftPayToBankStrategyActionELEC00"
+		class="com.bocom.bbip.gdeupsb.strategy.efek.payFeeOnline.AftPayToBankAction" />
+
+	<!-- 联机单边抹账 前处理 -->
+	<bean id="eups.preCclToBankStrategyActionELEC00"
+		class="com.bocom.bbip.gdeupsb.strategy.efek.cancelFeeOnline.PreCclToTHDAction" />
+
+	<!-- 联机单边抹账 后处理 -->
+	<bean id="eups.aftCclToBankStrategyActionELEC00"
+		class="com.bocom.bbip.gdeupsb.strategy.efek.cancelFeeOnline.AftCclToTHDAction" />
+
+	<!-- 第三方对账 对总账 -->
+	<bean id="eups.checkThdSumAcctServiceActionELEC00"
+		class="com.bocom.bbip.gdeupsb.strategy.efek.checkThdAcct.CheckThdSumAcctAction" />
+
 	<!-- 批量文件 准备(定时) -->
-				<bean id="eups.autoBatchPayCreateDataInitActionELEC00"  
-					class="com.bocom.bbip.gdeupsb.action.efek.batch.BatchDataFileAction"/>
-	<!-- 批量文件 返回-->
-				<bean id="eups.afterBatchAcpServiceActionELEC00"  
-					class="com.bocom.bbip.gdeupsb.action.efek.batch.BatchDataResultFileAction"/>
-					
-	<!-- 第三方对账  对明细-->
-			<bean id="eups.checkThdDetlAcctServiceActionELEC00"  
-					class="com.bocom.bbip.gdeupsb.strategy.efek.checkThdAcct.CheckThdDetlAcctAction"/>		
-			 
-	<!-- 对账信息查询
-			<bean id="eups.checkBkFileToThirdStrategyActionELEC00"  
-					class="com.bocom.bbip.gdeupsb.strategy.efek.checkBKFileToThirdAction"/>	
-		 -->				
-	
-	<!-- 银行到供电变更代扣协议业务   修改 -->
-			<bean id="eups.commUpdateCusAgentServiceActionELEC00"  
-					class="com.bocom.bbip.gdeupsb.strategy.efek.agent.UpdateCusAgentServiceAction"/>								
-	<!-- 银行到供电变更代扣协议业务    签约-->
-			<bean id="eups.commInsertCusAgentServiceActionELEC00"  
-					class="com.bocom.bbip.gdeupsb.strategy.efek.agent.InsertCusAgentServiceAction"/>		
-	<!-- 银行到供电变更代扣协议业务   注销-->
-			<bean id="eups.commDelCusAgentServiceActionELEC00"  
-					class="com.bocom.bbip.gdeupsb.strategy.efek.agent.DeleteCusAgentServiceAction"/>						
-	
-	
-		<!--商户资金转入   -->
-  	<bean class="com.bocom.bbip.gdeupsb.strategy.hscard.ChargeStrategyAction"
+	<bean id="eups.autoBatchPayCreateDataInitActionELEC00"
+		class="com.bocom.bbip.gdeupsb.action.efek.batch.BatchDataFileAction" />
+	<!-- 批量文件 返回 -->
+	<bean id="eups.afterBatchAcpServiceActionELEC00"
+		class="com.bocom.bbip.gdeupsb.action.efek.batch.BatchDataResultFileAction" />
+
+	<!-- 第三方对账 对明细 -->
+	<bean id="eups.checkThdDetlAcctServiceActionELEC00"
+		class="com.bocom.bbip.gdeupsb.strategy.efek.checkThdAcct.CheckThdDetlAcctAction" />
+
+	<!-- 对账信息查询 <bean id="eups.checkBkFileToThirdStrategyActionELEC00" class="com.bocom.bbip.gdeupsb.strategy.efek.checkBKFileToThirdAction"/> -->
+
+	<!-- 银行到供电变更代扣协议业务 修改 -->
+	<bean id="eups.commUpdateCusAgentServiceActionELEC00"
+		class="com.bocom.bbip.gdeupsb.strategy.efek.agent.UpdateCusAgentServiceAction" />
+	<!-- 银行到供电变更代扣协议业务 签约 -->
+	<bean id="eups.commInsertCusAgentServiceActionELEC00"
+		class="com.bocom.bbip.gdeupsb.strategy.efek.agent.InsertCusAgentServiceAction" />
+	<!-- 银行到供电变更代扣协议业务 注销 -->
+	<bean id="eups.commDelCusAgentServiceActionELEC00"
+		class="com.bocom.bbip.gdeupsb.strategy.efek.agent.DeleteCusAgentServiceAction" />
+
+
+	<!--商户资金转入 -->
+	<bean class="com.bocom.bbip.gdeupsb.strategy.hscard.ChargeStrategyAction"
 		id="eups.prepareCheckDealStrategyActionHSSC00" />
-	<bean class="com.bocom.bbip.gdeupsb.strategy.hscard.PrePayToBankStrategyAction"
+	<bean
+		class="com.bocom.bbip.gdeupsb.strategy.hscard.PrePayToBankStrategyAction"
 		id="eups.prePayToBankStrategyActionHSSC00" />
-		
+
 	<!-- 圈存对账 -->
-	<bean class="com.bocom.bbip.gdeupsb.strategy.hscard.CheckBkFileToThirdStrategyAction"
-	    id="eups.checkBkFileToThirdStrategyActionHSSC00"/>
-	    
-	    
-	    <!--欠费查询   -->
- 	<bean class="com.bocom.bbip.gdeupsb.strategy.trsp.QryDealStrategyAction"
-		id="eups.qryDealStrategyActionTRSP00" /> 
-	
-	<!--自助通缴费   -->
-	<bean class="com.bocom.bbip.gdeupsb.strategy.trsp.PrepareCheckDealStrategyAction"
+	<bean
+		class="com.bocom.bbip.gdeupsb.strategy.hscard.CheckBkFileToThirdStrategyAction"
+		id="eups.checkBkFileToThirdStrategyActionHSSC00" />
+
+
+	<!--欠费查询 -->
+	<bean class="com.bocom.bbip.gdeupsb.strategy.trsp.QryDealStrategyAction"
+		id="eups.qryDealStrategyActionTRSP00" />
+
+	<!--自助通缴费 -->
+	<bean
+		class="com.bocom.bbip.gdeupsb.strategy.trsp.PrepareCheckDealStrategyAction"
 		id="eups.prepareCheckDealStrategyActionTRSP00" />
-		
-   	<bean class="com.bocom.bbip.gdeupsb.strategy.trsp.PrePayToBankStrategyAction"
+
+	<bean class="com.bocom.bbip.gdeupsb.strategy.trsp.PrePayToBankStrategyAction"
 		id="eups.prePayToBankStrategyActionTRSP00" />
-		
+
 	<bean class="com.bocom.bbip.gdeupsb.strategy.trsp.AftPayToBankStrategyAction"
 		id="eups.aftPayToBankStrategyActionTRSP00" />
-	
+
 	<!-- ************广州文本************************* -->
 	<!-- 批量文件 准备(柜面) -->
-				<bean id="eups.fileBatchPayCreateDataServiceActionGZAG00"  
-					class="com.bocom.bbip.gdeupsb.action.gzag.batch.GzagBatchDataFileAction"/>
-	<!-- 批量文件 返回-->
-				<bean id="eups.autoFileBatchPayCreateDataServiceActionGZAG00"  
-					class="com.bocom.bbip.gdeupsb.action.gzag.batch.GzagBatchDataResultFileAction"/>
-				
-		<!--广州电力单笔缴费  -->
+	<bean id="eups.fileBatchPayCreateDataServiceActionGZAG00"
+		class="com.bocom.bbip.gdeupsb.action.gzag.batch.GzagBatchDataFileAction" />
+	<!-- 批量文件 返回 -->
+	<bean id="eups.autoFileBatchPayCreateDataServiceActionGZAG00"
+		class="com.bocom.bbip.gdeupsb.action.gzag.batch.GzagBatchDataResultFileAction" />
+
+	<!--广州电力单笔缴费 -->
 	<bean class="com.bocom.bbip.gdeupsb.strategy.elcgd.PayFeeOnlineServiceAction"
-		id="eups.payFeeOnlineServiceActionELEC01" />				
-					
-	<!--广州电力单边划扣  -->
-	<bean class="com.bocom.bbip.gdeupsb.strategy.elcgd.PayUnilateralToBankServiceAction"
-		id="eups.payUnilateralToBankServiceActionELEC01" />		
-		
-		
+		id="eups.payFeeOnlineServiceActionELEC01" />
+
+	<!--广州电力单边划扣 -->
+	<bean
+		class="com.bocom.bbip.gdeupsb.strategy.elcgd.PayUnilateralToBankServiceAction"
+		id="eups.payUnilateralToBankServiceActionELEC01" />
+
+
 	<!-- 惠州燃气单边划扣 -->
-	<bean class="com.bocom.bbip.gdeupsb.strategy.gash.PayUnilateralToBankServiceImplPGAS00"
+	<bean
+		class="com.bocom.bbip.gdeupsb.strategy.gash.PayUnilateralToBankServiceImplPGAS00"
 		id="eups.payUnilateralToBankServiceActionPGAS00" />
 	<!-- 惠州燃气单边抹帐冲正 -->
-	<bean class="com.bocom.bbip.gdeupsb.strategy.gash.CnlPayUnilateralToBankServicePGAS00"
+	<bean
+		class="com.bocom.bbip.gdeupsb.strategy.gash.CnlPayUnilateralToBankServicePGAS00"
 		id="eups.cancelUnilateralToBankServiceActionPGAS00" />
 	<!-- 惠州燃气对账文件上传 -->
 	<bean id="eups.checkBkFileToThirdStrategyActionPGAS00"
 		class="com.bocom.bbip.gdeupsb.strategy.gash.CheckBkFileToThirdStrategyAction">
 	</bean>
-				    
-	
-	 <!-- 广东烟草划扣联机单笔记 -->
-     <bean class="com.bocom.bbip.gdeupsb.strategy.sgrt00.PayUnilateralToBankServiceActionSGRT00"
-        id="eups.payUnilateralToBankServiceActionSGRT00" />
-	
+
+
+	<!-- 广东烟草划扣联机单笔记 -->
+	<bean
+		class="com.bocom.bbip.gdeupsb.strategy.sgrt00.PayUnilateralToBankServiceActionSGRT00"
+		id="eups.payUnilateralToBankServiceActionSGRT00" />
+
 </beans>
