@@ -61,162 +61,166 @@ public class CheckThdDetlAcctAction implements Executable {
 	public void execute(Context context) throws CoreException,
 			CoreRuntimeException {
 			logger.info("=======Start CheckThdDetlAcctAction");
-			//流水日期时间
-			String sqn =bbipPublicService.getBBIPSequence();
+			//日期
 			Date txnDte=DateUtils.parse(DateUtils.formatAsSimpleDate(new Date()));
-			Date txnTme=DateUtils.parse(DateUtils.formatAsTranstime(new Date()));
-			context.setData(ParamKeys.SEQUENCE, sqn);
 			context.setData(ParamKeys.TXN_DTE, txnDte);
-			context.setData(ParamKeys.TXN_TME, txnTme);
-			
+			//一些常量
 			context.setData(GDParamKeys.TOTNUM, "1");
 			context.setData(ParamKeys.BANK_NO, "0301");
 			context.setData(ParamKeys.TELLER_ID, "301_030600");  //收款人代码
-			context.setData(GDParamKeys.CHECKTIME, txnTme);
-			
 			context.setData("allCheckNumber", "1");
-			context.setData("checkTyp", "03");
-			context.setData("number", "000001");
-			context.setData("xH", "1");
+			//对账类型  明细
+			context.setData("checkTyp", "05");
 			
-			//初始化对账控制类型
-			context.setData(ParamKeys.TXN_CTL_TYP, Constants.TXN_CTL_TYP_CHKBANKFILE_THD);  
-			//对账日期
-			String chkDte=null;
-			if(StringUtils.isNotEmpty(context.getData(GDParamKeys.CHECKDATE).toString())){
-					chkDte=context.getData(GDParamKeys.CHECKDATE).toString();
-			}else{
-					chkDte=DateUtils.format(com.bocom.bbip.thd.org.apache.commons.lang.time.DateUtils.addDays(new Date(), -1),DateUtils.STYLE_yyyyMMdd);
+			Map<String, Object> listMap=new HashMap<String, Object>();
+			listMap.put("txnDte", txnDte);
+			
+			List<Map<String, Object>> mapList=eupsStreamNoRepository.findMsgToChkTot(listMap);
+			if(CollectionUtils.isEmpty(mapList)){
+						context.setData(ParamKeys.MESSAGE_TYPE, "E");
+						context.setData(ParamKeys.RSP_CDE,"EFE999");
+						context.setData(ParamKeys.RSP_MSG, "统计明细记录总数出错");
+						logger.info("~~~~~~~~~~~统计明细记录总数出错");
+						throw new CoreException("统计明细记录总数出错");
 			}
-			Date acDate=DateUtils.parse(chkDte);
-			
-			context.setData(ParamKeys.AC_DATE, acDate);  
-			try{
-					//生成对账文件
-					Map<String, Object> map= encodeFileMap(context);
-					//获取FTP信息
-//					String ftpId=context.getData()
-					String ftpId="elecCheckFile";
-//					eupsThdFtpConfig.setFtpNo();  
-					EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne(ftpId);
+			for(Map<String, Object> maps:mapList){
+					//流水
+					String sqn =bbipPublicService.getBBIPSequence();
+					context.setData(ParamKeys.SEQUENCE, sqn);
+					//对账时间
+					Date txnTme=DateUtils.parse(DateUtils.formatAsTranstime(new Date()));
+					context.setData(ParamKeys.TXN_TME, txnTme);
 					
-					//设置本地对账文件名称
-//					对账文件名称
-					String busType=context.getData(GDParamKeys.BUS_TYPE).toString().substring(0, 2);
-					String payType=context.getData(ParamKeys.PAY_TYPE).toString();
-					String bankNo=context.getData(ParamKeys.BANK_NO).toString().substring(0,4);
-					bankNo="123";
-//					String companyNo=context.getData(ParamKeys.COMPANY_NO).toString().substring(0,8);
-					String companyNo=context.getData(ParamKeys.COMPANY_NO).toString();
-//					DZ+对账文件类型(2位)+收费方式（3位）+
-//					费用类型（3位）_+银行代码(4位)+单位编码（8位）+日期（yyyymmdd）
-					String fileName = "DZ05"+busType+payType+"_"+bankNo+companyNo+chkDte+".txt";
-					eupsThdFtpConfig.setLocFleNme(fileName);
-					logger.info("~~~~~~~~eupsThdFtpConfig~~~~~~~"+eupsThdFtpConfig);
-					logger.info("CheckBkFileMbusCardStrategy fileName is :"+ fileName);
+					//对账唯一标识码
+					String checkOneCode=maps.get("COM_NO").toString().substring(0,6)+DateUtils.format(txnDte, DateUtils.STYLE_yyyyMMdd)+maps.get("RSV_FLD4".toString());
+					context.setData("checkOneCode", checkOneCode);
 					
-					//生成对账文件到指定路径
-					operateFileAction.createCheckFile(eupsThdFtpConfig, "elecCheckFile", fileName, map);
-
-					//向指定FTP路径放文件  上传
-//		            operateFTPAction.putCheckFile(eupsThdFtpConfig);
-
-		            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
-
-		            logger.info("=============放置成功==========End   CheckThdDetlAcctAction");
-			} catch (Exception e) {
-	            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
-	            logger.info("File create error : " + e.getMessage());          
-	            throw new CoreException(e.getMessage());
-	        }  
-			context.setData(GDParamKeys.CHECKTIME, DateUtils.formatAsHHmmss(txnTme));
-			context.setData(GDParamKeys.SVRCOD, "51");
-			callThd(context);
-			
+					//初始化对账控制类型
+					context.setData(ParamKeys.TXN_CTL_TYP, Constants.TXN_CTL_TYP_CHKBANKFILE_THD);  
+					try{
+							//生成对账文件
+							Map<String, Object> map= encodeFileMap(context,maps);
+							//获取FTP信息
+		//					String ftpId=context.getData()
+							String ftpId="elecCheckFile";
+							EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne(ftpId);
+							
+							//设置本地对账文件名称
+		//					对账文件名称
+							String	comNo  =maps.get("COM_NO").toString();
+							String  busType=maps.get("RSV_FLD4").toString();
+							String  payType=maps.get("RSV_FLD5").toString();
+							String bankNo="301";
+							String fileName = "DZ05"+busType+payType+"_"+bankNo+comNo+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";
+							eupsThdFtpConfig.setLocFleNme(fileName);
+							logger.info("~~~~~~~~eupsThdFtpConfig~~~~~~~"+eupsThdFtpConfig);
+							logger.info("CheckBkFileMbusCardStrategy fileName is :"+ fileName);
+							
+							//生成对账文件到指定路径
+							operateFileAction.createCheckFile(eupsThdFtpConfig, "elecCheckFile", fileName, map);
+		
+							//向指定FTP路径放文件  上传
+//				            operateFTPAction.putCheckFile(eupsThdFtpConfig);
+		
+				            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
+				            logger.info("=============放置成功==========End   CheckThdDetlAcctAction");
+					} catch (Exception e) {
+			            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
+			            logger.info("File create error : " + e.getMessage());          
+			            throw new CoreException(e.getMessage());
+			        }  
+					context.setData(GDParamKeys.CHECKDATE, DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
+					context.setData(GDParamKeys.CHECKTIME, DateUtils.formatAsHHmmss(txnTme));
+					context.setData(GDParamKeys.SVRCOD, "51");
+					callThd(context);
+			}
 	}
 	/**
 	 * 生成对账文件
 	 */
-	public Map<String, Object> encodeFileMap(Context context) throws CoreException,CoreRuntimeException{
+	public Map<String, Object> encodeFileMap(Context context,Map<String, Object> maps) throws CoreException,CoreRuntimeException{
 		logger.info("=======Start CheckThdDetlAcctAction encodeFileMap");
-		Map<String, Object> map=new HashMap<String, Object>();
+		String	comNo  =maps.get("COM_NO").toString();
+		String  busType=maps.get("RSV_FLD4").toString();
+		String  payType=maps.get("RSV_FLD5").toString();
+		//总笔数 总金额
+		long acount=0;
+		if(null != maps.get("TOT_COUNT")){
+				acount=Long.parseLong(maps.get("TOT_COUNT").toString());
+		}
+		BigDecimal allMoney=new BigDecimal("0.00");
+		if(null != maps.get("ALL_MONEY")){
+				allMoney.add(new BigDecimal(maps.get("ALL_MONEY").toString()));
+		}
+		//header  部分
+		Map<String, Object> headerMap=new HashMap<String, Object>();
+		headerMap.put(ParamKeys.SEQUENCE, context.getData(ParamKeys.SEQUENCE));
+		headerMap.put(ParamKeys.BANK_NO,context.getData(ParamKeys.BANK_NO));
+        headerMap.put(ParamKeys.COMPANY_NO, comNo.substring(0, 6));
+        headerMap.put(GDParamKeys.BUS_TYPE, busType);
+        headerMap.put(GDParamKeys.PAY_TYPE, payType);
+        headerMap.put(GDParamKeys.TOT_COUNT, acount);
+        headerMap.put(GDParamKeys.ALL_MONEY, allMoney);
+        headerMap.put(GDParamKeys.CHECKDATE, DateUtils.format((Date)context.getData(ParamKeys.TXN_DTE),DateUtils.STYLE_yyyyMMdd));
+        headerMap.put(GDParamKeys.CHECKTIME,DateUtils.formatAsHHmmss((Date)context.getData(ParamKeys.TXN_TME)));
+        headerMap.put("checkOneCode", context.getData("checkOneCode"));
+		
 		//查找对应数据
 		EupsStreamNo eupsStreamNos=new EupsStreamNo();
-		
 		eupsStreamNos.setEupsBusTyp(context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
-		eupsStreamNos.setComNo(context.getData(ParamKeys.COMPANY_NO).toString());
-		
-		String busTyp=(String)context.getData(GDParamKeys.BUS_TYPE);
-		String payType=context.getData(ParamKeys.PAY_TYPE).toString();
-		
-//		String bakFld2=busTyp+"&&"+payType;
-//		eupsStreamNos.setBakFld2(bakFld2);
-		String chkDte=DateUtils.format((Date)context.getData(ParamKeys.AC_DATE),DateUtils.STYLE_yyyyMMdd);
-		eupsStreamNos.setTxnDte((Date)context.getData(ParamKeys.AC_DATE));
+		eupsStreamNos.setComNo(comNo);
+		eupsStreamNos.setTxnDte((Date)context.getData(ParamKeys.TXN_DTE));
 		eupsStreamNos.setTxnSts("S");
-		
-//		eupsStreamNos.setIsBatFlg("S");
-		
+		eupsStreamNos.setRsvFld4(busType);
+		eupsStreamNos.setRsvFld4(payType);
 		List<EupsStreamNo> eupsStreamNoList=eupsStreamNoRepository.find(eupsStreamNos);
-		if(CollectionUtils.isEmpty(eupsStreamNoList)){
-				context.setData(ParamKeys.MESSAGE_TYPE, "E");
-				context.setData(ParamKeys.RSP_CDE,"EFE999");
-				context.setData(ParamKeys.RSP_MSG, "统计明细记录总数出错");
-				logger.info("~~~~~~~~~~~统计明细记录总数出错");
-				throw new CoreException("统计明细记录总数出错");
-		}
 		
-		BigDecimal allmoney=new BigDecimal("0.00");
 		List<CheckDetailAcct> list=new ArrayList<CheckDetailAcct>();
-		
+		//内容
 		for (EupsStreamNo eupsStreamNo : eupsStreamNoList) {
 			
-			BigDecimal txnAmt=eupsStreamNo.getTxnAmt();
-			allmoney=allmoney.add(txnAmt);
-			eupsStreamNo.setTxnAmt(allmoney);
-			
 			CheckDetailAcct checkDetailAcct =new CheckDetailAcct();
-			//BK						
-			checkDetailAcct.setBankNo(eupsStreamNo.getBk().substring(0,4));			
-			checkDetailAcct.setComNo(eupsStreamNo.getComNo());
-			checkDetailAcct.setCusAc(eupsStreamNo.getCusAc());
-			
-			checkDetailAcct.setCusNme(eupsStreamNo.getCusNme());
-			checkDetailAcct.setBakFld1(eupsStreamNo.getBakFld1());
-			String electricityYearMonth=chkDte.substring(0, 6);
-			checkDetailAcct.setElectricityYearMonth(electricityYearMonth);
+			checkDetailAcct.setSqn(eupsStreamNo.getSqn());
+			checkDetailAcct.setComNo(comNo.substring(0, 6));
+			checkDetailAcct.setElectricityYearMonth(eupsStreamNo.getRsvFld6());
 			checkDetailAcct.setPayNo(eupsStreamNo.getThdCusNo());
-			checkDetailAcct.setSqn(context.getData(ParamKeys.SEQUENCE).toString());
-			
-			Date date=eupsStreamNo.getTxnTme();
-			String txnDte=DateUtils.format(date, "yyyy-MM-dd HH:mm:ss");
-			checkDetailAcct.setTxnDte(txnDte);
-			checkDetailAcct.setTxnAmt(eupsStreamNo.getTxnAmt());
-			checkDetailAcct.setTxnTlr(eupsStreamNo.getTxnTlr());
+			//结算户名称
 			checkDetailAcct.setThdCusNme(eupsStreamNo.getThdCusNme());
-			//唯一标识
-			checkDetailAcct.setOnlySignCode(context.getData(ParamKeys.SEQUENCE).toString());
+			checkDetailAcct.setCusAc(eupsStreamNo.getCusAc());
+			checkDetailAcct.setCusAc(eupsStreamNo.getCusNme());
+			checkDetailAcct.setTxnDte(DateUtils.format(eupsStreamNo.getTxnTme(),"YYYY-MM-DD HH:MM:SS"));
+			checkDetailAcct.setTxnAmt(eupsStreamNo.getTxnAmt());
+			String str="";
+				if("010".equals(busType)){
+					str="010 供电柜台现金";
+				}else if("020".equals(busType)){
+					str="020 供电支票";
+				}else if("030".equals(busType)){
+					str="030 供电汇票";
+				}else if("040".equals(busType)){
+					str="040 供电POS机";
+				}else if("050".equals(busType)){
+					str="050 供电第三方支付";
+				}else if("060".equals(busType)){
+					str="060 供电发起单笔实扣";
+				}else if("070".equals(busType)){
+					str="070 供电发起批量代扣";
+				}else if("110".equals(busType)){
+					str="110 银行单笔代收";
+				}else if("120".equals(busType)){
+					str="120 银行支票";
+				}else if("130".equals(busType)){
+					str="130 银行发起托收";
+				}else if("140".equals(busType)){
+					str="140 银行发起代扣";
+				}
+			checkDetailAcct.setBakFld1(str);
+			checkDetailAcct.setTxnTlr(eupsStreamNo.getTxnTlr());
 			list.add(checkDetailAcct);
 		}
 		logger.info("~~~~~~~~~~~~list~~~~"+list);
-		//header  部分
-		Map<String, Object> headerMap=new HashMap<String, Object>();
-		headerMap.put("SQN", context.getData(ParamKeys.SEQUENCE));
-		headerMap.put("enterBankNo",context.getData(ParamKeys.BANK_NO));
-		
-        headerMap.put("comNo", context.getData(ParamKeys.COMPANY_NO));
-        headerMap.put("busTyp", busTyp);
-        headerMap.put("payType", payType);
         
-        headerMap.put("amount", eupsStreamNoList.size());
-        headerMap.put("allMoney", allmoney);
-        String checkDate=DateUtils.format((Date)context.getData(ParamKeys.AC_DATE), DateUtils.STYLE_yyyyMMdd);
-        
-        headerMap.put("checkDate", checkDate);
-        String checkTime=DateUtils.formatAsHHmmss((Date)context.getData(GDParamKeys.CHECKTIME));
-        
-        headerMap.put("checkTime",checkTime);
-        
+		Map<String, Object> map=new HashMap<String, Object>();
         map.put(ParamKeys.EUPS_FILE_HEADER, headerMap);
 		map.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(list));
 		logger.info("~~~~~map~~~~~~"+map);
@@ -246,7 +250,7 @@ public class CheckThdDetlAcctAction implements Executable {
 				context.setData(GDParamKeys.TRADE_RECEIVE, GDConstants.TRADE_RECEIVE);//交易接收方
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
-
+				context.setData("PKGCNT", "000001");
 				
 				try{
 					Map<String, Object> rspMap = callThdTradeManager.trade(context);
