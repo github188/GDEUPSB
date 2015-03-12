@@ -86,13 +86,6 @@ public class QryLotWinRecordAction extends BaseAction {
 //	        for(int i=0; i<winMapLst.size(); i++){
 	        	for(Map<String, Object> maps:winMapLst){
 	        	Map<String, Object> tempMap = new HashMap<String, Object>();
-//	        	<Item name="TxnLog"   length="30"  desc="投注流水号"/>
-//				<Item name="DrawId"   length="5"   desc="当前大期"/>
-//				<Item name="KenoId"   length="5"   desc="当前小期"/>
-//				<Item name="BetMul"   length="3"   desc="投注倍数"/>
-//				<Item name="BetLin"   length="128" desc="投注号码"/>
-//				<Item name="BetMod"   length="5"   desc="投注方式  1单式，12复式，13胆托"/>
-//				<Item name="PrzAmt"   length="15"  desc="返奖金额"/>
 	        	tempMap.put("txnLog", maps.get("T_LOG_NO"));
 	        	tempMap.put("drawId", maps.get("DRAW_ID"));
 	        	tempMap.put("kenoId", maps.get("KENO_ID"));
