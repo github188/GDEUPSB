@@ -201,10 +201,6 @@
     <xs:sequence>
       <xs:element ref="tns:responseHeader"/>
       <xs:element ref="tns:pageableResponse" minOccurs="0"/>
-      <xs:element name="pageNo" type="tns:pageNo_SType" minOccurs="0"/>
-      <xs:element name="varSize" type="tns:varSize_SType" minOccurs="0"/>
-      <xs:element name="ttl" type="tns:ttl_SType" minOccurs="0"/>
-      <xs:element name="subTtl" type="tns:subTtl_SType" minOccurs="0"/>
       <xs:element name="loopDtl" type="tns:loopDtl_CType" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
@@ -262,38 +258,6 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="10"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="pageNo_SType">
-    <xs:annotation>
-      <xs:documentation>PageNo</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="4"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="varSize_SType">
-    <xs:annotation>
-      <xs:documentation>VarSize</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="1"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="ttl_SType">
-    <xs:annotation>
-      <xs:documentation>Ttl</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="60"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="subTtl_SType">
-    <xs:annotation>
-      <xs:documentation>SubTtl</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="60"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="acTyp_SType">
@@ -441,7 +405,7 @@
       <xs:element ref="tns:requestHeader"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="ftpNo" type="tns:ftpNo_SType"/>
-      <xs:element name="txnDte" type="tns:txnDte_SType"/>
+      <xs:element name="fileDte" type="tns:fileDte_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="uploadDKchkFleResponse_CType">
@@ -459,13 +423,11 @@
       <xs:maxLength value="32"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="txnDte_SType">
+  <xs:simpleType name="fileDte_SType">
     <xs:annotation>
-      <xs:documentation>交易日期</xs:documentation>
+      <xs:documentation>文件日期</xs:documentation>
     </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="10"/>
-    </xs:restriction>
+    <xs:restriction base="xs:string"/>
   </xs:simpleType>
   <xs:simpleType name="sqn_SType">
     <xs:annotation>
@@ -499,14 +461,10 @@
     <xs:sequence>
       <xs:element ref="tns:responseHeader"/>
       <xs:element ref="tns:pageableResponse" minOccurs="0"/>
-      <xs:element name="pageNo" type="tns:pageNo_SType" minOccurs="0"/>
-      <xs:element name="varSize" type="tns:varSize_SType" minOccurs="0"/>
-      <xs:element name="ttl" type="tns:ttl_SType" minOccurs="0"/>
-      <xs:element name="subTtl" type="tns:subTtl_SType" minOccurs="0"/>
       <xs:element name="loop" type="tns:loop_CType" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="bakFld3_SType">
+  <xs:simpleType name="payYea_SType">
     <xs:annotation>
       <xs:documentation>费用年份</xs:documentation>
     </xs:annotation>
@@ -551,7 +509,7 @@
   <xs:complexType name="loop_CType">
     <xs:sequence>
       <xs:element name="thdCusNo" type="tns:thdCusNo_SType" minOccurs="0"/>
-      <xs:element name="bakFld3" type="tns:bakFld3_SType" minOccurs="0"/>
+      <xs:element name="payYea" type="tns:payYea_SType" minOccurs="0"/>
       <xs:element name="cusAc" type="tns:cusAc_SType" minOccurs="0"/>
       <xs:element name="cusNme" type="tns:cusNme_SType" minOccurs="0"/>
       <xs:element name="txnAmt" type="tns:txnAmt_SType" minOccurs="0"/>
@@ -590,7 +548,7 @@
       <xs:element ref="tns:requestHeader"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="ftpNo" type="tns:ftpNo_SType"/>
-      <xs:element name="txnDte" type="tns:txnDte_SType"/>
+      <xs:element name="fileDte" type="tns:fileDte_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="uploadCusAgentFileResponse_CType">
