@@ -1,7 +1,6 @@
 package com.bocom.bbip.gdeupsb.repository;
 
 import java.util.List;
-import java.util.Map;
 
 import com.bocom.bbip.data.annotation.Find;
 import com.bocom.bbip.data.repository.PagingAndSortingRepository;
@@ -15,5 +14,5 @@ public interface EupsStreamNoRepository extends PagingAndSortingRepository<EupsS
 	@Find
 	public List<EupsStreamNo> findLogService(EupsStreamNo eupsStreamNo );
 	@Find
-	public List<EupsStreamNo> findMsgToChkTot(Map<String, Object> map);
+	public List<EupsStreamNo> findMsgToChkTot(String txnDte);
 }
