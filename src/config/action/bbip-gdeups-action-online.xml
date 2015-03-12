@@ -6,6 +6,8 @@
 
 
 			<action id="eups.cancelToTHDExtAction" class="com.bocom.bbip.gdeupsb.action.CancelToTHDExtAction" />
-			<action id="eups.initCancelInfoActionExt" class="com.bocom.bbip.gdeupsb.action.InitCancelInfoActionExt" />
+			
+			<!-- 抹帐初始化处理，根据会计流水号查询交易流水号 -->
+			<action id="eups.preIntCnlDealAction" class="com.bocom.bbip.gdeupsb.action.common.PreIntCnlDealAction" />
 			  
 </x:beans>
