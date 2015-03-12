@@ -37,15 +37,20 @@
 	</process>
 	
 	
-			<!-- 联机单笔抹帐  -->
-	<process id="eups.automaticCancelExt" template="eups.cancelOnlineTemplate"  interceptors="eups.thdTransInterceptorExt" >
+			<!-- 自定义联机单笔抹帐  -->
+	<process id="eups.automaticCancelProcessAdd" template="eups.autoCancelTemplateAdd"  interceptors="eups.thdTransInterceptor" >
 	   <actions>
-	       <!-- 第三方抹账前处理 -->
-	       <action id="preCalAction" ref="eups.preCancelStrategyAction"/>
-	       <!-- 第三方抹账后处理 -->
-	       <action id="aftCalAction" ref="eups.aftCancelStrategyAction"/>
+	   	   <action id="preIntAction" ref="eups.preIntCnlDealAction"/>
+	   	   <!-- 第三方抹账前处理 -->
+			<action id="preCalAction" ref="eups.automaticCancelServiceAction"
+				operations="preCancel" />
+			<!-- 第三方抹账后处理 -->
+			<action id="aftCalAction" ref="eups.automaticCancelServiceAction"
+				operations="aftCancel" />
+	   	   
 	   </actions>
 	</process>
+	
 		
 
 
