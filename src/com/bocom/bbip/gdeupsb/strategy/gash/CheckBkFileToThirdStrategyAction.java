@@ -25,6 +25,7 @@ import com.bocom.bbip.eups.spi.service.check.CheckBkFileToThirdService;
 import com.bocom.bbip.eups.spi.vo.CheckDomain;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -65,11 +66,11 @@ public class CheckBkFileToThirdStrategyAction implements CheckBkFileToThirdServi
 		
 		EupsTransJournal etj = new EupsTransJournal();
 		etj.setComNo(context.getData(ParamKeys.COMPANY_NO).toString().trim());
-		etj.setTxnDte((Date) (context.getData(ParamKeys.TXN_DTE)));
+		etj.setTxnDte((Date) (context.getData("fileDte")));
 		etj.setThdTxnCde("SMPCPAY");//460710?
 
 		List<EupsTransJournal> chkEtjList = eupsTransJournalRepository.find(etj);
-		if (null == chkEtjList && CollectionUtils.isEmpty(chkEtjList)) {
+		if (null == chkEtjList || CollectionUtils.isEmpty(chkEtjList)) {
 			logger.info("There are no records for select check trans journal ");
 			throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
 		}
@@ -115,33 +116,32 @@ public class CheckBkFileToThirdStrategyAction implements CheckBkFileToThirdServi
 //		String thdTxnCde = "460707";
 //		context.setData(ParamKeys.THD_TXN_CDE, thdTxnCde);
 //		String sqn = context.getData(ParamKeys.SEQUENCE);
-		context.setData(ParamKeys.BK, "CNJT");
 		// 交易日期
-		String txnDte1 = DateUtils.format((Date) context.getData(ParamKeys.TXN_DTE), DateUtils.STYLE_yyyyMMdd);
-		if (null == txnDte1) {
-			Date txnDte = getYesterDay();
-			context.setData(ParamKeys.TXN_DTE, txnDte);
-			txnDte1 = DateUtils.format(txnDte, DateUtils.STYLE_yyyyMMdd);
+		String fileDte = context.getData("fileDte");
+		
+		if(StringUtils.isNotEmpty(fileDte)){
+			Date fileDate = DateUtils.parse(fileDte);
+			fileDte = DateUtils.format(fileDate, DateUtils.STYLE_yyyyMMdd);
+			context.setData("fileDte", fileDate);
+		}else{
+			Date fileDate = getYesterDay();
+			fileDte = DateUtils.format(fileDate, DateUtils.STYLE_yyyyMMdd);
+			context.setData("fileDte", fileDate);
 		}
 		
-		//前端传入的日期是String形式的，转换为Date类型 
-//		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//		try {
-//			Date txnDte = sdf.parse((String) context.getData(ParamKeys.TXN_DTE));
-//			context.setData(ParamKeys.TXN_DTE, txnDte);
-//		} catch (ParseException e1) {
-//			e1.printStackTrace();
+		
+//		if (null == fileDte || "".equals(fileDte) || "?".equals(fileDte)) {
+//			
 //		}
-//		txnDte1 = txnDte1.replace("-", "");
-		// 银行编号
-		String bk = context.getData(ParamKeys.BK);
-		// //拼接文件名 ssCNJT20141231.txt
-		String filNam = "ss" + bk + txnDte1 + ".txt";
-		logger.info("========================fileName" + filNam);
+//		else{
+//			
+//		}
+		// 拼接文件名 ssCNJT20141231.txt
+		String filNam = "ssCNJT" + fileDte + ".txt";
+		logger.info("========================fileName【" + filNam +"】");
 
 		// 设置生成文件的名字
-		// EupsThdFtpConfig eupsThdFtpConfig = new EupsThdFtpConfig();
-		EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("gasCheckFilToThd");	//FTP_NO
+		EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne(context.getData(ParamKeys.FTP_ID).toString());	//FTP_NO
 		eupsThdFtpConfig.setLocFleNme(filNam);
 		eupsThdFtpConfig.setRmtFleNme(filNam);
 
