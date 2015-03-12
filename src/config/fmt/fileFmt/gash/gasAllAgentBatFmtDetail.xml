@@ -33,22 +33,22 @@
 
  -->
  	<fixString name="bk" length="4"   default="CNJT"/>
-	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	<fixString  name="Deli1" length="1" default=","/>
 	
 	<fixString name="cusNo" length="12"   />		
-	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	<fixString  name="Deli2" length="1" default=","/>
 
 	<fixString name="cmuTel" length="50" />			
-	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	<fixString  name="Deli3" length="1" default=","/>
 	
 	<fixString name="cusAc" length="32"   />		
-<!-- 	<fixString  name="DeliA" length="1" default=","/> -->
+	<fixString  name="Deli4" length="1" default=","/>
 	
 	<fixString name="idTyp" length="2" />		
-	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	<fixString  name="Deli5" length="1" default=","/>
 	 
 	<fixString name="idNo" length="32" />		
-<!-- 	<fixString  name="DeliA" length="1" default=","/> -->
+	<fixString  name="Deli6" length="1" default=""/>
 
 		
 		
