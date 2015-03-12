@@ -4,8 +4,8 @@
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
 	name="460411Resp">
 		<fixString name="thdSqn" length="24" /><!-- 交易流水号 -->
-		<fixString name="thdTxnDate" length="8" /><!--  交易日期-->
-		<fixString name="thdTxnTime" length="6" /><!-- 交易时间 -->
+		<fixString name="thdTxnDte" length="8" /><!--  交易日期-->
+		<fixString name="thdTxnTme" length="6" /><!-- 交易时间 -->
 		<fixString name="sqn" length="24" /><!--  原交易流水号-->
 		<fixString name="oldTxnDte" length="8" /><!--  原交易日期-->
 		<fixString name="oldTxnTme" length="6" /><!-- 原交易时间 -->
