@@ -99,10 +99,10 @@ public class QueryElecUserStrategyAction implements Executable {
 		// 客户编号21+电费月份6+产品代码2+原系统参考号12+用电地址用户56
 		// String thdCusId=remarkData.substring(0,21);
 		log.info("#########remarkData=" + remarkData);
-		String lChkTm = remarkData.substring(21, 27);
-		String prdCde = remarkData.substring(27, 29);
-		// String oThdSqn=remarkData.substring(29,41); //原系统参考号
-		String thdExtInfo = remarkData.substring(41, remarkData.length()); // 用电地址户名
+		String lChkTm = remarkData.substring(21, 29);
+		String prdCde = remarkData.substring(29, 31);
+		// String oThdSqn=remarkData.substring(31,43); //原系统参考号
+		String thdExtInfo = remarkData.substring(58, remarkData.length()); // 用电地址户名
 
 		String usrAdd = thdExtInfo.substring(0, thdExtInfo.indexOf("^")); // 用电地址
 		String usrNme = thdExtInfo.substring(thdExtInfo.indexOf("^") + 1); // 户名

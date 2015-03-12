@@ -56,10 +56,10 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 		String dpTyp = context.getData(GDParamKeys.GZ_ELE_DPT_TYP);
 		String comNo = CodeSwitchUtils.codeGenerator("eleGzComNoGen", dpTyp);
 		log.info("after codeSwitch, dptTyp change from [" + dpTyp + "],to [" + comNo + "]");
-		if(StringUtils.isEmpty(comNo)){
+		if (StringUtils.isEmpty(comNo)) {
 			throw new CoreException(ErrorCodes.EUPS_COM_NO_NOTEXIST);
 		}
-		
+
 		// 检查签到签退
 		EupsThdTranCtlInfo eupsThdTranCtlInfo = eupsThdTranCtlInfoRepository.findOne(comNo);
 		if (!eupsThdTranCtlInfo.isTxnCtlStsSignin()) {
@@ -124,7 +124,8 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 		}
 		context.setData("bvNo", context.getData("vchNo")); // 凭证号码
 		context.setData(ParamKeys.BAK_FLD5, context.getData("bilDte")); // 凭证日期
-
+		
+		log.info("====================收费类型为："+thdFeeWay);
 		context.setData(GDParamKeys.GZ_ELE_FEE_WAY, thdFeeWay); // 收费类型
 
 		context.setData(ParamKeys.COMPANY_NO, comNo); // 单位编号
@@ -239,7 +240,7 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 		}
 		String vchNo = context.getData("vchNo"); // 凭证号码
 
-		rmkDte.append(StringUtils.leftPad(thdCusNo, 21)).append(lchkTm).append("01").append(StringUtils.left("", 12))
+		rmkDte.append(StringUtils.leftPad(thdCusNo, 21)).append(lchkTm).append("01").append(StringUtils.leftPad(" ", 12))
 				.append(context.getData(GDParamKeys.GZ_ELE_FEE_WAY)).append(StringUtils.leftPad(vchNo, 25));
 
 		context.setData("remarkData48", rmkDte.toString());
@@ -270,6 +271,9 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 			String thdTxnTmeStr = clrYear + eleTxnTme;
 			context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse(thdTxnTmeStr, DateUtils.STYLE_yyyyMMddHHmmss));
 		}
+
+		// 将附加数据保存到数据库
+		context.setData(ParamKeys.RSV_FLD1, context.getData("remarkData48"));
 
 		context.setData("eleClrDte", eleClrDte); // 供电公司清算日期
 

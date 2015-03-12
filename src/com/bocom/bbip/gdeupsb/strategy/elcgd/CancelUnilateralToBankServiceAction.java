@@ -25,16 +25,21 @@ import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
+/**
+ * 划扣抹帐
+ * 
+ * @author qc.w
+ * 
+ */
+public class CancelUnilateralToBankServiceAction implements CancelUnilateralToBankService {
 
-public class CancelUnilateralToBankServiceAction implements CancelUnilateralToBankService{
-	
 	private final static Logger log = LoggerFactory.getLogger(CancelUnilateralToBankServiceAction.class);
 	@Autowired
 	EupsTransJournalRepository eupsTransJournalRepository;
 
 	@Autowired
 	GdElecClrInfRepository gdElecClrInfRepository;
-	
+
 	@Override
 	public Map<String, Object> aftCclToBank(CommHeadDomain commheaddomain, CancelDomain canceldomain, Context context) throws CoreException {
 		log.info("AftCnlBnkSglDealStrategyAction start!..");
@@ -62,7 +67,7 @@ public class CancelUnilateralToBankServiceAction implements CancelUnilateralToBa
 			context.setData(ParamKeys.RESPONSE_CODE, "CNLER00"); // 冲正不成功
 		}
 		log.info("#######thdRspCde= " + thdRspCd);
-		
+
 		return null;
 	}
 
@@ -79,9 +84,9 @@ public class CancelUnilateralToBankServiceAction implements CancelUnilateralToBa
 		String oldAcSqn = remarkData.substring(29, 41).trim(); // 原系统参考号-对应缴费时送给第三方的会计流水号
 
 		context.setData(ParamKeys.THD_CUS_NO, thdCusNo); // 第三方客户标志
-//		context.setData("eleMonth", eleMonth);	
-		context.setData("bakFld2", eleMonth);	// 电费月份
-		context.setData("bakFld4",proCde);	//产品代码
+		// context.setData("eleMonth", eleMonth);
+		context.setData("bakFld2", eleMonth); // 电费月份
+		context.setData("bakFld4", proCde); // 产品代码
 		// context.setData(ParamKeys.OLD_TXN_SEQUENCE, oldAcSqn); //原会计流水号
 
 		// 根据会计流水号查询原交易流水号
@@ -98,7 +103,7 @@ public class CancelUnilateralToBankServiceAction implements CancelUnilateralToBa
 		else {
 			eupsTransJournal = list.get(0);
 		}
-		
+
 		// 获取电力清算信息表信息
 		GdElecClrInf gdElecClrInf = new GdElecClrInf();
 		gdElecClrInf.setBrNo("441999");
@@ -111,13 +116,13 @@ public class CancelUnilateralToBankServiceAction implements CancelUnilateralToBa
 			gdElecClrInf = gdElecClrInfList.get(0);
 			// 获取与第三方约定的第三方会计日期
 			String clrDatStr = gdElecClrInf.getClrDat();
-			context.setData("bakFld1", clrDatStr);     
+			context.setData("bakFld1", clrDatStr);
 		}
-		
+
 		String oldSqn = eupsTransJournal.getSqn();
 		context.setData(ParamKeys.OLD_TXN_SEQUENCE, oldSqn); // 原交易流水号
 		return null;
-		
+
 	}
 
 }
