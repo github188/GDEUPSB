@@ -1749,7 +1749,7 @@
 		</select>	
 	
 	<!-- 南方电网 对总账 分组 -->
-	<select id="findMsgToChkTot" resultMap="basicResultMap"  parameterType="java.util.Map">
+	<select id="findMsgToChkTot" resultType="java.util.Map"  parameterType="java.lang.String">
 			select 
 						COM_NO,RSV_FLD4,RSV_FLD5,TXN_DTE,count(*) as TOT_COUNT,sum(TXN_AMT) as ALL_MONEY
 			 from 
