@@ -79,7 +79,7 @@ public class CheckThdFileToBkServiceAction  implements CheckThdFileToBkService {
         EupsThdFtpConfig eupsThdFtpConfig =  eupsThdFtpConfigRepository.findOne("tbcCheckFile");
         String locFileName = context.getData("datFilNam").toString();
         eupsThdFtpConfig.setLocFleNme(locFileName);
-        eupsThdFtpConfig.setFtpDir(context.getData("datFil").toString());
+       // eupsThdFtpConfig.setFtpDir(context.getData("datFil").toString());没有链接第三方的真实服务器//TODO
         eupsThdFtpConfig.setRmtFleNme(locFileName);
 
         GdEupsTransJournal transJournal = new GdEupsTransJournal();
