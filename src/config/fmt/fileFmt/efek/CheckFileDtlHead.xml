@@ -5,15 +5,16 @@
 	encoding="utf-8"  trace="true">
 	
 	<segment name="header" encoding="utf-8">
-			<fixString name="SQN"  length="27"/><!-- 对账批次流水号 -->
-			<fixString name="enterBankNo"   length="4"/><!-- 银行代码 -->
+			<fixString name="sqn"  length="27"/><!-- 对账批次流水号 -->
+			<fixString name="bankNo"   length="4"/><!-- 银行代码 -->
 			<fixString name="comNo"   length="8"  /><!-- 单位编码 -->
-			<fixString name="busTyp"   length="3"    /><!-- 收费方式-->
+			<fixString name="busType"   length="3"    /><!-- 收费方式-->
 			<fixString name="payType"   length="3"   /><!-- 费用类型-->
-			<fixString name="amount"   length="11"   /><!--  总笔数-->
+			<fixString name="totCount"   length="11"   /><!--  总笔数-->
 			<fixString name="allMoney"   length="16"  /><!--  总金额-->
 			<fixString name="checkDate"  length="8" /><!--  达账日期-->
 			<fixString name="checkTime"   length="6"  /><!--  达账时间-->
+			<fixString name="checkOneCode"   length="32"  /><!--  对账唯一标识码-->
 	</segment>
 	
 	<!--  	<include  encodePrefix="checkFileDtlHead.xml"/>  -->
