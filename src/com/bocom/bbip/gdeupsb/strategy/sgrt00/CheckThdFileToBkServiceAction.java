@@ -21,6 +21,7 @@ import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.eups.spi.service.check.CheckThdFileToBkService;
 import com.bocom.bbip.eups.spi.vo.CheckDomain;
+import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal;
 import com.bocom.bbip.gdeupsb.repository.GdEupsTransJournalRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
@@ -117,9 +118,23 @@ public class CheckThdFileToBkServiceAction  implements CheckThdFileToBkService {
         fileBottom.put("SUCC_COUNT", "<SUCC_COUNT>"+resultList.get(0).get("totSum")+"</SUCC_COUNT>\n");
         fileBottom.put("SUCC_AMT", "<SUCC_AMT>"+resultList.get(0).get("totAmt")+"</SUCC_AMT>\n</TOTAL>\n</OUT>\n</DLMAPS>");
         fileMap.put("bottom", fileBottom);
-        operateFile.createCheckFile(eupsThdFtpConfig, "tbcCheckFile", locFileName, fileMap);
-
-        operateFTPAction.putCheckFile(eupsThdFtpConfig);
+        try {
+            operateFile.createCheckFile(eupsThdFtpConfig, "tbcCheckFile", locFileName, fileMap);
+        } catch (Exception e){
+            context.setData(GDParamKeys.RSP_CDE,"9999");
+            context.setData(GDParamKeys.RSP_MSG,"生成对账文件失败！");
+            return null;
+        }
+        try {
+            operateFTPAction.putCheckFile(eupsThdFtpConfig);
+        } catch (Exception e){
+            context.setData(GDParamKeys.RSP_CDE,"9999");
+            context.setData(GDParamKeys.RSP_MSG,"上传对账文件失败！");
+            return null;
+        }
+        context.setData(GDParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
+        context.setData(GDParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
+        context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
         return null;
     }
 }
