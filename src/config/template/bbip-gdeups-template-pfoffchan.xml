@@ -261,5 +261,52 @@
      <simple-template id="gdgaseups.simpleTran" transactional="txTemplate">
 		<action id="act" place-holder="true" />
 	</simple-template>
+	
+		<!-- 自动区分抹帐： 根据流水表第三方状态和主机状态决定抹账方向 -->
+	<flow-template id="eups.autoCancelTemplateAdd">
+		<step id="init" useCtxState="true" transactional="txTemplate">
+			<!-- 交易前检查 -->
+			<action id="preIntAction" place-holder="true"/>
+			<!-- 第三方交易控制检查（默认正常交易） -->
+			<action id="preAction" ref="eups.checkComTxnCtlAction" operations="checkThdTxnCtlNormal" />
+			<action id="preAction" ref="eups.checkBeforeCancelAction" operations="checkBeforeCancel" />
+			<!-- 联机抹账预处理 -->
+			<action id="initAction" ref="eups.initCancelInfoAction" />
+			<next on="BP_STATE_NORMAL" to="autoCancelPayment" />
+			<next on="*" to="finalize" />
+		</step>
+		<step id="autoCancelPayment" next="REVERSE_TYP" useCtxState="true"
+			transactional="txTemplate">
+			<action id="preAction" ref="eups.checkBeforeCancelAction" operations="autoCancelDistinguish" />
+		</step>
+		<decision id="REVERSE_TYP">
+			<script>tradeTxnDir</script>
+			<next on="OL" to="businessTHDStep" />
+			<next on="BU" to="businessCBStep" />
+			<next on="TU" to="businessTHDStep" />
+		</decision>
+		<step id="businessTHDStep" useCtxState="true" transactional="txTemplate">
+			<action id="preCalAction" place-holder="true" />
+			<action id="businessTHDAction" ref="eups.cancelToTHDAction" />
+			<next on="BP_STATE_SUCCESS" to="REVERSE_TYP1" />
+			<next on="*" to="finalize" />
+		</step>
+		<decision id="REVERSE_TYP1">
+			<script>tradeTxnDir</script>
+			<next on="OL" to="businessCBStep" />
+			<next on="TU" to="finalize" />
+		</decision>
+		<step id="businessCBStep" next="finalize" useCtxState="true"
+			transactional="txTemplate">
+			<action id="businessCBAction" ref="eups.bbipPaymentCancelUsingReversal" />
+			<action id="businessCBAction" ref="eups.processCBCancelResultAction" />
+		</step>
+		<step id="finalize" useCtxState="true" transactional="txTemplate">
+			<action id="aftCalAction" place-holder="true" />
+			<action id="finalizeAction" ref="eups.saveCancelResultAction" />
+		</step>
+	</flow-template>
+	
+	
 
 </x:beans>
