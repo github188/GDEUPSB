@@ -50,25 +50,5 @@
 	<fixString name="idNo" length="32" />		
 	<fixString  name="Deli6" length="1" default=""/>
 
-		
-		
-		
-	<!-- 
-	<varString name="bk" type="D," referred="true"
-			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.bk, 4, ' ','0')" />
-	<varString name="cusNo" type="D," referred="true"
-			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.cusNo, 12, ' ','0')" />
-	<varString name="cmuTel" type="D," referred="true"
-			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.cmuTel, 50, ' ','0')" />
-	<varString name="cusAc" type="D," referred="true"
-			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.cusAc, 32, ' ','0')" />
-	<varString name="idTyp" type="D," referred="true"
-			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.idTyp, 2, ' ','0')" />
-	<varString name="idNo"  referred="true"
-			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.idNo, 32, ' ','0')" />
-		 -->
-		
-		
-		
 	</segment>
 </message>
