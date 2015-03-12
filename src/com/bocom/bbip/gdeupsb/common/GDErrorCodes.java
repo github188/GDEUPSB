@@ -42,7 +42,10 @@ public final class GDErrorCodes {
 
 	/** 广东电力不存在清算日期参数 */
 	public static final String EUPS_ELE_GZ_CLEAR_INFO_ERROR = "BBIP4400EU0105";
-	
+
+	/** 广东电力已清算，不可发起该交易 */
+	public static final String EUPS_ELE_GZ_ALREADY_CLEAR_ERROR = "BBIP4400EU0106";
+
 	/** 供电局系统:无效交易(数据格式) */
 	public static final String EUPS_ELE_GZ_DATE_FORMAT_ERROR = "BBIP4400EU0190";
 
@@ -93,7 +96,7 @@ public final class GDErrorCodes {
 
 	/** 签约一站通-没有满足条件的记录 */
 	public static final String EUPS_SIGN_NO_RECORD_FOUND = "BBIP4400EU1708";
-	
+
 	/** 文件名不符合规范 */
 	public static final String EUPS_FILE_RULE_ERROR = "BBIP0004EU0137";
 	/** 文件名中的业务类型不正确 */
@@ -101,26 +104,21 @@ public final class GDErrorCodes {
 	/** 检查文件头中的网点号 */
 	public static final String EUPS_FILE_HEADBR_ERROR = "BBIP0004EU0139";
 	/** 文件头汇总笔数与明细不一致 */
-	public static final String  EUPS_FILE_HEADCNT_ERROR="BBIP0004EU0140";
+	public static final String EUPS_FILE_HEADCNT_ERROR = "BBIP0004EU0140";
 	/** 文件明细第 */
-	public static final String  EUPS_FILE_DETAIL_ERROR="BBIP0004EU0141";
-	/**打印报错**/
-	public static final String  PRINT_REPORT_ERROR="BBIP0004EU0142";
-	/**无打印模板**/
-	public static final String  PRINT_FMTFIL_ERROR="BBIP0004EU0143";
-	/**生成签约成功清单失败**/
-	public static final String  PRINT_SUCC_ERROR="BBIP0004EU0144";
-	/**生成签约失败清单失败**/
-	public static final String  PRINT_FAIL_ERROR="BBIP0004EU01445";
-	/**文件头的业务类型不对**/
-	public static final String EUPS_FILE_HEADSBID_ERROR="BBIP0004EU01446";
-	/**文件头的日期不对**/
-	public static final String EUPS_FILE_HEADDATE_ERROR="BBIP0004EU01447";
-	
-	
-	
-	
-	
+	public static final String EUPS_FILE_DETAIL_ERROR = "BBIP0004EU0141";
+	/** 打印报错 **/
+	public static final String PRINT_REPORT_ERROR = "BBIP0004EU0142";
+	/** 无打印模板 **/
+	public static final String PRINT_FMTFIL_ERROR = "BBIP0004EU0143";
+	/** 生成签约成功清单失败 **/
+	public static final String PRINT_SUCC_ERROR = "BBIP0004EU0144";
+	/** 生成签约失败清单失败 **/
+	public static final String PRINT_FAIL_ERROR = "BBIP0004EU01445";
+	/** 文件头的业务类型不对 **/
+	public static final String EUPS_FILE_HEADSBID_ERROR = "BBIP0004EU01446";
+	/** 文件头的日期不对 **/
+	public static final String EUPS_FILE_HEADDATE_ERROR = "BBIP0004EU01447";
 
 	// 汕头水费
 	/** 登录数据库错 */
@@ -346,7 +344,7 @@ public final class GDErrorCodes {
 	public static final String EUPS_LOTR01_12_ERROR = "BBIP4400EU1012";
 	/** 返奖记录表有返奖记录存在异常 */
 	public static final String EUPS_LOTR01_13_ERROR = "BBIP4400EU1013";
-	
+
 	/** 福彩系统配置信息不存在 */
 	public static final String EUPS_LOTR01_14_ERROR = "BBIP4400EU1014";
 	/** 代收内部户不存在 */
@@ -359,8 +357,6 @@ public final class GDErrorCodes {
 	public static final String EUPS_LOTR01_18_ERROR = "BBIP4400EU1018";
 	/** 不存在未返奖奖期 */
 	public static final String EUPS_LOTR01_19_ERROR = "BBIP4400EU1019";
-	
-	
 
 	public static final String EUPS_THD_ERROR_TIMEOUT = "BBIP4400EU0701";
 	public static final String EUPS_THD_ERROR_SENDFAILURE = "BBIP4400EU0702";
@@ -404,38 +400,38 @@ public final class GDErrorCodes {
 	/************************ 中山文件批量 *********************/
 	/******* 批次文件重复录入 *********/
 	public static final String GDEUPSB_BAT_FIL_EXIST = "BBIP4400EU1601";
-	
-	/**************************南方电网***********************/
-	/**部分与汕头电力相同 ELEC02*/
-	/** 银行正在日结中，无法进行缴费*/
-	public static final String EUPS_ELEC00_84_ERROR="BBIP4400EU0001";
-	/**供电账户锁定，无法进行缴费，请致电供电95598 */
-	public static final String EUPS_ELEC00_100_ERROR="BBIP4400EU0002";
-	
-	/** 批次状态为不可以撤销*/
-	public static final String EUPS_BATCH_STATUS_ERROR="BBIP4400EU0352";
-	/** 批次已经存在*/
-	public static final String EUPS_BATCH_INFO_EXIST="BBIP4400EU0353";
 
-	/*************************公共汽车***********************/
-	/**0	成功*/
-	public static final String EUPS_VECH00_0_ERROR="BBIP4400EU0800";
-	/**	系统异常*/
-	public static final String EUPS_VECH00_99_ERROR="BBIP4400EU0899";
-	/**	签名验证失败*/
-	public static final String EUPS_VECH00_1001_ERROR="BBIP4400EU0811";
-	/**	不是本系统的终端*/
-	public static final String EUPS_VECH00_1002_ERROR="BBIP4400EU0812";
-	/**	客户端IP验证失败*/
-	public static final String EUPS_VECH00_1003_ERROR="BBIP4400EU0813";
-	/**	没有对应查询数据*/
-	public static final String EUPS_VECH00_1004_ERROR="BBIP4400EU0814";
-	/**	参数不正确*/
-	public static final String EUPS_VECH00_1005_ERROR="BBIP4400EU0815";
-	/**	提交的订单和预提交订单信息不一致*/
-	public static final String EUPS_VECH00_1006_ERROR="BBIP4400EU0816";
-	/**	订单信息错误*/
-	public static final String EUPS_VECH00_1008_ERROR="BBIP4400EU0818";
-	/**	没有找到确认支付的订单*/
-	public static final String EUPS_VECH00_1009_ERROR="BBIP4400EU0819";
+	/************************** 南方电网 ***********************/
+	/** 部分与汕头电力相同 ELEC02 */
+	/** 银行正在日结中，无法进行缴费 */
+	public static final String EUPS_ELEC00_84_ERROR = "BBIP4400EU0001";
+	/** 供电账户锁定，无法进行缴费，请致电供电95598 */
+	public static final String EUPS_ELEC00_100_ERROR = "BBIP4400EU0002";
+
+	/** 批次状态为不可以撤销 */
+	public static final String EUPS_BATCH_STATUS_ERROR = "BBIP4400EU0352";
+	/** 批次已经存在 */
+	public static final String EUPS_BATCH_INFO_EXIST = "BBIP4400EU0353";
+
+	/************************* 公共汽车 ***********************/
+	/** 0 成功 */
+	public static final String EUPS_VECH00_0_ERROR = "BBIP4400EU0800";
+	/** 系统异常 */
+	public static final String EUPS_VECH00_99_ERROR = "BBIP4400EU0899";
+	/** 签名验证失败 */
+	public static final String EUPS_VECH00_1001_ERROR = "BBIP4400EU0811";
+	/** 不是本系统的终端 */
+	public static final String EUPS_VECH00_1002_ERROR = "BBIP4400EU0812";
+	/** 客户端IP验证失败 */
+	public static final String EUPS_VECH00_1003_ERROR = "BBIP4400EU0813";
+	/** 没有对应查询数据 */
+	public static final String EUPS_VECH00_1004_ERROR = "BBIP4400EU0814";
+	/** 参数不正确 */
+	public static final String EUPS_VECH00_1005_ERROR = "BBIP4400EU0815";
+	/** 提交的订单和预提交订单信息不一致 */
+	public static final String EUPS_VECH00_1006_ERROR = "BBIP4400EU0816";
+	/** 订单信息错误 */
+	public static final String EUPS_VECH00_1008_ERROR = "BBIP4400EU0818";
+	/** 没有找到确认支付的订单 */
+	public static final String EUPS_VECH00_1009_ERROR = "BBIP4400EU0819";
 }
