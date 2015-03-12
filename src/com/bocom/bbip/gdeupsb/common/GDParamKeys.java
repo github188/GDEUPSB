@@ -88,6 +88,10 @@ public class GDParamKeys {
 	
 	/** 收费类型 */
 	public static final String GZ_ELE_FEE_WAY = "thdFeeWay";
+	
+	/** 电费抹帐原交易流水 */
+	public static final String GZ_ELE_CANCLE_OLD_JNL = "cancleOldJnl";
+	
 
 	/********************* 广州电力end **********************/
 
