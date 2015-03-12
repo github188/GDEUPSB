@@ -1282,7 +1282,7 @@
       <xs:element name="payNo" type="tns:payNo_SType"/>
       <xs:element name="bankNo" type="tns:bankNo_SType"/>
       <xs:element name="fulDedFlg" type="tns:fulDedFlg_SType"/>
-      <xs:element name="electricityYearMonth" type="tns:electricityYearMonth_SType"/>
+      <xs:element name="electricityYearMonth" type="tns:electricityYearMonth_SType" minOccurs="0"/>
       <xs:element name="oweFeeAmt" type="tns:oweFeeAmt_SType" minOccurs="0"/>
       <xs:element name="capital" type="tns:capital_SType" minOccurs="0"/>
       <xs:element name="dedit" type="tns:dedit_SType" minOccurs="0"/>
@@ -1368,7 +1368,7 @@
       <xs:element name="tradeTxnDir" type="tns:tradeTxnDir_SType" minOccurs="0"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="Operate" type="tns:Operate_SType"/>
-      <xs:element name="mfmVchNo" type="tns:mfmVchNo_SType" minOccurs="0"/>
+      <xs:element name="mfmVchNo" type="tns:mfmVchNo_SType"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="tallyCancelQryOnlineResponse_CType">
@@ -1378,7 +1378,7 @@
       <xs:element name="sqn" type="tns:sqn_SType" minOccurs="0"/>
       <xs:element name="txnDte" type="tns:txnDte_SType" minOccurs="0"/>
       <xs:element name="txnTme" type="tns:txnTme_SType" minOccurs="0"/>
-      <xs:element name="oldTxnSqn" type="tns:oldTxnSqn_SType"/>
+      <xs:element name="oldTxnSqn" type="tns:oldTxnSqn_SType" minOccurs="0"/>
       <xs:element name="thdTxnDte" type="tns:thdTxnDte_SType" minOccurs="0"/>
       <xs:element name="thdTxnTme" type="tns:thdTxnTme_SType" minOccurs="0"/>
       <xs:element name="busType" type="tns:busType_SType" minOccurs="0"/>
