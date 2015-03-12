@@ -358,6 +358,8 @@ public final class GDConstants {
 	public static final String THD_STS_B1 = "B1";
 	public static final String THD_STS_B2 = "B2";
 	public static final String THD_STS_B3 = "B3";
+	/**公共批量 批次撤销调用processID*/
+	public static final String BATCH_CANCEL_PROCESSID="gdeups.cancelBatch";
 	/**公共批量 公共方法*/
 	public static final String BATCH_FILE_COMMON_UTILS="BatchFileCommon";
 	/**公共批量 代收付文件格式*/
