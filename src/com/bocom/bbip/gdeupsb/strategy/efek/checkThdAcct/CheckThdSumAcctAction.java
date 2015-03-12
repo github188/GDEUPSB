@@ -78,7 +78,10 @@ public class CheckThdSumAcctAction implements  CheckThdSumAcctService{
 				context.setData(ParamKeys.SEQUENCE, sqn);
 //				context.setData("rcnBat", sqn);
 				long amount =Long.parseLong(map.get("TOT_COUNT").toString());
-				BigDecimal allmoney=new BigDecimal(map.get("ALL_MONEY").toString());	
+				BigDecimal allmoney=new BigDecimal("0.00");
+				if(null != map.get("ALL_MONEY")){
+					allmoney.add(new BigDecimal(map.get("ALL_MONEY").toString()));
+				}
 				context.setData(ParamKeys.BANK_NO, "301");
 				context.setData(GDParamKeys.AMOUNT, amount);
 				context.setData(GDParamKeys.ALL_MONEY, allmoney);  
