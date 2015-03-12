@@ -63,19 +63,13 @@ public class CheckThdSumAcctAction implements  CheckThdSumAcctService{
 		context.setData(GDParamKeys.SVRCOD, "50");
 		
 		//对账日期
-		String chkDte=null;
-		if(StringUtils.isNotEmpty((String)context.getData(GDParamKeys.CHECKDATE))){
-				chkDte=context.getData(GDParamKeys.CHECKDATE).toString();
-		}else{
-				chkDte=DateUtils.format(txnDte,DateUtils.STYLE_yyyyMMdd);
-		}
-		chkDte="20150311";
-		Date rcnDte=DateUtils.parse(chkDte);
-		context.setData(ParamKeys.RCN_DATE, rcnDte);
+		String chkDte=DateUtils.format(txnDte,DateUtils.STYLE_yyyyMMdd);
+		
+		context.setData(ParamKeys.RCN_DATE, txnDte);
 		context.setData(GDParamKeys.CHECKDATE, chkDte);
 		context.setData(GDParamKeys.CHECKTIME, DateUtils.formatAsHHmmss(txnTme));
 		Map<String, Object> maps=new HashMap<String, Object>();
-		maps.put("txnDte", rcnDte);
+		maps.put("txnDte", txnDte);
 		//得到记录
 		List<Map<String, Object>> mapList=eupsStreamNoRepository.findMsgToChkTot(maps);
 		for(Map<String, Object> map:mapList){
