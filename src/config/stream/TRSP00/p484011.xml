@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+  encoding="GBK"  trace="true">
+	<segment name="agentResponsehead">
+   <varString type="D|"  name="trspCd"  /> <!-- 返回码-->
+	<varString type="D|"  name="tactDt"  /> <!-- 企业日期-->
+	<varString type="D|"  name="carNo"  /> <!-- 车牌号码-->
+	<varString type="D|"  name="carTyp"  /> <!-- 车牌类别-->
+	<varString type="D|"  name="payMon"  /> <!-- 缴费月数-->
+	<varString type="D|"  name="begDat"  /> <!-- 有效起始日期-->
+	<varString type="D|"  name="endDat"  /> <!-- 有效结束日期-->
+	<varString type="D|"  name="carName"  /> <!-- 车型说明-->
+	<varString type="D|"  name="carDzs"  /> <!-- 吨数或座数-->
+	<varString type="D|"  name="cntStd"  /> <!-- 计费标准-->
+	<varString type="D|"  name="feeStd"  /> <!-- 标准年收费额-->
+	<varString type="D|"  name="corpus"  /> <!-- 本金-->
+	<varString type="D|"  name="lateFee"  /> <!-- 滞纳金额-->
+	<varString type="D|"  name="txnAmt"  /> <!-- 收费金额 -->
+	<varString type="D|"  name="CLGS"  /> <!-- 车辆归属-->
+	<varString type="D|"  name="YYBZ"  /> <!-- 营运标志-->
+	<varString type="D|"  name="tcusNm"  /> <!-- 车主名称-->
+	</segment> 
+</message>
