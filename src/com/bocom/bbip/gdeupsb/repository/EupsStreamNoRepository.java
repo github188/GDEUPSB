@@ -16,4 +16,7 @@ public interface EupsStreamNoRepository extends PagingAndSortingRepository<EupsS
 	public List<EupsStreamNo> findLogService(EupsStreamNo eupsStreamNo );
 	@Find
 	public List<Map<String, Object>> findMsgToChkTot(Map<String, Object> map);
+	@Find
+	public List<Map<String, Object>> findComNoGroup(Map<String, Object> map);
+	
 }
