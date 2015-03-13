@@ -1277,7 +1277,8 @@
     <xs:sequence>
       <xs:element ref="tns:requestHeader" minOccurs="0"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
-      <xs:element name="busType" type="tns:busType_SType" minOccurs="0"/>
+      <xs:element name="payType" type="tns:payType_SType"/>
+      <xs:element name="busType" type="tns:busType_SType"/>
       <xs:element name="comNo" type="tns:comNo_SType"/>
       <xs:element name="payNo" type="tns:payNo_SType"/>
       <xs:element name="bankNo" type="tns:bankNo_SType"/>
