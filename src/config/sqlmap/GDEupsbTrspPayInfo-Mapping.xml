@@ -275,4 +275,51 @@
       </foreach>
     </if>
   </select>
+   <delete id="delete1" parameterType="java.lang.String" >
+    delete from gdeupsb.TRSP_PAY_INFO
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="thdKey!=null" >
+        AND  THD_KEY=#{thdKey,jdbcType=CHAR}
+      </if>
+      <if test="brNo!=null" >
+        AND  BR_NO=#{brNo,jdbcType=CHAR}
+      </if>
+      <if test="carTyp!=null" >
+        AND  CAR_TYP=#{carTyp,jdbcType=CHAR}
+      </if>
+      <if test="carNo!=null" >
+        AND  CAR_NO=#{carNo,jdbcType=CHAR}
+      </if>
+      <if test="tcusNm!=null" >
+        AND  TCUS_NM=#{tcusNm,jdbcType=CHAR}
+      </if>
+      <if test="payMon!=null" >
+        AND  PAY_MON=#{payMon,jdbcType=CHAR}
+      </if>
+      <if test="actDat!=null" >
+        AND  ACT_DAT=#{actDat,jdbcType=DATE}
+      </if>
+      <if test="tactDt!=null" >
+        AND  TACT_DT=#{tactDt,jdbcType=DATE}
+      </if>
+      <if test="txnAmt!=null" >
+        AND  TXN_AMT=#{txnAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="flg!=null" >
+        AND  FLG=#{flg,jdbcType=CHAR}
+      </if>
+      <if test="bakFld1!=null" >
+        AND  BAK_FLD1=#{bakFld1,jdbcType=CHAR}
+      </if>
+      <if test="bakFld2!=null" >
+        AND  BAK_FLD2=#{bakFld2,jdbcType=CHAR}
+      </if>
+      <if test="bakFld3!=null" >
+        AND  BAK_FLD3=#{bakFld3,jdbcType=CHAR}
+      </if>
+      <if test="rsvFld1!=null" >
+        AND  RSV_FLD1=#{rsvFld1,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </delete>
 </mapper>
