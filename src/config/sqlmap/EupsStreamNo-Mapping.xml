@@ -1751,25 +1751,25 @@
 	<!-- 南方电网 对总账 分组 -->
 	<select id="findMsgToChkTot" resultType="java.util.Map"  parameterType="java.util.Map">
 			select 
-						COM_NO,BAK_FLD6,RSV_FLD4,RSV_FLD5,TXN_DTE,count(*) as TOT_COUNT,sum(TXN_AMT) as ALL_MONEY
+						COM_NO,THD_OBK_CDE,RSV_FLD4,RSV_FLD5,TXN_DTE,count(*) as TOT_COUNT,sum(TXN_AMT) as ALL_MONEY
 			 from 
 			 			${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL
 			 where  
 			 			EUPS_BUS_TYP='ELEC00' AND TXN_STS='S' AND TXN_TYP='N' 
 			 			AND TXN_DTE=#{txnDte,jdbcType=CHAR}  
 			  group by
-			 			COM_NO,BAK_FLD6,RSV_FLD4,RSV_FLD5,TXN_DTE
+			 			COM_NO,THD_OBK_CDE,RSV_FLD4,RSV_FLD5,TXN_DTE
 	 </select>	
 	 	<!-- 南方电网 日志服务 分组 -->
 	<select id="findComNoGroup" resultType="java.util.Map"  parameterType="java.util.Map">
 			select 
-						COM_NO,BAK_FLD6,TXN_DTE,count(*) as TOT_COUNT
+						COM_NO,THD_OBK_CDE,TXN_DTE,count(*) as TOT_COUNT
 			 from 
 			 			${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL
 			 where  
 			 			EUPS_BUS_TYP='ELEC00' AND TXN_STS='S' AND TXN_TYP='N' 
 			 			AND TXN_DTE=#{txnDte,jdbcType=CHAR}  
 			  group by
-			 			COM_NO,BAK_FLD6,TXN_DTE
+			 			COM_NO,THD_OBK_CDE,TXN_DTE
 	 </select>	
 </mapper>
