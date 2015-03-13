@@ -33,10 +33,14 @@
 	<bbip-core:bbip-service-support />
 
 	<!-- 向bbip平台内部提供服务 -->
-	<bbip-channel:bbip-service-channel-adaptor
+ 	<bbip-channel:bbip-service-channel-adaptor
 		service-domain="${system.code}" />
+<!--<bbip-channel:bbip-service-channel-adaptor
+		service-domain="GDEUPSC" /> -->
+
 
 	<!-- 向bgsp提供服务 -->
+	
 
 	<!-- BBIP平台公共服务 (平台基础功能) -->
 	<bean id="bbipPublicService" class="com.bocom.bbip.comp.BBIPPublicServiceImpl" />
