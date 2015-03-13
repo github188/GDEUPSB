@@ -59,5 +59,6 @@ public class PrePayFeeAction implements Executable{
 						context.setData("GthFlg", "N");//			<Set>GthFlg=N</Set>
 					}
 					context.setData(ParamKeys.CUS_NME, context.getData("CusNme"));
+					context.setData(ParamKeys.BUS_TYP, "2");
 			}
 }

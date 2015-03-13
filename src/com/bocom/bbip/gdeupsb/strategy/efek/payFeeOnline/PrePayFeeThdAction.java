@@ -71,7 +71,6 @@ public class PrePayFeeThdAction implements Executable{
 				//TODO 
 				context.setData(GDParamKeys.BUS_IDENTIFY, "");
 //				context.setData(ParamKeys.PAY_TYPE, "110");
-				context.setData(ParamKeys.BUS_TYP, "2");
 				
 	}
 }
