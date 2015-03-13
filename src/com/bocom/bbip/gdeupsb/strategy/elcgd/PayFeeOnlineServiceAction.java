@@ -124,8 +124,8 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 		}
 		context.setData("bvNo", context.getData("vchNo")); // 凭证号码
 		context.setData(ParamKeys.BAK_FLD5, context.getData("bilDte")); // 凭证日期
-		
-		log.info("====================收费类型为："+thdFeeWay);
+
+		log.info("====================收费类型为：" + thdFeeWay);
 		context.setData(GDParamKeys.GZ_ELE_FEE_WAY, thdFeeWay); // 收费类型
 
 		context.setData(ParamKeys.COMPANY_NO, comNo); // 单位编号

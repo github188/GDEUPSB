@@ -69,10 +69,14 @@ public class QueryElecUserStrategyAction implements Executable {
 		thdCusNo = StringUtils.leftPad(thdCusNo, 21, ' ');
 		context.setData(ParamKeys.THD_CUS_NO, thdCusNo); // 第三方客户标识
 
-		String payMonth = context.getData(GDParamKeys.GZ_ELE_PAY_MONTH); // 缴费月份
+		String lchkTm = context.getData("lChkTm"); // 缴费月份
+		if (StringUtils.isEmpty(lchkTm)) {
+			lchkTm = "  999999";
+		}
 
-		// <Set>OData=STRCAT($TCusId,$LChkTm,01,SPACE(12),SPACE(56))</Set>
-		String rmk = thdCusNo + payMonth + "01" + String.format("%-68s", " "); // 附加数据
+		String rmk = thdCusNo + lchkTm + "01" + StringUtils.leftPad(" ", 68); // 附加数据
+
+		context.setData("remarkData48", rmk);
 
 		Map<String, Object> resultInfo = thirdPartyAdaptor.trade(context);
 		// 获取返回码
