@@ -4,15 +4,11 @@
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
 	encoding="utf-8" trace="true">
 	
-	<!-- 流水表信息 -->
-	<segment name="detail"  encoding="utf-8">
-		 <fixString name="sqn" length="24"/><!-- 交易流水号 -->
-		 <fixString name="rsvFld1" length="8"/><!--  交易日期-->
-		 <fixString name="rsvFld2" length="6"/><!-- 交易时间 -->
-		 <fixString name="comNo" length="8"/><!--单位编码  -->
-		 <fixString name="rsvFld3" length="36"/><!--  文件名称-->
-		 <fixString name="rsvFld4" length="2"/><!-- 文件类型 -->
-		 <fixString name="rsvFld5" length="32"/><!--  文件MD5-->
+	<segment name="header"  encoding="utf-8"> 
+		 	<fixString name="sqn" length=" 24" /><!--交易流水号-->
+			<fixString name="bankNo"  length="  4" /><!--银行代码-->
+			<fixString name="comNo"  length="  8" /><!--单位编码-->
+			<fixString name="totCount"  length=" 11" /><!--总笔数-->
 	</segment>
 	
 </message>
