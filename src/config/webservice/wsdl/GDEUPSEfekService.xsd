@@ -87,20 +87,6 @@
       <xs:element name="response" type="tns:qryCusPayRecordResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="deleteCusAgent" type="tns:deleteCusAgentReq_CType"/>
-  <xs:element name="deleteCusAgentResponse" type="tns:deleteCusAgentRsp_CType"/>
-  <xs:complexType name="deleteCusAgentReq_CType">
-    <xs:sequence>
-      <xs:element ref="gsp:requestInformation"/>
-      <xs:element name="request" type="tns:deleteCusAgentRequest_CType"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="deleteCusAgentRsp_CType">
-    <xs:sequence>
-      <xs:element ref="gsp:replyInformation"/>
-      <xs:element name="response" type="tns:deleteCusAgentResponse_CType"/>
-    </xs:sequence>
-  </xs:complexType>
   <xs:element name="tallyCancelOnline" type="tns:tallyCancelOnlineReq_CType"/>
   <xs:element name="tallyCancelOnlineResponse" type="tns:tallyCancelOnlineRsp_CType"/>
   <xs:complexType name="tallyCancelOnlineReq_CType">
@@ -129,6 +115,20 @@
       <xs:element name="response" type="tns:advanceTradeResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:element name="deleteCusAgent" type="tns:deleteCusAgentReq_CType"/>
+  <xs:element name="deleteCusAgentResponse" type="tns:deleteCusAgentRsp_CType"/>
+  <xs:complexType name="deleteCusAgentReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:deleteCusAgentRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deleteCusAgentRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:deleteCusAgentResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:element name="checkFileSumAcct" type="tns:checkFileSumAcctReq_CType"/>
   <xs:element name="checkFileSumAcctResponse" type="tns:checkFileSumAcctRsp_CType"/>
   <xs:complexType name="checkFileSumAcctReq_CType">
@@ -155,20 +155,6 @@
     <xs:sequence>
       <xs:element ref="gsp:replyInformation"/>
       <xs:element name="response" type="tns:tallyOneOnlineResponse_CType"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:element name="logService" type="tns:logServiceReq_CType"/>
-  <xs:element name="logServiceResponse" type="tns:logServiceRsp_CType"/>
-  <xs:complexType name="logServiceReq_CType">
-    <xs:sequence>
-      <xs:element ref="gsp:requestInformation"/>
-      <xs:element name="request" type="tns:logServiceRequest_CType"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="logServiceRsp_CType">
-    <xs:sequence>
-      <xs:element ref="gsp:replyInformation"/>
-      <xs:element name="response" type="tns:logServiceResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
   <xs:element name="tallyCancelQryOnline" type="tns:tallyCancelQryOnlineReq_CType"/>
@@ -997,35 +983,6 @@
       <xs:maxLength value="6"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:complexType name="deleteCusAgentRequest_CType">
-    <xs:sequence>
-      <xs:element ref="tns:requestHeader" minOccurs="0"/>
-      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
-      <xs:element name="conSign" type="tns:conSign_SType"/>
-      <xs:element name="comNo" type="tns:comNo_SType"/>
-      <xs:element name="payNo" type="tns:payNo_SType"/>
-      <xs:element name="thdCusNme" type="tns:thdCusNme_SType" minOccurs="0"/>
-      <xs:element name="bankNo" type="tns:bankNo_SType" minOccurs="0"/>
-      <xs:element name="cusAc" type="tns:cusAc_SType" minOccurs="0"/>
-      <xs:element name="cusNme" type="tns:cusNme_SType" minOccurs="0"/>
-      <xs:element name="newCusAc" type="tns:newCusAc_SType" minOccurs="0"/>
-      <xs:element name="newCusName" type="tns:newCusName_SType" minOccurs="0"/>
-      <xs:element name="accTyp" type="tns:accTyp_SType"/>
-      <xs:element name="IdTpCd" type="tns:IdTpCd_SType"/>
-      <xs:element name="RefNum" type="tns:RefNum_SType"/>
-      <xs:element name="cmuTel" type="tns:cmuTel_SType" minOccurs="0"/>
-      <xs:element name="mobPhone" type="tns:mobPhone_SType" minOccurs="0"/>
-      <xs:element name="email" type="tns:email_SType" minOccurs="0"/>
-      <xs:element name="bakFld1" type="tns:bakFld1_SType" minOccurs="0"/>
-      <xs:element name="agtSts" type="tns:agtSts_SType" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="deleteCusAgentResponse_CType">
-    <xs:sequence>
-      <xs:element ref="tns:responseHeader" minOccurs="0"/>
-      <xs:element name="rspMsg" type="tns:rspMsg_SType" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="tallyCancelOnlineRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader" minOccurs="0"/>
@@ -1219,6 +1176,35 @@
       <xs:maxLength value="6"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:complexType name="deleteCusAgentRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="conSign" type="tns:conSign_SType"/>
+      <xs:element name="comNo" type="tns:comNo_SType"/>
+      <xs:element name="payNo" type="tns:payNo_SType"/>
+      <xs:element name="thdCusNme" type="tns:thdCusNme_SType" minOccurs="0"/>
+      <xs:element name="bankNo" type="tns:bankNo_SType" minOccurs="0"/>
+      <xs:element name="cusAc" type="tns:cusAc_SType" minOccurs="0"/>
+      <xs:element name="cusNme" type="tns:cusNme_SType" minOccurs="0"/>
+      <xs:element name="newCusAc" type="tns:newCusAc_SType" minOccurs="0"/>
+      <xs:element name="newCusName" type="tns:newCusName_SType" minOccurs="0"/>
+      <xs:element name="accTyp" type="tns:accTyp_SType"/>
+      <xs:element name="IdTpCd" type="tns:IdTpCd_SType"/>
+      <xs:element name="RefNum" type="tns:RefNum_SType"/>
+      <xs:element name="cmuTel" type="tns:cmuTel_SType" minOccurs="0"/>
+      <xs:element name="mobPhone" type="tns:mobPhone_SType" minOccurs="0"/>
+      <xs:element name="email" type="tns:email_SType" minOccurs="0"/>
+      <xs:element name="bakFld1" type="tns:bakFld1_SType" minOccurs="0"/>
+      <xs:element name="agtSts" type="tns:agtSts_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="deleteCusAgentResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="rspMsg" type="tns:rspMsg_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="checkFileSumAcctRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader" minOccurs="0"/>
@@ -1350,19 +1336,6 @@
       <xs:maxLength value="128"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:complexType name="logServiceRequest_CType">
-    <xs:sequence>
-      <xs:element ref="tns:requestHeader" minOccurs="0"/>
-      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
-      <xs:element name="comNo" type="tns:comNo_SType"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="logServiceResponse_CType">
-    <xs:sequence>
-      <xs:element ref="tns:responseHeader" minOccurs="0"/>
-      <xs:element name="rspMsg" type="tns:rspMsg_SType" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="tallyCancelQryOnlineRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader" minOccurs="0"/>

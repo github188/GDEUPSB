@@ -42,12 +42,6 @@
   <wsdl:message name="qryCusPayRecordResponseMessage">
     <wsdl:part name="qryCusPayRecordResponse" element="gdeupsb:qryCusPayRecordResponse"/>
   </wsdl:message>
-  <wsdl:message name="deleteCusAgentRequestMessage">
-    <wsdl:part name="deleteCusAgentRequest" element="gdeupsb:deleteCusAgent"/>
-  </wsdl:message>
-  <wsdl:message name="deleteCusAgentResponseMessage">
-    <wsdl:part name="deleteCusAgentResponse" element="gdeupsb:deleteCusAgentResponse"/>
-  </wsdl:message>
   <wsdl:message name="tallyCancelOnlineRequestMessage">
     <wsdl:part name="tallyCancelOnlineRequest" element="gdeupsb:tallyCancelOnline"/>
   </wsdl:message>
@@ -60,6 +54,12 @@
   <wsdl:message name="advanceTradeResponseMessage">
     <wsdl:part name="advanceTradeResponse" element="gdeupsb:advanceTradeResponse"/>
   </wsdl:message>
+  <wsdl:message name="deleteCusAgentRequestMessage">
+    <wsdl:part name="deleteCusAgentRequest" element="gdeupsb:deleteCusAgent"/>
+  </wsdl:message>
+  <wsdl:message name="deleteCusAgentResponseMessage">
+    <wsdl:part name="deleteCusAgentResponse" element="gdeupsb:deleteCusAgentResponse"/>
+  </wsdl:message>
   <wsdl:message name="checkFileSumAcctRequestMessage">
     <wsdl:part name="checkFileSumAcctRequest" element="gdeupsb:checkFileSumAcct"/>
   </wsdl:message>
@@ -71,12 +71,6 @@
   </wsdl:message>
   <wsdl:message name="tallyOneOnlineResponseMessage">
     <wsdl:part name="tallyOneOnlineResponse" element="gdeupsb:tallyOneOnlineResponse"/>
-  </wsdl:message>
-  <wsdl:message name="logServiceRequestMessage">
-    <wsdl:part name="logServiceRequest" element="gdeupsb:logService"/>
-  </wsdl:message>
-  <wsdl:message name="logServiceResponseMessage">
-    <wsdl:part name="logServiceResponse" element="gdeupsb:logServiceResponse"/>
   </wsdl:message>
   <wsdl:message name="tallyCancelQryOnlineRequestMessage">
     <wsdl:part name="tallyCancelQryOnlineRequest" element="gdeupsb:tallyCancelQryOnline"/>
@@ -121,11 +115,6 @@
       <wsdl:input message="tns:qryCusPayRecordRequestMessage"/>
       <wsdl:output message="tns:qryCusPayRecordResponseMessage"/>
     </wsdl:operation>
-    <wsdl:operation name="deleteCusAgent">
-      <wsdl:documentation/>
-      <wsdl:input message="tns:deleteCusAgentRequestMessage"/>
-      <wsdl:output message="tns:deleteCusAgentResponseMessage"/>
-    </wsdl:operation>
     <wsdl:operation name="tallyCancelOnline">
       <wsdl:documentation/>
       <wsdl:input message="tns:tallyCancelOnlineRequestMessage"/>
@@ -136,6 +125,11 @@
       <wsdl:input message="tns:advanceTradeRequestMessage"/>
       <wsdl:output message="tns:advanceTradeResponseMessage"/>
     </wsdl:operation>
+    <wsdl:operation name="deleteCusAgent">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:deleteCusAgentRequestMessage"/>
+      <wsdl:output message="tns:deleteCusAgentResponseMessage"/>
+    </wsdl:operation>
     <wsdl:operation name="checkFileSumAcct">
       <wsdl:documentation/>
       <wsdl:input message="tns:checkFileSumAcctRequestMessage"/>
@@ -145,11 +139,6 @@
       <wsdl:documentation/>
       <wsdl:input message="tns:tallyOneOnlineRequestMessage"/>
       <wsdl:output message="tns:tallyOneOnlineResponseMessage"/>
-    </wsdl:operation>
-    <wsdl:operation name="logService">
-      <wsdl:documentation/>
-      <wsdl:input message="tns:logServiceRequestMessage"/>
-      <wsdl:output message="tns:logServiceResponseMessage"/>
     </wsdl:operation>
     <wsdl:operation name="tallyCancelQryOnline">
       <wsdl:documentation/>
@@ -218,15 +207,6 @@
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="deleteCusAgent">
-      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/deleteCusAgent"/>
-      <wsdl:input>
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal"/>
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="tallyCancelOnline">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/tallyCancelOnline"/>
       <wsdl:input>
@@ -245,6 +225,15 @@
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="deleteCusAgent">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/deleteCusAgent"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="checkFileSumAcct">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/checkFileSumAcct"/>
       <wsdl:input>
@@ -256,15 +245,6 @@
     </wsdl:operation>
     <wsdl:operation name="tallyOneOnline">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/tallyOneOnline"/>
-      <wsdl:input>
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal"/>
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="logService">
-      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/logService"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
