@@ -14,6 +14,11 @@
   <action id="qryHzThdJnlInfoAction" class="com.bocom.bbip.gdeupsb.action.gas.QryHzThdJnlInfoAction" />
   <!-- 惠州燃气代扣用户信息查询 -->
   <action id="qryHzThdCusInfoAction" class="com.bocom.bbip.gdeupsb.action.gas.QryHzThdCusInfoAction" />
+  <!-- 惠州燃气报表打印 -->
+  <action id="prtGasJnlReport" class="com.bocom.bbip.gdeupsb.action.gas.PrintReportServiceActionPGAS00" />
+  
+  
+  
  
   <!-- 福彩中奖查询 -->
   <action id="qryWinLotRecordAction" class="com.bocom.bbip.gdeupsb.action.lot.QryLotWinRecordAction" />
