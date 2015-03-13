@@ -4,9 +4,9 @@
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
 	name="460440Resp">
 		
-      <fixString name="sqn"  length="24" /><!-- 交易流水号 -->
-      <fixString name="txnDate"      length=" 8" /><!--交易日期 -->
-      <fixString name="txnTme"      length=" 6" /><!--交易时间  -->
+      <fixString name="thdSqn"  length="24" /><!-- 交易流水号 -->
+      <fixString name="thdTxnDte"      length=" 8" /><!--交易日期 -->
+      <fixString name="thdTxnTme"      length=" 6" /><!--交易时间  -->
        <fixString name="busType"      length=" 3" /><!-- 收费方式 -->
       <fixString name="payType"    length=" 3" /><!-- 费用类型 -->
        <fixString name="comNo"     length=" 8" /><!-- 单位编码-->
