@@ -14,8 +14,8 @@
 		      <fixString name="mfmRspCde" length="  8" /><!--银行内部错误代码-->
 		      <fixString name="bakFld1"    length="128" /><!--备注-->
 		      <fixString name="txnTlr"  length=" 20" /><!--操作员号-->
-		      <fixString name="txnDte"  length="  8" /><!--业务日期-->
-		      <fixString name="txnTme"  length="  6" /><!--业务时间-->
+		      <fixString name="rsvFld2"  length="  8" /><!--业务日期-->
+		      <fixString name="rsvFld3"  length="  6" /><!--业务时间-->
 	</segment>
 	
 </message>
