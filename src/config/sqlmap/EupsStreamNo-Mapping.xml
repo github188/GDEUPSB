@@ -1738,14 +1738,14 @@
 					)
 		</select>
 
-  <!-- 南方电网   -->
+  <!-- 南方电网   日志服务-->
 		 <select id="findLogService" resultMap="basicResultMap" >
 			select
 			<include refid="baseColumnList" />
 				from ${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL
 					where EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
 					AND   COM_NO=#{comNo,jdbcType=CHAR}
-					AND   TXN_STS !='S'
+					AND   TXN_STS !='S' AND TXN_TYP='N'
 		</select>	
 	
 	<!-- 南方电网 对总账 分组 -->
