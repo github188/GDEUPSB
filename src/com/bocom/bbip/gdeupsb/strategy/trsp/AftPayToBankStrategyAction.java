@@ -1,6 +1,8 @@
 package com.bocom.bbip.gdeupsb.strategy.trsp;
 
+import java.math.BigDecimal;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -10,6 +12,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.comp.account.AccountService;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbPubInvInfo;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo;
@@ -86,17 +89,30 @@ public class AftPayToBankStrategyAction implements Executable{
 		
 		
 
-		ctx.setData(GDParamKeys.TCUS_NM, otCusNm);
 		
-
-//		<!--登记缴费记录表-->
-//		<Exec func="PUB:ExecSql" error="IGNORE">
-//        <Arg name="SqlCmd" value="Inittxnbok"/>  rbfbtxnbok444找不到
-//    </Exec>
-//		 INSERT INTO rbfbtxnbok444(BrNo,ThdKey,CarTyp,TCusId,TCusNm,PayMon,PayDat,PayLog,TxnAmt,TxnCnl,ActTyp,ActNo,PayNod,PayTlr,PayTck,Status)
-//         VALUES('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','0')
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+ctx);
 		GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
-		gdEupsbTrspFeeInfo = BeanUtils.toObject(ctx.getDataMap(), GDEupsbTrspFeeInfo.class);
+//		INSERT INTO rbfbtxnbok444(BrNo,ThdKey,CarTyp,TCusId,TCusNm,PayMon,PayDat,PayLog,TxnAmt,TxnCnl,ActTyp,ActNo,PayNod,PayTlr,PayTck,Status)
+//        VALUES('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','0')
+//   </Sentence>
+//   <Fields>BrNo|ThdKey|CarTyp|TCusId|TCusNm|PayMon|ActDat|LogNo|TxnAmt|TxnCnl|ActFlg|ActNo|NodNo|TlrId|TckNo|</Fields>
+		gdEupsbTrspFeeInfo.setBrNo((String)ctx.getData(GDParamKeys.BR_NO));
+		gdEupsbTrspFeeInfo.setThdKey((String)ctx.getData(GDParamKeys.THD_KEY));
+		gdEupsbTrspFeeInfo.setCarTyp((String)ctx.getData(GDParamKeys.CAR_TYP));
+		gdEupsbTrspFeeInfo.setCarNo((String)ctx.getData(GDParamKeys.CAR_NO));
+		gdEupsbTrspFeeInfo.setTcusNm((String)ctx.getData(GDParamKeys.TCUS_NM));
+		gdEupsbTrspFeeInfo.setPayMon((String)ctx.getData(GDParamKeys.PAY_MON));
+		gdEupsbTrspFeeInfo.setPayDat((Date)ctx.getData(ParamKeys.AC_DATE));
+		gdEupsbTrspFeeInfo.setPayLog((String)ctx.getData(ParamKeys.SEQUENCE));
+		gdEupsbTrspFeeInfo.setTxnAmt((BigDecimal)ctx.getData(GDParamKeys.TXN_AMT));
+		gdEupsbTrspFeeInfo.setTxnCnl((String)ctx.getData(GDParamKeys.TXN_CNL));
+		gdEupsbTrspFeeInfo.setActTyp((String)ctx.getData(GDParamKeys.ACT_TYP));//1111111111
+		gdEupsbTrspFeeInfo.setActNo((String)ctx.getData(GDParamKeys.ACT_NO));
+		gdEupsbTrspFeeInfo.setPayNod((String)ctx.getData(GDParamKeys.NOD_NO));
+		gdEupsbTrspFeeInfo.setPayTlr((String)ctx.getData(GDParamKeys.TLR_ID));
+		gdEupsbTrspFeeInfo.setPayTck((String)ctx.getData(GDParamKeys.TCK_NO));//银行流水号
+		gdEupsbTrspFeeInfo.setStatus(GDConstants.JF);
+		
 		gdEupsbTrspFeeInfoRepository.insert(gdEupsbTrspFeeInfo);
 	}
 }
