@@ -146,6 +146,15 @@
 		</qname-mappings>
 	</server-side-ws-def>
 	
+	<!-- 惠州燃气报表打印 -->
+	<server-side-ws-def wsdl="GDEUPSBGasCoreService.wsdl"
+		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBGasCoreService/Schema">
+		<qname-mappings>
+			<qname-mapping operation="printReportForms"  process-id="gdeupsb.prtGasJnlReport" />
+		</qname-mappings>
+	</server-side-ws-def>
+	
+	
 	<!-- 福彩中奖查询 -->
 	<server-side-ws-def wsdl="GDEUPSBLotLclService.wsdl"
 		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotLclService/Schema">
