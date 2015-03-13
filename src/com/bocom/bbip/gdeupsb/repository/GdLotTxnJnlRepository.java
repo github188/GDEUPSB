@@ -39,8 +39,8 @@ public interface GdLotTxnJnlRepository extends
 	@Update
 	public void updateAwdFlg(GdLotDrwTbl gdLotDrwTbl);
 
-	@Find
-	public List<GdLotTxnJnl> qryLotWinRecord(GdLotTxnJnl gdEupsbLotTxnJnl);
+//	@Find
+//	public List<GdLotTxnJnl> qryLotWinRecord(GdLotTxnJnl gdEupsbLotTxnJnl);
 
 	@Find
 	public List<Map<String, Object>> qryLotWinRecord(Map<String, Object> map);
