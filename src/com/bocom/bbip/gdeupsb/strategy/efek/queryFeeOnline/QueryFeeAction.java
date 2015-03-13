@@ -22,7 +22,6 @@ public class QueryFeeAction implements Executable{
 			logger.info("=========Start  CheckFeeAction ");
 			context.setData(GDParamKeys.TOTNUM, "1");
 			context.setData(GDParamKeys.SVRCOD, "10");
-			context.setData(ParamKeys.BUS_TYP, context.getData(GDParamKeys.BUS_TYPE));
 			context.setData(ParamKeys.RSV_FLD1, context.getData(GDParamKeys.ELECTRICITY_YEARMONTH));
 			context.setData(ParamKeys.THD_CUS_NO, context.getData(GDParamKeys.PAY_NO));
 			context.setData("PKGCNT", "000001");

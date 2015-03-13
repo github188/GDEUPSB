@@ -43,42 +43,15 @@ public class QueryFeeResultAction implements Executable{
 		public void execute(Context context) throws CoreException,
 			CoreRuntimeException {
 			logger.info("===========Start QueryFeeResultAction");
-			/*				
-		    String payNo=context.getData(GDParamKeys.PAY_NO).toString();
-			String busType=(String)context.getData(GDParamKeys.BUS_TYPE);
-			String checkType=context.getData(GDParamKeys.CHECK_TYPE).toString();
-			EupsAmountInfo eupsAmountInfos=new EupsAmountInfo();
-			eupsAmountInfos.setThdCusNo(payNo);
-			if(StringUtils.isNotEmpty(busType)){
-				eupsAmountInfos.setBakFld1(busType);
-			}
-			List<EupsAmountInfo> list=eupsAmountInfoRepository.find(eupsAmountInfos);
-			if("0".equals(checkType)){
-					context.setDataMap(BeanUtils.toMap(list));
-			}else{
-				String electricityYearMonth=null;
-				//比较月份的
-				if(null !=context.getData(GDParamKeys.ELECTRICITY_YEARMONTH)){
-					electricityYearMonth=context.getData(GDParamKeys.ELECTRICITY_YEARMONTH).toString();
-				}else{
-					electricityYearMonth=DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd).substring(0, 6);
-				}
-				List<EupsAmountInfo> eupsAmountInfolist=new ArrayList<EupsAmountInfo>();
-				for(EupsAmountInfo eupsAmountInfo:list){
-					String txnDte=eupsAmountInfo.getTxnDte().toString().substring(0,6);
-					if(txnDte.equals(electricityYearMonth)){
-							eupsAmountInfolist.add(eupsAmountInfo);
-					}
-				}
-				context.setDataMap(BeanUtils.toMap(eupsAmountInfolist));
-			}
-			*/
 			callThd(context);
-			context.setData(ParamKeys.RAP_TYPE, "2");
 			Date thdTxnDate=DateUtils.parse(context.getData(GDParamKeys.TRADE_SEND_DATE).toString(),DateUtils.STYLE_yyyyMMdd);
 	        Date thdTxnTme = DateUtils.parse(context.getData(GDParamKeys.TRADE_SEND_TIME).toString(),DateUtils.STYLE_HHmmss);
 	        context.setData(ParamKeys.THD_TXN_DATE, thdTxnDate);
 	        context.setData(ParamKeys.THD_TXN_TIME, thdTxnTme);
+	        
+	        System.out.println("~~~~~~~~~context:~~~"+context);
+	        System.out.println();
+	        System.out.println("~~~~~~~~~~context.getData~~~~~~~~~~~~"+context.getData(ParamKeys.EUPS_AMOUNT_INFO));
 		}
 		/**
 		 *  报文常量 外发第三方 
@@ -133,9 +106,15 @@ public class QueryFeeResultAction implements Executable{
 												}
 								                context.setData(ParamKeys.OWE_FEE_AMT, oweFeeAmt);
 								                context.setData("pbd",pbd );
+								                context.setData(ParamKeys.BAK_FLD1,  list.get(0).get(ParamKeys.BANK_NO));
 								                context.setData(ParamKeys.RSV_FLD2, list.get(0).get(GDParamKeys.ACCOUNTS_SERIAL_NO));
 								                context.setData(ParamKeys.RSV_FLD3, list.get(0).get(ParamKeys.FULL_DED_FLAG));
-								                context.setData(ParamKeys.RSV_FLD4,  list.get(0).get(ParamKeys.BANK_NO));
+								    	       
+								                context.setData(ParamKeys.RSV_FLD4, list.get(0).get(GDParamKeys.BUS_TYPE));
+								    	        context.setData(ParamKeys.RSV_FLD5, list.get(0).get(GDParamKeys.PAY_TYPE));
+								    	        context.setData(ParamKeys.RSV_FLD6, list.get(0).get(ParamKeys.RSV_FLD6));
+								    	        
+								    	        context.setData(ParamKeys.THD_CUS_NME,  list.get(0).get(ParamKeys.THD_CUS_NME));
 								                context.setData("CusNme",  list.get(0).get(ParamKeys.CUS_NME));
 								                //第三方返回码
 								                CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
