@@ -4,7 +4,7 @@
 						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
 		
 		<!-- 珠海路桥 对账 -->
-			<process id="gdeupsb.checkTrspFile" template="eups.simpleTran"  interceptors="eups.transMessageInterceptor">
+			<process id="gdeupsb.checkTrspFile" template="eups.simpleTran"  interceptors="bbip.bbipSchedulerInterceptor">
 			  <actions>
 			   			<action id="act" ref="gdeupsb.checkTrspFileAction"/>
 			   </actions>
