@@ -8,7 +8,7 @@
 		<fixString name="thdSqn"  length="24"/><!--交易流水号	JYLSH	Varchar2(24)-->
 		<fixString name="thdTxnDte"  length="8"/><!--交易日期	JYRQ	Varchar2(8)-->
 		<fixString name="thdTxnTme"  length="6"/><!--交易时间	JYSJ	Varchar2 (6)-->
-		<fixString name="payMde"  length="3"/><!--收费方式	SFFS	Varchar2(3)-->
+		<fixString name="busType"  length="3"/><!--收费方式	SFFS	Varchar2(3)-->
 		<fixString name="payType"  length="3"/><!--费用类型	FYLX	Varchar2(3)-->
 		<fixString name="comNo"  length="8"/><!--单位编码	DWBM	Varchar2(8)-->
 		<fixString name="payNo"  length="20"/><!--费号	JFH	Varchar2(20)-->
