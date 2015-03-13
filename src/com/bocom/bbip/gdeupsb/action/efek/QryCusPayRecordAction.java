@@ -31,67 +31,10 @@ public class QryCusPayRecordAction extends BaseAction{
     ThirdPartyAdaptor callThdTradeManager;
 		public void execute(Context context)throws CoreException,CoreRuntimeException{
 				log.info("=============Start QryCusPayRecordAction");
-//				String payNo=context.getData(GDParamKeys.PAY_NO).toString();
-//				Date startDate=DateUtils.parse(context.getData(GDParamKeys.ELECTRIC_START_YEARMONTH).toString());
-//				String eupsBusTyp=context.getData(ParamKeys.EUPS_BUSS_TYPE).toString();
 				String endDate=(String)context.getData(GDParamKeys.ELECTRIC_END_YEARMONTH);
 				if(StringUtils.isEmpty(endDate)){
 						endDate=DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
 				}
-				/*
-				EupsStreamNoList eupsStreamNoList=new EupsStreamNoList();
-				eupsStreamNoList.setEndDate(endDate);
-				eupsStreamNoList.setStartDate(startDate);
-				eupsStreamNoList.setPayNo(payNo);
-				eupsStreamNoList.setEupsBusTyp(eupsBusTyp);
-				List<EupsStreamNo> list=get(EupsStreamNoRepository.class).findList(eupsStreamNoList);
-
-				if(CollectionUtils.isEmpty(list)){
-						context.setData("ApCode", "SC");
-						context.setData("OFmtCd", "D04");
-						context.setData(ParamKeys.RSP_CDE, "");
-						context.setData("InPos", "0001");
-						context.setData(ParamKeys.RESPONSE_MESSAGE, "在【"+startDate+"】~【"+endDate+"】没有记录");
-				}else{
-					List<DetailInformation> streamNoList=new ArrayList<DetailInformation>();
-						for (EupsStreamNo eupsStreamNo : list) {
-								DetailInformation detailInformation=new DetailInformation();
-								detailInformation.setApCode("46");
-								detailInformation.setOFmtCd("999");
-								String bakFld2=eupsStreamNo.getBakFld2();
-								if(StringUtils.isNotEmpty(bakFld2)){
-									String[] s=bakFld2.split("&&");
-//									detailInformation.setBusType(s[0]); //收费方式 RAP_TYP
-									detailInformation.setBusType(s[1]); //费用类型
-								}
-								String electricityYearMonth=DateUtils.format(eupsStreamNo.getTxnDte(),DateUtils.STYLE_yyyyMMdd).substring(0, 6);
-								detailInformation.setElectricityYearMonth(electricityYearMonth);
-								detailInformation.setParticularNo(eupsStreamNo.getAccSeq());//明细序号
-//								context.setData(arg0, arg1);           缺失字段，内容未知	null
-								detailInformation.setCopyListDate( eupsStreamNo.getBakFld4());//抄表日期
-								detailInformation.setCopyListDate( eupsStreamNo.getBakFld5());//本次预存
-								detailInformation.setCopyListDate( eupsStreamNo.getBakFld6());//本月示数
-								detailInformation.setCopyListDate( eupsStreamNo.getRsvFld1());//上月示数
-								String rsvFld2=eupsStreamNo.getRsvFld2();
-								if(StringUtils.isNotEmpty(rsvFld2)){
-										String s[]=rsvFld2.split("&&");
-										detailInformation.setUseElectric(s[0]);//实用电量
-										detailInformation.setUseElectric(s[1]);//增减电量
-								}
-								String rsvFld3=eupsStreamNo.getRsvFld3();
-								if(StringUtils.isNotEmpty(rsvFld3)){
-										String s[]=rsvFld3.split("&&");
-										detailInformation.setUseElectric(s[0]);//单价
-										detailInformation.setUseElectric(s[1]);//违约金
-								}
-								detailInformation.setPaymentMoney(eupsStreamNo.getTxnAmt());
-								String paymentTime=DateUtils.formatAsHHmmss(eupsStreamNo.getTxnTme());
-								detailInformation.setPaymentTime(paymentTime);
-								streamNoList.add(detailInformation);
-						}
-						context.setData("DetailInformation", BeanUtils.toMaps(streamNoList));
-				}
-				*/
 				context.setData(GDParamKeys.SVRCOD, "40");
 				callThd(context);
 				
@@ -120,8 +63,8 @@ public class QryCusPayRecordAction extends BaseAction{
 					context.setData(GDParamKeys.TRADE_RECEIVE, GDConstants.TRADE_RECEIVE);//交易接收方
 					context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 					context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
-
-					
+					context.setData("PKGCNT", "000001");
+					context.setData(GDParamKeys.BAG_TYPE, "0");
 					try{
 						Map<String, Object> rspMap = callThdTradeManager.trade(context);
 						
