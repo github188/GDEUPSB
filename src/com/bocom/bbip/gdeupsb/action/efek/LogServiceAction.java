@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.action.efek;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
@@ -48,61 +50,67 @@ public class LogServiceAction extends BaseAction{
 	Marshaller marshaller;
 	@Autowired
 	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
+	@Autowired
+	BBIPPublicService bbipPublicService;
 	/**
 	 * 代收付日志服务
 	 */
 	public void execute(Context context)throws CoreException,CoreRuntimeException{
 			log.info("===============Start  LogServiceAction");
-			
+			String eupsBusTyp="ELEC00";
+			context.setData(ParamKeys.EUPS_BUSS_TYPE, eupsBusTyp);
 			context.setData(GDParamKeys.SVRCOD, "90");
-			String comNo=context.getData(ParamKeys.COMPANY_NO).toString();
-			String eupsBusTyp=context.getData(ParamKeys.EUPS_BUSS_TYPE).toString();
-			EupsStreamNo eupsStreamNos=new EupsStreamNo();
-			eupsStreamNos.setComNo(comNo);
-			eupsStreamNos.setEupsBusTyp(eupsBusTyp);
-			//TODO 判断txnSts是否需要‘C’
-			List<EupsStreamNo> list=eupsStreamNoRepository.findLogService(eupsStreamNos);
-			if(CollectionUtils.isEmpty(list)){
-				context.setData(ParamKeys.RSP_CDE, "000000");
-				context.setData(ParamKeys.RSP_MSG, "无错误日志");
-				return;
-		}
-			// 需修改 文件名  时间+类型
-			String fileName=DateUtils.format(DateUtils.parse(context.getData(ParamKeys.TXN_TME).toString()),DateUtils.STYLE_yyyyMMddHHmmss)+"_05"+".txt";
-			context.setData(GDParamKeys.FILE_NAME,fileName);
-			
-			for (EupsStreamNo eupsStreamNo : list) {
-				Date txnDte=eupsStreamNo.getTxnDte();
-				eupsStreamNo.setRsvFld1(DateUtils.format(txnDte, DateUtils.STYLE_yyyyMMdd));
-				Date txnTme=eupsStreamNo.getTxnTme();
-				eupsStreamNo.setRsvFld2(DateUtils.formatAsHHmmss(txnTme));
-				eupsStreamNo.setRsvFld3(fileName);
-				//文件类型  明细
-				eupsStreamNo.setRsvFld4("05");
-				//TODO MD5
-				eupsStreamNo.setRsvFld5("加密");
+			//得到分组
+			Map<String, Object> maps=new HashMap<String, Object>();
+			Date txnDte=new Date();
+			context.setData(ParamKeys.TXN_DTE, txnDte);
+			Date txnDate=DateUtils.parse(DateUtils.formatAsSimpleDate(new Date()));
+			maps.put("txnDte", txnDate);
+			List<Map<String, Object>> mapList=eupsStreamNoRepository.findComNoGroup(maps);
+			for(Map<String, Object> map:mapList){
+					String comNo=map.get("COM_NO").toString();
+					String bankNo=map.get("THD_OBK_CDE").toString();
+					//TODO  需修改文件名  单位编号+银行+日期+_类型+.txt
+					String fileName=comNo+bankNo+DateUtils.format(txnDate, DateUtils.STYLE_yyyyMMdd)+"_05.txt";
+					context.setData(GDParamKeys.FILE_NAME,fileName);
+					
+					//得到日志集合
+					EupsStreamNo eupsStreamNos=new EupsStreamNo();
+					eupsStreamNos.setComNo(comNo);
+					eupsStreamNos.setEupsBusTyp(eupsBusTyp);
+					//TODO 判断txnSts是否需要‘C’
+					List<EupsStreamNo> list=eupsStreamNoRepository.findLogService(eupsStreamNos);
+					if(CollectionUtils.isEmpty(list)){
+						context.setData(ParamKeys.RSP_CDE, "000000");
+						context.setData(ParamKeys.RSP_MSG, "无错误日志");
+						return;
+					}
+					
+					EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecLogService");
+					log.info("~~~~~~~~~eupsThdFtpConfig~~~~"+eupsThdFtpConfig);
+					try{
+							//拼装文件
+							String sqn=bbipPublicService.getBBIPSequence();
+							Map<String, Object>resultMap=createFileMap(sqn,list,map);
+							//生成文件
+							eupsThdFtpConfig.setLocFleNme(fileName);
+							operateFileAction.createCheckFile(eupsThdFtpConfig, "logService", fileName, resultMap);
+							//TODO 上传至服务器
+							operateFTPAction.putCheckFile(eupsThdFtpConfig);   
+					}catch(Exception e){
+			            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
+			            log.info("File create error : " + e.getMessage());          
+			            throw new CoreException(e.getMessage());
+					}
+					//外发第三方
+					callThd(context);
+					//交易成功删除流水信息
+					if(GDConstants.SUCCESS_CODE.equals(context.getData(ParamKeys.RESPONSE_CODE).toString())){
+			//				eupsStreamNoRepository.delete(eupsStreamNo);
+							System.out.println("~~~~~~~~~~~~~~delete                 "+comNo);
+					}
 			}
-			//
-			EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecLogService");
-			eupsThdFtpConfig.setLocFleNme(fileName);
-			eupsThdFtpConfig.setRmtFleNme(fileName);
-			//拼装文件
-//			Map<String, Object>resultMap=createFileMap(context, fileName, comNo,eupsThdFtpConfig);
-			Map<String, Object> resultMap=new HashMap<String, Object>();
-			resultMap.put(ParamKeys.EUPS_FILE_DETAIL,BeanUtils.toMaps(list));
-			//生成文件
-			operateFileAction.createCheckFile(eupsThdFtpConfig, "logService", fileName, resultMap);
-			//TODO 上传至服务器
-//			operateFTPAction.putCheckFile(eupsThdFtpConfig);   
-			//外发第三方
-			callThd(context);
-			//交易成功删除流水信息
-			if(GDConstants.SUCCESS_CODE.equals(context.getData(ParamKeys.RESPONSE_CODE).toString())){
-				for (EupsStreamNo eupsStreamNo : list) {
-	//				eupsStreamNoRepository.delete(eupsStreamNo);
-					System.out.println("~~~~~~~~~~~~~~                 "+eupsStreamNo.getSqn());
-				}
-			}
+			log.info("===============End  LogServiceAction");
 	}
 	/**
 	 *报文信息  外发第三方
@@ -127,7 +135,7 @@ public class LogServiceAction extends BaseAction{
 		context.setData(GDParamKeys.TRADE_RECEIVE, GDConstants.TRADE_RECEIVE);//交易接收方
 		context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 		context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
-
+		context.setData("PKGCNT", "000001");
 				
 				//外发第三方 时间
 				Date txnDate=(Date)context.getData(ParamKeys.TXN_DTE);
@@ -207,19 +215,29 @@ public class LogServiceAction extends BaseAction{
 /**
  * 拼装文件Map
 */
-	public Map<String, Object> createFileMap(Context context,String fileName,String comNo,EupsThdFtpConfig eupsThdFtpConfig)throws CoreException,CoreRuntimeException{
+	public Map<String, Object> createFileMap(String sqn,List<EupsStreamNo> list,Map<String, Object> maps)throws CoreException,CoreRuntimeException{
 		log.info("==================Start  LogServiceAction createFileMap ");
+		//头部
+		Map<String, Object> mapHeader=new HashMap<String, Object>();
+		mapHeader.put(ParamKeys.SEQUENCE, sqn);
+		mapHeader.put(ParamKeys.BANK_NO, maps.get("THD_OBK_CDE"));
+		mapHeader.put(ParamKeys.COMPANY_NO, maps.get("COM_NO"));
+		mapHeader.put(GDParamKeys.TOT_COUNT,maps.get("TOT_COUNT"));
+		
+		//主体
+		List<EupsStreamNo> mapList=new ArrayList<EupsStreamNo>();
+		for(EupsStreamNo eupsStreamNo:list){
+			System.out.println();
+			String txnDte=DateUtils.format(eupsStreamNo.getTxnDte(),DateUtils.STYLE_yyyyMMdd);
+			String txnTme=DateUtils.formatAsHHmmss(eupsStreamNo.getTxnTme());
+			eupsStreamNo.setRsvFld2(txnDte);
+			eupsStreamNo.setRsvFld3(txnTme);
+				mapList.add(eupsStreamNo);
+		}
+		log.info("==========mapList===="+mapList);
 		Map<String, Object> resultMap=new HashMap<String, Object>();
-//		operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
-		
-		//解析文件
-		List<Map<String, Object>> mapList=operateFileAction.pareseFile(eupsThdFtpConfig, "logService");
-//		List<Map<String, Object>> detailList=new ArrayList<Map<String,Object>>();
-//		for (Map<String, Object> map : mapList) {
-//				detailList.add(map);
-//		} 
+		resultMap.put(ParamKeys.EUPS_FILE_HEADER, mapHeader);
 		resultMap.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(mapList));
-		
 		log.info("==================End  LogServiceAction createFileMap ");
 		return resultMap;
 	}
