@@ -1,6 +1,7 @@
 package com.bocom.bbip.gdeupsb.strategy.efek.checkThdAcct;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,6 +12,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+
+import a.a.a.s;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
@@ -64,6 +67,7 @@ public class CheckThdDetlAcctAction implements Executable {
 			//日期
 			Date txnDte=DateUtils.parse(DateUtils.formatAsSimpleDate(new Date()));
 			context.setData(ParamKeys.TXN_DTE, txnDte);
+			context.setData(ParamKeys.TXN_DTE, DateUtils.parse("2015-03-12"));
 			//一些常量
 			context.setData(GDParamKeys.TOTNUM, "1");
 			context.setData(ParamKeys.BANK_NO, "0301");
@@ -73,7 +77,8 @@ public class CheckThdDetlAcctAction implements Executable {
 			context.setData("checkTyp", "05");
 			
 			Map<String, Object> listMap=new HashMap<String, Object>();
-			listMap.put("txnDte", txnDte);
+			listMap.put("txnDte",DateUtils.parse("2015-03-12"));
+//			listMap.put("txnDte", txnDte);
 			
 			List<Map<String, Object>> mapList=eupsStreamNoRepository.findMsgToChkTot(listMap);
 			if(CollectionUtils.isEmpty(mapList)){
@@ -83,6 +88,7 @@ public class CheckThdDetlAcctAction implements Executable {
 						logger.info("~~~~~~~~~~~统计明细记录总数出错");
 						throw new CoreException("统计明细记录总数出错");
 			}
+			System.out.println("~~~~~~~~~~~"+mapList.size());
 			for(Map<String, Object> maps:mapList){
 					//流水
 					String sqn =bbipPublicService.getBBIPSequence();
@@ -149,9 +155,10 @@ public class CheckThdDetlAcctAction implements Executable {
 				acount=Long.parseLong(maps.get("TOT_COUNT").toString());
 		}
 		BigDecimal allMoney=new BigDecimal("0.00");
-		if(null != maps.get("ALL_MONEY")){
+		if(null != maps.get("ALL_MONEY")){			
 				allMoney.add(new BigDecimal(maps.get("ALL_MONEY").toString()));
 		}
+		allMoney=allMoney.scaleByPowerOfTen(2);
 		//header  部分
 		Map<String, Object> headerMap=new HashMap<String, Object>();
 		headerMap.put(ParamKeys.SEQUENCE, context.getData(ParamKeys.SEQUENCE));
@@ -173,7 +180,13 @@ public class CheckThdDetlAcctAction implements Executable {
 		eupsStreamNos.setTxnSts("S");
 		eupsStreamNos.setRsvFld4(busType);
 		eupsStreamNos.setRsvFld4(payType);
+		System.out.println("~~~~~~~~~~~~EUPS_BUSS_TYPE~~~~~~~~~~~~~~~~"+context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
+		System.out.println("~~~~~~~~~~~~comNo~~~~~~~~~~~~~~~~"+comNo);
+		System.out.println("~~~~~~~~~~~~~~TXN_DTE~~~~~~~~~~~~~~"+(Date)context.getData(ParamKeys.TXN_DTE));
+		System.out.println("~~~~~~~~~~~~busType~~~~~~~~~~~~~~~~"+busType);
+		System.out.println("~~~~~~~~~~~~~payType~~~~~~~~~~~~~~~"+payType);
 		List<EupsStreamNo> eupsStreamNoList=eupsStreamNoRepository.find(eupsStreamNos);
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~"+eupsStreamNoList.size());
 		
 		List<CheckDetailAcct> list=new ArrayList<CheckDetailAcct>();
 		//内容
