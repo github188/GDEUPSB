@@ -10,13 +10,13 @@
        KENO期号            投注流水号         会计流水号          彩民标识           投注卡号                 玩法编号                 投注金额                     投注时间
 #end 
 #td(1,$d.eles)
-#para($f.rpad($str.trim($ele.kenoId),2,' ')) 
+#para($str.trim($ele.kenoId)) 
 #para($str.trim($ele.txnLog))  
 #para($str.trim($ele.tckNo))
 #para($str.trim($ele.lotNam))
 #para($str.trim($ele.crdNo)) 
 #para($str.trim($ele.playId))
-#para($num.fmt($num.parse($str.trim($ele.txnAmt)),'0,000.00'))
+#para($num.fmt($num.parse($str.leftPad($str.trim($ele.txnAmt),18,'0')),'0,000.00'))
 #para($f.center($ele.txnTim,15))
 
        ?            ?         ?         ?          ?           ?  ?                           ?
