@@ -64,7 +64,6 @@ public class CheckThdDetlAcctAction implements Executable {
 			//日期
 			Date txnDte=DateUtils.parse(DateUtils.formatAsSimpleDate(new Date()));
 			context.setData(ParamKeys.TXN_DTE, txnDte);
-			context.setData(ParamKeys.TXN_DTE, DateUtils.parse("2015-03-12"));
 			//一些常量
 			context.setData(GDParamKeys.TOTNUM, "1");
 			context.setData(ParamKeys.BANK_NO, "0301");
@@ -74,8 +73,7 @@ public class CheckThdDetlAcctAction implements Executable {
 			context.setData("checkTyp", "05");
 			
 			Map<String, Object> listMap=new HashMap<String, Object>();
-			listMap.put("txnDte",DateUtils.parse("2015-03-12"));
-//			listMap.put("txnDte", txnDte);
+			listMap.put("txnDte", txnDte);
 			
 			List<Map<String, Object>> mapList=eupsStreamNoRepository.findMsgToChkTot(listMap);
 			if(CollectionUtils.isEmpty(mapList)){
@@ -85,7 +83,6 @@ public class CheckThdDetlAcctAction implements Executable {
 						logger.info("~~~~~~~~~~~统计明细记录总数出错");
 						throw new CoreException("统计明细记录总数出错");
 			}
-			System.out.println("~~~~~~~~~~~"+mapList.size());
 			for(Map<String, Object> maps:mapList){
 					//流水
 					String sqn =bbipPublicService.getBBIPSequence();
@@ -113,7 +110,7 @@ public class CheckThdDetlAcctAction implements Executable {
 							String	comNo  =(String)maps.get("COM_NO");
 							String  busType=(String)maps.get("RSV_FLD4");
 							String  payType=(String)maps.get("RSV_FLD5");
-							String bankNo="301";
+							String bankNo=context.getData(ParamKeys.BANK_NO).toString();
 							String fileName = "DZ05"+busType+payType+"_"+bankNo+comNo+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";
 
 							logger.info("~~~~~~~~eupsThdFtpConfig~~~~~~~"+eupsThdFtpConfig);
@@ -180,20 +177,17 @@ public class CheckThdDetlAcctAction implements Executable {
 		eupsStreamNos.setRsvFld4(busType);
 		eupsStreamNos.setRsvFld5(payType);
 		List<EupsStreamNo> eupsStreamNoList=eupsStreamNoRepository.find(eupsStreamNos);
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~"+eupsStreamNoList.size());
-		
 		List<CheckDetailAcct> list=new ArrayList<CheckDetailAcct>();
 		//内容
 		for (EupsStreamNo eupsStreamNo : eupsStreamNoList) {
 			CheckDetailAcct checkDetailAcct =new CheckDetailAcct();
 			checkDetailAcct.setSqn(eupsStreamNo.getSqn());
-			checkDetailAcct.setComNo(comNo.substring(0, 6));
+			checkDetailAcct.setComNo(comNo);
 			checkDetailAcct.setElectricityYearMonth(eupsStreamNo.getRsvFld6());
 			checkDetailAcct.setPayNo(eupsStreamNo.getThdCusNo());
 			//结算户名称
 			checkDetailAcct.setThdCusNme(eupsStreamNo.getCusNme());
 			checkDetailAcct.setCusAc(eupsStreamNo.getCusAc());
-			checkDetailAcct.setCusAc(eupsStreamNo.getCusNme());
 			checkDetailAcct.setTxnDte(DateUtils.format(eupsStreamNo.getTxnTme(),DateUtils.STYLE_FULL));
 			BigDecimal txnAmt=eupsStreamNo.getTxnAmt().scaleByPowerOfTen(2);
 			checkDetailAcct.setTxnAmt(txnAmt);
@@ -226,7 +220,6 @@ public class CheckThdDetlAcctAction implements Executable {
 			checkDetailAcct.setBakFld1(str);
 			checkDetailAcct.setTxnTlr(eupsStreamNo.getTxnTlr());
 			list.add(checkDetailAcct);
-			System.out.println("~~~~~~~~~~~~list~~~~~~~~~~~~~~~~~"+list);
 		}
 		logger.info("~~~~~~~~~~~~list~~~~"+list);
         
