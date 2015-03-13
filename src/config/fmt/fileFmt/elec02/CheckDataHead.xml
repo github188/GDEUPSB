@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	encoding="GBK"  trace="true">
+	
+	<segment name="header" encoding="GBK">
+		    <fixString name="OCC"     length="2" default="50"/>  <!--交易码-->
+			<fixString name="YHC"     length="3" default="301"/>     <!--银行代码 -->
+			<fixString name="FSC"     length="8" alias="totNum"/>   <!--实时户数-->
+			<fixString name="FSM"     length="12" alias="totAmt"/>  <!--实时金额-->
+			<fixString name="FMC"     length="8"/>   <!--当日抹帐户数-->
+			<fixString name="FMM"     length="12"/>   <!--当日抹帐金额-->
+			<fixString name="FGC"     length="8" default="0"/>  <!--隔日抹帐户数-->
+			<fixString name="FGM"     length="12" default="0"/>  <!--隔日抹帐金额-->
+			<fixString name="FDC"     length="8" alias="totNum"/>  <!--单笔扣款户数-->
+			<fixString name="FDM"     length="12" alias="totAmt"/>  <!--单笔扣款金额-->
+			<fixString name="FEC"     length="8" default="0"/>  <!--批量代扣户数-->
+			<fixString name="FEM"     length="14" default="0"/>  <!--批量代扣金额-->
+			<fixString name="CCD"     length="8" />   <!--银行处理日期-->
+			<fixString name="CCT"     length="6" default=""/>    <!--银行处理时间-->
+			<fixString name="LogNo"   length="12" default=""/> <!--银行流水-->
+			<fixString name="RBN"     length="12" default="5850"/>   <!--企业代码-->
+			<fixString name="WDO"     length="8"/>  <!--工作日期-->
+			<fixString name="CJG"     length="4" default=""/>  <!--处理结果-->
+			<fixString name="CSM"     length="128" default=""/>  <!--处理说明-->
+			<fixString name="DTN"     length="12" alias="totNum"/>  <!--明细笔数-->
+	</segment>
+	
+</message>

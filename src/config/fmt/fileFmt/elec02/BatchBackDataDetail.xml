@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	encoding="GBK" trace="true">
+	
+	<segment name="detail"  encoding="GBK">
+	
+		    <fixString name="PNO"     length="10"  alias="rsvFld1"/>  <!--编号-->
+			<fixString name="thdCusNo"     length="32" />  <!--缴费号-->
+			<fixString name="KKB"     length="12"/>  <!--客户开户行行号-->
+			<fixString name="cusAc"   length="32" />  <!--账号-->
+			<fixString name="txnAmt"  length="12"/>  <!--金额-->
+			<fixString name="SucFlg"  length="1"/>  <!-- 标识 -->
+			<fixString name="SKDF"   length="12" expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse(this.SucFlg,"1",this.txnAmt,"0")'/>
+			<fixString name="logNo"  length="16"/>		
+			<fixString name="DMO"     length="40"  alias="rsvFld3"/>  <!--说明-->
+			<fixString name="TlrId"        length="8" alias="tlr"/>
+			<fixString name="TrTime"  length="6"/>   <!-- 收费时间 -->			
+			<fixString name="DEPT"    length="8"  alias="rsvFld4"/>   <!--用户所在部门-->
+			<fixString name="MON"     length="6"  alias="rsvFld5"/>   <!--电费月份-->
+			<fixString name="MNS"     length="2"  alias="rsvFld6"/>   <!--电费次数-->
+			<fixString name="JLD"     length="5"  alias="rsvFld10"/>   <!--计量点号-->
+			<fixString name="YSH"     length="16"  alias="rsvFld11"/>  <!--应收凭证号-->
+			<fixString name="PCC"     length="12"  alias="rsvFld9"/>  <!--违约金-->
+			<fixString name="YKDF"    length="12"  alias="rsvFld8"/>  <!--应扣电费-->
+			<fixString name="thdCusNme"  length="40" />  <!--客户名称-->
+			<fixString name="GDZH"    length="32"   alias="rsvFld7"/>  <!--供电企业账号-->
+			<fixString name="FPDD" length="15" value=" "/>
+			<fixString name="ActNo"   length="32" alias="cusAc"/>  <!--银行方客户账号-->
+			
+			
+			
+	</segment>
+	
+</message>

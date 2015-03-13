@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	encoding="GBK" trace="true">
+	
+	<segment name="detail"  encoding="GBK">
+	
+		    <fixString name="ActDat"  length="8" alias="txnDte"/> <!-- 收费日期 -->
+			<fixString name="MON"     length="6"/>   <!--电费月份-->
+			<fixString name="MNS"     length="2"/>   <!--电费次数-->
+			<fixString name="JLD"     length="5"/>   <!--计量点号-->
+			<fixString name="YSH"     length="16"/>  <!--应收凭证号-->
+			<fixString name="GDBM"    length="12" default=""/> <!--供电公司编号-->
+			<fixString name="ActNo"   length="32" alias="cusAc"/> <!--客户帐号-->
+			<fixString name="ActNam"  length="32" alias="cusNme"/>  <!-- 客户帐号名称 -->
+			<fixString name="KAT"     length="1"/>  <!-- 属何类型 -->
+			<fixString name="OAN"     length="32" default=""/>  <!--供电开户银行帐号-->
+			<fixString name="NUM"     length="8" default=""/> <!--明细序号-->
+			
+			 <fixString name="ZLDM"    length="3" expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse(this.svrNme,"eups.payUnilateralToBank","20","11")'/>  <!--指令代码-->
+			 <fixString name="WTC"     length="12" default="301"/>  <!--委托节点代码-->
+			 <fixString name="LogNo1"   length="16" expression='exp:str.substring(this.sqn,4,20)'/>        <!--入账流水号-->
+			<fixString name="LogNo"   length="16" expression='exp:str.substring(this.sqn,4,20)'/>        <!--入账流水号-->
+			<fixString name="WDO"     length="8"/>   <!--委托日期-->
+			
+			<fixString name="OZLM"     length="3"  default=""/>   <!--原指令码-->
+			<fixString name="OWTC"     length="12" default=""/>   <!--原委托节点代码-->
+			<fixString name="OWD"      length="8"  default=""/>  <!--原委托日期-->
+			<fixString name="TLogNo"   length="16" default=""/>  <!--原流水-->
+			
+			<fixString name="ECD"     length="12"/>  <!---收费企业代码-->   
+			<fixString name="WTC2"     length="3" default="301"/>  <!--银行编码-->
+			<fixString name="JFH"     length="32" alias="thdCusNo"/>  <!--缴费号-->
+			<fixString name="KKB"     length="12" default="301"/>  <!--扣款行行号-->
+			<fixString name="ActNo"   length="32" alias="cusAc"/>  <!--扣款账号-->
+			<fixString name="HBC"     length="3" default="RMB"/>  <!--货币符号-->
+			<fixString name="TxnAmt"  length="12" alias="txnAmt"/>  <!--扣款金额-->
+			<fixString name="MXT"     length="2" default=""/>  <!--交易明细状态-->
+			<fixString name="FTXNTM"  length="14" default=""/>  <!--处理时间-->
+	</segment>
+	
+</message>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	encoding="GBK"  trace="true">
+	
+	<segment name="header" encoding="GBK">
+		    <fixString name="PID"     length="20" alias="rsvFld1"/>  <!--批量代收信息标识-->
+			<fixString name="CUN"     length="3" alias="rsvFld2"/>   <!--货币符号-->
+			<fixString name="FPBB"    length="1" alias="rsvFld3"/>   <!--收付标志,固定为收1-->
+			<fixString name="EDD"     length="3" alias="rsvFld4"/>   <!--费项代码-->
+			<fixString name="TotCnt"  length="10" alias="totCnt"/>  <!--总记录数-->
+			<fixString name="TotAmt"  length="14" alias="totAmt"/>  <!--总金额-->
+			<fixString name="SetDat"  length="8"/>   <!--送银行日期-->
+			<fixString name="TxnDat"  length="8"/>   <!--应划款日期-->
+			<fixString name="RSFLD1"  length="128" expression='exp:str.trim($c.RSFLD1)'/> <!--处理说明-->
+			<fixString name="TLogNo"  length="16"  expression='exp:str.trim($c.TLogNo)'/> <!--流水号-->
+			<fixString name="BankCd"  length="12"  alias="rsvFld5"/>   <!--银行代码-->
+	</segment>
+	
+</message>
