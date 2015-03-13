@@ -32,25 +32,15 @@ public class PreCheckDealAction implements Executable{
 		logger.info("============Start  PreCheckDealAction");
 		
 			context.setData(ParamKeys.THD_CUS_NO, context.getData(GDParamKeys.PAY_NO));
-			//验证单位协议
-//			 Map<String,Object> rspMap = new HashMap<String, Object>();
-//			 String comNo=context.getData(ParamKeys.COMPANY_NO).toString();
-//			 rspMap.put(ParamKeys.COMPANY_NO, comNo);
-//		    Result respData = bgspServiceAccessObject.callServiceFlatting("queryCorporInfo", rspMap);
-//			
-//			 if(CollectionUtils.isEmpty(respData.getPayload())){			
-//				    context.setData(GDParamKeys.MSGTYP, "E");                  //  Contants常量   
-//					context.setData(ParamKeys.RSP_CDE,"EFE999");        //  Contants常量   
-//					throw new CoreRuntimeException("该单位未签约");
-//			}
+			context.setData(ParamKeys.RSV_FLD4, context.getData(GDParamKeys.BUS_TYPE));
+			context.setData(ParamKeys.RSV_FLD5, context.getData(GDParamKeys.PAY_TYPE));
+			context.setData(ParamKeys.RSV_FLD6, context.getData(GDParamKeys.ELECTRICITY_YEARMONTH));
+			
 				context.setData(GDParamKeys.TOTNUM, "1");
 				//日期时间格式修改
 				context.setData(ParamKeys.CCY, GDConstants.RENMINBI);
 				
-				//TODO 
-				context.setData(ParamKeys.BUS_TYP,context.getData(GDParamKeys.BUS_TYPE));
-				logger.info("~~~~~~~~~~~交易日期："+context.getData(ParamKeys.TXN_DATE)
-						+"~~~~~~~~~~~交易时间："+context.getData(ParamKeys.TXN_TIME));
+				logger.info("~~~~~~~~~~~交易日期："+context.getData(ParamKeys.TXN_DATE)+"~~~~~~~~~~~交易时间："+context.getData(ParamKeys.TXN_TIME));
 				//TODO 
 				context.setData(ParamKeys.BUS_TYP, "2");
 				context.setData(ParamKeys.TELLER, "ABIR148");
@@ -61,8 +51,5 @@ public class PreCheckDealAction implements Executable{
 //				//TODO 要删
 				context.setData(ParamKeys.TRACE_NO, traceNo);
 				context.setData(ParamKeys.REQ_JRN_NO, context.getData(ParamKeys.SEQUENCE));
-				context.setData(ParamKeys.RSV_FLD1, context.getData(GDParamKeys.BUS_TYPE));
-				context.setData(ParamKeys.RSV_FLD2, context.getData(GDParamKeys.PAY_TYPE));
-				
 	}
 }

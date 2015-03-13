@@ -78,10 +78,6 @@ public class PrePayToBankAction implements Executable{
 			DecimalFormat df=new DecimalFormat("#.00");
 			BigDecimal txnAmt=new BigDecimal(df.format(d));
 			context.setData(ParamKeys.TXN_AMT,txnAmt );
-			
-			context.setData(ParamKeys.RSV_FLD4, context.getData(ParamKeys.BUS_TYP));
-			context.setData(ParamKeys.RSV_FLD5, context.getData(ParamKeys.PAY_TYPE));
-			context.setData(ParamKeys.RSV_FLD6, context.getData(GDParamKeys.ELECTRICITY_YEARMONTH));
-			
+//			context.setData(arg0, arg1);
 		}
 }
