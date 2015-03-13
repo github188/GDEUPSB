@@ -5,4 +5,5 @@ import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspPayInfo;
 
 public interface GDEupsbTrspPayInfoRepository extends PagingAndSortingRepository<GDEupsbTrspPayInfo, String> {
 	public void update(GDEupsbTrspPayInfo gdEupsbTrspPayInfo);
+	public void delete1(GDEupsbTrspPayInfo gdEupsbTrspPayInfo);
 }
