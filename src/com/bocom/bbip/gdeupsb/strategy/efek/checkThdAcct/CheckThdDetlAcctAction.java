@@ -215,7 +215,7 @@ public class CheckThdDetlAcctAction implements Executable {
 				}else if("140".equals(busType)){
 					str="140 银行发起代扣";
 				}else{
-					str=".....";
+					str="费用类型 Error";
 				}
 			checkDetailAcct.setBakFld1(str);
 			checkDetailAcct.setTxnTlr(eupsStreamNo.getTxnTlr());
