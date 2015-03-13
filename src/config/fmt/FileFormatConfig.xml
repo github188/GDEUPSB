@@ -119,7 +119,8 @@
 	<!-- 日志服务 -->
 	<file name="logService" id="logService" encoding="utf-8"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/efek/LogService.xml" />
+		<line name="header" ref="config/fmt/fileFmt/efek/LogServiceHead.xml" />
+		<foreach name="detail" ref="config/fmt/fileFmt/efek/LogServiceDetail.xml" />
 	</file>
 
 	<!-- 南方电网 批量文件入库 -->
