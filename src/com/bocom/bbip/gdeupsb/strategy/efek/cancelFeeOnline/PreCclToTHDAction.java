@@ -39,5 +39,10 @@ public class PreCclToTHDAction implements Executable {
 			BigDecimal txnAmt=new BigDecimal(df.format(d));
 			context.setData(ParamKeys.TXN_AMT,txnAmt );
 			
+			context.setData("thdObkCde",context.getData(ParamKeys.BANK_NO));
+			context.setData(ParamKeys.RSV_FLD4,context.getData(GDParamKeys.BUS_TYPE));
+			context.setData(ParamKeys.RSV_FLD5,context.getData(GDParamKeys.PAY_TYPE));
+			context.setData(ParamKeys.RSV_FLD6,context.getData(GDParamKeys.ELECTRICITY_YEARMONTH));
+			context.setData(ParamKeys.CUS_NME, context.getData(GDParamKeys.SETTLE_ACCOUNTS_NAME));
 		}
 }
