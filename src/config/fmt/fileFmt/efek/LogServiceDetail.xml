@@ -10,7 +10,7 @@
 		      <fixString name="rsvFld5"  length="  3" /><!--费用类型-->
 		      <fixString name="rsvFld6"  length="  6" /><!--电费月份-->
 		      <fixString name="txnAmt"  length=" 16" /><!--电费金额-->
-		      <fixString name="thdRsoCde" length="  5" /><!--错误返回码-->
+		      <fixString name="thdRspCde" length="  5" /><!--错误返回码-->
 		      <fixString name="mfmRspCde" length="  8" /><!--银行内部错误代码-->
 		      <fixString name="bakFld1"    length="128" /><!--备注-->
 		      <fixString name="txnTlr"  length=" 20" /><!--操作员号-->
