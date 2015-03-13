@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.comp.BBIPPublicService;
+import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsTransJournal;
@@ -50,6 +51,7 @@ public class ChargeStrategyAction implements Executable{
 //		TODO:现在先设置一个柜员号，以后需要删除。
 		context.setData(ParamKeys.TELLER, "0007");
 		context.setData(ParamKeys.TXN_TLR, "0007");
+		context.setData(ParamKeys.BUS_TYP, Constants.BUS_TYP_2); //待缴
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+context);
 //		检查报文是否重复
 		EupsTransJournal eups = new EupsTransJournal();
