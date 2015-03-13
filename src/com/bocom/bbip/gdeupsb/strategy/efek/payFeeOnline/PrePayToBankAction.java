@@ -44,7 +44,7 @@ public class PrePayToBankAction implements Executable{
 				context.setData(ParamKeys.TXN_CODE,"451240");
 				context.setData("NamChk", "1");//		<Set>NamChk=1</Set> <!--测试不检查，生产考虑打开-->
 				context.setData(ParamKeys.TXN_CHL, "0");//     <Set>VchFlg=0</Set> <!--渠道交易不检查-->
-				
+				//TODO
 // 字段长度				context.setData(ParamKeys.BV_KIND,"000"); 凭证种类  字符长度
 				context.setData(ParamKeys.BV_KIND,"00");
 				
@@ -58,6 +58,7 @@ public class PrePayToBankAction implements Executable{
 				context.setData(ParamKeys.CHL_TYP, "L");  //<Set>CnlTyp=L</Set>
 				context.setData("Mask", "9102");//					<Set>Mask=9102</Set>
 				
+				//TODO
 //字段长度				context.setData(ParamKeys.BV_KIND,"000"); 凭证种类  字符长度
 				context.setData(ParamKeys.BV_KIND,"00");
 				
@@ -78,6 +79,6 @@ public class PrePayToBankAction implements Executable{
 			DecimalFormat df=new DecimalFormat("#.00");
 			BigDecimal txnAmt=new BigDecimal(df.format(d));
 			context.setData(ParamKeys.TXN_AMT,txnAmt );
-//			context.setData(arg0, arg1);
+			context.setData(ParamKeys.BUS_TYP, "0");
 		}
 }

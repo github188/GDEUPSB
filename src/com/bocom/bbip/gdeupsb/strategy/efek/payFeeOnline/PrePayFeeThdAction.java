@@ -31,16 +31,11 @@ public class PrePayFeeThdAction implements Executable{
 			context.setData(GDParamKeys.BAG_TYPE, "1");
 			context.setData(GDParamKeys.SVRCOD, "11");             //GDConstants 常量
 			constantOfSoapUI(context);
-			context.setData(ParamKeys.RSV_FLD6, context.getData(GDParamKeys.ELECTRICITY_YEARMONTH));
-			//TODO 0 客户到银行主动缴费 1 银行定时发起  0 不打，默认方式 1 需打 
-			context.setData("busWay", "0");
-			context.setData("inv", "0");
 			
 			BigDecimal txnAmt=new BigDecimal(context.getData(ParamKeys.TXN_AMT).toString());
 			context.setData(ParamKeys.TXN_AMT, txnAmt.scaleByPowerOfTen(2));
 			BigDecimal oweFeeAmt=new BigDecimal(context.getData(ParamKeys.OWE_FEE_AMT).toString());
 			context.setData(ParamKeys.OWE_FEE_AMT, oweFeeAmt.scaleByPowerOfTen(2));
-			context.setData("PKGCNT", "000001");
 	}
 	/**
 	 *报文信息 
@@ -64,6 +59,7 @@ public class PrePayFeeThdAction implements Executable{
 				context.setData(GDParamKeys.TRADE_RECEIVE, GDConstants.TRADE_RECEIVE);//交易接收方
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
+				context.setData("PKGCNT", "000001");
 				
 				Date txnDte=context.getData(ParamKeys.TXN_DATE);
 				Date txnTme=context.getData(ParamKeys.TXN_TIME);
@@ -74,7 +70,8 @@ public class PrePayFeeThdAction implements Executable{
 				
 				//TODO 
 				context.setData(GDParamKeys.BUS_IDENTIFY, "");
-				context.setData(ParamKeys.PAY_TYPE, "110");
+//				context.setData(ParamKeys.PAY_TYPE, "110");
+				context.setData(ParamKeys.BUS_TYP, "2");
 				
 	}
 }
