@@ -5,9 +5,9 @@
 	name="460423Req">
 		
 		<fixString name="netName"  length="64" /><!--  网点名称	WDMC	Varchar2(64)-->
-		<fixString name="sqn"  length="24" /><!--  交易流水号	JYLSH	Varchar2(24)-->
-		<fixString name="txnDte"  length="8" /><!--  交易日期	JYRQ	Varchar2(8)-->
-		<fixString name="txnTme"  length="6" /><!--  交易时间	JYSJ	Varchar2 (6)-->
+		<fixString name="thdAqn"  length="24" /><!--  交易流水号	JYLSH	Varchar2(24)-->
+		<fixString name="thdTxnDte"  length="8" /><!--  交易日期	JYRQ	Varchar2(8)-->
+		<fixString name="thdTxnTme"  length="6" /><!--  交易时间	JYSJ	Varchar2 (6)-->
 		<fixString name="oldTxnSqn"  length="24" /><!--  原交易流水号	YJYLSH	Varchar2(24)-->
 		<fixString name="busOldDate"  length="8" /><!--  原交易日期	YJYRQ	Varchar2(8)-->
 		<fixString name="busOldTime"  length="6" /><!--  原交易时间	YJYSJ	Varchar2 (6)-->
