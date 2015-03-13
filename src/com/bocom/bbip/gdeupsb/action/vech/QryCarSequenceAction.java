@@ -26,11 +26,16 @@ public class QryCarSequenceAction  extends BaseAction{
      @Override
     public void execute(Context context) throws CoreException, CoreRuntimeException {
         log.info("QryCarSequenceAction Start!!");
-        Date date = DateUtils.parse(context.getData("startDate").toString(), DateUtils.STYLE_yyyyMMdd);
-        String dateString = DateUtils.format(date, DateUtils.STYLE_yyyyMMdd);
-        String timeString = context.getData("startTime").toString();
-        String destination = context.getData("destination").toString();
-        String ownerdepot = context.getData("ownerdepot").toString();
+        Date date = DateUtils.parse(context.getData("qryDate").toString(), DateUtils.STYLE_yyyyMMdd);
+        String dateString = DateUtils.format(date, DateUtils.STYLE_yyyyMMdd);//查询日期
+        String timeString = context.getData("qryTime").toString();//班次时间
+        String destination = context.getData("des").toString();//>到站代码（或者拼音，或者汉字
+        String ownerdepot = context.getData("ownerdepot").toString();//班次所属站代码
+        
+        //TODO // <param name="storeNo">商户编号</param>
+        // <param name="terminalNo">终端编号</param>
+        // <param name="sign">签名：sign=md5(storeNo + terminalNo + date + md5(password))  password 为终端密码</param>
+
         //易票联长途汽车班车查询接口 TODO;
         String[] schemes = terminalQuerySchemeInfo(dateString, destination, ownerdepot, timeString);
         int schemesLength =schemes.length;
@@ -54,19 +59,19 @@ public class QryCarSequenceAction  extends BaseAction{
                 }
             }
             tempMap.put("ticSouStatNo", infoArr[0]);
-            tempMap.put("classesNo", infoArr[1]);
-            tempMap.put("classesNam", infoArr[2]);
-            tempMap.put("classesTim", infoArr[3]);
-            tempMap.put("classesprop", infoArr[4]);
-            tempMap.put("classesTyp", infoArr[5]);
-            tempMap.put("operationTyp", infoArr[6]);
-            tempMap.put("classesLev", infoArr[7]);
-            tempMap.put("destinationNo", infoArr[8]);
-            tempMap.put("destinationNam", infoArr[9]);
+            tempMap.put("claNo", infoArr[1]);
+            tempMap.put("claNam", infoArr[2]);
+            tempMap.put("claTim", infoArr[3]);
+            tempMap.put("claprop", infoArr[4]);
+            tempMap.put("claTyp", infoArr[5]);
+            tempMap.put("opeTyp", infoArr[6]);
+            tempMap.put("claLev", infoArr[7]);
+            tempMap.put("destNo", infoArr[8]);
+            tempMap.put("destNam", infoArr[9]);
             tempMap.put("endNam", infoArr[10]);
             tempMap.put("souStatNam", infoArr[11]);
-            tempMap.put("surplusTicNum", infoArr[12]);
-            tempMap.put("ridingStatNo", infoArr[13]);// 目前与票源客运站编码一致
+            tempMap.put("surTicNum", infoArr[12]);
+            tempMap.put("ridStatNo", infoArr[13]);// 目前与票源客运站编码一致
             tempMap.put("ownerdepot", infoArr[14]);// 目前与票源客运站编码一致
             tempMap.put("remark", infoArr[15]);
             resultMapLst.add(tempMap);

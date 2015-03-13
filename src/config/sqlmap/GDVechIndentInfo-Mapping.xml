@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GDVechIndentInfo" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GDVechIndentInfo" >
+    <id column="ORDER_ID" property="orderId" jdbcType="CHAR" />
+    <result column="STORE_SEQ" property="storeSeq" jdbcType="CHAR" />
+    <result column="TXN_TIM" property="txnTim" jdbcType="CHAR" />
+    <result column="CLA_DTE" property="claDte" jdbcType="CHAR" />
+    <result column="CLA_TIM" property="claTim" jdbcType="CHAR" />
+    <result column="CLA_NO" property="claNo" jdbcType="CHAR" />
+    <result column="CLA_TYP" property="claTyp" jdbcType="CHAR" />
+    <result column="OPE_TYP" property="opeTyp" jdbcType="CHAR" />
+    <result column="CLA_LEV" property="claLev" jdbcType="CHAR" />
+    <result column="RID_STAT_NO" property="ridStatNo" jdbcType="CHAR" />
+    <result column="DES_NAM" property="desNam" jdbcType="CHAR" />
+    <result column="BUY_NUM" property="buyNum" jdbcType="CHAR" />
+    <result column="TXN_AMT" property="txnAmt" jdbcType="DECIMAL" />
+    <result column="BUS_STOP_NO" property="busStopNo" jdbcType="CHAR" />
+    <result column="TIC_ENT_NO" property="ticEntNo" jdbcType="CHAR" />
+    <result column="TIC_PRI" property="ticPri" jdbcType="DECIMAL" />
+    <result column="BUN_SUR_PRI" property="bunSurPri" jdbcType="DECIMAL" />
+    <result column="USER_NAM" property="userNam" jdbcType="CHAR" />
+    <result column="USER_ID" property="userId" jdbcType="CHAR" />
+    <result column="MOBILE" property="mobile" jdbcType="CHAR" />
+    <result column="ORD_TIM" property="ordTim" jdbcType="CHAR" />
+    <result column="ORD_STA" property="ordSta" jdbcType="CHAR" />
+    <result column="VOUCHER" property="voucher" jdbcType="CHAR" />
+    <result column="VOUCHER_CODE" property="voucherCode" jdbcType="CHAR" />
+    <result column="PAY_TYPE" property="payType" jdbcType="CHAR" />
+    <result column="SUR_TIC_NUM" property="surTicNum" jdbcType="CHAR" />
+    <result column="RSV_FLD1" property="rsvFld1" jdbcType="VARCHAR" />
+    <result column="RSV_FLD2" property="rsvFld2" jdbcType="VARCHAR" />
+    <result column="RSV_FLD3" property="rsvFld3" jdbcType="VARCHAR" />
+    <result column="RSV_FLD4" property="rsvFld4" jdbcType="VARCHAR" />
+    <result column="RSV_FLD5" property="rsvFld5" jdbcType="VARCHAR" />
+    <result column="RSV_FLD6" property="rsvFld6" jdbcType="VARCHAR" />
+    <result column="RSV_FLD7" property="rsvFld7" jdbcType="VARCHAR" />
+    <result column="RSV_FLD8" property="rsvFld8" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    ORDER_ID, STORE_SEQ, TXN_TIM, CLA_DTE, CLA_TIM, CLA_NO, CLA_TYP, OPE_TYP, CLA_LEV, 
+    RID_STAT_NO, DES_NAM, BUY_NUM, TXN_AMT, BUS_STOP_NO, TIC_ENT_NO, TIC_PRI, BUN_SUR_PRI, 
+    USER_NAM, USER_ID, MOBILE, ORD_TIM, ORD_STA, VOUCHER, VOUCHER_CODE, PAY_TYPE, SUR_TIC_NUM, 
+    RSV_FLD1, RSV_FLD2, RSV_FLD3, RSV_FLD4, RSV_FLD5, RSV_FLD6, RSV_FLD7, RSV_FLD8
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_VECH_INDENT_INFO
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="orderId!=null" >
+        AND  ORDER_ID=#{orderId,jdbcType=CHAR}
+      </if>
+      <if test="storeSeq!=null" >
+        AND  STORE_SEQ=#{storeSeq,jdbcType=CHAR}
+      </if>
+      <if test="txnTim!=null" >
+        AND  TXN_TIM=#{txnTim,jdbcType=CHAR}
+      </if>
+      <if test="claDte!=null" >
+        AND  CLA_DTE=#{claDte,jdbcType=CHAR}
+      </if>
+      <if test="claTim!=null" >
+        AND  CLA_TIM=#{claTim,jdbcType=CHAR}
+      </if>
+      <if test="claNo!=null" >
+        AND  CLA_NO=#{claNo,jdbcType=CHAR}
+      </if>
+      <if test="claTyp!=null" >
+        AND  CLA_TYP=#{claTyp,jdbcType=CHAR}
+      </if>
+      <if test="opeTyp!=null" >
+        AND  OPE_TYP=#{opeTyp,jdbcType=CHAR}
+      </if>
+      <if test="claLev!=null" >
+        AND  CLA_LEV=#{claLev,jdbcType=CHAR}
+      </if>
+      <if test="ridStatNo!=null" >
+        AND  RID_STAT_NO=#{ridStatNo,jdbcType=CHAR}
+      </if>
+      <if test="desNam!=null" >
+        AND  DES_NAM=#{desNam,jdbcType=CHAR}
+      </if>
+      <if test="buyNum!=null" >
+        AND  BUY_NUM=#{buyNum,jdbcType=CHAR}
+      </if>
+      <if test="txnAmt!=null" >
+        AND  TXN_AMT=#{txnAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="busStopNo!=null" >
+        AND  BUS_STOP_NO=#{busStopNo,jdbcType=CHAR}
+      </if>
+      <if test="ticEntNo!=null" >
+        AND  TIC_ENT_NO=#{ticEntNo,jdbcType=CHAR}
+      </if>
+      <if test="ticPri!=null" >
+        AND  TIC_PRI=#{ticPri,jdbcType=DECIMAL}
+      </if>
+      <if test="bunSurPri!=null" >
+        AND  BUN_SUR_PRI=#{bunSurPri,jdbcType=DECIMAL}
+      </if>
+      <if test="userNam!=null" >
+        AND  USER_NAM=#{userNam,jdbcType=CHAR}
+      </if>
+      <if test="userId!=null" >
+        AND  USER_ID=#{userId,jdbcType=CHAR}
+      </if>
+      <if test="mobile!=null" >
+        AND  MOBILE=#{mobile,jdbcType=CHAR}
+      </if>
+      <if test="ordTim!=null" >
+        AND  ORD_TIM=#{ordTim,jdbcType=CHAR}
+      </if>
+      <if test="ordSta!=null" >
+        AND  ORD_STA=#{ordSta,jdbcType=CHAR}
+      </if>
+      <if test="voucher!=null" >
+        AND  VOUCHER=#{voucher,jdbcType=CHAR}
+      </if>
+      <if test="voucherCode!=null" >
+        AND  VOUCHER_CODE=#{voucherCode,jdbcType=CHAR}
+      </if>
+      <if test="payType!=null" >
+        AND  PAY_TYPE=#{payType,jdbcType=CHAR}
+      </if>
+      <if test="surTicNum!=null" >
+        AND  SUR_TIC_NUM=#{surTicNum,jdbcType=CHAR}
+      </if>
+      <if test="rsvFld1!=null" >
+        AND  RSV_FLD1=#{rsvFld1,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld2!=null" >
+        AND  RSV_FLD2=#{rsvFld2,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld3!=null" >
+        AND  RSV_FLD3=#{rsvFld3,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld4!=null" >
+        AND  RSV_FLD4=#{rsvFld4,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld5!=null" >
+        AND  RSV_FLD5=#{rsvFld5,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld6!=null" >
+        AND  RSV_FLD6=#{rsvFld6,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld7!=null" >
+        AND  RSV_FLD7=#{rsvFld7,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld8!=null" >
+        AND  RSV_FLD8=#{rsvFld8,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_VECH_INDENT_INFO
+    where ORDER_ID = #{orderId,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from ${GDEUPSB_SCHEMA}.GDEUPS_VECH_INDENT_INFO
+    where ORDER_ID = #{orderId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GDVechIndentInfo" >
+    insert into ${GDEUPSB_SCHEMA}.GDEUPS_VECH_INDENT_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="storeSeq != null" >
+        STORE_SEQ,
+      </if>
+      <if test="txnTim != null" >
+        TXN_TIM,
+      </if>
+      <if test="claDte != null" >
+        CLA_DTE,
+      </if>
+      <if test="claTim != null" >
+        CLA_TIM,
+      </if>
+      <if test="claNo != null" >
+        CLA_NO,
+      </if>
+      <if test="claTyp != null" >
+        CLA_TYP,
+      </if>
+      <if test="opeTyp != null" >
+        OPE_TYP,
+      </if>
+      <if test="claLev != null" >
+        CLA_LEV,
+      </if>
+      <if test="ridStatNo != null" >
+        RID_STAT_NO,
+      </if>
+      <if test="desNam != null" >
+        DES_NAM,
+      </if>
+      <if test="buyNum != null" >
+        BUY_NUM,
+      </if>
+      <if test="txnAmt != null" >
+        TXN_AMT,
+      </if>
+      <if test="busStopNo != null" >
+        BUS_STOP_NO,
+      </if>
+      <if test="ticEntNo != null" >
+        TIC_ENT_NO,
+      </if>
+      <if test="ticPri != null" >
+        TIC_PRI,
+      </if>
+      <if test="bunSurPri != null" >
+        BUN_SUR_PRI,
+      </if>
+      <if test="userNam != null" >
+        USER_NAM,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="mobile != null" >
+        MOBILE,
+      </if>
+      <if test="ordTim != null" >
+        ORD_TIM,
+      </if>
+      <if test="ordSta != null" >
+        ORD_STA,
+      </if>
+      <if test="voucher != null" >
+        VOUCHER,
+      </if>
+      <if test="voucherCode != null" >
+        VOUCHER_CODE,
+      </if>
+      <if test="payType != null" >
+        PAY_TYPE,
+      </if>
+      <if test="surTicNum != null" >
+        SUR_TIC_NUM,
+      </if>
+      <if test="rsvFld1 != null" >
+        RSV_FLD1,
+      </if>
+      <if test="rsvFld2 != null" >
+        RSV_FLD2,
+      </if>
+      <if test="rsvFld3 != null" >
+        RSV_FLD3,
+      </if>
+      <if test="rsvFld4 != null" >
+        RSV_FLD4,
+      </if>
+      <if test="rsvFld5 != null" >
+        RSV_FLD5,
+      </if>
+      <if test="rsvFld6 != null" >
+        RSV_FLD6,
+      </if>
+      <if test="rsvFld7 != null" >
+        RSV_FLD7,
+      </if>
+      <if test="rsvFld8 != null" >
+        RSV_FLD8,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderId != null" >
+        #{orderId,jdbcType=CHAR},
+      </if>
+      <if test="storeSeq != null" >
+        #{storeSeq,jdbcType=CHAR},
+      </if>
+      <if test="txnTim != null" >
+        #{txnTim,jdbcType=CHAR},
+      </if>
+      <if test="claDte != null" >
+        #{claDte,jdbcType=CHAR},
+      </if>
+      <if test="claTim != null" >
+        #{claTim,jdbcType=CHAR},
+      </if>
+      <if test="claNo != null" >
+        #{claNo,jdbcType=CHAR},
+      </if>
+      <if test="claTyp != null" >
+        #{claTyp,jdbcType=CHAR},
+      </if>
+      <if test="opeTyp != null" >
+        #{opeTyp,jdbcType=CHAR},
+      </if>
+      <if test="claLev != null" >
+        #{claLev,jdbcType=CHAR},
+      </if>
+      <if test="ridStatNo != null" >
+        #{ridStatNo,jdbcType=CHAR},
+      </if>
+      <if test="desNam != null" >
+        #{desNam,jdbcType=CHAR},
+      </if>
+      <if test="buyNum != null" >
+        #{buyNum,jdbcType=CHAR},
+      </if>
+      <if test="txnAmt != null" >
+        #{txnAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="busStopNo != null" >
+        #{busStopNo,jdbcType=CHAR},
+      </if>
+      <if test="ticEntNo != null" >
+        #{ticEntNo,jdbcType=CHAR},
+      </if>
+      <if test="ticPri != null" >
+        #{ticPri,jdbcType=DECIMAL},
+      </if>
+      <if test="bunSurPri != null" >
+        #{bunSurPri,jdbcType=DECIMAL},
+      </if>
+      <if test="userNam != null" >
+        #{userNam,jdbcType=CHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=CHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=CHAR},
+      </if>
+      <if test="ordTim != null" >
+        #{ordTim,jdbcType=CHAR},
+      </if>
+      <if test="ordSta != null" >
+        #{ordSta,jdbcType=CHAR},
+      </if>
+      <if test="voucher != null" >
+        #{voucher,jdbcType=CHAR},
+      </if>
+      <if test="voucherCode != null" >
+        #{voucherCode,jdbcType=CHAR},
+      </if>
+      <if test="payType != null" >
+        #{payType,jdbcType=CHAR},
+      </if>
+      <if test="surTicNum != null" >
+        #{surTicNum,jdbcType=CHAR},
+      </if>
+      <if test="rsvFld1 != null" >
+        #{rsvFld1,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld2 != null" >
+        #{rsvFld2,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld3 != null" >
+        #{rsvFld3,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld4 != null" >
+        #{rsvFld4,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld5 != null" >
+        #{rsvFld5,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld6 != null" >
+        #{rsvFld6,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld7 != null" >
+        #{rsvFld7,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld8 != null" >
+        #{rsvFld8,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_VECH_INDENT_INFO
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="orderId!=null" >
+        AND  ORDER_ID=#{orderId,jdbcType=CHAR}
+      </if>
+      <if test="storeSeq!=null" >
+        AND  STORE_SEQ=#{storeSeq,jdbcType=CHAR}
+      </if>
+      <if test="txnTim!=null" >
+        AND  TXN_TIM=#{txnTim,jdbcType=CHAR}
+      </if>
+      <if test="claDte!=null" >
+        AND  CLA_DTE=#{claDte,jdbcType=CHAR}
+      </if>
+      <if test="claTim!=null" >
+        AND  CLA_TIM=#{claTim,jdbcType=CHAR}
+      </if>
+      <if test="claNo!=null" >
+        AND  CLA_NO=#{claNo,jdbcType=CHAR}
+      </if>
+      <if test="claTyp!=null" >
+        AND  CLA_TYP=#{claTyp,jdbcType=CHAR}
+      </if>
+      <if test="opeTyp!=null" >
+        AND  OPE_TYP=#{opeTyp,jdbcType=CHAR}
+      </if>
+      <if test="claLev!=null" >
+        AND  CLA_LEV=#{claLev,jdbcType=CHAR}
+      </if>
+      <if test="ridStatNo!=null" >
+        AND  RID_STAT_NO=#{ridStatNo,jdbcType=CHAR}
+      </if>
+      <if test="desNam!=null" >
+        AND  DES_NAM=#{desNam,jdbcType=CHAR}
+      </if>
+      <if test="buyNum!=null" >
+        AND  BUY_NUM=#{buyNum,jdbcType=CHAR}
+      </if>
+      <if test="txnAmt!=null" >
+        AND  TXN_AMT=#{txnAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="busStopNo!=null" >
+        AND  BUS_STOP_NO=#{busStopNo,jdbcType=CHAR}
+      </if>
+      <if test="ticEntNo!=null" >
+        AND  TIC_ENT_NO=#{ticEntNo,jdbcType=CHAR}
+      </if>
+      <if test="ticPri!=null" >
+        AND  TIC_PRI=#{ticPri,jdbcType=DECIMAL}
+      </if>
+      <if test="bunSurPri!=null" >
+        AND  BUN_SUR_PRI=#{bunSurPri,jdbcType=DECIMAL}
+      </if>
+      <if test="userNam!=null" >
+        AND  USER_NAM=#{userNam,jdbcType=CHAR}
+      </if>
+      <if test="userId!=null" >
+        AND  USER_ID=#{userId,jdbcType=CHAR}
+      </if>
+      <if test="mobile!=null" >
+        AND  MOBILE=#{mobile,jdbcType=CHAR}
+      </if>
+      <if test="ordTim!=null" >
+        AND  ORD_TIM=#{ordTim,jdbcType=CHAR}
+      </if>
+      <if test="ordSta!=null" >
+        AND  ORD_STA=#{ordSta,jdbcType=CHAR}
+      </if>
+      <if test="voucher!=null" >
+        AND  VOUCHER=#{voucher,jdbcType=CHAR}
+      </if>
+      <if test="voucherCode!=null" >
+        AND  VOUCHER_CODE=#{voucherCode,jdbcType=CHAR}
+      </if>
+      <if test="payType!=null" >
+        AND  PAY_TYPE=#{payType,jdbcType=CHAR}
+      </if>
+      <if test="surTicNum!=null" >
+        AND  SUR_TIC_NUM=#{surTicNum,jdbcType=CHAR}
+      </if>
+      <if test="rsvFld1!=null" >
+        AND  RSV_FLD1=#{rsvFld1,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld2!=null" >
+        AND  RSV_FLD2=#{rsvFld2,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld3!=null" >
+        AND  RSV_FLD3=#{rsvFld3,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld4!=null" >
+        AND  RSV_FLD4=#{rsvFld4,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld5!=null" >
+        AND  RSV_FLD5=#{rsvFld5,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld6!=null" >
+        AND  RSV_FLD6=#{rsvFld6,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld7!=null" >
+        AND  RSV_FLD7=#{rsvFld7,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld8!=null" >
+        AND  RSV_FLD8=#{rsvFld8,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GDVechIndentInfo" >
+    update ${GDEUPSB_SCHEMA}.GDEUPS_VECH_INDENT_INFO
+    <set >
+      <if test="storeSeq != null" >
+        STORE_SEQ = #{storeSeq,jdbcType=CHAR},
+      </if>
+      <if test="txnTim != null" >
+        TXN_TIM = #{txnTim,jdbcType=CHAR},
+      </if>
+      <if test="claDte != null" >
+        CLA_DTE = #{claDte,jdbcType=CHAR},
+      </if>
+      <if test="claTim != null" >
+        CLA_TIM = #{claTim,jdbcType=CHAR},
+      </if>
+      <if test="claNo != null" >
+        CLA_NO = #{claNo,jdbcType=CHAR},
+      </if>
+      <if test="claTyp != null" >
+        CLA_TYP = #{claTyp,jdbcType=CHAR},
+      </if>
+      <if test="opeTyp != null" >
+        OPE_TYP = #{opeTyp,jdbcType=CHAR},
+      </if>
+      <if test="claLev != null" >
+        CLA_LEV = #{claLev,jdbcType=CHAR},
+      </if>
+      <if test="ridStatNo != null" >
+        RID_STAT_NO = #{ridStatNo,jdbcType=CHAR},
+      </if>
+      <if test="desNam != null" >
+        DES_NAM = #{desNam,jdbcType=CHAR},
+      </if>
+      <if test="buyNum != null" >
+        BUY_NUM = #{buyNum,jdbcType=CHAR},
+      </if>
+      <if test="txnAmt != null" >
+        TXN_AMT = #{txnAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="busStopNo != null" >
+        BUS_STOP_NO = #{busStopNo,jdbcType=CHAR},
+      </if>
+      <if test="ticEntNo != null" >
+        TIC_ENT_NO = #{ticEntNo,jdbcType=CHAR},
+      </if>
+      <if test="ticPri != null" >
+        TIC_PRI = #{ticPri,jdbcType=DECIMAL},
+      </if>
+      <if test="bunSurPri != null" >
+        BUN_SUR_PRI = #{bunSurPri,jdbcType=DECIMAL},
+      </if>
+      <if test="userNam != null" >
+        USER_NAM = #{userNam,jdbcType=CHAR},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=CHAR},
+      </if>
+      <if test="mobile != null" >
+        MOBILE = #{mobile,jdbcType=CHAR},
+      </if>
+      <if test="ordTim != null" >
+        ORD_TIM = #{ordTim,jdbcType=CHAR},
+      </if>
+      <if test="ordSta != null" >
+        ORD_STA = #{ordSta,jdbcType=CHAR},
+      </if>
+      <if test="voucher != null" >
+        VOUCHER = #{voucher,jdbcType=CHAR},
+      </if>
+      <if test="voucherCode != null" >
+        VOUCHER_CODE = #{voucherCode,jdbcType=CHAR},
+      </if>
+      <if test="payType != null" >
+        PAY_TYPE = #{payType,jdbcType=CHAR},
+      </if>
+      <if test="surTicNum != null" >
+        SUR_TIC_NUM = #{surTicNum,jdbcType=CHAR},
+      </if>
+      <if test="rsvFld1 != null" >
+        RSV_FLD1 = #{rsvFld1,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld2 != null" >
+        RSV_FLD2 = #{rsvFld2,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld3 != null" >
+        RSV_FLD3 = #{rsvFld3,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld4 != null" >
+        RSV_FLD4 = #{rsvFld4,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld5 != null" >
+        RSV_FLD5 = #{rsvFld5,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld6 != null" >
+        RSV_FLD6 = #{rsvFld6,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld7 != null" >
+        RSV_FLD7 = #{rsvFld7,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld8 != null" >
+        RSV_FLD8 = #{rsvFld8,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ORDER_ID = #{orderId,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_VECH_INDENT_INFO
+    <if test="_parameter" >
+      where ORDER_ID in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
+</mapper>
