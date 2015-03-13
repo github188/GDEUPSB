@@ -36,7 +36,7 @@ public class PreCancelFeeAction implements Executable{
 		
 		context.setData(ParamKeys.CUS_NME, context.getData("CusNme"));
 		//TODO 
-		context.setData(ParamKeys.BANK_NO, "301");
+		context.setData("thdObkCde", context.getData(ParamKeys.BANK_NO));
 			 	//TODO   comNo
 				String comNo=context.getData(ParamKeys.COMPANY_NO).toString();     
 				EupsThdTranCtlInfo eupsThdTranCtlInfo=eupsThdTranCtlInfoRepository.findOne(comNo);
