@@ -318,4 +318,75 @@
     <include refid="baseColumnList" />
     from ${GDEUPSB_SCHEMA}.GDEUPS_TYF_INV_REC
   </select>
+  <delete id="delete1" parameterType="com.bocom.bbip.gdeupsb.entity.GdeupsTyfInvRec" >
+  delete from ${GDEUPSB_SCHEMA}.GDEUPS_TYF_INV_REC
+  <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="trType!=null" >
+        AND  TR_TYPE=#{trType,jdbcType=CHAR}
+      </if>
+      <if test="recCnt!=null" >
+        AND  REC_CNT=#{recCnt,jdbcType=CHAR}
+      </if>
+      <if test="thdKey!=null" >
+        AND  THD_KEY=#{thdKey,jdbcType=CHAR}
+      </if>
+      <if test="actNo!=null" >
+        AND  ACT_NO=#{actNo,jdbcType=CHAR}
+      </if>
+      <if test="tcusId!=null" >
+        AND  TCUS_ID=#{tcusId,jdbcType=CHAR}
+      </if>
+      <if test="fcusId!=null" >
+        AND  FCUS_ID=#{fcusId,jdbcType=CHAR}
+      </if>
+      <if test="trDate!=null" >
+        AND  TR_DATE=#{trDate,jdbcType=CHAR}
+      </if>
+      <if test="tcusNm!=null" >
+        AND  TCUS_NM=#{tcusNm,jdbcType=CHAR}
+      </if>
+      <if test="iprnCnt!=null" >
+        AND  IPRN_CNT=#{iprnCnt,jdbcType=CHAR}
+      </if>
+      <if test="billDate!=null" >
+        AND  BILL_DATE=#{billDate,jdbcType=CHAR}
+      </if>
+      <if test="txnAmt!=null" >
+        AND  TXN_AMT=#{txnAmt,jdbcType=CHAR}
+      </if>
+      <if test="lastBal!=null" >
+        AND  LAST_BAL=#{lastBal,jdbcType=CHAR}
+      </if>
+      <if test="thisBal!=null" >
+        AND  THIS_BAL=#{thisBal,jdbcType=CHAR}
+      </if>
+      <if test="ipayAmt!=null" >
+        AND  IPAY_AMT=#{ipayAmt,jdbcType=CHAR}
+      </if>
+      <if test="itotAmt!=null" >
+        AND  ITOT_AMT=#{itotAmt,jdbcType=CHAR}
+      </if>
+      <if test="einvNo!=null" >
+        AND  EINV_NO=#{einvNo,jdbcType=CHAR}
+      </if>
+      <if test="staMon!=null" >
+        AND  STA_MON=#{staMon,jdbcType=CHAR}
+      </if>
+      <if test="endMon!=null" >
+        AND  END_MON=#{endMon,jdbcType=CHAR}
+      </if>
+      <if test="tmp01!=null" >
+        AND  TMP01=#{tmp01,jdbcType=CHAR}
+      </if>
+      <if test="tmp02!=null" >
+        AND  TMP02=#{tmp02,jdbcType=CHAR}
+      </if>
+      <if test="mxCount!=null" >
+        AND  MX_COUNT=#{mxCount,jdbcType=CHAR}
+      </if>
+      <if test="fpInf!=null" >
+        AND  FP_INF=#{fpInf,jdbcType=VARCHAR}
+      </if>
+    </trim>
+   </delete>
 </mapper>
