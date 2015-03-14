@@ -1,27 +1,24 @@
 package com.bocom.bbip.gdeupsb.strategy.trsp;
 
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
 
-import com.bocom.bbip.comp.account.AccountService;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
-import com.bocom.bbip.gdeupsb.entity.GDEupsbPubInvInfo;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspPayInfo;
-import com.bocom.bbip.gdeupsb.repository.GDEupsbPubInvInfoRepository;
+import com.bocom.bbip.gdeupsb.entity.GdeupsTyfInvRec;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspFeeInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspPayInfoRepository;
-import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspTxnJnlRepository;
+import com.bocom.bbip.gdeupsb.repository.GdeupsTyfInvRecRepository;
 import com.bocom.bbip.utils.BeanUtils;
+import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -32,11 +29,12 @@ public class AftPayToBankStrategyAction implements Executable{
 	@Autowired
 	GDEupsbTrspPayInfoRepository gdEupsbTrspPayInfoRepository;
 	
-	@Autowired
-	GDEupsbPubInvInfoRepository gdEupsbPubInvInfoRepository;
 	
 	@Autowired
 	GDEupsbTrspFeeInfoRepository gdEupsbTrspFeeInfoRepository;
+	
+	@Autowired
+	GdeupsTyfInvRecRepository gdeupsTyfInvRecRepository;
 	
 	private final static Log log = LogFactory.getLog(AftPayToBankStrategyAction.class); 
 	public void execute(Context ctx) throws CoreException,CoreRuntimeException{
@@ -73,19 +71,26 @@ public class AftPayToBankStrategyAction implements Executable{
 //		ctx.setData(GDParamKeys.TCUS_NM, tCusNam);
 		
 //		查询是否存在发票记录
-		GDEupsbPubInvInfo gdEupsbPubInvInfo = new GDEupsbPubInvInfo();
-		gdEupsbPubInvInfo.setTmp01(carNo);
-		gdEupsbPubInvInfo.setTmp02(car_typ);
-		gdEupsbPubInvInfo.setActNo(actNo);
-		List<GDEupsbPubInvInfo> invInfoList = gdEupsbPubInvInfoRepository.find(gdEupsbPubInvInfo);
-		if(!CollectionUtils.isEmpty(invInfoList)){
-			gdEupsbPubInvInfoRepository.delete(gdEupsbPubInvInfo);
+//		GDEupsbPubInvInfo gdEupsbPubInvInfo = new GDEupsbPubInvInfo();
+//		gdEupsbPubInvInfo.setTmp01(carNo);
+//		gdEupsbPubInvInfo.setTmp02(car_typ);
+//		gdEupsbPubInvInfo.setActNo(actNo);
+//		List<GDEupsbPubInvInfo> invInfoList = gdEupsbPubInvInfoRepository.find(gdEupsbPubInvInfo);
+//		if(!CollectionUtils.isEmpty(invInfoList)){
+//			gdEupsbPubInvInfoRepository.delete(gdEupsbPubInvInfo);
+//		}
+		
+		GdeupsTyfInvRec gdeupsTyfInvRec = new GdeupsTyfInvRec();
+		gdeupsTyfInvRec.setTmp01(carNo);
+		gdeupsTyfInvRec.setTmp02(car_typ);
+		gdeupsTyfInvRec.setActNo(actNo);
+		List<GdeupsTyfInvRec> invRecList = gdeupsTyfInvRecRepository.find(gdeupsTyfInvRec);
+		if(!CollectionUtils.isEmpty(invRecList)){
+			gdeupsTyfInvRecRepository.delete1(gdeupsTyfInvRec);
 		}
-		
-		
 
-		gdEupsbPubInvInfo = BeanUtils.toObject(ctx.getDataMap(), GDEupsbPubInvInfo.class);
-		gdEupsbPubInvInfoRepository.insert(gdEupsbPubInvInfo);
+		gdeupsTyfInvRec = BeanUtils.toObject(ctx.getDataMap(), GdeupsTyfInvRec.class);
+		gdeupsTyfInvRecRepository.insert(gdeupsTyfInvRec);
 		
 		
 
