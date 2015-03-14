@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDVechIndentInfo;
-import com.bocom.bbip.gdeupsb.entity.GdLotChkCtl;
 import com.bocom.bbip.gdeupsb.repository.GDVechIndentInfoRepository;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.euif.component.util.StringUtil;
@@ -32,7 +31,7 @@ public class SubmitEleTicketOder extends BaseAction{
     
     @Override
     public void execute(Context context) throws CoreException, CoreRuntimeException {
-        
+        log.info("SubmitEleTicketOder Start!!");
         String storeId = context.getData("storeId").toString();//商家ID
         String terminalId = context.getData("terminalId").toString();//终端ID
         String account = context.getData("account").toString();//商户帐户
@@ -101,6 +100,7 @@ public class SubmitEleTicketOder extends BaseAction{
        
         //易票联 电子票下单报文拼装
         
+        //易票联 电子票下单接口调用
         
         //订单表数据插入
         GDVechIndentInfo  vechIndentInfo = new GDVechIndentInfo();

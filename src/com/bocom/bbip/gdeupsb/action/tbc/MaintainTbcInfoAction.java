@@ -1,5 +1,7 @@
 package com.bocom.bbip.gdeupsb.action.tbc;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +13,6 @@ import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
 import com.bocom.bbip.eups.repository.EupsThdBaseInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
-import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.euif.component.util.StringUtil;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -56,8 +57,14 @@ public class MaintainTbcInfoAction extends BaseAction {
             break;
         case 1: // multiquery
             List <EupsThdBaseInfo> thdBaseInfos = get(EupsThdBaseInfoRepository.class).findAll();
-            List<Map<String,Object>> resultList=(List<Map<String, Object>>) BeanUtils.toMaps(thdBaseInfos);
-            context.setData("rec", resultList);
+            List<Map<String, Object>> qryResultList = new ArrayList<Map<String,Object>>();
+                for(EupsThdBaseInfo thdBaseInfo:thdBaseInfos){
+                Map<String, Object> tempMap = new HashMap<String, Object>();
+                tempMap.put("comNo", thdBaseInfo.getComNo());
+                tempMap.put("comNme", thdBaseInfo.getComNme());
+                qryResultList.add(tempMap);
+            }
+            context.setData("rec", qryResultList);
             break;
         case 2: // delete
             EupsThdBaseInfo NewEupsThdBaseInfo = get(EupsThdBaseInfoRepository.class).findOne(context
