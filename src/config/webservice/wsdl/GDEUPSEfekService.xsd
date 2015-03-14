@@ -344,7 +344,6 @@
       <xs:element name="obkBk" type="tns:obkBk_SType" minOccurs="0"/>
       <xs:element name="cusAc" type="tns:cusAc_SType"/>
       <xs:element name="cusNme" type="tns:cusNme_SType" minOccurs="0"/>
-      <xs:element name="newBankNo" type="tns:newBankNo_SType" minOccurs="0"/>
       <xs:element name="newCusAc" type="tns:newCusAc_SType" minOccurs="0"/>
       <xs:element name="newCusName" type="tns:newCusName_SType" minOccurs="0"/>
       <xs:element name="pwd" type="tns:pwd_SType" minOccurs="0"/>
@@ -410,14 +409,6 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="128"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="newBankNo_SType">
-    <xs:annotation>
-      <xs:documentation>新签约银行编码</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="4"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="newCusAc_SType">
