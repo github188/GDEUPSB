@@ -17,7 +17,7 @@
 							
 							<fixString name="newbankNo"  length="4" /><!-- 新签约银行代码	XQYYHDM	Varchar2(4)-->		
 							<fixString name="newCusAc"  length="32" /><!-- 新签约账户	XQYZH	Varchar2(32)-->		
-							<fixString name="newThdCusNme"  length="128" /><!-- 新签约账户名称	XQYZHMC	Varchar2(128)-->		
+							<fixString name="newCusNme"  length="128" /><!-- 新签约账户名称	XQYZHMC	Varchar2(128)-->		
 							<fixString name="accTyp"  length="2" /><!-- 账户类型	ZHLX	Varchar2(2)-->		
 							<fixString name="idTyp"  length="2" /><!-- 证件类型	ZJLX	Varchar2(2)-->		
 							<fixString name="RefNum"  length="32" /><!-- 证件号码	ZJHM	Varchar2(32)-->		
