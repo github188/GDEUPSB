@@ -66,26 +66,8 @@ public class PowerChangeTreatyAction extends BaseAction{
 					}
 					context.setDataMap(comResult.getPayload());
 					log.info("===========context======"+context);
-					//TODO 修改
-					String accType=context.getData(ParamKeys.ACC_TYPE).toString();
-					String idNo=context.getData(ParamKeys.ECIF_REF_NUM).toString();
-					if("0".equals(accType)){
-							if("06".equals(idNo) || context.getData("ActQ04").toString().trim().equals(context.getData(ParamKeys.ECIF_REF_NUM).toString())){
-								context.setData(ParamKeys.MESSAGE_TYPE, "E");
-								context.setData(ParamKeys.RESPONSE_CODE, "EFE999");
-								context.setData(ParamKeys.RSP_MSG, "证件种类【"+accType+"】或证件号码【"+idNo+"】与银行系统不一致");
-								throw new CoreRuntimeException("证件种类【"+accType+"】或证件号码【"+idNo+"】与银行系统不一致");
-							}
-					}else if("1".equals(accType) || "3".equals(accType)){
-							//TODO   <If condition="OR(IS_NOEQUAL_STRING($ZJLX,$IdTyp),IS_NOEQUAL_STRING($ZJHM,$IdNo))">
-							if(accTyp.equals(accType) || null !=idNo){
-								context.setData(ParamKeys.MESSAGE_TYPE, "E");
-								context.setData(ParamKeys.RESPONSE_CODE, "EFE999");
-								context.setData(ParamKeys.RSP_MSG, "证件种类【"+accType+"】或证件号码【"+idNo+"】与银行系统不一致");
-							}
-					}
+					
 					context.setData("ChkFlg", "S");
-					context.setData("PKGCNT", GDConstants.SUCCESS_CODE);
 					context.setData(ParamKeys.MESSAGE_TYPE, "N");  
 					context.setData(ParamKeys.RSP_CDE, GDConstants.SUCCESS_CODE);
 					//修改签约表
