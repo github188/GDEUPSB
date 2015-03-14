@@ -20,6 +20,7 @@ public class CusAgentServiceAction extends BaseAction{
 		public void execute(Context context)throws CoreException,CoreRuntimeException{
 			log.info("============Start  CusAgentServiceAction ");
 				context.setData(GDParamKeys.SVRCOD, "30");
+				context.setData("PKGCNT", "000001");
 				String oprTyp=context.getData("oprTyp").toString();
 				String mothed="";
 				if("0".equals(oprTyp)){
