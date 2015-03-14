@@ -26,10 +26,10 @@ public class QryCarSequenceAction  extends BaseAction{
      @Override
     public void execute(Context context) throws CoreException, CoreRuntimeException {
         log.info("QryCarSequenceAction Start!!");
-        Date date = DateUtils.parse(context.getData("qryDate").toString(), DateUtils.STYLE_yyyyMMdd);
+        Date date = DateUtils.parse(context.getData("claDte").toString(), DateUtils.STYLE_yyyyMMdd);
         String dateString = DateUtils.format(date, DateUtils.STYLE_yyyyMMdd);//查询日期
-        String timeString = context.getData("qryTime").toString();//班次时间
-        String destination = context.getData("des").toString();//>到站代码（或者拼音，或者汉字
+        String timeString = context.getData("claTim").toString();//班次时间
+        String destination = context.getData("destination").toString();//>到站代码（或者拼音，或者汉字
         String ownerdepot = context.getData("ownerdepot").toString();//班次所属站代码
         
         //TODO // <param name="storeNo">商户编号</param>
