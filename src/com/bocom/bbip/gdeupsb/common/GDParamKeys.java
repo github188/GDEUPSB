@@ -407,7 +407,7 @@ public class GDParamKeys {
 	/** 原签约账户名称 */
 	public final static String CUSACNAME = "cusAcName";
 	/** 新签约账户名称 */
-	public final static String NEWCUSACNAME = "newCusAcName";
+	public final static String NEWCUSNAME = "newCusNme";
 	/** 手机 */
 	public final static String MOBPHONE = "mobPhone";
 	/** E-MAIL */
