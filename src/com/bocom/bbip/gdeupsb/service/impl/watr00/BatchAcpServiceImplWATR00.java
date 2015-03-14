@@ -1,3 +1,4 @@
+
 package com.bocom.bbip.gdeupsb.service.impl.watr00;
 
 import java.io.File;
@@ -136,9 +137,6 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 	/**
 	 * 创建批扣文件
 	 * @param context
-	 * @param filNam
-	 * @param dir
-	 * @param comNo
 	 * @return
 	 * @throws CoreException
 	 */

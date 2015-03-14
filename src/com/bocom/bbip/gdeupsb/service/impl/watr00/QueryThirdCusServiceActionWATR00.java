@@ -47,7 +47,7 @@ public class QueryThirdCusServiceActionWATR00 extends BaseAction{
 		
 		context.setData("bankcode", "JT");
 		context.setData("salesdepart",((String)context.getData(ParamKeys.BR)).substring(2, 8));
-		context.setData("salesperson", ((String)context.getData(ParamKeys.TELLER)).substring(4, 7));
+		context.setData("salesperson", ((String)context.getData(ParamKeys.TELLER)).substring(3));
 		context.setData("busitime", DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMddHHmmss));
 		context.setData("thdRspCde", "0");
 		context.setData("zprice", "");

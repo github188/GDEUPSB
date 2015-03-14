@@ -30,16 +30,16 @@ public class InvoiceGrantManagerServiceActionPROF00 extends BaseAction {
 	@Override
 	public void execute(Context context) throws CoreException,	CoreRuntimeException {
 		logger.info("InvoiceGrantManagerServiceActionPROF00 start ... ...");
-		if(StringUtils.isEmpty((String)context.getData("sup1Id"))){
-			logger.error("无授权信息!");
-			logger.error("sup1Id["+context.getData("sup1Id")+"]");
-			throw new CoreException(GDErrorCodes.EUPS_PROF00_00_ERROR);
-		}
-		if(!"40".equals(context.getData("authLvl"))){
-			logger.error("授权级别不够!");
-			logger.error("authLvl["+context.getData("authLvl")+"]");
-			throw new CoreException(GDErrorCodes.EUPS_PROF00_01_ERROR);
-		}
+//		if(StringUtils.isEmpty((String)context.getData("sup1Id"))){
+//			logger.error("无授权信息!");
+//			logger.error("sup1Id["+context.getData("sup1Id")+"]");
+//			throw new CoreException(GDErrorCodes.EUPS_PROF00_00_ERROR);
+//		}
+//		if(!"40".equals(context.getData("authLvl"))){
+//			logger.error("授权级别不够!");
+//			logger.error("authLvl["+context.getData("authLvl")+"]");
+//			throw new CoreException(GDErrorCodes.EUPS_PROF00_01_ERROR);
+//		}
 		
 		//TODO:检查自助柜员是否已经存在下发的凭证
 		String invTyp = context.getData("invTyp");//凭证类型

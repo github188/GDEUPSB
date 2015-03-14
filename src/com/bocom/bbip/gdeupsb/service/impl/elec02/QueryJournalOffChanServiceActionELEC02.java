@@ -7,6 +7,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
@@ -29,7 +30,8 @@ public class QueryJournalOffChanServiceActionELEC02 extends BaseAction {
 		logger.info("mfmVchNo["+mfmVchNo+"]");
 		EupsTransJournal eupsTransJournal = new EupsTransJournal();
 		eupsTransJournal.setMfmVchNo(mfmVchNo);
-		eupsTransJournal.setTxnDte(new Date());
+//		eupsTransJournal.setTxnDte(new Date());
+		eupsTransJournal.setAcDte(get(BBIPPublicService.class).getAcDate());
 		eupsTransJournal.setEupsBusTyp((String)context.getData(ParamKeys.EUPS_BUSS_TYPE));
 		List<EupsTransJournal> eupsTransJournals = get(EupsTransJournalRepository.class).find(eupsTransJournal);
 		if(CollectionUtils.isEmpty(eupsTransJournals)){
