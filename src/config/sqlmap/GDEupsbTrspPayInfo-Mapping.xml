@@ -275,7 +275,7 @@
       </foreach>
     </if>
   </select>
-   <delete id="delete1" parameterType="java.lang.String" >
+   <delete id="delete1" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspPayInfo" >
     delete from gdeupsb.TRSP_PAY_INFO
     <trim prefix="WHERE" prefixOverrides="AND" >
       <if test="thdKey!=null" >
