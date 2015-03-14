@@ -24,8 +24,10 @@ public class CusAgentServiceAction extends BaseAction{
 				String mothed="";
 				if("0".equals(oprTyp)){
 					mothed="eups.commInsertCusAgent";
+					context.setData(GDParamKeys.NEWBANKNO, "301");
 				}else if("1".equals(oprTyp)){
 					mothed="eups.commUpdateCusAgent";
+					context.setData(GDParamKeys.NEWBANKNO, "301");
 				}else {
 					mothed="eups.commDelCusAgent";
 				}
