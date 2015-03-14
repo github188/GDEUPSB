@@ -29,6 +29,7 @@ public class CusAgentServiceAction extends BaseAction{
 				}else {
 					mothed="eups.commDelCusAgent";
 				}
+				context.setData(GDParamKeys.SVRCOD, "30");
 				bbipPublicService.synExecute(mothed, context);
 				
 				log.info("============End  CusAgentServiceAction");
