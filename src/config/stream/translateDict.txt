@@ -20,7 +20,7 @@ TransCode.eups.payUnilateralToBankELEC00=22
 TransCode.eups.cancelUnilateralToBankELEC00=23
 
 ##南方电网  供电方发起供电到银行变更代扣协议请求
-TransCode.gdeupsb.powerChangeTreaty=32
+TransCode.eups.updateCusAgent=32
 
 ##南方电网   供电批量代扣取消业务
 TransCode.gdeupsb.cancelBatch=24
