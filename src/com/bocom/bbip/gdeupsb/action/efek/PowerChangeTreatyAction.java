@@ -31,15 +31,11 @@ public class PowerChangeTreatyAction extends BaseAction{
 			log.info("========context====="+context);
 			context.setData(GDParamKeys.SVRCOD, "32");   
 			context.setData(GDParamKeys.TOTNUM, "1");
-			context.setData(ParamKeys.SEQUENCE, bbipPublicService.getBBIPSequence());
+//			context.setData(ParamKeys.SEQUENCE, bbipPublicService.getBBIPSequence());
 			context.setData(ParamKeys.TXN_CHL, "EFE");  //交易渠道
 			context.setData("CnlSub", "");
-			
-			String NodNo="800";
-			if(context.getData(GDParamKeys.NET_NAME) !=null){
-				NodNo=context.getData(GDParamKeys.NET_NAME).toString().substring(1, 4)+"800";
-			}
-		    context.setData(GDParamKeys.NET_NAME, NodNo); //网点号
+			String nodNo=context.getData(ParamKeys.BANK_NO).toString().substring(0, 3)+"800";
+			context.setData("NodNo", nodNo);
 		    //签订标志
 			String conSign=context.getData(GDParamKeys.CONSIGN).toString();
 			
@@ -51,7 +47,7 @@ public class PowerChangeTreatyAction extends BaseAction{
 			if(!CollectionUtils.isEmpty(comResult.getPayload()) && conSign.equals("2")){
 					context.setData(ParamKeys.BANK_NO, context.getData(GDParamKeys.NEWBANKNO));
 					context.setData(ParamKeys.CUS_AC, context.getData(GDParamKeys.NEWCUSAC));
-					context.setData(GDParamKeys.CUSACNAME, context.getData(GDParamKeys.NEWCUSACNAME));
+					context.setData(ParamKeys.CUS_NME, context.getData(GDParamKeys.NEWCUSNAME));
 					String accTyp=context.getData(ParamKeys.ACC_TYPE);
 					if("0".equals(accTyp)){
 						context.setData(ParamKeys.TXN_CODE, "109000");
