@@ -81,6 +81,45 @@
 	<!-- 第三方接出服务 -->
 	<jump:service name="STHDLOT1" type="com.bocom.jump.bp.channel.DefaultTransport" ref="LOTR01Transport" />
 	<!-- add by hefw 20150122 end 福彩接出 -->
+	
+	
+	<bean id="trspGateWay" class="com.bocom.jump.bp.channel.tcp.SocketGateway"> 
+				<property name="host" value="127.0.0.1"/>
+				<property name="port" value="9900" />
+				<property name="soTimeout" value="30000" />
+				<property name="streamResolver">
+				<!-- 
+				<bean class="com.bocom.jump.bp.channel.tcp.LengthStreamResolver" >
+					<property name="lengthSize" value="8" />
+				</bean> -->
+					<bean class="com.bocom.bbip.eups.adaptor.channel.NoFrontLengthStreamResolver" />
+				</property>
+    	 </bean>
+	
+	<bean id="TRSP00Transport" class="com.bocom.jump.bp.channel.DefaultTransport">
+		<property name="gateway"  ref="trspGateWay"/>
+		<property name="encodeTransforms">
+			<array>
+				<bean class="com.bocom.jump.bp.channel.interceptors.EncoderTransform">
+						<constructor-arg   value="packet://config/stream/TRSP00/f484011.xml" />
+				</bean>
+				<!-- <bean class="com.bocom.bbip.szxeups.channel.tcp.RequestTransformEx" /> -->
 
+			</array>
+		</property>
+		<property name="decodeTransforms">
+			<array>
+				<!-- <bean class="com.bocom.bbip.szxeups.channel.tcp.ResponseTransformEx" /> -->
+				<bean class="com.bocom.jump.bp.channel.interceptors.DecoderTransform">
+						<constructor-arg  value="packet://config/stream/TRSP00/p484011.xml" />
+				</bean>
+			</array>
+		</property>
+	    <property name="tranportLister">
+			<bean class="com.bocom.jump.bp.channel.DefaultTransportListener"></bean>
+		</property>
+	</bean>
+	
+	
 	
 </beans>
