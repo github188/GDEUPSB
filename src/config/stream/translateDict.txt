@@ -35,3 +35,21 @@ TransCode.gdeupsb.checkTrspFile=GetChk
 
 TransCode.gdeupsb.hSCardSignIn=000101
 TransCode.gdeupsb.trspPrintInvoic=484004
+
+
+##珠海自助通发票管理路桥凭条打印查询
+TransCode.gdeupsb.queryPrintInvoice=482190
+##珠海自助通发票管理凭证付出
+TransCode.gdeupsb.invoiceUseManager=482194
+##珠海自助通发票管理终端发票结账
+TransCode.gdeupsb.invoiceCheckManager=482195
+##珠海自助通发票管理凭证作废丢失
+TransCode.gdeupsb.invoiceInvalidManager=482196
+##珠海自助通发票管理终端凭证领用
+TransCode.gdeupsb.invoiceReceiveManager=482197
+##珠海自助通发票管理发票柜员改密
+TransCode.gdeupsb.updateTlrPasswd=482198
+##珠海自助通发票管理发票柜员验密
+TransCode.gdeupsb.checkTlrPasswd=482199
+##珠海自助通发票管理柜员校验
+TransCode.gdeupsb.checkTlrInf=483570

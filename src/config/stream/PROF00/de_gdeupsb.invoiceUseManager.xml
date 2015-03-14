@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="gdeupsb.invoiceUseManager.req">
+	<fixString name="invTyp" length="2"  expression="exp:str.trim('F17')"/><!-- 凭证类型 -->
+	<fixString name="qyNo" length="4"/><!-- 企业代码-->
+	<fixString name="oldSeq" length="8"/><!-- 原发票流水号 -->
+	<fixString name="oldTrdate" length="8"/><!-- 原交易日期 -->
+</segment>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	type="LLLL" name="gdeupsb.queryPrintInvoice.rsp" encoding="GBK">
+	<segment name="body" type="LLLL+">
+		<fixString name="ApFmt" length="5" default="48D06"/><!--格式码-->
+		<fixString name="trDate" length="8" /><!--交易日期-->
+		<fixString name="thdKey" length="20" /><!--流水号-->
+		<fixString name="carNo" length="20"/><!--车牌号码-->
+		<fixString name="carType" length="3"/><!--车牌类型-->
+		<fixString name="mxCount" length="21"/><!--缴费月数-->
+	</segment>
+</segment>

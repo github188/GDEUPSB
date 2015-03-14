@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="LLLLLLLL"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	encoding="GBK" trace="true"  filter="both,classpath:config/stream/translateDict.txt">
+	<!-- 报文头 -->
+	<segment name="trmTia">
+		<fixString name="CCSCOD" length="4" />
+		<fixString name="TransCode" length="6" mapping="true"/>
+		<fixString name="FECOD"  length="6" />
+		<fixString name="TRMNO"  length="7" />
+		<fixString name="TXNSRC" length="5" />
+		<fixString name="NODTRC" length="15" />
+		<fixString name="tlr"  length="7" />
+		<fixString name="TIATYP" length="1" />
+		<fixString name="ATHLVL" length="2" />
+		<fixString name="SUP1ID" length="7" />
+		<fixString name="SUP2ID" length="7" />
+		<fixString name="SUP1PW" length="6" />
+		<fixString name="SUP2PW" length="6" />
+		<fixString name="SUP1DV" length="1" />
+		<fixString name="SUP2DV" length="1" />
+		<fixString name="ATHTBL" length="60" />
+		<fixString name="ATHLOG" length="1" />
+		<fixString name="HLOGNO" length="9" />
+		<fixString name="CPRIND" length="1" />
+		<fixString name="ENPIND" length="1" />
+		<fixString name="br"  length="6" />
+		<fixString name="OPRLVL" length="1" />
+		<fixString name="TRMVER" length="8" />
+		<fixString name="OUTSYS" length="1" />
+		<fixString name="FIL"    length="2" />
+	</segment>
+	
+	<segment name="trmBody">	   
+		<include name="N" keys="TransCode" encodePrefix="en_" decodePrefix="de_" />
+	</segment>
+</message>
+

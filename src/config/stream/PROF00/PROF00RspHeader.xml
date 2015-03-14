@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="LLLLLLLL"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	encoding="GBK" trace="true" filter="both,classpath:config/stream/translateDict.txt">
+	<!-- 柜面接入TOA头 -->
+	<segment name="trmToa">
+		<fixString name="FIL1" length="3"/>
+		<fixString name="MSGTYP" length="1 " />
+		<fixString name="RSPCOD" length="6 " />
+		<fixString name="ERRFLD" length="4 " />
+		<fixString name="TRMNO" length="7 " />
+		<fixString name="TRMSQN" length="6 " />
+		<fixString name="STXNCD" length="4 " />
+		<fixString name="SAPLCD" length="2 " />
+		<fixString name="TXNSYM" length="3 " />
+		<fixString name="TXNDAT" length="8 " />
+		<fixString name="TXNTM" length="6 " />
+		<fixString name="ACTDAT" length="8 " />
+		<fixString name="HLOGNO" length="9 " />
+		<fixString name="TCKNO" length="11" />
+		<fixString name="PAGID" length="1 " />
+		<fixString name="CPRIND" length="1 " />
+		<fixString name="ENPIND" length="1 " />
+		<fixString name="br" length="6 " />
+		<fixString name="ATHLOG" length="1 " />
+		<fixString name="FINFLG" length="1 " />
+		<fixString name="ATHLVL" length="2 " />
+		<fixString name="SUP1ID" length="7 " />
+		<fixString name="SUP2ID" length="7 " />
+		<fixString name="FIL2" length="5 " />
+		<!-- fixInteger name="DATLEN" length="4 " referred="true"/>  注释此行，在交易的stream文件中需要配置type="LLLL", 保证4字节长度 -->
+	</segment>
+
+	<select name="trmToaBody" key="MSGTYP" default="N">
+		<include name="N" keys="TransCode" encodePrefix="en_" decodePrefix="de_" />
+		<include name="A" keys="MSGTYP" encodePrefix="PROF00RspHeader_" decodePrefix="PROF00RspHeader_" />
+		<include name="E" keys="MSGTYP" encodePrefix="PROF00RspHeader_" decodePrefix="PROF00RspHeader_" />
+	</select>
+	
+</message>
+

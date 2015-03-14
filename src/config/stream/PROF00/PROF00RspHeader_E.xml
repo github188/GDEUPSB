@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="trmTOAErr" type="LLLL"> <!-- 添加前置长度4字节 -->
+	
+	<!-- 柜面接入TOA公用错误 -->
+	<fixString name="TMPDAT" length="4" default="0075" />
+	<fixString name="APCODE" length="5" default="SCD04" />
+	<fixString name="RSPCOD" length="6" />
+	<fixString name="INPOS" length="4" default="0001" />
+	<fixString name="RSPMSG" length="56" />
+</segment>

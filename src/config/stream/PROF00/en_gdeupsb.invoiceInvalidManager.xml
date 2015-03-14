@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	type="LLLL" name="gdeupsb.invoiceInvalidManager.rsp" encoding="GBK">
+	<segment name="body" type="LLLL+">
+		<fixString name="ApFmt" length="5" default="48D06"/><!--格式码-->
+		<fixString name="actDat" length="8" /><!--交易日期-->
+		<fixString name="ivBegNo" length="8" /><!--凭证起始号码-->
+	</segment>
+</segment>

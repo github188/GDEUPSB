@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="trmTOAAth" type="LLLL"> <!-- 添加前置长度4字节 -->
+	
+	<!-- 柜面接入TOA授权 -->
+	<varString name="BILLTEXT" type="RDATLEN"/>
+	
+</segment>

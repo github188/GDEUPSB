@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="gdeupsb.queryPrintInvoice.req">
+	
+	<fixString name="carNo" length="20"/><!-- 车牌号码 -->
+	<fixString name="carType" length="3"/><!-- 车牌类型-->
+	<fixString name="actNo" length="21"/><!-- 代扣账号 -->
+</segment>
