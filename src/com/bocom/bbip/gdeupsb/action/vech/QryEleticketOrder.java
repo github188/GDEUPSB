@@ -8,7 +8,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.eups.action.BaseAction;
-import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
 import com.bocom.bbip.gdeupsb.entity.GDVechIndentInfo;
 import com.bocom.bbip.gdeupsb.repository.GDVechIndentInfoRepository;
 import com.bocom.jump.bp.core.Context;
@@ -28,8 +27,8 @@ public class QryEleticketOrder extends BaseAction{
     
     @Override
     public void execute(Context context) throws CoreException, CoreRuntimeException {
-       
-        
+
+        log.info("QryEleticketOrder Start!!");
         GDVechIndentInfo  vechIndentInfo = new GDVechIndentInfo();
         vechIndentInfo.setClaNo(context.getData("claNo").toString());//班次
         vechIndentInfo.setClaDte(context.getData("claDte").toString());//乘车日期

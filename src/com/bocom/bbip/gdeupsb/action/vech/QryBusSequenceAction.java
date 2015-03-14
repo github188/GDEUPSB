@@ -25,7 +25,7 @@ public class QryBusSequenceAction  extends BaseAction{
      */
      @Override
     public void execute(Context context) throws CoreException, CoreRuntimeException {
-        log.info("QryCarSequenceAction Start!!");
+        log.info("QryBusSequenceAction Start!!");
         Date date = DateUtils.parse(context.getData("claDte").toString(), DateUtils.STYLE_yyyyMMdd);
         String dateString = DateUtils.format(date, DateUtils.STYLE_yyyyMMdd);//查询日期
         String timeString = context.getData("claTim").toString();//班次时间
