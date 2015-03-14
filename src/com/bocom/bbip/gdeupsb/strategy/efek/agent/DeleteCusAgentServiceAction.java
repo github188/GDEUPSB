@@ -107,18 +107,8 @@ public class DeleteCusAgentServiceAction implements CommDelCusAgentService{
 		public Map<String, Object> preDelCusAgent(CustomerDomain customerdomain,
 			Context context) throws CoreException {
 			logger.info("=============Start   DeleteCusAgentServiceAction  preDelCusAgent");
-			Date txnDte=DateUtils.parse(DateUtils.formatAsSimpleDate(new Date()));
-			context.setData(ParamKeys.TXN_DAT, txnDte);
-			if(context.getData(GDParamKeys.NET_NAME) !=null){
-					context.setData(ParamKeys.BR,context.getData(GDParamKeys.NET_NAME));
-			}
-			
-			context.setData(GDParamKeys.AGT_STS, "2");
-			//TODO 核对方向
-			context.setData("ChkFlg", "U");
-			context.setData(GDParamKeys.SVRCOD, "30");
-			
 			constantOfSoapUI(context);
+			logger.info("=============End    DeleteCusAgentServiceAction  preDelCusAgent");
 	    	return null;
 	    }
 	    /**

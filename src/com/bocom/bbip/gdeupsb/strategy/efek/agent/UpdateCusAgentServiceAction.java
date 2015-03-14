@@ -38,17 +38,13 @@ public class UpdateCusAgentServiceAction implements CommUpdateCusAgentService{
 		List<CusAgentCollectDomain> list, Context context)
 		throws CoreException {
 	   logger.info("=============Start  UpdateCusAgentServiceAction ");
-		    Date txnDte=DateUtils.parse(DateUtils.formatAsSimpleDate(new Date()));
-			context.setData(ParamKeys.TXN_DAT, txnDte);
-			if(context.getData(GDParamKeys.NET_NAME) !=null){
-				context.setData(ParamKeys.BR, context.getData(GDParamKeys.NET_NAME));
-		}
-			context.setData(GDParamKeys.AGT_STS, "2");
-			//TODO 核对方向
-			context.setData("ChkFlg", "U");
-			context.setData(GDParamKeys.SVRCOD, "30");
+	   
+	   if(StringUtils.isNotEmpty(context.getData(ParamKeys.THD_SEQUENCE).toString())){
+			context.setData(ParamKeys.OBK_BR, context.getData(GDParamKeys.NEWBANKNO));
+			context.setData(ParamKeys.CUS_AC, context.getData(GDParamKeys.NEWCUSAC));
+			context.setData(ParamKeys.CUS_NME, context.getData(GDParamKeys.NEWCUSNAME));
+	   }
 			
-			constantOfSoapUI(context);
 	return null;
 }
     /**
@@ -59,6 +55,8 @@ public class UpdateCusAgentServiceAction implements CommUpdateCusAgentService{
     		List<CusAgentCollectDomain> arg1, Context context)
     		throws CoreException {
 		logger.info("===============Start   UpdateCusAgentServiceAction   callThdOther");
+		
+		constantOfSoapUI(context);
 		
 		try{
 			Map<String, Object> rspMap = callThdTradeManager.trade(context);

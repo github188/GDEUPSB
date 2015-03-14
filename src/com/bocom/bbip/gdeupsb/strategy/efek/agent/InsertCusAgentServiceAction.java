@@ -118,18 +118,8 @@ public class InsertCusAgentServiceAction implements CommInsertCusAgentService{
 				List<CusAgentCollectDomain> list, Context context)
 				throws CoreException {
 		logger.info("=============Start   InsertCusAgentServiceAction  preInsertCusAgent");
-		if(context.getData(GDParamKeys.NET_NAME) !=null){
-				context.setData(ParamKeys.BR, context.getData(GDParamKeys.NET_NAME));
-		}
-		Date txnDte=DateUtils.parse(DateUtils.formatAsSimpleDate(new Date()));
-		context.setData(ParamKeys.TXN_DAT, txnDte);
-		
-		context.setData(GDParamKeys.AGT_STS, "2");
-		//TODO 核对方向
-		context.setData("ChkFlg", "U");
-		context.setData(GDParamKeys.SVRCOD, "30");
-		
 		constantOfSoapUI(context);
+		logger.info("=============End    InsertCusAgentServiceAction  preInsertCusAgent");
 		return null;
 		}
 	@Override
@@ -137,31 +127,7 @@ public class InsertCusAgentServiceAction implements CommInsertCusAgentService{
 				List<CusAgentCollectDomain> list, Context context)
 				throws CoreException {
 		logger.info("=============Start   InsertCusAgentServiceAction  reverseThd");
-		//设置交易为失败
-		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
-		//TODO 获得签约编号
-		String agentNo=context.getData("agentNo").toString();
-		EupsCusAgentJournal eupsCusAgentJournal=eupsCusAgentJournalRepository.findOne(agentNo);
-		if(null == eupsCusAgentJournal){
-			throw new CoreException("没有该协议");
-		}
-		Map<String, Object> map = callThdTradeManager.trade(context);
-		
-	    if (BPState.isBPStateOvertime(context)) {
-	    	logger.error("==============南方电网解约 第三方超时==============");
-            throw new CoreException("解约 第三方超时");
-            
-	    } else if (BPState.isBPStateTransFail(context)) {
-	    	logger.error("==============南方电网解约第三方时未发送成功==============");
-	    	throw new CoreException("解约第三方时未发送成功");
-	    } else if (BPState.isBPStateSystemError(context)) {
-	    	logger.error("==============南方电网解约第三方系统错误==============");
-	    	throw new CoreException("解约第三方系统错误");
-	    }
-	    String thdRspCde=map.get(ParamKeys.RESPONSE_CODE).toString();
-	    if(!thdRspCde.equals(Constants.RESPONSE_CODE_SUCC) ){
-	    	throw new CoreException("解约失败");
-	    }
+		logger.info("=============End     InsertCusAgentServiceAction  reverseThd");
     	return null;
     }
     /**
