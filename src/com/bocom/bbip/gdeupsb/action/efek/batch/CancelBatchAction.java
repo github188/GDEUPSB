@@ -49,6 +49,7 @@ public class CancelBatchAction extends BaseAction {
 			   gdEupsBatchConsoleInfoRepository.updateConsoleInfo(info);
 			   //删除临时表信息
 			   gdEupsEleTmpRepository.deleteAll("1");
+			   context.setData("cancelSign","qx");
 			   //解锁
 			   result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).unlock(batNo);
 			   Assert.isTrue(result.isSuccess(), GDErrorCodes.EUPS_UNLOCK_FAIL);
