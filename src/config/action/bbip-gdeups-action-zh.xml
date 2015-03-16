@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<x:beans xmlns:x="http://www.springframework.org/schema/beans"
+	xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd       http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+
+<!-- 珠海代发工资来盘文件转换 -->
+<action id="transferInFile" class="com.bocom.bbip.gdeupsb.action.zh.EupsTransferInFile" />
+
+
+<!-- 珠海代发工资返盘文件转换 -->
+<action id="transferOutFile" class="com.bocom.bbip.gdeupsb.action.zh.EupsTransferOutFile" />
+
+<!-- 珠海查询地区信息-->
+<action id="queryAreaCode" class="com.bocom.bbip.gdeupsb.action.zh.EupsQueryAreaCodebyAreaName" />
+
+<!-- 珠海零余额协议管理 -->
+<action id="manageZeroAgt" class="com.bocom.bbip.gdeupsb.action.zh.EupsZeroAgtManageAction" />
+
+
+</x:beans>
