@@ -33,32 +33,32 @@ public class EupsZeroAgtManageAction extends BaseAction {
 	private static final int QUERY = 2;
 	private static final int UPDATE = 3;
 	private static final int DELETE = 4;
-	public void execute(Context context) throws CoreException {
-		context.setData(ParamKeys.TELLER, "467856");
-		context.setData("oprTyp", "3");context.setData("ZreAct", "1");
-		context.setData("CActNo", "1");context.setData("CAgtNo", "1");
-		context.setData("payCod", "8");context.setData("payNam", "李四");
-        logger.info("------start----");
+	private static final String UPDAT="3";
+	public void process(Context context) throws CoreException {
+
+        logger.info("------零余额账户托收协议管理start----");
          /**操作类型1.新增 2.查询 3.修改 4.删除*/
          final String oprTyp=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.OPERATION_TPYE, ErrorCodes.EUPS_FIELD_EMPTY);
          
 		try {
-			process(context, oprTyp);
+			proces(context, oprTyp);
 		} catch (IOException e) {
+			logger.info("----操作类型错误----");
 			throw new CoreException(ErrorCodes.EUPS_OPR_TYP_ERR);
+			
 		}
          
-         logger.info("------success----");
+         logger.info("------零余额账户托收协议管理success----");
 	}
 
-	private void process(Context context, final String oprTyp)throws CoreException, IOException {
+	private void proces(Context context, final String oprTyp)throws CoreException, IOException {
 		Zero zero = ContextUtils.getDataAsObject(context, Zero.class);
-		Assert.isNotNull( zero, ErrorCodes.EUPS_QUERY_NO_DATA);
 		List<Zero> list = get(ZeroRepository.class).findZero(zero);
 		int operate = QUERY;
 		try {
 			operate = Integer.parseInt(oprTyp);
 		} catch (Exception e) {
+			logger.info("----操作类型错误----");
 			throw new CoreException(ErrorCodes.EUPS_OPR_TYP_ERR);
 		}
 		switch (operate) {
@@ -79,38 +79,43 @@ public class EupsZeroAgtManageAction extends BaseAction {
 			delete(context, zero);
 			break;
 		default:
+			logger.info("----操作类型错误----");
 			throw new CoreException(ErrorCodes.EUPS_OPR_TYP_ERR);
 
 		}
 	}
 
 	private void add(Context context, Zero zero) throws CoreException, IOException  {
+		logger.info("----协议新增----");
 		get(ZeroRepository.class).addZero(zero);
-		generateReport(context);
+		//generateReport(context);
 	}
 
 	private void query(Context context, Zero zero) throws CoreException {
+		logger.info("----协议查询----");
 		logger.info(BeanUtils.toFlatMap(zero));
 		ContextUtils.setDataMapAsFlatMap(context, zero);
 	}
 
 	private void update(Context context, Zero src,Zero dest) throws CoreException, IOException {
+		logger.info("----协议修改----");
 		get(ZeroRepository.class).updateZero(src);
 		context.setData("payCod1", src.getPayCod());
 		context.setData("payNam1", src.getPayNam());
 		ContextUtils.setDataMapAsFlatMap(context, dest);
-		generateReport(context);
+		//generateReport(context);
 	}
 
 	private void delete(Context context, Zero zero) throws CoreException, IOException {
+		logger.info("----协议删除----");
 		get(ZeroRepository.class).deleteZero(zero);
-		generateReport(context);
+		//generateReport(context);
 	}
 	private void generateReport(Context context)throws CoreException, IOException {
 		Map<String, String> mapping = CollectionUtils.createMap();
 		VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
 		String sampleFile="config/report/zh/ZHZeroAgt.vm";
-		if ("3".equals(context.getData(ParamKeys.OPERATION_TPYE))) {
+		if (UPDAT.equals(context.getData(ParamKeys.OPERATION_TPYE))) {
 			sampleFile = "config/report/zh/ZHZeroAgtUpd.vm";
 		}
 		mapping.put("sample", sampleFile);
@@ -122,7 +127,7 @@ public class EupsZeroAgtManageAction extends BaseAction {
 		render.setReportNameTemplateLocationMapping(mapping);
 		String result = render.renderAsString("sample", context);
 		logger.info("generate report content:****"+ new String(result.getBytes("gbk")));
-		IOUtils.write(result.getBytes("gbk"),new FileOutputStream("D:\\template.txt") );
+		IOUtils.write(result.getBytes("gbk"),new FileOutputStream("D:\\report.txt") );
 		
 	}
 }
