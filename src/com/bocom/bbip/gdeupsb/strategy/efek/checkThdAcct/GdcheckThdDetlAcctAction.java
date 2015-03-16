@@ -17,7 +17,6 @@ public class GdcheckThdDetlAcctAction extends BaseAction{
 			CoreRuntimeException {
 		log.info("===========Start   GdcheckThdDetlAcctAction");
 		context.setData(ParamKeys.EUPS_BUSS_TYPE, "ELEC00");
-//		context.setData(ParamKeys.FTP_ID, arg1);
 		String mothed="eups.checkThdDetlAcct";
 		bbipPublicService.synExecute(mothed, context);
 		log.info("===========End   GdcheckThdDetlAcctAction");
