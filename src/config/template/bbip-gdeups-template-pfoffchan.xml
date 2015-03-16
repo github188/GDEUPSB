@@ -242,7 +242,9 @@
 			<action id="callThirdAction" place-holder="true" />
 			
 			<next on="complete"  to="finalize"/>
-			<next on="*" to="regTransRollBackAct" />
+			
+			<!-- <next on="*" to="regTransRollBackAct" /> -->
+			<end on="*"/>
 			
 		</step>
 		<step id="regTransRollBackAct" useCtxState="true" transactional="txTemplate">
