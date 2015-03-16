@@ -15,7 +15,7 @@ import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
 
 /**
- * 长途汽车订单查询
+ * 长途汽车订单查询 (不调用接口直接查询本地订单表)
  * Date 2015-03-13
  * @author Guilin.Li
  * @version 1.0.0
@@ -38,7 +38,7 @@ public class QryEleticketOrder extends BaseAction{
         List<GDVechIndentInfo> vechIndentInfos = vechIndentInfoRepository.find(vechIndentInfo);
         List<Map<String, Object>> qryResultList = new ArrayList<Map<String,Object>>();
         for(GDVechIndentInfo indentInfo:vechIndentInfos){
-        	//车票信息：
+        //车票信息：
         Map<String, Object> tempMap = new HashMap<String, Object>();
         tempMap.put("orderId", indentInfo.getOrderId());//订单号 ORDER_ID
         tempMap.put("claDte", indentInfo.getClaDte());//班次 CLA_NO
@@ -51,14 +51,10 @@ public class QryEleticketOrder extends BaseAction{
         tempMap.put("ticEntNo",indentInfo.getTicEntNo());
         tempMap.put("ticPri", indentInfo.getTicPri());//        票价 TIC_PRI
         tempMap.put("buyNum", indentInfo.getBuyNum());//       购买数量BUY_NUM
-        //       取票人信息：
+        //取票人信息：
         tempMap.put("userNam", indentInfo.getUserNam());//       姓名 USER_NAM
         tempMap.put("userId", indentInfo.getUserId());//       身份证号 USER_ID
         tempMap.put("mobile", indentInfo.getMobile());//       手机号码MOBILE
-        
-        
-        
-        
         qryResultList.add(tempMap);
     }
     context.setData("rec", qryResultList);

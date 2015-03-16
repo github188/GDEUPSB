@@ -64,11 +64,11 @@ public class SubmitEleTicketOder extends BaseAction{
         //查询票价 
         Date date = DateUtils.parse(context.getData("claDte").toString(), DateUtils.STYLE_yyyyMMdd);
         String dateString = DateUtils.format(date, DateUtils.STYLE_yyyyMMdd);//查询日期
-        String claNo = context.getData("claNo").toString();//班次（或者线路）编号
-        String destinationNo = context.getData("desNo").toString();//到站站点编码
-        String ticSouStatNo = context.getData("ticSouStatNo").toString();//票源客运站编码
-        String ownerdepot = context.getData("ownerdepot").toString();//班次所属站代码
-        String souStatNam = context.getData("souStaNam").toString();//发车区域名称
+        String claNo = context.getData("choClaNo").toString();//班次（或者线路）编号
+        String destinationNo = context.getData("choDes").toString();//到站站点编码//TODO 根据名称找车站编码
+        String ticSouStatNo = context.getData("choOwnerdepot").toString();//票源客运站编码 //TODO 根据名称找车站编码
+        String ownerdepot = context.getData("choOwnerdepot").toString();//班次所属站代码 //TODO 根据名称找车站编码
+        String souStatNam = context.getData("choOwnerdepot").toString();//发车区域名称
        
         
         // TODO; <param name="storeNo">商户编号</param>
@@ -107,7 +107,9 @@ public class SubmitEleTicketOder extends BaseAction{
         vechIndentInfo.setBuyNum(count);
         vechIndentInfo.setTxnTim(requestTime);
         vechIndentInfo.setClaDte(context.getData("claDte").toString());
-        vechIndentInfo.setClaTim(context.getData("claTim").toString());
+        vechIndentInfo.setClaTim(context.getData("choClaTim").toString());
+        vechIndentInfo.setClaNo(context.getData("choClaNo").toString());
+       
         vechIndentInfo.setMobile(mobile);
         vechIndentInfo.setUserId(voucherCode);
         vechIndentInfo.setUserNam(userName);
@@ -117,6 +119,8 @@ public class SubmitEleTicketOder extends BaseAction{
         vechIndentInfo.setBusStopNo(context.getData("busStopNo").toString());
         vechIndentInfo.setTicEntNo(context.getData("ticEntNo").toString());
         vechIndentInfo.setBunSurPri(bunSurPri);
+        vechIndentInfo.setClaLev(context.getData("choClaLev").toString());
+        vechIndentInfo.setOpeTyp(context.getData("choOpeTyp").toString());
         vechIndentInfoRepository.insert(vechIndentInfo);
     }
     

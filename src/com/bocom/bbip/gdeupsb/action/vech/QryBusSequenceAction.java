@@ -40,7 +40,7 @@ public class QryBusSequenceAction  extends BaseAction{
         String[] schemes = terminalQuerySchemeInfo(dateString, destination, ownerdepot, timeString);
         int schemesLength =schemes.length;
         if (schemesLength<1) {
-            context.setData(ParamKeys.RSP_MSG, "对不起，按您输入的条件没有查询到车次");
+            context.setData("respDesc", "对不起，按您输入的条件没有查询到车次");
             return;
         }
         //车次信息List
@@ -77,6 +77,8 @@ public class QryBusSequenceAction  extends BaseAction{
             resultMapLst.add(tempMap);
         }
         context.setData("resultList", resultMapLst);
+        context.setData("respDesc", "交易成功！");
+        
     }
      
     //模拟易票联长途汽车班车查询接口 
