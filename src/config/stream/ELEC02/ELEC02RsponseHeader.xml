@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	type="LLLLLLLLLL"  encoding="GBK" trace="true" filter="both,WEB-INF/classes/config/stream/ELEC02/translateDict.txt">
+	<segment name="responseHead">
+		<fixString name="TransCode"   length="3" mapping="true" /> <!-- 业务交易码 -->
+			<fixString name="thdRspCde"      length="2" default="79"/>		<!--交易返回码-->
+			<fixString name="rspMsg"      length="60" default="其他错误信息"/>		<!--交易返回错误信息-->
+			<fixString name="SAddr"       length="12" default="301"/>  	<!--源地址-->
+			<fixString name="DAddr"       length="12" expression='exp:str.trim(this.StartAddr)'/>	    <!--目的地址-->
+			<fixString name="AAC"         length="20"/>			<!--报文标识号-->
+			<fixString name="WorkDate"    length="8"  />		<!--提交日期-->
+			<fixString name="TxnTim"      length="14" />	<!--发送时间-->
+			<fixString name="mesgPRI"     length="1"/>		<!--信息优先级-->
+			<fixString name="recordNum"   length="10"/>		<!--信息明细项数-->
+			<fixString name="FilNam"      length="32" />	<!--文件名-->
+			<fixString name="zipFlag"     length="1"/>		<!--压缩标志-->
+	</segment>
+	<select name="body" key="tccode" default="N">
+		<include name="N" keys="TransCode" encodePrefix="p"/>
+	</select>
+	
+</message>
