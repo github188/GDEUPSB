@@ -46,7 +46,7 @@ public class PrintCallThirdAction extends BaseAction{
 			//更新路桥方记账信息
 			gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
 			gdEupsbTrspTxnJnl.setTxnSt(ctx.getData(GDParamKeys.TXN_ST).toString());
-			gdEupsbTrspTxnJnl.setNodNo(ctx.getData(GDParamKeys.NOD_NO).toString());
+			gdEupsbTrspTxnJnl.setNodNo(ctx.getData(ParamKeys.BR).toString()); //银行网点号
 			gdEupsbTrspTxnJnl.setInvNo(ctx.getData(GDParamKeys.INV_NO).toString());
 			gdEupsbTrspTxnJnl.setSqn(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
 			gdEupsbTrspTxnJnlRepository.updateSt(gdEupsbTrspTxnJnl);
@@ -59,13 +59,13 @@ public class PrintCallThirdAction extends BaseAction{
 			ctx.setData(ParamKeys.RSP_CDE, ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
 			ctx.setData(ParamKeys.RSP_MSG, "路桥方交易超时");
 			//TODO:此处throw待考虑是否放开
-//			throw new CoreRuntimeException( ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
+			throw new CoreRuntimeException( ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
 		}else if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_TRANS_FAIL)){
 			ctx.setData(GDParamKeys.TXN_ST, "X");
 			ctx.setData(GDParamKeys.TTXN_ST, "X");
 			gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
 			gdEupsbTrspTxnJnl.setTxnSt(ctx.getData(GDParamKeys.TXN_ST).toString());
-			gdEupsbTrspTxnJnl.setNodNo(ctx.getData(GDParamKeys.NOD_NO).toString());
+			gdEupsbTrspTxnJnl.setNodNo(ctx.getData(ParamKeys.BR).toString());
 			gdEupsbTrspTxnJnl.setInvNo(ctx.getData(GDParamKeys.INV_NO).toString());
 			gdEupsbTrspTxnJnl.setSqn(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
 			gdEupsbTrspTxnJnlRepository.updateSt(gdEupsbTrspTxnJnl);
@@ -77,14 +77,14 @@ public class PrintCallThirdAction extends BaseAction{
 
 			ctx.setData(ParamKeys.RSP_CDE, ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
 			ctx.setData(ParamKeys.RSP_MSG, "交易失败");
-//			throw new CoreRuntimeException( ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
+			throw new CoreRuntimeException( ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
 		}else{
 			if(!"000".equals(thdReturnMessage.get(GDParamKeys.TRSP_CD))){				
 				ctx.setData(GDParamKeys.TXN_ST, "F");
 				ctx.setData(GDParamKeys.TTXN_ST, "F");
 				gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
 				gdEupsbTrspTxnJnl.setTxnSt(ctx.getData(GDParamKeys.TXN_ST).toString());
-				gdEupsbTrspTxnJnl.setNodNo(ctx.getData(GDParamKeys.NOD_NO).toString());
+				gdEupsbTrspTxnJnl.setNodNo(ctx.getData(ParamKeys.BR).toString());
 				gdEupsbTrspTxnJnl.setInvNo(ctx.getData(GDParamKeys.INV_NO).toString());
 				gdEupsbTrspTxnJnl.setSqn(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
 				gdEupsbTrspTxnJnlRepository.updateSt(gdEupsbTrspTxnJnl);
@@ -96,15 +96,15 @@ public class PrintCallThirdAction extends BaseAction{
 
 				ctx.setData(ParamKeys.RSP_CDE, ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
 				ctx.setData(ParamKeys.RSP_MSG, "路桥方返回：" + thdReturnMessage.get(GDParamKeys.TRSP_CD));
-//				throw new CoreRuntimeException( ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
-				ctx.setState("error");
+				throw new CoreRuntimeException( ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
+				
 
 			}else{
 				ctx.setData(GDParamKeys.TXN_ST, "S");
 				ctx.setData(GDParamKeys.TTXN_ST, "S");
 				gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
 				gdEupsbTrspTxnJnl.setTxnSt(ctx.getData(GDParamKeys.TXN_ST).toString());
-				gdEupsbTrspTxnJnl.setNodNo(ctx.getData(GDParamKeys.NOD_NO).toString());
+				gdEupsbTrspTxnJnl.setNodNo(ctx.getData(ParamKeys.BR).toString());
 				gdEupsbTrspTxnJnl.setInvNo(ctx.getData(GDParamKeys.INV_NO).toString());
 				gdEupsbTrspTxnJnl.setSqn(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
 				gdEupsbTrspTxnJnlRepository.updateSt(gdEupsbTrspTxnJnl);
@@ -119,12 +119,18 @@ public class PrintCallThirdAction extends BaseAction{
 //		         <Fields>InvNo|BegDat|EndDat|CarName|CarDzs|CntStd|FeeStd|Corpus|LateFee|CLGS|YYBZ|TLogNo|TActDt|NodNo|TlrId|OLogNo|</Fields>
 		        Date tactDt = new Date();
 				GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
+				gdEupsbTrspFeeInfo.setInvNo(ctx.getData(GDParamKeys.INV_NO).toString());
+//				gdEupsbTrspFeeInfo.setBegDat((Date)ctx.getData(GDParamKeys.BEG_DAT)); //TODO:
+//				gdEupsbTrspFeeInfo.setEndDat((Date)ctx.getData(GDParamKeys.END_DAT));  //TODO:
+//				gdEupsbTrspFeeInfo.setCarName(ctx.getData(GDParamKeys.CAR_NAME).toString());
+//				gdEupsbTrspFeeInfo.setCarDzs(ctx.getData(GDParamKeys.CAR_DZS).toString());
+				
 				gdEupsbTrspFeeInfo.setTlogNo(ctx.getData(GDParamKeys.SQN).toString());
 				gdEupsbTrspFeeInfo.setTactDt(tactDt);
 				
-				//下面两个字段的值还没确定出处
-				gdEupsbTrspFeeInfo.setPrtNod(ctx.getData(GDParamKeys.NOD_NO).toString());
-				gdEupsbTrspFeeInfo.setPrtTlr(ctx.getData(GDParamKeys.TLR_ID).toString());
+			
+				gdEupsbTrspFeeInfo.setPrtNod(ctx.getData(ParamKeys.BR).toString());
+				gdEupsbTrspFeeInfo.setPrtTlr(ctx.getData(GDParamKeys.TLR_ID).toString());  //TODO:字段名称待确定
 				gdEupsbTrspFeeInfo.setThdKey(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
 				gdEupsbTrspFeeInfoRepository.updateStatus(gdEupsbTrspFeeInfo);
 				ctx.setState("complete");
