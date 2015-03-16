@@ -50,23 +50,23 @@ public class GDEupsZhAGBatchTemp {
 	}
 
 	public String getComNo() {
-		return comNo;
+		return comNo= comNo == null ? " " : comNo;
 	}
 
 	public void setComNo(String comNo) {
-		this.comNo = comNo == null ? null : comNo.trim();
+		this.comNo = comNo == null ? null : comNo;
 	}
 
 	public String getTxnTlr() {
-		return txnTlr;
+		return txnTlr= txnTlr == null ? " " : txnTlr;
 	}
 
 	public void setTxnTlr(String txnTlr) {
-		this.txnTlr = txnTlr == null ? null : txnTlr.trim();
+		this.txnTlr = txnTlr == null ? " " : txnTlr;
 	}
 
 	public Date getSubDte() {
-		return subDte;
+		return subDte=subDte==null? new Date():subDte;
 	}
 
 	public void setSubDte(Date subDte) {
@@ -74,23 +74,23 @@ public class GDEupsZhAGBatchTemp {
 	}
 
 	public String getCusAc() {
-		return cusAc;
+		return cusAc= cusAc == null ? " " : cusAc;
 	}
 
 	public void setCusAc(String cusAc) {
-		this.cusAc = cusAc == null ? null : cusAc.trim();
+		this.cusAc = cusAc ;
 	}
 
 	public String getCusNme() {
-		return cusNme;
+		return cusNme = cusNme == null ? " " :cusNme;
 	}
 
 	public void setCusNme(String cusNme) {
-		this.cusNme = cusNme == null ? null : cusNme.trim();
+		this.cusNme = cusNme ;
 	}
 
 	public String getTxnAmt() {
-		return txnAmt;
+		return txnAmt=txnAmt==null?" ":txnAmt;
 	}
 
 	public void setTxnAmt(String txnAmt) {
@@ -99,50 +99,50 @@ public class GDEupsZhAGBatchTemp {
 	}
 
 	public String getThdCusNo() {
-		return thdCusNo;
+		return thdCusNo= thdCusNo == null ? " " : thdCusNo;
 	}
 
 	public void setThdCusNo(String thdCusNo) {
-		this.thdCusNo = thdCusNo == null ? null : thdCusNo.trim();
+		this.thdCusNo = thdCusNo ;
 	}
 
 	public String getThdCusNme() {
-		return thdCusNme;
+		return thdCusNme = thdCusNme == null ? " " :thdCusNme;
 	}
 
 	public void setThdCusNme(String thdCusNme) {
-		this.thdCusNme = thdCusNme == null ? null : thdCusNme.trim();
+		this.thdCusNme = thdCusNme ;
 	}
 
 	public String getRsvFld1() {
-		return rsvFld1;
+		return rsvFld1= rsvFld1 == null ? " " : rsvFld1;
 	}
 
 	public void setRsvFld1(String rsvFld1) {
-		this.rsvFld1 = rsvFld1 == null ? null : rsvFld1.trim();
+		this.rsvFld1 = rsvFld1 ;
 	}
 
 	public String getRsvFld2() {
-		return rsvFld2;
+		return rsvFld2= rsvFld2 == null ? " " : rsvFld2;
 	}
 
 	public void setRsvFld2(String rsvFld2) {
-		this.rsvFld2 = rsvFld2 == null ? null : rsvFld2.trim();
+		this.rsvFld2 = rsvFld2 ;
 	}
 
 	public String getRsvFld3() {
-		return rsvFld3;
+		return rsvFld3= rsvFld3 == null ? " " : rsvFld3;
 	}
 
 	public void setRsvFld3(String rsvFld3) {
-		this.rsvFld3 = rsvFld3 == null ? null : rsvFld3.trim();
+		this.rsvFld3 = rsvFld3 ;
 	}
 
 	public String getRsvFld4() {
-		return rsvFld4;
+		return rsvFld4= rsvFld4 == null ? " " : rsvFld4;
 	}
 
 	public void setRsvFld4(String rsvFld4) {
-		this.rsvFld4 = rsvFld4 == null ? null : rsvFld4.trim();
+		this.rsvFld4 = rsvFld4 ;
 	}
 }
