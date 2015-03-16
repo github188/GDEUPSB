@@ -11,7 +11,7 @@
 							<fixString name="oprTyp"  length="1" /><!-- 签订标志	QDBZ	Varchar2(1)-->		
 							<fixString name="comNo"  length="8" /><!-- 单位编码-->
 							<fixString name="cusNo"  length="20"/><!-- 缴费号	JFH	Varchar2(20)-->		
-							<fixString name="cusNme"  length="64"/><!-- 结算户名称	JSHMC	Varchar2(64)-->		
+							<fixString name="thdCusNme"  length="64"/><!-- 结算户名称	JSHMC	Varchar2(64)-->		
 							<fixString name="obkBk"  length="4" /><!-- 签约银行代码	YQYYHDM	Varchar2(4)-->		
 							<fixString name="cusAc"  length="32" /><!-- 原签约账户	YQYZH	Varchar2(32)-->		
 							<fixString name="cusNme"  length="128" /><!-- 原签约账号名称	YQYZHMC	Varchar2(128)-->		
