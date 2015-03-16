@@ -11,7 +11,6 @@ import org.apache.commons.logging.LogFactory;
 import com.bocom.bbip.comp.BBIPPublicServiceImpl;
 import com.bocom.bbip.comp.btp.BTPService;
 import com.bocom.bbip.eups.action.BaseAction;
-import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
@@ -44,15 +43,16 @@ public class BatchFileCommon extends BaseAction {
 	
 	private static final Log logger = LogFactory.getLog(BatchFileCommon.class);
 	public void BeforeBatchProcess(final Context context)throws CoreException {
+		logger.info("----before batch check----");
 		String comNo=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.COMPANY_NO, ErrorCodes.EUPS_COM_NO_NOTEXIST);
-		String fleNme=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.FLE_NME, ErrorCodes.EUPS_COM_NO_NOTEXIST);
-		String eupsBusTyp=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.EUPS_BUSS_TYPE, ErrorCodes.EUPS_COM_NO_NOTEXIST);
+		String fleNme=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.FLE_NME, ErrorCodes.EUPS_FIELD_EMPTY,"fleNme");
+		String eupsBusTyp=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.EUPS_BUSS_TYPE, ErrorCodes.EUPS_BUS_TYP_ISEMPTY);
 
 		/** 检查批次是否存在 */
 		GDEupsBatchConsoleInfo info = new GDEupsBatchConsoleInfo();
 		info.setFleNme(fleNme);
 		GDEupsBatchConsoleInfo ret =get(GDEupsBatchConsoleInfoRepository.class).findConsoleInfo(info);
-		Assert.isTrue(null==ret, GDErrorCodes.EUPS_BATCH_INFO_EXIST,"批次信息已经存在");
+		Assert.isTrue(null==ret, GDErrorCodes.EUPS_BATCH_INFO_EXIST);
 		/** 插入批次控制表 */
 		String batNo =((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
 		info.setBatNo(batNo);
@@ -80,15 +80,15 @@ public class BatchFileCommon extends BaseAction {
 	}
 
 	public void unLock(final String lockKey)throws CoreException {
-		Assert.isFalse(StringUtils.isBlank(lockKey), "lockKey必须输入");
+		Assert.isFalse(StringUtils.isBlank(lockKey), ErrorCodes.EUPS_FIELD_EMPTY, "lockKey");
 		Result result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).unlock(lockKey);
-		Assert.isTrue(result.isSuccess(), "批次解锁失败");
+		Assert.isTrue(result.isSuccess(), GDErrorCodes.EUPS_UNLOCK_FAIL);
 	}
 
 	public void Lock(final String lockKey)throws CoreException {
-		Assert.isFalse(StringUtils.isBlank(lockKey), "lockKey必须输入");
+		Assert.isFalse(StringUtils.isBlank(lockKey), ErrorCodes.EUPS_FIELD_EMPTY ,"lockKey");
 		Result result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).tryLock(lockKey, 60*1000L, 600L);
-		Assert.isTrue(result.isSuccess(), "批次加锁失败");
+		Assert.isTrue(result.isSuccess(), GDErrorCodes.EUPS_LOCK_FAIL);
 	}
 
 	public void sendBatchFileToACP(final Context context) throws CoreException {
@@ -107,9 +107,9 @@ public class BatchFileCommon extends BaseAction {
         final String comNoAcps =((EupsActSysPara)resultList.get(0)).getSplNo();
         final String fleNme="BATC"+comNoAcps+"0.txt";
 
-        Map<String, Object> fileMap = (Map<String, Object>) ContextUtils.assertVariableNotNullAndGet(context, "agtFileMap","agtFileMap不能为空");
+        Map<String, Object> fileMap = (Map<String, Object>) ContextUtils.assertVariableNotNullAndGet(context, "agtFileMap", ErrorCodes.EUPS_FIELD_EMPTY,"agtFileMap");
 		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne(ParamKeys.FTPID_BATCH_PAY_FILE_TO_ACP);
-		Assert.isFalse(null==config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST,"代收付FTP配置信息不存在");
+		Assert.isFalse(null==config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST);
 		config.setLocFleNme(fleNme);
 		config.setLocDir(dir);
 		/** 产生代收付格式文件 */
@@ -117,7 +117,7 @@ public class BatchFileCommon extends BaseAction {
 		
 	}
 	public void afterBatchProcess(Context context)throws CoreException{
-		final String thdbatNo=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.THD_BAT_NO, ErrorCodes.EUPS_QUERY_NO_DATA);
+		final String thdbatNo=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.THD_BAT_NO,  ErrorCodes.EUPS_FIELD_EMPTY,"thdBatNo");
 		GDEupsBatchConsoleInfo info = new GDEupsBatchConsoleInfo();
 		info.setRsvFld9(thdbatNo);
 		List<GDEupsBatchConsoleInfo> result =get(GDEupsBatchConsoleInfoRepository.class).find(info);
