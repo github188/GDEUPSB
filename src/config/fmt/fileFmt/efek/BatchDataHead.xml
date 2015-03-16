@@ -5,12 +5,12 @@
 	encoding="utf-8"  trace="true">
 	
 	<segment name="header" encoding="utf-8">
-		<fixString name="rsvFld4"  length="32"></fixString><!-- 批量代收信息标识 -->
-		<fixString name="bankNo"  length="4"></fixString><!-- 入账银行代码	RZYHDM	Varchar2(4) -->
+		<fixString name="rsvFld9"  length="27"></fixString><!-- 批量代收信息标识 -->
+		<fixString name="rsvFld8"  length="4"></fixString><!-- 入账银行代码	RZYHDM	Varchar2(4) -->
 		<fixString name="comNo"  length="8"></fixString><!-- 单位编码	DWBM	Varchar2(8) -->
 		<fixString name="subDte"  length="8"></fixString><!-- 送银行日期-->
-		<fixString name="ccy"  length="5"></fixString><!-- 货币符号  -->
-		<fixString name="busKnd"  length="3"></fixString><!-- 收费方式 -->
+		<fixString name="rsvFld7"  length="5"></fixString><!-- 货币符号  -->
+		<fixString name="rsvFld6"  length="3"></fixString><!-- 收费方式 -->
 		<fixString name="totCnt"  length="11"></fixString><!-- 总笔数	ZBS	Number(10) -->
 		<fixString name="totAmt"  length="16"></fixString><!-- 总金额	ZJE	Number(14,2) -->		
 		<fixString name="bakFld"  length="128"></fixString><!-- 处理说明 -->	
