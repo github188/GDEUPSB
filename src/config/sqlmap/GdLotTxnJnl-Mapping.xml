@@ -860,6 +860,20 @@
       </foreach>
     </if>
   </select>
+
+  <!--  -->
+  <select id="findCheckSuccess" resultMap="basicResultMap" parameterType="map">
+  select * from gdeupsb.GDEUPS_LOT_TXN_JNL 
+					where GAME_ID=#{GameId} and DRAW_ID=#{DrawId} and TXN_STS in ('S','T') and CHK_FLG='1' 
+					order by KENO_ID, TXN_TIM asc
+  </select>
+  
+  <select id="findCheckFail" resultMap="basicResultMap" parameterType="map">
+  select * from gdeupsb.GDEUPS_LOT_TXN_JNL 
+					where GAME_ID=#{GameId} and DRAW_ID=#{DrawId} and TXN_STS in ('S','T') and CHK_FLG='2' 
+					order by KENO_ID, TXN_TIM asc
+  </select>
+
   
   
  <select id="qryLotWinRecord" parameterType="java.util.Map" resultType="java.util.Map" >
@@ -882,4 +896,5 @@
   
   
   
+
 </mapper>
