@@ -6,6 +6,8 @@ import java.util.Map;
 import com.bocom.bbip.data.annotation.Delete;
 import com.bocom.bbip.data.annotation.Find;
 import com.bocom.bbip.data.annotation.Insert;
+import com.bocom.bbip.data.domain.Page;
+import com.bocom.bbip.data.domain.Pageable;
 import com.bocom.bbip.data.repository.PagingAndSortingRepository;
 import com.bocom.bbip.gdeupsb.entity.GDEupsZhAGBatchTemp;
 
@@ -24,5 +26,7 @@ public interface GDEupsZHAGBatchTempRepository extends
 
 	@Delete
 	public void deleteAll();
+	@Find
+	public Page<GDEupsZhAGBatchTemp>getDetails(Pageable pageable,final String batNo);
 
 }
