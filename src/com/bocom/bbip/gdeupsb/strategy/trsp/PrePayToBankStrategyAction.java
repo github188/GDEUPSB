@@ -2,6 +2,7 @@ package com.bocom.bbip.gdeupsb.strategy.trsp;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -47,6 +48,7 @@ public class PrePayToBankStrategyAction implements Executable{
 	@Autowired
 	AccountService accountService;
 
+	@SuppressWarnings("unchecked")
 	public void execute(Context ctx) throws CoreException,CoreRuntimeException{
 		log.info("PrePayToBankStrategyAction start.....");
 //		TODO: <Call package="BRBFJUD" function="JudAreNo">    <!--检查是否珠海借记卡-->
@@ -54,7 +56,7 @@ public class PrePayToBankStrategyAction implements Executable{
 //      </Call>
 		CommonRequest comReq = new CommonRequest();
 		ctx.setData(ParamKeys.BUS_TYP, Constants.BUS_TYP_2); //待缴
-		//TODO:此处把密码校验标志设为1，以后还要改
+		//TODO:此处把密码校验标志设为1，以后还要改为0
 		ctx.setData("pswCekFlg", "1");
 		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!actNo="+ctx.getData(GDParamKeys.ACT_NO));
 	//TODO:待验证卡号是否属于珠海分行
@@ -65,7 +67,7 @@ public class PrePayToBankStrategyAction implements Executable{
 
 //		查询该用户是否存在已缴费未打发票的记录
 		GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
-		gdEupsbTrspFeeInfo.setBrNo("443999");
+		gdEupsbTrspFeeInfo.setBrNo(ctx.getData(ParamKeys.BR).toString());
 		gdEupsbTrspFeeInfo.setCarNo(ctx.getData(GDParamKeys.CAR_NO).toString());
 		gdEupsbTrspFeeInfo.setCarTyp(ctx.getData(GDParamKeys.CAR_TYP).toString());
 		gdEupsbTrspFeeInfo.setStatus(GDConstants.JF);
@@ -92,7 +94,7 @@ public class PrePayToBankStrategyAction implements Executable{
 //		检查本地费用表是否有待缴费用
 		GDEupsbTrspPayInfo gdEupsbTrspPayInfo = new GDEupsbTrspPayInfo();
 		 
-		gdEupsbTrspPayInfo.setBrNo("443999");    //ctx.getData(ParamKeys.BK).toString()
+		gdEupsbTrspPayInfo.setBrNo(ctx.getData(ParamKeys.BR).toString());    //ctx.getData(ParamKeys.BK).toString()
 		gdEupsbTrspPayInfo.setCarNo(ctx.getData(GDParamKeys.CAR_NO).toString());
 		gdEupsbTrspPayInfo.setCarTyp(ctx.getData(GDParamKeys.CAR_TYP).toString());
 		gdEupsbTrspPayInfo.setPayMon((String)ctx.getData(GDParamKeys.PAY_MON));
@@ -112,8 +114,8 @@ public class PrePayToBankStrategyAction implements Executable{
 			ctx.setState("BUSINESS_PROCESSNIG_STATE_TRANS_FAIL");
 			throw new CoreException(ErrorCodes.EUPS_CHECK_FAIL);
 		}else{
-			BigDecimal txnAmt = payInfoList.get(0).getTxnAmt();
-			ctx.setData(ParamKeys.TXN_AMT, txnAmt);
+		
+			ctx.setDataMap(BeanUtils.toMap(payInfoList.get(0)));
 			log.info("555555555555555555555555555555555555555555555555555555555555555555555555555555555555");
 		}
 		
