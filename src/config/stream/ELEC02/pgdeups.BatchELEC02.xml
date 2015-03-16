@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="20Request">
+			<fixString name="BankLs" length="16" default="1234567890123456"/> <!--银行流水号-->
+			<fixString name="BankCd" length="12"/> <!--银行代码-->
+			<fixString name="FilNm"  length="32"/> <!--文件名-->
+			<fixString name="QSFlg"  length="01" default="0"/> <!--取消标志-->
+			<fixString name="FSDT"   length="08"/> <!--发送日期-->
+			<fixString name="QSSM"   length="64"/> <!--取消说明-->
+		
+		
+		
+		
+</segment>
