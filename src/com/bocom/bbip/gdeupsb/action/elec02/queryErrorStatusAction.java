@@ -32,31 +32,31 @@ public class queryErrorStatusAction extends BaseAction {
 
 		final String TxnDat=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.TXN_DAT, ErrorCodes.EUPS_FIELD_EMPTY);
 		/**单位类型*/
-		final String AppNm=ContextUtils.assertDataHasLengthAndGetNNR(context, "AppNm", ErrorCodes.EUPS_FIELD_EMPTY);
+		final String comNo=ContextUtils.assertDataHasLengthAndGetNNR(context, "comNo", ErrorCodes.EUPS_FIELD_EMPTY);
 		/**会计流水*/
-		final String TckNo=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.SEQ_NO, ErrorCodes.EUPS_FIELD_EMPTY);
+		final String TckNo=ContextUtils.assertDataHasLengthAndGetNNR(context, "TckNo", ErrorCodes.EUPS_FIELD_EMPTY);
 		
 		final String brNo=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.BR, ErrorCodes.EUPS_FIELD_EMPTY);
 
 		/** 单位类型转换为单位代码cmo */
-		final String CAgtNo = switchCode(AppNm);
-		Assert.isFalse(StringUtils.isBlank(CAgtNo), ErrorCodes.EUPS_FIELD_EMPTY);
-		/** 检查单位协议是否存在 */
-		//TODO：不对！！！！！
-		EupsCorpAgent corpAgent=get(EupsCorpAgentRepository.class).findOne(CAgtNo);
-		Assert.isFalse(null==corpAgent, ErrorCodes.EUPS_FIELD_EMPTY, "单位协议不存在");
+		
 		EupsTransJournal journal = new EupsTransJournal();
-		journal.setComNo(CAgtNo);
+		journal.setComNo(comNo);
 		journal.setSqn(TckNo);
 		journal.setTxnDte(DateUtils.parse(TxnDat));
+		journal.setTxnSts("T");
 		List<EupsTransJournal> list=get(EupsTransJournalRepository.class).find(journal);
-		Assert.isEmpty(list, ErrorCodes.EUPS_FIELD_EMPTY);
+		if(0==list.size()){
+			journal.setTxnSts("U");
+			list=get(EupsTransJournalRepository.class).find(journal);
+			Assert.isNotEmpty(list, ErrorCodes.EUPS_QUERY_NO_DATA);
+		}
+		
 		EupsTransJournal ret=list.get(0);
-		context.setData(ParamKeys.TXN_AMT, ret.getTxnAmt());
-		context.setData(ParamKeys.THD_CUS_NO, ret.getThdCusNo());
-		context.setData(ParamKeys.THD_CUS_NME, ret.getThdCusNme());
-		context.setData(ParamKeys.ACT_NO, ret.getCusAc());
-
+		context.setData("ActNo", ret.getCusAc());
+        context.setData("TCUSNM", ret.getThdCusNme());
+        context.setData("TCUSID", ret.getThdCusNo());
+        context.setData("TxnAmt", ret.getTxnAmt());
 		logger.info("query success!!");
 
 	}
