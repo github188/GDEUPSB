@@ -516,4 +516,7 @@
       </foreach>
     </if>
   </select>
+	<delete id="delete" parameterType="java.lang.String" >
+			delete from ${GDEUPSB_SCHEMA}.GDEUPS_ELE_TMP where '1'=#{del,jdbcType=CHAR}
+	</delete>
 </mapper>
