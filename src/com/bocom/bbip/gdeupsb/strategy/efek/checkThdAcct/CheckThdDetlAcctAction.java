@@ -186,7 +186,7 @@ public class CheckThdDetlAcctAction implements Executable {
 			checkDetailAcct.setElectricityYearMonth(eupsStreamNo.getRsvFld6());
 			checkDetailAcct.setPayNo(eupsStreamNo.getThdCusNo());
 			//结算户名称
-			checkDetailAcct.setThdCusNme(eupsStreamNo.getCusNme());
+			checkDetailAcct.setThdCusNme(eupsStreamNo.getThdCusNme());
 			checkDetailAcct.setCusAc(eupsStreamNo.getCusAc());
 			checkDetailAcct.setTxnDte(DateUtils.format(eupsStreamNo.getTxnTme(),DateUtils.STYLE_FULL));
 			BigDecimal txnAmt=eupsStreamNo.getTxnAmt().scaleByPowerOfTen(2);
