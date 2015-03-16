@@ -5,7 +5,7 @@
 	encoding="utf-8"  trace="true">
 	
 	<segment name="header" encoding="utf-8">
-		<fixString name="rsvFld4"  length="27"></fixString><!-- 批量代收信息标识 -->
+		<fixString name="rsvFld4"  length="32"></fixString><!-- 批量代收信息标识 -->
 		<fixString name="bankNo"  length="4"></fixString><!-- 入账银行代码	RZYHDM	Varchar2(4) -->
 		<fixString name="comNo"  length="8"></fixString><!-- 单位编码	DWBM	Varchar2(8) -->
 		<fixString name="subDte"  length="8"></fixString><!-- 送银行日期-->
