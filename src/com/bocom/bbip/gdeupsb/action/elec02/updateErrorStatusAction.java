@@ -28,16 +28,14 @@ public class updateErrorStatusAction extends BaseAction {
 		final String bk = ContextUtils.assertDataHasLengthAndGetNNR(context,ParamKeys.BK, ErrorCodes.EUPS_FIELD_EMPTY);
 		Assert.isFalse(bk.equalsIgnoreCase(GDConstants.MANAGE_ORG_445012),  ErrorCodes.EUPS_OPR_TYP_ERR,"非管理机构不能执行本交易");
 		/**单位类型*/
-		final String AppNm=ContextUtils.assertDataHasLengthAndGetNNR(context, "AppNm", ErrorCodes.EUPS_FIELD_EMPTY);
+		final String AppNm=ContextUtils.assertDataHasLengthAndGetNNR(context, "comNo", ErrorCodes.EUPS_FIELD_EMPTY);
 		/**修改的交易状态*/
-		final String HTxnS=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.MFM_TXN_STS, ErrorCodes.EUPS_FIELD_EMPTY);
-		final String sqn=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.SEQ_NO, ErrorCodes.EUPS_FIELD_EMPTY);
+		final String HTxnS=ContextUtils.assertDataHasLengthAndGetNNR(context, "HTxnSt", ErrorCodes.EUPS_FIELD_EMPTY);
+		final String sqn=ContextUtils.assertDataHasLengthAndGetNNR(context, "TckNo", ErrorCodes.EUPS_FIELD_EMPTY);
 
 		/**单位类型转换为单位代码cmo*/		
-		final String CAgtNo=switchCode(AppNm);
-		/**检查单位协议是否存在*/
-		EupsCorpAgent corpAgent=get(EupsCorpAgentRepository.class).findOne(CAgtNo);
-		Assert.isFalse(null==corpAgent, ErrorCodes.EUPS_FIELD_EMPTY, "单位协议不存在");
+		//final String CAgtNo=switchCode(AppNm);
+
 		EupsTransJournal journal=new EupsTransJournal();
 		journal.setMfmTxnSts(HTxnS);
 		journal.setSqn(sqn);
