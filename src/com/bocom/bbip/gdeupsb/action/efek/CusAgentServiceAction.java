@@ -1,11 +1,16 @@
 package com.bocom.bbip.gdeupsb.action.efek;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.utils.DateUtils;
@@ -24,6 +29,17 @@ public class CusAgentServiceAction extends BaseAction{
 		public void execute(Context context)throws CoreException,CoreRuntimeException{
 			log.info("============Start  CusAgentServiceAction ");
 				context.setData(GDParamKeys.SVRCOD, "30");
+				Map<String, Object> map=new HashMap<String, Object>();
+				map.put(ParamKeys.BUS_TYP, "0");
+				map.put("comNo", context.getData("comNo"));
+				map.put("cusAc", context.getData("cusAc"));
+				map.put("cusNme", context.getData("cusNme"));
+				map.put("pwd", context.getData("pwd"));
+				map.put("cmuTel", context.getData("cmuTel"));
+				map.put("des2", context.getData("des2"));
+				map.put("eml", context.getData("eml"));
+				map.put("thdCusNo", context.getData("cusNo"));
+				//添加 agentCollectAgreement
 				String oprTyp=context.getData("oprTyp").toString();
 				String mothed="";
 				if("0".equals(oprTyp)){
@@ -32,9 +48,14 @@ public class CusAgentServiceAction extends BaseAction{
 				}else if("1".equals(oprTyp)){
 					mothed="eups.commUpdateCusAgent";
 					context.setData(GDParamKeys.NEWBANKNO, "301");
+					map.put("cusAc", context.getData("newCusAc"));
+					map.put("cusNme", context.getData("newCusName"));
 				}else {
 					mothed="eups.commDelCusAgent";
 				}
+				List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();
+				list.add(map);
+				context.setData(ParamKeys.AGENT_COLLECT_AGREEMENT, list);
 				constantOfSoapUI(context);
 				bbipPublicService.synExecute(mothed, context);
 				
