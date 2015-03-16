@@ -1,6 +1,23 @@
 #report(50)
 #rh(10)
- 		                                                                              珠海分行       
+ 
+#para($str.trim($d.ZreAct))
+#para($str.trim($d.ZActNam))
+#para($str.trim($d.ZActNodNo))
+#para($str.trim($str.trim($d.ZActNodNm)))
+#para($str.trim($d.CAgtNo))
+#para($str.trim($d.CAgtNm))
+#para($str.trim($d.CActNo))
+#para($str.trim($d.CActNm))
+#para($str.trim($d.CActNodNo))
+#para($str.trim($d.CActNodNm))
+#para($str.trim($d.PayCod))
+#para($str.trim($d.PayNam))
+#para($str.trim($d.payCod1))
+#para($str.trim($d.payNam1))
+#para($d.sup1Id)
+#para($d.tlr)											      
+										珠海分行       
  			                                                                                                        
                                                               $f.fmt($currentTime,'yyyy-MM-dd HH:mm:ss')
                  
@@ -10,18 +27,18 @@
               
               
                                              功能：$f.conv('zhzero',$d.oprTyp)
-		     零余额账户帐号: $str.trim($d.ZreAct)        零余额账户名:$str.trim($d.ZActNam)
-		     零余额账户开户行网点号:$str.trim($d.ZActNodNo)   零余额账户开户行名:$str.trim($d.ZActNodNm) 
-		     托收单位编号:$str.trim($d.CAgtNo)             托收单位名:$str.trim($d.CAgtNm) 
-		     托收暂收户账号:$str.trim($d.CActNo)           托收暂收户名:$str.trim($d.CActNm) 
-		     托收暂收户开户行网点号:$str.trim($d.CActNodNo)   托收暂收户开户行名:$str.trim($d.CActNodNm) 
-		     原支付编码:$str.trim($d.payCod)              原托收费用名:$str.trim($d.payNam)
-		     新支付编码:$str.trim($d.payCod1)              新托收费用名:$str.trim($d.payNam1) 
+		     零余额账户帐号:?                       零余额账户名:?
+		     零余额账户开户行网点号:?                零余额账户开户行名:? 
+		     托收单位编号:?                          托收单位名:? 
+		     托收暂收户账号:?                        托收暂收户名:? 
+		     托收暂收户开户行网点号:?                托收暂收户开户行名:?
+		     原支付编码:?                            原托收费用名:?
+		     新支付编码:?                           新托收费用名:? 
 	      
 	      
 	      
 	      
 	      
-	                                      $d.tlr                                          $d.tlr                                                                                         
+	                                      ?                                         ?                                                                                        
 #end   
 #end
