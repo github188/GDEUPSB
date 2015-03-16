@@ -38,5 +38,15 @@
     <action class="com.bocom.bbip.gdeupsb.action.lot.CathecticExeAction" id="gdeupsb.cathecticExeAction" />
     <!--实时投记账后处理 -->
     <action class="com.bocom.bbip.gdeupsb.action.lot.CathecticCallThdAction" id="gdeupsb.cathecticCallThdAction" />
+    <!--查询清算奖期 -->
+    <action class="com.bocom.bbip.gdeupsb.action.lot.EupsQueryClrPrize" id="gdeupsb.queryClearPrizeAction" />
+    <!--查询奖期 -->
+    <action class="com.bocom.bbip.gdeupsb.action.lot.EupsQueryPrize" id="gdeupsb.queryPrizeAction" />
+    <!--查询奖期 信息-->
+    <action class="com.bocom.bbip.gdeupsb.action.lot.EupsQueryPrizeInfo" id="gdeupsb.queryPrizeInfoAction" />
+     <!--对账清单打印-->
+    <action class="com.bocom.bbip.gdeupsb.action.lot.EupsPrintCheckListAction" id="gdeupsb.PrintLotCheckList" />
     
+    <!-- 下载奖期 信息 -->
+    <action class="com.bocom.bbip.gdeupsb.action.lot.DownPrizeInfoAction" id="gdeupsb.DownPrizeInfoAction" />
 	</x:beans>
