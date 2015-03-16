@@ -3,32 +3,5 @@
 	xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd       http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
 	
-	<!-- 中山文件批量:文件录入及检查 -->
-	<x:bean id="eups.fileBatchPayCreateDataServiceActionZSAG00"
-		class="com.bocom.bbip.gdeupsb.action.fbpd.CheckAndImportFileFbpdAction"/>
-	
-	<!-- 中山文件批量:文件批量完成通知前端 -->
-	<x:bean id="eups.afterBatchAcpServiceActionZSAG00"
-		class="com.bocom.bbip.gdeupsb.action.fbpd.DealFbpdBatchResultAction"/>
-	
-	<!-- HZ燃气单笔托收 -->
-	<!-- <x:bean id="eups.payUnilateralToBankServiceImplPGAS00" class="com.bocom.bbip.gdeupsb.action.gas.PayUnilateralToBankServiceImplPGAS00" /> -->
-	<!-- HZ燃气单笔冲正 -->
-	<!-- <x:bean id="gdeupsb.cnlPayUnilateralToBankServicePGAS00" class="com.bocom.bbip.gdeupsb.action.gas.CnlPayUnilateralToBankServicePGAS00" /> -->
-	<!-- HZ燃气对账文件上传 -->
-	<!-- <x:bean id="gdeupsb.checkFileToThdHzAction" class="com.bocom.bbip.gdeupsb.action.gas.CheckFileToThdHzAction" /> -->
-	
-	<!-- 用户协议文件上传（0全部，1新增） -->
-	<!-- <x:bean id="gdeupsb.gasAgentBatchFileToFTP" class="com.bocom.bbip.gdeupsb.action.gas.agentBat.GasAgentBatchFileToFtpAction" /> -->
-	
-	 <!-- HZ燃气： 文件批扣数据准备 -->
-  	<x:bean id="eups.fileBatchPayCreateDataServiceActionPGAS00"
-		class="com.bocom.bbip.gdeupsb.action.gas.BatchGashDealServiceAction"/>
-	
-	<!-- HZ燃气：文件批量托收完成通知燃气  --> 
-	<x:bean id="eups.afterBatchAcpServicePGAS00"
-		class="com.bocom.bbip.gdeupsb.action.gas.MsgToGasAftBatchAction"/>
-	
-	
 
 </x:beans>
