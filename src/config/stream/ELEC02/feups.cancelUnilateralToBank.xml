@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="20Request">
+			<fixString name="OWC" length="12"/>  <!--收付费企业代码-->
+			<fixString name="JFH" length="32" expression='exp:str.trim($c.JFH)' alias="thdCusNo"/>  <!--缴费号-->
+			<fixString name="ActNam" length="64"  alias="cusNme" expression='exp:str.trim($c.ActNam)'/>  <!--客户名称-->
+			<fixString name="KAC" length="32" expression='exp:str.trim($c.KAC)' alias="cusAc"/>  <!--扣款帐号/卡号-->
+			<fixString name="AUN" length="32"/>  <!--银行账户名称-->
+			<fixString name="txnAmt" length="12"/>  <!--扣款金额-->
+			<fixString name="STO"  length="8" expression='exp:str.trim($c.STO)' alias="tlr"/> <!--经办柜员号 -->
+			<fixString name="WD0" length="8"/>  <!--工作日期 YYYYMMDD-->
+			<fixString name="LogNo" length="16" alias="thdSqn"/>  <!--流水-->
+			<fixString name="OAN" length="32" />  <!--供电企业银行帐号-->
+			<fixString name="MON"  length="6"/> <!--电费月份 -->
+			<fixString name="MNS"  length="2"/> <!--电费次数 -->
+			<fixString name="JLD"  length="5"/> <!--计量点号 -->
+			<fixString name="YSH"  length="16"/> <!--应收凭证号 -->
+			
+</segment>
