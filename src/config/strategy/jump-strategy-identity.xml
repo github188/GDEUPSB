@@ -6,6 +6,18 @@
 						http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
 
+<!-- 汕头电力批次数据准备 -->
+<bean id="eups.fileBatchPayCreateDataServiceActionELEC02" class="com.bocom.bbip.gdeupsb.action.zh.BatchAcpServiceImplELEC02">
+    </bean>
+ <!-- 珠海文本： 批次撤销 -->	
+<bean id="cancelBatchProcessELEC00" class="com.bocom.bbip.gdeupsb.action.zh.EupsZHAGCancelBatchAction">
+    </bean>
+     <!-- 汕头电力  批次撤销 -->
+<bean id="cancelBatchProcessELEC02" class=" com.bocom.bbip.gdeupsb.action.elec02.EupsCancelBatchProcess">
+    </bean>
+        <!-- 汕头电力  签到签退 -->
+<bean id="eups.signInOutThirdServiceActionELEC02" class="com.bocom.bbip.gdeupsb.action.elec02.SignInOutThirdServiceImplELEC02">
+    </bean>
 
 
 	<!-- 佛山文本： 文件批扣数据准备 -->
@@ -243,10 +255,30 @@
 		class="com.bocom.bbip.gdeupsb.strategy.gash.CheckBkFileToThirdStrategyAction">
 	</bean>
 
+				    
+	
+
+	
+	<!--汕头电力单边划扣  -->
+	<bean class="com.bocom.bbip.gdeupsb.action.elec02.PayUnilateralToBankServiceImplELEC02"
+		id="eups.payUnilateralToBankServiceActionELEC02" />	
+		
+		<!--汕头电力单边mozhaang  -->
+	<bean class="com.bocom.bbip.gdeupsb.action.elec02.CancelUnilateralToBankServiceImplELEC02"
+		id="eups.cancelUnilateralToBankServiceActionELEC02" />	
+
+	 <!-- 广东烟草划扣联机单笔记 -->
+     <bean class="com.bocom.bbip.gdeupsb.strategy.sgrt00.PayUnilateralToBankServiceActionSGRT00"
+        id="eups.payUnilateralToBankServiceActionSGRT00" />
+	
+
+
 
 	<!-- 广东烟草划扣联机单笔记 -->
 	<bean
 		class="com.bocom.bbip.gdeupsb.strategy.sgrt00.PayUnilateralToBankServiceActionSGRT00"
 		id="eups.payUnilateralToBankServiceActionSGRT00" />
+
+
 
 </beans>
