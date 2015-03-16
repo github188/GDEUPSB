@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSZHAGService/Schema" xmlns:gsp="http://gsp.bankcomm.com" xmlns:bbip="http://bbip.bankcomm.com" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSZHAGService/Schema" elementFormDefault="qualified">
+  <xs:import namespace="http://gsp.bankcomm.com" schemaLocation="headerOfSOAP.xsd"/>
+  <xs:import namespace="http://bbip.bankcomm.com" schemaLocation="headerOfBbip.xsd"/>
+  <xs:element name="transferInFile" type="tns:transferInFileReq_CType"/>
+  <xs:element name="transferInFileResponse" type="tns:transferInFileRsp_CType"/>
+  <xs:complexType name="transferInFileReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:transferInFileRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="transferInFileRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:transferInFileResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="manageZeroBalance" type="tns:manageZeroBalanceReq_CType"/>
+  <xs:element name="manageZeroBalanceResponse" type="tns:manageZeroBalanceRsp_CType"/>
+  <xs:complexType name="manageZeroBalanceReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:manageZeroBalanceRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="manageZeroBalanceRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:manageZeroBalanceResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="modifyActInfo" type="tns:modifyActInfoReq_CType"/>
+  <xs:element name="modifyActInfoResponse" type="tns:modifyActInfoRsp_CType"/>
+  <xs:complexType name="modifyActInfoReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:modifyActInfoRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="modifyActInfoRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:modifyActInfoResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="transferOutFile" type="tns:transferOutFileReq_CType"/>
+  <xs:element name="transferOutFileResponse" type="tns:transferOutFileRsp_CType"/>
+  <xs:complexType name="transferOutFileReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:transferOutFileRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="transferOutFileRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:transferOutFileResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="queryAreaInfo" type="tns:queryAreaInfoReq_CType"/>
+  <xs:element name="queryAreaInfoResponse" type="tns:queryAreaInfoRsp_CType"/>
+  <xs:complexType name="queryAreaInfoReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:queryAreaInfoRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryAreaInfoRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:queryAreaInfoResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="requestHeader" type="tns:requestHeader_CType"/>
+  <xs:element name="responseHeader" type="tns:responseHeader_CType"/>
+  <xs:element name="sortingInfo" type="tns:sortingInfo_CType"/>
+  <xs:element name="pageableRequest" type="tns:pageableRequest_CType"/>
+  <xs:element name="pageableRsponse" type="tns:pageableRsponse_CType"/>
+  <xs:complexType name="requestHeader_CType">
+    <xs:sequence>
+      <xs:element ref="bbip:bbipRequestHead"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="responseHeader_CType">
+    <xs:sequence>
+      <xs:element ref="bbip:bbipResponseHead"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="property_SType">
+    <xs:annotation>
+      <xs:documentation>排序数据域</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="32"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="direction_SType">
+    <xs:annotation>
+      <xs:documentation>排序方式</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="sortingInfo_CType">
+    <xs:sequence>
+      <xs:element name="property" type="tns:property_SType"/>
+      <xs:element name="direction" type="tns:direction_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="pageNum_SType">
+    <xs:annotation>
+      <xs:documentation>页数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+  <xs:simpleType name="pageSize_SType">
+    <xs:annotation>
+      <xs:documentation>每页显示数据数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+  <xs:complexType name="pageableRequest_CType">
+    <xs:sequence>
+      <xs:element name="pageNum" type="tns:pageNum_SType"/>
+      <xs:element name="pageSize" type="tns:pageSize_SType"/>
+      <xs:element ref="tns:sortingInfo" minOccurs="0" maxOccurs="10"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="totalElements_SType">
+    <xs:annotation>
+      <xs:documentation>总记录数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:long"/>
+  </xs:simpleType>
+  <xs:complexType name="pageableRsponse_CType">
+    <xs:sequence>
+      <xs:element name="totalElements" type="tns:totalElements_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="transferInFileRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="inFileNme" type="tns:inFileNme_SType"/>
+      <xs:element name="outFileNme" type="tns:outFileNme_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="transferInFileResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="inFileNme_SType">
+    <xs:annotation>
+      <xs:documentation>输入文件名称</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="outFileNme_SType">
+    <xs:annotation>
+      <xs:documentation>输出文件名称</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="manageZeroBalanceRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="ZreAct" type="tns:ZreAct_SType"/>
+      <xs:element name="ZActNam" type="tns:ZActNam_SType" minOccurs="0"/>
+      <xs:element name="ZActNodNo" type="tns:ZActNodNo_SType" minOccurs="0"/>
+      <xs:element name="ZActNodNm" type="tns:ZActNodNm_SType" minOccurs="0"/>
+      <xs:element name="CAgtNo" type="tns:CAgtNo_SType"/>
+      <xs:element name="CAgtNm" type="tns:CAgtNm_SType" minOccurs="0"/>
+      <xs:element name="CActNo" type="tns:CActNo_SType"/>
+      <xs:element name="CActNm" type="tns:CActNm_SType" minOccurs="0"/>
+      <xs:element name="CActNodNo" type="tns:CActNodNo_SType" minOccurs="0"/>
+      <xs:element name="CActNodNm" type="tns:CActNodNm_SType" minOccurs="0"/>
+      <xs:element name="PayCod" type="tns:PayCod_SType" minOccurs="0"/>
+      <xs:element name="PayNam" type="tns:PayNam_SType" minOccurs="0"/>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="oprTyp" type="tns:oprTyp_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="manageZeroBalanceResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="FleNam" type="tns:FleNam_SType"/>
+      <xs:element name="payCod" type="tns:payCod_SType"/>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="payNam" type="tns:payNam_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="ZreAct_SType">
+    <xs:annotation>
+      <xs:documentation>零余额账号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="21"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ZActNam_SType">
+    <xs:annotation>
+      <xs:documentation>零余额账户名称</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ZActNodNo_SType">
+    <xs:annotation>
+      <xs:documentation>零余额账户开户网点</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="6"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ZActNodNm_SType">
+    <xs:annotation>
+      <xs:documentation>零余额账户开户网点名称</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CAgtNo_SType">
+    <xs:annotation>
+      <xs:documentation>单位编号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CAgtNm_SType">
+    <xs:annotation>
+      <xs:documentation>单位名称</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CActNo_SType">
+    <xs:annotation>
+      <xs:documentation>托收业务暂收户账号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="21"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CActNm_SType">
+    <xs:annotation>
+      <xs:documentation>托收业务暂收户名称</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CActNodNo_SType">
+    <xs:annotation>
+      <xs:documentation>托收业务暂收户开户行网点号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="6"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CActNodNm_SType">
+    <xs:annotation>
+      <xs:documentation>托收业务暂收户开户行名称</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PayCod_SType">
+    <xs:annotation>
+      <xs:documentation>支付编码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="12"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PayNam_SType">
+    <xs:annotation>
+      <xs:documentation>支付编码对应托收费用名称</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="oprTyp_SType">
+    <xs:annotation>
+      <xs:documentation>操作类型</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FleNam_SType">
+    <xs:annotation>
+      <xs:documentation>文件名称</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="payCod_SType">
+    <xs:annotation>
+      <xs:documentation>支付编码返回</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="12"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="payNam_SType">
+    <xs:annotation>
+      <xs:documentation>支付编码对应托收费用名称</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="modifyActInfoRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="ActTyp" type="tns:ActTyp_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="modifyActInfoResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="ActTyp_SType">
+    <xs:annotation>
+      <xs:documentation>账号类型</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="transferOutFileRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="inFileNme" type="tns:inFileNme_SType"/>
+      <xs:element name="outFileNme" type="tns:outFileNme_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="transferOutFileResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryAreaInfoRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element ref="tns:pageableRequest"/>
+      <xs:element name="AreaNam" type="tns:AreaNam_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryAreaInfoResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="AreaInfo" type="tns:AreaInfo_CType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element ref="tns:pageableRsponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="AreaNam_SType">
+    <xs:annotation>
+      <xs:documentation>地区名称</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="40"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="areaNam_SType">
+    <xs:annotation>
+      <xs:documentation>地区名称</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="40"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="areaCod_SType">
+    <xs:annotation>
+      <xs:documentation>地区代码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="AreaInfo_CType">
+    <xs:sequence>
+      <xs:element name="areaNam" type="tns:areaNam_SType"/>
+      <xs:element name="areaCod" type="tns:areaCod_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
