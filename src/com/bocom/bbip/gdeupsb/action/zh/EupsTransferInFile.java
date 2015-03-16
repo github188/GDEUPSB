@@ -33,21 +33,23 @@ public class EupsTransferInFile  extends BaseAction {
     private static final int HEAD=0;
 	
 	public void process(Context context)throws CoreRuntimeException,IOException, JumpException{
-		logger.info("Eups481214 start!!");
-		final String inFileName=ContextUtils.assertDataHasLengthAndGetNNR(context, "smsSndFlg", ErrorCodes.EUPS_FIELD_EMPTY);
-		final String outFileName=ContextUtils.assertDataHasLengthAndGetNNR(context, "txnChl", ErrorCodes.EUPS_FIELD_EMPTY);
-        File srcFile=FileUtils.getFile("D:\\"+inFileName+".txt");
+		logger.info("代发工资来盘文件转换 start!!");
+		 String inFileName=ContextUtils.assertDataHasLengthAndGetNNR(context, "inFileNme", ErrorCodes.EUPS_FIELD_EMPTY);
+		 String outFileName=ContextUtils.assertDataHasLengthAndGetNNR(context, "outFileNme", ErrorCodes.EUPS_FIELD_EMPTY);
+        inFileName=inFileName.trim();
+         outFileName=outFileName.trim();
+		 File srcFile=FileUtils.getFile("D:\\"+inFileName+".txt");
         File destFile=FileUtils.getFile("D:\\"+outFileName+".txt");
 		Assert.isFalse(null==srcFile||null==destFile, ErrorCodes.EUPS_FILE_NOT_EXIST);
         List <String> lines=FileUtils.readLines(srcFile, GDConstants.CHARSET_ENCODING_GBK);
-		Assert.isEmpty(lines, ErrorCodes.EUPS_QUERY_NO_DATA);
+		Assert.isNotEmpty(lines, ErrorCodes.EUPS_QUERY_NO_DATA);
 		/** 账号转换 */
 		List <String>dest=transform(lines);
-		Assert.isEmpty(dest, ErrorCodes.EUPS_QUERY_NO_DATA);
+		Assert.isNotEmpty(dest, ErrorCodes.EUPS_QUERY_NO_DATA);
         FileUtils.writeLines(destFile, GDConstants.CHARSET_ENCODING_GBK, dest);
         /** 发送到BBOS */
 
-		logger.info("Eups481214转换成功!!");
+		logger.info("代发工资来盘文件转换转换成功!!");
 	}
 private List<String> transform(List<String>list)throws CoreException{
 	final int idx=1;
