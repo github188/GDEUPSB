@@ -3,9 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
 	name="50Request">
-			<fixString name="WTC" length="12"/>   <!-- 委托节点代码 -->
-			<fixString name="WD0"  length="8"/>   <!-- 工作日期 -->
-			<fixString name="FIF"  length="2"/>   <!-- 文件类型 -->
-			<fixString name="STO"  length="8"/>   <!-- 操作员代码 -->
-			<fixString name="CLZ"  length="16"/>   <!-- 银行流水号-->
+			<fixString name="WTC" length="12" default="301"/>   <!-- 委托节点代码 -->
+			<fixString name="WD0"  length="8" alias="WorkDate"/>   <!-- 工作日期 -->
+			<fixString name="FIF"  length="2" default="03"/>   <!-- 文件类型 -->
+			<fixString name="STO"  length="8" alias="tlr"/>   <!-- 操作员代码 -->
+			<fixString name="CLZ"  length="16" expression='exp:str.substring(this.sqn,4,20)'/>   <!-- 银行流水号-->
 </segment>
