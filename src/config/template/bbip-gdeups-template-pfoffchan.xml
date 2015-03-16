@@ -243,7 +243,7 @@
 			
 			<next on="complete"  to="finalize"/>
 			
-			<!-- <next on="*" to="regTransRollBackAct" /> -->
+			<next on="error" to="regTransRollBackAct" /> 
 			<end on="*"/>
 			
 		</step>
