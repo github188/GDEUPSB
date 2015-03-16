@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	type="LLLLLLLLLL" encoding="GBK" trace="true" filter="both,WEB-INF/classes/config/stream/ELEC02/translateDict.txt"> 
+	<segment name="requestHead">
+		<fixString name="TransCode" length="3" referred="true" mapping="true" /> <!-- 业务交易码 -->
+		    <fixString name="StartAddr"   length="12" />	<!--源地址-->
+			<fixString name="DestAddr"    length="12" />		<!--目标地址-->
+			<fixString name="AAC"         length="20" />		<!--报文标识号-->
+			<fixString name="WorkDate"    length="8"/>		  <!--提交日期-->
+			<fixString name="TxnTim"      length="14"/>		<!--发送时间-->
+			<fixString name="mesgPRI"     length="1"/>		  <!--信息优先级-->
+			<fixString name="recordNum"   length="10"/>		<!--信息明细项数-->
+			<fixString name="FilNam"      length="32" />	<!--文件名-->
+			<fixString name="zipFlag"     length="1"/>		<!--压缩标志-->
+			<addString name="br" expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse("0","0","01441131999","MMM")'/>
+			<addString name="bk" expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse("0","0","01441999999","MMM")'/>
+			<addString name="ccy" expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse("0","0","CNY","MMM")'/>
+	</segment>
+	<select name="body" key="tccode" default="N">
+		<include name="N" keys="TransCode" decodePrefix="f"/>
+	</select>
+</message>
