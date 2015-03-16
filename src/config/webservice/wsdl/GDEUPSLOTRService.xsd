@@ -1,0 +1,681 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSLOTRService/Schema" xmlns:gsp="http://gsp.bankcomm.com" xmlns:bbip="http://bbip.bankcomm.com" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSLOTRService/Schema" elementFormDefault="qualified">
+  <xs:import namespace="http://gsp.bankcomm.com" schemaLocation="headerOfSOAP.xsd"/>
+  <xs:import namespace="http://bbip.bankcomm.com" schemaLocation="headerOfBbip.xsd"/>
+  <xs:element name="queryPrizeInfo" type="tns:queryPrizeInfoReq_CType"/>
+  <xs:element name="queryPrizeInfoResponse" type="tns:queryPrizeInfoRsp_CType"/>
+  <xs:complexType name="queryPrizeInfoReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:queryPrizeInfoRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryPrizeInfoRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:queryPrizeInfoResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="queryBetInfo" type="tns:queryBetInfoReq_CType"/>
+  <xs:element name="queryBetInfoResponse" type="tns:queryBetInfoRsp_CType"/>
+  <xs:complexType name="queryBetInfoReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:queryBetInfoRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryBetInfoRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:queryBetInfoResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="printCheckInfo" type="tns:printCheckInfoReq_CType"/>
+  <xs:element name="printCheckInfoResponse" type="tns:printCheckInfoRsp_CType"/>
+  <xs:complexType name="printCheckInfoReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:printCheckInfoRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="printCheckInfoRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:printCheckInfoResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="queryPrize" type="tns:queryPrizeReq_CType"/>
+  <xs:element name="queryPrizeResponse" type="tns:queryPrizeRsp_CType"/>
+  <xs:complexType name="queryPrizeReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:queryPrizeRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryPrizeRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:queryPrizeResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="queryClearPrize" type="tns:queryClearPrizeReq_CType"/>
+  <xs:element name="queryClearPrizeResponse" type="tns:queryClearPrizeRsp_CType"/>
+  <xs:complexType name="queryClearPrizeReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:queryClearPrizeRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryClearPrizeRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:queryClearPrizeResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="requestHeader" type="tns:requestHeader_CType"/>
+  <xs:element name="responseHeader" type="tns:responseHeader_CType"/>
+  <xs:element name="sortingInfo" type="tns:sortingInfo_CType"/>
+  <xs:element name="pageableRequest" type="tns:pageableRequest_CType"/>
+  <xs:element name="pageableRsponse" type="tns:pageableRsponse_CType"/>
+  <xs:complexType name="requestHeader_CType">
+    <xs:sequence>
+      <xs:element ref="bbip:bbipRequestHead"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="responseHeader_CType">
+    <xs:sequence>
+      <xs:element ref="bbip:bbipResponseHead"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="property_SType">
+    <xs:annotation>
+      <xs:documentation>排序数据域</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="32"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="direction_SType">
+    <xs:annotation>
+      <xs:documentation>排序方式</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="sortingInfo_CType">
+    <xs:sequence>
+      <xs:element name="property" type="tns:property_SType"/>
+      <xs:element name="direction" type="tns:direction_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="pageNum_SType">
+    <xs:annotation>
+      <xs:documentation>页数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+  <xs:simpleType name="pageSize_SType">
+    <xs:annotation>
+      <xs:documentation>每页显示数据数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:int"/>
+  </xs:simpleType>
+  <xs:complexType name="pageableRequest_CType">
+    <xs:sequence>
+      <xs:element name="pageNum" type="tns:pageNum_SType"/>
+      <xs:element name="pageSize" type="tns:pageSize_SType"/>
+      <xs:element ref="tns:sortingInfo" minOccurs="0" maxOccurs="10"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="totalElements_SType">
+    <xs:annotation>
+      <xs:documentation>总记录数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:long"/>
+  </xs:simpleType>
+  <xs:complexType name="pageableRsponse_CType">
+    <xs:sequence>
+      <xs:element name="totalElements" type="tns:totalElements_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryPrizeInfoRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="GameId" type="tns:GameId_SType"/>
+      <xs:element name="SalEnd" type="tns:SalEnd_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryPrizeInfoResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="gameId" type="tns:gameId_SType"/>
+      <xs:element name="drawId" type="tns:drawId_SType"/>
+      <xs:element name="drawNm" type="tns:drawNm_SType"/>
+      <xs:element name="salStr" type="tns:salStr_SType"/>
+      <xs:element name="salEnd" type="tns:salEnd_SType"/>
+      <xs:element name="cshStr" type="tns:cshStr_SType"/>
+      <xs:element name="cshEnd" type="tns:cshEnd_SType"/>
+      <xs:element name="chkFlg" type="tns:chkFlg_SType"/>
+      <xs:element name="chkTim" type="tns:chkTim_SType"/>
+      <xs:element name="przAmt" type="tns:przAmt_SType"/>
+      <xs:element name="totAmt" type="tns:totAmt_SType"/>
+      <xs:element name="difFlg" type="tns:difFlg_SType"/>
+      <xs:element name="difAmt" type="tns:difAmt_SType"/>
+      <xs:element ref="tns:responseHeader"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="GameId_SType">
+    <xs:annotation>
+      <xs:documentation>游戏编号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SalEnd_SType">
+    <xs:annotation>
+      <xs:documentation>销售结束日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="gameId_SType">
+    <xs:annotation>
+      <xs:documentation>游戏编号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="drawId_SType">
+    <xs:annotation>
+      <xs:documentation>当前大期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="5"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="drawNm_SType">
+    <xs:annotation>
+      <xs:documentation>期名</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="salStr_SType">
+    <xs:annotation>
+      <xs:documentation>销售开始日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="14"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="salEnd_SType">
+    <xs:annotation>
+      <xs:documentation>销售结束日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="14"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="cshStr_SType">
+    <xs:annotation>
+      <xs:documentation>兑奖开始日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="14"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="cshEnd_SType">
+    <xs:annotation>
+      <xs:documentation>兑奖结束日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="14"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="chkFlg_SType">
+    <xs:annotation>
+      <xs:documentation>对账清算标志</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="chkTim_SType">
+    <xs:annotation>
+      <xs:documentation>对账清算时间</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="14"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="przAmt_SType">
+    <xs:annotation>
+      <xs:documentation>返奖总金额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="totAmt_SType">
+    <xs:annotation>
+      <xs:documentation>购彩总金额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="difFlg_SType">
+    <xs:annotation>
+      <xs:documentation>扎差标志</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="difAmt_SType">
+    <xs:annotation>
+      <xs:documentation>购彩总金额与返奖总金额扎差金额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="queryBetInfoRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element ref="tns:pageableRequest"/>
+      <xs:element name="GameId" type="tns:GameId_SType"/>
+      <xs:element name="CrdNo" type="tns:CrdNo_SType"/>
+      <xs:element name="BetTyp" type="tns:BetTyp_SType"/>
+      <xs:element name="BegDat" type="tns:BegDat_SType"/>
+      <xs:element name="EndDat" type="tns:EndDat_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryBetInfoResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="infoList" type="tns:infoList_CType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element ref="tns:pageableRsponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="CrdNo_SType">
+    <xs:annotation>
+      <xs:documentation>客户银行卡类型</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="21"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BetTyp_SType">
+    <xs:annotation>
+      <xs:documentation>投注类型</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BegDat_SType">
+    <xs:annotation>
+      <xs:documentation>起始日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="EndDat_SType">
+    <xs:annotation>
+      <xs:documentation>结束日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="playId_SType">
+    <xs:annotation>
+      <xs:documentation>玩法编号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="5"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="txnLog_SType">
+    <xs:annotation>
+      <xs:documentation>投注流水号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="kenoId_SType">
+    <xs:annotation>
+      <xs:documentation>Keno期号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="5"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="betMul_SType">
+    <xs:annotation>
+      <xs:documentation>投注倍数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="3"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="txnAmt_SType">
+    <xs:annotation>
+      <xs:documentation>投注金额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="betLin_SType">
+    <xs:annotation>
+      <xs:documentation>投注号码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="128"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="infoList_CType">
+    <xs:sequence>
+      <xs:element name="gameId" type="tns:gameId_SType"/>
+      <xs:element name="playId" type="tns:playId_SType"/>
+      <xs:element name="txnLog" type="tns:txnLog_SType"/>
+      <xs:element name="drawId" type="tns:drawId_SType"/>
+      <xs:element name="kenoId" type="tns:kenoId_SType"/>
+      <xs:element name="betMul" type="tns:betMul_SType"/>
+      <xs:element name="txnAmt" type="tns:txnAmt_SType"/>
+      <xs:element name="betLin" type="tns:betLin_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="printCheckInfoRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="FunTyp" type="tns:FunTyp_SType"/>
+      <xs:element name="GameId" type="tns:GameId_SType"/>
+      <xs:element name="DrawId" type="tns:DrawId_SType"/>
+      <xs:element name="RptTyp" type="tns:RptTyp_SType"/>
+      <xs:element name="fleNme" type="tns:fleNme_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="printCheckInfoResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="fleNmeBack" type="tns:fleNmeBack_SType"/>
+      <xs:element ref="tns:responseHeader"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="FunTyp_SType">
+    <xs:annotation>
+      <xs:documentation>操作类型</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="DrawId_SType">
+    <xs:annotation>
+      <xs:documentation>当前大期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="5"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RptTyp_SType">
+    <xs:annotation>
+      <xs:documentation>报表类型</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="fleNme_SType">
+    <xs:annotation>
+      <xs:documentation>报表文件名（用于打印）</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="fleNmeBack_SType">
+    <xs:annotation>
+      <xs:documentation>报表文件名返回</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="queryPrizeRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element ref="tns:pageableRequest"/>
+      <xs:element name="GameId" type="tns:GameId_SType"/>
+      <xs:element name="DrawId" type="tns:DrawId_SType"/>
+      <xs:element name="DrawNm" type="tns:DrawNm_SType"/>
+      <xs:element name="KenoId" type="tns:KenoId_SType"/>
+      <xs:element name="KenoNm" type="tns:KenoNm_SType"/>
+      <xs:element name="SalStrF" type="tns:SalStrF_SType"/>
+      <xs:element name="SalEndF" type="tns:SalEndF_SType"/>
+      <xs:element name="ChkFlg" type="tns:ChkFlg_SType"/>
+      <xs:element name="PayFlg" type="tns:PayFlg_SType"/>
+      <xs:element name="AddCon" type="tns:AddCon_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryPrizeResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="prizeList" type="tns:prizeList_CType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element ref="tns:pageableRsponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="DrawNm_SType">
+    <xs:annotation>
+      <xs:documentation>期名</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="KenoId_SType">
+    <xs:annotation>
+      <xs:documentation>Keno期号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="5"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="KenoNm_SType">
+    <xs:annotation>
+      <xs:documentation>Keno名称</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SalStrF_SType">
+    <xs:annotation>
+      <xs:documentation>销售开始日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SalEndF_SType">
+    <xs:annotation>
+      <xs:documentation>销售结束日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ChkFlg_SType">
+    <xs:annotation>
+      <xs:documentation>对账清算标志</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="PayFlg_SType">
+    <xs:annotation>
+      <xs:documentation>垫付标志</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AddCon_SType">
+    <xs:annotation>
+      <xs:documentation>附加条件</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="32"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="kenoNm_SType">
+    <xs:annotation>
+      <xs:documentation>Keno名称</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="kSalSt_SType">
+    <xs:annotation>
+      <xs:documentation>Keno开始销售日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="14"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="kSalEd_SType">
+    <xs:annotation>
+      <xs:documentation>Keno销售结束日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="14"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="payFlg_SType">
+    <xs:annotation>
+      <xs:documentation>垫付标志</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="payAmt_SType">
+    <xs:annotation>
+      <xs:documentation>返奖垫付金额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="xfeFlg_SType">
+    <xs:annotation>
+      <xs:documentation>划拨标志</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="flwCtl_SType">
+    <xs:annotation>
+      <xs:documentation>返奖流程控制标志</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="clrTim_SType">
+    <xs:annotation>
+      <xs:documentation>清算时间</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="14"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="rtnTim_SType">
+    <xs:annotation>
+      <xs:documentation>返奖垫付时间</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="14"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="prizeList_CType">
+    <xs:sequence>
+      <xs:element name="gameId" type="tns:gameId_SType"/>
+      <xs:element name="drawId" type="tns:drawId_SType"/>
+      <xs:element name="drawNm" type="tns:drawNm_SType"/>
+      <xs:element name="salStr" type="tns:salStr_SType"/>
+      <xs:element name="salEnd" type="tns:salEnd_SType"/>
+      <xs:element name="cshStr" type="tns:cshStr_SType"/>
+      <xs:element name="cshEnd" type="tns:cshEnd_SType"/>
+      <xs:element name="kenoId" type="tns:kenoId_SType"/>
+      <xs:element name="kenoNm" type="tns:kenoNm_SType"/>
+      <xs:element name="kSalSt" type="tns:kSalSt_SType"/>
+      <xs:element name="kSalEd" type="tns:kSalEd_SType"/>
+      <xs:element name="chkFlg" type="tns:chkFlg_SType"/>
+      <xs:element name="chkTim" type="tns:chkTim_SType"/>
+      <xs:element name="przAmt" type="tns:przAmt_SType"/>
+      <xs:element name="totAmt" type="tns:totAmt_SType"/>
+      <xs:element name="difFlg" type="tns:difFlg_SType"/>
+      <xs:element name="difAmt" type="tns:difAmt_SType"/>
+      <xs:element name="difFlg" type="tns:difFlg_SType"/>
+      <xs:element name="payFlg" type="tns:payFlg_SType"/>
+      <xs:element name="payAmt" type="tns:payAmt_SType"/>
+      <xs:element name="xfeFlg" type="tns:xfeFlg_SType"/>
+      <xs:element name="flwCtl" type="tns:flwCtl_SType"/>
+      <xs:element name="clrTim" type="tns:clrTim_SType"/>
+      <xs:element name="rtnTim" type="tns:rtnTim_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryClearPrizeRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element ref="tns:pageableRequest"/>
+      <xs:element name="GameId" type="tns:GameId_SType"/>
+      <xs:element name="ClrDat" type="tns:ClrDat_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="queryClearPrizeResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="clearPrizeList" type="tns:clearPrizeList_CType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element ref="tns:pageableRsponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="ClrDat_SType">
+    <xs:annotation>
+      <xs:documentation>清算日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="clearPrizeList_CType">
+    <xs:sequence>
+      <xs:element name="drawId" type="tns:drawId_SType"/>
+      <xs:element name="drawNm" type="tns:drawNm_SType"/>
+      <xs:element name="chkFlg" type="tns:chkFlg_SType"/>
+      <xs:element name="payFlg" type="tns:payFlg_SType"/>
+      <xs:element name="flwCtl" type="tns:flwCtl_SType"/>
+      <xs:element name="totAmt" type="tns:totAmt_SType"/>
+      <xs:element name="przAmt" type="tns:przAmt_SType"/>
+      <xs:element name="payAmt" type="tns:payAmt_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
