@@ -427,7 +427,9 @@
     <xs:annotation>
       <xs:documentation>文件日期</xs:documentation>
     </xs:annotation>
-    <xs:restriction base="xs:string"/>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="sqn_SType">
     <xs:annotation>
