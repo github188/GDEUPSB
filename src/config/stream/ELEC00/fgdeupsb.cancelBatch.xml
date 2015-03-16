@@ -2,20 +2,18 @@
 <segment xmlns="http://www.bocom.com/jump/transformer/packet"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
-	name="460424Req">
-		
-
-		<fixString name="thdSqn"  length="24" /><!-- 交易流水号	JYLSH	Varchar2(24) -->
-		<fixString name="thdTxnDte"  length="8" /><!-- 交易日期	JYRQ	Varchar2(8)-->
-		<fixString name="thdTxnTme"  length="6" /><!-- 交易时间	JYSJ	Varchar2 (6) -->
-		<fixString name="oldTxnSqn"  length="24" /><!-- 原交易流水号	YJYLSH	Varchar2(24) -->
-		<fixString name="oldTxnDte"  length="8" /><!-- 原交易日期	YJYRQ	Varchar2(8) -->
-		<fixString name="oldTxnTme"  length="6" /><!-- 原交易时间	YJYSJ	Varchar2 (6) -->
-		<fixString name="rsvFld8"  length="4" /><!-- 入账银行代码	RZYHDM	Varchar2(4) -->
-		<fixString name="comNo"  length="8" /><!-- 单位编码	DWBM	Varchar2(8) -->
-		<fixString name="fleNme"  length="36" /><!-- 原文件名称	YWJMC	Varchar2(36) -->
-		<fixString name="fleTyp"  length="2" /><!-- 文件类型	WJLX	Varchar2(2) -->
-		<fixString name="totCnt"  length="10" /><!-- 总笔数	ZBS	Number(10) -->
-		<fixString name="totAmt"  length="16" /><!-- 总金额	ZJE	Number(14,2) -->
-		<fixString name="rsvFld1"  length="128" /><!-- 备注	BZ	Varchar2(128) -->
-	</segment>
+	name="460424Resp">
+	  
+		<fixString name="sqn"  length="24"></fixString><!--交易流水号	JYLSH	Varchar2(24)-->
+		<fixString name="txnDte"  length="8"></fixString><!--交易日期	JYRQ	Varchar2(8)-->
+		<fixString name="txnTme"  length="6"></fixString><!--交易时间	JYSJ	Varchar2 (6)-->
+		<fixString name="rsvFld1"  length="24"></fixString><!--原交易流水号	YJYLSH	Varchar2(24)-->
+		<fixString name="rsvFld2"  length="8"></fixString><!--原交易日期	YJYRQ	Varchar2(8)-->
+		<fixString name="rsvFld3"  length="6"></fixString><!--原交易时间	YJYSJ	Varchar2 (6)-->
+		<fixString name="bankNo"  length="4"></fixString><!--入账银行代码	RZYHDM	Varchar2(4)-->
+		<fixString name="comNo"  length="8"></fixString><!--单位编码	DWBM	Varchar2(8)-->
+		<fixString name="fleNme"  length="36"></fixString><!--文件名称	WJMC	Varchar2(36)-->
+		<fixString name="fleTyp"  length="2"></fixString><!--文件类型	WJLX	Varchar2(2)-->
+		<fixString name="cancelSign"  length="2"></fixString><!--取消标志	QXBZ	Varchar2(2)-->
+		<fixString name="rsvFld4"  length="128"></fixString><!--备注	BZ	Varchar2(128)-->
+</segment>
