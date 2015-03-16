@@ -15,11 +15,18 @@
             <action id="act" ref="gdeupsb.QryEleticketOrderAction"/>
         </actions>
     </process>
-
     <!--易票联长途汽车订单提交-->
     <process id="gdeupsb.SubmitEleTicketOder" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
         <actions>
             <action id="act" ref="gdeupsb.SubmitEleTicketOderAction"/>
         </actions>
     </process>
+	<!-- 长途汽车电子票取消 -->
+	<process id="gdeupsb.cancelTicket" template="eups.simpleTran"
+		interceptors="eups.transMessageInterceptor">
+		<actions>
+			<action id="act" ref="cancelTicket" />
+		</actions>
+	</process>
+	
 </x:beans>
