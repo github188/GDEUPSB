@@ -36,34 +36,53 @@
 
 	<select id="findByBatNo" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
-		select * from ${GDEUPS_SCHEMA}.GDEUPS_ZHAG_BATCH_TEMP where BAT_NO=#{batNo}
+		select * from ${GDEUPSB_SCHEMA}.GDEUPS_ZHAG_BATCH_TEMP where BAT_NO=#{batNo}
 
 	</select>
      <select id="findByBatNo2" resultMap="BaseResultMap2"
 		parameterType="java.lang.String">
-		select * from ${GDEUPS_SCHEMA}.GDEUPS_ZHAG_BATCH_TEMP where BAT_NO=#{batNo}
+		select * from ${GDEUPSB_SCHEMAA}.GDEUPS_ZHAG_BATCH_TEMP where BAT_NO=#{batNo}
 
 	</select>
 	<delete id="deleteByBatNo" parameterType="java.lang.String">
-		delete from ${GDEUPS_SCHEMA}.GDEUPS_ZHAG_BATCH_TEMP
+		delete from ${GDEUPSB_SCHEMA}.GDEUPS_ZHAG_BATCH_TEMP
 		where BAT_NO = #{batNo,jdbcType=CHAR}
   </delete>
 	<delete id="deleteAll">
-		delete from ${GDEUPS_SCHEMA}.GDEUPS_ZHAG_BATCH_TEMP
+		delete from ${GDEUPSB_SCHEMA}.GDEUPS_ZHAG_BATCH_TEMP
     
   </delete>
 	<select id="batchInsert" parameterType="java.util.List">
-		insert into ${GDEUPS_SCHEMA}.GDEUPS_ZHAG_BATCH_TEMP ( BAT_NO, COM_NO,
-		TXN_TLR, SUB_DTE, CUS_AC, CUS_NME,
-		TXN_AMT, THD_CUS_NO, THD_CUS_NME,
-		RSV_FLD1, RSV_FLD2, RSV_FLD3,
+		insert into ${GDEUPSB_SCHEMA}.GDEUPS_ZHAG_BATCH_TEMP ( 
+		BAT_NO,
+		 
+		COM_NO,
+		 
+		TXN_TLR,
+		SUB_DTE,
+		CUS_AC, 
+		CUS_NME,
+		TXN_AMT,
+		THD_CUS_NO,
+		THD_CUS_NME,
+		RSV_FLD1,
+		RSV_FLD2,
+		RSV_FLD3,
 		RSV_FLD4)
 		values
 		<foreach collection="list" item="item" index="index" separator=",">
-			( #{item.batNo}, #{item.comNo},
-			#{item.txnTlr}, #{item.subDte}, #{item.cusAc}, #{item.cusNme},
-			#{item.txnAmt}, #{item.thdCusNo}, #{item.thdCusNme},
-			#{item.rsvFld1}, #{item.rsvFld2}, #{item.rsvFld3},
+			( #{item.batNo},
+			#{item.comNo},
+			#{item.txnTlr},
+			#{item.subDte},
+			#{item.cusAc},
+			#{item.cusNme},
+			#{item.txnAmt},
+			#{item.thdCusNo},
+			#{item.thdCusNme},
+			#{item.rsvFld1},
+			#{item.rsvFld2},
+			#{item.rsvFld3},
 			#{item.rsvFld4})
       </foreach>
 	</select>
