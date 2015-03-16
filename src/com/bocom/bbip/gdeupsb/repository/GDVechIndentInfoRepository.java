@@ -7,5 +7,5 @@ import com.bocom.bbip.gdeupsb.entity.GDVechIndentInfo;
 public interface GDVechIndentInfoRepository extends PagingAndSortingRepository<GDVechIndentInfo, String> {
 	
 	@Update
-	public void update(GDVechIndentInfo updateInfo);
+	public void update(GDVechIndentInfo updateInfo);   
 }
