@@ -46,11 +46,10 @@ public class QryEleticketOrder extends BaseAction{
         tempMap.put("opeTyp", indentInfo.getOpeTyp());//运营方式OPE_TYP
         tempMap.put("claLev", indentInfo.getClaLev());//        班次档次CLA_LEV
         tempMap.put("ridStatNo", indentInfo.getRidStatNo());//        发车地点RID_STAT_NO
-        tempMap.put("desNam", indentInfo.getDesNam());//        到站名称DES_NAM
+        tempMap.put("destination", indentInfo.getDesNam());//        到站名称DES_NAM
         tempMap.put("busStopNo", indentInfo.getBusStopNo());//        卡位/检票口 BUS_STOP_NO/TIC_ENT_NO
         tempMap.put("ticEntNo",indentInfo.getTicEntNo());
         tempMap.put("ticPri", indentInfo.getTicPri());//        票价 TIC_PRI
-        tempMap.put("buyNum", indentInfo.getBuyNum());//       购买数量BUY_NUM
         //取票人信息：
         tempMap.put("userNam", indentInfo.getUserNam());//       姓名 USER_NAM
         tempMap.put("userId", indentInfo.getUserId());//       身份证号 USER_ID
