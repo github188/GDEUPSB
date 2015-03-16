@@ -52,7 +52,8 @@ public class QryLotBetRecordAction extends BaseAction{
 		Map<String, Object> thdRspMsgMap = get(ThirdPartyAdaptor.class).trade(context);
 		context.setDataMap(thdRspMsgMap);
 		
-		logger.info("============thdRspMsgMap=======" + thdRspMsgMap.toString());
+		logger.info("============thdRspMsgMap=======" + thdRspMsgMap.size());
+		logger.info("=========context:" + context);
 		
  		if(CollectionUtils.isEmpty(thdRspMsgMap )){
  			throw new CoreRuntimeException("交易不成功");
