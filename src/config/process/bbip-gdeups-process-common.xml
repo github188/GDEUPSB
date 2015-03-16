@@ -15,6 +15,18 @@
 	
 	
 	
+<process id="gdeups.queryBatchInfo" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
+		<actions>
+			  <action id="act" ref="queryBatchInfo"   />
+			  
+		</actions>
+	</process>	
 	
+	<process id="gdeups.queryBatchDetail" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
+		<actions>
+			  <action id="act" ref="BatchDetails"   />
+			  
+		</actions>
+	</process>
 </x:beans>
 
