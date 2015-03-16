@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.bocom.bbip.data.annotation.Find;
 import com.bocom.bbip.data.annotation.Update;
+import com.bocom.bbip.data.domain.Page;
+import com.bocom.bbip.data.domain.Pageable;
 import com.bocom.bbip.data.repository.PagingAndSortingRepository;
 import com.bocom.bbip.gdeupsb.entity.GdLotDrwTbl;
 import com.bocom.bbip.gdeupsb.entity.GdLotDrwTblKey;
@@ -96,6 +98,22 @@ public interface GdLotDrwTblRepository extends PagingAndSortingRepository<GdLotD
 	/** 查询福彩奖期信息总数 */
     @Find
     public Map<String, String> statUnPrzDrw(GdLotDrwTbl gdLotDrwTbl);
+
+    /** 清算奖期查询 */
+    @Find
+    public Page<GdLotDrwTbl> queryClearPrize(Pageable pageable,Map<String,String>map);
+    /** 奖期查询 */
+    @Find
+    public Page<GdLotDrwTbl> queryPrize(Pageable pageable,Map<String,String>map);
+    /**查询奖期信息*/
+    @Find
+    public List<GdLotDrwTbl>queryPrizeInfo(Map<String,String>map);
+    
+    /**检查奖期信息是否已经存在*/
+    @Find
+    public List<Map>checkPrizeInfo(Map<String,String>map);
+    
+
     
     /** 查询返奖金额汇总 */
     @Find
@@ -111,5 +129,6 @@ public interface GdLotDrwTblRepository extends PagingAndSortingRepository<GdLotD
     /** 更新更新轧差信息 */
     @Update
     public void UpdLotDifAmt(GdLotDrwTbl lotDrwTbl);
+
 
 }
