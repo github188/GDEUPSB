@@ -101,21 +101,21 @@ public class AftPayToBankStrategyAction implements Executable{
 //        VALUES('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','0')
 //   </Sentence>
 //   <Fields>BrNo|ThdKey|CarTyp|TCusId|TCusNm|PayMon|ActDat|LogNo|TxnAmt|TxnCnl|ActFlg|ActNo|NodNo|TlrId|TckNo|</Fields>
-		gdEupsbTrspFeeInfo.setBrNo((String)ctx.getData(GDParamKeys.BR_NO));
+		gdEupsbTrspFeeInfo.setBrNo(ctx.getData(ParamKeys.BR).toString());
 		gdEupsbTrspFeeInfo.setThdKey((String)ctx.getData(GDParamKeys.THD_KEY));
 		gdEupsbTrspFeeInfo.setCarTyp((String)ctx.getData(GDParamKeys.CAR_TYP));
 		gdEupsbTrspFeeInfo.setCarNo((String)ctx.getData(GDParamKeys.CAR_NO));
 		gdEupsbTrspFeeInfo.setTcusNm((String)ctx.getData(GDParamKeys.TCUS_NM));
 		gdEupsbTrspFeeInfo.setPayMon((String)ctx.getData(GDParamKeys.PAY_MON));
-		gdEupsbTrspFeeInfo.setPayDat((Date)ctx.getData(ParamKeys.AC_DATE));
+		gdEupsbTrspFeeInfo.setPayDat((Date)ctx.getData(GDParamKeys.ACT_DAT));
 		gdEupsbTrspFeeInfo.setPayLog((String)ctx.getData(ParamKeys.SEQUENCE));
 		gdEupsbTrspFeeInfo.setTxnAmt((BigDecimal)ctx.getData(GDParamKeys.TXN_AMT));
-		gdEupsbTrspFeeInfo.setTxnCnl((String)ctx.getData(GDParamKeys.TXN_CNL));
+		gdEupsbTrspFeeInfo.setTxnCnl((String)ctx.getData(ParamKeys.CHANNEL)); //交易渠道
 		gdEupsbTrspFeeInfo.setActTyp((String)ctx.getData(GDParamKeys.ACT_TYP));//1111111111
 		gdEupsbTrspFeeInfo.setActNo((String)ctx.getData(GDParamKeys.ACT_NO));
-		gdEupsbTrspFeeInfo.setPayNod((String)ctx.getData(GDParamKeys.NOD_NO));
-		gdEupsbTrspFeeInfo.setPayTlr((String)ctx.getData(GDParamKeys.TLR_ID));
-		gdEupsbTrspFeeInfo.setPayTck((String)ctx.getData(GDParamKeys.TCK_NO));//银行流水号
+		gdEupsbTrspFeeInfo.setPayNod((String)ctx.getData(ParamKeys.BK)); //网点号
+		gdEupsbTrspFeeInfo.setPayTlr((String)ctx.getData(ParamKeys.TELLER));  //银行柜员号
+		gdEupsbTrspFeeInfo.setPayTck((String)ctx.getData(ParamKeys.ACO_VCH_NO));//银行流水号!!!!!!!!!!!!!
 		gdEupsbTrspFeeInfo.setStatus(GDConstants.JF);
 		
 		gdEupsbTrspFeeInfoRepository.insert(gdEupsbTrspFeeInfo);
