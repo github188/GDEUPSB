@@ -157,7 +157,7 @@
         </actions>
     </process>
     <!--打印对账清单-->
-    <process id="gdeups.printLotCheckList" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+    <process id="gdeups.printCheckInfo" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
         <actions>
             <action id="act" ref="gdeupsb.PrintLotCheckList" operations="process"/>
         </actions>
