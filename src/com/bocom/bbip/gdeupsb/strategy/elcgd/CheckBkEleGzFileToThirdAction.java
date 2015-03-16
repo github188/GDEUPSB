@@ -97,22 +97,22 @@ public class CheckBkEleGzFileToThirdAction implements CheckBkFileToThirdService 
 		// 查询代扣的数据
 		GdEupsTransJournal eupsTransJournal = new GdEupsTransJournal();
 		eupsTransJournal.setEupsBusTyp(eupsBusTyp);
-		eupsTransJournal.setBakFld1(clearDteStr);  //使用备用字段(第三方约定的交易日期，原老系统“清算日期”)作为对账条件
+		eupsTransJournal.setBakFld1(clearDteStr); // 使用备用字段(第三方约定的交易日期，原老系统“清算日期”)作为对账条件
 		eupsTransJournal.setMfmTxnSts(Constants.FIN_TXNSTS_SUCCESS); // 主机交易状态为成功
 
 		eupsTransJournal.setThdTxnCde("HK"); // 第三方交易码为划扣
 		Map<String, Object> headerInfoHK = new HashMap<String, Object>(); // 划账map头
-		
+		headerInfoHK.put("clrDat", clearDteStr);
+		headerInfoHK.put("batNo", context.getData(ParamKeys.SEQUENCE));
+
 		// 统计划扣总体信息
 		List<Map<String, Object>> hkHeaderResult = gdEupsTransJournalRepository.findGzEleChkHKInfo(eupsTransJournal);
 		if (CollectionUtils.isNotEmpty(hkHeaderResult)) {
 			headerInfoHK = hkHeaderResult.get(0);
 		}
 		else { // 无数据
-			headerInfoHK.put("clrDat", clearDteStr);
 			headerInfoHK.put("totalDeal", "0");
 			headerInfoHK.put("totalFee", "0");
-			headerInfoHK.put("batNo", "");
 		}
 		checkFileHK.put("header", headerInfoHK);
 
@@ -126,17 +126,18 @@ public class CheckBkEleGzFileToThirdAction implements CheckBkFileToThirdService 
 		// 统计缴费总体信息
 		eupsTransJournal.setThdTxnCde("JF"); // 第三方交易码为划扣
 		Map<String, Object> headerInfoJF = new HashMap<String, Object>(); // 划账map头
+		headerInfoJF.put("clrDat", clearDteStr);
+		headerInfoJF.put("batNo", context.getData(ParamKeys.SEQUENCE));
 
 		List<Map<String, Object>> jfHeaderResult = gdEupsTransJournalRepository.findGzEleChkJFInfo(eupsTransJournal);
 		if (CollectionUtils.isNotEmpty(jfHeaderResult)) {
 			headerInfoJF = jfHeaderResult.get(0);
 		}
 		else { // 无数据
-			headerInfoJF.put("clrDat", clearDteStr);
 			headerInfoJF.put("totalDeal", "0");
 			headerInfoJF.put("totalFee", "0");
-			headerInfoJF.put("batNo", "");
 		}
+
 		checkFileJF.put("header", headerInfoJF);
 
 		// 查询缴费明细信息
