@@ -25,9 +25,9 @@ public class CancelBatchCheckAction extends BaseAction {
 
     public void check(Context context)throws Exception{
         //context.setData("batNo", "150508TPO300300011");
-		final String batNo=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.BAT_NO, ErrorCodes.EUPS_FIELD_EMPTY);
+		final String batNo=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.BAT_NO, ErrorCodes.EUPS_FIELD_EMPTY,"batNo");
 		Result result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).tryLock(batNo, 60*1000L, 6000L);
-		Assert.isTrue(result.isSuccess(), "加锁失败");
+		Assert.isTrue(result.isSuccess(), GDErrorCodes.EUPS_LOCK_FAIL);
 		GDEupsBatchConsoleInfo info = new GDEupsBatchConsoleInfo();
 		info.setBatNo(batNo);
 		GDEupsBatchConsoleInfo ret = get(GDEupsBatchConsoleInfoRepository.class).findConsoleInfo(info);
@@ -43,6 +43,6 @@ public class CancelBatchCheckAction extends BaseAction {
     public void unLock(Context context)throws CoreException{
     	final String batNo=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.BAT_NO, ErrorCodes.EUPS_FIELD_EMPTY);
     	Result result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).unlock(batNo);
-		Assert.isTrue(result.isSuccess(), "解锁失败");
+		Assert.isTrue(result.isSuccess(), GDErrorCodes.EUPS_UNLOCK_FAIL);
     }
 }
