@@ -480,6 +480,10 @@ public class GDParamKeys {
 	/**************** 珠海路桥字段相关 ****************/
 	/** 车牌类型 */
 	public final static String CAR_TYP = "carTyp";
+	/** 车型说明 */
+	public final static String CAR_NAME = "carName";
+	/** 吨数或座数 */
+	public final static String CAR_DZS = "carDzs";
 	/** 企业日期 */
 	public final static String TACT_DT = "tactDt";
 	/** 缴费状态 */
