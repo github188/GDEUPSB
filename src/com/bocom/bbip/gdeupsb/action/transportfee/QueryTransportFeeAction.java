@@ -57,7 +57,7 @@ public class QueryTransportFeeAction extends BaseAction{
 		logger.info("QueryTransportFeeAction start......");
 		
 		ctx.setData(ParamKeys.THD_TXN_CDE, GDConstants.QRY_CAR);
-		ctx.setData("transCode", "484001");
+		
 		ctx.setData(GDParamKeys.ACT_DAT, new Date());
 		ctx.setData(GDParamKeys.TACT_DT, new Date());
 		ctx.setData(GDParamKeys.TLOG_NO, ctx.getData(GDParamKeys.SQN));
@@ -106,6 +106,12 @@ public class QueryTransportFeeAction extends BaseAction{
 				gdEupsbTrspPayInfoRepository.delete1(gdEupsbTrspPayInfo);
 				
 				ctx.setDataMap(responseMessage);
+				ctx.setData(GDParamKeys.BEG_DAT, DateUtils.parse((String)ctx.getData(GDParamKeys.BEG_DAT)));
+				ctx.setData(GDParamKeys.END_DAT, DateUtils.parse((String)ctx.getData(GDParamKeys.END_DAT)));
+				ctx.setData("feeStd", new BigDecimal((String)ctx.getData("feeStd")));
+				ctx.setData("corpus", new BigDecimal((String)ctx.getData("corpus")));
+				ctx.setData("lateFee", new BigDecimal((String)ctx.getData("lateFee")));
+				ctx.setData("txnAmt", new BigDecimal((String)ctx.getData("txnAmt")));
 				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+ctx);
 				gdEupsbTrspPayInfo.setPayMon(ctx.getData(GDParamKeys.PAY_MON).toString());
 				gdEupsbTrspPayInfo.setTcusNm(ctx.getData(GDParamKeys.TCUS_NM).toString());
