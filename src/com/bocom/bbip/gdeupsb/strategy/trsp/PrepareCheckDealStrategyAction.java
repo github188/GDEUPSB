@@ -23,7 +23,8 @@ public class PrepareCheckDealStrategyAction implements Executable{
 		ctx.setData(ParamKeys.CUS_AC, actNo);
 		ctx.setData(ParamKeys.THD_CUSTOMER_NO, carNo);
 		ctx.setData(GDParamKeys.THD_KEY, logNo);
-		ctx.setData(GDParamKeys.BR_NO, "443999");
-		ctx.setData(ParamKeys.AC_DATE, new Date());
+	
+		
+		ctx.setData(GDParamKeys.ACT_DAT, new Date());
 	}
 }
