@@ -36,7 +36,7 @@ public class SubmitEleTicketOder extends BaseAction{
         String terminalId = context.getData("terminalId").toString();//终端ID
         String account = context.getData("account").toString();//商户帐户
         String requestTime = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMddHHmmss);//请求时间
-        String operType ="1";//操作类型
+        String operType ="3";//操作类型
         String pwd = context.getData("pwd").toString();
         String storeSeq = context.getData("storeSeq").toString();//商户订单号
         String sign =null;
@@ -62,7 +62,7 @@ public class SubmitEleTicketOder extends BaseAction{
         String payType = "3";//支付方式
         String orderState = "0";//订单状态
         //查询票价 
-        Date date = DateUtils.parse(context.getData("qryDate").toString(), DateUtils.STYLE_yyyyMMdd);
+        Date date = DateUtils.parse(context.getData("claDte").toString(), DateUtils.STYLE_yyyyMMdd);
         String dateString = DateUtils.format(date, DateUtils.STYLE_yyyyMMdd);//查询日期
         String claNo = context.getData("claNo").toString();//班次（或者线路）编号
         String destinationNo = context.getData("desNo").toString();//到站站点编码

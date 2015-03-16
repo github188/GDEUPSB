@@ -62,7 +62,7 @@ public class QryBusSequenceAction  extends BaseAction{
             tempMap.put("claNo", infoArr[1]);
             tempMap.put("claNam", infoArr[2]);
             tempMap.put("claTim", infoArr[3]);
-            tempMap.put("claprop", infoArr[4]);
+            tempMap.put("claProp", infoArr[4]);
             tempMap.put("claTyp", infoArr[5]);
             tempMap.put("opeTyp", infoArr[6]);
             tempMap.put("claLev", infoArr[7]);
