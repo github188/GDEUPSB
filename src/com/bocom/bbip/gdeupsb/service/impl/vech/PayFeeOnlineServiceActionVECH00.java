@@ -30,6 +30,8 @@ public class PayFeeOnlineServiceActionVECH00 implements PayFeeOnlineService{
 					PayFeeOnlineDomain payfeeonlinedomain, Context context)
 					throws CoreException {
 				log.info("===========Start   PayFeeOnlineServiceActionVECH00  preCheckDeal");
+				context.setData(ParamKeys.SEQUENCE, context.getData(GDParamKeys.ORDER_ID));
+				log.info("===========End    PayFeeOnlineServiceActionVECH00  preCheckDeal");
 				return null;
 			}
 			@Override
@@ -37,12 +39,13 @@ public class PayFeeOnlineServiceActionVECH00 implements PayFeeOnlineService{
 					PayFeeOnlineDomain payfeeonlinedomain, Context context)
 					throws CoreException {
 				log.info("===========Start   PayFeeOnlineServiceActionVECH00  preHostDeal");
+				System.out.println("~~~~~~~~~~txnDte~~~~~~~~~~~~~"+context.getData(ParamKeys.TXN_DTE));
+				System.out.println("~~~~~~~~~~~txnTme~~~~~~~~~~"+context.getData(ParamKeys.TXN_TME));
 				Date txnDte=DateUtils.parse(DateUtils.formatAsSimpleDate(new Date()));
 				Date txnTme=DateUtils.parse(DateUtils.formatAsTranstime(new Date()));
 				
 				context.setData(ParamKeys.TXN_DTE, txnDte);
 				context.setData(ParamKeys.TXN_TME, txnTme);
-				context.setData(ParamKeys.SEQUENCE, context.getData(GDParamKeys.ORDER_ID));
 				log.info("===========End   PayFeeOnlineServiceActionVECH00  preHostDeal");
 				return null;
 			}
