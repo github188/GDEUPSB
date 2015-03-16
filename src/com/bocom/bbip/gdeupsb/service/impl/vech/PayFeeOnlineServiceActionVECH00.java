@@ -1,6 +1,7 @@
 package com.bocom.bbip.gdeupsb.service.impl.vech;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -31,11 +32,13 @@ public class PayFeeOnlineServiceActionVECH00 implements PayFeeOnlineService{
 					throws CoreException {
 				log.info("===========Start   PayFeeOnlineServiceActionVECH00  preCheckDeal");
 				context.setData(ParamKeys.SEQUENCE, context.getData(GDParamKeys.ORDER_ID));
-				String cusNme=context.getData("userNam").toString();
+				List<GDVechIndentInfo> list=context.getData("ticketInfo");
+				GDVechIndentInfo gdVechIndentInfo=list.get(0);
+				String cusNme=gdVechIndentInfo.getUserNam();
 				context.setData(ParamKeys.CUS_NME, cusNme);
-				String userId=context.getData("userId").toString();
-				String mobile=context.getData("mobile").toString();
+				String userId=gdVechIndentInfo.getUserId();
 				context.setData(ParamKeys.ID_NO,userId);
+				String mobile=gdVechIndentInfo.getMobile();
 				context.setData(ParamKeys.CMU_TEL,mobile);
 				log.info("===========End    PayFeeOnlineServiceActionVECH00  preCheckDeal");
 				return null;
@@ -62,15 +65,6 @@ public class PayFeeOnlineServiceActionVECH00 implements PayFeeOnlineService{
 					throws CoreException {
 				log.info("===========Start   PayFeeOnlineServiceActionVECH00  preThdDeal");
 				context.setData(ParamKeys.THD_SEQUENCE, context.getData(GDParamKeys.STORE_SEQ));
-				context.setData(ParamKeys.BAK_FLD1, context.getData(GDParamKeys.STATION_ARRIVE));
-				context.setData(ParamKeys.BAK_FLD2, context.getData(GDParamKeys.STATION_GET_ON));
-				context.setData(ParamKeys.BAK_FLD3, context.getData(ParamKeys.PAY_TYPE));
-				context.setData(ParamKeys.BAK_FLD4, context.getData(GDParamKeys.BUY_NUMBER));
-				context.setData(ParamKeys.ID_NO, context.getData(GDParamKeys.CUS_ID));
-				context.setData(ParamKeys.RSV_FLD1, context.getData(GDParamKeys.LINE_NO));
-				context.setData(ParamKeys.TXN_AMT, context.getData(GDParamKeys.ALL_MONEY));
-				context.setData(ParamKeys.BV_KIND, context.getData(GDParamKeys.VOUCHER));
-				context.setData(ParamKeys.CMU_TEL, context.getData(GDParamKeys.TEL));
 				log.info("===========End   PayFeeOnlineServiceActionVECH00  preThdDeal");
 				return null;
 			}
@@ -80,16 +74,9 @@ public class PayFeeOnlineServiceActionVECH00 implements PayFeeOnlineService{
 					throws CoreException {
 				log.info("===========Start   PayFeeOnlineServiceActionVECH00  aftThdDeal");
 				String orderId=context.getData(ParamKeys.SEQUENCE).toString();
-				String userNam=context.getData("userNam").toString();
-				String userId=context.getData("userId").toString();
-				String mobile=context.getData("mobile").toString();
 				if(Constants.RESPONSE_CODE_SUCC.equals(context.getData(ParamKeys.RESPONSE_CODE).toString())){
 						log.info("===========update  GDEUPS_VECH_INDENT ");
 						GDVechIndentInfo gdVechIndentInfo=gdVechIndentInfoRepository.findOne(orderId);
-						gdVechIndentInfo.setMobile(mobile);
-						gdVechIndentInfo.setUserId(userId);
-						gdVechIndentInfo.setUserNam(userNam);
-						gdVechIndentInfo.setMobile(mobile);
 						gdVechIndentInfo.setOrdSta("1");
 						gdVechIndentInfoRepository.update(gdVechIndentInfo);
 				}
