@@ -24,11 +24,25 @@
     insert into  gdeupsb.GDEUPS_LOT_CHK_DTL (
     <include refid="baseColumnList" />) values
     	<foreach collection="list" item="item" index="index" separator=",">
-			( #{item.tLogNo}, #{item.gameId},
-			#{item.drawId}, #{item.kenoId}, #{item.txnLog}, #{item.betMod},
-			#{item.betMul}, #{item.classNo}, #{item.przAmt}, #{item.betLin})
+       (#{item.txnLog,jdbcType=CHAR},
+        #{item.chkDat,jdbcType=CHAR},
+        #{item.gameId,jdbcType=CHAR},
+        #{item.drawId,jdbcType=CHAR},
+        #{item.kenoId,jdbcType=CHAR},
+        #{item.seqNo,jdbcType=CHAR},
+        #{item.schId,jdbcType=CHAR},
+        #{item.lotNam,jdbcType=CHAR},
+        #{item.playId,jdbcType=CHAR},
+        #{item.txnTim,jdbcType=CHAR},
+        #{item.txnAmt,jdbcType=CHAR},
+        #{item.chkFlg,jdbcType=CHAR},
+        #{item.chkTim,jdbcType=CHAR})
       </foreach>
   </select>
+   <delete id="deleteByGameId" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotChkDtl" >
+    delete from gdeupsb.GDEUPS_LOT_CHK_DTL
+     where GAME_ID = #{gameId,jdbcType=CHAR} and DRAW_ID= #{drawId,jdbcType=CHAR} and KENO_ID= #{kenoId,jdbcType=CHAR}
+  </delete>
    <update id="updateByGameIdAndDrawId" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotChkDtl" >
     update gdeupsb.GDEUPS_LOT_CHK_DTL
        set CHK_FLG = #{chkFlg,jdbcType=CHAR}, CHK_TIM = #{chkTim,jdbcType=CHAR}
@@ -287,5 +301,13 @@
         #{item}
       </foreach>
     </if>
+  </select>
+  <!-- 打印福彩方失败清单 -->
+  <select id="findThdFailList" parameterType="map" resultType="map">
+  select a.*, b.CRD_NO
+					from  gdeupsb.GDEUPS_LOT_CHK_DTL a, gdeupsb.GDEUPS_LOT_CUS_INF b
+					where a.GAME_Id=#{GameId} and a.DRAW_Id=#{DrawId} and a.CHK_FLG='0' and a.LOT_NAM=b.LOT_NAM
+					order by a.KENO_ID, a.TXN_TIM asc
+  
   </select>
 </mapper>
