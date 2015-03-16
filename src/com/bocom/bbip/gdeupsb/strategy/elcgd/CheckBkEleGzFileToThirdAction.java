@@ -23,8 +23,10 @@ import com.bocom.bbip.eups.spi.vo.CheckDomain;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal;
 import com.bocom.bbip.gdeupsb.repository.GdEupsTransJournalRepository;
+import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -66,8 +68,12 @@ public class CheckBkEleGzFileToThirdAction implements CheckBkFileToThirdService 
 
 		Date clearDte = DateUtils.parse(clearDteStr);
 
-		// TODO：单位编号根据配型部类型查找
-		String comNo = "ELEC01";
+		String dpTyp = context.getData(GDParamKeys.GZ_ELE_DPT_TYP);
+		String comNo = CodeSwitchUtils.codeGenerator("eleGzComNoGen", dpTyp);
+		log.info("after codeSwitch, dptTyp change from [" + dpTyp + "],to [" + comNo + "]");
+		if (StringUtils.isEmpty(comNo)) {
+			throw new CoreException(ErrorCodes.EUPS_COM_NO_NOTEXIST);
+		}
 
 		// 检查签到签退
 		EupsThdTranCtlInfo eupsThdTranCtlInfo = eupsThdTranCtlInfoRepository.findOne(comNo);
@@ -75,8 +81,6 @@ public class CheckBkEleGzFileToThirdAction implements CheckBkFileToThirdService 
 			throw new CoreException(ErrorCodes.THD_CHL_TRADE_NOT_ALLOWWED);
 		}
 		log.info("已签退，可以进行对账");
-
-		String dptTyp = "0000";
 
 		// 分别生成划扣及缴费对账文件
 		String fileNameDk = "00" + "01_" + clearDteStr + "_315810" + "_001.bil"; // 代扣文件
@@ -93,11 +97,12 @@ public class CheckBkEleGzFileToThirdAction implements CheckBkFileToThirdService 
 		// 查询代扣的数据
 		GdEupsTransJournal eupsTransJournal = new GdEupsTransJournal();
 		eupsTransJournal.setEupsBusTyp(eupsBusTyp);
-		eupsTransJournal.setTxnDte(clearDte);
+		eupsTransJournal.setBakFld1(clearDteStr);  //使用备用字段(第三方约定的交易日期，原老系统“清算日期”)作为对账条件
 		eupsTransJournal.setMfmTxnSts(Constants.FIN_TXNSTS_SUCCESS); // 主机交易状态为成功
 
 		eupsTransJournal.setThdTxnCde("HK"); // 第三方交易码为划扣
 		Map<String, Object> headerInfoHK = new HashMap<String, Object>(); // 划账map头
+		
 		// 统计划扣总体信息
 		List<Map<String, Object>> hkHeaderResult = gdEupsTransJournalRepository.findGzEleChkHKInfo(eupsTransJournal);
 		if (CollectionUtils.isNotEmpty(hkHeaderResult)) {
