@@ -37,7 +37,7 @@ public class SubmitEleTicketOder extends BaseAction{
         String account = context.getData("account").toString();//商户帐户
         String requestTime = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMddHHmmss);//请求时间
         String operType ="3";//操作类型
-        String pwd = context.getData("pwd").toString();
+        String pwd = context.getData("password").toString();
         String storeSeq = context.getData("storeSeq").toString();//商户订单号
         String sign =null;
         MessageDigest md;

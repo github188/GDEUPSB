@@ -12,6 +12,12 @@
   <wsdl:message name="maintainTbcInfoResponseMessage">
     <wsdl:part name="maintainTbcInfoResponse" element="gdeupsb:maintainTbcInfoResponse"/>
   </wsdl:message>
+  <wsdl:message name="printClearAcRequestMessage">
+    <wsdl:part name="printClearAcRequest" element="gdeupsb:printClearAc"/>
+  </wsdl:message>
+  <wsdl:message name="printClearAcResponseMessage">
+    <wsdl:part name="printClearAcResponse" element="gdeupsb:printClearAcResponse"/>
+  </wsdl:message>
   <wsdl:message name="qryClearAccountActionRequestMessage">
     <wsdl:part name="qryClearAccountActionRequest" element="gdeupsb:qryClearAccountAction"/>
   </wsdl:message>
@@ -24,6 +30,11 @@
       <wsdl:input message="tns:maintainTbcInfoRequestMessage"/>
       <wsdl:output message="tns:maintainTbcInfoResponseMessage"/>
     </wsdl:operation>
+    <wsdl:operation name="printClearAc">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:printClearAcRequestMessage"/>
+      <wsdl:output message="tns:printClearAcResponseMessage"/>
+    </wsdl:operation>
     <wsdl:operation name="qryClearAccountAction">
       <wsdl:documentation/>
       <wsdl:input message="tns:qryClearAccountActionRequestMessage"/>
@@ -34,6 +45,15 @@
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     <wsdl:operation name="maintainTbcInfo">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBTbcService/maintainTbcInfo"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="printClearAc">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBTbcService/printClearAc"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -53,7 +73,7 @@
   </wsdl:binding>
   <wsdl:service name="GDEUPSBTbcService">
     <wsdl:port name="GDEUPSBTbcServicePort" binding="tns:GDEUPSBTbcServiceSoapBinding">
-      <soap:address location="http://127.0.0.1"/>
+      <soap:address location="http://127.0.0.1:8080/GDEUPSB/ws/"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

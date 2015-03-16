@@ -9,13 +9,18 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 
 
+
+
 import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsTransJournal;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
@@ -51,48 +56,51 @@ public class PrintClearAcAction extends BaseAction {
 		context.setData("eupsBusTyp", "烟草");
 		context.setData("tlr", tlr);
 		context.setData("br", br);
-		
-		
-	if("1".equals(prtFlg)){
-
-		EupsTransJournal  jnl=new EupsTransJournal();
-		jnl.setMfmTxnSts("S");
-//		jnl.setAcDte(d);
-		List<EupsTransJournal> entityList = eupstransjournalRepository.find(jnl);
-		context.setData("eles",entityList);
-		
-		log.info("TOMCAT----------------"+"Start--report");
-		log.info("TOMCAT----------------"+"End--report");
-		if (CollectionUtils.isNotEmpty(entityList)) {
-			String result = batchReport.renderAsString("tobaccoPrintReport",
-					context);
-			log.info("TOMCAT----------------" + result);
-			PrintWriter printWriter = null;
-			String mftploca = "E:\\Report\\";
-			String reportFileName = "tbc.txt";
-			try {
-				File file = new File(mftploca);
-				if (!file.exists()) {
-					file.mkdirs();
-				}
-				printWriter = new PrintWriter(new BufferedWriter(
-						new OutputStreamWriter(new FileOutputStream(
-								mftploca + reportFileName), "GBK")));
-				printWriter.write(result);
-			} catch (IOException e) {
-				log.info("---io异常");
-			} finally {
-				if (null != printWriter) {
-					try {
-						printWriter.close();
-					} catch (Exception e) {
-						log.info("关闭流出错");
-						return;
-					}
-				}
-			}	
-	}
-	
-	}
+  
+    	if("1".equals(prtFlg)){
+    
+    		EupsTransJournal  jnl=new EupsTransJournal();
+    		jnl.setMfmTxnSts("S");
+    //		jnl.setAcDte(d);
+    		List<EupsTransJournal> entityList = eupstransjournalRepository.find(jnl);
+    		context.setData("eles",entityList);
+    		
+    		log.info("TOMCAT----------------"+"Start--report");
+    		log.info("TOMCAT----------------"+"End--report");
+    		if (CollectionUtils.isNotEmpty(entityList)) {
+    		    Map<String, String> map = new HashMap<String, String>();
+    		    map.put("tobaccoPrintReport", "config/report/sgrt00/tobaccoPrintReport.vm");
+    		    batchReport.setReportNameTemplateLocationMapping(map);
+    			String result = batchReport.renderAsString("tobaccoPrintReport", context);
+    			
+    			log.info("TOMCAT----------------" + result);
+    			PrintWriter printWriter = null;
+    			String mftploca = "E:\\Report\\";
+    			String reportFileName = "tbc.txt";
+    			try {
+    				File file = new File(mftploca);
+    				if (!file.exists()) {
+    					file.mkdirs();
+    				}
+    				printWriter = new PrintWriter(new BufferedWriter(
+    						new OutputStreamWriter(new FileOutputStream(
+    								mftploca + reportFileName), "GBK")));
+    				printWriter.write(result);
+    			} catch (IOException e) {
+    				log.info("---io异常");
+    			} finally {
+    				if (null != printWriter) {
+    					try {
+    						printWriter.close();
+    					} catch (Exception e) {
+    						log.info("关闭流出错");
+    						return;
+    					}
+    				}
+    			}	
+    		}
+    	}
+        context.setData(ParamKeys.RSP_CDE, Constants.RESPONSE_CODE_SUCC);
+        context.setData(ParamKeys.RSP_MSG, Constants.RESPONSE_MSG);
 	}
 }
