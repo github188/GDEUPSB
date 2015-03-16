@@ -7,10 +7,10 @@
   </resultMap>
   
   <select id="findByAreaName" resultMap="BaseResultMap" parameterType="java.lang.String">
-     SELECT AreaNam,AreaCod FROM AreaInfo WHERE  AreaNam like  CONCAT(CONCAT('%',  #{AreaNam}), '%')   
+     SELECT AreaNam,AreaCod FROM gdeupsb.GDEUPS_ZH_AREA_INFO WHERE  AreaNam like  CONCAT(CONCAT('%',  #{AreaNam}), '%')   
   </select>
   <select id="findByAreaNameCount" resultType="java.lang.Integer" >
-    select count(*) from AreaInfo
+    select count(*) from gdeupsb.GDEUPS_ZH_AREA_INFO  WHERE  AreaNam like  CONCAT(CONCAT('%',  #{AreaNam}), '%')
     </select>
   
 </mapper>
