@@ -352,6 +352,12 @@
       <if test="fleNme!=null" >
         AND  FLE_NME=#{fleNme,jdbcType=CHAR}
       </if>
+       <if test="comNo!=null" >
+        AND  COM_NO=#{comNo,jdbcType=CHAR}
+      </if>
+       <if test="busKnd!=null" >
+        AND  BUS_KND=#{busKnd,jdbcType=CHAR}
+      </if>
       <if test="totCnt!=null" >
         AND  TOT_CNT=#{totCnt,jdbcType=INTEGER}
       </if>
