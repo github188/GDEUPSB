@@ -195,13 +195,13 @@
         AND MFM_RSP_CDE='SC0000' AND TXN_CDE='gdeupsb.tb' and SQN  &gt;=#{sqn,jdbcType=CHAR}
     </select>
 
-	<!--广州电力划扣对账统计信息查询 -->
+		<!--广州电力划扣对账统计信息查询 -->
 	<select id="findGzEleChkHKInfo" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
 		select count(*) totalDeal, sum(TXN_AMT) totalFee from
 		eups.EUPS_TRANS_JOURNAL where EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
-		and TXN_DTE=#{txnDte,jdbcType=DATE} and MFM_TXN_STS='S' and
-		THD_TXN_CDE='HK'
+		and BAK_FLD1=#{bakFld1,jdbcType=CHAR}  and MFM_TXN_STS='S' and
+		THD_TXN_CDE='HK' and TXN_TYP!='C' and TXN_STS!='C'
 	</select>
 
 	<!--广州电力划扣对账明细信息查询 -->
@@ -211,12 +211,12 @@
 		tActDt,TXN_DTE actDat, TXN_TME BkTim, MFM_VCH_NO bkLog,
 		CUS_AC actNo,
 		'0200' txnKnd,TXN_AMT txnAmt,' ' oTlogNo,THD_TXN_DTE dLDat,THD_TXN_TME
-		dLTim,BAK_FLD1 lChkTm
+		dLTim,BAK_FLD2 lChkTm
 		from
 		eups.EUPS_TRANS_JOURNAL where EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
 		and
-		TXN_DTE=#{txnDte,jdbcType=DATE} and MFM_TXN_STS='S' and
-		THD_TXN_CDE='HK'
+		BAK_FLD1=#{bakFld1,jdbcType=CHAR} and MFM_TXN_STS='S' and
+		THD_TXN_CDE='HK' and TXN_TYP!='C' and TXN_STS!='C'
 	</select>
 
 	<!--广州电力缴费对账统计信息查询 -->
@@ -224,8 +224,9 @@
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
 		select count(*) totalDeal, sum(TXN_AMT) totalFee from
 		eups.EUPS_TRANS_JOURNAL where EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
-		and TXN_DTE=#{txnDte,jdbcType=DATE} and MFM_TXN_STS='S' and
-		THD_TXN_CDE='JF'
+		and 
+		BAK_FLD1=#{bakFld1,jdbcType=CHAR} and MFM_TXN_STS='S' and
+		THD_TXN_CDE='JF' and TXN_TYP!='C' and TXN_STS!='C'
 	</select>
 
 	<!--广州电力缴费对账明细信息查询 -->
@@ -236,13 +237,14 @@
 		CUS_AC actNo,
 		'0200' txnKnd,TXN_AMT txnAmt,' ' oTlogNo,THD_TXN_DTE dLDat,THD_TXN_TME
 		dLTim, BAK_FLD3 bakFld3, BV_NO bvNo,
-		BAK_FLD1 lChkTm
+		BAK_FLD2 lChkTm
 		from
 		eups.EUPS_TRANS_JOURNAL where EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
 		and
-		TXN_DTE=#{txnDte,jdbcType=DATE} and MFM_TXN_STS='S' and
-		THD_TXN_CDE='JF'
+		BAK_FLD1=#{bakFld1,jdbcType=CHAR}  and MFM_TXN_STS='S' and
+		THD_TXN_CDE='JF' and TXN_TYP!='C' and TXN_STS!='C'
 	</select>
+	
 
 
 	<!-- 惠州燃气代扣流水信息查询 -->
