@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBatchService" xmlns:gdeupsb="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBatchService/Schema" name="GDEUPSBatchService" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBatchService">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBatchService">
+      <xsd:import namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBatchService/Schema" schemaLocation="GDEUPSBatchService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="cancelBatchRequestMessage">
+    <wsdl:part name="cancelBatchRequest" element="gdeupsb:cancelBatch"/>
+  </wsdl:message>
+  <wsdl:message name="cancelBatchResponseMessage">
+    <wsdl:part name="cancelBatchResponse" element="gdeupsb:cancelBatchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="printBatchInfoRequestMessage">
+    <wsdl:part name="printBatchInfoRequest" element="gdeupsb:printBatchInfo"/>
+  </wsdl:message>
+  <wsdl:message name="printBatchInfoResponseMessage">
+    <wsdl:part name="printBatchInfoResponse" element="gdeupsb:printBatchInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="queryBatchDetailRequestMessage">
+    <wsdl:part name="queryBatchDetailRequest" element="gdeupsb:queryBatchDetail"/>
+  </wsdl:message>
+  <wsdl:message name="queryBatchDetailResponseMessage">
+    <wsdl:part name="queryBatchDetailResponse" element="gdeupsb:queryBatchDetailResponse"/>
+  </wsdl:message>
+  <wsdl:message name="BatchPayCreateDataRequestMessage">
+    <wsdl:part name="BatchPayCreateDataRequest" element="gdeupsb:BatchPayCreateData"/>
+  </wsdl:message>
+  <wsdl:message name="BatchPayCreateDataResponseMessage">
+    <wsdl:part name="BatchPayCreateDataResponse" element="gdeupsb:BatchPayCreateDataResponse"/>
+  </wsdl:message>
+  <wsdl:message name="BatchPaySubmitDataRequestMessage">
+    <wsdl:part name="BatchPaySubmitDataRequest" element="gdeupsb:BatchPaySubmitData"/>
+  </wsdl:message>
+  <wsdl:message name="BatchPaySubmitDataResponseMessage">
+    <wsdl:part name="BatchPaySubmitDataResponse" element="gdeupsb:BatchPaySubmitDataResponse"/>
+  </wsdl:message>
+  <wsdl:message name="queryBatchInfoRequestMessage">
+    <wsdl:part name="queryBatchInfoRequest" element="gdeupsb:queryBatchInfo"/>
+  </wsdl:message>
+  <wsdl:message name="queryBatchInfoResponseMessage">
+    <wsdl:part name="queryBatchInfoResponse" element="gdeupsb:queryBatchInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="queryComInfoRequestMessage">
+    <wsdl:part name="queryComInfoRequest" element="gdeupsb:queryComInfo"/>
+  </wsdl:message>
+  <wsdl:message name="queryComInfoResponseMessage">
+    <wsdl:part name="queryComInfoResponse" element="gdeupsb:queryComInfoResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="GDEUPSBatchServicePortType">
+    <wsdl:operation name="cancelBatch">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:cancelBatchRequestMessage"/>
+      <wsdl:output message="tns:cancelBatchResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="printBatchInfo">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:printBatchInfoRequestMessage"/>
+      <wsdl:output message="tns:printBatchInfoResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="queryBatchDetail">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:queryBatchDetailRequestMessage"/>
+      <wsdl:output message="tns:queryBatchDetailResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="BatchPayCreateData">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:BatchPayCreateDataRequestMessage"/>
+      <wsdl:output message="tns:BatchPayCreateDataResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="BatchPaySubmitData">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:BatchPaySubmitDataRequestMessage"/>
+      <wsdl:output message="tns:BatchPaySubmitDataResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="queryBatchInfo">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:queryBatchInfoRequestMessage"/>
+      <wsdl:output message="tns:queryBatchInfoResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="queryComInfo">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:queryComInfoRequestMessage"/>
+      <wsdl:output message="tns:queryComInfoResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GDEUPSBatchServiceSoapBinding" type="tns:GDEUPSBatchServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="cancelBatch">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBatchService/cancelBatch"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="printBatchInfo">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBatchService/printBatchInfo"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryBatchDetail">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBatchService/queryBatchDetail"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BatchPayCreateData">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBatchService/BatchPayCreateData"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BatchPaySubmitData">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBatchService/BatchPaySubmitData"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryBatchInfo">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBatchService/queryBatchInfo"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryComInfo">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBatchService/queryComInfo"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GDEUPSBatchService">
+    <wsdl:port name="GDEUPSBatchServicePort" binding="tns:GDEUPSBatchServiceSoapBinding">
+      <soap:address location="http://127.0.0.1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
