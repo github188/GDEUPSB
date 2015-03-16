@@ -28,9 +28,9 @@ import com.bocom.bbip.file.transfer.TransferUtils;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
-import com.bocom.bbip.gdeupsb.entity.GdBatchConsoleInfo;
+import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.entity.GdGashBatchTmp;
-import com.bocom.bbip.gdeupsb.repository.GdBatchConsoleInfoRepository;
+import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GdGashBatchTmpRepository;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
@@ -59,7 +59,7 @@ public class BatchGashDealServiceAction implements BatchAcpService  {
 	OperateFileAction operateFileAction;
 
 	@Autowired
-	GdBatchConsoleInfoRepository gdBatchConsoleInfoRepository;
+	GDEupsBatchConsoleInfoRepository gdEupsBatchConsoleInfoRepository;
 
 	@Autowired
 	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
@@ -75,16 +75,20 @@ public class BatchGashDealServiceAction implements BatchAcpService  {
 		logger.info("BatchGashDealServiceAction initDeal start!");
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 		
-		context.setData(ParamKeys.BR, GDConstants.GAS_BAT_BR);
-		String comNo = "PGAS00";
+//		context.setData(ParamKeys.BR, GDConstants.GAS_BAT_BR);
+		String comNo = "GDPGAS0001";
 //		String comNo = context.getData(ParamKeys.COMPANY_NO);
+		
+		context.setData(ParamKeys.TELLER, "ABIR148");
+		context.setData(ParamKeys.BR, "01441131999");
+		context.setData(ParamKeys.BK, "01441999999");
 		
 		List<GdGashBatchTmp> gashBatchTmps = new ArrayList<GdGashBatchTmp>();
 		
 		//批量日期
-		String txnDatTmp = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
+//		String txnDatTmp = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
 		//批量文件名 (燃气端提供)
-		String batFileName = context.getData(ParamKeys.FLE_NME).toString();
+		String batFileName = context.getData("fileName").toString();
 		
 		//FTP配置信息
 		EupsThdFtpConfig gasBatThdFtpConfig=eupsThdFtpConfigRepository.findOne("PGAS00Bat");
@@ -92,14 +96,18 @@ public class BatchGashDealServiceAction implements BatchAcpService  {
 		gasBatThdFtpConfig.setRmtFleNme(batFileName);
 		
 		//取电子柜员
-		String ETeller = bbipPublicService.getETeller(GDConstants.PGAS00);
-		context.setData(ParamKeys.TELLER, ETeller);
+//		String ETeller = bbipPublicService.getETeller(GDConstants.PGAS00);
+//		context.setData(ParamKeys.TELLER, ETeller);
 			
-		// 判断文件是否重复录入
-		GdBatchConsoleInfo gdBatchConsoleInfo = new GdBatchConsoleInfo();
+		Date subDte = DateUtils.parse(batFileName.substring(4, 12), DateUtils.STYLE_yyyyMMdd);
+		
+		logger.info("===============判断文件是否重复录入=============");
+		GDEupsBatchConsoleInfo gdBatchConsoleInfo = new GDEupsBatchConsoleInfo();
 		gdBatchConsoleInfo.setComNo(comNo);
-		gdBatchConsoleInfo.setFleNme(batFileName);
-		List<GdBatchConsoleInfo> ebciList = gdBatchConsoleInfoRepository.find(gdBatchConsoleInfo);
+		gdBatchConsoleInfo.setSubDte(subDte);
+//		gdBatchConsoleInfo.setFleNme(batFileName);
+		logger.info("==============subDte:" + gdBatchConsoleInfo.getSubDte());
+		List<GDEupsBatchConsoleInfo> ebciList = gdEupsBatchConsoleInfoRepository.find(gdBatchConsoleInfo);
 		if(!CollectionUtils.isEmpty(ebciList)){
 			String batNo = ebciList.get(0).getBatNo();
 			context.setData(ParamKeys.RSP_CDE, GDConstants.GAS_ERROR_CODE);
