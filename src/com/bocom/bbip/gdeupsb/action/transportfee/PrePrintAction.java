@@ -44,31 +44,18 @@ public class PrePrintAction extends BaseAction{
 	public void execute(Context ctx) throws CoreException,CoreRuntimeException{
 		log.info("PrePrintAction start.......");
 		ctx.setState("fail");
-//		TODO:
-//			<!-- 通过加锁控制批次状态 -->
-//        <Set>LckKey=STRCAT(rbfbtxnjnl444,:,$OLogNo)</Set>
-//        <Exec func="PUB:Lock" error="IGNORE"><!-- 通过加锁控制批次状态 -->
-//           <Arg name="RecKey" value="$LckKey"/>
-//           <Arg name="TimOut" value="60"/>
-//           <Arg name="AutoUnlock" value="yes"/>
-//        </Exec>
-//        <If condition="INTCMP(~RetCod,4,0)"><!--加锁失败-->
-//           <Set>MsgTyp=E</Set>
-//           <Set>RspCod=329999</Set>
-//           <Set>RspMsg=交易不允许并发</Set>
-//           <Return/>
-//        </If>
-		ctx.setData("transCode", "484004");
-		ctx.setData(GDParamKeys.NOD_NO, "123");
-		ctx.setData(GDParamKeys.TLR_ID, "123");
-		ctx.setState("fail");
+
+//		ctx.setData("transCode", "484004");
+//		ctx.setData(GDParamKeys.NOD_NO, "123");
+//		ctx.setData(GDParamKeys.TLR_ID, "123");
+		
         //查询缴费记录
-		String payDat = "payDat";
+		
 		GDEupsbTrspTxnJnl gdEupsbTrspTxnJnl = new GDEupsbTrspTxnJnl();
 		gdEupsbTrspTxnJnl.setBrNo(GDConstants.BR_NO);
 		gdEupsbTrspTxnJnl.setCarNo(ctx.getData(GDParamKeys.CAR_NO).toString());
 		gdEupsbTrspTxnJnl.setSqn(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
-		gdEupsbTrspTxnJnl.setActDat((Date)ctx.getData(payDat));
+		gdEupsbTrspTxnJnl.setActDat((Date)ctx.getData("payDat"));
 		List<Map<String, Object>> txnJnlList = gdEupsbTrspTxnJnlRepository.findPayInfo(gdEupsbTrspTxnJnl);
 		
 		ctx.setDataMap(txnJnlList.get(0));
@@ -78,16 +65,15 @@ public class PrePrintAction extends BaseAction{
 		}else if(!"S".equals(ctx.getData(GDParamKeys.TTXN_ST))){
 //			 <Set>TLogNo=$LogNo</Set>
 			Date tactDt = new Date();
-			
+
 			ctx.setData(GDParamKeys.TACT_DT, tactDt);
-			//更新路桥方流水号
-			gdEupsbTrspTxnJnl.setThdKey(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
+			//更新路桥方流水号  TODO:此处的sql语句使用了"!="  不知是否能通过，还需验证
+			gdEupsbTrspTxnJnl.setSqn(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
 			gdEupsbTrspTxnJnl.setTlogNo(ctx.getData(ParamKeys.SEQUENCE).toString());
 			gdEupsbTrspTxnJnl.setTactDt(tactDt);
-			gdEupsbTrspTxnJnlRepository.update(gdEupsbTrspTxnJnl);
+			gdEupsbTrspTxnJnlRepository.update1(gdEupsbTrspTxnJnl);
 			
 			
-//			ctx.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 			
 //			TODO:
 //			<Arg name="HTxnCd" value="@PARA.TTxnCd"/>
@@ -97,16 +83,10 @@ public class PrePrintAction extends BaseAction{
 			ctx.setState("callThd");
 			
 			
+		}else{
+			ctx.setState("complete");
 		}
 		
-		
-		
-		
-
-
-		
-		
-
-		
+	
 	}
 }
