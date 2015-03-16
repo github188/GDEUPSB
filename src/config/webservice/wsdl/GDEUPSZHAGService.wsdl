@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSZHAGService" xmlns:gdeupsb="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSZHAGService/Schema" name="GDEUPSZHAGService" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSZHAGService">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSZHAGService">
+      <xsd:import namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSZHAGService/Schema" schemaLocation="GDEUPSZHAGService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="transferInFileRequestMessage">
+    <wsdl:part name="transferInFileRequest" element="gdeupsb:transferInFile"/>
+  </wsdl:message>
+  <wsdl:message name="transferInFileResponseMessage">
+    <wsdl:part name="transferInFileResponse" element="gdeupsb:transferInFileResponse"/>
+  </wsdl:message>
+  <wsdl:message name="manageZeroBalanceRequestMessage">
+    <wsdl:part name="manageZeroBalanceRequest" element="gdeupsb:manageZeroBalance"/>
+  </wsdl:message>
+  <wsdl:message name="manageZeroBalanceResponseMessage">
+    <wsdl:part name="manageZeroBalanceResponse" element="gdeupsb:manageZeroBalanceResponse"/>
+  </wsdl:message>
+  <wsdl:message name="modifyActInfoRequestMessage">
+    <wsdl:part name="modifyActInfoRequest" element="gdeupsb:modifyActInfo"/>
+  </wsdl:message>
+  <wsdl:message name="modifyActInfoResponseMessage">
+    <wsdl:part name="modifyActInfoResponse" element="gdeupsb:modifyActInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="transferOutFileRequestMessage">
+    <wsdl:part name="transferOutFileRequest" element="gdeupsb:transferOutFile"/>
+  </wsdl:message>
+  <wsdl:message name="transferOutFileResponseMessage">
+    <wsdl:part name="transferOutFileResponse" element="gdeupsb:transferOutFileResponse"/>
+  </wsdl:message>
+  <wsdl:message name="queryAreaInfoRequestMessage">
+    <wsdl:part name="queryAreaInfoRequest" element="gdeupsb:queryAreaInfo"/>
+  </wsdl:message>
+  <wsdl:message name="queryAreaInfoResponseMessage">
+    <wsdl:part name="queryAreaInfoResponse" element="gdeupsb:queryAreaInfoResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="GDEUPSZHAGServicePortType">
+    <wsdl:operation name="transferInFile">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:transferInFileRequestMessage"/>
+      <wsdl:output message="tns:transferInFileResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="manageZeroBalance">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:manageZeroBalanceRequestMessage"/>
+      <wsdl:output message="tns:manageZeroBalanceResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="modifyActInfo">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:modifyActInfoRequestMessage"/>
+      <wsdl:output message="tns:modifyActInfoResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="transferOutFile">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:transferOutFileRequestMessage"/>
+      <wsdl:output message="tns:transferOutFileResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="queryAreaInfo">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:queryAreaInfoRequestMessage"/>
+      <wsdl:output message="tns:queryAreaInfoResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GDEUPSZHAGServiceSoapBinding" type="tns:GDEUPSZHAGServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="transferInFile">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSZHAGService/transferInFile"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="manageZeroBalance">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSZHAGService/manageZeroBalance"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="modifyActInfo">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSZHAGService/modifyActInfo"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="transferOutFile">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSZHAGService/transferOutFile"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryAreaInfo">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSZHAGService/queryAreaInfo"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GDEUPSZHAGService">
+    <wsdl:port name="GDEUPSZHAGServicePort" binding="tns:GDEUPSZHAGServiceSoapBinding">
+      <soap:address location="http://127.0.0.1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
