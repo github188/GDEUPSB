@@ -59,6 +59,10 @@
     delete from gdeupsb.GDEUPS_LOT_PRZ_CTL
     where T_LOG_NO = #{tLogNo,jdbcType=CHAR}
   </delete>
+  <delete id="deleteByGameId" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotPrzCtl" >
+    delete from gdeupsb.GDEUPS_LOT_PRZ_CTL
+    where GAME_ID = #{gameId,jdbcType=CHAR} and DRAW_ID= #{drawId,jdbcType=CHAR} and KENO_ID= #{kenoId,jdbcType=CHAR}
+  </delete>
   <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotPrzCtl" >
     insert into gdeupsb.GDEUPS_LOT_PRZ_CTL
     <trim prefix="(" suffix=")" suffixOverrides="," >
