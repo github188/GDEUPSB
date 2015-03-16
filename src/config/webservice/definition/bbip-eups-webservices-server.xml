@@ -208,4 +208,7 @@
 		<!-- 珠海文本 -->
 	<server-side-ws-def wsdl="GDEUPSZHAGService.wsdl"
 		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSZHAGService/Schema" />
+		<!-- 珠海文本 -->
+	<server-side-ws-def wsdl="GDEUPSBatchService.wsdl"
+		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBatchService/Schema" />
 </x:beans>
