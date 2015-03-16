@@ -1,16 +1,21 @@
 package com.bocom.bbip.gdeupsb.action.efek.batch;
 
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.bocom.bbip.comp.BBIPPublicService;
+import com.bocom.bbip.comp.BBIPPublicServiceImpl;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
-import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
+import com.bocom.bbip.gdeupsb.repository.GDEupsEleTmpRepository;
+import com.bocom.bbip.service.Result;
+import com.bocom.bbip.utils.Assert;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -18,55 +23,38 @@ public class CancelBatchAction extends BaseAction {
 	private static final Log logger = LogFactory.getLog(CancelBatchAction.class);
     @Autowired
     GDEupsBatchConsoleInfoRepository gdEupsBatchConsoleInfoRepository;
+    @Autowired
+    GDEupsEleTmpRepository gdEupsEleTmpRepository;
     /**
-     * 南方电网 批量撤销
+     * 南方电网 批量撤销  删除临时表信息 更改控制表状态
      */
     public void execute(Context context)throws CoreException{
 	   logger.info("===========Start  CancelBatchAction");
-	   //获得原交易流水日期时间
-	   String batNo=context.getData(ParamKeys.BAT_NO).toString();
-	   String rsvFld2=context.getData(ParamKeys.RSV_FLD2).toString();
-	   String rsvFld3=context.getData(ParamKeys.RSV_FLD3).toString();
-	   //从批次表中得到信息
-	   GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=gdEupsBatchConsoleInfoRepository.findOne(batNo);
-	   //得到状态和批次号
+	   GDEupsBatchConsoleInfo gdEupsBatchConsoleInfos = new GDEupsBatchConsoleInfo();
+	   gdEupsBatchConsoleInfos.setFleNme(context.getData(ParamKeys.FLE_NME).toString());
+	   List<GDEupsBatchConsoleInfo> gdEupsBatchConsoleInfoList=gdEupsBatchConsoleInfoRepository.find(gdEupsBatchConsoleInfos);
+	   GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=gdEupsBatchConsoleInfoList.get(0);
+	   logger.info("~~~~~~GDEupsBatchConsoleInfo~~~~~"+gdEupsBatchConsoleInfo);
+	   //批量 判断状态
 	   String batSts=gdEupsBatchConsoleInfo.getBatSts();
-	   //上锁
-	   get(BBIPPublicService.class).tryLock(batNo, (long)0, (long)1000 * 60 * 20);
-	   //判断状态和返回
-	   if("S".equals(batSts)){
-		   context.setData(GDParamKeys.MSGTYP, "N");
-		   context.setData(ParamKeys.RSP_CDE, GDConstants.SUCCESS_CODE);
-		   context.setData(ParamKeys.RSP_MSG, "批次【批次号："+batNo+"】【交易日期："+rsvFld2+"】【交易时间："+rsvFld3+"】已扣款，取消失败");
-		   context.setData(ParamKeys.RSV_FLD4, context.getData(ParamKeys.RSP_MSG));
-		   logger.info("~~~~~~~~~~~账务处理完成");
-	   }else if("U".equals(batSts) || "W".equals(batSts)){
-		   gdEupsBatchConsoleInfo.setBatSts("C");
-		   gdEupsBatchConsoleInfo.setBatNo(batNo);
-		   gdEupsBatchConsoleInfoRepository.updateConsoleInfo(gdEupsBatchConsoleInfo);
-
-		   context.setData(GDParamKeys.MSGTYP, "N");
-		   context.setData(ParamKeys.RSP_CDE, GDConstants.SUCCESS_CODE);
-		   context.setData(ParamKeys.RSP_MSG, "批次批次【批次号："+batNo+"】【交易日期："+rsvFld2+"】【交易时间："+rsvFld3+"】取消成功");
-		   context.setData(GDParamKeys.CANCEL_SIGN, "1");
-		   context.setData(ParamKeys.RSV_FLD4, context.getData(ParamKeys.RSP_MSG));
-		   logger.info("~~~~~~~~~~~~~~~~取消成功");
-	   }else if("C".equals(batSts)){
-		   context.setData(GDParamKeys.MSGTYP, "N");
-		   context.setData(ParamKeys.RSP_CDE, GDConstants.SUCCESS_CODE);
-		   context.setData(ParamKeys.RSP_MSG, "批次【批次号："+batNo+"】【交易日期："+rsvFld2+"】【交易时间："+rsvFld3+"】已经撤销");
-		   context.setData(GDParamKeys.CANCEL_SIGN, "1");
-		   context.setData(ParamKeys.RSV_FLD4, context.getData(ParamKeys.RSP_MSG));
-		   logger.info("~~~~~~~~~~~~~~~~已经撤销");
-	   } else{
-		   context.setData(GDParamKeys.MSGTYP, "E");
-		   context.setData(ParamKeys.RSP_CDE, "EFE999");
-		   context.setData(ParamKeys.RSP_MSG, "批次【批次号："+batNo+"】【交易日期："+rsvFld2+"】【交易时间："+rsvFld3+"】处理异常");
-		   context.setData(GDParamKeys.CANCEL_SIGN, "4");
-		   context.setData(ParamKeys.RSV_FLD4, context.getData(ParamKeys.RSP_MSG));
+	   if(batSts.equals(GDConstants.BATCH_STATUS_INIT) || batSts.equals(GDConstants.BATCH_STATUS_WAIT)){
+			   String batNo=gdEupsBatchConsoleInfo.getBatNo();
+			   //上锁
+			   Result result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).tryLock(batNo, 60*1000L, 6000L);
+			   Assert.isTrue(result.isSuccess(), GDErrorCodes.EUPS_LOCK_FAIL);
+			   //更改批次控制表状态
+			   GDEupsBatchConsoleInfo info=new GDEupsBatchConsoleInfo();
+			   info.setBatNo(batNo);
+			   info.setBatSts("C");
+			   gdEupsBatchConsoleInfoRepository.updateConsoleInfo(info);
+			   //删除临时表信息
+			   gdEupsEleTmpRepository.deleteAll("1");
+			   //解锁
+			   result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).unlock(batNo);
+			   Assert.isTrue(result.isSuccess(), GDErrorCodes.EUPS_UNLOCK_FAIL);
+	   }else{
+		   		throw new CoreException(GDErrorCodes.EUPS_BATCH_STATUS_ERROR);
 	   }
-	   //解锁
-	   get(BBIPPublicService.class).unlock(batNo);
 	   logger.info("===========End  CancelBatchAction");
    }
 }
