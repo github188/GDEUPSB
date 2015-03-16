@@ -12,7 +12,8 @@
 		<varString name="BKLOG" type="D|" />  <!--银行交易流水号-->
 		<varString name="ACTNO" type="D|" />  <!--客户帐号-->
 		<varString name="TXNKND" type="D|" />  <!--交易类型-->
-		<varString name="TXNAMT" type="D|" />  <!--交易金额-->
+		<!--  <varString name="TXNAMT" type="D|"/> -->
+		<varString name="TXNAMT" type="D|"  expression='exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@FmtAmtToCentAddChar(this.TXNAMT,12,1)'/>
 		<varString name="OTLOGNO" type="D|" />  <!--原系统参考号-->
 		<varString name="DLDAT" type="D|" />  <!--供电公司交易日期-->
 		<varString name="DLTIM" type="D|" />  <!--供电公司交易时间-->
