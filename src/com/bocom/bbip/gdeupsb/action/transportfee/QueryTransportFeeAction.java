@@ -100,7 +100,7 @@ public class QueryTransportFeeAction extends BaseAction{
 			}else{
 
 				GDEupsbTrspPayInfo gdEupsbTrspPayInfo = new GDEupsbTrspPayInfo();
-				gdEupsbTrspPayInfo.setBrNo("443999");
+				gdEupsbTrspPayInfo.setBrNo(ctx.getData(ParamKeys.BR).toString());
 				gdEupsbTrspPayInfo.setCarTyp(ctx.getData(GDParamKeys.CAR_TYP).toString());
 				gdEupsbTrspPayInfo.setCarNo(ctx.getData(GDParamKeys.CAR_NO).toString());
 				gdEupsbTrspPayInfoRepository.delete1(gdEupsbTrspPayInfo);
