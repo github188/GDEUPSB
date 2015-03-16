@@ -167,5 +167,13 @@
 				   			  <action id="act"  ref="gdeupsb.checkThdDetlAcctAction"/>
 				   </actions>
 			</process>
+	
+	<!-- 南方电网  供电批量代扣取消交易-->		
+		<process id="gdeupsb.cancelBatch"  template="eups.simpleTran"  interceptors="eups.thdELEC00Interceptor">
+				  <actions>
+				   			  <action id="act"  ref="gdeupsb.CancelBatchAction"/>
+				   </actions>
+			</process>			
+		
 		
 </x:beans>
