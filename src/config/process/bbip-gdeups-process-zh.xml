@@ -1,0 +1,31 @@
+<x:beans xmlns:x="http://www.springframework.org/schema/beans"
+	xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+	
+	<!-- 珠海代发工资来盘文件转换 -->
+	<process id="gdeups.transferInFile" template="eups.simpleTran" interceptors="bbip.defaultInterceptors">	
+	   <actions>
+	        <action id="act" ref="transferInFile"   operations="process"/>
+	   </actions>
+	</process>
+<!-- 珠海代发工资返盘文件转换 -->
+<process id="gdeups.transferOutFile" template="eups.simpleTran" interceptors="bbip.defaultInterceptors">	
+	   <actions>
+	         <action id="act" ref="transferOutFile"  operations="process"/>
+	   </actions>
+	</process>
+	<!-- 珠海零余额协议管理 -->
+	<process id="gdeups.manageZeroAgt" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
+		<actions>
+			  <action id="act" ref="manageZeroAgt"  operations="process"/>
+		</actions>
+	</process>
+<!-- 珠海查询地区信息-->
+	<process id="gdeups.queryAreaCode" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
+		<actions>
+			  <action id="act" ref="queryAreaCode"  operations="process"/>
+		</actions>
+	</process>
+	
+</x:beans>
