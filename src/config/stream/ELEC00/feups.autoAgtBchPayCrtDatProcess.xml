@@ -4,15 +4,16 @@
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
 	name="460420Req">
 	
-		<fixString name="batNo"  length="24"></fixString><!-- 交易流水号	JYLSH	Varchar2(24) -->
-		<fixString name="subDte"  length="8"></fixString><!-- 交易日期	JYRQ	Varchar2(8) -->
-		<fixString name="rsvFld1"  length="6"></fixString><!-- 交易时间	JYSJ	Varchar2(6) -->
+		<fixString name="thdSqn"  length="24"></fixString><!-- 交易流水号	JYLSH	Varchar2(24) -->
+		<fixString name="txnDte"  length="8"></fixString><!-- 交易日期	JYRQ	Varchar2(8) -->
+		<fixString name="txnTme"  length="6"></fixString><!-- 交易时间	JYSJ	Varchar2(6) -->
 		<fixString name="comNo"  length="8"></fixString><!-- 单位编码	DWBM	Varchar2(8) -->
-		<fixString name="rsvFld2"  length="4"></fixString><!-- 入账银行代码	RZYHDM	Varchar2(4) -->
-		<fixString name="busKnd"  length="3"></fixString><!-- 收费方式	SFFS	Varchar2(3) -->
+		<fixString name="busType"  length="3"></fixString><!-- 收费方式	SFFS	Varchar2(3) -->
+		<fixString name="payType"  length="3"></fixString><!-- 费用类型 -->
+		<fixString name="KHBZ"  length="1"></fixString>
 		<fixString name="fleNme"  length="36"></fixString><!-- 文件名称	WJMC	Varchar2(36) -->
-		<fixString name="rsvFld3"  length="2"></fixString><!-- 文件类型	WJLX	Varchar2(2) -->
-		<fixString name="rsvFld4"  length="32"></fixString><!-- 文件MD5	WJMD5	Varchar2(32) -->
+		<fixString name="fleType"  length="2"></fixString><!-- 文件类型	WJLX	Varchar2(2) -->
+		<fixString name="fleMD5"  length="32"></fixString><!-- 文件MD5	WJMD5	Varchar2(32) -->
 		<fixString name="totCnt"  length="10"></fixString><!-- 总笔数	ZBS	Number(10) -->
 		<fixString name="totAmt"  length="16"></fixString><!-- 总金额	ZJE	Number(14,2) -->		
       
