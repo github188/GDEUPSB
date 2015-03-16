@@ -115,6 +115,7 @@ public class InsertCusAgentServiceAction implements CommInsertCusAgentService{
 				List<CusAgentCollectDomain> list, Context context)
 				throws CoreException {
 		logger.info("=============Start   InsertCusAgentServiceAction  preInsertCusAgent");
+		context.setData(ParamKeys.THD_CUS_NO,  context.getData("cusNo"));
 		logger.info("=============End    InsertCusAgentServiceAction  preInsertCusAgent");
 		return null;
 		}
