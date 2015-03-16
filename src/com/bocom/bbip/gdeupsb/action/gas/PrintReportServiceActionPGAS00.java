@@ -99,13 +99,13 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 		context.setData("sumCnt", prtList.size());
 		
 		BigDecimal sunAmt = new BigDecimal(0.00);
-		List<Map<String, Object>> rptMapsList = new ArrayList<Map<String,Object>>();
+//		List<Map<String, Object>> rptMapsList = new ArrayList<Map<String,Object>>();
 		for(EupsTransJournal perJnl : prtList){
 			Map<String, Object> listTmp = BeanUtils.toMap(perJnl);
-			listTmp.put(ParamKeys.TXN_DTE, DateUtils.format(perJnl.getTxnDte(), DateUtils.STYLE_SIMPLE_DATE));
-			//TODO 清算日期，EUPS无该字段，暂用会计日期acDte
-			listTmp.put(ParamKeys.AC_DATE, DateUtils.format(perJnl.getAcDte(), DateUtils.STYLE_SIMPLE_DATE));
-			rptMapsList.add(listTmp);
+//			listTmp.put(ParamKeys.TXN_DTE, DateUtils.format(perJnl.getTxnDte(), DateUtils.STYLE_SIMPLE_DATE));
+//			TODO 清算日期，EUPS无该字段，暂用会计日期acDte
+//			listTmp.put(ParamKeys.AC_DATE, DateUtils.format(perJnl.getAcDte(), DateUtils.STYLE_SIMPLE_DATE));
+//			rptMapsList.add(listTmp);
 			sunAmt = sunAmt.add(perJnl.getTxnAmt());
 		}
 		context.setData("sumAmt", sunAmt);
@@ -130,14 +130,14 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 		if("1".equals(context.getData(ParamKeys.PRT_FLG))){
 			map.put("gasSuccRpt", "config/report/pgas/printTransJournal_succ.vm");
 			render.setReportNameTemplateLocationMapping(map);
-			context.setData("eles", rptMapsList);
+			context.setData("eles", prtList);
 			result = render.renderAsString("gasSuccRpt", context);
 			logger.info(result);
 		}
 		if("2".equals(context.getData(ParamKeys.PRT_FLG))){
 			map.put("gasFailRpt", "config/report/pgas/printTransJournal_fail.vm");
 			render.setReportNameTemplateLocationMapping(map);
-			context.setData("eles", rptMapsList);
+			context.setData("eles", prtList);
 			result = render.renderAsString("gasFailRpt", context);
 			logger.info(result);
 		}
