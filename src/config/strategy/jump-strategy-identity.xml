@@ -267,13 +267,6 @@
 	<bean class="com.bocom.bbip.gdeupsb.action.elec02.CancelUnilateralToBankServiceImplELEC02"
 		id="eups.cancelUnilateralToBankServiceActionELEC02" />	
 
-	 <!-- 广东烟草划扣联机单笔记 -->
-     <bean class="com.bocom.bbip.gdeupsb.strategy.sgrt00.PayUnilateralToBankServiceActionSGRT00"
-        id="eups.payUnilateralToBankServiceActionSGRT00" />
-	
-
-
-
 	<!-- 广东烟草划扣联机单笔记 -->
 	<bean
 		class="com.bocom.bbip.gdeupsb.strategy.sgrt00.PayUnilateralToBankServiceActionSGRT00"
