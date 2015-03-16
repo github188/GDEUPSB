@@ -570,6 +570,90 @@
 		DIF_AMT!='0')
 	</update>
 
+	<!-- 清算奖期查询 -->
+	<select id="queryClearPrize" resultMap="basicResultMap" parameterType="map">
+	select *  from gdeupsb.GDEUPS_LOT_DRW_TBL 
+				where GAME_ID =#{GameId} and SubStr(SAL_END, 1, 8) &lt; #{ClrDat}
+					and (CHK_FLG != '3' or PAY_FLG not in ('0','2'))
+					and KENO_ID in ('','AAAAA')
+				order by GAME_ID, DRAW_ID asc
+	
+	</select>
+	<select id="queryClearPrizeCount" resultType="java.lang.Integer" >
+	select count(*)  from gdeupsb.GDEUPS_LOT_DRW_TBL 
+				where GAME_ID =#{GameId} and SubStr(SAL_END, 1, 8) &lt; #{ClrDat}
+					and (CHK_FLG != '3' or PAY_FLG not in ('0','2'))
+					and KENO_ID in ('','AAAAA')
+				
+	
+	</select>
+	
+	<!-- 奖期查询 -->
+	<select id="queryPrize" resultMap="basicResultMap" parameterType="map">
+	
+	select *
+				from gdeupsb.GDEUPS_LOT_DRW_TBL
+				where GAME_ID = #{GameId} and (DRAW_ID = #{DrawId} or DRAW_ID = '') and (DRAW_NM = #{DrawNm} or DRAW_NM = '')
+					and (KENO_ID = #{KenoId} or KENO_ID = '') and (KENO_NM = #{KenoNm} or KENO_NM = '')
+					and (SubStr(SAL_STR,1,8) = #{SalStr} or SAL_STR = '') and (SubStr(SAL_END,1,8) = #{SalEnd} or SAL_END = '')
+					and (CHK_FLG = #{ChkFlg} or CHK_FLG = '') and (PAY_FLG = #{PayFlg} or PAY_FLG = '')
+					
+            <choose>
+                <when test="condition1 == Y">
+                  and FLW_CTL != '10'
+					 </when>
+			</choose>
+			<choose>
+					 <when test="condition2 == Y">
+                 and TOT_AMT != '' and TOT_AMT != '0'
+					 </when>
+			</choose>
+			<choose>
+                  <when test="condition3 == Y">
+                and PRZ_AMT != '' and PRZ_AMT != '0'
+					 </when>
+            </choose>
+				order by GAME_ID, DRAW_ID asc
+	
+	</select>
+	<select id="queryPrizeCount" resultType="java.lang.Integer" >
+    select count(*) from gdeupsb.GDEUPS_LOT_DRW_TBL
+				where GAME_ID = #{GameId} and (DRAW_ID = #{DrawId} or DRAW_ID = '') and (DRAW_NM = #{DrawNm} or DRAW_NM = '')
+					and (KENO_ID = #{KenoId} or KENO_ID = '') and (KENO_NM = #{KenoNm} or KENO_NM = '')
+					and (SubStr(SAL_STR,1,8) = #{SalStr} or SAL_STR = '') and (SubStr(SAL_END,1,8) = #{SalEnd} or SAL_END = '')
+					and (CHK_FLG = #{ChkFlg} or CHK_FLG = '') and (PAY_FLG = #{PayFlg} or PAY_FLG = '')
+				<choose>
+                <when test="condition1 == Y">
+                  and FLW_CTL != '10'
+					 </when>
+			</choose>
+			<choose>
+					 <when test="condition2 == Y">
+                 and TOT_AMT != '' and TOT_AMT != '0'
+					 </when>
+			</choose>
+			<choose>
+                  <when test="condition3 == Y">
+                and PRZ_AMT != '' and PRZ_AMT != '0'
+					 </when>
+            </choose>
+	
+	</select>
+	<!-- 奖期信息查询 -->
+	<select id="queryPrizeInfo" resultMap="basicResultMap" parameterType="map">
+	select *  from gdeupsb.GDEUPS_LOT_DRW_TBL
+				where GAME_ID= #{GameId} and SubStr(SAL_END, 1, 8)=#{SalEnd}
+	
+	</select>
+
+<!-- 检查奖期信息是否已经存在 -->
+	<select id="checkPrizeInfo"  resultType="java.util.Map"  parameterType="map">
+	SELECT  'Y' YN FROM table(values(1)) as annoy WHERE EXISTS(
+				SELECT  'Y'
+				FROM    gdeupsb.GDEUPS_LOT_DRW_TBL
+				WHERE    GAME_ID= #{GameId} and DRAW_ID=#{drawId})
+	
+	</select>
 <!-- add By Guilin Start -->
   <select id="qryLotDrwInf" parameterType="map" resultMap="basicResultMap">
         select
@@ -643,5 +727,6 @@
         AND KENO_ID !='AAAAA' and PRZ_AMT='' and FLW_CTL !='10'
     </select>
 <!-- add By Guilin End -->
+
 
 </mapper>
