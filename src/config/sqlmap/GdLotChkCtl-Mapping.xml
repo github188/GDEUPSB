@@ -14,6 +14,11 @@
   <sql id="baseColumnList" >
     GAME_ID, DRAW_ID, CHK_DAT, KENO_ID, TOT_NUM, TOT_AMT, CHK_FLG, CHK_TIM
   </sql>
+  
+  <delete id="deleteByGameId"  parameterType="com.bocom.bbip.gdeupsb.entity.GdLotChkCtl" >
+    delete from gdeupsb.GDEUPS_LOT_CHK_CTL
+     where GAME_ID = #{gameId,jdbcType=CHAR} and DRAW_ID= #{drawId,jdbcType=CHAR} and KENO_ID= #{kenoId,jdbcType=CHAR}
+  </delete>
   <select id="find" resultMap="basicResultMap" >
     select
     <include refid="baseColumnList" />
