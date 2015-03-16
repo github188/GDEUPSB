@@ -37,6 +37,11 @@
  	<!-- 汕头电力 -->
 	<server-side-ws-def wsdl="GDEUPSELEC02Service.wsdl"
 		namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/Schema"/>
+		
+	<!-- 福彩 -->
+	<server-side-ws-def wsdl="GDEUPSLOTRService.wsdl"
+		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSLOTRService/Schema"/>	
+		
 	<server-side-ws-def wsdl="GDEUPSPROF00Service.wsdl"
 		namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/Schema"/>
 	<server-side-ws-def wsdl="GDEUPSLOTR01Service.wsdl"
@@ -199,4 +204,8 @@
      <!-- 华商一卡通 -->
 	<server-side-ws-def wsdl="HSSCService.wsdl"
 		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.HSSCService/Schema" />
+		
+		<!-- 珠海文本 -->
+	<server-side-ws-def wsdl="GDEUPSZHAGService.wsdl"
+		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSZHAGService/Schema" />
 </x:beans>
