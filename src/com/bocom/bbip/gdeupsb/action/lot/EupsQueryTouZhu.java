@@ -6,11 +6,15 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.bocom.bbip.data.domain.Page;
 import com.bocom.bbip.data.domain.PageRequest;
 import com.bocom.bbip.data.domain.Pageable;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.gdeupsb.entity.GDEupsBetInfo;
+import com.bocom.bbip.gdeupsb.repository.GDEupsBetInfoRepository;
+import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.ContextUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
@@ -21,20 +25,18 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
 public class EupsQueryTouZhu  extends BaseAction {
 	private static final Log logger=LogFactory.getLog(EupsQueryTouZhu.class);
 
-	public void execute(Context context)throws CoreException,CoreRuntimeException{
+	public void process(Context context)throws CoreException,CoreRuntimeException{
 		logger.info("投注查询 start!!");
-		context.setData("pageNum", "3");		context.setData("pageSize", "6");
 
-		final String pageNum=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.PAGE_NUM, ErrorCodes.EUPS_FIELD_EMPTY);
-		final String pageSize=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.PAGE_SIZE, ErrorCodes.EUPS_FIELD_EMPTY);
+		final int pageNum=context.getData(ParamKeys.PAGE_NUM);
+		final int pageSize=context.getData(ParamKeys.PAGE_SIZE);
 	    /** 获得前台的数据*/
-		Map <String,String>params=new HashMap<String, String>();params.put("bk", "1");
-			//buildParams(context);
-		Pageable pageable=new PageRequest(Integer.parseInt(pageNum), Integer.parseInt(pageSize));
-		//Page<BuyLoteryDetail> page=get(LoteryRepository.class).findDetails(pageable, params);
-		//Assert.isNotEmpty(page.getElements(), ErrorCodes.EUPS_FIELD_EMPTY);
+		Map <String,String>params=new HashMap<String, String>();
+		params=buildParams(context);
+		Pageable pageable=new PageRequest(pageNum, pageSize);
+		Page<GDEupsBetInfo> page=get(GDEupsBetInfoRepository.class).findInfo(pageable, params);
+		Assert.isNotEmpty(page.getElements(), ErrorCodes.EUPS_QUERY_NO_DATA);
 		/** 发送到前台*/
-		//setResponseFromPage(context, "data", page);
 		logger.info("投注查询成功!!");
 	}
 private Map<String,String> buildParams(Context context) throws CoreException{
@@ -65,11 +67,11 @@ private Map<String,String> buildParams(Context context) throws CoreException{
 		 TxnDatStr="20991331";
 	 }
 	
-	params.put("TxnDatEnd", TxnDatEnd);
-	params.put("TxnDatStr", TxnDatStr);
+	params.put("start", TxnDatEnd);
+	params.put("end", TxnDatStr);
 	params.put("AddCon", AddCon);
-	params.put("BetTyp", BetTyp);
-	params.put("BetMod", BetMod);
+	params.put("betTyp", BetTyp);
+	params.put("betMod", BetMod);
 	params.put("PrzFlg", PrzFlg);
 	
 	
@@ -84,7 +86,7 @@ private Map<String,String> buildParams(Context context) throws CoreException{
 	params.put(ParamKeys.THD_TXN_STS, TTxnSt);
 	params.put(ParamKeys.MFM_TXN_STS, HTxnSt);
 	
-	params.put(ParamKeys.TXN_STS, txtSts);
+	params.put("", txtSts);
 
 	return params;
 }
