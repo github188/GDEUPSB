@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GDEupsBetInfo" >
+    <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GDEupsBetInfo" >
+    <id column="TXN_LOG" property="txnLog" jdbcType="CHAR" />
+    <result column="BR_NO" property="brNo" jdbcType="CHAR" />
+    <result column="LOG_NO" property="logNo" jdbcType="CHAR" />
+    <result column="T_TXN_CD" property="tTxnCd" jdbcType="CHAR" />
+    <result column="TXN_COD" property="txnCod" jdbcType="CHAR" />
+    <result column="SCH_TYP" property="schTyp" jdbcType="CHAR" />
+    <result column="SCH_TIT" property="schTit" jdbcType="CHAR" />
+    <result column="SEC_LEV" property="secLev" jdbcType="CHAR" />
+    <result column="CITY_ID" property="cityId" jdbcType="CHAR" />
+    <result column="DRAW_ID" property="drawId" jdbcType="CHAR" />
+    <result column="KENO_ID" property="kenoId" jdbcType="CHAR" />
+    <result column="GAME_ID" property="gameId" jdbcType="CHAR" />
+    <result column="GAM_NAM" property="gamNam" jdbcType="CHAR" />
+    <result column="PLAY_ID" property="playId" jdbcType="CHAR" />
+    <result column="BET_MET" property="betMet" jdbcType="CHAR" />
+    <result column="BET_MOD" property="betMod" jdbcType="CHAR" />
+    <result column="BET_MUL" property="betMul" jdbcType="CHAR" />
+    <result column="TXN_AMT" property="txnAmt" jdbcType="CHAR" />
+    <result column="BET_LIN" property="betLin" jdbcType="CHAR" />
+    <result column="LOT_NAM" property="lotNam" jdbcType="CHAR" />
+    <result column="BET_DAT" property="betDat" jdbcType="CHAR" />
+    <result column="TXN_TIM" property="txnTim" jdbcType="CHAR" />
+    <result column="SCH_ID" property="schId" jdbcType="CHAR" />
+    <result column="T_LOG_NO" property="tLogNo" jdbcType="CHAR" />
+    <result column="CIPHER" property="cipher" jdbcType="CHAR" />
+    <result column="VERIFY" property="verify" jdbcType="CHAR" />
+    <result column="CUS_NAM" property="cusNam" jdbcType="CHAR" />
+    <result column="CRD_NO" property="crdNo" jdbcType="CHAR" />
+    <result column="H_TXN_CD" property="hTxnCd" jdbcType="CHAR" />
+    <result column="H_TXN_SB" property="hTxnSb" jdbcType="CHAR" />
+    <result column="H_LOG_NO" property="hLogNo" jdbcType="CHAR" />
+    <result column="H_RSP_CD" property="hRspCd" jdbcType="CHAR" />
+    <result column="H_TXN_ST" property="hTxnSt" jdbcType="CHAR" />
+    <result column="T_RSP_CD" property="tRspCd" jdbcType="CHAR" />
+    <result column="T_TXN_ST" property="tTxnSt" jdbcType="CHAR" />
+    <result column="THD_CHK" property="thdChk" jdbcType="CHAR" />
+    <result column="T_CHK_NO" property="tChkNo" jdbcType="CHAR" />
+    <result column="CHK_TIM" property="chkTim" jdbcType="CHAR" />
+    <result column="CHK_FLG" property="chkFlg" jdbcType="CHAR" />
+    <result column="AWD_FLG" property="awdFlg" jdbcType="CHAR" />
+    <result column="AWD_RTN" property="awdRtn" jdbcType="CHAR" />
+    <result column="C_AGT_NO" property="cAgtNo" jdbcType="CHAR" />
+    <result column="TCK_NO" property="tckNo" jdbcType="CHAR" />
+    <result column="TXN_CNL" property="txnCnl" jdbcType="CHAR" />
+    <result column="BET_TYP" property="betTyp" jdbcType="CHAR" />
+    <result column="L_CHK_TM" property="lChkTm" jdbcType="CHAR" />
+    <result column="TXN_STS" property="txnSts" jdbcType="CHAR" />
+     <result column="TOT_PRZ" property="totPrz" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    TXN_LOG, BR_NO, LOG_NO, T_TXN_CD, TXN_COD, SCH_TYP, SCH_TIT, SEC_LEV, CITY_ID, DRAW_ID, 
+    KENO_ID, GAME_ID, GAM_NAM, PLAY_ID, BET_MET, BET_MOD, BET_MUL, TXN_AMT, BET_LIN, 
+    LOT_NAM, BET_DAT, TXN_TIM, SCH_ID, T_LOG_NO, CIPHER, VERIFY, CUS_NAM, CRD_NO, H_TXN_CD, 
+    H_TXN_SB, H_LOG_NO, H_RSP_CD, H_TXN_ST, T_RSP_CD, T_TXN_ST, THD_CHK, T_CHK_NO, CHK_TIM, 
+    CHK_FLG, AWD_FLG, AWD_RTN, C_AGT_NO, TCK_NO, TXN_CNL, BET_TYP, L_CHK_TM, TXN_STS
+  </sql>
+  
+  
+
+
+  
+  
+ <select id="findInfo" parameterType="map" resultMap="basicResultMap" >
+			select a.*, b.TOT_PRZ
+				from gdeupsb.GDEUPS_LOT_TXN_JNL a left join gdeupsb.GDEUPS_LOT_PRZ_CTL b
+				on (a.GAME_ID = b.GAME_ID and a.DRAW_ID = b.DRAW_ID and a.TXN_LOG = b.TXN_LOG)
+				where a.GAME_ID = #{gameId} and (a.DRAW_ID = #{drawId} or a.DRAW_ID = '')
+					and (a.KENO_ID = #{kenoId} or a.KENO_ID = '')
+					and (a.TXN_STS = #{txnSts} or a.TXN_STS = '') and (a.H_TXN_ST = #{HtxnSt} or a.H_TXN_ST = '')
+					and (a.T_TXN_ST = #{tTxnSt} or a.T_TXN_ST = '') and (a.T_LOG_NO = #{tlogNo} or a.T_LOG_NO = '')
+					and (a.BET_MOD = #{betMod} or a.BET_MOD = '')
+					and (a.TCK_NO = #{tckNo} or a.TCK_NO = '')
+					and (a.CRD_NO = #{crdNo} or a.CRD_NO = '')
+					and (a.CUS_NAM = #{cusNme} or a.CUS_NAM = '')
+					and (a.BET_TYP = #{betTye} or a.BET_TYP = '')
+					and a.BET_DAT between #{start} and #{end}
+				<choose>
+                     <when test="przFlg == 1">
+                        and   b.TOT_PRZ != '0'
+					 </when>
+			    </choose>
+				order by a.GAME_ID, a.DRAW_ID, a.TXN_LOG asc
+ </select>
+ 			
+  	<select id="findInfoCount" resultType="java.lang.Integer" >
+    select a.*, b.TOT_PRZ
+				from gdeupsb.GDEUPS_LOT_TXN_JNL a left join gdeupsb.GDEUPS_LOT_PRZ_CTL b
+				on (a.GAME_ID = b.GAME_ID and a.DRAW_ID = b.DRAW_ID and a.TXN_LOG = b.TXN_LOG)
+				where a.GAME_ID = #{gameId} and (a.DRAW_ID = #{drawId} or a.DRAW_ID = '')
+					and (a.KENO_ID = #{kenoId} or a.KENO_ID = '')
+					and (a.TXN_STS = #{txnSts} or a.TXN_STS = '') and (a.H_TXN_ST = #{HtxnSt} or a.H_TXN_ST = '')
+					and (a.T_TXN_ST = #{tTxnSt} or a.T_TXN_ST = '') and (a.T_LOG_NO = #{tlogNo} or a.T_LOG_NO = '')
+					and (a.BET_MOD = #{betMod} or a.BET_MOD = '')
+					and (a.TCK_NO = #{tckNo} or a.TCK_NO = '')
+					and (a.CRD_NO = #{crdNo} or a.CRD_NO = '')
+					and (a.CUS_NAM = #{cusNme} or a.CUS_NAM = '')
+					and (a.BET_TYP = #{betTye} or a.BET_TYP = '')
+					and a.BET_DAT between #{start} and #{end}
+				<choose>
+                     <when test="przFlg == 1">
+                        and   b.TOT_PRZ != '0'
+					 </when>
+			    </choose>
+	
+	</select>
+  
+  
+  
+
+</mapper>
