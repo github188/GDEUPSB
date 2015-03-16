@@ -13,7 +13,7 @@
 		<fixString name="rsvFld6"  length="3"></fixString><!-- 收费方式 -->
 		<fixString name="totCnt"  length="11"></fixString><!-- 总笔数	ZBS	Number(10) -->
 		<fixString name="totAmt"  length="16"></fixString><!-- 总金额	ZJE	Number(14,2) -->		
-		<fixString name="bakFld"  length="128"></fixString><!-- 处理说明 -->	
+		<fixString name="rsvFld1"  length="128"></fixString><!-- 处理说明 -->	
 	</segment>
 	
 </message>
