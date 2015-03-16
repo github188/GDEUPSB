@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
@@ -14,21 +15,21 @@ import com.bocom.bbip.eups.spi.vo.CommHeadDomain;
 import com.bocom.bbip.eups.spi.vo.PayFeeOnlineDomain;
 import com.bocom.bbip.eups.spi.vo.PayFeeOnlineRetDomain;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.entity.GDVechIndentInfo;
+import com.bocom.bbip.gdeupsb.repository.GDVechIndentInfoRepository;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
 public class PayFeeOnlineServiceActionVECH00 implements PayFeeOnlineService{
 	private final static Log log=LogFactory.getLog(PayFeeOnlineServiceActionVECH00.class);
-//	@Autowired
-//	GDEupsVechIndentRepository  gdEupsVechIndentRepository;
+	@Autowired
+	GDVechIndentInfoRepository gdVechIndentInfoRepository;
 			@Override
 			public Map<String, Object> preCheckDeal(CommHeadDomain commheaddomain,
 					PayFeeOnlineDomain payfeeonlinedomain, Context context)
 					throws CoreException {
 				log.info("===========Start   PayFeeOnlineServiceActionVECH00  preCheckDeal");
-				//TODO 短信验证码
-//				Map<String, Object> map=callService
 				return null;
 			}
 			@Override
@@ -70,18 +71,13 @@ public class PayFeeOnlineServiceActionVECH00 implements PayFeeOnlineService{
 					throws CoreException {
 				log.info("===========Start   PayFeeOnlineServiceActionVECH00  aftThdDeal");
 				String orderId=context.getData(ParamKeys.SEQUENCE).toString();
-				String lineNo=context.getData(GDParamKeys.LINE_NO).toString();
-				String cusName=context.getData(ParamKeys.CUS_NME).toString();
-				String cusId=context.getData(GDParamKeys.CUS_ID).toString();
 				String tel=context.getData(GDParamKeys.TEL).toString();
 				if(Constants.RESPONSE_CODE_SUCC.equals(context.getData(ParamKeys.RESPONSE_CODE).toString())){
 						log.info("===========update  GDEUPS_VECH_INDENT ");
-//						GDEupsVechIndent gdEupsVechIndent=gdEupsVechIndentRepository.findOne(orderId);
-//				 		gdEupsVechIndent.setCusNme(cusName);
-//					 	gdEupsVechIndent.setCusId(cusId);
-//						gdEupsVechIndent.setOrderState(context.getDate(GDParamKeys.ORDER_STATE));
-//						gdEupsVechIndent.setPayType(context.getDate(ParamKeys.PAY_TYPE));
-//						gdEupsVechIndentRepository.update(gdEupsVechIndents);
+						GDVechIndentInfo gdVechIndentInfo=gdVechIndentInfoRepository.findOne(orderId);
+						gdVechIndentInfo.setMobile(tel);
+						gdVechIndentInfo.setOrdSta("1");
+						gdVechIndentInfoRepository.update(gdVechIndentInfo);
 				}
 				log.info("===========End   PayFeeOnlineServiceActionVECH00  aftThdDeal");
 				return null;
