@@ -2,7 +2,7 @@
 <segment xmlns="http://www.bocom.com/jump/transformer/packet"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
-	name="460424Resp">
+	name="460424Req">
 	  
 		<fixString name="sqn"  length="24"></fixString><!--交易流水号	JYLSH	Varchar2(24)-->
 		<fixString name="txnDte"  length="8"></fixString><!--交易日期	JYRQ	Varchar2(8)-->
