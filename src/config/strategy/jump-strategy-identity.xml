@@ -7,8 +7,8 @@
 
 
 <!-- 汕头电力批次数据准备 -->
-<bean id="eups.fileBatchPayCreateDataServiceActionELEC02" class="com.bocom.bbip.gdeupsb.action.zh.BatchAcpServiceImplELEC02">
-    </bean>
+<!-- <bean id="eups.fileBatchPayCreateDataServiceActionELEC02" class="com.bocom.bbip.gdeupsb.action.zh.BatchAcpServiceImplELEC02">
+    </bean> -->
  <!-- 珠海文本： 批次撤销 -->	
 <bean id="cancelBatchProcessELEC00" class="com.bocom.bbip.gdeupsb.action.zh.EupsZHAGCancelBatchAction">
     </bean>
