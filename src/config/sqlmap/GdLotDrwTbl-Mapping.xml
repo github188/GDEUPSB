@@ -117,7 +117,7 @@
 	<select id="findOne" resultMap="basicResultMap"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdLotDrwTblKey">
 		select
-		<include refid="baseColumnList" />
+		*
 		from gdeupsb.GDEUPS_LOT_DRW_TBL
 		where GAME_ID = #{gameId,jdbcType=CHAR}
 		and DRAW_ID = #{drawId,jdbcType=CHAR}
