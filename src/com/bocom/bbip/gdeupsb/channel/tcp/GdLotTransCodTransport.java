@@ -630,7 +630,7 @@ public class GdLotTransCodTransport implements Transport{
 	        	                mm.put("txnLog", r.getAttributeValue(3));
 	        	                mm.put("playId",r.getAttributeValue(4));
 	        	                mm.put("txnTim",r.getAttributeValue(5));
-	        	                mm.put("txnAmt",r.getAttributeValue(6));
+	        	                mm.put("txnAmt",removeStr(r.getAttributeValue(6)));
 	        	                mm.put("kenoId", (String)m.get("KenoId"));
 	        	                mm.put("chkFlg", "0");
 	        	                mm.put("drawId", map.get("draw_id"));
@@ -712,11 +712,11 @@ public class GdLotTransCodTransport implements Transport{
 				map.put("drawId", r.getAttributeValue(0));
 				map.put("drawNm", r.getAttributeValue(1));
 			}else if("sale".equals(name)){
-				map.put("salStr", r.getAttributeValue(0));
-				map.put("salEnd", r.getAttributeValue(1));
+				map.put("salStr", removeStr(r.getAttributeValue(0)));
+				map.put("salEnd", removeStr(r.getAttributeValue(1)));
 			}else if("cash".equals(name)){
-				map.put("cshStr", r.getAttributeValue(0));
-				map.put("cshEnd", r.getAttributeValue(1));
+				map.put("cshStr", removeStr(r.getAttributeValue(0)));
+				map.put("cshEnd", removeStr(r.getAttributeValue(1)));
 			}else if("kdraw".equals(name)){
 				map.put("isKeno", r.getAttributeValue(0));
 				map.put("KenoNum", r.getAttributeValue(1));
@@ -724,8 +724,8 @@ public class GdLotTransCodTransport implements Transport{
 				Map<String,Object> m = new HashMap<String,Object>();
 				m.put("kenoId", r.getAttributeValue(0));
 				m.put("kenoNm", r.getAttributeValue(1));
-				m.put("ksalSt", r.getAttributeValue(2));
-				m.put("ksalEd", r.getAttributeValue(3));
+				m.put("ksalSt", removeStr(r.getAttributeValue(2)));
+				m.put("ksalEd", removeStr(r.getAttributeValue(3)));
 				list.add(m);
 			}
 		}
@@ -993,5 +993,10 @@ public class GdLotTransCodTransport implements Transport{
 				map.put("file_name", r.getElementText());
 			}
 		}
+	}
+
+	private String removeStr(final String str){
+		String temp=StringUtils.remove(StringUtils.remove(str, "-"),":");
+		return StringUtils.substring(temp, 0, 14);
 	}
 }
