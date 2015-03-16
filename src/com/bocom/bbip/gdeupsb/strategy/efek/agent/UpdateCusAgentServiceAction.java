@@ -53,7 +53,7 @@ public class UpdateCusAgentServiceAction implements CommUpdateCusAgentService{
     		List<CusAgentCollectDomain> arg1, Context context)
     		throws CoreException {
 		logger.info("===============Start   UpdateCusAgentServiceAction   callThdOther");
-		if(null != context.getData("callThd")){
+		if(context.getData("callThd").toString().equals("callThd")){
 				try{
 					Map<String, Object> rspMap = callThdTradeManager.trade(context);
 					
