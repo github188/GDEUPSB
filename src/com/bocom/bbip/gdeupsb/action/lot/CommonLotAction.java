@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
@@ -20,6 +21,7 @@ import com.bocom.bbip.gdeupsb.entity.GdLotPrzDtl;
 import com.bocom.bbip.gdeupsb.entity.GdLotDrwTbl;
 import com.bocom.bbip.gdeupsb.entity.GdLotSysCfg;
 import com.bocom.bbip.gdeupsb.repository.GdLotChkCtlRepository;
+import com.bocom.bbip.gdeupsb.repository.GdLotChkDtlRepository;
 import com.bocom.bbip.gdeupsb.repository.GdLotPrzCtlRepository;
 import com.bocom.bbip.gdeupsb.repository.GdLotPrzDtlRepository;
 import com.bocom.bbip.gdeupsb.repository.GdLotDrwTblRepository;
@@ -30,6 +32,9 @@ import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.jump.bp.JumpException;
+import com.bocom.jump.bp.channel.CommunicationException;
+import com.bocom.jump.bp.channel.Transport;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.service.sqlmap.SqlMap;
@@ -42,7 +47,8 @@ import com.bocom.jump.bp.service.sqlmap.SqlMap;
  * @Update Wuyanhui 2015-02-28
  */
 public class CommonLotAction extends BaseAction{
-    
+    private static final String ACTION_QUERY_FILE_NAME="237";
+    private static final String ACTION_DOWNLOAD_FILE="238";
     @Autowired
     GdLotSysCfgRepository lotSysCfgRepository;
     @Autowired
@@ -114,9 +120,24 @@ public class CommonLotAction extends BaseAction{
      * @param drawId 期号
      * @return map 1.文件下载状态（0：成功  -1：失败） 2.文件下载结果描述
      */
-    public Map<String, String> downloadFile(String type,String gameId,String drawId){
+    public void downloadFile(Context context,String type,String gameId,String drawId)throws CoreException{
         Map<String, String>  map =new HashMap<String, String>();
-        return map;
+        context.setData("action", ACTION_QUERY_FILE_NAME);
+        context.setData("dealer_id", ACTION_QUERY_FILE_NAME);
+        Transport ts = context.getService("STHDLOT1");
+        Map<String,Object> resultMap = null;
+        try {
+            resultMap = (Map<String, Object>) ts.submit(context.getDataMap(), context);
+            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
+        } catch (CommunicationException e1) {
+            e1.printStackTrace();
+        } catch (JumpException e1) {
+            e1.printStackTrace();
+        }
+       context.getDataMapDirectly().putAll(resultMap);
+       /**文件入库*/
+       fileImport(context);
+       
     }
   
      /**
@@ -194,76 +215,105 @@ public class CommonLotAction extends BaseAction{
 		}
 		if ("3".equals(filetyp)) {
 			/** 对账文件入库 */
-			fileImport2(context);
-		} else {
-			throw new CoreException("");
+			fileImport3(context);
 		}
 
 	}
+	/***/
 	@SuppressWarnings("unchecked")
-    public void fileImport2(Context context)throws CoreException{
+    private void fileImport2(Context context)throws CoreException{
+		context.setData("action", ACTION_DOWNLOAD_FILE);
+		context.setData("file_type", context.getData(ParamKeys.FILE_TYPE));
+		   Transport ts = context.getService("STHDLOT1");
+	        Map<String,Object> resultMap = null;
+	        try {
+	            resultMap = (Map<String, Object>) ts.submit(context.getDataMap(), context);
+	            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
+	        } catch (CommunicationException e1) {
+	            e1.printStackTrace();
+	        } catch (JumpException e1) {
+	            e1.printStackTrace();
+	        }
 		/**-- 删除旧记录 */
 		GdLotPrzCtl ctl=new GdLotPrzCtl();
 		ctl.setGameId((String)context.getData("GameId"));
 		ctl.setDrawId((String)context.getData("DrawId"));
-		ctl.setKenoId((String)context.getData("KenoId"));
-		get(GdLotPrzCtlRepository.class).delete(ctl);
+		ctl.setKenoId("");
+		get(GdLotPrzCtlRepository.class).deleteByGameId(ctl);
 		GdLotPrzDtl dtl=new GdLotPrzDtl();
 		dtl.setGameId((String)context.getData("GameId"));
 		dtl.setDrawId((String)context.getData("DrawId"));
-		dtl.setKenoId((String)context.getData("KenoId"));
-		get(GdLotPrzDtlRepository.class).delete(dtl);
+		dtl.setKenoId("");
+		get(GdLotPrzDtlRepository.class).deleteByGameId(dtl);
 		/**新增中奖控制信息*/
 		List<GdLotPrzCtl>ctlList=(List<GdLotPrzCtl>) BeanUtils.toObjects(
-				(List<Map<String,Object>>)context.getData("bonusItem"), GdLotPrzCtl.class);
+				(List<Map<String,Object>>)resultMap.get("ret"), GdLotPrzCtl.class);
 		Assert.isNotEmpty(ctlList, ErrorCodes.EUPS_QUERY_NO_DATA);
 		((SqlMap)get("sqlMap")).insert("com.bocom.bbip.gdeupsb.entity.GdLotPrzCtl.LotCtlBatchInsert", ctlList);
 		
 		/**新增明细信息*/
 		
-		for(Map<String, Object> temp:(List<Map<String,Object>>)context.getData("bonusItem")){
+		for(Map<String, Object> temp:(List<Map<String,Object>>)resultMap.get("ret")){
 			List<GdLotPrzDtl>dtlList=(List<GdLotPrzDtl>) BeanUtils.toObjects(
-					(List<Map<String,Object>>)temp.get("bonusNode"), GdLotPrzDtl.class);
+					(List<Map<String,Object>>)temp.get("bonusNodes"), GdLotPrzDtl.class);
 			Assert.isNotEmpty(dtlList, ErrorCodes.EUPS_QUERY_NO_DATA);
-			for(GdLotPrzDtl tmp:dtlList){
-				tmp.setGameId((String)context.getData("GameId"));
-				tmp.setDrawId((String)context.getData("drawId"));
-				tmp.setKenoId((String)context.getData("kenoId"));
-				tmp.settLogNo((String)temp.get("TLogNo"));
-				tmp.setTxnLog((String)temp.get("txnLog"));
-			}
+			
 			((SqlMap)get("sqlMap")).insert("com.bocom.bbip.gdeupsb.entity.GdLotPrzDtl.LotDtlBatchInsert", dtlList);
 		}
 	}
     @SuppressWarnings("unchecked")
-    public void fileImport3(Context context)throws CoreException{
+    private void fileImport3(Context context)throws CoreException{
+    	
+    	context.setData("action", ACTION_DOWNLOAD_FILE);
+		context.setData("file_type", context.getData(ParamKeys.FILE_TYPE));
+		   Transport ts = context.getService("STHDLOT1");
+	        Map<String,Object> resultMap = null;
+	        try {
+	            resultMap = (Map<String, Object>) ts.submit(context.getDataMap(), context);
+	            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
+	        } catch (CommunicationException e1) {
+	            e1.printStackTrace();
+	        } catch (JumpException e1) {
+	            e1.printStackTrace();
+	        }
     	/**-- 删除旧记录 */
 		GdLotPrzCtl ctl=new GdLotPrzCtl();
 		ctl.setGameId((String)context.getData("GameId"));
 		ctl.setDrawId((String)context.getData("DrawId"));
-		ctl.setKenoId((String)context.getData("KenoId"));
-		get(GdLotPrzCtlRepository.class).delete(ctl);
+		ctl.setKenoId("");
+		get(GdLotPrzCtlRepository.class).deleteByGameId(ctl);
 		GdLotPrzDtl dtl=new GdLotPrzDtl();
 		dtl.setGameId((String)context.getData("GameId"));
 		dtl.setDrawId((String)context.getData("DrawId"));
-		dtl.setKenoId((String)context.getData("KenoId"));
-		get(GdLotPrzDtlRepository.class).delete(dtl);
+		dtl.setKenoId("");
+		get(GdLotPrzDtlRepository.class).deleteByGameId(dtl);
 		/**新增对账控制信息*/
 		GdLotChkCtl ChkCtl=new GdLotChkCtl();
+		ChkCtl.setGameId((String)context.getData("GameId"));
+		ChkCtl.setDrawId((String)context.getData("DrawId"));
+		ChkCtl.setKenoId("");
+		ChkCtl.setChkTim("");
 		ChkCtl.setChkDat(DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMdd));
 		ChkCtl.setChkFlg("0");
-		ChkCtl.setTotAmt((String)context.getData("totalMoney"));
-		ChkCtl.setTotNum((String)context.getData("sucessNum"));
+		ChkCtl.setTotAmt((String)resultMap.get("totalMoney"));
+		ChkCtl.setTotNum((String)resultMap.get("sucessNum"));
 		get(GdLotChkCtlRepository.class).insert(ChkCtl);
-		if("Y".equals((String)(context).getData("IsKeno"))){
+		if(((String)resultMap.get("game_id")).equals("7")){
+			for(Map<String, Object> temp:(List<Map<String,Object>>)resultMap.get("ret")){
 			List<GdLotChkDtl>dtlList=(List<GdLotChkDtl>) BeanUtils.toObjects(
-					(List<Map<String,Object>>)context.getData("scheme"), GdLotChkDtl.class);
+					(List<Map<String,Object>>)temp.get("kenoNodes"), GdLotChkDtl.class);
 			((SqlMap)get("sqlMap")).insert("com.bocom.bbip.gdeupsb.entity.GdLotChkDtl.LotDtlBatchInsert", dtlList);
 		}
+		}
 		else{
-			List<GdLotChkDtl>dtlList=(List<GdLotChkDtl>) BeanUtils.toObjects(
-					(List<Map<String,Object>>)context.getData("scheme"), GdLotChkDtl.class);
-			((SqlMap)get("sqlMap")).insert("com.bocom.bbip.gdeupsb.entity.GdLotChkDtl.LotDtlBatchInsert", dtlList);
+			GdLotChkDtl ChkDtl=new GdLotChkDtl();
+			ChkDtl.setGameId((String)context.getData("GameId"));
+			ChkDtl.setDrawId((String)context.getData("DrawId"));
+			ChkDtl.setKenoId("");
+			ChkDtl.setChkTim("");
+			ChkDtl.setChkDat(DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMdd));
+			ChkDtl.setChkFlg("0");
+			get(GdLotChkDtlRepository.class).insert(ChkDtl);
 		}
 	}
     /**
