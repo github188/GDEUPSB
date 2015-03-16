@@ -34,7 +34,7 @@ public class EupsQueryBalance  extends BaseAction {
 		Assert.isFalse(actNo.trim().length() != 21,"GDErrorCodes.EUPS_ZH_FILE_IS_NEW_ACTNO");
 		AccountInfo info = new AccountInfo();
 		info.setAcoAc(actNo);
-		BUAResult result = ((BUAServiceAccessObject)get("buaServer")).balanceQuery(new BalanceQueryRequest(info)
+		BUAResult result = ((BUAServiceAccessObject)get("cardBINService")).balanceQuery(new BalanceQueryRequest(info)
 		,((BUAServiceAccessObject)get("buaServer")).ACP_CHN);
 		Assert.isNotNull( result, ErrorCodes.EUPS_QUERY_NO_DATA);
 
