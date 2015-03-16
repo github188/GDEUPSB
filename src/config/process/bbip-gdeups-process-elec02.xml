@@ -12,4 +12,51 @@
 	</process>
 	<!-- add by hefw 20150114 end -->
 
+<!-- query check info -->
+<process id="queryCheckInfo" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	   <actions>
+	         <action id="act" ref="gdeups.ELEC02queryCheckInfo"  operations="process"/>
+	        <!-- <action id="act" ref="gdeupsb.DownPrizeInfoAction"  />-->
+	   </actions>
+	</process>
+	<process id="CheckELEC02" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
+		<actions>
+			  <action id="act" ref="gdeups.ELEC02queryCheckInfo"  operations="process"/>
+		</actions>
+	</process>
+	<!-- 批次撤销 -->
+	<process id="gdeups.cancelBatchELEC02" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
+		<actions>
+			  <action id="act" ref="cancelELEC02"  operations="process"/>
+		</actions>
+	</process>
+	<!-- 签退 -->
+	<process id="eups.signOutThird" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
+		<actions>
+			  <action id="act" ref="signOut"  />
+		</actions>
+	</process>
+<!-- 查询可疑信息 -->
+	<process id="gdeups.queryStatus" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
+		<actions>
+			  <action id="act" ref="queryStatus"  operations="process"/>
+		</actions>
+	</process>
+	<!-- 修改可疑信息 -->
+	<process id="gdeups.modifyStatus" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
+		<actions>
+			  <action id="act" ref="modifyStatus"  operations="process"/>
+		</actions>
+	</process>
+	<!-- 批次提交 -->
+	<process id="gdeups.batchPaySubmitDataProcess" template="eups.batchPaySubmitTemplate" interceptors="eups.transMessageInterceptor">
+	   <actions>
+		   <action id="preAct" ref="eups.checkComTxnCtlAction" operations="checkThdTxnCtlNormal"/>
+	       <action id="preAct" ref="eups.InitFileBatchPayAction"/>	       
+	       <action id="fileBatchPayInitAct" ref="gdeups.fileBatchPaySubmitDataAction"/>
+	       <action id="callACPSAct" ref="gdeups.fileBatchPaySubmitDataAction" operations="callHost"/>
+	       <action id="updateBatchConsoleStateAct" ref="gdeups.fileBatchPaySubmitDataAction" operations="updateBatchConsoleState"/>
+	       <action id="batchSinglePayAct" ref="eups.batchSinglePayFeeAction"/>
+	   </actions>
+	</process>
 </x:beans>
