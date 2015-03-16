@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSLOTRService" xmlns:gdeupsb="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSLOTRService/Schema" name="GDEUPSLOTRService" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSLOTRService">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSLOTRService">
+      <xsd:import namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSLOTRService/Schema" schemaLocation="GDEUPSLOTRService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="queryPrizeInfoRequestMessage">
+    <wsdl:part name="queryPrizeInfoRequest" element="gdeupsb:queryPrizeInfo"/>
+  </wsdl:message>
+  <wsdl:message name="queryPrizeInfoResponseMessage">
+    <wsdl:part name="queryPrizeInfoResponse" element="gdeupsb:queryPrizeInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="queryBetInfoRequestMessage">
+    <wsdl:part name="queryBetInfoRequest" element="gdeupsb:queryBetInfo"/>
+  </wsdl:message>
+  <wsdl:message name="queryBetInfoResponseMessage">
+    <wsdl:part name="queryBetInfoResponse" element="gdeupsb:queryBetInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="printCheckInfoRequestMessage">
+    <wsdl:part name="printCheckInfoRequest" element="gdeupsb:printCheckInfo"/>
+  </wsdl:message>
+  <wsdl:message name="printCheckInfoResponseMessage">
+    <wsdl:part name="printCheckInfoResponse" element="gdeupsb:printCheckInfoResponse"/>
+  </wsdl:message>
+  <wsdl:message name="queryPrizeRequestMessage">
+    <wsdl:part name="queryPrizeRequest" element="gdeupsb:queryPrize"/>
+  </wsdl:message>
+  <wsdl:message name="queryPrizeResponseMessage">
+    <wsdl:part name="queryPrizeResponse" element="gdeupsb:queryPrizeResponse"/>
+  </wsdl:message>
+  <wsdl:message name="queryClearPrizeRequestMessage">
+    <wsdl:part name="queryClearPrizeRequest" element="gdeupsb:queryClearPrize"/>
+  </wsdl:message>
+  <wsdl:message name="queryClearPrizeResponseMessage">
+    <wsdl:part name="queryClearPrizeResponse" element="gdeupsb:queryClearPrizeResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="GDEUPSLOTRServicePortType">
+    <wsdl:operation name="queryPrizeInfo">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:queryPrizeInfoRequestMessage"/>
+      <wsdl:output message="tns:queryPrizeInfoResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="queryBetInfo">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:queryBetInfoRequestMessage"/>
+      <wsdl:output message="tns:queryBetInfoResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="printCheckInfo">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:printCheckInfoRequestMessage"/>
+      <wsdl:output message="tns:printCheckInfoResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="queryPrize">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:queryPrizeRequestMessage"/>
+      <wsdl:output message="tns:queryPrizeResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="queryClearPrize">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:queryClearPrizeRequestMessage"/>
+      <wsdl:output message="tns:queryClearPrizeResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GDEUPSLOTRServiceSoapBinding" type="tns:GDEUPSLOTRServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="queryPrizeInfo">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSLOTRService/queryPrizeInfo"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryBetInfo">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSLOTRService/queryBetInfo"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="printCheckInfo">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSLOTRService/printCheckInfo"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryPrize">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSLOTRService/queryPrize"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="queryClearPrize">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSLOTRService/queryClearPrize"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GDEUPSLOTRService">
+    <wsdl:port name="GDEUPSLOTRServicePort" binding="tns:GDEUPSLOTRServiceSoapBinding">
+      <soap:address location="http://127.0.0.1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
