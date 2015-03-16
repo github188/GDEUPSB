@@ -138,5 +138,34 @@
         </actions>
     </process>
     <!-- add by guilin.li 20150210 end -->
-    
+     <!--查询清算奖期-->
+    <process id="gdeups.queryClearPrize" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <action id="act" ref="gdeupsb.queryClearPrizeAction" operations="process"/>
+        </actions>
+    </process>
+     <!--查询奖期-->
+    <process id="gdeups.queryPrize" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <action id="act" ref="gdeupsb.queryPrizeAction" operations="process"/>
+        </actions>
+    </process>
+     <!--查询奖期信息-->
+    <process id="gdeups.queryPrizeInfo" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <action id="act" ref="gdeupsb.queryPrizeInfoAction" operations="process"/>
+        </actions>
+    </process>
+    <!--打印对账清单-->
+    <process id="gdeups.printLotCheckList" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <action id="act" ref="gdeupsb.PrintLotCheckList" operations="process"/>
+        </actions>
+    </process>
+    <!--下载奖期信息-->
+    <process id="gdeups.downloadPrizeInfo" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <action id="act" ref="gdeupsb.DownPrizeInfoAction" operations="process"/>
+        </actions>
+    </process>
 </x:beans>
