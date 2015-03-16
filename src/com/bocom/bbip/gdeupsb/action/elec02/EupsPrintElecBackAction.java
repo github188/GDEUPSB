@@ -1,18 +1,27 @@
 package com.bocom.bbip.gdeupsb.action.elec02;
 
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.bocom.bbip.comp.CommonRequest;
+import com.bocom.bbip.comp.account.AccountService;
+import com.bocom.bbip.comp.account.support.CusActInfResult;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
 import com.bocom.bbip.gdeupsb.utils.SwitchCodeUtils;
 import com.bocom.bbip.thd.org.apache.commons.io.IOUtils;
+import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.ContextUtils;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -39,6 +48,7 @@ public class EupsPrintElecBackAction  extends BaseAction {
 		final String IActNm = SwitchCodeUtils.getIActNm(appNm);
 		context.setData("IActNo", IActNo);
 		context.setData("IActNm", IActNm);
+		queryData(context);
 		/** 开始生成打印文件 */
 		Map<String, String> mapping = CollectionUtils.createMap();
 		VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
@@ -59,7 +69,42 @@ public class EupsPrintElecBackAction  extends BaseAction {
 		
 	}
 
-	
+	private void queryData(Context context)throws CoreException{
+		String start=(String)context.getData(ParamKeys.BEGIN_DATE);
+		String end=(String)context.getData(ParamKeys.END_DATE);
+		String cusAc=(String)context.getData(ParamKeys.ACT_NO);
+		String comNo=(String)context.getData(ParamKeys.COMPANY_NO);
+		List<String> condList = new ArrayList<String>();
+		if(StringUtils.isNotEmpty(cusAc)){
+			condList.add(" CUS_AC='" + cusAc + "' ");
+		}
+		condList.add(" COM_NO='" + comNo + "' ");
+		condList.add(" TXN_DTE >= '" + start + "' ");
+		condList.add(" TXN_DTE <= '" + end + "' ");
+		condList.add(" TXN_STS='S' ");
+		condList.add(" SVR_NME in ('eups.payFeeOnline','eups.payUnilateralToBank') ");
+
+		Map<String, Object> dynSqlMap = new HashMap<String, Object>();
+		dynSqlMap.put("select", "SELECT");
+		dynSqlMap.put("from", "FROM");
+		dynSqlMap.put("table", "EUPS.EUPS_TRANS_JOURNAL");
+
+		Map<String, Object> subMap = new HashMap<String, Object>();
+		subMap.put("conditions", condList);
+
+		dynSqlMap.put("subMap", subMap);
+        List<Object> list = get(EupsTransJournalRepository.class).getCheckDynamicSql(dynSqlMap);
+		Assert.isNotEmpty(list, ErrorCodes.EUPS_QUERY_NO_DATA);
+		Map<String,String> map=(Map<String,String>)list.get(0);
+		CusActInfResult  result = ((AccountService)get("cardBINService")).
+		getAcInf(CommonRequest.build(context), map.get("cusAc"));
+		String cusNme=result.getCusName();
+		for(Object m:list){
+			Map<String,String>mm=(Map<String,String>)m;
+			mm.put("cusNme", cusNme);
+		}
+        context.setData("eles", list);
+	}
 	
 	
 }
