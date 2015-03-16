@@ -34,6 +34,17 @@
 		<result column="RSV_FLD4" property="rsvFld4" jdbcType="VARCHAR" />
 	</resultMap>
 
+
+<select id="getDetails" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select * from ${GDEUPSB_SCHEMA}.GDEUPS_ZHAG_BATCH_TEMP where BAT_NO=#{batNo}
+
+	</select>
+	<select id="getDetailsCount" resultType="java.lang.Integer"
+		>
+		select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_ZHAG_BATCH_TEMP where BAT_NO=#{batNo}
+
+	</select>
 	<select id="findByBatNo" resultMap="BaseResultMap"
 		parameterType="java.lang.String">
 		select * from ${GDEUPSB_SCHEMA}.GDEUPS_ZHAG_BATCH_TEMP where BAT_NO=#{batNo}
