@@ -100,16 +100,6 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 
 		context.setData(ParamKeys.CCY, Constants.CCY_CDE_CNY); // 币种
 
-		// TODO:支付方式paymde判断:目前根据是否传客户帐号分为现金和卡
-		String cusAc = context.getData(ParamKeys.CUS_AC); // 客户帐号判断
-		String payMde = new String();
-		if (StringUtils.isEmpty(cusAc)) {
-			payMde = Constants.PAY_MDE_0; // 现金
-		} else {
-			payMde = Constants.PAY_MDE_4; // 卡
-		}
-		context.setData(ParamKeys.PAY_MDE, payMde);
-
 		// 结算凭证处理,根据结算凭证转换对应的收费类型
 		String thdFeeWay = new String();
 		String vchTyp = context.getData("vchTyp");
@@ -122,6 +112,19 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 		if (StringUtils.isNotEmpty(vchTyp)) {
 			context.setData("bvKnd", vchTyp.substring(1, 3));
 		}
+
+		String payMde = new String();
+		if ("000".equals(vchTyp)) {
+			payMde = Constants.PAY_MDE_0; // 现金
+		} else if ("007".equals(vchTyp)) {
+			payMde = Constants.PAY_MDE_4; // 卡
+		} else {
+			// TODO:为了测试，默认为现金
+			payMde = Constants.PAY_MDE_0; // 现金
+		}
+
+		context.setData(ParamKeys.PAY_MDE, payMde);
+
 		context.setData("bvNo", context.getData("vchNo")); // 凭证号码
 		context.setData(ParamKeys.BAK_FLD5, context.getData("bilDte")); // 凭证日期
 
