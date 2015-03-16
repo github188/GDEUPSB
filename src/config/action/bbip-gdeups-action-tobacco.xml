@@ -22,10 +22,14 @@
     <!--烟草销户-->
     <action class="com.bocom.bbip.gdeupsb.action.tbc.DestroyAccountAction"
         id="gdeupsb.DestroyAccountAction" />
-        
+        PrintClearAcAction
+
     <!--广东烟草公司查询客户余额-->
     <action class="com.bocom.bbip.gdeupsb.action.tbc.QryRemainingAction"
         id="gdeupsb.QryRemainingAction" />
+    <!--广东烟草清算报表打印-->
+    <action class="com.bocom.bbip.gdeupsb.action.tbc.PrintClearAcAction"
+        id="gdeupsb.PrintClearAcAction" />
         
     <!--广东烟草业务签到检查-->
     <action class="com.bocom.bbip.gdeupsb.action.tbc.CheckComTxnCtlAction"

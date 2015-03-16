@@ -2,7 +2,24 @@
 	xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
-	
+	<!--易票联班次查询-->
+    <process id="gdeupsb.qryBusSequence" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <action id="act" ref="gdeupsb.QryBusSequenceAction"/>
+        </actions>
+    </process>
+    
+    <!--易票联长途汽车订单查询-->
+    <process id="gdeupsb.qryEleticketOrder" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <action id="act" ref="gdeupsb.QryEleticketOrderAction"/>
+        </actions>
+    </process>
 
-	
+    <!--易票联长途汽车订单提交-->
+    <process id="gdeupsb.SubmitEleTicketOder" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <action id="act" ref="gdeupsb.SubmitEleTicketOderAction"/>
+        </actions>
+    </process>
 </x:beans>

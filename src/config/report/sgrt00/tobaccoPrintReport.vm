@@ -1,0 +1,31 @@
+#report(50)
+#rh(6)
+#set($TotNum=0)
+#set($TotAmt=0)
+ 			                                                               #代理业务缴费成功明细表		                
+ 	                打印部门：$d.tlr                打印柜员：$d.br         
+                  业务类型: $d.eupsBusTyp         日期:$f.fmt($d.PrtDat,'yyyy-MM-dd'))日
+                                                                                                                                 共【$totalPages】页     第【$pageNumber】页
+#end
+#th(4)
+┏━━━━━━━━━━━━━━┃━━━┳━━┳━━━━┳━━━━ ┳━━━━┳━━━━━━━┓
+┃       交易日期        ┃缴费项目┃ 帐号┃前置流水号┃会计流水号┃金额┃交易状态┃
+┣━━━━━━━━━━━━━━┃━━━╋━━╋━━━━╋━━━━ ╋━━━━╋━━━━━━━┫
+#end 
+#td(8,$d.eles) 
+#para($ele.acDte)
+#para('广东烟草')
+#para($ele.cusAc)
+#para($ele.mfmJrnNo)
+#para($ele.mfmVchNo)
+#para($ele.TxnAmt)
+#para($ele.mfmTxnSts)
+#set($TotNum=$TotNum+1)
+#set($TotAmt=$TotAmt+$ele.TxnAmt)
+┃?               ┃?     ┃?     ┃?       ┃?      ┃ ?   ┃?     ┃
+┣━━━━━━━━ ━━━━━┳━━━━━  ┳━━━━━┳━━━━┳━━━┳━━┳━━━━━┳━━━━━━━━┫
+#end
+#tf(1)
+笔数 :$TotNum    金额:$TotAmt
+#end
+#end

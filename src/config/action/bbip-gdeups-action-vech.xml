@@ -2,6 +2,17 @@
 <x:beans xmlns:x="http://www.springframework.org/schema/beans"
 	xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd       http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
-    
-			
+  
+    <!--易票联班次查询-->
+    <action class="com.bocom.bbip.gdeupsb.action.vech.QryBusSequenceAction"
+        id="gdeupsb.QryBusSequenceAction" />
+        
+    <!--易票联长途汽车订单查询-->
+    <action class="com.bocom.bbip.gdeupsb.action.vech.QryEleticketOrder"
+        id="gdeupsb.QryEleticketOrderAction" />
+      
+    <!--易票联长途汽车订单提交-->
+    <action class="com.bocom.bbip.gdeupsb.action.vech.SubmitEleTicketOder"
+        id="gdeupsb.SubmitEleTicketOderAction" />
+        
 </x:beans>

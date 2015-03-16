@@ -63,6 +63,13 @@
             <action id="act" ref="gdeupsb.TbcQryClearAccountAction"/>
         </actions>
     </process>
+    
+     <!--广东烟草清算报表打印-->
+    <process id="gdeupsb.tbcPrintClearAc" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+        <actions>
+            <action id="act" ref="gdeupsb.PrintClearAcAction"/>
+        </actions>
+    </process>
 
 <!-- 广东烟草公司单边记账（银行记帐系统自带冲正，无需发起冲正）  -->
     <process id="gdeupsb.tbcPayUnilateralToBank" template="eups.payUnilateralNoRvsTemplate" interceptors="eups.thdTransInterceptor" >
