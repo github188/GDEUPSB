@@ -31,6 +31,12 @@ public class PayFeeOnlineServiceActionVECH00 implements PayFeeOnlineService{
 					throws CoreException {
 				log.info("===========Start   PayFeeOnlineServiceActionVECH00  preCheckDeal");
 				context.setData(ParamKeys.SEQUENCE, context.getData(GDParamKeys.ORDER_ID));
+				String cusNme=context.getData("userNam").toString();
+				context.setData(ParamKeys.CUS_NME, cusNme);
+				String userId=context.getData("userId").toString();
+				String mobile=context.getData("mobile").toString();
+				context.setData(ParamKeys.ID_NO,userId);
+				context.setData(ParamKeys.CMU_TEL,mobile);
 				log.info("===========End    PayFeeOnlineServiceActionVECH00  preCheckDeal");
 				return null;
 			}
