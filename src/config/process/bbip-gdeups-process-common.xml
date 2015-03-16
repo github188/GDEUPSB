@@ -4,7 +4,7 @@
 						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
 
 
-
+<!-- 批量处理公共撤销   策略接口-->
 <process id="gdeups.cancelBatch" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
 		<actions>
 			  <action id="act" ref="beforeCancelCheck"   operations="check"/>
@@ -14,7 +14,7 @@
 	</process>
 	
 	
-	
+<!--  批量查询批次信息 -->
 <process id="gdeups.queryBatchInfo" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
 		<actions>
 			  <action id="act" ref="queryBatchInfo"   />
@@ -22,6 +22,7 @@
 		</actions>
 	</process>	
 	
+<!-- 批量处理公共查询批次详细信息    策略接口-->
 	<process id="gdeups.queryBatchDetail" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
 		<actions>
 			  <action id="act" ref="BatchDetails"   />
