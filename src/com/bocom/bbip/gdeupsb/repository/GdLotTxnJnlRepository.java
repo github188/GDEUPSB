@@ -30,7 +30,15 @@ public interface GdLotTxnJnlRepository extends
 
 	@Find
 	public int statLotTxnJnlUnChk(GdLotTxnJnl gdLotTxnJnl);
-
+    /**对账成功清单*/
+    @Find
+    public List<GdLotTxnJnl> findCheckSuccess(Map<String,String>map);
+    /**对账失败清单*/
+    @Find
+    public List<GdLotTxnJnl> findCheckFail(Map<String,String>map);
+    /**对账福彩方失败清单*/
+    @Find
+    public void findCheckThdFail();
 	/**
 	 * 更新投注流水表中的中奖标志
 	 * 
