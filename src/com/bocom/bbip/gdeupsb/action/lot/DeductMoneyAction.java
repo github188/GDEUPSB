@@ -53,13 +53,13 @@ public class DeductMoneyAction extends BaseAction {
         CommonLotAction commAction = new CommonLotAction();
         if (CollectionUtils.isEmpty(lotChkCtls)) {
             //无信息则下载对账信息 
-            Map <String, String> map = commAction.downloadFile("3", gameId, drawId);
-            if (map.get("downloadStatus").equals("0")) {
+             commAction.downloadFile(context,"3", gameId, drawId);
+            /*if (map.get("downloadStatus").equals("0")) {
                 context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
                 context.setData(ParamKeys.RSP_CDE, "LOT999");
                 context.setData(ParamKeys.RSP_MSG, "下载对账文件失败["+map.get("downloadMsg")+"]");
                 return;
-            }
+            }*/
             List<GdLotChkCtl> gdLotChkCtls =  get(GdLotChkCtlRepository.class).find(lotChkCtl);
             if (CollectionUtils.isEmpty(gdLotChkCtls)) {
                 context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
