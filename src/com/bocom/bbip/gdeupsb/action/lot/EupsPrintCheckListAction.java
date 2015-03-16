@@ -14,6 +14,11 @@ import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
+import com.bocom.bbip.gdeupsb.entity.GdLotDrwTbl;
+import com.bocom.bbip.gdeupsb.entity.GdLotTxnJnl;
+import com.bocom.bbip.gdeupsb.repository.GdLotChkDtlRepository;
+import com.bocom.bbip.gdeupsb.repository.GdLotDrwTblRepository;
+import com.bocom.bbip.gdeupsb.repository.GdLotTxnJnlRepository;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.ContextUtils;
@@ -34,7 +39,7 @@ public class EupsPrintCheckListAction  extends BaseAction {
 	private static final String RPT_TYPE_THD_FAIL = "3";
 	public void process(Context context)throws IOException, CoreRuntimeException, JumpException{
 	
-		context.setData("RptTyp", "1");context.setData("GameId", "5");context.setData("DrawId", "6");
+		context.setData("RptTyp", "1");context.setData("GameId", "5");context.setData("DrawId", "2015");
 		context.setData("FunTyp", "5");context.setData("fleNme", "6");
 		logger.info("游戏对账清单打印 start!!");
 		/** 操作类型 0:浏览  1:打印 */
@@ -46,15 +51,19 @@ public class EupsPrintCheckListAction  extends BaseAction {
 		final String RptTyp=ContextUtils.assertDataHasLengthAndGetNNR(context, "RptTyp", ErrorCodes.EUPS_FIELD_EMPTY);
 		
 		final String GameDesc = getGameIdDesc(GameId);
-		final Map<String, String> param = buildGetDrawNmeParams(GameId, DrawId);
-		final List list = null;
-			//get(prizeRepository.class).findPrizeDrawName(param);
-		Assert.isNotEmpty(list, ErrorCodes.EUPS_QUERY_NO_DATA);
+		GdLotDrwTbl info=new GdLotDrwTbl();
+		info.setDrawId(DrawId);
+		info.setGameId(GameId);
+		GdLotDrwTbl result=get(GdLotDrwTblRepository.class).findOne(info);
+		Assert.isFalse(null==result, ErrorCodes.EUPS_QUERY_NO_DATA);
 		/** 得到DrawNme */
-		//context.setData("DrawNme", list.get(0).getDrawNm());
+		context.setData("DrawNme", result.getDrawNm());
 		context.setData("GameNme", GameDesc);
         context.setVariable("type", RptTyp);
 		/** 打印报表 */
+        Map param=CollectionUtils.createMap();
+        param.put("GameId", GameId);
+        param.put("DrawId", DrawId);
 		printReport(context, RptTyp,param);
 		logger.info("游戏对账清单打印!!");
 	}
@@ -87,20 +96,13 @@ public class EupsPrintCheckListAction  extends BaseAction {
 		return desc;
 	}
 
-	private Map<String, String> buildGetDrawNmeParams(final String GameId,
-			final String DrawId) {
-		Map<String, String> map = CollectionUtils.createMap();
-		map.put("GameId", GameId);
-		map.put("DrawId", DrawId);
-		return map;
-	}
+	
 
 	private void printSuccess(Context context,final Map<String,String>map) throws CoreException, IOException {
 		Map<String, String> mapping = CollectionUtils.createMap();
 		VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
 		String sampleFile="config/report/lot/LotCheck.vm";
-		List list=null;
-		//=get(LotTxnJnlRepository.class).findSuccess(map);
+		List<GdLotTxnJnl> list=get(GdLotTxnJnlRepository.class).findCheckSuccess(map);
 		Assert.isNotEmpty(list, ErrorCodes.EUPS_QUERY_NO_DATA);
 		List<Map<String,Object>>eles=(List<Map<String,Object>>)BeanUtils.toMaps(list);
 		context.setData("SumCnt", list.size());
@@ -111,7 +113,7 @@ public class EupsPrintCheckListAction  extends BaseAction {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		context.setData("eles", list);
+		context.setData("eles", eles);
 		render.setReportNameTemplateLocationMapping(mapping);
 		String result = render.renderAsString("sample", context);
 		logger.info("generate report content:****"+new String(result.getBytes(GDConstants.CHARSET_ENCODING_GBK)));
@@ -131,8 +133,7 @@ public class EupsPrintCheckListAction  extends BaseAction {
 		Map<String, String> mapping = CollectionUtils.createMap();
 		VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
 		String sampleFile="config/report/lot/LotCheck.vm";
-		List list=null;
-			//get(LotTxnJnlRepository.class).findFail(map);
+		List<GdLotTxnJnl> list=get(GdLotTxnJnlRepository.class).findCheckFail(map);
 		Assert.isNotEmpty(list, ErrorCodes.EUPS_QUERY_NO_DATA);
 		List<Map<String,Object>>eles=(List<Map<String,Object>>)BeanUtils.toMaps(list);
 		context.setData("SumCnt", list.size());
@@ -163,11 +164,9 @@ public class EupsPrintCheckListAction  extends BaseAction {
 		Map<String, String> mapping = CollectionUtils.createMap();
 		VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
 		String sampleFile="config/report/lot/LotCheck.vm";
-		List list=null;
-			//get(LotTxnJnlRepository.class).findFuCaiFail(map);
-		Assert.isNotEmpty(list, ErrorCodes.EUPS_QUERY_NO_DATA);
-		List<Map<String,Object>>eles=(List<Map<String,Object>>)BeanUtils.toMaps(list);
-		context.setData("SumCnt", list.size());
+		List <Map<String,String>>list=get(GdLotChkDtlRepository.class).findThdFailList(map);
+		//Assert.isNotEmpty(list, ErrorCodes.EUPS_QUERY_NO_DATA);
+		context.setData("SumCnt", 1);
 		context.setData(ParamKeys.TELLER, "EP88888");
 		mapping.put("sample", sampleFile);
 		try {
@@ -175,7 +174,8 @@ public class EupsPrintCheckListAction  extends BaseAction {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		context.setData("eles", eles);
+		
+		context.setData("eles", list);
 		render.setReportNameTemplateLocationMapping(mapping);
 		String result = render.renderAsString("sample", context);
 		logger.info("generate report content:****"+new String(result.getBytes(GDConstants.CHARSET_ENCODING_GBK)));
