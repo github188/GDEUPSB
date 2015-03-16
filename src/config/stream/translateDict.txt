@@ -23,7 +23,7 @@ TransCode.eups.cancelUnilateralToBankELEC00=23
 TransCode.eups.commUpdateCusAgent=32
 
 ##南方电网   供电批量代扣取消业务
-TransCode.gdeupsb.cancelBatch=24
+TransCode.gdeups.cancelBatch=24
 
 ##南方电网   供电批量代扣文件准备
 TransCode.eups.autoAgtBchPayCrtDatProcess=20
