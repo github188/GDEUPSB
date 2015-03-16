@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+    encoding="gbk" trace="true">
+	<segment name="detail" encoding="GBK">
+	 <varString name="cusAc"   type="|"/> 
+      <varString name="cusNme"    type="|" /> 
+	<varString name="txnAmt"    type="X" /> 	
+	  
+	</segment>
+</message>
+
