@@ -4,9 +4,11 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd       http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
 	<!-- 批量处理公共类 -->
 	<action id="eups.batchFileCommon" class="com.bocom.bbip.gdeupsb.action.common.BatchFileCommon"/>
-
+<!-- 批量查询批次信息 -->
+<action id="queryBatchInfo" class="com.bocom.bbip.gdeupsb.action.common.EupsQueryBatchStatusAction"/>
 
 <action id="beforeCancelCheck" class="com.bocom.bbip.gdeupsb.action.common.CancelBatchCheckAction" />
+<!-- 批量处理公共撤销 -->
 <action id="cancelBatchProcess" class="com.bocom.bbip.comp.action.strategy.StrategyDelegatorAction">
 			<x:property name="executableBeanResolver"> 
 		 <x:bean class="com.bocom.bbip.comp.action.strategy.support.DefaultExecutableBeanResolver">
@@ -14,5 +16,12 @@
 		 </x:bean>
 		</x:property>
 	</action>
-
+<!-- 批量处理公共查询批次详细信息 -->
+<action id="BatchDetails" class="com.bocom.bbip.comp.action.strategy.StrategyDelegatorAction">
+			<x:property name="executableBeanResolver"> 
+		 <x:bean class="com.bocom.bbip.comp.action.strategy.support.DefaultExecutableBeanResolver">
+		 <x:property name="strategyKey" value="eupsBusTyp" />
+		 </x:bean>
+		</x:property>
+	</action>
 </x:beans>
