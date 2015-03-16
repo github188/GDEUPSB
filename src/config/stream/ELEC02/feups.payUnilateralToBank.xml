@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="20Request">
+			<fixString name="ECD" length="12" />  <!--收付费企业代码-->
+			<fixString name="JBR" length="8"/>  <!--经办人编号-->
+			<fixString name="TLogNo" length="16" alias="thdSqn"/>  <!--第三方流水-->
+			<fixString name="WDO" length="8"/>  <!--工作日期-->
+			<fixString name="EDD" length="3"/>  <!--费项代码-->
+			<fixString name="JFH" length="32" alias="thdCusNo"/>  <!--缴费号-->
+			<fixString name="KKB" length="12" />  <!--扣款行行号-->
+			<fixString name="ActNo"   length="32" alias="cusAc"/>  <!--帐号-->
+			<fixString name="KAT" length="1"/>  <!--扣款帐号类型-->
+			<fixString name="CUN" length="3"/>  <!--货币类型-->
+			<fixString name="TxnAmt" length="12" alias="txnAmt"/>			
+			<fixString name="KFG" length="1"/>  <!--扣款方式-->
+			<fixString name="ActNam" length="64" alias="cusNm"/>  <!--客户名称-->
+			<fixString name="PCF" length="1"/>   <!--部分缴费标志-->
+			<fixString name="PCC" length="12" />  <!--违约金-->
+			<fixString name="CPS" length="12" />  <!--本金-->
+			<fixString name="AUN" length="32"/>  <!--银行账户名称-->
+			<fixString name="CLM" length="8"/>  <!--电量-->
+			<fixString name="OAN" length="32" />  <!--供电局银行帐号-->
+			<fixString name="MON" length="6"/>  <!--电费月份-->
+			<fixString name="MNS" length="2"/>  <!--电费次数-->
+			<fixString name="JLD" length="5"/>  <!--计量点号-->
+			<fixString name="YSH" length="16"/>  <!--应收凭证号-->
+			<fixString name="GDO" length="16"/>  <!--供电操作员代码-->
+			
+</segment>
