@@ -74,11 +74,16 @@ public class PayFeeOnlineServiceActionVECH00 implements PayFeeOnlineService{
 					throws CoreException {
 				log.info("===========Start   PayFeeOnlineServiceActionVECH00  aftThdDeal");
 				String orderId=context.getData(ParamKeys.SEQUENCE).toString();
-				String tel=context.getData(GDParamKeys.TEL).toString();
+				String userNam=context.getData("userNam").toString();
+				String userId=context.getData("userId").toString();
+				String mobile=context.getData("mobile").toString();
 				if(Constants.RESPONSE_CODE_SUCC.equals(context.getData(ParamKeys.RESPONSE_CODE).toString())){
 						log.info("===========update  GDEUPS_VECH_INDENT ");
 						GDVechIndentInfo gdVechIndentInfo=gdVechIndentInfoRepository.findOne(orderId);
-						gdVechIndentInfo.setMobile(tel);
+						gdVechIndentInfo.setMobile(mobile);
+						gdVechIndentInfo.setUserId(userId);
+						gdVechIndentInfo.setUserNam(userNam);
+						gdVechIndentInfo.setMobile(mobile);
 						gdVechIndentInfo.setOrdSta("1");
 						gdVechIndentInfoRepository.update(gdVechIndentInfo);
 				}
