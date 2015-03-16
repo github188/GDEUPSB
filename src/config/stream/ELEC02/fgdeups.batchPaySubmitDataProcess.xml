@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="20Request">
+			<fixString name="CreOrg"  length="12"/>	<!--委托节点代码-->
+			<fixString name="WdoDat"  length="8" alias="txnDat"/>	<!--工作日期 YYYYMMDD-->
+			<fixString name="OprCod"  length="8" alias="tlr"/>	<!--操作员代码 -->
+			<fixString name="DlTxt"   length="128" />	<!--备注-->
+			<addString name="txnTyp"  expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse("0","0","1","MMM")'/>
+			
+			<addString name="txnMde"  expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse("0","0","0","MMM")'/>
+			<addString name="busTyp"  expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse("0","0","0","MMM")'/>
+			<addString name="fleNme"  expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse("0","0","BATC44400000070.txt","MMM")'/>
+            <addInteger name="totCnt"  expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse("0","0",1,"MMM")'/>
+            <addString name="thdBatNo"  expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse("0","0","123456","MMM")'/>
+</segment>
