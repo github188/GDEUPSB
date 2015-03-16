@@ -10,4 +10,5 @@ public interface GDEupsbTrspTxnJnlRepository extends PagingAndSortingRepository<
 	public void update(GDEupsbTrspTxnJnl gdeupsb);
 	public void updateSt(GDEupsbTrspTxnJnl gdeupsb);
 	public List<Map<String, Object>> findPayInfo(GDEupsbTrspTxnJnl gdeupsb);
+	public void update1(GDEupsbTrspTxnJnl gdeupsb);
 }
