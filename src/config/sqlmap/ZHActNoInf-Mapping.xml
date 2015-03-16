@@ -13,7 +13,7 @@
   </resultMap>
   
   <select id="queryNewByOld" resultMap="BaseResultMap" parameterType="java.lang.String">
-      Select Act_No FROM GDEUPSB.ZH_ActNo_Inf WHERE Old_Act=#{OldAct}  
+      Select * FROM GDEUPSB.ZH_ActNo_Inf WHERE Old_Act=#{OldAct}  
   </select>
  
   <delete id="deleteInfo"  parameterType="map">
