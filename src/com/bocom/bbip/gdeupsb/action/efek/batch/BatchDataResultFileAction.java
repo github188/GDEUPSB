@@ -54,8 +54,12 @@ public class BatchDataResultFileAction implements AfterBatchAcpService{
 			String fileName=gdeupsBatchConsoleInfo.getFleNme();
 			EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecBatch");
 			// 生成文件
-			Map<String, Object> resultMap=createFileMap(context,gdEupsBatchConsoleInfoUpdate);
-			operateFile.createCheckFile(eupsThdFtpConfig, "efekBatchResulf", fileName, resultMap);
+			try{
+					Map<String, Object> resultMap=createFileMap(context,gdEupsBatchConsoleInfoUpdate);
+					operateFile.createCheckFile(eupsThdFtpConfig, "efekBatchResulf", fileName, resultMap);
+			}catch(CoreException e){
+					logger.info("~~~~~~~~~~~Error  Message",e);
+			}
 			// 将生成的文件上传至指定服务器
 			eupsThdFtpConfig.setLocFleNme(fileName);
 			eupsThdFtpConfig.setRmtFleNme(fileName);
