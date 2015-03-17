@@ -39,8 +39,6 @@ public class EupsPrintCheckListAction  extends BaseAction {
 	private static final String RPT_TYPE_THD_FAIL = "3";
 	public void process(Context context)throws IOException, CoreRuntimeException, JumpException{
 	
-		context.setData("RptTyp", "1");context.setData("GameId", "5");context.setData("DrawId", "2015");
-		context.setData("FunTyp", "5");context.setData("fleNme", "6");
 		logger.info("游戏对账清单打印 start!!");
 		/** 操作类型 0:浏览  1:打印 */
 		final String FunTyp=ContextUtils.assertDataHasLengthAndGetNNR(context, "FunTyp", ErrorCodes.EUPS_FIELD_EMPTY);
@@ -106,7 +104,6 @@ public class EupsPrintCheckListAction  extends BaseAction {
 		Assert.isNotEmpty(list, ErrorCodes.EUPS_QUERY_NO_DATA);
 		List<Map<String,Object>>eles=(List<Map<String,Object>>)BeanUtils.toMaps(list);
 		context.setData("SumCnt", list.size());
-		context.setData(ParamKeys.TELLER, "EP88888");
 		mapping.put("sample", sampleFile);
 		try {
 			render.afterPropertiesSet();
@@ -121,7 +118,7 @@ public class EupsPrintCheckListAction  extends BaseAction {
 		try {
 
 			outStream = new BufferedOutputStream(new FileOutputStream(
-					"D:\\template.txt"));
+					"D:\\lotCheck.txt"));
 			outStream.write(result.getBytes(GDConstants.CHARSET_ENCODING_GBK));
 		} catch (IOException e) {
 			throw new CoreException("BBIP0004EU0128");
@@ -137,7 +134,6 @@ public class EupsPrintCheckListAction  extends BaseAction {
 		Assert.isNotEmpty(list, ErrorCodes.EUPS_QUERY_NO_DATA);
 		List<Map<String,Object>>eles=(List<Map<String,Object>>)BeanUtils.toMaps(list);
 		context.setData("SumCnt", list.size());
-		context.setData(ParamKeys.TELLER, "EP88888");
 		mapping.put("sample", sampleFile);
 		try {
 			render.afterPropertiesSet();
@@ -152,7 +148,7 @@ public class EupsPrintCheckListAction  extends BaseAction {
 		try {
 
 			outStream = new BufferedOutputStream(new FileOutputStream(
-					"D:\\template.txt"));
+					"D:\\lotCheck.txt"));
 			outStream.write(result.getBytes(GDConstants.CHARSET_ENCODING_GBK));
 		} catch (IOException e) {
 			throw new CoreException("BBIP0004EU0128");
@@ -165,9 +161,8 @@ public class EupsPrintCheckListAction  extends BaseAction {
 		VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
 		String sampleFile="config/report/lot/LotCheck.vm";
 		List <Map<String,String>>list=get(GdLotChkDtlRepository.class).findThdFailList(map);
-		//Assert.isNotEmpty(list, ErrorCodes.EUPS_QUERY_NO_DATA);
+		Assert.isNotEmpty(list, ErrorCodes.EUPS_QUERY_NO_DATA);
 		context.setData("SumCnt", 1);
-		context.setData(ParamKeys.TELLER, "EP88888");
 		mapping.put("sample", sampleFile);
 		try {
 			render.afterPropertiesSet();
@@ -183,7 +178,7 @@ public class EupsPrintCheckListAction  extends BaseAction {
 		try {
 
 			outStream = new BufferedOutputStream(new FileOutputStream(
-					"D:\\template.txt"));
+					"D:\\lotCheck.txt"));
 			outStream.write(result.getBytes(GDConstants.CHARSET_ENCODING_GBK));
 		} catch (IOException e) {
 			throw new CoreException("BBIP0004EU0128");
