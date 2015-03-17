@@ -25,7 +25,7 @@ public class EupsQueryBatchStatusAction extends BaseAction {
 		final String eupsBusTyp=context.getData(ParamKeys.EUPS_BUSS_TYPE);
 		GDEupsBatchConsoleInfo info = new GDEupsBatchConsoleInfo();
 		info.setBatNo(batNo);
-		info.setBusKnd(eupsBusTyp);
+		info.setEupsBusTyp(eupsBusTyp);
 		List<GDEupsBatchConsoleInfo> ret = get(GDEupsBatchConsoleInfoRepository.class).find(info);
 		Assert.isNotEmpty(ret, ErrorCodes.EUPS_BAT_CTL_INFO_NOT_EXIST);
 		logger.info("批次信息:"+BeanUtils.toFlatMap(ret.get(0)));
