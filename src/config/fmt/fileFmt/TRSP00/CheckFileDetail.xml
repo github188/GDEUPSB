@@ -4,14 +4,13 @@
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet spacket.xsd"
 	encoding="utf-8" trace="true">
 	<segment name="detail" encoding="utf-8">
-				<varString name="payDat"  type="D|"></varString>
-				<varString name="thdKey"  type="D|"></varString>
-				<varString name="txnAmt"  type="D|"></varString>
-				<varString name="invNo"  type="D|"></varString>
-				<varString name="payMon"  type="D|"></varString>
-				<varString name="carTyp"  type="D|"></varString>
-				<varString name="carNo"  type="D|"></varString>
-				<varString name="status"  type="D|"></varString>
-				<varString name="tcusNm"  type="D|"></varString>
+				<varString name="payDat"  type="D|"></varString>		<!-- 日期 -->
+				<varString name="thdKey"  type="D|"></varString>			<!--  银行流水号-->
+				<varString name="txnAmt"  type="D|"></varString>		<!--  金额-->
+				<varString name="invNo"  type="D|"></varString>			<!--  发票号-->
+				<varString name="payMon"  type="D|"></varString>		<!-- 缴费月数 -->
+				<varString name="carTyp"  type="D|"></varString>			<!--  车辆类型-->
+				<varString name="carNo"  type="D|"></varString>			<!--  车牌号-->
+				<varString name="status"  type="D|"></varString>			<!--  交易状态-->
 		</segment>
 </message>		
