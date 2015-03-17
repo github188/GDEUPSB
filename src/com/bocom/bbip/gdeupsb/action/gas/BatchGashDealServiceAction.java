@@ -9,31 +9,36 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
-import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.comp.BBIPPublicService;
+import com.bocom.bbip.comp.BBIPPublicServiceImpl;
+import com.bocom.bbip.comp.btp.BTPService;
+import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
-import com.bocom.bbip.eups.action.common.OperateFileAction;
-import com.bocom.bbip.eups.common.BPState;
+import com.bocom.bbip.eups.common.Constants;
+import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsActSysPara;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
+import com.bocom.bbip.eups.repository.EupsActSysParaRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.BatchAcpService;
 import com.bocom.bbip.eups.spi.vo.PrepareBatchAcpDomain;
 import com.bocom.bbip.file.Marshaller;
 import com.bocom.bbip.file.transfer.TransferUtils;
+import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
-import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.entity.GdGashBatchTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GdGashBatchTmpRepository;
+import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
-import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.CollectionUtils;
+import com.bocom.bbip.utils.ContextUtils;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -45,133 +50,166 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
  * @author WangMQ
  *
  */
-public class BatchGashDealServiceAction implements BatchAcpService  {
+public class BatchGashDealServiceAction extends BaseAction implements BatchAcpService  {
 
 	private final static Logger logger = LoggerFactory.getLogger(BatchGashDealServiceAction.class);
 	
-	@Autowired
-	BBIPPublicService bbipPublicService;
-	
-	@Autowired
-	OperateFTPAction operateFTPAction;
-	
-	@Autowired
-	OperateFileAction operateFileAction;
-
-	@Autowired
-	GDEupsBatchConsoleInfoRepository gdEupsBatchConsoleInfoRepository;
-
-	@Autowired
-	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
-
-	@Autowired
-	GdGashBatchTmpRepository gdGashBatchTmpRepository;
-	
-	@Autowired
-	Marshaller marshaller;
-
 	@Override
-	public void prepareBatchDeal(PrepareBatchAcpDomain preparebatchacpdomain, Context context) throws CoreException {
-		logger.info("BatchGashDealServiceAction initDeal start!");
-		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
-		
-//		context.setData(ParamKeys.BR, GDConstants.GAS_BAT_BR);
-		String comNo = "GDPGAS0001";
-//		String comNo = context.getData(ParamKeys.COMPANY_NO);
+	public void prepareBatchDeal(PrepareBatchAcpDomain arg0, Context context)
+			throws CoreException {
+		logger.info("批次前准备数据");
 		
 		context.setData(ParamKeys.TELLER, "ABIR148");
 		context.setData(ParamKeys.BR, "01441131999");
 		context.setData(ParamKeys.BK, "01441999999");
 		
-		List<GdGashBatchTmp> gashBatchTmps = new ArrayList<GdGashBatchTmp>();
+		context.setData(ParamKeys.EUPS_BUSS_TYPE, "PGAS00");
+		context.setData(ParamKeys.COMPANY_NO, "GDPGAS0001");
+		context.setData(ParamKeys.FTP_ID, "PGAS00Bat");
 		
-		//批量日期
-//		String txnDatTmp = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
-		//批量文件名 (燃气端提供)
-		String batFileName = context.getData("fileName").toString();
+		logger.info("============context:" + context);
 		
-		//FTP配置信息
-		EupsThdFtpConfig gasBatThdFtpConfig=eupsThdFtpConfigRepository.findOne("PGAS00Bat");
-		gasBatThdFtpConfig.setLocDir(batFileName);
-		gasBatThdFtpConfig.setRmtFleNme(batFileName);
+		String fleNme = (String)context.getData(ParamKeys.FLE_NME);
+		/**加锁*/
+		String comNo = (String)context.getData(ParamKeys.COMPANY_NO);
+		logger.info("==============comNo : " + comNo);
+		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).Lock(comNo);
 		
-		//取电子柜员
-//		String ETeller = bbipPublicService.getETeller(GDConstants.PGAS00);
-//		context.setData(ParamKeys.TELLER, ETeller);
-			
-		Date subDte = DateUtils.parse(batFileName.substring(4, 12), DateUtils.STYLE_yyyyMMdd);
+		//检查批次是否重复录入，不是重复录入则插入一条数据进批次控制表
+		GDEupsBatchConsoleInfo info = new GDEupsBatchConsoleInfo();
+		info.setFleNme(fleNme);
+		GDEupsBatchConsoleInfo ret =get(GDEupsBatchConsoleInfoRepository.class).findConsoleInfo(info);
+		Assert.isTrue(null==ret, GDErrorCodes.EUPS_BATCH_INFO_EXIST);
+		/** 插入批次控制表 */
+		String batNo =((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
+		info.setBatNo(batNo);
+		info.setComNo((String)context.getData(ParamKeys.COMPANY_NO));
+		info.setBusKnd((String)context.getData(ParamKeys.BUSS_KIND));
+		info.setBatSts(GDConstants.BATCH_STATUS_INIT);
+		info.setFleNme(fleNme);
+		info.setSubDte(new Date());
+		info.setTxnTlr((String) context.getData(ParamKeys.TELLER));
+		info.setTxnMde(Constants.TXN_MDE_FILE);
+		info.setTxnOrgCde((String) context.getData(ParamKeys.BR));
+		/**该字段保存ParamKeys.THD_BAT_NO*/
+		info.setRsvFld9(((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getBBIPSequence());
+		context.setData(ParamKeys.THD_BAT_NO, info.getRsvFld9());
+		get(GDEupsBatchConsoleInfoRepository.class).insertConsoleInfo(info);
+		/**查询代收付ComNo*/
+		     String comNoAcps=null;
+		    EupsActSysPara eupsActSysPara = new EupsActSysPara();
+		    eupsActSysPara.setActSysTyp("0");
+		    eupsActSysPara.setComNo((String)context.getData(ParamKeys.COMPANY_NO));
+		    List<EupsActSysPara> resultList = ((EupsActSysParaRepository)get(EupsActSysParaRepository.class)).find(eupsActSysPara);
+		    if (CollectionUtils.isNotEmpty(resultList)) {
+		       comNoAcps = ((EupsActSysPara)resultList.get(0)).getSplNo();
+		    }
+		context.setData("comNoAcps", comNoAcps);
+		context.getDataMapDirectly().putAll(BeanUtils.toFlatMap(info));
 		
-		logger.info("===============判断文件是否重复录入=============");
-		GDEupsBatchConsoleInfo gdBatchConsoleInfo = new GDEupsBatchConsoleInfo();
-		gdBatchConsoleInfo.setComNo(comNo);
-		gdBatchConsoleInfo.setSubDte(subDte);
-//		gdBatchConsoleInfo.setFleNme(batFileName);
-		logger.info("==============subDte:" + gdBatchConsoleInfo.getSubDte());
-		List<GDEupsBatchConsoleInfo> ebciList = gdEupsBatchConsoleInfoRepository.find(gdBatchConsoleInfo);
-		if(!CollectionUtils.isEmpty(ebciList)){
-			String batNo = ebciList.get(0).getBatNo();
-			context.setData(ParamKeys.RSP_CDE, GDConstants.GAS_ERROR_CODE);
-			context.setData(ParamKeys.RSP_MSG, "该批次已录入，批次号为" + batNo);
-			throw new CoreRuntimeException(GDErrorCodes.EUPS_CKDB_FILE_EXIST);
-		}
-		logger.info("无重复录入文件");
-		
-		//总笔数、总金额
-		int totCnt = 0;
-		BigDecimal totAmt = new BigDecimal(0.00);
-		
-		//获取文件
-		operateFTPAction.getFileFromFtp(gasBatThdFtpConfig);
-		
-		//解析文件
-		Resource resource = new FileSystemResource(TransferUtils.resolveFilePath(gasBatThdFtpConfig.getLocDir().trim(), gasBatThdFtpConfig.getLocFleNme().trim()));
-		Map<String, Object> map = new HashMap<String, Object>();
-		try {
-			map = marshaller.unmarshal("PGAS00BatFmt", resource, Map.class);
-		} catch (JumpException e) {
-			throw new CoreException(GDErrorCodes.EUPS_COM_FILE_PARSE_ERROR); // 解析文件失败
-		}
-		
-		//入库
-		List<Map<String, Object>> batDeatil = new ArrayList<Map<String, Object>>();
-		List<Map<String, Object>> parseMap = (List<Map<String, Object>>) map.get("detail");
-		List<GdGashBatchTmp> bthTmpSession = new ArrayList<GdGashBatchTmp>();
-		for(Map<String, Object> orgMap : parseMap){
-			GdGashBatchTmp gdGashBatchTmp = BeanUtils.toObject(orgMap, GdGashBatchTmp.class);
-			gdGashBatchTmp.setSqn(bbipPublicService.getBBIPSequence());
-			
-			totAmt = totAmt.add(new BigDecimal((String)gdGashBatchTmp.getReqTxnAmt()));
-			totCnt++;
-			
-			bthTmpSession.add(gdGashBatchTmp);
-			String isOurBank = new String();
-			Map<String, Object> batFileDeatailMap = new HashMap<String, Object>();
-			batFileDeatailMap.put("CUSAC", gdGashBatchTmp.getCusAc());
-			batFileDeatailMap.put("TXNAMT", gdGashBatchTmp.getReqTxnAmt());
-			batFileDeatailMap.put("AGTSRVCUSID", gdGashBatchTmp.getCusNo());
-			
-			isOurBank = "0";
-			batFileDeatailMap.put("OUROTHFLG", isOurBank);
-			batDeatil.add(batFileDeatailMap);
-		}
-		gdGashBatchTmpRepository.insert(bthTmpSession);		
-		
-		//拼装代收付文件map
-		Map<String, Object> gashBatMap = new HashMap<String, Object>();
-		Map<String, Object> gasBatHeaderMap = new HashMap<String, Object>(); // 头
-		
-		gasBatHeaderMap.put("totCount", totCnt); // 总比数
-		gasBatHeaderMap.put("totAmt", totAmt.toString()); // 总金额
-		gasBatHeaderMap.put("comNo", comNo); // 单位编号
-		
-		// 拼装整个代收付文件
-		gashBatMap.put("header", gasBatHeaderMap);
-		gashBatMap.put("detail", batDeatil);
+		EupsThdFtpConfig config=get(EupsThdFtpConfigRepository.class).findOne((String)context.getData(ParamKeys.FTP_ID));
+		Assert.isFalse(null == config, ErrorCodes.EUPS_THD_FTP_CONFIG_NOTEXIST);
 
-		context.setVariable(GDParamKeys.BATCH_COM_FILE_NAME, "gashFile");
-		context.setVariable("gashBatFileMap", gashBatMap);
+		config.setRmtFleNme(fleNme);
+		config.setLocFleNme(fleNme);
+		get(OperateFTPAction.class).getFileFromFtp(config);
 		
-		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
-
+		Map<String,Map<String, Object>> result = pareseFile(config, "PGAS00BatFmt");
+		Assert.isFalse(null==result||0==result.size(), ErrorCodes.EUPS_FILE_PARESE_FAIL);
+		Map<String, Object> header =new HashMap<String, Object>();
+		
+		@SuppressWarnings("unchecked")
+		List<Map<String, Object>> detail = (List<Map<String, Object>>) result.get("detail");
+		GDEupsBatchConsoleInfo batInfo=ContextUtils.getDataAsObject(context, GDEupsBatchConsoleInfo.class);
+		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(batInfo);
+		
+		//将解析文件得到的数据放入临时表
+		List <GdGashBatchTmp>list=(List<GdGashBatchTmp>) BeanUtils.toObjects(detail, GdGashBatchTmp.class);
+        for(GdGashBatchTmp tmp:list){
+        	tmp.setSqn(get(BBIPPublicService.class).getBBIPSequence());
+        	tmp.setBatNo((String)context.getData(ParamKeys.BAT_NO));
+        	get(GdGashBatchTmpRepository.class).insert(tmp);
+        }
+        
+        List <GdGashBatchTmp>lt=get(GdGashBatchTmpRepository.class).findByBatNo((String)context.getData(ParamKeys.BAT_NO));
+        //  cusNo ----->  thdCusNo
+        
+        List<Map<String,Object>> gasBatDetail=new ArrayList<Map<String,Object>>();
+        
+    	String isOurBnk = new String(); // 初始化
+    	
+        // to sum totAmt
+        BigDecimal totAmt = new BigDecimal(0.0);
+        
+        for(GdGashBatchTmp tmp : lt){
+        	Map<String, Object> tmpMap = new HashMap<String, Object>();
+//        	<varString name="cusAc" type="D|" />
+//    		<varString name="cusNme" type="D|" />
+//    		<varString name="txnAmt" type="D|" />
+//    		<varString name="thdCusNo" type="D|" />
+//    		<varString name="thdCusNme" type="D|" />
+//    		<varString name="OUROTHFLG" type="D|" />
+//    		<varString name="OBKBK" type="D|" />
+//    		<varString name="RMK1" type="D|" />
+//    		<varString name="RMK2" type="D|" />
+			
+        	//TODO：我行卡查询，开户行查询
+//        			if (accountService.isOurBankCard(tmp.getCusAc())) {
+        				isOurBnk = "0"; // 我行卡
+//        			} else {
+//        				isOurBnk = "1"; // 他行卡
+//        				CusActInfResult actInf = accountService.getAcInf(CommonRequest.build(context), cusAc);
+//        				agtFileDeatailMap.put("OBKBK", actInf.getOpnBk());
+//        			}
+        	
+        	tmpMap.put("cusAc", tmp.getCusAc());
+        	tmpMap.put("cusNme", tmp.getCusNme());
+        	tmpMap.put("txnAmt", tmp.getTxnAmt());
+        	tmpMap.put("thdCusNo", tmp.getCusNo());
+        	tmpMap.put("OUROTHFLG", isOurBnk);
+//        	tmpMap.put("thdCusNme", value);
+//        	tmpMap.put("OBKBK", value);
+//        	tmpMap.put("RMK1", value);
+//        	tmpMap.put("RMK2", value);
+        	totAmt = totAmt.add(new BigDecimal(tmp.getTxnAmt()));
+        	gasBatDetail.add(tmpMap);
+        }
+        
+		Map<String, Object> temp = new HashMap<String, Object>();
+		
+		header.put("comNo", comNo);
+		header.put("totCnt", lt.size());
+		header.put("totAmt", totAmt);
+		
+		temp.put(ParamKeys.EUPS_FILE_HEADER, header);
+		temp.put(ParamKeys.EUPS_FILE_DETAIL, gasBatDetail);
+		context.setVariable("agtFileMap", temp);
+		GDEupsBatchConsoleInfo console=new GDEupsBatchConsoleInfo();
+		console.setBatNo((String)context.getData(ParamKeys.BAT_NO));
+		/**更新批次状态为待提交*/
+		console.setBatSts(GDConstants.BATCH_STATUS_WAIT);
+		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(console);
+		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).sendBatchFileToACP(context);
+		
+		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).unLock(comNo);
+		logger.info("批量文件数据准备结束-------------");
+		
 	}
+	
+	  private Map<String,Map<String, Object>> pareseFile(EupsThdFtpConfig eupsThdFtpConfig, String fileId)
+	    throws CoreException, CoreRuntimeException
+	  {
+		  Map map =null;
+	    logger.info("this is path:" + TransferUtils.resolveFilePath(eupsThdFtpConfig.getLocDir().trim(), eupsThdFtpConfig.getLocFleNme().trim()));
+	    try {
+	    	Resource resource = new FileSystemResource(TransferUtils.resolveFilePath(eupsThdFtpConfig.getLocDir().trim(), 
+	        eupsThdFtpConfig.getLocFleNme().trim()));
+	      map = (Map)((Marshaller)get(Marshaller.class)).unmarshal(fileId, resource, Map.class);
+	    } catch (JumpException e) {
+	      logger.error("文件解析错误");
+	      throw new CoreException("BBIP0004EU0015");
+	    }
+	    return map;
+	  }
+	
 }
