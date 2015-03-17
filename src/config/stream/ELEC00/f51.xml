@@ -7,20 +7,21 @@
 		<fixString name="sqn" length="24" /><!-- 交易流水号 -->
 		<fixString name="traSendDate" length="8" /><!-- 交易日期 -->
 		<fixString name="traSendTime" length="6" /><!--  交易时间-->
-		
-		<fixString name="batNo" length="27" /><!--  对账批次流水号-->
 	      <fixString name="comNo" length="8" /><!--  单位编码-->
 	      <fixString name="busType" length="3" /><!--  收费方式-->
 	     <fixString name="payType" length="3" /><!--  费用类型-->
 	     <fixString name="checkDate" length="8" /><!--  达账日期-->
 	     <fixString name="checkTime" length="6" /><!--  达账时间-->
-	     
-	     <fixString name="allCheckNumber"  length="2" /><!--  明细文件个数-->
+		
+		<fixString name="WJS" length="1"  />
 		<fixString name="checkTyp" length="2"  /><!--  文件类型-->
 		<fixString name="number" length="6"  /><!--  文件子包个数-->
 		<fixString name="xH"  length="2"  /><!--  序号-->
       	 <fixString name="fileName" length="36" /><!-- 文件名称-->
        <fixString name="fileMD5" length="32" /><!-- 文件MD5-->
+		<fixString name="batNo" length="27" /><!--  对账批次流水号-->
+	     
+	   <!--   <fixString name="allCheckNumber"  length="2" /> 明细文件个数-->
 
 
      
