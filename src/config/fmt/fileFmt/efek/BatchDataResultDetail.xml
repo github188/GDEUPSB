@@ -9,7 +9,7 @@
 			<fixString name="number" length="10" /><!--  序号	XH	Varchar2(10)-->
 			<fixString name="thdCusNo" length="20" /><!--  缴费号	JFH	Varchar2(20)-->
 			<fixString name="thdCusNme" length="64" /><!--  结算户名称	JSHMC	Varchar2(64)-->
-			<Item name="KKYHDM"  length="  4" desc="扣款银行代码"/>
+			<fixString name="bankNo"  length=" 4" /><!--  扣款银行代码-->
 			<fixString name="cusAc" length="32" /><!--  扣款账户	KKZH	Varchar2(32)-->
 			<fixString name="cusNme" length="128" /><!--  扣款账户名称	KKZHMC	Varchar2(128)-->			
 			<fixString name="fulDedFlg" length="1" /><!--  部分缴费标志	BFJFBZ	Varchar2(1)-->
