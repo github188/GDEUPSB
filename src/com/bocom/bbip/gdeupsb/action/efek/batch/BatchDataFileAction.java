@@ -53,7 +53,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 	public void prepareBatchDeal(PrepareBatchAcpDomain preparebatchacpdomain,
 			Context context) throws CoreException {
 		
-				logger.info("==========Start  BatchDataFileAction");
+				logger.info("==========Start  BatchDataFileAction  prepareBatchDeal");
 				context.setData(ParamKeys.WS_TRANS_CODE, "20");
 				//文件名
 				String fleNme=context.getData(ParamKeys.FLE_NME).toString();
@@ -96,7 +96,8 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 						
 						//提交代收付
 						userProcess(context);
-						logger.info("==========End  BatchDataFileAction");
+						//得到反盘文件 处理成第三方格式返回
+						logger.info("==========End  BatchDataFileAction  prepareBatchDeal");
 	}
 	/**
 	 * 文件map拼装
@@ -141,12 +142,22 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 			logger.info("=================End  BatchDataFileAction  createFileMap ");
 			return resultMap;
 		}
-/**
- * 异步调用process
- */
+	/**
+	 * 异步调用process
+	 */
 		public void userProcess(Context context)throws CoreException{
+			logger.info("==========Start  BatchDataFileAction  userProcess");
 			String mothed="eups.batchPaySubmitDataProcess";
 			bbipPublicService.synExecute(mothed, context);
+			logger.info("==========End  BatchDataFileAction  userProcess");
+		}
+	/**
+	 * 反盘文件拼装第三方格式
+	 */
+		public Map<String, Object> createThdFileMap(Context context){
+			
+			Map<String, Object> map=new HashMap<String, Object>();
+			return map;
 		}
 }
 
