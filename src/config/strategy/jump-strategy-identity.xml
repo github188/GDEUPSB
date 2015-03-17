@@ -45,7 +45,7 @@
 
     <!-- 个人代扣：文件批次撤销 -->
     <bean id="cancelBatchProcessGDAG00"
-        class=" com.bocom.bbip.gdeupsb.action.elec02.EupsCancelBatchProcess">
+        class=" com.bocom.bbip.gdeupsb.action.plpd.PlpdBatchCancelAction">
     </bean>
 	<!-- 个人代扣：文件批量托收完成通知前端  -->
 	<bean id="eups.afterBatchAcpServiceActionGDAG00"
