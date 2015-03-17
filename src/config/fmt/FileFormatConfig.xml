@@ -338,23 +338,45 @@
 		<file id="insuBatchFile" name="insuBatchFile" encoding="GBK" lineSeparator="\n">
 				<foreach name="detail" ref="config/fmt/fileFmt/gzag/insuBatchDataDetail.xml" encoding="GBK" />
 		</file>
+		<!-- 广州电话银行保险  返回-->
+		<file id="insuBatchFileResult" name="insuBatchFileResult" encoding="GBK" lineSeparator="\n">
+				<foreach name="detail" ref="config/fmt/fileFmt/gzag/insuBatchDataResultDetail.xml" encoding="GBK" />
+		</file>
 		<!-- 银行兑奖划款情况文件 -->
 		<file id="lottBatchFile" name="lottBatchFile" encoding="GBK" lineSeparator="\n">
 				<line name="header" ref="config/fmt/fileFmt/gzag/lottBatchDataHead.xml" encoding="GBK" />
 				<foreach name="detail" ref="config/fmt/fileFmt/gzag/lottBatchDataDetail.xml" encoding="GBK" />
 		</file>
+		<!-- 银行兑奖划款情况文件   返回-->
+		<file id="lottBatchFileResult" name="lottBatchFileResult" encoding="GBK" lineSeparator="\n">
+				<line name="header" ref="config/fmt/fileFmt/gzag/lottBatchDataResultHead.xml" encoding="GBK" />
+				<foreach name="detail" ref="config/fmt/fileFmt/gzag/lottBatchDataResultDetail.xml" encoding="GBK" />
+		</file>
 		<!-- 羊城通空中充值-->
 		<file id="yctBatchFile" name="yctBatchFile" encoding="GBK" lineSeparator="\n">
 				<foreach name="detail" ref="config/fmt/fileFmt/gzag/yctBatchDataDetail.xml" encoding="GBK" />
+		</file>
+		<!-- 羊城通空中充值  返回-->
+		<file id="yctBatchFileResult" name="yctBatchFileResult" encoding="GBK" lineSeparator="\n">
+				<foreach name="detail" ref="config/fmt/fileFmt/gzag/yctBatchDataResultDetail.xml" encoding="GBK" />
 		</file>
 		<!-- 粤通卡-->
 		<file id="yktBatchFile" name="yktBatchFile" encoding="GBK" lineSeparator="\n">
 				<foreach name="detail" ref="config/fmt/fileFmt/gzag/yktBatchDataDetail.xml" encoding="GBK" />
 		</file>
-		<!-- 体育彩票银行兑奖文件返回 -->
+		<!-- 粤通卡 返回-->
+		<file id="yktBatchFileResult" name="yktBatchFileResult" encoding="GBK" lineSeparator="\n">
+				<foreach name="detail" ref="config/fmt/fileFmt/gzag/yktBatchDataResultDetail.xml" encoding="GBK" />
+		</file>
+		<!-- 体育彩票银行兑奖文件 -->
 		<file id="sptltBatchFile" name="sptltBatchFile" encoding="GBK" lineSeparator="\n">
 				<line name="header" ref="config/fmt/fileFmt/gzag/sptltBatchDataHead.xml" encoding="GBK" />
 				<foreach name="detail" ref="config/fmt/fileFmt/gzag/sptltBatchDataDetail.xml" encoding="GBK" />
+		</file>
+		<!-- 体育彩票银行兑奖文件返回 -->
+		<file id="sptltBatchFileResult" name="sptltBatchFileResult" encoding="GBK" lineSeparator="\n">
+				<line name="header" ref="config/fmt/fileFmt/gzag/sptltBatchDataResultHead.xml" encoding="GBK" />
+				<foreach name="detail" ref="config/fmt/fileFmt/gzag/sptltBatchDataResultDetail.xml" encoding="GBK" />
 		</file>
 		
 		
