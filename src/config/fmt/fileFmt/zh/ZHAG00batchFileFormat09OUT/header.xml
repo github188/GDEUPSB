@@ -7,8 +7,8 @@
 	  <varString name="rsvFld1"       type="D|" />   <!-- 协议编号 -->
       <varString name="totCnt"       type="D|" />   <!-- 总笔数 -->
       <varString name="totAmt"       type="D|" expression='exp:num.centToYuanAsString(this.totAmt)' />   <!-- 总金额 -->
-	  <varString name="ActDat"   type="D|"/>    <!--批扣完成会计日期,ICS版非税新增-->
-      <varString name="BrNo"     type="D|"/>    <!--批扣分行号-->
+	  <varString name="actDte"   type="D|"/>    <!--批扣完成会计日期,ICS版非税新增-->
+      <varString name="br"     type="D|"/>    <!--批扣分行号-->
       <varString name="batNo"    type="D|"/>    <!--批扣主机批次号-->
       <varString name="STotCnt"  type="D|"/>    <!--批扣成功记录数-->
       <varString name="STotAmt"  type="D|" expression='exp:num.centToYuanAsString(this.STotAmt)' />     <!--批扣成功总金额(返盘金额元为单位，含小数点）-->
