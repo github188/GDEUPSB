@@ -157,11 +157,10 @@ public class CheckTrspFileAction extends BaseAction{
 		        if(CollectionUtils.isNotEmpty(gdEupsbTrspFeeInfoList)){
 		        	context.setData(ParamKeys.RSP_CDE, "329999");
 		        	context.setData(ParamKeys.RSP_MSG, "系统错误");
+		        	//上传文件
+		        	sendFile(context,fileName);
 		        	throw new CoreException("系统错误");
 		        }
-		        //上传文件
-		        sendFile(context,fileName);
-		        
 		        
 		        context.setData(GDParamKeys.MSGTYP, "N");
 		        context.setData(ParamKeys.RSP_CDE, "000000");
@@ -259,10 +258,6 @@ public class CheckTrspFileAction extends BaseAction{
         EupsThdFtpConfig eupsThdFtpConfig = context.getData(ParamKeys.CONSOLE_THD_FTP_CONFIG_LIST);
         eupsThdFtpConfig.setLocFleNme(fileName);
         operateFTPAction.putCheckFile(eupsThdFtpConfig);
-        
-		context.setData(GDParamKeys.MSGTYP, "E");
-        context.setData(ParamKeys.RSP_CDE, "329999");
-        context.setData(ParamKeys.RSP_MSG, "与路桥对账失败，请查看差错账记录清单");
 	}
 	/**
 	 * 打印清单
