@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files xmlns="http://www.bankcomm.com/bbip-fmt-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bankcomm.com/bbip-fmt-1.0 http://www.bocom.com/schema/bbip-fmt-1.0.xsd">
-
+<!--  文本批量-->
+	<file id="BatchFmt" name="BatchFmt" encoding="GBK"
+		lineSeparator="\n">
+		<line name="header" ref="config/fmt/fileFmt/batch/header.xml"
+            encoding="GBK" />
+		<foreach name="detail" ref="config/fmt/fileFmt/batch/detail.xml"
+			encoding="GBK" />
+	</file>
 	<!-- 佛山有线电视 文本批量-->
 	<file id="tvFbpeBatFmt" name="tvFbpeBatFmt" encoding="GBK"
 		lineSeparator="\n">
