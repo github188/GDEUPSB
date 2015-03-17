@@ -17,7 +17,7 @@
 	<fixString name="tCommd" length="10" /> 
  	<!-- <fixString name="DeliA"      length="1" default=","/> -->
  	
- 	<fixString name="fileName" length="64" />
+ 	<fixString name="fleNme" length="64" />
  	<!-- <fixString  name="DeliA" length="1" default=","/> -->
 
 

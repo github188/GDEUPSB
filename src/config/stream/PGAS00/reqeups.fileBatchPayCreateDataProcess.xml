@@ -4,7 +4,6 @@
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
 	name="06Response">
 
-s
 <!-- 
 起始位置	说明	长度	备注
 1	指令	10	SMPCPAYTXT
@@ -13,10 +12,10 @@ s
 （要求于第二日早上6点前将此文件放到ftp://BANK/银行标志/reckoning/目录下）
  -->
  	
- 	<fixString name="rtnCod" length="10" />
+ 	<fixString name="tCommd" length="10" />
  	 <!-- <fixString  name="Deli2" length="1" default=","/> -->
  	
-	<fixString name="fileName" length="64"    />
+	<fixString name="fleNme" length="64"    />
 	<!-- <fixString  name="Deli3" length="1" default=","/> -->
 	
  	
