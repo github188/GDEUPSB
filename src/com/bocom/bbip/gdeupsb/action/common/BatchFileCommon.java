@@ -56,7 +56,7 @@ public class BatchFileCommon extends BaseAction {
 		/** 插入批次控制表 */
 		String batNo =((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
 		info.setBatNo(batNo);
-		info.setBusKnd(eupsBusTyp);
+		info.setEupsBusTyp(eupsBusTyp);
 		info.setBatSts(GDConstants.BATCH_STATUS_INIT);
 		info.setFleNme(fleNme);
 		info.setSubDte(new Date());
