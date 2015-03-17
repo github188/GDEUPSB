@@ -8,7 +8,7 @@
 	      	<fixString name="sqn" length="24" /><!-- 交易流水号 -->
 			<fixString name="txnDte" length="8" /><!-- 交易日期 -->
 			<fixString name="txnTme" length="6" /><!--  交易时间-->
-	   	 	 <fixString name="busTyp" length="3" /><!--  收费方式-->
+	   	 	 <fixString name="busType" length="3" /><!--  收费方式-->
 			<fixString name="payType" length="3" /><!--  费用类型-->
 			<fixString name="comNo" length="8" /><!--  单位编码-->
 			<fixString name="payNo" length="20" /><!-- 缴费号 -->
@@ -16,7 +16,5 @@
 			<fixString name="traSendTime" length="6" /><!--  存入时间-->
 			<fixString name="payInAdvMoney" length="16" /><!--  存入预付款-->
 		    <fixString name="payMde" length="1" /><!-- 付款方式 -->
-		    <fixString name="txnTlr" length="20" /><!-- 操作员号 -->
 			<fixString name="bakFld1" length="128" /><!-- 备注说明 -->
-      
 	</segment>
