@@ -35,18 +35,21 @@ import com.bocom.bbip.gdeupsb.repository.GDEupsZHAGBatchTempRepository;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.ContextUtils;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
 import com.bocom.jump.bp.service.sqlmap.SqlMap;
 import com.bocom.jump.bp.support.CollectionUtils;
-
+/**
+ * @author wuyh
+ * 
+ * */
 public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpService {
 	private static final Log logger=LogFactory.getLog(BatchAcpServiceImplZHAG00.class);
 	@Override
 	public void prepareBatchDeal(PrepareBatchAcpDomain domain, Context context)throws CoreException {
-		context.setData(ParamKeys.FLE_NME, "gh");
 		final String comNo=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.COMPANY_NO, ErrorCodes.EUPS_FIELD_EMPTY);
         /**上锁*/
 		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).Lock(comNo);
@@ -69,7 +72,9 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 		Assert.isFalse(null==result||0==result.size(), ErrorCodes.EUPS_FILE_PARESE_FAIL, "解析文件出错");
 		Map head=(Map)result.get("header");
 		List lst=(List)result.get("detail");
-		context.getDataMapDirectly().putAll(head);
+		if (null!=head) {
+			context.getDataMapDirectly().putAll(head);
+		}
 		GDEupsBatchConsoleInfo info=ContextUtils.getDataAsObject(context, GDEupsBatchConsoleInfo.class);
 		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(info);
 		List <GDEupsZhAGBatchTemp>list=(List<GDEupsZhAGBatchTemp>) BeanUtils.toObjects(lst, GDEupsZhAGBatchTemp.class);
@@ -77,18 +82,17 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
         	tmp.setBatNo((String)context.getData(ParamKeys.BAT_NO));
         }
 		/**插入临时表中*/
-		((SqlMap)get("sqlMap")).insert("com.bocom.bbip.gdeupsb.entity.GDEupsbElecstBatchTmp.batchInsert", list);;
+		((SqlMap)get("sqlMap")).insert("com.bocom.bbip.gdeupsb.entity.GDEupsZhAGBatchTemp.batchInsert", list);;
 		
 		List <GDEupsZhAGBatchTemp>lt=get(GDEupsZHAGBatchTempRepository.class)
 		.findByBatNo((String)context.getData(ParamKeys.BAT_NO));
 		for(GDEupsZhAGBatchTemp temp:lt){
-			temp.setCusAc(temp.getCusAc()==null?temp.getThdCusNo():temp.getCusAc());
-			temp.setCusNme(temp.getCusNme()==null?temp.getThdCusNme():temp.getCusNme());
-			temp.setThdCusNo(temp.getCusAc()==null?temp.getThdCusNo():temp.getCusAc());
-			temp.setThdCusNme(temp.getCusNme()==null?temp.getThdCusNme():temp.getCusNme());
-			
+			temp.setCusAc(StringUtils.isBlank(temp.getCusAc())?temp.getThdCusNo():temp.getCusAc());
+			temp.setCusNme(StringUtils.isBlank(temp.getCusNme())?temp.getThdCusNme():temp.getCusNme());
+			temp.setThdCusNo(StringUtils.isBlank(temp.getCusAc())?temp.getThdCusNo():temp.getCusAc());
+			temp.setThdCusNme(StringUtils.isBlank(temp.getCusNme())?temp.getThdCusNme():temp.getCusNme());
 		}
-		List<Map<String,Object>> detail=(List<Map<String, Object>>) BeanUtils.toMaps(lst);
+		List<Map<String,Object>> detail=(List<Map<String, Object>>) BeanUtils.toMaps(lt);
 		Map<String, Object> header = CollectionUtils.createMap();
 		context.setData(ParamKeys.COMPANY_NO, (String)context.getData("comNoAcps"));
 		Map<String, Object> temp = CollectionUtils.createMap();
@@ -122,9 +126,9 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 	  private String findFormat(final String comNo) {
 		  InputStream location=null;
 		try {
-			location = new FileInputStream(new File("classpath:/config/fmt/fileFmt/zh/transIn.properties"));
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
+			//location =ClassLoader.getSystemResourceAsStream("config\\fmt\\fileFmt\\zh\\transIn.properties");
+			location = new FileInputStream(new File("D:\\transIn.properties"));
+		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 		  Properties prop = new Properties();
