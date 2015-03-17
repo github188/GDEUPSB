@@ -21,8 +21,8 @@
 			<fixString name="paymentResult" length="2" /><!--  扣款结果代码	KKJGDM	Varchar2 (2)	2-->
 			<fixString name="txnAmt" length="16" /><!--  实扣金额	SKJE	Number(14,2)	16-->
 			<fixString name="bankSqn" length="20" /><!-- 银行收费流水号	YHSFLSH	Varchar2(20)	20-->
-			<fixString name="txnDte" length="8" /><!-- 扣款日期	KKRQ	Varchar2(8)	8-->
-			<fixString name="txnTme" length="6" /><!--  扣款时间	KKSJ	Varchar2(6)	6-->
+			<fixString name="rsvFld1" length="8" /><!-- 扣款日期	KKRQ	Varchar2(8)	8-->
+			<fixString name="rsvFld2" length="6" /><!--  扣款时间	KKSJ	Varchar2(6)	6-->
 			<fixString name="bakFld" length="128" /><!-- 备注	BZ	Varchar2(128)	128-->
 	</segment>
 	
