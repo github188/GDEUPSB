@@ -16,8 +16,8 @@ public class AdvanceTradeStrCastDateAction extends BaseAction{
 				txnTme=txnDte+txnTme;
 				context.setData(ParamKeys.TXN_TME, DateUtils.parse(txnTme,DateUtils.STYLE_yyyyMMddHHmmss));
 				
-				String thdTxnDate=context.getData(ParamKeys.THD_TXN_DATE).toString();
-				String thdTxnTime=thdTxnDate+context.getData(ParamKeys.THD_TXN_TIME).toString();
+				String thdTxnDate=context.getData("traSendDate").toString();
+				String thdTxnTime=thdTxnDate+context.getData("traSendDate").toString();
 				context.setData(ParamKeys.THD_TXN_DATE, DateUtils.parse(thdTxnDate,DateUtils.STYLE_yyyyMMdd));
 				context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse(thdTxnTime,DateUtils.STYLE_yyyyMMddHHmmss));
 
