@@ -24,9 +24,9 @@ public class FbpeBatchCancelAction extends BaseAction {
         GDEupsBatchConsoleInfo info=new GDEupsBatchConsoleInfo();
         info.setBatNo(batNo);
         info.setBatSts(GDConstants.BATCH_STATUS_CANCEL);
-        /**更新批次状态为已经撤销*/
+        /**更新控制表批次状态为已经撤销*/
         get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(info);
-        /**清楚批量临时表中该批次的信息*/
+        /**清除批量临时表中该批次的信息*/
         GdFbpeFileBatchTmp tmp=new GdFbpeFileBatchTmp();
         tmp.setRsvFld8(batNo);
         get(GdFbpeFileBatchTmpRepository.class).delete(tmp);
