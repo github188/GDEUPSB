@@ -122,4 +122,38 @@
 	
 	
 	
+	
+	
+	 <!-- add by Guilin 20150316 start 长途汽车票 -->
+     <bean id="vechGateWay" class="com.bocom.jump.bp.channel.tcp.SocketGateway"> 
+                <property name="host" value="219.136.207.190"/>
+                <property name="port" value="9998" />
+                <property name="soTimeout" value="30000" />
+                <property name="streamResolver">
+                    <bean class="com.bocom.bbip.eups.adaptor.channel.NoFrontLengthStreamResolver" />
+                </property>
+         </bean>
+    
+    <bean id="vechTransport" class="com.bocom.jump.bp.channel.DefaultTransport">
+        <property name="gateway"  ref="vechGateWay"/>
+        <property name="encodeTransforms">
+            <array>
+                <bean class="com.bocom.jump.bp.channel.interceptors.EncoderTransform">
+                    <constructor-arg   value="packet://config/stream/vech/ReqHeader.xml" />
+                </bean>
+            </array>
+        </property>
+        <property name="decodeTransforms">
+            <array>
+                <bean class="com.bocom.jump.bp.channel.interceptors.DecoderTransform">
+                    <constructor-arg  value="packet://config/stream/vech/RspHeader.xml" />
+                </bean>
+            </array>
+        </property>
+        <property name="tranportLister">
+            <bean class="com.bocom.jump.bp.channel.DefaultTransportListener"></bean>
+        </property>
+    </bean>
+    <!-- add by Guilin 20150316 end 长途汽车票 -->
+
 </beans>

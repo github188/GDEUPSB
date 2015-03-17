@@ -4,8 +4,11 @@ import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ParamKeys;
@@ -13,6 +16,15 @@ import com.bocom.bbip.gdeupsb.entity.GDVechIndentInfo;
 import com.bocom.bbip.gdeupsb.repository.GDVechIndentInfoRepository;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.euif.component.util.StringUtil;
+import com.bocom.jump.bp.JumpException;
+import com.bocom.jump.bp.channel.CommunicationException;
+import com.bocom.jump.bp.channel.DefaultTransport;
+import com.bocom.jump.bp.channel.Transform;
+import com.bocom.jump.bp.channel.interceptors.DecoderTransform;
+import com.bocom.jump.bp.channel.interceptors.EncoderTransform;
+import com.bocom.jump.bp.channel.interceptors.RequestTransform;
+import com.bocom.jump.bp.channel.interceptors.ResponseTransform;
+import com.bocom.jump.bp.channel.tcp.SocketGateway;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -29,6 +41,16 @@ public class SubmitEleTicketOder extends BaseAction{
     @Autowired
     GDVechIndentInfoRepository vechIndentInfoRepository;
     
+    @SuppressWarnings("rawtypes")
+    @Autowired
+    @Qualifier("vechTransport")
+    DefaultTransport trspTransport;
+    
+    @Autowired
+    @Qualifier("vechGateWay")
+    SocketGateway gateway;
+    
+    @SuppressWarnings("unchecked")
     @Override
     public void execute(Context context) throws CoreException, CoreRuntimeException {
         log.info("SubmitEleTicketOder Start!!");
@@ -98,10 +120,25 @@ public class SubmitEleTicketOder extends BaseAction{
         BigDecimal bunSurPri = new BigDecimal(0.0);
         bunSurPri = bunSurPri.add(BigDecimal.valueOf(Double.valueOf(infoArr[3])));
        
-        //易票联 电子票下单报文拼装
+        //易票联 电子票下单报文拼装 及 电子票下单接口调用 TODO;
+      
+         
+        String enCodePath="packet://WEB-INF/classes/config/stream/vech/f.xml";
+        String deCodePath="packet://WEB-INF/classes/config/stream/vech/p.xml";
+        trspTransport.setEncodeTransforms(new Transform[] { new EncoderTransform(enCodePath), new RequestTransform() });
+        trspTransport.setDecodeTransforms(new Transform[] { new DecoderTransform(deCodePath), new ResponseTransform() });
+        trspTransport.setGateway(gateway);
         
-        //易票联 电子票下单接口调用
+        Map<String, Object> responseMessage=new HashMap<String, Object>();
         
+        try {
+             responseMessage = (Map<String, Object>)trspTransport.submit(context.getDataMap(), context);
+        } catch (CommunicationException e) {
+            e.printStackTrace();
+        } catch (JumpException e) {
+            e.printStackTrace();
+        }
+
         //订单表数据插入
         GDVechIndentInfo  vechIndentInfo = new GDVechIndentInfo();
         vechIndentInfo.setBuyNum(count);

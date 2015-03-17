@@ -6,8 +6,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.jump.bp.JumpException;
+import com.bocom.jump.bp.channel.CommunicationException;
+import com.bocom.jump.bp.channel.DefaultTransport;
+import com.bocom.jump.bp.channel.Transform;
+import com.bocom.jump.bp.channel.interceptors.DecoderTransform;
+import com.bocom.jump.bp.channel.interceptors.EncoderTransform;
+import com.bocom.jump.bp.channel.interceptors.RequestTransform;
+import com.bocom.jump.bp.channel.interceptors.ResponseTransform;
+import com.bocom.jump.bp.channel.tcp.SocketGateway;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -36,6 +48,32 @@ public class QryBusSequenceAction  extends BaseAction{
         // <param name="sign">签名：sign=md5(storeNo + terminalNo + date + md5(password))  password 为终端密码</param>
 
         //易票联长途汽车班车查询接口 TODO;
+        /*
+         
+            @Autowired
+    @Qualifier("TRSP00Transport")
+    DefaultTransport trspTransport;
+    
+    @Autowired
+    @Qualifier("trspGateWay")
+    SocketGateway gateway;
+        String enCodePath="packet://WEB-INF/classes/config/stream/vech/f484011.xml";
+        String deCodePath="packet://WEB-INF/classes/config/stream/TRSP00/p484011.xml";
+        trspTransport.setEncodeTransforms(new Transform[] { new EncoderTransform(enCodePath), new RequestTransform() });
+        trspTransport.setDecodeTransforms(new Transform[] { new DecoderTransform(deCodePath), new ResponseTransform() });
+        trspTransport.setGateway(gateway);
+        
+        Map responseMessage=new HashMap();
+        
+        try {
+             responseMessage = (Map)trspTransport.submit(ctx.getDataMap(), ctx);
+        } catch (CommunicationException e) {
+            e.printStackTrace();
+        } catch (JumpException e) {
+            e.printStackTrace();
+        }
+
+         */
         String[] schemes = terminalQuerySchemeInfo(dateString, destination, ownerdepot, timeString);
         int schemesLength =schemes.length;
         if (schemesLength<1) {
