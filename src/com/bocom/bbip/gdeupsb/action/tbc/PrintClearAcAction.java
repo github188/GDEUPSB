@@ -70,7 +70,6 @@ public class PrintClearAcAction extends BaseAction {
     		context.setData("eles",entityList);
     		
     		log.info("TOMCAT----------------"+"Start--report");
-    		log.info("TOMCAT----------------"+"End--report");
     		if (CollectionUtils.isNotEmpty(entityList)) {
     		    Map<String, String> map = new HashMap<String, String>();
     		    map.put("tobaccoPrintReport", "config/report/sgrt00/tobaccoPrintReport.vm");
