@@ -88,7 +88,7 @@ public class EupsZeroAgtManageAction extends BaseAction {
 	private void add(Context context, Zero zero) throws CoreException, IOException  {
 		logger.info("----协议新增----");
 		get(ZeroRepository.class).addZero(zero);
-		//generateReport(context);
+		generateReport(context);
 	}
 
 	private void query(Context context, Zero zero) throws CoreException {
@@ -103,13 +103,15 @@ public class EupsZeroAgtManageAction extends BaseAction {
 		context.setData("payCod1", src.getPayCod());
 		context.setData("payNam1", src.getPayNam());
 		ContextUtils.setDataMapAsFlatMap(context, dest);
-		//generateReport(context);
+		context.setData("PayCod", dest.getPayCod());
+		context.setData("PayNam", dest.getPayNam());
+		generateReport(context);
 	}
 
 	private void delete(Context context, Zero zero) throws CoreException, IOException {
 		logger.info("----协议删除----");
 		get(ZeroRepository.class).deleteZero(zero);
-		//generateReport(context);
+		generateReport(context);
 	}
 	private void generateReport(Context context)throws CoreException, IOException {
 		Map<String, String> mapping = CollectionUtils.createMap();
