@@ -127,7 +127,9 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 		  InputStream location=null;
 		try {
 			//location =ClassLoader.getSystemResourceAsStream("config\\fmt\\fileFmt\\zh\\transIn.properties");
-			location = new FileInputStream(new File("D:\\transIn.properties"));
+			location = getClass().getClassLoader().
+			getResourceAsStream("config/fmt/fileFmt/zh/transIn.properties");
+			//location = new FileInputStream(new File("D:\\transIn.properties"));
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
