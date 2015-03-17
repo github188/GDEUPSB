@@ -26,7 +26,7 @@ TransCode.eups.commUpdateCusAgent=32
 TransCode.gdeupsb.cancelBatch=24
 
 ##南方电网   供电批量代扣文件准备
-TransCode.eups.autoAgtBchPayCrtDatProcess=20
+TransCode.eups.fileBatchPayCreateDataProcess=20
 
 ##珠海路桥  对账 
 TransCode.gdeupsb.checkTrspFile=GetChk
