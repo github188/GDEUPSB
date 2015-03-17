@@ -419,4 +419,10 @@
       </foreach>
     </if>
   </select>
+  
+    <select id="findByBatNo" resultMap="basicResultMap"
+		parameterType="java.lang.String">
+		select * from ${GDEUPSB_SCHEMA}.GDEUPS_GASH_BATCH_TMP where BAT_NO=#{batNo}
+
+	</select>
 </mapper>
