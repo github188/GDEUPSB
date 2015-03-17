@@ -278,6 +278,7 @@
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="comNo" type="tns:comNo_SType"/>
       <xs:element name="fleNme" type="tns:fleNme_SType"/>
     </xs:sequence>
   </xs:complexType>
@@ -288,6 +289,14 @@
       <xs:element ref="tns:responseHeader"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:simpleType name="comNo_SType">
+    <xs:annotation>
+      <xs:documentation>单位编号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:simpleType name="fleNme_SType">
     <xs:annotation>
       <xs:documentation>提交文件名称</xs:documentation>
@@ -315,14 +324,6 @@
       <xs:element ref="tns:responseHeader"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="comNo_SType">
-    <xs:annotation>
-      <xs:documentation>单位编号</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="15"/>
-    </xs:restriction>
-  </xs:simpleType>
   <xs:simpleType name="totCnt_SType">
     <xs:annotation>
       <xs:documentation>总笔数</xs:documentation>
