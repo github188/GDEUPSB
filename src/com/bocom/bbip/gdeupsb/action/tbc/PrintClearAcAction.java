@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 
+
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
@@ -26,6 +27,7 @@ import com.bocom.bbip.eups.entity.EupsTransJournal;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
 import com.bocom.bbip.utils.CollectionUtils;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -43,26 +45,28 @@ public class PrintClearAcAction extends BaseAction {
 	EupsTransJournalRepository eupstransjournalRepository;
 	public void execute(Context context) throws CoreException,
 			CoreRuntimeException {
-		log.info("--------begin----------");
+		log.info("-PrintClearAcAction begin -!");
 		String tlr = context.getData(ParamKeys.TELLER);
 		String br =  context.getData(ParamKeys.BR);
 		String prtFlg = context.getData("prtFlg");
 		String txndat = context.getData("txnDat");
 		log.info("-------------------------- request date：" + txndat);
-		txndat = txndat.replaceAll("T", " ");
+        Date date = DateUtils.parse(txndat,DateUtils.STYLE_yyyyMMdd);
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 设置日期格式
 		String currentDat = df.format(new Date());// new Date()为获取当前系统时间
 		context.setData("prtDat", currentDat); // 打印日期
-		context.setData("eupsBusTyp", "烟草");
+		context.setData("eupsBusTyp", "SGRT00");
 		context.setData("tlr", tlr);
 		context.setData("br", br);
   
     	if("1".equals(prtFlg)){
     
-    		EupsTransJournal  jnl=new EupsTransJournal();
-    		jnl.setMfmTxnSts("S");
+    		EupsTransJournal  transJournal=new EupsTransJournal();
+    		transJournal.setEupsBusTyp("SGRT00");
+    		transJournal.setTxnDte(date);
+    		transJournal.setMfmTxnSts("S");
     //		jnl.setAcDte(d);
-    		List<EupsTransJournal> entityList = eupstransjournalRepository.find(jnl);
+    		List<EupsTransJournal> entityList = eupstransjournalRepository.find(transJournal);
     		context.setData("eles",entityList);
     		
     		log.info("TOMCAT----------------"+"Start--report");

@@ -55,7 +55,7 @@ public class FbpeBathFileDealAction implements BatchAcpService {
     @Override
     public void prepareBatchDeal(PrepareBatchAcpDomain arg0, Context context) throws CoreException {
 
-        String batNo=context.getData("batNo");
+        String batNo=context.getData("dskNo");
         log.info("BathFileDealAction start!..");
         List <GdFbpeFileBatchTmp> payDetailLst = new ArrayList<GdFbpeFileBatchTmp>();
         String comNo = context.getData("cAgtNo").toString();

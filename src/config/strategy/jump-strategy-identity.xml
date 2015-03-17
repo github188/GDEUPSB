@@ -17,6 +17,7 @@
 	<bean id="cancelBatchProcessELEC02"
 		class=" com.bocom.bbip.gdeupsb.action.elec02.EupsCancelBatchProcess">
 	</bean>
+	
 	<!-- 汕头电力 签到签退 -->
 	<bean id="eups.signInOutThirdServiceActionELEC02"
 		class="com.bocom.bbip.gdeupsb.action.elec02.SignInOutThirdServiceImplELEC02">
@@ -32,14 +33,22 @@
 	<bean id="eups.afterBatchAcpServiceActionFSAG00"
 		class="com.bocom.bbip.gdeupsb.action.fbpe.FbpeBatchResultDealAction">
 	</bean>
+    <!-- 佛山文本：文件批次撤销 -->
+    <bean id="cancelBatchProcessFSAG00"
+        class=" com.bocom.bbip.gdeupsb.action.fbpe.FbpeBatchCancelAction">
+    </bean>
 
-	<!-- 个人代扣：数据准备 交易类型未知TODO -->
-	<bean id="eups.fileBatchPayCreateDataServiceActionPlpd"
+	<!-- 个人代扣：数据准备  -->
+	<bean id="eups.fileBatchPayCreateDataServiceActionGDAG00"
 		class="com.bocom.bbip.gdeupsb.action.plpd.PlpdBathFileDealAction">
 	</bean>
 
-	<!-- 个人代扣：文件批量托收完成通知前端 交易类型未知TODO -->
-	<bean id="eups.afterBatchAcpServiceActionPlpd"
+    <!-- 个人代扣：文件批次撤销 -->
+    <bean id="cancelBatchProcessGDAG00"
+        class=" com.bocom.bbip.gdeupsb.action.elec02.EupsCancelBatchProcess">
+    </bean>
+	<!-- 个人代扣：文件批量托收完成通知前端  -->
+	<bean id="eups.afterBatchAcpServiceActionGDAG00"
 		class="com.bocom.bbip.gdeupsb.action.plpd.PlpdBatchResultDealAction">
 	</bean>
 
