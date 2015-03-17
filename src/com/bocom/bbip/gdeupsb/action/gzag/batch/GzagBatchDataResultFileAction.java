@@ -40,7 +40,7 @@ public class GzagBatchDataResultFileAction implements AfterBatchAcpService{
 	 */
 	public void afterBatchDeal(AfterBatchAcpDomain afterbatchacpdomain, Context context) throws CoreException {
 		logger.info("===============Start  GzagBatchDataResultFileAction");
-		//
+			
 			Map<String, Object> resultMap = new HashMap<String, Object>();
 			
 			String batNo=context.getData(ParamKeys.BAT_NO).toString();
