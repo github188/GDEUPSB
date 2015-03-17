@@ -434,4 +434,5 @@ public final class GDErrorCodes {
 	public static final String EUPS_VECH00_1008_ERROR = "BBIP4400EU0818";
 	/** 没有找到确认支付的订单 */
 	public static final String EUPS_VECH00_1009_ERROR = "BBIP4400EU0819";
+	
 }
