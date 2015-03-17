@@ -35,7 +35,7 @@ import com.bocom.jump.bp.core.CoreException;
 public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 	private final static Log logger=LogFactory.getLog(BatchDataFileAction.class);
 		/**
-		 * 批量代收付  数据准备
+		 * 批量代收付  数据准备  提交
 		 */
 	@Autowired 
 	GDEupsBatchConsoleInfoRepository gdEupsBatchConsoleInfoRepository;
@@ -93,6 +93,9 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 						Map<String, Object> resultMap=createFileMap(context);
 						context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_NAME, createFileName);
 						context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_MAP, resultMap);
+						
+						//提交代收付
+						userProcess(context);
 						logger.info("==========End  BatchDataFileAction");
 	}
 	/**
@@ -138,6 +141,12 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 			logger.info("=================End  BatchDataFileAction  createFileMap ");
 			return resultMap;
 		}
-
+/**
+ * 异步调用process
+ */
+		public void userProcess(Context context)throws CoreException{
+			String mothed="eups.batchPaySubmitDataProcess";
+			bbipPublicService.synExecute(mothed, context);
+		}
 }
 
