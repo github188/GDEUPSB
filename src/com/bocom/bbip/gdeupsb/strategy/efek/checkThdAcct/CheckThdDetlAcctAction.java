@@ -66,7 +66,7 @@ public class CheckThdDetlAcctAction implements Executable {
 			context.setData(ParamKeys.TXN_DTE, txnDte);
 			//一些常量
 			context.setData(GDParamKeys.TOTNUM, "1");
-			context.setData(ParamKeys.BANK_NO, "0301");
+			context.setData(ParamKeys.BANK_NO, "301");
 			context.setData(ParamKeys.TELLER_ID, "301_030600");  //收款人代码
 			context.setData("allCheckNumber", "1");
 			//对账类型  明细
@@ -255,6 +255,10 @@ public class CheckThdDetlAcctAction implements Executable {
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
 				context.setData("PKGCNT", "000001");
 				context.setData(GDParamKeys.BUS_IDENTIFY, "");
+				
+				context.setData("WJS", "1");
+				context.setData("number", "000001");
+				context.setData("xH", "1");
 				try{
 					Map<String, Object> rspMap = callThdTradeManager.trade(context);
 					
