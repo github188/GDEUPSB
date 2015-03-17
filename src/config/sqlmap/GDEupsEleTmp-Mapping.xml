@@ -604,4 +604,11 @@
     </set>
     where CUS_AC = #{cusAc,jdbcType=CHAR} and THD_CUS_NO=#{thdCusNo,jdbcType=CHAR}
   </update>
+  
+  <select id="findAllOrderBySqn" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_ELE_TMP ORDER BY SQN
+    </if>
+  </select>
 </mapper>
