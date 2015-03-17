@@ -57,7 +57,23 @@ public class GzagBatchDataFileAction implements BatchAcpService{
 			EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("gzagBatch");
 			//文件名称
 			String fileName=eupsThdFtpConfig.getLocFleNme();
-			String fileId=comNo+"BatchFile";
+			String fileId="";
+			if(comNo.equals("4410000578")){
+					fileId="lottBatchFile";
+			}else if(comNo.equals("4410000560")){
+					fileId="insuBatchFile";
+			}else if(comNo.equals("4410000561")){
+					fileId="insuBatchFile";
+			}else if(comNo.equals("4410001102")){
+					fileId="yctBatchFile";
+			}else if(comNo.equals("4410001274")){
+					fileId="yktBatchFile";
+			}else if(comNo.equals("4410001882")){
+					fileId="sptltBatchFile";
+			}else{
+					throw new CoreException("没有该单位");
+			}
+			
 			context.setData("fileId", fileId);
 			//获取文件并解析入库
 			List<Map<String, Object>> mapList=operateFileAction.pareseFile(eupsThdFtpConfig, fileId);
