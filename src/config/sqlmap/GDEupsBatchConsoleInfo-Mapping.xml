@@ -30,12 +30,13 @@
     <result column="RSV_FLD7" property="rsvFld7" jdbcType="VARCHAR" />
     <result column="RSV_FLD8" property="rsvFld8" jdbcType="VARCHAR" />
     <result column="RSV_FLD9" property="rsvFld9" jdbcType="VARCHAR" />
+     <result column="EUPS_BUS_TYP" property="eupsBusTyp" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="baseColumnList" >
     BAT_NO, TXN_MDE, RAP_TYP, COM_NO, COM_NME, BUS_KND, TXN_ORG_CDE, TXN_TLR, SUB_DTE, 
     EXE_DTE, BAT_STS, FLE_NME, TOT_CNT, TOT_AMT, SUC_TOT_CNT, SUC_TOT_AMT, FAL_TOT_CNT, 
     FAL_TOT_AMT, PAY_CNT, RSV_FLD1, RSV_FLD2, RSV_FLD3, RSV_FLD4, RSV_FLD5, RSV_FLD6, 
-    RSV_FLD7, RSV_FLD8, RSV_FLD9
+    RSV_FLD7, RSV_FLD8, RSV_FLD9,EUPS_BUS_TYP
   </sql>
   <select id="find" resultMap="basicResultMap" >
     select
@@ -125,6 +126,9 @@
       </if>
       <if test="rsvFld9!=null" >
         AND  RSV_FLD9=#{rsvFld9,jdbcType=VARCHAR}
+      </if>
+      <if test="eupsBusTyp!=null" >
+        AND  EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=VARCHAR}
       </if>
     </trim>
   </select>
@@ -225,6 +229,9 @@
       <if test="rsvFld9 != null" >
         RSV_FLD9,
       </if>
+      <if test="eupsBusTyp != null" >
+        EUPS_BUS_TYP
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="batNo != null" >
@@ -310,6 +317,9 @@
       </if>
       <if test="rsvFld9 != null" >
         #{rsvFld9,jdbcType=VARCHAR},
+      </if>
+      <if test="eupsBusTyp != null" >
+        #{eupsBusTyp,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -406,6 +416,9 @@
       <if test="rsvFld9!=null" >
         AND  RSV_FLD9=#{rsvFld9,jdbcType=VARCHAR}
       </if>
+       <if test="eupsBusTyp!=null" >
+        AND  EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=VARCHAR}
+      </if>
     </trim>
   </select>
   <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo" >
@@ -491,6 +504,9 @@
       </if>
       <if test="rsvFld9 != null" >
         RSV_FLD9 = #{rsvFld9,jdbcType=VARCHAR},
+      </if>
+      <if test="eupsBusTyp != null" >
+        EUPS_BUS_TYP = #{eupsBusTyp,jdbcType=VARCHAR},
       </if>
     </set>
     where BAT_NO = #{batNo,jdbcType=CHAR}
@@ -613,6 +629,9 @@
       <if test="rsvFld9 != null" >
         RSV_FLD9,
       </if>
+      <if test="eupsBusTyp != null" >
+        EUPS_BUS_TYP
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="batNo != null" >
@@ -698,6 +717,9 @@
       </if>
       <if test="rsvFld9 != null" >
         #{rsvFld9,jdbcType=VARCHAR},
+      </if>
+      <if test="eupsBusTyp != null" >
+        #{eupsBusTyp,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -786,6 +808,9 @@
       </if>
       <if test="rsvFld9 != null" >
         RSV_FLD9 = #{rsvFld9,jdbcType=VARCHAR},
+      </if>
+       <if test="eupsBusTyp != null" >
+        EUPS_BUS_TYP = #{eupsBusTyp,jdbcType=VARCHAR},
       </if>
     </set>
     where BAT_NO = #{batNo,jdbcType=CHAR}
