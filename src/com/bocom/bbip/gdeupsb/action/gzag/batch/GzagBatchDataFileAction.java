@@ -10,6 +10,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.comp.BBIPPublicService;
+import com.bocom.bbip.comp.account.AccountService;
+import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
@@ -28,7 +30,7 @@ import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
-public class GzagBatchDataFileAction implements BatchAcpService{
+public class GzagBatchDataFileAction extends BaseAction implements BatchAcpService{
 	private final static Log logger=LogFactory.getLog(GzagBatchDataFileAction.class);
 		/**
 		 * 广州文本  数据准备
@@ -123,11 +125,11 @@ public class GzagBatchDataFileAction implements BatchAcpService{
 				String cusAc=gdEupsGzagBatchTmp.getCusAc();
 				agtFileBatchDetail.setCUSAC(cusAc);
 				//本行标志
-//				if(get(AccountService.class).isOurBankCard(cusAc)){
+				if(get(AccountService.class).isOurBankCard(cusAc)){
 				agtFileBatchDetail.setOUROTHFLG("0");
-//				}else{
-//					agtFileBatchDetail.setOUROTHFLG("1");
-//				}
+				}else{
+					agtFileBatchDetail.setOUROTHFLG("1");
+				}
 				agtFileBatchDetail.setCUSNME(gdEupsGzagBatchTmp.getThdCusNme());
 				agtFileBatchDetail.setOBKBK("443999");
 				
