@@ -18,6 +18,7 @@ import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
 import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
+import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbElecstBatchTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbElecstBatchTmpRepository;
@@ -36,6 +37,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements AfterB
 	@Override
 	public void afterBatchDeal(AfterBatchAcpDomain arg0, Context context)throws CoreException {
 		logger.info("电力返盘文件处理开始");
+		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).afterBatchProcess(context);
 		Map<String,Object>ret=new HashMap<String,Object>();
         final List result=(List<EupsBatchInfoDetail>)context.getVariable("detailList");
         Assert.isNotEmpty(result, ErrorCodes.EUPS_QUERY_NO_DATA);
