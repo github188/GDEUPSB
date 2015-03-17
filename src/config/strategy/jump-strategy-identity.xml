@@ -175,8 +175,8 @@
 	<bean id="eups.checkThdSumAcctServiceActionELEC00"
 		class="com.bocom.bbip.gdeupsb.strategy.efek.checkThdAcct.CheckThdSumAcctAction" />
 
-	<!-- 批量文件 准备(定时) -->
-	<bean id="eups.autoBatchPayCreateDataInitActionELEC00"
+	<!-- 批量文件 准备 -->
+	<bean id="eups.fileBatchPayCreateDataServiceActionELEC00"
 		class="com.bocom.bbip.gdeupsb.action.efek.batch.BatchDataFileAction" />
 	<!-- 批量文件 返回 -->
 	<bean id="eups.afterBatchAcpServiceActionELEC00"
