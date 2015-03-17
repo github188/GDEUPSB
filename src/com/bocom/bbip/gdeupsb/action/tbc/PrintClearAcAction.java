@@ -78,6 +78,7 @@ public class PrintClearAcAction extends BaseAction {
     			
     			log.info("TOMCAT----------------" + result);
     			PrintWriter printWriter = null;
+    			//TODO 先本地生产！
     			String mftploca = "E:\\Report\\";
     			String reportFileName = "tbc.txt";
     			try {
