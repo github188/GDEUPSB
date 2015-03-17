@@ -84,8 +84,8 @@
 	
 	
 	<bean id="trspGateWay" class="com.bocom.jump.bp.channel.tcp.SocketGateway"> 
-				<property name="host" value="127.0.0.1"/>
-				<property name="port" value="9900" />
+				<property name="host" value="182.59.28.80"/>
+				<property name="port" value="7600" />
 				<property name="soTimeout" value="30000" />
 				<property name="streamResolver">
 				<!-- 
