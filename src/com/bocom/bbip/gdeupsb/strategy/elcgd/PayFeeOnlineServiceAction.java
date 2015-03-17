@@ -116,13 +116,15 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 		String payMde = new String();
 		if ("000".equals(vchTyp)) {
 			payMde = Constants.PAY_MDE_0; // 现金
+			context.setData(ParamKeys.AC_TYP, "00");
 		} else if ("007".equals(vchTyp)) {
 			payMde = Constants.PAY_MDE_4; // 卡
 		} else {
-			// TODO:为了测试，默认为现金
+			//TODO:默认为现金
 			payMde = Constants.PAY_MDE_0; // 现金
+			context.setData(ParamKeys.AC_TYP, "00");
 		}
-
+		
 		context.setData(ParamKeys.PAY_MDE, payMde);
 
 		context.setData("bvNo", context.getData("vchNo")); // 凭证号码
