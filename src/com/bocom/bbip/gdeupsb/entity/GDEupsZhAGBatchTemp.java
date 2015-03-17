@@ -94,8 +94,9 @@ public class GDEupsZhAGBatchTemp {
 	}
 
 	public void setTxnAmt(String txnAmt) {
-		final String temp=NumberUtils.yuanToCentString(txnAmt.trim());
-		this.txnAmt=StringUtils.leftPad(temp, 18, "0");
+		this.txnAmt=txnAmt;
+		/*final String temp=NumberUtils.yuanToCentString(txnAmt.trim());
+		this.txnAmt=StringUtils.leftPad(temp, 18, "0");*/
 	}
 
 	public String getThdCusNo() {
