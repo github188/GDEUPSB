@@ -609,6 +609,5 @@
     select 
     <include refid="baseColumnList" />
     from ${GDEUPSB_SCHEMA}.GDEUPS_ELE_TMP ORDER BY SQN
-    </if>
   </select>
 </mapper>
