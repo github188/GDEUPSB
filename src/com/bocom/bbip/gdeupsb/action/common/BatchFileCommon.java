@@ -56,6 +56,7 @@ public class BatchFileCommon extends BaseAction {
 		/** 插入批次控制表 */
 		String batNo =((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
 		info.setBatNo(batNo);
+		info.setBusKnd(eupsBusTyp);
 		info.setBatSts(GDConstants.BATCH_STATUS_INIT);
 		info.setFleNme(fleNme);
 		info.setSubDte(new Date());
@@ -111,9 +112,9 @@ public class BatchFileCommon extends BaseAction {
 		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne(ParamKeys.FTPID_BATCH_PAY_FILE_TO_ACP);
 		Assert.isFalse(null==config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST);
 		config.setLocFleNme(fleNme);
-		config.setLocDir(dir);
+		config.setLocDir("D:\\");
 		/** 产生代收付格式文件 */
-		((OperateFileAction)get("opeFile")).createCheckFile(config, GDConstants.BATCH_FILE_FORMAT, fleNme, fileMap);
+		((OperateFileAction)get("opeFile")).createCheckFile(config, "BatchFmt", fleNme, fileMap);
 		
 	}
 	public void afterBatchProcess(Context context)throws CoreException{
