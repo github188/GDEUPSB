@@ -1254,7 +1254,7 @@
       <xs:element name="ActFlg" type="tns:ActFlg_SType" minOccurs="0"/>
       <xs:element name="accTyp" type="tns:accTyp_SType" minOccurs="0"/>
       <xs:element name="VchCod" type="tns:VchCod_SType" minOccurs="0"/>
-      <xs:element name="cusAc" type="tns:cusAc_SType"/>
+      <xs:element name="cusAc" type="tns:cusAc_SType" minOccurs="0"/>
       <xs:element name="CusNme" type="tns:CusNme_SType" minOccurs="0"/>
       <xs:element name="BActSq" type="tns:BActSq_SType" minOccurs="0"/>
       <xs:element name="choNo" type="tns:choNo_SType" minOccurs="0"/>
