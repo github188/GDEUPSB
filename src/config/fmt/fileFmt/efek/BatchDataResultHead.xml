@@ -5,21 +5,17 @@
 	encoding="utf-8"  trace="true">
 	
 	<segment name="header" encoding="utf-8">
-		<fixString name="rsvFld3"  length="24"></fixString><!-- 批次号 -->
+		<fixString name="rsvFld9"  length="27"></fixString><!-- 批量代收信息标识 -->
 		<fixString name="comNo"  length="8"></fixString><!-- 单位编码	DWBM	Varchar2(8) -->
-		<fixString name="rsvFld8"  length="24"></fixString><!-- 入账银行代码	RZYHDM	Varchar2(4) -->
+		<fixString name="rsvFld8"  length="4"></fixString><!-- 入账银行代码	RZYHDM	Varchar2(4) -->
 		<fixString name="rsvFld7"  length="5"></fixString><!-- 货币符号  -->
 		<fixString name="busKnd"  length="3"></fixString><!-- 收费方式	SFFS	Varchar2(3) -->
-		<fixString name="rsvFld5"  length="3"></fixString><!-- 费用类型 -->
 		<fixString name="totCnt"  length="11"></fixString><!-- 总笔数	ZBS	Number(10) -->
 		<fixString name="totAmt"  length="16"></fixString><!-- 总金额	ZJE	Number(14,2) -->	
-		<fixString name="rsvFld4"  length="2"></fixString><!-- 账户类型 -->	
 		<fixString name="sucTotCnt"  length="11"></fixString><!-- 成功笔数 -->	
 		<fixString name="sucTotAmt"  length="16"></fixString><!-- 成功金额	 -->		
 		<fixString name="falTotCnt"  length="11"></fixString><!-- 失败笔数 -->
 		<fixString name="falTotAmt"  length="16"></fixString><!-- 失败金额 -->	
 		<fixString name="txnTlr"  length="20"></fixString><!-- 收费员 -->	
-
 	</segment>
-	
 </message>
