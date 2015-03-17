@@ -95,8 +95,10 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 						context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_MAP, resultMap);
 						
 						//提交代收付
-						userProcess(context);
-						//得到反盘文件 处理成第三方格式返回
+						userProcessToSubmit(context);
+						//得到反盘文件 
+						userProcessToGet(context);
+						//处理成第三方格式返回
 						logger.info("==========End  BatchDataFileAction  prepareBatchDeal");
 	}
 	/**
@@ -112,7 +114,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 			//detail
 			GDEupsEleTmp gdEupsEleTmps=new GDEupsEleTmp();
 			gdEupsEleTmps.setComNo(context.getData(ParamKeys.COMPANY_NO).toString());
-			List<GDEupsEleTmp> gdEupsEleTmpList=gdEupsEleTmpRepository.findAll();
+			List<GDEupsEleTmp> gdEupsEleTmpList=gdEupsEleTmpRepository.findAllOrderBySqn();
 			
 			List<AgtFileBatchDetail> detailList=new ArrayList<AgtFileBatchDetail>();
 			for (GDEupsEleTmp gdEupsEleTmp : gdEupsEleTmpList) {
@@ -143,21 +145,22 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 			return resultMap;
 		}
 	/**
-	 * 异步调用process
+	 * 异步调用process   批量代扣数据提交
 	 */
-		public void userProcess(Context context)throws CoreException{
+		public void userProcessToSubmit(Context context)throws CoreException{
 			logger.info("==========Start  BatchDataFileAction  userProcess");
 			String mothed="eups.batchPaySubmitDataProcess";
 			bbipPublicService.synExecute(mothed, context);
 			logger.info("==========End  BatchDataFileAction  userProcess");
 		}
 	/**
-	 * 反盘文件拼装第三方格式
+	 * 异步调用process  代收付回调函数：解析回盘文件并入库
 	 */
-		public Map<String, Object> createThdFileMap(Context context){
-			
-			Map<String, Object> map=new HashMap<String, Object>();
-			return map;
+		public void userProcessToGet(Context context)throws CoreException{
+			logger.info("==========Start  BatchDataFileAction  userProcess");
+			String mothed="eups.commNotifyBatchStatus";
+			bbipPublicService.synExecute(mothed, context);
+			logger.info("==========End  BatchDataFileAction  userProcess");
 		}
 }
 
