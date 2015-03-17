@@ -70,26 +70,21 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 		((SqlMap)get("sqlMap")).insert("com.bocom.bbip.gdeupsb.entity.GDEupsbElecstBatchTmp.batchInsert", list);;
 		
 		List <GDEupsbElecstBatchTmp>lt=get(GDEupsbElecstBatchTmpRepository.class).findByBatNo((String)context.getData(ParamKeys.BAT_NO));
-		for(GDEupsbElecstBatchTmp temp:lt){
-			temp.setCusAc(temp.getCusAc()==null?temp.getThdCusNo():temp.getCusAc());
-			temp.setCusNme(temp.getCusNme()==null?temp.getThdCusNme():temp.getCusNme());
-			temp.setThdCusNo(temp.getCusAc()==null?temp.getThdCusNo():temp.getCusAc());
-			temp.setThdCusNme(temp.getCusNme()==null?temp.getThdCusNme():temp.getCusNme());
-			
-		}
-		List<Map<String,Object>> detail=(List<Map<String, Object>>) BeanUtils.toMaps(lst);
+		
+		List<Map<String,Object>> detail=(List<Map<String, Object>>) BeanUtils.toMaps(lt);
 		Map<String, Object> header = CollectionUtils.createMap();
 		context.setData(ParamKeys.COMPANY_NO, (String)context.getData("comNoAcps"));
 		Map<String, Object> temp = CollectionUtils.createMap();
 		temp.put(ParamKeys.EUPS_FILE_HEADER, context.getDataMapDirectly());
 		temp.put(ParamKeys.EUPS_FILE_DETAIL, detail);
 		context.setVariable("agtFileMap", temp);
-		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).sendBatchFileToACP(context);
 		GDEupsBatchConsoleInfo console=new GDEupsBatchConsoleInfo();
 		console.setBatNo((String)context.getData(ParamKeys.BAT_NO));
 		/**更新批次状态为待提交*/
 		console.setBatSts(GDConstants.BATCH_STATUS_WAIT);
 		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(console);
+		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).sendBatchFileToACP(context);
+		
 		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).unLock(comNo);
 		logger.info("批量文件数据准备结束-------------");
 	}
