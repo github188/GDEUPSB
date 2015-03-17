@@ -73,7 +73,7 @@ public class GzagBatchDataFileAction implements BatchAcpService{
 			}else{
 					throw new CoreException("没有该单位");
 			}
-			
+			logger.info("~~~~~~~~~~~~~fileId=["+fileId+"]");
 			context.setData("fileId", fileId);
 			//获取文件并解析入库
 			List<Map<String, Object>> mapList=operateFileAction.pareseFile(eupsThdFtpConfig, fileId);
@@ -81,11 +81,13 @@ public class GzagBatchDataFileAction implements BatchAcpService{
 					throw new CoreException("处理状态异常");
 			}
 			for (Map<String, Object> map : mapList) {
-					map.put(ParamKeys.EUPS_FILE_HEADER, BeanUtils.toMap(context));
-					map.put(ParamKeys.SEQUENCE, bbipPublicService.getBBIPSequence());
-					GDEupsGzagBatchTmp gdEupsGzagBatchTmp=BeanUtils.toObject(map,GDEupsGzagBatchTmp.class);
-					gdEupsGzagBatchTmp.setBakFld(comNo);
-					gdEupsGzagBatchTmpRepository.insert(gdEupsGzagBatchTmp);
+						if(fileId.equals("lottBatchFile") || fileId.equals("sptltBatchFile")){
+								map.put(ParamKeys.EUPS_FILE_HEADER, BeanUtils.toMap(context));
+						}
+						map.put(ParamKeys.SEQUENCE, bbipPublicService.getBBIPSequence());
+						GDEupsGzagBatchTmp gdEupsGzagBatchTmp=BeanUtils.toObject(map,GDEupsGzagBatchTmp.class);
+						gdEupsGzagBatchTmp.setBakFld(comNo);
+						gdEupsGzagBatchTmpRepository.insert(gdEupsGzagBatchTmp);
 			}
 			logger.info("~~~~~~~~~~~~~End  insert  (获取文件并解析入库)");
 
