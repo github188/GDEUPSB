@@ -19,10 +19,10 @@
 82	费用年月	6	YYYYMM  示例：201309
 89	应缴费用	10	示例：123.23
 -->
-	<fixString name="tCommd" length="10"/>
+	<fixString name="tmpFld1" length="10"/>
 	<fixString  name="Deli1" length="1" default=","/>
 	
-	<fixString name="thdsqn" length="18"    />
+	<fixString name="thdSqn" length="18"    />
 	<fixString  name="Deli2" length="1" default=","/>
 	
 	<fixString name="bk" length="4"   />
@@ -34,7 +34,7 @@
 	<fixString name="cusAc" length="32"   />
 	<fixString  name="Deli5" length="1" default=","/> 
 	
-	<fixString name="rsvFld6" length="6"   />
+	<fixString name="tmpFld2" length="6"   />
 	<fixString  name="Deli6" length="1" default=","/> 
 	
 	<fixString name="txnAmt" length="10"   />
