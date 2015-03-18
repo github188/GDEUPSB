@@ -7,16 +7,14 @@ import com.bocom.bbip.data.annotation.Delete;
 import com.bocom.bbip.data.annotation.Find;
 import com.bocom.bbip.data.annotation.Update;
 import com.bocom.bbip.data.repository.PagingAndSortingRepository;
-import com.bocom.bbip.gdeupsb.entity.GdLotChkCtl;
 import com.bocom.bbip.gdeupsb.entity.GdLotChkDtl;
 
 public interface GdLotChkDtlRepository extends PagingAndSortingRepository<GdLotChkDtl, String> {
-
     
-	@Delete
+    @Delete
     public void deleteByGameId(GdLotChkDtl lotChkCtlInput);
-	
-	@Update
+    
+    @Update
     public void updateByGameIdAndDrawId(GdLotChkDtl lotChkDtl);
 
     @Update

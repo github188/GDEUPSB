@@ -50,6 +50,12 @@ public class GdLotDrwTbl {
 
     private String flwCtl;
 
+    private String rtnTim;
+
+    private String clrTim;
+
+    private String xfeFlg;
+
     public Long getSqn() {
         return sqn;
     }
@@ -224,5 +230,29 @@ public class GdLotDrwTbl {
 
     public void setFlwCtl(String flwCtl) {
         this.flwCtl = flwCtl;
+    }
+
+    public String getRtnTim() {
+        return rtnTim;
+    }
+
+    public void setRtnTim(String rtnTim) {
+        this.rtnTim = rtnTim;
+    }
+
+    public String getClrTim() {
+        return clrTim;
+    }
+
+    public void setClrTim(String clrTim) {
+        this.clrTim = clrTim;
+    }
+
+    public String getXfeFlg() {
+        return xfeFlg;
+    }
+
+    public void setXfeFlg(String xfeFlg) {
+        this.xfeFlg = xfeFlg;
     }
 }
