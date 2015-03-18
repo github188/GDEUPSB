@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="20Request">
+	<fixString name="SBN" length="12" />     <!--发起业务的节点代码 -->
+	<fixString name="WDO" length="8 " />     <!--工作日期 -->
+	<fixString name="TLogNo" length="16" />  <!--供电局流水 -->
+	<fixString name="CHT" length="1" />              <!--变更方式 0-新增,3-修改,5-查询,9-注销 -->
+	<fixString name="ECD" length="12" />     <!--收付费企业代码 -->
+	<fixString name="EDD" length="3" />     <!--费项代码 -->
+	<fixString name="JFH" length="32" />     <!--缴费号 -->
+	<fixString name="OKH" length="12" />     <!--原开户行行号 -->
+	<fixString name="OAC" length="32" />     <!--原账户/卡号 -->
+	<fixString name="KKB" length="12" />     <!--新开户行行号 -->
+	<fixString name="TActNo" length="32" />  <!--新账户/卡号 -->
+	<fixString name="TActNm" length="40" />  <!--新客户名称 -->
+	<fixString name="ACT" length="1" />                                    <!--帐号类型 -->
+	<fixString name="TXT" length="64" />     <!--备注 -->
+	<fixString name="UsrNam" length="64" />  <!--用户名称 -->
+	<fixString name="TIdTyp" length="2 " />  <!--证件类型 -->
+	<fixString name="TIdNo" length="32" />   <!--证件号码 -->
+	<fixString name="DLNo" length="12" />    <!--供电公司编号 -->
+	<fixString name="DLOpr" length="32" />   <!--供电操作员 -->
+	<fixString name="JLD" length="5 " />    <!--计量点号 -->  
+			
+</segment>
