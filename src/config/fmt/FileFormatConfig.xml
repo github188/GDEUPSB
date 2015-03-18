@@ -117,27 +117,27 @@
 
 
 	<!-- 南方电网  对账 -->
-	<file name="elecCheckFile" id="elecCheckFile" encoding="utf-8"
+	<file name="elecCheckFile" id="elecCheckFile" encoding="GBK"
 		lineSeparator="\n">
 		<line name="header" ref="config/fmt/fileFmt/efek/CheckFileDtlHead.xml" />
 		<foreach name="detail" ref="config/fmt/fileFmt/efek/CheckFileDetail.xml" />
 	</file>
 
 	<!-- 日志服务 -->
-	<file name="logService" id="logService" encoding="utf-8"
+	<file name="logService" id="logService" encoding="GBK"
 		lineSeparator="\n">
 		<line name="header" ref="config/fmt/fileFmt/efek/LogServiceHead.xml" />
 		<foreach name="detail" ref="config/fmt/fileFmt/efek/LogServiceDetail.xml" />
 	</file>
 
 	<!-- 南方电网 批量文件入库 -->
-	<file name="batchFile" id="batchFile" encoding="UTF-8"
+	<file name="batchFile" id="batchFile" encoding="GBK"
 		lineSeparator="\n">
 		<line name="head" ref="config/fmt/fileFmt/efek/BatchDataHead.xml" />
 		<foreach name="detail" ref="config/fmt/fileFmt/efek/BatchDataDetail.xml" />
 	</file>
 	<!-- 南方电网 批量文件返回 -->
-	<file name="efekBatchResulf" id="efekBatchResulf" encoding="UTF-8"
+	<file name="efekBatchResulf" id="efekBatchResulf" encoding="GBK"
 		lineSeparator="\n">
 		<line name="head" ref="config/fmt/fileFmt/efek/BatchDataResultHead.xml" />
 		<foreach name="detail" ref="config/fmt/fileFmt/efek/BatchDataResultDetail.xml" />
