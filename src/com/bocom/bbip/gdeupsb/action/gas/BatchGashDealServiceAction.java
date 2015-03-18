@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
@@ -53,6 +54,9 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
 public class BatchGashDealServiceAction extends BaseAction implements BatchAcpService  {
 
 	private final static Logger logger = LoggerFactory.getLogger(BatchGashDealServiceAction.class);
+	
+	@Autowired
+	BBIPPublicService bbipPublicService;
 	
 	@Override
 	public void prepareBatchDeal(PrepareBatchAcpDomain arg0, Context context)
@@ -181,6 +185,9 @@ public class BatchGashDealServiceAction extends BaseAction implements BatchAcpSe
 		header.put("totCnt", lt.size());
 		header.put("totAmt", totAmt);
 		
+		context.setData(ParamKeys.TOT_CNT, lt.size());
+		context.setData(ParamKeys.TOT_AMT, totAmt);
+		
 		temp.put(ParamKeys.EUPS_FILE_HEADER, header);
 		temp.put(ParamKeys.EUPS_FILE_DETAIL, gasBatDetail);
 		context.setVariable("agtFileMap", temp);
@@ -193,6 +200,17 @@ public class BatchGashDealServiceAction extends BaseAction implements BatchAcpSe
 		
 		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).unLock(comNo);
 		logger.info("批量文件数据准备结束-------------");
+		
+		logger.info("==============context:" + context);
+		
+		//提交代收付
+		userProcessToSubmit(context);
+		//得到反盘文件 
+		userProcessToGet(context);
+		//处理成第三方格式返回
+		logger.info("==========End  BatchDataFileAction  prepareBatchDeal");
+		
+		
 		
 	}
 	
@@ -211,5 +229,28 @@ public class BatchGashDealServiceAction extends BaseAction implements BatchAcpSe
 	    }
 	    return map;
 	  }
+	  
+	  
+	  
+	  /**
+		 * 异步调用process   批量代扣数据提交
+		 */
+			public void userProcessToSubmit(Context context)throws CoreException{
+				logger.info("==========Start  BatchDataFileAction  userProcess");
+				String mothed="eups.batchPaySubmitDataProcess";
+				bbipPublicService.synExecute(mothed, context);
+				logger.info("==========End  BatchDataFileAction  userProcess");
+			}
+		/**
+		 * 异步调用process  代收付回调函数：解析回盘文件并入库
+		 */
+			public void userProcessToGet(Context context)throws CoreException{
+				logger.info("==========Start  BatchDataFileAction  userProcess");
+				String mothed="eups.commNotifyBatchStatus";
+				bbipPublicService.synExecute(mothed, context);
+				logger.info("==========End  BatchDataFileAction  userProcess");
+			}
+	  
+	  
 	
 }
