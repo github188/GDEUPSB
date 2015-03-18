@@ -14,7 +14,7 @@
 此.txt文件内容格式参照接口一
  -->
 	
-	<fixString name="tCommd" length="10" /> 
+	<fixString name="thdTxnCde" length="10" /> 
  	<!-- <fixString name="DeliA"      length="1" default=","/> -->
  	
  	<fixString name="fleNme" length="64" />

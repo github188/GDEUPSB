@@ -12,7 +12,7 @@
 （要求于第二日早上6点前将此文件放到ftp://BANK/银行标志/reckoning/目录下）
  -->
  	
- 	<fixString name="tCommd" length="10" />
+ 	<fixString name="thdTxnCde" length="10" />
  	 <!-- <fixString  name="Deli2" length="1" default=","/> -->
  	
 	<fixString name="fleNme" length="64"    />
