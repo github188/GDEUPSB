@@ -1,0 +1,25 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:sch="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service/Schema" xmlns:gsp="http://gsp.bankcomm.com" xmlns:bbip="http://bbip.bankcomm.com">
+   <soapenv:Body>
+      <sch:payCancelOffChan>
+          <gsp:requestInformation>
+            <gsp:traceNo>2004440320150305113500000300</gsp:traceNo>
+            <gsp:version>1.0</gsp:version>
+         </gsp:requestInformation>
+         <sch:request>
+            <sch:requestHeader>
+               <bbip:bbipRequestHead>
+                  <bbip:chn>00</bbip:chn>
+                  <bbip:reqJrnNo>2004440320150305113500000300</bbip:reqJrnNo>
+                  <bbip:tlr>ABIR148</bbip:tlr>
+                  <bbip:br>01441131999</bbip:br>
+                  <bbip:bk>01441999999</bbip:bk>
+                  <bbip:tlrTmlId>441131A</bbip:tlrTmlId>
+                  <bbip:reqTme>2015-02-12T12:12:12</bbip:reqTme>
+               </bbip:bbipRequestHead>
+            </sch:requestHeader>
+            <sch:eupsBusTyp>WATR00</sch:eupsBusTyp>
+            <sch:oldTxnSqn>20150305000000012109</sch:oldTxnSqn>
+         </sch:request>
+      </sch:payCancelOffChan>
+   </soapenv:Body>
+</soapenv:Envelope>
