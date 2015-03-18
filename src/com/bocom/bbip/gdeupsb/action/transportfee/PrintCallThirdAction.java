@@ -35,8 +35,7 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
 public class PrintCallThirdAction extends BaseAction{
 	private final static Log log = LogFactory.getLog(PrintCallThirdAction.class);
 	
-	@Autowired
-	ThirdPartyAdaptor callThdTradeManager;
+	
 	@Autowired
 	GDEupsbTrspFeeInfoRepository gdEupsbTrspFeeInfoRepository;
 	@Autowired
@@ -168,9 +167,9 @@ public class PrintCallThirdAction extends BaseAction{
 				gdEupsbTrspFeeInfo.setTactDt(tactDt);
 				
 			
-				gdEupsbTrspFeeInfo.setPrtNod(ctx.getData(ParamKeys.BR).toString());
-				gdEupsbTrspFeeInfo.setPrtTlr(ctx.getData(GDParamKeys.TLR_ID).toString());  //TODO:字段名称待确定
-				gdEupsbTrspFeeInfo.setThdKey(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
+				gdEupsbTrspFeeInfo.setPrtNod(ctx.getData(ParamKeys.BR).toString());     //打印网点号
+				gdEupsbTrspFeeInfo.setPrtTlr(ctx.getData(ParamKeys.TELLER).toString());  //打印柜员号
+				gdEupsbTrspFeeInfo.setPayLog(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
 				gdEupsbTrspFeeInfoRepository.updateStatus(gdEupsbTrspFeeInfo);
 				ctx.setState("complete");
 
