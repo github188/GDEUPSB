@@ -2,9 +2,9 @@
 <message xmlns="http://www.bocom.com/jump/transformer/packet"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
-	encoding="utf-8" trace="true">
+	encoding="GBK" trace="true">
 	
-	<segment name="detail"  encoding="utf-8">
+	<segment name="detail"  encoding="GBK">
 			<fixString name="thdCusNo" 		  length="12"/>	  <!--粤通卡卡号-->
 			<fixString name="txnTme"	  length="14"/>	  <!--交易时间-->
 			<fixString name="cusAc"   length="19"/>   <!--帐号--> 

@@ -2,9 +2,9 @@
 <message xmlns="http://www.bocom.com/jump/transformer/packet"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
-	encoding="utf-8" trace="true">
+	encoding="GBK" trace="true">
 	
-	<segment name="detail"  encoding="utf-8">
+	<segment name="detail"  encoding="GBK">
 			<fixString name="lendtypeOrGameno"          length="2"/><!--游戏编号-->
 	        <fixString name="number"           length="5"/><!--总期号-->
 	        <fixString name="sitrLogicNo"            length="8"/><!--站点逻辑机号-->   

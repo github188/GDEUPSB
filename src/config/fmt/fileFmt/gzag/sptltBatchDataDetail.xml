@@ -2,9 +2,9 @@
 <message xmlns="http://www.bocom.com/jump/transformer/packet"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
-	encoding="utf-8" trace="true">
+	encoding="GBK" trace="true">
 	
-	<segment name="detail"  encoding="utf-8">
+	<segment name="detail"  encoding="GBK">
 			<fixString  name="bankSqn"	            length="20" /><!--接入系统流水号-->
 			<fixString  name="lottSqn"	           length="20" /><!--购彩流水号-->
 			<fixString  name="awardDate"	              length="8"/><!--返奖日期-->   
