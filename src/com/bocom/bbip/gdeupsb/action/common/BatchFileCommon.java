@@ -79,19 +79,25 @@ public class BatchFileCommon extends BaseAction {
 		context.setData("comNoAcps", comNoAcps);
 		context.getDataMapDirectly().putAll(BeanUtils.toFlatMap(info));
 	}
-
+/**
+ * 上锁
+ */
 	public void unLock(final String lockKey)throws CoreException {
 		Assert.isFalse(StringUtils.isBlank(lockKey), ErrorCodes.EUPS_FIELD_EMPTY, "lockKey");
 		Result result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).unlock(lockKey);
 		Assert.isTrue(result.isSuccess(), GDErrorCodes.EUPS_UNLOCK_FAIL);
 	}
-
+	/**
+	 * 解锁
+	 */
 	public void Lock(final String lockKey)throws CoreException {
 		Assert.isFalse(StringUtils.isBlank(lockKey), ErrorCodes.EUPS_FIELD_EMPTY ,"lockKey");
 		Result result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).tryLock(lockKey, 60*1000L, 600L);
 		Assert.isTrue(result.isSuccess(), GDErrorCodes.EUPS_LOCK_FAIL);
 	}
-
+	/**
+	 * 
+	 */
 	public void sendBatchFileToACP(final Context context) throws CoreException {
 		final String comNo=(String)context.getData(ParamKeys.COMPANY_NO);
 		final String tlr=(String)context.getData(ParamKeys.TELLER);
