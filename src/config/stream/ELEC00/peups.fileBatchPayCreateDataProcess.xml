@@ -14,7 +14,7 @@
 		<fixString name="fleNme"  length="36"></fixString><!-- 文件名称	WJMC	Varchar2(36) -->
 		<fixString name="fleType"  length="2"></fixString><!-- 文件类型	WJLX	Varchar2(2) -->
 		<fixString name="fleMD5"  length="32"></fixString><!-- 文件MD5	WJMD5	Varchar2(32) -->
-		<fixString name="totCnt"  length="10"></fixString><!-- 总笔数	ZBS	Number(10) -->
+		<fixString name="totCnt"  length="11"></fixString><!-- 总笔数	ZBS	Number(10) -->
 		<fixString name="totAmt"  length="16"></fixString><!-- 总金额	ZJE	Number(14,2) -->		
       
 </segment>
