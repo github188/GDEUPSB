@@ -84,21 +84,23 @@ public class ExecutePlanPayServiceActionLOTR01 extends BaseAction {
 		String sent_time = DateUtils.format(new Date(),DateUtils.STYLE_FULL);
 		context.setData("dealer_id", dealer_id);
 		//定投执行前执行登录操作，调用已有交易
-//		get(LoginAction.class).execute(context);
 		get(BBIPPublicService.class).synExecute("gdeupsb.lotLogin", context);
 		if(!context.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL)){
 			//TODO:系统登录失败，发送短信给维护人员
 			
+			logger.error("=====福彩定投执行登录失败=====");
 			throw new CoreException(GDErrorCodes.EUPS_LOTR01_17_ERROR);
 		}
+		logger.info("=====福彩定投执行登录成功=====");
 		//奖期信息下载，调用已有交易
-//		get()
+		get(BBIPPublicService.class).synExecute("gdeups.downloadPrizeInfo", context);
 		if(!context.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL)){
 			//TODO:奖期信息下载失败，发送短信给维护人员
 			
+			logger.error("=====福彩定投执行奖期信息下载失败=====");
 			throw new CoreException(GDErrorCodes.EUPS_LOTR01_18_ERROR);
 		}
-		
+		logger.info("=====福彩定投执行奖期信息下载成功=====");
 		
 		context.setData("gameId", gameId);//设置游戏编号
 		context.setData("action", action);
@@ -256,6 +258,7 @@ public class ExecutePlanPayServiceActionLOTR01 extends BaseAction {
 		GdLotDrwTbl gdLotDrwTbl = context.getData("gdLotDrwTbl");
 		String curtim = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMddHHmmss);
 		if(curtim.compareTo(gdLotDrwTbl.getSalEnd())>0){
+			logger.error("非购彩时间");
 			throw new CoreException(GDErrorCodes.EUPS_LOTR01_06_ERROR);
 		}
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);

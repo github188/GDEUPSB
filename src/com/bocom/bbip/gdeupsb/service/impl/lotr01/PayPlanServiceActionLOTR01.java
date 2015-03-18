@@ -11,6 +11,7 @@ import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.gdeupsb.action.lot.CommonLotAction;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.entity.GdLotAwdDtl;
 import com.bocom.bbip.gdeupsb.entity.GdLotDrwTbl;
@@ -191,6 +192,7 @@ public class PayPlanServiceActionLOTR01 extends BaseAction {
 		String flwCtl = gdLotDrwTbl.getFlwCtl();
 		logger.info("flwCtl["+flwCtl+"]");//3
 		
+//		get(CommonLotAction.class).downloadFile(context, "2", gdLotDrwTbl.getGameId(), gdLotDrwTbl.getDrawId());
 		GdLotPrzCtl gdLotPrzCtl = new GdLotPrzCtl();
 		gdLotPrzCtl.setGameId(gdLotDrwTbl.getGameId());
 		gdLotPrzCtl.setDrawId(gdLotDrwTbl.getDrawId());
@@ -264,78 +266,113 @@ public class PayPlanServiceActionLOTR01 extends BaseAction {
 					throw new CoreException(GDErrorCodes.EUPS_LOTR01_11_ERROR);
 				}
 			}else{//双色球
-				String filTyp = "2";
-				context.setData("filTyp", filTyp);
-				
-				String action = "237";
-				String dealer_id = ((GdLotSysCfg)context.getData("gdLotSysCfg")).getDealId();//运营商ID
-				context.setData("action", action);
-				context.setData("dealer_id", dealer_id);
-				
-				context.setData("gameId", gdLotDrwTbl.getGameId());//设置游戏编号
-				context.setData("drawId", gdLotDrwTbl.getDrawId());
-				context.setData("kenoId", gdLotDrwTbl.getKenoId());
-				
-				Transport ts = context.getService("STHDLOT1");
-				Map<String,Object> thdReturnMessage = null;
-				try {
-					thdReturnMessage = (Map<String, Object>) ts.submit(context.getDataMap(), context);//查询文件地址
-					context.setDataMap(thdReturnMessage);
-//					context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
-				} catch (CommunicationException e1) {
-					e1.printStackTrace();
-					logger.error("查询双色球中奖文件失败1");
-					throw new CoreException("查询双色球中奖文件失败1");
-				} catch (JumpException e1) {
-					e1.printStackTrace();
-					logger.error("查询双色球中奖文件失败2");
-					throw new CoreException("查询双色球中奖文件失败2");
-				}
-				
-				logger.info("thdReturnMessage["+thdReturnMessage+"]");
-				logger.info("state["+context.getState()+"]");
-				
-				CommThdRspCdeAction commThdRspCdeAction = new CommThdRspCdeAction();
-				String responseCode = commThdRspCdeAction.getThdRspCde(thdReturnMessage, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
-				if(responseCode.equals(Constants.RESPONSE_CODE_SUCC)){
-					logger.info("file["+context.getData("file")+"]");
-				}else{
-					//TODO:第三方返回失败，发送短信给维护人员
-					String message = "银福通系统游戏编号"+gdLotDrwTbl.getGameId()+"期号"+gdLotDrwTbl.getDrawId()+"小期号"+gdLotDrwTbl.getKenoId()+"定时返奖交易第3步，新增中奖明细异常，定投执行程序退出，请检查！";
-					
-					throw new CoreException(GDErrorCodes.EUPS_LOTR01_11_ERROR);
-				}
-				
-				action = "238";
-				try {
-					thdReturnMessage = (Map<String, Object>) ts.submit(context.getDataMap(), context);//下载文件
-					context.setDataMap(thdReturnMessage);
-//					context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
-				} catch (CommunicationException e1) {
-					e1.printStackTrace();
-					logger.error("下载双色球中奖文件失败1");
-					throw new CoreException("下载双色球中奖文件失败1");
-				} catch (JumpException e1) {
-					e1.printStackTrace();
-					logger.error("下载双色球中奖文件失败2");
-					throw new CoreException("下载双色球中奖文件失败2");
-				}
-				
-				logger.info("thdReturnMessage["+thdReturnMessage+"]");
-				logger.info("state["+context.getState()+"]");
-				
-				commThdRspCdeAction = new CommThdRspCdeAction();
-				responseCode = commThdRspCdeAction.getThdRspCde(thdReturnMessage, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
-				if(responseCode.equals(Constants.RESPONSE_CODE_SUCC)){
-					logger.info("file["+context.getData("file")+"]");
-				}else{
-					//TODO:第三方返回失败，发送短信给维护人员
-					String message = "银福通系统游戏编号"+gdLotDrwTbl.getGameId()+"期号"+gdLotDrwTbl.getDrawId()+"小期号"+gdLotDrwTbl.getKenoId()+"定时返奖交易第3步，新增中奖明细异常，定投执行程序退出，请检查！";
-					
-					throw new CoreException(GDErrorCodes.EUPS_LOTR01_11_ERROR);
-				}
+				context.setData(ParamKeys.FILE_TYPE, "2");
+				context.setData("GameId", gdLotDrwTbl.getGameId());
+				context.setData("DrawId", gdLotDrwTbl.getDrawId());
+				get(CommonLotAction.class).downloadFile(context);
 			}
 		}
+//				String filTyp = "2";
+//				context.setData("filTyp", filTyp);
+//				
+//				String action = "237";
+//				String dealer_id = ((GdLotSysCfg)context.getData("gdLotSysCfg")).getDealId();//运营商ID
+//				context.setData("action", action);
+//				context.setData("dealer_id", dealer_id);
+//				
+//				context.setData("gameId", gdLotDrwTbl.getGameId());//设置游戏编号
+//				context.setData("drawId", gdLotDrwTbl.getDrawId());
+//				context.setData("kenoId", gdLotDrwTbl.getKenoId());
+//				
+//				Transport ts = context.getService("STHDLOT1");
+//				Map<String,Object> thdReturnMessage = null;
+//				try {
+//					thdReturnMessage = (Map<String, Object>) ts.submit(context.getDataMap(), context);//查询文件地址
+//					context.setDataMap(thdReturnMessage);
+////					context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
+//				} catch (CommunicationException e1) {
+//					e1.printStackTrace();
+//					logger.error("查询双色球中奖文件失败1");
+//					throw new CoreException("查询双色球中奖文件失败1");
+//				} catch (JumpException e1) {
+//					e1.printStackTrace();
+//					logger.error("查询双色球中奖文件失败2");
+//					throw new CoreException("查询双色球中奖文件失败2");
+//				}
+//				
+//				logger.info("thdReturnMessage["+thdReturnMessage+"]");
+//				logger.info("state["+context.getState()+"]");
+//				
+//				CommThdRspCdeAction commThdRspCdeAction = new CommThdRspCdeAction();
+//				String responseCode = commThdRspCdeAction.getThdRspCde(thdReturnMessage, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
+//				if(responseCode.equals(Constants.RESPONSE_CODE_SUCC)){
+//					logger.info("file["+context.getData("file")+"]");
+//				}else{
+//					//TODO:第三方返回失败，发送短信给维护人员
+//					String message = "银福通系统游戏编号"+gdLotDrwTbl.getGameId()+"期号"+gdLotDrwTbl.getDrawId()+"小期号"+gdLotDrwTbl.getKenoId()+"定时返奖交易第3步，新增中奖明细异常，定投执行程序退出，请检查！";
+//					
+//					throw new CoreException(GDErrorCodes.EUPS_LOTR01_11_ERROR);
+//				}
+//				
+//				action = "238";
+//				try {
+//					thdReturnMessage = (Map<String, Object>) ts.submit(context.getDataMap(), context);//下载文件
+//					context.setDataMap(thdReturnMessage);
+////					context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
+//				} catch (CommunicationException e1) {
+//					e1.printStackTrace();
+//					logger.error("下载双色球中奖文件失败1");
+//					throw new CoreException("下载双色球中奖文件失败1");
+//				} catch (JumpException e1) {
+//					e1.printStackTrace();
+//					logger.error("下载双色球中奖文件失败2");
+//					throw new CoreException("下载双色球中奖文件失败2");
+//				}
+//				
+//				logger.info("thdReturnMessage["+thdReturnMessage+"]");
+//				logger.info("state["+context.getState()+"]");
+//				
+//				commThdRspCdeAction = new CommThdRspCdeAction();
+//				responseCode = commThdRspCdeAction.getThdRspCde(thdReturnMessage, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
+//				if(responseCode.equals(Constants.RESPONSE_CODE_SUCC)){
+//					logger.info("file["+context.getData("file")+"]");
+//					List<Map<String,Object>> items = context.getData("bonusItems");
+//					for(Map<String,Object> item:items){
+//						//新增中奖记录控制表
+//						gdLotPrzCtl.setCipher(this.trim(item.get("cipher")));
+//						gdLotPrzCtl.setBigBon(this.trim(item.get("bigBon")));
+//						gdLotPrzCtl.setTotPrz(this.trim(item.get("totPrz")));
+//						gdLotPrzCtl.setTxnlog(this.trim(item.get("txnLog")));
+//						gdLotPrzCtl.settLogNo(this.trim(item.get("tLogNo")));
+//						gdLotPrzCtl.setTermId(this.trim(item.get("termID")));
+//						get(GdLotPrzCtlRepository.class).insert(gdLotPrzCtl);
+//						
+//						List<Map<String,Object>> nodes = (List<Map<String, Object>>) item.get("nodes");
+//						for(Map<String,Object> node:nodes){
+//							GdLotPrzDtl gdLotPrzDtl = new GdLotPrzDtl();
+//							
+//							gdLotPrzDtl.setGameId(gdLotPrzCtl.getGameId());
+//							gdLotPrzDtl.setDrawId(gdLotPrzCtl.getDrawId());
+//							gdLotPrzDtl.setKenoId(gdLotPrzCtl.getKenoId());
+//							gdLotPrzDtl.setTxnLog(gdLotPrzCtl.getTxnlog());
+//							gdLotPrzDtl.settLogNo(gdLotPrzCtl.gettLogNo());
+//							gdLotPrzDtl.setBetMod(this.trim(node.get("betMod")));
+//							gdLotPrzDtl.setBetMul(this.trim(node.get("betMul")));
+//							gdLotPrzDtl.setClassNo(this.trim(node.get("class")));
+//							gdLotPrzDtl.setPrzAmt(this.trim(node.get("przAmt")));
+//							gdLotPrzDtl.setBetLin(this.trim(node.get("betLin")));
+//							get(GdLotPrzDtlRepository.class).insert(gdLotPrzDtl);
+//						}
+//					}
+//					
+//				}else{
+//					//TODO:第三方返回失败，发送短信给维护人员
+//					String message = "银福通系统游戏编号"+gdLotDrwTbl.getGameId()+"期号"+gdLotDrwTbl.getDrawId()+"小期号"+gdLotDrwTbl.getKenoId()+"定时返奖交易第3步，新增中奖明细异常，定投执行程序退出，请检查！";
+//					
+//					throw new CoreException(GDErrorCodes.EUPS_LOTR01_11_ERROR);
+//				}
+//			}
+//		}
 		gdLotDrwTbl.setFlwCtl(""+(Integer.parseInt(flwCtl)+1));
 		context.setData("flwCtl",gdLotDrwTbl.getFlwCtl());
 		get(GdLotDrwTblRepository.class).updateFlwCtl(gdLotDrwTbl);
@@ -405,13 +442,13 @@ public class PayPlanServiceActionLOTR01 extends BaseAction {
 			
 			throw new CoreException(GDErrorCodes.EUPS_LOTR01_13_ERROR);
 		}else{
-			//TODO:将中奖信息插入返奖记录明细表
+			//将中奖信息插入返奖记录明细表
 			get(GdLotAwdDtlRepository.class).insertAwdDtl(gdLotAwdDtl);
-			//TODO:查看有无返奖记录
+			//查看有无返奖记录
 			gdLotAwdDtls = get(GdLotAwdDtlRepository.class).find(gdLotAwdDtl);
 			if(CollectionUtils.isEmpty(gdLotAwdDtls)){
 				//无小奖记录
-				//TODO:统计返奖总金额
+				//统计返奖总金额
 				Map<String,Object> amtMap = get(GdLotAwdDtlRepository.class).sumAmt(gdLotAwdDtl);
 				String przamt =  amtMap.get("PRZAMT")==null?"0":amtMap.get("PRZAMT").toString();
 				gdLotDrwTbl.setPrzAmt(przamt);
@@ -441,7 +478,7 @@ public class PayPlanServiceActionLOTR01 extends BaseAction {
 		GdLotDrwTbl gdLotDrwTbl = context.getData("gdLotDrwTbl");
 		String flwCtl = gdLotDrwTbl.getFlwCtl();
 		logger.info("flwCtl["+flwCtl+"]");//5
-		//TODO:检查同意游戏编号、期号、投注流水号是否有多条记录存在
+		//检查同意游戏编号、期号、投注流水号是否有多条记录存在
 		Map<String,Object> dupMap = get(GdLotAwdDtlRepository.class).checkTxnLog();
 		if(dupMap!=null){
 			String dupnum = dupMap.get("DUPNUM").toString().trim();
@@ -490,7 +527,7 @@ public class PayPlanServiceActionLOTR01 extends BaseAction {
 		GdLotDrwTbl gdLotDrwTbl = context.getData("gdLotDrwTbl");
 		String flwCtl = gdLotDrwTbl.getFlwCtl();
 		logger.info("flwCtl["+flwCtl+"]");//5
-		//TODO:更新流水表中奖标志AWDFLG=1
+		//更新流水表中奖标志AWDFLG=1
 		get(GdLotTxnJnlRepository.class).updateAwdFlg(gdLotDrwTbl);
 		
 		gdLotDrwTbl.setFlwCtl(""+(Integer.parseInt(flwCtl)+1));
@@ -533,6 +570,7 @@ public class PayPlanServiceActionLOTR01 extends BaseAction {
 		List<GdLotDrwTbl> gdLotDrwTbls = get(GdLotDrwTblRepository.class).find(gdLotDrwTbl);
 		if(CollectionUtils.isEmpty(gdLotDrwTbls)){
 			//TODO:不存在奖期信息
+			String message = "银福通系统游戏编号"+gdLotDrwTbl.getGameId()+"期号"+gdLotDrwTbl.getDrawId()+"小期号"+gdLotDrwTbl.getKenoId()+"定时返奖交易第7步，奖期信息不存在，返奖执行程序退出，请检查！";
 			
 		}
 		gdLotDrwTbl = gdLotDrwTbls.get(0);
