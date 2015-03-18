@@ -215,4 +215,13 @@
     delete from gdeupsb.GDEUPS_LOT_PRZ_DTL
      where GAME_ID = #{gameId,jdbcType=CHAR} and DRAW_ID= #{drawId,jdbcType=CHAR} and KENO_ID= #{kenoId,jdbcType=CHAR}
   </delete>
+   <select id="LotDtlBatchInsert" resultMap="basicResultMap" >
+    insert into  gdeupsb.GDEUPS_LOT_PRZ_DTL (
+    <include refid="baseColumnList" />) values
+    	<foreach collection="list" item="item" index="index" separator=",">
+			( #{item.tLogNo}, #{item.gameId},
+			#{item.drawId}, #{item.kenoId}, #{item.txnLog}, #{item.betMod},
+			#{item.betMul}, #{item.classNo}, #{item.przAmt}, #{item.betLin})
+      </foreach>
+  </select>
 </mapper>
