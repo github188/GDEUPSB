@@ -30,10 +30,10 @@ public class PrePayToBankAction implements Executable{
 			CoreRuntimeException {
 			logger.info("=========Start PrePayToBankAction");
 			context.setData(GDParamKeys.TOTNUM, "1");
-			context.setData(ParamKeys.TXN_DTE, DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())));
-			String time=DateUtils.format(new Date(),DateUtils.STYLE_TRANS_TIME);
-			Date txnTme=DateUtils.parse(time);
-			context.setData(ParamKeys.TXN_TME, txnTme);
+//			context.setData(ParamKeys.TXN_DTE, DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())));
+//			String time=DateUtils.format(new Date(),DateUtils.STYLE_TRANS_TIME);
+//			Date txnTme=DateUtils.parse(time);
+//			context.setData(ParamKeys.TXN_TME, txnTme);
 			
 			//TODO 待定  
 			String ActFlg=(String)context.getData(ParamKeys.ACC_TYPE);
