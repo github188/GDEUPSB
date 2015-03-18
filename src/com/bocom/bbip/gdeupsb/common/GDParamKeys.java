@@ -484,6 +484,18 @@ public class GDParamKeys {
 	public final static String CAR_NAME = "carName";
 	/** 吨数或座数 */
 	public final static String CAR_DZS = "carDzs";
+	/** 计费标准 */
+	public final static String CNT_STD = "cntStd";
+	/**标准年收费额 */
+	public final static String FEE_STD = "feeStd";
+	/**本金 */
+	public final static String CORPUS = "corpus";
+	/**滞纳金额 */
+	public final static String LATE_FEE = "lateFee";
+	/**车辆归属 */
+	public final static String CLGS = "clgs";
+	/**营运标志 */
+	public final static String YYBZ = "yybz";
 	/** 企业日期 */
 	public final static String TACT_DT = "tactDt";
 	/** 缴费状态 */
