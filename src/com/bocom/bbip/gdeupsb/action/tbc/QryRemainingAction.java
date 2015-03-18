@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.action.tbc;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.comp.BBIPPublicService;
+import com.bocom.bbip.comp.CommonRequest;
+import com.bocom.bbip.comp.account.AccountService;
+import com.bocom.bbip.comp.account.support.CusActInfResult;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
@@ -14,9 +18,13 @@ import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
+import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.entity.GdTbcCusAgtInfo;
+import com.bocom.bbip.gdeupsb.repository.GdTbcCusAgtInfoRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.bbip.service.Result;
+import com.bocom.euif.component.util.StringUtil;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -33,6 +41,12 @@ public class QryRemainingAction extends BaseAction {
     
     @Autowired
     BGSPServiceAccessObject serviceAccess;
+    @Autowired
+    AccountService accountService;
+    @Autowired
+    private BBIPPublicService bbipPublicService;
+    @Autowired
+    GdTbcCusAgtInfoRepository cusAgtInfoRepository;
     
     @Override
     public void execute(Context context) throws CoreException {
@@ -62,9 +76,16 @@ public class QryRemainingAction extends BaseAction {
         } else if (resultThdTranCtlInfo.getTxnCtlSts().equals(Constants.TXN_CTL_STS_CHECKBILL_ING)) {
             throw new CoreException(ErrorCodes.THD_CHL_SIGNIN_NOT_ALLOWWED);
         } else {
+            String cusAc = qryCusAcNo(context.getData("custId").toString());
+            if (StringUtil.isEmptyOrNull(cusAc)) {
+                context.setData(GDParamKeys.RSP_CDE,"9999");
+                context.setData(GDParamKeys.RSP_MSG,"无此用户信息 !");
+                return;
+            }
             //   检查该客户是否已签约
             Map<String, Object> map = new HashMap<String, Object>();
-            map.put("cusAc", context.getData("custId").toString());
+            map.put("cusAc",cusAc);
+            
             Result accessObject =  serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", map);
             if (CollectionUtils.isEmpty(accessObject.getPayload())) {
                 context.setData(ParamKeys.RSP_CDE,"9999");
@@ -87,12 +108,32 @@ public class QryRemainingAction extends BaseAction {
             String tlr = get(BBIPPublicService.class).getETeller(bankId);
             context.setData(ParamKeys.TELLER,tlr);
             context.setData("tTxnCd","483803");
-            //向主机查询账户信息  已经查询 且存放在accessObject
-           
+            //查询账户余额信息   
+            log.info("查询账户余额信息  start......");
+            
+            context.setData("traceNo", bbipPublicService.getTraceNo());
+            context.setData(ParamKeys.BK, bbipPublicService.getParam("BBIP", "BK"));
+            context.setData(ParamKeys.BR, "01441131999");
+            
+            context.setData(ParamKeys.TELLER, "ABIR148");
+            context.setData(ParamKeys.CHANNEL, "00");
+//          ctx.setData(ParamKeys.TRACE_NO, ctx.getData(ParamKeys.SEQUENCE));
+            CommonRequest comRequest=CommonRequest.build(context);
+            CusActInfResult acResult = accountService.getAcInf(comRequest, cusAc);
+            BigDecimal actBal = acResult.getActBal();
+            BigDecimal avaBal = acResult.getAvaBal();
+            log.info("所剩余额：" + actBal);
+            context.setData("avaBal", avaBal);
+            context.setData("actBal", actBal);
             context.setData(ParamKeys.RSP_CDE,"0000");
             context.setData(ParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
             context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
             
         }
+    }
+    //协议临时表查询客户账户
+    private String qryCusAcNo(String custId){
+        GdTbcCusAgtInfo cusAgtInfo = cusAgtInfoRepository.findOne(custId);
+        return cusAgtInfo.getActNo();
     }
 }

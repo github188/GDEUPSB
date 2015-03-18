@@ -38,5 +38,6 @@ public class CathecticPreAction extends BaseAction {
            context.setData("tzCod", "TZ9001");
            return;
         }
+    context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
     }
 }

@@ -120,7 +120,7 @@ public class CommonLotAction extends BaseAction{
      * @param drawId 期号
      * @return map 1.文件下载状态（0：成功  -1：失败） 2.文件下载结果描述
      */
-    public void downloadFile(Context context,String type,String gameId,String drawId)throws CoreException{
+    public void downloadFile(Context context)throws CoreException{
         Map<String, String>  map =new HashMap<String, String>();
         context.setData("action", ACTION_QUERY_FILE_NAME);
         context.setData("dealer_id", ACTION_QUERY_FILE_NAME);

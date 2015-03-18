@@ -30,7 +30,7 @@ public class CathecticExeAction extends BaseAction{
     
     @Override
     public void execute(Context context) throws CoreException {
-
+        context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
         context.setData("tTxnCd", context.getData("cTTxnCd"));
         //客户签约状态
         Map<String, Object> map = new HashMap<String, Object>();
@@ -142,5 +142,6 @@ public class CathecticExeAction extends BaseAction{
         }
         String lotTxnTim = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMddHHmmss);
         context.setData("lotTxnTim", lotTxnTim);
+        context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
     }
 }

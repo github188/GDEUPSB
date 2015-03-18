@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdLotDrwTbl;
@@ -23,7 +24,7 @@ public class CathecticPreExecuteAction extends BaseAction{
     
     @Override
     public void execute(Context context) throws CoreException {
-       
+        context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
         //<!-- 检查当前是否有可用奖期，如果没有则下载一次，下载后再检查一次，如果没有则返回错误 -->
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("isKeno", context.getData("isKeno"));
@@ -127,5 +128,6 @@ public class CathecticPreExecuteAction extends BaseAction{
             context.setData("tzCod", "TZ9005");
             return;
         }
+        context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
     }
 }

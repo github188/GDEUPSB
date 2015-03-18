@@ -286,17 +286,17 @@
         </step>
         <step id="prePayDel" useCtxState="true" transactional="txTemplate">  
             <action id="prePayDel" place-holder="true" />
-            <next on="BP_STATE_REVAL" to="rollback" />
-            <next on="*" to="payDel" /> 
+            <next on="BP_STATE_NORMAL" to="payDel" />
+            <next on="*" to="rollback" /> 
         </step>
-        <step id="payDel"   useCtxState="true" transactional="txTemplate">  <!-- 轧差处理 -->
+        <step id="payDel" useCtxState="true" transactional="txTemplate">  <!-- 轧差处理 -->
             <action id="payDel" place-holder="true" />
-            <next on="BP_STATE_REVAL" to="rollback" />  
-            <next on="*" to="aftpayDel" /> 
+            <next on="BP_STATE_NORMAL" to="aftpayDel" />  
+            <next on="*" to="rollback" /> 
         </step>
-         <step id="aftpayDel"   useCtxState="true" transactional="txTemplate">  <!-- 轧差处理 -->
+         <step id="aftpayDel" useCtxState="true" transactional="txTemplate">  <!-- 轧差处理 -->
             <action id="aftpayDel" place-holder="true" />
-            <next on="BP_STATE_REVAL" to="rollback" />  
+            <next on="BP_STATE_NORMAL" to="rollback" />  
             <end on="*"/>
         </step>
         <step id="rollback" useCtxState="true" transactional="txTemplate">   <!-- 冲正-->

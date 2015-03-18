@@ -25,6 +25,7 @@ public class CathecticCallThdAction extends BaseAction{
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public void execute(Context context) throws CoreException, CoreRuntimeException {
+        context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
         Transport ts = context.getService("STHDLOT1");
         Map<String,Object> resultMap = null;
         try {
