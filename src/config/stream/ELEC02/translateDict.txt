@@ -8,8 +8,8 @@
 #  filter="parse,packets/translateDict.txt"
 
 ##汕头电力单边扣款
-#TransCode.eups.payUnilateralToBank=20
-TransCode.eups.checkInBank=20
+TransCode.eups.payUnilateralToBank=20
+#TransCode.eups.checkInBank=20
 ##汕头电力单边抹账
 TransCode.eups.cancelUnilateralToBank=21
 ##汕头电力批次撤销
@@ -22,6 +22,8 @@ TransCode.eups.signInOutThird=90
 ##汕头电力签退
 TransCode.eups.signOutThird=91
 #TransCode.gdeups.batchPaySubmitDataProcess=90
+##汕头电力协议更改
+TransCode.gdeups.manageELEC02AGT=31
 
-
-
+##汕头电力批量ftp返回文件
+#TransCode.gdeups.manageELEC02AGT=824
