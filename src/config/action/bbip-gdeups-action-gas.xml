@@ -27,10 +27,10 @@
   <action id="qryLotBetRecordAction" class="com.bocom.bbip.gdeupsb.action.lot.QryLotBetRecordAction" />
   
   	<!-- ************************  福彩文件下载Start!  ************************ -->
-	<action id="qryFilDownloadAdrAction" class="com.bocom.bbip.gdeupsb.action.lot.QryFilDownloadAdrAction" />
+	<!-- <action id="qryFilDownloadAdrAction" class="com.bocom.bbip.gdeupsb.action.lot.QryFilDownloadAdrAction" />
 	<action id="downloadLotFilesAction" class="com.bocom.bbip.gdeupsb.action.lot.DownloadLotFilesAction" />
   	<action id="lotFilImportAction" class="com.bocom.bbip.gdeupsb.action.lot.LotFilImportAction" />
-  	<action id="aftDownloadLotFilesAction" class="com.bocom.bbip.gdeupsb.action.lot.AftDownloadLotFilesAction" />
+  	<action id="aftDownloadLotFilesAction" class="com.bocom.bbip.gdeupsb.action.lot.AftDownloadLotFilesAction" /> -->
   	<!-- 福彩对账文件下载 -->
   	<action id="downloadLotChkFileAction" class="com.bocom.bbip.gdeupsb.action.lot.DownloadLotChkFileAction" />
   	<!-- 福彩返奖（中奖）文件下载 -->
