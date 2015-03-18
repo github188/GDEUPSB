@@ -1,0 +1,35 @@
+#report(20)
+#set($p.index=0)
+#td(1,$d.eles)
+#set($p.index=$p.index+1) 
+#para($str.trim($ele.cusAc))
+#para($str.trim($ele.cusNme))
+#para($str.trim($ele.ccy))
+#para($ele.txnAmt)
+#para($str.trim($ele.txnAmtInWord))
+#para($str.trim($ele.thdCusNo))
+#para($str.trim($ele.actDat))
+#para($str.trim($ele.txnTlr))
+#para($str.trim($ele.sqn))
+业务    名称:代收付业务                 业务种类:代收水费
+
+
+付款人  账号:?
+付款人  名称:?
+
+
+
+收款人  账号:$d.actNo
+收款人  名称:$d.actNm
+
+交易    币种:?                          交易金额:?
+交易金额大写:?
+摘        要:代收水费?
+
+入账    日期:?                          入账柜员:?              入账流水号:?
+打印    日期:$f.fmt($currentTime,'yyyyMMdd')                   打印柜员:$d.tlr        打印机构:$d.br
+
+
+
+#end     
+#end

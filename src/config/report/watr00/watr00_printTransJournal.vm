@@ -1,0 +1,31 @@
+#report(50)
+#rh(1)
+ 			                       汕头分行代收水费成功明细表
+#end
+#th(4)
+                           业务类型:代收水费业务  日期:$str.substring($d.txnDat,0,4)年$str.substring($d.txnDat,5,7)月$str.substring($d.txnDat,8,10)日   共 $totalPages 页 第 $pageNumber 页
+┏━━━━━━┳━━━━┳━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━┳━━━━━┳━━━━━━┓
+┃  交易日期  ┃缴费项目┃   用户号   ┃         账号         ┃        流水号        ┃    会计流水号    ┃   金额   ┃  交易状态  ┃
+┣━━━━━━╋━━━━╋━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━╋━━━━━╋━━━━━━┫
+#end 
+#set($p.index=0)
+#td(1,$d.eles)#set($p.index=$p.index+1) 
+#para($d.txnDat)
+#para("代收水费")
+#para($str.trim($ele.thdCusNo))
+#para($str.trim($ele.cusAc))
+#para($str.trim($ele.sqn))
+#para($str.trim($ele.mfmVchNo))
+#para($ele.txnAmt)
+#para($str.trim($ele.bakFld1))
+┃?           ┃?       ┃?           ┃?                     ┃?                     ┃?                 ┃?         ┃?           ┃   
+┣━━━━━━╋━━━━╋━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━╋━━━━━╋━━━━━━┫
+#end     
+#rf(3)   
+#para($d.sumCnt)
+#para($d.sumAmt)
+┃                                  合计                                                    笔数:?          金额:?                  ┃  
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+             打印部门:$d.br                         打印柜员:$d.tlr                      打印日期:$f.fmt($currentTime,'yyyyMMdd')
+#end
+#end

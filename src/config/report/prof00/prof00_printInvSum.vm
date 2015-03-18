@@ -1,0 +1,28 @@
+#report(50)
+#rh(3)
+		交通银行珠海分行自助通发票使用情况汇总表
+						打印日期:$f.fmt($currentTime,'yyyyMMdd')
+	报表日期范围:$d.begDat - $d.endDat                 单位:份
+#end
+#th(3)
+┏━━━━━┳━━━━┳━━━━┳━━━━┳━━━━━┳━━━━━┳━━━━┓
+┃  机构号  ┃ 柜员号 ┃凭证类型┃装入数量┃ 使用数量 ┃ 报废数量 ┃结余数量┃
+┣━━━━━╋━━━━╋━━━━╋━━━━╋━━━━━╋━━━━━╋━━━━┫
+#end
+#td(1,$d.eles)
+#para($str.trim($ele.nodno)) 
+#para($str.trim($ele.oprTlr))
+#para($str.trim($ele.invTyp))
+#para($ele.lodNum)
+#para($ele.useNum)
+#para($ele.clrNum)
+#para($ele.invNum)
+┃?         ┃?       ┃?       ┃?       ┃?         ┃?         ┃?       ┃
+┣━━━━━╋━━━━╋━━━━╋━━━━╋━━━━━╋━━━━━╋━━━━┫
+#end
+#tf(3)
+┃              合计            ┃  $d.slodNum   ┃    $d.suseNum    ┃    $d.sclrNum   ┃   --   ┃
+┗━━━━━━━━━━━━━━━┻━━━━┻━━━━━┻━━━━━┻━━━━┛
+                                               打印柜员:$d.tlr
+#end
+#end
