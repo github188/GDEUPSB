@@ -9,4 +9,6 @@ public interface GdLotSysCfgRepository extends PagingAndSortingRepository<GdLotS
     @Update
     public void update(GdLotSysCfg lotSysCfgInfoInput);
 
+    public GdLotSysCfg findOne(String dealId);
+
 }
