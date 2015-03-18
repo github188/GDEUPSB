@@ -24,6 +24,7 @@
   </update>
   
   <insert id="insertInfo"  parameterType="com.bocom.bbip.gdeupsb.entity.ZHActNoInf">
-      insert into GDEUPSB.ZH_ActNo_Inf values Act_No=#{ActNo} WHERE Act_No=#{OldAct}
+      insert into GDEUPSB.ZH_ActNo_Inf(Old_Act,Act_No,Cus_Id,Act_Typ,Act_Nam,Opn_Nod) values
+      (#{OldAct},#{ActNo},#{CusId},#{ActTyp},#{ActNam},#{OpnNod})
   </insert>
 </mapper>
