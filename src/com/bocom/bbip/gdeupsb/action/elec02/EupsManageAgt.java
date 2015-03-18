@@ -25,7 +25,7 @@ public class EupsManageAgt extends BaseAction {
 	private static final int DELETE=9;
 	public void process(Context context) throws CoreException {
      logger.info("协议维护");
-     context.setData("ActDat", DateUtils.format(new Date(), DateUtils.REGEXP_yyyyMMdd));
+     context.setData("ActDat", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
      context.setData("LogNo", StringUtils.substring(
     		 ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getBBIPSequence(),4));
      final int oprType=Integer.parseInt((String)context.getData("CHT"));
