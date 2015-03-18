@@ -15,7 +15,7 @@
 	<!-- add by hefw 20150120 end -->
 	
 	
-
-	
+<!--  汕头电力 批量数据准备-->
+	<x:bean id="eups.fileBatchPayCreateDataServiceActionELEC02" class="com.bocom.bbip.gdeupsb.action.zh.BatchAcpServiceImplELEC02"/>
 	
 </x:beans>
