@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.bocom.bbip.eups.action.BaseAction;
-import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
@@ -19,7 +18,6 @@ import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspPayInfo;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspPayInfoRepository;
-import com.bocom.bbip.gdeupsb.utils.ConnectThdUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.channel.CommunicationException;
