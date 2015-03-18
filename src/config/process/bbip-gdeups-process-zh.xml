@@ -28,4 +28,10 @@
 		</actions>
 	</process>
 	
+	<!-- 珠海查询帐户信息-->
+	<process id="gdeups.updateCardInfo" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
+		<actions>
+			  <action id="act" ref="updateInfo"  operations="process"/>
+		</actions>
+	</process>
 </x:beans>
