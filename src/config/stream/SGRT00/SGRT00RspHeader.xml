@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+    			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    			xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+        		filter="both,WEB-INF/classes/config/stream/SGRT00/translateDict.txt"
+        		encoding="UTF-8" trace="true">
+    			<segment name="head">
+    				<fixString name="msgHead" 		length="3" 	default="TEB"/>
+	        		<fixString name="TransCode" 	length="4"/>
+	       	 		<fixString name="companyNo" 	length="4" />  
+    			</segment>
+    			<segment name="body">
+    				<xml name="xml" format="nono">
+    					<include elementFactory="xml://config/stream/SGRT00/" path="SGRT00RspBody" />
+    				</xml>
+    			</segment>
+    			<segment name="foot">
+    				<fixString name="msgEnd" 		length="3" 	default="***"/>
+    			</segment>
+</message>

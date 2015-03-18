@@ -50,21 +50,19 @@
 		select * from
 		${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL
 		<trim prefix="WHERE" prefixOverrides="AND">
-			<if test="eupsBusTyp!=null">
+			<if test="eupsBusTyp!=null and eupsBusTyp!=''">
 				AND EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=VARCHAR}
 			</if>
-			<if test="beginDate!=null">
+			<if test="beginDate!=null and beginDate!=''">
 				AND TXN_DTE &gt;= #{beginDate,jdbcType=VARCHAR}
 			</if>
-			<if test="endDate!=null">
+			<if test="endDate!=null and endDate!=''">
 				AND TXN_DTE &lt;= #{endDate,jdbcType=VARCHAR}
 			</if>
-			<if test="cusAc!=null">
+			<if test="cusAc!=null and cusAc!=''">
 				AND CUS_AC = #{cusAc,jdbcType=VARCHAR}
 			</if>
-			<if test="txnSts!=null">
-				AND TXN_STS =#{txnSts,jdbcType=VARCHAR}
-			</if>
+				AND TXN_STS ='S' AND TXN_TYP ='N'
 		</trim>
 	</select>
 </mapper>

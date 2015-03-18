@@ -9,10 +9,18 @@
                  SUM(bigint(case when a.STL_FLG='1' then a.STL_NUM else '0' end)) as CLR_NUM,
                  (bigint(b.TOL_NUM)-SUM(bigint(case when a.STL_FLG!='U' then a.STL_NUM else '0' end))) as INV_NUM
           FROM   ${GDEUPSB_SCHEMA}.GDEUPS_INV_TXN_INF as a ,${GDEUPSB_SCHEMA}.GDEUPS_INV_DTL_BOK as b
-          WHERE  a.NODNO=#{br,jdbcType=CHAR}  and (a.ACT_DAT between #{begDat,jdbcType=CHAR} and #{endDat,jdbcType=CHAR}) 
+          WHERE  a.NODNO=#{qryNod,jdbcType=CHAR}  and (a.ACT_DAT between #{begDat,jdbcType=CHAR} and #{endDat,jdbcType=CHAR}) 
                  and a.INV_TYP=b.INV_TYP and a.IV_BEG_NO=b.IV_BEG_NO and a.IV_END_NO=b.IV_END_NO
           GROUP BY a.ACT_DAT,a.TLR_ID,a.INV_TYP,a.IV_BEG_NO,a.IV_END_NO,b.TOL_NUM,b.REG_TLR
           ORDER BY ACT_DAT,TLR_ID
+	</select>
+	<!-- 自助通发票使用情况汇总表，明细报表使用 -->
+	<select id="atmInvSumRpt" resultType="map">
+		SELECT SUM(bigint(case when STL_FLG='U' then STL_NUM else '0' end)) as LOD_NUM,
+                 SUM(bigint(case when STL_FLG='0' then STL_NUM else '0' end)) as USE_NUM,
+                 SUM(bigint(case when STL_FLG='1' then STL_NUM else '0' end)) as CLR_NUM
+          FROM   ${GDEUPSB_SCHEMA}.GDEUPS_INV_TXN_INF
+          WHERE NODNO=#{qryNod,jdbcType=CHAR} and  (ACT_DAT between #{begDat,jdbcType=CHAR} and #{endDat,jdbcType=CHAR})
 	</select>
 	<!-- 自助通发票使用情况汇总表 -->
 	<select id="atmInvSum" resultType="map">
@@ -21,26 +29,42 @@
                  SUM(bigint(case when STL_FLG='0' then STL_NUM else '0' end)) as USE_NUM,
                  SUM(bigint(case when STL_FLG='1' then STL_NUM else '0' end)) as CLR_NUM
           FROM   ${GDEUPSB_SCHEMA}.GDEUPS_INV_TXN_INF
-          WHERE  NODNO=#{br,jdbcType=CHAR} and (ACT_DAT between #{begDat,jdbcType=CHAR} and #{endDat,jdbcType=CHAR}) 
+          WHERE (ACT_DAT between #{begDat,jdbcType=CHAR} and #{endDat,jdbcType=CHAR}) 
+          <if test="qryNod!=null and qryNod!=''" >
+        	AND  NODNO=#{qryNod,jdbcType=CHAR}
+      	  </if> 
           GROUP BY NODNO,TLR_ID,INV_TYP
-          ORDER BY NODNO,TLR_ID,INV_TYP <!--
-          SELECT a.ACT_DAT,a.TLR_ID,a.INV_TYP,a.IV_BEG_NO,a.IV_END_NO,b.TOL_NUM,b.REG_TLR,
-                 SUM(bigint(case when a.STL_FLG='U' then a.STL_NUM else '0' end)) as LOD_NUM,
-                 SUM(bigint(case when a.STL_FLG='0' then a.STL_NUM else '0' end)) as USE_NUM,
-                 SUM(bigint(case when a.STL_FLG='1' then a.STL_NUM else '0' end)) as CLR_NUM,
-                 (bigint(b.TOL_NUM)-SUM(bigint(case when a.STL_FLG!='U' then a.STL_NUM else '0' end))) as INV_NUM
-          FROM   ${GDEUPSB_SCHEMA}.GDEUPS_INV_TXN_INF as a ,${GDEUPSB_SCHEMA}.GDEUPS_INV_DTL_BOK as b
-          WHERE  a.NODNO=#{br,jdbcType=CHAR}  and (a.ACT_DAT between #{begDat,jdbcType=CHAR} and #{endDat,jdbcType=CHAR}) 
-                 and a.INV_TYP=b.INV_TYP and a.IV_BEG_NO=b.IV_BEG_NO and a.IV_END_NO=b.IV_END_NO
-          GROUP BY a.ACT_DAT,a.TLR_ID,a.INV_TYP,a.IV_BEG_NO,a.IV_END_NO,b.TOL_NUM,b.REG_TLR
-          ORDER BY ACT_DAT,TLR_ID-->
+          ORDER BY NODNO,TLR_ID,INV_TYP 
+	</select>
+	<!-- 自助通发票使用情况汇总表，汇总报表使用 -->
+	<select id="atmInvSumRpt1" resultType="map">
+		SELECT SUM(bigint(case when STL_FLG='U' then STL_NUM else '0' end)) as LOD_NUM,
+                 SUM(bigint(case when STL_FLG='0' then STL_NUM else '0' end)) as USE_NUM,
+                 SUM(bigint(case when STL_FLG='1' then STL_NUM else '0' end)) as CLR_NUM
+          FROM   ${GDEUPSB_SCHEMA}.GDEUPS_INV_TXN_INF
+          WHERE (ACT_DAT between #{begDat,jdbcType=CHAR} and #{endDat,jdbcType=CHAR})
+          <if test="qryNod!=null and qryNod!=''" >
+        	AND  NODNO=#{qryNod,jdbcType=CHAR}
+      	  </if> 
 	</select>
 	<!-- 自助通发票使用情况汇总详细查询 -->
 	<select id="qyInvSum" resultType="map">
 		SELECT QY_NO,SUM(bigint(STL_NUM)) as USE_NUM
           FROM   ${GDEUPSB_SCHEMA}.GDEUPS_INV_TXN_INF
-          WHERE  NODNO=#{br,jdbcType=CHAR} and (ACT_DAT between #{begDat,jdbcType=CHAR} and #{endDat,jdbcType=CHAR}) and STL_FLG='0'
+          WHERE  (ACT_DAT between #{begDat,jdbcType=CHAR} and #{endDat,jdbcType=CHAR}) and STL_FLG='0'
+          <if test="qryNod!=null and qryNod!=''" >
+        	AND  NODNO=#{qryNod,jdbcType=CHAR}
+      	  </if> 
           GROUP BY QY_NO
           ORDER BY QY_NO
+	</select>
+	<!-- 自助通发票使用情况汇总详细查询，报表使用 -->
+	<select id="qyInvSumRpt" resultType="map">
+		SELECT SUM(bigint(STL_NUM)) as USE_NUM
+          FROM   ${GDEUPSB_SCHEMA}.GDEUPS_INV_TXN_INF
+          WHERE  (ACT_DAT between #{begDat,jdbcType=CHAR} and #{endDat,jdbcType=CHAR}) and STL_FLG='0'
+          <if test="qryNod!=null and qryNod!=''" >
+        	AND  NODNO=#{qryNod,jdbcType=CHAR}
+      	  </if> 
 	</select>
 </mapper>

@@ -16,3 +16,6 @@ TransCode.gdeupsb.tbcSignOut=8911
 TransCode.gdeupsb.tbcEstablishAccount=8912
 TransCode.gdeupsb.tbcDestroyAccount=8913
 TransCode.gdeupsb.tbcQryRemaining=8924
+
+
+TransCode.C8910=8910

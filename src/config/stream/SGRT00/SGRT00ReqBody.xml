@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="GBK"?>
+<message xmlns="http://www.bocom.com/jump/transformer/xml" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/xml xml.xsd"
+	name="DLMAPS" encoding="ISO-8859-1" trace="true">
+	<record name="PUB" >
+		<string name="TransCode" />
+		<string name="TRAN_TIME" />
+		<string name="BANK_ID" />
+		<string name="DPT_ID" />
+		<string name="TRADE_SEQ" />
+		<string name="APP_TYPE" />
+	</record>
+	<!-- 登录验证请求-->
+	<select name="transaction" key="TransCode" >			
+		<record name="8910" xmlStyle="none">
+			<record name="IN">
+				<string name="DEV_ID" />
+				<string name="TELLER" />
+			</record>
+		</record>
+	</select>
+	
+</message>
