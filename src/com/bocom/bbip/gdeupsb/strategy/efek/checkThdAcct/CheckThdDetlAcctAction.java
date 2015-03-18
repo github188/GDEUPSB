@@ -110,6 +110,7 @@ public class CheckThdDetlAcctAction implements Executable {
 							String	comNo  =(String)maps.get("COM_NO");
 							String  busType=(String)maps.get("RSV_FLD4");
 							String  payType=(String)maps.get("RSV_FLD5");
+							
 							String bankNo=context.getData(ParamKeys.BANK_NO).toString();
 							String fileName = "DZ05"+busType+payType+"_"+bankNo+comNo+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";
 
@@ -145,6 +146,9 @@ public class CheckThdDetlAcctAction implements Executable {
 		String	comNo  =(String)maps.get("COM_NO");
 		String  busType=(String)maps.get("RSV_FLD4");
 		String  payType=(String)maps.get("RSV_FLD5");
+		
+		context.setData("busType", busType);
+		context.setData("payType", payType);
 		//总笔数 总金额
 		long acount=0;
 		if(null != maps.get("TOT_COUNT")){
@@ -188,6 +192,7 @@ public class CheckThdDetlAcctAction implements Executable {
 			//结算户名称
 			checkDetailAcct.setThdCusNme(eupsStreamNo.getThdCusNme());
 			checkDetailAcct.setCusAc(eupsStreamNo.getCusAc());
+			checkDetailAcct.setCusNme(eupsStreamNo.getCusNme());
 			checkDetailAcct.setTxnDte(DateUtils.format(eupsStreamNo.getTxnTme(),DateUtils.STYLE_FULL));
 			BigDecimal txnAmt=eupsStreamNo.getTxnAmt().scaleByPowerOfTen(2);
 			checkDetailAcct.setTxnAmt(txnAmt);
