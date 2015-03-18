@@ -1,8 +1,5 @@
 package com.bocom.bbip.gdeupsb.action.zh;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -126,10 +123,8 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 	  private String findFormat(final String comNo) {
 		  InputStream location=null;
 		try {
-			//location =ClassLoader.getSystemResourceAsStream("config\\fmt\\fileFmt\\zh\\transIn.properties");
 			location = getClass().getClassLoader().
 			getResourceAsStream("config/fmt/fileFmt/zh/transIn.properties");
-			//location = new FileInputStream(new File("D:\\transIn.properties"));
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
