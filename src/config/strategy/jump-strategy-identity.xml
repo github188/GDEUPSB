@@ -111,7 +111,7 @@
 		class="com.bocom.bbip.gdeupsb.strategy.sgrt00.CheckThdFileToBkServiceAction">
 	</bean>
 	<!-- 签约一站通-协议维护-水务 -->
-	<bean id="gdeups.agtMdyDealImlServiceActionWAT00"
+	<bean id="gdeups.agtMdyDealImlServiceAction44101"
 		class="com.bocom.bbip.gdeupsb.strategy.sign.WaterAgtMdyDealImlAction">
 	</bean>
 
@@ -129,6 +129,13 @@
 	<bean id="gdeups.agtDateUpdServiceActionWAT00"
 		class="com.bocom.bbip.gdeupsb.strategy.sign.WaterDateUpdImlAction">
 	</bean>
+	
+	
+	<!-- 签约一站通-协议维护-珠江数码 -->
+	<bean id="gdeups.agtMdyDealImlServiceAction44108"
+		class="com.bocom.bbip.gdeupsb.strategy.sign.DigitAgtMdyDealImlAction">
+	</bean>
+	
 
 
 	<!-- 费用查询处理前 -->
