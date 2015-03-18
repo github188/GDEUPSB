@@ -3,7 +3,9 @@ package com.bocom.bbip.gdeupsb.action.zh;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -39,42 +41,45 @@ public class EupsUpdateCardNo  extends BaseAction {
 	private String cusId;
 	private String tlrId;
 	private String Sup1Id;
+	private String opn;
 
 	public void process(Context context)throws CoreException,CoreRuntimeException,IOException{
-		logger.info("Eups481210 start!!");
+		logger.info(" start!!");
 		/**操作类型 0-查询  1-修改  2-新增  3-删除*/
-		 func=ContextUtils.assertDataHasLengthAndGetNNR(context, "func", ErrorCodes.EUPS_FIELD_EMPTY);
-		 actName=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.CUS_NME, ErrorCodes.EUPS_FIELD_EMPTY);
-		 oldActNO=ContextUtils.assertDataHasLengthAndGetNNR(context, "oldActNO", ErrorCodes.EUPS_FIELD_EMPTY);
-		 ActNo=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.ACT_NO, ErrorCodes.EUPS_FIELD_EMPTY);
+		 func=ContextUtils.assertDataHasLengthAndGetNNR(context, "Func", ErrorCodes.EUPS_FIELD_EMPTY);
+		 actName=ContextUtils.assertDataHasLengthAndGetNNR(context, "ActNam", ErrorCodes.EUPS_FIELD_EMPTY);
+		 oldActNO=ContextUtils.assertDataHasLengthAndGetNNR(context, "OldAct", ErrorCodes.EUPS_FIELD_EMPTY);
+		 ActNo=ContextUtils.assertDataHasLengthAndGetNNR(context, "ActNo", ErrorCodes.EUPS_FIELD_EMPTY);
 		/** 客户类型*/
-		 ActTyp=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.AC_TYP, ErrorCodes.EUPS_FIELD_EMPTY);
+		 ActTyp=ContextUtils.assertDataHasLengthAndGetNNR(context, "ActTyp", ErrorCodes.EUPS_FIELD_EMPTY);
 		final String br=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.BR, ErrorCodes.EUPS_FIELD_EMPTY );
-		final String actDat=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.AC_DATE, ErrorCodes.EUPS_FIELD_EMPTY);
+		final String actDat=DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
 		/** 客户号*/
-		 cusId=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.THD_CUS_NO, ErrorCodes.EUPS_FIELD_EMPTY );
+		 cusId=ContextUtils.assertDataHasLengthAndGetNNR(context, "CusId", ErrorCodes.EUPS_FIELD_EMPTY );
 		 tlrId=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.TELLER, ErrorCodes.EUPS_FIELD_EMPTY );
 		 Sup1Id=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.SUPER_TELLER1_ID, ErrorCodes.EUPS_FIELD_EMPTY );
-
-		year = actDat.substring(0, 3);
-		month = actDat.substring(4, 5);
-		day = actDat.substring(6, 7);
+         opn=context.getData("OpnNod");
+		year = actDat.substring(0, 4);
+		month = actDat.substring(4, 6);
+		day = actDat.substring(6, 8);
 		time = DateUtils.formatAsHHmmss(new Date());
 		fileName = "fbp_" + tlrId + "hk_" + time + ".txt";
-		context.setData("filename", fileName);
+		context.setData("FleNam", fileName);
 		if (!func.equalsIgnoreCase(GDConstants.GD_ZH_OPERATE_QUERY)) {
 			/** 需要发送到BBOS的文件 */
-			File file = FileUtils.getFile( fileName);
+			File file = FileUtils.getFile( "D:\\upd.txt");
 			Assert.isFalse(null == file, ErrorCodes.EUPS_FILE_NOT_EXIST);
 			/** 业务处理 */
 			List<String> lines = operate(context, func);
 				/** 写入文件 */
-			Assert.isEmpty(lines, ErrorCodes.EUPS_FILE_NOT_EXIST);
+			Assert.isNotEmpty(lines, ErrorCodes.EUPS_FILE_NOT_EXIST);
 			FileUtils.writeLines(file, GDConstants.CHARSET_ENCODING_GBK,lines);
 				
 			
+		}else{
+			 query(context);
 		}
-		logger.info("Eups481210成功!!");
+		logger.info("成功!!");
 	}
 
 	private List<String> operate(Context context,final String operator) throws CoreException {
@@ -93,27 +98,36 @@ public class EupsUpdateCardNo  extends BaseAction {
 		return ret;
 	}
 
-	private List<String> query(Context context) {
+	private List<String> query(Context context)throws CoreException {
+		Map<String,String> map=new HashMap<String,String>();
+		map.put("OldAct", (String)context.getData("OldAct"));
 		List<ZHActNoInf> list=get(ZHActNoInfRepository.class).
-		queryNewByOld((String)context.getData(oldActNO));
-		ContextUtils.setDataMapAsFlatMap(context, BeanUtils.toFlatMap(list).get(0));
+		queryNewByOld(map);
+		Assert.isNotEmpty(list, ErrorCodes.EUPS_QUERY_NO_DATA);
+		context.getDataMapDirectly().putAll(BeanUtils.toFlatMap(list.get(0)));
 		return null;
 	}
 
 	private List<String> update(Context context) throws CoreException {
 		List<String> ret = CollectionUtils.createList();
 		ret.addAll(fileTemplate());
-		get(ZHActNoInfRepository.class).updateInfo(null);
+		Map<String,String> map=new HashMap<String,String>();
+		map.put("OldAct", (String)context.getData("OldAct"));
+		map.put("ActNo", (String)context.getData("ActNo"));
+		get(ZHActNoInfRepository.class).updateInfo(map);
 		ret.add("               "+Sup1Id+"                   "+tlrId);
 		return ret;
 	}
 	private List<String> add(Context context) throws CoreException {
 		List<String> ret = CollectionUtils.createList();
 		ret.addAll(fileTemplate());
+		Map<String,String> map=new HashMap<String,String>();
+		map.put("OldAct", (String)context.getData("OldAct"));
 		List<ZHActNoInf> list=get(ZHActNoInfRepository.class).
-		queryNewByOld((String)context.getData(oldActNO));
-		Assert.isTrue(null==list, "记录已经存在");
-		get(ZHActNoInfRepository.class).insertInfo(null);
+		queryNewByOld(map);
+		Assert.isEmpty(list, ErrorCodes.EUPS_QUERY_NO_DATA);
+		ZHActNoInf info=ContextUtils.getDataAsObject(context, ZHActNoInf.class);
+		get(ZHActNoInfRepository.class).insertInfo(info);
 		ret.add("            代缴费业务中旧帐号视同为新帐号："+ActNo);
 		ret.add("            客户签名：");
 		ret.add("               "+Sup1Id+"                   "+tlrId);
@@ -123,10 +137,10 @@ public class EupsUpdateCardNo  extends BaseAction {
 	private List<String> delete(Context context) throws CoreException {
 		List<String> ret = CollectionUtils.createList();
 		ret.addAll(fileTemplate());
-		List<ZHActNoInf> list=get(ZHActNoInfRepository.class).
-		queryNewByOld((String)context.getData(oldActNO));
-		Assert.isFalse(null==list, "记录不存在");
-		get(ZHActNoInfRepository.class).deleteInfo(null);
+		Map<String,String> map=new HashMap<String,String>();
+		map.put("OldAct", (String)context.getData("OldAct"));
+		map.put("ActNo", (String)context.getData("ActNo"));
+		get(ZHActNoInfRepository.class).deleteInfo(map);
 		ret.add("            代缴费业务中旧帐号不再视同为新帐号："+ActNo);
 		ret.add("            客户签名：");
 		ret.add("               "+Sup1Id+"                   "+tlrId);
@@ -144,7 +158,7 @@ public class EupsUpdateCardNo  extends BaseAction {
 		list.add("            凭 证  种 类"+"["+ActTyp+"]");
 		list.add("            客   户   号"+"["+cusId+"]");
 		list.add("            帐 户 名  称"+"["+actName+"]");
-		list.add("            开 户 网  点"+"["+"]");
+		list.add("            开 户 网  点"+"["+opn+"]");
 		list.add("            ");
 		return list;
 	}
