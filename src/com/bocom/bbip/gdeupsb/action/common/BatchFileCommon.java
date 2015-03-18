@@ -113,15 +113,14 @@ public class BatchFileCommon extends BaseAction {
         Assert.isNotEmpty(resultList, ErrorCodes.EUPS_QUERY_NO_DATA);
         final String comNoAcps =((EupsActSysPara)resultList.get(0)).getSplNo();
         final String fleNme="BATC"+comNoAcps+"0.txt";
-
         Map<String, Object> fileMap = (Map<String, Object>) ContextUtils.assertVariableNotNullAndGet(context, "agtFileMap", ErrorCodes.EUPS_FIELD_EMPTY,"agtFileMap");
 		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne(ParamKeys.FTPID_BATCH_PAY_FILE_TO_ACP);
 		Assert.isFalse(null==config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST);
 		config.setLocFleNme(fleNme);
 		config.setLocDir("D:\\");
+		logger.info("===============生成代收付文件");
 		/** 产生代收付格式文件 */
 		((OperateFileAction)get("opeFile")).createCheckFile(config, "BatchFmt", fleNme, fileMap);
-		
 	}
 	public void afterBatchProcess(Context context)throws CoreException{
 		final String thdbatNo=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.THD_BAT_NO,  ErrorCodes.EUPS_FIELD_EMPTY,"thdBatNo");
