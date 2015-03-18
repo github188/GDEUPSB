@@ -52,10 +52,10 @@ public class EupsPrintCheckListAction  extends BaseAction {
 		GdLotDrwTbl info=new GdLotDrwTbl();
 		info.setDrawId(DrawId);
 		info.setGameId(GameId);
-		GdLotDrwTbl result=get(GdLotDrwTblRepository.class).findOne(info);
-		Assert.isFalse(null==result, ErrorCodes.EUPS_QUERY_NO_DATA);
+		List<GdLotDrwTbl> result=get(GdLotDrwTblRepository.class).find(info);
+		Assert.isNotEmpty(result, ErrorCodes.EUPS_QUERY_NO_DATA);
 		/** 得到DrawNme */
-		context.setData("DrawNme", result.getDrawNm());
+		context.setData("DrawNme", result.get(0).getDrawNm());
 		context.setData("GameNme", GameDesc);
         context.setVariable("type", RptTyp);
 		/** 打印报表 */
