@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
@@ -184,7 +183,7 @@ public class DeductMoneyAction extends BaseAction {
             return;
         }
         //生成对账报表  代码为空
-        //TODO; 计算轧差 
+        // 计算轧差 
         commAction.calcLotDifAmt(context);
         context.setData("msgTyp", Constants.RESPONSE_TYPE_SUCC);
         context.setData(ParamKeys.RSP_CDE, Constants.RESPONSE_CODE_SUCC);

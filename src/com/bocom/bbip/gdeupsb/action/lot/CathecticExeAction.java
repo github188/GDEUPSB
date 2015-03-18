@@ -80,8 +80,6 @@ public class CathecticExeAction extends BaseAction{
         inmap.put("tfaAmt", context.getData("betAmt")); // 转账金额
         try {
             Result dsResult = get(BGSPServiceAccessObject.class).callServiceFlatting("acpFundsTransfer", inmap);
-            Map<String, Object> rspMap = dsResult.getPayload();
-            
             if (dsResult.isSuccess()) {
                 context.setData("accStatus","S");
                 context.setData("txnSts","A");
