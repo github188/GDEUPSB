@@ -366,13 +366,13 @@
     <xs:annotation>
       <xs:documentation>有效起始日期</xs:documentation>
     </xs:annotation>
-    <xs:restriction base="xs:dateTime"/>
+    <xs:restriction base="xs:date"/>
   </xs:simpleType>
   <xs:simpleType name="endDat_SType">
     <xs:annotation>
       <xs:documentation>有效结束日期</xs:documentation>
     </xs:annotation>
-    <xs:restriction base="xs:dateTime"/>
+    <xs:restriction base="xs:date"/>
   </xs:simpleType>
   <xs:simpleType name="carNo_SType">
     <xs:annotation>
@@ -458,7 +458,7 @@
     <xs:annotation>
       <xs:documentation>缴费日期</xs:documentation>
     </xs:annotation>
-    <xs:restriction base="xs:dateTime"/>
+    <xs:restriction base="xs:date"/>
   </xs:simpleType>
   <xs:simpleType name="invNo_SType">
     <xs:annotation>
@@ -472,7 +472,7 @@
     <xs:annotation>
       <xs:documentation>打票日期</xs:documentation>
     </xs:annotation>
-    <xs:restriction base="xs:dateTime"/>
+    <xs:restriction base="xs:date"/>
   </xs:simpleType>
   <xs:complexType name="resultList_CType">
     <xs:sequence>
@@ -707,7 +707,7 @@
     <xs:annotation>
       <xs:documentation>交易日期</xs:documentation>
     </xs:annotation>
-    <xs:restriction base="xs:dateTime"/>
+    <xs:restriction base="xs:date"/>
   </xs:simpleType>
   <xs:complexType name="trspPreInvoicQryRequest_CType">
     <xs:sequence>
@@ -1059,7 +1059,7 @@
     <xs:annotation>
       <xs:documentation>交易日期</xs:documentation>
     </xs:annotation>
-    <xs:restriction base="xs:dateTime"/>
+    <xs:restriction base="xs:date"/>
   </xs:simpleType>
   <xs:simpleType name="thdKey_SType">
     <xs:annotation>
@@ -1134,7 +1134,7 @@
     <xs:annotation>
       <xs:documentation>打印日期</xs:documentation>
     </xs:annotation>
-    <xs:restriction base="xs:dateTime"/>
+    <xs:restriction base="xs:date"/>
   </xs:simpleType>
   <xs:simpleType name="tlrId_SType">
     <xs:annotation>
