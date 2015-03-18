@@ -1,6 +1,6 @@
 package com.bocom.bbip.gdeupsb.strategy.sign;
 
-import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -68,7 +68,7 @@ public class WaterAgtMdyDealImlAction implements AgtMdyDealImlService {
 
 		String func = context.getData(GDParamKeys.SIGN_STATION_FUNC); // 操作类型
 		if (GDConstants.SIGN_STATION_AGT_FUNC_QUERY.equals(func)) {
-			log.info("start query agent info!");
+			log.info("操作类型为查询，开始进行协议信息查询!");
 
 			Map<String, Object> inMap = new HashMap<String, Object>();
 			inMap.put("actNo", actNo); // 卡号
@@ -76,23 +76,34 @@ public class WaterAgtMdyDealImlAction implements AgtMdyDealImlService {
 			inMap.put("AgtMTb", agtMtb); // 协议主表
 			inMap.put("AgtSTb", agtStb); // 协议子表
 
+			List<Map<String, Object>> prvDatRes = new ArrayList<Map<String, Object>>(); // 返回list
+
 			List<Map<String, Object>> qryResult = gdsAgtWaterRepository.findSignDeatilForQry(inMap);
-			context.setData(GDParamKeys.SIGN_STATION_AGT_QRY_RESULT, qryResult); // 返回信息
+			// context.setData(GDParamKeys.SIGN_STATION_AGT_QRY_RESULT,
+			// qryResult); // 返回信息
 
-			// prvDatRes
-			Map<String, Object> jsonMap = new HashMap<String, Object>();
-			jsonMap.put("showInf", qryResult);
-
-			try {
-				context.setData("prvDatRes", new String(JsonUtils.jsonFromObject(jsonMap, "UTF8"), "UTF8"));
-			} catch (UnsupportedEncodingException e) {
-				throw new CoreException(GDErrorCodes.EUPS_SIGN_DEFAULT_ERROR); // 返回json有问题
+			// 循环组返回报文
+			for (Map<String, Object> qryMap : qryResult) {
+				log.info("查询返回的map为[" + qryMap + "]");
+				Map<String, Object> prvDatMap = new HashMap<String, Object>();
+				prvDatMap.put("SUBSTS", qryMap.get("SUB_STS"));
+				prvDatMap.put("ORGCOD", qryMap.get("ORG_COD"));
+				prvDatMap.put("TBUSTP", qryMap.get("TBUS_TP"));
+				prvDatMap.put("TCUSID", qryMap.get("TCUS_ID"));
+				prvDatMap.put("TCUSNM", qryMap.get("TCUS_NM"));
+				prvDatMap.put("GDSAID", qryMap.get("GDS_AID"));
+				prvDatMap.put("EFFDAT", qryMap.get("EFF_DAT"));
+				prvDatMap.put("IVDDAT", qryMap.get("IVD_DAT"));
+				prvDatRes.add(prvDatMap);
 			}
+			context.setData("recNum", qryResult.size()); // 返回笔数
+			context.setData("prvDatRes", prvDatRes); // 返回字段
+			log.info("协议维护-查询结束，当前context=" + context.getDataMap());
 
 			context.setData(GDParamKeys.SIGN_STATION_OEXTFLG, GDConstants.SIGN_STATION_OEXTFLG_Y);
 
 		} else if (GDConstants.SIGN_STATION_AGT_FUNC_UPDATE.equals(func)) {
-			log.info("start update agent info!");
+			log.info("操作类型为更新，开始更新协议信息！");
 
 			// 查询协议主表判断是否已存在协议信息
 			Map<String, Object> inpara = new HashMap<String, Object>();
@@ -142,8 +153,8 @@ public class WaterAgtMdyDealImlAction implements AgtMdyDealImlService {
 
 			// 协议子表处理
 			deataileal(agtStb, gdsAgtInf.getIvdDat(), gdsBId, actNo, context);
-			
-			context.setData(GDParamKeys.SIGN_STATION_OEXTFLG, GDConstants.SIGN_STATION_OEXTFLG_N);  //扩展标志为"N"
+
+			context.setData(GDParamKeys.SIGN_STATION_OEXTFLG, GDConstants.SIGN_STATION_OEXTFLG_N); // 扩展标志为"N"
 			// TODO：GenPrvData
 
 			// 将操作记录计入操作流水表
@@ -171,9 +182,10 @@ public class WaterAgtMdyDealImlAction implements AgtMdyDealImlService {
 
 		} else if (GDConstants.SIGN_STATION_AGT_FUNC_INSERT.equals(func)) {
 
+			log.info("操作类型为新增，暂时不做处理!");
+
 		} else {
 			log.error("handle type error!");
-
 			context.setData(GDParamKeys.SIGN_STATION_OEXTFLG, GDConstants.SIGN_STATION_OEXTFLG_N);
 			throw new CoreException(GDErrorCodes.EUPS_SIGN_DEAL_TYPE_ERROR); // 操作选项错误
 		}
@@ -212,13 +224,12 @@ public class WaterAgtMdyDealImlAction implements AgtMdyDealImlService {
 		for (int i = 0; i < signDetailList.size(); i++) {
 
 			Map<String, Object> detailMap = signDetailList.get(i);
-			detailMap.put("agtSTb", agtStb);   //子表
-			detailMap.put("gdsBid", gdsBId);   //代理业务id
-			detailMap.put("actNo", actNo); //卡号
-			System.out.println("~~~~~~~~~~~~~~~~~context="+context);
-			
-			detailMap.put("txnCnl", context.getData(GDParamKeys.SIGN_STATION_TXN_CNL)); //操作渠道
-			
+			detailMap.put("agtSTb", agtStb); // 子表
+			detailMap.put("gdsBid", gdsBId); // 代理业务id
+			detailMap.put("actNo", actNo); // 卡号
+			System.out.println("~~~~~~~~~~~~~~~~~context=" + context);
+
+			detailMap.put("txnCnl", context.getData(GDParamKeys.SIGN_STATION_TXN_CNL)); // 操作渠道
 
 			// 从detailList中获取用户编号，验证长度是否合法，协议是否可以签订等
 			String cusNo = (String) detailMap.get("TCusId"); // 用户编号
