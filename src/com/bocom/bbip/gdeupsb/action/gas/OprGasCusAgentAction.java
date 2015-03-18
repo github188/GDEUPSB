@@ -295,10 +295,10 @@ public class OprGasCusAgentAction extends BaseAction{
 		Map<String, Object> cusListMap = new HashMap<String, Object>();
 		cusListMap.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
 		Result accessObjList = get(BGSPServiceAccessObject.class).callServiceFlatting("queryListAgentCollectAgreement", cusListMap);
-		if(CollectionUtils.isEmpty(accessObjList.getPayload())){
-			context.setData(GDParamKeys.GAS_MSG_TYP, "E");
-			throw new CoreRuntimeException("该用户未签约,不可进行交易");
-		}
+//		if(CollectionUtils.isEmpty(accessObjList.getPayload())){
+//			context.setData(GDParamKeys.GAS_MSG_TYP, "E");
+//			throw new CoreRuntimeException("该用户未签约,不可进行交易");
+//		}
 		String agdAgrNo = (String) accessObjList.getPayload().get("agdAgrNo");
 		Map<String, Object> cusInfoMap = new HashMap<String, Object>();
 		cusInfoMap.put("agdAgrNo", agdAgrNo);
