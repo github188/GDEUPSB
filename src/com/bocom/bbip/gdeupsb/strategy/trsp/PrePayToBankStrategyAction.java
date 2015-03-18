@@ -94,12 +94,12 @@ public class PrePayToBankStrategyAction implements Executable{
 //		检查本地费用表是否有待缴费用
 		GDEupsbTrspPayInfo gdEupsbTrspPayInfo = new GDEupsbTrspPayInfo();
 		 
-		gdEupsbTrspPayInfo.setBrNo(ctx.getData(ParamKeys.BR).toString());    //ctx.getData(ParamKeys.BK).toString()
+		gdEupsbTrspPayInfo.setBrNo(ctx.getData(ParamKeys.BR).toString());    
 		gdEupsbTrspPayInfo.setCarNo(ctx.getData(GDParamKeys.CAR_NO).toString());
 		gdEupsbTrspPayInfo.setCarTyp(ctx.getData(GDParamKeys.CAR_TYP).toString());
 		gdEupsbTrspPayInfo.setPayMon((String)ctx.getData(GDParamKeys.PAY_MON));
 		String tactDte=(String)ctx.getData(GDParamKeys.TACT_DT);
-//		TODO:
+//		TODO:此处需要确认业务流程，是否只有在查询费用当天才可缴费。
 //		if(!tactDte.equals(null)){
 //			gdEupsbTrspPayInfo.setTactDt(DateUtils.parse(tactDte));
 //		}
