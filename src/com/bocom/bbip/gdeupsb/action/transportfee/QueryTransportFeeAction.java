@@ -19,6 +19,7 @@ import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspPayInfo;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspPayInfoRepository;
+import com.bocom.bbip.gdeupsb.utils.ConnectThdUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.channel.CommunicationException;
@@ -81,6 +82,13 @@ public class QueryTransportFeeAction extends BaseAction{
 			e.printStackTrace();
 		}
 
+//		ConnectThdUtils connectThdUtils = new ConnectThdUtils();
+//		Map<String,Object> responseMessage = connectThdUtils.getThdReosponse(enCodePath,deCodePath,ctx);
+		System.out.println();
+		System.out.println(enCodePath);
+		System.out.println(deCodePath);
+		System.out.println(ctx);
+//		Map<String,Object> responseMessage = get(ConnectThdUtils.class).getThdResponse(enCodePath, deCodePath, ctx);
 //		Map<String,Object> thdReturnMessage = callThdTradeManager.trade(ctx);
 		logger.info("call third start....[the state is" + ctx.getState() + "]");
 		if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_OVERTIME)){
