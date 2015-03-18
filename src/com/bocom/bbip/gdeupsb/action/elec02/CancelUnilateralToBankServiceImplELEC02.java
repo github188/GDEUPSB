@@ -34,13 +34,11 @@ public class CancelUnilateralToBankServiceImplELEC02 extends BaseAction implemen
 	public Map<String, Object> preCclToBank(CommHeadDomain arg0,
 			CancelDomain arg1, Context context) throws CoreException {
 		context.setData(ParamKeys.TXN_DTE, new Date());
-		//context.setData(ParamKeys.OLD_TXN_SEQUENCE, "20150305000000004303");
 		EupsTransJournal journal=new EupsTransJournal();
-		//journal.setThdSqn((String)context.getData(ParamKeys.THD_SEQUENCE));
-		//List<EupsTransJournal>list=get(EupsTransJournalRepository.class).find(journal);
-		//Assert.isNotEmpty(list, ErrorCodes.EUPS_QUERY_NO_DATA);
-		context.setData("txnAmt",8);
-		context.setData(ParamKeys.OLD_TXN_SEQUENCE, "20150309000000010010");
+		journal.setThdSqn((String)context.getData(ParamKeys.THD_SEQUENCE));
+		List<EupsTransJournal>list=get(EupsTransJournalRepository.class).find(journal);
+		Assert.isNotEmpty(list, ErrorCodes.EUPS_QUERY_NO_DATA);
+		context.setData(ParamKeys.OLD_TXN_SEQUENCE, list.get(0).getSqn());
 		return null;
 	}
 
