@@ -122,7 +122,7 @@ public class CommonLotAction extends BaseAction{
      */
     public void downloadFile(Context context)throws CoreException{
         Map<String, String>  map =new HashMap<String, String>();
-        context.setData("action", ACTION_QUERY_FILE_NAME);
+        context.setData("action", ACTION_QUERY_FILE_NAME);	//237
         context.setData("dealer_id", ACTION_QUERY_FILE_NAME);
         Transport ts = context.getService("STHDLOT1");
         Map<String,Object> resultMap = null;
