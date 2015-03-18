@@ -2,7 +2,9 @@ package com.bocom.bbip.gdeupsb.action.zh;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -68,8 +70,9 @@ private List<String> transform(List<String>list)throws CoreException{
 		if((ActNo.length()==18&&ActNo.substring(0, 5).equalsIgnoreCase(GDConstants.GD_ZH_WAGE_ACTNO_PREFIX_18_63420))
 			||(ActNo.length()==20&&ActNo.substring(0, 3).equalsIgnoreCase(GDConstants.GD_ZH_WAGE_ACTNO_PREFIX_20_078)&&
 			ActNo.substring(6,10).equalsIgnoreCase(GDConstants.GD_ZH_WAGE_ACTNO_SUFFIX_20_9999))){
-
-		List<ZHActNoInf> lst=get(ZHActNoInfRepository.class).queryNewByOld(ActNo);
+			Map<String,String> map=new HashMap<String,String>();
+			map.put("OldAct", ActNo);
+		List<ZHActNoInf> lst=get(ZHActNoInfRepository.class).queryNewByOld(map);
 		Assert.isFalse(null==lst||lst.size()!=1, ErrorCodes.EUPS_QUERY_NO_DATA);
 		List<ZHAgtActno> lt=get(ZHAgtActnoRespository.class).queryNewByOld(lst.get(0).getActNo());
 		Assert.isFalse(null==lt||lt.size()!=1, ErrorCodes.EUPS_QUERY_NO_DATA);
