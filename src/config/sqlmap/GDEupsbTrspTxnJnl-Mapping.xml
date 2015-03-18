@@ -994,6 +994,9 @@
       <if test="trspCd != null" >
         TRSP_CD = #{trspCd,jdbcType=CHAR},
       </if>
+      <if test="ttxnSt != null" >
+        TTXN_ST = #{ttxnSt,jdbcType=CHAR},
+      </if>
       <if test="txnSt != null" >
         TXN_ST = #{txnSt,jdbcType=CHAR},
       </if>
@@ -1042,11 +1045,11 @@
     </set>
     where SQN = #{sqn,jdbcType=CHAR} AND TTXN_ST != 'S'
   </update>
-  <select id="findPayInfo" resultType="java.util.List"  parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspTxnJnl">
-  	select a.CAR_NO,a.TCUS_NM,a.TXN_AMT,a.CAR_TYP,a.PAY_MON,a.TTXN_ST,a.TXN_ST,b.BEG_DAT,b.END_DAT,b.CAR_NAME,b.CAR_DZS,b.CNT_STD,
-                  b.FEE_STD,b.CORPUS,b.LATE_FEE,b.CLGS,b.YYBZ
+  <select id="findPayInfo" resultType="java.util.Map"  parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspTxnJnl">
+  	select a.CAR_NO,a.TCUS_NM ,a.TXN_AMT ,a.CAR_TYP,a.PAY_MON,
+  	a.TTXN_ST,a.TXN_ST,b.BEG_DAT,b.END_DAT,b.CAR_NAME ,b.CAR_DZS,b.CNT_STD,b.FEE_STD,b.CORPUS,b.LATE_FEE,b.CLGS,b.YYBZ
            FROM   gdeupsb.TRSP_TXN_JNL as a ,gdeupsb.TRSP_FEE_INFO as b
-           WHERE  a.SQN=b.THD_KEY AND a.BR_NO = #{brNo,jdbcType=CHAR} AND a.ACT_DAT = #{actDat,jdbcType=CHAR} 
+           WHERE  a.SQN=b.PAY_LOG AND a.BR_NO = #{brNo,jdbcType=CHAR} 
            AND b.STATUS='0' AND a.CAR_NO = #{carNo,jdbcType=CHAR} AND a.SQN = #{sqn,jdbcType=CHAR}
            
   </select>
