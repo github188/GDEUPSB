@@ -822,4 +822,90 @@
       </foreach>
     </if>
   </select>
+  
+  
+  <update id="updateByGameIdAndDrawId" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotTxnJnl" >
+    update gdeupsb.GDEUPS_LOT_TXN_JNL
+    <set >
+        CHK_FLG = #{chkFlg,jdbcType=CHAR}, CHK_TIM = #{chkTim,jdbcType=CHAR}
+    </set>
+    where GAME_ID = #{gameId,jdbcType=CHAR} AND DRAW_ID = #{drawId,jdbcType=CHAR}
+  </update>
+  
+    <update id="updateMatchLotTxnJnl" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotTxnJnl" >
+      update gdeupsb.GDEUPS_LOT_TXN_JNL
+      <set >
+         CHK_FLG ='1', CHK_TIM = #{chkTim,jdbcType=CHAR}, TXN_STS='S'
+     </set>
+         where GAME_ID = #{gameId,jdbcType=CHAR} AND DRAW_ID = #{drawId,jdbcType=CHAR} AND
+           TXN_LOG in (select a.TXN_LOG from gdeupsb.GDEUPS_LOT_TXN_JNL a, gdeupsb.GDEUPS_LOT_CHK_DTL b
+                         where a.GAME_ID=b.GAME_ID and a.DRAW_ID=b.DRAW_ID and a.KENO_ID=b.KENO_ID
+                            and a.SCH_ID=b.SCH_ID and a.LOT_NAM=b.LOT_NAM and a.TXN_LOG=b.TXN_LOG
+                            and a.PLAY_ID=b.PLAY_ID and a.TXN_AMT=b.TXN_AMT
+                            and a.TXN_STS in ('S', 'T'))
+    </update>
+
+  <update id="updateUnMatchLotTxnJnl" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotTxnJnl" >
+    update gdeupsb.GDEUPS_LOT_TXN_JNL
+    <set >
+        CHK_FLG = '2', CHK_TIM = #{chkTim,jdbcType=CHAR}
+    </set>
+    where GAME_ID = #{gameId,jdbcType=CHAR} AND DRAW_ID = #{drawId,jdbcType=CHAR} 
+    AND CHK_FLG = '0' AND TXN_STS in ('S', 'T')
+  </update>
+  
+  
+  <select id="statLotTxnJnlUnChk"  parameterType="com.bocom.bbip.gdeupsb.entity.GdLotTxnJnl" resultType="java.lang.Integer" >
+    select count(*) from ${BBIPADM_SCHEMA}.GDEUPS_LOT_TXN_JNL 
+    WHERE GAME_ID = #{gameId,jdbcType=CHAR} AND DRAW_ID = #{drawId,jdbcType=CHAR} 
+    AND CHK_FLG != '1' AND TXN_STS in ('S', 'T')
+  </select>
+   <select id="qryLotTxnJnl"  parameterType="map" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${BBIPADM_SCHEMA}.GDEUPS_LOT_TXN_JNL
+     <where>
+        <choose>
+          <when test="betTyp !=null and betTyp != ''">
+             CRD_NO=#{crdNo} AND BET_TYP=#{betTyp} AND BET_DAT between #{begDat} and #{endDat} AND TXN_STS='S'
+          </when>
+          <otherwise>
+             CRD_NO=#{crdNo} AND BET_DAT between #{begDat} and #{endDat} AND TXN_STS='S'
+         </otherwise>
+        </choose>
+     </where>
+     order by TXN_TIM desc
+  </select>
+  
+  <select id="findCheckSuccess" resultMap="basicResultMap" parameterType="map">
+  select * from gdeupsb.GDEUPS_LOT_TXN_JNL 
+                    where GAME_ID=#{GameId} and DRAW_ID=#{DrawId} and TXN_STS in ('S','T') and CHK_FLG='1' 
+                    order by KENO_ID, TXN_TIM asc
+  </select>
+  
+  <select id="findCheckFail" resultMap="basicResultMap" parameterType="map">
+  select * from gdeupsb.GDEUPS_LOT_TXN_JNL 
+                    where GAME_ID=#{GameId} and DRAW_ID=#{DrawId} and TXN_STS in ('S','T') and CHK_FLG='2' 
+                    order by KENO_ID, TXN_TIM asc
+  </select>
+
+  
+  
+ <select id="qryLotWinRecord" parameterType="java.util.Map" resultType="java.util.Map" >
+            SELECT A.T_LOG_NO, A.DRAW_ID, A.KENO_ID, A.PLAY_ID,A.BET_MUL, A.BET_LIN, A.BET_MOD, B.TOT_PRZ, A.TXN_TIM, A.TXN_LOg, C.PRZ_AMT
+            FROM GDEUPSB.GDEUPS_LOT_PRZ_CTL B, GDEUPSB.GDEUPS_LOT_TXN_JNL A, GDEUPSB.GDEUPS_LOT_PRZ_DTL C
+            <where>
+                <choose>
+                 <when test='betTyp != ""'>
+                    A.GAME_ID=B.GAME_ID AND A.DRAW_ID=B.DRAW_ID AND A.KENO_ID=B.KENO_ID AND A.TXN_LOG=B.TXN_LOG AND A.T_LOG_NO=B.T_LOG_NO AND A.T_LOG_NO=C.T_LOG_NO AND A.TXN_LOG=C.TXN_LOG AND CRD_NO=#{crdNo} AND BET_DAT BETWEEN #{begDat} AND #{endDat} AND BET_TYP=#{betTyp} AND TXN_STS='S' AND A.GAME_ID=#{gameId}
+                 </when>
+                 <otherwise>
+                    A.GAME_ID=B.GAME_ID AND A.DRAW_ID=B.DRAW_ID AND A.KENO_ID=B.KENO_ID AND A.TXN_LOG=B.TXN_LOG AND A.T_LOG_NO=B.T_LOG_NO AND A.T_LOG_NO=C.T_LOG_NO AND A.TXN_LOG=C.TXN_LOG AND CRD_NO=#{crdNo} AND BET_DAT BETWEEN #{begDat} AND #{endDat}  AND TXN_STS='S' AND A.GAME_ID=#{gameId}
+                 </otherwise>
+                </choose>
+            </where>
+            ORDER BY A.TXN_TIM DESC
+ </select>
+            
+  
 </mapper>

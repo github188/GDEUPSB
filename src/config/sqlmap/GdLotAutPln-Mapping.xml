@@ -419,4 +419,17 @@
       </foreach>
     </if>
   </select>
+  
+  <update id="updateStatus" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotAutPln" >
+    update ${GDEUPSB_SCHEMA}.GDEUPS_LOT_AUT_PLN
+        set STATUS=#{status,jdbcType=CHAR}
+        where PLAN_NO=#{planNo,jdbcType=CHAR} AND CRD_NO=#{crdNo,jdbcType=CHAR} AND STATUS='0'
+  </update>
+  <update id="updateResult" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotAutPln" >
+    update ${GDEUPSB_SCHEMA}.GDEUPS_LOT_AUT_PLN
+        set CUR_PER=#{curPer,jdbcType=CHAR},CUR_FAL=#{curFal,jdbcType=CHAR},
+            CON_FAL=#{conFal,jdbcType=CHAR},DO_PER=#{doPer,jdbcType=CHAR},
+            CCL_TIM=#{cclTim,jdbcType=CHAR},STATUS=#{status,jdbcType=CHAR}
+        where PLAN_NO=#{planNo,jdbcType=CHAR} AND CRD_NO=#{crdNo,jdbcType=CHAR} AND STATUS='0'
+  </update>
 </mapper>

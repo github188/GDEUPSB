@@ -209,4 +209,18 @@
       </foreach>
     </if>
   </select>
+ 
+  <delete id="deleteByGameId" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotPrzCtl" >
+    delete from gdeupsb.GDEUPS_LOT_PRZ_CTL
+    where GAME_ID = #{gameId,jdbcType=CHAR} and DRAW_ID= #{drawId,jdbcType=CHAR} and KENO_ID= #{kenoId,jdbcType=CHAR}
+  </delete>
+   <select id="LotCtlBatchInsert" resultMap="basicResultMap" >
+    insert into  gdeupsb.GDEUPS_LOT_PRZ_CTL (
+    <include refid="baseColumnList" />) values
+        <foreach collection="list" item="item" index="index" separator=",">
+            ( #{item.tLogNo}, #{item.gameId},
+            #{item.drawId}, #{item.kenoId}, #{item.cipher}, #{item.bigBon},
+            #{item.totPrz}, #{item.txnlog}, #{item.termId})
+      </foreach>
+  </select>
 </mapper>

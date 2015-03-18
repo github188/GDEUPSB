@@ -292,4 +292,24 @@
     <include refid="baseColumnList" />
     from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_AWD_DTL
   </select>
+    <insert id="insertAwdDtl" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotAwdDtl" >
+    insert into ${EUPS_SCHEMA}.GDEUPS_LOT_AWD_DTL 
+        (BR_NO,GAME_ID,DRAW_ID,KENO_ID,LOT_NAM,TXN_LOG,T_LOG_NO,CUS_NAM,CRD_NO,AWD_AMT) 
+    select b.BR_NO,a.GAME_ID,a.DRAW_ID,a.KENO_ID,b.LOT_NAM,a.TXN_LOG,a.T_LOG_NO,b.CUS_NAM,b.CRD_NO,a.TOT_PRZ
+          FROM  GDEUPS_LOT_PRZ_CTL a,GDEUPS_LOT_TXN_JNL b
+          WHERE a.GAME_ID=#{gameId,jdbcType=CHAR} and a.DRAW_ID=#{drawId,jdbcType=CHAR} 
+                and a.KENO_ID=#{kenoId,jdbcType=CHAR} and a.GAME_ID=b.GAME_ID and a.DRAW_ID=b.DRAW_ID and a.KENO_ID=b.KENO_ID
+                and a.BIG_BON='false' and a.TXN_LOG=b.TXN_LOG and a.T_LOG_NO=b.T_LOG_NO and b.TXN_STS in ('S','T') and b.AWD_RTN='0'
+   </insert>
+   <select id="sumAmt" resultType="map" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotAwdDtl">
+    SELECT　COALESCE(SUM(CAST(AWD_AMT AS BIGINT)),0) PrzAmt
+          FROM GDEUPS_LOT_AWD_DTL
+          WHERE  GAME_ID=#{gameId,jdbcType=CHAR}  and DRAWw_ID=#{drawId,jdbcType=CHAR}
+             and KENO_ID=#{kenoId,jdbcType=CHAR}
+  </select>
+   <select id="checkTxnLog" resultType="map">
+    SELECT　COUNT(TXNLOG) dupnum
+          FROM GDEUPS_LOT_AWD_DTL DESC
+          GROUP BY  GAME_ID,DRAW_ID,KENO_ID FETCH FIRST 1 ROWS ONLY
+  </select>
 </mapper>
