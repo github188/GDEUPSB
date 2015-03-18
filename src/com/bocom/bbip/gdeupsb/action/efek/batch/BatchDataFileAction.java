@@ -164,21 +164,21 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 			return resultMap;
 		}
 	/**
-	 * 异步调用process   批量代扣数据提交
+	 *  批量代扣数据提交
 	 */
 		public void userProcessToSubmit(Context context)throws CoreException{
-			logger.info("==========Start  BatchDataFileAction  userProcess");
+			logger.info("==========Start  BatchDataFileAction  userProcessToSubmit");
 			get(BatchFileCommon.class).sendBatchFileToACP(context);
-			logger.info("==========End  BatchDataFileAction  userProcess");
+			logger.info("==========End  BatchDataFileAction  userProcessToSubmit");
 		}
 	/**
 	 * 异步调用process  代收付回调函数：解析回盘文件并入库
 	 */
 		public void userProcessToGet(Context context)throws CoreException{
-			logger.info("==========Start  BatchDataFileAction  userProcess");
+			logger.info("==========Start  BatchDataFileAction  userProcessToGet");
 			String mothed="eups.commNotifyBatchStatus";
 			bbipPublicService.synExecute(mothed, context);
-			logger.info("==========End  BatchDataFileAction  userProcess");
+			logger.info("==========End  BatchDataFileAction  userProcessToGet");
 		}
 	/**
 	 * 第一行数据保存到控制表中
