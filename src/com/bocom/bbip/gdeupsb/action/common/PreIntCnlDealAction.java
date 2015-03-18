@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.bea.common.ldap.DateUtil;
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.Constants;
@@ -89,12 +88,17 @@ public class PreIntCnlDealAction extends BaseAction {
 		
 		String bk = context.getData(ParamKeys.BK);
 
-		// 授权原因码并校验是否已授权
-		String authTlr = context.getData(ParamKeys.AUTHOR_LEVEL);
-		if (StringUtils.isEmpty(authTlr)) {
-			throw new CoreException(ErrorCodes.EUPS_CANCEL_CHECK_AUTH_FAIL);
-		}
-		context.setData(GDConstants.AUTH_REASON, "EFE000");// 授权原因码 EFE000
+		// TODO:为了测试，先注释，授权原因码并校验是否已授权
+//		String authTlr = context.getData(ParamKeys.AUTHOR_LEVEL);
+//		if (StringUtils.isEmpty(authTlr)) {
+//			throw new CoreException(ErrorCodes.EUPS_CANCEL_CHECK_AUTH_FAIL);
+//		}
+		// 授权原因码 EFE000
+		context.setData(GDConstants.AUTH_REASON, "EFE000");
+		
+		String authTlr = "4413913";
+		context.setData("athTlrNo", authTlr);
+		context.setData("athTlr", authTlr);
 
 		// 校验凭单号是否存在，此处用THD_SUB_CUS_NO作为凭单号
 		// String tckNo = context.getData(ParamKeys.THD_SUB_CUS_NO);
