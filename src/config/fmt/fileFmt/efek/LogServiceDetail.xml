@@ -2,9 +2,9 @@
 <message xmlns="http://www.bocom.com/jump/transformer/packet"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
-	encoding="utf-8" trace="true">
+	encoding="GBK" trace="true">
 	
-	<segment name="detail"  encoding="utf-8">
+	<segment name="detail"  encoding="GBK">
 		      <fixString name="thdCusNo"   length=" 20" /><!--缴费号-->
 		      <fixString name="rsvFld4"  length="  3" /><!--收费方式-->
 		      <fixString name="rsvFld5"  length="  3" /><!--费用类型-->

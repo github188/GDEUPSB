@@ -2,9 +2,9 @@
 <message xmlns="http://www.bocom.com/jump/transformer/packet"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
-	encoding="utf-8" trace="true">
+	encoding="GBK" trace="true">
 	
-	<segment name="detail"  encoding="utf-8">
+	<segment name="detail"  encoding="GBK">
 		 <fixString name="sqn"  length="24"  /><!--交易流水号-->
 		 <fixString name="comNo"  length="8"  /><!--单位编码-->
 		 <fixString name="electricityYearMonth"  length="6"  /><!--电费日期-->

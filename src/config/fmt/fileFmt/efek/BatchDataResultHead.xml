@@ -2,9 +2,9 @@
 <message xmlns="http://www.bocom.com/jump/transformer/packet"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
-	encoding="utf-8"  trace="true">
+	encoding="GBK"  trace="true">
 	
-	<segment name="header" encoding="utf-8">
+	<segment name="header" encoding="GBK">
 		<fixString name="rsvFld9"  length="27"></fixString><!-- 批量代收信息标识 -->
 		<fixString name="comNo"  length="8"></fixString><!-- 单位编码	DWBM	Varchar2(8) -->
 		<fixString name="rsvFld8"  length="4"></fixString><!-- 入账银行代码	RZYHDM	Varchar2(4) -->
