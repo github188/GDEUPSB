@@ -42,7 +42,7 @@ public class AftPayToBankStrategyAction implements Executable{
 		
 //        更新缴费标志
 		GDEupsbTrspPayInfo gdEupsbTrspPayInfo = new GDEupsbTrspPayInfo();
-		gdEupsbTrspPayInfo.setThdKey((GDParamKeys.THD_KEY).toString());
+		gdEupsbTrspPayInfo.setThdKey(ctx.getData(GDParamKeys.THD_KEY).toString());
 		gdEupsbTrspPayInfo.setFlg("1");
 		gdEupsbTrspPayInfoRepository.update(gdEupsbTrspPayInfo);
 		
