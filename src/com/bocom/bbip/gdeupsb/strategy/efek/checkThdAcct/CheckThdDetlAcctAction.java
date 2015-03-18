@@ -114,6 +114,8 @@ public class CheckThdDetlAcctAction implements Executable {
 							String bankNo=context.getData(ParamKeys.BANK_NO).toString();
 							String fileName = "DZ05"+busType+payType+"_"+bankNo+comNo+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";
 
+							context.setData("fileName", fileName);
+							context.setData("batNo", sqn);
 							logger.info("~~~~~~~~eupsThdFtpConfig~~~~~~~"+eupsThdFtpConfig);
 							logger.info("CheckBkFileMbusCardStrategy fileName is :"+ fileName);
 							
