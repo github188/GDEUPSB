@@ -15,25 +15,26 @@ import com.bocom.bbip.service.Result;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.ContextUtils;
-import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
-
+/**
+ * 
+ * @author wuyh
+ *
+ */
 public class CancelBatchCheckAction extends BaseAction {
 	private static final Log logger=LogFactory.getLog(CancelBatchCheckAction.class);
 
 
     public void check(Context context)throws Exception{
-        //context.setData("batNo", "150508TPO300300011");
 		final String batNo=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.BAT_NO, ErrorCodes.EUPS_FIELD_EMPTY,"batNo");
-		Result result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).tryLock(batNo, 60*1000L, 6000L);
+		Result result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).tryLock(batNo, 60*1000L, 60*1000L);
 		Assert.isTrue(result.isSuccess(), GDErrorCodes.EUPS_LOCK_FAIL);
 		GDEupsBatchConsoleInfo info = new GDEupsBatchConsoleInfo();
 		info.setBatNo(batNo);
 		GDEupsBatchConsoleInfo ret = get(GDEupsBatchConsoleInfoRepository.class).findConsoleInfo(info);
 		Assert.isNotNull(ret, ErrorCodes.EUPS_BAT_CTL_INFO_NOT_EXIST);
 		logger.info("批次信息:"+BeanUtils.toFlatMap(ret));
-		Assert.isFalse(StringUtils.isBlank(ret.getBatSts()), "批次状态不存在");
 		/**只有状态为I或W，才可以撤销批次*/
 		boolean canCancel=ret.getBatSts().equalsIgnoreCase(GDConstants.BATCH_STATUS_INIT)||
 		ret.getBatSts().equalsIgnoreCase(GDConstants.BATCH_STATUS_WAIT);
