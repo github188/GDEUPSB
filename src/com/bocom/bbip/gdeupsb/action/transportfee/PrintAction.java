@@ -17,6 +17,7 @@ public class PrintAction extends BaseAction{
 			ctx.setData(ParamKeys.RSP_MSG, "发票号码改变，请补打");
 			throw new CoreRuntimeException(GDErrorCodes.EUPS_INVOIC_NO_ERROR);
 		}
+		System.out.println("hahhahahahahahhahah");
 //		 <Set>FilNam=STRCAT(INVO,$TlrId,00)</Set>
 //         <Exec func="PUB:GenerateReport">
 //            <Arg name="ObjFil"  value="STRCAT($TSDir,$FilNam)"/>
