@@ -120,7 +120,11 @@ public class BatchFileCommon extends BaseAction {
 		config.setLocDir("D:\\");
 		logger.info("===============生成代收付文件");
 		/** 产生代收付格式文件 */
-		((OperateFileAction)get("opeFile")).createCheckFile(config, "BatchFmt", fleNme, fileMap);
+		if(context.getData(ParamKeys.EUPS_BUSS_TYPE).equals("ELEC00")){
+			((OperateFileAction)get("opeFile")).createCheckFile(config, "agtFileBatchFmt", fleNme, fileMap);
+		}else{
+			((OperateFileAction)get("opeFile")).createCheckFile(config, "BatchFmt", fleNme, fileMap);
+		}
 	}
 	public void afterBatchProcess(Context context)throws CoreException{
 		final String thdbatNo=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.THD_BAT_NO,  ErrorCodes.EUPS_FIELD_EMPTY,"thdBatNo");
