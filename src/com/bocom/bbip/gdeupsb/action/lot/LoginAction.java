@@ -33,7 +33,7 @@ public class LoginAction extends BaseAction {
         log.info("LoginAction Start !!");
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
         context.setData("nodNo", "441800");
-        GdLotSysCfg lotSysCfgInfo = get(GdLotSysCfgRepository.class).findOne(GDConstants.LOT_DEAL_ID);
+        GdLotSysCfg lotSysCfgInfo = get(GdLotSysCfgRepository.class).findSysCfg(GDConstants.LOT_DEAL_ID);
         if (null == lotSysCfgInfo) {
             context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
             context.setData(ParamKeys.RSP_CDE, "LOT999");

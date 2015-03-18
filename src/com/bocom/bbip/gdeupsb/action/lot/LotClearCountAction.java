@@ -29,7 +29,7 @@ public class LotClearCountAction extends BaseAction {
 
 		// 获取系统配置
 		String dealId = GDConstants.LOT_DEAL_ID; // 运营商编号
-		GdLotSysCfg gdLotSysCfg = get(GdLotSysCfgRepository.class).findOne(dealId);
+		GdLotSysCfg gdLotSysCfg = get(GdLotSysCfgRepository.class).findSysCfg(dealId);
 
 		// 查询代收单位协议信息
 		String dscAgtNo = gdLotSysCfg.getDsCAgtNo(); // 代收单位编号

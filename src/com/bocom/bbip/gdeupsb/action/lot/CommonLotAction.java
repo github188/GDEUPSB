@@ -65,7 +65,7 @@ public class CommonLotAction extends BaseAction{
      */
     public String getFcTim(String dealId, String brNo) {
         //查询系统参数，获取当前本地与福彩系统的时差
-        GdLotSysCfg gdLotSysCfg = lotSysCfgRepository.findOne(dealId);
+        GdLotSysCfg gdLotSysCfg = lotSysCfgRepository.findSysCfg(dealId);
         String difTim = "0";
         if (null != gdLotSysCfg) {
             difTim= gdLotSysCfg.getDiffTm();
@@ -321,8 +321,9 @@ public class CommonLotAction extends BaseAction{
      */
     
     public void GetSysCfg(Context context) {
+        log.info(" Get Systerm Config  Start...!");
         String dealId = GDConstants.LOT_DEAL_ID; // 运营商编号
-        GdLotSysCfg gdLotSysCfg = lotSysCfgRepository.findOne(dealId);
+        GdLotSysCfg gdLotSysCfg = lotSysCfgRepository.findSysCfg(dealId);
 
         // 查询代收单位协议信息
         String dscAgtNo = gdLotSysCfg.getDsCAgtNo(); // 代收单位编号
@@ -330,7 +331,7 @@ public class CommonLotAction extends BaseAction{
         inpara.put(ParamKeys.COMPANY_NO, dscAgtNo);
         inpara.put("inqBusLstFlg", "N");
 
-         Result dsResult = bgspServiceAccessObject.callServiceFlatting("queryCorporInfo", inpara);
+        Result dsResult = bgspServiceAccessObject.callServiceFlatting("queryCorporInfo", inpara);
         Map<String, Object> dsMap = new HashMap<String, Object>();
         dsMap = dsResult.getPayload();
 

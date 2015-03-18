@@ -15,12 +15,12 @@ import com.bocom.jump.bp.core.CoreException;
 
 public class CathecticPreAction extends BaseAction {
 
-    CommonLotAction commonLotAction =new CommonLotAction();
     
     @Override
     public void execute(Context context) throws CoreException {
         log.info("Enter in Cathectic Lot Action... ");
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
+        CommonLotAction commonLotAction =new CommonLotAction();
         
         commonLotAction.GetSysCfg(context);
         context.setData("cTTxnCd", context.getData("tTxnCd"));
