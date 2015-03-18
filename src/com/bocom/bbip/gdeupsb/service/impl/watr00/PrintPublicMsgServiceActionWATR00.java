@@ -43,18 +43,31 @@ public class PrintPublicMsgServiceActionWATR00 extends BaseAction {
 		if(cusAc==null||"".equals(cusAc.toString().trim())){
 			param.put("cusAc", null);
 		}else{
-			param.put("cusAc", endDate);
+			param.put("cusAc", cusAc);
 		}
 		param.put("br", context.getData("br"));
 		param.put("eupsBusTyp", context.getData("eupsBusTyp"));
-		param.put("txnSts", context.getData("S"));
 		
 		EupsThdFtpConfigRepository eupsThdFtpConfigRepository = get(EupsThdFtpConfigRepository.class);
 		ReportHelper reportHelper = get(ReportHelper.class);
 		MFTPConfigInfo mftpConfigInfo = reportHelper.getMFTPConfigInfo(eupsThdFtpConfigRepository);
 		logger.info((new StringBuilder("mftpConfigInfo:>>>>").append(BeanUtils.toMap(mftpConfigInfo))).toString());
 		
-		List<Map<String,String>> eupsTransJournals = ((SqlMap)get("sqlMap")).queryForList("watr00.queryPublicMsg", param);
+		List<Map<String,Object>> eupsTransJournals = ((SqlMap)get("sqlMap")).queryForList("watr00.queryPublicMsg", param);
+		for(Map<String,Object> m:eupsTransJournals){
+			m.put("cusAc", m.get("CUS_AC"));
+			m.put("cusNme", m.get("CUS_NMES"));
+			m.put("ccy", m.get("CCY"));
+			m.put("txnAmt", m.get("TXN_AMT"));
+			m.put("txnAmtInWord", StringUtils.amountInWords(String.valueOf(m.get("txnAmt"))));
+			m.put("thdCusNo", m.get("THD_CUS_NO"));
+			m.put("actDat", String.valueOf(m.get("AC_DTE")));
+			m.put("txnTlr", m.get("TXN_TLR"));
+			m.put("sqn", m.get("SQN"));
+		}
+		context.setData("actNo", "445007012620194007699");
+		context.setData("actNm", "汕头自来水公司");
+		
 		VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
 		try {
 			render.afterPropertiesSet();
@@ -62,7 +75,7 @@ public class PrintPublicMsgServiceActionWATR00 extends BaseAction {
 			e.printStackTrace();
 		}
 		Map<String,String> map = new HashMap<String,String>();
-		map.put("sample", "config/report/watr00_printPublicMsg.vm");
+		map.put("sample", "config/report/watr00/watr00_printPublicMsg.vm");
 		render.setReportNameTemplateLocationMapping(map);
 		context.setData("eles", eupsTransJournals);
 		String result = render.renderAsString("sample", context);
@@ -73,9 +86,9 @@ public class PrintPublicMsgServiceActionWATR00 extends BaseAction {
 		logger.info("PrintPublicMsgServiceActionWATR00 end ... ...");
 	}
 	
-	public static void main(String[] args) {
-		String amt = "123";
-		System.out.println(StringUtils.amountInWords(amt));
-	}
+//	public static void main(String[] args) {
+//		String amt = "123";
+//		System.out.println(StringUtils.amountInWords(amt));
+//	}
 
 }

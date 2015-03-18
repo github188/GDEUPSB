@@ -1,32 +1,24 @@
 package com.bocom.bbip.gdeupsb.service.impl.watr00;
 
-import java.util.ArrayList;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.bocom.bbip.data.domain.Page;
-import com.bocom.bbip.data.domain.PageRequest;
-import com.bocom.bbip.data.domain.Pageable;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.eupsreport.ReportHelper;
-import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsTransJournal;
-import com.bocom.bbip.eups.entity.EupsTransJournalTemp;
 import com.bocom.bbip.eups.entity.MFTPConfigInfo;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
-import com.bocom.bbip.eups.vo.TransJournalRequest;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
-import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -47,10 +39,25 @@ public class PrintTransJournalServiceActionWATR00 extends BaseAction {
         logger.info("txnDat["+txnDat+"]br["+br+"]");
         EupsTransJournal eupsTransJournal = new EupsTransJournal();
         eupsTransJournal.setTxnDte(DateUtils.parse(txnDat, DateUtils.STYLE_SIMPLE_DATE));
+//        eupsTransJournal.setAcDte(DateUtils.parse(txnDat, DateUtils.STYLE_SIMPLE_DATE));
         eupsTransJournal.setEupsBusTyp(context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
         eupsTransJournal.setBr(br);
         eupsTransJournal.setMfmTxnSts("S");
+        eupsTransJournal.setTxnTyp("N");
         List<EupsTransJournal> eupsTransJournals = get(EupsTransJournalRepository.class).find(eupsTransJournal);
+        BigDecimal sumAmt = BigDecimal.ZERO;
+        for(EupsTransJournal journal:eupsTransJournals){
+        	String txnSts = journal.getTxnSts();
+        	if("S".equals(txnSts)){
+        		journal.setBakFld1("交易成功");
+        	}else{
+        		journal.setBakFld1("可疑，请查询");
+        	}
+        	BigDecimal amt = journal.getTxnAmt();
+        	sumAmt = sumAmt.add(amt);
+        }
+        context.setData("sumCnt", eupsTransJournals.size());
+        context.setData("sumAmt", sumAmt);
         
         EupsThdFtpConfigRepository eupsThdFtpConfigRepository = get(EupsThdFtpConfigRepository.class);
 		ReportHelper reportHelper = get(ReportHelper.class);
@@ -64,7 +71,7 @@ public class PrintTransJournalServiceActionWATR00 extends BaseAction {
 			e.printStackTrace();
 		}
 		Map<String,String> map = new HashMap<String,String>();
-		map.put("sample", "config/report/watr00_printTransJournal.vm");
+		map.put("sample", "config/report/watr00/watr00_printTransJournal.vm");
 		render.setReportNameTemplateLocationMapping(map);
 		context.setData("eles", eupsTransJournals);
 		String result = render.renderAsString("sample", context);

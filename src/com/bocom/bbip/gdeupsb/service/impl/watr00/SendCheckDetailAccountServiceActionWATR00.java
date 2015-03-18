@@ -52,11 +52,11 @@ public class SendCheckDetailAccountServiceActionWATR00 extends BaseAction {
 	@Override
 	public void execute(Context context) throws CoreException,	CoreRuntimeException {
 		
-		try {
-			Thread.sleep(5000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			Thread.sleep(2000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
 		
 		logger.info("SendCheckDetailAccountServiceActionWATR00 execute start ... ...");
 		String hno = context.getData("hno");

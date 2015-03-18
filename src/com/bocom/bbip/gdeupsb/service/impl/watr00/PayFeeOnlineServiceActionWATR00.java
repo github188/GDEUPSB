@@ -43,7 +43,7 @@ public class PayFeeOnlineServiceActionWATR00 implements PayFeeOnlineService {
 	public Map<String, Object> preCheckDeal(CommHeadDomain commheaddomain,PayFeeOnlineDomain payfeeonlinedomain, Context context) throws CoreException {
 		//暂时不需实现
 		logger.info("PayFeeOnlineServiceActionWATR00 preCheckDeal start ... ...");
-		
+//		context.setData("oldTxnSqn", context.getData("txnSqn"));
 		logger.info("PayFeeOnlineServiceActionWATR00 preCheckDeal end ... ...");
 		return null;
 	}
