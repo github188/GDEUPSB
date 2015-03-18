@@ -38,7 +38,6 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 	private static final Log logger=LogFactory.getLog(BatchAcpServiceImplELEC02.class);
 	@Override
 	public void prepareBatchDeal(PrepareBatchAcpDomain domain, Context context)throws CoreException {
-		context.setData(ParamKeys.FLE_NME, "gh");
 		final String comNo=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.COMPANY_NO, ErrorCodes.EUPS_FIELD_EMPTY);
         /**上锁*/
 		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).Lock(comNo);
