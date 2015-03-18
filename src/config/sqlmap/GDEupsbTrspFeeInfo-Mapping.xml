@@ -698,9 +698,6 @@
       <if test="payDat != null" >
         PAY_DAT = #{payDat,jdbcType=DATE},
       </if>
-      <if test="payLog != null" >
-        PAY_LOG = #{payLog,jdbcType=CHAR},
-      </if>
       <if test="payNod != null" >
         PAY_NOD = #{payNod,jdbcType=CHAR},
       </if>
@@ -795,7 +792,7 @@
         STATUS = '1'
       
     </set>
-    where THD_KEY = #{thdKey,jdbcType=CHAR} AND STATUS = '0'
+    where PAY_LOG = #{payLog,jdbcType=CHAR} AND STATUS = '0'
   </update>
  
 <update id="updateChkFlg"  parameterType="java.lang.String">
