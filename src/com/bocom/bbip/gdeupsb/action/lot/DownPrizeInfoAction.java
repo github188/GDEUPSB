@@ -27,7 +27,7 @@ public class DownPrizeInfoAction extends BaseAction {
 	public void process(Context context) throws CoreException {
           logger.info("开始下载奖期信息");
           context.setData("action", "235");
-          context.setData("gameId", "9");
+         // context.setData("gameId", "9");
           context.setData("dealer_id", "wuyh");
           final String GameId=ContextUtils.assertDataHasLengthAndGet(context, "gameId", ErrorCodes.EUPS_QUERY_NO_DATA);
           context.setData("gameId", GameId);
