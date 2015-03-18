@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import com.bocom.bbip.eups.adaptor.exception.DecodeNotDoneException;
 import com.bocom.bbip.eups.adaptor.exception.EncodeNotDoneException;
+import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.JumpException;
@@ -472,7 +473,7 @@ public class GdLotTransCodTransport implements Transport{
 			factory = XMLInputFactory.newInstance();
 			sr = new StringReader(data);
 			r = factory.createXMLStreamReader(sr);
-			String action = "";
+			String action = context.getData("action");
 			while(r.hasNext()){
 				int typ = r.next();
 				if(typ!=XMLStreamConstants.START_ELEMENT)
@@ -512,7 +513,7 @@ public class GdLotTransCodTransport implements Transport{
             else if("238".equals(action)){
                 decode_238(r,map,context);
             }
-			
+			context.setData(ParamKeys.RESPONSE_CODE, "0000");
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (XMLStreamException e) {
@@ -534,11 +535,10 @@ public class GdLotTransCodTransport implements Transport{
 	                map.put("draw_id", r.getAttributeValue(1));
 	            }
 	            if ("point".equals(name)) {
-              map.put("db", r.getAttributeValue(0));
-              map.put("cash",r.getAttributeValue(1));
-              map.put("dump", r.getAttributeValue(2));
-              
-          }
+		              map.put("db", r.getAttributeValue(0));
+		              map.put("cash",r.getAttributeValue(1));
+		              map.put("dump", r.getAttributeValue(2));
+		         }
 	            if ("bonusItem".equals(name)) {
 	            	if(lst.size()>0){
 	            		List lt=new ArrayList();
