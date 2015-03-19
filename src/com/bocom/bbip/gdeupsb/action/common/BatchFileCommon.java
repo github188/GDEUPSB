@@ -1,10 +1,13 @@
 package com.bocom.bbip.gdeupsb.action.common;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -96,6 +99,7 @@ public class BatchFileCommon extends BaseAction {
 		Assert.isTrue(result.isSuccess(), GDErrorCodes.EUPS_LOCK_FAIL);
 	}
 	/**
+	 * @throws IOException 
 	 * 
 	 */
 	public void sendBatchFileToACP(final Context context) throws CoreException {
@@ -106,6 +110,15 @@ public class BatchFileCommon extends BaseAction {
         	((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getAcDate(),DateUtils.STYLE_yyyyMMdd);
         final String systemCode=((SystemConfig)get(SystemConfig.class)).getSystemCode();
         final String dir="/home/bbipadm/data/mftp/BBIP/"+systemCode+"/"+br+"/"+tlr+"/"+AcDate+"/";
+        /**创建目录*/
+        File file=new File(dir);
+        try {
+			FileUtils.forceMkdir(file);
+		} catch (IOException e) {
+			logger.info("----make fir fail----");
+			e.printStackTrace();
+		}
+        
         EupsActSysPara eupsActSysPara = new EupsActSysPara();
         eupsActSysPara.setActSysTyp("0");
         eupsActSysPara.setComNo(comNo);
@@ -117,7 +130,7 @@ public class BatchFileCommon extends BaseAction {
 		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne(ParamKeys.FTPID_BATCH_PAY_FILE_TO_ACP);
 		Assert.isFalse(null==config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST);
 		config.setLocFleNme(fleNme);
-		config.setLocDir("D:\\");
+		config.setLocDir(dir);
 		config.setLocDir(dir);
 		logger.info("===============生成代收付文件");
 		/** 产生代收付格式文件 */
