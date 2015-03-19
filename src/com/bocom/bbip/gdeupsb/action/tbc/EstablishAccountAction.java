@@ -96,8 +96,10 @@ public class EstablishAccountAction extends BaseAction {
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("cusAc", context.getData("actNo").toString());
         String traceNo = publicService.getTraceNo();
-        map.put("traceNo", traceNo);
-        context.setData("traceNo", traceNo);
+        //map.put("traceNo", traceNo);
+        map.put("traceNo", "2004440020150318154000055129");
+       // context.setData("traceNo", traceNo);
+        context.setData("traceNo", "2004440020150318154000055129");
         Result accessObject =  serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", map);
         if (CollectionUtils.isEmpty(accessObject.getPayload())) {
             Map<String, Object> establishMap = new HashMap<String, Object>();

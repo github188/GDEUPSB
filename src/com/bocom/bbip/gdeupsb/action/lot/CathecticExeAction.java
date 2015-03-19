@@ -20,6 +20,9 @@ import com.bocom.bbip.service.Status;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
+import com.bocom.jump.bp.JumpException;
+import com.bocom.jump.bp.channel.CommunicationException;
+import com.bocom.jump.bp.channel.Transport;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -28,6 +31,7 @@ public class CathecticExeAction extends BaseAction{
     @Autowired
     BGSPServiceAccessObject serviceAccess;
     
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public void execute(Context context) throws CoreException {
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
@@ -130,7 +134,7 @@ public class CathecticExeAction extends BaseAction{
             context.setData("tzCod", "TZ9013");
             return;
         }
-        context.setData("action", "231");
+ 
         if (!accStatus.equals("S")) {
             log.info("账务处理未成功");
             context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
@@ -140,6 +144,28 @@ public class CathecticExeAction extends BaseAction{
         }
         String lotTxnTim = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMddHHmmss);
         context.setData("lotTxnTim", lotTxnTim);
+        context.setData("action", "231");
+        
+        //向福彩中心发出购彩
+        context.setData("eupsBusTyp", "LOTR01");
+        Transport ts = context.getService("STHDLOT1");
+        Map<String,Object> resultMap = null;//申请当前期号，奖期信息下载
+        try {
+            resultMap = (Map<String, Object>) ts.submit(context.getDataMap(), context);
+            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
+        } catch (CommunicationException e1) {
+            e1.printStackTrace();
+        } catch (JumpException e1) {
+            e1.printStackTrace();
+        }  
+        if(!Constants.RESPONSE_CODE_SUCC.equals(resultMap.get("resultCode"))){
+            log.info("Check Systerm Time  Fail!");
+            context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
+            context.setData(ParamKeys.RSP_CDE, "LOT999");
+            context.setData(ParamKeys.RSP_MSG, "系统对时失败!!!");
+            return;
+        }
+        
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
     }
 }
