@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.action.transportfee;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +20,7 @@ import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspTxnJnl;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspFeeInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspTxnJnlRepository;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.channel.CommunicationException;
 import com.bocom.jump.bp.channel.DefaultTransport;
@@ -138,6 +140,7 @@ public class PrintCallThirdAction extends BaseAction{
 				
 
 			}else{
+				ctx.setDataMap(responseMessage);
 				ctx.setData(GDParamKeys.TXN_ST, "S");
 				ctx.setData(GDParamKeys.TTXN_ST, "S");
 				gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
@@ -146,22 +149,23 @@ public class PrintCallThirdAction extends BaseAction{
 				gdEupsbTrspTxnJnl.setInvNo(ctx.getData(GDParamKeys.INV_NO).toString());
 				gdEupsbTrspTxnJnl.setSqn(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
 				gdEupsbTrspTxnJnlRepository.updateSt(gdEupsbTrspTxnJnl);
-//		        <Exec func="PUB:ExecSql" error="IGNORE"><!--更新路桥方记账信息-->
-//		           <Arg name="SqlCmd" value="updateInvInf"/>
-//		        </Exec>
-//				UPDATE rbfbtxnbok444
-//		           SET    2InvNo='%s',2BegDat='%s',2EndDat='%s',2CarName='%s',2CarDzs='%s',2CntStd='%s',FeeStd='%s',
-//		                  Corpus='%s',LateFee='%s',CLGS='%s',YYBZ='%s',TLogNo='%s',TActDt='%s',PrtNod='%s',PrtTlr='%s',Status='1'
-//		           WHERE  PayLog='%s' and Status='0'
-//		         </Sentence>
-//		         <Fields>InvNo|BegDat|EndDat|CarName|CarDzs|CntStd|FeeStd|Corpus|LateFee|CLGS|YYBZ|TLogNo|TActDt|NodNo|TlrId|OLogNo|</Fields>
+
 		        Date tactDt = new Date();
+		        
+		        //更新路桥方记账信息
 				GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
+
 				gdEupsbTrspFeeInfo.setInvNo(ctx.getData(GDParamKeys.INV_NO).toString());
-//				gdEupsbTrspFeeInfo.setBegDat((Date)ctx.getData(GDParamKeys.BEG_DAT)); //TODO:
-//				gdEupsbTrspFeeInfo.setEndDat((Date)ctx.getData(GDParamKeys.END_DAT));  //TODO:
-//				gdEupsbTrspFeeInfo.setCarName(ctx.getData(GDParamKeys.CAR_NAME).toString());
-//				gdEupsbTrspFeeInfo.setCarDzs(ctx.getData(GDParamKeys.CAR_DZS).toString());
+				gdEupsbTrspFeeInfo.setBegDat(DateUtils.parse(ctx.getData(GDParamKeys.BEG_DAT).toString())); 
+				gdEupsbTrspFeeInfo.setEndDat(DateUtils.parse(ctx.getData(GDParamKeys.END_DAT).toString()));  
+				gdEupsbTrspFeeInfo.setCarName((String)ctx.getData(GDParamKeys.CAR_NAME));
+				gdEupsbTrspFeeInfo.setCarDzs((String)ctx.getData(GDParamKeys.CAR_DZS));
+				gdEupsbTrspFeeInfo.setCntStd((String)ctx.getData(GDParamKeys.CNT_STD));
+				gdEupsbTrspFeeInfo.setFeeStd(new BigDecimal((String)ctx.getData(GDParamKeys.FEE_STD)));
+				gdEupsbTrspFeeInfo.setCorpus(new BigDecimal((String)ctx.getData(GDParamKeys.CORPUS)));
+				gdEupsbTrspFeeInfo.setLateFee(new BigDecimal((String)ctx.getData(GDParamKeys.LATE_FEE)));
+				gdEupsbTrspFeeInfo.setClgs((String)ctx.getData(GDParamKeys.CLGS));
+				gdEupsbTrspFeeInfo.setYybz((String)ctx.getData(GDParamKeys.YYBZ));
 				
 				gdEupsbTrspFeeInfo.setTlogNo(ctx.getData(GDParamKeys.SQN).toString());
 				gdEupsbTrspFeeInfo.setTactDt(tactDt);
