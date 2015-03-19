@@ -35,6 +35,8 @@ public class EstablishAccountAction extends BaseAction {
     BGSPServiceAccessObject serviceAccess;
     @Autowired
     GdTbcCusAgtInfoRepository cusAgtInfoRepository;
+    @Autowired
+    BBIPPublicService publicService;
     
     @Override
      public void execute(Context context) throws CoreException {
@@ -93,6 +95,9 @@ public class EstablishAccountAction extends BaseAction {
         //   检查该客户是否已签约
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("cusAc", context.getData("actNo").toString());
+        String traceNo = publicService.getTraceNo();
+        map.put("traceNo", traceNo);
+        context.setData("traceNo", traceNo);
         Result accessObject =  serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", map);
         if (CollectionUtils.isEmpty(accessObject.getPayload())) {
             Map<String, Object> establishMap = new HashMap<String, Object>();

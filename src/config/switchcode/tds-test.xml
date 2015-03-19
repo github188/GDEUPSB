@@ -241,4 +241,15 @@
       
 <!--  TBC CodeSwitch End  ADD By GuiLin 20150302-->
 
+<!--  LOT CodeSwitch Start ADD By GuiLin 20150318-->
+  <table id="IsKenoChg">     <!--是否有keno期-->
+    <key name="5" value="N"/><!-- 双色球 -->
+    <key name="7" value="Y"/><!-- 快乐十分 -->
+  </table>
+  
+   <table id="GameIdDescChg">       <!--游戏名称-->
+    <key name="5" value="双色球"/><!-- 双色球 -->
+    <key name="7" value="快乐十分"/><!-- 快乐十分 -->
+  </table>
+<!--  LOT CodeSwitch End  ADD By GuiLin 20150318-->
 </xx:beans>

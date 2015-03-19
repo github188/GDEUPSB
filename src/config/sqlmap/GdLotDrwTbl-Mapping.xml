@@ -670,7 +670,7 @@
   <select id="qryLotDrwInf" parameterType="map" resultMap="basicResultMap">
         select
         <include refid="baseColumnList" />
-        from ${BBIPADM_SCHEMA}.GDEUPS_LOT_DRW_TBL
+        from gdeupsb.GDEUPS_LOT_DRW_TBL
         <where>
             <choose>
                 <when test="isKeno == Y">

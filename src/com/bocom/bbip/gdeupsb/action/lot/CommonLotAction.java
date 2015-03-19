@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.ErrorCodes;
@@ -54,6 +55,8 @@ public class CommonLotAction extends BaseAction{
     BGSPServiceAccessObject bgspServiceAccessObject;
     @Autowired
     GdLotDrwTblRepository lotDrwInfRepository;
+    @Autowired
+    BBIPPublicService publicService;
     /**
      * 根据与福彩之间的时差获取福彩时间
      * INPUT:
@@ -62,7 +65,7 @@ public class CommonLotAction extends BaseAction{
         lclTim:本地时间
      * @return  fcTim 福彩时间
      */
-    public String getFcTim(String dealId, String brNo) {
+    public String getFcTim(String brNo) {
         //查询系统参数，获取当前本地与福彩系统的时差
         List<GdLotSysCfg> gdLotSysCfg = lotSysCfgRepository.findSysCfg();
         String difTim = "0";
@@ -329,12 +332,16 @@ public class CommonLotAction extends BaseAction{
         Map<String, Object> inpara = new HashMap<String, Object>();
         inpara.put(ParamKeys.COMPANY_NO, dscAgtNo);
         inpara.put("inqBusLstFlg", "N");
+        String traceNo = publicService.getTraceNo();
+        inpara.put("traceNo", traceNo);
+        context.setData("traceNo", traceNo);
+       //TODO; 测试
+        // Result dsResult = bgspServiceAccessObject.callServiceFlatting("queryCorporInfo", inpara);
+        //  Map<String, Object> dsMap = new HashMap<String, Object>();
+        //  dsMap = dsResult.getPayload();
 
-        Result dsResult = bgspServiceAccessObject.callServiceFlatting("queryCorporInfo", inpara);
-        Map<String, Object> dsMap = new HashMap<String, Object>();
-        dsMap = dsResult.getPayload();
-
-        String fCActNo = (String) dsMap.get("hfeStlAc"); // 代收结算账户,用于处理轧差入账帐号
+        //  String fCActNo = (String) dsMap.get("hfeStlAc"); // 代收结算账户,用于处理轧差入账帐号
+        String fCActNo = "6222603710003888889";
         String curTim = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMddHHmmss); // 当前时间
 
         context.setVariable(GDParamKeys.GD_LOT_SYS_CFG, gdLotSysCfgs.get(0));
