@@ -110,14 +110,7 @@ public class BatchFileCommon extends BaseAction {
         	((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getAcDate(),DateUtils.STYLE_yyyyMMdd);
         final String systemCode=((SystemConfig)get(SystemConfig.class)).getSystemCode();
         final String dir="/home/bbipadm/data/mftp/BBIP/"+systemCode+"/"+br+"/"+tlr+"/"+AcDate+"/";
-        /**创建目录*/
-        File file=new File(dir);
-        try {
-			FileUtils.forceMkdir(file);
-		} catch (IOException e) {
-			logger.info("----make fir fail----");
-			e.printStackTrace();
-		}
+      
         
         EupsActSysPara eupsActSysPara = new EupsActSysPara();
         eupsActSysPara.setActSysTyp("0");
