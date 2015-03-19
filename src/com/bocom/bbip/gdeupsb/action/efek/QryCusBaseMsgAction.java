@@ -45,10 +45,13 @@ public class QryCusBaseMsgAction extends BaseAction{
 					context.setData(ParamKeys.BR, context.getData(GDParamKeys.NET_NAME));
 			}
 			context.setData(ParamKeys.SEQUENCE, bbipPublicService.getBBIPSequence());
-			context.setData(ParamKeys.TXN_DTE, DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())));
-			context.setData(ParamKeys.TXN_TME, DateUtils.parse(DateUtils.formatAsTranstime(new Date())));
+			String txnDte=DateUtils.format((Date)context.getData(ParamKeys.TXN_DTE),DateUtils.STYLE_yyyyMMdd);
+			String txnTme=DateUtils.formatAsHHmmss(DateUtils.parse(context.getData(ParamKeys.TXN_TME).toString()));
+			context.setData(ParamKeys.TXN_DTE,txnDte);
+			context.setData(ParamKeys.TXN_TME, txnTme);
 			
-			context.setData(GDParamKeys.SVRCOD, "45");
+			context.setData(ParamKeys.TXN_TLR, context.getData(ParamKeys.TELLER));
+			context.setData(GDParamKeys.SVRCOD, "44");
 			context.setData(GDParamKeys.TOTNUM, "1");
 			callThd(context);
 			log.info("============End   QryCusBaseMsgAction");
@@ -75,7 +78,7 @@ public class QryCusBaseMsgAction extends BaseAction{
 			context.setData(GDParamKeys.TRADE_RECEIVE, GDConstants.TRADE_RECEIVE);//交易接收方
 			context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 			context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
-					
+			context.setData("PKGCNT", "000001");		
 					try{
 						Map<String, Object> rspMap = callThdTradeManager.trade(context);
 						
