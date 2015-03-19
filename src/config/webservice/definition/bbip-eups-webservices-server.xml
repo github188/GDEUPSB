@@ -83,9 +83,9 @@
 	<!-- 签约一站通 -->
 	<server-side-ws-def wsdl="GDEUPSNrmSignService.wsdl"
 		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignService/Schema">
-		<qname-mappings>
-		</qname-mappings>
 	</server-side-ws-def>
+		<!-- <qname-mappings>
+		</qname-mappings> -->
 
 	<!-- 签约一站通测试 -->
 	<!-- <server-side-ws-def wsdl="GDEUPSNrmSignStationTestService.wsdl"
