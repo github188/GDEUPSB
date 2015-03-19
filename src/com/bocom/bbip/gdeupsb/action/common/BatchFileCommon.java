@@ -128,12 +128,11 @@ public class BatchFileCommon extends BaseAction {
 		/** 产生代收付格式文件 */
 		if(context.getData(ParamKeys.EUPS_BUSS_TYPE).equals("ELEC00")){
 			config.setRmtFleNme(fleNme);
-//			config.setRmtWay(dir);
 			((OperateFileAction)get("opeFile")).createCheckFile(config, "agtFileBatchFmt", fleNme, fileMap);
-//			operateFTPAction.putCheckFile(config);
 		}else{
 			((OperateFileAction)get("opeFile")).createCheckFile(config, "BatchFmt", fleNme, fileMap);
 		}
+		operateFTPAction.putCheckFile(config);
 	}
 	public void afterBatchProcess(Context context)throws CoreException{
 		final String thdbatNo=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.THD_BAT_NO,  ErrorCodes.EUPS_FIELD_EMPTY,"thdBatNo");
