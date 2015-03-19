@@ -2,6 +2,7 @@ package com.bocom.bbip.gdeupsb.strategy.elcgd;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +22,7 @@ import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdElecClrInf;
 import com.bocom.bbip.gdeupsb.repository.GdElecClrInfRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
+import com.bocom.bbip.gdeupsb.utils.actswitch.EleActSwitch;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.NumberUtils;
@@ -60,7 +62,7 @@ public class PayUnilateralToBankServiceAction implements PayUnilateralToBankServ
 
 		// 检查签到签退
 		EupsThdTranCtlInfo eupsThdTranCtlInfo = eupsThdTranCtlInfoRepository.findOne(comNo);
-		if(null==eupsThdTranCtlInfo){
+		if (null == eupsThdTranCtlInfo) {
 			throw new CoreException(ErrorCodes.THD_CHL_TRADE_NOT_ALLOWWED);
 		}
 		if (!eupsThdTranCtlInfo.isTxnCtlStsSignin()) {
@@ -82,6 +84,13 @@ public class PayUnilateralToBankServiceAction implements PayUnilateralToBankServ
 			String clrDatStr = gdElecClrInf.getClrDat();
 			context.setData("bakFld1", clrDatStr);
 		}
+
+		// 设置第三方请求日期及第三方请求时间
+		String dtm = context.getData("txnDateTime"); // 第三方请求时间MMDDhhmmss
+		String year = DateUtils.format(new Date(), "yyyy");
+		String thdTxnTme = year + dtm; // 第三方交易请求时间
+		log.info("第三方交易日期时间为：" + thdTxnTme);
+		context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse(thdTxnTme, DateUtils.STYLE_yyyyMMddHHmmss));
 		return null;
 	}
 
@@ -89,7 +98,6 @@ public class PayUnilateralToBankServiceAction implements PayUnilateralToBankServ
 	public Map<String, Object> prePayToBank(CommHeadDomain commheaddomain, PayFeeOnlineDomain payfeeonlinedomain, Context context)
 			throws CoreException {
 		// 检查单位协议，可以不检查，因为代收付一定会检查单位协议
-
 		log.info("PayUnilateralToBankServiceAction prePayToBank start!..");
 		String txnAmt = context.getData("thdTxnAmt");
 		BigDecimal realAmt = NumberUtils.centToYuan(txnAmt);
@@ -106,6 +114,28 @@ public class PayUnilateralToBankServiceAction implements PayUnilateralToBankServ
 		context.setData(ParamKeys.THD_CUS_NO, thdCusNo); // 第三方客户标志
 		context.setData(ParamKeys.BAK_FLD2, eleMonth); // 设置备用字段2为电费月份
 		context.setData(ParamKeys.BAK_FLD4, prdCde); // 设置备用字段4为产品代码
+
+		// 校验各分行账号，获取对公或对私标志
+		String cusAc = context.getData(ParamKeys.CUS_AC); // 卡号
+
+		Map<String, Object> inpara = new HashMap<String, Object>();
+		inpara.put("actNo", cusAc);
+		inpara.put("br", context.getData(ParamKeys.BK)); // TODO：将网点号赋值给br，用于判断对公对私标志
+		Map<String, Object> resultMap = EleActSwitch.eleActSwitch(inpara);
+		log.info("对公对私帐号区分，最终的结果为：" + resultMap);
+
+		String actFlg = new String();
+		String actCls = (String) resultMap.get(GDParamKeys.GZ_ELE_ACT_CLS); // 对公对私标志
+		if ("0".equals(actCls) || "4".equals(actCls)) {
+			log.info("该帐号为对公帐号");
+			actFlg = "DG";
+		} else if ("2".equals(actCls) || "3".equals(actCls) || "5".equals(actCls)) {
+			log.info("该帐号为对私帐号");
+			actFlg = "DS";
+		}
+		// 将对公对私标志设置为备用字段6
+		context.setData(ParamKeys.BAK_FLD6, actFlg);
+		log.info("数据准备完毕，开始调用代收付！");
 
 		return null;
 	}
@@ -129,6 +159,7 @@ public class PayUnilateralToBankServiceAction implements PayUnilateralToBankServ
 		} else {
 			context.setData("bnkTxnDate13", DateUtils.format(nowTme, DateUtils.STYLE_MMdd));
 		}
+		context.setData("reqTme", new Date()); // 设置请求时间
 
 		// TODO:第三方返回码转换(将主机的返回码转化为第三方需要的返回码)
 		context.setData("thdRspCde", "00");

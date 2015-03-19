@@ -89,6 +89,7 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 		// context.setData(ParamKeys.PAYFEE_TYPE,
 		// Constants.TXN_PAYFEE_TYPE_PAYMENT);
 		// } else {
+		// TODO:for test，真实环境应校验当日该缴费号是否已完成缴费，不允许重复缴费
 		context.setData(ParamKeys.PAYFEE_TYPE, Constants.TXN_PAYFEE_TYPE_RECHARGE);
 		// }
 
@@ -103,11 +104,20 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 		// 结算凭证处理,根据结算凭证转换对应的收费类型
 		String thdFeeWay = new String();
 		String vchTyp = context.getData("vchTyp");
+		String actFlg = new String();
+
 		if ("000".equals(vchTyp) || "007".equals(vchTyp) || "704".equals("vchTyp") || "722".equals(vchTyp)) {
 			thdFeeWay = GDConstants.THD_PAY_TYP_CASH; // 收费类型:10现金;11支票预交;12支票实交
+			actFlg = "DS"; // 对私
+			log.info("该帐号为对私帐号");
 		} else if ("021".equals(vchTyp) || "117".equals(vchTyp) || "105".equals(vchTyp) || "113".equals(vchTyp) || "115".equals(vchTyp)) {
 			thdFeeWay = GDConstants.THD_PAY_TYP_RLCK;
+			actFlg = "DG"; // 对公
+			log.info("该帐号为对公帐号");
 		}
+
+		// 将对公对私标志设置为备用字段6
+		context.setData(ParamKeys.BAK_FLD6, actFlg);
 		// 凭证种类截取后两位
 		if (StringUtils.isNotEmpty(vchTyp)) {
 			context.setData("bvKnd", vchTyp.substring(1, 3));
@@ -120,11 +130,11 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 		} else if ("007".equals(vchTyp)) {
 			payMde = Constants.PAY_MDE_4; // 卡
 		} else {
-			//TODO:默认为现金
+			// TODO:默认为现金
 			payMde = Constants.PAY_MDE_0; // 现金
 			context.setData(ParamKeys.AC_TYP, "00");
 		}
-		
+
 		context.setData(ParamKeys.PAY_MDE, payMde);
 
 		context.setData("bvNo", context.getData("vchNo")); // 凭证号码
