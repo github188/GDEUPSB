@@ -1,10 +1,12 @@
 package com.bocom.bbip.gdeupsb.utils.actswitch;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.utils.StringUtils;
-import com.bocom.jump.bp.core.Context;
 
 /**
  * 电力actNo转换
@@ -22,43 +24,45 @@ public class EleActSwitch {
 	 * @param inputMap
 	 * @return
 	 */
-	public static Context eleActSwitch(Context context) {
-		String brNo = context.getData(ParamKeys.BR); // 网点号
-
+	public static Map<String, Object> eleActSwitch(Map<String, Object> inpara) {
+		String brNo = (String) inpara.get(ParamKeys.BR); // 分行号
+		
+		brNo=brNo.substring(2,8);
 		Integer br = Integer.valueOf(brNo);
+		Map<String, Object> resultMap = new HashMap<String, Object>();
 
 		switch (br) {
 		case 441999: // 广东
-			context = gdActDeal(context);
+			resultMap = gdActDeal(inpara);
 			break;
 		case 484999: // 中山
-			context = zsActDeal(context);
+			resultMap = zsActDeal(inpara);
 			break;
 		case 444999: // 珠海
-			context = zhActDeal(context);
+			resultMap = zhActDeal(inpara);
 			break;
 		case 446999: // 佛山
-			context = fsActDeal(context);
+			resultMap = fsActDeal(inpara);
 			break;
 		case 485999: // 揭阳
-			context = jyActDeal(context);
+			resultMap = jyActDeal(inpara);
 
 		default:
 			break;
 		}
 
-		return context;
+		return resultMap;
 	}
 
 	/**
-	 * 广东分行帐号处理 0对公新账号外部户 1对公新账号内部户 2对私新账号 3对私卡号 4对公旧账号 5对私旧账号 6其他(可受理账号)
-	 * 7其他(不可受理账号)
+	 * 广东分行帐号处理 0对公新账号外部户 1对公新账号内部户 2对私新账号 3对私卡号 4对公旧账号 5对私旧账号
+	 * 6其他(可受理账号)7其他(不可受理账号); 输入参数actNo(卡号)
 	 * 
 	 * @param inputMap
 	 * @return
 	 */
-	private static Context gdActDeal(Context context) {
-		String actNo = context.getData("actNo"); // 帐号
+	private static Map<String, Object> gdActDeal(Map<String, Object> inpara) {
+		String actNo = (String) inpara.get("actNo");
 		int len = actNo.length();
 		String actCls = null;
 		String responseCode = null;
@@ -95,20 +99,21 @@ public class EleActSwitch {
 			break;
 		}
 		}
-		context.setData(GDParamKeys.GZ_ELE_ACT_CLS, actCls);
-		context.setData(ParamKeys.RESPONSE_CODE, responseCode);
-		return context;
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put(GDParamKeys.GZ_ELE_ACT_CLS, actCls);
+		resultMap.put(ParamKeys.RESPONSE_CODE, responseCode);
+		return resultMap;
 	}
 
 	/**
-	 * 中山分行帐号处理
+	 * 中山分行帐号处理 输入actNo帐号，newFlag转换标志
 	 * 
 	 * @param context
 	 * @return
 	 */
-	private static Context zsActDeal(Context context) {
-		String actNo = context.getData("actNo"); // 帐号
-		String newFlg = context.getData("newFlag"); // 转换标志
+	private static Map<String, Object> zsActDeal(Map<String, Object> inpara) {
+		String actNo = (String) inpara.get("actNo"); // 帐号
+		String newFlg = (String) inpara.get("newFlag"); // 转换标志
 
 		int len = actNo.length();
 		String actCls = null;
@@ -172,20 +177,20 @@ public class EleActSwitch {
 			break;
 		}
 		}
-		context.setData(GDParamKeys.GZ_ELE_ACT_CLS, actCls);
-		context.setData(ParamKeys.RESPONSE_CODE, responseCode);
-		return context;
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put(GDParamKeys.GZ_ELE_ACT_CLS, actCls);
+		resultMap.put(ParamKeys.RESPONSE_CODE, responseCode);
+		return resultMap;
 	}
 
 	/**
-	 * 珠海分行账号判断
+	 * 珠海分行账号判断: 输入参数actNo帐号
 	 * 
 	 * @param context
 	 * @return
 	 */
-	private static Context zhActDeal(Context context) {
-		String actNo = context.getData("actNo"); // 帐号
-		actNo = actNo.trim();
+	private static Map<String, Object> zhActDeal(Map<String, Object> inpara) {
+		String actNo = inpara.get("actNo").toString().trim(); // 帐号
 		// TODO:珠海分行新旧帐号转换
 		// SELECT * FROM ActNoInf444 WHERE OldAct='%s' OR ActNo='%s' FETCH FIRST
 		// 1 ROWS ONLY
@@ -237,19 +242,21 @@ public class EleActSwitch {
 			// </Else>
 
 		}
-		return context;
+		Map<String, Object> resusltMap = new HashMap<String, Object>();
+
+		return resusltMap;
 	}
 
 	/**
-	 * 佛山分行账号判断
+	 * 佛山分行账号判断:输入参数actNo帐号，newFlag转换标志
 	 * 
 	 * @param context
 	 * @return
 	 */
-	private static Context fsActDeal(Context context) {
-		String actNo = context.getData("actNo"); // 帐号
+	private static Map<String, Object> fsActDeal(Map<String, Object> inpara) {
 
-		String newFlg = context.getData("newFlag"); // 转换标志
+		String actNo = (String) inpara.get("actNo"); // 帐号
+		String newFlg = (String) inpara.get("newFlag"); // 转换标志
 
 		int len = actNo.length();
 		String actCls = null;
@@ -301,9 +308,10 @@ public class EleActSwitch {
 			break;
 		}
 		}
-		context.setData(GDParamKeys.GZ_ELE_ACT_CLS, actCls);
-		context.setData(ParamKeys.RESPONSE_CODE, responseCode);
-		return context;
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put(GDParamKeys.GZ_ELE_ACT_CLS, actCls);
+		resultMap.put(ParamKeys.RESPONSE_CODE, responseCode);
+		return resultMap;
 	}
 
 	/**
@@ -312,8 +320,8 @@ public class EleActSwitch {
 	 * @param context
 	 * @return
 	 */
-	private static Context jyActDeal(Context context) {
-		String actNo = context.getData("actNo"); // 帐号
+	private static Map<String, Object> jyActDeal(Map<String, Object> inpara) {
+		String actNo = (String) inpara.get("actNo"); // 帐号
 
 		int len = actNo.length();
 		String actCls = null;
@@ -347,9 +355,10 @@ public class EleActSwitch {
 			break;
 		}
 		}
-		context.setData(GDParamKeys.GZ_ELE_ACT_CLS, actCls);
-		context.setData(ParamKeys.RESPONSE_CODE, responseCode);
-		return context;
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put(GDParamKeys.GZ_ELE_ACT_CLS, actCls);
+		resultMap.put(ParamKeys.RESPONSE_CODE, responseCode);
+		return resultMap;
 	}
 
 }
