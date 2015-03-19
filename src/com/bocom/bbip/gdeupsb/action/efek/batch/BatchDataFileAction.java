@@ -123,7 +123,6 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 			headMap.put(ParamKeys.COMPANY_NO, comNo);
 			headMap.put(GDParamKeys.TOT_COUNT, totCnt);
 			headMap.put(ParamKeys.TOT_AMT, totAmts);
-			System.out.println(headMap);
 			//detail
 			GDEupsEleTmp gdEupsEleTmps=new GDEupsEleTmp();
 			gdEupsEleTmps.setComNo(comNo);
@@ -131,9 +130,6 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 			
 			List<AgtFileBatchDetail> detailList=new ArrayList<AgtFileBatchDetail>();
 			for (GDEupsEleTmp gdEupsEleTmp : gdEupsEleTmpList) {
-				System.out.println();
-				System.out.println(gdEupsEleTmp.getSqn());
-				
 				AgtFileBatchDetail agtFileBatchDetail=new AgtFileBatchDetail();
 				String cusAc=gdEupsEleTmp.getCusAc();
 				agtFileBatchDetail.setCUSAC(cusAc);
@@ -237,10 +233,6 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 				}
 				context.setData(ParamKeys.TOT_CNT, Integer.parseInt(totCnt));
 				context.setData(ParamKeys.TOT_AMT, new BigDecimal(totAmt));
-				System.out.println();
-				System.out.println();
-				System.out.println(context.getData("totCnt"));
-				System.out.println(context.getData("totAmt"));
 				logger.info("==========End  BatchDataFileAction  updateInfo");
 		}
 }
