@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -47,9 +48,17 @@ public class PrintAction extends BaseAction{
 		System.out.println("hahhahahahahahhahah");
 
 		Date printDate = new Date();
+		Date begDat = DateUtils.parse((String)ctx.getData(GDParamKeys.BEG_DAT));
+		Date endDat = DateUtils.parse((String)ctx.getData(GDParamKeys.END_DAT));
 		ctx.setData("printYear", DateUtils.format(printDate, DateUtils.STYLE_yyyy));
 		ctx.setData("printMon", DateUtils.format(printDate, DateUtils.STYLE_MM));
 		ctx.setData("printDay", DateUtils.format(printDate, DateUtils.STYLE_dd));
+		ctx.setData("begYear", DateUtils.format(begDat, DateUtils.STYLE_yyyy));
+		ctx.setData("begMon", DateUtils.format(begDat, DateUtils.STYLE_MM));
+		ctx.setData("begDay", DateUtils.format(begDat, DateUtils.STYLE_dd));
+		ctx.setData("endYear", DateUtils.format(endDat, DateUtils.STYLE_yyyy));
+		ctx.setData("endMon", DateUtils.format(endDat, DateUtils.STYLE_MM));
+		ctx.setData("endDay", DateUtils.format(endDat, DateUtils.STYLE_dd));
 		
 		Map<String, String> mapping = CollectionUtils.createMap();
 		VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
@@ -58,16 +67,14 @@ public class PrintAction extends BaseAction{
 		gdEupsbTrspFeeInfo.setPayLog(ctx.getData(ParamKeys.OLD_TXN_SEQUENCE).toString());
 		List<GDEupsbTrspFeeInfo> feeInfoList = gdEupsbTrspFeeInfoRepository.find(gdEupsbTrspFeeInfo);
 		Assert.isNotEmpty(feeInfoList, ErrorCodes.EUPS_QUERY_NO_DATA);
-//		List<Map<String,Object>>eles=(List<Map<String,Object>>)BeanUtils.toMaps(list);
-//		ctx.setData("SumCnt", list.size());
-//		ctx.setData(ParamKeys.TELLER, "EP88888");
+
 		mapping.put("sample", sampleFile);
 		try {
 			render.afterPropertiesSet();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-//		ctx.setData("eles", eles);
+
 		ctx.setDataMap(BeanUtils.toMap(feeInfoList.get(0)));
 		System.out.println("@@@@@@@@@@@@@@@@@@@@"+ctx);
 		render.setReportNameTemplateLocationMapping(mapping);
@@ -78,11 +85,12 @@ public class PrintAction extends BaseAction{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		String fileName = ctx.getData(GDParamKeys.INV_NO).toString()+ctx.getData(ParamKeys.TELLER)+"00";
 		BufferedOutputStream outStream = null;
 		try {
 
 			outStream = new BufferedOutputStream(new FileOutputStream(
-					"D:\\template.txt"));
+					"D:\\test"+fileName));
 			outStream.write(result.getBytes(GDConstants.CHARSET_ENCODING_GBK));
 			outStream.close();
 		} catch (IOException e) {
