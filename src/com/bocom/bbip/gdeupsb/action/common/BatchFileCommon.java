@@ -1,19 +1,19 @@
 package com.bocom.bbip.gdeupsb.action.common;
 
-import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.comp.BBIPPublicServiceImpl;
 import com.bocom.bbip.comp.btp.BTPService;
 import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
@@ -43,7 +43,8 @@ import com.bocom.jump.bp.core.CoreException;
  * @Company TD
  */
 public class BatchFileCommon extends BaseAction {
-	
+	@Autowired
+	OperateFTPAction operateFTPAction;
 	private static final Log logger = LogFactory.getLog(BatchFileCommon.class);
 	public void BeforeBatchProcess(final Context context)throws CoreException {
 		logger.info("----before batch check----");
@@ -126,7 +127,10 @@ public class BatchFileCommon extends BaseAction {
 		logger.info("===============生成代收付文件");
 		/** 产生代收付格式文件 */
 		if(context.getData(ParamKeys.EUPS_BUSS_TYPE).equals("ELEC00")){
+			config.setRmtFleNme(fleNme);
+//			config.setRmtWay(dir);
 			((OperateFileAction)get("opeFile")).createCheckFile(config, "agtFileBatchFmt", fleNme, fileMap);
+//			operateFTPAction.putCheckFile(config);
 		}else{
 			((OperateFileAction)get("opeFile")).createCheckFile(config, "BatchFmt", fleNme, fileMap);
 		}
