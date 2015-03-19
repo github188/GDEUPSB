@@ -118,6 +118,7 @@ public class BatchFileCommon extends BaseAction {
 		Assert.isFalse(null==config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST);
 		config.setLocFleNme(fleNme);
 		config.setLocDir("D:\\");
+		config.setLocDir(dir);
 		logger.info("===============生成代收付文件");
 		/** 产生代收付格式文件 */
 		if(context.getData(ParamKeys.EUPS_BUSS_TYPE).equals("ELEC00")){
