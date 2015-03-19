@@ -17,7 +17,7 @@
 	<bean id="cancelBatchProcessELEC02"
 		class=" com.bocom.bbip.gdeupsb.action.elec02.EupsCancelBatchProcess">
 	</bean>
-	
+
 	<!-- 汕头电力 签到签退 -->
 	<bean id="eups.signInOutThirdServiceActionELEC02"
 		class="com.bocom.bbip.gdeupsb.action.elec02.SignInOutThirdServiceImplELEC02">
@@ -33,21 +33,21 @@
 	<bean id="eups.afterBatchAcpServiceActionFSAG00"
 		class="com.bocom.bbip.gdeupsb.action.fbpe.FbpeBatchResultDealAction">
 	</bean>
-    <!-- 佛山文本：文件批次撤销 -->
-    <bean id="cancelBatchProcessFSAG00"
-        class=" com.bocom.bbip.gdeupsb.action.fbpe.FbpeBatchCancelAction">
-    </bean>
+	<!-- 佛山文本：文件批次撤销 -->
+	<bean id="cancelBatchProcessFSAG00"
+		class=" com.bocom.bbip.gdeupsb.action.fbpe.FbpeBatchCancelAction">
+	</bean>
 
-	<!-- 个人代扣：数据准备  -->
+	<!-- 个人代扣：数据准备 -->
 	<bean id="eups.fileBatchPayCreateDataServiceActionGDAG00"
 		class="com.bocom.bbip.gdeupsb.action.plpd.PlpdBathFileDealAction">
 	</bean>
 
-    <!-- 个人代扣：文件批次撤销 -->
-    <bean id="cancelBatchProcessGDAG00"
-        class=" com.bocom.bbip.gdeupsb.action.plpd.PlpdBatchCancelAction">
-    </bean>
-	<!-- 个人代扣：文件批量托收完成通知前端  -->
+	<!-- 个人代扣：文件批次撤销 -->
+	<bean id="cancelBatchProcessGDAG00"
+		class=" com.bocom.bbip.gdeupsb.action.plpd.PlpdBatchCancelAction">
+	</bean>
+	<!-- 个人代扣：文件批量托收完成通知前端 -->
 	<bean id="eups.afterBatchAcpServiceActionGDAG00"
 		class="com.bocom.bbip.gdeupsb.action.plpd.PlpdBatchResultDealAction">
 	</bean>
@@ -129,13 +129,13 @@
 	<bean id="gdeups.agtDateUpdServiceActionWAT00"
 		class="com.bocom.bbip.gdeupsb.strategy.sign.WaterDateUpdImlAction">
 	</bean>
-	
-	
+
+
 	<!-- 签约一站通-协议维护-珠江数码 -->
 	<bean id="gdeups.agtMdyDealImlServiceAction44108"
 		class="com.bocom.bbip.gdeupsb.strategy.sign.DigitAgtMdyDealImlAction">
 	</bean>
-	
+
 
 
 	<!-- 费用查询处理前 -->
@@ -260,6 +260,18 @@
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.PayUnilateralToBankServiceAction"
 		id="eups.payUnilateralToBankServiceActionELEC01" />
 
+
+	<!-- PGAS00新增协议 -->
+	<bean class="com.bocom.bbip.gdeupsb.strategy.gash.CommInsertCusAgentServiceActionPGAS00" id="eups.commInsertCusAgentServiceActionPGAS00" />
+	
+	<!-- PGAS00修改协议 -->
+	<bean class="com.bocom.bbip.gdeupsb.strategy.gash.CommUpdateCusAgentServiceActionPGAS00" id="eups.commUpdateCusAgentServiceActionPGAS00" />
+	
+	<!-- PGAS00删除协议 -->
+	<bean class="com.bocom.bbip.gdeupsb.strategy.gash.CommDelCusAgentServiceActionPGAS00" id="eups.commDelCusAgentServiceActionPGAS00" />
+	
+	<!-- PGAS00查询协议 -->
+	<!-- <bean class="" id="" /> -->
 
 	<!-- 惠州燃气单边划扣 -->
 	<bean
