@@ -781,5 +781,7 @@ public class GDParamKeys {
 	public static final String CCY_TYP = "ccyTyp";
 
 	public static final String BR1 = "br1";
+
+	public static final String GAS_BK = "gasBk";
 	
 }
