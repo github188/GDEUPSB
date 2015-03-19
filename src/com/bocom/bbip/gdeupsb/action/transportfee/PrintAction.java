@@ -69,6 +69,7 @@ public class PrintAction extends BaseAction{
 		}
 //		ctx.setData("eles", eles);
 		ctx.setDataMap(BeanUtils.toMap(feeInfoList.get(0)));
+		System.out.println("@@@@@@@@@@@@@@@@@@@@"+ctx);
 		render.setReportNameTemplateLocationMapping(mapping);
 		String result = render.renderAsString("sample", ctx);
 		try {
