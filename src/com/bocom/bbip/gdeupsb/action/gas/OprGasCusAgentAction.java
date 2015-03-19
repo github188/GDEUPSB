@@ -1,12 +1,13 @@
 package com.bocom.bbip.gdeupsb.action.gas;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
@@ -22,6 +23,7 @@ import com.bocom.bbip.gdeupsb.repository.GdGasCusDayRepository;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.bbip.service.Result;
 import com.bocom.bbip.utils.BeanUtils;
+import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
@@ -40,49 +42,43 @@ public class OprGasCusAgentAction extends BaseAction{
 		logger.info("Enter in OprGasCusAgentAction!...........");
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 		
-//		context.setData("TransCode", "460701");
-//		context.setData("eupsBusTyp", "PGAS00");
-//		context.setData("comNo", "PGAS00");
-		context.setData(ParamKeys.BK, "CNJT");
+		logger.info("=================traceNo:" + context.getData(ParamKeys.TRACE_NO));
+		 String traceNo = get(BBIPPublicService.class).getTraceNo();
+		context.setData(ParamKeys.TRACE_NO, traceNo);
+		logger.info("=================traceNo:" + traceNo);
+		
+		context.setTraceNo(traceNo);
+		
+		context.setData(GDParamKeys.GAS_BK, "CNJT");
 		context.setData(ParamKeys.CUS_NO, context.getData("thdCusNo"));
 		logger.info("================now context =" + context);
-		
 		
 		
 		logger.info("=======功能选择(1-新增 2-修改 3-删除 4-查询):" + context.getData("optFlg"));
 		
 		if("4".equals(context.getData("optFlg"))){		//4:查询交易, 先进行用户签约状态的查询
 //			select * from Gascusall491 where UserNo='%s' or idno='%s'
-			Result accessObject = cusIsExist(context);
-			if(CollectionUtils.isEmpty(accessObject.getPayload())){			
+			GdGasCusAll qryCusInf = new GdGasCusAll();
+			qryCusInf.setIdNo(context.getData(ParamKeys.ID_NO).toString().trim());
+			qryCusInf.setCusNo(context.getData(ParamKeys.THD_CUS_NO).toString().trim());
+			List<GdGasCusAll> infList = get(GdGasCusAllRepository.class).find(qryCusInf);
+			if(CollectionUtils.isEmpty(infList)){			
 				context.setData(GDParamKeys.GAS_MSG_TYP, "E");
-				throw new CoreRuntimeException("该用户未签约,不可进行交易");
+				throw new CoreRuntimeException("该用户未签约,不可进行查询交易");
 			}
 			logger.info("该用户已签约，可进行交易");
 		}
 		
 		//前端授权，此处只检查
-		else{		//非查询交易要授权
-			String authTlr = context.getData(ParamKeys.AUTHOR_LEVEL);
-			if (StringUtils.isEmpty(authTlr)) {
-				throw new CoreException("未授权，不能进行交易");
+		//非查询交易要授权
+//		else{		
+//			String authTlr = context.getData(ParamKeys.AUTHOR_LEVEL);
+//			if (StringUtils.isEmpty(authTlr)) {
+//				throw new CoreException("未授权，不能进行交易");
 //				throw new CoreException(ErrorCodes.EUPS_CANCEL_CHECK_AUTH_FAIL);
-			}
-		}
-		logger.info("已授权，可进行交易");
-		//无需查询单位协议 now
-//查询单位协议   SELECT TActNo,BBusTyp,CrpCod FROM savcrpagr where CAgtNo='%s' and SvrSts='1'      //comNo    useSts
-//		EupsThdBaseInfo thdBaseInfo = BeanUtils.toObject(context.getDataMap(), EupsThdBaseInfo.class);
-//		thdBaseInfo.setUseSts("0");
-//		List<EupsThdBaseInfo> thdBaseInfoList = get(EupsThdBaseInfoRepository.class).find(thdBaseInfo);
-//		if(CollectionUtils.isEmpty(thdBaseInfoList)){
-//			context.setData("rspCod", GDConstants.GAS_ERROR_CODE);
-//			context.setData("rspmsg", "单位协议不存在");
-//			throw new CoreRuntimeException("单位协议不存在");
+//			}
 //		}
-//		logger.info("存在单位协议，可进行交易");
-
-		
+//		logger.info("已授权，可进行交易");
 		
 //		<Set>TActNo=491800012620190029499</Set>  
 //	      <Set>@MSG.OIP=$HstIp</Set>  <!--第三方IP-->
@@ -104,45 +100,38 @@ public class OprGasCusAgentAction extends BaseAction{
 		Map<String, Object> thdRspMsg = get(ThirdPartyAdaptor.class).trade(context);
 		context.setDataMap(thdRspMsg);
 		logger.info("======================context========" + context);
-		context.setData("TransCode", null);
-		logger.info(""+context.getData("TransCode"));
+//		context.setData("TransCode", null);
+//		logger.info(""+context.getData("TransCode"));
 		
 		//处理燃气返回的信息
 		logger.info("==============rtnCod=" + context.getData("rtnCod") + "============optFlg=" +context.getData("optFlg"));
 		if("QryUser".equals(context.getData("rtnCod").toString().trim())){
-			if("1".equals(context.getData("optFlg"))){ 	// optFlg = 1 	新增
-				Result accessObject = cusIsExist(context);
-				if(!CollectionUtils.isEmpty(accessObject.getPayload())){			
-					context.setData(ParamKeys.RSP_CDE, GDConstants.GAS_ERROR_CODE);
-					context.setData(ParamKeys.RSP_MSG, "该用户编号已经签约,无法新增签约!");
+			if("1".equals(context.getData("optFlg"))){ 	// optFlg = 1 	燃气返回QryUser, 燃气存在该用户编号
+				List<GdGasCusAll> qryCusInf = qryCusInfoList(context);
+				if(CollectionUtils.isNotEmpty(qryCusInf)){
 					throw new CoreRuntimeException("该用户编号已经签约,无法新增签约!");
 				}
-				logger.info("============accessObject=" + accessObject);
-				context.setDataMap(accessObject.getPayload());
 				context.setData("tCommd", "Add");
-				logger.info("可以新增签约");
 			}
 			
-			if("2".equals(context.getData("optFlg"))){ 	// optFlg = 2 	修改
-				Result accessObject = cusIsExist(context);
-				if(CollectionUtils.isEmpty(accessObject.getPayload())){			
+			if("2".equals(context.getData("optFlg"))){ 	// optFlg = 2 	燃气返回QryUser, 说明燃气存在该用户编号，可修改
+				List<GdGasCusAll> qryCusInf = qryCusInfoList(context);
+				if(CollectionUtils.isEmpty(qryCusInf)){			
 					context.setData(ParamKeys.RSP_CDE, GDConstants.GAS_ERROR_CODE);
 					context.setData(ParamKeys.RSP_MSG, "该用户编号未签约,无法修改!");
 					throw new CoreRuntimeException("该用户编号未签约,无法修改!");
 				}
-				context.setDataMap(accessObject.getPayload());
 				context.setData("tCommd", "Edit");
 				logger.info("============可以对签约协议进行修改");
 			}
 			
-			if("3".equals(context.getData("optFlg"))){ 	// optFlg = 3	删除
-				Result accessObject = cusIsExist(context);
-				if(CollectionUtils.isEmpty(accessObject.getPayload())){			
+			if("3".equals(context.getData("optFlg"))){ 	// optFlg = 3	燃气返回QryUser, 说明燃气存在该用户编号，可删除
+				List<GdGasCusAll> qryCusInf = qryCusInfoList(context);
+				if(CollectionUtils.isEmpty(qryCusInf)){			
 					context.setData(ParamKeys.RSP_CDE, GDConstants.GAS_ERROR_CODE);
 					context.setData(ParamKeys.RSP_MSG, "该用户编号未签约,无法删除!");
 					throw new CoreRuntimeException("该用户编号未签约,无法删除!");
 				}
-				context.setDataMap(accessObject.getPayload());
 				context.setData("tCommd", "Stop");
 				logger.info("===========可以删除");
 			}
@@ -173,7 +162,7 @@ public class OprGasCusAgentAction extends BaseAction{
 				Map<String, Object> addOrEditMap = new HashMap<String, Object>();
 				addOrEditMap.put("agtCllCusId", context.getData("agtCllCusId"));	//客户ID
 				addOrEditMap.put("cusTyp", context.getData("cusTyp"));		//账户类型
-				addOrEditMap.put("cusNo", context.getData(ParamKeys.CUS_NO));
+				addOrEditMap.put("cusNo", context.getData(ParamKeys.THD_CUS_NO));
 				addOrEditMap.put("cusAc", context.getData(ParamKeys.CUS_AC));
 				addOrEditMap.put("cusNme", context.getData(ParamKeys.CUS_NME));
 				addOrEditMap.put("ccy", context.getData(ParamKeys.CCY));
@@ -185,6 +174,7 @@ public class OprGasCusAgentAction extends BaseAction{
 				addOrEditMap.put("ourOthFlg", context.getData(ParamKeys.SELF_OR_OTHER_BANK_FLAG));
 				addOrEditMap.put("obkBk", context.getData(ParamKeys.BK));	//开户行号
 				
+				context.setDataMap(addOrEditMap);
 				
 				if("AddOK".equals(context.getData("rtnCod").toString().trim())){	//第三方返回新增成功，协议表、动态协议表插入新增数据
 					//代扣协议管理-修改和新增 maintainAgentCollectAgreement
@@ -220,14 +210,28 @@ public class OprGasCusAgentAction extends BaseAction{
 					
 					logger.info("============修改成功");
 				}
-				if("StopOK".equals(context.getData("rtnCod").toString().trim())){	////第三方返回删除成功，delete协议表相关数据，动态协议表插入数据
+				if("StopOK".equals(context.getData("rtnCod").toString().trim())){	////第三方返回删除成功，delete协议表/代收付协议表相关数据，动态协议表插入数据
 					//代扣协议管理-删除	deleteAgentCollectAgreement   delete by 协议编号	agdAgrNo
 					
-					Result accessObject = cusIsExist(context);
-					Map<String, Object> delCusMap = new HashMap<String, Object>();
-					delCusMap.put("agdAgrNo", accessObject.getPayload().get("agdAgrNo"));
-					get(BGSPServiceAccessObject.class).callServiceFlatting("deleteAgentCollectAgreement", delCusMap);
+					Map<String, Object> cusListMap = new HashMap<String, Object>();
+					cusListMap.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
+					Result accessObjList = get(BGSPServiceAccessObject.class).callServiceFlatting("queryListAgentCollectAgreement", cusListMap);
+					if(CollectionUtils.isEmpty((Collection<?>) accessObjList.getPayload())){
+						context.setData(GDParamKeys.GAS_MSG_TYP, "E");
+						throw new CoreRuntimeException("该用户未签约,不可进行交易");
+					}
+					String agdAgrNo = (String) accessObjList.getPayload().get("agdAgrNo");
+					Map<String, Object> cusInfoMap = new HashMap<String, Object>();
+					cusInfoMap.put("agdAgrNo", agdAgrNo);
+					
+					get(BGSPServiceAccessObject.class).callServiceFlatting("deleteAgentCollectAgreement", cusInfoMap);
 					insertCusInfo(context);	
+					
+					//删除燃气协议表相关数据
+					GdGasCusAll delCus = new GdGasCusAll();
+					delCus.setIdNo(context.getData(ParamKeys.ID_NO).toString().trim());
+					delCus.setCusNo(context.getData(ParamKeys.THD_CUS_NO).toString().trim());
+					get(GdGasCusAllRepository.class).delete(delCus);
 					
 					context.setData("msgTyp", "N");
 					context.setData("rspCod", GDConstants.GDEUPSB_TXN_SUCC_CODE);
@@ -272,7 +276,20 @@ public class OprGasCusAgentAction extends BaseAction{
 		
 	}
 	
-	
+	/**
+	 * 查燃气协议表信息
+	 * @param context
+	 * @return
+	 */
+	private List<GdGasCusAll> qryCusInfoList(Context context) {
+		GdGasCusAll qryCusInf = new GdGasCusAll();
+//		qryCusInf.setIdNo(context.getData(ParamKeys.ID_NO).toString().trim());
+		qryCusInf.setCusNo(context.getData(ParamKeys.THD_CUS_NO).toString().trim());
+		List<GdGasCusAll> infList = get(GdGasCusAllRepository.class).find(qryCusInf);
+		return infList;
+	}
+
+
 	/**
 	 * 无论增删改用户协议表，均向燃气每天动态协议表插入一条数据，  tCommd可表示增删改
 	 * @param context
@@ -291,19 +308,19 @@ public class OprGasCusAgentAction extends BaseAction{
 	 * @param context
 	 * @return
 	 */
-	public Result cusIsExist(Context context){
-		Map<String, Object> cusListMap = new HashMap<String, Object>();
-		cusListMap.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
-		Result accessObjList = get(BGSPServiceAccessObject.class).callServiceFlatting("queryListAgentCollectAgreement", cusListMap);
+//	public Result cusIsExist(Context context){
+//		Map<String, Object> cusListMap = new HashMap<String, Object>();
+//		cusListMap.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
+//		Result accessObjList = get(BGSPServiceAccessObject.class).callServiceFlatting("queryListAgentCollectAgreement", cusListMap);
 //		if(CollectionUtils.isEmpty(accessObjList.getPayload())){
 //			context.setData(GDParamKeys.GAS_MSG_TYP, "E");
 //			throw new CoreRuntimeException("该用户未签约,不可进行交易");
 //		}
-		String agdAgrNo = (String) accessObjList.getPayload().get("agdAgrNo");
-		Map<String, Object> cusInfoMap = new HashMap<String, Object>();
-		cusInfoMap.put("agdAgrNo", agdAgrNo);
-		Result accessObject = get(BGSPServiceAccessObject.class).callServiceFlatting("queryDetailAgentCollectAgreement", cusInfoMap);
-		return accessObject;
-	}
+//		String agdAgrNo = (String) accessObjList.getPayload().get("agdAgrNo");
+//		Map<String, Object> cusInfoMap = new HashMap<String, Object>();
+//		cusInfoMap.put("agdAgrNo", agdAgrNo);
+//		Result accessObject = get(BGSPServiceAccessObject.class).callServiceFlatting("queryDetailAgentCollectAgreement", cusInfoMap);
+//		return accessObject;
+//	}
 	
 }
