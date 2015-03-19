@@ -222,13 +222,17 @@
       <xs:element name="email" type="tns:email_SType" minOccurs="0"/>
       <xs:element name="addr" type="tns:addr_SType" minOccurs="0"/>
       <xs:element name="iExtFg" type="tns:iExtFg_SType" minOccurs="0"/>
+      <xs:element name="bnkTyp" type="tns:bnkTyp_SType" minOccurs="0"/>
+      <xs:element name="bnkNo" type="tns:bnkNo_SType" minOccurs="0"/>
+      <xs:element name="inNum" type="tns:inNum_SType" minOccurs="0"/>
       <xs:element name="prvDatReq" type="tns:prvDatReq_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="agentBatchOperateResponse_CType">
     <xs:sequence>
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
-      <xs:element name="prvDatRes" type="tns:prvDatRes_SType" minOccurs="0"/>
+      <xs:element name="recNum" type="tns:recNum_SType" minOccurs="0"/>
+      <xs:element name="prvDatRes" type="tns:prvDatRes_CType" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="func_SType">
@@ -388,7 +392,31 @@
       <xs:documentation>私有数据标识</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="bnkTyp_SType">
+    <xs:annotation>
+      <xs:documentation>银行类型</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
       <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="bnkNo_SType">
+    <xs:annotation>
+      <xs:documentation>银行行号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="12"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="inNum_SType">
+    <xs:annotation>
+      <xs:documentation>笔数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="prvDatReq_SType">
@@ -396,17 +424,93 @@
       <xs:documentation>私有数据请求</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:maxLength value="3072"/>
+      <xs:maxLength value="3380"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="prvDatRes_SType">
+  <xs:simpleType name="recNum_SType">
     <xs:annotation>
-      <xs:documentation>私有数据响应</xs:documentation>
+      <xs:documentation>笔数</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:maxLength value="3072"/>
+      <xs:maxLength value="2"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:simpleType name="SUBSTS_SType">
+    <xs:annotation>
+      <xs:documentation>状态L</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ORGCOD_SType">
+    <xs:annotation>
+      <xs:documentation>机构代码L</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="12"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TBUSTP_SType">
+    <xs:annotation>
+      <xs:documentation>业务种类L</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="5"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TCUSID_SType">
+    <xs:annotation>
+      <xs:documentation>用户标识L</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TCUSNM_SType">
+    <xs:annotation>
+      <xs:documentation>用户名称L</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="GDSAID_SType">
+    <xs:annotation>
+      <xs:documentation>协议号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="55"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="EFFDAT_SType">
+    <xs:annotation>
+      <xs:documentation>生效日期L</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="IVDDAT_SType">
+    <xs:annotation>
+      <xs:documentation>失效日期L</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="prvDatRes_CType">
+    <xs:sequence>
+      <xs:element name="SUBSTS" type="tns:SUBSTS_SType" minOccurs="0"/>
+      <xs:element name="ORGCOD" type="tns:ORGCOD_SType" minOccurs="0"/>
+      <xs:element name="TBUSTP" type="tns:TBUSTP_SType" minOccurs="0"/>
+      <xs:element name="TCUSID" type="tns:TCUSID_SType" minOccurs="0"/>
+      <xs:element name="TCUSNM" type="tns:TCUSNM_SType" minOccurs="0"/>
+      <xs:element name="GDSAID" type="tns:GDSAID_SType" minOccurs="0"/>
+      <xs:element name="EFFDAT" type="tns:EFFDAT_SType" minOccurs="0"/>
+      <xs:element name="IVDDAT" type="tns:IVDDAT_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="agentFileSendRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader" minOccurs="0"/>
@@ -468,14 +572,6 @@
       <xs:maxLength value="8"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="recNum_SType">
-    <xs:annotation>
-      <xs:documentation>笔数</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="2"/>
-    </xs:restriction>
-  </xs:simpleType>
   <xs:simpleType name="GDSBID_SType">
     <xs:annotation>
       <xs:documentation>业务标识L</xs:documentation>
@@ -507,22 +603,6 @@
       <xs:element name="GDSBNM" type="tns:GDSBNM_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="SUBSTS_SType">
-    <xs:annotation>
-      <xs:documentation>状态L</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="1"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="ORGCOD_SType">
-    <xs:annotation>
-      <xs:documentation>机构代码L</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="12"/>
-    </xs:restriction>
-  </xs:simpleType>
   <xs:simpleType name="LAGTST_SType">
     <xs:annotation>
       <xs:documentation>本地协议状态L</xs:documentation>
@@ -537,30 +617,6 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="1"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="TCUSID_SType">
-    <xs:annotation>
-      <xs:documentation>用户标识L</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="20"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="EFFDAT_SType">
-    <xs:annotation>
-      <xs:documentation>生效日期L</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="8"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="IVDDAT_SType">
-    <xs:annotation>
-      <xs:documentation>失效日期L</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="8"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="ERRMSG_SType">
