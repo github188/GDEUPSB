@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,9 +21,12 @@ import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
+import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.BatchAcpService;
+import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
 import com.bocom.bbip.eups.spi.vo.PrepareBatchAcpDomain;
 import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
@@ -34,6 +38,7 @@ import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GDEupsEleTmpRepository;
 import com.bocom.bbip.thd.org.apache.commons.collections.CollectionUtils;
 import com.bocom.bbip.utils.BeanUtils;
+import com.bocom.bbip.utils.ContextUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -121,6 +126,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 			//header
 			Map<String, Object> headMap=new HashMap<String, Object>();
 			headMap.put(ParamKeys.COMPANY_NO, comNo);
+			headMap.put(ParamKeys.COMPANY_NO, "4840000703");
 			headMap.put(GDParamKeys.TOT_COUNT, totCnt);
 			headMap.put(ParamKeys.TOT_AMT, totAmts);
 			//detail
@@ -160,19 +166,28 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 			return resultMap;
 		}
 	/**
-	 *  异步调用process  批量代扣数据提交
+	 *  同步调用process  批量代扣数据提交
 	 */
 		public void userProcessToSubmit(Context context)throws CoreException{
 			logger.info("==========Start  BatchDataFileAction  userProcessToSubmit");
 			//生成代收付文件
 			get(BatchFileCommon.class).sendBatchFileToACP(context);
+			Date date=new Date();
+			context.setData("reqTme",DateUtils.formatAsSimpleDate(date)+"T"+DateUtils.format(date, "HH:mm:ss"));
 			//提交
 			String mothed="eups.batchPaySubmitDataProcess";
+			context.setData(ParamKeys.RSV_FLD2, context.getData(ParamKeys.THD_SQN));
 			bbipPublicService.synExecute(mothed, context);
+			String	rsvFld2=context.getData(ParamKeys.THD_SQN).toString();
+			EupsBatchConsoleInfo eupsBatchConsoleInfo =new EupsBatchConsoleInfo();
+			eupsBatchConsoleInfo.setRsvFld2(rsvFld2);
+			String batNo=get(EupsBatchConsoleInfoRepository.class).find(eupsBatchConsoleInfo).get(0).getBatNo();
+			context.setData(ParamKeys.BAT_NO, batNo);
 			logger.info("==========End  BatchDataFileAction  userProcessToSubmit");
+
 		}
 	/**
-	 * 异步调用process  代收付回调函数：解析回盘文件并入库
+	 * 同步调用process  代收付回调函数：解析回盘文件并入库
 	 */
 		public void userProcessToGet(Context context)throws CoreException{
 			logger.info("==========Start  BatchDataFileAction  userProcessToGet");
@@ -216,7 +231,9 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 									if(!rTotAmt.trim().equals(totAmt.trim())){
 										throw new CoreException("总金额不相同");
 									}
-									gdEupsBatchConsoleInfo.setTotAmt((new BigDecimal(totAmt)).scaleByPowerOfTen(-2));
+									BigDecimal totTxnAmt=(new BigDecimal(totAmt)).scaleByPowerOfTen(-2);
+									gdEupsBatchConsoleInfo.setTotAmt(totTxnAmt);
+									context.setData("totAmt", totTxnAmt);
 									String rsvFld1=firstLine.substring(82);
 									gdEupsBatchConsoleInfo.setRsvFld1(rsvFld1);
 									gdEupsBatchConsoleInfo.setBatNo(batNo);
@@ -235,7 +252,6 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 					e.printStackTrace();
 				}
 				context.setData(ParamKeys.TOT_CNT, Integer.parseInt(totCnt));
-				context.setData(ParamKeys.TOT_AMT, new BigDecimal(totAmt));
 				logger.info("==========End  BatchDataFileAction  updateInfo");
 		}
 }
