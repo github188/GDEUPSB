@@ -469,7 +469,6 @@
       <xs:element ref="tns:responseHeader"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType/>
   <xs:complexType name="payFeeOffChanRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
