@@ -969,9 +969,7 @@
     <xs:sequence>
       <xs:element ref="tns:requestHeader" minOccurs="0"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
-      <xs:element name="netName" type="tns:netName_SType" minOccurs="0"/>
       <xs:element name="payNo" type="tns:payNo_SType"/>
-      <xs:element name="txnTlr" type="tns:txnTlr_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="qryCusBaseMsgResponse_CType">
@@ -992,14 +990,6 @@
       <xs:element name="bakFld1" type="tns:bakFld1_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="txnTlr_SType">
-    <xs:annotation>
-      <xs:documentation>操作员</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="20"/>
-    </xs:restriction>
-  </xs:simpleType>
   <xs:simpleType name="thdSqn_SType">
     <xs:annotation>
       <xs:documentation>交易流水号</xs:documentation>
@@ -1133,6 +1123,14 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="6"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="txnTlr_SType">
+    <xs:annotation>
+      <xs:documentation>操作员</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="rsvFld4_SType">
