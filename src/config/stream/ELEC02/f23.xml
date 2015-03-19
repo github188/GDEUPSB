@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="10Request">
+			<fixString name="WTC" length="12" default="301"/> <!--委托节点代码-->
+			<fixString name="WD0" length="8" /> <!--工作日期-->
+			<fixString name="TMN" length="12"/> <!--经办网点号-->
+			<fixString name="LogNo" length="16"/> <!--流水-->
+			<fixString name="STO" length="5"/>   <!--银行操作员代码-->
+			<fixString name="HAN" length="8" alias="totCnt"/>  <!--已扣笔数-->
+			<fixString name="HAM" length="14" alias="totAmt"/>  <!--已扣金额-->
+			<fixString name="LSN" length="8" alias="falTotCnt"/>  <!--失败笔数-->
+			<fixString name="LSM" length="14" alias="falTotAmt"/> <!--失败金额-->
+			<fixString name="FIF" length="2" default="02"/>  <!--文件类型-->
+</segment>
