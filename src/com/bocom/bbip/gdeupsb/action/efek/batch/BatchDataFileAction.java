@@ -160,11 +160,15 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 			return resultMap;
 		}
 	/**
-	 *  批量代扣数据提交
+	 *  异步调用process  批量代扣数据提交
 	 */
 		public void userProcessToSubmit(Context context)throws CoreException{
 			logger.info("==========Start  BatchDataFileAction  userProcessToSubmit");
+			//生成代收付文件
 			get(BatchFileCommon.class).sendBatchFileToACP(context);
+			//提交
+			String mothed="eups.batchPaySubmitDataProcess";
+			bbipPublicService.synExecute(mothed, context);
 			logger.info("==========End  BatchDataFileAction  userProcessToSubmit");
 		}
 	/**
