@@ -103,9 +103,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 									 logger.info("~~~~~gdEupsEleTmp~~~~"+gdEupsEleTmp);
 									 gdEupsEleTmpRepository.insert(gdEupsEleTmp);
 						}
-						//	文件名		账户类型(2位,PT普通账户)+FS_银行代码(4位)+单位编码（8位）+ 日期（yyyymmdd）(8位)＋批次号（5位）.txt
-						//TODO 新文件文件名
-						String createFileName="01"+"FS_301"+context.getData(ParamKeys.COMPANY_NO)+context.getData(ParamKeys.TXN_DTE)+batNo.substring(0, 5)+".txt";
+						String createFileName=context.getData(ParamKeys.FLE_NME).toString();
 						//文件内容
 						Map<String, Object> resultMap=createFileMap(context,comNo,totAmt,totCnt);
 						context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_NAME, createFileName);

@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsBatchInfoDetail;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
+import com.bocom.bbip.eups.repository.EupsBatchInfoDetailRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
 import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
@@ -40,6 +42,8 @@ public class BatchDataResultFileAction implements AfterBatchAcpService{
 	GDEupsEleTmpRepository gdEupsEleTmpRepository;
 	@Autowired
 	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
+	@Autowired
+	EupsBatchInfoDetailRepository eupsBatchInfoDetailRepository;
 	/**
 	 * 南方电网 结果文件处理
 	 */
@@ -53,19 +57,25 @@ public class BatchDataResultFileAction implements AfterBatchAcpService{
 			//更改控制表
 			GDEupsBatchConsoleInfo gdEupsBatchConsoleInfoUpdate=updateInfo(context, gdeupsBatchConsoleInfo);
 			//文件名
-			String fileName=gdeupsBatchConsoleInfo.getFleNme();
+//			账户类型(2位,PT普通账户)+FH_+银行代码(4位)+ 单位编码（8位）+日期（yyyymmdd）＋批次号（5位）.txt
+			String fileName="PTFH_301"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+context.getData(ParamKeys.BAT_NO).toString().substring(13)+".txt";
 			EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecBatch");
 			// 生成文件
 			try{
 					Map<String, Object> resultMap=createFileMap(context,gdEupsBatchConsoleInfoUpdate);
-					operateFile.createCheckFile(eupsThdFtpConfig, "efekBatchResulf", fileName, resultMap);
+					eupsThdFtpConfig.setLocDir("G:\\");
+					operateFile.createCheckFile(eupsThdFtpConfig, "efekBatchResult", fileName, resultMap);
 			}catch(CoreException e){
 					logger.info("~~~~~~~~~~~Error  Message",e);
 			}
 			// 将生成的文件上传至指定服务器
-			eupsThdFtpConfig.setLocFleNme(fileName);
-			eupsThdFtpConfig.setRmtFleNme(fileName);
-			operateFTP.putCheckFile(eupsThdFtpConfig);
+//			eupsThdFtpConfig.setLocFleNme(fileName);
+//			eupsThdFtpConfig.setRmtFleNme(fileName);
+//			operateFTP.putCheckFile(eupsThdFtpConfig);
+			gdEupsEleTmpRepository.deleteAll("1");
+			EupsBatchInfoDetail eupsBatchInfoDetail=new EupsBatchInfoDetail();
+			eupsBatchInfoDetail.setBatNo(context.getData(ParamKeys.BAT_NO).toString());
+			eupsBatchInfoDetailRepository.delete(eupsBatchInfoDetail);
 			logger.info("===============End  BatchDataResultFileAction  afterBatchDeal");	
 		}
 	/**
@@ -100,28 +110,44 @@ public class BatchDataResultFileAction implements AfterBatchAcpService{
 	public Map<String, Object> createFileMap(Context context,GDEupsBatchConsoleInfo gdEupsBatchConsoleInfoUpdate){
 			logger.info("===============Start  BatchDataResultFileAction  createFileMap");	
 			//代收付文件内容
-			List<Map<String, Object>> mapList=context.getVariable(ParamKeys.EUPS_FILE_DETAIL);
+			List<EupsBatchInfoDetail> mapList=context.getVariable("detailList");
 			List<GDEupsEleTmp> gdEupsEleTmpList = gdEupsEleTmpRepository.findAllOrderBySqn();
 			//内容主体
 			List<GDEupsEleTmp> list=new ArrayList<GDEupsEleTmp>();
 			for(int i=0;i<mapList.size();i++){
 						GDEupsEleTmp gdEupsEleTmp=gdEupsEleTmpList.get(i);
-						Map<String, Object> map=mapList.get(i);
+						EupsBatchInfoDetail eupsBatchInfoDetail=mapList.get(i);
 						//<!--客户账号|姓名|金额|代理服务客户标识|代理服务客户姓名|本行标志|开户银行|备注一|备注二|状态|描述  -->
-						gdEupsEleTmp.setTxnAmt(new BigDecimal(map.get("TXNAMT").toString()));
-						gdEupsEleTmp.setPaymentResult(map.get("sts").toString());
+						gdEupsEleTmp.setRsvFld5(eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2).signum()+"");
+						gdEupsEleTmp.setPaymentResult(eupsBatchInfoDetail.getSts());
 						gdEupsEleTmp.setBankNo(gdEupsEleTmp.getSqn());
 						//TODO 
 						Date date=new Date();
 						gdEupsEleTmp.setRsvFld1(DateUtils.format(date, DateUtils.STYLE_yyyyMMdd));
 						gdEupsEleTmp.setRsvFld2(DateUtils.formatAsHHmmss(date));
-						gdEupsEleTmp.setBakFld(map.get("RMK1").toString());
+						gdEupsEleTmp.setBakFld(eupsBatchInfoDetail.getRmk1());
 						list.add(gdEupsEleTmp);
 			}
+			Map<String, Object> headMap=new HashMap<String, Object>();
+			headMap.put("rsvFld5", gdEupsBatchConsoleInfoUpdate.getRsvFld5());
+			headMap.put("comNo", gdEupsBatchConsoleInfoUpdate.getComNo());
+			headMap.put("rsvFld8", gdEupsBatchConsoleInfoUpdate.getRsvFld8());
+			headMap.put("rsvFld7", gdEupsBatchConsoleInfoUpdate.getRsvFld7());
+			headMap.put("rsvFld6", gdEupsBatchConsoleInfoUpdate.getRsvFld6());
+			headMap.put("totCnt", gdEupsBatchConsoleInfoUpdate.getTotCnt());
+			headMap.put("totAmt", gdEupsBatchConsoleInfoUpdate.getTotAmt().scaleByPowerOfTen(2).signum());
+			headMap.put("sucTotCnt", gdEupsBatchConsoleInfoUpdate.getSucTotCnt());
+			headMap.put("sucTotAmt", gdEupsBatchConsoleInfoUpdate.getSucTotAmt().scaleByPowerOfTen(2).signum());
+			headMap.put("falTotCnt", gdEupsBatchConsoleInfoUpdate.getFalTotCnt());
+			headMap.put("falTotAmt", gdEupsBatchConsoleInfoUpdate.getFalTotAmt().scaleByPowerOfTen(2).signum());
+			headMap.put("txnTlr", gdEupsBatchConsoleInfoUpdate.getTxnTlr());
+			System.out.println();
+			System.out.println(headMap);
 			Map<String, Object> resultMap=new HashMap<String, Object>(); 
-			resultMap.put(ParamKeys.EUPS_FILE_HEADER, BeanUtils.toMap(gdEupsBatchConsoleInfoUpdate));
+			resultMap.put(ParamKeys.EUPS_FILE_HEADER, headMap);
+			System.out.println(resultMap.get(ParamKeys.EUPS_FILE_HEADER));
 			resultMap.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(list));
 			logger.info("===============End  BatchDataResultFileAction  createFileMap");	
-			return null;
+			return resultMap;
 	}
 }
