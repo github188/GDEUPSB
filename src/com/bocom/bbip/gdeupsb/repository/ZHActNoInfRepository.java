@@ -14,7 +14,7 @@ public interface ZHActNoInfRepository extends PagingAndSortingRepository<ZHActNo
 	
 	//更新一本通帐号到主帐号－实体帐号
 	@Find
-	public List<ZHActNoInf> queryNewByOld(final String oldActNo);
+	public List<ZHActNoInf> queryNewByOld(Map<String,String> map);
 	@Delete
 	public void deleteInfo(Map<String,String> map);
 	@Update
