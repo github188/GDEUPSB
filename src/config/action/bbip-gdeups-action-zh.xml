@@ -16,5 +16,6 @@
 <!-- 珠海零余额协议管理 -->
 <action id="manageZeroAgt" class="com.bocom.bbip.gdeupsb.action.zh.EupsZeroAgtManageAction" />
 
-
+<!-- 珠海查询更改帐户信息-->
+<action id="updateInfo" class="com.bocom.bbip.gdeupsb.action.zh.EupsUpdateCardNo" />
 </x:beans>
