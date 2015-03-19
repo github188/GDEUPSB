@@ -46,8 +46,10 @@ public class BatchDataResultFileAction implements AfterBatchAcpService{
 	public void afterBatchDeal(AfterBatchAcpDomain afterbatchacpdomain, Context context) throws CoreException {
 		logger.info("===============Start  BatchDataResultFileAction  afterBatchDeal");	
 			//第三方 rsvFld9
-			String batNo=context.getData(ParamKeys.BAT_NO).toString();
-			GDEupsBatchConsoleInfo  gdeupsBatchConsoleInfo = gdeupsBatchConsoleInfoRepository.findOne(batNo);
+			String rsvFld9=context.getData(ParamKeys.THD_BAT_NO).toString();
+			GDEupsBatchConsoleInfo  Info=new GDEupsBatchConsoleInfo();
+			Info.setRsvFld9(rsvFld9);
+			GDEupsBatchConsoleInfo  gdeupsBatchConsoleInfo = gdeupsBatchConsoleInfoRepository.find(Info).get(0);
 			//更改控制表
 			GDEupsBatchConsoleInfo gdEupsBatchConsoleInfoUpdate=updateInfo(context, gdeupsBatchConsoleInfo);
 			//文件名

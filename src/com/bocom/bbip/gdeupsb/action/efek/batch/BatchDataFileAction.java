@@ -195,8 +195,8 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 						while((firstLine=bufferedReader.readLine())!=null){
 								if(i == 0){
 									GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=new GDEupsBatchConsoleInfo();
-									String rsvFld9=firstLine.substring(0,27);   //27
-									gdEupsBatchConsoleInfo.setRsvFld9(rsvFld9);
+									String rsvFld5=firstLine.substring(0,27);   //27
+									gdEupsBatchConsoleInfo.setRsvFld5(rsvFld5);
 									String rsvFld8=firstLine.substring(27,31); //4
 									gdEupsBatchConsoleInfo.setRsvFld8(rsvFld8);
 									String comNo=firstLine.substring(31,39); //8
@@ -220,7 +220,6 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 									String rsvFld1=firstLine.substring(82);
 									gdEupsBatchConsoleInfo.setRsvFld1(rsvFld1);
 									gdEupsBatchConsoleInfo.setBatNo(batNo);
-									gdEupsBatchConsoleInfo.setRsvFld9(rsvFld9);
 									gdEupsBatchConsoleInfoRepository.updateConsoleInfo(gdEupsBatchConsoleInfo);
 									logger.info("==========Successful to update GDEupsBatchConsoleInfo");
 								}
