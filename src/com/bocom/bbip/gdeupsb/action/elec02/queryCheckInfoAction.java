@@ -13,7 +13,7 @@ import com.bocom.bbip.data.domain.Pageable;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.gdeupsb.entity.EupsTransJournalELEC02Check;
+import com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal;
 import com.bocom.bbip.gdeupsb.repository.GdEupsTransJournalRepository;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.ContextUtils;
@@ -53,8 +53,7 @@ public class queryCheckInfoAction extends BaseAction {
 		map.put("startDate", start);
 		map.put("endDate", end);
 
-		Page<EupsTransJournalELEC02Check> page = get(GdEupsTransJournalRepository.class).getCheckInfo(pageable, map);
-
+		Page<GdEupsTransJournal> page = get(GdEupsTransJournalRepository.class).getCheckInfo(pageable, map);
 		logger.info("query checkinfo success!!");
 
 	}
