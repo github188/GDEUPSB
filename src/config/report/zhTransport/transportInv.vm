@@ -15,18 +15,18 @@
  #para($str.trim($d.carName))
  #para($str.trim($d.carNo))
  #para($str.trim($d.carTyp))
- #para($str.trim($d.feeStd))
- #para($str.trim($d.corpus))
- #para($str.trim($d.carDzs))
- #para($str.trim($d.lateFee))
- #para($str.trim($d.txnAmt))
+ #para($d.feeStd)
+ #para($d.corpus)
+ #para($d.carDzs)
+ #para($d.lateFee)
+ #para($d.txnAmt)
  ?                                                           ?         ?       ? 
 
                             ?
 
 
 
-                           ?              ?              ?   ，  ?           本  金：?
+                           ?              ?              ?     ?           本  金：?
 
                            ?                                                 滞纳金：?
 
