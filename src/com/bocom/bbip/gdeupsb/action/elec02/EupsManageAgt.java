@@ -106,6 +106,8 @@ public class EupsManageAgt extends BaseAction {
 	}
 
 	private void query(Context context) throws CoreException {
+
+	  
 		 Map<String,Object>map=new HashMap<String,Object>();
 	       map.put("cusAc", (String)context.getData("OAC"));
 	       Result respData = ((BGSPServiceAccessObject)get(BGSPServiceAccessObject.class)).
