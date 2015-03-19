@@ -7,7 +7,6 @@ import com.bocom.bbip.data.annotation.Find;
 import com.bocom.bbip.data.domain.Page;
 import com.bocom.bbip.data.domain.Pageable;
 import com.bocom.bbip.data.repository.PagingAndSortingRepository;
-import com.bocom.bbip.gdeupsb.entity.EupsTransJournalELEC02Check;
 import com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal;
 
 public interface GdEupsTransJournalRepository extends PagingAndSortingRepository<GdEupsTransJournal, String> {
@@ -47,6 +46,6 @@ public interface GdEupsTransJournalRepository extends PagingAndSortingRepository
     public List<GdEupsTransJournal> findTbcTransJournalDetails(GdEupsTransJournal eupsTransJournal);
     
     @Find
-    public Page<EupsTransJournalELEC02Check>getCheckInfo(Pageable pageable,Map<String,String>map);
+    public Page<GdEupsTransJournal>getCheckInfo(Pageable pageable,Map<String,String>map);
 
 }
