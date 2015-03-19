@@ -1,0 +1,43 @@
+ #report(50)
+#rh(5)
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ #para($str.trim($d.invNo))
+ #para($str.trim($d.printYear))
+ #para($str.trim($d.printMon))
+ #para($str.trim($d.printDay))
+ #para($str.trim($d.tcusNm))
+ #para($str.trim($d.carName))
+ #para($str.trim($d.carNo))
+ #para($str.trim($d.carTyp))
+ #para($str.trim($d.feeStd))
+ #para($str.trim($d.corpus))
+ #para($str.trim($d.carDzs))
+ #para($str.trim($d.lateFee))
+ #para($str.trim($d.txnAmt))
+ ?                                                           ?         ?       ? 
+
+                            ?
+
+
+
+                           ?              ?              ?   ，  ?           本  金：?
+
+                           ?                                                 滞纳金：?
+
+                                                                             合  计：?
+
+                             备  注：
+
+                                   #        #      #               #        #      #
+
+                                                                       #                #
+
+                      珠海市路桥管理处          #（交行）
+#end
+#end
