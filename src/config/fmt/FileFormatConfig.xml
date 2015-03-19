@@ -139,7 +139,7 @@
 	<!-- 南方电网 批量文件返回 -->
 	<file name="efekBatchResult" id="efekBatchResult" encoding="GBK"
 		lineSeparator="\n">
-		<line name="head" ref="config/fmt/fileFmt/efek/BatchDataResultHead.xml" />
+		<line name="header" ref="config/fmt/fileFmt/efek/BatchDataResultHead.xml" />
 		<foreach name="detail" ref="config/fmt/fileFmt/efek/BatchDataResultDetail.xml" />
 	</file>
 
