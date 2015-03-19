@@ -9,6 +9,6 @@
 	<fixString name="txnDte" length="8" /><!-- 交易日期 -->
 	<fixString name="txnTme" length="6" /><!--  交易时间-->
     <fixString name="payNo" length="20" /><!-- 缴费号 -->
-    <fixString name="txnTlr" length="20" /><!-- 操作员号 -->
+    <fixString name="txnTlr" length="7" /><!-- 操作员号 -->
       
 	</segment>
