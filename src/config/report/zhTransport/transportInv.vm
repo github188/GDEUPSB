@@ -20,13 +20,22 @@
  #para($d.carDzs)
  #para($d.lateFee)
  #para($d.txnAmt)
+ #para($d.begYear)
+ #para($d.begMon)
+ #para($d.begDay)
+ #para($d.endYear)
+ #para($d.endMon)
+ #para($d.endDay)
+ #para($d.txnAmt)      
+ #para($d.txnAmt)
+ #para($d.prtNod)
  ?                                                           ?         ?       ? 
 
                             ?
 
 
 
-                           ?              ?              ?     ?           本  金：?
+                           ?              ?              ?     ?             本  金：?
 
                            ?                                                 滞纳金：?
 
@@ -34,10 +43,10 @@
 
                              备  注：
 
-                                   #        #      #               #        #      #
+                                   ?        ?      ?               ?        ?      ?
 
-                                                                       #                #
+                                                                       ?                ?
 
-                      珠海市路桥管理处          #（交行）
+                      珠海市路桥管理处          ?（交行）
 #end
 #end
