@@ -187,11 +187,11 @@
     <include refid="baseColumnList" />
     from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_SYS_CFG
   </select>
-   <select id="findSysCfg" resultMap="basicResultMap" parameterType="java.lang.String" >
+   <select id="findSysCfg" resultMap="basicResultMap" >
     select 
     <include refid="baseColumnList" />
     from gdeupsb.GDEUPS_LOT_SYS_CFG
-    where DEAL_ID = #{dealId,jdbcType=CHAR}
+    where DEAL_ID = '141'
   </select>
   
 </mapper>

@@ -1,7 +1,10 @@
 package com.bocom.bbip.gdeupsb.action.lot;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+
+import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
@@ -33,8 +36,8 @@ public class LoginAction extends BaseAction {
         log.info("LoginAction Start !!");
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
         context.setData("nodNo", "441800");
-        GdLotSysCfg lotSysCfgInfo = get(GdLotSysCfgRepository.class).findSysCfg(GDConstants.LOT_DEAL_ID);
-        if (null == lotSysCfgInfo) {
+        List<GdLotSysCfg> lotSysCfgInfos = get(GdLotSysCfgRepository.class).findSysCfg();
+        if (CollectionUtils.isEmpty(lotSysCfgInfos)) {
             context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
             context.setData(ParamKeys.RSP_CDE, "LOT999");
             context.setData(ParamKeys.RSP_MSG, "查询参数表失败!!!");
@@ -45,8 +48,8 @@ public class LoginAction extends BaseAction {
         context.setData("action", "212");
         // context.setData("usrPam", "tangdi"); 测试
         // context.setData("usrPas", "123456");
-        context.setData("usrPam", lotSysCfgInfo.getUsrPam());
-        context.setData("usrPas",  lotSysCfgInfo.getUsrPas());
+        context.setData("usrPam", lotSysCfgInfos.get(0).getUsrPam());
+        context.setData("usrPas",  lotSysCfgInfos.get(0).getUsrPas());
         
 
         Transport ts = context.getService("STHDLOT1");

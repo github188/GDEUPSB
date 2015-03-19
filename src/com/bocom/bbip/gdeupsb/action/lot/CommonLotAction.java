@@ -12,7 +12,6 @@ import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdLotChkCtl;
 import com.bocom.bbip.gdeupsb.entity.GdLotChkDtl;
@@ -65,10 +64,10 @@ public class CommonLotAction extends BaseAction{
      */
     public String getFcTim(String dealId, String brNo) {
         //查询系统参数，获取当前本地与福彩系统的时差
-        GdLotSysCfg gdLotSysCfg = lotSysCfgRepository.findSysCfg(dealId);
+        List<GdLotSysCfg> gdLotSysCfg = lotSysCfgRepository.findSysCfg();
         String difTim = "0";
         if (null != gdLotSysCfg) {
-            difTim= gdLotSysCfg.getDiffTm();
+            difTim= gdLotSysCfg.get(0).getDiffTm();
         }
         String srcDate = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMddHHmmss);
         String fcTim = calTim(brNo,srcDate,difTim);
@@ -322,11 +321,11 @@ public class CommonLotAction extends BaseAction{
     
     public void GetSysCfg(Context context) {
         log.info(" Get Systerm Config  Start...!");
-        String dealId = GDConstants.LOT_DEAL_ID; // 运营商编号
-        GdLotSysCfg gdLotSysCfg = lotSysCfgRepository.findSysCfg(dealId);
+        
+       List <GdLotSysCfg> gdLotSysCfgs = lotSysCfgRepository.findSysCfg();
 
         // 查询代收单位协议信息
-        String dscAgtNo = gdLotSysCfg.getDsCAgtNo(); // 代收单位编号
+        String dscAgtNo = gdLotSysCfgs.get(0).getDsCAgtNo(); // 代收单位编号
         Map<String, Object> inpara = new HashMap<String, Object>();
         inpara.put(ParamKeys.COMPANY_NO, dscAgtNo);
         inpara.put("inqBusLstFlg", "N");
@@ -338,7 +337,7 @@ public class CommonLotAction extends BaseAction{
         String fCActNo = (String) dsMap.get("hfeStlAc"); // 代收结算账户,用于处理轧差入账帐号
         String curTim = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMddHHmmss); // 当前时间
 
-        context.setVariable(GDParamKeys.GD_LOT_SYS_CFG, gdLotSysCfg);
+        context.setVariable(GDParamKeys.GD_LOT_SYS_CFG, gdLotSysCfgs.get(0));
         context.setVariable(GDParamKeys.LOT_CURTIM, curTim);
         context.setVariable(GDParamKeys.LOT_FC_ACT_NO, fCActNo);
 

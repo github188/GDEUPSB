@@ -28,11 +28,10 @@ public class LotClearCountAction extends BaseAction {
 		String difFlg = new String();
 
 		// 获取系统配置
-		String dealId = GDConstants.LOT_DEAL_ID; // 运营商编号
-		GdLotSysCfg gdLotSysCfg = get(GdLotSysCfgRepository.class).findSysCfg(dealId);
+		   List<GdLotSysCfg> lotSysCfgInfos  = get(GdLotSysCfgRepository.class).findSysCfg();
 
 		// 查询代收单位协议信息
-		String dscAgtNo = gdLotSysCfg.getDsCAgtNo(); // 代收单位编号
+		String dscAgtNo = lotSysCfgInfos.get(0).getDsCAgtNo(); // 代收单位编号
 		Map<String, Object> inpara = new HashMap<String, Object>();
 		inpara.put(ParamKeys.COMPANY_NO, dscAgtNo);
 		inpara.put("inqBusLstFlg", "N");
@@ -48,7 +47,7 @@ public class LotClearCountAction extends BaseAction {
 		String fCActNo = (String) dsMap.get("hfeStlAc"); // 代收结算账户
 
 		// 查询代发单位协议信息
-		String dfcAgtNo = gdLotSysCfg.getDfCAgtNo(); // 代发单位编号
+		String dfcAgtNo = lotSysCfgInfos.get(0).getDfCAgtNo(); // 代发单位编号
 		inpara.put(ParamKeys.COMPANY_NO, dfcAgtNo);
 
 		// TODO：for test,先注释掉

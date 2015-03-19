@@ -108,6 +108,8 @@
             <action id="prePayDel" ref="gdeupsb.cathecticPreExecuteAction" />  
             <action id="payDel" ref="gdeupsb.cathecticExeAction" /> 
             <action id="aftpayDel" ref="gdeupsb.cathecticCallThdAction" />  <!-- 更新轧差结果 -->
+            <action id="rollback" ref="eups.processReversalToTHDAction" />
+        
         </actions>
     </process>
     <!--用户登录 -->

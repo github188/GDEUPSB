@@ -1,5 +1,8 @@
 package com.bocom.bbip.gdeupsb.repository;
 
+import java.util.List;
+
+import com.bocom.bbip.data.annotation.Find;
 import com.bocom.bbip.data.annotation.Update;
 import com.bocom.bbip.data.domain.NoId;
 import com.bocom.bbip.data.repository.PagingAndSortingRepository;
@@ -9,6 +12,7 @@ public interface GdLotSysCfgRepository extends PagingAndSortingRepository<GdLotS
     @Update
     public void update(GdLotSysCfg lotSysCfgInfoInput);
 
-    public GdLotSysCfg findSysCfg(String dealId);
+    @Find
+    public List <GdLotSysCfg> findSysCfg();
 
 }

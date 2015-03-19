@@ -2,6 +2,8 @@ package com.bocom.bbip.gdeupsb.action.lot;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
@@ -15,12 +17,13 @@ import com.bocom.jump.bp.core.CoreException;
 
 public class CathecticPreAction extends BaseAction {
 
+    @Autowired
+    CommonLotAction commonLotAction;
     
     @Override
     public void execute(Context context) throws CoreException {
         log.info("Enter in Cathectic Lot Action... ");
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
-        CommonLotAction commonLotAction =new CommonLotAction();
         
         commonLotAction.GetSysCfg(context);
         context.setData("cTTxnCd", context.getData("tTxnCd"));
