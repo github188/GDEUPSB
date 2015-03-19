@@ -55,7 +55,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 	
 	private static Logger logger = LoggerFactory.getLogger(BatchAcpServiceImplWATR00.class);
 	/**代扣文件指定存放路径前缀*/
-	private static final String FILE_DIR_PREFIX = "~/home/bbipadm/data/mftp/BBIP/GDEUPSB/";
+	private static final String FILE_DIR_PREFIX = "/home/bbipadm/data/mftp/BBIP/GDEUPSB/";
 	/**批量加锁KEY*/
 	private static final String lockKey = "BatchAcpServiceImplWATR00";
 	@Autowired
