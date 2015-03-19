@@ -435,4 +435,16 @@ public final class GDErrorCodes {
 	/** 没有找到确认支付的订单 */
 	public static final String EUPS_VECH00_1009_ERROR = "BBIP4400EU0819";
 	
+	/** 惠州燃气已存在协议 */
+	public static final String GAS_CUS_AGT_DOUBLE = "BBIP4400EU0620";
+	/** 惠州燃气协议新增失败*/
+	public static final String GAS_CUS_AGT_ADDNO = "BBIP4400EU0621";
+	/** 惠州燃气协议修改失败*/
+	public static final String GAS_CUS_AGT_EDITNO = "BBIP4400EU0622";
+	/** 惠州燃气协议删除失败*/
+	public static final String GAS_CUS_AGT_STOPNO = "BBIP4400EU0623";
+	/** 惠州燃气查询协议空*/
+	public static final String GAS_QRY_AGT_ERR_EMT = "BBIP4400EU0624";
+	
+	
 }
