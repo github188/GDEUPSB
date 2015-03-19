@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.action.elec02;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.bocom.bbip.comp.BBIPPublicServiceImpl;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
@@ -24,6 +26,8 @@ import com.bocom.bbip.gdeupsb.entity.GDEupsbElecstBatchTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbElecstBatchTmpRepository;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
+import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 /**
@@ -60,7 +64,15 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements AfterB
 
 		((OperateFTPAction)get("opeFTP")).putCheckFile(config);
 		/**通知第三方*/
-		 context.setData("", "");
+		 context.setData("TransCode", "23");
+		 context.setData("WD0", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
+		 String logNo=((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getBBIPSequence();
+		 context.setData("LogNo", StringUtils.substring(logNo, 4));
+		 String etlr=StringUtils.substring(logNo, 15);
+		 String tmn=StringUtils.substring(logNo, 8);
+		 context.setData("TMN", tmn);
+		 context.setData("FileName", "");
+		 context.setData("recordNum", (String)context.getData("totCnt"));
 		 Map<String,Object>thdResult= get(CallThdService.class).callTHD(context);
 		 logger.info("电力返盘文件处理结束");
 	}
