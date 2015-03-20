@@ -7,7 +7,6 @@
 	<action   class="com.bocom.bbip.gdeupsb.action.efek.QryCusBaseMsgAction"
 		id="gdeupsb.qryCusBaseMsgAction" />
 		
-		
 	<!--  查询抹账结果-->
 	<action   class="com.bocom.bbip.gdeupsb.action.efek.TallyCancelQryOnlineAction"
 		id="gdeupsb.tallyCancelQryOnlineAction" />	
