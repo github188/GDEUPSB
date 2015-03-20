@@ -7,7 +7,7 @@
 	   <fixString name="rsvFld1"       length="10" />   
       <fixString name="rsvFld2"       length="5" />   
       <fixString name="totCnt"       length="10"/>   <!-- 总户数 -->
-      <fixString name="totAmt"       length="14"/>   <!-- 总金额 -->
+      <fixString name="totAmt"       length="14" expression='exp:num.centToYuanAsString($c.totAmt)'/>   <!-- 总金额 -->
 			
 		
 	</segment>

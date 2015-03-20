@@ -5,11 +5,11 @@
     encoding="gbk" trace="true">
 	<segment name="detail" encoding="GBK">
         <fixString name="cusAc"   length="21" />    <!-- 帐号 -->
-      <fixString name="txnAmt"   length="10"  expression='exp:str.leftPad(num.centToYuanAsString(this.txnAmt),10," ")'/>   <!-- 来盘金额元为单位，含小数点 -->
+      <fixString name="txnAmt"   length="10"  />   <!-- 来盘金额元为单位，含小数点 -->
       <fixString name="thdCusNo"  length="15"  />    
-      <fixString name="thdCusNme"  length="10"  expression='exp:str.leftPad(num.centToYuanAsString(this.thdCusNme),10," ")'/>
+      <fixString name="thdCusNme"  length="10"  />
 		<fixString name="rsvFld1"  length="8"  />	   
-	  <fixString name="SucFlg"   length="1"  />	
+	  <fixString name="SucFlg"   length="1" expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse(this.sts,"S","Y","O")' />	
 
 	</segment>
 </message>

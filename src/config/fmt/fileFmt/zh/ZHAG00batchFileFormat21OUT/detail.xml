@@ -5,10 +5,10 @@
     encoding="gbk" trace="true">
 	<segment name="detail" encoding="GBK">
       <varString name="cusAc"   type="D|" />    <!-- 帐号 -->
-      <varString name="txnAmt"   type="D|"  expression='exp:num.centToYuanAsString(this.txnAmt)'/>   <!-- 来盘金额元为单位，含小数点 -->
+      <varString name="txnAmt"   type="D|" />   <!-- 来盘金额元为单位，含小数点 -->
       <varString name="thdCusNme"       type="D|"  />    
-       <varString name="SucFlg"       type="D|"  />    
-	   <varString name="SucMsg"       type="X"  />   
+       <varString name="SucFlg"       type="D|" expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse(this.sts,"S","Y","N")' />    
+	   <varString name="ErrMsg"       type="X" expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse(this.sts,"S","",this.errMsg)' />   
 			
 
 	</segment>

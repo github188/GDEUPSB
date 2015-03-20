@@ -10,11 +10,11 @@
 	  <fixString name="rsvFld4"   length="5" />    
       <fixString name="thdCusNme"   length="14" />        
       <fixString name="rsvFld5"   length="14" />
-      <fixString name="txnAmt"   length="12" expression='exp:str.leftPad(this.txnAmt,12," ")'/>
+      <fixString name="txnAmt"   length="12" expression='exp:num.yuanToCentString(this.txnAmt)'/>
       <fixString name="sqn"   length="32"  /> 
-      <fixString name="cusAc"   length="40" expression='exp:str.leftPad(this.cusAc,40," ")'/>   
+      <fixString name="cusAc"   length="40" />   
       <fixString name="ActDat"   length="14"  /> 
-      <fixString name="SucFlg"   length="1"  /> <!-- 标识 0成功，1余额不足，2帐户冻结，3帐户错，4其他 -->
+      <fixString name="SucFlg"   length="1" expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse(this.sts,"S","0","4")' /> <!-- 标识 0成功，1余额不足，2帐户冻结，3帐户错，4其他 -->
 	</segment>
 </message>
 

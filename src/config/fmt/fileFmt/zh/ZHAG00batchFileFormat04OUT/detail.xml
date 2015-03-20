@@ -7,18 +7,18 @@
 	
 	
      <fixString name="rsvFld1"  length="5"  />
-      <fixString name="thdCusNme"  length="20" expression='exp:str.leftPad($c.thdCusNme,20," ")' />
+      <fixString name="thdCusNme"  length="20"  />
       <fixString name="rsvFld2"  length="14"  />
       <fixString name="rsvFld3"  length="14"  />
       <fixString name="rsvFld4"  length="14"  />
-      <fixString name="txnAmt"   length="15"  expression='exp:str.leftPad($c.txnAmt,15," ")'/>   
+      <fixString name="txnAmt"   length="15"  expression='exp:num.yuanToCentString(this.txnAmt)'/>   
       <fixString name="rsvFld5"  length="15"  />
-	  <fixString name="cusAc"   length="30" expression='exp:str.leftPad($c.cusAc,30," ")'/>	
+	  <fixString name="cusAc"   length="30" />	
 
 
      <fixString name="ActDat"   length="14" />    <!-- 会计日期 -->
-      <fixString name="txnAmt"   length="15" />
-      <fixString name="SucFlg"   length="1"  />   
+      <fixString name="txnAmt"   length="15" expression='exp:num.yuanToCentString(this.txnAmt)'/>
+      <fixString name="SucFlg"   length="1" expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse(this.sts,"S","0","4")'/>   
 	</segment>
 </message>
 

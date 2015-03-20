@@ -6,7 +6,7 @@
 	<segment name="detail" encoding="GBK">
       <varString name="cusAc"   type="D|" />    <!-- 帐号 -->
       <varString name="txnAmt"   type="D|"  />   <!-- 来盘金额元为单位，含小数点 -->
-      <varString name="thdCusNme"       type="X" expression='exp:str.trim($c.thdCusNme)' />    
+      <varString name="thdCusNme"       type="X"  />    
       
 			
 			

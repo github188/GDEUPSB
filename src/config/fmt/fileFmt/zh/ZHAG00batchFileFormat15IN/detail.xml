@@ -6,7 +6,7 @@
 	<segment name="detail" encoding="GBK">           
       <varString name="cusAc"   type="D|" />    
       <varString name="txnAmt"   type="D|" />    
-      <varString name="thdCusNme"   type="X" expression='exp:str.trim($c.thdCusNme)' />    
+      <varString name="thdCusNme"   type="X"  />    
 			
 			
 

@@ -11,7 +11,7 @@
       <varString name="txnAmt"   type="D|" expression='exp:num.centToYuanAsString(this.txnAmt)' />   <!-- 来盘金额元为单位，含小数点 -->
       <varString name="rsvFld1"       type="D|"  />    <!-- 保单号 -->
        <varString name="SucFlg"       type="D|"  />    
-	<varString name="SucMsg"       type="D|"  />   
+	<varString name="SucMsg"       type="D|" expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse(this.sts,"S","Y","N")' />   
 			
 
 	</segment>

@@ -7,7 +7,7 @@
       <fixString name="cusAc"   length="21" />    <!-- 帐号 -->
       <fixString name="rsvFld1"   length="1" /> 
       <fixString name="txnAmt"   length="15"  />   <!-- 来盘金额元为单位，含小数点 -->
-      <fixString name="thdCusNo"  length="30"  expression='exp:str.trim($c.thdCusNme)'/>    
+      <fixString name="thdCusNo"  length="30"  />    
       
 			
 			

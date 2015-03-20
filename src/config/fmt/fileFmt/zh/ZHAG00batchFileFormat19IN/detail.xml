@@ -5,11 +5,8 @@
     encoding="gbk" trace="true">
 	<segment name="detail" encoding="GBK">
    
-      <varString name="cusAc"   type="D|" expression='exp:str.trim($c.cusAc)'/>    <!-- 银行帐号 -->
-      <varString name="txnAmt"   type="X" expression='exp:str.leftPad($c.txnAmt,15,"0")'/>
-      <!--
-      <fixString name="txnAmt"  length="25" filling=" " leftJustified="false" expression='exp:str.amountInWords(this.txnAmt)'/>     来盘金额分为单位，无小数点 
-	  --><addString name="test" expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse("0","0","EP989877","MMM")'/>	
+      <varString name="cusAc"   type="D|" />    <!-- 银行帐号 -->
+      <varString name="txnAmt"   type="X" />
 
 	</segment>
 </message>

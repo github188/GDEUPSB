@@ -6,9 +6,9 @@
 	<segment name="detail" encoding="GBK">
       <fixString name="cusAc"   length="23" />    <!-- 帐号 -->
       <fixString name="rsvFld1"  length="1"  />
-      <fixString name="txnAmt"   length="12"  expression='exp:str.leftPad(num.centToYuanAsString(this.txnAmt),12," ")'/>   <!-- 来盘金额元为单位，含小数点 -->
-      <fixString name="thdCusNme"  length="60" expression='exp:str.leftPad(this.thdCusNme,60," ")' />	   
-	  <fixString name="SucFlg"   length="1"  />	
+      <fixString name="txnAmt"   length="12"  />   <!-- 来盘金额元为单位，含小数点 -->
+      <fixString name="thdCusNme"  length="60"  />	   
+	  <fixString name="SucFlg"   length="1" expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse(this.sts,"S","Y","O")' />	
 
 	</segment>
 </message>

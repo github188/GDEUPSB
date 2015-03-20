@@ -6,10 +6,10 @@
 	<segment name="detail" encoding="GBK">
      <fixString name="rsvFld1"       length="6" />     <!-- 来盘序号 -->
       <fixString name="cusAc"   length="30" />    <!-- 帐号 -->
-      <fixString name="txnAmt"   length="15"  expression='exp:str.leftPad(num.centToYuanAsString(this.txnAmt),15," ")'/>   <!-- 来盘金额元为单位，含小数点 -->
-      <fixString name="thdCusNme"  length="30" expression='exp:str.leftPad(this.thdCusNme,30," ")' />    
+      <fixString name="txnAmt"   length="15"  />   <!-- 来盘金额元为单位，含小数点 -->
+      <fixString name="thdCusNme"  length="30"  />    
       <fixString name="rsvFld2"   		length="12" />    <!-- 保单费用代码 -->
-      <fixString name="SucFlg"   		length="1" />  
+      <fixString name="SucFlg"   		length="1" expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse(this.sts,"S","Y","O")'/>  
 	</segment>
 </message>
 

@@ -7,7 +7,7 @@
 	   <fixString name="rsvFld1"       length="6" />   <!-- 话费年月 -->
       <fixString name="rsvFld2"       length="8" />   <!-- 生成日期 -->
       <fixString name="totCnt"       length="10"/>   <!-- 总户数 -->
-      <fixString name="totAmt"       length="15"/>   <!-- 总金额 -->
+      <fixString name="totAmt"       length="15" />   <!-- 总金额 -->
 			
 		
 	</segment>

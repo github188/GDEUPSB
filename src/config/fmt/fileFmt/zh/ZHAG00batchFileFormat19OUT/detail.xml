@@ -7,7 +7,7 @@
    
       <varString name="cusAc"   type="D|" />    <!-- 银行帐号 -->
       <varString name="txnAmt"   type="D|" />    <!-- 来盘金额分为单位，无小数点 -->
-      <fixString name="SucFlg"   length="1" />
+      <fixString name="SucFlg"   length="1" expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse(this.sts,"S","1","2")'/>
 			
 			
 

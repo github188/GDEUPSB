@@ -10,7 +10,7 @@
       <fixString name="rsvFld3"       length="2"  />    <!-- 电费次数 -->
       <fixString name="txnAmt"   length="12" />    <!-- 欠费总额，金额元为单位，含小数点 -->
       <fixString name="cusAc"   length="32" />    <!-- 客户帐号 -->
-      <fixString name="thdCusNme"   length="32" expression='exp:str.trim($c.thdCusNme)'/>    <!-- 客户帐户名称 -->
+      <fixString name="thdCusNme"   length="32" />    <!-- 客户帐户名称 -->
       <fixString name="rsvFld4"       length="1"  />    <!-- 是否允许部分交费，1允许部分交费，2必须全额交费 -->
       <fixString name="rsvFld5"       length="32" />    <!-- 供电公司在银行开户帐号 -->
       <fixString name="rsvFld6"       length="5" />     <!-- 供电公司计量点号 -->

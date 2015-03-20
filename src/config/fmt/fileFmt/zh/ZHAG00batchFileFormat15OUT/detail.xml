@@ -5,9 +5,9 @@
     encoding="gbk" trace="true">
 	<segment name="detail" encoding="GBK">
       <varString name="cusAc"     type="D|"/>    <!-- 银行帐号 -->
-      <varString name="txnAmt"     type="D|" expression='exp:num.centToYuanAsString(this.txnAmt)' /> <!-- 返盘金额元为单位，含小数点 -->
+      <varString name="txnAmt"     type="D|"  /> <!-- 返盘金额元为单位，含小数点 -->
       <varString name="thdCusNme"     type="D|" />    <!-- 客户名称 -->
-      <fixString name="SucFlg"     type="X"/>    <!-- 标识,1-成功,2-失败 -->
+      <fixString name="SucFlg"     type="X" expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse(this.sts,"S","1","2")'/>    <!-- 标识,1-成功,2-失败 -->
 			
 			
 
