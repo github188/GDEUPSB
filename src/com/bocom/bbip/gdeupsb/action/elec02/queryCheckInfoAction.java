@@ -22,7 +22,7 @@ import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
 
-/** 460265 */
+
 public class queryCheckInfoAction extends BaseAction {
 	private static final Log logger = LogFactory.getLog(queryCheckInfoAction.class);
 
