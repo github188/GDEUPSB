@@ -16,12 +16,12 @@
     <result column="LEND_START_DATE" property="lendStartDate" jdbcType="CHAR" />
     <result column="LEND_END_DATE" property="lendEndDate" jdbcType="CHAR" />
     <result column="NUMBER" property="number" jdbcType="CHAR" />
-    <result column="TOT_CNT" property="TOT_CNT" jdbcType="CHAR" />
-    <result column="TOT_AMT" property="TOT_AMT" jdbcType="DECIMAL" />
-    <result column="SUC_TOT_CNT" property="sucTOT_CNT" jdbcType="CHAR" />
-    <result column="SUC_TOT_AMT" property="sucTOT_AMT" jdbcType="DECIMAL" />
-    <result column="FAL_TOT_CNT" property="falTOT_CNT" jdbcType="CHAR" />
-    <result column="FAL_TOT_AMT" property="falTOT_AMT" jdbcType="DECIMAL" />
+    <result column="TOT_CNT" property="totCnt" jdbcType="CHAR" />
+    <result column="TOT_AMT" property="totAmt" jdbcType="DECIMAL" />
+    <result column="SUC_TOT_CNT" property="sucTotCnt" jdbcType="CHAR" />
+    <result column="SUC_TOT_AMT" property="sucTotAmt" jdbcType="DECIMAL" />
+    <result column="FAL_TOT_CNT" property="falTotCnt" jdbcType="CHAR" />
+    <result column="FAL_TOT_AMT" property="falTotAmt" jdbcType="DECIMAL" />
     <result column="SITR_LOGIC_NO" property="sitrLogicNo" jdbcType="CHAR" />
     <result column="POUR_AMT" property="pourAmt" jdbcType="DECIMAL" />
     <result column="LOTT_SQN" property="lottSqn" jdbcType="CHAR" />
@@ -91,23 +91,23 @@
       <if test="number!=null" >
         AND  NUMBER=#{number,jdbcType=CHAR}
       </if>
-      <if test="TOT_CNT!=null" >
-        AND  TOT_CNT=#{TOT_CNT,jdbcType=CHAR}
+      <if test="totCnt!=null" >
+        AND  TOT_CNT=#{totCnt,jdbcType=CHAR}
       </if>
-      <if test="TOT_AMT!=null" >
-        AND  TOT_AMT=#{TOT_AMT,jdbcType=DECIMAL}
+      <if test="totAmt!=null" >
+        AND  TOT_AMT=#{totAmt,jdbcType=DECIMAL}
       </if>
-      <if test="sucTOT_CNT!=null" >
-        AND  SUC_TOT_CNT=#{sucTOT_CNT,jdbcType=CHAR}
+      <if test="sucTotCnt!=null" >
+        AND  SUC_TOT_CNT=#{sucTotCnt,jdbcType=CHAR}
       </if>
-      <if test="sucTOT_AMT!=null" >
-        AND  SUC_TOT_AMT=#{sucTOT_AMT,jdbcType=DECIMAL}
+      <if test="sucTotAmt!=null" >
+        AND  SUC_TOT_AMT=#{sucTotAmt,jdbcType=DECIMAL}
       </if>
-      <if test="falTOT_CNT!=null" >
-        AND  FAL_TOT_CNT=#{falTOT_CNT,jdbcType=CHAR}
+      <if test="falTotCnt!=null" >
+        AND  FAL_TOT_CNT=#{falTotCnt,jdbcType=CHAR}
       </if>
-      <if test="falTOT_AMT!=null" >
-        AND  FAL_TOT_AMT=#{falTOT_AMT,jdbcType=DECIMAL}
+      <if test="falTotAmt!=null" >
+        AND  FAL_TOT_AMT=#{falTotAmt,jdbcType=DECIMAL}
       </if>
       <if test="sitrLogicNo!=null" >
         AND  SITR_LOGIC_NO=#{sitrLogicNo,jdbcType=CHAR}
@@ -208,22 +208,22 @@
       <if test="number != null" >
         NUMBER,
       </if>
-      <if test="TOT_CNT != null" >
+      <if test="totCnt != null" >
         TOT_CNT,
       </if>
-      <if test="TOT_AMT != null" >
+      <if test="totAmt != null" >
         TOT_AMT,
       </if>
-      <if test="sucTOT_CNT != null" >
+      <if test="sucTotCnt != null" >
         SUC_TOT_CNT,
       </if>
-      <if test="sucTOT_AMT != null" >
+      <if test="sucTotAmt != null" >
         SUC_TOT_AMT,
       </if>
-      <if test="falTOT_CNT != null" >
+      <if test="falTotCnt != null" >
         FAL_TOT_CNT,
       </if>
-      <if test="falTOT_AMT != null" >
+      <if test="falTotAmt!= null" >
         FAL_TOT_AMT,
       </if>
       <if test="sitrLogicNo != null" >
@@ -312,23 +312,23 @@
       <if test="number != null" >
         #{number,jdbcType=CHAR},
       </if>
-      <if test="TOT_CNT != null" >
-        #{TOT_CNT,jdbcType=CHAR},
+      <if test="totCnt!= null" >
+        #{totCnt,jdbcType=CHAR},
       </if>
-      <if test="TOT_AMT != null" >
-        #{TOT_AMT,jdbcType=DECIMAL},
+      <if test="totAmt!= null" >
+        #{totAmt,jdbcType=DECIMAL},
       </if>
-      <if test="sucTOT_CNT != null" >
-        #{sucTOT_CNT,jdbcType=CHAR},
+      <if test="sucTotCnt != null" >
+        #{sucTotCnt,jdbcType=CHAR},
       </if>
-      <if test="sucTOT_AMT != null" >
-        #{sucTOT_AMT,jdbcType=DECIMAL},
+      <if test="sucTotAmt!= null" >
+        #{sucTotAmt,jdbcType=DECIMAL},
       </if>
-      <if test="falTOT_CNT != null" >
-        #{falTOT_CNT,jdbcType=CHAR},
+      <if test="falTotCnt!= null" >
+        #{falTotCnt,jdbcType=CHAR},
       </if>
-      <if test="falTOT_AMT != null" >
-        #{falTOT_AMT,jdbcType=DECIMAL},
+      <if test="falTotAmt!= null" >
+        #{falTotAmt,jdbcType=DECIMAL},
       </if>
       <if test="sitrLogicNo != null" >
         #{sitrLogicNo,jdbcType=CHAR},
@@ -419,23 +419,23 @@
       <if test="number!=null" >
         AND  NUMBER=#{number,jdbcType=CHAR}
       </if>
-      <if test="TOT_CNT!=null" >
-        AND  TOT_CNT=#{TOT_CNT,jdbcType=CHAR}
+      <if test="totCnt!=null" >
+        AND  TOT_CNT=#{totCnt,jdbcType=CHAR}
       </if>
-      <if test="TOT_AMT!=null" >
-        AND  TOT_AMT=#{TOT_AMT,jdbcType=DECIMAL}
+      <if test="totAmt!=null" >
+        AND  TOT_AMT=#{totAmt,jdbcType=DECIMAL}
       </if>
-      <if test="sucTOT_CNT!=null" >
-        AND  SUC_TOT_CNT=#{sucTOT_CNT,jdbcType=CHAR}
+      <if test="sucTotCnt!=null" >
+        AND  SUC_TOT_CNT=#{sucTotCnt,jdbcType=CHAR}
       </if>
-      <if test="sucTOT_AMT!=null" >
-        AND  SUC_TOT_AMT=#{sucTOT_AMT,jdbcType=DECIMAL}
+      <if test="sucTotAmt!=null" >
+        AND  SUC_TOT_AMT=#{sucTotAmt,jdbcType=DECIMAL}
       </if>
-      <if test="falTOT_CNT!=null" >
-        AND  FAL_TOT_CNT=#{falTOT_CNT,jdbcType=CHAR}
+      <if test="falTotCnt!=null" >
+        AND  FAL_TOT_CNT=#{falTotCnt,jdbcType=CHAR}
       </if>
-      <if test="falTOT_AMT!=null" >
-        AND  FAL_TOT_AMT=#{falTOT_AMT,jdbcType=DECIMAL}
+      <if test="falTotAmt!=null" >
+        AND  FAL_TOT_AMT=#{falTotAmt,jdbcType=DECIMAL}
       </if>
       <if test="sitrLogicNo!=null" >
         AND  SITR_LOGIC_NO=#{sitrLogicNo,jdbcType=CHAR}
@@ -523,23 +523,23 @@
       <if test="number != null" >
         NUMBER = #{number,jdbcType=CHAR},
       </if>
-      <if test="TOT_CNT != null" >
-        TOT_CNT = #{TOT_CNT,jdbcType=CHAR},
+      <if test="totCnt!= null" >
+        TOT_CNT = #{totCnt,jdbcType=CHAR},
       </if>
-      <if test="TOT_AMT != null" >
-        TOT_AMT = #{TOT_AMT,jdbcType=DECIMAL},
+      <if test="totAmt!= null" >
+        TOT_AMT = #{totAmt,jdbcType=DECIMAL},
       </if>
-      <if test="sucTOT_CNT != null" >
-        SUC_TOT_CNT = #{sucTOT_CNT,jdbcType=CHAR},
+      <if test="sucTotCnt != null" >
+        SUC_TOT_CNT = #{sucTotCnt,jdbcType=CHAR},
       </if>
-      <if test="sucTOT_AMT != null" >
-        SUC_TOT_AMT = #{sucTOT_AMT,jdbcType=DECIMAL},
+      <if test="sucTotAmt!= null" >
+        SUC_TOT_AMT = #{sucTotAmt,jdbcType=DECIMAL},
       </if>
-      <if test="falTOT_CNT != null" >
-        FAL_TOT_CNT = #{falTOT_CNT,jdbcType=CHAR},
+      <if test="falTotCnt!= null" >
+        FAL_TOT_CNT = #{falTotCnt,jdbcType=CHAR},
       </if>
-      <if test="falTOT_AMT != null" >
-        FAL_TOT_AMT = #{falTOT_AMT,jdbcType=DECIMAL},
+      <if test="falTotAmt != null" >
+        FAL_TOT_AMT = #{falTotAmt,jdbcType=DECIMAL},
       </if>
       <if test="sitrLogicNo != null" >
         SITR_LOGIC_NO = #{sitrLogicNo,jdbcType=CHAR},
