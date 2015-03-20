@@ -20,4 +20,6 @@
 <action id="modifyStatus" class="com.bocom.bbip.gdeupsb.action.elec02.updateErrorStatusAction" />
 <!-- 电力协议维护 -->
 <action id="manageAGT" class="com.bocom.bbip.gdeupsb.action.elec02.EupsManageAgt" />
+<!-- 电力回执打印-->
+<action id="printBackELEC02" class="com.bocom.bbip.gdeupsb.action.elec02.EupsPrintElecBackAction" />
 </x:beans>
