@@ -245,7 +245,7 @@
 
 	<!-- ************广州文本************************* -->
 	<!-- 批量文件 准备(柜面) -->
-	<bean id="eups.fileBatchPayCreateDataProcessGZAG00"
+	<bean id="eups.fileBatchPayCreateDataServiceActionGZAG00"
 		class="com.bocom.bbip.gdeupsb.action.gzag.batch.GzagBatchDataFileAction" />
 		
 	<!--广州电力单笔缴费 -->
