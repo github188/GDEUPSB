@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdElePrtService" xmlns:gdeupsb="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdElePrtService/Schema" name="GDEUPSGdElePrtService" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdElePrtService">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdElePrtService">
+      <xsd:import namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdElePrtService/Schema" schemaLocation="GDEUPSGdElePrtService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="comPayPrintRequestMessage">
+    <wsdl:part name="comPayPrintRequest" element="gdeupsb:comPayPrint"/>
+  </wsdl:message>
+  <wsdl:message name="comPayPrintResponseMessage">
+    <wsdl:part name="comPayPrintResponse" element="gdeupsb:comPayPrintResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="GDEUPSGdElePrtServicePortType">
+    <wsdl:operation name="comPayPrint">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:comPayPrintRequestMessage"/>
+      <wsdl:output message="tns:comPayPrintResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GDEUPSGdElePrtServiceSoapBinding" type="tns:GDEUPSGdElePrtServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="comPayPrint">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdElePrtService/comPayPrint"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GDEUPSGdElePrtService">
+    <wsdl:port name="GDEUPSGdElePrtServicePort" binding="tns:GDEUPSGdElePrtServiceSoapBinding">
+      <soap:address location="http://127.0.0.1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
