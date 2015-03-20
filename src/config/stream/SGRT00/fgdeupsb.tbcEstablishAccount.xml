@@ -3,9 +3,9 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
     name="festablish">
-       <fixString name="CUST_ID" length="30"/>  <!-- 客户号 -->
-       <fixString name="COM_ID" length="30"/>  <!-- 公司编号 -->
-       <fixString name="CUST_NAME" length="50"/>  <!--客户姓名 -->
+       <fixString name="CUST_ID" length="16"/>  <!-- 客户号 -->
+       <fixString name="COM_ID" length="16"/>  <!-- 公司编号 -->
+       <fixString name="CUST_NAME" length="30"/>  <!--客户姓名 -->
        <fixString name="CUST_TYPE" length="2"/>  <!-- 客户类型 -->
        <fixString name="PASS_TYPE" length="1"/>  <!-- 证件类型 -->
        <fixString name="PASS_ID" length="18"/>  <!-- 证件号码 -->
@@ -13,7 +13,7 @@
        <fixString name="ACC_TYPE" length="2"/>  <!-- 卡/账户类型 -->
        <fixString name="ACC" length="19"/>  <!-- 卡/账户号码 -->
        <fixString name="PASS_FLAG" length="1"/>  <!--密码校验标志 -->
-       <fixString name="PASSWORD" length="2"/>  <!-- 密码-->
+       <fixString name="PASSWORD" length="10"/>  <!-- 密码-->
        <fixString name="ADDR" length="1"/>  <!--联系地址-->
        <fixString name="TEL" length="4"/>  <!--电话号码-->
        <fixString name="DEV_ID" length="10"  />

@@ -88,37 +88,18 @@ public class EstablishAccountAction extends BaseAction {
         context.setData("nodNo",nodNo);
         // 获取电子柜员
         String bankId = context.getData(ParamKeys.BK).toString();
-        String tlr = get(BBIPPublicService.class).getETeller(bankId);
-        context.setData(ParamKeys.TELLER,tlr);
         context.setData("tTxnCd","483803");
 
         context.setData("txnCtlSts", "0");
         //   检查该客户是否已签约
-        Map <String,Object> total= new HashMap<String,Object>();
-        total.put("traceNo", publicService.getTraceNo());
-       
-        total.put("traceSrc", "GDEUPSB");
-        total.put("traceNo",  publicService.getTraceNo());
-        total.put("version","GDEUPSB-1.0.0");
-        
-        total.put("cusAc", "6222620710001878170");
-       // total.put("authLog", "");
-        total.put("reqTme", new Date());
-        total.put("reqJrnNo",  publicService.getBBIPSequence());
-        total.put("reqSysCde", "SGRT00");
-       // total.put("sup2Auth", "");
-       // total.put("sup2Id", "");
-       // total.put("subSysCde", "");
+        Map <String,Object> total= getMap();
+        total.put("cusAc",  context.getData("actNo"));
         total.put("bk", bankId);
-        total.put("tlr", "4411417");
         total.put("br", context.getData(ParamKeys.BR));
-       // total.put("bbipBusCde", "");
-        total.put("chn", "00");
-       // total.put("filler", "");
-       // total.put("tlrTmlId", "");
+
         Result accessObject =  serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", total);
         if (CollectionUtils.isEmpty(accessObject.getPayload())) {
-            Map<String, Object> establishMap = new HashMap<String, Object>();
+            Map<String, Object> establishMap = getMap();
             establishMap.put("agrChl","01");
             establishMap.put("oprTyp", "0");
             establishMap.put("cusTyp","0");
@@ -128,17 +109,9 @@ public class EstablishAccountAction extends BaseAction {
             establishMap.put("idTyp",context.getData("pasTyp"));
             establishMap.put("ccy","156");
             establishMap.put("cusAc",context.getData("actNo"));
-            establishMap.put("traceNo",  publicService.getTraceNo());
-            
-            //GDEUPS协议临时表添加数据
-            GdTbcCusAgtInfo  cusAgtInfo =new  GdTbcCusAgtInfo();
-            cusAgtInfo.setActNo(context.getData("actNo").toString());
-            cusAgtInfo.setCustId(context.getData("custId").toString());
-            cusAgtInfo.setCusNm(context.getData("tCusNm").toString());
-            cusAgtInfo.setPasId(context.getData("pasId").toString());
-            cusAgtInfo.setComId(context.getData("comId").toString());
-            cusAgtInfo.setAccTyp(context.getData("accTyp").toString());
-            cusAgtInfoRepository.insert(cusAgtInfo);
+            establishMap.put("bk", bankId);
+            establishMap.put("br", context.getData(ParamKeys.BR));
+
             //代收付系统接口调用增加协议
             try {
                 serviceAccess.callServiceFlatting("maintainAgentCollectAgreement", establishMap);
@@ -148,8 +121,17 @@ public class EstablishAccountAction extends BaseAction {
                 context.setData(GDParamKeys.RSP_MSG,"数据库处理失败!！！");
                 return;
             }
+            //GDEUPS协议临时表添加数据
+            GdTbcCusAgtInfo  cusAgtInfo =new  GdTbcCusAgtInfo();
+            cusAgtInfo.setActNo(context.getData("actNo").toString());
+            cusAgtInfo.setCustId(context.getData("custId").toString());
+            cusAgtInfo.setCusNm(context.getData("tCusNm").toString());
+            cusAgtInfo.setPasId(context.getData("pasId").toString());
+            cusAgtInfo.setComId(context.getData("comId").toString());
+            cusAgtInfo.setAccTyp(context.getData("accTyp").toString());
+            cusAgtInfoRepository.insert(cusAgtInfo);
         } else {
-            Map<String, Object> establishMap = new HashMap<String, Object>();
+            Map<String, Object> establishMap = getMap();
             establishMap.put("agrChl","01");
             establishMap.put("oprTyp", "1");//0新增 1修改 
             establishMap.put("cusTyp","0");
@@ -159,7 +141,9 @@ public class EstablishAccountAction extends BaseAction {
             establishMap.put("idTyp",context.getData("pasTyp"));
             establishMap.put("ccy","156");
             establishMap.put("cusAc",context.getData("actNo"));
-            establishMap.put("traceNo",  publicService.getTraceNo());
+            establishMap.put("bk", bankId);
+            establishMap.put("br", context.getData(ParamKeys.BR));
+
             try {
                 serviceAccess.callServiceFlatting("maintainAgentCollectAgreement", establishMap);
             } catch(Exception e) {
@@ -181,5 +165,18 @@ public class EstablishAccountAction extends BaseAction {
         context.setData(GDParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
         context.setData(GDParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
+    }
+    
+    private Map<String, Object> getMap(){
+        Map<String, Object> map =  new HashMap<String, Object>();
+        map.put("traceNo", publicService.getTraceNo());
+        map.put("traceSrc", "GDEUPSB");
+        map.put("version","GDEUPSB-1.0.0");
+        map.put("reqTme", new Date());
+        map.put("reqJrnNo",  publicService.getBBIPSequence());
+        map.put("reqSysCde", "SGRT00");
+        map.put("tlr", "4411417");
+        map.put("chn", "00");
+        return map;
     }
 }
