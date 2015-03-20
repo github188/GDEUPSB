@@ -195,13 +195,25 @@
 			<action id="act" ref="gdeupsb.synExcCheckEleGzFileAction" />
 		</actions>
 	</process>
+	
+	<action class="com.bocom.bbip.gdeupsb.action.elea.EleGzComPayPrtAction"
+		id="gdeupsb.eleGzComPayPrtAction" />
+	
+		<!--电力对公缴费记账回执打印-->
+	<process id="gdeupsb.eleComPayPrtProcess" template="eups.simpleTran"
+		interceptors="bbip.defaultInterceptors">
+		<actions>
+			<action id="act" ref="gdeupsb.eleGzComPayPrtAction" />
+		</actions>
+	</process>
 
 
-	<!--银行发起银行代扣代收电费对帐交易 -->
+	<!--签约一站通：协议浏览或打印 -->
 	<action class="com.bocom.bbip.gdeupsb.action.sign.AgtScanPrintAction"
 		id="gdeups.agtScanPrintAction" />
 
-
+	
+	
 
 	<!--签约一站通：协议浏览或打印 -->
 	<process id="gdeups.agtScanPrintProcess" template="eups.simpleTran"
