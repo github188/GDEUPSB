@@ -97,25 +97,25 @@ public class EstablishAccountAction extends BaseAction {
         Map <String,Object> total= new HashMap<String,Object>();
         total.put("traceNo", publicService.getTraceNo());
        
-        total.put("traceSrc", "BBOSPA0013");
+        total.put("traceSrc", "GDEUPSB");
         total.put("traceNo",  publicService.getTraceNo());
         total.put("version","GDEUPSB-1.0.0");
         
         total.put("cusAc", "6222620710001878170");
-        total.put("authLog", "");
+       // total.put("authLog", "");
         total.put("reqTme", new Date());
         total.put("reqJrnNo", "3003440020150320153900054105");
         total.put("reqSysCde", "30034400");
-        total.put("sup2Auth", "");
-        total.put("sup2Id", "");
-        total.put("subSysCde", "");
-        total.put("bk", "01441999999");
-        total.put("tlr", "4411417");
-        total.put("br", "01441133999");
-        total.put("bbipBusCde", "");
+       // total.put("sup2Auth", "");
+       // total.put("sup2Id", "");
+       // total.put("subSysCde", "");
+        total.put("bk", context.getData(ParamKeys.BK));
+        total.put("tlr", tlr);
+        total.put("br", context.getData(ParamKeys.BR));
+       // total.put("bbipBusCde", "");
         total.put("chn", "00");
-        total.put("filler", "");
-        total.put("tlrTmlId", "");
+       // total.put("filler", "");
+       // total.put("tlrTmlId", "");
         Result accessObject =  serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", total);
         if (CollectionUtils.isEmpty(accessObject.getPayload())) {
             Map<String, Object> establishMap = new HashMap<String, Object>();
