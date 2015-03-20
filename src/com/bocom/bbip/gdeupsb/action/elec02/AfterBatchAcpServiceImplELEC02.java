@@ -50,12 +50,8 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements AfterB
         List<Map<String,String>>resultMap=(List<Map<String, String>>) BeanUtils.toMaps(result);
 		List <GDEupsbElecstBatchTmp>lt=get(GDEupsbElecstBatchTmpRepository.class).findByBatNo((String)context.getData(ParamKeys.BAT_NO));
 		List<Map<String,Object>>tempMap=(List<Map<String, Object>>) BeanUtils.toMaps(lt);
-		for (Map m : tempMap) {
-			for (Map mm :resultMap) {
-                   if(((String)m.get("cusAc")).equals((String)mm.get("cusAc"))){
-                	    m.putAll(mm);
-                   }
-			}
+		for(int i=0;i<tempMap.size();i++){
+			tempMap.get(i).putAll(resultMap.get(i));
 		}
 		
 		ret.put("header", context.getDataMapDirectly());
