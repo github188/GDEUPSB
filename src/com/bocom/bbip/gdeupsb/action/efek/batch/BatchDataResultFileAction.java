@@ -57,21 +57,26 @@ public class BatchDataResultFileAction implements AfterBatchAcpService{
 			//更改控制表
 			GDEupsBatchConsoleInfo gdEupsBatchConsoleInfoUpdate=updateInfo(context, gdeupsBatchConsoleInfo);
 			//文件名
-//			账户类型(2位,PT普通账户)+FH_+银行代码(4位)+ 单位编码（8位）+日期（yyyymmdd）＋批次号（5位）.txt
 			String fileName="PTFH_301"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+context.getData(ParamKeys.BAT_NO).toString().substring(13)+".txt";
 			EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecBatch");
+			//文件下载
+			String fleNme=context.getData(ParamKeys.FLE_NME).toString();
+			eupsThdFtpConfig.setFtpDir("1");
+			eupsThdFtpConfig.setRmtFleNme(fleNme);
+			eupsThdFtpConfig.setLocFleNme(fleNme);
+			operateFTP.getFileFromFtp(eupsThdFtpConfig);
 			// 生成文件
 			try{
 					Map<String, Object> resultMap=createFileMap(context,gdEupsBatchConsoleInfoUpdate);
-					eupsThdFtpConfig.setLocDir("G:\\");
+					eupsThdFtpConfig.setFtpDir("0");
 					operateFile.createCheckFile(eupsThdFtpConfig, "efekBatchResult", fileName, resultMap);
 			}catch(CoreException e){
 					logger.info("~~~~~~~~~~~Error  Message",e);
 			}
 			// 将生成的文件上传至指定服务器
-//			eupsThdFtpConfig.setLocFleNme(fileName);
-//			eupsThdFtpConfig.setRmtFleNme(fileName);
-//			operateFTP.putCheckFile(eupsThdFtpConfig);
+			eupsThdFtpConfig.setLocFleNme(fileName);
+			eupsThdFtpConfig.setRmtFleNme(fileName);
+			operateFTP.putCheckFile(eupsThdFtpConfig);
 			gdEupsEleTmpRepository.deleteAll("1");
 			EupsBatchInfoDetail eupsBatchInfoDetail=new EupsBatchInfoDetail();
 			eupsBatchInfoDetail.setBatNo(context.getData(ParamKeys.BAT_NO).toString());
