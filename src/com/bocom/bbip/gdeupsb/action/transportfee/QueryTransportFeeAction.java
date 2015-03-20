@@ -37,8 +37,7 @@ public class QueryTransportFeeAction extends BaseAction{
 
 	public final static Log logger = LogFactory.getLog(QueryTransportFeeAction.class);
 	
-//	@Autowired
-//    ThirdPartyAdaptor callThdTradeManager;
+
 	
 	@Autowired
 	GDEupsbTrspPayInfoRepository gdEupsbTrspPayInfoRepository;
