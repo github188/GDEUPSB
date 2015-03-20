@@ -70,8 +70,12 @@ public class BatchDataResultFileAction implements AfterBatchAcpService{
 			}
 			// 将生成的文件上传至指定服务器
 			eupsThdFtpConfig.setLocFleNme(fileName);
+			eupsThdFtpConfig.setLocDir(context.getData("dir").toString());
 			eupsThdFtpConfig.setRmtFleNme(fileName);
+			eupsThdFtpConfig.setRmtWay(context.getData("dir").toString());
+			eupsThdFtpConfig.setFtpDir("0");
 			operateFTP.putCheckFile(eupsThdFtpConfig);
+			
 			gdEupsEleTmpRepository.deleteAll("1");
 			EupsBatchInfoDetail eupsBatchInfoDetail=new EupsBatchInfoDetail();
 			eupsBatchInfoDetail.setBatNo(context.getData(ParamKeys.BAT_NO).toString());

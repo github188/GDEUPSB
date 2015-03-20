@@ -180,18 +180,6 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 			String batNo=get(EupsBatchConsoleInfoRepository.class).find(eupsBatchConsoleInfo).get(0).getBatNo();
 			context.setData(ParamKeys.BAT_NO, batNo);
 			
-			//文件下载
-//			EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne(ParamKeys.FTPID_BATCH_PAY_FILE_TO_ACP);
-//			String fileName=batNo+".result";
-//			String dir=context.getData("dir").toString();
-//			eupsThdFtpConfig.setRmtFleNme(fileName);
-//			eupsThdFtpConfig.setRmtWay(dir);
-//			eupsThdFtpConfig.setLocDir(dir);
-//			eupsThdFtpConfig.setLocFleNme(fileName);
-//			eupsThdFtpConfig.setFtpDir("1");
-			log.info(">>>>>Start  Down  AGTS  FileResult <<<<<<");
-//			operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
-			log.info(">>>>>Down Result File Success<<<<<<");
 			logger.info("==========End  BatchDataFileAction  userProcessToSubmit");
 
 		}
@@ -200,8 +188,14 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 	 */
 		public void userProcessToGet(Context context)throws CoreException{
 			logger.info("==========Start  BatchDataFileAction  userProcessToGet");
-
+			log.info(">>>>>Start  Down  AGTS  FileResult <<<<<<");
+			//文件下载
+//			EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne(ParamKeys.FTPID_BATCH_PAY_FILE_TO_ACP);
+//			String fileName=batNo+".result";
 //			get(ftp.class).getFileFromFtp(eupsThdFtpConfig);
+//			operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
+//			eupsThdFtpConfig.setFtpDir("1");
+			log.info(">>>>>Down Result File Success<<<<<<");
 			String mothed="eups.commNotifyBatchStatus";
 			bbipPublicService.synExecute(mothed, context);
 			logger.info("==========End  BatchDataFileAction  userProcessToGet");
@@ -265,5 +259,6 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 				context.setData(ParamKeys.TOT_CNT, Integer.parseInt(totCnt));
 				logger.info("==========End  BatchDataFileAction  updateInfo");
 		}
+
 }
 
