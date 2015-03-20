@@ -22,6 +22,9 @@ public interface GdEupsTransJournalRepository extends PagingAndSortingRepository
 
 	/** 广州电力划扣总信息查询 */
 	public List<Map<String, Object>> findGzEleChkHKInfo(GdEupsTransJournal gdEupsTransJournal);
+	
+	 /** 广州电力对公缴费记账回执打印*/
+    public List<Map<String, Object>> findComPayInfo(Map<String, Object> inpara);
 
 	@Find	
 	public List<GdEupsTransJournal> findCheck(GdEupsTransJournal gdEupsTransJournal);
