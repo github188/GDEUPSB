@@ -460,6 +460,7 @@
 				AND MFM_RSP_MSG=#{mfmRspMsg,jdbcType=VARCHAR}
 			</if>
 			<if test="thdTxnCde!=null">
+
 				AND THD_TXN_CDE=#{thdTxnCde,jdbcType=CHAR}
 			</if>
 			<if test="thdTxnDte!=null">
@@ -674,6 +675,26 @@
 			</if>
 			<if test="EupsBusType!=null">
 				AND EUPS_BUS_TYP = #{EupsBusType,jdbcType=DATE}
+			</if>
+			<if test="EupsBusType!=null">
+				and RCN_FLG='1'
+			</if>
+		</trim>
+	</select>
+
+	<select id="findComPayInfo" resultType="java.util.Map"
+		parameterType="java.util.Map">
+		select THD_CUS_NO,CUS_AC,TXN_AMT,CUS_NME,CCY,AC_DTE,TXN_TLR,MFM_VCH_NO
+		from ${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="startDate!=null">
+				AND TXN_DTE &gt;= #{startDate,jdbcType=VARCHAR}
+			</if>
+			<if test="endDate!=null">
+				AND TXN_DTE &lt;= #{endDate,jdbcType=VARCHAR}
+			</if>
+			<if test="EupsBusType!=null">
+				AND EUPS_BUS_TYP = #{EupsBusType,jdbcType=VARCHAR}
 			</if>
 			<if test="EupsBusType!=null">
 				and RCN_FLG='1'
