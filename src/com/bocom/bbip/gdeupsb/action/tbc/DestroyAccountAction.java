@@ -1,18 +1,23 @@
 package com.bocom.bbip.gdeupsb.action.tbc;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
+import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.entity.GdTbcCusAgtInfo;
+import com.bocom.bbip.gdeupsb.repository.GdTbcCusAgtInfoRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.bbip.service.Result;
@@ -29,6 +34,10 @@ public class DestroyAccountAction extends BaseAction {
    
     @Autowired
     BGSPServiceAccessObject serviceAccess;
+    @Autowired
+    BBIPPublicService publicService;
+    @Autowired
+    GdTbcCusAgtInfoRepository cusAgtInfoRepository;
     
     @Override
      public void execute(Context context) throws CoreException {
@@ -64,8 +73,10 @@ public class DestroyAccountAction extends BaseAction {
             throw new CoreException(ErrorCodes.THD_CHL_ALDEAY_SIGN_OUT);
         }
         //客户签约状态
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = getMap();
         map.put("cusAc", context.getData("actNo").toString());
+        map.put("bk", context.getData(ParamKeys.BK));
+        map.put("br", context.getData(ParamKeys.BR));
         Result accessObject = serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", map);
         if (CollectionUtils.isEmpty(accessObject.getPayload())){
             context.setData(GDParamKeys.RSP_MSG,"账号已注销!！！");
@@ -99,7 +110,9 @@ public class DestroyAccountAction extends BaseAction {
             return;
         }
        
-        Map<String, Object> destroyMap = new HashMap<String, Object>();
+        Map<String, Object> destroyMap = getMap();
+        destroyMap.put("bk", context.getData(ParamKeys.BK));
+        destroyMap.put("br", context.getData(ParamKeys.BR));
         destroyMap.put("agdAgrNo", accessObject.getData("agdAgrNo").toString());
         try {
             serviceAccess.callServiceFlatting("deleteAgentCollectAgreement", destroyMap);
@@ -109,9 +122,31 @@ public class DestroyAccountAction extends BaseAction {
             context.setData(GDParamKeys.RSP_MSG,"数据库处理失败!！！");
             return;
         }
+        //GDEUPS协议临时表更改数据
+        GdTbcCusAgtInfo  cusAgtInfo =new  GdTbcCusAgtInfo();
+        cusAgtInfo.setActNo(context.getData("actNo").toString());
+        cusAgtInfo.setCustId(context.getData("custId").toString());
+        cusAgtInfo.setCusNm(context.getData("tCusNm").toString());
+        cusAgtInfo.setPasId(context.getData("pasId").toString());
+        cusAgtInfo.setComId(context.getData("comId").toString());
+        cusAgtInfo.setAccTyp(context.getData("accTyp").toString());
+        cusAgtInfoRepository.update(cusAgtInfo);
 
         context.setData(GDParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
         context.setData(GDParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
+    }
+    
+    private Map<String, Object> getMap(){
+        Map<String, Object> map =  new HashMap<String, Object>();
+        map.put("traceNo", publicService.getTraceNo());
+        map.put("traceSrc", "GDEUPSB");
+        map.put("version","GDEUPSB-1.0.0");
+        map.put("reqTme", new Date());
+        map.put("reqJrnNo",  publicService.getBBIPSequence());
+        map.put("reqSysCde", "SGRT00");
+        map.put("tlr", "4411417");
+        map.put("chn", "00");
+        return map;
     }
 }
