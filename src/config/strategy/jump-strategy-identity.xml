@@ -245,12 +245,9 @@
 
 	<!-- ************广州文本************************* -->
 	<!-- 批量文件 准备(柜面) -->
-	<bean id="eups.fileBatchPayCreateDataServiceActionGZAG00"
+	<bean id="eups.fileBatchPayCreateDataProcessGZAG00"
 		class="com.bocom.bbip.gdeupsb.action.gzag.batch.GzagBatchDataFileAction" />
-	<!-- 批量文件 返回 -->
-	<bean id="eups.autoFileBatchPayCreateDataServiceActionGZAG00"
-		class="com.bocom.bbip.gdeupsb.action.gzag.batch.GzagBatchDataResultFileAction" />
-
+		
 	<!--广州电力单笔缴费 -->
 	<bean class="com.bocom.bbip.gdeupsb.strategy.elcgd.PayFeeOnlineServiceAction"
 		id="eups.payFeeOnlineServiceActionELEC01" />
