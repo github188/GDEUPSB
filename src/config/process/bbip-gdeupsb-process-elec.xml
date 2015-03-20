@@ -5,12 +5,12 @@
 
 		
 	<!-- 南方电网 缴费结果查询
-			<process id="gdeupsb.bbipPayResultQuery" template="eups.simpleTran"  interceptors="eups.transMessageInterceptor">
+			<process id="eupsNotifyBatchStatus" template="eups.simpleTran"  interceptors="eups.transMessageInterceptor">
 			  <actions>
 			   			<action id="act" ref="gdeupsb.preQryResultAction"/>
 			   </actions>
 			</process>
-			-->
+		-->	
 
 		
 	<!-- 南方电网  银行发起存入预付款-->
