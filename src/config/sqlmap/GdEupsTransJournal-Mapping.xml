@@ -291,8 +291,8 @@
 		select THD_CUS_NO,CUS_AC,TXN_AMT,CUS_NME,CCY,AC_DTE,TXN_TLR,MFM_VCH_NO
 		from ${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL   where COM_NO in (#{cAgtNoDl},#{cAgtNoYh},#{cAgtNoPl}) and
 		 AC_DTE &gt;= #{bgnDte}
-		and AC_DTE &lt;= #{endDte}  and MFM_TXN_STS='S' and BAK_FLD6='DG' and MFM_VCH_NO like #{MFM_VCH_NO} 
-		and CUS_AC like #{CUS_AC} order by CUS_AC,AC_DTE
+		and AC_DTE &lt;= #{endDte}  and MFM_TXN_STS='S' and BAK_FLD6='DG' and MFM_VCH_NO like '%${tckNo}%'
+		and CUS_AC like '%${cusAc}%'  order by CUS_AC,AC_DTE
 	</select> 
 	
 	<!-- 惠州燃气代扣流水信息查询 -->
