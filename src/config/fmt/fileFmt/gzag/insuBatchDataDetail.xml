@@ -6,7 +6,7 @@
 	
 	<segment name="detail"  encoding="GBK">
 			
-			<fixString name="lendtypeOrGameno" 			      length="02"/>	  <!--请款类型 -->
+			<fixString name="lendtypeOrGameno" 			      length="2"/>	  <!--请款类型 -->
 			<fixString name="thdCusNo" 		  length="14"/>	  <!--保单编号-->
 			<fixString name="txnDte" 			  length="8"/>	  <!--保单生效日-->
 			<fixString name="cusAc" 		  length="21"/>   <!--帐号--> 
