@@ -111,7 +111,8 @@ public class BatchFileCommon extends BaseAction {
         	((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getAcDate(),DateUtils.STYLE_yyyyMMdd);
         final String systemCode=((SystemConfig)get(SystemConfig.class)).getSystemCode();
         final String dir="/home/bbipadm/data/mftp/BBIP/"+systemCode+"/"+br+"/"+tlr+"/"+AcDate+"/";
-
+        context.setData("dir", dir);
+        
         EupsActSysPara eupsActSysPara = new EupsActSysPara();
         eupsActSysPara.setActSysTyp("0");
         eupsActSysPara.setComNo(comNo);
@@ -122,17 +123,25 @@ public class BatchFileCommon extends BaseAction {
         Map<String, Object> fileMap = (Map<String, Object>) ContextUtils.assertVariableNotNullAndGet(context, "agtFileMap", ErrorCodes.EUPS_FIELD_EMPTY,"agtFileMap");
 		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne(ParamKeys.FTPID_BATCH_PAY_FILE_TO_ACP);
 		Assert.isFalse(null==config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST);
+		//设置文件名 文件路径
+		config.setFtpDir("0");
 		config.setLocFleNme(fleNme);
 		config.setLocDir(dir);
+		config.setRmtFleNme(fleNme);
+		config.setRmtWay(dir);
 		logger.info("===============生成代收付文件");
 		/** 产生代收付格式文件 */
 		if(context.getData(ParamKeys.EUPS_BUSS_TYPE).equals("ELEC00")){
-			config.setRmtFleNme(fleNme);
 			((OperateFileAction)get("opeFile")).createCheckFile(config, "agtFileBatchFmt", fleNme, fileMap);
 		}else{
 			((OperateFileAction)get("opeFile")).createCheckFile(config, "BatchFmt", fleNme, fileMap);
 		}
 		operateFTPAction.putCheckFile(config);
+		//为得到代收付文件 更改ftpDir
+		config.setFtpDir("1");
+		config.setRmtWay("/home/bbipadm/data/mftp/BBIP/");
+		get(EupsThdFtpConfigRepository.class).update(config);
+		logger.info("==============End sendBatchFileToACP and putCheckFile");
 	}
 	public void afterBatchProcess(Context context)throws CoreException{
 		final String thdbatNo=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.THD_BAT_NO,  ErrorCodes.EUPS_FIELD_EMPTY,"thdBatNo");
