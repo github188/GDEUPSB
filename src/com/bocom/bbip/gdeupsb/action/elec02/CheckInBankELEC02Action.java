@@ -70,7 +70,7 @@ public class CheckInBankELEC02Action extends BaseAction {
 		final String txndte = (String) context.getData("WDO");
 		List<String> condList = new ArrayList<String>();
 		condList.add(" COM_NO='" + comNo + "' ");
-		//condList.add(" TXN_DTE='" + txndte + "' ");
+		condList.add(" TXN_DTE='" + txndte + "' ");
 		condList.add(" TXN_STS='S' ");
 		condList.add(" SVR_NME in ('eups.payFeeOnline','eups.payUnilateralToBank') ");
 
@@ -110,7 +110,7 @@ public class CheckInBankELEC02Action extends BaseAction {
 		final String txndte = (String) context.getData("WDO");
 		EupsTransJournal temp=new EupsTransJournal();
 		temp.setTxnSts("S");
-		//temp.setTxnDte(DateUtils.parse(txndte));
+		temp.setTxnDte(DateUtils.parse(txndte));
 		temp.setComNo(comNo);
 		temp.setSvrNme("eups.payFeeOnline");
 		/**单笔缴费*/
