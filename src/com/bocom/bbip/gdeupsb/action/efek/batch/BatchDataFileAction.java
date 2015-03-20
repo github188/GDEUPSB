@@ -26,8 +26,8 @@ import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.BatchAcpService;
-import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
 import com.bocom.bbip.eups.spi.vo.PrepareBatchAcpDomain;
+import com.bocom.bbip.gdeupsb.ftp;
 import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
@@ -38,7 +38,6 @@ import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GDEupsEleTmpRepository;
 import com.bocom.bbip.thd.org.apache.commons.collections.CollectionUtils;
 import com.bocom.bbip.utils.BeanUtils;
-import com.bocom.bbip.utils.ContextUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -189,6 +188,19 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 	 */
 		public void userProcessToGet(Context context)throws CoreException{
 			logger.info("==========Start  BatchDataFileAction  userProcessToGet");
+			//文件下载
+			EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne(ParamKeys.FTPID_BATCH_PAY_FILE_TO_ACP);
+			String fileName=context.getData(ParamKeys.BAT_NO).toString()+".result";
+			String dir=context.getData("dir").toString();
+			eupsThdFtpConfig.setRmtFleNme(fileName);
+			eupsThdFtpConfig.setRmtWay(dir);
+			eupsThdFtpConfig.setLocDir(dir);
+			eupsThdFtpConfig.setLocFleNme(fileName);
+			eupsThdFtpConfig.setFtpDir("1");
+			log.info(">>>>>Start  Down  AGTS  FileResult <<<<<<");
+			get(ftp.class).getFileFromFtp(eupsThdFtpConfig);
+//			operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
+			log.info(">>>>>Down Result File Success<<<<<<");
 			String mothed="eups.commNotifyBatchStatus";
 			bbipPublicService.synExecute(mothed, context);
 			logger.info("==========End  BatchDataFileAction  userProcessToGet");

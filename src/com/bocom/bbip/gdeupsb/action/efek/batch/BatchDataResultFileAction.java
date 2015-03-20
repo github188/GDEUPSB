@@ -59,16 +59,12 @@ public class BatchDataResultFileAction implements AfterBatchAcpService{
 			//文件名
 			String fileName="PTFH_301"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+context.getData(ParamKeys.BAT_NO).toString().substring(13)+".txt";
 			EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecBatch");
-			//文件下载
-			String fleNme=context.getData(ParamKeys.FLE_NME).toString();
-			eupsThdFtpConfig.setFtpDir("1");
-			eupsThdFtpConfig.setRmtFleNme(fleNme);
-			eupsThdFtpConfig.setLocFleNme(fleNme);
-			operateFTP.getFileFromFtp(eupsThdFtpConfig);
 			// 生成文件
 			try{
 					Map<String, Object> resultMap=createFileMap(context,gdEupsBatchConsoleInfoUpdate);
 					eupsThdFtpConfig.setFtpDir("0");
+					eupsThdFtpConfig.setLocDir(context.getData("dir").toString());
+					eupsThdFtpConfig.setRmtWay(context.getData("dir").toString());
 					operateFile.createCheckFile(eupsThdFtpConfig, "efekBatchResult", fileName, resultMap);
 			}catch(CoreException e){
 					logger.info("~~~~~~~~~~~Error  Message",e);
