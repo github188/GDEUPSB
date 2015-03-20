@@ -59,7 +59,6 @@ public class BatchDataResultFileAction implements AfterBatchAcpService{
 			//文件名
 			String fileName="PTFH_301"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+context.getData(ParamKeys.BAT_NO).toString().substring(13)+".txt";
 			EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecBatch");
-			// 生成文件
 			try{
 					Map<String, Object> resultMap=createFileMap(context,gdEupsBatchConsoleInfoUpdate);
 					eupsThdFtpConfig.setFtpDir("0");
