@@ -271,7 +271,7 @@
 	<bean class="com.bocom.bbip.gdeupsb.strategy.gash.CommDelCusAgentServiceActionPGAS00" id="eups.commDelCusAgentServiceActionPGAS00" />
 	
 	<!-- PGAS00查询协议 -->
-	<!-- <bean class="" id="" /> -->
+	<!-- <bean class="" id="" /> --> 
 
 	<!-- 惠州燃气单边划扣 -->
 	<bean
