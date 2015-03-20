@@ -15,13 +15,19 @@
 		</qname-mappings>
 	</server-side-ws-def> -->
 	
-		<!-- 线上联机交易-->
+		<!-- 广州电力-->
 	<server-side-ws-def wsdl="GDEUPSGdEleService.wsdl"
 		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdEleService/Schema">
 		<qname-mappings>
 			<qname-mapping operation="batchAccountFilePre"  process-id="eups.fileBatchPayCreateDataProcess" />
 		</qname-mappings>
 	</server-side-ws-def>
+	
+	
+			<!-- 广州电力清算及打印-->
+	<server-side-ws-def wsdl="GDEUPSGdElePrtService.wsdl"
+		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdElePrtService/Schema"/>
+	
 	
 	<server-side-ws-def wsdl="GDEUPSPFOffChanService.wsdl"
 		namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPFOffChanService/Schema"/>
