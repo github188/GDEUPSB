@@ -131,7 +131,7 @@ public class BatchFileCommon extends BaseAction {
 		config.setRmtWay(dir);
 		logger.info("===============生成代收付文件");
 		/** 产生代收付格式文件 */
-		if(context.getData(ParamKeys.EUPS_BUSS_TYPE).equals("ELEC00")){
+		if(context.getData(ParamKeys.EUPS_BUSS_TYPE).equals("ELEC00") || context.getData(ParamKeys.EUPS_BUSS_TYPE).equals("GZAG00") ){
 			((OperateFileAction)get("opeFile")).createCheckFile(config, "agtFileBatchFmt", fleNme, fileMap);
 		}else{
 			((OperateFileAction)get("opeFile")).createCheckFile(config, "BatchFmt", fleNme, fileMap);
@@ -139,7 +139,7 @@ public class BatchFileCommon extends BaseAction {
 		operateFTPAction.putCheckFile(config);
 		//为得到代收付文件 更改ftpDir
 		config.setFtpDir("1");
-		config.setRmtWay("/home/bbipadm/data/mftp/BBIP/");
+		config.setRmtWay("/home/bbipad======End  BatchDataFileAction  createFileMam/data/mftp/BBIP/");
 		get(EupsThdFtpConfigRepository.class).update(config);
 		logger.info("==============End sendBatchFileToACP and putCheckFile");
 	}
