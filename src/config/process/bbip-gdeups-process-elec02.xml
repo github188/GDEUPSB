@@ -59,7 +59,7 @@
 		<actions>
 			  <action id="act" ref="printBackELEC02"  operations="process"/>
 		</actions>
-	</process
+	</process>
 	<!-- 批次提交 -->
 	<process id="gdeups.batchPaySubmitDataProcess" template="eups.batchPaySubmitTemplate" interceptors="eups.transMessageInterceptor">
 	   <actions>
