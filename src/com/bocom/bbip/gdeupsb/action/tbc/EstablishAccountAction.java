@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.action.tbc;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -93,14 +94,29 @@ public class EstablishAccountAction extends BaseAction {
 
         context.setData("txnCtlSts", "0");
         //   检查该客户是否已签约
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("cusAc", context.getData("actNo").toString());
-        String traceNo = publicService.getTraceNo();
-        //map.put("traceNo", traceNo);
-        map.put("traceNo", "2004440020150318154000055129");
-       // context.setData("traceNo", traceNo);
-        context.setData("traceNo", "2004440020150318154000055129");
-        Result accessObject =  serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", map);
+        Map <String,Object> total= new HashMap<String,Object>();
+        total.put("traceNo", publicService.getTraceNo());
+       
+        total.put("traceSrc", "BBOSPA0013");
+        total.put("traceNo",  publicService.getTraceNo());
+        total.put("version","GDEUPSB-1.0.0");
+        
+        total.put("cusAc", "6222620710001878170");
+        total.put("authLog", "");
+        total.put("reqTme", new Date());
+        total.put("reqJrnNo", "3003440020150320153900054105");
+        total.put("reqSysCde", "30034400");
+        total.put("sup2Auth", "");
+        total.put("sup2Id", "");
+        total.put("subSysCde", "");
+        total.put("bk", "01441999999");
+        total.put("tlr", "4411417");
+        total.put("br", "01441133999");
+        total.put("bbipBusCde", "");
+        total.put("chn", "00");
+        total.put("filler", "");
+        total.put("tlrTmlId", "");
+        Result accessObject =  serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", total);
         if (CollectionUtils.isEmpty(accessObject.getPayload())) {
             Map<String, Object> establishMap = new HashMap<String, Object>();
             establishMap.put("agrChl","01");
@@ -112,6 +128,7 @@ public class EstablishAccountAction extends BaseAction {
             establishMap.put("idTyp",context.getData("pasTyp"));
             establishMap.put("ccy","156");
             establishMap.put("cusAc",context.getData("actNo"));
+            establishMap.put("traceNo",  publicService.getTraceNo());
             
             //GDEUPS协议临时表添加数据
             GdTbcCusAgtInfo  cusAgtInfo =new  GdTbcCusAgtInfo();
@@ -134,7 +151,7 @@ public class EstablishAccountAction extends BaseAction {
         } else {
             Map<String, Object> establishMap = new HashMap<String, Object>();
             establishMap.put("agrChl","01");
-            establishMap.put("oprTyp", "1");
+            establishMap.put("oprTyp", "1");//0新增 1修改 
             establishMap.put("cusTyp","0");
             establishMap.put("cusNo",context.getData("custId"));
             establishMap.put("cusNme",context.getData("tCusNm"));
@@ -142,6 +159,7 @@ public class EstablishAccountAction extends BaseAction {
             establishMap.put("idTyp",context.getData("pasTyp"));
             establishMap.put("ccy","156");
             establishMap.put("cusAc",context.getData("actNo"));
+            establishMap.put("traceNo",  publicService.getTraceNo());
             try {
                 serviceAccess.callServiceFlatting("maintainAgentCollectAgreement", establishMap);
             } catch(Exception e) {
@@ -150,6 +168,15 @@ public class EstablishAccountAction extends BaseAction {
                 context.setData(GDParamKeys.RSP_MSG,"数据库处理失败!！！");
                 return;
             }
+            //GDEUPS协议临时表更改数据
+            GdTbcCusAgtInfo  cusAgtInfo =new  GdTbcCusAgtInfo();
+            cusAgtInfo.setActNo(context.getData("actNo").toString());
+            cusAgtInfo.setCustId(context.getData("custId").toString());
+            cusAgtInfo.setCusNm(context.getData("tCusNm").toString());
+            cusAgtInfo.setPasId(context.getData("pasId").toString());
+            cusAgtInfo.setComId(context.getData("comId").toString());
+            cusAgtInfo.setAccTyp(context.getData("accTyp").toString());
+            cusAgtInfoRepository.update(cusAgtInfo);
         }
         context.setData(GDParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
         context.setData(GDParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
