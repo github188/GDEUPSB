@@ -54,6 +54,12 @@
 			  <action id="act" ref="modifyStatus"  operations="process"/>
 		</actions>
 	</process>
+	<!-- 打印回执 -->
+	<process id="gdeups.printBackELEC02" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
+		<actions>
+			  <action id="act" ref="printBackELEC02"  operations="process"/>
+		</actions>
+	</process
 	<!-- 批次提交 -->
 	<process id="gdeups.batchPaySubmitDataProcess" template="eups.batchPaySubmitTemplate" interceptors="eups.transMessageInterceptor">
 	   <actions>
