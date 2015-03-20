@@ -245,8 +245,56 @@
 		THD_TXN_CDE='JF' and TXN_TYP!='C' and TXN_STS!='C'
 	</select>
 	
+	
+	<select id="getCheckInfoCount" resultType="java.lang.Integer">
+		select count(*) from ${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL
 
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="startDate!=null">
+				AND TXN_DTE &gt;= #{startDate,jdbcType=VARCHAR}
+			</if>
+			<if test="endDate!=null">
+				AND TXN_DTE &lt;= #{endDate,jdbcType=DATE}
+			</if>
+			<if test="EupsBusType!=null">
+				AND EUPS_BUS_TYP = #{EupsBusType,jdbcType=DATE}
+			</if>
+			<if test="EupsBusType!=null">
+				and RCN_FLG='1'
+			</if>
+		</trim>
+	</select>
+	
+	<select id="getCheckInfo" resultMap="basicResultMap">
+		select
+		<include refid="baseColumnList" />
+		from ${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="startDate!=null">
+				AND TXN_DTE &gt;= #{startDate,jdbcType=VARCHAR}
+			</if>
+			<if test="endDate!=null">
+				AND TXN_DTE &lt;= #{endDate,jdbcType=VARCHAR}
+			</if>
+			<if test="EupsBusType!=null">
+				AND EUPS_BUS_TYP = #{EupsBusType,jdbcType=VARCHAR}
+			</if>
+			<if test="EupsBusType!=null">
+				and RCN_FLG='1'
+			</if>
+		</trim>
+	</select>
+	
+	
 
+	 <select id="findComPayInfo"  resultType="java.util.Map"  parameterType="java.util.Map">
+		select THD_CUS_NO,CUS_AC,TXN_AMT,CUS_NME,CCY,AC_DTE,TXN_TLR,MFM_VCH_NO
+		from ${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL   where COM_NO in (#{cAgtNoDl},#{cAgtNoYh},#{cAgtNoPl}) and
+		 AC_DTE &gt;= #{bgnDte}
+		and AC_DTE &lt;= #{endDte}  and MFM_TXN_STS='S' and BAK_FLD6='DG' and MFM_VCH_NO like #{MFM_VCH_NO} 
+		and CUS_AC like #{CUS_AC} order by CUS_AC,AC_DTE
+	</select> 
+	
 	<!-- 惠州燃气代扣流水信息查询 -->
 	<select id="findGasJnlInfo" resultMap="basicResultMap">
 		SELECT
@@ -593,7 +641,8 @@
 		order by MFM_VCH_NO
 	</select>
 	
-<select id="findSumTxnAmt" resultType="java.util.Map" parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
+	<select id="findSumTxnAmt" resultType="java.util.Map" 
+	parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
 		select count(TXN_AMT) as totNum ,sum(TXN_AMT) as totAmt from EUPS.EUPS_TRANS_JOURNAL
 		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="sqn!=null">
