@@ -190,11 +190,12 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 			logger.info("==========Start  BatchDataFileAction  userProcessToGet");
 			log.info(">>>>>Start  Down  AGTS  FileResult <<<<<<");
 			//文件下载
-//			EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne(ParamKeys.FTPID_BATCH_PAY_FILE_TO_ACP);
-//			String fileName=batNo+".result";
-//			get(ftp.class).getFileFromFtp(eupsThdFtpConfig);
-//			operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
-//			eupsThdFtpConfig.setFtpDir("1");
+			EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne(ParamKeys.FTPID_BATCH_PAY_FILE_TO_ACP);
+			String fileName=context.getData("batNo")+".result";
+			eupsThdFtpConfig.setLocDir(fileName);
+			eupsThdFtpConfig.setRmtFleNme(fileName);
+			eupsThdFtpConfig.setFtpDir("1");
+			operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
 			log.info(">>>>>Down Result File Success<<<<<<");
 			String mothed="eups.commNotifyBatchStatus";
 			bbipPublicService.synExecute(mothed, context);
