@@ -445,6 +445,18 @@ public final class GDErrorCodes {
 	public static final String GAS_CUS_AGT_STOPNO = "BBIP4400EU0623";
 	/** 惠州燃气查询协议空*/
 	public static final String GAS_QRY_AGT_ERR_EMT = "BBIP4400EU0624";
+	/** 惠州燃气：代收付已存在相关协议*/
+	public static final String GAS_QRY_AGT_ERR_EXIST = "BBIP4400EU0625";
+	/** 惠州燃气：不存在协议*/
+	public static final String GAS_QRY_AGT_ERR_NO = "BBIP4400EU0626";
+	/** 惠州燃气：协议已报停*/
+	public static final String GAS_QRY_AGT_ERR_STOP = "BBIP4400EU0627";
+	/** 燃气返回存在相关协议*/
+	public static final String GAS_QRY_AGT_ERR_DOUBLE = "BBIP4400EU0628";
+	/** 燃气返回操作失败*/
+	public static final String GAS_CUS_AGT_OPRE = "BBIP4400EU0629";
+	/** 操作代收付协议失败*/
+	public static final String GAS_OPR_ACP_ERR = "BBIP4400EU0630";
 	
 	
 }
