@@ -2,6 +2,7 @@ package com.bocom.bbip.gdeupsb.strategy.efek.queryFeeOnline;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -86,6 +87,8 @@ public class QueryFeeResultAction implements Executable{
 								                BigDecimal oweFeeAmt=new BigDecimal("0.00");
 								                BigDecimal pbd=new BigDecimal("0.00");
 								                List<Map<String, Object>> list=(List<Map<String, Object>>)rspMap.get("Information");
+								                pageGet(context, list);
+
 								                DecimalFormat df=new DecimalFormat("#.00");
 								                context.setData(ParamKeys.CUS_AC, list.get(0).get(ParamKeys.CUS_AC));
 								                for (Map<String, Object> map : list) {
@@ -173,6 +176,44 @@ public class QueryFeeResultAction implements Executable{
 							context.setData(ParamKeys.THD_TXN_STS, Constants.TXNSTS_FAIL);
 							context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 						}
-						
 			}
+		
+		/**
+		 *页数记录数得到 
+		 */
+		public void pageGet(Context context,List<Map<String, Object>> list){
+			logger.info("==========Start  QueryFeeResultAction  pageGet");
+			int pageNow=Integer.parseInt(context.getData("pageNum").toString());
+			int pageSize=Integer.parseInt(context.getData("pageSize").toString());
+			int allSize=list.size();
+			//总页数
+			int pageAll=0;
+			if((allSize%pageSize) ==0){
+					pageAll=allSize/pageSize;
+			}else{
+					pageAll=allSize/pageSize+1;
+			}
+			
+			//每页显示的内容
+			int pageShowFirst=(pageNow-1)*pageSize;
+			int pageShowLast=pageNow*pageSize-1;
+			if(pageAll*pageSize>list.size()){
+					pageShowLast=list.size()-((pageAll-1)*pageSize);
+			}
+			List<Map<String, Object>> listMap=new ArrayList<Map<String,Object>>();
+			System.out.println();
+			System.out.println(pageAll);
+			System.out.println(pageShowFirst);
+			System.out.println(pageShowLast);
+			for(int i=pageShowFirst;i<pageShowLast;i++){
+					Map<String, Object> maps=list.get(i);
+					listMap.add(maps);
+			}
+			context.setData("Information", listMap);
+            context.setData(ParamKeys.TOTAL_PAGES,pageAll);
+            context.setData(ParamKeys.TOTAL_ELEMETS, allSize);
+            
+            logger.info("==========End  QueryFeeResultAction  pageGet");
+		}
+			
 }
