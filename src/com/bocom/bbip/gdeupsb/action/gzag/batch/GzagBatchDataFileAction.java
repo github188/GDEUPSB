@@ -113,6 +113,7 @@ public class GzagBatchDataFileAction extends BaseAction implements BatchAcpServi
 						BigDecimal txnAmt=gdEupsGzagBatchTmp.getTxnAmt().scaleByPowerOfTen(-2);
 						gdEupsGzagBatchTmp.setTxnAmt(txnAmt);
 						gdEupsGzagBatchTmp.setBakFld(comNo);
+						gdEupsGzagBatchTmp.setRsvFld1(batNo);
 						gdEupsGzagBatchTmpRepository.insert(gdEupsGzagBatchTmp);
 						listTotAmt=listTotAmt.add(txnAmt);
 			}
