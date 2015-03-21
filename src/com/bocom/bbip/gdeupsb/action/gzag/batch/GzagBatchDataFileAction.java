@@ -20,7 +20,9 @@ import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsActSysPara;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
+import com.bocom.bbip.eups.repository.EupsActSysParaRepository;
 import com.bocom.bbip.eups.repository.EupsThdBaseInfoRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.BatchAcpService;
@@ -136,9 +138,14 @@ public class GzagBatchDataFileAction extends BaseAction implements BatchAcpServi
 		public Map<String, Object> createFileMap(Context context,String comNo){
 			logger.info("=================Start  BatchDataFileAction  createFileMap ");
 			Map<String, Object> resultMap=new HashMap<String, Object>();
+			EupsActSysPara eupsActSysPara=new EupsActSysPara();
+			eupsActSysPara.setComNo(comNo);
+			eupsActSysPara.setActSysTyp("0");
+			EupsActSysPara eupsActSysParaInfo=get(EupsActSysParaRepository.class).find(eupsActSysPara).get(0);
+			String sqlNo=eupsActSysParaInfo.getSplNo();
 			//header
 			Map<String, Object> headMap=new HashMap<String, Object>();
-			headMap.put(ParamKeys.COMPANY_NO,comNo);
+			headMap.put(ParamKeys.COMPANY_NO,sqlNo);
 			headMap.put(GDParamKeys.TOT_COUNT, context.getData("listTotCnt"));
 			headMap.put(ParamKeys.TOT_AMT, context.getData("listTotAmt"));
 
@@ -147,6 +154,7 @@ public class GzagBatchDataFileAction extends BaseAction implements BatchAcpServi
 			gdEupsGzagBatchTmps.setBakFld(comNo);
 			List<GDEupsGzagBatchTmp> gdEupsGzagBatchTmpList=gdEupsGzagBatchTmpRepository.find(gdEupsGzagBatchTmps);
 			
+
 			List<AgtFileBatchDetail> detailList=new ArrayList<AgtFileBatchDetail>();
 			for (GDEupsGzagBatchTmp gdEupsGzagBatchTmp : gdEupsGzagBatchTmpList) {
 				AgtFileBatchDetail agtFileBatchDetail=new AgtFileBatchDetail();
