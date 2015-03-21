@@ -109,7 +109,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 						//提交代收付
 						userProcessToSubmit(context);
 						//得到反盘文件 
-						userProcessToGet(context);
+//						userProcessToGet(context);
 						//处理成第三方格式返回
 						logger.info("==========End  BatchDataFileAction  prepareBatchDeal");
 	}
@@ -183,24 +183,24 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 			logger.info("==========End  BatchDataFileAction  userProcessToSubmit");
 
 		}
-	/**
-	 * 同步调用process  代收付回调函数：解析回盘文件并入库
-	 */
-		public void userProcessToGet(Context context)throws CoreException{
-			logger.info("==========Start  BatchDataFileAction  userProcessToGet");
-			log.info(">>>>>Start  Down  AGTS  FileResult <<<<<<");
-			//文件下载
-			EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne(ParamKeys.FTPID_BATCH_PAY_FILE_TO_ACP);
-			String fileName=context.getData("batNo")+".result";
-			eupsThdFtpConfig.setLocDir(fileName);
-			eupsThdFtpConfig.setRmtFleNme(fileName);
-			eupsThdFtpConfig.setFtpDir("1");
-			operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
-			log.info(">>>>>Down Result File Success<<<<<<");
-			String mothed="eups.commNotifyBatchStatus";
-			bbipPublicService.synExecute(mothed, context);
-			logger.info("==========End  BatchDataFileAction  userProcessToGet");
-		}
+//	/**
+//	 * 同步调用process  代收付回调函数：解析回盘文件并入库
+//	 */
+//		public void userProcessToGet(Context context)throws CoreException{
+//			logger.info("==========Start  BatchDataFileAction  userProcessToGet");
+//			log.info(">>>>>Start  Down  AGTS  FileResult <<<<<<");
+//			//文件下载
+//			EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne(ParamKeys.FTPID_BATCH_PAY_FILE_TO_ACP);
+//			String fileName=context.getData("batNo")+".result";
+//			eupsThdFtpConfig.setLocDir(fileName);
+//			eupsThdFtpConfig.setRmtFleNme(fileName);
+//			eupsThdFtpConfig.setFtpDir("1");
+//			operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
+//			log.info(">>>>>Down Result File Success<<<<<<");
+//			String mothed="eups.commNotifyBatchStatus";
+//			bbipPublicService.synExecute(mothed, context);
+//			logger.info("==========End  BatchDataFileAction  userProcessToGet");
+//		}
 	/**
 	 * 第一行数据保存到控制表中
 	 */
