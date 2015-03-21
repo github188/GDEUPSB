@@ -49,9 +49,6 @@ public class QueryFeeResultAction implements Executable{
 	        context.setData(ParamKeys.THD_TXN_DATE, thdTxnDate);
 	        context.setData(ParamKeys.THD_TXN_TIME, thdTxnTme);
 	        
-	        System.out.println("~~~~~~~~~context:~~~"+context);
-	        System.out.println();
-	        System.out.println("~~~~~~~~~~context.getData~~~~~~~~~~~~"+context.getData(ParamKeys.EUPS_AMOUNT_INFO));
 		}
 		/**
 		 *  报文常量 外发第三方 
