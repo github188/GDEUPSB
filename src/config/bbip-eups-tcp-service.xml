@@ -209,7 +209,7 @@
 	<!-- ======================================== -->
 	<!-- TBC BUSINESS TCP CHANNEL CONFIG -->
 	<!-- ======================================== -->
-	<bean id="tbc_TcpMapping" class="com.bocom.jump.bp.channel.tcp.SocketURIEndpointMapping">
+	<bean id="tbc_TcpMapping" class="com.bocom.bbip.channel.tcp.EdgeSupportSocketURIEndpointMapping">
 		<property name="mapping">
 			<map>
 				<entry key="tcp://*:9997" value-ref="tbc_TcpEndpoint" />
@@ -344,7 +344,7 @@
 		<property name="workQueueSize" value="1024" />
 	</bean>
 
-	<bean class="com.bocom.jump.bp.channel.tcp.SocketURIEndpointMapping"
+	<bean class="com.bocom.bbip.channel.tcp.EdgeSupportSocketURIEndpointMapping"
 		id="tcpMapping_ELEC00">
 		<property name="default" ref="tcpEndpoint_ELEC00" />
 	</bean>
@@ -476,7 +476,7 @@
 		<property name="workQueueSize" value="1024" />
 	</bean>
 
-	<bean id="tcpMapping_ELEC02" class="com.bocom.jump.bp.channel.tcp.SocketURIEndpointMapping">
+	<bean id="tcpMapping_ELEC02" class="com.bocom.bbip.channel.tcp.EdgeSupportSocketURIEndpointMapping">
 		<property name="default" ref="tcpEndpoint_ELEC02" />
 	</bean>
 
