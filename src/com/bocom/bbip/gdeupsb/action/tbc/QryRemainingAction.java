@@ -1,6 +1,7 @@
 package com.bocom.bbip.gdeupsb.action.tbc;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,9 +45,10 @@ public class QryRemainingAction extends BaseAction {
     @Autowired
     AccountService accountService;
     @Autowired
-    private BBIPPublicService bbipPublicService;
+    BBIPPublicService publicService;
     @Autowired
     GdTbcCusAgtInfoRepository cusAgtInfoRepository;
+    
     
     @Override
     public void execute(Context context) throws CoreException {
@@ -83,8 +85,11 @@ public class QryRemainingAction extends BaseAction {
                 return;
             }
             //   检查该客户是否已签约
-            Map<String, Object> map = new HashMap<String, Object>();
+            Map<String, Object> map = getMap();
             map.put("cusAc",cusAc);
+            map.put("bk", context.getData(ParamKeys.BK));
+            map.put("br", context.getData(ParamKeys.BR));
+
             
             Result accessObject =  serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", map);
             if (CollectionUtils.isEmpty(accessObject.getPayload())) {
@@ -103,17 +108,15 @@ public class QryRemainingAction extends BaseAction {
                 nodNo ="441800";
             }
             context.setData("nodNo",nodNo);
-            // 取电子柜员号
-            String bankId = context.getData("brNo").toString();
-            String tlr = get(BBIPPublicService.class).getETeller(bankId);
-            context.setData(ParamKeys.TELLER,tlr);
+            // 取电子柜员号 获取不到tlr
+           // String bankId = context.getData("brNo").toString();
+           // String tlr = get(BBIPPublicService.class).getETeller(bankId);
+          //  context.setData(ParamKeys.TELLER,tlr);
             context.setData("tTxnCd","483803");
             //查询账户余额信息   
             log.info("查询账户余额信息  start......");
             
-            context.setData("traceNo", bbipPublicService.getTraceNo());
-            context.setData(ParamKeys.BK, bbipPublicService.getParam("BBIP", "BK"));
-            context.setData(ParamKeys.BR, "01441131999");
+            context.setData("traceNo", publicService.getTraceNo());
             
             context.setData(ParamKeys.TELLER, "ABIR148");
             context.setData(ParamKeys.CHANNEL, "00");
@@ -124,9 +127,9 @@ public class QryRemainingAction extends BaseAction {
             BigDecimal avaBal = acResult.getAvaBal();
             log.info("所剩余额：" + actBal);
             context.setData("avaBal", avaBal);
-            context.setData("actBal", actBal);
-            context.setData(ParamKeys.RSP_CDE,"0000");
-            context.setData(ParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
+            context.setData("ACCOUNT", actBal);
+            context.setData(GDParamKeys.RSP_CDE,"0000");
+            context.setData(GDParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
             context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
             
         }
@@ -135,5 +138,18 @@ public class QryRemainingAction extends BaseAction {
     private String qryCusAcNo(String custId){
         GdTbcCusAgtInfo cusAgtInfo = cusAgtInfoRepository.findOne(custId);
         return cusAgtInfo.getActNo();
+    }
+    
+    private Map<String, Object> getMap(){
+        Map<String, Object> map =  new HashMap<String, Object>();
+        map.put("traceNo", publicService.getTraceNo());
+        map.put("traceSrc", "GDEUPSB");
+        map.put("version","GDEUPSB-1.0.0");
+        map.put("reqTme", new Date());
+        map.put("reqJrnNo",  publicService.getBBIPSequence());
+        map.put("reqSysCde", "SGRT00");
+        map.put("tlr", "4411417");
+        map.put("chn", "00");
+        return map;
     }
 }

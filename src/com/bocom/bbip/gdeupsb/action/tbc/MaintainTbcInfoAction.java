@@ -10,7 +10,9 @@ import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
+import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
 import com.bocom.bbip.eups.repository.EupsThdBaseInfoRepository;
+import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.euif.component.util.StringUtil;
@@ -34,7 +36,7 @@ public class MaintainTbcInfoAction extends BaseAction {
         int transactionFig = Integer.parseInt(context.getData(GDParamKeys.TBC_TXNFLG).toString());
         switch (transactionFig) {
         case 0: // insert--检测单位是否存在
-            EupsThdBaseInfo eupsThdBaseInfo = get(EupsThdBaseInfoRepository.class).findOne(context.getData(ParamKeys.COMPANY_NO).toString());
+            EupsThdBaseInfo eupsThdBaseInfo = get(EupsThdBaseInfoRepository.class).findOne("GDSGRT0001");
             if (null == eupsThdBaseInfo) { 
                 EupsThdBaseInfo eupsThdBase = new EupsThdBaseInfo();
                 eupsThdBase.setComNo(context.getData(ParamKeys.COMPANY_NO).toString());
@@ -56,12 +58,12 @@ public class MaintainTbcInfoAction extends BaseAction {
             }
             break;
         case 1: // multiquery
-            List <EupsThdBaseInfo> thdBaseInfos = get(EupsThdBaseInfoRepository.class).findAll();
+            List <EupsThdTranCtlInfo> thdBaseInfos = get(EupsThdTranCtlInfoRepository.class).findAll();
             List<Map<String, Object>> qryResultList = new ArrayList<Map<String,Object>>();
-                for(EupsThdBaseInfo thdBaseInfo:thdBaseInfos){
+                for(EupsThdTranCtlInfo thdBaseInfo:thdBaseInfos){
                 Map<String, Object> tempMap = new HashMap<String, Object>();
-                tempMap.put("comNo", thdBaseInfo.getComNo());
-                tempMap.put("comNme", thdBaseInfo.getComNme());
+                tempMap.put("dptId", thdBaseInfo.getComNo());
+                tempMap.put("comNme", context.getData(ParamKeys.COMPANY_NAME).toString());
                 qryResultList.add(tempMap);
             }
             context.setData("rec", qryResultList);

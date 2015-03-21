@@ -3,13 +3,13 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
     name="IN">
-       <fixString name="CUST_ID" length="30"/>  <!-- 客户号 -->
-       <fixString name="CUST_NAME" length="50"/>  <!--客户姓名 -->
+       <fixString name="CUST_ID" length="15"/>  <!-- 客户号 -->
+       <fixString name="CUST_NAME" length="30"/>  <!--客户姓名 -->
        <fixString name="CUST_TYPE" length="2"/>  <!-- 客户类型 -->
        <fixString name="PASS_ID" length="18"/>  <!-- 证件号码 -->
        <fixString name="LICE_ID" length="30"/>  <!-- 营业执照号码 -->
        <fixString name="ACC_TYPE" length="2"/>  <!-- 卡/账户类型 -->
-       <fixString name="ACC" length="25"/>  <!-- 卡/账户号码 -->
+       <fixString name="ACC" length="19"/>  <!-- 卡/账户号码 -->
        <fixString name="DEV_ID" length="10"  />
        <fixString name="TELLER" length="10"  />
 </segment>

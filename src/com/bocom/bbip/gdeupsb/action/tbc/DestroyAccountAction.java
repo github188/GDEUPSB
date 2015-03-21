@@ -16,7 +16,6 @@ import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
-import com.bocom.bbip.gdeupsb.entity.GdTbcCusAgtInfo;
 import com.bocom.bbip.gdeupsb.repository.GdTbcCusAgtInfoRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
@@ -50,7 +49,7 @@ public class DestroyAccountAction extends BaseAction {
         context.setData("dptId", context.getData("DPT_ID"));
         //上面公共报文头，下面报文体
         context.setData("custId", context.getData("CUST_ID"));
-        context.setData("tCusNm", context.getData("CUST_NAME"));
+        context.setData("cusNam", context.getData("CUST_NAME"));
         context.setData("cusTyp", context.getData("CUST_TYPE"));
         context.setData("pasId", context.getData("PASS_ID"));
         context.setData("liceId", context.getData("LICE_ID"));
@@ -83,8 +82,8 @@ public class DestroyAccountAction extends BaseAction {
             return; 
         }
         
-      //检查用户名是否匹配
-        String cusNme = context.getData("cusNme").toString().trim();
+        //检查用户名是否匹配
+        String cusNme = context.getData("cusNam").toString().trim();
         String tCusNm = accessObject.getData("tCusNm").toString().trim();
         if (!cusNme.equals(tCusNm)) {
             context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
@@ -122,15 +121,8 @@ public class DestroyAccountAction extends BaseAction {
             context.setData(GDParamKeys.RSP_MSG,"数据库处理失败!！！");
             return;
         }
-        //GDEUPS协议临时表更改数据
-        GdTbcCusAgtInfo  cusAgtInfo =new  GdTbcCusAgtInfo();
-        cusAgtInfo.setActNo(context.getData("actNo").toString());
-        cusAgtInfo.setCustId(context.getData("custId").toString());
-        cusAgtInfo.setCusNm(context.getData("tCusNm").toString());
-        cusAgtInfo.setPasId(context.getData("pasId").toString());
-        cusAgtInfo.setComId(context.getData("comId").toString());
-        cusAgtInfo.setAccTyp(context.getData("accTyp").toString());
-        cusAgtInfoRepository.update(cusAgtInfo);
+        //GDEUPS协议临时表删除数据
+        cusAgtInfoRepository.delete(context.getData("custId").toString());
 
         context.setData(GDParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
         context.setData(GDParamKeys.RSP_MSG,Constants.RESPONSE_MSG);

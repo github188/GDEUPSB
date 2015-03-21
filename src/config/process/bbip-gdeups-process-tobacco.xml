@@ -51,7 +51,7 @@
     </process>
     
     <!--广东烟草公司信息维护-->
-    <process id="gdeupsb.tbcMaintainTbcInfo" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
+    <process id="gdeupsb.tbcMaintainInfo" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">    
         <actions>
             <action id="act" ref="gdeupsb.TbcMaintainTbcInfo"/>
         </actions>

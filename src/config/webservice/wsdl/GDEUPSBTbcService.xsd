@@ -163,7 +163,7 @@
       <xs:element name="rspCde" type="tns:rspCde_SType" minOccurs="0"/>
       <xs:element name="rspMsg" type="tns:rspMsg_SType" minOccurs="0"/>
       <xs:element ref="tns:pageableResponse"/>
-      <xs:element name="rec" type="tns:rec_CType" minOccurs="0"/>
+      <xs:element name="rec" type="tns:rec_CType" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="eupsBusTyp_SType">

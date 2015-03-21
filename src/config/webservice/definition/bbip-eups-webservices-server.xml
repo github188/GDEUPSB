@@ -31,8 +31,14 @@
 	
 	<server-side-ws-def wsdl="GDEUPSPFOffChanService.wsdl"
 		namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSPFOffChanService/Schema"/>
-	 <server-side-ws-def wsdl="GDEUPSBTbcService.wsdl"
-    namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBTbcService/Schema" />
+
+    <server-side-ws-def wsdl="GDEUPSBTbcService.wsdl"
+        namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBTbcService/Schema">
+        <qname-mappings>
+            <qname-mapping operation="maintainTbcInfo"  process-id="gdeupsb.tbcMaintainInfo" />
+        </qname-mappings>
+    </server-side-ws-def>
+    
     <server-side-ws-def wsdl="GDEUPSBLotService.wsdl"
     namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotService/Schema" />
 	
