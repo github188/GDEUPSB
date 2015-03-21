@@ -110,7 +110,6 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 						userProcessToSubmit(context);
 						//得到反盘文件 
 //						userProcessToGet(context);
-						//处理成第三方格式返回
 						logger.info("==========End  BatchDataFileAction  prepareBatchDeal");
 	}
 	/**
