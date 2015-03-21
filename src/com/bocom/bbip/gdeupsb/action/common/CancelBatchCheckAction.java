@@ -25,9 +25,12 @@ import com.bocom.jump.bp.core.CoreException;
 public class CancelBatchCheckAction extends BaseAction {
 	private static final Log logger=LogFactory.getLog(CancelBatchCheckAction.class);
 
-
+/**
+ * 批次撤销
+ */
     public void check(Context context)throws Exception{
 		final String batNo=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.BAT_NO, ErrorCodes.EUPS_FIELD_EMPTY,"batNo");
+		//上锁
 		Result result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).tryLock(batNo, 60*1000L, 60*1000L);
 		Assert.isTrue(result.isSuccess(), GDErrorCodes.EUPS_LOCK_FAIL);
 		GDEupsBatchConsoleInfo info = new GDEupsBatchConsoleInfo();
@@ -40,7 +43,11 @@ public class CancelBatchCheckAction extends BaseAction {
 		ret.getBatSts().equalsIgnoreCase(GDConstants.BATCH_STATUS_WAIT);
 		Assert.isTrue(canCancel, GDErrorCodes.EUPS_BATCH_STATUS_ERROR);
 		context.setData("BatchConsoleInfo", ret);
+		unLock(context);
     }
+    /**
+     * 解锁
+     */
     public void unLock(Context context)throws CoreException{
     	final String batNo=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.BAT_NO, ErrorCodes.EUPS_FIELD_EMPTY);
     	Result result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).unlock(batNo);

@@ -18,7 +18,9 @@ import com.bocom.jump.bp.core.CoreException;
 
 public class EupsQueryBatchStatusAction extends BaseAction {
 	private static final Log logger=LogFactory.getLog(EupsQueryBatchStatusAction.class);
-	
+/**
+ * 查询批次信息	
+ */
 	public void execute(Context context)throws CoreException{
 		logger.info("----批次信息查询开始----");
 		final String batNo=ContextUtils.assertDataNotEmptyAndGet(context, "batNo", ErrorCodes.EUPS_FIELD_EMPTY, "批次号");

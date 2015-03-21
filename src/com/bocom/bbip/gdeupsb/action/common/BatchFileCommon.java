@@ -46,6 +46,9 @@ public class BatchFileCommon extends BaseAction {
 	@Autowired
 	OperateFTPAction operateFTPAction;
 	private static final Log logger = LogFactory.getLog(BatchFileCommon.class);
+	/**
+	 * 检查批量是否可以进行
+	 */
 	public void BeforeBatchProcess(final Context context)throws CoreException {
 		logger.info("----before batch check----");
 		String comNo=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.COMPANY_NO, ErrorCodes.EUPS_COM_NO_NOTEXIST);
@@ -100,8 +103,7 @@ public class BatchFileCommon extends BaseAction {
 		Assert.isTrue(result.isSuccess(), GDErrorCodes.EUPS_LOCK_FAIL);
 	}
 	/**
-	 * @throws IOException 
-	 * 
+	 * 生成代收付文件 上传到服务器
 	 */
 	public void sendBatchFileToACP(final Context context) throws CoreException {
 		final String comNo=(String)context.getData(ParamKeys.COMPANY_NO);
@@ -143,12 +145,16 @@ public class BatchFileCommon extends BaseAction {
 		get(EupsThdFtpConfigRepository.class).update(config);
 		logger.info("==============End sendBatchFileToACP and putCheckFile");
 	}
+	/**
+	 * 代收付返回文件 部分处理
+	 */
 	public void afterBatchProcess(Context context)throws CoreException{
 		final String thdbatNo=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.THD_BAT_NO,  ErrorCodes.EUPS_FIELD_EMPTY,"thdBatNo");
 		GDEupsBatchConsoleInfo info = new GDEupsBatchConsoleInfo();
 		info.setRsvFld9(thdbatNo);
 		List<GDEupsBatchConsoleInfo> result =get(GDEupsBatchConsoleInfoRepository.class).find(info);
 		Assert.isNotEmpty(result, "BBIP0004EU0706", "代收付返回的批次号不存在");
+		//成功笔数金额  失败笔数金额
 		GDEupsBatchConsoleInfo ret=result.get(0);
 		Integer totCnt = ret.getTotCnt();
 	    BigDecimal totAmt = ret.getTotAmt();
@@ -165,6 +171,7 @@ public class BatchFileCommon extends BaseAction {
 	    ret.setFalTotAmt(falTotAmt);
 	    ret.setExeDte(new Date());
 		ret.setBatSts(GDConstants.BATCH_STATUS_COMPLETE);
+		//更改批次表
 		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(ret);
 		context.getDataMapDirectly().putAll(BeanUtils.toMap(ret));
 	}
