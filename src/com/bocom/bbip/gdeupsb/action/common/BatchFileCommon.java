@@ -139,7 +139,7 @@ public class BatchFileCommon extends BaseAction {
 		operateFTPAction.putCheckFile(config);
 		//为得到代收付文件 更改ftpDir
 		config.setFtpDir("1");
-		config.setRmtWay("/home/bbipad======End  BatchDataFileAction  createFileMam/data/mftp/BBIP/");
+		config.setRmtWay("/home/bbipadm/data/mftp/BBIP/");
 		get(EupsThdFtpConfigRepository.class).update(config);
 		logger.info("==============End sendBatchFileToACP and putCheckFile");
 	}
