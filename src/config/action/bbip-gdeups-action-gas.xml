@@ -6,7 +6,7 @@
 
  
  <!-- 惠州燃气用户协议维护 -->
- 	<action id="oprGasCusAgentAction" class="com.bocom.bbip.gdeupsb.action.gas.OprGasCusAgentAction" />
+ 	<action id="oprGasCusAgentAction" class="com.bocom.bbip.gdeupsb.action.gas.OprGasCusAgentActionV2" />
 <!-- 惠州燃气用户协议文件上传（0全部，1新增） -->
 	<action id="gasAgentBatchFileToFTP" class="com.bocom.bbip.gdeupsb.action.gas.agentBat.GasAgentBatchFileToFtpAction"/>   
  
