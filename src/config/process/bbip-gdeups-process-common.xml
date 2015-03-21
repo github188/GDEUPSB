@@ -29,6 +29,13 @@
 			  
 		</actions>
 	</process>
-	<!-- 数据准备   反盘文件   提交  -->
+	<!-- 数据准备   反盘文件   提交  标准版 -->
+	
+	<!-- 批次清单打印 -->
+		<process id="gdeupsb.printBatchInfo" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
+		<actions>
+			  <action id="act" ref="gdeupsb.printBatchInfoAction"   />
+		</actions>
+	</process>
 </x:beans>
 
