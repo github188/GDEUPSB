@@ -212,14 +212,14 @@
 	<bean id="tbc_TcpMapping" class="com.bocom.bbip.channel.tcp.EdgeSupportSocketURIEndpointMapping">
 		<property name="mapping">
 			<map>
-				<entry key="tcp://*:9997" value-ref="tbc_TcpEndpoint" />
+				<entry key="tcp://*:36010" value-ref="tbc_TcpEndpoint" />
 			</map>
 		</property>
 	</bean>
 
 	<bean id="tbc" class="com.bocom.jump.bp.channel.tcp.SocketServer">
 		<!-- 渠道接入端口，参数配置于sys.properties文件 -->
-		<property name="port" value="9997" />
+		<property name="port" value="36010" />
 		<property name="mapping" ref="tbc_TcpMapping" />
 		<property name="threadPool" ref="tbc_TcpThreadPool" />
 	</bean>
@@ -256,10 +256,8 @@
 					<property name="decodeTransforms"> <!-- unpack request -->
 						<array>
 							<bean class="com.bocom.jump.bp.channel.interceptors.RequestTransform" />
-
 							<bean class="com.bocom.jump.bp.channel.interceptors.DecoderTransform">
 								<!-- 渠道请求报文头，参数配置于sys.properties文件 -->
-
 								<constructor-arg
 									value="packet://WEB-INF/classes/config/stream/SGRT00/TBCReqHeader.xml" />
 							</bean>
@@ -269,7 +267,7 @@
 				</bean>
 				<bean class="com.bocom.jump.bp.channel.interceptors.ContextInterceptor" />
                  <bean class="com.bocom.bbip.eups.interceptor.ServiceThdInterceptor">
-                    <constructor-arg value="9997" />
+                    <constructor-arg value="36010" />
                 </bean>
 			</array>
 		</property>
