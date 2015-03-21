@@ -77,7 +77,7 @@ public class OprGasCusAgentActionV2 extends BaseAction {
 			// 【accessObjList.getResponseCode():BBIP0004AGPM66】responseMessage():客户信息不存在。responseType()：E】
 			if (!("N".equals(accessObjList.getResponseType()))) {
 				context.setData(ParamKeys.RESPONSE_MESSAGE, accessObjList.getResponseMessage());
-				throw new CoreException(accessObjList.getResponseCode());
+				throw new CoreException(GDErrorCodes.GAS_QRY_AGT_ERR_EMT);
 			}
 
 			Map<String, Object> cusDtlMap = setAcpMap(context);
@@ -93,7 +93,7 @@ public class OprGasCusAgentActionV2 extends BaseAction {
 					"queryDetailAgentCollectAgreement", cusDtlMap);
 			logger.info("========before optFlg=4 queryDetailAgentCollectAgreement ======="
 					+ context);
-			logger.info("==============msg:【"
+			logger.info("==============msg:【operateAcpAgtResult.getResponseCode()："
 					+ qryCusDetail.getResponseCode()
 					+ "】【accessObjList.getResponseMessage():"
 					+ qryCusDetail.getResponseMessage()
@@ -101,7 +101,7 @@ public class OprGasCusAgentActionV2 extends BaseAction {
 					+ qryCusDetail.getResponseType() + "】");
 			if (!("N".equals(qryCusDetail.getResponseType()))) {
 				context.setData(ParamKeys.RESPONSE_MESSAGE, qryCusDetail.getResponseMessage());
-				throw new CoreException(accessObjList.getResponseCode());
+				throw new CoreException(GDErrorCodes.GAS_QRY_AGT_ERR_EMT);
 			}
 
 			context.setDataMap(qryCusDetail.getPayload());
@@ -144,7 +144,7 @@ public class OprGasCusAgentActionV2 extends BaseAction {
 				Result accessObjList = bgspServiceAccessObject
 						.callServiceFlatting("queryListAgentCollectAgreement",
 								cusListMap);
-				logger.info("==============msg:【"
+				logger.info("==============msg:【operateAcpAgtResult.getResponseCode()："
 						+ accessObjList.getResponseCode()
 						+ "】【accessObjList.getResponseMessage():"
 						+ accessObjList.getResponseMessage()
@@ -166,8 +166,7 @@ public class OprGasCusAgentActionV2 extends BaseAction {
 																// 燃气返回QryUser,
 																// 说明燃气存在该用户编号，可修改
 					if (!("N".equals(accessObjList.getResponseType()))) {
-						throw new CoreRuntimeException(
-								accessObjList.getResponseCode());
+						throw new CoreRuntimeException(GDErrorCodes.GAS_QRY_AGT_ERR_EMT);
 					}
 					context.setData("tCommd", "Edit");
 					logger.info("============有协议，可修改");
@@ -177,8 +176,7 @@ public class OprGasCusAgentActionV2 extends BaseAction {
 																// 燃气返回QryUser,
 																// 说明燃气存在该用户编号，可删除
 					if (!("N".equals(accessObjList.getResponseType()))) {
-						throw new CoreRuntimeException(
-								accessObjList.getResponseCode());
+						throw new CoreRuntimeException(GDErrorCodes.GAS_QRY_AGT_ERR_EMT);
 					}
 					context.setData("tCommd", "Stop");
 					logger.info("===========有协议，可删除");
@@ -239,7 +237,7 @@ public class OprGasCusAgentActionV2 extends BaseAction {
 						throw new CoreException(GDErrorCodes.GAS_OPR_ACP_ERR);
 					}
 					
-					logger.info("==============msg:【"
+					logger.info("==============msg:【operateAcpAgtResult.getResponseCode()："
 							+ operateAcpAgtResult.getResponseCode()
 							+ "】【accessObjList.getResponseMessage():"
 							+ operateAcpAgtResult.getResponseMessage()
@@ -249,8 +247,7 @@ public class OprGasCusAgentActionV2 extends BaseAction {
 					context.setData(ParamKeys.RESPONSE_MESSAGE, operateAcpAgtResult.getResponseMessage());
 					
 					if (!("N".equals(operateAcpAgtResult.getResponseType()))) {
-						throw new CoreRuntimeException(
-								operateAcpAgtResult.getResponseCode());
+						throw new CoreRuntimeException(GDErrorCodes.GAS_QRY_AGT_ERR_EMT);
 					}
 
 					insertCusInfo(context);
@@ -300,7 +297,7 @@ public class OprGasCusAgentActionV2 extends BaseAction {
 						throw new CoreException(GDErrorCodes.GAS_OPR_ACP_ERR);
 					}
 					
-					logger.info("==============msg:【"
+					logger.info("==============msg:【operateAcpAgtResult.getResponseCode()："
 							+ operateAcpAgtResult.getResponseCode()
 							+ "】【accessObjList.getResponseMessage():"
 							+ operateAcpAgtResult.getResponseMessage()
@@ -309,8 +306,7 @@ public class OprGasCusAgentActionV2 extends BaseAction {
 					context.setData(ParamKeys.RESPONSE_MESSAGE, operateAcpAgtResult.getResponseMessage());
 					
 					if (!("N".equals(operateAcpAgtResult.getResponseType()))) {
-						throw new CoreRuntimeException(
-								operateAcpAgtResult.getResponseCode());
+						throw new CoreRuntimeException(GDErrorCodes.GAS_OPR_ACP_ERR);
 					}
 
 					insertCusInfo(context);
@@ -345,7 +341,7 @@ public class OprGasCusAgentActionV2 extends BaseAction {
 						throw new CoreException(GDErrorCodes.GAS_OPR_ACP_ERR);
 					}
 					
-					logger.info("==============msg:【"
+					logger.info("==============msg:【operateAcpAgtResult.getResponseCode()："
 							+ operateAcpAgtResult.getResponseCode()
 							+ "】【accessObjList.getResponseMessage():"
 							+ operateAcpAgtResult.getResponseMessage()
@@ -355,8 +351,7 @@ public class OprGasCusAgentActionV2 extends BaseAction {
 					context.setData(ParamKeys.RESPONSE_MESSAGE, operateAcpAgtResult.getResponseMessage());
 
 					if (!("N".equals(operateAcpAgtResult.getResponseType()))) {
-						throw new CoreRuntimeException(
-								operateAcpAgtResult.getResponseCode());
+						throw new CoreRuntimeException(GDErrorCodes.GAS_OPR_ACP_ERR);
 					}
 
 					insertCusInfo(context);
