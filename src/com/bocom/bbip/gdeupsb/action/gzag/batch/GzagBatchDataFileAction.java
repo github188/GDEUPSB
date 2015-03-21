@@ -1,5 +1,9 @@
 package com.bocom.bbip.gdeupsb.action.gzag.batch;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,11 +29,13 @@ import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.AgtFileBatchDetail;
+import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.entity.GDEupsGzagBatchTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GDEupsGzagBatchTmpRepository;
 import com.bocom.bbip.thd.org.apache.commons.collections.CollectionUtils;
 import com.bocom.bbip.utils.BeanUtils;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -56,7 +62,7 @@ public class GzagBatchDataFileAction extends BaseAction implements BatchAcpServi
 	public void prepareBatchDeal(PrepareBatchAcpDomain preparebatchacpdomain,
 			Context context) throws CoreException {
 		
-			logger.info("=============Start  BatchDataFileAction");
+			logger.info("=============Start  BatchDataFileAction  prepareBatchDeal");
 			String comNo=context.getData(ParamKeys.COMPANY_NO).toString();
 			String fileName=context.getData(ParamKeys.FLE_NME).toString();
 			//获取批次号
@@ -88,17 +94,20 @@ public class GzagBatchDataFileAction extends BaseAction implements BatchAcpServi
 			eupsThdFtpConfig.setRmtFleNme(fileName);
 			operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
 			logger.info("==============Get file Success ");
+			String batNo=context.getData(ParamKeys.BAT_NO).toString();
 			//获取文件并解析入库
 			List<Map<String, Object>> mapList=operateFileAction.pareseFile(eupsThdFtpConfig, fileId);
 			if(CollectionUtils.isEmpty(mapList)){
 					throw new CoreException("处理状态异常");
 			}
+			if(fileId.equals("lottBatchFile")){
+				updateInfoAboutLott(context,eupsThdFtpConfig,batNo);
+			}else if(fileId.equals("sptltBatchFile")){
+				
+			}
 			context.setData("listTotCnt", mapList.size());
 			BigDecimal listTotAmt=new BigDecimal("0.00");
 			for (Map<String, Object> map : mapList) {
-						if(fileId.equals("lottBatchFile") || fileId.equals("sptltBatchFile")){
-								map.put(ParamKeys.EUPS_FILE_HEADER, BeanUtils.toMap(context));
-						}
 						map.put(ParamKeys.SEQUENCE, bbipPublicService.getBBIPSequence());
 						GDEupsGzagBatchTmp gdEupsGzagBatchTmp=BeanUtils.toObject(map,GDEupsGzagBatchTmp.class);
 						BigDecimal txnAmt=gdEupsGzagBatchTmp.getTxnAmt().scaleByPowerOfTen(-2);
@@ -118,7 +127,7 @@ public class GzagBatchDataFileAction extends BaseAction implements BatchAcpServi
 			context.setData(ParamKeys.COMPANY_NO, comNo);
 			get(BatchFileCommon.class).sendBatchFileToACP(context);
 			
-			logger.info("=================End  BatchDataFileAction");
+			logger.info("=================End  BatchDataFileAction  prepareBatchDeal");
 	}
 	/**
 	 * 文件map拼装
@@ -164,5 +173,44 @@ public class GzagBatchDataFileAction extends BaseAction implements BatchAcpServi
 			logger.info("=================End  BatchDataFileAction  createFileMap ");
 			return resultMap;
 		}
+
+/**
+ * lottBatchFile 写入第一行
+ */
+		public void updateInfoAboutLott(Context context,EupsThdFtpConfig eupsThdFtpConfig,String batNo) throws CoreException{
+				logger.info("=================Start  BatchDataFileAction  updateInfoAboutLott");
+				String fleName=context.getData(ParamKeys.FLE_NME).toString();
+				String filePath=eupsThdFtpConfig.getLocDir();
+				try {
+					FileReader fileReader = new FileReader(filePath+"//"+fleName);
+					BufferedReader bufferedReader=new BufferedReader(fileReader);
+					String firstLine=null;
+					int i=0;
+					while((firstLine=bufferedReader.readLine())!=null && i<1){
+							GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=new GDEupsBatchConsoleInfo();
+							String subDte=firstLine.substring(0,8);
+							String totCnt=firstLine.substring(8,16).trim();
+							BigDecimal totAmt=(new BigDecimal(firstLine.substring(16).trim())).scaleByPowerOfTen(-2);
+							
+							gdEupsBatchConsoleInfo.setSubDte(DateUtils.parse(subDte,DateUtils.STYLE_yyyyMMdd));
+							gdEupsBatchConsoleInfo.setTotCnt(Integer.parseInt(totCnt));
+							gdEupsBatchConsoleInfo.setTotAmt(totAmt);
+							gdEupsBatchConsoleInfo.setBatNo(batNo);
+							gdEupsBatchConsoleInfoRepository.updateConsoleInfo(gdEupsBatchConsoleInfo);
+							logger.info("==========Successful to update GDEupsBatchConsoleInfo");
+							i++;
+					}
+					bufferedReader.close();
+					fileReader.close();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				logger.info("=================End  BatchDataFileAction  updateInfoAboutLott");
+		}
+
 }
 
