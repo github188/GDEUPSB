@@ -248,9 +248,9 @@ public class OprGasCusAgentActionV2 extends BaseAction {
 					
 					context.setData(ParamKeys.RESPONSE_MESSAGE, operateAcpAgtResult.getResponseMessage());
 					
-					if (!("N".equals(accessObjList.getResponseType()))) {
+					if (!("N".equals(operateAcpAgtResult.getResponseType()))) {
 						throw new CoreRuntimeException(
-								accessObjList.getResponseCode());
+								operateAcpAgtResult.getResponseCode());
 					}
 
 					insertCusInfo(context);
