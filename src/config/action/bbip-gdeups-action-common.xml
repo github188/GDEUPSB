@@ -16,14 +16,8 @@
 		 </x:bean>
 		</x:property>
 	</action>
-<!-- 批量处理公共查询批次详细信息 -->
-<action id="BatchDetails" class="com.bocom.bbip.comp.action.strategy.StrategyDelegatorAction">
-			<x:property name="executableBeanResolver"> 
-		 <x:bean class="com.bocom.bbip.comp.action.strategy.support.DefaultExecutableBeanResolver">
-		 <x:property name="strategyKey" value="eupsBusTyp" />
-		 </x:bean>
-		</x:property>
-	</action>
+	<!-- 批次详单查询 -->
+	<action id="BatchDetails" class="com.bocom.bbip.gdeupsb.action.common.BatchDetailsAction"/>
 	
 	<!-- 打印批次信息 -->
 	<action id="gdeupsb.printBatchInfoAction" class="com.bocom.bbip.gdeupsb.action.common.PrintBatchInfoAction"/>
