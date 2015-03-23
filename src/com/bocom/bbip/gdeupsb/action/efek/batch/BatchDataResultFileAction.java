@@ -76,6 +76,8 @@ public class BatchDataResultFileAction implements AfterBatchAcpService{
 			eupsThdFtpConfig.setFtpDir("0");
 			operateFTP.putCheckFile(eupsThdFtpConfig);
 			
+			//TODO 通知第三方
+			
 			gdEupsEleTmpRepository.deleteAll("1");
 			EupsBatchInfoDetail eupsBatchInfoDetail=new EupsBatchInfoDetail();
 			eupsBatchInfoDetail.setBatNo(context.getData(ParamKeys.BAT_NO).toString());
