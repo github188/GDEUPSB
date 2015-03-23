@@ -13,7 +13,7 @@
 	<!-- =======pgas00 start====== -->
 	<!-- ========================= -->
 
-	<bean id="pgas00_TcpMapping" class="com.bocom.jump.bp.channel.tcp.SocketURIEndpointMapping">
+	<bean id="pgas00_TcpMapping" class="com.bocom.bbip.channel.tcp.EdgeSupportSocketURIEndpointMapping">
 		<property name="mapping">
 			<map>
 				<!-- 渠道接入端口，参数配置于sys.properties文件 <entry key="tcp://*:${abs.listen.port}" 
@@ -396,7 +396,7 @@
 	<!-- ======================================== -->
 	<!-- TCP CHANNEL COMMON CONFIG -->
 	<!-- ======================================== -->
-	<bean id="absIn_TcpMapping" class="com.bocom.jump.bp.channel.tcp.SocketURIEndpointMapping">
+	<bean id="absIn_TcpMapping" class="com.bocom.bbip.channel.tcp.EdgeSupportSocketURIEndpointMapping">
 		<property name="mapping">
 			<map>
 				<!-- 渠道接入端口，参数配置于sys.properties文件 -->
