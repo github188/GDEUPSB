@@ -44,7 +44,7 @@
 
 	<!--电力发起划账交易对应的内部账户 -->
 	<table id="DptTypToCAgtNo_DL">
-		<key name="0000" value="4410001273" />    <!--城区核算中心 -->
+		<key name="0000" value="GDELEC01" />    <!--城区核算中心 -->
 		<key name="1000" value="xxxxxxxxxx" />    <!--从化核算中心 -->
 		<key name="1100" value="xxxxxxxxxx" />    <!--增城核算中心 -->
 		<key name="1200" value="xxxxxxxxxx" />    <!--花都核算中心 -->
@@ -53,7 +53,7 @@
 
 	<!-- 银行发起缴费交易对应的内部账户 -->
 	<table id="DptTypToCAgtNo_YH">
-		<key name="0000" value="4410001273" />    <!--城区核算中心 -->
+		<key name="0000" value="GDELEC01" />    <!--城区核算中心 -->
 		<key name="1000" value="xxxxxxxxxx" />    <!--从化核算中心 -->
 		<key name="1100" value="xxxxxxxxxx" />    <!--增城核算中心 -->
 		<key name="1200" value="xxxxxxxxxx" />    <!--花都核算中心 -->
@@ -62,7 +62,7 @@
 
 	<!-- 批量交易对应的内部账户 -->
 	<table id="DptTypToCAgtNo_PL">
-		<key name="0000" value="4410001273" />    <!--城区核算中心 -->
+		<key name="0000" value="GDELEC01" />    <!--城区核算中心 -->
 		<key name="1000" value="xxxxxxxxxx" />    <!--从化核算中心 -->
 		<key name="1100" value="xxxxxxxxxx" />    <!--增城核算中心 -->
 		<key name="1200" value="xxxxxxxxxx" />    <!--花都核算中心 -->
