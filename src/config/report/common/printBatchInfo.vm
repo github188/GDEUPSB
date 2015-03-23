@@ -1,7 +1,7 @@
 #report(45)
 #rh(3)
 
-										录入批次清单
+														录入批次清单
 批次号:  $str.trim($d.batNo)             单位编号: $str.trim($d.comNo)             单位名称: $str.trim($d.comNme)              业务类型: $str.trim($d.eupsBusTyp)
 
  #end
@@ -20,10 +20,8 @@
 #para($ele.thdCusNme)
 #para($ele.cusNme)
 #end
-
+?                     ?                      ?                                     ?                       ?                               ?                                  ?                        
 #tf(4)
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   操作柜员: $str.trim($d.txnTlr)   操作日期: $str.trim($d.exeDte)                           总笔数: $str.trim($d.totCnt)   总金额: ￥$str.trim($d.totAmt)
  #end
-  
-  
