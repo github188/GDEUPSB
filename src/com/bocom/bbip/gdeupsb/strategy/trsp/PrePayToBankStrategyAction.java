@@ -1,6 +1,7 @@
 package com.bocom.bbip.gdeupsb.strategy.trsp;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -90,19 +91,16 @@ public class PrePayToBankStrategyAction implements Executable{
 		String card = "4";
 		ctx.setData(GDParamKeys.ACT_TYP, card);
 		ctx.setData(GDParamKeys.PAY_MOD, "1");
+
 		
 //		检查本地费用表是否有待缴费用
 		GDEupsbTrspPayInfo gdEupsbTrspPayInfo = new GDEupsbTrspPayInfo();
-		 
 		gdEupsbTrspPayInfo.setBrNo(ctx.getData(ParamKeys.BR).toString());    
 		gdEupsbTrspPayInfo.setCarNo(ctx.getData(GDParamKeys.CAR_NO).toString());
 		gdEupsbTrspPayInfo.setCarTyp(ctx.getData(GDParamKeys.CAR_TYP).toString());
 		gdEupsbTrspPayInfo.setPayMon((String)ctx.getData(GDParamKeys.PAY_MON));
-		String tactDte=(String)ctx.getData(GDParamKeys.TACT_DT);
-//		TODO:此处需要确认业务流程，是否只有在查询费用当天才可缴费。
-//		if(!tactDte.equals(null)){
-//			gdEupsbTrspPayInfo.setTactDt(DateUtils.parse(tactDte));
-//		}
+		
+		gdEupsbTrspPayInfo.setTactDt((Date)ctx.getData(GDParamKeys.TACT_DT));
 		
 		gdEupsbTrspPayInfo.setFlg("0");
 		
@@ -121,7 +119,7 @@ public class PrePayToBankStrategyAction implements Executable{
 		
 		
 
-//		检查路桥方流水是否重复  TODO:
+
 		GDEupsbTrspTxnJnl gdEupsbTrspTxnJnl = new GDEupsbTrspTxnJnl();
 		gdEupsbTrspTxnJnl.setThdKey(ctx.getData(GDParamKeys.THD_KEY).toString());
 		List<GDEupsbTrspTxnJnl> txnJnlList = gdEupsbTrspTxnJnlRepository.find(gdEupsbTrspTxnJnl);
