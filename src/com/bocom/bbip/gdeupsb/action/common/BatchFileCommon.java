@@ -73,7 +73,6 @@ public class BatchFileCommon extends BaseAction {
 		/**该字段保存ParamKeys.THD_BAT_NO*/
 		info.setRsvFld9(((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getBBIPSequence());
 		context.setData(ParamKeys.THD_BAT_NO, info.getRsvFld9());
-		get(GDEupsBatchConsoleInfoRepository.class).insertConsoleInfo(info);
 		/**查询代收付ComNo*/
 		     String comNoAcps=null;
 		    EupsActSysPara eupsActSysPara = new EupsActSysPara();
@@ -84,6 +83,10 @@ public class BatchFileCommon extends BaseAction {
 		       comNoAcps = ((EupsActSysPara)resultList.get(0)).getSplNo();
 		    }
 		context.setData("comNoAcps", comNoAcps);
+		//文件名   和eups控制表关联  必须有
+		info.setRsvFld8("BATC"+comNoAcps+"0.txt");
+		//保存到控制表  
+		get(GDEupsBatchConsoleInfoRepository.class).insertConsoleInfo(info);
 		context.getDataMapDirectly().putAll(BeanUtils.toFlatMap(info));
 	}
 /**
