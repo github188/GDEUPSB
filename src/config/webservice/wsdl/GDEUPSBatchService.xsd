@@ -172,12 +172,12 @@
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
       <xs:element name="batNo" type="tns:batNo_SType"/>
-      <xs:element ref="tns:requestHeader"/>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="cancelBatchResponse_CType">
     <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="batNo_SType">
@@ -190,14 +190,15 @@
   </xs:simpleType>
   <xs:complexType name="printBatchInfoRequest_CType">
     <xs:sequence>
-      <xs:element ref="tns:requestHeader"/>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="batNo" type="tns:batNo_SType"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="printBatchInfoResponse_CType">
     <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="printResult" type="tns:printResult_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="eupsBusTyp_SType">
@@ -206,6 +207,14 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="printResult_SType">
+    <xs:annotation>
+      <xs:documentation>打印结果</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="64"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="queryBatchDetailRequest_CType">
@@ -218,10 +227,9 @@
   </xs:complexType>
   <xs:complexType name="queryBatchDetailResponse_CType">
     <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
       <xs:element name="detailList" type="tns:detailList_CType" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element ref="tns:pageableRsponse"/>
-      <xs:element ref="tns:responseHeader"/>
+      <xs:element ref="tns:pageableRsponse" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="cusAc_SType">
@@ -244,8 +252,9 @@
     <xs:annotation>
       <xs:documentation>交易金额</xs:documentation>
     </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="18"/>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="18"/>
+      <xs:fractionDigits value="2"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="thdCusNo_SType">
@@ -264,19 +273,28 @@
       <xs:maxLength value="8"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:simpleType name="sts_SType">
+    <xs:annotation>
+      <xs:documentation>交易结果</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:complexType name="detailList_CType">
     <xs:sequence>
-      <xs:element name="batNo" type="tns:batNo_SType"/>
-      <xs:element name="cusAc" type="tns:cusAc_SType"/>
+      <xs:element name="batNo" type="tns:batNo_SType" minOccurs="0"/>
+      <xs:element name="cusAc" type="tns:cusAc_SType" minOccurs="0"/>
       <xs:element name="cusNme" type="tns:cusNme_SType" minOccurs="0"/>
-      <xs:element name="txnAmt" type="tns:txnAmt_SType"/>
+      <xs:element name="txnAmt" type="tns:txnAmt_SType" minOccurs="0"/>
       <xs:element name="thdCusNo" type="tns:thdCusNo_SType" minOccurs="0"/>
-      <xs:element name="subDte" type="tns:subDte_SType"/>
+      <xs:element name="subDte" type="tns:subDte_SType" minOccurs="0"/>
+      <xs:element name="sts" type="tns:sts_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="BatchPayCreateDataRequest_CType">
     <xs:sequence>
-      <xs:element ref="tns:requestHeader"/>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="comNo" type="tns:comNo_SType"/>
       <xs:element name="fleNme" type="tns:fleNme_SType"/>
@@ -284,9 +302,11 @@
   </xs:complexType>
   <xs:complexType name="BatchPayCreateDataResponse_CType">
     <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
-      <xs:element name="batNo" type="tns:batNo_SType"/>
-      <xs:element ref="tns:responseHeader"/>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="batNo" type="tns:batNo_SType" minOccurs="0"/>
+      <xs:element name="fleNme" type="tns:fleNme_SType" minOccurs="0"/>
+      <xs:element name="totCnt" type="tns:totCnt_SType" minOccurs="0"/>
+      <xs:element name="totAmt" type="tns:totAmt_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="comNo_SType">
@@ -305,9 +325,24 @@
       <xs:maxLength value="40"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:simpleType name="totCnt_SType">
+    <xs:annotation>
+      <xs:documentation>总笔数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:long"/>
+  </xs:simpleType>
+  <xs:simpleType name="totAmt_SType">
+    <xs:annotation>
+      <xs:documentation>总金额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal">
+      <xs:totalDigits value="18"/>
+      <xs:fractionDigits value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:complexType name="BatchPaySubmitDataRequest_CType">
     <xs:sequence>
-      <xs:element ref="tns:requestHeader"/>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="comNo" type="tns:comNo_SType"/>
       <xs:element name="totCnt" type="tns:totCnt_SType"/>
@@ -321,21 +356,9 @@
   </xs:complexType>
   <xs:complexType name="BatchPaySubmitDataResponse_CType">
     <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="totCnt_SType">
-    <xs:annotation>
-      <xs:documentation>总笔数</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:int"/>
-  </xs:simpleType>
-  <xs:simpleType name="totAmt_SType">
-    <xs:annotation>
-      <xs:documentation>总金额</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:decimal"/>
-  </xs:simpleType>
   <xs:simpleType name="txnDte_SType">
     <xs:annotation>
       <xs:documentation>提交日期</xs:documentation>
@@ -370,14 +393,14 @@
   </xs:simpleType>
   <xs:complexType name="queryBatchInfoRequest_CType">
     <xs:sequence>
-      <xs:element ref="tns:requestHeader"/>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="batNo" type="tns:batNo_SType"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="queryBatchInfoResponse_CType">
     <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
       <xs:element name="batNo" type="tns:batNo_SType" minOccurs="0"/>
       <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
       <xs:element name="comNme" type="tns:comNme_SType" minOccurs="0"/>
@@ -408,17 +431,16 @@
   </xs:simpleType>
   <xs:complexType name="queryComInfoRequest_CType">
     <xs:sequence>
-      <xs:element ref="tns:requestHeader"/>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="comNo" type="tns:comNo_SType"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="queryComInfoResponse_CType">
     <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
-      <xs:element name="comNo" type="tns:comNo_SType"/>
-      <xs:element name="comNme" type="tns:comNme_SType"/>
-      <xs:element ref="tns:responseHeader"/>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
+      <xs:element name="comNme" type="tns:comNme_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>
