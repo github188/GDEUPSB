@@ -1,16 +1,21 @@
-#report(45)
-#rh(3)
+#report(50)
+#rh(1)
 
-														录入批次清单
-批次号:  $str.trim($d.batNo)             单位编号: $str.trim($d.comNo)             单位名称: $str.trim($d.comNme)              业务类型: $str.trim($d.eupsBusTyp)
+#para($d.batNo)
+#para($d.comNo)
+#para($d.comNme)
+#para($d.eupsBusTyp)
+												录入批次清单
+批次号:  ?           单位编号: ?         单位名称: ?              业务类型: ?
 
- #end
+#end
 #th(4)
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
   序号  来盘卡号/账号           银行帐号                       金额     来盘客户标识  来盘客户姓名                  银行客户姓名                    
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- #end
- #set($p.index=0)
+#end
+ 
+#set($p.index=0)
 #td(1,$d.eles)#set($p.index=$p.index+1) 
 #para($p.index)
 #para($ele.thdCusNo)
@@ -21,7 +26,14 @@
 #para($ele.cusNme)
 #end
 ?                     ?                      ?                                     ?                       ?                               ?                                  ?                        
-#tf(4)
+#rf(3)   
+
+#para($d.txnTlr)
+#para($d.exeDte)
+#para($d.totCnt)
+#para($d.totAmt)
+
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-  操作柜员: $str.trim($d.txnTlr)   操作日期: $str.trim($d.exeDte)                           总笔数: $str.trim($d.totCnt)   总金额: ￥$str.trim($d.totAmt)
+  操作柜员: ?   操作日期:?                  总笔数: ?  总金额: ￥?
+ #end
  #end
