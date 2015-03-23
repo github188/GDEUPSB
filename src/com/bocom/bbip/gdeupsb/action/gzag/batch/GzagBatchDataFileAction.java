@@ -176,6 +176,7 @@ public class GzagBatchDataFileAction extends BaseAction implements BatchAcpServi
 //				agtFileBatchDetail.setOBKBK("443999");
 				
 				agtFileBatchDetail.setTXNAMT(gdEupsGzagBatchTmp.getTxnAmt());
+				agtFileBatchDetail.setRMK2(gdEupsGzagBatchTmp.getThdCusNo());
 				//备注 不用
 				detailList.add(agtFileBatchDetail);
 			}
