@@ -327,7 +327,7 @@
     <xs:annotation>
       <xs:documentation>总笔数</xs:documentation>
     </xs:annotation>
-    <xs:restriction base="xs:long"/>
+    <xs:restriction base="xs:int"/>
   </xs:simpleType>
   <xs:simpleType name="totAmt_SType">
     <xs:annotation>
