@@ -136,8 +136,9 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 				agtFileBatchDetail.setCUSAC(cusAc);
 				agtFileBatchDetail.setTXNAMT(gdEupsEleTmp.getTxnAmt());
 				agtFileBatchDetail.setCUSNME(gdEupsEleTmp.getCusNme());
-				agtFileBatchDetail.setAGTSRVCUSID(gdEupsEleTmp.getThdCusNo());
-				agtFileBatchDetail.setAGTSRVCUSNME(gdEupsEleTmp.getThdCusNme());
+//				agtFileBatchDetail.setAGTSRVCUSID();
+//				agtFileBatchDetail.setAGTSRVCUSNME();
+				agtFileBatchDetail.setRMK2(gdEupsEleTmp.getThdCusNo());
 				//本行标志
 				if(get(AccountService.class).isOurBankCard(cusAc)){
 					agtFileBatchDetail.setOUROTHFLG("0");
