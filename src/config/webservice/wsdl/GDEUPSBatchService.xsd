@@ -257,7 +257,7 @@
       <xs:fractionDigits value="2"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="thdCusNo_SType">
+  <xs:simpleType name="rmk2_SType">
     <xs:annotation>
       <xs:documentation>第三方客户号</xs:documentation>
     </xs:annotation>
@@ -265,13 +265,11 @@
       <xs:maxLength value="30"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="subDte_SType">
+  <xs:simpleType name="txnDte_SType">
     <xs:annotation>
-      <xs:documentation>交易时间</xs:documentation>
+      <xs:documentation>提交日期</xs:documentation>
     </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="8"/>
-    </xs:restriction>
+    <xs:restriction base="xs:date"/>
   </xs:simpleType>
   <xs:simpleType name="sts_SType">
     <xs:annotation>
@@ -287,8 +285,8 @@
       <xs:element name="cusAc" type="tns:cusAc_SType" minOccurs="0"/>
       <xs:element name="cusNme" type="tns:cusNme_SType" minOccurs="0"/>
       <xs:element name="txnAmt" type="tns:txnAmt_SType" minOccurs="0"/>
-      <xs:element name="thdCusNo" type="tns:thdCusNo_SType" minOccurs="0"/>
-      <xs:element name="subDte" type="tns:subDte_SType" minOccurs="0"/>
+      <xs:element name="rmk2" type="tns:rmk2_SType" minOccurs="0"/>
+      <xs:element name="txnDte" type="tns:txnDte_SType" minOccurs="0"/>
       <xs:element name="sts" type="tns:sts_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
@@ -359,14 +357,6 @@
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="txnDte_SType">
-    <xs:annotation>
-      <xs:documentation>提交日期</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="14"/>
-    </xs:restriction>
-  </xs:simpleType>
   <xs:simpleType name="thdBatNo_SType">
     <xs:annotation>
       <xs:documentation>第三方批次号</xs:documentation>
