@@ -87,9 +87,9 @@ public class BatchFileCommon extends BaseAction {
 		//文本代收付 fileId 反盘文件时使用
 		info.setRsvFld7((String)context.getData("fileId"));
 		//文件名   和eups控制表关联  必须有
-		String fileNme="BATC"+comNoAcps+"0.txt";
-		context.setData(ParamKeys.FLE_NME, fileNme);
-		info.setRsvFld8(fileNme);
+		String batNoFile="BATC"+comNoAcps+"0.txt";
+		context.setData(ParamKeys.FLE_NME, batNoFile);
+		info.setRsvFld8(batNoFile);
 		//保存到控制表  
 		get(GDEupsBatchConsoleInfoRepository.class).insertConsoleInfo(info);
 		context.getDataMapDirectly().putAll(BeanUtils.toFlatMap(info));
