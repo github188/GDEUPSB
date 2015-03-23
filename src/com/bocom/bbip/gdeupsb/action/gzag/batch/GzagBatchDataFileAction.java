@@ -88,7 +88,6 @@ public class GzagBatchDataFileAction extends BaseAction implements BatchAcpServi
 					throw new CoreException("没有该单位");
 			}
 			logger.info("~~~~~~~~~~~~~fileId=["+fileId+"]");
-			context.setData("fileId", fileId);
 			//得到文件
 			EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne(fileId);
 			eupsThdFtpConfig.setFtpDir("1");
