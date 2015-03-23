@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdTbcBasInf" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdTbcBasInf" >
+    <id column="DPT_ID" property="dptId" jdbcType="CHAR" />
+    <result column="BR_NO" property="brNo" jdbcType="CHAR" />
+    <result column="DPT_NAM" property="dptNam" jdbcType="CHAR" />
+    <result column="DEV_ID" property="devId" jdbcType="CHAR" />
+    <result column="TELLER" property="teller" jdbcType="CHAR" />
+    <result column="TRAN_DT" property="tranDt" jdbcType="CHAR" />
+    <result column="COM_KEY" property="comKey" jdbcType="CHAR" />
+    <result column="SIG_STS" property="sigSts" jdbcType="CHAR" />
+    <result column="RSV_FLD1" property="rsvFld1" jdbcType="VARCHAR" />
+    <result column="RSV_FLD2" property="rsvFld2" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    DPT_ID, BR_NO, DPT_NAM, DEV_ID, TELLER, TRAN_DT, COM_KEY, SIG_STS, RSV_FLD1, RSV_FLD2
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_TBC_BAS_INF
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="dptId!=null" >
+        AND  DPT_ID=#{dptId,jdbcType=CHAR}
+      </if>
+      <if test="brNo!=null" >
+        AND  BR_NO=#{brNo,jdbcType=CHAR}
+      </if>
+      <if test="dptNam!=null" >
+        AND  DPT_NAM=#{dptNam,jdbcType=CHAR}
+      </if>
+      <if test="devId!=null" >
+        AND  DEV_ID=#{devId,jdbcType=CHAR}
+      </if>
+      <if test="teller!=null" >
+        AND  TELLER=#{teller,jdbcType=CHAR}
+      </if>
+      <if test="tranDt!=null" >
+        AND  TRAN_DT=#{tranDt,jdbcType=CHAR}
+      </if>
+      <if test="comKey!=null" >
+        AND  COM_KEY=#{comKey,jdbcType=CHAR}
+      </if>
+      <if test="sigSts!=null" >
+        AND  SIG_STS=#{sigSts,jdbcType=CHAR}
+      </if>
+      <if test="rsvFld1!=null" >
+        AND  RSV_FLD1=#{rsvFld1,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld2!=null" >
+        AND  RSV_FLD2=#{rsvFld2,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_TBC_BAS_INF
+    where DPT_ID = #{dptId,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from ${GDEUPSB_SCHEMA}.GDEUPS_TBC_BAS_INF
+    where DPT_ID = #{dptId,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdTbcBasInf" >
+    insert into ${GDEUPSB_SCHEMA}.GDEUPS_TBC_BAS_INF
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="dptId != null" >
+        DPT_ID,
+      </if>
+      <if test="brNo != null" >
+        BR_NO,
+      </if>
+      <if test="dptNam != null" >
+        DPT_NAM,
+      </if>
+      <if test="devId != null" >
+        DEV_ID,
+      </if>
+      <if test="teller != null" >
+        TELLER,
+      </if>
+      <if test="tranDt != null" >
+        TRAN_DT,
+      </if>
+      <if test="comKey != null" >
+        COM_KEY,
+      </if>
+      <if test="sigSts != null" >
+        SIG_STS,
+      </if>
+      <if test="rsvFld1 != null" >
+        RSV_FLD1,
+      </if>
+      <if test="rsvFld2 != null" >
+        RSV_FLD2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="dptId != null" >
+        #{dptId,jdbcType=CHAR},
+      </if>
+      <if test="brNo != null" >
+        #{brNo,jdbcType=CHAR},
+      </if>
+      <if test="dptNam != null" >
+        #{dptNam,jdbcType=CHAR},
+      </if>
+      <if test="devId != null" >
+        #{devId,jdbcType=CHAR},
+      </if>
+      <if test="teller != null" >
+        #{teller,jdbcType=CHAR},
+      </if>
+      <if test="tranDt != null" >
+        #{tranDt,jdbcType=CHAR},
+      </if>
+      <if test="comKey != null" >
+        #{comKey,jdbcType=CHAR},
+      </if>
+      <if test="sigSts != null" >
+        #{sigSts,jdbcType=CHAR},
+      </if>
+      <if test="rsvFld1 != null" >
+        #{rsvFld1,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld2 != null" >
+        #{rsvFld2,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_TBC_BAS_INF
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="dptId!=null" >
+        AND  DPT_ID=#{dptId,jdbcType=CHAR}
+      </if>
+      <if test="brNo!=null" >
+        AND  BR_NO=#{brNo,jdbcType=CHAR}
+      </if>
+      <if test="dptNam!=null" >
+        AND  DPT_NAM=#{dptNam,jdbcType=CHAR}
+      </if>
+      <if test="devId!=null" >
+        AND  DEV_ID=#{devId,jdbcType=CHAR}
+      </if>
+      <if test="teller!=null" >
+        AND  TELLER=#{teller,jdbcType=CHAR}
+      </if>
+      <if test="tranDt!=null" >
+        AND  TRAN_DT=#{tranDt,jdbcType=CHAR}
+      </if>
+      <if test="comKey!=null" >
+        AND  COM_KEY=#{comKey,jdbcType=CHAR}
+      </if>
+      <if test="sigSts!=null" >
+        AND  SIG_STS=#{sigSts,jdbcType=CHAR}
+      </if>
+      <if test="rsvFld1!=null" >
+        AND  RSV_FLD1=#{rsvFld1,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld2!=null" >
+        AND  RSV_FLD2=#{rsvFld2,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdTbcBasInf" >
+    update ${GDEUPSB_SCHEMA}.GDEUPS_TBC_BAS_INF
+    <set >
+      <if test="brNo != null" >
+        BR_NO = #{brNo,jdbcType=CHAR},
+      </if>
+      <if test="dptNam != null" >
+        DPT_NAM = #{dptNam,jdbcType=CHAR},
+      </if>
+      <if test="devId != null" >
+        DEV_ID = #{devId,jdbcType=CHAR},
+      </if>
+      <if test="teller != null" >
+        TELLER = #{teller,jdbcType=CHAR},
+      </if>
+      <if test="tranDt != null" >
+        TRAN_DT = #{tranDt,jdbcType=CHAR},
+      </if>
+      <if test="comKey != null" >
+        COM_KEY = #{comKey,jdbcType=CHAR},
+      </if>
+      <if test="sigSts != null" >
+        SIG_STS = #{sigSts,jdbcType=CHAR},
+      </if>
+      <if test="rsvFld1 != null" >
+        RSV_FLD1 = #{rsvFld1,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld2 != null" >
+        RSV_FLD2 = #{rsvFld2,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DPT_ID = #{dptId,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_TBC_BAS_INF
+    <if test="_parameter" >
+      where DPT_ID in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
+</mapper>

@@ -106,8 +106,8 @@
 	<!-- 转换为协议号 -->
 	<table id="GDYC_DPTID">
 		<key name="2001" value="4410000560" />    <!--441999广东省分行 -->
-		<key name="" value="xxxxxxxxxx" />    <!--444999珠海分行 -->
-		<key name="" value="xxxxxxxxxx" />    <!--446999佛山分行 -->
+		<key name="" value="" />    <!--444999珠海分行 -->
+		<key name="" value="" />    <!--446999佛山分行 -->
 		<key name="2032" value="4450000262" />    <!--445999汕头分行 -->
 		<key name="" value="" />    <!--483999东莞分行 -->
 		<key name="" value="" />    <!--484999中山分行 -->

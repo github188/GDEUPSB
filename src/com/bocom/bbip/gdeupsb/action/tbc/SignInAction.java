@@ -5,10 +5,9 @@ import java.util.Date;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
-import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
-import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
-import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
+import com.bocom.bbip.gdeupsb.entity.GdTbcBasInf;
+import com.bocom.bbip.gdeupsb.repository.GdTbcBasInfRepository;
 import com.bocom.bbip.utils.*;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -32,37 +31,36 @@ public class SignInAction extends BaseAction {
         context.setData("devId", context.getData("DEV_ID"));
         context.setData("teller", context.getData("TELLER"));
 
-        String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
-        if (null == cAgtNo) {
-            cAgtNo ="4410000560";
-        }
-        context.setData("cAgtNo", cAgtNo);
-        EupsThdTranCtlInfo eupsThdTranCtlInfo = BeanUtils.toObject(context.getDataMap(), EupsThdTranCtlInfo.class);
-        EupsThdTranCtlInfo resultThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(cAgtNo);
-        if (resultThdTranCtlInfo == null) {
+     
+      
+        GdTbcBasInf resultTbcBasInfo = get(GdTbcBasInfRepository.class).findOne(context.getData("dptId").toString());
+        if (resultTbcBasInfo == null) {
             context.setData(GDParamKeys.RSP_CDE,"9999");
             context.setData(GDParamKeys.RSP_MSG,"你提供的数据不存在!");
             return;
         } 
-        if (resultThdTranCtlInfo.getTxnCtlSts().equals(Constants.TXN_CTL_STS_SIGNIN)) {
+        if (resultTbcBasInfo.getSigSts().equals(Constants.TXN_CTL_STS_SIGNIN)) {
             context.setData(GDParamKeys.RSP_CDE,"9999");
             context.setData(GDParamKeys.RSP_MSG,"第三方渠道已签到!");
             return;
-        } else if (resultThdTranCtlInfo.getTxnCtlSts().equals(Constants.TXN_CTL_STS_CHECKBILL_ING)) {
+        } else if (resultTbcBasInfo.getSigSts().equals(Constants.TXN_CTL_STS_CHECKBILL_ING)) {
             context.setData(GDParamKeys.RSP_CDE,"9999");
             context.setData(GDParamKeys.RSP_MSG,"不是签到时间不允许第三方签到!");
             return;
         } else {
-            eupsThdTranCtlInfo.setTxnCtlSts(Constants.TXN_CTL_STS_SIGNIN);
-            eupsThdTranCtlInfo.setTxnDte(DateUtils.parse(context.getData("txnTme").toString().substring(0,8),DateUtils.STYLE_yyyyMMdd));
-            eupsThdTranCtlInfo.setTxnTme(DateUtils.parse(context.getData("txnTme").toString(),DateUtils.STYLE_yyyyMMddHHmmss));
-            eupsThdTranCtlInfo.setComNo(cAgtNo);
+            GdTbcBasInf tbcBasInfo = BeanUtils.toObject(context.getDataMap(), GdTbcBasInf.class);
+            tbcBasInfo.setSigSts(Constants.TXN_CTL_STS_SIGNIN);
+            Date date =DateUtils.parse(context.getData("txnTme").toString().substring(0,8), DateUtils.STYLE_yyyyMMdd);
+            tbcBasInfo.setTranDt(DateUtils.format(date, DateUtils.STYLE_yyyyMMdd));
+   
             // 根据默认算法生成一个密钥
             Date timeStp = new Date();
             String mainkey = DateUtils.format(timeStp, DateUtils.STYLE_yyyyMMddHHmmss);
-            if (null !=resultThdTranCtlInfo.getManKey()) {
-                mainkey = resultThdTranCtlInfo.getManKey() + mainkey;
+            if (null !=resultTbcBasInfo.getComKey()) {
+                mainkey = resultTbcBasInfo.getComKey() + mainkey;
             }
+            tbcBasInfo.setComKey(mainkey);
+            
             //;加密秘钥
            // String readyMD5 = buildReadyStr(context);
            // String beforeMacChk =GDEUPSConstants.EUPS_TBC_BLANK, macChk =GDEUPSConstants.EUPS_TBC_BLANK;
@@ -99,8 +97,8 @@ public class SignInAction extends BaseAction {
                 } catch (NoSuchAlgorithmException e) {
                     throw new CoreException(ErrorCodes.EUPS_GEN_KEY_ERROR);
                 }*/
-                get(EupsThdTranCtlInfoRepository.class).update(eupsThdTranCtlInfo);
-            } else {
+                get(GdTbcBasInfRepository.class).update(tbcBasInfo);
+                } else {
                 throw new CoreException("主密钥不存在 !!");
             }
             context.setData(GDParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);

@@ -1,12 +1,15 @@
 package com.bocom.bbip.gdeupsb.action.tbc;
 
+import java.util.Date;
+
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
-import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
-import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.entity.GdTbcBasInf;
+import com.bocom.bbip.gdeupsb.repository.GdTbcBasInfRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
+import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -34,28 +37,27 @@ public class SignOutAction  extends BaseAction {
             cAgtNo ="4410000560";
         }
         context.setData("cAgtNo", cAgtNo);
-        EupsThdTranCtlInfo resultThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(cAgtNo);
-        if (resultThdTranCtlInfo == null) {
+        GdTbcBasInf tbcBasInfo = get(GdTbcBasInfRepository.class).findOne(context.getData("dptId").toString());
+        if (tbcBasInfo == null) {
             context.setData(GDParamKeys.RSP_CDE,"9999");
             context.setData(GDParamKeys.RSP_MSG,"数据不存在!");
             return;
         } 
-        if (resultThdTranCtlInfo.getTxnCtlSts().equals(Constants.TXN_CTL_STS_SIGNOUT)) {
+        if (tbcBasInfo.getSigSts().equals(Constants.TXN_CTL_STS_SIGNOUT)) {
             context.setData(GDParamKeys.RSP_CDE,"9999");
             context.setData(GDParamKeys.RSP_MSG,"第三方渠道已签退!");
             return;
-        } else if (resultThdTranCtlInfo.getTxnCtlSts().equals(Constants.TXN_CTL_STS_CHECKBILL_ING)) {
+        } else if (tbcBasInfo.getSigSts().equals(Constants.TXN_CTL_STS_CHECKBILL_ING)) {
             context.setData(GDParamKeys.RSP_CDE,"9999");
             context.setData(GDParamKeys.RSP_MSG,"不是签退时间不允许第三方签退!");
             return;
         } else {
             try {
-                EupsThdTranCtlInfo eupsThdTranCtlInfo = new EupsThdTranCtlInfo();
-                eupsThdTranCtlInfo.setTxnCtlSts(Constants.TXN_CTL_STS_SIGNOUT);
-                eupsThdTranCtlInfo.setTxnDte(DateUtils.parse(context.getData("txnTme").toString().substring(0,8),DateUtils.STYLE_yyyyMMdd));
-                eupsThdTranCtlInfo.setTxnTme(DateUtils.parse(context.getData("txnTme").toString(),DateUtils.STYLE_yyyyMMddHHmmss));
-                eupsThdTranCtlInfo.setComNo(cAgtNo);
-                get (EupsThdTranCtlInfoRepository.class).update(eupsThdTranCtlInfo);
+                GdTbcBasInf putTbcBasInfo = BeanUtils.toObject(context.getDataMap(), GdTbcBasInf.class);
+                Date date =DateUtils.parse(context.getData("txnTme").toString().substring(0,8), DateUtils.STYLE_yyyyMMdd);
+                putTbcBasInfo.setTranDt(DateUtils.format(date, DateUtils.STYLE_yyyyMMdd));
+                putTbcBasInfo.setSigSts(Constants.TXN_CTL_STS_SIGNOUT);
+                get (GdTbcBasInfRepository.class).update(putTbcBasInfo);
             } catch (Exception e) {
                 throw new CoreException("数据库处理错误 !"+ e);
             }
