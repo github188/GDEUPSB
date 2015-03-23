@@ -78,10 +78,6 @@ public class BatchDataResultFileAction implements AfterBatchAcpService{
 			
 			//TODO 通知第三方
 			
-			gdEupsEleTmpRepository.deleteAll("1");
-			EupsBatchInfoDetail eupsBatchInfoDetail=new EupsBatchInfoDetail();
-			eupsBatchInfoDetail.setBatNo(context.getData(ParamKeys.BAT_NO).toString());
-			eupsBatchInfoDetailRepository.delete(eupsBatchInfoDetail);
 			logger.info("===============End  BatchDataResultFileAction  afterBatchDeal");	
 		}
 	/**
