@@ -88,10 +88,6 @@
 	<!-- ========================= -->
 
 
-
-
-
-
 	<!-- WATR00 START -->
 	<bean id="tcpThreadPool_WATR00" class="com.bocom.jump.bp.util.Jdk15ThreadPool">
 		<property name="name" value="tcpChannel_WATR00" />
@@ -274,7 +270,7 @@
 
 
 	<bean id="tcpThreadPool_ELEC01" class="com.bocom.jump.bp.util.Jdk15ThreadPool">
-		<property name="name" value="tcpChannel_mobile" />
+		<property name="name" value="tcpChannel_ELEC01" />
 		<property name="poolSize" value="10" />
 		<property name="workQueueSize" value="1024" />
 	</bean>
@@ -391,7 +387,7 @@
 	
 	
 	<bean id="tcpThreadPool_HSSC" class="com.bocom.jump.bp.util.Jdk15ThreadPool">
-		<property name="name" value="tcpChannel_mobile" />
+		<property name="name" value="tcpChannel_HSSC" />
 		<property name="poolSize" value="10" />
 		<property name="workQueueSize" value="1024" />
 	</bean>
@@ -404,7 +400,7 @@
 		<property name="port" value="34160" />
 		<property name="soTimeout" value="100000" />
 		<property name="mapping" ref="tcpMapping_HSSC" />
-		<property name="threadPool" ref="tcpThreadPool_ELEC01" />
+		<property name="threadPool" ref="tcpThreadPool_HSSC" />
 	</bean>
 	<bean id="tcpEndpoint_HSSC" class="com.bocom.jump.bp.channel.DefaultEndpoint">
 		<property name="interceptors">
