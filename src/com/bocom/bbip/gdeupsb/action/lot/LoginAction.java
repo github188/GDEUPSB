@@ -48,7 +48,7 @@ public class LoginAction extends BaseAction {
         Map<String,Object> resultMap = new HashMap<String, Object>();//申请当前期号，奖期信息下载
        
       
-        //测试 Start
+        //测试 Start TODO
         // 福彩系统登录
         /*   Transport ts = context.getService("STHDLOT1");
         try {
@@ -75,7 +75,7 @@ public class LoginAction extends BaseAction {
        
         Map<String,Object> map = new HashMap<String, Object>();//申请当前期号，奖期信息下载
         //测试 Start
-        // 系统对时
+        // 系统对时 TODO
         /*   Transport transport = context.getService("STHDLOT1");
         try {
             resultMap = (Map<String, Object>) ts.submit(context.getDataMap(), context);
