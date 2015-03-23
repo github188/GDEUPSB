@@ -168,7 +168,7 @@ public class GzagBatchDataFileAction extends BaseAction implements BatchAcpServi
 				agtFileBatchDetail.setCUSAC(cusAc);
 				//本行标志
 				if(get(AccountService.class).isOurBankCard(cusAc)){
-				agtFileBatchDetail.setOUROTHFLG("0");
+						agtFileBatchDetail.setOUROTHFLG("0");
 				}else{
 					agtFileBatchDetail.setOUROTHFLG("1");
 				}
