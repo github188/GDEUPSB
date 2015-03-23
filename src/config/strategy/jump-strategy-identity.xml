@@ -248,6 +248,9 @@
 	<bean id="eups.fileBatchPayCreateDataServiceActionGZAG00"
 		class="com.bocom.bbip.gdeupsb.action.gzag.batch.GzagBatchDataFileAction" />
 		
+	<bean id="eups.afterBatchAcpServiceActionGZAG00"
+		class="com.bocom.bbip.gdeupsb.action.gzag.batch.GzagBatchDataResultFileAction" />
+				
 	<!--广州电力单笔缴费 -->
 	<bean class="com.bocom.bbip.gdeupsb.strategy.elcgd.PayFeeOnlineServiceAction"
 		id="eups.payFeeOnlineServiceActionELEC01" />
