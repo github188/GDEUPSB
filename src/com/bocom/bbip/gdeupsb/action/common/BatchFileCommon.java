@@ -1,6 +1,5 @@
 package com.bocom.bbip.gdeupsb.action.common;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -88,7 +87,9 @@ public class BatchFileCommon extends BaseAction {
 		//文本代收付 fileId 反盘文件时使用
 		info.setRsvFld7((String)context.getData("fileId"));
 		//文件名   和eups控制表关联  必须有
-		info.setRsvFld8("BATC"+comNoAcps+"0.txt");
+		String fileNme="BATC"+comNoAcps+"0.txt";
+		context.setData(ParamKeys.FLE_NME, fileNme);
+		info.setRsvFld8(fileNme);
 		//保存到控制表  
 		get(GDEupsBatchConsoleInfoRepository.class).insertConsoleInfo(info);
 		context.getDataMapDirectly().putAll(BeanUtils.toFlatMap(info));
