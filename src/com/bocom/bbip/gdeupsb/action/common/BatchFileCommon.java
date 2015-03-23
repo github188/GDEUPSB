@@ -19,8 +19,10 @@ import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsActSysPara;
+import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsActSysParaRepository;
+import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
@@ -83,6 +85,8 @@ public class BatchFileCommon extends BaseAction {
 		       comNoAcps = ((EupsActSysPara)resultList.get(0)).getSplNo();
 		    }
 		context.setData("comNoAcps", comNoAcps);
+		//文本代收付 fileId 反盘文件时使用
+		info.setRsvFld7((String)context.getData("fileId"));
 		//文件名   和eups控制表关联  必须有
 		info.setRsvFld8("BATC"+comNoAcps+"0.txt");
 		//保存到控制表  
@@ -178,5 +182,16 @@ public class BatchFileCommon extends BaseAction {
 		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(ret);
 		context.getDataMapDirectly().putAll(BeanUtils.toMap(ret));
 	}
-	
+/**
+ * EUPS_BATCH_CONSOLE_INFO和GDEUPS_BATCH_CONSOLE_INFO关联起来
+ */
+	public GDEupsBatchConsoleInfo  eupsBatchConSoleInfoAndgdEupsBatchConSoleInfo(Context context){
+			String batNo=context.getData("batNo").toString();
+			EupsBatchConsoleInfo eupsBatchConSoleInfo=get(EupsBatchConsoleInfoRepository.class).findOne(batNo);
+			String fleNme=eupsBatchConSoleInfo.getFleNme();
+			GDEupsBatchConsoleInfo gdEupsBatchConsoleInfos=new GDEupsBatchConsoleInfo();
+			gdEupsBatchConsoleInfos.setRsvFld8(fleNme);
+			GDEupsBatchConsoleInfo gdEupsBatchConSoleInfo=get(GDEupsBatchConsoleInfoRepository.class).find(gdEupsBatchConsoleInfos).get(0);
+			return gdEupsBatchConSoleInfo;
+	}
 }

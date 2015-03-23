@@ -55,6 +55,7 @@ public class PrintBatchInfoAction extends BaseAction{
 				context.setData("totCnt", gdEupsBatchConsoleInfo.getTotCnt());
 				context.setData("totAmt", gdEupsBatchConsoleInfo.getTotAmt());
 				
+				log.info("~~~~~~~~~~~"+context);
 				//清单文件
 				VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
 				try {
@@ -63,13 +64,24 @@ public class PrintBatchInfoAction extends BaseAction{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				System.out.println();
+				System.out.println(1);
 				//拼装文件
 				Map<String, String> map = new HashMap<String, String>();
-				map.put("batchInfo", "config/report/common/printBatchInfo.vm");
+				System.out.println();
+				System.out.println(11);
+				map.put("printBatchInfo", "config/report/common/printBatchInfo.vm");
+				System.out.println();
+				System.out.println(111);
 				render.setReportNameTemplateLocationMapping(map);
+				System.out.println();
+				System.out.println(1111);
 				context.setData("eles", list);
-				String result = render.renderAsString("batchInfo", context);
-				
+				System.out.println();
+				System.out.println(11111);
+				String result = render.renderAsString("printBatchInfo", context);
+				System.out.println();
+				System.out.println(111111);
 				log.info("~~~~~~~~~~~~~~~~~~~~~"+result);
 				
 				//文件路径
