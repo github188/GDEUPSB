@@ -10,6 +10,37 @@
 			   </actions>
 			</process>
 	
+	<!-- 银行方单边记账 -->
+	<process id="gdeupsb.trspCharge" template="eups.payUnilateralNoRvsTemplate" interceptors="eups.thdTransInterceptor" >
+	   <actions>
+	       <!-- 交易前服务处理 -->
+		 <action id="preCheckAction" ref="eups.prepareCheckDealStrategyAction" /> 
+		  <!--  <action id="preCheckAction" ref="eups.payUnilateralToBankServiceAction" operations="prepareCheckDeal"/> -->
+	       <!-- 交易前检查  -->
+	       <action id="preAction" ref="eups.checkComTxnCtlAction" operations="checkThdTxnCtlNormal"/>
+	       <action id="preAction" ref="eups.checkCusAgrAction"/>
+	       <!-- 记账前处理 -->
+	        <action id="preAction" ref="eups.prePayToBankStrategyAction"/> 
+	       <!-- <action id="preAction" ref="eups.payUnilateralToBankServiceAction" operations="prePayToBank"/> -->
+	       <action id="preAction" ref="eups.checkThdReqJnlAction"/>	
+	       <action id="preAction" ref="eups.queryCusAcInfAction" operations="cusAcOldToNew"/>
+	       <action id="preAction" ref="eups.queryCusAcInfAction" operations="queryCusAcTyp"/>
+	       <action id="preAction" ref="eups.preparePaymentInfoAction"/>
+	       <!-- 检查渠道限额，如果配置了渠道限额则检查 -->
+		   <action id="preAction" ref="eups.checkChlAmtLimAction" /> 
+	       <!-- 联机记账预处理 -->
+	       <action id="initAction" ref="eups.initPaymentInfoAction"/>
+	       <!-- 联机531代收付交易主机记账 （自调冲正） -->
+	       <action id="businessAction" ref="eups.bbipPayment"/>
+	       <action id="businessAction" ref="eups.saveCBPaymentResultAction"/>
+	       <!-- 交易结果 -->
+	       <!-- 记账后返回处理 -->
+	       <action id="finalizeAction" ref="eups.aftPayToBankStrategyAction"/> 
+	       <!-- <action id="finalizeAction" ref="eups.payUnilateralToBankServiceAction" operations="aftPayToBank"/> -->
+	       <action id="finalizeAction" ref="eups.setTransJournalStateAction"/>
+	       <action id="finalizeAction" ref="eups.savePaymentResultAction"/>
+	   </actions>
+	</process>
 	
 	<!-- 查询汽车费用  -->
 	 <process id="gdeupsb.transportFeeQuery" template="eups.simpleTran"
