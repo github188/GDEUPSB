@@ -49,6 +49,7 @@ public class CancelBatchCheckAction extends BaseAction {
 					EupsBatchConsoleInfo eupsBatchConsoleInfo=get(EupsBatchConsoleInfoRepository.class).find(eupsBatchConsoleInfos).get(0);
 					eupsBatchConsoleInfo.setBatSts("C");
 					get(EupsBatchConsoleInfoRepository.class).update(eupsBatchConsoleInfo);
+					context.setData("cancelResult", "批次撤销完成");
 		}else if(gdEupsBatchConsoleInfo.getBatSts().equals("S")){
 					context.setData("cancelResult", "批次已完成，不能撤销");
 		}else if(gdEupsBatchConsoleInfo.getBatSts().equals("C")){
