@@ -130,6 +130,8 @@ public class GzagBatchDataFileAction extends BaseAction implements BatchAcpServi
 			context.setData(ParamKeys.COMPANY_NO, comNo);
 			get(BatchFileCommon.class).sendBatchFileToACP(context);
 			
+			context.setData(ParamKeys.TOT_CNT, mapList.size());
+			context.setData(ParamKeys.TOT_AMT, listTotAmt);
 			logger.info("=================End  BatchDataFileAction  prepareBatchDeal");
 	}
 	/**
@@ -148,7 +150,6 @@ public class GzagBatchDataFileAction extends BaseAction implements BatchAcpServi
 			headMap.put(ParamKeys.COMPANY_NO,sqlNo);
 			headMap.put(GDParamKeys.TOT_COUNT, context.getData("listTotCnt"));
 			headMap.put(ParamKeys.TOT_AMT, context.getData("listTotAmt"));
-
 			//detail
 			GDEupsGzagBatchTmp gdEupsGzagBatchTmps=new GDEupsGzagBatchTmp();
 			gdEupsGzagBatchTmps.setBakFld(comNo);
