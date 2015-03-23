@@ -67,8 +67,6 @@ public class GzagBatchDataFileAction extends BaseAction implements BatchAcpServi
 			logger.info("=============Start  BatchDataFileAction  prepareBatchDeal");
 			String comNo=context.getData(ParamKeys.COMPANY_NO).toString();
 			String fileName=context.getData(ParamKeys.FLE_NME).toString();
-			//获取批次号
-			((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).BeforeBatchProcess(context);
 			context.setData(ParamKeys.WS_TRANS_CODE, "99");
 			//文件名称
 			String fileId="";
@@ -87,7 +85,13 @@ public class GzagBatchDataFileAction extends BaseAction implements BatchAcpServi
 			}else{
 					throw new CoreException("没有该单位");
 			}
+			//传入控制表 选择翻盘文件是使用
+			context.setData("fileId", fileId);
 			logger.info("~~~~~~~~~~~~~fileId=["+fileId+"]");
+			
+			//获取批次号
+			((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).BeforeBatchProcess(context);
+			
 			//得到文件
 			EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne(fileId);
 			eupsThdFtpConfig.setFtpDir("1");

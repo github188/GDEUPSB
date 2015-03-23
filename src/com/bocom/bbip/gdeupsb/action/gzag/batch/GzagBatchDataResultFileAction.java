@@ -1,6 +1,7 @@
 package com.bocom.bbip.gdeupsb.action.gzag.batch;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,23 +10,29 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bocom.bbip.comp.BBIPPublicService;
+import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
+import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
 import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
+import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.entity.GDEupsGzagBatchTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GDEupsGzagBatchTmpRepository;
 import com.bocom.bbip.utils.BeanUtils;
+import com.bocom.bbip.utils.DateUtils;
+import com.bocom.jump.bp.SystemConfig;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
-public class GzagBatchDataResultFileAction implements AfterBatchAcpService{
+public class GzagBatchDataResultFileAction extends BaseAction implements AfterBatchAcpService{
 	private final static Log logger=LogFactory.getLog(GzagBatchDataResultFileAction.class);
 	@Autowired
 	OperateFileAction operateFile;
@@ -34,32 +41,57 @@ public class GzagBatchDataResultFileAction implements AfterBatchAcpService{
 	@Autowired
 	GDEupsBatchConsoleInfoRepository gdEupsBatchConsoleInfoRepository;
 	@Autowired
+	EupsBatchConsoleInfoRepository eupsBatchConsoleInfoRepository;
+	@Autowired
 	GDEupsGzagBatchTmpRepository gdEupsGzagBatchTmpRepository;
 	@Autowired
 	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
+	@Autowired
+	BBIPPublicService bbipPublicService;
+	@Autowired
+	SystemConfig systemConfig;
 	/**
 	 * 广州文本  结果文件处理
 	 */
 	public void afterBatchDeal(AfterBatchAcpDomain afterbatchacpdomain, Context context) throws CoreException {
 		logger.info("===============Start  GzagBatchDataResultFileAction");
+		
+		final String tlr=(String)context.getData(ParamKeys.TELLER);
+		final String br=(String)context.getData(ParamKeys.BR);
+        final String AcDate=DateUtils.format(bbipPublicService.getAcDate(),DateUtils.STYLE_yyyyMMdd);
+        final String systemCode=systemConfig.getSystemCode();
+        final String dir="/home/bbipadm/data/mftp/BBIP/"+systemCode+"/"+br+"/"+tlr+"/"+AcDate+"/";
+			//得到文件
+			EupsThdFtpConfig eupsThdFtpConfigFile = eupsThdFtpConfigRepository.findOne(ParamKeys.FTPID_BATCH_PAY_FILE_TO_ACP);
+			String batNo=context.getData("batNo").toString();
+			String fileNme=context.getData("batNo")+".result";
+			//第三方批次号
+			String thdBatNo=eupsBatchConsoleInfoRepository.findOne(batNo).getRsvFld1();
+			eupsThdFtpConfigFile.setRmtFleNme(fileNme);
+			eupsThdFtpConfigFile.setRmtWay(dir);
+			eupsThdFtpConfigFile.setFtpDir("1");
+			operateFTP.getFileFromFtp(eupsThdFtpConfigFile);
+			logger.info("============得到文件成功");
 			
-			
-			String batNo=context.getData(ParamKeys.BAT_NO).toString();
-			GDEupsBatchConsoleInfo gdeupsBatchConsoleInfo = gdEupsBatchConsoleInfoRepository.findOne(batNo);
+			GDEupsBatchConsoleInfo gdeupsBatchConsoleInfo =get(BatchFileCommon.class).eupsBatchConSoleInfoAndgdEupsBatchConSoleInfo(context);
 			
 			//更改控制表 并得到控制信息
 			GDEupsBatchConsoleInfo info=updateInfo(context,gdeupsBatchConsoleInfo); 
+			String fileId=gdeupsBatchConsoleInfo.getRsvFld7();
 			//文件名
-			String fileName=info.getFleNme();
+			String locName=DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+fileId+".txt";
+			logger.info(">>>>>>>>>>>>>>>>>locName:"+locName);
 			//拼装Map文件
 			Map<String, Object> resultMap = createFileMap(context,info);
-			String fileIDResult=context.getData("fileID").toString()+"Result";
-			EupsThdFtpConfig eupsThdFtpConfig =eupsThdFtpConfigRepository.findOne(fileIDResult);
+			String fileIDResult=fileId+"Result";
+			EupsThdFtpConfig eupsThdFtpConfig =eupsThdFtpConfigRepository.findOne(fileId);
 			// 生成文件
-			operateFile.createCheckFile(eupsThdFtpConfig, fileIDResult, fileName, resultMap);
+			operateFile.createCheckFile(eupsThdFtpConfig, fileIDResult, locName, resultMap);
+			logger.info("===============生成反盘文件成功");
 			// 将生成的文件上传至指定服务器
-			eupsThdFtpConfig.setLocFleNme(fileName);
-			eupsThdFtpConfig.setRmtFleNme(fileName);
+			eupsThdFtpConfig.setFtpDir("0");
+			eupsThdFtpConfig.setLocFleNme(locName);
+			eupsThdFtpConfig.setRmtFleNme(locName);
 			operateFTP.putCheckFile(eupsThdFtpConfig);
 			
 			logger.info("===============End  GzagBatchDataResultFileAction");
@@ -101,9 +133,9 @@ public class GzagBatchDataResultFileAction implements AfterBatchAcpService{
 			resultMap.put(ParamKeys.EUPS_FILE_HEADER, resultMapHead);
 			//文件内容 
 			GDEupsGzagBatchTmp gdEupsGzagBatchTmps =new  GDEupsGzagBatchTmp();
-			gdEupsGzagBatchTmps.setRsvFld5(info.getBatNo());
+			gdEupsGzagBatchTmps.setRsvFld1(info.getBatNo());
 			List<GDEupsGzagBatchTmp> detailList=gdEupsGzagBatchTmpRepository.find(gdEupsGzagBatchTmps);
-			resultMap.put(ParamKeys.EUPS_FILE_DETAIL, detailList);
+			resultMap.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(detailList));
 			logger.info("===============End   BatchDataResultFileAction  createFileMap");	
 			return resultMap;
 	}
