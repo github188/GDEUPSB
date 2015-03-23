@@ -44,8 +44,9 @@ public class CancelBatchCheckAction extends BaseAction {
 					gdEupsBatchConsoleInfo.setBatSts("C");
 					get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(gdEupsBatchConsoleInfo);
 					String fleNme=gdEupsBatchConsoleInfo.getRsvFld8();
-					EupsBatchConsoleInfo eupsBatchConsoleInfo=new EupsBatchConsoleInfo();
-					eupsBatchConsoleInfo.setFleNme(fleNme);
+					EupsBatchConsoleInfo eupsBatchConsoleInfos=new EupsBatchConsoleInfo();
+					eupsBatchConsoleInfos.setFleNme(fleNme);
+					EupsBatchConsoleInfo eupsBatchConsoleInfo=get(EupsBatchConsoleInfoRepository.class).find(eupsBatchConsoleInfos).get(0);
 					eupsBatchConsoleInfo.setBatSts("C");
 					get(EupsBatchConsoleInfoRepository.class).update(eupsBatchConsoleInfo);
 		}else if(gdEupsBatchConsoleInfo.getBatSts().equals("S")){
