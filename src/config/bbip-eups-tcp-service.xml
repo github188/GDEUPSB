@@ -479,8 +479,8 @@
 	</bean>
 
 	<bean id="tcpChannel_ELEC02" class="com.bocom.jump.bp.channel.tcp.SocketServer">
-		<property name="host" value="127.0.0.1" />
-		<property name="port" value="9999" />
+		<property name="host" value="0.0.0.0" />
+		<property name="port" value="30112" />
 		<property name="soTimeout" value="10000" />
 		<property name="mapping" ref="tcpMapping_ELEC02" />
 		<property name="threadPool" ref="Pool_ELEC02" />
@@ -518,7 +518,7 @@
 				</bean>
 				<bean class="com.bocom.bbip.gdeupsb.channel.tcp.ContextInterceptorExt"></bean>
 				<bean class="com.bocom.bbip.gdeupsb.channel.tcp.ServiceThdInterceptorExt">
-					<constructor-arg value="9002" />
+					<constructor-arg value="30112" />
 				</bean>
 			</array>
 		</property>
