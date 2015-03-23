@@ -29,13 +29,11 @@
 		<property name="mapping" ref="pgas00_TcpMapping" />
 		<property name="threadPool" ref="pgas00_TcpThreadPool" />
 	</bean>
-
 	<bean id="pgas00_TcpThreadPool" class="com.bocom.jump.bp.util.Jdk15ThreadPool">
 		<property name="name" value="pgas00" />
 		<property name="poolSize" value="10" />
 		<property name="workQueueSize" value="1024" />
 	</bean>
-
 	<bean id="pgas00_TcpEndpoint" class="com.bocom.jump.bp.channel.DefaultEndpoint">
 		<property name="interceptors">
 			<array>
@@ -100,7 +98,6 @@
 		<property name="poolSize" value="10" />
 		<property name="workQueueSize" value="1024" />
 	</bean>
-
 	<bean id="tcpMapping_WATR00" class="com.bocom.bbip.channel.tcp.EdgeSupportSocketURIEndpointMapping">
 		<property name="default" ref="tcpEndpoint_WATR00" />
 	</bean>
@@ -149,13 +146,15 @@
 		</property>
 	</bean>
 	<!-- WATR00 END -->
+	
+	
+	
 	<!-- PROF00 START -->
 	<bean id="tcpThreadPool_PROF00" class="com.bocom.jump.bp.util.Jdk15ThreadPool">
 		<property name="name" value="tcpChannel_PROF00" />
 		<property name="poolSize" value="10" />
 		<property name="workQueueSize" value="1024" />
 	</bean>
-
 	<bean id="tcpMapping_PROF00" class="com.bocom.bbip.channel.tcp.EdgeSupportSocketURIEndpointMapping">
 		<property name="default" ref="tcpEndpoint_PROF00" />
 	</bean>
@@ -216,20 +215,17 @@
 			</map>
 		</property>
 	</bean>
-
 	<bean id="tbc" class="com.bocom.jump.bp.channel.tcp.SocketServer">
 		<!-- 渠道接入端口，参数配置于sys.properties文件 -->
 		<property name="port" value="36010" />
 		<property name="mapping" ref="tbc_TcpMapping" />
 		<property name="threadPool" ref="tbc_TcpThreadPool" />
 	</bean>
-
 	<bean id="tbc_TcpThreadPool" class="com.bocom.jump.bp.util.Jdk15ThreadPool">
 		<property name="name" value="tbc" />
 		<property name="poolSize" value="10" />
 		<property name="workQueueSize" value="1024" />
 	</bean>
-
 	<bean id="tbc_TcpEndpoint" class="com.bocom.jump.bp.channel.DefaultEndpoint">
 		<property name="interceptors">
 			<array>
@@ -282,7 +278,6 @@
 		<property name="poolSize" value="10" />
 		<property name="workQueueSize" value="1024" />
 	</bean>
-
 	<bean class="com.bocom.bbip.channel.tcp.EdgeSupportSocketURIEndpointMapping"
 		id="tcpMapping_ELEC01">
 		<property name="default" ref="tcpEndpoint_ELEC01" />
@@ -341,12 +336,10 @@
 		<property name="poolSize" value="10" />
 		<property name="workQueueSize" value="1024" />
 	</bean>
-
 	<bean class="com.bocom.bbip.channel.tcp.EdgeSupportSocketURIEndpointMapping"
 		id="tcpMapping_ELEC00">
 		<property name="default" ref="tcpEndpoint_ELEC00" />
 	</bean>
-
 	<bean id="tcpChannel_ELEC00" class="com.bocom.jump.bp.channel.tcp.SocketServer">
 		<property name="host" value="127.0.0.1" />
 		<property name="port" value="9998" />
@@ -354,7 +347,6 @@
 		<property name="mapping" ref="tcpMapping_ELEC00" />
 		<property name="threadPool" ref="Pool_ELEC00" />
 	</bean>
-
 	<bean id="tcpEndpoint_ELEC00" class="com.bocom.jump.bp.channel.DefaultEndpoint">
 		<property name="interceptors">
 			<array>
@@ -403,12 +395,7 @@
 				<entry key="tcp://*:32038" value-ref="absIn_TcpEndpoint" />
 			</map>
 		</property>
-	</bean>
-
-	<!-- ========================================================== -->
-	<!-- SERVER COMMUNICATION CONFIG ！ -->
-	<!-- tcp channel absIn -->
-	<!-- ========================================================== -->
+	</bean>	
 	<bean id="absIn" class="com.bocom.jump.bp.channel.tcp.SocketServer">
 		<!-- property name="host" value="${local.ip}"/> -->
 		<!-- 渠道接入端口，参数配置于sys.properties文件 -->
@@ -416,13 +403,11 @@
 		<property name="mapping" ref="absIn_TcpMapping" />
 		<property name="threadPool" ref="absIn_TcpThreadPool" />
 	</bean>
-
 	<bean id="absIn_TcpThreadPool" class="com.bocom.jump.bp.util.Jdk15ThreadPool">
 		<property name="name" value="absIn" />
 		<property name="poolSize" value="10" />
 		<property name="workQueueSize" value="1024" />
 	</bean>
-
 	<bean id="absIn_TcpEndpoint" class="com.bocom.jump.bp.channel.DefaultEndpoint">
 		<property name="interceptors">
 			<array>
@@ -467,26 +452,25 @@
 			</array>
 		</property>
 	</bean>
+
+
 <!-- 汕头电力第三方接出 start-->
 <bean id="Pool_ELEC02" class="com.bocom.jump.bp.util.Jdk15ThreadPool">
 		<property name="name" value="tcpChannel_ELEC02" />
 		<property name="poolSize" value="10" />
 		<property name="workQueueSize" value="1024" />
 	</bean>
-
-	<bean id="tcpMapping_ELEC02" class="com.bocom.bbip.channel.tcp.EdgeSupportSocketURIEndpointMapping">
-		<property name="default" ref="tcpEndpoint_ELEC02" />
-	</bean>
-
-	<bean id="tcpChannel_ELEC02" class="com.bocom.jump.bp.channel.tcp.SocketServer">
-		<property name="host" value="0.0.0.0" />
-		<property name="port" value="30112" />
-		<property name="soTimeout" value="10000" />
-		<property name="mapping" ref="tcpMapping_ELEC02" />
+<bean id="tcpMapping_ELEC02" class="com.bocom.bbip.channel.tcp.EdgeSupportSocketURIEndpointMapping">
+	<property name="default" ref="tcpEndpoint_ELEC02" />
+</bean>
+<bean id="tcpChannel_ELEC02" class="com.bocom.jump.bp.channel.tcp.SocketServer">
+	<property name="host" value="0.0.0.0" />
+	<property name="port" value="30112" />
+	<property name="soTimeout" value="10000" />
+	<property name="mapping" ref="tcpMapping_ELEC02" />
 		<property name="threadPool" ref="Pool_ELEC02" />
 	</bean>
-
-	<bean id="tcpEndpoint_ELEC02" class="com.bocom.jump.bp.channel.DefaultEndpoint">
+<bean id="tcpEndpoint_ELEC02" class="com.bocom.jump.bp.channel.DefaultEndpoint">
 		<property name="interceptors">
 			<array>
 				<bean
