@@ -1,6 +1,7 @@
 package com.bocom.bbip.gdeupsb.action.lot;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,9 +16,6 @@ import com.bocom.bbip.gdeupsb.entity.GdLotSysCfg;
 import com.bocom.bbip.gdeupsb.repository.GdLotSysCfgRepository;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
-import com.bocom.jump.bp.JumpException;
-import com.bocom.jump.bp.channel.CommunicationException;
-import com.bocom.jump.bp.channel.Transport;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -30,7 +28,6 @@ import com.bocom.jump.bp.core.CoreException;
 public class LoginAction extends BaseAction {
     // dealId 运营商 141
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public void execute(Context context) throws CoreException {
         log.info("LoginAction Start !!");
@@ -46,14 +43,14 @@ public class LoginAction extends BaseAction {
         //向福彩中心发出系统角色登录
         context.setData("eupsBusTyp", "LOTR01");
         context.setData("action", "212");
-        // context.setData("usrPam", "tangdi"); 测试
-        // context.setData("usrPas", "123456");
         context.setData("usrPam", lotSysCfgInfos.get(0).getUsrPam());
         context.setData("usrPas",  lotSysCfgInfos.get(0).getUsrPas());
-        
-
-        Transport ts = context.getService("STHDLOT1");
-        Map<String,Object> resultMap = null;//申请当前期号，奖期信息下载
+        Map<String,Object> resultMap = new HashMap<String, Object>();//申请当前期号，奖期信息下载
+       
+      
+        //测试 Start
+        // 福彩系统登录
+        /*   Transport ts = context.getService("STHDLOT1");
         try {
             resultMap = (Map<String, Object>) ts.submit(context.getDataMap(), context);
             context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
@@ -61,8 +58,10 @@ public class LoginAction extends BaseAction {
             e1.printStackTrace();
         } catch (JumpException e1) {
             e1.printStackTrace();
-        }  
-        
+        }  */
+        resultMap.put("resultCode", "000000");
+        resultMap.put("resultDes", "交易成功");
+        //测试 end
         if(!Constants.RESPONSE_CODE_SUCC.equals(resultMap.get("resultCode"))){
             log.info("QueryLot Fail!");
             context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
@@ -73,17 +72,22 @@ public class LoginAction extends BaseAction {
         
         //系统对时
         context.setData("action", "200");
-        Transport transport = context.getService("STHDLOT1");
-        Map<String,Object> map = null;//申请当前期号，奖期信息下载
+       
+        Map<String,Object> map = new HashMap<String, Object>();//申请当前期号，奖期信息下载
+        //测试 Start
+        // 系统对时
+        /*   Transport transport = context.getService("STHDLOT1");
         try {
-            map = (Map<String, Object>) transport.submit(context.getDataMap(), context);
+            resultMap = (Map<String, Object>) ts.submit(context.getDataMap(), context);
             context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
         } catch (CommunicationException e1) {
             e1.printStackTrace();
         } catch (JumpException e1) {
             e1.printStackTrace();
-        }
-       // Map<String, Object> map= get(ThirdPartyAdaptor.class).trade(context);
+        }  */
+        map.put("resultCode", "000000");
+        map.put("resultDes", "交易成功");
+        //测试 end
 
         if(!Constants.RESPONSE_CODE_SUCC.equals(map.get("resultCode"))){
             log.info("Check Systerm Time  Fail!");
@@ -96,14 +100,18 @@ public class LoginAction extends BaseAction {
         //获取时间差函数调用，设置时间差
         String sigTim = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMddHHmmss);
         String lclTim = sigTim;
-        String nodNo = context.getData("nodNo");
         String brNo = context.getData("brNo");
         String lotTim = context.getData("lotTim");
+
         CommonLotAction commonLotAction = new CommonLotAction();
-        String diffTm = commonLotAction.difTime(nodNo, brNo, lotTim, lclTim);
+        String diffTm = commonLotAction.difTime(brNo, lotTim, lclTim);
         context.setData("diffTm", diffTm);
-        GdLotSysCfg lotSysCfgInfoInput = BeanUtils.toObject(context.getDataMap(), GdLotSysCfg.class);
+        GdLotSysCfg lotSysCfgInfoInput = new GdLotSysCfg();
         lotSysCfgInfoInput.setDealId(GDConstants.LOT_DEAL_ID);
+        lotSysCfgInfoInput.setDiffTm(diffTm);
+        lotSysCfgInfoInput.setLclTim(lclTim);
+        lotSysCfgInfoInput.setLotTim(lotTim);
+        lotSysCfgInfoInput.setSigTim(lclTim);
         try {
             get(GdLotSysCfgRepository.class).update(lotSysCfgInfoInput);
         } catch (Exception e) {

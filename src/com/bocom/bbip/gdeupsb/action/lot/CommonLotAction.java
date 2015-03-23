@@ -86,7 +86,7 @@ public class CommonLotAction extends BaseAction{
         lclTim:本地时间
      * @return  difTim:时差（秒）
      */
-    public String difTime(String nodNo, String brNo,String lotTim, String lclTim) {
+    public String difTime( String brNo,String lotTim, String lclTim) {
         //检查分行号是否存在
         if (null == brNo) {
             brNo="441999";

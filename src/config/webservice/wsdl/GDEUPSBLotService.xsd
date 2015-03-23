@@ -87,6 +87,20 @@
       <xs:element name="response" type="tns:queryRegisterResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:element name="lotLogin" type="tns:lotLoginReq_CType"/>
+  <xs:element name="lotLoginResponse" type="tns:lotLoginRsp_CType"/>
+  <xs:complexType name="lotLoginReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:lotLoginRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="lotLoginRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:lotLoginResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:element name="requestHeader" type="tns:requestHeader_CType"/>
   <xs:element name="responseHeader" type="tns:responseHeader_CType"/>
   <xs:element name="sortingInfo" type="tns:sortingInfo_CType"/>
@@ -164,6 +178,7 @@
   <xs:complexType name="lotDeductMoneyRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType" minOccurs="0"/>
       <xs:element name="gameId" type="tns:gameId_SType"/>
       <xs:element name="drawId" type="tns:drawId_SType"/>
     </xs:sequence>
@@ -173,6 +188,14 @@
       <xs:element ref="tns:responseHeader"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:simpleType name="eupsBusTyp_SType">
+    <xs:annotation>
+      <xs:documentation>业务类型</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:simpleType name="gameId_SType">
     <xs:annotation>
       <xs:documentation>游戏编号</xs:documentation>
@@ -192,7 +215,7 @@
   <xs:complexType name="qryLotTxnJnlInfoRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
-      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType" minOccurs="0"/>
       <xs:element name="crdNo" type="tns:crdNo_SType"/>
       <xs:element name="betTyp" type="tns:betTyp_SType" minOccurs="0"/>
       <xs:element name="begDat" type="tns:begDat_SType" minOccurs="0"/>
@@ -211,14 +234,6 @@
       <xs:element name="rec" type="tns:rec_CType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="eupsBusTyp_SType">
-    <xs:annotation>
-      <xs:documentation>业务类型</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="10"/>
-    </xs:restriction>
-  </xs:simpleType>
   <xs:simpleType name="crdNo_SType">
     <xs:annotation>
       <xs:documentation>客户银行卡号</xs:documentation>
@@ -358,7 +373,7 @@
   <xs:complexType name="cathecticOnTimeRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
-      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType" minOccurs="0"/>
       <xs:element name="crdNo" type="tns:crdNo_SType"/>
       <xs:element name="betTyp" type="tns:betTyp_SType" minOccurs="0"/>
       <xs:element name="schTyp" type="tns:schTyp_SType" minOccurs="0"/>
@@ -517,6 +532,7 @@
   <xs:complexType name="lotRegistRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType" minOccurs="0"/>
       <xs:element name="cusNam" type="tns:cusNam_SType"/>
       <xs:element name="crdNo" type="tns:crdNo_SType"/>
       <xs:element name="idTyp" type="tns:idTyp_SType"/>
@@ -601,6 +617,7 @@
   <xs:complexType name="lotUpdateRegistInfoActionRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType" minOccurs="0"/>
       <xs:element name="cusNam" type="tns:cusNam_SType"/>
       <xs:element name="crdNo" type="tns:crdNo_SType"/>
       <xs:element name="idTyp" type="tns:idTyp_SType"/>
@@ -617,6 +634,7 @@
   <xs:complexType name="queryRegisterRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType" minOccurs="0"/>
       <xs:element name="crdNo" type="tns:crdNo_SType"/>
     </xs:sequence>
   </xs:complexType>
@@ -631,4 +649,24 @@
       <xs:element name="lotNam" type="tns:lotNam_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:complexType name="lotLoginRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType" minOccurs="0"/>
+      <xs:element name="lotTim" type="tns:lotTim_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="lotLoginResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="lotTim_SType">
+    <xs:annotation>
+      <xs:documentation>福彩时间</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="14"/>
+    </xs:restriction>
+  </xs:simpleType>
 </xs:schema>

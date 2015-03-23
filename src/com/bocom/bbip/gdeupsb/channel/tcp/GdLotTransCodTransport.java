@@ -910,8 +910,8 @@ public class GdLotTransCodTransport implements Transport {
 				continue;
 			String name = r.getName().toString();
 			if ("return".equals(name)) {
-				map.put("rRspCod", r.getAttributeValue(0));
-				map.put("rRspMsg", r.getAttributeValue(1));
+				map.put("resultCode", r.getAttributeValue(0));
+				map.put("resultDes", r.getAttributeValue(1));
 			}
 		}
 	}

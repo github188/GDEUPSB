@@ -42,6 +42,12 @@
   <wsdl:message name="queryRegisterResponseMessage">
     <wsdl:part name="queryRegisterResponse" element="gdeupsb:queryRegisterResponse"/>
   </wsdl:message>
+  <wsdl:message name="lotLoginRequestMessage">
+    <wsdl:part name="lotLoginRequest" element="gdeupsb:lotLogin"/>
+  </wsdl:message>
+  <wsdl:message name="lotLoginResponseMessage">
+    <wsdl:part name="lotLoginResponse" element="gdeupsb:lotLoginResponse"/>
+  </wsdl:message>
   <wsdl:portType name="GDEUPSBLotServicePortType">
     <wsdl:operation name="lotDeductMoney">
       <wsdl:documentation/>
@@ -72,6 +78,11 @@
       <wsdl:documentation/>
       <wsdl:input message="tns:queryRegisterRequestMessage"/>
       <wsdl:output message="tns:queryRegisterResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="lotLogin">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:lotLoginRequestMessage"/>
+      <wsdl:output message="tns:lotLoginResponseMessage"/>
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="GDEUPSBLotServiceSoapBinding" type="tns:GDEUPSBLotServicePortType">
@@ -123,6 +134,15 @@
     </wsdl:operation>
     <wsdl:operation name="queryRegister">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotService/queryRegister"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="lotLogin">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBLotService/lotLogin"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>

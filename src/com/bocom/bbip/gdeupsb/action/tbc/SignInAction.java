@@ -31,8 +31,6 @@ public class SignInAction extends BaseAction {
         context.setData("devId", context.getData("DEV_ID"));
         context.setData("teller", context.getData("TELLER"));
 
-     
-      
         GdTbcBasInf resultTbcBasInfo = get(GdTbcBasInfRepository.class).findOne(context.getData("dptId").toString());
         if (resultTbcBasInfo == null) {
             context.setData(GDParamKeys.RSP_CDE,"9999");
