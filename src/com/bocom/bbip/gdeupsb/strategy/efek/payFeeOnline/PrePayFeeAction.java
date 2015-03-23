@@ -21,7 +21,7 @@ public class PrePayFeeAction implements Executable{
 	public void execute(Context context) throws CoreException,
 			CoreRuntimeException {
 			logger.info("============Start  PrePayFeeAction");
-					String ActFlg=(String)context.getData(ParamKeys.ACC_TYPE);          //银行内部账务类型
+					String ActFlg=(String)context.getData(ParamKeys.PAY_MDE);          //银行内部账务类型
 					
 					if("0".equals(ActFlg)){              //对公
 						//需要GDContants定义常量
