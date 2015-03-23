@@ -388,38 +388,34 @@
 	<!-- ======================================== -->
 	<!-- TCP CHANNEL COMMON CONFIG -->
 	<!-- ======================================== -->
-	<bean id="absIn_TcpMapping" class="com.bocom.bbip.channel.tcp.EdgeSupportSocketURIEndpointMapping">
-		<property name="mapping">
-			<map>
-				<!-- 渠道接入端口，参数配置于sys.properties文件 -->
-				<entry key="tcp://*:34160" value-ref="absIn_TcpEndpoint" />
-			</map>
-		</property>
-	</bean>	
-	<bean id="absIn" class="com.bocom.jump.bp.channel.tcp.SocketServer">
-		<property name="host" value="0.0.0.0"/>
-		<!-- 渠道接入端口，参数配置于sys.properties文件 -->
-		<property name="port" value="34160" />
-		<property name="mapping" ref="absIn_TcpMapping" />
-		<property name="threadPool" ref="absIn_TcpThreadPool" />
-	</bean>
-	<bean id="absIn_TcpThreadPool" class="com.bocom.jump.bp.util.Jdk15ThreadPool">
-		<property name="name" value="absIn" />
+	
+	
+	<bean id="tcpThreadPool_HSSC" class="com.bocom.jump.bp.util.Jdk15ThreadPool">
+		<property name="name" value="tcpChannel_mobile" />
 		<property name="poolSize" value="10" />
 		<property name="workQueueSize" value="1024" />
 	</bean>
-	<bean id="absIn_TcpEndpoint" class="com.bocom.jump.bp.channel.DefaultEndpoint">
+	<bean class="com.bocom.bbip.channel.tcp.EdgeSupportSocketURIEndpointMapping"
+		id="tcpMapping_HSSC">
+		<property name="default" ref="tcpEndpoint_HSSC" />
+	</bean>
+	<bean id="tcpChannel_HSSC" class="com.bocom.jump.bp.channel.tcp.SocketServer">
+		<property name="host" value="0.0.0.0" />
+		<property name="port" value="34160" />
+		<property name="soTimeout" value="100000" />
+		<property name="mapping" ref="tcpMapping_HSSC" />
+		<property name="threadPool" ref="tcpThreadPool_ELEC01" />
+	</bean>
+	<bean id="tcpEndpoint_HSSC" class="com.bocom.jump.bp.channel.DefaultEndpoint">
 		<property name="interceptors">
 			<array>
 				<bean
 					class="com.bocom.jump.bp.channel.interceptors.RequestTracingInterceptor" />
 				<bean
 					class="com.bocom.jump.bp.channel.tcp.interceptors.PayloadChannelInterceptor">
-					<!-- 报文前置长度，参数配置于sys.properties文件 -->
 					<property name="lengthSize" value="4" />
 				</bean>
-				<!-- with out prelen ,read only once <bean class="com.bocom.net.tangdi.core.tcp.TdPayLoadInterceptor"> 
-					<property name="MaxBufSize" value="8192"/> </bean> -->
+
 				<bean class="com.bocom.jump.bp.channel.interceptors.TransformInterceptor">
 					<property name="encodeTransforms"> <!-- unpack response -->
 						<array>
@@ -445,15 +441,14 @@
 					</property>
 					<property name="exceptionHandler" ref="exceptionHandler" />
 				</bean>
-				<bean class="com.bocom.jump.bp.channel.interceptors.ContextInterceptor" />
+				<bean class="com.bocom.jump.bp.channel.interceptors.ContextInterceptor"></bean>
 				<bean class="com.bocom.bbip.eups.interceptor.ServiceThdInterceptor">
 					<constructor-arg value="34160" />
 				</bean>
 			</array>
 		</property>
 	</bean>
-
-
+	
 <!-- 汕头电力第三方接出 start-->
 <bean id="Pool_ELEC02" class="com.bocom.jump.bp.util.Jdk15ThreadPool">
 		<property name="name" value="tcpChannel_ELEC02" />
