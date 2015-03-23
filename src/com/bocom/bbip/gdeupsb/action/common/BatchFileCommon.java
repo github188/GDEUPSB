@@ -139,13 +139,13 @@ public class BatchFileCommon extends BaseAction {
 		config.setLocDir(dir);
 		config.setRmtFleNme(fleNme);
 		config.setRmtWay(dir);
-		logger.info("===============生成代收付文件");
 		/** 产生代收付格式文件 */
 		if(context.getData(ParamKeys.EUPS_BUSS_TYPE).equals("ELEC00") || context.getData(ParamKeys.EUPS_BUSS_TYPE).equals("GZAG00") ){
 			((OperateFileAction)get("opeFile")).createCheckFile(config, "agtFileBatchFmt", fleNme, fileMap);
 		}else{
 			((OperateFileAction)get("opeFile")).createCheckFile(config, "BatchFmt", fleNme, fileMap);
 		}
+		logger.info("===============生成代收付文件");
 		operateFTPAction.putCheckFile(config);
 		//为得到代收付文件 更改ftpDir
 		config.setFtpDir("1");
