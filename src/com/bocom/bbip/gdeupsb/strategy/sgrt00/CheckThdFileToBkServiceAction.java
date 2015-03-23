@@ -16,14 +16,15 @@ import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
-import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.eups.spi.service.check.CheckThdFileToBkService;
 import com.bocom.bbip.eups.spi.vo.CheckDomain;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal;
+import com.bocom.bbip.gdeupsb.entity.GdTbcBasInf;
 import com.bocom.bbip.gdeupsb.repository.GdEupsTransJournalRepository;
+import com.bocom.bbip.gdeupsb.repository.GdTbcBasInfRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
@@ -44,6 +45,8 @@ public class CheckThdFileToBkServiceAction  implements CheckThdFileToBkService {
     EupsThdTranCtlInfoRepository thdTranCtlInfoRepository;
     @Autowired
     GdEupsTransJournalRepository transJournalRepository;
+    @Autowired
+    GdTbcBasInfRepository tbcBasInfRepository;
 
     @Override
     public Map<String, Object> checkThdFileToBk(CheckDomain checkdomain, Context context) throws CoreException {
@@ -65,13 +68,14 @@ public class CheckThdFileToBkServiceAction  implements CheckThdFileToBkService {
         }
         context.setData("cAgtNo", cAgtNo);
         
-        //检查用户状态
-        EupsThdTranCtlInfo thdTranCtlInfo = thdTranCtlInfoRepository.findOne(cAgtNo);
-        if (thdTranCtlInfo == null) {
+        GdTbcBasInf resultTbcBasInfo = tbcBasInfRepository.findOne(context.getData("dptId").toString());
+        if (resultTbcBasInfo == null) {
             throw new CoreException(ErrorCodes.THD_CHL_NOT_FOUND);
         } 
-        if (thdTranCtlInfo.getTxnCtlSts().equals(Constants.TXN_CTL_STS_SIGNOUT)) {
+        if (resultTbcBasInfo.getSigSts().equals(Constants.TXN_CTL_STS_SIGNOUT)) {
             throw new CoreException(ErrorCodes.THD_CHL_ALDEAY_SIGN_OUT);
+        } else if (resultTbcBasInfo.getSigSts().equals(Constants.TXN_CTL_STS_CHECKBILL_ING)) {
+            throw new CoreException(ErrorCodes.THD_CHL_SIGNIN_NOT_ALLOWWED);
         }
         //生成文件及FTP上传数据准备
         String dateString = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);

@@ -5,22 +5,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.service.Result;
+import com.bocom.bbip.service.Status;
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
-import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.entity.GdTbcBasInf;
 import com.bocom.bbip.gdeupsb.entity.GdTbcCusAgtInfo;
+import com.bocom.bbip.gdeupsb.repository.GdTbcBasInfRepository;
 import com.bocom.bbip.gdeupsb.repository.GdTbcCusAgtInfoRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -65,21 +66,20 @@ public class EstablishAccountAction extends BaseAction {
         context.setData("devId", context.getData("DEV_ID"));
         context.setData("teller", context.getData("TELLER"));
 
+        GdTbcBasInf resultTbcBasInfo = get(GdTbcBasInfRepository.class).findOne(context.getData("dptId").toString());
+        if (null == resultTbcBasInfo) {
+            throw new CoreException(ErrorCodes.THD_CHL_NOT_FOUND);
+        } 
+        if (resultTbcBasInfo.getSigSts().equals(Constants.TXN_CTL_STS_SIGNOUT)) {
+            throw new CoreException(ErrorCodes.THD_CHL_ALDEAY_SIGN_OUT);
+        }
+        
+        //构成网点号
         String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
         if (null == cAgtNo) {
             cAgtNo ="4410000560";
         }
         context.setData("cAgtNo", cAgtNo);
-        //检查系统签到状态
-        EupsThdTranCtlInfo eupsThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(cAgtNo);
-        if (null == eupsThdTranCtlInfo) {
-            throw new CoreException(ErrorCodes.THD_CHL_NOT_FOUND);
-        } 
-        if (eupsThdTranCtlInfo.getTxnCtlSts().equals(Constants.TXN_CTL_STS_SIGNOUT)) {
-            throw new CoreException(ErrorCodes.THD_CHL_ALDEAY_SIGN_OUT);
-        }
-        
-        //构成网点号
         String brNo = cAgtNo.substring(0,3)+"999";
         String nodNo = CodeSwitchUtils.codeGenerator("GDYC_nodSwitch",brNo);
         if (null == nodNo) {
@@ -98,29 +98,54 @@ public class EstablishAccountAction extends BaseAction {
         total.put("br", context.getData(ParamKeys.BR));
 
         Result accessObject =  serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", total);
-        if (CollectionUtils.isEmpty(accessObject.getPayload())) {
+        if (accessObject.getResponseCode().equals("BBIP0004AGPM66")) {
             Map<String, Object> establishMap = getMap();
             establishMap.put("agrChl","01");
             establishMap.put("oprTyp", "0");
-            establishMap.put("cusTyp","0");
+            establishMap.put("cusTyp","1");
             establishMap.put("cusNo",context.getData("custId"));
             establishMap.put("cusNme",context.getData("tCusNm"));
             establishMap.put("idNo",context.getData("pasId"));
             establishMap.put("idTyp",context.getData("pasTyp"));
-            establishMap.put("ccy","156");
+            establishMap.put("ccy","CNY");
+            establishMap.put("bvCde","007");
+            establishMap.put("bvNo","12345678");
+            establishMap.put("ourOthFlg","0");
+            establishMap.put("obkBk","441999");
+            establishMap.put("cmuTel",context.getData("telNum").toString());
+            establishMap.put("comNo",cAgtNo);
             establishMap.put("cusAc",context.getData("actNo"));
+            establishMap.put("acTyp","3");
             establishMap.put("bk", bankId);
+            establishMap.put("busKnd", "A087");//busKnd
+            establishMap.put("busTyp", "0");
+            establishMap.put("cusFeeDerFlg", "0");
+            establishMap.put("agtSrvCusId", context.getData("telNum").toString());
+            establishMap.put("agrVldDte", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
+            establishMap.put("agrExpDte", "21151230");
             establishMap.put("br", context.getData(ParamKeys.BR));
 
             //代收付系统接口调用增加协议
-            try {
-                serviceAccess.callServiceFlatting("maintainAgentCollectAgreement", establishMap);
-            } catch(Exception e) {
-                context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
-                context.setData(GDParamKeys.RSP_CDE,"9999");
-                context.setData(GDParamKeys.RSP_MSG,"数据库处理失败!！！");
-                return;
-            }
+          
+                Result operateAcpAgtResult = serviceAccess.callServiceFlatting("maintainAgentCollectAgreement", establishMap);
+                log.info("===========respMap: " + operateAcpAgtResult.getPayload() + "===========");
+                if (!operateAcpAgtResult.isSuccess()) {
+                    Throwable e = operateAcpAgtResult.getException();
+                    if (Status.SEND_ERROR == operateAcpAgtResult.getStatus()) {
+                        context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
+                        context.setData(GDParamKeys.RSP_CDE,"9999");
+                        context.setData(GDParamKeys.RSP_MSG,"Call acp transfor or other error: "+e);
+                        return;
+                    }
+                    // 连接错误或等待超时,但不知道是否已上送,这里交易已处于未知状态
+                    context.setState(BPState.BUSINESS_PROCESSNIG_STATE_UNKOWN_FAIL);
+                    if (Status.TIMEOUT == operateAcpAgtResult.getStatus()) {
+                        context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
+                        context.setData(GDParamKeys.RSP_CDE,"9999");
+                        context.setData(GDParamKeys.RSP_MSG,"Call acp servcie occur time out.");
+                        return;
+                    }
+                }
             //GDEUPS协议临时表添加数据
             GdTbcCusAgtInfo  cusAgtInfo =new  GdTbcCusAgtInfo();
             cusAgtInfo.setActNo(context.getData("actNo").toString());
@@ -139,18 +164,43 @@ public class EstablishAccountAction extends BaseAction {
             establishMap.put("cusNme",context.getData("tCusNm"));
             establishMap.put("idNo",context.getData("pasId"));
             establishMap.put("idTyp",context.getData("pasTyp"));
-            establishMap.put("ccy","156");
+            establishMap.put("ccy","CNY");
+            establishMap.put("bvCde","007");
+            establishMap.put("bvNo","12345678");
+            establishMap.put("ourOthFlg","0");
+            establishMap.put("obkBk",bankId);
+            establishMap.put("cmuTel",context.getData("telNum").toString());
+            establishMap.put("comNo",cAgtNo);
             establishMap.put("cusAc",context.getData("actNo"));
+            establishMap.put("acTyp","3");
             establishMap.put("bk", bankId);
+            establishMap.put("busKnd", "A087");
+            establishMap.put("busTyp", "0");
+            establishMap.put("cusFeeDerFlg", "0");
+            establishMap.put("agtSrvCusId", context.getData("telNum").toString());
+            establishMap.put("agrVldDte", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
+            establishMap.put("agrExpDte", "21151230");
             establishMap.put("br", context.getData(ParamKeys.BR));
 
-            try {
-                serviceAccess.callServiceFlatting("maintainAgentCollectAgreement", establishMap);
-            } catch(Exception e) {
-                context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
-                context.setData(GDParamKeys.RSP_CDE,"9999");
-                context.setData(GDParamKeys.RSP_MSG,"数据库处理失败!！！");
-                return;
+           
+            Result result = serviceAccess.callServiceFlatting("maintainAgentCollectAgreement", establishMap);
+            log.info("===========respMap: " + result.getPayload() + "===========");
+            if (!result.isSuccess()) {
+                Throwable e = result.getException();
+                if (Status.SEND_ERROR == result.getStatus()) {
+                    context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
+                    context.setData(GDParamKeys.RSP_CDE,"9999");
+                    context.setData(GDParamKeys.RSP_MSG,"Call acp transfor or other error: "+e);
+                    return;
+                }
+                // 连接错误或等待超时,但不知道是否已上送,这里交易已处于未知状态
+                context.setState(BPState.BUSINESS_PROCESSNIG_STATE_UNKOWN_FAIL);
+                if (Status.TIMEOUT == result.getStatus()) {
+                    context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
+                    context.setData(GDParamKeys.RSP_CDE,"9999");
+                    context.setData(GDParamKeys.RSP_MSG,"Call acp servcie occur time out.");
+                    return;
+                }
             }
             //GDEUPS协议临时表更改数据
             GdTbcCusAgtInfo  cusAgtInfo =new  GdTbcCusAgtInfo();
@@ -175,7 +225,7 @@ public class EstablishAccountAction extends BaseAction {
         map.put("reqTme", new Date());
         map.put("reqJrnNo",  publicService.getBBIPSequence());
         map.put("reqSysCde", "SGRT00");
-        map.put("tlr", "4411417");
+        map.put("tlr", "ABIR148");
         map.put("chn", "00");
         return map;
     }

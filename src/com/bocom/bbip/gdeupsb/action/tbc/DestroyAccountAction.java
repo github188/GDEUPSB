@@ -16,10 +16,13 @@ import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.entity.GdTbcBasInf;
+import com.bocom.bbip.gdeupsb.repository.GdTbcBasInfRepository;
 import com.bocom.bbip.gdeupsb.repository.GdTbcCusAgtInfoRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.bbip.service.Result;
+import com.bocom.bbip.service.Status;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -58,17 +61,12 @@ public class DestroyAccountAction extends BaseAction {
         context.setData("devId", context.getData("DEV_ID"));
         context.setData("teller", context.getData("TELLER"));
 
-        String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
-        if (null == cAgtNo) {
-            cAgtNo ="4410000560";
-        }
-        context.setData("cAgtNo", cAgtNo);
         //检查系统签到状态
-        EupsThdTranCtlInfo eupsThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(cAgtNo);
-        if (null == eupsThdTranCtlInfo) {
+        GdTbcBasInf resultTbcBasInfo = get(GdTbcBasInfRepository.class).findOne(context.getData("dptId").toString());
+        if (null == resultTbcBasInfo) {
             throw new CoreException(ErrorCodes.THD_CHL_NOT_FOUND);
         } 
-        if (eupsThdTranCtlInfo.getTxnCtlSts().equals(Constants.TXN_CTL_STS_SIGNOUT)) {
+        if (resultTbcBasInfo.getSigSts().equals(Constants.TXN_CTL_STS_SIGNOUT)) {
             throw new CoreException(ErrorCodes.THD_CHL_ALDEAY_SIGN_OUT);
         }
         //客户签约状态
@@ -77,14 +75,15 @@ public class DestroyAccountAction extends BaseAction {
         map.put("bk", context.getData(ParamKeys.BK));
         map.put("br", context.getData(ParamKeys.BR));
         Result accessObject = serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", map);
-        if (CollectionUtils.isEmpty(accessObject.getPayload())){
+        if (accessObject.getResponseCode().equals("BBIP0004AGPM66")){
+            context.setData(GDParamKeys.RSP_CDE,"9999");
             context.setData(GDParamKeys.RSP_MSG,"账号已注销!！！");
             return; 
         }
         
         //检查用户名是否匹配
         String cusNme = context.getData("cusNam").toString().trim();
-        String tCusNm = accessObject.getData("tCusNm").toString().trim();
+        String tCusNm = accessObject.getData("cusNme").toString().trim();
         if (!cusNme.equals(tCusNm)) {
             context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
             context.setData(GDParamKeys.RSP_CDE,"9999");
@@ -113,13 +112,26 @@ public class DestroyAccountAction extends BaseAction {
         destroyMap.put("bk", context.getData(ParamKeys.BK));
         destroyMap.put("br", context.getData(ParamKeys.BR));
         destroyMap.put("agdAgrNo", accessObject.getData("agdAgrNo").toString());
-        try {
-            serviceAccess.callServiceFlatting("deleteAgentCollectAgreement", destroyMap);
-        } catch (Exception e) {
-            context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
-            context.setData(GDParamKeys.RSP_CDE,"9999");
-            context.setData(GDParamKeys.RSP_MSG,"数据库处理失败!！！");
-            return;
+        
+        Result result = serviceAccess.callServiceFlatting("deleteAgentCollectAgreement", destroyMap);
+        log.info("===========respMap: " + result.getPayload() + "===========");
+        
+        if (!result.isSuccess()) {
+            Throwable e = result.getException();
+            if (Status.SEND_ERROR == result.getStatus()) {
+                context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
+                context.setData(GDParamKeys.RSP_CDE,"9999");
+                context.setData(GDParamKeys.RSP_MSG,"Call acp transfor or other error: "+e);
+                return;
+            }
+            // 连接错误或等待超时,但不知道是否已上送,这里交易已处于未知状态
+            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_UNKOWN_FAIL);
+            if (Status.TIMEOUT == result.getStatus()) {
+                context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
+                context.setData(GDParamKeys.RSP_CDE,"9999");
+                context.setData(GDParamKeys.RSP_MSG,"Call acp servcie occur time out.");
+                return;
+            }
         }
         //GDEUPS协议临时表删除数据
         cusAgtInfoRepository.delete(context.getData("custId").toString());

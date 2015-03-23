@@ -20,7 +20,9 @@ import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.entity.GdTbcBasInf;
 import com.bocom.bbip.gdeupsb.entity.GdTbcCusAgtInfo;
+import com.bocom.bbip.gdeupsb.repository.GdTbcBasInfRepository;
 import com.bocom.bbip.gdeupsb.repository.GdTbcCusAgtInfoRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
@@ -64,18 +66,13 @@ public class QryRemainingAction extends BaseAction {
         context.setData("teller", context.getData("TELLER"));
         context.setData(ParamKeys.TXN_DTE, context.getData(ParamKeys.TXN_TME).toString().substring(0,8));
 
-        String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
-        if (null == cAgtNo) {
-            cAgtNo ="4410000560";
-        }
-        context.setData("cAgtNo", cAgtNo);
-        EupsThdTranCtlInfo resultThdTranCtlInfo = get(EupsThdTranCtlInfoRepository.class).findOne(cAgtNo);
-        if (resultThdTranCtlInfo == null) {
+        GdTbcBasInf resultTbcBasInfo = get(GdTbcBasInfRepository.class).findOne(context.getData("dptId").toString());
+        if (resultTbcBasInfo == null) {
             throw new CoreException(ErrorCodes.THD_CHL_NOT_FOUND);
         } 
-        if (resultThdTranCtlInfo.getTxnCtlSts().equals(Constants.TXN_CTL_STS_SIGNOUT)) {
+        if (resultTbcBasInfo.getSigSts().equals(Constants.TXN_CTL_STS_SIGNOUT)) {
             throw new CoreException(ErrorCodes.THD_CHL_ALDEAY_SIGN_OUT);
-        } else if (resultThdTranCtlInfo.getTxnCtlSts().equals(Constants.TXN_CTL_STS_CHECKBILL_ING)) {
+        } else if (resultTbcBasInfo.getSigSts().equals(Constants.TXN_CTL_STS_CHECKBILL_ING)) {
             throw new CoreException(ErrorCodes.THD_CHL_SIGNIN_NOT_ALLOWWED);
         } else {
             String cusAc = qryCusAcNo(context.getData("custId").toString());
@@ -102,6 +99,11 @@ public class QryRemainingAction extends BaseAction {
             context.setData("actNo", accessObject.getData("cusAc"));
             context.setData("dbPasWrd", accessObject.getData("pwd"));
             //构成网点号
+            String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
+            if (null == cAgtNo) {
+                cAgtNo ="4410000560";
+            }
+            context.setData("cAgtNo", cAgtNo);
             String brNo = cAgtNo.substring(0,3)+"999";
             String nodNo = CodeSwitchUtils.codeGenerator("GDYC_nodSwitch", brNo);
             if (null == nodNo) {
