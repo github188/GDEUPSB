@@ -1,0 +1,26 @@
+#report(45)
+#rh(20)
+
+业务    名称：代收付业务                       业务    种类：电力缴费
+
+
+付款人  帐号：$d.jnlCusAc
+付款人  名称：$d.cusNm
+
+
+
+收款人  帐号：$str.trim($d.inAct)
+收款人  名称：$str.trim($d.inActNm)
+
+
+交易    币种：'CNY'                  交易    金额：$str.trim($d.txnAmt)
+交易金额大写：$str.amountInWords($str.trim($d.txnAmt))
+摘        要：
+
+入帐    日期：$d.acDte            入帐    柜员：$str.trim($d.txnTlr)       入帐流水号： $str.trim($d.mfmVchNo)
+打印    日期：$str.trim($d.txnDat)   打印    柜员：$str.trim($d.tlr)          打印  机构：  $str.trim($d.br)
+
+
+
+#end
+#end
