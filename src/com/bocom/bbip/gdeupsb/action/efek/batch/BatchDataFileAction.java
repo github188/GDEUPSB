@@ -240,7 +240,9 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 									gdEupsBatchConsoleInfo.setTotAmt(totTxnAmt);
 									context.setData("totAmt", totTxnAmt);
 									String rsvFld1=firstLine.substring(82);
+									String rsvFld2=context.getData(ParamKeys.THD_SQN).toString();
 									gdEupsBatchConsoleInfo.setRsvFld1(rsvFld1);
+									gdEupsBatchConsoleInfo.setRsvFld2(rsvFld2);
 									gdEupsBatchConsoleInfo.setBatNo(batNo);
 									gdEupsBatchConsoleInfoRepository.updateConsoleInfo(gdEupsBatchConsoleInfo);
 									logger.info("==========Successful to update GDEupsBatchConsoleInfo");

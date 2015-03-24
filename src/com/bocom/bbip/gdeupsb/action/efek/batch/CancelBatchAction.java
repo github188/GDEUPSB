@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.action.efek.batch;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -18,6 +19,7 @@ import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GDEupsEleTmpRepository;
 import com.bocom.bbip.service.Result;
 import com.bocom.bbip.utils.Assert;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -38,15 +40,15 @@ public class CancelBatchAction extends BaseAction {
 	   gdEupsBatchConsoleInfos.setFleNme(context.getData(ParamKeys.FLE_NME).toString());
 	   List<GDEupsBatchConsoleInfo> gdEupsBatchConsoleInfoList=gdEupsBatchConsoleInfoRepository.find(gdEupsBatchConsoleInfos);
 	   GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=gdEupsBatchConsoleInfoList.get(0);
+	   logger.info("~~~~~~GDEupsBatchConsoleInfo~~~~~"+gdEupsBatchConsoleInfo);
 	   String totCnt=gdEupsBatchConsoleInfo.getTotCnt()+"";
-	   if(context.getData(ParamKeys.TOT_CNT).toString().trim().equals(totCnt.trim())){
+	   if(!context.getData(ParamKeys.TOT_CNT).toString().trim().equals(totCnt.trim())){
 		   		throw new CoreException("获取笔数与交易笔数不相等");
 	   }
 	   String totAmt=gdEupsBatchConsoleInfo.getTotAmt().scaleByPowerOfTen(2)+"";
-	   if(context.getData(ParamKeys.TOT_AMT).toString().trim().equals(totAmt.trim())){
+	   if(!context.getData(ParamKeys.TOT_AMT).toString().trim().equals(totAmt.trim())){
 		   		throw new CoreException("获取金额与交易金额不相等");
 	   }
-	   logger.info("~~~~~~GDEupsBatchConsoleInfo~~~~~"+gdEupsBatchConsoleInfo);
 	   //批量 判断状态
 	   String batSts=gdEupsBatchConsoleInfo.getBatSts();
 	   if(batSts.equals(GDConstants.BATCH_STATUS_INIT) || batSts.equals(GDConstants.BATCH_STATUS_WAIT)){
@@ -60,7 +62,7 @@ public class CancelBatchAction extends BaseAction {
 			   info.setBatSts("C");
 			   gdEupsBatchConsoleInfoRepository.updateConsoleInfo(info);
 			   GDEupsBatchConsoleInfo Infos=gdEupsBatchConsoleInfoRepository.findOne(batNo);
-			   String thdSqn=Infos.getRsvFld5();
+			   String thdSqn=Infos.getRsvFld2();
 			   EupsBatchConsoleInfo eupsBatchConsoleInfo=new EupsBatchConsoleInfo();
 			   eupsBatchConsoleInfo.setRsvFld2(thdSqn);
 			   EupsBatchConsoleInfo eupsBatchConsoleInfoOne=eupsBatchConsoleInfoRepository.find(eupsBatchConsoleInfo).get(0);
@@ -73,6 +75,9 @@ public class CancelBatchAction extends BaseAction {
 	   }else{
 		   		throw new CoreException(GDErrorCodes.EUPS_BATCH_STATUS_ERROR);
 	   }
+	   context.setData("thdTxnDate", DateUtils.format((Date)context.getData(ParamKeys.THD_TXN_DATE), DateUtils.STYLE_yyyyMMdd));
+	   context.setData("thdTxnTime", DateUtils.formatAsHHmmss((Date)context.getData(ParamKeys.THD_TXN_TIME)));
+	   context.setData(ParamKeys.TXN_DTE, DateUtils.formatAsTranstime((Date)context.getData(ParamKeys.TXN_DTE)));
 	   logger.info("===========End  CancelBatchAction");
    }
 }
