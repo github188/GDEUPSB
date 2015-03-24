@@ -38,6 +38,14 @@ public class CancelBatchAction extends BaseAction {
 	   gdEupsBatchConsoleInfos.setFleNme(context.getData(ParamKeys.FLE_NME).toString());
 	   List<GDEupsBatchConsoleInfo> gdEupsBatchConsoleInfoList=gdEupsBatchConsoleInfoRepository.find(gdEupsBatchConsoleInfos);
 	   GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=gdEupsBatchConsoleInfoList.get(0);
+	   String totCnt=gdEupsBatchConsoleInfo.getTotCnt()+"";
+	   if(context.getData(ParamKeys.TOT_CNT).toString().trim().equals(totCnt.trim())){
+		   		throw new CoreException("获取笔数与交易笔数不相等");
+	   }
+	   String totAmt=gdEupsBatchConsoleInfo.getTotAmt().scaleByPowerOfTen(2)+"";
+	   if(context.getData(ParamKeys.TOT_AMT).toString().trim().equals(totAmt.trim())){
+		   		throw new CoreException("获取金额与交易金额不相等");
+	   }
 	   logger.info("~~~~~~GDEupsBatchConsoleInfo~~~~~"+gdEupsBatchConsoleInfo);
 	   //批量 判断状态
 	   String batSts=gdEupsBatchConsoleInfo.getBatSts();
@@ -58,7 +66,7 @@ public class CancelBatchAction extends BaseAction {
 			   EupsBatchConsoleInfo eupsBatchConsoleInfoOne=eupsBatchConsoleInfoRepository.find(eupsBatchConsoleInfo).get(0);
 			   eupsBatchConsoleInfoOne.setBatSts("C");
 			   eupsBatchConsoleInfoRepository.update(eupsBatchConsoleInfoOne);
-			   context.setData("cancelSign","qx");
+			   context.setData("cancelSign","C");
 			   //解锁
 			   result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).unlock(batNo);
 			   Assert.isTrue(result.isSuccess(), GDErrorCodes.EUPS_UNLOCK_FAIL);
