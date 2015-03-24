@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.bocom.bbip.comp.BBIPPublicServiceImpl;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
+import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
@@ -25,6 +27,8 @@ public class CancelBatchAction extends BaseAction {
     GDEupsBatchConsoleInfoRepository gdEupsBatchConsoleInfoRepository;
     @Autowired
     GDEupsEleTmpRepository gdEupsEleTmpRepository;
+    @Autowired
+    EupsBatchConsoleInfoRepository eupsBatchConsoleInfoRepository;
     /**
      * 南方电网 批量撤销  删除临时表信息 更改控制表状态
      */
@@ -47,8 +51,13 @@ public class CancelBatchAction extends BaseAction {
 			   info.setBatNo(batNo);
 			   info.setBatSts("C");
 			   gdEupsBatchConsoleInfoRepository.updateConsoleInfo(info);
-			   //删除临时表信息
-			   gdEupsEleTmpRepository.deleteAll("1");
+			   GDEupsBatchConsoleInfo Infos=gdEupsBatchConsoleInfoRepository.findOne(batNo);
+			   String thdSqn=Infos.getRsvFld5();
+			   EupsBatchConsoleInfo eupsBatchConsoleInfo=new EupsBatchConsoleInfo();
+			   eupsBatchConsoleInfo.setRsvFld2(thdSqn);
+			   EupsBatchConsoleInfo eupsBatchConsoleInfoOne=eupsBatchConsoleInfoRepository.find(eupsBatchConsoleInfo).get(0);
+			   eupsBatchConsoleInfoOne.setBatSts("C");
+			   eupsBatchConsoleInfoRepository.update(eupsBatchConsoleInfoOne);
 			   context.setData("cancelSign","qx");
 			   //解锁
 			   result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).unlock(batNo);
