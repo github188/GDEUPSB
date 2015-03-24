@@ -18,7 +18,7 @@ TransCode.gdeups.cancelBatchELEC02=24
 ##汕头电力批量
 TransCode.eups.fileBatchPayCreateDataProcess=22
 ##汕头电力签到
-TransCode.eups.signInOutThird=90
+TransCode.gdeupsb.signInOutThird=90
 ##汕头电力签退
 TransCode.eups.signOutThird=91
 #TransCode.gdeups.batchPaySubmitDataProcess=90
