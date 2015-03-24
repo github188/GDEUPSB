@@ -338,6 +338,7 @@
       <xs:element ref="tns:requestHeader" minOccurs="0"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="oprTyp" type="tns:oprTyp_SType"/>
+      <xs:element name="area" type="tns:area_SType"/>
       <xs:element name="comNo" type="tns:comNo_SType"/>
       <xs:element name="cusNo" type="tns:cusNo_SType"/>
       <xs:element name="settleAccountsName" type="tns:settleAccountsName_SType" minOccurs="0"/>
@@ -371,6 +372,14 @@
       <xs:maxLength value="1"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:simpleType name="area_SType">
+    <xs:annotation>
+      <xs:documentation>供电地区</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="64"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:simpleType name="cusNo_SType">
     <xs:annotation>
       <xs:documentation>缴费号</xs:documentation>
@@ -381,7 +390,7 @@
   </xs:simpleType>
   <xs:simpleType name="settleAccountsName_SType">
     <xs:annotation>
-      <xs:documentation>结算户 名称</xs:documentation>
+      <xs:documentation>客户名称</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="64"/>
@@ -536,7 +545,7 @@
       <xs:documentation>银行代码</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:maxLength value="3"/>
+      <xs:maxLength value="4"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="detailFileNum_SType">
@@ -598,7 +607,7 @@
       <xs:element name="bankNo" type="tns:bankNo_SType"/>
       <xs:element name="fulDedFlg" type="tns:fulDedFlg_SType"/>
       <xs:element name="electricityYearMonth" type="tns:electricityYearMonth_SType" minOccurs="0"/>
-      <xs:element name="oweFeeAmt" type="tns:oweFeeAmt_SType" minOccurs="0"/>
+      <xs:element name="oweFeeAmt" type="tns:oweFeeAmt_SType"/>
       <xs:element name="capital" type="tns:capital_SType" minOccurs="0"/>
       <xs:element name="dedit" type="tns:dedit_SType" minOccurs="0"/>
       <xs:element name="payMde" type="tns:payMde_SType"/>
@@ -877,7 +886,7 @@
   </xs:complexType>
   <xs:simpleType name="thdCusNme_SType">
     <xs:annotation>
-      <xs:documentation>结算户名称</xs:documentation>
+      <xs:documentation>客户名称</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="64"/>
@@ -905,7 +914,7 @@
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="netName" type="tns:netName_SType" minOccurs="0"/>
       <xs:element name="busType" type="tns:busType_SType" minOccurs="0"/>
-      <xs:element name="comNo" type="tns:comNo_SType"/>
+      <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
       <xs:element name="payNo" type="tns:payNo_SType"/>
       <xs:element name="checkType" type="tns:checkType_SType"/>
       <xs:element name="electricityYearMonth" type="tns:electricityYearMonth_SType" minOccurs="0"/>
@@ -945,16 +954,13 @@
   </xs:simpleType>
   <xs:complexType name="Information_CType">
     <xs:sequence>
-      <xs:element name="netName" type="tns:netName_SType" minOccurs="0"/>
-      <xs:element name="sqn" type="tns:sqn_SType" minOccurs="0"/>
-      <xs:element name="txnDte" type="tns:txnDte_SType" minOccurs="0"/>
-      <xs:element name="txnTme" type="tns:txnTme_SType" minOccurs="0"/>
       <xs:element name="busType" type="tns:busType_SType" minOccurs="0"/>
       <xs:element name="payType" type="tns:payType_SType" minOccurs="0"/>
       <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
       <xs:element name="payNo" type="tns:payNo_SType" minOccurs="0"/>
       <xs:element name="thdCusNme" type="tns:thdCusNme_SType" minOccurs="0"/>
       <xs:element name="rsvFld6" type="tns:rsvFld6_SType" minOccurs="0"/>
+      <xs:element name="bankNo" type="tns:bankNo_SType" minOccurs="0"/>
       <xs:element name="cusAc" type="tns:cusAc_SType" minOccurs="0"/>
       <xs:element name="CusNme" type="tns:CusNme_SType" minOccurs="0"/>
       <xs:element name="fulDedFlg" type="tns:fulDedFlg_SType" minOccurs="0"/>
