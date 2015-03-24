@@ -8,7 +8,7 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
 /**
  *得到单位编号 
  */
-public class QryComNoByComNmeAction extends BaseAction{
+public class QryComNoByAreaAction extends BaseAction{
 		@Override
 		public void execute(Context context) throws CoreException,
 				CoreRuntimeException {
