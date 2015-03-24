@@ -37,11 +37,11 @@
 <!-- 	<bbip-channel:bbip-service-channel-adaptor
 		service-domain="${system.code}" /> -->
 
- <!--	<bbip-channel:bbip-service-channel-adaptor
-		service-domain="${system.code}" />-->
+ 	<bbip-channel:bbip-service-channel-adaptor
+		service-domain="${system.code}" />
 
-<bbip-channel:bbip-service-channel-adaptor
-		service-domain="GDEUPSC" /> 
+<!--    <bbip-channel:bbip-service-channel-adaptor
+		service-domain="GDEUPSC" /> -->
 
 
 	<!-- 向bgsp提供服务 -->

@@ -294,5 +294,39 @@
 		<key name="5" value="双色球" /><!-- 双色球 -->
 		<key name="7" value="快乐十分" /><!-- 快乐十分 -->
 	</table>
+	
+	<table id="SubNod2CityId">     <!--地市编码转换-->
+    <key name="441" value="1" /> <!--广州-->
+    <key name="444" value="3" /> <!--珠海-->
+    <key name="445" value="4" /> <!--汕头-->
+    <key name="446" value="4" /> <!--汕头-->
+    <key name="447" value="4" /> <!--汕头-->
+    <key name="442" value="5" /> <!--韶关-->
+    <key name="XXX" value="6" /> <!--河源-->
+    <key name="496" value="7" /> <!--梅州-->
+    <key name="491" value="8" /> <!--惠州-->
+    <key name="XXX" value="9" /> <!--汕尾-->
+    <key name="483" value="10" /> <!--东莞-->
+    <key name="484" value="11" /> <!--中山-->
+    <key name="761" value="12" /> <!--江门-->
+    <key name="446" value="13" /> <!--佛山-->
+    <key name="482" value="13" /> <!--佛山南海-->
+    <key name="XXX" value="14" /> <!--阳江-->
+    <key name="448" value="15" /> <!--湛江-->
+    <key name="XXX" value="16" /> <!--茂名-->
+    <key name="492" value="17" /> <!--肇庆-->
+    <key name="493" value="18" /> <!--清远-->
+    <key name="495" value="19" /> <!--潮州-->
+    <key name="485" value="20" /> <!--揭阳-->
+    <key name="486" value="4" /> <!--汕头潮阳-->
+    <key name="488" value="20" /> <!--惠来-->
+    <key name="489" value="20" /> <!--普宁-->
+    <key name="XXX" value="21" /> <!--云浮-->
+    <key name="481" value="22" /> <!--顺德-->
+   </table>
+   <table id="Gender2Sex">     <!--总行性别转换福彩性别-->
+    <key name="0" value="1" /><!--男-->
+    <key name="1" value="0" /><!--女-->
+  </table>
 	<!-- LOT CodeSwitch End ADD By GuiLin 20150318 -->
 </xx:beans>
