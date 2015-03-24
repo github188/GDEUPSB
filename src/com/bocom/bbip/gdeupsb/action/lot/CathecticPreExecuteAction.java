@@ -20,6 +20,7 @@ import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.euif.component.util.StringUtil;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -79,42 +80,60 @@ public class CathecticPreExecuteAction extends BaseAction{
         }
         // 登记购彩记录(commit)
         String gameIdDesc = CodeSwitchUtils.codeGenerator("GameIdDescChg", gameId);
-        //获取流水号
-        String sqn = publicService.getBBIPSequence();
-        context.setData("sqn",sqn);
-        context.setData("txnAmt",context.getData("betAmt"));
-        context.setData("tTxnCd",context.getData("231"));
-        context.setData("txnCod",context.getData("485412"));
-        context.setData("schTit","直接投注"); //codeswitching 中只有一个 直接投注
-        context.setData("gamNam",gameIdDesc);
+
+        GdLotTxnJnl lotTxnJnl= new GdLotTxnJnl();
+       
+        String brNo = context.getData(ParamKeys.BK).toString();      
+        String cityNo =CodeSwitchUtils.codeGenerator("SubNod2CityId", brNo.substring(2,5));
+        if (StringUtil.isEmptyOrNull(cityNo)) {
+            cityNo="1";
+        }
+        lotTxnJnl.setCityId(cityNo);
+        lotTxnJnl.setBrNo(brNo);
+        lotTxnJnl.setDrawId(context.getData("drawId").toString());
+        lotTxnJnl.setKenoId(context.getData("kenoId").toString());
+        lotTxnJnl.setGameId(gameId);
+        
+        lotTxnJnl.setPlayId((String)context.getData("playId"));
+        lotTxnJnl.setTxnAmt(context.getData("betAmt").toString());
+        lotTxnJnl.settTxnCd("231");
+        lotTxnJnl.setTxnCod("485412");
+        lotTxnJnl.setSchTit("直接投注");//codeswitching 中只有一个 直接投注
+        lotTxnJnl.setGamNam(gameIdDesc);
+        lotTxnJnl.setBetMod(context.getData("betMod").toString());
+        lotTxnJnl.setBetMet(context.getData("betMet").toString());
+        lotTxnJnl.setBetMul(context.getData("betMul").toString());
+        lotTxnJnl.setBetLin(context.getData("betLin").toString());
+       // lotTxnJnl.setLotNam(context.getData("lotNam").toString());//TODO 是否在登录时候  所得
+        lotTxnJnl.setLotNam("13162036230");
         Date date =new Date();
         String dateString = DateUtils.format(date, DateUtils.STYLE_yyyyMMdd);
         String dateTimeString = DateUtils.format(date, DateUtils.STYLE_yyyyMMddHHmmss);
-        context.setData("betDat",dateString);
-        context.setData("txnTim",dateTimeString);
-        context.setData("txnLog",context.getData("selVal"));
-        context.setData("schId","");
-        context.setData("tLogNo","");
-        context.setData("cipher","");
-        context.setData("verify","");
-        context.setData("hTxnCd","471140");
-        context.setData("hTxnSb","002");
-        context.setData("hLogNo","");
-        context.setData("hResCd","");
-        context.setData("hTxnSt","U");
-        context.setData("tRspCd","");
-        context.setData("tTxnSt","U");
-        context.setData("thdChk","0");
-        context.setData("tChkNo","00000000000");
-        context.setData("chkTim","");
-        context.setData("chkFlg","0");
-        context.setData("awdFlg","0");
-        context.setData("awdRtn","0");
-        context.setData("cAgtNo",context.getData("dSCAgtNo"));//TODO; 商户协议编号 
-        context.setData("tckNo","0");
-        context.setData("lChkTm","");
-        context.setData("txnSts","U");
-        GdLotTxnJnl lotTxnJnl= BeanUtils.toObject(context.getDataMap(), GdLotTxnJnl.class);
+        lotTxnJnl.setBetDat(dateString);
+        lotTxnJnl.setTxnTim(dateTimeString);
+        lotTxnJnl.setTxnLog(publicService.getBBIPSequence());
+        lotTxnJnl.setSchTyp("1");
+        lotTxnJnl.setSecLev("1");
+        
+        lotTxnJnl.setSchId("1212121");//TODO系统生成的方案编号
+        lotTxnJnl.settLogNo(publicService.getBBIPSequence());
+        lotTxnJnl.setCipher("");
+        lotTxnJnl.setVerify("");
+        lotTxnJnl.sethTxnCd("471140");
+        lotTxnJnl.sethTxnSb("002");
+        lotTxnJnl.sethTxnSt("U");
+        lotTxnJnl.sethLogNo("");
+        lotTxnJnl.sethRspCd("");
+        lotTxnJnl.settRspCd("");
+        lotTxnJnl.settTxnSt("U");
+        lotTxnJnl.setThdChk("0");
+        lotTxnJnl.settChkNo("00000000000");
+        lotTxnJnl.setChkTim("");
+        lotTxnJnl.setChkFlg("0");
+        lotTxnJnl.setAwdFlg("0");
+        lotTxnJnl.setAwdRtn("0");
+        lotTxnJnl.setTxnSts("U");
+     
         try {
             get(GdLotTxnJnlRepository.class).insert(lotTxnJnl);
         }catch (Exception e){

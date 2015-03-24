@@ -101,21 +101,21 @@ public class RegistAction extends BaseAction{
         //--登记福彩用户表--
         GdLotCusInf inputLotCusInf = new GdLotCusInf();
         inputLotCusInf.setBrNo(context.getData(ParamKeys.BK).toString());
-        inputLotCusInf.setCusNam(context.getData("cusNam").toString());
-        inputLotCusInf.setCrdNo(context.getData("crdNo").toString());
-        inputLotCusInf.setActNo(context.getData("actNo").toString());
-        if (null != context.getData("nodNo").toString()){
-            inputLotCusInf.setActNod(context.getData("nodNo").toString());
+        inputLotCusInf.setCusNam(context.getData("cusNam").toString().trim());
+        inputLotCusInf.setCrdNo(context.getData("crdNo").toString().trim());
+        inputLotCusInf.setActNo(context.getData("actNo").toString().trim());
+        if (null != context.getData("nodNo").toString().trim()){
+            inputLotCusInf.setActNod(context.getData("nodNo").toString().trim());
         }
-        inputLotCusInf.setIdTyp(context.getData("idTyp").toString());
-        inputLotCusInf.setIdNo(context.getData("idNo").toString());
-        inputLotCusInf.setMobTel(context.getData("mobTel").toString());
+        inputLotCusInf.setIdTyp(context.getData("idTyp").toString().trim());
+        inputLotCusInf.setIdNo(context.getData("idNo").toString().trim());
+        inputLotCusInf.setMobTel(context.getData("mobTel").toString().trim());
        
         if (null != context.getData("fixTel").toString()) {
-            inputLotCusInf.setFixTel(context.getData("fixTel").toString());
+            inputLotCusInf.setFixTel(context.getData("fixTel").toString().trim());
         }
         if (null != context.getData("email").toString()) {
-            inputLotCusInf.setEmail(context.getData("email").toString());
+            inputLotCusInf.setEmail(context.getData("email").toString().trim());
         }
         inputLotCusInf.setLotPsw("000000");
         inputLotCusInf.setBthday("20101111");
