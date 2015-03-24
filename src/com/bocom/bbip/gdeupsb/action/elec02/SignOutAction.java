@@ -15,6 +15,6 @@ public class SignOutAction extends BaseAction {
 	public void execute(Context context) throws CoreException {
 		
 		((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE))
-		 .synExecute("eups.signInOutThird", context);
+		 .synExecute("gdeupsb.signInOutThird", context);
 	}
 }
