@@ -25,7 +25,8 @@
 	<bean id="pgas00" class="com.bocom.jump.bp.channel.tcp.SocketServer">
 		<!-- property name="host" value="${local.ip}"/> -->
 		<!-- 渠道接入端口，参数配置于sys.properties文件 -->
-		<property name="port" value="8889" />
+		
+		<property name="port" value="33010" />
 		<property name="mapping" ref="pgas00_TcpMapping" />
 		<property name="threadPool" ref="pgas00_TcpThreadPool" />
 	</bean>
@@ -99,7 +100,7 @@
 	</bean>
 	<bean id="tcpChannel_WATR00" class="com.bocom.jump.bp.channel.tcp.SocketServer">
 		<property name="host" value="0.0.0.0" />
-		<property name="port" value="6000" />
+		<property name="port" value="30162" />
 		<property name="soTimeout" value="100000" />
 		<property name="mapping" ref="tcpMapping_WATR00" />
 		<property name="threadPool" ref="tcpThreadPool_WATR00" />
@@ -213,6 +214,7 @@
 	</bean>
 	<bean id="tbc" class="com.bocom.jump.bp.channel.tcp.SocketServer">
 		<!-- 渠道接入端口，参数配置于sys.properties文件 -->
+		<property name="host" value="0.0.0.0" />
 		<property name="port" value="36010" />
 		<property name="mapping" ref="tbc_TcpMapping" />
 		<property name="threadPool" ref="tbc_TcpThreadPool" />
@@ -338,7 +340,7 @@
 	</bean>
 	<bean id="tcpChannel_ELEC00" class="com.bocom.jump.bp.channel.tcp.SocketServer">
 		<property name="host" value="127.0.0.1" />
-		<property name="port" value="9998" />
+		<property name="port" value="33251" />
 		<property name="soTimeout" value="10000" />
 		<property name="mapping" ref="tcpMapping_ELEC00" />
 		<property name="threadPool" ref="Pool_ELEC00" />
