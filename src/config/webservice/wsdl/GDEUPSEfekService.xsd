@@ -115,6 +115,20 @@
       <xs:element name="response" type="tns:qryCusPayRecordResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:element name="qryComNoByArea" type="tns:qryComNoByAreaReq_CType"/>
+  <xs:element name="qryComNoByAreaResponse" type="tns:qryComNoByAreaRsp_CType"/>
+  <xs:complexType name="qryComNoByAreaReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:qryComNoByAreaRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="qryComNoByAreaRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:qryComNoByAreaResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:element name="tallyCancelQryOnline" type="tns:tallyCancelQryOnlineReq_CType"/>
   <xs:element name="tallyCancelQryOnlineResponse" type="tns:tallyCancelQryOnlineRsp_CType"/>
   <xs:complexType name="tallyCancelQryOnlineReq_CType">
@@ -1183,6 +1197,18 @@
       <xs:maxLength value="6"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:complexType name="qryComNoByAreaRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
+      <xs:element name="area" type="tns:area_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="qryComNoByAreaResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="tallyCancelQryOnlineRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader" minOccurs="0"/>
