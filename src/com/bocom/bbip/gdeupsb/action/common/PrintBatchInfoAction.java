@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,12 +17,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsBatchInfoDetail;
+import com.bocom.bbip.eups.repository.EupsBatchInfoDetailRepository;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
-import com.bocom.bbip.gdeupsb.entity.GDEupsGzagBatchTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
-import com.bocom.bbip.gdeupsb.repository.GDEupsGzagBatchTmpRepository;
 import com.bocom.bbip.utils.BeanUtils;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -32,7 +34,7 @@ public class PrintBatchInfoAction extends BaseAction{
 	@Autowired
 	GDEupsBatchConsoleInfoRepository gdEupsBatchConsoleInfoRepository;
 	@Autowired
-	GDEupsGzagBatchTmpRepository gdEupsGzagBatchTmpRepository;
+	EupsBatchInfoDetailRepository eupsBatchInfoDetailRepository;
 		@Override
 		public void execute(Context context) throws CoreException,
 				CoreRuntimeException {
@@ -43,18 +45,14 @@ public class PrintBatchInfoAction extends BaseAction{
 				context.setData("comNme", gdEupsBatchConsoleInfo.getComNme());
 				context.setData("eupsBusTyp", "广州文本");
 				//入库信息
-				GDEupsGzagBatchTmp gdEupsGzagBatchTmps=new GDEupsGzagBatchTmp();
-				gdEupsGzagBatchTmps.setRsvFld1(batNo);
-				List<GDEupsGzagBatchTmp> list=gdEupsGzagBatchTmpRepository.find(gdEupsGzagBatchTmps);
-				for (GDEupsGzagBatchTmp gdEupsGzagBatchTmp : list) {
-						context.setDataMap(BeanUtils.toMap(gdEupsGzagBatchTmp));
-						
+				EupsBatchInfoDetail eupsBatchInfoDetail=new EupsBatchInfoDetail();
+				eupsBatchInfoDetail.setBatNo(batNo);
+				List<EupsBatchInfoDetail> list=eupsBatchInfoDetailRepository.find(eupsBatchInfoDetail);
+				for (EupsBatchInfoDetail eupsBatchInfoDetails : list) {
+						context.setDataMap(BeanUtils.toMap(eupsBatchInfoDetails));
 				}
-				context.setData("txnTlr", gdEupsBatchConsoleInfo.getTxnTlr());
-				context.setData("exeDte",gdEupsBatchConsoleInfo.getExeDte());
-				context.setData("totCnt", gdEupsBatchConsoleInfo.getTotCnt());
-				context.setData("totAmt", gdEupsBatchConsoleInfo.getTotAmt());
-				
+//				context.setData("txnTlr", arg1);
+				context.setData("exeDte", DateUtils.formatAsSimpleDate(new Date()));
 				log.info("~~~~~~~~~~~"+context);
 				//清单文件
 				VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
@@ -64,24 +62,12 @@ public class PrintBatchInfoAction extends BaseAction{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				System.out.println();
-				System.out.println(1);
 				//拼装文件
 				Map<String, String> map = new HashMap<String, String>();
-				System.out.println();
-				System.out.println(11);
-				map.put("printBatchInfo", "config/report/common/printBatchInfo.vm");
-				System.out.println();
-				System.out.println(111);
+				map.put("printBatch", "config/report/common/printBatch.vm");
 				render.setReportNameTemplateLocationMapping(map);
-				System.out.println();
-				System.out.println(1111);
 				context.setData("eles", list);
-				System.out.println();
-				System.out.println(11111);
-				String result = render.renderAsString("printBatchInfo", context);
-				System.out.println();
-				System.out.println(111111);
+				String result = render.renderAsString("printBatch", context);
 				log.info("~~~~~~~~~~~~~~~~~~~~~"+result);
 				
 				//文件路径
