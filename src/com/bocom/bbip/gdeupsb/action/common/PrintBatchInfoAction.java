@@ -17,7 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.entity.EupsBatchInfoDetail;
+import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
 import com.bocom.bbip.eups.repository.EupsBatchInfoDetailRepository;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
@@ -35,6 +37,8 @@ public class PrintBatchInfoAction extends BaseAction{
 	GDEupsBatchConsoleInfoRepository gdEupsBatchConsoleInfoRepository;
 	@Autowired
 	EupsBatchInfoDetailRepository eupsBatchInfoDetailRepository;
+	@Autowired
+	EupsBatchConsoleInfoRepository eupsBatchConsoleInfoRepository;
 		@Override
 		public void execute(Context context) throws CoreException,
 				CoreRuntimeException {
@@ -43,7 +47,14 @@ public class PrintBatchInfoAction extends BaseAction{
 				context.setData("batNo", batNo);
 				context.setData("comNo", gdEupsBatchConsoleInfo.getComNo());
 				context.setData("comNme", gdEupsBatchConsoleInfo.getComNme());
-				context.setData("eupsBusTyp", "广州文本");
+				context.setData("eupsBusTyp", gdEupsBatchConsoleInfo.getEupsBusTyp());
+				String fleNme=gdEupsBatchConsoleInfo.getRsvFld8();
+				
+				//eupsBatchConsoleInfo批次号
+				EupsBatchConsoleInfo eupsBatchConsoleInfos=new EupsBatchConsoleInfo();
+				eupsBatchConsoleInfos.setFleNme(fleNme);
+				EupsBatchConsoleInfo eupsBatchConsoleInfo=eupsBatchConsoleInfoRepository.find(eupsBatchConsoleInfos).get(0);
+				batNo=eupsBatchConsoleInfo.getBatNo();
 				//入库信息
 				EupsBatchInfoDetail eupsBatchInfoDetail=new EupsBatchInfoDetail();
 				eupsBatchInfoDetail.setBatNo(batNo);
