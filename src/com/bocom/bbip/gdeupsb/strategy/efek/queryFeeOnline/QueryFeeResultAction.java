@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -84,38 +85,11 @@ public class QueryFeeResultAction implements Executable{
 										if(null !=rspMap){
 											 	context.setDataMap(rspMap);
 								                context.setData(ParamKeys.THIRD_RETURN_MESSAGE, rspMap);
-								                BigDecimal oweFeeAmt=new BigDecimal("0.00");
-								                BigDecimal pbd=new BigDecimal("0.00");
 								                List<Map<String, Object>> list=(List<Map<String, Object>>)rspMap.get("Information");
+								               //页数
 								                pageGet(context, list);
-
-								                DecimalFormat df=new DecimalFormat("#.00");
-								                context.setData(ParamKeys.CUS_AC, list.get(0).get(ParamKeys.CUS_AC));
-								                for (Map<String, Object> map : list) {
-								                		double  amt=Double.parseDouble(map.get(ParamKeys.OWE_FEE_AMT).toString());
-								                		amt=amt/100;
-								                		BigDecimal amtAdd=new BigDecimal(df.format(amt));
-								                		map.put(ParamKeys.OWE_FEE_AMT, amtAdd);
-								                		oweFeeAmt=oweFeeAmt.add(amtAdd);
-								                		if(StringUtils.isNotEmpty((String)map.get(GDParamKeys.DEDIT))){
-										                		double  detit=Double.parseDouble(map.get(GDParamKeys.DEDIT).toString());
-										                		detit=detit/100;
-										                		BigDecimal detitAdd=new BigDecimal(df.format(detit));
-										                		pbd=pbd.add(detitAdd);
-								                		}
-												}
-								                context.setData(ParamKeys.OWE_FEE_AMT, oweFeeAmt);
-								                context.setData("pbd",pbd );
-								                context.setData(ParamKeys.BAK_FLD1,  list.get(0).get(ParamKeys.BANK_NO));
-								                context.setData(ParamKeys.RSV_FLD2, list.get(0).get(GDParamKeys.ACCOUNTS_SERIAL_NO));
-								                context.setData(ParamKeys.RSV_FLD3, list.get(0).get(ParamKeys.FULL_DED_FLAG));
-								    	       
-								                context.setData(ParamKeys.RSV_FLD4, list.get(0).get(GDParamKeys.BUS_TYPE));
-								    	        context.setData(ParamKeys.RSV_FLD5, list.get(0).get(GDParamKeys.PAY_TYPE));
-								    	        context.setData(ParamKeys.RSV_FLD6, list.get(0).get(ParamKeys.RSV_FLD6));
-								    	        
-								    	        context.setData(ParamKeys.THD_CUS_NME,  list.get(0).get(ParamKeys.THD_CUS_NME));
-								                context.setData("CusNme",  list.get(0).get(ParamKeys.CUS_NME));
+								                //返回list
+								                creatList(list,context);
 								                //第三方返回码
 								                CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
 								                String responseCode = rspCdeAction.getThdRspCde(rspMap, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
@@ -201,10 +175,6 @@ public class QueryFeeResultAction implements Executable{
 					pageShowLast=list.size()-((pageAll-1)*pageSize);
 			}
 			List<Map<String, Object>> listMap=new ArrayList<Map<String,Object>>();
-			System.out.println();
-			System.out.println(pageAll);
-			System.out.println(pageShowFirst);
-			System.out.println(pageShowLast);
 			for(int i=pageShowFirst;i<pageShowLast;i++){
 					Map<String, Object> maps=list.get(i);
 					listMap.add(maps);
@@ -215,5 +185,71 @@ public class QueryFeeResultAction implements Executable{
             
             logger.info("==========End  QueryFeeResultAction  pageGet");
 		}
-			
+/**
+ * 生成返回List
+ */
+		public void creatList(List<Map<String, Object>> list,Context context){
+			logger.info("===========Start QueryFeeResultAction creatList");
+            context.setData(ParamKeys.CUS_AC, list.get(0).get(ParamKeys.CUS_AC));
+            BigDecimal oweFeeAmt=new BigDecimal("0.00");
+            BigDecimal pbd=new BigDecimal("0.00");
+            BigDecimal capitial=new BigDecimal("0.00");
+            DecimalFormat df=new DecimalFormat("#.00");
+            List<Map<String, Object>> InformationList=new ArrayList<Map<String,Object>>();
+            for (Map<String, Object> map : list) {
+            		double  amt=Double.parseDouble(map.get(ParamKeys.OWE_FEE_AMT).toString());
+            		amt=amt/100;
+            		BigDecimal amtAdd=new BigDecimal(df.format(amt));
+            		BigDecimal detitAdd=new BigDecimal("0.00");
+            		if(StringUtils.isNotEmpty((String)map.get(GDParamKeys.DEDIT))){
+	                		double  detit=Double.parseDouble(map.get(GDParamKeys.DEDIT).toString());
+	                		detit=detit/100;
+	                		detitAdd=new BigDecimal(df.format(detit));
+	                		pbd=pbd.add(detitAdd);
+            		}
+            		BigDecimal capitialAdd=new BigDecimal("0.00");
+            		if(StringUtils.isNotEmpty((String)map.get(GDParamKeys.CAPITIAL))){
+	                		double  capitials=Double.parseDouble(map.get(GDParamKeys.CAPITIAL).toString());
+	                		capitials=capitials/100;
+	                		capitialAdd=new BigDecimal(df.format(capitials));
+	                		capitial=capitial.add(capitialAdd);
+            		}
+            		//行的list赋值 
+            		Map<String, Object> mapInformation=new HashMap<String, Object>();
+            		mapInformation.put("busType", map.get("busType"));
+            		mapInformation.put("payType", map.get("payType"));
+            		mapInformation.put("comNo", map.get("comNo"));
+            		mapInformation.put("payNo", map.get("payNo"));
+            		mapInformation.put("thdCusNme", map.get("thdCusNme"));
+            		mapInformation.put("rsvFld6", map.get("rsvFld6"));
+            		mapInformation.put("bankNo", map.get("bankNo"));
+            		mapInformation.put("cusAc", map.get("cusAc"));
+            		mapInformation.put("CusNme", map.get("cusNme"));
+            		mapInformation.put("fulDedFlg", map.get("fulDedFlg"));
+            		mapInformation.put("accountsSerialNo", map.get("accountsSerialNo"));
+            		mapInformation.put("electricityYearMonth", map.get("electricityYearMonth"));
+            		//金额数值转换
+            		mapInformation.put("oweFeeAmt", amtAdd);
+            		mapInformation.put("capital", detitAdd);
+            		mapInformation.put("dedit", capitialAdd);
+            		InformationList.add(mapInformation);
+            		//欠费总金额
+            		oweFeeAmt=oweFeeAmt.add(amtAdd);
+			}
+            context.setData("Information", InformationList);
+            //保存金额转换
+            context.setData(ParamKeys.OWE_FEE_AMT, oweFeeAmt);
+            context.setData("pbd",pbd );
+            context.setData("capital",capitial );
+            context.setData(ParamKeys.BAK_FLD1,  list.get(0).get(ParamKeys.BANK_NO));
+            context.setData(ParamKeys.RSV_FLD2, list.get(0).get(GDParamKeys.ACCOUNTS_SERIAL_NO));
+            context.setData(ParamKeys.RSV_FLD3, list.get(0).get(ParamKeys.FULL_DED_FLAG));
+	       
+            context.setData(ParamKeys.RSV_FLD4, list.get(0).get(GDParamKeys.BUS_TYPE));
+	        context.setData(ParamKeys.RSV_FLD5, list.get(0).get(GDParamKeys.PAY_TYPE));
+	        context.setData(ParamKeys.RSV_FLD6, list.get(0).get(ParamKeys.RSV_FLD6));
+	        
+	        context.setData(ParamKeys.THD_CUS_NME,  list.get(0).get(ParamKeys.THD_CUS_NME));
+			logger.info("===========End  QueryFeeResultAction creatList");
+		}
 }
