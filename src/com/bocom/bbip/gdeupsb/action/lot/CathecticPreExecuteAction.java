@@ -17,7 +17,6 @@ import com.bocom.bbip.gdeupsb.entity.GdLotTxnJnl;
 import com.bocom.bbip.gdeupsb.repository.GdLotDrwTblRepository;
 import com.bocom.bbip.gdeupsb.repository.GdLotTxnJnlRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
-import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.euif.component.util.StringUtil;
@@ -28,8 +27,6 @@ public class CathecticPreExecuteAction extends BaseAction{
 
     @Autowired
     CommonLotAction commonLotAction;
-    @Autowired
-    BBIPPublicService publicService;
     @Override
     public void execute(Context context) throws CoreException {
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
@@ -80,9 +77,7 @@ public class CathecticPreExecuteAction extends BaseAction{
         }
         // 登记购彩记录(commit)
         String gameIdDesc = CodeSwitchUtils.codeGenerator("GameIdDescChg", gameId);
-
         GdLotTxnJnl lotTxnJnl= new GdLotTxnJnl();
-       
         String brNo = context.getData(ParamKeys.BK).toString();      
         String cityNo =CodeSwitchUtils.codeGenerator("SubNod2CityId", brNo.substring(2,5));
         if (StringUtil.isEmptyOrNull(cityNo)) {
@@ -94,16 +89,20 @@ public class CathecticPreExecuteAction extends BaseAction{
         lotTxnJnl.setKenoId(context.getData("kenoId").toString());
         lotTxnJnl.setGameId(gameId);
         
-        lotTxnJnl.setPlayId((String)context.getData("playId"));
-        lotTxnJnl.setTxnAmt(context.getData("betAmt").toString());
+        String playId = context.getData("playId");//如果为空则为一
+        if (StringUtil.isEmptyOrNull(playId)) {
+            playId="1";
+        }
+        lotTxnJnl.setPlayId(playId);
+        lotTxnJnl.setTxnAmt((String)context.getData("betAmt"));
         lotTxnJnl.settTxnCd("231");
         lotTxnJnl.setTxnCod("485412");
         lotTxnJnl.setSchTit("直接投注");//codeswitching 中只有一个 直接投注
         lotTxnJnl.setGamNam(gameIdDesc);
-        lotTxnJnl.setBetMod(context.getData("betMod").toString());
-        lotTxnJnl.setBetMet(context.getData("betMet").toString());
-        lotTxnJnl.setBetMul(context.getData("betMul").toString());
-        lotTxnJnl.setBetLin(context.getData("betLin").toString());
+        lotTxnJnl.setBetMod((String)context.getData("betMod"));
+        lotTxnJnl.setBetMet((String)context.getData("betMet"));
+        lotTxnJnl.setBetMul((String)context.getData("betMul"));
+        lotTxnJnl.setBetLin((String)context.getData("betLin"));
        // lotTxnJnl.setLotNam(context.getData("lotNam").toString());//TODO 是否在登录时候  所得
         lotTxnJnl.setLotNam("13162036230");
         Date date =new Date();
@@ -111,12 +110,13 @@ public class CathecticPreExecuteAction extends BaseAction{
         String dateTimeString = DateUtils.format(date, DateUtils.STYLE_yyyyMMddHHmmss);
         lotTxnJnl.setBetDat(dateString);
         lotTxnJnl.setTxnTim(dateTimeString);
-        lotTxnJnl.setTxnLog(publicService.getBBIPSequence());
+       // lotTxnJnl.setTxnLog(get(BBIPPublicService.class).getBBIPSequence());
+        lotTxnJnl.setTxnLog("selVal");
         lotTxnJnl.setSchTyp("1");
         lotTxnJnl.setSecLev("1");
         
         lotTxnJnl.setSchId("1212121");//TODO系统生成的方案编号
-        lotTxnJnl.settLogNo(publicService.getBBIPSequence());
+        lotTxnJnl.settLogNo(lotTxnJnl.getTxnLog());
         lotTxnJnl.setCipher("");
         lotTxnJnl.setVerify("");
         lotTxnJnl.sethTxnCd("471140");

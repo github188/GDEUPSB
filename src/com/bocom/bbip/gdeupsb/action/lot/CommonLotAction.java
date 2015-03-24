@@ -332,9 +332,9 @@ public class CommonLotAction extends BaseAction{
         Map<String, Object> inpara = new HashMap<String, Object>();
         inpara.put(ParamKeys.COMPANY_NO, dscAgtNo);
         inpara.put("inqBusLstFlg", "N");
-        String traceNo = publicService.getTraceNo();
-        inpara.put("traceNo", traceNo);
-        context.setData("traceNo", traceNo);
+       // String traceNo = publicService.getTraceNo();
+        //inpara.put("traceNo", traceNo);
+      //  context.setData("traceNo", traceNo);
        //TODO; 测试
         // Result dsResult = bgspServiceAccessObject.callServiceFlatting("queryCorporInfo", inpara);
         //  Map<String, Object> dsMap = new HashMap<String, Object>();

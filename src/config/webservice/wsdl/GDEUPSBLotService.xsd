@@ -254,13 +254,17 @@
     <xs:annotation>
       <xs:documentation>起始日期</xs:documentation>
     </xs:annotation>
-    <xs:restriction base="xs:date"/>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="endDat_SType">
     <xs:annotation>
       <xs:documentation>结束日期</xs:documentation>
     </xs:annotation>
-    <xs:restriction base="xs:date"/>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="pageNo_SType">
     <xs:annotation>
