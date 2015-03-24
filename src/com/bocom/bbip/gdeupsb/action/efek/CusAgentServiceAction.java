@@ -58,6 +58,8 @@ public class CusAgentServiceAction extends BaseAction{
 				context.setData(ParamKeys.AGENT_COLLECT_AGREEMENT, list);
 				constantOfSoapUI(context);
 				context.setData(ParamKeys.THD_CUS_NME, context.getData("settleAccountsName"));
+				String traceNo=bbipPublicService.getTraceNo();
+				context.setData(ParamKeys.TRACE_NO, traceNo);
 				bbipPublicService.synExecute(mothed, context);
 				
 				log.info("============End  CusAgentServiceAction");
