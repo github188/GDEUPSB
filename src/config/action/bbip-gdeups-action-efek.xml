@@ -46,5 +46,10 @@
 		id="gdeupsb.checkThdSumAcctAction" />	
 		<!--  异步调用 对明细-->
 	<action   class="com.bocom.bbip.gdeupsb.strategy.efek.checkThdAcct.GdcheckThdDetlAcctAction"
-		id="gdeupsb.checkThdDetlAcctAction" />		
+		id="gdeupsb.checkThdDetlAcctAction" />
+				
+	<!--  嵌套 查询单位名称-->
+	<action   class="com.bocom.bbip.gdeupsb.action.efek.QryComNoByComNmeAction"
+		id="gdeupsb.qryComNoByComNmeAction" />		
+		
 </x:beans>
