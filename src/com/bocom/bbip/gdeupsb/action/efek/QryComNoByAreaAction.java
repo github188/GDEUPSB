@@ -23,5 +23,6 @@ public class QryComNoByAreaAction extends BaseAction{
 						comNo="GDELEC00";
 				}
 				context.setData(ParamKeys.COMPANY_NO, comNo);
+				log.info("===================End   QryComNoByAreaAction");
 		}
 }
