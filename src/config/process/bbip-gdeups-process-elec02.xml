@@ -71,4 +71,12 @@
 	       <action id="batchSinglePayAct" ref="eups.batchSinglePayFeeAction"/>
 	   </actions>
 	</process>
+	<!--向第三方签到签退 -->
+	<process id="gdeupsb.signInOutThird" template="eups.simpleTran"
+		interceptors="eups.thdTransInterceptor">
+		<actions>
+			<action id="act" class="com.bocom.bbip.gdeupsb.action.elec02.SignInOutAction"  />
+			<action id="act" class="com.bocom.bbip.gdeupsb.action.elec02.SignInOutElec02"/>
+		</actions>
+	</process>
 </x:beans>
