@@ -925,6 +925,7 @@
     <xs:sequence>
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
       <xs:element name="Information" type="tns:Information_CType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="oweFeeAmt" type="tns:oweFeeAmt_SType" minOccurs="0"/>
       <xs:element ref="tns:pageableResponse" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
