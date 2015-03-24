@@ -24,7 +24,7 @@
 							<fixString name="idTyp"  length="2" /><!-- 证件类型	ZJLX	Varchar2(2)-->		
 							<fixString name="idNo"  length="32" /><!-- 证件号码	ZJHM	Varchar2(32)-->		
 							
-							<fixString name="cmuTel"  length="32" /><!-- 联系电话	LXDH	Varchar2(32)-->		
+							<fixString name="cmuTel"  length="20" /><!-- 联系电话	LXDH	Varchar2(32)-->		
 							<fixString name="des2"  length="20" /><!-- 手机号码	SJHM	Varchar2(20)-->		
 							<fixString name="eml"  length="64" /><!-- E-MAIL	EMAIL	Varchar2(64)-->		
 							<fixString name="des1"  length="128" /><!-- 备注	BZ	Varchar2(128)-->	
