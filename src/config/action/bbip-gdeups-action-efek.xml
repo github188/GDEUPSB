@@ -49,7 +49,7 @@
 		id="gdeupsb.checkThdDetlAcctAction" />
 				
 	<!--  嵌套 查询单位编号-->
-	<action   class="com.bocom.bbip.gdeupsb.action.efek.QryComNoByComNmeAction"
-		id="gdeupsb.qryComNoByComNmeAction" />		
+	<action   class="com.bocom.bbip.gdeupsb.action.efek.QryComNoByAreaAction"
+		id="gdeupsb.qryComNoByAreaAction" />		
 		
 </x:beans>
