@@ -5,8 +5,8 @@
 	name="460424Resp">
 	  
 		<fixString name="thdSqn"  length="24"></fixString><!--交易流水号	JYLSH	Varchar2(24)-->
-		<fixString name="thdTxnDte"  length="8"></fixString><!--交易日期	JYRQ	Varchar2(8)-->
-		<fixString name="thdTxnTme"  length="6"></fixString><!--交易时间	JYSJ	Varchar2 (6)-->
+		<fixString name="thdTxnDate"  length="8"></fixString><!--交易日期	JYRQ	Varchar2(8)-->
+		<fixString name="thdTxnTime"  length="6"></fixString><!--交易时间	JYSJ	Varchar2 (6)-->
 		<fixString name="oldTxnSqn"  length="24"></fixString><!--原交易流水号	YJYLSH	Varchar2(24)-->
 		<fixString name="oldTxnDte"  length="8"></fixString><!--原交易日期	YJYRQ	Varchar2(8)-->
 		<fixString name="oldTxnTme"  length="6"></fixString><!--原交易时间	YJYSJ	Varchar2 (6)-->
