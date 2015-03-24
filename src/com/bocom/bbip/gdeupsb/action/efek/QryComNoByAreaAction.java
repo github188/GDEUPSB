@@ -12,14 +12,14 @@ public class QryComNoByAreaAction extends BaseAction{
 		@Override
 		public void execute(Context context) throws CoreException,
 				CoreRuntimeException {
-				log.info("===================Start   QryComNoBycomNmeAction");
-				String comNme=context.getData(ParamKeys.COMPANY_NAME).toString();
+				log.info("===================Start   QryComNoByAreaAction");
+				String area=context.getData("area").toString();
 				String comNo="";
-				if(comNme.equals("佛山") || comNme.equals("1")){
+				if(area.equals("佛山") || area.equals("1")){
 						comNo="foshan";
-				}else if(comNme.equals("清远") || comNme.equals("2")){
+				}else if(area.equals("清远") || area.equals("2")){
 						comNo="qingyuan";
-				}else if(comNme.equals("中山") || comNme.equals("3")){
+				}else if(area.equals("中山") || area.equals("3")){
 						comNo="GDELEC00";
 				}
 				context.setData(ParamKeys.COMPANY_NO, comNo);
