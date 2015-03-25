@@ -39,18 +39,18 @@ public class CancelBatchCheckAction extends BaseAction {
 
 		Assert.isNotNull(gdEupsBatchConsoleInfo, ErrorCodes.EUPS_BAT_CTL_INFO_NOT_EXIST);
 		logger.info("批次信息:"+BeanUtils.toFlatMap(gdEupsBatchConsoleInfo));
+		String fleNme=gdEupsBatchConsoleInfo.getRsvFld8();
+		EupsBatchConsoleInfo eupsBatchConsoleInfos=new EupsBatchConsoleInfo();
+		eupsBatchConsoleInfos.setFleNme(fleNme);
+		EupsBatchConsoleInfo eupsBatchConsoleInfo=get(EupsBatchConsoleInfoRepository.class).find(eupsBatchConsoleInfos).get(0);
 		/**只有状态为I或W，才可以撤销批次*/
-		if(gdEupsBatchConsoleInfo.getBatSts().equals("I") || gdEupsBatchConsoleInfo.getBatSts().equals("W")){
-					gdEupsBatchConsoleInfo.setBatSts("C");
-					get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(gdEupsBatchConsoleInfo);
-					String fleNme=gdEupsBatchConsoleInfo.getRsvFld8();
-					EupsBatchConsoleInfo eupsBatchConsoleInfos=new EupsBatchConsoleInfo();
-					eupsBatchConsoleInfos.setFleNme(fleNme);
-					EupsBatchConsoleInfo eupsBatchConsoleInfo=get(EupsBatchConsoleInfoRepository.class).find(eupsBatchConsoleInfos).get(0);
+		if(eupsBatchConsoleInfo.getBatSts().equals("I") || eupsBatchConsoleInfo.getBatSts().equals("W")){
 					eupsBatchConsoleInfo.setBatSts("C");
 					get(EupsBatchConsoleInfoRepository.class).update(eupsBatchConsoleInfo);
+					gdEupsBatchConsoleInfo.setBatSts("C");
+					get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(gdEupsBatchConsoleInfo);
 					context.setData("cancelResult", "批次撤销完成");
-		}else if(gdEupsBatchConsoleInfo.getBatSts().equals("S")){
+		}else if(eupsBatchConsoleInfo.getBatSts().equals("S")){
 					context.setData("cancelResult", "批次已完成，不能撤销");
 		}else if(gdEupsBatchConsoleInfo.getBatSts().equals("C")){
 					context.setData("cancelResult", "批次已撤销，不能再次撤销");
