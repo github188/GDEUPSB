@@ -15,19 +15,24 @@
 89	应缴费用	10	示例：123.23
  -->
 
-	<fixString name="thdTxnCde" length="10" /> 
+	<!-- <fixString name="thdTxnCde" length="10" />  -->
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
 	<fixString name="thdSqn" length="18"    />
-	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	<fixString  name="Deli3" length="1" default=","/>
+	
 	<fixString name="bk" length="4"   />
-	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	<fixString  name="Deli4" length="1" default=","/>
+	
 	<fixString name="thdCusNo" length="12"   /> 
-	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	<fixString  name="Deli5" length="1" default=","/>
+	
 	<fixString name="cusAc" length="32"   />
-	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	<fixString  name="Deli6" length="1" default=","/> 
+	
 	<fixString name="rsvFld6" length="6"   />
-	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	<fixString  name="Deli7" length="1" default=","/>
+	
 	<fixString name="txnAmt" length="10"   />
-	<!-- <fixString  name="DeliA" length="1"  /> -->
+	<fixString  name="Deli8" length="1"  />
 
 </segment>
