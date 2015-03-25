@@ -220,4 +220,15 @@
 		<!-- 珠海文本 -->
 	<server-side-ws-def wsdl="GDEUPSBatchService.wsdl"
 		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBatchService/Schema" />
+		
+		
+		<!-- 报表打印 -->
+		<server-side-ws-def wsdl="GDEUPBPrtRptService.wsdl"
+		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPBPrtRptService/Schema">
+		<qname-mappings>
+			<qname-mapping operation="prtRptService"  process-id="gdeupsb.printEupsbRpts" />
+		</qname-mappings>
+	</server-side-ws-def>
+		
+		
 </x:beans>
