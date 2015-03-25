@@ -153,7 +153,7 @@
   </wsdl:binding>
   <wsdl:service name="GDEUPSBLotService">
     <wsdl:port name="GDEUPSBLotServicePort" binding="tns:GDEUPSBLotServiceSoapBinding">
-      <soap:address location="http://127.0.0.1"/>
+      <soap:address location="http://127.0.0.1:8080/GDEUPSB/ws/"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

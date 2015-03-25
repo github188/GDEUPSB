@@ -22,7 +22,7 @@ public class CathecticPreAction extends BaseAction {
     
     @Override
     public void execute(Context context) throws CoreException {
-        log.info("Enter in Cathectic Lot Action... ");
+        log.info("Enter in Cathectic  Pre Lot Action... ");
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
         
         commonLotAction.GetSysCfg(context);

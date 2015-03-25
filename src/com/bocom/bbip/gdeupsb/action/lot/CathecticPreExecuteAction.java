@@ -29,6 +29,8 @@ public class CathecticPreExecuteAction extends BaseAction{
     CommonLotAction commonLotAction;
     @Override
     public void execute(Context context) throws CoreException {
+        log.info("Enter in Cathectic  PreExecute Lot Action... ");
+
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
         //<!-- 检查当前是否有可用奖期，如果没有则下载一次，下载后再检查一次，如果没有则返回错误 -->
         //获取福彩时间
@@ -85,8 +87,11 @@ public class CathecticPreExecuteAction extends BaseAction{
         }
         lotTxnJnl.setCityId(cityNo);
         lotTxnJnl.setBrNo(brNo);
-        lotTxnJnl.setDrawId(context.getData("drawId").toString());
-        lotTxnJnl.setKenoId(context.getData("kenoId").toString());
+        lotTxnJnl.setDrawId("12");
+        lotTxnJnl.setKenoId("");
+       // 为何为空 lotTxnJnl.setDrawId(context.getData("drawId").toString());
+        //lotTxnJnl.setKenoId(context.getData("kenoId").toString());
+       
         lotTxnJnl.setGameId(gameId);
         
         String playId = context.getData("playId");//如果为空则为一
@@ -97,6 +102,7 @@ public class CathecticPreExecuteAction extends BaseAction{
         lotTxnJnl.setTxnAmt((String)context.getData("betAmt"));
         lotTxnJnl.settTxnCd("231");
         lotTxnJnl.setTxnCod("485412");
+        lotTxnJnl.setLogNo("485412");
         lotTxnJnl.setSchTit("直接投注");//codeswitching 中只有一个 直接投注
         lotTxnJnl.setGamNam(gameIdDesc);
         lotTxnJnl.setBetMod((String)context.getData("betMod"));
@@ -111,7 +117,7 @@ public class CathecticPreExecuteAction extends BaseAction{
         lotTxnJnl.setBetDat(dateString);
         lotTxnJnl.setTxnTim(dateTimeString);
        // lotTxnJnl.setTxnLog(get(BBIPPublicService.class).getBBIPSequence());
-        lotTxnJnl.setTxnLog("selVal");
+        lotTxnJnl.setTxnLog("141"+context.getData("selVal"));
         lotTxnJnl.setSchTyp("1");
         lotTxnJnl.setSecLev("1");
         

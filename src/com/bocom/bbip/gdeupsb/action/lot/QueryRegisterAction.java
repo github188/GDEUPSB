@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.action.lot;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +26,7 @@ import com.bocom.jump.bp.core.CoreException;
  */
 public class QueryRegisterAction  extends BaseAction{
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public void execute (Context context) throws CoreException {
         log.info("==》》》》》》QueryRegisterAction Start !!==》》》》》》");
@@ -42,7 +43,12 @@ public class QueryRegisterAction  extends BaseAction{
             context.setData(ParamKeys.RSP_MSG,"卡号:"+context.getData("crdNo").toString()+"没注册 !!");
             return;
         }
-
+        context.setData("cusNam",lotCusInfs.get(0).getCusNam());
+        context.setData("idTyp",lotCusInfs.get(0).getIdTyp());
+        context.setData("idNo",lotCusInfs.get(0).getIdNo());
+        context.setData("mobTel",lotCusInfs.get(0).getMobTel());
+        context.setData("lotNam",lotCusInfs.get(0).getLotNam());
+        
         //向福彩中心发送彩民信息查询
         context.setData("action", "209");
         context.setData("eupsBusTyp", "LOTR01");
@@ -50,8 +56,9 @@ public class QueryRegisterAction  extends BaseAction{
         context.setData("gambler_pwd", context.getData("lotPsw"));
         context.setData("modify_time", context.getData("fTXNTm"));
 
-        Transport ts = context.getService("STHDLOT1");
-        Map<String,Object> resultMap = null;//申请当前期号，奖期信息下载
+        // 测试//TODO; 向福彩中心发送请求
+      /*  Transport ts = context.getService("STHDLOT1");
+        Map<String,Object> resultMap = new HashMap<String, Object>();
         try {
             resultMap = (Map<String, Object>) ts.submit(context.getDataMap(), context);
             context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
@@ -68,7 +75,7 @@ public class QueryRegisterAction  extends BaseAction{
             context.setData(ParamKeys.RSP_CDE, "LOT999");
             context.setData(ParamKeys.RSP_MSG, "彩民查询失败!!!");
             return;
-        }
+        }*/
         
         context.setData("MsgTyp",Constants.RESPONSE_TYPE_SUCC);
         context.setData(ParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);

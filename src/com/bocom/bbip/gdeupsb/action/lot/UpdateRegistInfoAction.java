@@ -56,8 +56,8 @@ public class UpdateRegistInfoAction extends BaseAction {
         if (null == lotCusInf.getLotPsw()) {
             context.setData("lotPsw"," ");
         }
-        //PUB:CallThirdOther 向福彩中心发彩民注销 
-        context.setData("eupsBusTyp", "LOTR01");
+        //TODO; CallThirdOther 向福彩中心发彩民注销 
+        /*context.setData("eupsBusTyp", "LOTR01");
         context.setData("action", "219");
        
         @SuppressWarnings("rawtypes")
@@ -78,6 +78,7 @@ public class UpdateRegistInfoAction extends BaseAction {
             context.setData(ParamKeys.RSP_MSG, "彩民注销失败!!!");
             return;
         }
+        //向福彩中心发用户注册
         context.setData("lotNam", context.getData("mobTel"));
         context.setData("regTim", DateUtils.format(new Date(),  DateUtils.STYLE_yyyyMMddHHmmss));
         //PUB:CallThirdOther 向福彩中心发出彩民注册
@@ -102,10 +103,12 @@ public class UpdateRegistInfoAction extends BaseAction {
             context.setData(ParamKeys.RSP_MSG, "彩民注册失败!!!");
             return;
         }
-   
+   */
         GdLotCusInf lotCusInfInput = new GdLotCusInf();
         lotCusInfInput.setCrdNo(context.getData("crdNo").toString());
-        lotCusInfInput.setLotNam(context.getData("lotNam").toString());
+        lotCusInfInput.setCusNam(context.getData("cusNam").toString());
+        lotCusInfInput.setIdTyp(context.getData("idTyp").toString());
+        lotCusInfInput.setIdNo(context.getData("idNo").toString());
         lotCusInfInput.setRegTim(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMddHHmmss));
         lotCusInfInput.setMobTel(context.getData("mobTel").toString());
         try {

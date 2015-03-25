@@ -22,10 +22,16 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
 
 public class CathecticCallThdAction extends BaseAction{
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public void execute(Context context) throws CoreException, CoreRuntimeException {
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
+        // TODO 向福彩中心发出购彩
+/*        String lotTxnTim = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMddHHmmss);
+        context.setData("lotTxnTim", lotTxnTim);
+        context.setData("action", "231");
+        
+        //向福彩中心发出购彩
+        context.setData("eupsBusTyp", "LOTR01");
         Transport ts = context.getService("STHDLOT1");
         Map<String,Object> resultMap = null;
         try {
@@ -36,7 +42,18 @@ public class CathecticCallThdAction extends BaseAction{
         } catch (JumpException e1) {
             e1.printStackTrace();
         }  
-        
+        if(!Constants.RESPONSE_CODE_SUCC.equals(resultMap.get("resultCode"))){
+            log.info("向福彩中心发出购彩信息失败!");
+            context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
+            context.setData(ParamKeys.RSP_CDE, "LOT999");
+            context.setData(ParamKeys.RSP_MSG, "向福彩中心发出购彩信息失败!");
+            return;
+        }
+        */
+        // 测试 Start 
+        Map<String,Object> resultMap =new HashMap<String, Object>();
+        resultMap.put("resultCode", "000000");
+        //测试 end
         String sndStatus = "F";
         if(context.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL)){
             if(Constants.RESPONSE_CODE_SUCC.equals(resultMap.get("resultCode"))){
@@ -104,7 +121,7 @@ public class CathecticCallThdAction extends BaseAction{
             context.setData("MsgTyp",Constants.RESPONSE_TYPE_SUCC);
             context.setData(ParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
             context.setData(ParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
-           
+
         }else {
             context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
             context.setData(ParamKeys.RSP_CDE,"LOT999");

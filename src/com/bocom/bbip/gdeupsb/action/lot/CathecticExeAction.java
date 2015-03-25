@@ -30,6 +30,8 @@ public class CathecticExeAction extends BaseAction{
 
     @Autowired
     BGSPServiceAccessObject serviceAccess;
+    @Autowired
+    BBIPPublicService publicService;
     
     @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
@@ -37,14 +39,14 @@ public class CathecticExeAction extends BaseAction{
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
         context.setData("tTxnCd", context.getData("cTTxnCd"));
         //客户签约状态
-        Map<String, Object> map = new HashMap<String, Object>();
-        map.put("cusAc", context.getData("actNo").toString());
+        Map<String, Object> map =getMap();
+        map.put("cusAc", context.getData("crdNo").toString());
         Result accessObject = serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", map);
-        if (CollectionUtils.isEmpty(accessObject.getPayload())) {
+        if (accessObject.getResponseCode().equals("BBIP0004AGPM66")) {
             context.setData(ParamKeys.RSP_CDE,"LOT999");
             context.setData(ParamKeys.RSP_MSG,"送主机记账失败（无法获取代收协议信息）");
             context.setData("tzCod", "TZ9006");
-            return;
+            throw new CoreException("送主机记账失败（无法获取代收协议信息）");
         }
         context.setData("busTyp","CBS52");
         context.setData("cnlTyp","L");
@@ -74,7 +76,7 @@ public class CathecticExeAction extends BaseAction{
         }
         // 上主机记账
         context.setData("accStatus", "N");
-        Map<String, Object> inmap = new HashMap<String, Object>();
+        Map<String, Object> inmap =getMap();
         inmap.put("busKnd", "test"); // 业务种类
         inmap.put("comNo", ParamKeys.BK); // 单位编号
         inmap.put("tfrDir", "1"); // 代付
@@ -142,30 +144,20 @@ public class CathecticExeAction extends BaseAction{
             context.setData(ParamKeys.RSP_MSG,context.getData("accMsg"));
             return;
         }
-        String lotTxnTim = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMddHHmmss);
-        context.setData("lotTxnTim", lotTxnTim);
-        context.setData("action", "231");
-        
-        //向福彩中心发出购彩
-        context.setData("eupsBusTyp", "LOTR01");
-        Transport ts = context.getService("STHDLOT1");
-        Map<String,Object> resultMap = null;//申请当前期号，奖期信息下载
-        try {
-            resultMap = (Map<String, Object>) ts.submit(context.getDataMap(), context);
-            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
-        } catch (CommunicationException e1) {
-            e1.printStackTrace();
-        } catch (JumpException e1) {
-            e1.printStackTrace();
-        }  
-        if(!Constants.RESPONSE_CODE_SUCC.equals(resultMap.get("resultCode"))){
-            log.info("Check Systerm Time  Fail!");
-            context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
-            context.setData(ParamKeys.RSP_CDE, "LOT999");
-            context.setData(ParamKeys.RSP_MSG, "系统对时失败!!!");
-            return;
-        }
-        
+
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
+    }
+    
+    private Map<String, Object> getMap(){
+        Map<String, Object> map =  new HashMap<String, Object>();
+        map.put("traceNo", publicService.getTraceNo());
+        map.put("traceSrc", "GDEUPSB");
+        map.put("version","GDEUPSB-1.0.0");
+        map.put("reqTme", new Date());
+        map.put("reqJrnNo",  publicService.getBBIPSequence());
+        map.put("reqSysCde", "SGRT00");
+        map.put("tlr", "ABIR148");
+        map.put("chn", "00");
+        return map;
     }
 }
