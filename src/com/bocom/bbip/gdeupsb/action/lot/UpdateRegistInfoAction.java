@@ -19,7 +19,7 @@ import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
 /**
- * 福彩更改用户注册
+ * 福彩更改用户注册 485405
  * @version 1.0.0
  * Date 2015-01-26
  * @author GuiLin.Li

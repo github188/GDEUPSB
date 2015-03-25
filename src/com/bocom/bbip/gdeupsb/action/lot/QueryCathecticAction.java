@@ -21,7 +21,7 @@ import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 /**
- * 福彩投注查询
+ * 福彩投注查询 485413
  * @version 1.0.0
  * Date 2015-01-22
  * @author GuiLin.Li

@@ -33,6 +33,7 @@
     K_SAL_ST, K_SAL_ED, CHK_FLG, CHK_TIM, DOW_PRZ, PRZ_AMT, TOT_AMT, DIF_FLG, DIF_AMT, 
     PAY_FLG, PAY_AMT, FLW_CTL, RTN_TIM, CLR_TIM, XFE_FLG
   </sql>
+  
   <select id="find" resultMap="basicResultMap" >
     select
     <include refid="baseColumnList" />
@@ -730,6 +731,7 @@
         from gdeupsb.GDEUPS_LOT_DRW_TBL
         where KENO_ID='AAAAA' and PRZ_AMT='' and FLW_CTL !='10'
     </select>
+    
     <!--福彩明细总数查询 -->
     <select id="statUnPrzDrw" resultType="java.util.Map"
         parameterType="com.bocom.bbip.gdeupsb.entity.GdLotDrwTbl">

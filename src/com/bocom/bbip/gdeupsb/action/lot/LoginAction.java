@@ -20,7 +20,7 @@ import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
 /**
- * 福彩用户登录
+ * 福彩用户登录 485401
  * 
  * @version 1.0.0 Date 2015-01-26
  * @author GuiLin.Li

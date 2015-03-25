@@ -235,7 +235,7 @@ public class GdLotDrwTbl {
     public String getRtnTim() {
         return rtnTim;
     }
-
+    
     public void setRtnTim(String rtnTim) {
         this.rtnTim = rtnTim;
     }
@@ -251,7 +251,6 @@ public class GdLotDrwTbl {
     public String getXfeFlg() {
         return xfeFlg;
     }
-
     public void setXfeFlg(String xfeFlg) {
         this.xfeFlg = xfeFlg;
     }
