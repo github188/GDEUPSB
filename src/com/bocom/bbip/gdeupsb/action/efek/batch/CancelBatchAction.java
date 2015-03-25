@@ -50,24 +50,25 @@ public class CancelBatchAction extends BaseAction {
 		   		throw new CoreException("获取金额与交易金额不相等");
 	   }
 	   //批量 判断状态
-	   String batSts=gdEupsBatchConsoleInfo.getBatSts();
-	   if(batSts.equals(GDConstants.BATCH_STATUS_INIT) || batSts.equals(GDConstants.BATCH_STATUS_WAIT)){
-			   String batNo=gdEupsBatchConsoleInfo.getBatNo();
+	   String batNo=gdEupsBatchConsoleInfo.getBatNo();
+	   GDEupsBatchConsoleInfo Infos=gdEupsBatchConsoleInfoRepository.findOne(batNo);
+	   String thdSqn=Infos.getRsvFld2();
+	   EupsBatchConsoleInfo eupsBatchConsoleInfo=new EupsBatchConsoleInfo();
+	   eupsBatchConsoleInfo.setRsvFld2(thdSqn);
+	   EupsBatchConsoleInfo eupsBatchConsoleInfoOne=eupsBatchConsoleInfoRepository.find(eupsBatchConsoleInfo).get(0);
+	   String eupsBatSts=eupsBatchConsoleInfoOne.getBatSts();
+	   if(eupsBatSts.equals(GDConstants.BATCH_STATUS_INIT) || eupsBatSts.equals(GDConstants.BATCH_STATUS_WAIT)){
 			   //上锁
 			   Result result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).tryLock(batNo, 60*1000L, 6000L);
 			   Assert.isTrue(result.isSuccess(), GDErrorCodes.EUPS_LOCK_FAIL);
 			   //更改批次控制表状态
+			   eupsBatchConsoleInfoOne.setBatSts("C");
+			   eupsBatchConsoleInfoRepository.update(eupsBatchConsoleInfoOne);
+			   
 			   GDEupsBatchConsoleInfo info=new GDEupsBatchConsoleInfo();
 			   info.setBatNo(batNo);
 			   info.setBatSts("C");
 			   gdEupsBatchConsoleInfoRepository.updateConsoleInfo(info);
-			   GDEupsBatchConsoleInfo Infos=gdEupsBatchConsoleInfoRepository.findOne(batNo);
-			   String thdSqn=Infos.getRsvFld2();
-			   EupsBatchConsoleInfo eupsBatchConsoleInfo=new EupsBatchConsoleInfo();
-			   eupsBatchConsoleInfo.setRsvFld2(thdSqn);
-			   EupsBatchConsoleInfo eupsBatchConsoleInfoOne=eupsBatchConsoleInfoRepository.find(eupsBatchConsoleInfo).get(0);
-			   eupsBatchConsoleInfoOne.setBatSts("C");
-			   eupsBatchConsoleInfoRepository.update(eupsBatchConsoleInfoOne);
 			   context.setData("cancelSign","C");
 			   //解锁
 			   result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).unlock(batNo);
