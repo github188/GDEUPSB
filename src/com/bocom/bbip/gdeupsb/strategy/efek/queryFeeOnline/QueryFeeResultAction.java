@@ -191,6 +191,7 @@ public class QueryFeeResultAction implements Executable{
 		public void creatList(List<Map<String, Object>> list,Context context){
 			logger.info("===========Start QueryFeeResultAction creatList");
             context.setData(ParamKeys.CUS_AC, list.get(0).get(ParamKeys.CUS_AC));
+            //欠费总金额   总违约金  总本金 单位编码
             BigDecimal oweFeeAmt=new BigDecimal("0.00");
             BigDecimal pbd=new BigDecimal("0.00");
             BigDecimal capitial=new BigDecimal("0.00");
@@ -233,13 +234,14 @@ public class QueryFeeResultAction implements Executable{
             		mapInformation.put("capital", detitAdd);
             		mapInformation.put("dedit", capitialAdd);
             		InformationList.add(mapInformation);
-            		//欠费总金额
+            		//欠费总金额 总违约金  总本金 单位编码
             		oweFeeAmt=oweFeeAmt.add(amtAdd);
 			}
             context.setData("Information", InformationList);
             //保存金额转换
             context.setData(ParamKeys.OWE_FEE_AMT, oweFeeAmt);
             context.setData("pbd",pbd );
+            context.setData(GDParamKeys.DEDIT, pbd);
             context.setData("capital",capitial );
             context.setData(ParamKeys.BAK_FLD1,  list.get(0).get(ParamKeys.BANK_NO));
             context.setData(ParamKeys.RSV_FLD2, list.get(0).get(GDParamKeys.ACCOUNTS_SERIAL_NO));
