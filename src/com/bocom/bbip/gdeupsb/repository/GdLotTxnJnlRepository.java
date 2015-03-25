@@ -19,7 +19,7 @@ public interface GdLotTxnJnlRepository extends PagingAndSortingRepository<GdLotT
     public void update(GdLotTxnJnl lotTxnJnlInput);
 
     @Find
-    public List<GdLotTxnJnl> qryLotTxnJnl(Pageable page, Map<String, Object> map);
+    public List<Map<String, Object>> qryLotTxnJnl(Pageable page, Map<String, Object> map);
 
     @Update
     public void updateMatchLotTxnJnl(GdLotTxnJnl gdLotTxnJnl);
@@ -45,9 +45,6 @@ public interface GdLotTxnJnlRepository extends PagingAndSortingRepository<GdLotT
      */
     @Update
     public void updateAwdFlg(GdLotDrwTbl gdLotDrwTbl);
-
-//  @Find
-//  public List<GdLotTxnJnl> qryLotWinRecord(GdLotTxnJnl gdEupsbLotTxnJnl);
 
     @Find
     public List<Map<String, Object>> qryLotWinRecord(Map<String, Object> map);

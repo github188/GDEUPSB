@@ -339,6 +339,14 @@
       <xs:maxLength value="128"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:simpleType name="drawNm_SType">
+    <xs:annotation>
+      <xs:documentation>期名</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:simpleType name="txnAmt_SType">
     <xs:annotation>
       <xs:documentation>投注金额</xs:documentation>
@@ -349,14 +357,15 @@
   </xs:simpleType>
   <xs:complexType name="rec_CType">
     <xs:sequence>
-      <xs:element name="gameId" type="tns:gameId_SType"/>
-      <xs:element name="playId" type="tns:playId_SType"/>
-      <xs:element name="txnLog" type="tns:txnLog_SType"/>
-      <xs:element name="drawId" type="tns:drawId_SType"/>
-      <xs:element name="kenoId" type="tns:kenoId_SType"/>
-      <xs:element name="betMul" type="tns:betMul_SType"/>
-      <xs:element name="betLin" type="tns:betLin_SType"/>
-      <xs:element name="txnAmt" type="tns:txnAmt_SType"/>
+      <xs:element name="gameId" type="tns:gameId_SType" minOccurs="0"/>
+      <xs:element name="playId" type="tns:playId_SType" minOccurs="0"/>
+      <xs:element name="txnLog" type="tns:txnLog_SType" minOccurs="0"/>
+      <xs:element name="drawId" type="tns:drawId_SType" minOccurs="0"/>
+      <xs:element name="kenoId" type="tns:kenoId_SType" minOccurs="0"/>
+      <xs:element name="betMul" type="tns:betMul_SType" minOccurs="0"/>
+      <xs:element name="betLin" type="tns:betLin_SType" minOccurs="0"/>
+      <xs:element name="drawNm" type="tns:drawNm_SType" minOccurs="0"/>
+      <xs:element name="txnAmt" type="tns:txnAmt_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="cathecticOnTimeRequest_CType">
