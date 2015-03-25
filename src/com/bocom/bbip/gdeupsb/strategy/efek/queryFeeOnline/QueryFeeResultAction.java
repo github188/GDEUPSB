@@ -234,11 +234,10 @@ public class QueryFeeResultAction implements Executable{
             		mapInformation.put("capital", detitAdd);
             		mapInformation.put("dedit", capitialAdd);
             		InformationList.add(mapInformation);
-            		//欠费总金额 总违约金  总本金 单位编码
             		oweFeeAmt=oweFeeAmt.add(amtAdd);
 			}
             context.setData("Information", InformationList);
-            //保存金额转换
+            //欠费总金额 总违约金  总本金 单位编码
             context.setData(ParamKeys.OWE_FEE_AMT, oweFeeAmt);
             context.setData("pbd",pbd );
             context.setData(GDParamKeys.DEDIT, pbd);
