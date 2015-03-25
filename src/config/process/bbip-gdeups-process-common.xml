@@ -37,5 +37,15 @@
 			  <action id="act" ref="gdeupsb.printBatchInfoAction"   />
 		</actions>
 	</process>
+	
+	<!-- 报表打印 -->
+	<process id="gdeupsb.printEupsbRpts" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
+		<actions>
+			  <action id="act" ref="gdeupsb.printEupsbRptsAction"   />
+		</actions>
+	</process>
+	
+	
+	
 </x:beans>
 
