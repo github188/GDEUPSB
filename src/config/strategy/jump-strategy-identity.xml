@@ -261,7 +261,7 @@
 		id="eups.payUnilateralToBankServiceActionELEC01" />
 
 
-	<!-- PGAS00新增协议 -->
+	<!-- PGAS00新增协议 -->																			
 	<bean class="com.bocom.bbip.gdeupsb.strategy.gash.CommInsertCusAgentServiceActionPGAS00" id="eups.commInsertCusAgentServiceActionPGAS00" />
 	
 	<!-- PGAS00修改协议 -->
@@ -319,5 +319,6 @@
 		id="eups.payUnilateralToBankServiceActionSGRT00" />
 
 
+	<bean class="com.bocom.bbip.gdeupsb.strategy.sgrt00.CommInsertCusAgentServiceActionSGRT00" id="eups.commInsertCusAgentServiceActionSGRT00" />
 
 </beans>
