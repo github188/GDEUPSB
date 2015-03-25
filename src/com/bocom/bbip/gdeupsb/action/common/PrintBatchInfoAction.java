@@ -22,6 +22,7 @@ import com.bocom.bbip.eups.entity.EupsBatchInfoDetail;
 import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
 import com.bocom.bbip.eups.repository.EupsBatchInfoDetailRepository;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
+import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.utils.BeanUtils;
@@ -45,8 +46,6 @@ public class PrintBatchInfoAction extends BaseAction{
 				String batNo=context.getData(ParamKeys.BAT_NO).toString();
 				GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=gdEupsBatchConsoleInfoRepository.findOne(batNo);
 				context.setData("batNo", batNo);
-				context.setData("comNo", gdEupsBatchConsoleInfo.getComNo());
-				context.setData("comNme", gdEupsBatchConsoleInfo.getComNme());
 				context.setData("eupsBusTyp", gdEupsBatchConsoleInfo.getEupsBusTyp());
 				String fleNme=gdEupsBatchConsoleInfo.getRsvFld8();
 				
@@ -54,16 +53,33 @@ public class PrintBatchInfoAction extends BaseAction{
 				EupsBatchConsoleInfo eupsBatchConsoleInfos=new EupsBatchConsoleInfo();
 				eupsBatchConsoleInfos.setFleNme(fleNme);
 				EupsBatchConsoleInfo eupsBatchConsoleInfo=eupsBatchConsoleInfoRepository.find(eupsBatchConsoleInfos).get(0);
-				batNo=eupsBatchConsoleInfo.getBatNo();
+				String eupsBatNo=eupsBatchConsoleInfo.getBatNo();
 				//入库信息
 				EupsBatchInfoDetail eupsBatchInfoDetail=new EupsBatchInfoDetail();
-				eupsBatchInfoDetail.setBatNo(batNo);
+				eupsBatchInfoDetail.setBatNo(eupsBatNo);
 				List<EupsBatchInfoDetail> list=eupsBatchInfoDetailRepository.find(eupsBatchInfoDetail);
 				for (EupsBatchInfoDetail eupsBatchInfoDetails : list) {
+						if(eupsBatchInfoDetails.getSts().equals("S")){
+								eupsBatchInfoDetails.setSts("成功");
+						}else{
+								eupsBatchInfoDetails.setSts("失败");
+						}
 						context.setDataMap(BeanUtils.toMap(eupsBatchInfoDetails));
 				}
-//				context.setData("txnTlr", arg1);
-				context.setData("exeDte", DateUtils.formatAsSimpleDate(new Date()));
+				context.setData("exeDte", DateUtils.formatAsSimpleDate(gdEupsBatchConsoleInfo.getExeDte()));
+				context.setData("comNo", eupsBatchConsoleInfo.getComNo());
+				context.setData("comNme", eupsBatchConsoleInfo.getComNme());
+				context.setData(ParamKeys.TOT_CNT, eupsBatchConsoleInfo.getTotCnt());
+				context.setData(ParamKeys.TOT_AMT, eupsBatchConsoleInfo.getTotAmt());
+				context.setData(GDParamKeys.SUC_TOT_CNT, eupsBatchConsoleInfo.getSucTotCnt());
+				context.setData(GDParamKeys.SUC_TOT_AMT, eupsBatchConsoleInfo.getSucTotAmt());
+				context.setData(GDParamKeys.FAL_TOT_CNT, eupsBatchConsoleInfo.getFalTotCnt());
+				context.setData("Tlr", eupsBatchConsoleInfo.getTxnTlr());
+				context.setData("falTotAmt", eupsBatchConsoleInfo.getFalTotAmt());
+				context.setData("txnDte",DateUtils.formatAsSimpleDate(new Date()));
+				System.out.println();
+				System.out.println(context.getData("txnDte"));
+				System.out.println(context.getData("falTotAmt"));
 				log.info("~~~~~~~~~~~"+context);
 				//清单文件
 				VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
