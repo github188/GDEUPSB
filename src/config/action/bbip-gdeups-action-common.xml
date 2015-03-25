@@ -22,4 +22,6 @@
 	<!-- 打印批次信息 -->
 	<action id="gdeupsb.printBatchInfoAction" class="com.bocom.bbip.gdeupsb.action.common.PrintBatchInfoAction"/>
 	
+	<!-- 报表打印 -->
+	<action id="gdeupsb.printEupsbRptsAction" class="com.bocom.bbip.gdeupsb.action.common.PrintEupsbRptsAction" />	
 </x:beans>
