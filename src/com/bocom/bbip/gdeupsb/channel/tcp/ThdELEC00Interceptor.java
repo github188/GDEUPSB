@@ -389,7 +389,6 @@ public class ThdELEC00Interceptor implements Interceptor {
             context.setData(ParamKeys.RSP_JRN_NO, sqn);
         }
         log.info("================get sqn:context=" + context);
-
         Date rspTime = null;
         if(null !=context.getData(ParamKeys.TXN_DATE)){
         	rspTime=DateUtils.parse(context.getData(ParamKeys.TXN_DATE).toString());
@@ -408,6 +407,11 @@ public class ThdELEC00Interceptor implements Interceptor {
             BigDecimal amt = new BigDecimal(oweFeeAmt.trim());
             amt = amt.setScale(2, BigDecimal.ROUND_HALF_UP);
             context.setData(ParamKeys.OWE_FEE_AMT, amt.toString());
+        }
+        if(context.getData(ParamKeys.SERVICE_NAME).toString().equals(SHG_PAY_ID+"ELEC00")){
+    		context.setData("thdTxnDte", DateUtils.format(thdTxnDte, DateUtils.STYLE_yyyyMMdd));
+    		context.setData("thdTxnTme", DateUtils.formatAsHHmmss(thdTxnTme));
+    		context.setData("txnTme",context.getData("txnTme").toString().substring(8));
         }
     }
 
