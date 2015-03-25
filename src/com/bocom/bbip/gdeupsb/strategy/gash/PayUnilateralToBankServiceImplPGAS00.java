@@ -46,7 +46,10 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 		context.setData(ParamKeys.TELLER, "ABIR148");
 		context.setData(ParamKeys.BR, "01441131999");
 		context.setData(ParamKeys.BK, "01441999999");
-
+		
+		context.setData("br1", context.getData(ParamKeys.BR).toString().subSequence(2, 8));
+		context.setData("txnTme1", DateUtils.format(new Date(), DateUtils.STYLE_FULL));
+		context.setData("reMark1", "扣款失败"); 
 		logger.info("PayUnilateralToBankServiceImplPGAS00@prepareCheckDeal end!");
 		return null;
 	}
@@ -73,25 +76,21 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 
 		// 查询用户信息（签约状态）select ActNam from Gascusall491 where UserNo='%s' and
 		// ActNo='%s' cusAc UserNo='%s' cusNo
-		GdGasCusAll qryCusInf = new GdGasCusAll();
-		qryCusInf.setCusAc(context.getData(ParamKeys.CUS_AC).toString());
-		qryCusInf.setCusNo(context.getData(ParamKeys.THD_CUS_NO).toString());
-		List<GdGasCusAll> cusInfLst = gdGasCusAllRepository.find(qryCusInf);
-
-		if (CollectionUtils.isEmpty(cusInfLst)) { // cusInfLst为空，未签约
-			context.setData(ParamKeys.BAK_FLD2, "B2");
-			context.setData(ParamKeys.MESSAGE_TYPE, "E");
-			context.setData(ParamKeys.RSP_CDE, GDConstants.GAS_ERROR_CODE);
-			context.setData(ParamKeys.RSP_MSG, "该用户未签约，交易失败");
-			// throw new CoreException("该用户未签约，交易失败");
-		}
+//		GdGasCusAll qryCusInf = new GdGasCusAll();
+//		qryCusInf.setCusAc(context.getData(ParamKeys.CUS_AC).toString());
+//		qryCusInf.setCusNo(context.getData(ParamKeys.THD_CUS_NO).toString());
+//		List<GdGasCusAll> cusInfLst = gdGasCusAllRepository.find(qryCusInf);
+//
+//		if (CollectionUtils.isEmpty(cusInfLst)) { // cusInfLst为空，未签约
+//			context.setData(ParamKeys.BAK_FLD2, "B2");
+//			context.setData("TransCode", "B2");
+//			context.setData(ParamKeys.MESSAGE_TYPE, "E");
+//			context.setData(ParamKeys.RSP_CDE, GDConstants.GAS_ERROR_CODE);
+//			context.setData(ParamKeys.RSP_MSG, "该用户未签约，交易失败");
+//			throw new CoreException("该用户未签约，交易失败");
+//		}
 
 		// 将交易数据入 流水表，预置为交易失败F EUPS已实现相应逻辑但交易状态为U(预置)
-		// EupsTransJournal eupsTxnJnl =
-		// BeanUtils.toObject(context.getDataMap(),
-		// EupsTransJournal.class);
-		// eupsTxnJnl.setTxnSts("F");
-		// eupsTransJournalRepository.insert(eupsTxnJnl);
 
 		// <Set>TActNo=491800012620190029499</Set>
 		context.setData("TActNo", GDConstants.GAS_THD_ACT_NO);
@@ -152,13 +151,13 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 		logger.info("Enter in PayUnilateralToBankServiceImplPGAS00@aftPayToBank!....");
 		logger.info("======context:" + context);
 
-		context.setData(GDParamKeys.TXN_TME1, DateUtils.format(
-				(Date) context.getData(ParamKeys.TXN_TME),
-				"yyyy-MM-dd HH:mm:ss"));
+//		context.setData(GDParamKeys.TXN_TME1, DateUtils.format(
+//				(Date) context.getData(ParamKeys.TXN_TME),
+//				"yyyy-MM-dd HH:mm:ss"));
 		// context.setData(ParamKeys.BK,
 		// context.getData(ParamKeys.BK).toString().substring(2, 8));
-		context.setData(GDParamKeys.BR1, context.getData(ParamKeys.BR)
-				.toString().substring(2));
+//		context.setData(GDParamKeys.BR1, context.getData(ParamKeys.BR)
+//				.toString().substring(2));
 
 		
 		logger.info("=================context.state:" + context.getData("state"));
@@ -169,15 +168,17 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 		if ("000000".equals(context.getData(ParamKeys.RESPONSE_CODE)) && "S".equals(context.getData(ParamKeys.MFM_TXN_STS))) {
 
 			context.setData(ParamKeys.BAK_FLD2, "B0");
+			context.setData("TransCode", "B0");
 			context.setData(ParamKeys.RSP_MSG, "扣款成功");
 			context.setData(ParamKeys.BAK_FLD5, "扣款成功");
+			context.setData("reMark1", "扣款成功 ");
 
 			// 更新流水 BBIP有相应处理
 			logger.info("=========交易成功了啊！！！！！！！！！！！！！！！context=" + context);
 		} else {
 			if ("GEMS0004TP0017".equals(context.getData(ParamKeys.RESPONSE_CODE))) { // B1为金额不足扣费失败
 				context.setData(ParamKeys.BAK_FLD2, "B1");
-				context.setData("reMark1", "余额不足");
+				context.setData("TransCode", "B1");
 				logger.info("=========交易失败了啊！！！余额不足啊！！！！！！！！！！！！context=" + context);
 			} else if ("GEMS0004CB0042".equals(context.getData(ParamKeys.RESPONSE_CODE)) 
 					&& !(GDConstants.GAS_TXN_BY_CASH.equals(context.getData(ParamKeys.CUS_AC)))) {
@@ -186,12 +187,12 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 				// "客户账号不存在                                            ",
 				// "客户账号不存在                                            ":payMod为0时（即现金交易，也会返回此消息，需要区分开这情况,检测cusAc不为00000000且RESPONSE_MESSAGE为"客户账号不存在                                            "）
 				context.setData(ParamKeys.BAK_FLD2, "B2");
-				context.setData("reMark1", "客户账号不存在");
+				context.setData("TransCode", "B2");
 				logger.info("=========交易失败了啊！！！！！客户账号不存在啊！！！！！快去签约！！！！！context="
 						+ context);
 			} else { // B3其它原因扣费失败
 				context.setData(ParamKeys.BAK_FLD2, "B3");
-//				context.setData("reMark1", context.getData(ParamKeys.RESPONSE_MESSAGE).toString());
+				context.setData("TransCode", "B3");
 				logger.info("=========交易失败了啊！！！！！！！！context=" + context);
 			}
 		} 
