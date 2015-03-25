@@ -25,6 +25,7 @@ public class QueryFeeAction implements Executable{
 			context.setData(ParamKeys.RSV_FLD1, context.getData(GDParamKeys.ELECTRICITY_YEARMONTH));
 			context.setData(ParamKeys.THD_CUS_NO, context.getData(GDParamKeys.PAY_NO));
 			context.setData("PKGCNT", "000001");
+			context.setData(GDParamKeys.BUS_TYPE,"110");
 //			context.setData(ParamKeys.BAK_FLD1, context.getData(GDParamKeys.PAY_NO));
 	}
 }
