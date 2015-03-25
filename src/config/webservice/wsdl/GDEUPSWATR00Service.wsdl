@@ -245,7 +245,7 @@
   </wsdl:binding>
   <wsdl:service name="GDEUPSWATR00Service">
     <wsdl:port name="GDEUPSWATR00ServicePort" binding="tns:GDEUPSWATR00ServiceSoapBinding">
-      <soap:address location="http://127.0.0.1"/>
+      <soap:address location="http://127.0.0.1:8080/GDEUPSB/ws/"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
