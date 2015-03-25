@@ -457,6 +457,9 @@ public final class GDErrorCodes {
 	public static final String GAS_CUS_AGT_OPRE = "BBIP4400EU0629";
 	/** 操作代收付协议失败*/
 	public static final String GAS_OPR_ACP_ERR = "BBIP4400EU0630";
+	/** 系统错误，请联系管理员*/
+	public static final String GAS_SYS_ERROR = "BBIP4400EU0601";
+	
 	
 	
 }
