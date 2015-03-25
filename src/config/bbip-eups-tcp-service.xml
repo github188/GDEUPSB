@@ -16,15 +16,11 @@
 	<bean id="pgas00_TcpMapping" class="com.bocom.bbip.channel.tcp.EdgeSupportSocketURIEndpointMapping">
 		<property name="mapping">
 			<map>
-				<!-- 渠道接入端口，参数配置于sys.properties文件 <entry key="tcp://*:${abs.listen.port}" 
-					value-ref="pgas00_TcpEndpoint"/> -->
-				<entry key="tcp://*:8889" value-ref="pgas00_TcpEndpoint" />
+				<entry key="tcp://*:33010" value-ref="pgas00_TcpEndpoint" />
 			</map>
 		</property>
 	</bean>
 	<bean id="pgas00" class="com.bocom.jump.bp.channel.tcp.SocketServer">
-		<!-- property name="host" value="${local.ip}"/> -->
-		<!-- 渠道接入端口，参数配置于sys.properties文件 -->
 		
 		<property name="port" value="33010" />
 		<property name="mapping" ref="pgas00_TcpMapping" />
@@ -38,17 +34,10 @@
 	<bean id="pgas00_TcpEndpoint" class="com.bocom.jump.bp.channel.DefaultEndpoint">
 		<property name="interceptors">
 			<array>
+				<bean class="com.bocom.jump.bp.channel.interceptors.RequestTracingInterceptor" />
 				<bean
-					class="com.bocom.jump.bp.channel.interceptors.RequestTracingInterceptor" />
-				<bean
-					class="com.bocom.jump.bp.channel.tcp.interceptors.PayloadChannelInterceptor">
-
-					<property name="lengthSize" value="4" />
-
+					class="com.bocom.bbip.gdeupsb.channel.tcp.NoFrontPayloadChannelInterceptorEb">
 				</bean>
-
-				<!-- <bean class="com.bocom.net.tangdi.core.tcp.TdPayLoadInterceptor"> 
-					<property name="MaxBufSize" value="8192"/> </bean> -->
 
 				<bean class="com.bocom.jump.bp.channel.interceptors.TransformInterceptor">
 					<property name="encodeTransforms"> <!-- unpack response -->
@@ -77,7 +66,7 @@
 				</bean>
 				<bean class="com.bocom.jump.bp.channel.interceptors.ContextInterceptor" />
 				<bean class="com.bocom.bbip.eups.interceptor.ServiceThdInterceptor">
-					<constructor-arg value="8889" />
+					<constructor-arg value="33010" />
 				</bean>
 			</array>
 		</property>
