@@ -226,6 +226,7 @@
   <xs:complexType name="qryLotTxnJnlInfoResponse_CType">
     <xs:sequence>
       <xs:element ref="tns:responseHeader"/>
+      <xs:element name="gameId" type="tns:gameId_SType"/>
       <xs:element name="pageNo" type="tns:pageNo_SType" minOccurs="0"/>
       <xs:element name="varSize" type="tns:varSize_SType" minOccurs="0"/>
       <xs:element name="ttl" type="tns:ttl_SType" minOccurs="0"/>
@@ -298,15 +299,7 @@
       <xs:maxLength value="3"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="GAMEID_SType">
-    <xs:annotation>
-      <xs:documentation>游戏编号</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="2"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="PLAYID_SType">
+  <xs:simpleType name="playId_SType">
     <xs:annotation>
       <xs:documentation>玩法编号</xs:documentation>
     </xs:annotation>
@@ -314,7 +307,7 @@
       <xs:maxLength value="5"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="TXNLOG_SType">
+  <xs:simpleType name="txnLog_SType">
     <xs:annotation>
       <xs:documentation>投注流水号</xs:documentation>
     </xs:annotation>
@@ -322,15 +315,7 @@
       <xs:maxLength value="32"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="DRAWID_SType">
-    <xs:annotation>
-      <xs:documentation>当前大期</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="5"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="KENOID_SType">
+  <xs:simpleType name="kenoId_SType">
     <xs:annotation>
       <xs:documentation>当前小期</xs:documentation>
     </xs:annotation>
@@ -338,7 +323,7 @@
       <xs:maxLength value="5"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="BETMUL_SType">
+  <xs:simpleType name="betMul_SType">
     <xs:annotation>
       <xs:documentation>投注倍数</xs:documentation>
     </xs:annotation>
@@ -346,7 +331,7 @@
       <xs:maxLength value="3"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="BETLIN_SType">
+  <xs:simpleType name="betLin_SType">
     <xs:annotation>
       <xs:documentation>投注号码</xs:documentation>
     </xs:annotation>
@@ -354,7 +339,7 @@
       <xs:maxLength value="128"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="TXNAMT_SType">
+  <xs:simpleType name="txnAmt_SType">
     <xs:annotation>
       <xs:documentation>投注金额</xs:documentation>
     </xs:annotation>
@@ -364,14 +349,14 @@
   </xs:simpleType>
   <xs:complexType name="rec_CType">
     <xs:sequence>
-      <xs:element name="GAMEID" type="tns:GAMEID_SType"/>
-      <xs:element name="PLAYID" type="tns:PLAYID_SType"/>
-      <xs:element name="TXNLOG" type="tns:TXNLOG_SType"/>
-      <xs:element name="DRAWID" type="tns:DRAWID_SType"/>
-      <xs:element name="KENOID" type="tns:KENOID_SType"/>
-      <xs:element name="BETMUL" type="tns:BETMUL_SType"/>
-      <xs:element name="BETLIN" type="tns:BETLIN_SType"/>
-      <xs:element name="TXNAMT" type="tns:TXNAMT_SType"/>
+      <xs:element name="gameId" type="tns:gameId_SType"/>
+      <xs:element name="playId" type="tns:playId_SType"/>
+      <xs:element name="txnLog" type="tns:txnLog_SType"/>
+      <xs:element name="drawId" type="tns:drawId_SType"/>
+      <xs:element name="kenoId" type="tns:kenoId_SType"/>
+      <xs:element name="betMul" type="tns:betMul_SType"/>
+      <xs:element name="betLin" type="tns:betLin_SType"/>
+      <xs:element name="txnAmt" type="tns:txnAmt_SType"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="cathecticOnTimeRequest_CType">
@@ -429,14 +414,6 @@
       <xs:maxLength value="5"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="kenoId_SType">
-    <xs:annotation>
-      <xs:documentation>当前小期</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="5"/>
-    </xs:restriction>
-  </xs:simpleType>
   <xs:simpleType name="betMod_SType">
     <xs:annotation>
       <xs:documentation>投注方式</xs:documentation>
@@ -451,14 +428,6 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="5"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="betMul_SType">
-    <xs:annotation>
-      <xs:documentation>投注倍数</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="3"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="betAmt_SType">
@@ -483,22 +452,6 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="2"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="betLin_SType">
-    <xs:annotation>
-      <xs:documentation>投注号码</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="128"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="txnLog_SType">
-    <xs:annotation>
-      <xs:documentation>投注流水号</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="32"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="cipher_SType">
