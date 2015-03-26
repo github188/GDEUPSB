@@ -6,14 +6,14 @@
       <xsd:import namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service/Schema" schemaLocation="GDEUPSWATR00Service.xsd"/>
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="commDelCusAgentRequestMessage">
-    <wsdl:part name="commDelCusAgentRequest" element="gdeupsb:commDelCusAgent"/>
-  </wsdl:message>
   <wsdl:message name="commInsertCusAgentRequestMessage">
     <wsdl:part name="commInsertCusAgentRequest" element="gdeupsb:commInsertCusAgent"/>
   </wsdl:message>
   <wsdl:message name="commInsertCusAgentResponseMessage">
     <wsdl:part name="commInsertCusAgentResponse" element="gdeupsb:commInsertCusAgentResponse"/>
+  </wsdl:message>
+  <wsdl:message name="commDelCusAgentRequestMessage">
+    <wsdl:part name="commDelCusAgentRequest" element="gdeupsb:commDelCusAgent"/>
   </wsdl:message>
   <wsdl:message name="queryJournalOffChanRequestMessage">
     <wsdl:part name="queryJournalOffChanRequest" element="gdeupsb:queryJournalOffChan"/>
@@ -76,13 +76,13 @@
     <wsdl:part name="queryThirdCusResponse" element="gdeupsb:queryThirdCusResponse"/>
   </wsdl:message>
   <wsdl:portType name="GDEUPSWATR00ServicePortType">
-    <wsdl:operation name="commDelCusAgent">
-      <wsdl:input message="tns:commDelCusAgentRequestMessage"/>
-    </wsdl:operation>
     <wsdl:operation name="commInsertCusAgent">
       <wsdl:documentation/>
       <wsdl:input message="tns:commInsertCusAgentRequestMessage"/>
       <wsdl:output message="tns:commInsertCusAgentResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="commDelCusAgent">
+      <wsdl:input message="tns:commDelCusAgentRequestMessage"/>
     </wsdl:operation>
     <wsdl:operation name="queryJournalOffChan">
       <wsdl:documentation/>
@@ -137,12 +137,6 @@
   </wsdl:portType>
   <wsdl:binding name="GDEUPSWATR00ServiceSoapBinding" type="tns:GDEUPSWATR00ServicePortType">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <wsdl:operation name="commDelCusAgent">
-      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service/commDelCusAgent"/>
-      <wsdl:input>
-        <soap:body use="literal"/>
-      </wsdl:input>
-    </wsdl:operation>
     <wsdl:operation name="commInsertCusAgent">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service/commInsertCusAgent"/>
       <wsdl:input>
@@ -151,6 +145,12 @@
       <wsdl:output>
         <soap:body use="literal"/>
       </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="commDelCusAgent">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service/commDelCusAgent"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
     </wsdl:operation>
     <wsdl:operation name="queryJournalOffChan">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service/queryJournalOffChan"/>
