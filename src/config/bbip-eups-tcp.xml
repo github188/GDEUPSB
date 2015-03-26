@@ -187,7 +187,7 @@
     <!-- add by WangMQ  start GASH -->
     
 	<bean id="WATR00GateWay" class="com.bocom.bbip.gdeupsb.channel.tcp.WatrSocketGateway">
-		<property name="host" value="182.55.200.6" />
+		<property name="host" value="182.55.200.60" />
 		<property name="port" value="8888" />
 		<property name="soTimeout" value="30000" />
 		<property name="streamResolver">
