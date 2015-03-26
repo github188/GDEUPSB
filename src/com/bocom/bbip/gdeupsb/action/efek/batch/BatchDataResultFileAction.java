@@ -111,7 +111,8 @@ public class BatchDataResultFileAction implements AfterBatchAcpService{
 			//失败总金额
 			BigDecimal falTotAmt=totAmt.subtract(sucTotAmt);
 			gdeupsBatchConsoleInfo.setFalTotAmt(falTotAmt);
-			
+			//更改状态
+			gdeupsBatchConsoleInfo.setBatSts("S");
 			//更新批次表
 			gdeupsBatchConsoleInfoRepository.updateConsoleInfo(gdeupsBatchConsoleInfo);
 			logger.info("===============End  BatchDataResultFileAction  updateInfo");	
