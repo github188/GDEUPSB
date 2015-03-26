@@ -20,7 +20,7 @@ public class GdLotPrzCtl {
 
     private String totPrz;
 
-    private String txnlog;
+    private String txnLog;
 
     private String tLogNo;
 
@@ -82,12 +82,12 @@ public class GdLotPrzCtl {
         this.totPrz = totPrz;
     }
 
-    public String getTxnlog() {
-        return txnlog;
+    public String getTxnLog() {
+        return txnLog;
     }
 
-    public void setTxnlog(String txnlog) {
-        this.txnlog = txnlog;
+    public void setTxnLog(String txnLog) {
+        this.txnLog = txnLog;
     }
 
     public String gettLogNo() {

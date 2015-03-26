@@ -237,7 +237,7 @@ public class PayPlanServiceActionLOTR01 extends BaseAction {
 						gdLotPrzCtl.setCipher(this.trim(item.get("cipher")));
 						gdLotPrzCtl.setBigBon(this.trim(item.get("bigBon")));
 						gdLotPrzCtl.setTotPrz(this.trim(item.get("totPrz")));
-						gdLotPrzCtl.setTxnlog(this.trim(item.get("txnLog")));
+						gdLotPrzCtl.setTxnLog(this.trim(item.get("txnLog")));
 						gdLotPrzCtl.settLogNo(this.trim(item.get("tLogNo")));
 						gdLotPrzCtl.setTermId(this.trim(item.get("termID")));
 						get(GdLotPrzCtlRepository.class).insert(gdLotPrzCtl);
@@ -249,7 +249,7 @@ public class PayPlanServiceActionLOTR01 extends BaseAction {
 							gdLotPrzDtl.setGameId(gdLotPrzCtl.getGameId());
 							gdLotPrzDtl.setDrawId(gdLotPrzCtl.getDrawId());
 							gdLotPrzDtl.setKenoId(gdLotPrzCtl.getKenoId());
-							gdLotPrzDtl.setTxnLog(gdLotPrzCtl.getTxnlog());
+							gdLotPrzDtl.setTxnLog(gdLotPrzCtl.getTxnLog());
 							gdLotPrzDtl.settLogNo(gdLotPrzCtl.gettLogNo());
 							gdLotPrzDtl.setBetMod(this.trim(node.get("betMod")));
 							gdLotPrzDtl.setBetMul(this.trim(node.get("betMul")));

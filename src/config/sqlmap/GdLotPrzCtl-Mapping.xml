@@ -9,12 +9,12 @@
     <result column="CIPHER" property="cipher" jdbcType="CHAR" />
     <result column="BIG_BON" property="bigBon" jdbcType="CHAR" />
     <result column="TOT_PRZ" property="totPrz" jdbcType="CHAR" />
-    <result column="TXNLOG" property="txnlog" jdbcType="CHAR" />
+    <result column="TXN_LOG" property="txnLog" jdbcType="CHAR" />
     <result column="T_LOG_NO" property="tLogNo" jdbcType="CHAR" />
     <result column="TERM_ID" property="termId" jdbcType="CHAR" />
   </resultMap>
   <sql id="baseColumnList" >
-    SQN, GAME_ID, DRAW_ID, KENO_ID, CIPHER, BIG_BON, TOT_PRZ, TXNLOG, T_LOG_NO, TERM_ID
+    SQN, GAME_ID, DRAW_ID, KENO_ID, CIPHER, BIG_BON, TOT_PRZ, TXN_LOG, T_LOG_NO, TERM_ID
   </sql>
   <select id="find" resultMap="basicResultMap" >
     select
@@ -42,8 +42,8 @@
       <if test="totPrz!=null" >
         AND  TOT_PRZ=#{totPrz,jdbcType=CHAR}
       </if>
-      <if test="txnlog!=null" >
-        AND  TXNLOG=#{txnlog,jdbcType=CHAR}
+      <if test="txnLog!=null" >
+        AND  TXN_LOG=#{txnLog,jdbcType=CHAR}
       </if>
       <if test="tLogNo!=null" >
         AND  T_LOG_NO=#{tLogNo,jdbcType=CHAR}
@@ -87,8 +87,8 @@
       <if test="totPrz != null" >
         TOT_PRZ,
       </if>
-      <if test="txnlog != null" >
-        TXNLOG,
+      <if test="txnLog != null" >
+        TXN_LOG,
       </if>
       <if test="tLogNo != null" >
         T_LOG_NO,
@@ -119,8 +119,8 @@
       <if test="totPrz != null" >
         #{totPrz,jdbcType=CHAR},
       </if>
-      <if test="txnlog != null" >
-        #{txnlog,jdbcType=CHAR},
+      <if test="txnLog != null" >
+        #{txnLog,jdbcType=CHAR},
       </if>
       <if test="tLogNo != null" >
         #{tLogNo,jdbcType=CHAR},
@@ -154,8 +154,8 @@
       <if test="totPrz!=null" >
         AND  TOT_PRZ=#{totPrz,jdbcType=CHAR}
       </if>
-      <if test="txnlog!=null" >
-        AND  TXNLOG=#{txnlog,jdbcType=CHAR}
+      <if test="txnLog!=null" >
+        AND  TXN_LOG=#{txnLog,jdbcType=CHAR}
       </if>
       <if test="tLogNo!=null" >
         AND  T_LOG_NO=#{tLogNo,jdbcType=CHAR}
@@ -186,8 +186,8 @@
       <if test="totPrz != null" >
         TOT_PRZ = #{totPrz,jdbcType=CHAR},
       </if>
-      <if test="txnlog != null" >
-        TXNLOG = #{txnlog,jdbcType=CHAR},
+      <if test="txnLog != null" >
+        TXN_LOG = #{txnLog,jdbcType=CHAR},
       </if>
       <if test="tLogNo != null" >
         T_LOG_NO = #{tLogNo,jdbcType=CHAR},
@@ -209,8 +209,7 @@
       </foreach>
     </if>
   </select>
- 
-  <delete id="deleteByGameId" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotPrzCtl" >
+    <delete id="deleteByGameId" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotPrzCtl" >
     delete from gdeupsb.GDEUPS_LOT_PRZ_CTL
     where GAME_ID = #{gameId,jdbcType=CHAR} and DRAW_ID= #{drawId,jdbcType=CHAR} and KENO_ID= #{kenoId,jdbcType=CHAR}
   </delete>
@@ -223,4 +222,5 @@
             #{item.totPrz}, #{item.txnlog}, #{item.termId})
       </foreach>
   </select>
+  
 </mapper>
