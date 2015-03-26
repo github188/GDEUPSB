@@ -267,6 +267,9 @@ public class CheckTrspFileAction extends BaseAction{
 		//报表模式
 		int i=Integer.parseInt(context.getData(GDParamKeys.JOURNAL_MODEL).toString());
 		context.setData("RptFil", "Car"+context.getData(GDParamKeys.START_DATE).toString().substring(5)+".dat");
+		
+		String rpFmt="rpFmt";
+		
 		if(0 == i){		//~~~~~~~~汇总方式
 				List<Map<String, String>> list=gdEupsbTrspFeeInfoRepository.findSumForTxnAmt(tChkNo);
 				if(CollectionUtils.isEmpty(list)){
@@ -276,22 +279,28 @@ public class CheckTrspFileAction extends BaseAction{
 				}else{
 						int count=Integer.parseInt(list.get(0).get("COUNT"));
 						BigDecimal sumTxnAmt=new BigDecimal(list.get(0).get("SUMTXNAMT"));
-						context.setData("RptFmt", "etc/RBFBCHKSUM_RPT.XML");
+//						"etc/RBFBCHKSUM_RPT.XML");
+						rpFmt=rpFmt+0;
 						context.setData("QryNod", "A");
 				}
 		}else if(1 == i){//~~~~~~~~~~~~~清单方式
-				context.setData("RptFmt", "etc/RBFBCHKBil_RPT.XML");
+//			etc/RBFBCHKBil_RPT.XML");
+				rpFmt=rpFmt+1;
 				context.setData("QryNod", "A");
 		}else if(2 == i){//~~~~~~~~~~~~~更改发票清单
-				context.setData("RptFmt", "etc/RBFBINVCHG_RPT.XML");
+//			"etc/RBFBINVCHG_RPT.XML");
+				rpFmt=rpFmt+2;
 		}else if(3 == i){//~~~~~~~~~~~~~未打印发票清单
-				context.setData("RptFmt", "etc/RBFBNOPRT_RPT.XML");
+//			"etc/RBFBNOPRT_RPT.XML");
+				rpFmt=rpFmt+3;
 		}else{
 				context.setData(GDParamKeys.MSGTYP, "E");
 				context.setData(ParamKeys.RSP_CDE, "329999");
 				context.setData(ParamKeys.RSP_MSG, "统计模式错误");
 				throw new CoreException("统计模式错误");
 		}
+		String path="config/report/common/"+rpFmt+".vm";
+		context.setData(rpFmt, path);
 		String RptFil="Car"+context.getData("TlrId")+context.getData(GDParamKeys.START_DATE).toString().substring(4);
 		context.setData("RptFil", RptFil);
 		//TODO 报表生成
@@ -309,7 +318,8 @@ public class CheckTrspFileAction extends BaseAction{
 		EupsThdFtpConfig eupsThdFtpConfig = context.getData(ParamKeys.CONSOLE_THD_FTP_CONFIG_LIST);
 		String sbLocDir=eupsThdFtpConfig.getLocDir();
 		String localFileName=eupsThdFtpConfig.getLocFleNme();
-        // 生成本地报表文件
+
+		// 生成本地报表文件
         PrintWriter printWriter = null;
 		        try {
 		            File file = new File(sbLocDir.toString());
