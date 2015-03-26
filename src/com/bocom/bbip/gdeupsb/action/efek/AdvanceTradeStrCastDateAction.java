@@ -1,6 +1,7 @@
 package com.bocom.bbip.gdeupsb.action.efek;
 
 import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
@@ -20,6 +21,8 @@ public class AdvanceTradeStrCastDateAction extends BaseAction{
 				String thdTxnTime=thdTxnDate+context.getData("traSendDate").toString();
 				context.setData(ParamKeys.THD_TXN_DATE, DateUtils.parse(thdTxnDate,DateUtils.STYLE_yyyyMMdd));
 				context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse(thdTxnTime,DateUtils.STYLE_yyyyMMddHHmmss));
-
+				if(context.getData(ParamKeys.RESPONSE_CODE).toString().equals(Constants.RESPONSE_CODE_SUCC)){
+							context.setData(ParamKeys.RSP_MSG, "充值成功");
+				}
 		}
 }
