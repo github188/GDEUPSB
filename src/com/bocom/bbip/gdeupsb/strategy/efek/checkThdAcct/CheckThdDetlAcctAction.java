@@ -158,7 +158,7 @@ public class CheckThdDetlAcctAction implements Executable {
 		}
 		BigDecimal allMoney=new BigDecimal("0.00");
 		if(null != maps.get("ALL_MONEY")){			
-				allMoney.add(new BigDecimal(maps.get("ALL_MONEY").toString()));
+			allMoney=allMoney.add(new BigDecimal(maps.get("ALL_MONEY").toString()));
 		}
 		allMoney=allMoney.scaleByPowerOfTen(2);
 		//header  部分
@@ -180,6 +180,7 @@ public class CheckThdDetlAcctAction implements Executable {
 		eupsStreamNos.setComNo(comNo);
 		eupsStreamNos.setTxnDte((Date)context.getData(ParamKeys.TXN_DTE));
 		eupsStreamNos.setTxnSts("S");
+		eupsStreamNos.setThdTxnSts("S");
 		eupsStreamNos.setRsvFld4(busType);
 		eupsStreamNos.setRsvFld5(payType);
 		List<EupsStreamNo> eupsStreamNoList=eupsStreamNoRepository.find(eupsStreamNos);

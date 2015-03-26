@@ -80,7 +80,7 @@ public class CheckThdSumAcctAction implements  CheckThdSumAcctService{
 				long amount =Long.parseLong(map.get("TOT_COUNT").toString());
 				BigDecimal allmoney=new BigDecimal("0.00");
 				if(null != map.get("ALL_MONEY")){
-					allmoney.add(new BigDecimal(map.get("ALL_MONEY").toString()));
+					allmoney=allmoney.add(new BigDecimal(map.get("ALL_MONEY").toString()));
 				}
 				allmoney=allmoney.scaleByPowerOfTen(2);
 				context.setData(ParamKeys.BANK_NO, map.get("THD_OBK_CDE").toString());
