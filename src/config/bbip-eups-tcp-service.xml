@@ -21,7 +21,7 @@
 		</property>
 	</bean>
 	<bean id="pgas00" class="com.bocom.jump.bp.channel.tcp.SocketServer">
-		
+		<property name="host" value="0.0.0.0" />
 		<property name="port" value="33010" />
 		<property name="mapping" ref="pgas00_TcpMapping" />
 		<property name="threadPool" ref="pgas00_TcpThreadPool" />
