@@ -390,8 +390,10 @@ public class ThdELEC00Interceptor implements Interceptor {
         }
         log.info("================get sqn:context=" + context);
         Date rspTime = null;
-        if(null !=context.getData(ParamKeys.TXN_DATE)){
+        if(null !=context.getData(ParamKeys.TXN_DATE) && !context.getData(ParamKeys.SERVICE_NAME).toString().equals(SHG_PAY_ID+"ELEC00")){
         	rspTime=DateUtils.parse(context.getData(ParamKeys.TXN_DATE).toString());
+        }else if(null !=context.getData(ParamKeys.TXN_DATE) && context.getData(ParamKeys.SERVICE_NAME).toString().equals(SHG_PAY_ID+"ELEC00")){
+        		rspTime=(Date)context.getData(ParamKeys.TXN_DATE);
         }
         if (null != rspTime) {
             context.setData(ParamKeys.RESPONSE_TIME, rspTime);
