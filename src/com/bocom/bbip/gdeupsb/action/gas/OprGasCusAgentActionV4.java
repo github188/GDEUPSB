@@ -36,35 +36,77 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
  * @author WangMQ
  * 
  */
-public class OprGasCusAgentActionV3 extends BaseAction {
+public class OprGasCusAgentActionV4 extends BaseAction {
 	public static Logger logger = LoggerFactory
-			.getLogger(OprGasCusAgentActionV3.class);
+			.getLogger(OprGasCusAgentActionV4.class);
 
 	@Autowired
 	BGSPServiceAccessObject bgspServiceAccessObject;
 
 	public void execute(Context context) throws CoreException,
 			CoreRuntimeException {
-		logger.info("Enter in OprGasCusAgentActionV3!...........");
+		logger.info("Enter in OprGasCusAgentActionV4!...........");
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 
 		context.setData(GDParamKeys.GAS_BK, "CNJT");
 		context.setData(ParamKeys.CUS_NO, context.getData("thdCusNo"));
-		logger.info("================now context =" + context);
+		
+		List<Map<String, Object>> agentCollectAgreementList = new ArrayList<Map<String, Object>>();
+		Map<String, Object> agentCollectAgreementListMap = setAgentCollectAgreementMap(context);
+		agentCollectAgreementList.add(agentCollectAgreementListMap);
+		context.setData("agentCollectAgreement", agentCollectAgreementList);
 
+		List<Map<String, Object>> customerInfoList = new ArrayList<Map<String, Object>>();
+		Map<String, Object> customerInfoMap = setCustomerInfoMap(context);
+		customerInfoList.add(customerInfoMap);
+		context.setData("customerInfo", customerInfoList);
+		
+		logger.info("================now context =" + context);
 		logger.info("=======功能选择(1-新增 2-修改 3-删除 4-查询):"
 				+ context.getData("optFlg"));
+
+		// if("4"){
+		// 查询
+		// }else{
+		// QryUser
+		//
+		// if(QryUser){
+		// if(2){
+		// 修改Edit
+		// EditOK或EditNo
+		// }
+		// if(3){
+		// 删除Stop
+		// StopOK或StopNo
+		// }
+		// }
+		// if(NoUser){
+		// if(1){
+		// 新增Add
+		// Double或AddOK或AddNo
+		// }
+		// }
+		// if(UserStop){
+		//
+		// }
+		// }
 
 		if ("4".equals(context.getData("optFlg"))) { // 4:查询交易
 			// 上代收付查询协议，先根据cusAc进行列表查询得到协议编号，再用协议编号查询明细（用户信息）
 			Map<String, Object> cusListMap = setAcpMap(context);
 			cusListMap.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
-
 			context.setDataMap(cusListMap);
+			
 			Result accessObjList = bgspServiceAccessObject.callServiceFlatting(
 					"queryListAgentCollectAgreement", cusListMap);
-			logger.info("========after optFlg=4 queryListAgentCollectAgreement =======" + context);
-			logger.info("=========after optFlg=4 accessObjList：【accessObjList.getResponseCode():" + accessObjList.getResponseCode() + "】【accessObjList.getResponseMessage():" + accessObjList.getResponseMessage() + "】【accessObjList.getResponseType()：" + accessObjList.getResponseType() + "】");
+			logger.info("========after optFlg=4 queryListAgentCollectAgreement ======="
+					+ context);
+			logger.info("=========after optFlg=4 accessObjList：【accessObjList.getResponseCode():"
+					+ accessObjList.getResponseCode()
+					+ "】【accessObjList.getResponseMessage():"
+					+ accessObjList.getResponseMessage()
+					+ "】【accessObjList.getResponseType()："
+					+ accessObjList.getResponseType() + "】");
 			// 【accessObjList.getResponseCode():BBIP0004AGPM66】responseMessage():客户信息不存在。responseType()：E】
 			if (!("N".equals(accessObjList.getResponseType()))) {
 				context.setData(ParamKeys.RESPONSE_MESSAGE,
@@ -75,15 +117,20 @@ public class OprGasCusAgentActionV3 extends BaseAction {
 			Map<String, Object> cusDtlMap = setAcpMap(context);
 			cusDtlMap.put("agdAgrNo", accessObjList.getPayload()
 					.get("agdAgrNo"));
-
-//			context.setData("agdAgrNo",
-//					accessObjList.getPayload().get("agdAgrNo"));
 			context.setDataMap(cusDtlMap);
-			logger.info("========before optFlg=4 queryDetailAgentCollectAgreement =======" + context);
-			Result qryCusDetail = bgspServiceAccessObject.callServiceFlatting("queryDetailAgentCollectAgreement", cusDtlMap);
-			logger.info("========before optFlg=4 queryDetailAgentCollectAgreement =======" + context);
-			logger.info("==============ACPS response msg:【operateAcpAgtResult.getResponseCode()：" + qryCusDetail.getResponseCode() + "】【accessObjList.getResponseMessage():" + qryCusDetail.getResponseMessage() + "】【accessObjList.getResponseType()：" + qryCusDetail.getResponseType() + "】");
-			
+			logger.info("========before optFlg=4 queryDetailAgentCollectAgreement ======="
+					+ context);
+			Result qryCusDetail = bgspServiceAccessObject.callServiceFlatting(
+					"queryDetailAgentCollectAgreement", cusDtlMap);
+			logger.info("========before optFlg=4 queryDetailAgentCollectAgreement ======="
+					+ context);
+			logger.info("==============ACPS response msg:【operateAcpAgtResult.getResponseCode()："
+					+ qryCusDetail.getResponseCode()
+					+ "】【accessObjList.getResponseMessage():"
+					+ qryCusDetail.getResponseMessage()
+					+ "】【accessObjList.getResponseType()："
+					+ qryCusDetail.getResponseType() + "】");
+
 			if (!("N".equals(qryCusDetail.getResponseType()))) {
 				context.setData(ParamKeys.RESPONSE_MESSAGE,
 						qryCusDetail.getResponseMessage());
@@ -97,7 +144,6 @@ public class OprGasCusAgentActionV3 extends BaseAction {
 			// 非查询交易要授权
 			String authTlr = context.getData(ParamKeys.AUTHOR_LEVEL);
 			if (StringUtils.isEmpty(authTlr)) {
-				// throw new CoreException("未授权，不能进行交易");
 				throw new CoreException(ErrorCodes.EUPS_CANCEL_CHECK_AUTH_FAIL);
 			}
 
@@ -110,11 +156,11 @@ public class OprGasCusAgentActionV3 extends BaseAction {
 			// context.setData("@MSG.OIP", context.getData("hstIp"));
 			// context.setData("@MSG.OPT", context.getData("HstPrt"));
 
-			context.setData("tCommd", "QryUser");
-			context.setData("TransCode", "GASHXX");
+			// context.setData("tCommd", "QryUser");
+			context.setData("TransCode", "QryUser");
 
-			context.setData("txnCod", "GASHXX");
-			context.setData("objSvr", "STDHGAS1");
+			// context.setData("txnCod", "GASHXX");
+			// context.setData("objSvr", "STDHGAS1");
 			// 发燃气第三方，查看有无该用户编号信息
 			logger.info("=============context=======" + context);
 
@@ -123,76 +169,43 @@ public class OprGasCusAgentActionV3 extends BaseAction {
 					context);
 			context.setDataMap(thdRspMsg);
 			logger.info("======================context========" + context);
-			// context.setData("TransCode", null);
-			// logger.info(""+context.getData("TransCode"));
 
-			// 处理燃气返回的信息
-			logger.info("==============rtnCod=" + context.getData("rtnCod")
-					+ "============optFlg=" + context.getData("optFlg"));
-			if ("QryUser".equals(context.getData("rtnCod").toString().trim())) {
 
-				Map<String, Object> cusListMap = setAcpMap(context);
-				cusListMap.put(ParamKeys.CUS_AC,
-						context.getData(ParamKeys.CUS_AC));
-				context.setDataMap(cusListMap);
-				Result accessObjList = bgspServiceAccessObject
-						.callServiceFlatting("queryListAgentCollectAgreement",
-								cusListMap);
-				logger.info("==============ACPS response msg:【operateAcpAgtResult.getResponseCode()："
-						+ accessObjList.getResponseCode()
-						+ "】【accessObjList.getResponseMessage():"
-						+ accessObjList.getResponseMessage()
-						+ "】【accessObjList.getResponseType()："
-						+ accessObjList.getResponseType() + "】");
+			Map<String, Object> cusListMap = setAcpMap(context);
+			cusListMap.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
+			context.setDataMap(cusListMap);
+			Result accessObjList = bgspServiceAccessObject.callServiceFlatting(
+					"queryListAgentCollectAgreement", cusListMap);
+			logger.info("==============ACPS response msg:【operateAcpAgtResult.getResponseCode()："
+					+ accessObjList.getResponseCode()
+					+ "】【accessObjList.getResponseMessage():"
+					+ accessObjList.getResponseMessage()
+					+ "】【accessObjList.getResponseType()："
+					+ accessObjList.getResponseType() + "】");
 
-				if ("1".equals(context.getData("optFlg"))) { // optFlg = 1
-					if ("N".equals(accessObjList.getResponseType())) {
-						throw new CoreRuntimeException(
-								GDErrorCodes.GAS_QRY_AGT_ERR_EXIST);
-					} else {
-						context.setData("tCommd", "Add");
-						logger.info("============未签约，可签约");
-						context.setData("agrChl", "01");
-						context.setData(ParamKeys.OPERATION_TPYE, "0"); // oprTyp=0:增
-						
-						List<Map<String, Object>> agentCollectAgreementList = new ArrayList<Map<String, Object>>();
-						Map<String, Object> agentCollectAgreementListMap = setAgentCollectAgreementMap(context);
-						agentCollectAgreementList.add(agentCollectAgreementListMap);
-						context.setData("agentCollectAgreement", agentCollectAgreementList);
-
-						List<Map<String, Object>> customerInfoList = new ArrayList<Map<String, Object>>();
-						Map<String, Object> customerInfoMap = setCustomerInfoMap(context);
-						customerInfoList.add(customerInfoMap);
-						context.setData("customerInfo", customerInfoList);
-
-						logger.info("===========context.getData('agentCollectAgreement'):" + context.getData("agentCollectAgreement"));
-						logger.info("===========context.getData('customerInfo'):" + context.getData("customerInfo"));
-						logger.info("===========context:" + context);
-						
-						
-						get(BBIPPublicService.class).synExecute(
-								"eups.commInsertCusAgent", context);
-					}
-				}
+			if ("QryUser"
+					.equals(context.getData("TransCode").toString().trim())) {// 燃气返回QryUser,说明燃气存在该用户编号，可修改,可删除
 
 				if ("2".equals(context.getData("optFlg"))) { // optFlg = 2
-																// 燃气返回QryUser,
-																// 说明燃气存在该用户编号，可修改
+																
 					if (!("N".equals(accessObjList.getResponseType()))) {
 						throw new CoreRuntimeException(
 								GDErrorCodes.GAS_QRY_AGT_ERR_EMT);
 					} else {
 						context.setData("tCommd", "Edit");
+						context.setData("TransCode", "Edit");
 						logger.info("============有协议，可修改");
 						context.setData("agrChl", "01");
 						context.setData(ParamKeys.OPERATION_TPYE, "1"); // //oprTyp=1:改
-						
-						//需先查询明细得到agtCllCusId，，，，，
+
+						// 需先查询明细得到agtCllCusId，，，，，
 						Map<String, Object> cusDtlMap = setAcpMap(context);
-						cusDtlMap.put("agdAgrNo", accessObjList.getPayload().get("accessObjList"));
+						cusDtlMap.put("agdAgrNo", accessObjList.getPayload()
+								.get("accessObjList"));
 						context.setDataMap(cusDtlMap);
 						Result accessObjDtl = bgspServiceAccessObject
-								.callServiceFlatting("queryListAgentCollectAgreement",
+								.callServiceFlatting(
+										"queryListAgentCollectAgreement",
 										cusListMap);
 						logger.info("==============ACPS response msg:【operateAcpAgtResult.getResponseCode()："
 								+ accessObjList.getResponseCode()
@@ -200,24 +213,11 @@ public class OprGasCusAgentActionV3 extends BaseAction {
 								+ accessObjList.getResponseMessage()
 								+ "】【accessObjList.getResponseType()："
 								+ accessObjList.getResponseType() + "】");
-						
-						
-						context.setData("agtCllCusId", accessObjDtl.getPayload().get("agtCllCusId"));
-						
-						List<Map<String, Object>> agentCollectAgreementList = new ArrayList<Map<String, Object>>();
-						Map<String, Object> agentCollectAgreementListMap = setAgentCollectAgreementMap(context);
-						agentCollectAgreementList.add(agentCollectAgreementListMap);
-						context.setData("agentCollectAgreement", agentCollectAgreementList);
 
-						List<Map<String, Object>> customerInfoList = new ArrayList<Map<String, Object>>();
-						Map<String, Object> customerInfoMap = setCustomerInfoMap(context);
-						customerInfoList.add(customerInfoMap);
-						context.setData("customerInfo", customerInfoList);
+						context.setData("agtCllCusId", accessObjDtl
+								.getPayload().get("agtCllCusId"));
 
-						logger.info("===========context.getData('agentCollectAgreement'):" + context.getData("agentCollectAgreement"));
-						logger.info("===========context.getData('customerInfo'):" + context.getData("customerInfo"));
-						logger.info("===========context:" + context);
-						 
+
 						get(BBIPPublicService.class).synExecute(
 								"eups.commUpdateCusAgent", context);
 					}
@@ -231,6 +231,7 @@ public class OprGasCusAgentActionV3 extends BaseAction {
 								GDErrorCodes.GAS_QRY_AGT_ERR_EMT);
 					} else {
 						context.setData("tCommd", "Stop");
+						context.setData("TransCode", "Stop");
 						logger.info("===========有协议，可删除");
 
 						get(BBIPPublicService.class).synExecute(
@@ -238,11 +239,28 @@ public class OprGasCusAgentActionV3 extends BaseAction {
 					}
 				}
 
-			} else if ("NOUser".equals(context.getData("rtnCod").toString()
+			} else if ("NOUser".equals(context.getData("TransCode").toString()
 					.trim())) { // NOUser 为无此用户（用户编码错误）
-				throw new CoreRuntimeException(GDErrorCodes.GAS_QRY_AGT_ERR_NO);
-			} else if ("UserStop".equals(context.getData("rtnCod").toString()
-					.trim())) { // UserStop为此用户已报停
+			// throw new CoreRuntimeException(GDErrorCodes.GAS_QRY_AGT_ERR_NO);
+
+				if ("1".equals(context.getData("optFlg"))) { // optFlg = 1
+					if ("N".equals(accessObjList.getResponseType())) {
+						throw new CoreRuntimeException(
+								GDErrorCodes.GAS_QRY_AGT_ERR_EXIST);
+					} else {
+						context.setData("tCommd", "Add");
+						context.setData("TransCode", "Add");
+						logger.info("============未签约，可签约");
+						context.setData("agrChl", "01");
+						context.setData(ParamKeys.OPERATION_TPYE, "0"); // oprTyp=0:增
+
+						get(BBIPPublicService.class).synExecute(
+								"eups.commInsertCusAgent", context);
+					}
+				}
+
+			} else if ("UserStop".equals(context.getData("TransCode")
+					.toString().trim())) { // UserStop为此用户已报停
 				throw new CoreRuntimeException(
 						GDErrorCodes.GAS_QRY_AGT_ERR_STOP);
 			} else {
@@ -336,8 +354,8 @@ public class OprGasCusAgentActionV3 extends BaseAction {
 		// ourOthFlg CHAR 1 N "0-本行；1-他行
 		// obkBk VARCHAR 14 N
 		// </customerInfo> LIST
-		
-		if("2".equals(context.getData("optFlg"))){
+
+		if ("2".equals(context.getData("optFlg"))) {
 			map.put("agtCllCusId", context.getData("agtCllCusId"));
 		}
 
