@@ -14,11 +14,11 @@ TransCode.SMPCPAY=eups.payUnilateralToBank
 
 #TransCode.gdeupsb.hzPGasReversePaymentThdAction=460711
 #TransCode.460711=gdeupsb.hzPGasReversePaymentThdAction
-TransCode.eups.cancelUnilateralToBank=460711
-TransCode.460711=eups.cancelUnilateralToBank
+TransCode.eups.cancelUnilateralToBank=UpPay
+TransCode.UpPay=eups.cancelUnilateralToBank
 
-TransCode.eups.fileBatchPayCreateDataProcess=460716
-TransCode.460716=eups.fileBatchPayCreateDataProcess
+TransCode.eups.fileBatchPayCreateDataProcess=SMPCPAYTXT
+TransCode.SMPCPAYTXT=eups.fileBatchPayCreateDataProcess
 
 #TransCode.gdeupsb.oprGasCusAgentAction=GASHXX
 #TransCode.GASHXX=gdeupsb.oprGasCusAgentAction

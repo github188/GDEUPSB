@@ -18,20 +18,20 @@
 	<fixString name="Deli2" length="1" default="," />
  	-->
  	
- 	<fixString name="rtnCod" length="10" />
+ 	<!-- <fixString name="rtnCod" length="10" /> -->
  	 <!-- <fixString  name="Deli2" length="1" default=","/> -->
  	
 	<fixString name="gasBk" length="4"    />
-	<!-- <fixString  name="Deli2" length="1" default=","/> -->
+	<fixString  name="Deli9" length="1" default=","/> 
 	
 	<fixString name="cusNo" length="12"    />
-	<!-- <fixString  name="Deli3" length="1" default=","/> -->
+	<fixString  name="Deli10" length="1" default=","/>
 	
 	<fixString name="cusAc" length="32"    />
-	<!-- <fixString  name="Deli4" length="1" default="," /> -->
+	<fixString  name="Deli11" length="1" default="," />
 	
 	<fixString name="idTyp" length="2"    />
-	<!-- <fixString  name="Deli5" length="1" default="," /> -->
+	<fixString  name="Deli12" length="1" default="," />
 	
 	<fixString name="idNo" length="32"    />
 	<!-- <fixString  name="Deli6" length="1" /> -->
