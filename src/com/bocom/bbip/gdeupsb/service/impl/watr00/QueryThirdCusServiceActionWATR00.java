@@ -59,7 +59,7 @@ public class QueryThirdCusServiceActionWATR00 extends BaseAction{
 		context.setData("hno", context.getData("thdCusNo"));
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+context);
 		Map<String,Object> thdReturnMessage = callThdTradeManager.trade(context);
-		
+		System.out.println("!!!!!!!!!!!!!!!!!"+thdReturnMessage);
 		if(context.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL)){
 			CommThdRspCdeAction cRspCdeAction = new CommThdRspCdeAction();
 			String responseCode = cRspCdeAction.getThdRspCde(thdReturnMessage, 	context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
