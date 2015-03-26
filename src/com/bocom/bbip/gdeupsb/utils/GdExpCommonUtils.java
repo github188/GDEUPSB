@@ -292,7 +292,7 @@ public class GdExpCommonUtils {
 		}
 		return res;
 	}
-
+	
 	// 转换代码为信息
 	public static final String TrnToMsg(String rpCod) {
 		String retSmr = null;
