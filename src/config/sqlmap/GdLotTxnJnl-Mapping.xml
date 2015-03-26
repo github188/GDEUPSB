@@ -859,7 +859,7 @@
     WHERE GAME_ID = #{gameId,jdbcType=CHAR} AND DRAW_ID = #{drawId,jdbcType=CHAR} 
     AND CHK_FLG != '1' AND TXN_STS in ('S', 'T')
   </select>
-   <select id="qryLotTxnJnl"  parameterType="map" resultMap="java.util.Map" >
+   <select id="qryLotTxnJnl"  parameterType="map" resultMap="map" >
     select a.Game_Id, a.Play_Id, T_Log_No, a.Draw_Id, a.Keno_Id, a.Bet_Mul, a.Txn_Amt, a.Bet_Lin, a.Txn_Tim, a.Txn_Log, b.Draw_Nm
      from gdeupsb.Gdeups_Lot_Txn_Jnl a, gdeupsb.Gdeups_Lot_Drw_Tbl b
      <where>
@@ -890,7 +890,7 @@
 
   
   
- <select id="qryLotWinRecord" parameterType="map" resultType="java.util.Map" >
+ <select id="qryLotWinRecord" parameterType="map" resultType="map" >
             SELECT A.T_LOG_NO, A.DRAW_ID, A.KENO_ID, A.PLAY_ID,A.BET_MUL, A.BET_LIN, A.BET_MOD, B.TOT_PRZ, A.TXN_TIM, A.TXN_LOg, C.PRZ_AMT
             FROM GDEUPSB.GDEUPS_LOT_PRZ_CTL B, GDEUPSB.GDEUPS_LOT_TXN_JNL A, GDEUPSB.GDEUPS_LOT_PRZ_DTL C
             <where>
