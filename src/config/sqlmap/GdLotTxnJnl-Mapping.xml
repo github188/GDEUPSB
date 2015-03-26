@@ -890,7 +890,7 @@
 
   
   
-  <select id="qryLotWinRecord" resultType="java.util.Map" parameterType="java.util.Map" >
+ <select id="qryLotWinRecord" parameterType="map" resultType="java.util.Map" >
             SELECT A.T_LOG_NO, A.DRAW_ID, A.KENO_ID, A.PLAY_ID,A.BET_MUL, A.BET_LIN, A.BET_MOD, B.TOT_PRZ, A.TXN_TIM, A.TXN_LOg, C.PRZ_AMT
             FROM GDEUPSB.GDEUPS_LOT_PRZ_CTL B, GDEUPSB.GDEUPS_LOT_TXN_JNL A, GDEUPSB.GDEUPS_LOT_PRZ_DTL C
             <where>
