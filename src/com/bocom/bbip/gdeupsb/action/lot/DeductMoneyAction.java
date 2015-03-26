@@ -62,7 +62,6 @@ public class DeductMoneyAction extends BaseAction {
                 return;
             }
         }
-        
         GdLotTxnJnl lotTxnJnl = new GdLotTxnJnl();
         lotTxnJnl.setGameId(gameId);
         lotTxnJnl.setDrawId(drawId);
