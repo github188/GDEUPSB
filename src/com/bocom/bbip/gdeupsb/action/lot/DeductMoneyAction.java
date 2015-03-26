@@ -62,6 +62,7 @@ public class DeductMoneyAction extends BaseAction {
                 return;
             }
         }
+        //设置对账初始状态
         GdLotTxnJnl lotTxnJnl = new GdLotTxnJnl();
         lotTxnJnl.setGameId(gameId);
         lotTxnJnl.setDrawId(drawId);
@@ -90,6 +91,7 @@ public class DeductMoneyAction extends BaseAction {
             return;
         }
         //  对购彩记录进行对账   --(对账成功)
+        //更新核对成功的状态
         GdLotTxnJnl gdLotTxnJnl = new GdLotTxnJnl();
         gdLotTxnJnl.setGameId(gameId);
         gdLotTxnJnl.setDrawId(drawId);
@@ -99,7 +101,7 @@ public class DeductMoneyAction extends BaseAction {
         } catch(Exception e){
             context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
             context.setData(ParamKeys.RSP_CDE, "LOT999");
-            context.setData(ParamKeys.RSP_MSG, "对账更新状态失败!");
+            context.setData(ParamKeys.RSP_MSG, "对账更新状态失败!（MatchLotTxnJnl）");
             return;
         }
         //对对账明细进行对账
@@ -113,7 +115,7 @@ public class DeductMoneyAction extends BaseAction {
         } catch(Exception e){
             context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
             context.setData(ParamKeys.RSP_CDE, "LOT999");
-            context.setData(ParamKeys.RSP_MSG, "对账更新状态失败!");
+            context.setData(ParamKeys.RSP_MSG, "对账更新状态失败!（MatchLotChkDtl）");
             return;
         }
         //  更新我方多账的状态 --"对购彩记录进行对账(对账失败)
@@ -122,7 +124,7 @@ public class DeductMoneyAction extends BaseAction {
         } catch(Exception e){
             context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
             context.setData(ParamKeys.RSP_CDE, "LOT999");
-            context.setData(ParamKeys.RSP_MSG, "对账更新状态失败!");
+            context.setData(ParamKeys.RSP_MSG, "对账更新状态失败!（MatchLotChkDtl）");
             return;
         }
         //  <!-- 判断是否对账成功，如果是则更新奖期表的对账标志并通知购彩总金额 -->
