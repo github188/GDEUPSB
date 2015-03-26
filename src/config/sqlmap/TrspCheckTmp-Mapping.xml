@@ -203,7 +203,7 @@
   </select>
 	
 	<delete id="deleteAll"  parameterType="java.lang.String"  >
-			delete  from GDEUPSB.TRSP_CHECK_TMP  where '1' =#{string,jdbcType=CHAR}
+			delete  from GDEUPSB.TRSP_CHECK_TMP  where TCHK_NO =#{tchkNo,jdbcType=CHAR}
 	</delete>
 	<update id="updateAll" parameterType="java.lang.String" >
 			update GDEUPSB.TRSP_CHECK_TMP set STATUE='0' WHERE  TCHK_NO=#{tchkNo,jdbcType=CHAR}
