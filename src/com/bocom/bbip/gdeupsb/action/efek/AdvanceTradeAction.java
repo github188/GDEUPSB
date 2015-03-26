@@ -97,7 +97,6 @@ public class AdvanceTradeAction extends BaseAction {
 			context.setData(ParamKeys.CUS_NME, context.getData("CusNme"));
 			context.setData(ParamKeys.BUS_TYP, "2");
 			logger.info("~~~~~~~~~~~~End AdvanceTradeAction");
-			context.setData("traceNo", bbipPublicService.getTraceNo());
 	}
 	/**
 	 *报文信息  外发第三方
