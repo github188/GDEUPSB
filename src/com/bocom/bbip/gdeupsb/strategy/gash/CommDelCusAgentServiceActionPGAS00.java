@@ -39,7 +39,7 @@ public class CommDelCusAgentServiceActionPGAS00 extends BaseAction implements Co
 		logger.info("CommDelCusAgentServiceActionPGAS00 callThd start ... ...");
 		
 		String date = DateUtils.format(new Date(), DateUtils.STYLE_SIMPLE_DATE);
-		context.setData("TransCode", "GASHXY");
+		context.setData("TransCode", "Stop");
 		context.setData("regDat", date);
 		context.setData("txnCod", "GASHXY");
 		context.setData("objSvr", "STDHGAS1");

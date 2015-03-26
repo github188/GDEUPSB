@@ -49,7 +49,7 @@ public class CnlPayUnilateralToBankServicePGAS00 implements
 		if (context.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL)) {  //冲正成功
 //			context.setData(ParamKeys.MFM_TXN_STS, "C");
 //			context.setData(ParamKeys.TXN_STS, "C");
-			context.setData(GDParamKeys.GAS_RESULT, "Upay");
+			context.setData("TransCode", "Upay");
 			context.setData(ParamKeys.BAK_FLD5, "冲正成功");
 //			context.setData(ParamKeys.BAK_FLD4,
 //					context.getData(ParamKeys.TXN_AMOUNT));
@@ -57,7 +57,7 @@ public class CnlPayUnilateralToBankServicePGAS00 implements
 			// EupsTransJournal etj = context.getData("lclJnlList");
 			// eupsTransJournalRepository.update(etj);
 		} else {
-			context.setData(GDParamKeys.GAS_RESULT, "NoPay");
+			context.setData("TransCode", "NoPay");
 			context.setData(ParamKeys.BAK_FLD5, "冲正失败");
 //			context.setData(ParamKeys.MESSAGE_TYPE, "E");
 //			context.setData(ParamKeys.RSP_CDE,
@@ -97,6 +97,7 @@ public class CnlPayUnilateralToBankServicePGAS00 implements
 		qryJnl.setThdSqn(context.getData(ParamKeys.THD_SQN).toString());
 		List<EupsTransJournal> upPayJnlList = eupsTransJournalRepository.find(qryJnl);
 		if(CollectionUtils.isEmpty(upPayJnlList)){
+			context.setData("TransCode", "NoPay");
 			throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
 		}
 		context.setData(ParamKeys.OLD_TXN_SQN, upPayJnlList.get(0).getSqn());

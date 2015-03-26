@@ -53,7 +53,7 @@ public class CommInsertCusAgentServiceActionPGAS00 extends BaseAction implements
 		logger.info("CommInsertCusAgentServiceActionPGAS00 callThd start ... ...");
 		
 		String date = DateUtils.format(new Date(), DateUtils.STYLE_SIMPLE_DATE);
-		context.setData("TransCode", "GASHXY");
+		context.setData("TransCode", "Add");
 		context.setData("regDat", date);
 		context.setData("txnCod", "GASHXY");
 		context.setData("objSvr", "STDHGAS1");
