@@ -80,5 +80,9 @@ public class PrePayToBankAction implements Executable{
 			BigDecimal txnAmt=new BigDecimal(df.format(d));
 			context.setData(ParamKeys.TXN_AMT,txnAmt );
 			context.setData(ParamKeys.BUS_TYP, "2");
+			
+			context.setData(ParamKeys.TELLER, "ABIR148");
+			context.setData(ParamKeys.BBIP_TERMINAL_NO, "ABIR148");
+			
 		}
 }
