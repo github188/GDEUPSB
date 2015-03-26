@@ -231,8 +231,8 @@ public class QueryFeeResultAction implements Executable{
             		mapInformation.put("electricityYearMonth", map.get("electricityYearMonth"));
             		//金额数值转换
             		mapInformation.put("oweFeeAmt", amtAdd);
-            		mapInformation.put("capital", detitAdd);
-            		mapInformation.put("dedit", capitialAdd);
+            		mapInformation.put("capital",capitialAdd );
+            		mapInformation.put("dedit",detitAdd );
             		InformationList.add(mapInformation);
             		oweFeeAmt=oweFeeAmt.add(amtAdd);
 			}
