@@ -272,7 +272,7 @@ public class GdExpCommonUtils {
 
 	// 补空格
 	public static final String AddChar(String res, int len, char des, char LorR) {
-		System.out.println("res>>>" + res);
+		System.out.println("res>>>[" + res+"]");
 		System.out.println("addChar>>" + "‘" + des + "’");
 		if (res.trim().length() != len) {
 			int tm = len - res.trim().length();
@@ -287,6 +287,7 @@ public class GdExpCommonUtils {
 					res = des + res;
 				}
 			}
+			System.out.println("经过转换后的String=["+res+"]");
 			return res;
 		}
 		return res;
