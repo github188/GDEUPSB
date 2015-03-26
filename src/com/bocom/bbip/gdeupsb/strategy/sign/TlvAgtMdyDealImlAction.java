@@ -1,6 +1,7 @@
 package com.bocom.bbip.gdeupsb.strategy.sign;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -55,8 +56,8 @@ public class TlvAgtMdyDealImlAction implements AgtMdyDealImlService {
 
 	@Override
 	public Map<String, Object> agtDelByGdsIdService(Context context) throws CoreException {
-		log.info("agtDelByGdsIdService start!");
-		String bnkNme = bbipPublicService.getParam("GZEUPSB", "agtBkNme");
+		log.info("廣州有限電視特色邏輯處理start!");
+		String bnkNme = bbipPublicService.getParam("GDEUPSB", "agtBkNme");
 		context.setData("bnkNam", bnkNme);
 
 		GdsRunCtl gdsRunctl = context.getVariable(GDParamKeys.SIGN_STATION_RUN_CTL_INFO);
@@ -68,6 +69,7 @@ public class TlvAgtMdyDealImlAction implements AgtMdyDealImlService {
 
 		String func = context.getData(GDParamKeys.SIGN_STATION_FUNC); // 操作类型
 		if (GDConstants.SIGN_STATION_AGT_FUNC_QUERY.equals(func)) {
+			log.info("当前操作类型为2，开始进行查询!");
 			log.info("start query agent info!");
 
 			Map<String, Object> inMap = new HashMap<String, Object>();
@@ -76,24 +78,33 @@ public class TlvAgtMdyDealImlAction implements AgtMdyDealImlService {
 			inMap.put("AgtMTb", agtMtb); // 协议主表
 			inMap.put("AgtSTb", agtStb); // 协议子表
 
+			List<Map<String, Object>> prvDatRes = new ArrayList<Map<String, Object>>();
+
 			List<Map<String, Object>> qryResult = gdsAgtWaterRepository.findSignDeatilForQry(inMap);
 			context.setData(GDParamKeys.SIGN_STATION_AGT_QRY_RESULT, qryResult); // 返回信息
 
-			// prvDatRes
-			Map<String, Object> jsonMap = new HashMap<String, Object>();
-			jsonMap.put("showInf", qryResult);
-
-			try {
-				context.setData("prvDatRes", new String(JsonUtils.jsonFromObject(jsonMap, "UTF8"), "UTF8"));
-			} catch (UnsupportedEncodingException e) {
-				throw new CoreException(GDErrorCodes.EUPS_SIGN_DEFAULT_ERROR); // 返回json有问题
+			// 循环组返回报文
+			for (Map<String, Object> qryMap : qryResult) {
+				log.info("查询返回的map为[" + qryMap + "]");
+				Map<String, Object> prvDatMap = new HashMap<String, Object>();
+				prvDatMap.put("SUBSTS", qryMap.get("SUB_STS"));
+				prvDatMap.put("ORGCOD", qryMap.get("ORG_COD"));
+				prvDatMap.put("TBUSTP", qryMap.get("TBUS_TP"));
+				prvDatMap.put("TCUSID", qryMap.get("TCUS_ID"));
+				prvDatMap.put("TCUSNM", qryMap.get("TCUS_NM"));
+				prvDatMap.put("GDSAID", qryMap.get("GDS_AID"));
+				prvDatMap.put("EFFDAT", qryMap.get("EFF_DAT"));
+				prvDatMap.put("IVDDAT", qryMap.get("IVD_DAT"));
+				prvDatRes.add(prvDatMap);
 			}
+			context.setData("recNum", qryResult.size()); // 返回笔数
+			context.setData("prvDatRes", prvDatRes); // 返回字段
+			log.info("协议维护-查询结束，当前context=" + context.getDataMap());
 
 			context.setData(GDParamKeys.SIGN_STATION_OEXTFLG, GDConstants.SIGN_STATION_OEXTFLG_Y);
 
-		} else if (GDConstants.SIGN_STATION_AGT_FUNC_UPDATE.equals(func)) {
-			log.info("start update agent info!");
-
+		} else if (GDConstants.SIGN_STATION_AGT_FUNC_UPDATE.equals(func) || GDConstants.SIGN_STATION_AGT_FUNC_INSERT.equals(func)) {
+			log.info("当前操作类型為" + func + ",开始进行协议更新/新增");
 			// 查询协议主表判断是否已存在协议信息
 			Map<String, Object> inpara = new HashMap<String, Object>();
 			inpara.put("AgtMTb", agtMtb); // 协议主表
@@ -169,11 +180,8 @@ public class TlvAgtMdyDealImlAction implements AgtMdyDealImlService {
 
 			gdsAgtTrcRepository.save(gdsAgtTrc);
 
-		} else if (GDConstants.SIGN_STATION_AGT_FUNC_INSERT.equals(func)) {
-
 		} else {
-			log.error("handle type error!");
-
+			log.error("操作类型错误!");
 			context.setData(GDParamKeys.SIGN_STATION_OEXTFLG, GDConstants.SIGN_STATION_OEXTFLG_N);
 			throw new CoreException(GDErrorCodes.EUPS_SIGN_DEAL_TYPE_ERROR); // 操作选项错误
 		}
@@ -189,29 +197,33 @@ public class TlvAgtMdyDealImlAction implements AgtMdyDealImlService {
 		inparaSub.put("gdsBId", gdsBId); // 业务类型
 		inparaSub.put("actNo", actNo); // 帐号
 
+		log.info("将原子表信息作废!");
 		// 协议子表处理
 		gdsAgtWaterRepository.updateOldAgtInfCnl(inparaSub);
 
-		// TODO:json转换
-		String jsonMsg = context.getData("prvDatReq");
-		log.info("==============jsonMsg:" + jsonMsg);
-		// 去掉json中的[],否则JsonUtils无法解析
-		// if(jsonMsg.contains("[")&&jsonMsg.contains("]")){
-		// jsonMsg=jsonMsg.replace("[", "").replace("]", "");
-		// }
-		if (jsonMsg.length() != 0) {
-			context.setDataMap(JsonUtils.objectFromJson(jsonMsg, Map.class));
-		}
-
-		List<Map<String, Object>> signDetailList = context.getData("InRec");
+		List<Map<String, Object>> signDetailList = context.getData("prvDatReq");
 
 		// 卡号限制判断
 		String actTyp = context.getData("actTyp"); // 账户性质
 		cardBinVerify(actTyp, actNo);
 
 		for (int i = 0; i < signDetailList.size(); i++) {
-
 			Map<String, Object> detailMap = signDetailList.get(i);
+			log.info("签约子表明细数据为:[" + detailMap + "]");
+			
+			//请求字段转换
+			detailMap.put("EffDat", detailMap.get("EFFDAT"));
+			detailMap.put("OrgCod", detailMap.get("ORGCOD"));
+			detailMap.put("SubSts", detailMap.get("SUBSTS"));
+			detailMap.put("GdsAId", detailMap.get("GDSAID"));
+			detailMap.put("BnkTyp", context.getVariable("BnkTyp"));  
+			detailMap.put("BnkNo",  "");
+			detailMap.put("bnkNam",  "交通银行广东省分行");
+			detailMap.put("TBusTp",  detailMap.get("TBUSTP"));
+			detailMap.put("TCusId",  detailMap.get("TCUSID"));
+			detailMap.put("TCusNm",  detailMap.get("TCUSNM"));
+			detailMap.put("IvdDat",  detailMap.get("IVDDAT"));
+			
 			detailMap.put("agtSTb", agtStb); // 子表
 			detailMap.put("gdsBid", gdsBId); // 代理业务id
 			detailMap.put("actNo", actNo); // 卡号
@@ -222,6 +234,7 @@ public class TlvAgtMdyDealImlAction implements AgtMdyDealImlService {
 			// 从detailList中获取用户编号，验证长度是否合法，协议是否可以签订等
 			String cusNo = (String) detailMap.get("TCusId"); // 用户编号
 			String tBusTyp = (String) detailMap.get("TBusTp"); // 业务类型
+			// chechkCusInf(cusNo, tBusTyp, agtStb, i + 1);只有水务需要进行长度校验
 
 			String gdsAId = (String) detailMap.get("GdsAId"); // 协议号
 			Map<String, Object> oldAgtInMap = new HashMap<String, Object>();
