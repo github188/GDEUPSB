@@ -50,7 +50,7 @@ public class PrePayFeeAction implements Executable{
 						context.setData(ParamKeys.BV_NO,"00000000");//  <Set>VchCod=00000000</Set>
 						context.setData(ParamKeys.CCY_NO,Constants.EUPS_PAYMENT_TO_ACPS_CCY_CDE);
 
-						context.setData(ParamKeys.PAY_MDE, "0");
+//						context.setData(ParamKeys.PAY_MDE, "0");
 						context.setData(GDParamKeys.CCYTYP,"1");
 						context.setData(GDParamKeys.VCHCHK, "0");
 						
