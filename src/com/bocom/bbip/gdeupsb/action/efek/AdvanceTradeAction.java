@@ -51,7 +51,7 @@ public class AdvanceTradeAction extends BaseAction {
 		context.setData(ParamKeys.TXN_TME,DateUtils.formatAsTranstime(new Date()));
 		// 柜员号 
 		// 记账
-		String ActFlg = (String) context.getData(ParamKeys.ACC_TYPE); // 银行内部账务类型
+		String ActFlg = (String) context.getData(ParamKeys.PAY_MDE); 
 		
 		if ("0".equals(ActFlg)) { // 对公
 			// 需要GDContants定义常量
@@ -71,7 +71,7 @@ public class AdvanceTradeAction extends BaseAction {
 
 			context.setData(GDParamKeys.ACCMOD, "1");
 			context.setData(ParamKeys.BAK_FLD1, "代扣电费");
-		} else if ("4".equals(ActFlg)) { // 卡
+		} else if ("2".equals(ActFlg) || "4".equals(ActFlg)) { // 卡
 			context.setData(ParamKeys.TXN_CODE, "471140");
 			context.setData(ParamKeys.CHL_TYP, "L"); // <Set>CnlTyp=L</Set>
 			context.setData("Mask", "9102");// <Set>Mask=9102</Set>
@@ -83,7 +83,6 @@ public class AdvanceTradeAction extends BaseAction {
 			context.setData(ParamKeys.CCY_NO,
 					Constants.EUPS_PAYMENT_TO_ACPS_CCY_CDE);
 
-			context.setData(ParamKeys.PAY_MDE, "0");
 			context.setData(GDParamKeys.CCYTYP, "1");
 			context.setData(GDParamKeys.VCHCHK, "0");
 
@@ -99,6 +98,7 @@ public class AdvanceTradeAction extends BaseAction {
 			context.setData(ParamKeys.CUS_NME, context.getData("CusNme"));
 			context.setData(ParamKeys.BUS_TYP, "2");
 			logger.info("~~~~~~~~~~~~End AdvanceTradeAction");
+			context.setData("traceNo", bbipPublicService.getTraceNo());
 	}
 	/**
 	 *报文信息  外发第三方
