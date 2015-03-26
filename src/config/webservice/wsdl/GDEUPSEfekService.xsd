@@ -893,8 +893,8 @@
       <xs:element name="bankNo" type="tns:bankNo_SType" minOccurs="0"/>
       <xs:element name="cusAc" type="tns:cusAc_SType" minOccurs="0"/>
       <xs:element name="cusNme" type="tns:cusNme_SType" minOccurs="0"/>
-      <xs:element name="txnDte" type="tns:txnDte_SType" minOccurs="0"/>
-      <xs:element name="txnTme" type="tns:txnTme_SType" minOccurs="0"/>
+      <xs:element name="signDte" type="tns:signDte_SType" minOccurs="0"/>
+      <xs:element name="signTme" type="tns:signTme_SType" minOccurs="0"/>
       <xs:element name="bakFld1" type="tns:bakFld1_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
@@ -912,6 +912,22 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="128"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="signDte_SType">
+    <xs:annotation>
+      <xs:documentation>签约日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="signTme_SType">
+    <xs:annotation>
+      <xs:documentation>签约时间</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="16"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="bakFld1_SType">
@@ -939,6 +955,7 @@
     <xs:sequence>
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
       <xs:element name="Information" type="tns:Information_CType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="electricityYearMonth" type="tns:electricityYearMonth_SType" minOccurs="0"/>
       <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
       <xs:element name="capital" type="tns:capital_SType" minOccurs="0"/>
       <xs:element name="dedit" type="tns:dedit_SType" minOccurs="0"/>
@@ -1277,7 +1294,9 @@
       <xs:element name="busType" type="tns:busType_SType"/>
       <xs:element name="comNo" type="tns:comNo_SType"/>
       <xs:element name="payNo" type="tns:payNo_SType"/>
+      <xs:element name="thdCusNme" type="tns:thdCusNme_SType" minOccurs="0"/>
       <xs:element name="payMde" type="tns:payMde_SType"/>
+      <xs:element name="oweFeeAmt" type="tns:oweFeeAmt_SType"/>
       <xs:element name="payInAdvMoney" type="tns:payInAdvMoney_SType"/>
       <xs:element name="bakFld1" type="tns:bakFld1_SType" minOccurs="0"/>
       <xs:element name="ActFlg" type="tns:ActFlg_SType" minOccurs="0"/>
@@ -1285,6 +1304,7 @@
       <xs:element name="VchCod" type="tns:VchCod_SType" minOccurs="0"/>
       <xs:element name="cusAc" type="tns:cusAc_SType" minOccurs="0"/>
       <xs:element name="CusNme" type="tns:CusNme_SType" minOccurs="0"/>
+      <xs:element name="password" type="tns:password_SType" minOccurs="0"/>
       <xs:element name="BActSq" type="tns:BActSq_SType" minOccurs="0"/>
       <xs:element name="choNo" type="tns:choNo_SType" minOccurs="0"/>
       <xs:element name="bvKnd" type="tns:bvKnd_SType" minOccurs="0"/>
