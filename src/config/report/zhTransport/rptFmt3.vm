@@ -10,15 +10,23 @@
 #para($d.endDate)
 打印日期：?          报表柜员：?         日期范围：?        到 ?
 -----------------------------------------------------------------------------------------------------
-车牌号     车类型   交易日期     缴费月数     卡 号                 交易金额
+序号     车牌号     车类型   交易日期     缴费月数     卡 号                 交易金额
 #end
-#para($d.txnDte)
-#para($d.txnDte)
-#para($d.txn)
-#para($d.payMon)
-#para($d.actNo)
-#para($d.txnAmt)
+#set($p.index=0)
+#td(1,$d.eles)#set($p.index=$p.index+1) 
+#para($p.index)
+#para($ele.carNo)
+#para($ele.carTyp)
+#para($ele.payDat)
+#para($ele.payMon)
+#para($ele.actNo)
+#para($ele.txnAmt)
 
-?           ?        ?            ?             ?                               ?
+?                 ?           ?        ?            ?             ?                               ?
 -----------------------------------------------------------------------------------------------------
+#end   
+#tf(2)
+#para($d.totCnt)
  总笔数：           ?
+#end
+#end
