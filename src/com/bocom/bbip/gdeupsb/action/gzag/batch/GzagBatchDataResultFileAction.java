@@ -55,7 +55,7 @@ public class GzagBatchDataResultFileAction extends BaseAction implements AfterBa
 	 */
 	public void afterBatchDeal(AfterBatchAcpDomain afterbatchacpdomain, Context context) throws CoreException {
 		logger.info("===============Start  GzagBatchDataResultFileAction");
-		
+		get(BatchFileCommon.class).changeBatSts(context);
 		final String tlr=(String)context.getData(ParamKeys.TELLER);
 		final String br=(String)context.getData(ParamKeys.BR);
         final String AcDate=DateUtils.format(bbipPublicService.getAcDate(),DateUtils.STYLE_yyyyMMdd);
