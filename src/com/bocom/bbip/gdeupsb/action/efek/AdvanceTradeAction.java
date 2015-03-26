@@ -35,7 +35,6 @@ public class AdvanceTradeAction extends BaseAction {
 
 	public void execute(Context context) throws CoreException,
 			CoreRuntimeException {
-
 		logger.info("===========Start  AdvanceTradeAction");
 		context.setData(GDParamKeys.TOTNUM, "1");
 //		context.setData(ParamKeys.REQ_JRN_NO, context.getData(ParamKeys.SEQUENCE));
