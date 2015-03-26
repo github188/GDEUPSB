@@ -19,7 +19,7 @@ public interface GdLotTxnJnlRepository extends PagingAndSortingRepository<GdLotT
     public void update(GdLotTxnJnl lotTxnJnlInput);
 
     @Find
-    public List<Map<String, Object>> qryLotTxnJnl(Pageable page, Map<String, Object> map);
+    public List<Map<String, Object>> qryLotTxnJnl(Map<String, Object> map);
 
     @Update
     public void updateMatchLotTxnJnl(GdLotTxnJnl gdLotTxnJnl);

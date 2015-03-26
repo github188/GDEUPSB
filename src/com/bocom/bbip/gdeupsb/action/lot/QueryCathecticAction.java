@@ -58,10 +58,7 @@ public class QueryCathecticAction extends BaseAction{
         }
 
         map.put("begDat",begDate);
-        int pageSize = context.getData(ParamKeys.PAGE_SIZE);
-        int pageNum = context.getData(ParamKeys.PAGE_NUM);
-        Pageable page =new PageRequest(pageNum, pageSize);
-        List<Map<String, Object>> gdLotTxnJnls = get(GdLotTxnJnlRepository.class).qryLotTxnJnl(page,map);
+        List<Map<String, Object>> gdLotTxnJnls = get(GdLotTxnJnlRepository.class).qryLotTxnJnl(map);
         if (CollectionUtils.isEmpty(gdLotTxnJnls)){
             context.setData(ParamKeys.RSP_CDE, "LOT999");
             context.setData(ParamKeys.RSP_MSG, "没符合查询条件的记录");
