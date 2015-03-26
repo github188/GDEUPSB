@@ -1,6 +1,8 @@
 package com.bocom.bbip.gdeupsb.service.impl.watr00;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +41,59 @@ public class CommInsertCusAgentServiceActionWATR00 implements	CommInsertCusAgent
 	@Override
 	public Map<String, Object> preInsertCusAgent(CustomerDomain customerdomain,List<CusAgentCollectDomain> list, Context context) throws CoreException {
 		logger.info("CommInsertCusAgentServiceActionWATR00 preInsertCusAgent start ... ...");
+		Map<String, Object> agentMap = new HashMap<String, Object>();
+//		agentMap.put("agdAgrNo", (String)context.getData("agdAgrNo"));
+//		agentMap.put("cusAc", (String)context.getData("cusAc"));
+		agentMap.put("acoAc", (String)context.getData("cusAc"));
+		agentMap.put("pwd", (String)context.getData("pwd"));
+//		agentMap.put("bvCde", (String)context.getData("agtCllCusId"));
+//		agentMap.put("bvNo", (String)context.getData("agtCllCusId"));
+		agentMap.put("comNo", "GDWATR0001");
+		agentMap.put("comNum", "汕头自来水公司");
 		
+		agentMap.put("busTyp","0");
+		agentMap.put("busKnd", "A115");
+//		agentMap.put("busKndNme", (String)context.getData("agtCllCusId"));
+		agentMap.put("ccy", "CNY");
+		agentMap.put("cusFeeDerFlg", "0");
+		agentMap.put("agtSrvCusId", (String)context.getData("thdCusNo"));
+		agentMap.put("agtSrvCusPnm", (String)context.getData("thdCusNme"));
+//		agentMap.put("agrVldDte", (String)context.getData("agtCllCusId"));
+//		agentMap.put("des1", (String)context.getData("agtCllCusId"));
+//		agentMap.put("des2", (String)context.getData("agtCllCusId"));
+//		agentMap.put("des3", (String)context.getData("agtCllCusId"));
+//		agentMap.put("des4", (String)context.getData("agtCllCusId"));
+//		agentMap.put("des5", (String)context.getData("agtCllCusId"));
+//		agentMap.put("selId", (String)context.getData("agtCllCusId"));
+//		agentMap.put("selNme", (String)context.getData("agtCllCusId"));
+//		agentMap.put("rcoId", (String)context.getData("agtCllCusId"));
+//		agentMap.put("rcoNme", (String)context.getData("agtCllCusId"));
+//		agentMap.put("pedAgrSts", (String)context.getData("agtCllCusId"));
+//		agentMap.put("mkiEvtNo", (String)context.getData("agtCllCusId"));
+//		agentMap.put("ageBr", (String)context.getData("agtCllCusId"));
+//		agentMap.put("agrBr", (String)context.getData("agtCllCusId"));
+//		agentMap.put("agrTlr", (String)context.getData("agtCllCusId"));
+//		agentMap.put("athTlr", (String)context.getData("agtCllCusId"));
+//		agentMap.put("agrTme", (String)context.getData("agtCllCusId"));
+//		agentMap.put("cmuTel", (String)context.getData("agtCllCusId"));
+//		agentMap.put("eml", (String)context.getData("agtCllCusId"));
+		
+		
+		List<Map<String,Object>> agentCollectAgreement = new ArrayList<Map<String,Object>>();
+		agentCollectAgreement.add(agentMap);
+		context.setData(ParamKeys.AGENT_COLLECT_AGREEMENT, agentCollectAgreement);//上代收付用
+		
+		Map<String, Object> infoMap = new HashMap<String, Object>();
+		List<Map<String,Object>> customerInfo = new ArrayList<Map<String,Object>>();
+//		infoMap.put("agtCllCusId", "");//TODO:修改协议时必输
+		infoMap.put("custyp", (String)context.getData("cusTyp"));
+//		infoMap.put("cusAc", "");
+		infoMap.put("ccy", "CNY");
+		infoMap.put("idTyp", context.getData("idTyp"));
+		infoMap.put("idNo", context.getData("idNo"));
+		customerInfo.add(infoMap);
+		context.setData("agrChl", "1");//签约渠道设为公共事业缴费，上代收付用
+		context.setData("customerInfo", customerInfo);
 		logger.info("CommInsertCusAgentServiceActionWATR00 preInsertCusAgent end ... ...");
 		return null;
 	}
