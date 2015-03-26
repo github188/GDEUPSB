@@ -175,8 +175,8 @@ public class WatrSocketGateway implements Gateway<Object, Object> {
 			log.info("md5Date=" + md5Date);
 
 			StringBuffer sb = new StringBuffer();
-			log.info("初始报文头(不含校验位)=" + sndStrPre.substring(0, 99));
-			sb.append(sndStrPre.substring(0, 99)); // 初始报文头(不含校验位)
+			log.info("初始报文头(不含校验位)=" + sndStrPre.substring(0, 97));
+			sb.append(sndStrPre.substring(0, 97)); // 初始报文头(不含校验位)
 			sb.append(md5Date);
 			log.info("后面拼接报文=" +detailDate);
 			sb.append(detailDate);
