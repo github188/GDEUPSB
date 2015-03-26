@@ -189,5 +189,38 @@
     </bean>
     <!-- add by WangMQ  start GASH -->
     
+	<bean id="WATR00GateWay" class="com.bocom.bbip.gdeupsb.channel.tcp.WatrSocketGateway">
+		<property name="host" value="182.53.15.200" />
+		<property name="port" value="8888" />
+		<property name="soTimeout" value="30000" />
+		<property name="streamResolver">
+			<bean class="com.bocom.jump.bp.channel.tcp.LengthStreamResolver">
+				<property name="lengthSize" value="4" />
+			</bean>
+		</property>
+	</bean>
 
+	<bean id="WATR00Transport" class="com.bocom.jump.bp.channel.DefaultTransport">
+		<property name="gateway" ref="WATR00GateWay" />
+		<property name="encodeTransforms">
+			<array>
+				<bean class="com.bocom.jump.bp.channel.interceptors.EncoderTransform">
+					<constructor-arg
+						value="packet://WEB-INF/classes/config/stream/WATR00/WATR00ReqHeader.xml" />
+				</bean>
+			</array>
+		</property>
+		<property name="decodeTransforms">
+			<array>
+				<bean class="com.bocom.jump.bp.channel.interceptors.DecoderTransform">
+					<constructor-arg
+						value="packet://WEB-INF/classes/config/stream/WATR00/WATR00RspHeader.xml" />
+				</bean>
+			</array>
+		</property>
+		<property name="tranportLister">
+			<bean class="com.bocom.jump.bp.channel.DefaultTransportListener"></bean>
+		</property>
+	</bean>
+	
 </beans>
