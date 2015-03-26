@@ -325,12 +325,13 @@
       <xs:element ref="tns:requestHeader"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="optFlg" type="tns:optFlg_SType"/>
-      <xs:element name="comNo" type="tns:comNo_SType"/>
+      <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
       <xs:element name="thdCusNo" type="tns:thdCusNo_SType"/>
       <xs:element name="idTyp" type="tns:idTyp_SType"/>
       <xs:element name="idNo" type="tns:idNo_SType"/>
       <xs:element name="cusTyp" type="tns:cusTyp_SType"/>
       <xs:element name="cusAc" type="tns:cusAc_SType" minOccurs="0"/>
+      <xs:element name="pwd" type="tns:pwd_SType" minOccurs="0"/>
       <xs:element name="cusNme" type="tns:cusNme_SType" minOccurs="0"/>
       <xs:element name="cmuTel" type="tns:cmuTel_SType" minOccurs="0"/>
       <xs:element name="thdCusNme" type="tns:thdCusNme_SType" minOccurs="0"/>
@@ -382,6 +383,14 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="pwd_SType">
+    <xs:annotation>
+      <xs:documentation>密码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="6"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="thdCusAdr_SType">
