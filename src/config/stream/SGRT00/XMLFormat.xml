@@ -2,9 +2,8 @@
 <message xmlns="http://www.bocom.com/jump/transformer/xml"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.bocom.com/jump/transformer/xml xml.xsd"
-      name="DLMAPS" trace="true" encoding="GBK">
-   <record name="pub">
-   
+    name="DLMAPS" trace="true" encoding="GBK">
+    <record name="PUB">
         <string name="TRADE_ID" referred="true" mapping="true"/>  
         <string name="TRAN_TIME" />
         <string name="BANK_ID" />

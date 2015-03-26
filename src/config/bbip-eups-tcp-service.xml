@@ -203,7 +203,7 @@
 	</bean>
 	<bean id="tbc" class="com.bocom.jump.bp.channel.tcp.SocketServer">
 		<!-- 渠道接入端口，参数配置于sys.properties文件 -->
-		<property name="host" value="0.0.0.0" />
+		<property name="host" value="127.0.0.1" />
 		<property name="port" value="36010" />
 		<property name="mapping" ref="tbc_TcpMapping" />
 		<property name="threadPool" ref="tbc_TcpThreadPool" />
@@ -229,10 +229,8 @@
 							<bean class="com.bocom.jump.bp.channel.interceptors.EncoderTransform">
 								<!-- 渠道返回报文体，参数配置于sys.properties文件 -->
 								<constructor-arg
-									value="packet://WEB-INF/classes/config/stream/SGRT00/TBCRspHeader.xml" />
-
+									value="packet://WEB-INF/classes/config/stream/SGRT00/SGRT00RspHeader.xml" />
 							</bean>
-
 							<bean class="com.bocom.jump.bp.channel.interceptors.ResponseTransform" />
 						</array>
 					</property>
@@ -242,7 +240,7 @@
 							<bean class="com.bocom.jump.bp.channel.interceptors.DecoderTransform">
 								<!-- 渠道请求报文头，参数配置于sys.properties文件 -->
 								<constructor-arg
-									value="packet://WEB-INF/classes/config/stream/SGRT00/TBCReqHeader.xml" />
+									value="packet://WEB-INF/classes/config/stream/SGRT00/SGRT00ReqHeader.xml" />
 							</bean>
 						</array>
 					</property>

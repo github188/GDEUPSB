@@ -7,10 +7,8 @@ import java.util.Map;
 
 import org.springframework.util.CollectionUtils;
 
-import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
-import com.bocom.bbip.eups.adaptor.support.CallThdService;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
@@ -18,9 +16,6 @@ import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.entity.GdLotSysCfg;
 import com.bocom.bbip.gdeupsb.repository.GdLotSysCfgRepository;
 import com.bocom.bbip.utils.DateUtils;
-import com.bocom.jump.bp.JumpException;
-import com.bocom.jump.bp.channel.CommunicationException;
-import com.bocom.jump.bp.channel.Transport;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -33,7 +28,6 @@ import com.bocom.jump.bp.core.CoreException;
 public class LoginAction extends BaseAction {
     // dealId 运营商 141
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public void execute(Context context) throws CoreException {
         log.info("LoginAction Start !!");
