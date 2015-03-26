@@ -318,7 +318,7 @@
 		class="com.bocom.bbip.gdeupsb.strategy.sgrt00.PayUnilateralToBankServiceActionSGRT00"
 		id="eups.payUnilateralToBankServiceActionSGRT00" />
 
-
+<!-- 
 	<bean class="com.bocom.bbip.gdeupsb.strategy.sgrt00.CommInsertCusAgentServiceActionSGRT00" id="eups.commInsertCusAgentServiceActionSGRT00" />
-
+ -->
 </beans>
