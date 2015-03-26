@@ -7,15 +7,20 @@ import java.util.Map;
 
 import org.springframework.util.CollectionUtils;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
+import com.bocom.bbip.eups.adaptor.support.CallThdService;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.entity.GdLotSysCfg;
 import com.bocom.bbip.gdeupsb.repository.GdLotSysCfgRepository;
-import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.jump.bp.JumpException;
+import com.bocom.jump.bp.channel.CommunicationException;
+import com.bocom.jump.bp.channel.Transport;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -28,6 +33,7 @@ import com.bocom.jump.bp.core.CoreException;
 public class LoginAction extends BaseAction {
     // dealId 运营商 141
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Override
     public void execute(Context context) throws CoreException {
         log.info("LoginAction Start !!");
@@ -42,26 +48,14 @@ public class LoginAction extends BaseAction {
         }
         //向福彩中心发出系统角色登录
         context.setData("eupsBusTyp", "LOTR01");
-        context.setData("action", "212");
-        context.setData("usrPam", lotSysCfgInfos.get(0).getUsrPam());
-        context.setData("usrPas",  lotSysCfgInfos.get(0).getUsrPas());
+        context.setData("action", "200");
+        context.setData("user", lotSysCfgInfos.get(0).getUsrPam());
+        context.setData("pwd",  lotSysCfgInfos.get(0).getUsrPas());
         Map<String,Object> resultMap = new HashMap<String, Object>();//申请当前期号，奖期信息下载
-       
-      
-        //测试 Start TODO
-        // 福彩系统登录
-        /*   Transport ts = context.getService("STHDLOT1");
-        try {
-            resultMap = (Map<String, Object>) ts.submit(context.getDataMap(), context);
-            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
-        } catch (CommunicationException e1) {
-            e1.printStackTrace();
-        } catch (JumpException e1) {
-            e1.printStackTrace();
-        }  */
-        resultMap.put("resultCode", "000000");
-        resultMap.put("resultDes", "交易成功");
-        //测试 end
+       // 福彩系统登录
+        resultMap = get(ThirdPartyAdaptor.class).trade(context);
+        
+        
         if(!Constants.RESPONSE_CODE_SUCC.equals(resultMap.get("resultCode"))){
             log.info("QueryLot Fail!");
             context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
@@ -69,26 +63,11 @@ public class LoginAction extends BaseAction {
             context.setData(ParamKeys.RSP_MSG, "系统角色登录失败!!!");
             return;
         }
-        
         //系统对时
         context.setData("action", "200");
-       
         Map<String,Object> map = new HashMap<String, Object>();//申请当前期号，奖期信息下载
-        //测试 Start
-        // 系统对时 TODO
-        /*   Transport transport = context.getService("STHDLOT1");
-        try {
-            resultMap = (Map<String, Object>) ts.submit(context.getDataMap(), context);
-            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
-        } catch (CommunicationException e1) {
-            e1.printStackTrace();
-        } catch (JumpException e1) {
-            e1.printStackTrace();
-        }  */
-        map.put("resultCode", "000000");
-        map.put("resultDes", "交易成功");
-        //测试 end
-
+        map = get(ThirdPartyAdaptor.class).trade(context);
+  
         if(!Constants.RESPONSE_CODE_SUCC.equals(map.get("resultCode"))){
             log.info("Check Systerm Time  Fail!");
             context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);

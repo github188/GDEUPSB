@@ -2,15 +2,18 @@
 <message xmlns="http://www.bocom.com/jump/transformer/xml" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.bocom.com/jump/transformer/xml xml.xsd"
-    encoding="UTF-8"  trace="true" name="root">   
+    encoding="UTF-8"  trace="true" name="pkg">
     <record name="pkgH">
-        <string name="type"/>
-        <string name="action" />
+        <string name="type" default="3"/>
+        <string name="action"/>
         <string name="version"/>
-        <string name="dealer_id"/>
-        <string name="terminal_id"/>
-        <string name="mobile"/>
-        <string name="phone"/>
-        <string name="sent_time"/>
+        <string name="dealer_id" default="141"/>
+        <string name="terminal_id" default="0"/>
+        <string name="mobile" default="0"/>
+        <string name="phone" default="0"/>
+        <string name="sent_time" default="2015-01-14 09:25:07"/>
     </record>
+        <select name="body" key="MsgType" default="N">
+            <include name="N" keys="action" decodePrefix="p"/>
+        </select>
 </message>

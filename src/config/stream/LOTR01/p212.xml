@@ -2,7 +2,9 @@
 <record xmlns="http://www.bocom.com/jump/transformer/xml" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.bocom.com/jump/transformer/xml xml.xsd"
-    trace="true" name="return">
-        <string name="rRspCod"/>
-        <string name="rRspMsg"/>
+    trace="true" name="pkgC">
+    <complexRecord name="return" optional="true">
+        <string name="return"/>
+        <string name="resultCode"/>
+    </complexRecord>
 </record>

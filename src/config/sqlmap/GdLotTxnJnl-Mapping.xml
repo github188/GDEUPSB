@@ -866,14 +866,13 @@
      <where>
         <choose>
           <when test="betTyp !=null and betTyp != ''">
-             a.CRD_NO=#{crdNo} AND a.BET_TYP=#{betTyp} AND a.BET_DAT between #{begDat} and #{endDat} AND a.TXN_STS='S'and a.Game_Id='%s' and a.Draw_Id=b.Draw_Id
+             a.CRD_NO=#{crdNo} AND a.BET_TYP=#{betTyp} AND a.BET_DAT between #{begDat} and #{endDat} AND a.TXN_STS='S'and a.Game_Id=#{gameId} and a.Draw_Id=b.Draw_Id
           </when>
           <otherwise>
               a.CRD_NO=#{crdNo} AND a.BET_DAT between #{begDat} and #{endDat} AND a.TXN_STS='S'and a.Game_Id=#{gameId} and a.Draw_Id=b.Draw_Id
          </otherwise>
         </choose>
      </where>
-     fetch first 10 rows only
      order by a.TXN_TIM desc
   </select>
   <select id="findCheckSuccess" resultMap="basicResultMap" parameterType="map">
