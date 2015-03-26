@@ -22,7 +22,7 @@ public class AdvanceTradeStrCastDateAction extends BaseAction{
 				context.setData(ParamKeys.THD_TXN_DATE, DateUtils.parse(thdTxnDate,DateUtils.STYLE_yyyyMMdd));
 				context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse(thdTxnTime,DateUtils.STYLE_yyyyMMddHHmmss));
 				if(context.getData(ParamKeys.RESPONSE_CODE).toString().equals(Constants.RESPONSE_CODE_SUCC)){
-							context.setData(ParamKeys.RSP_MSG, "充值成功");
+							context.setData("rspMsg", "充值成功");
 				}
 		}
 }
