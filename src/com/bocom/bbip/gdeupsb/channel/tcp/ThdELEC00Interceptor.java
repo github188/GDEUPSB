@@ -413,8 +413,8 @@ public class ThdELEC00Interceptor implements Interceptor {
         if(context.getData(ParamKeys.SERVICE_NAME).toString().equals(SHG_PAY_ID+"ELEC00")){
     		context.setData("thdTxnDte", DateUtils.format(thdTxnDte, DateUtils.STYLE_yyyyMMdd));
     		context.setData("thdTxnTme", DateUtils.formatAsHHmmss(thdTxnTme));
-    		context.setData("txnDte",DateUtils.format(DateUtils.parse(context.getData("txnDte").toString()),DateUtils.STYLE_yyyyMMdd));
-    		context.setData("txnTme",DateUtils.format(DateUtils.parse(context.getData("txnTme").toString()),DateUtils.STYLE_HHmmss));
+    		context.setData("txnDte",DateUtils.format((Date)context.getData("txnDte"),DateUtils.STYLE_SIMPLE_DATE));
+    		context.setData("txnTme",context.getData("txnTme").toString().substring(11,19));
         }
     }
 
