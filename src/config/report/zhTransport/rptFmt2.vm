@@ -16,7 +16,7 @@
 #td(1,$d.eles)#set($p.index=$p.index+1) 
 #para($p.index)
 #para($ele.cusAc)
-#para($ele.tLogNo)
+#para($ele.tlogNo)
 #para($ele.carNo)
 #para($ele.carTyp)
 #para($ele.payDat)
