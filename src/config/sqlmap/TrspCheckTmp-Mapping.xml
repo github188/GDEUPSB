@@ -193,6 +193,14 @@
       </foreach>
     </if>
   </select>
+  <!-- 根据批次号得到信息 -->
+    <select id="findByTChkNo" resultMap="basicResultMap" parameterType="java.lang.String"  >
+    select 
+    <include refid="baseColumnList" />
+    from GDEUPSB.TRSP_CHECK_TMP  where  TCHK_NO=#{tchkNo,jdbcType=CHAR}
+      </foreach>
+    </if>
+  </select>
 	
 	<delete id="deleteAll"  parameterType="java.lang.String"  >
 			delete  from GDEUPSB.TRSP_CHECK_TMP  where '1' =#{string,jdbcType=CHAR}
