@@ -37,14 +37,12 @@ public class AdvanceTradeAction extends BaseAction {
 			CoreRuntimeException {
 		logger.info("===========Start  AdvanceTradeAction");
 		context.setData(GDParamKeys.TOTNUM, "1");
-//		context.setData(ParamKeys.REQ_JRN_NO, context.getData(ParamKeys.SEQUENCE));
 		// 第三方客户标识
 		context.setData(ParamKeys.THD_CUS_NO,context.getData(GDParamKeys.PAY_NO));
 		
-	      
 		// 预付费金额设定
 		context.setData(ParamKeys.TXN_AMT,context.getData(GDParamKeys.PAYMENTIN_ADVANCE_MONEY));
-		context.setData(ParamKeys.PAYFEE_TYPE, context.getData(ParamKeys.PAY_MDE));
+		context.setData(ParamKeys.PAYFEE_TYPE, "2");
 		
 		context.setData(ParamKeys.TXN_DTE,DateUtils.parse(DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMdd)));
 		context.setData(ParamKeys.TXN_TME,DateUtils.formatAsTranstime(new Date()));
