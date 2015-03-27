@@ -1,5 +1,7 @@
 package com.bocom.bbip.gdeupsb.action.efek;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.Map;
 
@@ -54,6 +56,11 @@ public class QryCusBaseMsgAction extends BaseAction{
 			context.setData(GDParamKeys.SVRCOD, "44");
 			context.setData(GDParamKeys.TOTNUM, "1");
 			callThd(context);
+			double i=Double.parseDouble(context.getData(ParamKeys.OWE_FEE_AMT).toString());
+			i=i/100;
+			DecimalFormat df=new DecimalFormat("#.00");
+			BigDecimal oweFeeAmt=new BigDecimal(df.format(i));
+			context.setData(ParamKeys.OWE_FEE_AMT, oweFeeAmt);
 			log.info("============End   QryCusBaseMsgAction");
 		}
 	/**
