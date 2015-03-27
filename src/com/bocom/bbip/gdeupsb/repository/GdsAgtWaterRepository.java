@@ -40,6 +40,10 @@ public interface GdsAgtWaterRepository extends PagingAndSortingRepository<GdsAgt
 	/** 签约一站通-查找拷盘数据*/
 	public List<Map<String, Object>> findFileSndInfo(Map<String, Object> inpara);
 	
+	/** 签约一站通-查找拷盘数据(广州有线)*/
+	public List<Map<String, Object>> findFileSndInfoTel(Map<String, Object> inpara);
+	
+	
 	/** 签约一站通-更新该批次的批次号，并设置为不可制盘*/
 	public void updateBchUsbFlg(Map<String, Object> inpara);
 	
