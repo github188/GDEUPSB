@@ -232,7 +232,7 @@ public class WatrSocketGateway implements Gateway<Object, Object> {
 			localSocket = new Socket();
 			localSocket.setReuseAddress(this.d);
 			config(localSocket);
-
+			log.info("conn "+a +":"+b);
 			InetSocketAddress localInetSocketAddress = new InetSocketAddress(this.a, this.b);
 			if (this.c > 0)
 				localSocket.connect(localInetSocketAddress, this.c);
