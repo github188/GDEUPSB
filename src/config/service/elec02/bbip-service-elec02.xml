@@ -17,5 +17,6 @@
 	
 <!--  汕头电力 批量数据准备-->
 	<x:bean id="eups.fileBatchPayCreateDataServiceActionELEC02" class="com.bocom.bbip.gdeupsb.action.zh.BatchAcpServiceImplELEC02"/>
-	
+	<!-- 协议新增 -->
+		<x:bean id="eups.commInsertCusAgentServiceActionELEC02" class="com.bocom.bbip.gdeupsb.service.impl.elec02.CommInsertCusAgentServiceActionELEC02"/>
 </x:beans>
