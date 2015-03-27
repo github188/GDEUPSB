@@ -4,12 +4,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
-import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -19,10 +17,6 @@ public class PreCheckDealAction implements Executable{
 	private final static Log logger=LogFactory.getLog(PreCheckDealAction.class);
 	@Autowired
 	EupsThdTranCtlInfoRepository eupsThdTranCtlInfoRepository;
-	@Autowired
-	BBIPPublicService bbipPublicService;
-	@Autowired
-	BGSPServiceAccessObject bgspServiceAccessObject;
 	/**
 	 * 交易前策略处理
 	 */
@@ -41,12 +35,5 @@ public class PreCheckDealAction implements Executable{
 				context.setData(ParamKeys.CCY, GDConstants.RENMINBI);
 				
 				logger.info("~~~~~~~~~~~交易日期："+context.getData(ParamKeys.TXN_DATE)+"~~~~~~~~~~~交易时间："+context.getData(ParamKeys.TXN_TIME));
-				//TODO 
-				context.setData(ParamKeys.BR,"01441131999");
-				context.setData(ParamKeys.BK,"01441999999");
-				String traceNo=bbipPublicService.getTraceNo();
-//				//TODO 要删
-				context.setData(ParamKeys.TRACE_NO, traceNo);
-				context.setData(ParamKeys.REQ_JRN_NO, context.getData(ParamKeys.SEQUENCE));
 	}
 }

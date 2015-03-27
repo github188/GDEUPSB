@@ -8,11 +8,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlDetailRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
-import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -22,6 +22,8 @@ public class PrePayToBankAction implements Executable{
 		private final static Log logger=LogFactory.getLog(PrePayToBankAction.class);
 		@Autowired
 		EupsThdTranCtlDetailRepository eupsThdTranCtlDetailRepository;
+		@Autowired
+		BBIPPublicService bbipPublicService;
 		/**
 		 * 第三方单边记账处理前
 		 */
@@ -30,10 +32,13 @@ public class PrePayToBankAction implements Executable{
 			CoreRuntimeException {
 			logger.info("=========Start PrePayToBankAction");
 			context.setData(GDParamKeys.TOTNUM, "1");
-//			context.setData(ParamKeys.TXN_DTE, DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())));
-//			String time=DateUtils.format(new Date(),DateUtils.STYLE_TRANS_TIME);
-//			Date txnTme=DateUtils.parse(time);
-//			context.setData(ParamKeys.TXN_TME, txnTme);
+			
+			//TODO 
+			context.setData(ParamKeys.BR,"01441131999");
+			context.setData(ParamKeys.BK,"01441999999");
+			String traceNo=bbipPublicService.getTraceNo();
+			//TODO 要删
+			context.setData(ParamKeys.TRACE_NO, traceNo);
 			
 			//TODO 待定  
 			String ActFlg=(String)context.getData(ParamKeys.ACC_TYPE);
