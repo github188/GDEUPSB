@@ -2,7 +2,7 @@
 <message xmlns="http://www.bocom.com/jump/transformer/packet"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
-	type="LLLL+" encoding="GBK" trace="true"> 
+	type="LLLL+" encoding="UTF-8" trace="true"> 
 	<segment name="requestHead">
 		<fixString name="type"              length="4"/> <!-- 数据报类型 -->
 		<fixString name="accountdate"   length="8"/><!-- 记账日期 -->
