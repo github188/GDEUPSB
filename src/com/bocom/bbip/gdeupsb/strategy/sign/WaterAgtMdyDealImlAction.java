@@ -55,8 +55,8 @@ public class WaterAgtMdyDealImlAction implements AgtMdyDealImlService {
 
 	@Override
 	public Map<String, Object> agtDelByGdsIdService(Context context) throws CoreException {
-		log.info("agtDelByGdsIdService start!");
-		String bnkNme = bbipPublicService.getParam("GZEUPSB", "agtBkNme");
+		log.info("水务逻辑处理start!");
+		String bnkNme = bbipPublicService.getParam("GDEUPSB", "agtBkNme");
 		context.setData("bnkNam", bnkNme);
 
 		GdsRunCtl gdsRunctl = context.getVariable(GDParamKeys.SIGN_STATION_RUN_CTL_INFO);
@@ -68,7 +68,8 @@ public class WaterAgtMdyDealImlAction implements AgtMdyDealImlService {
 
 		String func = context.getData(GDParamKeys.SIGN_STATION_FUNC); // 操作类型
 		if (GDConstants.SIGN_STATION_AGT_FUNC_QUERY.equals(func)) {
-			log.info("操作类型为查询，开始进行协议信息查询!");
+			log.info("当前操作类型为2，开始进行查询!");
+			log.info("start query agent info!");
 
 			Map<String, Object> inMap = new HashMap<String, Object>();
 			inMap.put("actNo", actNo); // 卡号
@@ -102,9 +103,8 @@ public class WaterAgtMdyDealImlAction implements AgtMdyDealImlService {
 
 			context.setData(GDParamKeys.SIGN_STATION_OEXTFLG, GDConstants.SIGN_STATION_OEXTFLG_Y);
 
-		} else if (GDConstants.SIGN_STATION_AGT_FUNC_UPDATE.equals(func)) {
-			log.info("操作类型为更新，开始更新协议信息！");
-
+		} else if (GDConstants.SIGN_STATION_AGT_FUNC_UPDATE.equals(func) || GDConstants.SIGN_STATION_AGT_FUNC_INSERT.equals(func)) {
+			log.info("当前操作类型為" + func + ",开始进行协议更新/新增");
 			// 查询协议主表判断是否已存在协议信息
 			Map<String, Object> inpara = new HashMap<String, Object>();
 			inpara.put("AgtMTb", agtMtb); // 协议主表
@@ -180,12 +180,8 @@ public class WaterAgtMdyDealImlAction implements AgtMdyDealImlService {
 
 			gdsAgtTrcRepository.save(gdsAgtTrc);
 
-		} else if (GDConstants.SIGN_STATION_AGT_FUNC_INSERT.equals(func)) {
-
-			log.info("操作类型为新增，暂时不做处理!");
-
 		} else {
-			log.error("handle type error!");
+			log.error("操作类型错误!");
 			context.setData(GDParamKeys.SIGN_STATION_OEXTFLG, GDConstants.SIGN_STATION_OEXTFLG_N);
 			throw new CoreException(GDErrorCodes.EUPS_SIGN_DEAL_TYPE_ERROR); // 操作选项错误
 		}
@@ -201,21 +197,11 @@ public class WaterAgtMdyDealImlAction implements AgtMdyDealImlService {
 		inparaSub.put("gdsBId", gdsBId); // 业务类型
 		inparaSub.put("actNo", actNo); // 帐号
 
+		log.info("将原子表信息作废!");
 		// 协议子表处理
 		gdsAgtWaterRepository.updateOldAgtInfCnl(inparaSub);
 
-		// TODO:json转换
-		String jsonMsg = context.getData("prvDatReq");
-		log.info("==============jsonMsg:" + jsonMsg);
-		// 去掉json中的[],否则JsonUtils无法解析
-		// if(jsonMsg.contains("[")&&jsonMsg.contains("]")){
-		// jsonMsg=jsonMsg.replace("[", "").replace("]", "");
-		// }
-		if (jsonMsg.length() != 0) {
-			context.setDataMap(JsonUtils.objectFromJson(jsonMsg, Map.class));
-		}
-
-		List<Map<String, Object>> signDetailList = context.getData("InRec");
+		List<Map<String, Object>> signDetailList = context.getData("prvDatReq");
 
 		// 卡号限制判断
 		String actTyp = context.getData("actTyp"); // 账户性质
@@ -224,6 +210,21 @@ public class WaterAgtMdyDealImlAction implements AgtMdyDealImlService {
 		for (int i = 0; i < signDetailList.size(); i++) {
 
 			Map<String, Object> detailMap = signDetailList.get(i);
+			log.info("签约子表明细数据为:[" + detailMap + "]");
+			
+			//请求字段转换
+			detailMap.put("EffDat", detailMap.get("EFFDAT"));
+			detailMap.put("OrgCod", detailMap.get("ORGCOD"));
+			detailMap.put("SubSts", detailMap.get("SUBSTS"));
+			detailMap.put("GdsAId", detailMap.get("GDSAID"));
+			detailMap.put("BnkTyp", context.getVariable("BnkTyp"));  
+			detailMap.put("BnkNo",  "");
+			detailMap.put("bnkNam",  "交通银行广东省分行");
+			detailMap.put("TBusTp",  detailMap.get("TBUSTP"));
+			detailMap.put("TCusId",  detailMap.get("TCUSID"));
+			detailMap.put("TCusNm",  detailMap.get("TCUSNM"));
+			detailMap.put("IvdDat",  detailMap.get("IVDDAT"));
+			
 			detailMap.put("agtSTb", agtStb); // 子表
 			detailMap.put("gdsBid", gdsBId); // 代理业务id
 			detailMap.put("actNo", actNo); // 卡号
@@ -278,7 +279,10 @@ public class WaterAgtMdyDealImlAction implements AgtMdyDealImlService {
 		log.info("start cardBinVerify,actTyp=" + actTyp);
 		if (Constants.PAY_MDE_4.equals(actTyp)) { // 卡
 			String carBin = actNo.substring(0, 9);
-
+			
+			//TODO:
+//			CardBinExc
+			
 			String cardValid = "Y";
 			// TODO:判断cardValid，使用我待测试的codeSwitch
 			// <Item CardBin="622261071" CardValid="Y"/>

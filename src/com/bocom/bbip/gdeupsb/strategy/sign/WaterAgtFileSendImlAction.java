@@ -33,7 +33,7 @@ public class WaterAgtFileSendImlAction implements AgtFileSendImlService {
 
 	@Override
 	public Map<String, Object> agtFleSndDelService(Context context) throws CoreException {
-		log.info("WaterAgtFileSendImlAction agtFleSndByGdsId start!..");
+		log.info("水务协议数据拷盘开始！..");
 
 		// 获取runctl
 		GdsRunCtl gdsRunCtl = context.getVariable(GDParamKeys.SIGN_STATION_RUN_CTL_INFO);

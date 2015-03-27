@@ -1,6 +1,5 @@
 package com.bocom.bbip.gdeupsb.strategy.sign;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -59,7 +58,7 @@ public class DigitAgtMdyDealImlAction implements AgtMdyDealImlService {
 		log.info("agtDelByGdsIdService start! ");
 		log.info("开始处理珠江数码业务！");
 
-		String bnkNme = bbipPublicService.getParam("GZEUPSB", "agtBkNme");
+		String bnkNme = bbipPublicService.getParam("GDEUPSB", "agtBkNme");
 		context.setData("bnkNam", bnkNme);
 
 		GdsRunCtl gdsRunctl = context.getVariable(GDParamKeys.SIGN_STATION_RUN_CTL_INFO);
