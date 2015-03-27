@@ -63,6 +63,7 @@ public class BatchGashDealServiceAction extends BaseAction implements BatchAcpSe
 			throws CoreException {
 		logger.info("批次前准备数据");
 		
+		//TODO: for test, 此处为了测试写死，后续需要修改
 		context.setData(ParamKeys.TELLER, "ABIR148");
 		context.setData(ParamKeys.BR, "01441131999");
 		context.setData(ParamKeys.BK, "01441999999");
