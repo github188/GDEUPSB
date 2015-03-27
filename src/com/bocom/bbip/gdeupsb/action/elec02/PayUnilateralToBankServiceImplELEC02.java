@@ -62,6 +62,7 @@ public class PayUnilateralToBankServiceImplELEC02 extends BaseAction implements 
 	@Override
 	public Map<String, Object> prepareCheckDeal(CommHeadDomain arg0,PayFeeOnlineDomain arg1, Context context) throws CoreException {
 		logger.info("prepareCheckDeal");
+		//TODO:for test
 		context.setData(ParamKeys.BR, "01441131999");
 		context.setData(ParamKeys.BK, "01441999999");
 		context.setData(ParamKeys.TELLER, "ABIR148");
