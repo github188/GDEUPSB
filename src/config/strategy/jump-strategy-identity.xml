@@ -135,7 +135,12 @@
 	<bean id="gdeups.agtMdyDealImlServiceAction44108"
 		class="com.bocom.bbip.gdeupsb.strategy.sign.DigitAgtMdyDealImlAction">
 	</bean>
-
+	
+	<!-- 签约一站通-协议维护-廣州有線電視 -->
+	<bean id="gdeups.agtMdyDealImlServiceAction44107"
+		class="com.bocom.bbip.gdeupsb.strategy.sign.TlvAgtMdyDealImlAction">
+	</bean>
+	
 
 
 	<!-- 费用查询处理前 -->
