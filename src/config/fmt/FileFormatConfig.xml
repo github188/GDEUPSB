@@ -1,76 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files xmlns="http://www.bankcomm.com/bbip-fmt-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bankcomm.com/bbip-fmt-1.0 http://www.bocom.com/schema/bbip-fmt-1.0.xsd">
-<!--  文本批量-->
-	<file id="BatchFmt" name="BatchFmt" encoding="GBK"
-		lineSeparator="\n">
+	<!-- 文本批量 -->
+	<file id="BatchFmt" name="BatchFmt" encoding="GBK" lineSeparator="\n">
 		<line name="header" ref="config/fmt/fileFmt/batch/header.xml"
-            encoding="GBK" />
+			encoding="GBK" />
 		<foreach name="detail" ref="config/fmt/fileFmt/batch/detail.xml"
 			encoding="GBK" />
 	</file>
-	<!-- 佛山有线电视 文本批量-->
+	<!-- 佛山有线电视 文本批量 -->
 	<file id="tvFbpeBatFmt" name="tvFbpeBatFmt" encoding="GBK"
 		lineSeparator="\n">
 		<foreach name="detail" ref="config/fmt/fileFmt/fbpe/fbpeTvBatchDeatil.xml"
 			encoding="GBK" />
 	</file>
-    <!-- 佛山燃气文本批量-->
-    <file id="gasFbpeBatFmt" name="gasFbpeBatFmt" encoding="GBK"
-        lineSeparator="\n">
-        <foreach name="detail" ref="config/fmt/fileFmt/fbpe/fbpeGasBatchDeatil.xml"
-            encoding="GBK" />
-    </file>
-    <!-- 佛山电信文本批量 -->
-    <file id="telFbpeBatFmt" name="telFbpeBatFmt" encoding="GBK"
-        lineSeparator="\n">
-        <foreach name="detail" ref="config/fmt/fileFmt/fbpe/fbpeTelBatchDeatil.xml"
-            encoding="GBK"/>
-    </file>
-    <!-- 佛山移动文本批量-->
-    <file id="mobFbpeBatFmt" name="mobFbpeBatFmt" encoding="GBK"
-        lineSeparator="\n">
-        <line name="header" ref="config/fmt/fileFmt/fbpe/fbpeMobBatchDeatil.xml"
-            encoding="GBK" />
-        <foreach name="detail" ref="config/fmt/fileFmt/fbpe/fbpeMobBatchDeatil.xml"
-            encoding="GBK" />
-    </file>
-    
-    <!-- 佛山有线电视 文本批量返盘-->
-    <file id="tvFbpeBatResultFmt" name="tvFbpeBatFmt" encoding="GBK"
-        lineSeparator="\n">
-        <foreach name="detail" ref="config/fmt/fileFmt/fbpe/fbpeTvBatchResultDeatil.xml"
-            encoding="GBK" />
-    </file>
-    <!-- 佛山燃气文本批量返盘-->
-    <file id="gasFbpeBatResultFmt" name="gasFbpeBatFmt" encoding="GBK"
-        lineSeparator="\n">
-        <foreach name="detail" ref="config/fmt/fileFmt/fbpe/fbpeGasBatchResultDeatil.xml"
-            encoding="GBK" />
-    </file>
-    <!-- 佛山电信文本批量返盘 -->
-    <file id="telFbpeBatResultFmt" name="telFbpeBatResultFmt" encoding="GBK"
-        lineSeparator="\n">
-        <foreach name="detail" ref="config/fmt/fileFmt/fbpe/fbpeTelBatchResultDeatil.xml"
-            encoding="GBK"/>
-    </file>
-    <!-- 佛山移动文本批量返盘-->
-    <file id="mobFbpeBatResultFmt" name="mobFbpeBatResultFmt" encoding="GBK"
-        lineSeparator="\n">
-        <line name="header" ref="config/fmt/fileFmt/fbpe/fbpeMobBatchResultDeatil.xml"
-            encoding="GBK" />
-        <foreach name="detail" ref="config/fmt/fileFmt/fbpe/fbpeMobBatchResultDeatil.xml"
-            encoding="GBK" />
-    </file>
-    <!-- 广东烟草对账-->
-    <file id="tbcCheckFile" name="tbcCheckFile" encoding="GBK" lineSeparator="\n">
-        <line name="tops" ref="config/fmt/fileFmt/SGRT00/CheckFileDtlHead.xml"
-            encoding="GBK" />
-        <foreach name="detail" ref="config/fmt/fileFmt/SGRT00/CheckFileDeatil.xml"
-            encoding="GBK" />
-        <line name="bottom" ref="config/fmt/fileFmt/SGRT00/CheckFileEnd.xml"
-            encoding="GBK" />
-    </file>
+	<!-- 佛山燃气文本批量 -->
+	<file id="gasFbpeBatFmt" name="gasFbpeBatFmt" encoding="GBK"
+		lineSeparator="\n">
+		<foreach name="detail" ref="config/fmt/fileFmt/fbpe/fbpeGasBatchDeatil.xml"
+			encoding="GBK" />
+	</file>
+	<!-- 佛山电信文本批量 -->
+	<file id="telFbpeBatFmt" name="telFbpeBatFmt" encoding="GBK"
+		lineSeparator="\n">
+		<foreach name="detail" ref="config/fmt/fileFmt/fbpe/fbpeTelBatchDeatil.xml"
+			encoding="GBK" />
+	</file>
+	<!-- 佛山移动文本批量 -->
+	<file id="mobFbpeBatFmt" name="mobFbpeBatFmt" encoding="GBK"
+		lineSeparator="\n">
+		<line name="header" ref="config/fmt/fileFmt/fbpe/fbpeMobBatchDeatil.xml"
+			encoding="GBK" />
+		<foreach name="detail" ref="config/fmt/fileFmt/fbpe/fbpeMobBatchDeatil.xml"
+			encoding="GBK" />
+	</file>
+
+	<!-- 佛山有线电视 文本批量返盘 -->
+	<file id="tvFbpeBatResultFmt" name="tvFbpeBatFmt" encoding="GBK"
+		lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/fbpe/fbpeTvBatchResultDeatil.xml" encoding="GBK" />
+	</file>
+	<!-- 佛山燃气文本批量返盘 -->
+	<file id="gasFbpeBatResultFmt" name="gasFbpeBatFmt" encoding="GBK"
+		lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/fbpe/fbpeGasBatchResultDeatil.xml" encoding="GBK" />
+	</file>
+	<!-- 佛山电信文本批量返盘 -->
+	<file id="telFbpeBatResultFmt" name="telFbpeBatResultFmt"
+		encoding="GBK" lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/fbpe/fbpeTelBatchResultDeatil.xml" encoding="GBK" />
+	</file>
+	<!-- 佛山移动文本批量返盘 -->
+	<file id="mobFbpeBatResultFmt" name="mobFbpeBatResultFmt"
+		encoding="GBK" lineSeparator="\n">
+		<line name="header" ref="config/fmt/fileFmt/fbpe/fbpeMobBatchResultDeatil.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/fbpe/fbpeMobBatchResultDeatil.xml" encoding="GBK" />
+	</file>
+	<!-- 广东烟草对账 -->
+	<file id="tbcCheckFile" name="tbcCheckFile" encoding="GBK"
+		lineSeparator="\n">
+		<line name="tops" ref="config/fmt/fileFmt/SGRT00/CheckFileDtlHead.xml"
+			encoding="GBK" />
+		<foreach name="detail" ref="config/fmt/fileFmt/SGRT00/CheckFileDeatil.xml"
+			encoding="GBK" />
+		<line name="bottom" ref="config/fmt/fileFmt/SGRT00/CheckFileEnd.xml"
+			encoding="GBK" />
+	</file>
 
 	<!-- 广东电力 -->
 	<file id="eleGzBatFmt" name="eleGzBatFmt" encoding="GBK"
@@ -116,7 +116,7 @@
 	</file>
 
 
-	<!-- 南方电网  对账 -->
+	<!-- 南方电网 对账 -->
 	<file name="elecCheckFile" id="elecCheckFile" encoding="GBK"
 		lineSeparator="\n">
 		<line name="header" ref="config/fmt/fileFmt/efek/CheckFileDtlHead.xml" />
@@ -140,7 +140,8 @@
 	<file name="efekBatchResult" id="efekBatchResult" encoding="GBK"
 		lineSeparator="\n">
 		<line name="header" ref="config/fmt/fileFmt/efek/BatchDataResultHead.xml" />
-		<foreach name="detail" ref="config/fmt/fileFmt/efek/BatchDataResultDetail.xml" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/efek/BatchDataResultDetail.xml" />
 	</file>
 
 
@@ -149,364 +150,520 @@
 		lineSeparator="\n">
 		<foreach name="detail" ref="config/fmt/fileFmt/TRSP00/CheckFileDetail.xml" />
 	</file>
-	
-		
+
+
 	<!-- 银行文件对账第三方（华商一卡通） -->
 	<file id="HSCardFile" name="HSCardFile" encoding="UTF-8"
 		lineSeparator="\n">
-		<foreach name="detail"
-			ref="config/fmt/fileFmt/hsCard/checkFileFormat.xml" />
+		<foreach name="detail" ref="config/fmt/fileFmt/hsCard/checkFileFormat.xml" />
 	</file>
 
-	
-	
-	
-    <!-- 银行文件对账第三方（ 惠州燃气） -->
- 	<file id="creHzGasCheckFile" name="creHzGasCardFile" encoding="GBK" 
+
+
+
+	<!-- 银行文件对账第三方（ 惠州燃气） -->
+	<file id="creHzGasCheckFile" name="creHzGasCardFile" encoding="GBK"
 		lineSeparator="\n">
 		<foreach name="detail"
-			ref="config/fmt/fileFmt/gash/checkFileFormatToGas.xml" encoding="GBK"/>
+			ref="config/fmt/fileFmt/gash/checkFileFormatToGas.xml" encoding="GBK" />
 	</file>
-	
+
 	<!-- 惠州燃气批量托收文件 -->
 	<file id="PGAS00BatFmt" name="PGAS00BatFmt" encoding="GBK"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/gash/gashBatchActDetail.xml" encoding="GBK" />
+		<foreach name="detail" ref="config/fmt/fileFmt/gash/gashBatchActDetail.xml"
+			encoding="GBK" />
 	</file>
-	
+
 	<!-- 惠州燃气批量托收完成通知燃气：批量结果格式 -->
 	<file id="msgToGasFileFmt" name="msgToGasFileFmt" encoding="GBK"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/gash/msgToGasFileFmt.xml" encoding="GBK" />
+		<foreach name="detail" ref="config/fmt/fileFmt/gash/msgToGasFileFmt.xml"
+			encoding="GBK" />
 	</file>
-	
+
 	<!-- 惠州燃气增量代扣协议文件 -->
 	<file id="gasDayAgentBatFmt" name="gasDayAgentBatFmt" encoding="GBK"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/gash/gasDayAgentBatFmtDetail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/gash/gasDayAgentBatFmtDetail.xml" encoding="GBK" />
 	</file>
-	
+
 	<!-- 惠州燃气全量代扣协议文件 -->
 	<file id="gasAllAgentBatFmt" name="gasAllAgentBatFmt" encoding="GBK"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/gash/gasAllAgentBatFmtDetail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/gash/gasAllAgentBatFmtDetail.xml" encoding="GBK" />
 	</file>
-	
-	
-	
-	
+
+
+
+
 	<!-- 中山文件批扣Start! -->
 	<!-- IN-START -->
 	<!-- 水费文件格式fbpdWaterFmtIn -->
 	<file id="fbpdWaterFmtIn" name="fbpdWaterFmtIn" encoding="GBK"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/in/fbpdWaterFmtInDetail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/fbpd/in/fbpdWaterFmtInDetail.xml" encoding="GBK" />
 	</file>
-	
-	<!-- 电费1 fbpdNele1FmtIn-->
+
+	<!-- 电费1 fbpdNele1FmtIn -->
 	<file id="fbpdNele1FmtIn" name="fbpdNele1FmtIn" encoding="GBK"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/in/fbpdNele1FmtInDetail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/fbpd/in/fbpdNele1FmtInDetail.xml" encoding="GBK" />
 	</file>
-	
-	<!-- 电费 fbpdNeleFmtIn--><!-- head && detail  -->
+
+	<!-- 电费 fbpdNeleFmtIn --><!-- head && detail -->
 	<file id="fbpdNeleFmtIn" name="fbpdNeleFmtIn" encoding="GBK"
 		lineSeparator="\n">
-		<line name="header" ref="config/fmt/fileFmt/fbpd/in/fbpdNeleFmtInHeader.xml" encoding="GBK" />
-		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/in/fbpdNeleFmtInDetail.xml" encoding="GBK" />
+		<line name="header" ref="config/fmt/fileFmt/fbpd/in/fbpdNeleFmtInHeader.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/fbpd/in/fbpdNeleFmtInDetail.xml" encoding="GBK" />
 	</file>
-	
-	
-	<!-- 中山煤气费	fbpdGgasFmtIn -->
+
+
+	<!-- 中山煤气费 fbpdGgasFmtIn -->
 	<file id="fbpdGgasFmtIn" name="fbpdGgasFmtIn" encoding="GBK"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/in/fbpdGgasFmtInDetail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/fbpd/in/fbpdGgasFmtInDetail.xml" encoding="GBK" />
 	</file>
-	
+
 	<!-- 中山物业管理费 fbpdVankFmtIn -->
 	<file id="fbpdVankFmtIn" name="fbpdVankFmtIn" encoding="GBK"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/in/fbpdVankFmtInDetail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/fbpd/in/fbpdVankFmtInDetail.xml" encoding="GBK" />
 	</file>
-	
+
 	<!-- 中山铁通 fbpdTtomFmtIn -->
 	<file id="fbpdTtomFmtIn" name="fbpdTtomFmtIn" encoding="GBK"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/in/fbpdTtomFmtInDetail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/fbpd/in/fbpdTtomFmtInDetail.xml" encoding="GBK" />
 	</file>
-	
+
 	<!-- 中山有线电视 fbpdCttvFmtIn -->
 	<file id="fbpdCttvFmtIn" name="fbpdCttvFmtIn" encoding="GBK"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/in/fbpdCttvFmtInDetail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/fbpd/in/fbpdCttvFmtInDetail.xml" encoding="GBK" />
 	</file>
-	
+
 	<!-- 南区有线电视 fbpdNqtvFmtIn -->
 	<file id="fbpdNqtvFmtIn" name="fbpdNqtvFmtIn" encoding="GBK"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/in/fbpdNqtvFmtInDetail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/fbpd/in/fbpdNqtvFmtInDetail.xml" encoding="GBK" />
 	</file>
-	
-	 <!-- 新都物业管理 fbpdXindFmtIn -->
-	 <file id="fbpdXindFmtIn" name="fbpdXindFmtIn" encoding="GBK"
+
+	<!-- 新都物业管理 fbpdXindFmtIn -->
+	<file id="fbpdXindFmtIn" name="fbpdXindFmtIn" encoding="GBK"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/in/fbpdXindFmtInDetail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/fbpd/in/fbpdXindFmtInDetail.xml" encoding="GBK" />
 	</file>
-	
+
 	<!-- 中山移动POS fbpdMposFmtIn -->
 	<file id="fbpdMposFmtIn" name="fbpdMposFmtIn" encoding="GBK"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/in/fbpdMposFmtInDetail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/fbpd/in/fbpdMposFmtInDetail.xml" encoding="GBK" />
 	</file>
 	<!-- IN-END -->
-	
-	
+
+
 	<!-- OUT-START -->
 	<!-- 水费文件格式fbpdWaterFmtOut -->
 	<file id="fbpdWaterFmtOut" name="fbpdWaterFmtOut" encoding="GBK"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/out/fbpdWaterFmtOutDetail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/fbpd/out/fbpdWaterFmtOutDetail.xml" encoding="GBK" />
 	</file>
-	
-	<!-- 电费1 fbpdNele1FmtOut-->
+
+	<!-- 电费1 fbpdNele1FmtOut -->
 	<file id="fbpdNele1FmtOut" name="fbpdNele1FmtOut" encoding="GBK"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/out/fbpdNele1FmtOutDetail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/fbpd/out/fbpdNele1FmtOutDetail.xml" encoding="GBK" />
 	</file>
-	
-	<!-- 电费 fbpdNeleFmtOut--><!-- head && detail  -->
+
+	<!-- 电费 fbpdNeleFmtOut --><!-- head && detail -->
 	<file id="fbpdNeleFmtOut" name="fbpdNeleFmtOut" encoding="GBK"
 		lineSeparator="\n">
-		<line name="header" ref="config/fmt/fileFmt/fbpd/out/fbpdNeleFmtOutHeader.xml" encoding="GBK" />
-		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/out/fbpdNeleFmtOutDetail.xml" encoding="GBK" />
+		<line name="header" ref="config/fmt/fileFmt/fbpd/out/fbpdNeleFmtOutHeader.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/fbpd/out/fbpdNeleFmtOutDetail.xml" encoding="GBK" />
 	</file>
-	
-	
-	<!-- 中山煤气费	fbpdGgasFmtOut -->
+
+
+	<!-- 中山煤气费 fbpdGgasFmtOut -->
 	<file id="fbpdGgasFmtOut" name="fbpdGgasFmtOut" encoding="GBK"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/out/fbpdGgasFmtOutDetail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/fbpd/out/fbpdGgasFmtOutDetail.xml" encoding="GBK" />
 	</file>
-	
+
 	<!-- 中山物业管理费 fbpdVankFmtOut -->
 	<file id="fbpdVankFmtOut" name="fbpdVankFmtOut" encoding="GBK"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/out/fbpdVankFmtOutDetail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/fbpd/out/fbpdVankFmtOutDetail.xml" encoding="GBK" />
 	</file>
-	
+
 	<!-- 中山铁通 fbpdTtomFmtOut -->
 	<file id="fbpdTtomFmtOut" name="fbpdTtomFmtOut" encoding="GBK"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/out/fbpdTtomFmtOutDetail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/fbpd/out/fbpdTtomFmtOutDetail.xml" encoding="GBK" />
 	</file>
-	
+
 	<!-- 中山有线电视 fbpdCttvFmtOut -->
 	<file id="fbpdCttvFmtOut" name="fbpdCttvFmtOut" encoding="GBK"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/out/fbpdCttvFmtOutDetail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/fbpd/out/fbpdCttvFmtOutDetail.xml" encoding="GBK" />
 	</file>
-	
+
 	<!-- 南区有线电视 fbpdNqtvFmtOut -->
 	<file id="fbpdNqtvFmtOut" name="fbpdNqtvFmtOut" encoding="GBK"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/out/fbpdNqtvFmtOutDetail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/fbpd/out/fbpdNqtvFmtOutDetail.xml" encoding="GBK" />
 	</file>
-	
-	 <!-- 新都物业管理 fbpdXindFmtOut -->
-	 <file id="fbpdXindFmtOut" name="fbpdXindFmtOut" encoding="GBK"
+
+	<!-- 新都物业管理 fbpdXindFmtOut -->
+	<file id="fbpdXindFmtOut" name="fbpdXindFmtOut" encoding="GBK"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/out/fbpdXindFmtOutDetail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/fbpd/out/fbpdXindFmtOutDetail.xml" encoding="GBK" />
 	</file>
-	
+
 	<!-- 中山移动POS fbpdMposFmtOut -->
 	<file id="fbpdMposFmtOut" name="fbpdMposFmtOut" encoding="GBK"
 		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/fbpd/out/fbpdMposFmtOutDetail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/fbpd/out/fbpdMposFmtOutDetail.xml" encoding="GBK" />
 	</file>
 	<!-- OUT-END -->
 	<!-- 中山文件批扣End! -->
-	
-	<!-- 汕头水费批扣文件解析 start  -->
-		<file id="watr00FmtIn" name="watr00FmtIn" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/watr00/watr00FmtInDetail.xml" encoding="GBK" />
-				<line name="header" ref="config/fmt/fileFmt/watr00/watr00FmtInTotal.xml" encoding="GBK" />
-		</file>
-	<!-- 汕头水费批扣文件解析 end  -->
-	
+
+	<!-- 汕头水费批扣文件解析 start -->
+	<file id="watr00FmtIn" name="watr00FmtIn" encoding="GBK"
+		lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/watr00/watr00FmtInDetail.xml" encoding="GBK" />
+		<line name="header" ref="config/fmt/fileFmt/watr00/watr00FmtInTotal.xml"
+			encoding="GBK" />
+	</file>
+	<!-- 汕头水费批扣文件解析 end -->
+
 	<!-- 广州文本代收付 -->
-		<!-- 广州电话银行保险 -->
-		<file id="insuBatchFile" name="insuBatchFile" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/gzag/insuBatchDataDetail.xml" encoding="GBK" />
-		</file>
-		<!-- 广州电话银行保险  返回-->
-		<file id="insuBatchFileResult" name="insuBatchFileResult" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/gzag/insuBatchDataResultDetail.xml" encoding="GBK" />
-		</file>
-		<!-- 银行兑奖划款情况文件 -->
-		<file id="lottBatchFile" name="lottBatchFile" encoding="GBK" lineSeparator="\n">
-				<line name="header" ref="config/fmt/fileFmt/gzag/lottBatchDataHead.xml" encoding="GBK" />
-				<foreach name="detail" ref="config/fmt/fileFmt/gzag/lottBatchDataDetail.xml" encoding="GBK" />
-		</file>
-		<!-- 银行兑奖划款情况文件   返回-->
-		<file id="lottBatchFileResult" name="lottBatchFileResult" encoding="GBK" lineSeparator="\n">
-				<line name="header" ref="config/fmt/fileFmt/gzag/lottBatchDataResultHead.xml" encoding="GBK" />
-				<foreach name="detail" ref="config/fmt/fileFmt/gzag/lottBatchDataResultDetail.xml" encoding="GBK" />
-		</file>
-		<!-- 羊城通空中充值-->
-		<file id="yctBatchFile" name="yctBatchFile" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/gzag/yctBatchDataDetail.xml" encoding="GBK" />
-		</file>
-		<!-- 羊城通空中充值  返回-->
-		<file id="yctBatchFileResult" name="yctBatchFileResult" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/gzag/yctBatchDataResultDetail.xml" encoding="GBK" />
-		</file>
-		<!-- 粤通卡-->
-		<file id="yktBatchFile" name="yktBatchFile" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/gzag/yktBatchDataDetail.xml" encoding="GBK" />
-		</file>
-		<!-- 粤通卡 返回-->
-		<file id="yktBatchFileResult" name="yktBatchFileResult" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/gzag/yktBatchDataResultDetail.xml" encoding="GBK" />
-		</file>
-		<!-- 体育彩票银行兑奖文件 -->
-		<file id="sptltBatchFile" name="sptltBatchFile" encoding="GBK" lineSeparator="\n">
-				<line name="header" ref="config/fmt/fileFmt/gzag/sptltBatchDataHead.xml" encoding="GBK" />
-				<foreach name="detail" ref="config/fmt/fileFmt/gzag/sptltBatchDataDetail.xml" encoding="GBK" />
-		</file>
-		<!-- 体育彩票银行兑奖文件返回 -->
-		<file id="sptltBatchFileResult" name="sptltBatchFileResult" encoding="GBK" lineSeparator="\n">
-				<line name="header" ref="config/fmt/fileFmt/gzag/sptltBatchDataResultHead.xml" encoding="GBK" />
-				<foreach name="detail" ref="config/fmt/fileFmt/gzag/sptltBatchDataResultDetail.xml" encoding="GBK" />
-		</file>
-		
-		
-		
-		<!-- 汕头电力批量扣款 -->
-		<file id="ELEC02Batch" name="elec02Batch" encoding="GBK" lineSeparator="\n">
-				<line name="header" ref="config/fmt/fileFmt/elec02/BatchDataHead.xml" encoding="GBK" />
-				<foreach name="detail" ref="config/fmt/fileFmt/elec02/BatchDataDetail.xml" encoding="GBK" />
-		</file>
-		
-		<!-- 汕头电力批量反盘 -->
-		<file id="ELEC02Check" name="ELEC02Check" encoding="GBK" lineSeparator="\n">
-				<line name="header" ref="config/fmt/fileFmt/elec02/CheckDataHead.xml" encoding="GBK" />
-				<foreach name="detail" ref="config/fmt/fileFmt/elec02/CheckDataDetail.xml" encoding="GBK" />
-		</file>
-		<!-- 汕头电力对账量扣款 -->
-		<file id="ELEC02BatchBack" name="ELEC02BatchBack" encoding="GBK" lineSeparator="\n">
-				<line name="header" ref="config/fmt/fileFmt/elec02/BatchBackDataHead.xml" encoding="GBK" />
-				<foreach name="detail" ref="config/fmt/fileFmt/elec02/BatchBackDataDetail.xml" encoding="GBK" />
-		</file>
-		
-		<!-- 珠海文本代发工资来盘文件转换 -->
-		<file id="ZHAGWageIn" name="ELEC02Check" encoding="GBK" lineSeparator="\n">
-				<line name="header" ref="config/fmt/fileFmt/zh/wageIn/header.xml" encoding="GBK" />
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/wageIn/detail.xml" encoding="GBK" />
-		</file>
-		<!-- 珠海文本代发工资返盘文件转换 -->
-		<file id="ZHAGWageOut" name="ELEC02BatchBack" encoding="GBK" lineSeparator="\n">
-				<line name="header" ref="config/fmt/fileFmt/zh/wageOut/header.xml" encoding="GBK" />
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/wageOut/detail.xml" encoding="GBK" />
-		</file>
-		<!-- 珠海文本 -->
-		<file id="fmtin1" name="fmtin1" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat01IN/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtout1" name="fmtout1" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat01OUT/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtin2" name="fmtin2" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat02IN/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtout2" name="fmtout2" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat02OUT/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtin3" name="fmtin3" encoding="GBK" lineSeparator="\n">
-			<line name="header" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat03INheader.xml" encoding="GBK" />
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat03IN/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtout3" name="fmtout3" encoding="GBK" lineSeparator="\n">
-				<line name="header" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat03OUT/header.xml" encoding="GBK" />
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat03OUT/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtin4" name="fmtin4" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat04IN/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtout4" name="fmtout4" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat04OUT/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtin5" name="fmtin5" encoding="GBK" lineSeparator="\n">
-			<line name="header" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat05IN/header.xml" encoding="GBK" />
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat05IN/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtout5" name="fmtout5" encoding="GBK" lineSeparator="\n">
-				<line name="header" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat05OUT/header.xml" encoding="GBK" />
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat05OUT/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtin6" name="fmtin6" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat06IN/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtout6" name="fmtout6" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat06OUT/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtin7" name="fmtin7" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat07IN/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtout7" name="fmtout7" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat07OUT/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtin8" name="fmtin8" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat08IN/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtout8" name="fmtout8" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat08OUT/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtin9" name="fmtin9" encoding="GBK" lineSeparator="\n">
-			<line name="header" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat09IN/header.xml" encoding="GBK" />
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat09IN/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtout9" name="fmtout9" encoding="GBK" lineSeparator="\n">
-				<line name="header" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat09OUT/header.xml" encoding="GBK" />
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat09OUT/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtin10" name="fmtin10" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat10IN/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtout10" name="fmtout10" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat10OUT/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtin12" name="fmtin12" encoding="GBK" lineSeparator="\n">
-			<line name="header" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat12IN/header.xml" encoding="GBK" />
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat12IN/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtout12" name="fmtout12" encoding="GBK" lineSeparator="\n">
-				<line name="header" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat12OUT/header.xml" encoding="GBK" />
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat12OUT/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtin15" name="fmtin15" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat15IN/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtout15" name="fmtout15" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat15OUT/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtin16" name="fmtin16" encoding="GBK" lineSeparator="\n">
-			<line name="header" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat16IN/header.xml" encoding="GBK" />
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat16IN/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtout16" name="fmtout16" encoding="GBK" lineSeparator="\n">
-				<line name="header" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat16OUT/header.xml" encoding="GBK" />
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat16OUT/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtin19" name="fmtin19" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat19IN/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtout19" name="fmtout19" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat19OUT/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtin21" name="fmtin21" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat21IN/detail.xml" encoding="GBK" />
-		</file>
-		<file id="fmtout21" name="fmtout21" encoding="GBK" lineSeparator="\n">
-				<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat21OUT/detail.xml" encoding="GBK" />
-		</file>
+	<!-- 广州电话银行保险 -->
+	<file id="insuBatchFile" name="insuBatchFile" encoding="GBK"
+		lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/gzag/insuBatchDataDetail.xml" encoding="GBK" />
+	</file>
+	<!-- 广州电话银行保险 返回 -->
+	<file id="insuBatchFileResult" name="insuBatchFileResult"
+		encoding="GBK" lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/gzag/insuBatchDataResultDetail.xml" encoding="GBK" />
+	</file>
+	<!-- 银行兑奖划款情况文件 -->
+	<file id="lottBatchFile" name="lottBatchFile" encoding="GBK"
+		lineSeparator="\n">
+		<line name="header" ref="config/fmt/fileFmt/gzag/lottBatchDataHead.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/gzag/lottBatchDataDetail.xml" encoding="GBK" />
+	</file>
+	<!-- 银行兑奖划款情况文件 返回 -->
+	<file id="lottBatchFileResult" name="lottBatchFileResult"
+		encoding="GBK" lineSeparator="\n">
+		<line name="header" ref="config/fmt/fileFmt/gzag/lottBatchDataResultHead.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/gzag/lottBatchDataResultDetail.xml" encoding="GBK" />
+	</file>
+	<!-- 羊城通空中充值 -->
+	<file id="yctBatchFile" name="yctBatchFile" encoding="GBK"
+		lineSeparator="\n">
+		<foreach name="detail" ref="config/fmt/fileFmt/gzag/yctBatchDataDetail.xml"
+			encoding="GBK" />
+	</file>
+	<!-- 羊城通空中充值 返回 -->
+	<file id="yctBatchFileResult" name="yctBatchFileResult" encoding="GBK"
+		lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/gzag/yctBatchDataResultDetail.xml" encoding="GBK" />
+	</file>
+	<!-- 粤通卡 -->
+	<file id="yktBatchFile" name="yktBatchFile" encoding="GBK"
+		lineSeparator="\n">
+		<foreach name="detail" ref="config/fmt/fileFmt/gzag/yktBatchDataDetail.xml"
+			encoding="GBK" />
+	</file>
+	<!-- 粤通卡 返回 -->
+	<file id="yktBatchFileResult" name="yktBatchFileResult" encoding="GBK"
+		lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/gzag/yktBatchDataResultDetail.xml" encoding="GBK" />
+	</file>
+	<!-- 体育彩票银行兑奖文件 -->
+	<file id="sptltBatchFile" name="sptltBatchFile" encoding="GBK"
+		lineSeparator="\n">
+		<line name="header" ref="config/fmt/fileFmt/gzag/sptltBatchDataHead.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/gzag/sptltBatchDataDetail.xml" encoding="GBK" />
+	</file>
+	<!-- 体育彩票银行兑奖文件返回 -->
+	<file id="sptltBatchFileResult" name="sptltBatchFileResult"
+		encoding="GBK" lineSeparator="\n">
+		<line name="header" ref="config/fmt/fileFmt/gzag/sptltBatchDataResultHead.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/gzag/sptltBatchDataResultDetail.xml"
+			encoding="GBK" />
+	</file>
+
+
+
+	<!-- 汕头电力批量扣款 -->
+	<file id="ELEC02Batch" name="elec02Batch" encoding="GBK"
+		lineSeparator="\n">
+		<line name="header" ref="config/fmt/fileFmt/elec02/BatchDataHead.xml"
+			encoding="GBK" />
+		<foreach name="detail" ref="config/fmt/fileFmt/elec02/BatchDataDetail.xml"
+			encoding="GBK" />
+	</file>
+
+	<!-- 汕头电力批量反盘 -->
+	<file id="ELEC02Check" name="ELEC02Check" encoding="GBK"
+		lineSeparator="\n">
+		<line name="header" ref="config/fmt/fileFmt/elec02/CheckDataHead.xml"
+			encoding="GBK" />
+		<foreach name="detail" ref="config/fmt/fileFmt/elec02/CheckDataDetail.xml"
+			encoding="GBK" />
+	</file>
+	<!-- 汕头电力对账量扣款 -->
+	<file id="ELEC02BatchBack" name="ELEC02BatchBack" encoding="GBK"
+		lineSeparator="\n">
+		<line name="header" ref="config/fmt/fileFmt/elec02/BatchBackDataHead.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/elec02/BatchBackDataDetail.xml" encoding="GBK" />
+	</file>
+
+	<!-- 珠海文本代发工资来盘文件转换 -->
+	<file id="ZHAGWageIn" name="ELEC02Check" encoding="GBK"
+		lineSeparator="\n">
+		<line name="header" ref="config/fmt/fileFmt/zh/wageIn/header.xml"
+			encoding="GBK" />
+		<foreach name="detail" ref="config/fmt/fileFmt/zh/wageIn/detail.xml"
+			encoding="GBK" />
+	</file>
+	<!-- 珠海文本代发工资返盘文件转换 -->
+	<file id="ZHAGWageOut" name="ELEC02BatchBack" encoding="GBK"
+		lineSeparator="\n">
+		<line name="header" ref="config/fmt/fileFmt/zh/wageOut/header.xml"
+			encoding="GBK" />
+		<foreach name="detail" ref="config/fmt/fileFmt/zh/wageOut/detail.xml"
+			encoding="GBK" />
+	</file>
+	<!-- 珠海文本 -->
+	<file id="fmtin1" name="fmtin1" encoding="GBK" lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat01IN/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtout1" name="fmtout1" encoding="GBK" lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat01OUT/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtin2" name="fmtin2" encoding="GBK" lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat02IN/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtout2" name="fmtout2" encoding="GBK" lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat02OUT/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtin3" name="fmtin3" encoding="GBK" lineSeparator="\n">
+		<line name="header"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat03INheader.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat03IN/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtout3" name="fmtout3" encoding="GBK" lineSeparator="\n">
+		<line name="header"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat03OUT/header.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat03OUT/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtin4" name="fmtin4" encoding="GBK" lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat04IN/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtout4" name="fmtout4" encoding="GBK" lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat04OUT/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtin5" name="fmtin5" encoding="GBK" lineSeparator="\n">
+		<line name="header"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat05IN/header.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat05IN/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtout5" name="fmtout5" encoding="GBK" lineSeparator="\n">
+		<line name="header"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat05OUT/header.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat05OUT/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtin6" name="fmtin6" encoding="GBK" lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat06IN/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtout6" name="fmtout6" encoding="GBK" lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat06OUT/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtin7" name="fmtin7" encoding="GBK" lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat07IN/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtout7" name="fmtout7" encoding="GBK" lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat07OUT/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtin8" name="fmtin8" encoding="GBK" lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat08IN/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtout8" name="fmtout8" encoding="GBK" lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat08OUT/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtin9" name="fmtin9" encoding="GBK" lineSeparator="\n">
+		<line name="header"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat09IN/header.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat09IN/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtout9" name="fmtout9" encoding="GBK" lineSeparator="\n">
+		<line name="header"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat09OUT/header.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat09OUT/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtin10" name="fmtin10" encoding="GBK" lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat10IN/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtout10" name="fmtout10" encoding="GBK" lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat10OUT/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtin12" name="fmtin12" encoding="GBK" lineSeparator="\n">
+		<line name="header"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat12IN/header.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat12IN/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtout12" name="fmtout12" encoding="GBK" lineSeparator="\n">
+		<line name="header"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat12OUT/header.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat12OUT/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtin15" name="fmtin15" encoding="GBK" lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat15IN/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtout15" name="fmtout15" encoding="GBK" lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat15OUT/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtin16" name="fmtin16" encoding="GBK" lineSeparator="\n">
+		<line name="header"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat16IN/header.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat16IN/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtout16" name="fmtout16" encoding="GBK" lineSeparator="\n">
+		<line name="header"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat16OUT/header.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat16OUT/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtin19" name="fmtin19" encoding="GBK" lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat19IN/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtout19" name="fmtout19" encoding="GBK" lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat19OUT/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtin21" name="fmtin21" encoding="GBK" lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat21IN/detail.xml"
+			encoding="GBK" />
+	</file>
+	<file id="fmtout21" name="fmtout21" encoding="GBK" lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat21OUT/detail.xml"
+			encoding="GBK" />
+	</file>
+
+	<!-- 广州有线数据拷盘返盘文件 -->
+	<file id="datFleSndTel" name="datFleSndTel" encoding="GBK" lineSeparator="\n">
+		<foreach name="detail" ref="config/fmt/fileFmt/sign/datFleSndTel.xml"
+			encoding="GBK" />
+	</file>
+
+
 </files>
