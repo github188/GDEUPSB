@@ -6,6 +6,7 @@ import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdsRunCtl;
 import com.bocom.bbip.gdeupsb.repository.GdsRunCtlRepository;
+import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -17,7 +18,7 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
  * 
  */
 public class AgtFileSendPreAction extends BaseAction {
-	
+
 	@Override
 	public void execute(Context context) throws CoreException, CoreRuntimeException {
 		log.info("AgtFileSendPreAction start!..");
@@ -36,15 +37,12 @@ public class AgtFileSendPreAction extends BaseAction {
 		}
 		context.setVariable(GDParamKeys.SIGN_STATION_RUN_CTL_INFO, gdsRunCtl); // 将签约控制信息表信息放到context中，便于后续取值
 
-		// TODO:codeswitch，根据GdsBId获取BusNam
-		// for test -0203
-		String busNam = "广州水务";
+		String busNam = CodeSwitchUtils.codeGenerator("GdsBIdToBusNam", gdsBid);
 		context.setData("busNam", busNam);
 
 		// 设置文件名称
 		String filNam = "GDS" + gdsBid + context.getData("begDat") + ".TXT";
 		context.setData("filNam", filNam);
-		
 	}
 
 }
