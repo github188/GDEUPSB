@@ -116,7 +116,7 @@
 	</bean>
 
 	<!-- 签约一站通-协议数据拷盘-水务 -->
-	<bean id="gdeups.agtFileSendImlServiceActionWAT00"
+	<bean id="gdeups.agtFileSendImlServiceAction44101"
 		class="com.bocom.bbip.gdeupsb.strategy.sign.WaterAgtFileSendImlAction">
 	</bean>
 
@@ -139,6 +139,11 @@
 	<!-- 签约一站通-协议维护-廣州有線電視 -->
 	<bean id="gdeups.agtMdyDealImlServiceAction44107"
 		class="com.bocom.bbip.gdeupsb.strategy.sign.TlvAgtMdyDealImlAction">
+	</bean>
+	
+	 <!-- 签约一站通-协议数据拷盘-广州有线电视 -->
+	<bean id="gdeups.agtFileSendImlServiceAction44107"
+		class="com.bocom.bbip.gdeupsb.strategy.sign.TlvAgtFileSendImlAction">
 	</bean>
 	
 
