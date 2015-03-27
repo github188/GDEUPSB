@@ -1,5 +1,7 @@
 package com.bocom.bbip.gdeupsb.action.elec02;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +49,13 @@ public class PayUnilateralToBankServiceImplELEC02 extends BaseAction implements 
 		list.add(map);
 		/**保存到流水表中的rsvFld3中，生成对账文件时需要上述字段*/
 		context.setData("rsvFld3", new String(JsonUtils.jsonFromObject(list, "UTF8")));
+		
+		double i=Double.parseDouble(context.getData(ParamKeys.TXN_AMT).toString());
+		double d=i/100;
+		DecimalFormat df=new DecimalFormat("#.00");
+		BigDecimal txnAmt=new BigDecimal(df.format(d));
+		context.setData(ParamKeys.TXN_AMT,txnAmt );
+		
 		return null;
 	}
 
