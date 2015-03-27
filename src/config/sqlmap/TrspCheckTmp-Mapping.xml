@@ -198,8 +198,6 @@
     select 
     <include refid="baseColumnList" />
     from GDEUPSB.TRSP_CHECK_TMP  where  TCHK_NO=#{tchkNo,jdbcType=CHAR}
-      </foreach>
-    </if>
   </select>
 	
 	<delete id="deleteAll"  parameterType="java.lang.String"  >
