@@ -166,19 +166,17 @@ public class WatrSocketGateway implements Gateway<Object, Object> {
 		String sndStrPre;
 		try {
 			sndStrPre = new String(arrayOfByte1, "GBK");
-			log.info("sndStrPre="+sndStrPre);
+			log.info("sndStrPre=" + sndStrPre);
 			String detailDate = sndStrPre.substring(131, sndStrPre.length()); // 子报文
-			
-			log.info("detailDate="+detailDate);
+
+			log.info("detailDate,即拼接在后面的报文内容=" + detailDate);
 			String md5Date = CryptoUtils.md5(detailDate.toString().getBytes("GBK")); // 校验位
-			// String md5Date=sndStrPre.substring(99,131); //md5加密数据
 			log.info("md5Date=" + md5Date);
 
 			StringBuffer sb = new StringBuffer();
 			log.info("初始报文头(不含校验位)=" + sndStrPre.substring(0, 97));
 			sb.append(sndStrPre.substring(0, 97)); // 初始报文头(不含校验位)
 			sb.append(md5Date);
-			log.info("后面拼接报文=" +detailDate);
 			sb.append(detailDate);
 
 			arrayOfByte1 = sb.toString().getBytes();
