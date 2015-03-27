@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record xmlns="http://www.bocom.com/jump/transformer/xml" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/xml xml.xsd"
+        name="pkgC">   
+        <record name="gamblerBasicInfo">
+            <String name="gambler_name" alias="lotNam">
+            <String name="gambler_pwd" alias="lotPsw">
+            <String name="regist_time" alias="regTim">
+            <String name="email" alias="email">
+        </record>
+        <record name="gamblerAdditionalInfo">
+            <String name="city_id" alias="cityId">
+            <String name="ID_type" alias="lotIdTyp">
+            <String name="ID_no" alias="idNo">
+            <String name="account_type" default="14">
+            <String name="charge_type" default="5">
+            <String name="prize_type" default="3">
+            <record name="bindCard">
+                <String name="isBind" default="1"></String>
+	            <String name="card_type" default="2">
+	            <String name="bank_id" default="COMM">
+	            <String name="bank_card" alias="crdNo">
+            </record>
+            <String name="real_name" alias="cusNam">
+            <String name="sex" >
+            <String name="birthday" default="">
+            <String name="mobile" >
+            <String name="phone" default="">
+        </record>
+        <record name="bindDealer">
+            <String name="isBind" default="1">
+            <String name="dealer_id" alias="dealId">
+        </record>
+</record>

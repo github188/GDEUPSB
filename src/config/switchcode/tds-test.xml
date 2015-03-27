@@ -342,5 +342,20 @@
     <key name="0" value="1" /><!--男-->
     <key name="1" value="0" /><!--女-->
   </table>
+  
+  
+    <table id="IdTyp2LotIdTyp">     <!--证件类型转换-->
+    <key name="15" value="1" /> <!--居民身份证-->
+    <key name="17" value="2" /> <!--军人身份证件-->
+    <key name="20" value="3" /> <!--护照-->
+    <key name="23" value="4" /> <!--户口簿-->
+    <key name="19" value="5" /> <!--港澳通行证-->
+    <key name="19" value="6" /> <!--台湾通行证-->
+    <key name="16" value="7" /> <!--临时身份证-->
+    <key name="25" value="8" /> <!--外国人居留证-->
+    <key name="18" value="9" /> <!--武警身份证件-->
+    <key name="17" value="0" /> <!--士兵证-->
+    <key name="21" value="X" /> <!--其他-->
+  </table>
 	<!-- LOT CodeSwitch End ADD By GuiLin 20150318 -->
 </xx:beans>

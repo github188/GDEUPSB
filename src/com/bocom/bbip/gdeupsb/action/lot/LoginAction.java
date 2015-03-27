@@ -43,14 +43,15 @@ public class LoginAction extends BaseAction {
         //向福彩中心发出系统角色登录
         context.setData("eupsBusTyp", "LOTR01");
         context.setData("action", "212");
+        context.setData("version", "");
+        context.setData("sent_time",DateUtils.format(new Date(),DateUtils.STYLE_FULL));
         context.setData("user", lotSysCfgInfos.get(0).getUsrPam());
         context.setData("pwd",  lotSysCfgInfos.get(0).getUsrPas());
         Map<String,Object> resultMap = new HashMap<String, Object>();//申请当前期号，奖期信息下载
        // 福彩系统登录
         resultMap = get(ThirdPartyAdaptor.class).trade(context);
-        
-        
-        if(!Constants.RESPONSE_CODE_SUCC.equals(resultMap.get("resultCode"))){
+
+        if(!"0".equals(resultMap.get("resultCode"))){
             log.info("QueryLot Fail!");
             context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
             context.setData(ParamKeys.RSP_CDE, "LOT999");
@@ -71,20 +72,19 @@ public class LoginAction extends BaseAction {
         }
         
         //获取时间差函数调用，设置时间差
-        String sigTim = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMddHHmmss);
-        String lclTim = sigTim;
+        String sigTim =context.getData("sent_time");
         String brNo = context.getData("brNo");
         String lotTim = context.getData("lotTim");
 
         CommonLotAction commonLotAction = new CommonLotAction();
-        String diffTm = commonLotAction.difTime(brNo, lotTim, lclTim);
+        String diffTm = commonLotAction.difTime(brNo, lotTim, sigTim);
         context.setData("diffTm", diffTm);
         GdLotSysCfg lotSysCfgInfoInput = new GdLotSysCfg();
         lotSysCfgInfoInput.setDealId(GDConstants.LOT_DEAL_ID);
         lotSysCfgInfoInput.setDiffTm(diffTm);
-        lotSysCfgInfoInput.setLclTim(lclTim);
+        lotSysCfgInfoInput.setLclTim(sigTim);
         lotSysCfgInfoInput.setLotTim(lotTim);
-        lotSysCfgInfoInput.setSigTim(lclTim);
+        lotSysCfgInfoInput.setSigTim(sigTim);
         try {
             get(GdLotSysCfgRepository.class).update(lotSysCfgInfoInput);
         } catch (Exception e) {

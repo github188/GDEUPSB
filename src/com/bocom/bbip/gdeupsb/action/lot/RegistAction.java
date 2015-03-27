@@ -120,13 +120,12 @@ public class RegistAction extends BaseAction {
         }
         inputLotCusInf.setLotPsw("000000");
         inputLotCusInf.setBthday("20101111");
-
-        inputLotCusInf.setRegTim(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMddHHmmss));
+        Date regTim = new Date();
+        inputLotCusInf.setRegTim(DateUtils.format(regTim, DateUtils.STYLE_yyyyMMddHHmmss));
         inputLotCusInf.setStatus("1");
 
         // TODO; 前台及程序都没有actNod
         String subNod = context.getData(ParamKeys.BR).toString().substring(2, 5);
-        // CodeSwitching
         String cityId = CodeSwitchUtils.codeGenerator("SubNod2CityId", subNod);
         if (StringUtil.isEmpty(cityId)) {
             context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
@@ -153,8 +152,16 @@ public class RegistAction extends BaseAction {
             return;
         }
         // 向福彩中心发出彩民注册
+        //数据准备
         context.setData("eupsBusTyp", "LOTR01");
         context.setData("action", "201");
+        context.setData("regTim", DateUtils.format(regTim, DateUtils.STYLE_FULL));
+        String idTyp = context.getData("idTyp");
+        String lotIdTyp = CodeSwitchUtils.codeGenerator("IdTyp2LotIdTyp", idTyp);
+        if (null ==lotIdTyp) {
+            lotIdTyp="1";
+        }
+        context.setData("lotIdTyp", lotIdTyp);
         Map<String, Object> resultMap = null;// 申请当前期号，奖期信息下载
         try {
             resultMap = get(ThirdPartyAdaptor.class).trade(context);

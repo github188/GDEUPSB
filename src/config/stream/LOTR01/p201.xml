@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record xmlns="http://www.bocom.com/jump/transformer/xml" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/xml xml.xsd"
+    trace="true" name="pkgC">
+    <complexRecord name="return" optional="true">
+        <string name="return"/>
+        <string name="resultCode"/>
+    </complexRecord>
+    <string name="gambler_name"></string>
+    <string name="gambler_status"></string>
+    <string name="account_type"></string>
+    <string name="charge_type"></string>
+    <string name="lotPrzTyp"></string>
+    <string name="prize_type"></string>
+    
+     <complexRecord name="bindDealer" optional="true">
+        <string name="bindDealer"/>
+        <string name="isBind"/>
+        <string name="dealer_id"/>
+    </complexRecord>
+</record>

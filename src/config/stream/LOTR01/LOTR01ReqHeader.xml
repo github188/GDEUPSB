@@ -11,7 +11,7 @@
         <string name="terminal_id" default="0"/>
         <string name="mobile" default="0"/>
         <string name="phone" default="0"/>
-        <string name="sent_time" default="2015-03-26 19:20:07"/>
+        <string name="sent_time"/>
     </record>
         <select name="body" key="MsgType" default="N">
             <!-- 第三方请求的用 decodePrefix 向第三方请求的用 encodePrefix -->
