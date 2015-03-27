@@ -4,6 +4,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
@@ -33,6 +34,8 @@ public class PreCheckDealAction implements Executable{
 				context.setData(GDParamKeys.TOTNUM, "1");
 				//日期时间格式修改
 				context.setData(ParamKeys.CCY, GDConstants.RENMINBI);
+				
+				context.setData(ParamKeys.PAYFEE_TYPE, Constants.TXN_PAYFEE_TYPE_PAYMENT);
 				
 				logger.info("~~~~~~~~~~~交易日期："+context.getData(ParamKeys.TXN_DATE)+"~~~~~~~~~~~交易时间："+context.getData(ParamKeys.TXN_TIME));
 	}
