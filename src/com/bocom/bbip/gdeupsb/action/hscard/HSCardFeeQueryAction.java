@@ -31,6 +31,7 @@ public class HSCardFeeQueryAction extends BaseAction {
 		
 		ctx.setData("traceNo", bbipPublicService.getTraceNo());
 		// 查询内部账户余额
+		//TODO:此处为了测试，暂时写死，后续需要修改
 		ctx.setData(ParamKeys.BK, bbipPublicService.getParam("BBIP", "BK"));
 		ctx.setData(ParamKeys.BR, "01441131999");
 		
