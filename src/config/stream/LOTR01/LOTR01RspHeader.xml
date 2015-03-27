@@ -11,7 +11,7 @@
         <string name="terminal_id" default="0"/>
         <string name="mobile" default="0"/>
         <string name="phone" default="0"/>
-        <string name="sent_time" default="2015-01-14 09:25:07"/>
+        <string name="sent_time"/>
     </record>
         <select name="body" key="MsgType" default="N">
             <include name="N" keys="action" decodePrefix="p"/>

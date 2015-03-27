@@ -1,9 +1,11 @@
 package com.bocom.bbip.gdeupsb.action.lot;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
@@ -13,9 +15,8 @@ import com.bocom.bbip.gdeupsb.repository.GdLotTxnJnlRepository;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.bbip.service.Result;
 import com.bocom.bbip.utils.BeanUtils;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.JumpException;
-import com.bocom.jump.bp.channel.CommunicationException;
-import com.bocom.jump.bp.channel.Transport;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -25,21 +26,19 @@ public class CathecticCallThdAction extends BaseAction{
     @Override
     public void execute(Context context) throws CoreException, CoreRuntimeException {
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
-        // TODO 向福彩中心发出购彩
-/*        String lotTxnTim = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMddHHmmss);
+        //向福彩中心发出购彩
+       String lotTxnTim = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMddHHmmss);
         context.setData("lotTxnTim", lotTxnTim);
         context.setData("action", "231");
         
         //向福彩中心发出购彩
         context.setData("eupsBusTyp", "LOTR01");
-        Transport ts = context.getService("STHDLOT1");
+
         Map<String,Object> resultMap = null;
         try {
-            resultMap = (Map<String, Object>) ts.submit(context.getDataMap(), context);
+            resultMap = get(ThirdPartyAdaptor.class).trade(context);
             context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
-        } catch (CommunicationException e1) {
-            e1.printStackTrace();
-        } catch (JumpException e1) {
+        }  catch (JumpException e1) {
             e1.printStackTrace();
         }  
         if(!Constants.RESPONSE_CODE_SUCC.equals(resultMap.get("resultCode"))){
@@ -49,11 +48,6 @@ public class CathecticCallThdAction extends BaseAction{
             context.setData(ParamKeys.RSP_MSG, "向福彩中心发出购彩信息失败!");
             return;
         }
-        */
-        // 测试 Start 
-        Map<String,Object> resultMap =new HashMap<String, Object>();
-        resultMap.put("resultCode", "000000");
-        //测试 end
         String sndStatus = "F";
         if(context.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL)){
             if(Constants.RESPONSE_CODE_SUCC.equals(resultMap.get("resultCode"))){

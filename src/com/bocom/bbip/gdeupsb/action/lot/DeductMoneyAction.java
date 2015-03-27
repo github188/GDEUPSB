@@ -90,7 +90,7 @@ public class DeductMoneyAction extends BaseAction {
             context.setData(ParamKeys.RSP_MSG, "对账更新状态失败!");
             return;
         }
-        //  对购彩记录进行对账   --(对账成功)
+        //对购彩记录进行对账   --(对账成功)
         //更新核对成功的状态
         GdLotTxnJnl gdLotTxnJnl = new GdLotTxnJnl();
         gdLotTxnJnl.setGameId(gameId);
