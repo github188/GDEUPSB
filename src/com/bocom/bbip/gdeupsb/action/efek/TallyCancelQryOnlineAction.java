@@ -34,8 +34,12 @@ public class TallyCancelQryOnlineAction extends BaseAction{
 
 						context.setData(ParamKeys.TRADE_TXN_DIR, "C");//交易方向
 						//本次交易日期时间
-						context.setData(ParamKeys.TXN_DTE, DateUtils.format(new Date(),DateUtils.STYLE_SIMPLE_DATE));
-						context.setData(ParamKeys.TXN_TME, DateUtils.format(new Date(),DateUtils.STYLE_TRANS_TIME));
+						Date date=new Date();
+						context.setData(ParamKeys.TXN_DTE, DateUtils.format(date,DateUtils.STYLE_yyyyMMdd));
+						context.setData(ParamKeys.TXN_TME, DateUtils.format(date,DateUtils.STYLE_HHmmss));
+						System.out.println();
+						System.out.println(context.getData(ParamKeys.TXN_DTE));
+						System.out.println(context.getData(ParamKeys.TXN_TME));
 						//原交易流水日期时间
 						context.setData(ParamKeys.OLD_TXN_SQN, eupsTransJournal.getSqn());
 						Date thdTxnDate=eupsTransJournal.getTxnDte();
