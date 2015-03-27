@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet spacket.xsd"
+	encoding="gbk" trace="true">
+	<segment name="detail" encoding="GBK">
+		<varString name="TCUSID" type="D|" />  
+		<varString name="busNam" type="D|" /> 
+		<varString name="ACTNM" type="D|" />  
+		<varString name="IDTYP" type="D|" /> 
+		<varString name="IDNO" type="D|" />  
+		<varString name="ACTNO" type="D|" />  
+		<varString name="MOBTEL" type="D|" /> 
+		<varString name="ACTTYP" type="D|" /> 
+		<varString name="bnkDes" type="D|"  default="交通银行"/>  
+		<varString name="brNo" type="D|" />  
+		<varString name="TXNCNL" type="D|" />  
+		<varString name="nodNo" type="D|" />  
+		<varString name="EFFDAT" type="D|" /> 
+		<varString name="tlrId" type="D|" />  
+		<varString name="a" type="D|" />  
+		<varString name="b" type="D|" />  
+		<varString name="c" type="D|" /> 
+	</segment>
+</message>
