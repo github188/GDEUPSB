@@ -42,7 +42,7 @@ public class AdvanceTradeAction extends BaseAction {
 		
 		// 预付费金额设定
 		context.setData(ParamKeys.TXN_AMT,context.getData(GDParamKeys.PAYMENTIN_ADVANCE_MONEY));
-		context.setData(ParamKeys.PAYFEE_TYPE, "2");
+		context.setData(ParamKeys.PAYFEE_TYPE, Constants.TXN_PAYFEE_TYPE_RECHARGE);
 		
 		context.setData(ParamKeys.TXN_DTE,DateUtils.parse(DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMdd)));
 		context.setData(ParamKeys.TXN_TME,DateUtils.formatAsTranstime(new Date()));
