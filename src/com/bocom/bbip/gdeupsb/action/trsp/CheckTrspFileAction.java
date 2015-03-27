@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -23,12 +24,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.bocom.bbip.comp.BBIPPublicService;
+import com.bocom.bbip.comp.btp.BTPService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.Constants;
-import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
@@ -55,12 +56,14 @@ public class CheckTrspFileAction extends BaseAction{
 			@Autowired
 			OperateFTPAction operateFTPAction;
 			@Autowired
+			EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
+			@Autowired
 			@Qualifier("callThdTradeManager")
 			ThirdPartyAdaptor callThdTradeManager;
 			public void execute(Context context)throws CoreException,CoreRuntimeException{
 				logger.info("=================Start  CheckTrspFile");
 				
-				String tChkNo=DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMddHHmmss);
+				String tChkNo=((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
 				context.setData(ParamKeys.WS_TRANS_CODE,"GetChk");
 				//交易上锁
 		        Result ret = get(BBIPPublicService.class).tryLock( tChkNo, (long) 0,(long) 600);
@@ -71,6 +74,7 @@ public class CheckTrspFileAction extends BaseAction{
 		            context.setData(ParamKeys.RSP_MSG,"交易并发，请稍后在做 !!");
 		            throw new CoreException("交易并发，请稍后在做 ");
 		        }
+		        
 		       if(null == context.getData(GDParamKeys.END_DATE)){
 		    	   		context.setData(GDParamKeys.END_DATE, DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
 		       }
@@ -80,17 +84,16 @@ public class CheckTrspFileAction extends BaseAction{
 		        get(TrspCheckTmpRepository.class).deleteAll("1");
 		        //文件内容添加到对账表
 		        fileInsertTrspCheckTmp(context,tChkNo);
-		        //更改表内所有对账状态
-		        trspCheckTmpRepository.updateAll(tChkNo);
 		        
 		        //错误数量 
 		        int numErr=0;
 		        //错误金额 
 		        BigDecimal AmtErr=new BigDecimal("0.00");
-		        String chkErr=""; //错误信息
+		        //错误信息
+		        String chkErr=""; 
 		        //TODO 文件名
 		        String fileName=context.getData("fileName").toString();
-		        List<TrspCheckTmp> list=trspCheckTmpRepository.findAll();
+		        List<TrspCheckTmp> list=trspCheckTmpRepository.findByTChkNo(tChkNo);
 		        int chkFlg=-1;
 		        //轮询对账
 		    	List<GDEupsbTrspFeeInfo> detailList=new ArrayList<GDEupsbTrspFeeInfo>();
@@ -118,22 +121,29 @@ public class CheckTrspFileAction extends BaseAction{
 							        	}
 					        		//临时使用实体类  定义类型和数据 使其生成文件使用
 					        		GDEupsbTrspFeeInfo  gdEupsbTrspFeeInfoNew=new GDEupsbTrspFeeInfo();
-					        		gdEupsbTrspFeeInfoNew.setTcusNm(chkErr);
-					        		gdEupsbTrspFeeInfoNew.setThdKey(trspCheckTmp.getSqn());
-					        		gdEupsbTrspFeeInfoNew.setTxnAmt(gdEupsbTrspFeeInfo.getTxnAmt());
-					        		gdEupsbTrspFeeInfoNew.setPayMon(gdEupsbTrspFeeInfo.getPayMon());
-					        		gdEupsbTrspFeeInfoNew.setCarTyp(gdEupsbTrspFeeInfo.getCarTyp());
-					        		gdEupsbTrspFeeInfoNew.setCarNo(gdEupsbTrspFeeInfo.getCarNo());
-					        		gdEupsbTrspFeeInfoNew.setStatus(gdEupsbTrspFeeInfo.getStatus());
-					        		gdEupsbTrspFeeInfoNew.setPayDat(gdEupsbTrspFeeInfo.getPayDat());
-					        		gdEupsbTrspFeeInfoNew.setInvNo(gdEupsbTrspFeeInfo.getInvNo());
+					        		gdEupsbTrspFeeInfoNew.setTcusNm(chkErr);                                        				 //错误
+					        		gdEupsbTrspFeeInfoNew.setThdKey(trspCheckTmp.getSqn());                		 	 //流水
+					        		gdEupsbTrspFeeInfoNew.setTxnAmt(gdEupsbTrspFeeInfo.getTxnAmt());		     //金额
+					        		gdEupsbTrspFeeInfoNew.setPayMon(gdEupsbTrspFeeInfo.getPayMon());		 //月份
+					        		gdEupsbTrspFeeInfoNew.setCarTyp(gdEupsbTrspFeeInfo.getCarTyp());			 //车类型
+					        		gdEupsbTrspFeeInfoNew.setCarNo(gdEupsbTrspFeeInfo.getCarNo());				 //车牌号
+					        		gdEupsbTrspFeeInfoNew.setPayDat(gdEupsbTrspFeeInfo.getPayDat());			 //缴费日期
+					        		gdEupsbTrspFeeInfoNew.setInvNo(gdEupsbTrspFeeInfo.getInvNo());				 //发票
+					        		gdEupsbTrspFeeInfoNew.setActNo(gdEupsbTrspFeeInfo.getActNo());				 //账号
+					        		gdEupsbTrspFeeInfoNew.setPayTlr(gdEupsbTrspFeeInfo.getPayTlr());				 //操作柜员
+					        		gdEupsbTrspFeeInfoNew.setPayNod(gdEupsbTrspFeeInfo.getPayNod());			 //网点
+					        		//是否打印  
+					        		gdEupsbTrspFeeInfoNew.setStatus("0");
 					        		
+					        	//TODO 
 					        	if(1 !=chkFlg){
 						        		numErr=numErr+1;
 						        		AmtErr=AmtErr.add(trspCheckTmp.getTxnAmt());
 //			                           银行交易日期|银行流水号|发生额|发票号|缴费月数|车辆类型|车牌号|状态|
 					        			detailList.add(gdEupsbTrspFeeInfoNew);
-					        	}else if(3 !=chkFlg){
+					        	}
+					        	context.setData("detailList", detailList);
+					        	if(3 !=chkFlg){
 					        			//跟新对账标志 
 						        		String checkFlg=chkFlg+"";
 						        		gdEupsbTrspFeeInfo.setChkFlg(checkFlg);
@@ -157,8 +167,6 @@ public class CheckTrspFileAction extends BaseAction{
 		        if(CollectionUtils.isNotEmpty(gdEupsbTrspFeeInfoList)){
 		        	context.setData(ParamKeys.RSP_CDE, "329999");
 		        	context.setData(ParamKeys.RSP_MSG, "系统错误");
-		        	//上传文件
-		        	sendFile(context,fileName);
 		        	throw new CoreException("系统错误");
 		        }
 		        
@@ -169,9 +177,9 @@ public class CheckTrspFileAction extends BaseAction{
 		        ret=get(BBIPPublicService.class).unlock(tChkNo);
 		        
 				//放到指定位置
-		        
+		        sendFile(context, fileName);
 		      //清除对账表中的信息
-		        get(TrspCheckTmpRepository.class).deleteAll("1");
+		        get(TrspCheckTmpRepository.class).deleteAll(tChkNo);
 		        logger.info("============对账结束");
 		   }
 	/**
@@ -204,13 +212,15 @@ public class CheckTrspFileAction extends BaseAction{
 		String ftpNo="trspCheckFile";
 		EupsThdFtpConfig eupsThdFtpConfig=get(EupsThdFtpConfigRepository.class).findOne(ftpNo);
 		String path=eupsThdFtpConfig.getLocDir();
-		String fileName=eupsThdFtpConfig.getLocFleNme();
+		String fileName=context.getData("fileName").toString().trim();
 		try {
 			FileReader fileReader=new FileReader(path+"//"+fileName);
 			BufferedReader bufferedReader=new BufferedReader(fileReader);
 			String string=null;
 			GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo =new GDEupsbTrspFeeInfo();
 			gdEupsbTrspFeeInfo.setChkFlg("0");
+			//设置对账批次
+			gdEupsbTrspFeeInfo.setTchkNo(tChkNo);
 			//读行
 			while((string=bufferedReader.readLine())!=null){
 					String[] str=string.split("\\|");
@@ -253,56 +263,51 @@ public class CheckTrspFileAction extends BaseAction{
 	 */
 	public void sendFile(Context context,String fileName)throws CoreException{
 		logger.info("~~~~~~~~~~~Start  CheckTrspFile   printFile");
-		
 		//获取FTP信息,发送文件到指定路径
-        EupsThdFtpConfig eupsThdFtpConfig = context.getData(ParamKeys.CONSOLE_THD_FTP_CONFIG_LIST);
+        EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("trspCheckFile");
         eupsThdFtpConfig.setLocFleNme(fileName);
         operateFTPAction.putCheckFile(eupsThdFtpConfig);
 	}
 	/**
 	 * 打印清单
 	 */
-	public void printDetail(Context context,String tChkNo)throws CoreException{
+	public void printDetail(Context context,String tChkNo,List<Object> detailList)throws CoreException{
 		logger.info("~~~~~~~~~~~Start  CheckTrspFile   printDetail");
 		//报表模式
 		int i=Integer.parseInt(context.getData(GDParamKeys.JOURNAL_MODEL).toString());
-		context.setData("RptFil", "Car"+context.getData(GDParamKeys.START_DATE).toString().substring(5)+".dat");
+		String rptFil="Car"+context.getData(ParamKeys.TXN_TLR).toString()+context.getData(GDParamKeys.START_DATE).toString().substring(5)+".dat";
+		context.setData("rptFil", rptFil);
 		
-		String rpFmt="rpFmt";
+		String rptFmt="rptFmt";
+		List<Map<String, String>> list=gdEupsbTrspFeeInfoRepository.findSumForTxnAmt(tChkNo);
+		//得到总笔数  总金额
+		if(CollectionUtils.isEmpty(list)){
+			context.setData(ParamKeys.RSP_CDE, "329999");
+			context.setData(ParamKeys.RSP_MSG, "查询统计信息失败");
+			throw new  CoreException("查询统计信息失败");
+		}else{
+			int totCnt=Integer.parseInt(list.get(0).get("COUNT"));
+			BigDecimal totAmt=new BigDecimal(list.get(0).get("SUMTXNAMT"));
+			context.setData(ParamKeys.TOT_CNT, totCnt);
+			context.setData(ParamKeys.TOT_AMT, totAmt);
+		}
 		
-		if(0 == i){		//~~~~~~~~汇总方式
-				List<Map<String, String>> list=gdEupsbTrspFeeInfoRepository.findSumForTxnAmt(tChkNo);
-				if(CollectionUtils.isEmpty(list)){
-					context.setData(ParamKeys.RSP_CDE, "329999");
-				    context.setData(ParamKeys.RSP_MSG, "查询统计信息失败");
-			        throw new  CoreException("查询统计信息失败");
-				}else{
-						int count=Integer.parseInt(list.get(0).get("COUNT"));
-						BigDecimal sumTxnAmt=new BigDecimal(list.get(0).get("SUMTXNAMT"));
-//						"etc/RBFBCHKSUM_RPT.XML");
-						rpFmt=rpFmt+0;
-						context.setData("QryNod", "A");
-				}
+		if(0 == i){		 //~~~~~~~~汇总方式
+				rptFmt=rptFmt+0;
 		}else if(1 == i){//~~~~~~~~~~~~~清单方式
-//			etc/RBFBCHKBil_RPT.XML");
-				rpFmt=rpFmt+1;
-				context.setData("QryNod", "A");
+				rptFmt=rptFmt+1;
 		}else if(2 == i){//~~~~~~~~~~~~~更改发票清单
-//			"etc/RBFBINVCHG_RPT.XML");
-				rpFmt=rpFmt+2;
+				rptFmt=rptFmt+2;
 		}else if(3 == i){//~~~~~~~~~~~~~未打印发票清单
-//			"etc/RBFBNOPRT_RPT.XML");
-				rpFmt=rpFmt+3;
+				rptFmt=rptFmt+3;
 		}else{
 				context.setData(GDParamKeys.MSGTYP, "E");
 				context.setData(ParamKeys.RSP_CDE, "329999");
 				context.setData(ParamKeys.RSP_MSG, "统计模式错误");
 				throw new CoreException("统计模式错误");
 		}
-		String path="config/report/common/"+rpFmt+".vm";
-		context.setData(rpFmt, path);
-		String RptFil="Car"+context.getData("TlrId")+context.getData(GDParamKeys.START_DATE).toString().substring(4);
-		context.setData("RptFil", RptFil);
+		String path="config/report/zhTransport/"+rptFmt+".vm";
+		context.setData(rptFmt, path);
 		//TODO 报表生成
 		VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
 		try {
@@ -310,36 +315,45 @@ public class CheckTrspFileAction extends BaseAction{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Map<String, String> mapping = new HashMap<String, String>();
-		mapping.put("sample", context.getData("RptFil").toString());
-		render.setReportNameTemplateLocationMapping(mapping);
-		String result = render.renderAsString("sample", context);
+		//拼装文件
+		Map<String, String> map = new HashMap<String, String>();
+		map.put(rptFmt, path);
+		render.setReportNameTemplateLocationMapping(map);
+		context.setData("eles", list);
+		String result = render.renderAsString("printBatch", context);
 		
-		EupsThdFtpConfig eupsThdFtpConfig = context.getData(ParamKeys.CONSOLE_THD_FTP_CONFIG_LIST);
-		String sbLocDir=eupsThdFtpConfig.getLocDir();
-		String localFileName=eupsThdFtpConfig.getLocFleNme();
-
-		// 生成本地报表文件
-        PrintWriter printWriter = null;
-		        try {
-		            File file = new File(sbLocDir.toString());
-		            if (!file.exists()) {
-		                file.mkdirs();
-		            }
-		            printWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream((sbLocDir+localFileName).toString()),"GBK")));
-		            printWriter.write(result);
-		        } catch (IOException e) {
-		            throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
-		        } finally {
-		            if (null != printWriter) {
-		                try {
-		                    printWriter.close();
-		                } catch (Exception e) {
-		                    throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
-		                }
-		            }
-		        }
-		        String fileName=context.getData("fileName").toString();
-		        sendFile(context,fileName);
+		//文件路径
+		StringBuffer rpFmts=new StringBuffer();
+		rpFmts.append("E:\\home\\bbipadm\\common\\");
+		File file =new File(rptFmt.toString());
+		if(!file.exists()){
+				file.mkdirs();
+		}
+		try {
+			FileOutputStream fileOutputStream = new FileOutputStream(rpFmts.append(rptFmt).toString());
+			OutputStreamWriter outputStreamWriter=new OutputStreamWriter(fileOutputStream,"GBK");
+			BufferedWriter bufferedWriter =new BufferedWriter(outputStreamWriter);
+			PrintWriter printWriter = new PrintWriter(bufferedWriter);
+			printWriter.write(result);
+			//关闭
+			printWriter.close();
+			bufferedWriter.close();
+			outputStreamWriter.close();
+			fileOutputStream.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		//TODO 没有确定下名字rptFil  还是 fileName
+		String fileName=context.getData("fileName").toString();
+		sendFile(context,fileName);
 	}
 }
