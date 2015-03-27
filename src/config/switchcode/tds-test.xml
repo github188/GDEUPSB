@@ -68,6 +68,20 @@
 		<key name="1200" value="xxxxxxxxxx" />    <!--花都核算中心 -->
 		<key name="1300" value="xxxxxxxxxx" />    <!--番禺核算中心 -->
 	</table>
+	
+	 <!-- 卡bin限制 -->
+	<table id="CardBinExc">
+		<key name="622261071" value="Y" />    <!--城区核算中心 -->
+		<key name="622260071" value="Y" />    <!--从化核算中心 -->
+		<key name="622259071" value="Y" />    <!--从化核算中心 -->
+		<key name="622258071" value="Y" />    <!--从化核算中心 -->
+		<key name="622262071" value="Y" />    <!--从化核算中心 -->
+		<key name="622261571" value="Y" />    <!--从化核算中心 -->
+		<key name="622260571" value="Y" />    <!--从化核算中心 -->
+		<key name="622259571" value="Y" />    <!--从化核算中心 -->
+		<key name="622258571" value="Y" />    <!--从化核算中心 -->
+		<key name="622262571" value="Y" />    <!--从化核算中心 -->
+	</table>
 
 	<!-- TBC CodeSwitch Start.. ADD By GuiLin 20150302 -->
 	<table id="GDYC_nodSwitch">
