@@ -36,6 +36,12 @@
   <wsdl:message name="agentFleSndUnSureDelResponseMessage">
     <wsdl:part name="agentFleSndUnSureDelResponse" element="gdeupsb:agentFleSndUnSureDelResponse"/>
   </wsdl:message>
+  <wsdl:message name="agtBatchFileInputRequestMessage">
+    <wsdl:part name="agtBatchFileInputRequest" element="gdeupsb:agtBatchFileInput"/>
+  </wsdl:message>
+  <wsdl:message name="agtBatchFileInputResponseMessage">
+    <wsdl:part name="agtBatchFileInputResponse" element="gdeupsb:agtBatchFileInputResponse"/>
+  </wsdl:message>
   <wsdl:message name="agtListCrpInfRequestMessage">
     <wsdl:part name="agtListCrpInfRequest" element="gdeupsb:agtListCrpInf"/>
   </wsdl:message>
@@ -67,6 +73,11 @@
       <wsdl:documentation/>
       <wsdl:input message="tns:agentFleSndUnSureDelRequestMessage"/>
       <wsdl:output message="tns:agentFleSndUnSureDelResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="agtBatchFileInput">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:agtBatchFileInputRequestMessage"/>
+      <wsdl:output message="tns:agtBatchFileInputResponseMessage"/>
     </wsdl:operation>
     <wsdl:operation name="agtListCrpInf">
       <wsdl:documentation/>
@@ -114,6 +125,15 @@
     </wsdl:operation>
     <wsdl:operation name="agentFleSndUnSureDel">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignService/agentFleSndUnSureDel"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="agtBatchFileInput">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSNrmSignService/agtBatchFileInput"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>

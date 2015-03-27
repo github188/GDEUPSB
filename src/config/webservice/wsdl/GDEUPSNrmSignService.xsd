@@ -73,6 +73,20 @@
       <xs:element name="response" type="tns:agentFleSndUnSureDelResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:element name="agtBatchFileInput" type="tns:agtBatchFileInputReq_CType"/>
+  <xs:element name="agtBatchFileInputResponse" type="tns:agtBatchFileInputRsp_CType"/>
+  <xs:complexType name="agtBatchFileInputReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:agtBatchFileInputRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="agtBatchFileInputRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:agtBatchFileInputResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:element name="agtListCrpInf" type="tns:agtListCrpInfReq_CType"/>
   <xs:element name="agtListCrpInfResponse" type="tns:agtListCrpInfRsp_CType"/>
   <xs:complexType name="agtListCrpInfReq_CType">
@@ -225,7 +239,7 @@
       <xs:element name="bnkTyp" type="tns:bnkTyp_SType" minOccurs="0"/>
       <xs:element name="bnkNo" type="tns:bnkNo_SType" minOccurs="0"/>
       <xs:element name="inNum" type="tns:inNum_SType" minOccurs="0"/>
-      <xs:element name="prvDatReq" type="tns:prvDatReq_SType" minOccurs="0"/>
+      <xs:element name="prvDatReq" type="tns:prvDatReq_CType" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="agentBatchOperateResponse_CType">
@@ -419,22 +433,6 @@
       <xs:maxLength value="2"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="prvDatReq_SType">
-    <xs:annotation>
-      <xs:documentation>私有数据请求</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="3380"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="recNum_SType">
-    <xs:annotation>
-      <xs:documentation>笔数</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="2"/>
-    </xs:restriction>
-  </xs:simpleType>
   <xs:simpleType name="SUBSTS_SType">
     <xs:annotation>
       <xs:documentation>状态L</xs:documentation>
@@ -497,6 +495,26 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="prvDatReq_CType">
+    <xs:sequence>
+      <xs:element name="SUBSTS" type="tns:SUBSTS_SType" minOccurs="0"/>
+      <xs:element name="ORGCOD" type="tns:ORGCOD_SType" minOccurs="0"/>
+      <xs:element name="TBUSTP" type="tns:TBUSTP_SType" minOccurs="0"/>
+      <xs:element name="TCUSID" type="tns:TCUSID_SType" minOccurs="0"/>
+      <xs:element name="TCUSNM" type="tns:TCUSNM_SType" minOccurs="0"/>
+      <xs:element name="GDSAID" type="tns:GDSAID_SType" minOccurs="0"/>
+      <xs:element name="EFFDAT" type="tns:EFFDAT_SType" minOccurs="0"/>
+      <xs:element name="IVDDAT" type="tns:IVDDAT_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="recNum_SType">
+    <xs:annotation>
+      <xs:documentation>笔数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="prvDatRes_CType">
@@ -711,6 +729,80 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="agtBatchFileInputRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
+      <xs:element name="funcTyp" type="tns:funcTyp_SType" minOccurs="0"/>
+      <xs:element name="gdsBId" type="tns:gdsBId_SType" minOccurs="0"/>
+      <xs:element name="filNm" type="tns:filNm_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="agtBatchFileInputResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="ApCode" type="tns:ApCode_SType" minOccurs="0"/>
+      <xs:element name="OFmtCd" type="tns:OFmtCd_SType" minOccurs="0"/>
+      <xs:element name="RetMsg" type="tns:RetMsg_SType" minOccurs="0"/>
+      <xs:element name="SucRpt" type="tns:SucRpt_SType" minOccurs="0"/>
+      <xs:element name="FailRpt" type="tns:FailRpt_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="funcTyp_SType">
+    <xs:annotation>
+      <xs:documentation>功能</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="filNm_SType">
+    <xs:annotation>
+      <xs:documentation>文件名</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="64"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ApCode_SType">
+    <xs:annotation>
+      <xs:documentation>标识码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="2"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OFmtCd_SType">
+    <xs:annotation>
+      <xs:documentation>识别码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="3"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RetMsg_SType">
+    <xs:annotation>
+      <xs:documentation>返回信息</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="128"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="SucRpt_SType">
+    <xs:annotation>
+      <xs:documentation>成功文件</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="64"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="FailRpt_SType">
+    <xs:annotation>
+      <xs:documentation>失败文件</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="64"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="agtListCrpInfRequest_CType">
