@@ -82,6 +82,22 @@
 		<key name="622258571" value="Y" />    <!--从化核算中心 -->
 		<key name="622262571" value="Y" />    <!--从化核算中心 -->
 	</table>
+	
+	 <!-- 业务名称-->
+	<table id="GdsBIdToBusNam">
+		<key name="44101" value="广州水务" />
+		<key name="44102" value="广东联通" />
+		<key name="44103" value="广东移动" />
+		<key name="44104" value="广州电信" />
+		<key name="44105" value="广州煤气" />
+		<key name="44106" value="广东电力" />
+		<key name="44107" value="广东有线广播电视网络股份有限公司"/>
+		<key name="44108" value="珠江数码集团" />
+	</table>
+	
+	
+	
+	
 
 	<!-- TBC CodeSwitch Start.. ADD By GuiLin 20150302 -->
 	<table id="GDYC_nodSwitch">
