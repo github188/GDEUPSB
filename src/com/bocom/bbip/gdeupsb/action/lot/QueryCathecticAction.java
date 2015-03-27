@@ -34,7 +34,6 @@ public class QueryCathecticAction extends BaseAction{
         
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("betTyp",context.getData("betTyp").toString());
-       // map.put("gameId",context.getData("gameId").toString());前端没有gameID
         map.put("crdNo",context.getData("crdNo").toString());
         String endDate =context.getData("endDat").toString().replace("-", "").trim();
         if (StringUtils.isEmpty(endDate)){

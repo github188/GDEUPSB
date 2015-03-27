@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+<record xmlns="http://www.bocom.com/jump/transformer/xml"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/xml xml.xsd"
     name="IN">
-       <fixString name="DEV_ID" length="10"/>
-       <fixString name="TELLER" length="10"/>
-
-</segment>
+       <string name="DEV_ID"/>
+       <string name="TELLER"/>
+</record>

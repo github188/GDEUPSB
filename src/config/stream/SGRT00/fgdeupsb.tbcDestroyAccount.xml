@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+<record xmlns="http://www.bocom.com/jump/transformer/xml"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/xml xml.xsd"
     name="IN">
-       <fixString name="CUST_ID" length="15"/>  <!-- 客户号 -->
-       <fixString name="CUST_NAME" length="30"/>  <!--客户姓名 -->
-       <fixString name="CUST_TYPE" length="2"/>  <!-- 客户类型 -->
-       <fixString name="PASS_ID" length="18"/>  <!-- 证件号码 -->
-       <fixString name="LICE_ID" length="30"/>  <!-- 营业执照号码 -->
-       <fixString name="ACC_TYPE" length="2"/>  <!-- 卡/账户类型 -->
-       <fixString name="ACC" length="19"/>  <!-- 卡/账户号码 -->
-       <fixString name="DEV_ID" length="10"  />
-       <fixString name="TELLER" length="10"  />
-</segment>
+       <string name="CUST_ID" />  <!-- 客户号 -->
+       <string name="CUST_NAME"/>  <!--客户姓名 -->
+       <string name="CUST_TYPE" />  <!-- 客户类型 -->
+       <string name="PASS_ID" />  <!-- 证件号码 -->
+       <string name="LICE_ID" />  <!-- 营业执照号码 -->
+       <string name="ACC_TYPE" />  <!-- 卡/账户类型 -->
+       <string name="ACC" />  <!-- 卡/账户号码 -->
+       <string name="DEV_ID"/>
+       <string name="TELLER"/>
+</record>

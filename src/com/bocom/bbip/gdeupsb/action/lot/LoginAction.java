@@ -42,7 +42,7 @@ public class LoginAction extends BaseAction {
         }
         //向福彩中心发出系统角色登录
         context.setData("eupsBusTyp", "LOTR01");
-        context.setData("action", "200");
+        context.setData("action", "212");
         context.setData("user", lotSysCfgInfos.get(0).getUsrPam());
         context.setData("pwd",  lotSysCfgInfos.get(0).getUsrPas());
         Map<String,Object> resultMap = new HashMap<String, Object>();//申请当前期号，奖期信息下载

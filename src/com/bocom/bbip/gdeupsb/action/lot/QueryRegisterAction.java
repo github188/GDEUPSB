@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
@@ -13,8 +14,6 @@ import com.bocom.bbip.gdeupsb.entity.GdLotCusInf;
 import com.bocom.bbip.gdeupsb.repository.GdLotCusInfRepository;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.jump.bp.JumpException;
-import com.bocom.jump.bp.channel.CommunicationException;
-import com.bocom.jump.bp.channel.Transport;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -26,7 +25,6 @@ import com.bocom.jump.bp.core.CoreException;
  */
 public class QueryRegisterAction  extends BaseAction{
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public void execute (Context context) throws CoreException {
         log.info("==》》》》》》QueryRegisterAction Start !!==》》》》》》");
@@ -48,7 +46,6 @@ public class QueryRegisterAction  extends BaseAction{
         context.setData("idNo",lotCusInfs.get(0).getIdNo());
         context.setData("mobTel",lotCusInfs.get(0).getMobTel());
         context.setData("lotNam",lotCusInfs.get(0).getLotNam());
-        
         //向福彩中心发送彩民信息查询
         context.setData("action", "209");
         context.setData("eupsBusTyp", "LOTR01");
@@ -56,14 +53,12 @@ public class QueryRegisterAction  extends BaseAction{
         context.setData("gambler_pwd", context.getData("lotPsw"));
         context.setData("modify_time", context.getData("fTXNTm"));
 
-        // 测试//TODO; 向福彩中心发送请求
-      /*  Transport ts = context.getService("STHDLOT1");
+        // 向福彩中心发送请求
+      
         Map<String,Object> resultMap = new HashMap<String, Object>();
         try {
-            resultMap = (Map<String, Object>) ts.submit(context.getDataMap(), context);
+            resultMap = get(ThirdPartyAdaptor.class).trade(context);
             context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
-        } catch (CommunicationException e1) {
-            e1.printStackTrace();
         } catch (JumpException e1) {
             e1.printStackTrace();
         }  
@@ -75,7 +70,7 @@ public class QueryRegisterAction  extends BaseAction{
             context.setData(ParamKeys.RSP_CDE, "LOT999");
             context.setData(ParamKeys.RSP_MSG, "彩民查询失败!!!");
             return;
-        }*/
+        }
         
         context.setData("MsgTyp",Constants.RESPONSE_TYPE_SUCC);
         context.setData(ParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
