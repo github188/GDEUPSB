@@ -101,8 +101,9 @@ public class ThdELEC00Interceptor implements Interceptor {
         
         String svrNme=context.getData(ParamKeys.SERVICE_NAME).toString();
         if(svrNme.equals("eups.automaticCancelELEC00")){
-        	Date txnDate=DateUtils.parse(thdTxnDte,DateUtils.STYLE_yyyyMMdd);
-        	context.setData(ParamKeys.TXN_DTE, txnDate);
+        	Date date=new Date();
+        	context.setData(ParamKeys.TXN_DTE, DateUtils.parse(DateUtils.formatAsSimpleDate(date)));
+        	context.setData(ParamKeys.TXN_TME, DateUtils.parse(DateUtils.formatAsTranstime(date)));
         }
         log.info("============on request end,context=" + context);
     }
@@ -391,7 +392,7 @@ public class ThdELEC00Interceptor implements Interceptor {
         log.info("================get sqn:context=" + context);
         Date rspTime = null;
         if(null !=context.getData(ParamKeys.TXN_DATE) && !context.getData(ParamKeys.SERVICE_NAME).toString().equals(SHG_PAY_ID+"ELEC00")){
-        	rspTime=DateUtils.parse(context.getData(ParamKeys.TXN_DATE).toString());
+        		rspTime=DateUtils.parse(context.getData(ParamKeys.TXN_DATE).toString());
         }else if(null !=context.getData(ParamKeys.TXN_DATE) && context.getData(ParamKeys.SERVICE_NAME).toString().equals(SHG_PAY_ID+"ELEC00") && context.getData(ParamKeys.PAY_MDE).toString().equals("4")){
         		rspTime=(Date)context.getData(ParamKeys.TXN_DATE);
         }
