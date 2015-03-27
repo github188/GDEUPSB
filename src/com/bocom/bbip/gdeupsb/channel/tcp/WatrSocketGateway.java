@@ -179,7 +179,7 @@ public class WatrSocketGateway implements Gateway<Object, Object> {
 			sb.append(md5Date);
 			sb.append(detailDate);
 
-			arrayOfByte1 = sb.toString().getBytes();
+			arrayOfByte1 = sb.toString().getBytes("GBK");
 
 		} catch (UnsupportedEncodingException e) {
 			throw new SocketReadException(false, "socket write error", e);
