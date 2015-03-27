@@ -90,9 +90,11 @@ public class AgtMdyDealPreAction extends BaseAction {
 			}
 		}
 		context.setData(GDParamKeys.SIGN_STATION_TXN_CNL, txnCnl);
-
+		
+		//请求字段设置
+		context.setVariable("BnkTyp", "16");
+		
 		log.info("all common check end!start impl deal!");
-
 	}
 
 }
