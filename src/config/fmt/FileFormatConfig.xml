@@ -146,7 +146,7 @@
 
 
 	<!-- 珠海路桥 -->
-	<file name="trspCheckFile" id="trspCheckFile" encoding="UTF-8"
+	<file name="trspCheckFile" id="trspCheckFile" encoding="GBK"
 		lineSeparator="\n">
 		<foreach name="detail" ref="config/fmt/fileFmt/TRSP00/CheckFileDetail.xml" />
 	</file>
