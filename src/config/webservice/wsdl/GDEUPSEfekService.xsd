@@ -356,6 +356,7 @@
       <xs:element name="comNo" type="tns:comNo_SType"/>
       <xs:element name="cusNo" type="tns:cusNo_SType"/>
       <xs:element name="settleAccountsName" type="tns:settleAccountsName_SType" minOccurs="0"/>
+      <xs:element name="bankNo" type="tns:bankNo_SType" minOccurs="0"/>
       <xs:element name="obkBk" type="tns:obkBk_SType" minOccurs="0"/>
       <xs:element name="cusAc" type="tns:cusAc_SType"/>
       <xs:element name="cusNme" type="tns:cusNme_SType" minOccurs="0"/>
@@ -366,9 +367,6 @@
       <xs:element name="idTyp" type="tns:idTyp_SType"/>
       <xs:element name="idNo" type="tns:idNo_SType"/>
       <xs:element name="cmuTel" type="tns:cmuTel_SType" minOccurs="0"/>
-      <xs:element name="des2" type="tns:des2_SType" minOccurs="0"/>
-      <xs:element name="eml" type="tns:eml_SType" minOccurs="0"/>
-      <xs:element name="des1" type="tns:des1_SType" minOccurs="0"/>
       <xs:element name="agtSts" type="tns:agtSts_SType" minOccurs="0"/>
       <xs:element name="signDate" type="tns:signDate_SType" minOccurs="0"/>
     </xs:sequence>
@@ -409,6 +407,14 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="64"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="bankNo_SType">
+    <xs:annotation>
+      <xs:documentation>代扣银行代码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="obkBk_SType">
@@ -489,30 +495,6 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="20"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="des2_SType">
-    <xs:annotation>
-      <xs:documentation>手机号码</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="20"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="eml_SType">
-    <xs:annotation>
-      <xs:documentation>邮箱</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="64"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="des1_SType">
-    <xs:annotation>
-      <xs:documentation>备注说明</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="128"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="agtSts_SType">
@@ -850,14 +832,6 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="128"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="bankNo_SType">
-    <xs:annotation>
-      <xs:documentation>代扣银行代码</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="4"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="signDte_SType">
