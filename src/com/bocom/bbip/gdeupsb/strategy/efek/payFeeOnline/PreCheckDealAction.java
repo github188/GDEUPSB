@@ -35,6 +35,8 @@ public class PreCheckDealAction implements Executable{
 				context.setData(ParamKeys.CCY, GDConstants.RENMINBI);
 				
 //				context.setData(ParamKeys.PAYFEE_TYPE, Constants.TXN_PAYFEE_TYPE_PAYMENT);
+				//TODO  试用
+				context.setData("extFields", "01441800999");
 				
 				logger.info("~~~~~~~~~~~交易日期："+context.getData(ParamKeys.TXN_DATE)+"~~~~~~~~~~~交易时间："+context.getData(ParamKeys.TXN_TIME));
 	}
