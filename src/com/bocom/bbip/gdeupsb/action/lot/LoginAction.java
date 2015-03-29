@@ -63,7 +63,7 @@ public class LoginAction extends BaseAction {
         Map<String,Object> map = new HashMap<String, Object>();//申请当前期号，奖期信息下载
         map = get(ThirdPartyAdaptor.class).trade(context);
   
-        if(!Constants.RESPONSE_CODE_SUCC.equals(map.get("resultCode"))){
+        if(!"0".equals(map.get("resultCode"))){
             log.info("Check Systerm Time  Fail!");
             context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
             context.setData(ParamKeys.RSP_CDE, "LOT999");
