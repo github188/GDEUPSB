@@ -36,6 +36,8 @@ public class AdvanceTradeAction extends BaseAction {
 	public void execute(Context context) throws CoreException,
 			CoreRuntimeException {
 		logger.info("===========Start  AdvanceTradeAction");
+		//TODO 试用 
+		context.setData("extFields", "01441800999");
 		context.setData(GDParamKeys.TOTNUM, "1");
 		// 第三方客户标识
 		context.setData(ParamKeys.THD_CUS_NO,context.getData(GDParamKeys.PAY_NO));
