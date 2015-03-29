@@ -50,5 +50,25 @@ public interface GdEupsTransJournalRepository extends PagingAndSortingRepository
     
     @Find
     public Page<GdEupsTransJournal>getCheckInfo(Pageable pageable,Map<String,String>map);
+    
+    /** 报表打印 -全部*/
+    @Find
+	public List<Map<String, Object>> findAllTxnList(GdEupsTransJournal eupsJnl);
+    
+    /** 报表打印 -成功*/
+    @Find
+	public List<Map<String, Object>> findSuccTxnList(GdEupsTransJournal eupsJnl);
+    
+    /** 报表打印 -失败*/
+    @Find
+	public List<Map<String, Object>> findFailTxnList(GdEupsTransJournal eupsJnl);
+    
+    /** 报表打印 -可疑*/
+    @Find
+	public List<Map<String, Object>> findDoubtTxnList(GdEupsTransJournal eupsJnl);
+    
+    /** 报表打印 -其他*/
+    @Find
+	public List<Map<String, Object>> findOthTxnList(GdEupsTransJournal eupsJnl);
 
 }
