@@ -23,11 +23,11 @@ import com.bocom.bbip.gdeupsb.expand.AgtMdyDealImlService;
 import com.bocom.bbip.gdeupsb.repository.GdsAgtInfRepository;
 import com.bocom.bbip.gdeupsb.repository.GdsAgtTrcRepository;
 import com.bocom.bbip.gdeupsb.repository.GdsAgtWaterRepository;
+import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
-import com.bocom.jump.bp.channel.http.support.JsonUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -211,20 +211,20 @@ public class WaterAgtMdyDealImlAction implements AgtMdyDealImlService {
 
 			Map<String, Object> detailMap = signDetailList.get(i);
 			log.info("签约子表明细数据为:[" + detailMap + "]");
-			
-			//请求字段转换
+
+			// 请求字段转换
 			detailMap.put("EffDat", detailMap.get("EFFDAT"));
 			detailMap.put("OrgCod", detailMap.get("ORGCOD"));
 			detailMap.put("SubSts", detailMap.get("SUBSTS"));
 			detailMap.put("GdsAId", detailMap.get("GDSAID"));
-			detailMap.put("BnkTyp", context.getVariable("BnkTyp"));  
-			detailMap.put("BnkNo",  "");
-			detailMap.put("bnkNam",  "交通银行广东省分行");
-			detailMap.put("TBusTp",  detailMap.get("TBUSTP"));
-			detailMap.put("TCusId",  detailMap.get("TCUSID"));
-			detailMap.put("TCusNm",  detailMap.get("TCUSNM"));
-			detailMap.put("IvdDat",  detailMap.get("IVDDAT"));
-			
+			detailMap.put("BnkTyp", context.getVariable("BnkTyp"));
+			detailMap.put("BnkNo", "");
+			detailMap.put("bnkNam", "交通银行广东省分行");
+			detailMap.put("TBusTp", detailMap.get("TBUSTP"));
+			detailMap.put("TCusId", detailMap.get("TCUSID"));
+			detailMap.put("TCusNm", detailMap.get("TCUSNM"));
+			detailMap.put("IvdDat", detailMap.get("IVDDAT"));
+
 			detailMap.put("agtSTb", agtStb); // 子表
 			detailMap.put("gdsBid", gdsBId); // 代理业务id
 			detailMap.put("actNo", actNo); // 卡号
@@ -261,7 +261,7 @@ public class WaterAgtMdyDealImlAction implements AgtMdyDealImlService {
 				detailMap.put("lagtSt", "U");
 				detailMap.put("tagtSt", "U");
 
-				System.out.println("+=======================detailMap=" + detailMap);
+				log.info("新增信息=" + detailMap);
 				gdsAgtWaterRepository.insertDetailAgtInf(detailMap);
 			}
 
@@ -279,83 +279,8 @@ public class WaterAgtMdyDealImlAction implements AgtMdyDealImlService {
 		log.info("start cardBinVerify,actTyp=" + actTyp);
 		if (Constants.PAY_MDE_4.equals(actTyp)) { // 卡
 			String carBin = actNo.substring(0, 9);
-			
-			//TODO:
-//			CardBinExc
-			
-			String cardValid = "Y";
-			// TODO:判断cardValid，使用我待测试的codeSwitch
-			// <Item CardBin="622261071" CardValid="Y"/>
-			// <Item CardBin="622260071" CardValid="Y"/>
-			// <Item CardBin="622259071" CardValid="Y"/>
-			// <Item CardBin="622258071" CardValid="Y"/>
-			// <Item CardBin="622262071" CardValid="Y"/>
-			// <Item CardBin="622261571" CardValid="Y"/>
-			// <Item CardBin="622260571" CardValid="Y"/>
-			// <Item CardBin="622259571" CardValid="Y"/>
-			// <Item CardBin="622258571" CardValid="Y"/>
-			// <Item CardBin="622262571" CardValid="Y"/>
-			// <Item CardBin="622261073" CardValid="Y"/>
-			// <Item CardBin="622260073" CardValid="Y"/>
-			// <Item CardBin="622259073" CardValid="Y"/>
-			// <Item CardBin="622258073" CardValid="Y"/>
-			// <Item CardBin="622262073" CardValid="Y"/>
-			// <Item CardBin="622261074" CardValid="Y"/>
-			// <Item CardBin="622260074" CardValid="Y"/>
-			// <Item CardBin="622259074" CardValid="Y"/>
-			// <Item CardBin="622258074" CardValid="Y"/>
-			// <Item CardBin="622262074" CardValid="Y"/>
-			// <Item CardBin="622261075" CardValid="Y"/>
-			// <Item CardBin="622260075" CardValid="Y"/>
-			// <Item CardBin="622259075" CardValid="Y"/>
-			// <Item CardBin="622258075" CardValid="Y"/>
-			// <Item CardBin="622262075" CardValid="Y"/>
-			// <Item CardBin="622261078" CardValid="Y"/>
-			// <Item CardBin="622260078" CardValid="Y"/>
-			// <Item CardBin="622259078" CardValid="Y"/>
-			// <Item CardBin="622258078" CardValid="Y"/>
-			// <Item CardBin="622262078" CardValid="Y"/>
-			// <Item CardBin="622261371" CardValid="Y"/>
-			// <Item CardBin="622260371" CardValid="Y"/>
-			// <Item CardBin="622259371" CardValid="Y"/>
-			// <Item CardBin="622258371" CardValid="Y"/>
-			// <Item CardBin="622262371" CardValid="Y"/>
-			// <Item CardBin="622261373" CardValid="Y"/>
-			// <Item CardBin="622260373" CardValid="Y"/>
-			// <Item CardBin="622259373" CardValid="Y"/>
-			// <Item CardBin="622258373" CardValid="Y"/>
-			// <Item CardBin="622262373" CardValid="Y"/>
-			// <Item CardBin="622261491" CardValid="Y"/>
-			// <Item CardBin="622260491" CardValid="Y"/>
-			// <Item CardBin="622259491" CardValid="Y"/>
-			// <Item CardBin="622258491" CardValid="Y"/>
-			// <Item CardBin="622262491" CardValid="Y"/>
-			// <Item CardBin="622261761" CardValid="Y"/>
-			// <Item CardBin="622260761" CardValid="Y"/>
-			// <Item CardBin="622259761" CardValid="Y"/>
-			// <Item CardBin="622258761" CardValid="Y"/>
-			// <Item CardBin="622262761" CardValid="Y"/>
-			// <Item CardBin="622261448" CardValid="Y"/>
-			// <Item CardBin="622260448" CardValid="Y"/>
-			// <Item CardBin="622259448" CardValid="Y"/>
-			// <Item CardBin="622258448" CardValid="Y"/>
-			// <Item CardBin="622262448" CardValid="Y"/>
-			// <Item CardBin="622261493" CardValid="Y"/>
-			// <Item CardBin="622260493" CardValid="Y"/>
-			// <Item CardBin="622259493" CardValid="Y"/>
-			// <Item CardBin="622258493" CardValid="Y"/>
-			// <Item CardBin="622262493" CardValid="Y"/>
-			// <Item CardBin="622261492" CardValid="Y"/>
-			// <Item CardBin="622260492" CardValid="Y"/>
-			// <Item CardBin="622259492" CardValid="Y"/>
-			// <Item CardBin="622258492" CardValid="Y"/>
-			// <Item CardBin="622262492" CardValid="Y"/>
-			// <Item CardBin="622261495" CardValid="Y"/>
-			// <Item CardBin="622260495" CardValid="Y"/>
-			// <Item CardBin="622259495" CardValid="Y"/>
-			// <Item CardBin="622258495" CardValid="Y"/>
-			// <Item CardBin="622262495" CardValid="Y"/>
 
+			String cardValid = CodeSwitchUtils.codeGenerator("CardBinExc", carBin);
 			if (!"Y".equals(cardValid)) {
 				// TODO:根据GdsBId获得对应的BusNam（业务名称），使用我待测试的codeSwitch
 				String busNam = "水费";
