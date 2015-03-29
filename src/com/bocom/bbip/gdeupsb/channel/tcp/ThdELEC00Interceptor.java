@@ -377,6 +377,10 @@ public class ThdELEC00Interceptor implements Interceptor {
             context.setData(ParamKeys.THD_RCN_DATE, DateUtils.format(thdRcnTme, DateUtils.STYLE_yyyyMMdd));
         }
         // 第三方返回时间thdRspTime
+        if(!context.getData(ParamKeys.RESPONSE_CODE).toString().equals("000000")){
+        		context.setData(ParamKeys.THD_TXN_DATE, DateUtils.parse(context.getData(ParamKeys.THD_TXN_DATE).toString(),DateUtils.STYLE_SIMPLE_DATE));
+        		context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse(context.getData(ParamKeys.THD_TXN_TIME).toString(),DateUtils.STYLE_TRANS_TIME));
+        }
         Date thdTxnDte = context.getData(ParamKeys.THD_TXN_DATE);
         Date thdTxnTme = context.getData(ParamKeys.THD_TXN_TIME);
         if (null != thdTxnDte && null != thdTxnTme) {
