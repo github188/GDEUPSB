@@ -41,7 +41,7 @@
 	
 	<!-- 汕头水费 -->
 	 <server-side-ws-def wsdl="GDEUPSWATR00Service.wsdl"
-		namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service/Schema"/>
+		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service/Schema"/>
 	
  	<!-- 汕头电力 -->
 	<server-side-ws-def wsdl="GDEUPSELEC02Service.wsdl"
