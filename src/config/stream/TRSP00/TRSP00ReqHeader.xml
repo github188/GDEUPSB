@@ -5,11 +5,11 @@
 	 encoding="GBK" trace="true" 
 	 filter="both,classpath:config/stream/translateDict.txt">
 	<segment name="head" encoding="GBK">
-	     <varString type="D|"  name="transCode" referred="true"  /> <!-- 交易码-->
-	     <varString type="D|"  name="bk"  default="100" /> <!-- 银行代码-->
-	     <varString type="D|"  name="tlr"   /> <!-- 机构代码-->
-	     <varString type="D|"  name="tlrTmlId"   /> <!-- 操作员号-->
+	     <varString type="D|"  name="thdTxnCde" referred="true"  /> <!-- 交易码-->
+	     <varString type="D|"  name="bankId"  default="100" /> <!-- 银行代码-->
+	     <varString type="D|"  name="br"   /> <!-- 机构代码-->
+	     <varString type="D|"  name="tlr"   /> <!-- 操作员号-->
 	     <varString type="D|"  name="sup1Id" default=" "   /> <!-- 授权号-->
     </segment>
-  <include keys="transCode" encodePrefix="f"/> 
+  <include keys="thdTxnCde" encodePrefix="f"/> 
 </message>
