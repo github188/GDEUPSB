@@ -101,7 +101,7 @@
 		<property name="encodeTransforms">
 			<array>
 				<bean class="com.bocom.jump.bp.channel.interceptors.EncoderTransform">
-						<constructor-arg   value="packet://config/stream/TRSP00/TRSP00ReqHeader.xml" />
+						<constructor-arg   value="packet://WEB-INF/classes/config/stream/TRSP00/TRSP00ReqHeader.xml" />
 				</bean>
 				<!-- <bean class="com.bocom.bbip.szxeups.channel.tcp.RequestTransformEx" /> -->
 
@@ -111,7 +111,7 @@
 			<array>
 				<!-- <bean class="com.bocom.bbip.szxeups.channel.tcp.ResponseTransformEx" /> -->
 				<bean class="com.bocom.jump.bp.channel.interceptors.DecoderTransform">
-						<constructor-arg  value="packet://config/stream/TRSP00/TRSP00RspHeader.xml" />
+						<constructor-arg  value="packet://WEB-INF/classes/config/stream/TRSP00/TRSP00RspHeader.xml" />
 				</bean>
 			</array>
 		</property>
