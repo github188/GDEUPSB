@@ -6,7 +6,6 @@ import java.util.Map;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdLotDrwTbl;
 import com.bocom.bbip.gdeupsb.entity.GdLotSysCfg;

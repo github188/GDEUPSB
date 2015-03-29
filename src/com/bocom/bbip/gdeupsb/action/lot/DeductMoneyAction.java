@@ -184,7 +184,6 @@ public class DeductMoneyAction extends BaseAction {
             return;
         }
         //生成对账报表  代码为空
-        
         // 计算轧差 
         commAction.calcLotDifAmt(context);
         context.setData("msgTyp", Constants.RESPONSE_TYPE_SUCC);

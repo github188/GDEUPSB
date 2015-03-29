@@ -11,18 +11,13 @@ import com.bocom.bbip.data.domain.Page;
 import com.bocom.bbip.data.domain.PageRequest;
 import com.bocom.bbip.data.domain.Pageable;
 import com.bocom.bbip.eups.action.BaseAction;
-import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.entity.GdLotDrwTbl;
 import com.bocom.bbip.gdeupsb.repository.GdLotDrwTblRepository;
-import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.ContextUtils;
-import com.bocom.jump.bp.JumpException;
-import com.bocom.jump.bp.channel.CommunicationException;
-import com.bocom.jump.bp.channel.Transport;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -57,18 +52,6 @@ public class EupsQueryClrPrize  extends BaseAction {
 		logger.info(BeanUtils.toMap(page));
           
 		logger.info("清算奖期查询 end!!");
-	}
-	private void test(Context context)throws CoreException,CoreRuntimeException{
-		context.setData("action", "238");
-		context.setData("gameId", "237");
-		context.setData("file_name", "238");
-		context.setData("file_type", "3");
-		context.setData("dealer_id", "237");
-		context.setData(ParamKeys.FILE_TYPE, "3");
-		context.setData("GameId","1");
-		context.setData("DrawId","2");
-		((CommonLotAction)get("lotCommon")).fileImport(context);
-
 	}
 	
 }

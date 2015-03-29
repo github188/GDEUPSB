@@ -8,6 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
@@ -29,14 +30,12 @@ public class DownPrizeInfoAction extends BaseAction {
           context.setData("action", "235");
           final String GameId=ContextUtils.assertDataHasLengthAndGet(context, "gameId", ErrorCodes.EUPS_QUERY_NO_DATA);
           context.setData("gameId", GameId);
-          Transport ts = context.getService("STHDLOT1");
-          Map<String,Object> resultMap = null;
+         
+          Map<String,Object> resultMap = new HashMap<String,Object>();
           try {
-              resultMap = (Map<String, Object>) ts.submit(context.getDataMapDirectly(), context);
+              resultMap = get(ThirdPartyAdaptor.class).trade(context);
               context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
-          } catch (CommunicationException e1) {
-              e1.printStackTrace();
-          } catch (JumpException e1) {
+          }  catch (JumpException e1) {
               e1.printStackTrace();
           }  
           
