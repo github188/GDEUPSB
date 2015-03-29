@@ -370,6 +370,7 @@
       <xs:element name="eml" type="tns:eml_SType" minOccurs="0"/>
       <xs:element name="des1" type="tns:des1_SType" minOccurs="0"/>
       <xs:element name="agtSts" type="tns:agtSts_SType" minOccurs="0"/>
+      <xs:element name="signDate" type="tns:signDate_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="agentChangeResponse_CType">
@@ -522,6 +523,14 @@
       <xs:maxLength value="1"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:simpleType name="signDate_SType">
+    <xs:annotation>
+      <xs:documentation>签约日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:simpleType name="rspMsg_SType">
     <xs:annotation>
       <xs:documentation>返回信息</xs:documentation>
@@ -618,7 +627,7 @@
       <xs:element name="busType" type="tns:busType_SType"/>
       <xs:element name="comNo" type="tns:comNo_SType"/>
       <xs:element name="payNo" type="tns:payNo_SType"/>
-      <xs:element name="bankNo" type="tns:bankNo_SType"/>
+      <xs:element name="thdCusNme" type="tns:thdCusNme_SType"/>
       <xs:element name="fulDedFlg" type="tns:fulDedFlg_SType"/>
       <xs:element name="electricityYearMonth" type="tns:electricityYearMonth_SType" minOccurs="0"/>
       <xs:element name="oweFeeAmt" type="tns:oweFeeAmt_SType"/>
@@ -626,14 +635,10 @@
       <xs:element name="dedit" type="tns:dedit_SType" minOccurs="0"/>
       <xs:element name="payMde" type="tns:payMde_SType"/>
       <xs:element name="txnAmt" type="tns:txnAmt_SType"/>
-      <xs:element name="ActFlg" type="tns:ActFlg_SType" minOccurs="0"/>
-      <xs:element name="accTyp" type="tns:accTyp_SType" minOccurs="0"/>
       <xs:element name="VchCod" type="tns:VchCod_SType" minOccurs="0"/>
       <xs:element name="cusAc" type="tns:cusAc_SType" minOccurs="0"/>
       <xs:element name="CusNme" type="tns:CusNme_SType" minOccurs="0"/>
       <xs:element name="BActSq" type="tns:BActSq_SType" minOccurs="0"/>
-      <xs:element name="choNo" type="tns:choNo_SType" minOccurs="0"/>
-      <xs:element name="bvKnd" type="tns:bvKnd_SType" minOccurs="0"/>
       <xs:element name="bvNo" type="tns:bvNo_SType" minOccurs="0"/>
       <xs:element name="BilDat" type="tns:BilDat_SType" minOccurs="0"/>
       <xs:element name="password" type="tns:password_SType" minOccurs="0"/>
@@ -646,9 +651,6 @@
       <xs:element name="sqn" type="tns:sqn_SType" minOccurs="0"/>
       <xs:element name="txnDte" type="tns:txnDte_SType" minOccurs="0"/>
       <xs:element name="txnTme" type="tns:txnTme_SType" minOccurs="0"/>
-      <xs:element name="oldTxnSqn" type="tns:oldTxnSqn_SType" minOccurs="0"/>
-      <xs:element name="thdTxnDte" type="tns:thdTxnDte_SType" minOccurs="0"/>
-      <xs:element name="thdTxnTme" type="tns:thdTxnTme_SType" minOccurs="0"/>
       <xs:element name="payNo" type="tns:payNo_SType" minOccurs="0"/>
       <xs:element name="electricityYearMonth" type="tns:electricityYearMonth_SType" minOccurs="0"/>
       <xs:element name="txnAmt" type="tns:txnAmt_SType" minOccurs="0"/>
@@ -663,12 +665,12 @@
       <xs:maxLength value="20"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="bankNo_SType">
+  <xs:simpleType name="thdCusNme_SType">
     <xs:annotation>
-      <xs:documentation>代扣银行代码</xs:documentation>
+      <xs:documentation>客户名称</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:maxLength value="4"/>
+      <xs:maxLength value="64"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="fulDedFlg_SType">
@@ -731,22 +733,6 @@
       <xs:fractionDigits value="2"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="ActFlg_SType">
-    <xs:annotation>
-      <xs:documentation>账户种类</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="1"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="accTyp_SType">
-    <xs:annotation>
-      <xs:documentation>账户类型</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="3"/>
-    </xs:restriction>
-  </xs:simpleType>
   <xs:simpleType name="VchCod_SType">
     <xs:annotation>
       <xs:documentation>存折号码</xs:documentation>
@@ -771,22 +757,6 @@
       <xs:maxLength value="5"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="choNo_SType">
-    <xs:annotation>
-      <xs:documentation>销帐号</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="12"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="bvKnd_SType">
-    <xs:annotation>
-      <xs:documentation>凭证种类</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="3"/>
-    </xs:restriction>
-  </xs:simpleType>
   <xs:simpleType name="bvNo_SType">
     <xs:annotation>
       <xs:documentation>凭证号</xs:documentation>
@@ -800,7 +770,7 @@
       <xs:documentation>凭证日期</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:maxLength value="8"/>
+      <xs:maxLength value="10"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="password_SType">
@@ -843,30 +813,6 @@
       <xs:maxLength value="16"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="oldTxnSqn_SType">
-    <xs:annotation>
-      <xs:documentation>原交易流水号</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="24"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="thdTxnDte_SType">
-    <xs:annotation>
-      <xs:documentation>原交易日期</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="8"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="thdTxnTme_SType">
-    <xs:annotation>
-      <xs:documentation>原交易时间</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="16"/>
-    </xs:restriction>
-  </xs:simpleType>
   <xs:simpleType name="paymentResult_SType">
     <xs:annotation>
       <xs:documentation>缴费结果说明</xs:documentation>
@@ -898,20 +844,20 @@
       <xs:element name="bakFld1" type="tns:bakFld1_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="thdCusNme_SType">
-    <xs:annotation>
-      <xs:documentation>客户名称</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="64"/>
-    </xs:restriction>
-  </xs:simpleType>
   <xs:simpleType name="rsvFld6_SType">
     <xs:annotation>
       <xs:documentation>用电地址</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="128"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="bankNo_SType">
+    <xs:annotation>
+      <xs:documentation>代扣银行代码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="signDte_SType">
@@ -942,9 +888,6 @@
     <xs:sequence>
       <xs:element ref="tns:requestHeader" minOccurs="0"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
-      <xs:element name="netName" type="tns:netName_SType" minOccurs="0"/>
-      <xs:element name="busType" type="tns:busType_SType" minOccurs="0"/>
-      <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
       <xs:element name="payNo" type="tns:payNo_SType"/>
       <xs:element name="checkType" type="tns:checkType_SType"/>
       <xs:element name="electricityYearMonth" type="tns:electricityYearMonth_SType" minOccurs="0"/>
@@ -955,6 +898,7 @@
     <xs:sequence>
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
       <xs:element name="Information" type="tns:Information_CType" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="thdCusNme" type="tns:thdCusNme_SType" minOccurs="0"/>
       <xs:element name="electricityYearMonth" type="tns:electricityYearMonth_SType" minOccurs="0"/>
       <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
       <xs:element name="capital" type="tns:capital_SType" minOccurs="0"/>
@@ -963,14 +907,6 @@
       <xs:element ref="tns:pageableResponse" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="netName_SType">
-    <xs:annotation>
-      <xs:documentation>网点名称</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="64"/>
-    </xs:restriction>
-  </xs:simpleType>
   <xs:simpleType name="checkType_SType">
     <xs:annotation>
       <xs:documentation>查询方式</xs:documentation>
@@ -989,15 +925,10 @@
   </xs:simpleType>
   <xs:complexType name="Information_CType">
     <xs:sequence>
-      <xs:element name="busType" type="tns:busType_SType" minOccurs="0"/>
       <xs:element name="payType" type="tns:payType_SType" minOccurs="0"/>
       <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
       <xs:element name="payNo" type="tns:payNo_SType" minOccurs="0"/>
-      <xs:element name="thdCusNme" type="tns:thdCusNme_SType" minOccurs="0"/>
-      <xs:element name="rsvFld6" type="tns:rsvFld6_SType" minOccurs="0"/>
       <xs:element name="bankNo" type="tns:bankNo_SType" minOccurs="0"/>
-      <xs:element name="cusAc" type="tns:cusAc_SType" minOccurs="0"/>
-      <xs:element name="CusNme" type="tns:CusNme_SType" minOccurs="0"/>
       <xs:element name="fulDedFlg" type="tns:fulDedFlg_SType" minOccurs="0"/>
       <xs:element name="accountsSerialNo" type="tns:accountsSerialNo_SType" minOccurs="0"/>
       <xs:element name="electricityYearMonth" type="tns:electricityYearMonth_SType" minOccurs="0"/>
@@ -1016,13 +947,6 @@
   <xs:complexType name="qryCusBaseMsgResponse_CType">
     <xs:sequence>
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
-      <xs:element name="netName" type="tns:netName_SType" minOccurs="0"/>
-      <xs:element name="thdSqn" type="tns:thdSqn_SType" minOccurs="0"/>
-      <xs:element name="txnDte" type="tns:txnDte_SType" minOccurs="0"/>
-      <xs:element name="txnTme" type="tns:txnTme_SType" minOccurs="0"/>
-      <xs:element name="oldTxnSqn" type="tns:oldTxnSqn_SType" minOccurs="0"/>
-      <xs:element name="thdTxnDte" type="tns:thdTxnDte_SType" minOccurs="0"/>
-      <xs:element name="thdTxnTme" type="tns:thdTxnTme_SType" minOccurs="0"/>
       <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
       <xs:element name="payNo" type="tns:payNo_SType" minOccurs="0"/>
       <xs:element name="oweFeeAmt" type="tns:oweFeeAmt_SType" minOccurs="0"/>
@@ -1031,14 +955,6 @@
       <xs:element name="bakFld1" type="tns:bakFld1_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="thdSqn_SType">
-    <xs:annotation>
-      <xs:documentation>交易流水号</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="24"/>
-    </xs:restriction>
-  </xs:simpleType>
   <xs:complexType name="qryCusPayRecordRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader" minOccurs="0"/>
@@ -1278,6 +1194,30 @@
       <xs:maxLength value="1"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:simpleType name="oldTxnSqn_SType">
+    <xs:annotation>
+      <xs:documentation>原交易流水号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="24"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="thdTxnDte_SType">
+    <xs:annotation>
+      <xs:documentation>原交易日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="thdTxnTme_SType">
+    <xs:annotation>
+      <xs:documentation>原交易时间</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="16"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:simpleType name="ccy_SType">
     <xs:annotation>
       <xs:documentation>货币符号</xs:documentation>
@@ -1299,16 +1239,13 @@
       <xs:element name="oweFeeAmt" type="tns:oweFeeAmt_SType"/>
       <xs:element name="payInAdvMoney" type="tns:payInAdvMoney_SType"/>
       <xs:element name="bakFld1" type="tns:bakFld1_SType" minOccurs="0"/>
-      <xs:element name="ActFlg" type="tns:ActFlg_SType" minOccurs="0"/>
-      <xs:element name="accTyp" type="tns:accTyp_SType" minOccurs="0"/>
       <xs:element name="VchCod" type="tns:VchCod_SType" minOccurs="0"/>
       <xs:element name="cusAc" type="tns:cusAc_SType" minOccurs="0"/>
       <xs:element name="CusNme" type="tns:CusNme_SType" minOccurs="0"/>
       <xs:element name="password" type="tns:password_SType" minOccurs="0"/>
       <xs:element name="BActSq" type="tns:BActSq_SType" minOccurs="0"/>
-      <xs:element name="choNo" type="tns:choNo_SType" minOccurs="0"/>
-      <xs:element name="bvKnd" type="tns:bvKnd_SType" minOccurs="0"/>
       <xs:element name="bvNo" type="tns:bvNo_SType" minOccurs="0"/>
+      <xs:element name="BilDat" type="tns:BilDat_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="advanceTradeResponse_CType">
