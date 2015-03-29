@@ -44,39 +44,42 @@ public class PrintCallThirdAction extends BaseAction{
 	GDEupsbTrspTxnJnlRepository gdEupsbTrspTxnJnlRepository;
 	
 	@Autowired
-	@Qualifier("TRSP00Transport")
-	DefaultTransport trspTransport;
+	ThirdPartyAdaptor callThdTradeManager;
 	
-	@Autowired
-	@Qualifier("trspGateWay")
-	SocketGateway gateway;
-	
-	@SuppressWarnings({ "unused", "unchecked" })
+//	@Autowired
+//	@Qualifier("TRSP00Transport")
+//	DefaultTransport trspTransport;
+//	
+//	@Autowired
+//	@Qualifier("trspGateWay")
+//	SocketGateway gateway;
+//	
+//	@SuppressWarnings({ "unused", "unchecked" })
 	public void execute(Context ctx) throws CoreException,CoreRuntimeException{
 		log.info("PrintCallThirdAction start.......");
 		ctx.setState("fail");
 		GDEupsbTrspTxnJnl gdEupsbTrspTxnJnl = new GDEupsbTrspTxnJnl();
 		
-		String enCodePath="packet://WEB-INF/classes/config/stream/TRSP00/f484014.xml";
-		String deCodePath="packet://WEB-INF/classes/config/stream/TRSP00/p484004.xml";
-		trspTransport.setEncodeTransforms(new Transform[] { new EncoderTransform(enCodePath), new RequestTransform() });
-		trspTransport.setDecodeTransforms(new Transform[] { new DecoderTransform(deCodePath), new ResponseTransform() });
-		trspTransport.setGateway(gateway);
-		
-		
-		Map responseMessage=new HashMap();
-		
-		try {
-			 responseMessage = (Map)trspTransport.submit(ctx.getDataMap(), ctx);
-		} catch (CommunicationException e) {
-			e.printStackTrace();
-		} catch (JumpException e) {
-			e.printStackTrace();
-		}
+//		String enCodePath="packet://WEB-INF/classes/config/stream/TRSP00/f484014.xml";
+//		String deCodePath="packet://WEB-INF/classes/config/stream/TRSP00/p484004.xml";
+//		trspTransport.setEncodeTransforms(new Transform[] { new EncoderTransform(enCodePath), new RequestTransform() });
+//		trspTransport.setDecodeTransforms(new Transform[] { new DecoderTransform(deCodePath), new ResponseTransform() });
+//		trspTransport.setGateway(gateway);
+//		
+//		
+//		Map responseMessage=new HashMap();
+//		
+//		try {
+//			 responseMessage = (Map)trspTransport.submit(ctx.getDataMap(), ctx);
+//		} catch (CommunicationException e) {
+//			e.printStackTrace();
+//		} catch (JumpException e) {
+//			e.printStackTrace();
+//		}
 //		ConnectThdUtils connectThdUtils = new ConnectThdUtils();
 //		Map<String,Object> thdReturnMessage = connectThdUtils.getThdResponse(enCodePath,deCodePath,ctx);
 		
-//		Map<String,Object> thdReturnMessage = callThdTradeManager.trade(ctx);
+		Map<String,Object> thdReturnMessage = callThdTradeManager.trade(ctx);
 		log.info("call third start....[the state is" + ctx.getState() + "]");
 		
 
@@ -119,7 +122,7 @@ public class PrintCallThirdAction extends BaseAction{
 			ctx.setData(ParamKeys.RSP_MSG, "交易失败");
 			throw new CoreRuntimeException( ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
 		}else{
-			if(!"000".equals(responseMessage.get(GDParamKeys.TRSP_CD))){				
+			if(!"000".equals(thdReturnMessage.get(GDParamKeys.TRSP_CD))){				
 				ctx.setData(GDParamKeys.TXN_ST, "F");
 				ctx.setData(GDParamKeys.TTXN_ST, "F");
 				gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
@@ -135,12 +138,12 @@ public class PrintCallThirdAction extends BaseAction{
 //	       <Exec func="PUB:DefaultErrorProc"/>
 
 				ctx.setData(ParamKeys.RSP_CDE, ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
-				ctx.setData(ParamKeys.RSP_MSG, "路桥方返回：" + responseMessage.get(GDParamKeys.TRSP_CD));
+				ctx.setData(ParamKeys.RSP_MSG, "路桥方返回：" + thdReturnMessage.get(GDParamKeys.TRSP_CD));
 				throw new CoreRuntimeException( ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
 				
 
 			}else{
-				ctx.setDataMap(responseMessage);
+				ctx.setDataMap(thdReturnMessage);
 				ctx.setData(GDParamKeys.TXN_ST, "S");
 				ctx.setData(GDParamKeys.TTXN_ST, "S");
 				gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
