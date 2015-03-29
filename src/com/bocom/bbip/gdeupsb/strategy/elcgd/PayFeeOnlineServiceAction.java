@@ -46,10 +46,18 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 	@Autowired
 	GdElecClrInfRepository gdElecClrInfRepository;
 
+	// @Autowired
+	// CallHostByComNo callHostByComNo;
+
 	@Override
 	public Map<String, Object> preCheckDeal(CommHeadDomain commheaddomain, PayFeeOnlineDomain payfeeonlinedomain, Context context)
 			throws CoreException {
 		log.info("PayFeeOnlineServiceAction preCheckDeal start!..");
+
+		context.setData("extFields", "01441800999");
+
+		// 根据单位编号查询记账网店
+		// callHostByComNo.callHost(context);
 
 		context.setData(ParamKeys.BUS_TYP, Constants.BUS_TYP_2); // 2-代缴
 
