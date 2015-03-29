@@ -425,8 +425,8 @@
 		Sub_Sts subSts,Gds_BId gdsBid, Org_Cod orgCod, LAgt_St lagtSt,
 		TAgt_St tagtSt, TCus_Id tcusId, Eff_Dat effDat,
 		Ivd_Dat ivdDat,
-		ErrMsg
-		errMsg ${extSql}
+		LER_MSG lerMsg,TER_MSG errMsg
+		 ${extSql}
 		from ${agtSTb}
 		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="gdsBid!=null">
