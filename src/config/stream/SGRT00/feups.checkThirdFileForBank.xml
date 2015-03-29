@@ -9,17 +9,3 @@
        <string name="DEV_ID"/>
        <string name="TELLER"/>
 </record>
-
-
-
-<?xml version="1.0" encoding="UTF-8"?>
-<segment xmlns="http://www.bocom.com/jump/transformer/packet"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
-    name="f001">
-       <fixString name="BANK_SEQ" length="20"/>
-       <fixString name="TRADE_DATE" length="8"/>
-       <fixString name="DEV_ID" length="10"/>
-       <fixString name="TELLER" length="10"/>
-       <fixString name ="ftpNo" length="12" />
-</segment>
