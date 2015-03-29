@@ -23,7 +23,7 @@
  	<fixString name="gasBk" length="4" default="CNJT"/>
  	<fixString  name="Deli3" length="1" default=","/>
  		
-	<fixString name="cusNo" length="12"   /> 
+	<fixString name="thdCusNo" length="12"   /> 
 	<!-- <fixString  name="Deli4" length="1" /> -->
 
 </segment> 

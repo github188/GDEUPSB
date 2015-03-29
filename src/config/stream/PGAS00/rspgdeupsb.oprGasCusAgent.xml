@@ -20,12 +20,12 @@
  	<!-- <fixString name="rtnCod" length="10" /> -->
  	 <!-- <fixString  name="Deli2" length="1" default=","/> -->
  	
-	<fixString name="cusNo1" length="12"    />
+	<fixString name="thdCusNo" length="12"    />
 	<fixString  name="Deli5" length="1" default=","/>
 	
-	<fixString name="cusNme1" length="60"    />
+	<fixString name="thdCusNme" length="60"    />
 	<fixString  name="Deli6" length="1" default=","/>
 	
-	<fixString name="thdCusAdr1" length="80"    />
+	<fixString name="thdCusAdr" length="80"    />
 	<!-- <fixString  name="Deli7" length="1" /> -->
 </segment>
