@@ -19,6 +19,7 @@ import com.bocom.bbip.gdeupsb.repository.GdsAgtInfRepository;
 import com.bocom.bbip.gdeupsb.repository.GdsAgtWaterRepository;
 import com.bocom.bbip.gdeupsb.repository.GdsRunCtlRepository;
 import com.bocom.bbip.utils.BeanUtils;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -41,6 +42,9 @@ public class AgtScanPrintAction extends BaseAction {
 		String gdsBId = context.getData(GDParamKeys.SIGN_STATION_BID); // 业务标识
 		String actNo = context.getData(ParamKeys.ACT_NO); // 帐号
 		String agtDat = context.getData(GDParamKeys.SIGN_STATION_AGT_DAT); // 日期
+		if (StringUtils.isEmpty(agtDat)) {
+			agtDat = null;
+		}
 
 		// 44101时，拼装动态sql
 		String extSql = new String();
@@ -59,7 +63,7 @@ public class AgtScanPrintAction extends BaseAction {
 			// 多页查询汇总信息
 			Pageable pageable = BeanUtils.toObject(context.getDataMap(), PageRequest.class);
 			Page<Map<String, Object>> result = gdsAgtInfRepository.findAgentTotInf(pageable, inpara);
-			System.out.println("!!!!!!!!!!!!!result=" + result);
+			log.info("汇总信息查询结果=" + result);
 			if (result.getTotalElements() == 0) {
 				log.error("agt total info query is null!");
 				throw new CoreException(ErrorCodes.EUPS_CONSOLE_INFO_NOTEXIST); // 查无记录
@@ -88,7 +92,7 @@ public class AgtScanPrintAction extends BaseAction {
 			inputMap.put("ivdDat", agtDat);
 
 			List<Map<String, Object>> signDetail = get(GdsAgtWaterRepository.class).findSignDeatilInfo(inputMap); // 查询明细
-
+			log.info("明细信息查询结果=" + signDetail);
 			context.setData("signDetail", signDetail);
 
 		} else if (GDConstants.SIGN_STATION_FUNC_PRINT.equals(func)) { // 打印
