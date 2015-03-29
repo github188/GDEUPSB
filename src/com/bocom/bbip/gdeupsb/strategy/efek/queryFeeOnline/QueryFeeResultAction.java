@@ -217,15 +217,15 @@ public class QueryFeeResultAction implements Executable{
             		}
             		//行的list赋值 
             		Map<String, Object> mapInformation=new HashMap<String, Object>();
-            		mapInformation.put("busType", map.get("busType"));
+//            		mapInformation.put("busType", map.get("busType"));
             		mapInformation.put("payType", map.get("payType"));
             		mapInformation.put("comNo", map.get("comNo"));
             		mapInformation.put("payNo", map.get("payNo"));
             		mapInformation.put("thdCusNme", map.get("thdCusNme"));
-            		mapInformation.put("rsvFld6", map.get("rsvFld6"));
+//            		mapInformation.put("rsvFld6", map.get("rsvFld6"));
             		mapInformation.put("bankNo", map.get("bankNo"));
-            		mapInformation.put("cusAc", map.get("cusAc"));
-            		mapInformation.put("CusNme", map.get("cusNme"));
+//            		mapInformation.put("cusAc", map.get("cusAc"));
+//            		mapInformation.put("CusNme", map.get("cusNme"));
             		mapInformation.put("fulDedFlg", map.get("fulDedFlg"));
             		mapInformation.put("accountsSerialNo", map.get("accountsSerialNo"));
             		mapInformation.put("electricityYearMonth", map.get("electricityYearMonth"));
