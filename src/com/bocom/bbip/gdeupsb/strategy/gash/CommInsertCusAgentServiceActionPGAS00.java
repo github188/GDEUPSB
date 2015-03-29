@@ -70,7 +70,7 @@ public class CommInsertCusAgentServiceActionPGAS00 extends BaseAction implements
 		context.setProcessId("gdeupsb.oprGasCusAgentAction");
 		logger.info("===oprGasCusAgentAction=====context=" + context);
 
-		if ("AddOK".equals(context.getData("rtnCod").toString().trim())) {
+		if ("AddOK".equals(context.getData("TransCode").toString().trim())) {
 			// 第三方返回新增成功，协议表、动态协议表插入新增数据
 			// 代扣协议管理-修改和新增 maintainAgentCollectAgreement
 			// get(BGSPServiceAccessObject.class).callServiceFlatting("maintainAgentCollectAgreement",
@@ -96,10 +96,10 @@ public class CommInsertCusAgentServiceActionPGAS00 extends BaseAction implements
 
 			logger.info("============新增本地协议，动态协议成功");
 		}
-		if("Double".equals(context.getData("rtnCod").toString().trim())) {
+		if("Double".equals(context.getData("TransCode").toString().trim())) {
 			throw new CoreException(GDErrorCodes.GAS_CUS_AGT_DOUBLE);
 		}
-		if("AddNo".equals(context.getData("rtnCod").toString().trim())) {
+		if("AddNo".equals(context.getData("TransCode").toString().trim())) {
 			throw new CoreException(GDErrorCodes.GAS_CUS_AGT_ADDNO);
 		}
 		logger.info("CommInsertCusAgentServiceActionPGAS00 callThd end ... ...");

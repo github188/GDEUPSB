@@ -59,7 +59,7 @@ public class CommUpdateCusAgentServiceActionPGAS00 extends BaseAction implements
 		context.setProcessId("gdeupsb.oprGasCusAgentAction");
 		logger.info("===oprGasCusAgentAction=====context=" + context);
 
-		if ("EditOK".equals(context.getData("rtnCod").toString().trim())) {
+		if ("EditOK".equals(context.getData("TransCode").toString().trim())) {
 			// 第三方返回新增成功，协议表、动态协议表插入新增数据
 			// 代扣协议管理-修改和新增 maintainAgentCollectAgreement
 			// get(BGSPServiceAccessObject.class).callServiceFlatting("maintainAgentCollectAgreement",

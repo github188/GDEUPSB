@@ -56,7 +56,7 @@ public class CommDelCusAgentServiceActionPGAS00 extends BaseAction implements Co
 		context.setProcessId("gdeupsb.oprGasCusAgentAction");
 		logger.info("===oprGasCusAgentAction=====context=" + context);
 
-		if ("StopOK".equals(context.getData("rtnCod").toString().trim())) {
+		if ("StopOK".equals(context.getData("TransCode").toString().trim())) {
 			// 第三方返回新增成功，协议表、动态协议表插入新增数据
 			// 代扣协议管理-修改和新增 maintainAgentCollectAgreement
 			// get(BGSPServiceAccessObject.class).callServiceFlatting("maintainAgentCollectAgreement",
@@ -92,8 +92,6 @@ public class CommDelCusAgentServiceActionPGAS00 extends BaseAction implements Co
 	@Override
 	public Map<String, Object> preDelCusAgent(CustomerDomain customerDomain, Context context)
 			throws CoreException {
-		//调用协议查询详细信息，获取第三方接口字段
-		get(BBIPPublicService.class).synExecute("eups.commQueryCusAgentDetail", context);
 		return null;
 	}
 
