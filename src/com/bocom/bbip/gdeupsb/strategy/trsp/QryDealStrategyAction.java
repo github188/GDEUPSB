@@ -38,13 +38,13 @@ public class QryDealStrategyAction implements Executable {
 	@Qualifier("callThdTradeManager")
 	ThirdPartyAdaptor callThdTradeManager;
 	
-	@Autowired
-	@Qualifier("TRSP00Transport")
-	DefaultTransport trspTransport;
-	
-	@Autowired
-	@Qualifier("trspGateWay")
-	SocketGateway gateway;
+//	@Autowired
+//	@Qualifier("TRSP00Transport")
+//	DefaultTransport trspTransport;
+//	
+//	@Autowired
+//	@Qualifier("trspGateWay")
+//	SocketGateway gateway;
 
 	@Autowired
 	GDEupsbAmountInfoRepository gdEupsAmountInfoRepository;
@@ -56,21 +56,21 @@ public class QryDealStrategyAction implements Executable {
 		ctx.setData(ParamKeys.THD_TXN_CDE, GDConstants.QRY_CAR);
 		// TODO:<Arg name="ObjSvr" value="@PARA.ThdSvr"/>
 		
-		String enCodePath="packet://WEB-INF/classes/config/stream/TRSP00/f484011.xml";
-		String deCodePath="packet://WEB-INF/classes/config/stream/TRSP00/p484011.xml";
-		trspTransport.setEncodeTransforms(new Transform[] { new EncoderTransform(enCodePath), new RequestTransform() });
-		trspTransport.setDecodeTransforms(new Transform[] { new DecoderTransform(deCodePath), new ResponseTransform() });
-		trspTransport.setGateway(gateway);
-		
-		Map responseMessage=new HashMap();
-		
-		try {
-			 responseMessage = (Map)trspTransport.submit(ctx.getDataMap(), ctx);
-		} catch (CommunicationException e) {
-			e.printStackTrace();
-		} catch (JumpException e) {
-			e.printStackTrace();
-		}
+//		String enCodePath="packet://WEB-INF/classes/config/stream/TRSP00/f484011.xml";
+//		String deCodePath="packet://WEB-INF/classes/config/stream/TRSP00/p484011.xml";
+//		trspTransport.setEncodeTransforms(new Transform[] { new EncoderTransform(enCodePath), new RequestTransform() });
+//		trspTransport.setDecodeTransforms(new Transform[] { new DecoderTransform(deCodePath), new ResponseTransform() });
+//		trspTransport.setGateway(gateway);
+//		
+//		Map responseMessage=new HashMap();
+//		
+//		try {
+//			 responseMessage = (Map)trspTransport.submit(ctx.getDataMap(), ctx);
+//		} catch (CommunicationException e) {
+//			e.printStackTrace();
+//		} catch (JumpException e) {
+//			e.printStackTrace();
+//		}
 		
 		
 		Map<String, Object> thdReturnMessage = callThdTradeManager.trade(ctx);
