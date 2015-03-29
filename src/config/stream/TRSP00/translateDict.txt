@@ -7,7 +7,7 @@
 #  filter="format,packets/translateDict.txt"
 #  filter="parse,packets/translateDict.txt"
 
-TransCode.gdeupsb.trspPrintInvoic=484004
+
 
 
 
