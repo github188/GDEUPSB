@@ -141,7 +141,7 @@ public class ZhLqSocketGateway implements Gateway {
 		is.readFully(b1);
 		String str1 = new String(b1);
 		log.info("recv return str"+idx+" = "+str1);
-		if (!str1.equals("AGR")||!str1.equals("2.0")) {
+		if (!(str1.equals("AGR")||str1.equals("2.0"))) {
 			throw new IOException("third cann't allow conn !");
 		}
 		return str1;
