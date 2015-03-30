@@ -56,7 +56,7 @@ public class QueryTransportFeeAction extends BaseAction{
 		Date date = new Date();
 		ctx.setData(GDParamKeys.ACT_DAT, date);
 		ctx.setData(GDParamKeys.TACT_DT, DateUtils.format(date, DateUtils.STYLE_yyyyMMdd));
-		ctx.setData(GDParamKeys.TLOG_NO, StringUtils.substring(sqn, 0, 8)+StringUtils.substring(sqn, 16, 20));
+		ctx.setData(GDParamKeys.TLOG_NO, StringUtils.substring(sqn, 2, 8)+StringUtils.substring(sqn, 14, 20));
 		ctx.setData(GDParamKeys.THD_KEY, sqn);
 		
 		
