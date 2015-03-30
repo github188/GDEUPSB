@@ -69,7 +69,7 @@ public class PrePayFeeThdAction implements Executable{
 				context.setData(ParamKeys.TXN_TIME, txnTime);
 				
 				//TODO 
-				context.setData(GDParamKeys.BUS_IDENTIFY, "");
+				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW04");
 //				context.setData(ParamKeys.PAY_TYPE, "110");
 				
 	}
