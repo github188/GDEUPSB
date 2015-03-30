@@ -162,8 +162,11 @@ public class GDParamKeys {
 	/** 系统当前时间：curTim */
 	public static final String LOT_CURTIM = "curTim";
 
+
 	/** 福彩轧差处理入账帐号 */
 	public static final String LOT_FC_ACT_NO = "fCActNo";
+	/** 福彩方第三方返回码*/
+	public static final String LOT_RESULT_CODE= "resultCode";
 
 	/*********************** 广东烟草start *****************************/
 	/*** 第三方规定返回码 */

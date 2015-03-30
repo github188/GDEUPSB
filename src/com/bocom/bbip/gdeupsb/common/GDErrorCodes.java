@@ -357,6 +357,13 @@ public final class GDErrorCodes {
 	public static final String EUPS_LOTR01_18_ERROR = "BBIP4400EU1018";
 	/** 不存在未返奖奖期 */
 	public static final String EUPS_LOTR01_19_ERROR = "BBIP4400EU1019";
+	/** 系统角色登陆失败 */
+	public static final String EUPS_LOT_LOGIN_ERROR = "BBIP4400EU1020";
+	/** 系统对时失败 */
+	public static final String EUPS_LOT_CHECK_TIME_ERROR = "BBIP4400EU1021";
+	/** 更新参数表失败!! */
+	public static final String EUPS_LOT_UPDATE_SYS_ERROR = "BBIP4400EU1022";
+	
 
 	public static final String EUPS_THD_ERROR_TIMEOUT = "BBIP4400EU0701";
 	public static final String EUPS_THD_ERROR_SENDFAILURE = "BBIP4400EU0702";
