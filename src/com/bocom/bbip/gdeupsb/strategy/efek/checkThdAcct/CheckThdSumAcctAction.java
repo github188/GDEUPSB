@@ -134,7 +134,7 @@ public class CheckThdSumAcctAction implements  CheckThdSumAcctService{
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
 				
 				context.setData(ParamKeys.BAT_NO, context.getData(ParamKeys.SEQUENCE));
-				context.setData(GDParamKeys.BUS_IDENTIFY, "");
+				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW04");
 				context.setData(ParamKeys.THD_CUS_NO, "");
 				try{
 					Map<String, Object> rspMap = callThdTradeManager.trade(context);
