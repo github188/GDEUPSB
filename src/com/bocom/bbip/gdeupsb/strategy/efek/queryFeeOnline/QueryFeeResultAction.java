@@ -78,7 +78,7 @@ public class QueryFeeResultAction implements Executable{
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
 				//TODO 
-				context.setData(GDParamKeys.BUS_IDENTIFY, "");		
+				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW04");		
 						try{
 							Map<String, Object> rspMap = callThdTradeManager.trade(context);
 								if(BPState.isBPStateNormal(context)){
