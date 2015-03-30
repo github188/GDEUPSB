@@ -62,9 +62,9 @@ public class LoginAction extends BaseAction {
                 // 系统角色失败
                 throw new CoreException(GDErrorCodes.EUPS_THD_SYS_ERROR);
             }
+            log.info("系统角色失败");
             throw new CoreException(GDErrorCodes.EUPS_LOT_LOGIN_ERROR);
         }
-
         // 系统对时
         context.setData("action", "200");
         Map<String, Object> map = new HashMap<String, Object>();// 申请当前期号，奖期信息下载
@@ -77,6 +77,7 @@ public class LoginAction extends BaseAction {
             if (StringUtils.isEmpty(responseCod)) {
                 throw new CoreException(GDErrorCodes.EUPS_THD_SYS_ERROR);
             }
+            log.info("系统对时失败！");
             throw new CoreException(GDErrorCodes.EUPS_LOT_CHECK_TIME_ERROR);
         }
 

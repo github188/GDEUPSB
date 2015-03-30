@@ -9,6 +9,7 @@ import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.entity.GdLotChkCtl;
 import com.bocom.bbip.gdeupsb.entity.GdLotChkDtl;
 import com.bocom.bbip.gdeupsb.entity.GdLotDrwTbl;
@@ -32,7 +33,7 @@ public class DeductMoneyAction extends BaseAction {
 
     @Override
     public void execute(Context context) throws CoreException {
-        log.info("DeductMoneyAction start!");
+        log.info("Lot DeductMoneyAction start!");
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
         context.setData("curTim",DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMddHHmmss));
         GdLotChkCtl lotChkCtl = new GdLotChkCtl();
@@ -41,25 +42,18 @@ public class DeductMoneyAction extends BaseAction {
         lotChkCtl.setGameId(gameId);
         lotChkCtl.setDrawId(drawId);
         List<GdLotChkCtl> lotChkCtls = new ArrayList<GdLotChkCtl>();
-        try {
-            lotChkCtls = get(GdLotChkCtlRepository.class).find(lotChkCtl);
-        } catch (Exception e) {
-            context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
-            context.setData(ParamKeys.RSP_CDE, "LOT999");
-            context.setData(ParamKeys.RSP_MSG, "查询对账信息异常!");
-            return;
-        }
+        //查询对账信息
+        lotChkCtls = get(GdLotChkCtlRepository.class).find(lotChkCtl);
         CommonLotAction commAction = new CommonLotAction();
         if (CollectionUtils.isEmpty(lotChkCtls)) {
             //无信息则下载对账信息 
             context.setData(ParamKeys.FILE_TYPE,"3");
             commAction.downloadFile(context);
+            //再次查询对账信息
             List<GdLotChkCtl> gdLotChkCtls =  get(GdLotChkCtlRepository.class).find(lotChkCtl);
             if (CollectionUtils.isEmpty(gdLotChkCtls)) {
-                context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
-                context.setData(ParamKeys.RSP_CDE, "LOT999");
-                context.setData(ParamKeys.RSP_MSG, "无对账信息!");
-                return;
+            	 log.info("无对账信息!");
+                throw new CoreException(GDErrorCodes.EUPS_LOT_NO_CHECK_INFO);
             }
         }
         //设置对账初始状态
@@ -71,12 +65,10 @@ public class DeductMoneyAction extends BaseAction {
         try {
             get(GdLotTxnJnlRepository.class).updateByGameIdAndDrawId(lotTxnJnl);
         } catch(Exception e){
-            context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
-            context.setData(ParamKeys.RSP_CDE, "LOT999");
-            context.setData(ParamKeys.RSP_MSG, "对账更新状态失败!");
-            return;
+        	 log.info("更新购彩流水失败!");
+            throw new CoreException(GDErrorCodes.EUPS_LOT_UPDATE_CHECK_INFO_FAIL);
         }
-        
+        //设置对账明细表初始状态
         GdLotChkDtl  lotChkDtl = new GdLotChkDtl();
         lotChkDtl.setGameId(gameId);
         lotChkDtl.setDrawId(drawId);
@@ -85,10 +77,8 @@ public class DeductMoneyAction extends BaseAction {
         try {
             get(GdLotChkDtlRepository.class).updateByGameIdAndDrawId(lotChkDtl);
         } catch(Exception e){
-            context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
-            context.setData(ParamKeys.RSP_CDE, "LOT999");
-            context.setData(ParamKeys.RSP_MSG, "对账更新状态失败!");
-            return;
+        	 log.error("更新对账明细表失败!",e);
+            throw new CoreException(GDErrorCodes.EUPS_LOT_UPDATE_CHK_DTL_FAIL);
         }
         //对购彩记录进行对账   --(对账成功)
         //更新核对成功的状态
@@ -99,10 +89,8 @@ public class DeductMoneyAction extends BaseAction {
         try {
             get(GdLotTxnJnlRepository.class).updateMatchLotTxnJnl(gdLotTxnJnl);
         } catch(Exception e){
-            context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
-            context.setData(ParamKeys.RSP_CDE, "LOT999");
-            context.setData(ParamKeys.RSP_MSG, "对账更新状态失败!（MatchLotTxnJnl）");
-            return;
+        	 log.error("对对账流水状态更新失败!",e);
+         throw new CoreException(GDErrorCodes.EUPS_LOT_UPDATE_TXN_JNL_FAIL);
         }
         //对对账明细进行对账
         GdLotChkDtl  gdLotChkDtl = new GdLotChkDtl();
@@ -113,19 +101,15 @@ public class DeductMoneyAction extends BaseAction {
         try {
             get(GdLotChkDtlRepository.class).updateMatchLotChkDtl(gdLotChkDtl);
         } catch(Exception e){
-            context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
-            context.setData(ParamKeys.RSP_CDE, "LOT999");
-            context.setData(ParamKeys.RSP_MSG, "对账更新状态失败!（MatchLotChkDtl）");
-            return;
+        	
+            throw new CoreException(GDErrorCodes.EUPS_LOT_UPDATE_CHK_DTL_FAIL);
         }
         //  更新我方多账的状态 --"对购彩记录进行对账(对账失败)
         try {
             get(GdLotTxnJnlRepository.class).updateUnMatchLotTxnJnl(gdLotTxnJnl);
         } catch(Exception e){
-            context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
-            context.setData(ParamKeys.RSP_CDE, "LOT999");
-            context.setData(ParamKeys.RSP_MSG, "对账更新状态失败!（MatchLotChkDtl）");
-            return;
+        	throw new CoreException(GDErrorCodes.EUPS_LOT_UPDATE_FAIL_TXN_JNL);
+        	
         }
         //  <!-- 判断是否对账成功，如果是则更新奖期表的对账标志并通知购彩总金额 -->
         //<!-- 判断对账明细中是否还有未对账的 -->
@@ -144,10 +128,7 @@ public class DeductMoneyAction extends BaseAction {
                 context.setData("totAmt", totAmt);
                 context.setData("totNum", totNum);
             } catch (Exception e) {
-                context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
-                context.setData(ParamKeys.RSP_CDE, "LOT999");
-                context.setData(ParamKeys.RSP_MSG, "统计购彩总金额失败!");
-                return;
+               throw new CoreException(GDErrorCodes.EUPS_LOT_CUM_CON_FAIL);
             }
             context.setData("chkFlg", "2");
         } else {
@@ -163,10 +144,8 @@ public class DeductMoneyAction extends BaseAction {
         try {
             get(GdLotChkCtlRepository.class).update(lotChkCtlInput);
         } catch (Exception e) {
-            context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
-            context.setData(ParamKeys.RSP_CDE, "LOT999");
-            context.setData(ParamKeys.RSP_MSG, "对账更新状态失败!");
-            return;
+            log.error("更新对账控制表对账结果失败！",e);
+            throw new CoreException(GDErrorCodes.EUPS_LOT_CHECK_CON_FAIL);
         }
         //更新奖期表中对应的对账信息
         GdLotDrwTbl lotDrwTbl = new GdLotDrwTbl();
@@ -178,10 +157,8 @@ public class DeductMoneyAction extends BaseAction {
         try {
             get(GdLotDrwTblRepository.class).update(lotDrwTbl);
         } catch (Exception e) {
-            context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
-            context.setData(ParamKeys.RSP_CDE, "LOT999");
-            context.setData(ParamKeys.RSP_MSG, "对账更新状态失败!");
-            return;
+            log.error("更新奖期表对账结果失败！",e);
+        	throw new CoreException(GDErrorCodes.EUPS_LOT_CHECK_CON_FAIL);
         }
         //生成对账报表  代码为空
         // 计算轧差 

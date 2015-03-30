@@ -1,6 +1,7 @@
 package com.bocom.bbip.gdeupsb.action.lot;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,15 +12,18 @@ import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
+import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
+import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdLotCusInf;
 import com.bocom.bbip.gdeupsb.repository.GdLotCusInfRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.euif.component.util.StringUtil;
-import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -36,7 +40,7 @@ public class RegistAction extends BaseAction {
 
     @Override
     public void execute(Context context) throws CoreException {
-        log.info("==》》》》》》registAction Start !!==》》》》》》");
+        log.info("==》registAction Start !!》》》》》》");
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
         GdLotCusInf lotCusInf = new GdLotCusInf();
         lotCusInf.setCrdNo(context.getData("crdNo").toString());
@@ -44,61 +48,55 @@ public class RegistAction extends BaseAction {
 
         List<GdLotCusInf> lotCusInfs = get(GdLotCusInfRepository.class).find(lotCusInf);
         if (!CollectionUtils.isEmpty(lotCusInfs)) {
-            context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
-            context.setData(ParamKeys.RSP_CDE, "LOT999");
-            context.setData(ParamKeys.RSP_MSG, "卡号:" + context.getData("crdNo").toString() + "已注册 !!");
-            return;
+            log.info("此卡号:"+context.getData("crdNo").toString()+"已注册 !");
+            throw new CoreException(GDErrorCodes.EUPS_LOT_CAR_HAV_REG);
         }
-
-        // =====================手机号注册检查>>>
+        //手机号注册检查>>>
         GdLotCusInf gdeupsbLotCusInf = new GdLotCusInf();
         gdeupsbLotCusInf.setMobTel(context.getData("mobTel").toString());
         gdeupsbLotCusInf.setStatus("1");
 
         List<GdLotCusInf> gdeupsblotCusInfs = get(GdLotCusInfRepository.class).find(gdeupsbLotCusInf);
         if (!CollectionUtils.isEmpty(gdeupsblotCusInfs)) {
-            context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
-            context.setData(ParamKeys.RSP_CDE, "LOT999");
-            context.setData(ParamKeys.RSP_MSG, "手机号:" + context.getData("mobTel").toString() + "已注册 !!");
-            return;
+            log.info("手机号:"+context.getData("mobTel").toString()+"已注册 !");
+            throw new CoreException(GDErrorCodes.EUPS_LOT_MOB_HAV_REG);
         }
 
-        // <Set>OIdNo=$IdNo</Set> <!--保留上送的身份证号码-->
+        // 保留上送的身份证号
         context.setData("oIdNo", context.getData("idNo"));
         context.setData("tTxnCd", "207120");
         String teller = get(BBIPPublicService.class).getETeller(ParamKeys.BK);
         context.setData(ParamKeys.TELLER_ID, teller);
         // Map<String, Object> establishMap = new HashMap<String, Object>();
 
-        /*
-         * Result operateAcpAgtResult =
-         * serviceAccess.callServiceFlatting("queryCustomeNoInfo",
-         * establishMap); log.info("===========respMap: " +
-         * operateAcpAgtResult.getPayload() + "==========="); if
-         * (!operateAcpAgtResult.isSuccess()) { if (Status.SEND_ERROR ==
-         * operateAcpAgtResult.getStatus()) {
-         * context.setData("msgTyp",Constants.RESPONSE_TYPE_FAIL);
-         * context.setData(ParamKeys.RSP_CDE,"LOT999");
-         * context.setData(ParamKeys.RSP_MSG,"查询客户开卡信息出错! "); throw new
-         * CoreException("查询客户开卡信息出错!"); } // 连接错误或等待超时,但不知道是否已上送,这里交易已处于未知状态
-         * context.setState(BPState.BUSINESS_PROCESSNIG_STATE_UNKOWN_FAIL); if
-         * (Status.TIMEOUT == operateAcpAgtResult.getStatus()) {
-         * context.setData("msgTyp",Constants.RESPONSE_TYPE_FAIL);
-         * context.setData(ParamKeys.RSP_CDE,"LOT999");
-         * context.setData(ParamKeys
-         * .RSP_MSG,"Call acp servcie occur time out."); throw new
-         * CoreException("Call acp servcie occur time out."); } }
-         */
+       /*
+          Result operateAcpAgtResult =
+          serviceAccess.callServiceFlatting("queryCustomeNoInfo",
+          establishMap); log.info("===========respMap: " +
+          operateAcpAgtResult.getPayload() + "==========="); if
+          (!operateAcpAgtResult.isSuccess()) { if (Status.SEND_ERROR ==
+          operateAcpAgtResult.getStatus()) {
+          context.setData("msgTyp",Constants.RESPONSE_TYPE_FAIL);
+          context.setData(ParamKeys.RSP_CDE,"LOT999");
+          context.setData(ParamKeys.RSP_MSG,"查询客户开卡信息出错! "); throw new
+          CoreException("查询客户开卡信息出错!"); } 
+          // 连接错误或等待超时,但不知道是否已上送,这里交易已处于未知状态
+          context.setState(BPState.BUSINESS_PROCESSNIG_STATE_UNKOWN_FAIL); if
+          (Status.TIMEOUT == operateAcpAgtResult.getStatus()) {
+	           context.setData("msgTyp",Constants.RESPONSE_TYPE_FAIL);
+	           context.setData(ParamKeys.RSP_CDE,"LOT999");
+	           context.setData(ParamKeys.RSP_MSG,"Call acp servcie occur time out."); 
+	           throw new CoreException("Call acp servcie occur time out.");
+           } 
+        }
         // <Set>CusNam=DELBOTHSPACE($ActNam)</Set> 前台及程序都没有 ActNam
         context.setData("cusNam", context.getData("cusNam").toString().trim());
         String idNo = context.getData("idNo").toString().trim();
         String oIdNo = context.getData("oIdNo").toString().trim();
         if (!idNo.equals(oIdNo)) {
-            context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
-            context.setData(ParamKeys.RSP_CDE, "LOT999");
-            context.setData(ParamKeys.RSP_MSG, "身份证号码不符!!!");
-            return;
-        }
+        	 log.info("身份证号码不符!");
+             throw new CoreException(GDErrorCodes.EUPS_LOT_IDEN_NOEXIST);
+        }*/
         // --登记福彩用户表--
         GdLotCusInf inputLotCusInf = new GdLotCusInf();
         inputLotCusInf.setBrNo(context.getData(ParamKeys.BK).toString());
@@ -124,14 +122,12 @@ public class RegistAction extends BaseAction {
         inputLotCusInf.setRegTim(DateUtils.format(regTim, DateUtils.STYLE_yyyyMMddHHmmss));
         inputLotCusInf.setStatus("1");
 
-        // TODO; 前台及程序都没有actNod
+        // 
         String subNod = context.getData(ParamKeys.BR).toString().substring(2, 5);
         String cityId = CodeSwitchUtils.codeGenerator("SubNod2CityId", subNod);
         if (StringUtil.isEmpty(cityId)) {
-            context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
-            context.setData(ParamKeys.RSP_CDE, "LOT999");
-            context.setData(ParamKeys.RSP_MSG, "地市编码转换出错!");
-            throw new CoreException("地市编码转换出错!");
+        	log.info( "地市编码转换出错!");
+        	throw new CoreException(GDErrorCodes.EUPS_LOT_SWIC_CITYNO_ERROR);
         }
         String sex = "0";
         // gender 在何处赋值 TODO
@@ -146,14 +142,11 @@ public class RegistAction extends BaseAction {
         try {
             get(GdLotCusInfRepository.class).insert(inputLotCusInf);
         } catch (Exception e) {
-            context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
-            context.setData(ParamKeys.RSP_CDE, "LOT999");
-            context.setData(ParamKeys.RSP_MSG, "登记福彩用户表失败!!!");
-            return;
+        	log.info( "登记福彩用户表失败!");
+        	throw new CoreException(GDErrorCodes.EUPS_LOT_INSERT_USERINFO_FAIL);
         }
         // 向福彩中心发出彩民注册
-        //数据准备
-        context.setData("eupsBusTyp", "LOTR01");
+        context.setData(ParamKeys.EUPS_BUSS_TYPE, "LOTR01");
         context.setData("action", "201");
         context.setData("regTim", DateUtils.format(regTim, DateUtils.STYLE_FULL));
         String idTyp = context.getData("idTyp");
@@ -162,21 +155,18 @@ public class RegistAction extends BaseAction {
             lotIdTyp="1";
         }
         context.setData("lotIdTyp", lotIdTyp);
-        Map<String, Object> resultMap = null;// 申请当前期号，奖期信息下载
-        try {
-            resultMap = get(ThirdPartyAdaptor.class).trade(context);
-            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
-        } catch (JumpException e1) {
-            e1.printStackTrace();
-        }
-        if (!Constants.RESPONSE_CODE_SUCC.equals(resultMap.get("resultCode"))) {
+        Map<String, Object> resultMap = new HashMap<String, Object>(); 
+        resultMap = get(ThirdPartyAdaptor.class).trade(context);
+        String responseCode = resultMap.get(GDParamKeys.LOT_RESULT_CODE).toString();
+        if (BPState.isBPStateOvertime(context)) {
+            throw new CoreException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
+        } else if (!"0".equals(responseCode)) {
+            if (StringUtils.isEmpty(responseCode)) {
+                throw new CoreException(GDErrorCodes.EUPS_THD_SYS_ERROR);
+            }
             log.info("Regist Fail!");
-            context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
-            context.setData(ParamKeys.RSP_CDE, "LOT999");
-            context.setData(ParamKeys.RSP_MSG, "彩民注册失败!!!");
-            return;
+            throw new CoreException(GDErrorCodes.EUPS_LOT_REG_FAIL);
         }
-
         context.setData("msgTyp", Constants.RESPONSE_TYPE_SUCC);
         context.setData("lotNam", context.getData("mobTel"));
         context.setData(ParamKeys.RSP_CDE, Constants.RESPONSE_CODE_SUCC);

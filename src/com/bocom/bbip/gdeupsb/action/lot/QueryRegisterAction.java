@@ -10,10 +10,12 @@ import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
+import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdLotCusInf;
 import com.bocom.bbip.gdeupsb.repository.GdLotCusInfRepository;
 import com.bocom.bbip.utils.CollectionUtils;
-import com.bocom.jump.bp.JumpException;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -36,10 +38,9 @@ public class QueryRegisterAction  extends BaseAction{
         
         List<GdLotCusInf> lotCusInfs =get(GdLotCusInfRepository.class).find(lotCusInf);
         if (CollectionUtils.isEmpty(lotCusInfs)) {
-            context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
-            context.setData(ParamKeys.RSP_CDE,"LOT999");
-            context.setData(ParamKeys.RSP_MSG,"卡号:"+context.getData("crdNo").toString()+"没注册 !!");
-            return;
+            log.info("卡号:"+context.getData("crdNo").toString()+"没注册 !");
+            throw new CoreException(GDErrorCodes.EUPS_LOT_CAR_NOT_REG);
+
         }
         context.setData("cusNam",lotCusInfs.get(0).getCusNam());
         context.setData("idTyp",lotCusInfs.get(0).getIdTyp());
@@ -48,30 +49,23 @@ public class QueryRegisterAction  extends BaseAction{
         context.setData("lotNam",lotCusInfs.get(0).getLotNam());
         //向福彩中心发送彩民信息查询
         context.setData("action", "209");
-        context.setData("eupsBusTyp", "LOTR01");
+        context.setData(ParamKeys.EUPS_BUSS_TYPE, "LOTR01");
         context.setData("gambler_name", context.getData("lotNam"));
         context.setData("gambler_pwd", context.getData("lotPsw"));
         context.setData("modify_time", context.getData("fTXNTm"));
-
         // 向福彩中心发送请求
-      
         Map<String,Object> resultMap = new HashMap<String, Object>();
-        try {
-            resultMap = get(ThirdPartyAdaptor.class).trade(context);
-            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
-        } catch (JumpException e1) {
-            e1.printStackTrace();
-        }  
-        if(BPState.isBPStateOvertime(context)){
+        resultMap = get(ThirdPartyAdaptor.class).trade(context);
+        String responseCode = resultMap.get(GDParamKeys.LOT_RESULT_CODE).toString();
+        if (BPState.isBPStateOvertime(context)) {
             throw new CoreException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
-        }else if(!((Constants.RESPONSE_CODE_SUCC).equals(resultMap.get("resultCode")))){
+        } else if (!"0".equals(responseCode)) {
+            if (StringUtils.isEmpty(responseCode)) {
+                throw new CoreException(GDErrorCodes.EUPS_THD_SYS_ERROR);
+            }
             log.info("QueryLot Fail!");
-            context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
-            context.setData(ParamKeys.RSP_CDE, "LOT999");
-            context.setData(ParamKeys.RSP_MSG, "彩民查询失败!!!");
-            return;
+            throw new CoreException(GDErrorCodes.EUPS_LOT_QRY_CUSINFO_FAIL);
         }
-        
         context.setData("MsgTyp",Constants.RESPONSE_TYPE_SUCC);
         context.setData(ParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
         context.setData(ParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
