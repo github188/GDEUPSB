@@ -618,8 +618,6 @@
   <xs:complexType name="lotLoginRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
-      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType" minOccurs="0"/>
-      <xs:element name="lotTim" type="tns:lotTim_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="lotLoginResponse_CType">
@@ -627,12 +625,4 @@
       <xs:element ref="tns:responseHeader"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="lotTim_SType">
-    <xs:annotation>
-      <xs:documentation>福彩时间</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="14"/>
-    </xs:restriction>
-  </xs:simpleType>
 </xs:schema>
