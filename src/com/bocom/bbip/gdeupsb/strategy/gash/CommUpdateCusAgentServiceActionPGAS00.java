@@ -60,10 +60,6 @@ public class CommUpdateCusAgentServiceActionPGAS00 extends BaseAction implements
 		logger.info("===oprGasCusAgentAction=====context=" + context);
 
 		if ("EditOK".equals(context.getData("TransCode").toString().trim())) {
-			// 第三方返回新增成功，协议表、动态协议表插入新增数据
-			// 代扣协议管理-修改和新增 maintainAgentCollectAgreement
-			// get(BGSPServiceAccessObject.class).callServiceFlatting("maintainAgentCollectAgreement",
-			// addOrEditMap);
 			
 			//动态协议表
 			GdGasCusDay insCusInfo = BeanUtils.toObject(context.getDataMap(),
