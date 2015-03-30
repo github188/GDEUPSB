@@ -120,7 +120,7 @@ public class ZhLqSocketGateway implements Gateway {
 	private void exChange(DataInputStream is, OutputStream os, String txncod) throws IOException {
 		recvThree(is, 0);
 		
-		String exStr = "VER2.0  ";
+		String exStr = "VER2.0";
 		os.write(exStr.getBytes());
 		log.info("send msg1:"+exStr);
 		String s = recvThree(is, 1);
