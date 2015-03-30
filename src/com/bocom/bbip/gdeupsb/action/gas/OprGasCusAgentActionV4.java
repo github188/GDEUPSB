@@ -14,7 +14,6 @@ import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
-import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
 import com.bocom.bbip.eups.repository.EupsThdBaseInfoRepository;
@@ -44,9 +43,9 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 
 	@Autowired
 	BGSPServiceAccessObject bgspServiceAccessObject;
-	
+
 	@Autowired
-	BBIPPublicService  bbipPublicService;
+	BBIPPublicService bbipPublicService;
 
 	public void execute(Context context) throws CoreException,
 			CoreRuntimeException {
@@ -57,16 +56,15 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		context.setData(ParamKeys.CUS_NO, context.getData(ParamKeys.THD_CUS_NO));
 		context.setData("agtSrvCusId", context.getData(ParamKeys.THD_CUS_NO));
 
-
 		context.setData("ccy", "CNY");
 		logger.info("================now context =" + context);
 		logger.info("=======功能选择(1-新增 2-修改 3-删除 4-查询):"
 				+ context.getData("optFlg"));
 
 		if ("4".equals(context.getData("optFlg"))) { // 4:查询交易
-			
+
 			setAgtCltAndCusInf(context);
-			
+
 			// 上代收付查询协议，先根据cusAc进行列表查询得到协议编号，再用协议编号查询明细（用户信息）
 			Map<String, Object> cusListMap = setAcpMap(context);
 			cusListMap.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
@@ -112,17 +110,17 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			context.setDataMap(qryCusDetail.getPayload());
 			logger.info("用户协议查询完成");
 		} else {
-			
+
 			setAgtCltAndCusInf(context);
 
 			// 前端授权，此处只检查
 			// 非查询交易要授权
-//			String authTlr = context.getData(ParamKeys.AUTHOR_LEVEL);
-//			if (StringUtils.isEmpty(authTlr)) {
-//				throw new CoreException(ErrorCodes.EUPS_CANCEL_CHECK_AUTH_FAIL);
-//			}
-//
-//			logger.info("已授权，可进行交易");
+			// String authTlr = context.getData(ParamKeys.AUTHOR_LEVEL);
+			// if (StringUtils.isEmpty(authTlr)) {
+			// throw new CoreException(ErrorCodes.EUPS_CANCEL_CHECK_AUTH_FAIL);
+			// }
+			//
+			// logger.info("已授权，可进行交易");
 
 			// <Set>TActNo=491800012620190029499</Set>
 			// <Set>@MSG.OIP=$HstIp</Set> <!--第三方IP-->
@@ -143,73 +141,77 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			Map<String, Object> thdRspMsg = get(ThirdPartyAdaptor.class).trade(
 					context);
 			context.setDataMap(thdRspMsg);
-			logger.info("======================context after callThd========" + context);
-//
-//			Map<String, Object> cusListMap = setAcpMap(context);
-//			cusListMap.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
-//			context.setDataMap(cusListMap);
-//			Result accessObjList = bgspServiceAccessObject.callServiceFlatting(
-//					"queryListAgentCollectAgreement", cusListMap);
-//			logger.info("==============ACPS response msg:【operateAcpAgtResult.getResponseCode()："
-//					+ accessObjList.getResponseCode()
-//					+ "】【accessObjList.getResponseMessage():"
-//					+ accessObjList.getResponseMessage()
-//					+ "】【accessObjList.getResponseType()："
-//					+ accessObjList.getResponseType() + "】");
-//			
-//			logger.info("================= context after qry cusAgtInfoList :" + context);
+			logger.info("======================context after callThd========"
+					+ context);
+			//
+			// Map<String, Object> cusListMap = setAcpMap(context);
+			// cusListMap.put(ParamKeys.CUS_AC,
+			// context.getData(ParamKeys.CUS_AC));
+			// context.setDataMap(cusListMap);
+			// Result accessObjList =
+			// bgspServiceAccessObject.callServiceFlatting(
+			// "queryListAgentCollectAgreement", cusListMap);
+			// logger.info("==============ACPS response msg:【operateAcpAgtResult.getResponseCode()："
+			// + accessObjList.getResponseCode()
+			// + "】【accessObjList.getResponseMessage():"
+			// + accessObjList.getResponseMessage()
+			// + "】【accessObjList.getResponseType()："
+			// + accessObjList.getResponseType() + "】");
+			//
+			// logger.info("================= context after qry cusAgtInfoList :"
+			// + context);
 
 			if ("QryUser"
 					.equals(context.getData("TransCode").toString().trim())) {// 燃气返回QryUser,说明燃气存在该用户编号，银行可新增，可修改,可删除
 
 				if ("1".equals(context.getData("optFlg"))) { // 新增
-//					if ("N".equals(accessObjList.getResponseType())) {
-//						throw new CoreRuntimeException(
-//								GDErrorCodes.GAS_QRY_AGT_ERR_EXIST);
-//					} else {
-						context.setData("tCommd", "Add");
-						context.setData("TransCode", "Add");
-						logger.info("============未签约，可签约");
-						context.setData("agrChl", "01");
-						context.setData(ParamKeys.OPERATION_TPYE, "0"); // oprTyp=0:增
-						
-						setAgtCltAndCusInf(context);
-						
-						get(BBIPPublicService.class).synExecute(
-								"eups.commInsertCusAgent", context);
-//					}
+				// if ("N".equals(accessObjList.getResponseType())) {
+				// throw new CoreRuntimeException(
+				// GDErrorCodes.GAS_QRY_AGT_ERR_EXIST);
+				// } else {
+					context.setData("tCommd", "Add");
+					context.setData("TransCode", "Add");
+					logger.info("============未签约，可签约");
+					context.setData("agrChl", "01");
+					context.setData(ParamKeys.OPERATION_TPYE, "0"); // oprTyp=0:增
+
+					setAgtCltAndCusInf(context);
+
+					get(BBIPPublicService.class).synExecute(
+							"eups.commInsertCusAgent", context);
+					// }
 				}
 
 				if ("2".equals(context.getData("optFlg"))) { // 修改
-//					if (!("N".equals(accessObjList.getResponseType()))) {
-//						throw new CoreRuntimeException(
-//								GDErrorCodes.GAS_QRY_AGT_ERR_EMT);
-//					} else {
-						context.setData("tCommd", "Edit");
-						context.setData("TransCode", "Edit");
-						logger.info("============有协议，可修改");
-						context.setData("agrChl", "01");
-						context.setData(ParamKeys.OPERATION_TPYE, "1"); // //oprTyp=1:改
+				// if (!("N".equals(accessObjList.getResponseType()))) {
+				// throw new CoreRuntimeException(
+				// GDErrorCodes.GAS_QRY_AGT_ERR_EMT);
+				// } else {
+					context.setData("tCommd", "Edit");
+					context.setData("TransCode", "Edit");
+					logger.info("============有协议，可修改");
+					context.setData("agrChl", "01");
+					context.setData(ParamKeys.OPERATION_TPYE, "1"); // //oprTyp=1:改
 
-						setAgtCltAndCusInf(context);
+					setAgtCltAndCusInf(context);
 
-						get(BBIPPublicService.class).synExecute(
-								"eups.commUpdateCusAgent", context);
-//					}
+					get(BBIPPublicService.class).synExecute(
+							"eups.commUpdateCusAgent", context);
+					// }
 				}
 
 				if ("3".equals(context.getData("optFlg"))) { // 删除
-//					if (!("N".equals(accessObjList.getResponseType()))) {
-//						throw new CoreRuntimeException(
-//								GDErrorCodes.GAS_QRY_AGT_ERR_EMT);
-//					} else {
-						context.setData("tCommd", "Stop");
-						context.setData("TransCode", "Stop");
-						logger.info("===========有协议，可删除");
-						
-						get(BBIPPublicService.class).synExecute(
-								"eups.commDelCusAgent", context);
-//					}
+				// if (!("N".equals(accessObjList.getResponseType()))) {
+				// throw new CoreRuntimeException(
+				// GDErrorCodes.GAS_QRY_AGT_ERR_EMT);
+				// } else {
+					context.setData("tCommd", "Stop");
+					context.setData("TransCode", "Stop");
+					logger.info("===========有协议，可删除");
+
+					get(BBIPPublicService.class).synExecute(
+							"eups.commDelCusAgent", context);
+					// }
 				}
 			} else if ("NOUser".equals(context.getData("TransCode").toString()
 					.trim())) {
@@ -294,6 +296,32 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		// drwMde CHAR 1 N
 		// bvCde CHAR 3 N "007-磁条卡；008-IC卡；009-磁条和IC复合卡；704-储蓄存折；
 		// bvNo CHAR 8 N
+		// cusTyp:0 对公账户 2存折 4对私卡8暂收内部户
+		// TODO
+		String cusTyp = context.getData("cusTyp");
+		if ("0".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡8暂收内部户
+			map.put("bvCde", null);
+			context.setData("bvCde", null);
+			map.put("bvNo", null);
+		}
+		if ("2".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡8暂收内部户
+			map.put("bvCde", "704");
+			map.put("bvNo", context.getData("bvNo"));
+			context.setData("bvCde", "704");
+			map.put("bcNo", context.getData("bvNo"));
+		}
+		if ("4".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡8暂收内部户
+			map.put("bvCde", "009");
+			context.setData("bvCde", "009");
+			map.put("bvNo", null);
+
+		}
+		if ("8".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡8暂收内部户
+			map.put("bvCde", null);
+			context.setData("bvCde", null);
+			map.put("bvNo", null);
+		}
+
 		// ourOthFlg CHAR 1 N "0-本行；1-他行
 		map.put("ourOthFlg", "0");
 		// obkBk VARCHAR 14 N
@@ -321,16 +349,35 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 
 		// bvCde CHAR 3 N "007-磁条卡；008-IC卡；009-磁条和IC复合卡；704-储蓄存折；
 		// bvNo CHAR 8 N
+		// cusTyp:0 对公账户 2存折 4对私卡8暂收内部户
+		// TODO
+		String cusTyp = context.getData("cusTyp");
+		if ("0".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡8暂收内部户
+			map.put("bvCde", null);
+			context.setData("bvCde", null);
+			map.put("bvNo", null);
+		}
+		if ("2".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡8暂收内部户
+			map.put("bvCde", "704");
+			map.put("bvNo", context.getData("bvNo"));
+			context.setData("bvCde", "704");
+		}
+		if ("4".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡8暂收内部户
+			map.put("bvCde", "009");
+			context.setData("bvCde", "009");
+			map.put("bvNo", null);
+		}
+		if ("8".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡8暂收内部户
+			map.put("bvCde", null);
+			context.setData("bvCde", null);
+			map.put("bvNo", null);
+		}
 
 		// comNo CHAR 15 Y
 		// comNum CHAR 100 N
 		// busTyp CHAR
 		// busKnd CHAR 4 Y 1 Y 0-代收；
 		map.put(ParamKeys.COMPANY_NO, context.getData(ParamKeys.COMPANY_NO));
-		
-		
-		
-		
 		EupsThdBaseInfo baseInfo = new EupsThdBaseInfo();
 		baseInfo.setEupsBusTyp((String) context
 				.getData(ParamKeys.EUPS_BUSS_TYPE));
@@ -343,7 +390,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		String comNme = infoList.get(0).getComNme();
 		context.setData(ParamKeys.COMPANY_NAME, comNme);
 		map.put(ParamKeys.COMPANY_NAME, comNme);
-		
+
 		map.put(ParamKeys.BUS_TYP, "0"); // TODO 0-代收； 暂用0，待确认0-代收,1-代付,2-代缴
 		map.put(ParamKeys.BUSS_KIND, "A565");
 		// busKndNme VARCHAR 30 N
@@ -382,7 +429,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		map.put(ParamKeys.CMU_TEL, context.getData(ParamKeys.CMU_TEL));
 		// eml VARCHAR 60 N
 		// </agentCollectAgreement> LIST
-		
+
 		map.put(ParamKeys.THD_CUS_NO, context.getData(ParamKeys.THD_CUS_NO));
 
 		return map;
