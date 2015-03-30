@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.strategy.efek.cancelFeeOnline;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import org.apache.commons.logging.Log;
@@ -33,7 +34,9 @@ public class PreCancelFeeAction implements Executable{
 		
 		context.setData(GDParamKeys.SVRCOD, "12");
 		context.setData(ParamKeys.THD_CUS_NO, context.getData(GDParamKeys.PAY_NO));
-		
+		BigDecimal bigDecimal=new BigDecimal(context.getData(ParamKeys.TXN_AMT).toString()).scaleByPowerOfTen(2);
+		context.setData(ParamKeys.TXN_AMT, bigDecimal);
+		context.setData("CXMoney", bigDecimal);
 		context.setData(ParamKeys.CUS_NME, context.getData("CusNme"));
 		//TODO 
 		context.setData("thdObkCde", context.getData(ParamKeys.BANK_NO));
@@ -49,12 +52,6 @@ public class PreCancelFeeAction implements Executable{
 					context.setData(GDParamKeys.TOTNUM, "1");
 					callThd(context);
 				
-				context.setData("TIATyp", "C");      //不明 TIATyp 是什么
-				//TODO 是否需要	    <Set>TTxnCd=STRCAT(SUBSTR($OTTxnCd,1,5),9)</Set>	    <Set>HTxnCd=STRCAT(SUBSTR($OHTxnCd,1,5),9)</Set>
-//				String txnCd=(String)context.getData(ParamKeys.TXN_CODE);
-//				context.setData(ParamKeys.THD_TXN_CDE, txnCd.substring(1, 6)+"9");
-//				context.setData(ParamKeys.TXN_CODE, txnCd.substring(1, 6)+"9");
-
 				context.setData(GDParamKeys.BAG_TYPE, "0");
 				logger.info("==========End  PreCancelFeeAction  ");
 		 }
@@ -82,6 +79,7 @@ public class PreCancelFeeAction implements Executable{
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
 				context.setData("PKGCNT", "000001");
+				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW05");
 				context.setData(ParamKeys.THD_TXN_DATE, DateUtils.format((Date)context.getData("thdTxnDte"), DateUtils.STYLE_yyyyMMdd));
 				context.setData(ParamKeys.THD_TXN_TIME, DateUtils.format((Date)context.getData("thdTxnTme"), DateUtils.STYLE_HHmmss));
 	}
