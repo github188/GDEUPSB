@@ -358,7 +358,7 @@
       <xs:element name="settleAccountsName" type="tns:settleAccountsName_SType" minOccurs="0"/>
       <xs:element name="bankNo" type="tns:bankNo_SType" minOccurs="0"/>
       <xs:element name="obkBk" type="tns:obkBk_SType" minOccurs="0"/>
-      <xs:element name="cusAc" type="tns:cusAc_SType"/>
+      <xs:element name="cusAc" type="tns:cusAc_SType" minOccurs="0"/>
       <xs:element name="cusNme" type="tns:cusNme_SType" minOccurs="0"/>
       <xs:element name="newCusAc" type="tns:newCusAc_SType" minOccurs="0"/>
       <xs:element name="newCusName" type="tns:newCusName_SType" minOccurs="0"/>
