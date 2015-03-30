@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="0001Response" >
+	<fixString name="ttxnDt" length="8"/>  <!--对账日期 -->
+	 <fixString length="10" name="totNum"  /> <!-- 交易笔数 -->
+	 <fixString length="12" name="totAmt" /> <!-- 总金额-->
+      <fixString length="40" name="checkFilNam" /> <!-- 对账文件名-->
+      <fixString length="8" name="DCC_MAC" /> <!-- MAC值 -->
+</segment>
