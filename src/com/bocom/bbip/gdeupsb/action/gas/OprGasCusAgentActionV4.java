@@ -137,30 +137,30 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			Map<String, Object> thdRspMsg = get(ThirdPartyAdaptor.class).trade(
 					context);
 			context.setDataMap(thdRspMsg);
-			logger.info("======================context========" + context);
-
-			Map<String, Object> cusListMap = setAcpMap(context);
-			cusListMap.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
-			context.setDataMap(cusListMap);
-			Result accessObjList = bgspServiceAccessObject.callServiceFlatting(
-					"queryListAgentCollectAgreement", cusListMap);
-			logger.info("==============ACPS response msg:【operateAcpAgtResult.getResponseCode()："
-					+ accessObjList.getResponseCode()
-					+ "】【accessObjList.getResponseMessage():"
-					+ accessObjList.getResponseMessage()
-					+ "】【accessObjList.getResponseType()："
-					+ accessObjList.getResponseType() + "】");
-			
-			logger.info("================= context after qry cusAgtInfoList :" + context);
+			logger.info("======================context after callThd========" + context);
+//
+//			Map<String, Object> cusListMap = setAcpMap(context);
+//			cusListMap.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
+//			context.setDataMap(cusListMap);
+//			Result accessObjList = bgspServiceAccessObject.callServiceFlatting(
+//					"queryListAgentCollectAgreement", cusListMap);
+//			logger.info("==============ACPS response msg:【operateAcpAgtResult.getResponseCode()："
+//					+ accessObjList.getResponseCode()
+//					+ "】【accessObjList.getResponseMessage():"
+//					+ accessObjList.getResponseMessage()
+//					+ "】【accessObjList.getResponseType()："
+//					+ accessObjList.getResponseType() + "】");
+//			
+//			logger.info("================= context after qry cusAgtInfoList :" + context);
 
 			if ("QryUser"
 					.equals(context.getData("TransCode").toString().trim())) {// 燃气返回QryUser,说明燃气存在该用户编号，银行可新增，可修改,可删除
 
 				if ("1".equals(context.getData("optFlg"))) { // 新增
-					if ("N".equals(accessObjList.getResponseType())) {
-						throw new CoreRuntimeException(
-								GDErrorCodes.GAS_QRY_AGT_ERR_EXIST);
-					} else {
+//					if ("N".equals(accessObjList.getResponseType())) {
+//						throw new CoreRuntimeException(
+//								GDErrorCodes.GAS_QRY_AGT_ERR_EXIST);
+//					} else {
 						context.setData("tCommd", "Add");
 						context.setData("TransCode", "Add");
 						logger.info("============未签约，可签约");
@@ -171,14 +171,14 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 						
 						get(BBIPPublicService.class).synExecute(
 								"eups.commInsertCusAgent", context);
-					}
+//					}
 				}
 
 				if ("2".equals(context.getData("optFlg"))) { // 修改
-					if (!("N".equals(accessObjList.getResponseType()))) {
-						throw new CoreRuntimeException(
-								GDErrorCodes.GAS_QRY_AGT_ERR_EMT);
-					} else {
+//					if (!("N".equals(accessObjList.getResponseType()))) {
+//						throw new CoreRuntimeException(
+//								GDErrorCodes.GAS_QRY_AGT_ERR_EMT);
+//					} else {
 						context.setData("tCommd", "Edit");
 						context.setData("TransCode", "Edit");
 						logger.info("============有协议，可修改");
@@ -189,21 +189,21 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 
 						get(BBIPPublicService.class).synExecute(
 								"eups.commUpdateCusAgent", context);
-					}
+//					}
 				}
 
 				if ("3".equals(context.getData("optFlg"))) { // 删除
-					if (!("N".equals(accessObjList.getResponseType()))) {
-						throw new CoreRuntimeException(
-								GDErrorCodes.GAS_QRY_AGT_ERR_EMT);
-					} else {
+//					if (!("N".equals(accessObjList.getResponseType()))) {
+//						throw new CoreRuntimeException(
+//								GDErrorCodes.GAS_QRY_AGT_ERR_EMT);
+//					} else {
 						context.setData("tCommd", "Stop");
 						context.setData("TransCode", "Stop");
 						logger.info("===========有协议，可删除");
 						
 						get(BBIPPublicService.class).synExecute(
 								"eups.commDelCusAgent", context);
-					}
+//					}
 				}
 			} else if ("NOUser".equals(context.getData("TransCode").toString()
 					.trim())) {
@@ -292,6 +292,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		// obkBk VARCHAR 14 N
 		// </customerInfo> LIST
 
+		map.put(ParamKeys.THD_CUS_NO, context.getData(ParamKeys.THD_CUS_NO));
 		return map;
 
 	}
@@ -358,6 +359,8 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		map.put(ParamKeys.CMU_TEL, context.getData(ParamKeys.CMU_TEL));
 		// eml VARCHAR 60 N
 		// </agentCollectAgreement> LIST
+		
+		map.put(ParamKeys.THD_CUS_NO, context.getData(ParamKeys.THD_CUS_NO));
 
 		return map;
 
