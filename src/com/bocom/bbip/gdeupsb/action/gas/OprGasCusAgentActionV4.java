@@ -201,17 +201,46 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 				}
 
 				if ("3".equals(context.getData("optFlg"))) { // 删除
-				// if (!("N".equals(accessObjList.getResponseType()))) {
-				// throw new CoreRuntimeException(
-				// GDErrorCodes.GAS_QRY_AGT_ERR_EMT);
-				// } else {
-					context.setData("tCommd", "Stop");
-					context.setData("TransCode", "Stop");
-					logger.info("===========有协议，可删除");
+					setAgtCltAndCusInf(context);
 
-					get(BBIPPublicService.class).synExecute(
-							"eups.commDelCusAgent", context);
-					// }
+					// 上代收付查询协议，先根据cusAc进行列表查询得到协议编号，再用协议编号查询明细（用户信息）
+					Map<String, Object> cusListMap = setAcpMap(context);
+					cusListMap.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
+					context.setDataMap(cusListMap);
+
+					Result accessObjList = bgspServiceAccessObject.callServiceFlatting(
+							"queryListAgentCollectAgreement", cusListMap);
+					logger.info("========after optFlg=4 queryListAgentCollectAgreement ======="
+							+ context);
+					logger.info("=========after optFlg=4 accessObjList：【accessObjList.getResponseCode():"
+							+ accessObjList.getResponseCode()
+							+ "】【accessObjList.getResponseMessage():"
+							+ accessObjList.getResponseMessage()
+							+ "】【accessObjList.getResponseType()："
+							+ accessObjList.getResponseType() + "】");
+					// 【accessObjList.getResponseCode():BBIP0004AGPM66】responseMessage():客户信息不存在。responseType()：E】
+					if (!("N".equals(accessObjList.getResponseType()))) {
+						context.setData(ParamKeys.RESPONSE_MESSAGE,
+								accessObjList.getResponseMessage());
+						throw new CoreException(GDErrorCodes.GAS_QRY_AGT_ERR_NO);
+					}
+					else {
+						logger.info("======================context after qryCusAgtList:" + context);
+						context.setDataMap(accessObjList.getPayload());
+						logger.info("======================context after qryCusAgtList & setDataMap:" + context);
+						
+						List<Map<String, Object>> agentCollectAgreementMaps = context.getData("agentCollectAgreement");
+						context.setData("agdAgrNo", agentCollectAgreementMaps.get(0).get("agdAgrNo"));
+						logger.info("============ context after set agdAgrNo : " + context);
+//						context.setData("agdAgrNo", accessObjList.getPayload().get("accessObjList"));
+						context.setData("tCommd", "Stop");
+						context.setData("TransCode", "Stop");
+						logger.info("===========有协议，可删除");
+
+						get(BBIPPublicService.class).synExecute(
+								"eups.commDelCusAgent", context);
+					}
+
 				}
 			} else if ("NOUser".equals(context.getData("TransCode").toString()
 					.trim())) {
@@ -392,7 +421,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		map.put(ParamKeys.COMPANY_NAME, comNme);
 
 		map.put(ParamKeys.BUS_TYP, "0"); // TODO 0-代收； 暂用0，待确认0-代收,1-代付,2-代缴
-		map.put(ParamKeys.BUSS_KIND, "A565");
+		map.put(ParamKeys.BUSS_KIND, context.getData(ParamKeys.BUSS_KIND));
 		// busKndNme VARCHAR 30 N
 
 		// ccy CHAR 3 Y
