@@ -73,6 +73,7 @@ public class ZhLqSocketGateway implements Gateway {
 			os = socket.getOutputStream();
 			exChange(is,os,txncod);
 			os.write(newreq);
+			log.info("send msg="+new String(newreq));
 			while (true) {
 				if (is.available() > 0) {
 					byte[] rb = new byte[2048];
@@ -122,12 +123,12 @@ public class ZhLqSocketGateway implements Gateway {
 		String exStr = "VER2.0  ";
 		os.write(exStr.getBytes());
 		log.info("send msg1:"+exStr);
-		recvThree(is, 1);
+		String s = recvThree(is, 1);
 		
 		exStr="000000000"+txncod;
 		os.write(exStr.getBytes());
 		log.info("send msg2:"+exStr);
-		String s = recvThree(is, 2);
+		recvThree(is, 2);
 		
 		if (s.equals("2.0")) {
 			byte[] b2 = new byte[8];
