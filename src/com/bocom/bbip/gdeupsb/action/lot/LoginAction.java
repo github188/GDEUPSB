@@ -97,6 +97,7 @@ public class LoginAction extends BaseAction {
         try {
             get(GdLotSysCfgRepository.class).update(lotSysCfgInfoInput);
         } catch (Exception e) {
+        	log.error("更新数据库异常",e);
         	 throw new CoreException(GDErrorCodes.EUPS_LOT_UPDATE_SYS_ERROR);
         }
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
