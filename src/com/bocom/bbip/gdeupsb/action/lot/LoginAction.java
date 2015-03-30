@@ -10,9 +10,7 @@ import org.springframework.util.CollectionUtils;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
-import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
-import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
@@ -25,7 +23,6 @@ import com.bocom.jump.bp.core.CoreException;
 
 /**
  * 福彩用户登录 485401
- * 
  * @version 1.0.0 Date 2015-01-26
  * @author GuiLin.Li
  */
@@ -39,10 +36,8 @@ public class LoginAction extends BaseAction {
         context.setData("nodNo", "441800");
         List<GdLotSysCfg> lotSysCfgInfos = get(GdLotSysCfgRepository.class).findSysCfg();
         if (CollectionUtils.isEmpty(lotSysCfgInfos)) {
-            context.setData("msgTyp", Constants.RESPONSE_TYPE_FAIL);
-            context.setData(ParamKeys.RSP_CDE, "LOT999");
-            context.setData(ParamKeys.RSP_MSG, "查询参数表失败!!!");
-            return;
+            log.info("查询参数表失败!");
+            throw new CoreException(GDErrorCodes.EUPS_LOT_QRY_SYS_FAIL);
         }
         // 向福彩中心发出系统角色登录
         context.setData("eupsBusTyp", "LOTR01");
