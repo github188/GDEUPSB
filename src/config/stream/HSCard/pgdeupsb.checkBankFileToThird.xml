@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="body" >
+	<fixString name="ttxnDt" length="8"/>  <!--对账日期 -->
+	<fixString length="8" name="DCC_MAC"  /> <!-- 交易密钥 -->
+      
+</segment>
