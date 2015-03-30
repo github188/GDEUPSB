@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
      filter="both,WEB-INF/classes/config/stream/PGAS00/translateDict.txt"
-     encoding="UTF-8"   trace="true">	<!--  type="LLLL" -->
+     encoding="GBK"   trace="true">	
 	<segment name="hzGasRsp">
 	
 	<!-- <fixString name="TransCode" length="6" />
