@@ -25,9 +25,9 @@ public class QueryFeeAction implements Executable{
 			logger.info("=========Start  CheckFeeAction ");
 			context.setData(GDParamKeys.TOTNUM, "1");
 			context.setData(GDParamKeys.SVRCOD, "10");
-			if(context.getData(GDParamKeys.CHECK_TYPE).toString().equals("1")){
-					context.setData(GDParamKeys.ELECTRICITY_YEARMONTH, DateUtils.format(new Date(), DateUtils.STYLE_yyyy+DateUtils.STYLE_MM));
-			}
+//			if(context.getData(GDParamKeys.CHECK_TYPE).toString().equals("1")){
+//					context.setData(GDParamKeys.ELECTRICITY_YEARMONTH, DateUtils.format(new Date(), DateUtils.STYLE_yyyy+DateUtils.STYLE_MM));
+//			}
 			context.setData(ParamKeys.RSV_FLD1, context.getData(GDParamKeys.ELECTRICITY_YEARMONTH));
 			context.setData(ParamKeys.THD_CUS_NO, context.getData(GDParamKeys.PAY_NO));
 			context.setData("PKGCNT", "000001");
