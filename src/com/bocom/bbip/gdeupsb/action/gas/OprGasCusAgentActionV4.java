@@ -16,6 +16,8 @@ import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
+import com.bocom.bbip.eups.repository.EupsThdBaseInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
@@ -55,7 +57,6 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		context.setData(ParamKeys.CUS_NO, context.getData(ParamKeys.THD_CUS_NO));
 		context.setData("agtSrvCusId", context.getData(ParamKeys.THD_CUS_NO));
 
-		setAgtCltAndCusInf(context);
 
 		context.setData("ccy", "CNY");
 		logger.info("================now context =" + context);
@@ -63,6 +64,9 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 				+ context.getData("optFlg"));
 
 		if ("4".equals(context.getData("optFlg"))) { // 4:查询交易
+			
+			setAgtCltAndCusInf(context);
+			
 			// 上代收付查询协议，先根据cusAc进行列表查询得到协议编号，再用协议编号查询明细（用户信息）
 			Map<String, Object> cusListMap = setAcpMap(context);
 			cusListMap.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
@@ -108,15 +112,17 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			context.setDataMap(qryCusDetail.getPayload());
 			logger.info("用户协议查询完成");
 		} else {
+			
+			setAgtCltAndCusInf(context);
 
 			// 前端授权，此处只检查
 			// 非查询交易要授权
-			String authTlr = context.getData(ParamKeys.AUTHOR_LEVEL);
-			if (StringUtils.isEmpty(authTlr)) {
-				throw new CoreException(ErrorCodes.EUPS_CANCEL_CHECK_AUTH_FAIL);
-			}
-
-			logger.info("已授权，可进行交易");
+//			String authTlr = context.getData(ParamKeys.AUTHOR_LEVEL);
+//			if (StringUtils.isEmpty(authTlr)) {
+//				throw new CoreException(ErrorCodes.EUPS_CANCEL_CHECK_AUTH_FAIL);
+//			}
+//
+//			logger.info("已授权，可进行交易");
 
 			// <Set>TActNo=491800012620190029499</Set>
 			// <Set>@MSG.OIP=$HstIp</Set> <!--第三方IP-->
@@ -289,6 +295,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		// bvCde CHAR 3 N "007-磁条卡；008-IC卡；009-磁条和IC复合卡；704-储蓄存折；
 		// bvNo CHAR 8 N
 		// ourOthFlg CHAR 1 N "0-本行；1-他行
+		map.put("ourOthFlg", "0");
 		// obkBk VARCHAR 14 N
 		// </customerInfo> LIST
 
@@ -320,7 +327,23 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		// busTyp CHAR
 		// busKnd CHAR 4 Y 1 Y 0-代收；
 		map.put(ParamKeys.COMPANY_NO, context.getData(ParamKeys.COMPANY_NO));
-		map.put(ParamKeys.COMPANY_NAME, "惠州燃气公司");
+		
+		
+		
+		
+		EupsThdBaseInfo baseInfo = new EupsThdBaseInfo();
+		baseInfo.setEupsBusTyp((String) context
+				.getData(ParamKeys.EUPS_BUSS_TYPE));
+		if (StringUtils.isNotBlank((String) context
+				.getData(ParamKeys.COMPANY_NO))) {
+			baseInfo.setComNo((String) context.getData(ParamKeys.COMPANY_NO));
+		}
+		List<EupsThdBaseInfo> infoList = get(EupsThdBaseInfoRepository.class)
+				.find(baseInfo);
+		String comNme = infoList.get(0).getComNme();
+		context.setData(ParamKeys.COMPANY_NAME, comNme);
+		map.put(ParamKeys.COMPANY_NAME, comNme);
+		
 		map.put(ParamKeys.BUS_TYP, "0"); // TODO 0-代收； 暂用0，待确认0-代收,1-代付,2-代缴
 		map.put(ParamKeys.BUSS_KIND, "A565");
 		// busKndNme VARCHAR 30 N
