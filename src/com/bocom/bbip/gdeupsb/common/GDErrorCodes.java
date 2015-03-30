@@ -361,8 +361,45 @@ public final class GDErrorCodes {
 	public static final String EUPS_LOT_LOGIN_ERROR = "BBIP4400EU1020";
 	/** 系统对时失败 */
 	public static final String EUPS_LOT_CHECK_TIME_ERROR = "BBIP4400EU1021";
-	/** 更新参数表失败!! */
+	/** 更新参数表失败! */
 	public static final String EUPS_LOT_UPDATE_SYS_ERROR = "BBIP4400EU1022";
+	/** 此卡号已注册! */
+	public static final String EUPS_LOT_CAR_HAV_REG = "BBIP4400EU1023";
+	/** 此手机已注册! */
+	public static final String EUPS_LOT_MOB_HAV_REG = "BBIP4400EU1024";
+	/**身份证号码不符!*/
+	public static final String EUPS_LOT_IDEN_NOEXIST= "BBIP4400EU1025";
+	/**地市编码转换出错*/
+	public static final String EUPS_LOT_SWIC_CITYNO_ERROR= "BBIP4400EU1026";
+	/**登记福彩用户表失败*/
+	public static final String EUPS_LOT_INSERT_USERINFO_FAIL= "BBIP4400EU1027";
+	/**彩民注册失败!*/
+	public static final String EUPS_LOT_REG_FAIL= "BBIP4400EU1028";
+	/** 此卡号未注册! */
+	public static final String EUPS_LOT_CAR_NOT_REG = "BBIP4400EU1029";
+	/** 彩民查询失败! */
+	public static final String EUPS_LOT_QRY_CUSINFO_FAIL = "BBIP4400EU1030";
+	/** 彩民注销失败! */
+	public static final String EUPS_LOT_LOGOUT_FAIL = "BBIP4400EU1031";
+	/** 无对账信息! */
+	public static final String EUPS_LOT_NO_CHECK_INFO = "BBIP4400EU1032";
+	/** 对账更新状态失败! */
+	public static final String EUPS_LOT_UPDATE_CHECK_INFO_FAIL = "BBIP4400EU1033";
+	/** 对账更新状态失败!（updateMatchLotTxnJnl）对成功账 */
+	public static final String EUPS_LOT_UPDATE_TXN_JNL_FAIL = "BBIP4400EU1034";
+	
+	/** 对账更新状态失败!（updateMatchLotChkDtl） 对成功账*/
+	public static final String EUPS_LOT_UPDATE_CHK_DTL_FAIL = "BBIP4400EU1035";
+	
+	/** 对账更新状态失败!（MatchLotTxnJnl） 对失敗账*/
+	public static final String EUPS_LOT_UPDATE_FAIL_TXN_JNL = "BBIP4400EU1036";
+	/**统计购彩总金额失败  */
+	public static final String EUPS_LOT_CUM_CON_FAIL = "BBIP4400EU1037";
+	
+	/**对账更新状态失败!  */
+	public static final String EUPS_LOT_CHECK_CON_FAIL = "BBIP4400EU1038";
+	/**查询参数表失败!  */
+	public static final String EUPS_LOT_QRY_SYS_FAIL = "BBIP4400EU1039";
 	
 
 	public static final String EUPS_THD_ERROR_TIMEOUT = "BBIP4400EU0701";
@@ -466,9 +503,6 @@ public final class GDErrorCodes {
 	public static final String GAS_OPR_ACP_ERR = "BBIP4400EU0630";
 	/** 系统错误，请联系管理员*/
 	public static final String GAS_SYS_ERROR = "BBIP4400EU0601";
-
-	/** 零余额：请求超时*/
-	public static final String REQUEST_TIME_OUT = "BBIP4400EU0699";
 	
 	
 	
