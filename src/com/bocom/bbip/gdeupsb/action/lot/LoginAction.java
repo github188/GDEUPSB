@@ -81,7 +81,9 @@ public class LoginAction extends BaseAction {
         }
 
         // 获取时间差函数调用，设置时间差
-        String sigTim = context.getData("sent_time");
+    
+        Date sigDate = DateUtils.parse( context.getData("sent_time").toString(), DateUtils.STYLE_yyyyMMddHHmmss);
+        String sigTim =DateUtils.format(sigDate, DateUtils.STYLE_yyyyMMddHHmmss);;
         String brNo = context.getData("brNo");
         Date lotTime = DateUtils.parse(map.get("sys_time").toString(), DateUtils.STYLE_yyyyMMddHHmmss);
         String lotTim = DateUtils.format(lotTime, DateUtils.STYLE_yyyyMMddHHmmss);

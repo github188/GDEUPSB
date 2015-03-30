@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bocom.bbip.gdeupsb.entity.GdLotSysCfg" >
   <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdLotSysCfg" >
-    <result column="DEAL_ID" property="dealId" jdbcType="CHAR" />
+    <id column="DEAL_ID" property="dealId" jdbcType="CHAR" />
     <result column="USR_PAM" property="usrPam" jdbcType="CHAR" />
     <result column="USR_PAS" property="usrPas" jdbcType="CHAR" />
     <result column="SIG_TIM" property="sigTim" jdbcType="CHAR" />
@@ -62,6 +62,16 @@
       </if>
     </trim>
   </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_SYS_CFG
+    where DEAL_ID = #{dealId,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_SYS_CFG
+    where DEAL_ID = #{dealId,jdbcType=CHAR}
+  </delete>
   <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotSysCfg" >
     insert into ${GDEUPSB_SCHEMA}.GDEUPS_LOT_SYS_CFG
     <trim prefix="(" suffix=")" suffixOverrides="," >
@@ -182,11 +192,57 @@
       </if>
     </trim>
   </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdLotSysCfg" >
+    update ${GDEUPSB_SCHEMA}.GDEUPS_LOT_SYS_CFG
+    <set >
+      <if test="usrPam != null" >
+        USR_PAM = #{usrPam,jdbcType=CHAR},
+      </if>
+      <if test="usrPas != null" >
+        USR_PAS = #{usrPas,jdbcType=CHAR},
+      </if>
+      <if test="sigTim != null" >
+        SIG_TIM = #{sigTim,jdbcType=CHAR},
+      </if>
+      <if test="lclTim != null" >
+        LCL_TIM = #{lclTim,jdbcType=CHAR},
+      </if>
+      <if test="lotTim != null" >
+        LOT_TIM = #{lotTim,jdbcType=CHAR},
+      </if>
+      <if test="diffTm != null" >
+        DIFF_TM = #{diffTm,jdbcType=CHAR},
+      </if>
+      <if test="dsCAgtNo != null" >
+        DS_C_AGT_NO = #{dsCAgtNo,jdbcType=CHAR},
+      </if>
+      <if test="dfCAgtNo != null" >
+        DF_C_AGT_NO = #{dfCAgtNo,jdbcType=CHAR},
+      </if>
+      <if test="hsActNo != null" >
+        HS_ACT_NO = #{hsActNo,jdbcType=CHAR},
+      </if>
+      <if test="logSeq != null" >
+        LOG_SEQ = #{logSeq,jdbcType=CHAR},
+      </if>
+      <if test="whPhone != null" >
+        WH_PHONE = #{whPhone,jdbcType=CHAR},
+      </if>
+    </set>
+    where DEAL_ID = #{dealId,jdbcType=CHAR}
+  </update>
   <select id="findAll" resultMap="basicResultMap" >
     select 
     <include refid="baseColumnList" />
     from ${GDEUPSB_SCHEMA}.GDEUPS_LOT_SYS_CFG
+    <if test="_parameter" >
+      where DEAL_ID in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
   </select>
+  
    <select id="findSysCfg" resultMap="basicResultMap" >
     select 
     <include refid="baseColumnList" />

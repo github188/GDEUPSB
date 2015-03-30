@@ -1,6 +1,11 @@
 package com.bocom.bbip.gdeupsb.entity;
 
+import com.bocom.bbip.data.annotation.GeneratedValue;
+import com.bocom.bbip.data.annotation.Id;
+
 public class GdLotSysCfg {
+    @Id
+    @GeneratedValue
     private String dealId;
 
     private String usrPam;
