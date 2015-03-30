@@ -123,7 +123,7 @@ public class OprGasCusAgentActionV2 extends BaseAction {
 			// context.setData("TActNo", GDConstants.GAS_THD_ACT_NO);
 
 			context.setData("tCommd", "QryUser");
-			context.setData("TransCode", "GASHXX");
+			context.setData("TransCode", "QryUser");
 
 			// context.setData("txnCod", "GASHXX");
 			// context.setData("objSvr", "STDHGAS1");
@@ -156,9 +156,9 @@ public class OprGasCusAgentActionV2 extends BaseAction {
 						+ "】【accessObjList.getResponseType()："
 						+ accessObjList.getResponseType() + "】");
 				
-				Result operateAcpAgtResult = null;
+//				Result operateAcpAgtResult = null;
 				
-				if ("1".equals(context.getData("optFlg"))) { // optFlg = 1
+				if ("1".equals(context.getData("TransCode"))) { // optFlg = 1
 					if ("N".equals(accessObjList.getResponseType())) {
 						throw new CoreRuntimeException(
 								GDErrorCodes.GAS_QRY_AGT_ERR_EXIST);
@@ -183,9 +183,9 @@ public class OprGasCusAgentActionV2 extends BaseAction {
 					logger.info("===========context.getData('customerInfo'):" + context.getData("customerInfo"));
 					logger.info("===========context:" + context);
 					
-					operateAcpAgtResult = bgspServiceAccessObject
-							.callServiceFlatting(
-									"maintainAgentCollectAgreement", context.getDataMap());
+//					operateAcpAgtResult = bgspServiceAccessObject
+//							.callServiceFlatting(
+//									"maintainAgentCollectAgreement", context.getDataMap());
 					
 				}
 
@@ -216,9 +216,9 @@ public class OprGasCusAgentActionV2 extends BaseAction {
 					logger.info("===========context.getData('customerInfo'):" + context.getData("customerInfo"));
 					logger.info("===========context:" + context);
 					
-					operateAcpAgtResult = bgspServiceAccessObject
-							.callServiceFlatting(
-									"maintainAgentCollectAgreement", context.getDataMap());
+//					operateAcpAgtResult = bgspServiceAccessObject
+//							.callServiceFlatting(
+//									"maintainAgentCollectAgreement", context.getDataMap());
 				}
 
 				if ("3".equals(context.getData("optFlg"))) { // optFlg = 3
@@ -236,27 +236,27 @@ public class OprGasCusAgentActionV2 extends BaseAction {
 					Map<String, Object> delCusInfoMap = setAcpMap(context);
 					delCusInfoMap.put("agdAgrNo", agdAgrNo);
 					
-					operateAcpAgtResult = bgspServiceAccessObject
-							.callServiceFlatting("deleteAgentCollectAgreement",
-									delCusInfoMap);
+//					operateAcpAgtResult = bgspServiceAccessObject
+//							.callServiceFlatting("deleteAgentCollectAgreement",
+//									delCusInfoMap);
 					
 				}
 
 				
-				logger.info("==============ACPS response msg:【operateAcpAgtResult.getResponseCode()："
-						+ operateAcpAgtResult.getResponseCode()
-						+ "】【accessObjList.getResponseMessage():"
-						+ operateAcpAgtResult.getResponseMessage()
-						+ "】【accessObjList.getResponseType()："
-						+ operateAcpAgtResult.getResponseType() + "】");
-				context.setData(ParamKeys.RESPONSE_MESSAGE,
-						operateAcpAgtResult.getResponseMessage());
+//				logger.info("==============ACPS response msg:【operateAcpAgtResult.getResponseCode()："
+//						+ operateAcpAgtResult.getResponseCode()
+//						+ "】【accessObjList.getResponseMessage():"
+//						+ operateAcpAgtResult.getResponseMessage()
+//						+ "】【accessObjList.getResponseType()："
+//						+ operateAcpAgtResult.getResponseType() + "】");
+//				context.setData(ParamKeys.RESPONSE_MESSAGE,
+//						operateAcpAgtResult.getResponseMessage());
 
-				if (!operateAcpAgtResult.isSuccess()) {
-					throw new CoreRuntimeException(
-							GDErrorCodes.GAS_OPR_ACP_ERR);
-				}
-				
+//				if (!operateAcpAgtResult.isSuccess()) {
+//					throw new CoreRuntimeException(
+//							GDErrorCodes.GAS_OPR_ACP_ERR);
+//				}
+//				
 				
 				
 				String date = DateUtils.format(new Date(),
