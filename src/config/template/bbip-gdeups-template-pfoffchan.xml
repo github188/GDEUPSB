@@ -309,6 +309,26 @@
 		</step>
 	</flow-template>
 	
-	
+	<!-- 对账 -->
+	<flow-template id="gdeupsb.checkBankFileToThirdTemplate">
+		<step id="checkPrepare" useCtxState="true" transactional="txTemplate">
+			<action id="checkPrepareAction" place-holder="true" />
+			<next on="*" to="befCheckFile" />
+			
+		</step>
+		<step id="befCheckFile" useCtxState="true" transactional="txTemplate">
+			<action id="beforeCheckFileAction" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="checkBankFileProcessing" />
+			<end on="*" />
+		</step>
+		<step id="checkBankFileProcessing" useCtxState="true" transactional="txTemplate">
+			<action id="checkBkFileToThirdStrategyAction" place-holder="true" />
+			<next on="*" to="aftCheckFile" />
+		</step>
+		<step id="aftCheckFile" useCtxState="true" transactional="txTemplate">
+			<action id="afterCheckFileAction" place-holder="true" />
+			<end on="*" />
+		</step>
+	</flow-template>
 
 </x:beans>
