@@ -466,6 +466,9 @@ public final class GDErrorCodes {
 	public static final String GAS_OPR_ACP_ERR = "BBIP4400EU0630";
 	/** 系统错误，请联系管理员*/
 	public static final String GAS_SYS_ERROR = "BBIP4400EU0601";
+
+	/** 零余额：请求超时*/
+	public static final String REQUEST_TIME_OUT = "BBIP4400EU0699";
 	
 	
 	
