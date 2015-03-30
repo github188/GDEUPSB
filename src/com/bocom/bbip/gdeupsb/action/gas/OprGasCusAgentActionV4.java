@@ -51,9 +51,6 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		logger.info("Enter in OprGasCusAgentActionV4!...........");
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 
-		logger.info("=============111111========cusNme"
-				+ context.getData(ParamKeys.CUS_NME));
-
 		context.setData(GDParamKeys.GAS_BK, "CNJT");
 		context.setData(ParamKeys.CUS_NO, context.getData(ParamKeys.THD_CUS_NO));
 		context.setData("agtSrvCusId", context.getData(ParamKeys.THD_CUS_NO));
@@ -92,11 +89,9 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			cusDtlMap.put("agdAgrNo", accessObjList.getPayload()
 					.get("agdAgrNo"));
 			context.setDataMap(cusDtlMap);
-			logger.info("========before optFlg=4 queryDetailAgentCollectAgreement ======="
-					+ context);
 			Result qryCusDetail = bgspServiceAccessObject.callServiceFlatting(
 					"queryDetailAgentCollectAgreement", cusDtlMap);
-			logger.info("========before optFlg=4 queryDetailAgentCollectAgreement ======="
+			logger.info("========after optFlg=4 queryDetailAgentCollectAgreement ======="
 					+ context);
 			logger.info("==============ACPS response msg:【operateAcpAgtResult.getResponseCode()："
 					+ qryCusDetail.getResponseCode()
