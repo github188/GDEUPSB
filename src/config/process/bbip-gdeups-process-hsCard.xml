@@ -29,12 +29,15 @@
 	</process> 
 	
 	<!-- 圈存对账  -->
-	 <process id="gdeupsb.hsCardCheckFile" template="eups.simpleTran"
-		interceptors="bbip.bbipSchedulerInterceptor">
+	 <process id="gdeupsb.checkBankFileToThird" template="gdeupsb.checkBankFileToThirdTemplate"
+		interceptors="eups.thdTransInterceptor">
 		<actions>
-		    <action id="act" class="com.bocom.bbip.gdeupsb.action.hscard.HSCardCheckFileAction"/>
+			<action id="checkPrepareAction" class="com.bocom.bbip.gdeupsb.action.hscard.CheckPrepareAction"/>
+			<action id="beforeCheckFileAction" ref="eups.beforeCheckFileAction" />
+			<action id="checkBkFileToThirdStrategyAction" ref="eups.checkBkFileToThirdStrategyAction" />
+			<action id="afterCheckFileAction" ref="eups.afterCheckFileAction" />
 		</actions>
-	</process> 
+	</process>
 	
 	<!-- 学费查询  -->
 	<process id="gdeupsb.stuFeeQry" template="eups.simpleTran"
