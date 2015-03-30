@@ -22,11 +22,11 @@ public class HSCardCheckFileAction extends BaseAction{
 		String EXECUTE_PROCESS = "eups.checkBankFileToThird";
 		ctx.setData(ParamKeys.EUPS_BUSS_TYPE, "HSSC00");
 		
-		Date ttxnDt = com.bocom.bbip.thd.org.apache.commons.lang.time.DateUtils.addDays(new Date(), -1);
+//		Date ttxnDt = com.bocom.bbip.thd.org.apache.commons.lang.time.DateUtils.addDays(new Date(), -1);
 		
-		ctx.setData(GDParamKeys.TTXN_DT, ttxnDt);
+//		ctx.setData(GDParamKeys.TTXN_DT, ttxnDt);
 		ctx.setData("ftpNo", "hsscCheckFile");
-		ctx.setData(ParamKeys.BAK_FLD1, "5291353");
+//		ctx.setData(ParamKeys.BAK_FLD1, "5291353");
 		get(BBIPPublicService.class).synExecute(EXECUTE_PROCESS, ctx);
 	}
 }
