@@ -17,7 +17,7 @@ public class AdvanceTradeTimeAction extends BaseAction{
 				log.info("==========Start AdvanceTradeTimeAction");
 				String txnDte=DateUtils.format((Date)context.getData(ParamKeys.TXN_DTE),DateUtils.STYLE_yyyyMMdd);
 				context.setData(ParamKeys.TXN_DTE, txnDte);
-				String txnTme=context.getData(ParamKeys.TXN_TME).toString();
+				String txnTme=DateUtils.formatAsHHmmss(DateUtils.parse(context.getData(ParamKeys.TXN_TME).toString()));
 				String txnTmeSend=txnTme.substring(0,6);
 				context.setData(ParamKeys.TXN_TME, txnTmeSend);
 				

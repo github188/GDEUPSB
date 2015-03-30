@@ -121,6 +121,6 @@ public class AdvanceTradeAction extends BaseAction {
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
 				context.setData("PKGCNT", "000001");
-				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW04");		
+				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW19");		
 	}
 }
