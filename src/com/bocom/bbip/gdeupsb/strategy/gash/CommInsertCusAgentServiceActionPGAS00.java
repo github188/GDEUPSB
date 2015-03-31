@@ -51,7 +51,7 @@ public class CommInsertCusAgentServiceActionPGAS00 extends BaseAction implements
 			List<CusAgentCollectDomain> domainList, Context context)
 			throws CoreException {
 		logger.info("CommInsertCusAgentServiceActionPGAS00 callThd start ... ...");
-		
+		logger.info("=================context before insCusAgt callThd" + context);
 		String date = DateUtils.format(new Date(), DateUtils.STYLE_SIMPLE_DATE);
 		context.setData("TransCode", "Add");
 		context.setData("regDat", date);
@@ -66,29 +66,44 @@ public class CommInsertCusAgentServiceActionPGAS00 extends BaseAction implements
 		context.setData("optDat", date);
 		context.setData("optNod", context.getData("NodNo"));
 		logger.info("===oprGasCusAgentAction1=====context=" + context);
-
+   
 		context.setProcessId("gdeupsb.oprGasCusAgentAction");
 		logger.info("===oprGasCusAgentAction=====context=" + context);
 
 		if ("AddOK".equals(context.getData("TransCode").toString().trim())) {
 			
 			//动态协议表新增一条数据
-			GdGasCusDay insCusInfo = BeanUtils.toObject(context.getDataMap(),
-					GdGasCusDay.class);
-			String sqn = get(BBIPPublicService.class).getBBIPSequence();
-			insCusInfo.setSequence(sqn);
+			GdGasCusDay insCusInfo = new GdGasCusDay();
+			insCusInfo.setSequence(get(BBIPPublicService.class).getBBIPSequence());
+			insCusInfo.setCusNo((String) context.getData(ParamKeys.CUS_NO));;
+			insCusInfo.settCommd((String) context.getData("tCommd"));
+			insCusInfo.setCusAc((String) context.getData(ParamKeys.CUS_AC));
+			insCusInfo.setCusNme((String) context.getData(ParamKeys.CUS_NME));
+			insCusInfo.setAccTyp((String) context.getData("cusTyp"));
+			insCusInfo.setOptNod((String) context.getData(ParamKeys.OBK_BR));
+			insCusInfo.setIdTyp((String)context.getData(ParamKeys.ID_TYPE));
+			insCusInfo.setIdNo((String)context.getData(ParamKeys.ID_NO));
+			insCusInfo.setThdCusNam((String)context.getData(ParamKeys.THD_CUS_NME));
+			insCusInfo.setCmuTel((String)context.getData(ParamKeys.CMU_TEL));
+			insCusInfo.setThdCusAdr((String)context.getData(ParamKeys.THD_CUSTOMER_ADDR));
 			get(GdGasCusDayRepository.class).insert(insCusInfo);
 
 			// 燃气协议表新增一条数据
 			GdGasCusAll addGasCusAll = BeanUtils.toObject(context.getDataMap(),
 					GdGasCusAll.class);
+			addGasCusAll.setCusNo((String) context.getData(ParamKeys.CUS_NO));;
+			addGasCusAll.setCusAc((String) context.getData(ParamKeys.CUS_AC));
+			addGasCusAll.setCusNme((String) context.getData(ParamKeys.CUS_NME));
+			addGasCusAll.setCusTyp((String) context.getData("cusTyp"));
 			addGasCusAll.setOptDat(date);
 			addGasCusAll.setOptNod((String) context.getData(ParamKeys.OBK_BR));
+			addGasCusAll.setIdTyp((String)context.getData(ParamKeys.ID_TYPE));
+			addGasCusAll.setIdNo((String)context.getData(ParamKeys.ID_NO));
+			addGasCusAll.setThdCusNme((String)context.getData(ParamKeys.THD_CUS_NME));
+			addGasCusAll.setCmuTel((String)context.getData(ParamKeys.CMU_TEL));
+			addGasCusAll.setThdCusAdr((String)context.getData(ParamKeys.THD_CUSTOMER_ADDR));
+			
 			get(GdGasCusAllRepository.class).insert(addGasCusAll);
-
-			// context.setData("msgTyp", "N");
-			// context.setData("rspCod", GDConstants.GDEUPSB_TXN_SUCC_CODE);
-			// context.setData("rspMsg", "新增成功");
 
 			logger.info("============新增本地协议，动态协议成功");
 		}

@@ -62,18 +62,36 @@ public class CommUpdateCusAgentServiceActionPGAS00 extends BaseAction implements
 		if ("EditOK".equals(context.getData("TransCode").toString().trim())) {
 			
 			//动态协议表
-			GdGasCusDay insCusInfo = BeanUtils.toObject(context.getDataMap(),
-					GdGasCusDay.class);
-			String sqn = get(BBIPPublicService.class).getBBIPSequence();
-			insCusInfo.setSequence(sqn);
+			GdGasCusDay insCusInfo = new GdGasCusDay();
+			insCusInfo.setSequence(get(BBIPPublicService.class).getBBIPSequence());
+			insCusInfo.setCusNo((String) context.getData(ParamKeys.CUS_NO));;
+			insCusInfo.settCommd((String) context.getData("tCommd"));
+			insCusInfo.setCusAc((String) context.getData(ParamKeys.CUS_AC));
+			insCusInfo.setCusNme((String) context.getData(ParamKeys.CUS_NME));
+			insCusInfo.setAccTyp((String) context.getData("cusTyp"));
+			insCusInfo.setOptNod((String) context.getData(ParamKeys.OBK_BR));
+			insCusInfo.setIdTyp((String)context.getData(ParamKeys.ID_TYPE));
+			insCusInfo.setIdNo((String)context.getData(ParamKeys.ID_NO));
+			insCusInfo.setThdCusNam((String)context.getData(ParamKeys.THD_CUS_NME));
+			insCusInfo.setCmuTel((String)context.getData(ParamKeys.CMU_TEL));
+			insCusInfo.setThdCusAdr((String)context.getData(ParamKeys.THD_CUSTOMER_ADDR));
 			get(GdGasCusDayRepository.class).insert(insCusInfo);
 
 			//燃气协议表
-			GdGasCusAll addGasCusAll = BeanUtils.toObject(context.getDataMap(),
+			GdGasCusAll updateGasCusAll = BeanUtils.toObject(context.getDataMap(),
 					GdGasCusAll.class);
-			addGasCusAll.setOptDat(date);
-			addGasCusAll.setOptNod((String) context.getData(ParamKeys.OBK_BR));
-			get(GdGasCusAllRepository.class).update(addGasCusAll);
+			updateGasCusAll.setCusNo((String) context.getData(ParamKeys.CUS_NO));;
+			updateGasCusAll.setCusAc((String) context.getData(ParamKeys.CUS_AC));
+			updateGasCusAll.setCusNme((String) context.getData(ParamKeys.CUS_NME));
+			updateGasCusAll.setCusTyp((String) context.getData("cusTyp"));
+			updateGasCusAll.setOptDat(date);
+			updateGasCusAll.setOptNod((String) context.getData(ParamKeys.OBK_BR));
+			updateGasCusAll.setIdTyp((String)context.getData(ParamKeys.ID_TYPE));
+			updateGasCusAll.setIdNo((String)context.getData(ParamKeys.ID_NO));
+			updateGasCusAll.setThdCusNme((String)context.getData(ParamKeys.THD_CUS_NME));
+			updateGasCusAll.setCmuTel((String)context.getData(ParamKeys.CMU_TEL));
+			updateGasCusAll.setThdCusAdr((String)context.getData(ParamKeys.THD_CUSTOMER_ADDR));
+			get(GdGasCusAllRepository.class).update(updateGasCusAll);
 
 			// context.setData("msgTyp", "N");
 			// context.setData("rspCod", GDConstants.GDEUPSB_TXN_SUCC_CODE);

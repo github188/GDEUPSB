@@ -51,31 +51,39 @@ public class CommDelCusAgentServiceActionPGAS00 extends BaseAction implements Co
 
 		context.setData("optDat", date);
 		context.setData("optNod", context.getData("NodNo"));
-		logger.info("===oprGasCusAgentAction1=====context=" + context);
+		logger.info("===oprGasCusAgentAction1=====context=" + context);  
 
 		context.setProcessId("gdeupsb.oprGasCusAgentAction");
 		logger.info("===oprGasCusAgentAction=====context=" + context);
 
 		if ("StopOK".equals(context.getData("TransCode").toString().trim())) {
 			//动态协议表
-			GdGasCusDay insCusInfo = BeanUtils.toObject(context.getDataMap(),
-					GdGasCusDay.class);
-			String sqn = get(BBIPPublicService.class).getBBIPSequence();
-			insCusInfo.setSequence(sqn);
+			GdGasCusDay insCusInfo = new GdGasCusDay();
+			insCusInfo.setSequence(get(BBIPPublicService.class).getBBIPSequence());
+			insCusInfo.setCusNo((String) context.getData(ParamKeys.CUS_NO));;
+			insCusInfo.settCommd((String) context.getData("tCommd"));
+			insCusInfo.setCusAc((String) context.getData(ParamKeys.CUS_AC));
+			insCusInfo.setCusNme((String) context.getData(ParamKeys.CUS_NME));
+			insCusInfo.setAccTyp((String) context.getData("cusTyp"));
+			insCusInfo.setOptNod((String) context.getData(ParamKeys.OBK_BR));
+			insCusInfo.setIdTyp((String)context.getData(ParamKeys.ID_TYPE));
+			insCusInfo.setIdNo((String)context.getData(ParamKeys.ID_NO));
+			insCusInfo.setThdCusNam((String)context.getData(ParamKeys.THD_CUS_NME));
+			insCusInfo.setCmuTel((String)context.getData(ParamKeys.CMU_TEL));
+			insCusInfo.setThdCusAdr((String)context.getData(ParamKeys.THD_CUSTOMER_ADDR));
 			get(GdGasCusDayRepository.class).insert(insCusInfo);
 
 			//燃气协议表
-			GdGasCusAll addGasCusAll = BeanUtils.toObject(context.getDataMap(),
-					GdGasCusAll.class);
-			addGasCusAll.setOptDat(date);
-			addGasCusAll.setOptNod((String) context.getData(ParamKeys.OBK_BR));
-			get(GdGasCusAllRepository.class).update(addGasCusAll);
+			GdGasCusAll delGasCusAll = new GdGasCusAll();
+			delGasCusAll.setCusAc((String)context.getData(ParamKeys.CUS_AC));
+			delGasCusAll.setCusNo((String)context.getData(ParamKeys.CUS_NO));
+			get(GdGasCusAllRepository.class).delete(delGasCusAll);
 
 			// context.setData("msgTyp", "N");
 			// context.setData("rspCod", GDConstants.GDEUPSB_TXN_SUCC_CODE);
 			// context.setData("rspMsg", "新增成功");
 
-			logger.info("============修改本地协议，新增动态协议成功");
+			logger.info("============del本地协议，新增动态协议成功");
 		}
 		else{
 			throw new CoreException(GDErrorCodes.GAS_CUS_AGT_STOPNO);
