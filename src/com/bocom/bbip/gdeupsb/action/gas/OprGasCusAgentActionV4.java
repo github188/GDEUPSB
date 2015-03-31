@@ -52,6 +52,22 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		logger.info("Enter in OprGasCusAgentActionV4!...........");
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 
+		
+		String cusTyp = context.getData("cusTyp");
+		if ("0".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡
+			context.setData("cusTyp", "1");
+			context.setData("bvCde", null);
+		}
+		if ("2".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡
+			context.setData("cusTyp", "0");
+			context.setData("bvCde", "704");
+		}
+		if ("4".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡
+			context.setData("cusTyp", "0");
+			context.setData("bvCde", "009");
+		}
+		
+		
 		context.setData(GDParamKeys.GAS_BK, "CNJT");
 		context.setData(ParamKeys.CUS_NO, context.getData(ParamKeys.THD_CUS_NO));
 		context.setData("agtSrvCusId", context.getData(ParamKeys.THD_CUS_NO));
@@ -325,31 +341,40 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		// drwMde CHAR 1 N
 		// bvCde CHAR 3 N "007-磁条卡；008-IC卡；009-磁条和IC复合卡；704-储蓄存折；
 		// bvNo CHAR 8 N
-		// cusTyp:0 对公账户 2存折 4对私卡8暂收内部户
-		// TODO
-		String cusTyp = context.getData("cusTyp");
-		if ("0".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡8暂收内部户
-			map.put("bvCde", null);
-			context.setData("bvCde", null);
-			map.put("bvNo", null);
+		map.put("bvCde", context.getData("bvCde"));
+		if (StringUtils.isNotBlank((String) context.getData("bvNo"))) {
+			map.put("bvNo", (String) context.getData("bvNo"));
 		}
-		if ("2".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡8暂收内部户
-			map.put("bvCde", "704");
-			map.put("bvNo", context.getData("bvNo"));
-			context.setData("bvCde", "704");
-			map.put("bcNo", context.getData("bvNo"));
-		}
-		if ("4".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡8暂收内部户
-			map.put("bvCde", "009");
-			context.setData("bvCde", "009");
-			map.put("bvNo", null);
-
-		}
-		if ("8".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡8暂收内部户
-			map.put("bvCde", null);
-			context.setData("bvCde", null);
-			map.put("bvNo", null);
-		}
+		
+//		
+//		// cusTyp:0 对公账户 2存折 4对私卡
+//		// TODO
+//		String cusTyp = context.getData("cusTyp");
+//		if ("0".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡
+//			map.put("cysTyp", "1");
+//			map.put("bvCde", null);
+//			map.put("bvNo", null);
+//			context.setData("cusTyp", "1");
+//			context.setData("bvCde", null);
+//			context.setData("bvNo", null);
+//		}
+//		if ("2".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡
+//			map.put("cysTyp", "0");
+//			context.setData("cusTyp", "0");
+//			map.put("bvCde", "704");
+//			map.put("bvNo", context.getData("bvNo"));
+//			context.setData("bvCde", "704");
+//			map.put("bcNo", context.getData("bvNo"));
+//		}
+//		if ("4".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡
+//			map.put("cysTyp", "0");
+//			context.setData("cusTyp", "0");
+//			map.put("bvCde", "009");
+//			context.setData("bvCde", "009");
+//			map.put("bvNo", null);
+//
+//		}
+		
 
 		// ourOthFlg CHAR 1 N "0-本行；1-他行
 		map.put("ourOthFlg", "0");
@@ -378,29 +403,33 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 
 		// bvCde CHAR 3 N "007-磁条卡；008-IC卡；009-磁条和IC复合卡；704-储蓄存折；
 		// bvNo CHAR 8 N
-		// cusTyp:0 对公账户 2存折 4对私卡8暂收内部户
-		// TODO
-		String cusTyp = context.getData("cusTyp");
-		if ("0".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡8暂收内部户
-			map.put("bvCde", null);
-			context.setData("bvCde", null);
-			map.put("bvNo", null);
+		map.put("bvCde", context.getData("bvCde"));
+		if (StringUtils.isNotBlank((String) context.getData("bvNo"))) {
+			map.put("bvNo", (String) context.getData("bvNo"));
 		}
-		if ("2".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡8暂收内部户
-			map.put("bvCde", "704");
-			map.put("bvNo", context.getData("bvNo"));
-			context.setData("bvCde", "704");
-		}
-		if ("4".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡8暂收内部户
-			map.put("bvCde", "009");
-			context.setData("bvCde", "009");
-			map.put("bvNo", null);
-		}
-		if ("8".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡8暂收内部户
-			map.put("bvCde", null);
-			context.setData("bvCde", null);
-			map.put("bvNo", null);
-		}
+//		// cusTyp:0 对公账户 2存折 4对私卡
+//		// TODO
+//		String cusTyp = context.getData("cusTyp");
+//		if ("0".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡
+//			map.put("bvCde", null);
+//			context.setData("bvCde", null);
+//			map.put("bvNo", null);
+//		}
+//		if ("2".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡
+//			map.put("bvCde", "704");
+//			map.put("bvNo", context.getData("bvNo"));
+//			context.setData("bvCde", "704");
+//		}
+//		if ("4".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡
+//			map.put("bvCde", "009");
+//			context.setData("bvCde", "009");
+//			map.put("bvNo", null);
+//		}
+//		if ("8".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡
+//			map.put("bvCde", null);
+//			context.setData("bvCde", null);
+//			map.put("bvNo", null);
+//		}
 
 		// comNo CHAR 15 Y
 		// comNum CHAR 100 N
