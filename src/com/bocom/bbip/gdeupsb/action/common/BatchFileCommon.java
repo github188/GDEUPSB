@@ -202,14 +202,15 @@ public class BatchFileCommon extends BaseAction {
 	public void changeBatSts(Context context){
 			logger.info("============Start  changeBatSts");
 			String batNo=context.getData(ParamKeys.BAT_NO).toString();
-			String fleNme=get(EupsBatchConsoleInfoRepository.class).findOne(batNo).getFleNme();
+			EupsBatchConsoleInfo  eupsBatchConsoleInfo=get(EupsBatchConsoleInfoRepository.class).findOne(batNo);
+			String fleNme=eupsBatchConsoleInfo.getFleNme();
+			
 			GDEupsBatchConsoleInfo gdEupsBatchConsoleInfos=new GDEupsBatchConsoleInfo();
 			gdEupsBatchConsoleInfos.setRsvFld8(fleNme);
+			
 			GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=get(GDEupsBatchConsoleInfoRepository.class).find(gdEupsBatchConsoleInfos).get(0);
-			Date date=new Date();
-			Date exeDte=DateUtils.parse(DateUtils.formatAsSimpleDate(date));
-			gdEupsBatchConsoleInfo.setExeDte(exeDte);
-			gdEupsBatchConsoleInfo.setBatNo("S");
+			gdEupsBatchConsoleInfo.setExeDte(eupsBatchConsoleInfo.getExeDte());
+			gdEupsBatchConsoleInfo.setBatSts("S");
 			get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(gdEupsBatchConsoleInfo);
 			logger.info("============End  changeBatSts");
 	}
