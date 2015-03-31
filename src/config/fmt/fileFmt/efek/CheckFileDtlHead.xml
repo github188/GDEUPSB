@@ -14,8 +14,5 @@
 			<fixString name="allMoney"   length="16"  /><!--  总金额-->
 			<fixString name="checkDate"  length="8" /><!--  达账日期-->
 			<fixString name="checkTime"   length="6"  /><!--  达账时间-->
-			<fixString name="checkOneCode"   length="32"  /><!--  对账唯一标识码-->
 	</segment>
-	
-	<!--  	<include  encodePrefix="checkFileDtlHead.xml"/>  -->
 </message>
