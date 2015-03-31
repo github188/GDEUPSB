@@ -19,5 +19,8 @@ public interface GdGasCusAllRepository extends PagingAndSortingRepository<GdGasC
 	@Update
 	public void update(GdGasCusAll addGasCusAll);
 	
+	@Find
+	public List<Map<String, Object>> findCusInfo(GdGasCusAll qryCusAll);
+	
 	
 }
