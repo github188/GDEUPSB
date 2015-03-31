@@ -42,7 +42,7 @@ Stop 为取消用户协议
 	<fixString name="regDat" length="10" /> 
 	<fixString  name="Deli7" length="1" default=","/>
 	
-	<fixString name="idTyp" length="2" /> 
+	<fixString name="idTyp" length="2" expression='exp:str.substring(this.idTyp,0,2)'/> 
 	<fixString  name="Deli8" length="1" default=","/>
 	
 	<fixString name="idNo" length="32" /> 
