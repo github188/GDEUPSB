@@ -103,7 +103,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			context.setData("thdCusAdr", infoList.get(0).get("THDCUSADR"));
 
 			logger.info("========context after qry cus info:" + context);
-
+			logger.info("========PGAS00 用户协议查询完成=======");
 		} else {
 
 			setAgtCltAndCusInf(context);
@@ -193,18 +193,14 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 					if (!("N".equals(accessObjList.getResponseType()))) {
 						context.setData(ParamKeys.RESPONSE_MESSAGE,
 								accessObjList.getResponseMessage());
-						// throw new
-						// CoreException(GDErrorCodes.GAS_QRY_AGT_ERR_NO);
 						throw new CoreException(
 								accessObjList.getResponseMessage());
 					} else {
-						// setAgtCltAndCusInf(context);
-
 						logger.info("======================context after qryCusAgtList:"
 								+ context);
-						context.setDataMap(accessObjList.getPayload());
-						logger.info("======================context after qryCusAgtList & setDataMap:"
-								+ context);
+//						context.setDataMap(accessObjList.getPayload());
+//						logger.info("======================context after qryCusAgtList & setDataMap:"
+//								+ context);
 
 						@SuppressWarnings("unchecked")
 						List<Map<String, Object>> agentCollectAgreementMaps = (List<Map<String, Object>>) context
@@ -212,14 +208,9 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 						context.setData("agdAgrNo", agentCollectAgreementMaps
 								.get(0).get("agdAgrNo"));
 
-						agentCollectAgreementMaps.get(0).put(
-								"agrVldDte",
-								DateUtils.format(new Date(),
-										DateUtils.STYLE_yyyyMMdd));
-						agentCollectAgreementMaps.get(0).put("agrExpDte",
-								"99991231");
-						context.setData("agentCollectAgreement",
-								agentCollectAgreementMaps);
+						agentCollectAgreementMaps.get(0).put("agrVldDte", DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMdd));
+						agentCollectAgreementMaps.get(0).put("agrExpDte", "99991231");
+						context.setData("agentCollectAgreement", agentCollectAgreementMaps);
 						logger.info("============ context after set agdAgrNo : "
 								+ context);
 						context.setData("tCommd", "Edit");
@@ -262,9 +253,9 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 					} else {
 						logger.info("======================context after qryCusAgtList:"
 								+ context);
-						context.setDataMap(accessObjList.getPayload());
-						logger.info("======================context after qryCusAgtList & setDataMap:"
-								+ context);
+//						context.setDataMap(accessObjList.getPayload());
+//						logger.info("======================context after qryCusAgtList & setDataMap:"
+//								+ context);
 
 						@SuppressWarnings("unchecked")
 						List<Map<String, Object>> agentCollectAgreementMaps = (List<Map<String, Object>>) context
@@ -274,13 +265,6 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 
 						logger.info("==============agdAgrNo in context :"
 								+ context.getData("agdAgrNo"));
-						// agentCollectAgreementMaps.get(0).put("agrVldDte",
-						// DateUtils.format(new Date(),
-						// DateUtils.STYLE_yyyyMMdd));
-						// agentCollectAgreementMaps.get(0).put("agrExpDte",
-						// "99991231");
-						// context.setData("agentCollectAgreement",
-						// agentCollectAgreementMaps);
 						logger.info("============ context after set agdAgrNo : "
 								+ context);
 
@@ -311,13 +295,13 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		Map<String, Object> agentCollectAgreementListMap = setAgentCollectAgreementMap(context);
 		agentCollectAgreementList.add(agentCollectAgreementListMap);
 		context.setData("agentCollectAgreement", agentCollectAgreementList);
-		context.setDataMap(agentCollectAgreementListMap);
+//		context.setDataMap(agentCollectAgreementListMap);
 
 		List<Map<String, Object>> customerInfoList = new ArrayList<Map<String, Object>>();
 		Map<String, Object> customerInfoMap = setCustomerInfoMap(context);
 		customerInfoList.add(customerInfoMap);
 		context.setData("customerInfo", customerInfoList);
-		context.setDataMap(customerInfoMap);
+//		context.setDataMap(customerInfoMap);
 
 		logger.info("============context after setAgtCltAndCusInf :" + context);
 	}
