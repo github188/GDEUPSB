@@ -105,7 +105,7 @@
   <xs:element name="responseHeader" type="tns:responseHeader_CType"/>
   <xs:element name="sortingInfo" type="tns:sortingInfo_CType"/>
   <xs:element name="pageableRequest" type="tns:pageableRequest_CType"/>
-  <xs:element name="pageableRsponse" type="tns:pageableRsponse_CType"/>
+  <xs:element name="pageableResponse" type="tns:pageableResponse_CType"/>
   <xs:complexType name="requestHeader_CType">
     <xs:sequence>
       <xs:element ref="bbip:bbipRequestHead"/>
@@ -161,11 +161,18 @@
     <xs:annotation>
       <xs:documentation>总记录数</xs:documentation>
     </xs:annotation>
-    <xs:restriction base="xs:int"/>
+    <xs:restriction base="xs:long"/>
   </xs:simpleType>
-  <xs:complexType name="pageableRsponse_CType">
+  <xs:simpleType name="totalPages_SType">
+    <xs:annotation>
+      <xs:documentation>总页数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:long"/>
+  </xs:simpleType>
+  <xs:complexType name="pageableResponse_CType">
     <xs:sequence>
       <xs:element name="totalElements" type="tns:totalElements_SType"/>
+      <xs:element name="totalPages" type="tns:totalPages_SType"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="batchPaySubmitDataRequest_CType">
@@ -307,7 +314,7 @@
   </xs:simpleType>
   <xs:complexType name="queryBatchDetailRequest_CType">
     <xs:sequence>
-      <xs:element ref="tns:requestHeader"/>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="batNo" type="tns:batNo_SType"/>
       <xs:element ref="tns:pageableRequest"/>
@@ -317,7 +324,7 @@
     <xs:sequence>
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
       <xs:element name="detailList" type="tns:detailList_CType" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element ref="tns:pageableRsponse" minOccurs="0"/>
+      <xs:element ref="tns:pageableResponse" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="cusAc_SType">
@@ -389,7 +396,6 @@
       <xs:element name="totAmt" type="tns:totAmt_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType/>
   <xs:complexType name="queryBatchInfoRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader" minOccurs="0"/>
