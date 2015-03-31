@@ -11,9 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -29,36 +31,19 @@ public class CusAgentServiceAction extends BaseAction{
 		public void execute(Context context)throws CoreException,CoreRuntimeException{
 			log.info("============Start  CusAgentServiceAction ");
 				context.setData(GDParamKeys.SVRCOD, "30");
-				Map<String, Object> cusMap=new HashMap<String, Object>();
-				cusMap.put("agtCllCusId", context.getData("cusNo"));
-				cusMap.put("cusTyp", "0");
-				cusMap.put("cusAc", context.getData("cusAc"));
-				cusMap.put("ccy", "RMB");
-				cusMap.put("idTyp", context.getData("idTyp"));
-				cusMap.put("idNo", context.getData("idNo"));
+				//TODO 
+				context.setData("idTyp", "01");
+				context.setData("ccy", "CNY");
+				context.setData("agrVldDte", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
+				context.setData("agrExpDte", "99991231");
+				context.setData("agtSrvCusId",context.getData("cusNo"));
+				Map<String, Object> cusMap=setCustomerInfoMap(context);
 				//添加 customerInfo
 				List<Map<String, Object>> cusList=new ArrayList<Map<String,Object>>();
 				cusList.add(cusMap);
 				context.setData("customerInfo", cusList);				
 				
-				Map<String, Object> map=new HashMap<String, Object>();
-				map.put(ParamKeys.BUS_TYP, "0");
-				map.put("comNo", context.getData("comNo"));
-				map.put("cusAc", context.getData("cusAc"));
-				map.put("cusNme", context.getData("cusNme"));
-				map.put("pwd", context.getData("pwd"));
-				map.put("cmuTel", context.getData("cmuTel"));
-				map.put("thdCusNo", context.getData("cusNo"));
-				map.put("buyTyp", "0");
-				map.put("busKnd", "A089");
-				map.put("agrVldDte", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
-				map.put("agrExpDte", "99991231");
-				map.put("agrTlr",context.getData(ParamKeys.TXN_TLR));
-				//TODO 
-				map.put("cusFeeDerFlg", "0");
-				map.put("ccy","RMB");
-				map.put("agtSrvCusPnm",context.getData("thdCusNme"));
-				map.put("agtSrvCusId",context.getData("cusNo"));
+				Map<String, Object> map=setAgentCollectAgreementMap(context);
 				String oprTyp=context.getData("oprTyp").toString();
 				String mothed="";
 				if("0".equals(oprTyp)){
@@ -78,8 +63,7 @@ public class CusAgentServiceAction extends BaseAction{
 				context.setData(ParamKeys.AGENT_COLLECT_AGREEMENT, list);
 				constantOfSoapUI(context);
 				context.setData(ParamKeys.THD_CUS_NME, context.getData("settleAccountsName"));
-				String traceNo=bbipPublicService.getTraceNo();
-				context.setData(ParamKeys.TRACE_NO, traceNo);
+				
 				bbipPublicService.synExecute(mothed, context);
 				
 				log.info("============End  CusAgentServiceAction");
@@ -112,4 +96,73 @@ public class CusAgentServiceAction extends BaseAction{
 				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW04");		
 				context.setData("callThd", "callThd");
 			}
+
+		private Map<String, Object> setCustomerInfoMap(Context context) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("agtCllCusId", context.getData("cusNo"));
+			map.put("cusTyp", context.getData("cusTyp"));
+			map.put(ParamKeys.CUS_NO, context.getData(ParamKeys.THD_CUS_NO));
+			map.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
+			map.put(ParamKeys.CUS_NME, context.getData(ParamKeys.CUS_NME));
+			map.put(ParamKeys.CCY, "CNY");
+			map.put(ParamKeys.ID_TYPE, context.getData(ParamKeys.ID_TYPE));
+			map.put("idNo", context.getData(ParamKeys.ID_NO));
+			//TODO
+			map.put("bvCde", "009");
+			
+			if (StringUtils.isNotBlank((String) context.getData("bvNo"))) {
+				map.put("bvNo", (String) context.getData("bvNo"));
+			}
+			map.put("ourOthFlg", "0");
+			map.put(ParamKeys.THD_CUS_NO, context.getData(ParamKeys.THD_CUS_NO));
+			return map;
+		}
+
+		private Map<String, Object> setAgentCollectAgreementMap(Context context) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put(ParamKeys.BUS_TYP, "0");
+			map.put("cusNme", context.getData("cusNme"));
+			map.put("thdCusNo", context.getData("cusNo"));
+
+			map.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
+			map.put("acoAc", context.getData(ParamKeys.CUS_AC));
+			if (StringUtils.isNotBlank((String) context.getData("pwd"))) {
+				map.put("pwd", (String) context.getData("pwd"));
+			}
+			map.put("bvCde", context.getData("bvCde"));
+			map.put("buyTyp", "0");
+			map.put("busKnd", "A089");
+			map.put("agrVldDte", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
+			map.put("agrExpDte", "99991231");
+			map.put("agrTlr",context.getData(ParamKeys.TXN_TLR));
+			//TODO 
+			map.put("agtSrvCusPnm",context.getData("thdCusNme"));
+			map.put("agtSrvCusId",context.getData("cusNo"));
+			
+			map.put(ParamKeys.COMPANY_NO, context.getData(ParamKeys.COMPANY_NO));
+			EupsThdBaseInfo baseInfo = new EupsThdBaseInfo();
+			baseInfo.setEupsBusTyp((String) context.getData(ParamKeys.EUPS_BUSS_TYPE));
+			if (StringUtils.isNotBlank((String) context.getData(ParamKeys.COMPANY_NO))) {
+				baseInfo.setComNo((String) context.getData(ParamKeys.COMPANY_NO));
+			}
+			//TODO 调用代收付接口  获得单位名称
+//			List<EupsThdBaseInfo> infoList = get(EupsThdBaseInfoRepository.class).find(baseInfo);
+//			String comNme = infoList.get(0).getComNme();
+//			context.setData(ParamKeys.COMPANY_NAME, comNme);
+//			map.put(ParamKeys.COMPANY_NAME, comNme);
+
+			map.put(ParamKeys.CCY, "CNY");
+			// TODO 暂用0，待确认
+			map.put("cusFeeDerFlg", "0"); 
+			map.put("agtSrvCusId", context.getData("agtSrvCusId"));
+			map.put("agtSrvCusPnm", context.getData(ParamKeys.THD_CUS_NME));
+			// YYYYMMDD默认当日
+			map.put("agrVldDte",DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)); 
+			// YYYYMMDD默认最大日，99991231
+			map.put("agrExpDte", "99991231"); 
+			map.put("idNo", context.getData(ParamKeys.ID_NO));
+			map.put(ParamKeys.CMU_TEL, context.getData(ParamKeys.CMU_TEL));
+			return map;
+
+		}
 }
