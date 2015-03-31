@@ -130,6 +130,7 @@ public class BatchFileCommon extends BaseAction {
         Assert.isNotEmpty(resultList, ErrorCodes.EUPS_QUERY_NO_DATA);
         final String comNoAcps =((EupsActSysPara)resultList.get(0)).getSplNo();
         final String fleNme="BATC"+comNoAcps+"0.txt";
+        context.setData("fleNme", fleNme);
         Map<String, Object> fileMap = (Map<String, Object>) ContextUtils.assertVariableNotNullAndGet(context, "agtFileMap", ErrorCodes.EUPS_FIELD_EMPTY,"agtFileMap");
 		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne(ParamKeys.FTPID_BATCH_PAY_FILE_TO_ACP);
 		Assert.isFalse(null==config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST);
