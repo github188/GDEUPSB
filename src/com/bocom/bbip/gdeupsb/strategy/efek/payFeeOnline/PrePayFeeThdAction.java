@@ -36,12 +36,18 @@ public class PrePayFeeThdAction implements Executable{
 			context.setData(ParamKeys.TXN_AMT, txnAmt.scaleByPowerOfTen(2));
 			BigDecimal oweFeeAmt=new BigDecimal(context.getData(ParamKeys.OWE_FEE_AMT).toString());
 			context.setData(ParamKeys.OWE_FEE_AMT, oweFeeAmt.scaleByPowerOfTen(2));
+			BigDecimal bj=new BigDecimal(context.getData(GDParamKeys.CAPITIAL).toString());
+			context.setData("capital", bj.scaleByPowerOfTen(2));
+			BigDecimal wyj=new BigDecimal(context.getData(GDParamKeys.DEDIT).toString());
+			context.setData("dedit", wyj.scaleByPowerOfTen(2));
+			
 	}
 	/**
 	 *报文信息 
 	 */
 	public void constantOfSoapUI(Context context){  
 		
+		context.setData(ParamKeys.COMPANY_NO, "032015");
 		context.setData(GDParamKeys.TREATY_VERSION, GDConstants.TREATY_VERSION);//协议版本
 		context.setData(GDParamKeys.TRADE_PERSON_IDENTIFY, GDConstants.TRADE_PERSON_IDENTIFY);//交易人标识
 		context.setData(GDParamKeys.BAG_TYPE, "0");//数据包类型
