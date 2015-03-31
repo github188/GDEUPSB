@@ -129,6 +129,7 @@ public class GzagBatchDataResultFileAction extends BaseAction implements AfterBa
 			logger.info("===============Start  BatchDataResultFileAction  createFileMap");	
 			Map<String, Object> resultMap=new HashMap<String, Object>();
 			//header
+			info.setRsvFld6("exeDte");
 			Map<String, Object> resultMapHead = BeanUtils.toMap(info);
 			resultMap.put(ParamKeys.EUPS_FILE_HEADER, resultMapHead);
 			//文件内容 
