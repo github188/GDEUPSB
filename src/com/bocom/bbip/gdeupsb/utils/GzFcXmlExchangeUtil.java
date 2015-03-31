@@ -28,6 +28,7 @@ public class GzFcXmlExchangeUtil{
 	private static String[] addEleRules = new String[]{
 		"201|pkgC.return|resultCode.resultDes",
 		"201|pkgC.bindDealer|isBind",
+		"219|pkgC.return|resultCode.resultDes",
 		"212|pkgC.return|resultCode.resultDes",
 		"200|pkgC.return|resultCode.resultDes",
 		"231|pkgC.return|resultCode.resultDes",

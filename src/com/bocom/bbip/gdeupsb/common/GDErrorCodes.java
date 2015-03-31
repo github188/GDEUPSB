@@ -402,6 +402,8 @@ public final class GDErrorCodes {
 	public static final String EUPS_LOT_QRY_SYS_FAIL = "BBIP4400EU1039";
 	/**用户名已注册！ */
 	public static final String EUPS_LOT_USER_HAV_REG = "BBIP4400EU1040";
+	/**用户名未注册，请先注册！ */
+	public static final String EUPS_LOT_NOT_REG = "BBIP4400EU1041";
 	
 
 	public static final String EUPS_THD_ERROR_TIMEOUT = "BBIP4400EU0701";
