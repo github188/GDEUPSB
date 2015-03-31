@@ -89,7 +89,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			context.setData("cusAc", infoList.get(0).get("CUSAC"));
 			if (StringUtils.isNotBlank((String) infoList.get(0).get("CUSNME"))) {
 				context.setData("cusNme", infoList.get(0).get("CUSNME"));
-			}
+			}      
 			context.setData("cusTyp", infoList.get(0).get("CUSTYP"));
 			context.setData("optDat", infoList.get(0).get("OPTDAT"));
 			context.setData("optNod", infoList.get(0).get("OPTNOD"));
