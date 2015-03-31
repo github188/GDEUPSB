@@ -44,7 +44,7 @@ public class ChargeStrategyAction implements Executable{
 //		      Set>RspCod=CPL999</Set>
 //		      <Set>TTxnCd=$TxnCod</Set>
 //		      <Set>TxnTim=GETDATETIME(YYYYMMDDHHMISS)</Set>
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+context);
+		
 		Date tTxnDte=DateUtils.parse(context.getData("tTxnDte").toString(), DateUtils.STYLE_yyyyMMdd);//第三方交易日期
 		
 		context.setData(ParamKeys.THD_TXN_DATE, tTxnDte);
@@ -52,7 +52,6 @@ public class ChargeStrategyAction implements Executable{
 		context.setData(ParamKeys.TELLER, "0007");
 		context.setData(ParamKeys.TXN_TLR, "0007");
 		context.setData(ParamKeys.BUS_TYP, Constants.BUS_TYP_2); //待缴
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+context);
 //		检查报文是否重复
 		EupsTransJournal eups = new EupsTransJournal();
 		eups.setBakFld1((String)context.getData(ParamKeys.BAK_FLD1));//备用字段1，学校代号。
