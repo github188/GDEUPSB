@@ -5,7 +5,7 @@
 	encoding="GBK"  trace="true">
 	
 	<segment name="header" encoding="GBK">
-				<fixString  name="txnDte"       length="8"/>
+				<fixString  name="rsvFld6"       length="8"/>
         		<fixString  name="totCnt"        length="8"/>  
       		  <fixString  name="totAmt"      length="13"/>
 		
