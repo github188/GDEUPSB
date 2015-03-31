@@ -23,6 +23,7 @@ import com.bocom.bbip.gdeupsb.repository.GdGasCusAllRepository;
 import com.bocom.bbip.gdeupsb.repository.GdGasCusDayRepository;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -82,7 +83,9 @@ public class CommUpdateCusAgentServiceActionPGAS00 extends BaseAction implements
 					GdGasCusAll.class);
 			updateGasCusAll.setCusNo((String) context.getData(ParamKeys.CUS_NO));;
 			updateGasCusAll.setCusAc((String) context.getData(ParamKeys.CUS_AC));
-			updateGasCusAll.setCusNme((String) context.getData(ParamKeys.CUS_NME));
+			if(StringUtils.isNoneBlank((String) context.getData(ParamKeys.CUS_NME))){
+				insCusInfo.setCusNme((String) context.getData(ParamKeys.CUS_NME));
+			}
 			updateGasCusAll.setCusTyp((String) context.getData("cusTyp"));
 			updateGasCusAll.setOptDat(date);
 			updateGasCusAll.setOptNod((String) context.getData(ParamKeys.OBK_BR));

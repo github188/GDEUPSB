@@ -23,6 +23,7 @@ import com.bocom.bbip.gdeupsb.repository.GdGasCusAllRepository;
 import com.bocom.bbip.gdeupsb.repository.GdGasCusDayRepository;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -78,7 +79,9 @@ public class CommInsertCusAgentServiceActionPGAS00 extends BaseAction implements
 			insCusInfo.setCusNo((String) context.getData(ParamKeys.CUS_NO));;
 			insCusInfo.settCommd((String) context.getData("tCommd"));
 			insCusInfo.setCusAc((String) context.getData(ParamKeys.CUS_AC));
-			insCusInfo.setCusNme((String) context.getData(ParamKeys.CUS_NME));
+			if(StringUtils.isNoneBlank((String) context.getData(ParamKeys.CUS_NME))){
+				insCusInfo.setCusNme((String) context.getData(ParamKeys.CUS_NME));
+			}
 			insCusInfo.setAccTyp((String) context.getData("cusTyp"));
 			insCusInfo.setOptNod((String) context.getData(ParamKeys.OBK_BR));
 			insCusInfo.setIdTyp((String)context.getData(ParamKeys.ID_TYPE));
