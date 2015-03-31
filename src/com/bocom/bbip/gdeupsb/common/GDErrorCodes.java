@@ -400,6 +400,8 @@ public final class GDErrorCodes {
 	public static final String EUPS_LOT_CHECK_CON_FAIL = "BBIP4400EU1038";
 	/**查询参数表失败!  */
 	public static final String EUPS_LOT_QRY_SYS_FAIL = "BBIP4400EU1039";
+	/**用户名已注册！ */
+	public static final String EUPS_LOT_USER_HAV_REG = "BBIP4400EU1040";
 	
 
 	public static final String EUPS_THD_ERROR_TIMEOUT = "BBIP4400EU0701";

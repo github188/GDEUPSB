@@ -108,8 +108,10 @@ public class RegistAction extends BaseAction {
         }
         inputLotCusInf.setIdTyp(context.getData("idTyp").toString().trim());
         inputLotCusInf.setIdNo(context.getData("idNo").toString().trim());
-        inputLotCusInf.setMobTel(context.getData("mobTel").toString().trim());
-
+        String mobPh= context.getData("mobTel").toString().trim();
+        inputLotCusInf.setMobTel(mobPh);
+        inputLotCusInf.setLotNam(mobPh);
+        context.setData("lotNam", mobPh);
         if (null != context.getData("fixTel").toString()) {
             inputLotCusInf.setFixTel(context.getData("fixTel").toString().trim());
         }
@@ -138,7 +140,7 @@ public class RegistAction extends BaseAction {
          */
         inputLotCusInf.setCityId(cityId);
         inputLotCusInf.setSex(sex);
-
+        context.setData("sex", sex);
         try {
             get(GdLotCusInfRepository.class).insert(inputLotCusInf);
         } catch (Exception e) {
@@ -149,6 +151,7 @@ public class RegistAction extends BaseAction {
         context.setData(ParamKeys.EUPS_BUSS_TYPE, "LOTR01");
         context.setData("action", "201");
         context.setData("version", "");
+        context.setData("lotPsw","000000");
         context.setData("sent_time", DateUtils.format(new Date(), DateUtils.STYLE_FULL));
         context.setData("dealId", "141");
         context.setData("regTim", DateUtils.format(regTim, DateUtils.STYLE_FULL));
@@ -157,6 +160,7 @@ public class RegistAction extends BaseAction {
         if (null ==lotIdTyp) {
             lotIdTyp="1";
         }
+        context.setData("real_name",context.getData("cusNam").toString().trim());
         context.setData("lotIdTyp", lotIdTyp);
         Map<String, Object> resultMap = new HashMap<String, Object>(); 
         resultMap = get(ThirdPartyAdaptor.class).trade(context);
@@ -167,11 +171,14 @@ public class RegistAction extends BaseAction {
             if (StringUtils.isEmpty(responseCode)) {
                 throw new CoreException(GDErrorCodes.EUPS_THD_SYS_ERROR);
             }
+            if ("1500".equals(responseCode)) {
+            	log.error("用户名已注册！");
+                throw new CoreException(GDErrorCodes.EUPS_LOT_USER_HAV_REG);
+            }
             log.info("Regist Fail!");
             throw new CoreException(GDErrorCodes.EUPS_LOT_REG_FAIL);
         }
         context.setData("msgTyp", Constants.RESPONSE_TYPE_SUCC);
-        context.setData("lotNam", context.getData("mobTel"));
         context.setData(ParamKeys.RSP_CDE, Constants.RESPONSE_CODE_SUCC);
         context.setData(ParamKeys.RSP_MSG, Constants.RESPONSE_MSG);
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);

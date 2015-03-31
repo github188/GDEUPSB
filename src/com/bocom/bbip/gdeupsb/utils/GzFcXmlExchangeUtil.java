@@ -26,7 +26,7 @@ public class GzFcXmlExchangeUtil{
 	//属性转换为子节点 (福彩方发送的解包报文)
 	//交易码|节点名|属性名
 	private static String[] addEleRules = new String[]{
-		"201|pkgC.return|resultCode.resultMsg",
+		"201|pkgC.return|resultCode.resultDes",
 		"201|pkgC.bindDealer|isBind",
 		"212|pkgC.return|resultCode.resultDes",
 		"200|pkgC.return|resultCode.resultDes",
@@ -74,6 +74,9 @@ public class GzFcXmlExchangeUtil{
 		Element e = root;
 		for (int i = 0; i < nodeNames.length; i++) {
 			e = e.element(nodeNames[i]);
+			if (e == null) {
+				return;
+			}
 		}
 		Attribute atr = e.attribute(atrName);
 		Element ne = DocumentHelper.createElement(atr.getName());
@@ -113,8 +116,10 @@ public class GzFcXmlExchangeUtil{
 		String[] nodeNames = StringUtils.split(nodeName, ".");
 		Element e = root;
 		for (int i = 0; i < nodeNames.length; i++) {
-			System.out.println(nodeNames[i]);
 			e = e.element(nodeNames[i]);
+			if (e == null) {
+				return;
+			}
 		}
 		Element nexte = e.element(atrName);
 		Attribute atr = DocumentHelper.createAttribute(e, nexte.getName(), nexte.getText());
