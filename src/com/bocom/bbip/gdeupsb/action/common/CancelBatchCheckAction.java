@@ -31,18 +31,20 @@ public class CancelBatchCheckAction extends BaseAction {
  * 批次撤销
  */
     public void check(Context context)throws Exception{
+    	log.info("==============Start  CancelBatchCheckAction");
 		final String batNo=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.BAT_NO, ErrorCodes.EUPS_FIELD_EMPTY,"batNo");
 		//上锁
 		Result result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).tryLock(batNo, 60*1000L, 60*1000L);
-		
+		//GDEUPSB
 		GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo = get(GDEupsBatchConsoleInfoRepository.class).findOne(batNo);
-
-		Assert.isNotNull(gdEupsBatchConsoleInfo, ErrorCodes.EUPS_BAT_CTL_INFO_NOT_EXIST);
-		logger.info("批次信息:"+BeanUtils.toFlatMap(gdEupsBatchConsoleInfo));
 		String fleNme=gdEupsBatchConsoleInfo.getRsvFld8();
 		EupsBatchConsoleInfo eupsBatchConsoleInfos=new EupsBatchConsoleInfo();
 		eupsBatchConsoleInfos.setFleNme(fleNme);
+		//EUPS
 		EupsBatchConsoleInfo eupsBatchConsoleInfo=get(EupsBatchConsoleInfoRepository.class).find(eupsBatchConsoleInfos).get(0);
+
+		Assert.isNotNull(eupsBatchConsoleInfo, ErrorCodes.EUPS_BAT_CTL_INFO_NOT_EXIST);
+		logger.info("批次信息:"+BeanUtils.toFlatMap(eupsBatchConsoleInfo));
 		/**只有状态为I或W，才可以撤销批次*/
 		if(eupsBatchConsoleInfo.getBatSts().equals("I") || eupsBatchConsoleInfo.getBatSts().equals("W")){
 					eupsBatchConsoleInfo.setBatSts("C");
@@ -58,10 +60,10 @@ public class CancelBatchCheckAction extends BaseAction {
 				throw new CoreException("批次batNo获取状态错误");
 		}
 		
-		context.setData("BatchConsoleInfo", gdEupsBatchConsoleInfo);
-		
+//		context.setData("BatchConsoleInfo", gdEupsBatchConsoleInfo);
 		
 		unLock(context);
+		log.info("==============Start  CancelBatchCheckAction");
     }
     /**
      * 解锁
