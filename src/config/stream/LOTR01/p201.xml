@@ -5,7 +5,7 @@
     name="pkgC">
     <record name="return" >
         <string name="resultCode"/>
-        <string name="resultMsg"/>
+        <string name="resultDes"/>
     </record>
     <string name="gambler_name"></string>
     <string name="gambler_status"></string>
