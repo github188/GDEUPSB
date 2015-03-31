@@ -172,7 +172,6 @@ public class CheckThdDetlAcctAction implements Executable {
         headerMap.put(GDParamKeys.ALL_MONEY, allMoney);
         headerMap.put(GDParamKeys.CHECKDATE, DateUtils.format((Date)context.getData(ParamKeys.TXN_DTE),DateUtils.STYLE_yyyyMMdd));
         headerMap.put(GDParamKeys.CHECKTIME,DateUtils.formatAsHHmmss((Date)context.getData(ParamKeys.TXN_TME)));
-        headerMap.put("checkOneCode", context.getData("checkOneCode"));
 		
 		//查找对应数据
 		EupsStreamNo eupsStreamNos=new EupsStreamNo();
@@ -201,31 +200,32 @@ public class CheckThdDetlAcctAction implements Executable {
 			checkDetailAcct.setTxnAmt(txnAmt);
 			String str="";
 				if("010".equals(busType)){
-					str="010 供电柜台现金";
+					str="010   供电柜台现金";
 				}else if("020".equals(busType)){
-					str="020 供电支票";
+					str="020   供电支票";
 				}else if("030".equals(busType)){
-					str="030 供电汇票";
+					str="030   供电汇票";
 				}else if("040".equals(busType)){
-					str="040 供电POS机";
+					str="040   供电POS机";
 				}else if("050".equals(busType)){
-					str="050 供电第三方支付";
+					str="050   供电第三方支付";
 				}else if("060".equals(busType)){
-					str="060 供电发起单笔实扣";
+					str="060   供电发起单笔实扣";
 				}else if("070".equals(busType)){
-					str="070 供电发起批量代扣";
+					str="070   供电发起批量代扣";
 				}else if("110".equals(busType)){
-					str="110 银行单笔代收";
+					str="110   银行单笔代收";
 				}else if("120".equals(busType)){
-					str="120 银行支票";
+					str="120   银行支票";
 				}else if("130".equals(busType)){
-					str="130 银行发起托收";
+					str="130   银行发起托收";
 				}else if("140".equals(busType)){
-					str="140 银行发起代扣";
+					str="140   银行发起代扣";
 				}else{
 					str="费用类型 Error";
 				}
 			checkDetailAcct.setBakFld1(str);
+			checkDetailAcct.setRsvFld1(context.getData("checkOneCode").toString());
 			checkDetailAcct.setTxnTlr(eupsStreamNo.getTxnTlr());
 			list.add(checkDetailAcct);
 		}
