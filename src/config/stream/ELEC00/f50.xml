@@ -9,7 +9,7 @@
 		<fixString name="traSendTime" length="6" /><!--  交易时间-->
 		
 		<fixString name="batNo" length="27" /><!--  对账批次流水号-->
-		<fixString name="bankNo" length="4" /><!--  入账银行代码-->
+		<!--<fixString name="bankNo" length="4" />  入账银行代码-->
       <fixString name="comNo" length="8" /><!--  单位编码-->
       <fixString name="busType" length="3" /><!--  收费方式-->
      <fixString name="payType" length="3" /><!--  费用类型-->
@@ -18,5 +18,4 @@
      <fixString name="allMoney" length="16" /><!--  总金额-->
      <fixString name="checkDate" length="8" /><!--  达账日期-->
      <fixString name="checkTime" length="6" /><!--  达账时间-->
-     <fixString name="checkCode" length="32" /><!--  对账唯一标识码-->
 	</segment>
