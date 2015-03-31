@@ -12,6 +12,7 @@ public class CheckDetailAcct {
 		private String cusAc;
 		private String cusNme;
 		private String  txnDte;
+		private String  rsvFld1;
 		public String getThdCusNme() {
 			return thdCusNme;
 		}
@@ -94,6 +95,12 @@ public class CheckDetailAcct {
 		}
 		public void setOnlySignCode(String onlySignCode) {
 			this.onlySignCode = onlySignCode;
+		}
+		public String getRsvFld1() {
+			return rsvFld1;
+		}
+		public void setRsvFld1(String rsvFld1) {
+			this.rsvFld1 = rsvFld1;
 		}
 	
 }
