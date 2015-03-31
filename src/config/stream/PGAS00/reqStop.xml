@@ -33,7 +33,7 @@ Stop 为取消用户协议
 	<fixString name="thdCusNo" length="12" /> 
 	<fixString  name="Deli4" length="1" default=","/>
 	
-	<fixString name="cmuTel" length="60" /> 
+	<fixString name="cmuTel" length="50" /> 
 	<fixString  name="Deli5" length="1" default=","/>
 	
 	<fixString name="cusAc" length="32" /> 
