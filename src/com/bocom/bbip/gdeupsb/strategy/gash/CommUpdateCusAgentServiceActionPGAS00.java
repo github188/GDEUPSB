@@ -108,10 +108,14 @@ public class CommUpdateCusAgentServiceActionPGAS00 extends BaseAction implements
 	}
 
 	@Override
-	public Map<String, Object> preUpdateCusAgent(CustomerDomain arg0,
-			List<CusAgentCollectDomain> arg1, Context arg2)
+	public Map<String, Object> preUpdateCusAgent(CustomerDomain customerDomain,
+			List<CusAgentCollectDomain> cusAgentCollectDomainList, Context context)
 			throws CoreException {
 		logger.info("============CommUpdateCusAgentServiceActionPGAS00@preUpdateCusAgent start!....");
+		
+		List<Map<String, Object>> agentCollectAgreementMaps = context.getData("agentCollectAgreement");
+		context.setData("agdAgrNo", agentCollectAgreementMaps.get(0).get("agdAgrNo"));
+		logger.info("============ context after set agdAgrNo : " + context);
 		
 		logger.info("============CommUpdateCusAgentServiceActionPGAS00@preUpdateCusAgent end!....");
 		return null;
