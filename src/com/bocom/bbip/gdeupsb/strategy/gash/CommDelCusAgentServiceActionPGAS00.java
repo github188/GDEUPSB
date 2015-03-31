@@ -94,7 +94,9 @@ public class CommDelCusAgentServiceActionPGAS00 extends BaseAction implements Co
 
 	@Override
 	public Map<String, Object> preDelCusAgent(CustomerDomain customerDomain, Context context)
-			throws CoreException {
+			throws CoreException {		
+		logger.info("=======CommDelCusAgentServiceActionPGAS00@preDelCusAgent start!....");
+		logger.info("=======CommDelCusAgentServiceActionPGAS00@preDelCusAgent end!....");
 		return null;
 	}
 

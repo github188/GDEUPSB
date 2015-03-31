@@ -111,7 +111,9 @@ public class CommUpdateCusAgentServiceActionPGAS00 extends BaseAction implements
 	public Map<String, Object> preUpdateCusAgent(CustomerDomain arg0,
 			List<CusAgentCollectDomain> arg1, Context arg2)
 			throws CoreException {
-		// TODO Auto-generated method stub
+		logger.info("============CommUpdateCusAgentServiceActionPGAS00@preUpdateCusAgent start!....");
+		
+		logger.info("============CommUpdateCusAgentServiceActionPGAS00@preUpdateCusAgent end!....");
 		return null;
 	}
 

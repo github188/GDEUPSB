@@ -111,6 +111,8 @@ public class CommInsertCusAgentServiceActionPGAS00 extends BaseAction implements
 			throw new CoreException(GDErrorCodes.GAS_CUS_AGT_DOUBLE);
 		}
 		if("AddNo".equals(context.getData("TransCode").toString().trim())) {
+			//冲代收付协议
+			get(BBIPPublicService.class).synExecute("eups.commReversalACPSCusAgent", context);
 			throw new CoreException(GDErrorCodes.GAS_CUS_AGT_ADDNO);
 		}
 		logger.info("CommInsertCusAgentServiceActionPGAS00 callThd end ... ...");
@@ -121,7 +123,8 @@ public class CommInsertCusAgentServiceActionPGAS00 extends BaseAction implements
 	public Map<String, Object> reverseThd(CustomerDomain customerDomain,
 			List<CusAgentCollectDomain> domainList, Context context)
 			throws CoreException {
-
+		logger.info("======CommInsertCusAgentServiceActionPGAS00@reverseThd start!....");
+		logger.info("======CommInsertCusAgentServiceActionPGAS00@reverseThd end!....");
 		return null;
 	}
 
