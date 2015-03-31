@@ -197,6 +197,7 @@ public class CheckThdDetlAcctAction implements Executable {
 			checkDetailAcct.setCusNme(eupsStreamNo.getCusNme());
 			checkDetailAcct.setTxnDte(DateUtils.format(eupsStreamNo.getTxnTme(),DateUtils.STYLE_FULL));
 			BigDecimal txnAmt=eupsStreamNo.getTxnAmt().scaleByPowerOfTen(2);
+			checkDetailAcct.setBankNo(eupsStreamNo.getThdObkCde());
 			checkDetailAcct.setTxnAmt(txnAmt);
 			String str="";
 				if("010".equals(busType)){
