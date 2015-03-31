@@ -188,7 +188,7 @@ public class CheckThdDetlAcctAction implements Executable {
 		//内容
 		for (EupsStreamNo eupsStreamNo : eupsStreamNoList) {
 			CheckDetailAcct checkDetailAcct =new CheckDetailAcct();
-			checkDetailAcct.setSqn(eupsStreamNo.getThdSqn());
+			checkDetailAcct.setSqn(eupsStreamNo.getSqn());
 			checkDetailAcct.setComNo(comNo);
 			checkDetailAcct.setElectricityYearMonth(eupsStreamNo.getRsvFld6());
 			checkDetailAcct.setPayNo(eupsStreamNo.getThdCusNo());
