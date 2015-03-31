@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.bocom.bbip.comp.BBIPPublicService;
+import com.bocom.bbip.comp.btp.BTPService;
+import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
@@ -33,7 +35,7 @@ import com.bocom.jump.bp.core.CoreException;
 /**
  * @author liyawei
  */
-public class CheckThdSumAcctAction implements  CheckThdSumAcctService{
+public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcctService{
 	private final static Log logger=LogFactory.getLog(CheckThdSumAcctAction.class);
 	@Autowired
 	EupsThdTranCtlDetailRepository eupsThdTranCtlDetailRepository;
@@ -75,8 +77,10 @@ public class CheckThdSumAcctAction implements  CheckThdSumAcctService{
 		for(Map<String, Object> map:mapList){
 				String sqn=bbipPublicService.getBBIPSequence();
 				context.setData(ParamKeys.COMPANY_NO, map.get("COM_NO").toString().substring(0, 6));
+				//TODO 
+				context.setData(ParamKeys.COMPANY_NO, "030615");
+				
 				context.setData(ParamKeys.SEQUENCE, sqn);
-//				context.setData("rcnBat", sqn);
 				long amount =Long.parseLong(map.get("TOT_COUNT").toString());
 				BigDecimal allmoney=new BigDecimal("0.00");
 				if(null != map.get("ALL_MONEY")){
@@ -112,7 +116,7 @@ public class CheckThdSumAcctAction implements  CheckThdSumAcctService{
 	/**
 	 *报文信息 外发第三方
 	 */
-	public void callThd(Context context){  
+	public void callThd(Context context) throws CoreException{  
 		
 		context.setData(GDParamKeys.TREATY_VERSION, GDConstants.TREATY_VERSION);//协议版本
 		context.setData(GDParamKeys.TRADE_PERSON_IDENTIFY, GDConstants.TRADE_PERSON_IDENTIFY);//交易人标识
@@ -132,9 +136,10 @@ public class CheckThdSumAcctAction implements  CheckThdSumAcctService{
 				context.setData(GDParamKeys.TRADE_RECEIVE, GDConstants.TRADE_RECEIVE);//交易接收方
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
-				
-				context.setData(ParamKeys.BAT_NO, context.getData(ParamKeys.SEQUENCE));
-				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW04");
+				//申请批次号
+				String batNo=((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
+				context.setData(ParamKeys.BAT_NO, batNo);
+				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW17");
 				context.setData(ParamKeys.THD_CUS_NO, "");
 				try{
 					Map<String, Object> rspMap = callThdTradeManager.trade(context);
