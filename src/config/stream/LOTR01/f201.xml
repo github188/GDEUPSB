@@ -4,15 +4,15 @@
     xsi:schemaLocation="http://www.bocom.com/jump/transformer/xml xml.xsd"
         name="pkgC">   
         <record name="gamblerBasicInfo">
-            <string name="gambler_name" alias="cusNam"/>
-            <string name="gambler_pwd" alias="lotPsw"/>
-            <string name="regist_time" alias="regTim"/>
-            <string name="email"/>
+            <string name="gambler_name" alias="cusNam" default=""/>
+            <string name="gambler_pwd" alias="lotPsw" default=""/>
+            <string name="regist_time" alias="regTim" default=""/>
+            <string name="email" default=""/>
         </record>
         <record name="gamblerAdditionalInfo">
-            <string name="city_id" alias="cityId"/>
-            <string name="ID_type" alias="lotIdTyp"/>
-            <string name="ID_no" alias="idNo"/>
+            <string name="city_id" alias="cityId" default=""/>
+            <string name="ID_type" alias="lotIdTyp" default=""/>
+            <string name="ID_no" alias="idNo" default=""/>
             <string name="account_type" default="14"/>
             <string name="charge_type" default="5"/>
             <string name="prize_type" default="3"/>
@@ -20,16 +20,16 @@
                 <string name="isBind" default="1"/>
 	            <string name="card_type" default="2"/>
 	            <string name="bank_id" default="COMM"/>
-	            <string name="bank_card" alias="crdNo"/>
+	            <string name="bank_card" alias="crdNo" default=""/>
             </record>
-            <string name="real_name" alias="cusNam"/>
-            <string name="sex" />
+            <string name="real_name" alias="cusNam" default=""/>
+            <string name="sex" default=""/>
             <string name="birthday" default=""/>
-            <string name="mobile" alias="mobTel"/>
+            <string name="mobile" alias="mobTel"default=""/>
             <string name="phone" default=""/>
         </record>
         <record name="bindDealer">
             <string name="isBind" default="1"/>
-            <string name="dealer_id" alias="dealId"/>
+            <string name="dealer_id" alias="dealId" default=""/>
         </record>
 </record>
