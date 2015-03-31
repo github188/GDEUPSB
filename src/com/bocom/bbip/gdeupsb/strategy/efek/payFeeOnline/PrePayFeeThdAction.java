@@ -46,8 +46,9 @@ public class PrePayFeeThdAction implements Executable{
 	 *报文信息 
 	 */
 	public void constantOfSoapUI(Context context){  
-		
+		//TODO 
 		context.setData(ParamKeys.COMPANY_NO, "032015");
+		
 		context.setData(GDParamKeys.TREATY_VERSION, GDConstants.TREATY_VERSION);//协议版本
 		context.setData(GDParamKeys.TRADE_PERSON_IDENTIFY, GDConstants.TRADE_PERSON_IDENTIFY);//交易人标识
 		context.setData(GDParamKeys.BAG_TYPE, "0");//数据包类型
