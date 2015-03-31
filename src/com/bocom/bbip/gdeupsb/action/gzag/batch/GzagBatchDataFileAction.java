@@ -183,7 +183,6 @@ public class GzagBatchDataFileAction extends BaseAction implements BatchAcpServi
 			resultMap.put(ParamKeys.EUPS_FILE_HEADER, headMap);
 			resultMap.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(detailList));
 			
-			System.out.println("~~~~~~~~resultMap~~~~~~~~"+resultMap.get(ParamKeys.EUPS_FILE_DETAIL));
 			logger.info("=================End  BatchDataFileAction  createFileMap ");
 			return resultMap;
 		}
