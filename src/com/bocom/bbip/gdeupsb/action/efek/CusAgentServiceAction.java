@@ -29,6 +29,18 @@ public class CusAgentServiceAction extends BaseAction{
 		public void execute(Context context)throws CoreException,CoreRuntimeException{
 			log.info("============Start  CusAgentServiceAction ");
 				context.setData(GDParamKeys.SVRCOD, "30");
+				Map<String, Object> cusMap=new HashMap<String, Object>();
+				cusMap.put("agtCllCusId", context.getData("cusNo"));
+				cusMap.put("cusTyp", "0");
+				cusMap.put("cusAc", context.getData("cusAc"));
+				cusMap.put("ccy", "RMB");
+				cusMap.put("idTyp", context.getData("idTyp"));
+				cusMap.put("idNo", context.getData("idNo"));
+				//添加 customerInfo
+				List<Map<String, Object>> cusList=new ArrayList<Map<String,Object>>();
+				cusList.add(cusMap);
+				context.setData("customerInfo", cusList);				
+				
 				Map<String, Object> map=new HashMap<String, Object>();
 				map.put(ParamKeys.BUS_TYP, "0");
 				map.put("comNo", context.getData("comNo"));
@@ -36,10 +48,17 @@ public class CusAgentServiceAction extends BaseAction{
 				map.put("cusNme", context.getData("cusNme"));
 				map.put("pwd", context.getData("pwd"));
 				map.put("cmuTel", context.getData("cmuTel"));
-				map.put("des2", context.getData("des2"));
-				map.put("eml", context.getData("eml"));
 				map.put("thdCusNo", context.getData("cusNo"));
-				//添加 agentCollectAgreement
+				map.put("buyTyp", "0");
+				map.put("busKnd", "A089");
+				map.put("agrVldDte", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
+				map.put("agrExpDte", "99991231");
+				map.put("agrTlr",context.getData(ParamKeys.TXN_TLR));
+				//TODO 
+				map.put("cusFeeDerFlg", "0");
+				map.put("ccy","RMB");
+				map.put("agtSrvCusPnm",context.getData("thdCusNme"));
+				map.put("agtSrvCusId",context.getData("cusNo"));
 				String oprTyp=context.getData("oprTyp").toString();
 				String mothed="";
 				if("0".equals(oprTyp)){
@@ -53,6 +72,7 @@ public class CusAgentServiceAction extends BaseAction{
 				}else {
 					mothed="eups.commDelCusAgent";
 				}
+				//添加 agentCollectAgreement
 				List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();
 				list.add(map);
 				context.setData(ParamKeys.AGENT_COLLECT_AGREEMENT, list);
