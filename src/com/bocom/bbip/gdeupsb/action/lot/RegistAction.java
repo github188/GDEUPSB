@@ -122,13 +122,13 @@ public class RegistAction extends BaseAction {
         inputLotCusInf.setRegTim(DateUtils.format(regTim, DateUtils.STYLE_yyyyMMddHHmmss));
         inputLotCusInf.setStatus("1");
 
-        // 
         String subNod = context.getData(ParamKeys.BR).toString().substring(2, 5);
         String cityId = CodeSwitchUtils.codeGenerator("SubNod2CityId", subNod);
         if (StringUtil.isEmpty(cityId)) {
         	log.info( "地市编码转换出错!");
         	throw new CoreException(GDErrorCodes.EUPS_LOT_SWIC_CITYNO_ERROR);
         }
+        context.setData("city_id", cityId);
         String sex = "0";
         // gender 在何处赋值 TODO
         // String gender = context.getData("gender").toString();
@@ -148,6 +148,9 @@ public class RegistAction extends BaseAction {
         // 向福彩中心发出彩民注册
         context.setData(ParamKeys.EUPS_BUSS_TYPE, "LOTR01");
         context.setData("action", "201");
+        context.setData("version", "");
+        context.setData("sent_time", DateUtils.format(new Date(), DateUtils.STYLE_FULL));
+        context.setData("dealId", "141");
         context.setData("regTim", DateUtils.format(regTim, DateUtils.STYLE_FULL));
         String idTyp = context.getData("idTyp");
         String lotIdTyp = CodeSwitchUtils.codeGenerator("IdTyp2LotIdTyp", idTyp);

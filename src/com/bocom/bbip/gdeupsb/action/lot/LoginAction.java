@@ -11,6 +11,7 @@ import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.ErrorCodes;
+import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
@@ -40,7 +41,7 @@ public class LoginAction extends BaseAction {
             throw new CoreException(GDErrorCodes.EUPS_LOT_QRY_SYS_FAIL);
         }
         // 向福彩中心发出系统角色登录
-        context.setData("eupsBusTyp", "LOTR01");
+        context.setData(ParamKeys.EUPS_BUSS_TYPE, "LOTR01");
         context.setData("action", "212");
         context.setData("version", "");
         context.setData("sent_time", DateUtils.format(new Date(), DateUtils.STYLE_FULL));

@@ -1,8 +1,10 @@
 package com.bocom.bbip.gdeupsb.channel.interceptors;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.bocom.bbip.gdeupsb.utils.GzFcXmlExchangeUtil;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.channel.Transform;
@@ -29,6 +31,13 @@ public class AddXmlLenTransform implements Transform {
         } else {
             throw new JumpException("msg type is error");
         }
+        try {
+            log.info("old send msg:"+new String(req,"UTF-8"));
+        	req = GzFcXmlExchangeUtil.GzFcXmlDel(new String(req,"UTF-8")).getBytes("UTF-8");
+		}  catch (Exception e) {
+			e.printStackTrace();
+			throw new JumpException("send xml exchange error");
+		}
         log.info("lengthSize="+lengthSize);
         if (lengthSize == 0) {
             return req;
