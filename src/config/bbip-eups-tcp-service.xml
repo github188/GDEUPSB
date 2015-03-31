@@ -385,7 +385,7 @@
 		<property name="default" ref="tcpEndpoint_HSSC" />
 	</bean>
 	<bean id="tcpChannel_HSSC" class="com.bocom.jump.bp.channel.tcp.SocketServer">
-		<property name="host" value="127.0.0.1" />
+		<property name="host" value="0.0.0.0" />
 		<property name="port" value="34160" />
 		<property name="soTimeout" value="100000" />
 		<property name="mapping" ref="tcpMapping_HSSC" />
