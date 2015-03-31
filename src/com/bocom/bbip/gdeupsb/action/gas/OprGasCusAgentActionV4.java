@@ -319,7 +319,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		map.put(ParamKeys.CCY, "CNY");
 		// idTyp CHAR 4 Y
 		// idNo CHAR 32 Y
-		map.put(ParamKeys.ID_TYPE, context.getData(ParamKeys.ID_TYPE));
+		map.put(ParamKeys.ID_TYPE, context.getData(ParamKeys.ID_TYPE));  
 		map.put("idNo", context.getData(ParamKeys.ID_NO));
 
 		// drwMde CHAR 1 N
