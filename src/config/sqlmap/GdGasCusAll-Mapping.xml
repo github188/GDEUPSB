@@ -264,6 +264,46 @@
 		</trim>
 	</select>
 
-
+<select id="findCusInfo" resultType="java.util.Map"
+		parameterType="com.bocom.bbip.gdeupsb.entity.GdGasCusAll">
+		select CUS_NO cusNo, CUS_AC cusAc, CUS_NME cusNme, CUS_TYP cusTyp, OPT_DAT optDat, OPT_NOD optNod, 
+		ID_TYP idTyp, ID_NO idNo, THD_CUS_NME thdCusNme, CMU_TEL cmuTel, THD_CUS_ADR thdCusAdr
+		from ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_ALL
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="cusNo!=null">
+				AND CUS_NO=#{cusNo,jdbcType=CHAR}
+			</if>
+			<if test="cusAc!=null">
+				AND CUS_AC=#{cusAc,jdbcType=CHAR}
+			</if>
+			<if test="cusNme!=null">
+				AND CUS_NME=#{cusNme,jdbcType=CHAR}
+			</if>
+			<if test="cusTyp!=null">
+				AND CUS_TYP=#{cusTyp,jdbcType=CHAR}
+			</if>
+			<if test="optDat!=null">
+				AND OPT_DAT=#{optDat,jdbcType=CHAR}
+			</if>
+			<if test="optNod!=null">
+				AND OPT_NOD=#{optNod,jdbcType=CHAR}
+			</if>
+			<if test="idTyp!=null">
+				AND ID_TYP=#{idTyp,jdbcType=CHAR}
+			</if>
+			<if test="idNo!=null">
+				AND ID_NO=#{idNo,jdbcType=CHAR}
+			</if>
+			<if test="thdCusNme!=null">
+				AND THD_CUS_NME=#{thdCusNme,jdbcType=CHAR}
+			</if>
+			<if test="cmuTel!=null">
+				AND CMU_TEL=#{cmuTel,jdbcType=CHAR}
+			</if>
+			<if test="thdCusAdr!=null">
+				AND THD_CUS_ADR=#{thdCusAdr,jdbcType=CHAR}
+			</if>
+		</trim>
+</select>
 
 </mapper>
