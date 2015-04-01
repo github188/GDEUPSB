@@ -76,6 +76,8 @@ public class CommInsertUpdateCusAgentServiceActionWATR00 extends BaseAction{
 			agentCollectAgreement.add(agentMap);
 			context.setData(ParamKeys.AGENT_COLLECT_AGREEMENT, agentCollectAgreement);//上代收付用
 			
+			
+			
 			Map<String, Object> infoMap = new HashMap<String, Object>();
 			List<Map<String,Object>> customerInfo = new ArrayList<Map<String,Object>>();
 //			infoMap.put("agtCllCusId", "");//TODO:修改协议时必输
@@ -88,6 +90,9 @@ public class CommInsertUpdateCusAgentServiceActionWATR00 extends BaseAction{
 			customerInfo.add(infoMap);
 			context.setData("agrChl", "1");//签约渠道设为公共事业缴费，上代收付用
 			context.setData("customerInfo", customerInfo);
+		
+			context.setData("ccy", "CNY");
+			context.setData("bvCde", "008");
 			get(BBIPPublicService.class).synExecute("eups.commInsertCusAgent", context);
 		}else if("1".equals(oprTyp)){
 			get(BBIPPublicService.class).synExecute("eups.commUpdateCusAgent", context);
