@@ -38,4 +38,9 @@
 	
 	<bean id="gemsService" class="com.bocom.bbip.comp.gems.service.DefaultGemsServiceAccessObject"/>
 	
+	<!-- 签约协议 -->
+	<bean id="RegisterService" class="com.bocom.bbip.comp.register.RegisterService"/>
+	
+	<bean id="EuifBaseAuthorityService" class="com.bocom.bbip.comp.euif.EuifBaseAuthorityService"/>
+	
 </beans>
