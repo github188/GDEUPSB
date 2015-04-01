@@ -8,7 +8,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
@@ -44,15 +43,6 @@ public class PreCancelFeeAction implements Executable{
 		System.out.println("~~~~~~~~~~"+context.getData("comNo"));
 		//TODO 
 		context.setData("thdObkCde", context.getData(ParamKeys.BANK_NO));
-			 	//TODO   comNo
-				String comNo=context.getData(ParamKeys.COMPANY_NO).toString();     
-				EupsThdTranCtlInfo eupsThdTranCtlInfo=eupsThdTranCtlInfoRepository.findOne(comNo);
-				if(null == eupsThdTranCtlInfo){
-							context.setData(GDParamKeys.MSGTYP, "E");                  //  Contants常量   
-							context.setData(ParamKeys.RSP_CDE,"EFE999");        //  Contants常量   
-							context.setData(ParamKeys.RSP_MSG, "获取单位编码【"+context.getData(ParamKeys.COMPANY_NO).toString()+"】交易参数错");
-							throw new CoreException("获取单位编码【"+context.getData(ParamKeys.COMPANY_NO).toString()+"】交易参数错");
-				}
 					context.setData(GDParamKeys.TOTNUM, "1");
 					callThd(context);
 				
