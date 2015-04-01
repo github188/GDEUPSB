@@ -179,7 +179,7 @@ public class RegistAction extends BaseAction {
             throw new CoreException(GDErrorCodes.EUPS_LOT_REG_FAIL);
         }
         context.setData("msgTyp", Constants.RESPONSE_TYPE_SUCC);
-        context.setData(ParamKeys.RSP_CDE, Constants.RESPONSE_CODE_SUCC);
+        context.setData("rspCod", Constants.RESPONSE_CODE_SUCC);
         context.setData(ParamKeys.RSP_MSG, Constants.RESPONSE_MSG);
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
     }
