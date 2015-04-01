@@ -8,6 +8,8 @@ import org.apache.commons.logging.LogFactory;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
+import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.utils.Assert;
@@ -29,9 +31,16 @@ public class EupsQueryBatchStatusAction extends BaseAction {
 		info.setBatNo(batNo);
 		info.setEupsBusTyp(eupsBusTyp);
 		List<GDEupsBatchConsoleInfo> ret = get(GDEupsBatchConsoleInfoRepository.class).find(info);
+		//EUPS 表中数据
+		GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=ret.get(0);
+		EupsBatchConsoleInfo eupsBatchConsoleInfos=new EupsBatchConsoleInfo();
+		eupsBatchConsoleInfos.setFleNme(gdEupsBatchConsoleInfo.getFleNme());
+		EupsBatchConsoleInfo eupsBatchConsoleInfo=get(EupsBatchConsoleInfoRepository.class).find(eupsBatchConsoleInfos).get(0);
+		gdEupsBatchConsoleInfo.setBatSts(eupsBatchConsoleInfo.getBatSts());
+		gdEupsBatchConsoleInfo.setFleNme(eupsBatchConsoleInfo.getFleNme());
 		Assert.isNotEmpty(ret, ErrorCodes.EUPS_BAT_CTL_INFO_NOT_EXIST);
-		logger.info("批次信息:"+BeanUtils.toFlatMap(ret.get(0)));
-		context.getDataMapDirectly().putAll(BeanUtils.toFlatMap(ret.get(0)));
+		logger.info("批次信息:"+BeanUtils.toFlatMap(gdEupsBatchConsoleInfo));
+		context.getDataMapDirectly().putAll(BeanUtils.toFlatMap(gdEupsBatchConsoleInfo));
 	}
 
 }

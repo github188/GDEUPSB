@@ -34,7 +34,7 @@ public class CancelBatchCheckAction extends BaseAction {
     	log.info("==============Start  CancelBatchCheckAction");
 		final String batNo=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.BAT_NO, ErrorCodes.EUPS_FIELD_EMPTY,"batNo");
 		//上锁
-		Result result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).tryLock(batNo, 60*1000L, 60*1000L);
+//		Result result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).tryLock(batNo, 60*1000L, 60*1000L);
 		//GDEUPSB
 		GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo = get(GDEupsBatchConsoleInfoRepository.class).findOne(batNo);
 		String fleNme=gdEupsBatchConsoleInfo.getRsvFld8();
@@ -62,8 +62,8 @@ public class CancelBatchCheckAction extends BaseAction {
 		
 //		context.setData("BatchConsoleInfo", gdEupsBatchConsoleInfo);
 		
-		unLock(context);
-		log.info("==============Start  CancelBatchCheckAction");
+//		unLock(context);
+		log.info("==============End  CancelBatchCheckAction");
     }
     /**
      * 解锁
