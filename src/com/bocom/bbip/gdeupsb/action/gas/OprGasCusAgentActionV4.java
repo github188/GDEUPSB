@@ -315,9 +315,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 							+ "】【accessObjList.getResponseType()："
 							+ accessObjList.getResponseType() + "】");
 					if (!("N".equals(accessObjList.getResponseType()))) {
-						context.setData(ParamKeys.RESPONSE_MESSAGE,
-								accessObjList.getResponseMessage());
-						throw new CoreException(GDErrorCodes.GAS_QRY_AGT_ERR_NO);
+						throw new CoreException(accessObjList.getResponseMessage());
 					} else {
 						logger.info("======================context after qryCusAgtList:"
 								+ context);
@@ -336,10 +334,15 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 						}
 						logger.info("==================");
 						context.setData("agentCollectAgreement", agentCollectAgreementMaps);
-						context.setData("agdAgrNo", agentCollectAgreementMaps.get(0).get("agdAgrNo"));
+						
+						List<String> agdAgrNoList =  new ArrayList<String>();
+						agdAgrNoList.add((String) agentCollectAgreementMaps.get(0).get("agdAgrNo"));
+						context.setData("agdAgrNo", agdAgrNoList);
 
 						logger.info("==============agdAgrNo in context :"
 								+ context.getData("agdAgrNo"));
+						
+						
 						logger.info("============ context after set agdAgrNo : "
 								+ context);
 
