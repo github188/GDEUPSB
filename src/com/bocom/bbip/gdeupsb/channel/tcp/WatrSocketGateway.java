@@ -167,7 +167,7 @@ public class WatrSocketGateway implements Gateway<Object, Object> {
 		try {
 			sndStrPre = new String(arrayOfByte1, "GBK");
 			log.info("sndStrPre=" + sndStrPre);
-			String detailDate = sndStrPre.substring(129); // 子报文
+			String detailDate = new String(sndStrPre.substring(129).getBytes("GBK"),"GBK");
 
 			log.info("detailDate,即拼接在后面的报文内容=" + detailDate);
 			String md5Date = CryptoUtils.md5(detailDate.toString().getBytes("GBK")); // 校验位
@@ -177,10 +177,9 @@ public class WatrSocketGateway implements Gateway<Object, Object> {
 			log.info("初始报文头(不含校验位)=" + sndStrPre.substring(0, 97));
 			sb.append(sndStrPre.substring(0, 97)); // 初始报文头(不含校验位)
 			sb.append(md5Date);
+			
 			sb.append(detailDate);
-
 			arrayOfByte1 = sb.toString().getBytes("GBK");
-
 		} catch (UnsupportedEncodingException e) {
 			throw new SocketReadException(false, "socket write error", e);
 		}
