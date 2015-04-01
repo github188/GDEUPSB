@@ -77,9 +77,6 @@ public class PrintBatchInfoAction extends BaseAction{
 				context.setData("Tlr", eupsBatchConsoleInfo.getTxnTlr());
 				context.setData("falTotAmt", eupsBatchConsoleInfo.getFalTotAmt());
 				context.setData("txnDte",DateUtils.formatAsSimpleDate(new Date()));
-				System.out.println();
-				System.out.println(context.getData("txnDte"));
-				System.out.println(context.getData("falTotAmt"));
 				log.info("~~~~~~~~~~~"+context);
 				//清单文件
 				VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
@@ -125,6 +122,8 @@ public class PrintBatchInfoAction extends BaseAction{
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+				}finally{
+					context.setData("printResult", "正在打印....");
 				}
 				
 		}
