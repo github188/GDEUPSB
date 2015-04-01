@@ -56,13 +56,13 @@ public class CommInsertCusAgentServiceActionWATR00 implements	CommInsertCusAgent
 		StepSequenceFactory s = context.getService("logNoService");
 		String logNo = s.create().toString();
 		context.setData("waterno", "JH"+logNo);//流水号生成
-		context.setData("bankcode", "JT");
+		context.setData("bankcode", "交行");
 		context.setData("salesdepart",((String)context.getData(ParamKeys.BR)).substring(2, 8));
 		context.setData("salesperson", ((String)context.getData(ParamKeys.TELLER)).substring(4, 7));
 		context.setData("busitime", DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMddHHmmss));
 		context.setData("thdRspCde", "0");
-		context.setData("zprice", "");
-		context.setData("months", "");
+		context.setData("zprice", "0");
+		context.setData("months", "0");
 		context.setData("operano", "");
 		context.setData("password", "        ");
 		context.setData("md5digest", " ");
