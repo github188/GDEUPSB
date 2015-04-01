@@ -64,7 +64,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		context.setData("thdthdCusNo", context.getData("thdCusNo"));
 
 		// 备份，修改时用 TODO 修改做不了
-		context.setData("cusTypBak", context.getData("cusTyp"));
+		String cusTypBak = context.getData("cusTyp");
 		context.setData("cusAcBak", context.getData(ParamKeys.CUS_AC));
 		boolean cmuTelSts = false;
 		if (StringUtils
@@ -107,8 +107,9 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			context.setData("thdCusNme", infoList.get(0).get("THDCUSNME"));
 			context.setData("cmuTel", infoList.get(0).get("CMUTEL"));
 			context.setData("thdCusAdr", infoList.get(0).get("THDCUSADR"));
-
+			context.setData("cusTyp", cusTypBak);
 			logger.info("========context after qry cus info:" + context);
+			
 			logger.info("========PGAS00 用户协议查询完成=======");
 		} else {
 
@@ -199,6 +200,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 					}
 					logger.info("=============代收付签约成功，发THD签约===========");
 					callThdAndOprateLclCusAgt(context);
+					context.setData("cusTyp", cusTypBak);
 
 				}
 				if ("2".equals(context.getData("optFlg"))) { // 修改
@@ -286,6 +288,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 						}
 						logger.info("=============代收付修改签约成功，发THD修改签约===========");
 						callThdUpdateOprateLclCusAgt(context);
+						context.setData("cusTyp", cusTypBak);
 
 					}
 				}
@@ -350,7 +353,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 						}
 						logger.info("=============代收付删除成功，发THD删除协议===========");
 						callThdStopOprateLclCusAgt(context);
-
+						context.setData("cusTyp", cusTypBak);
 					}
 				}
 			} else if ("NOUser".equals(context.getData("TransCode").toString()
@@ -365,7 +368,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			}
 		}
 
-		context.setData("cusTyp", context.getData("cusTypBak"));
+		context.setData("cusTyp", cusTypBak);
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
 	}
 
