@@ -6,22 +6,13 @@
     encoding="GBK"  trace="true">			<!-- type="LLLL"  -->
 	<segment name="hzGasReq">	
 	
-<!-- 	<fixString name="TransCode" length="6" /> 
-	<fixString name="DeliA" length="1" default="," />
-	
-	<fixString name="comNo"  length="10" />
-	<fixString name="DeliA" length="1" default="," /> -->
 	
  	<fixString name="TransCode" length="10" mapping="true" /> 
  	<fixString name="Deli1"      length="1" default=","/>
  	
- 	<!-- <fixString name="tlr" length="3" />
- 	<fixString name="tmlId" length="3" /> -->
  	
  	 	
 	</segment>
- 	 <!--  <include keys="TransCode" decodePrefix="req" />  -->
- 	 
  	 <select name="hzGasReqBody" key="tccode" default="N">
 		<include name="N" keys="TransCode" encodePrefix="req" decodePrefix="rsp" />
 	</select>

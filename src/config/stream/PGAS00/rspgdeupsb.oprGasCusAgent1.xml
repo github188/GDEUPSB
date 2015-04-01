@@ -24,7 +24,7 @@
 	<fixString name="gasBk" length="4"    />
 	<fixString  name="Deli9" length="1" default=","/> 
 	
-	<fixString name="cusNo" length="12"    />
+	<fixString name="thdCusNo" length="12"    />
 	<fixString  name="Deli10" length="1" default=","/>
 	
 	<fixString name="cusAc" length="32"    />
