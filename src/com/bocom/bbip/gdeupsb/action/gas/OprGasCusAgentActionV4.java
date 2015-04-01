@@ -66,7 +66,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			context.setData("cusTyp", "0");
 			context.setData("bvCde", "009");
 		}
-
+		context.setData("cusTypBak", context.getData("cusTyp"));
 		context.setData(GDParamKeys.GAS_BK, "CNJT");
 		context.setData(ParamKeys.CUS_NO, context.getData(ParamKeys.THD_CUS_NO));
 		context.setData("agtSrvCusId", context.getData(ParamKeys.THD_CUS_NO));
@@ -153,7 +153,6 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 							+ accessObjList.getResponseMessage()
 							+ "】【accessObjList.getResponseType()："
 							+ accessObjList.getResponseType() + "】");
-					// 【accessObjList.getResponseCode():BBIP0004AGPM66】responseMessage():客户信息不存在。responseType()：E】
 					if ("N".equals(accessObjList.getResponseType())) {
 						throw new CoreRuntimeException(
 								GDErrorCodes.GAS_QRY_AGT_ERR_EXIST);
@@ -189,7 +188,6 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 							+ accessObjList.getResponseMessage()
 							+ "】【accessObjList.getResponseType()："
 							+ accessObjList.getResponseType() + "】");
-					// 【accessObjList.getResponseCode():BBIP0004AGPM66】responseMessage():客户信息不存在。responseType()：E】
 					if (!("N".equals(accessObjList.getResponseType()))) {
 						context.setData(ParamKeys.RESPONSE_MESSAGE,
 								accessObjList.getResponseMessage());
@@ -198,9 +196,9 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 					} else {
 						logger.info("======================context after qryCusAgtList:"
 								+ context);
-//						context.setDataMap(accessObjList.getPayload());
-//						logger.info("======================context after qryCusAgtList & setDataMap:"
-//								+ context);
+						context.setDataMap(accessObjList.getPayload());
+						logger.info("======================context after qryCusAgtList & setDataMap:"
+								+ context);
 
 						@SuppressWarnings("unchecked")
 						List<Map<String, Object>> agentCollectAgreementMaps = (List<Map<String, Object>>) context
@@ -245,7 +243,6 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 							+ accessObjList.getResponseMessage()
 							+ "】【accessObjList.getResponseType()："
 							+ accessObjList.getResponseType() + "】");
-					// 【accessObjList.getResponseCode():BBIP0004AGPM66】responseMessage():客户信息不存在。responseType()：E】
 					if (!("N".equals(accessObjList.getResponseType()))) {
 						context.setData(ParamKeys.RESPONSE_MESSAGE,
 								accessObjList.getResponseMessage());
@@ -253,9 +250,9 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 					} else {
 						logger.info("======================context after qryCusAgtList:"
 								+ context);
-//						context.setDataMap(accessObjList.getPayload());
-//						logger.info("======================context after qryCusAgtList & setDataMap:"
-//								+ context);
+						context.setDataMap(accessObjList.getPayload());
+						logger.info("======================context after qryCusAgtList & setDataMap:"
+								+ context);
 
 						@SuppressWarnings("unchecked")
 						List<Map<String, Object>> agentCollectAgreementMaps = (List<Map<String, Object>>) context
@@ -287,6 +284,8 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 				throw new CoreRuntimeException(GDErrorCodes.GAS_SYS_ERROR);
 			}
 		}
+		
+		context.setData("cusTyp", context.getData("cusTypBak"));
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
 	}
 
@@ -368,7 +367,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		context.setData(ParamKeys.COMPANY_NAME, comNme);
 		map.put(ParamKeys.COMPANY_NAME, comNme);
 
-		map.put(ParamKeys.BUS_TYP, "0"); // TODO 0-代收； 暂用0，待确认0-代收,1-代付,2-代缴
+		map.put(ParamKeys.BUS_TYP, "0"); // TODO 0-代收； 暂用0，待确认0-代收,1-代付,2-代缴   0-批量代收；1-批量代付；2-联机缴费；
 		map.put(ParamKeys.BUSS_KIND, context.getData(ParamKeys.BUSS_KIND));
 		map.put(ParamKeys.CCY, "CNY");
 		map.put("cusFeeDerFlg", "0"); // TODO 暂用0，待确认
