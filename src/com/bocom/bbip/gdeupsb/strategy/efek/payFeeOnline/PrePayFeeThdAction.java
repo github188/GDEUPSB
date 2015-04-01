@@ -5,7 +5,12 @@ import java.util.Date;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.bocom.bbip.comp.BBIPPublicService;
+import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
@@ -17,9 +22,13 @@ import com.bocom.jump.bp.core.Executable;
 /**
  * @author liyawei
  */
-public class PrePayFeeThdAction implements Executable{
+public class PrePayFeeThdAction extends BaseAction implements Executable{
 	private final static Log logger=LogFactory.getLog(PrePayFeeThdAction.class);
-
+	@Autowired
+	BBIPPublicService bbipPublicService;
+	@Autowired
+	@Qualifier("callThdTradeManager")
+	ThirdPartyAdaptor callThdTradeManager;
 	/**
 	 * 记账前，第三方处理
 	 */
@@ -29,7 +38,6 @@ public class PrePayFeeThdAction implements Executable{
 		logger.info("==============Start   PrePayFeeThdAction");
 		
 			context.setData(GDParamKeys.BAG_TYPE, "1");
-			context.setData(GDParamKeys.SVRCOD, "11");             //GDConstants 常量
 			constantOfSoapUI(context);
 			
 			BigDecimal txnAmt=new BigDecimal(context.getData(ParamKeys.TXN_AMT).toString());
@@ -41,13 +49,18 @@ public class PrePayFeeThdAction implements Executable{
 			BigDecimal wyj=new BigDecimal(context.getData(GDParamKeys.DEDIT).toString());
 			context.setData("dedit", wyj.scaleByPowerOfTen(2));
 			
+			context.setData(GDParamKeys.SVRCOD, "11");             //GDConstants 常量
+			context.setData("accountsSerialNo", "032000172300328");
+//			context.setData("comNo", context.getData("company"));
+//			context.setData("rsvFld3", context.getData("accountsSerialNos"));
+			
+			context.setData("comNo", "032015");
+			context.setData("rsvFld3", "032000172300328");
 	}
 	/**
 	 *报文信息 
 	 */
 	public void constantOfSoapUI(Context context){  
-		//TODO 
-		context.setData(ParamKeys.COMPANY_NO, "032015");
 		
 		context.setData(GDParamKeys.TREATY_VERSION, GDConstants.TREATY_VERSION);//协议版本
 		context.setData(GDParamKeys.TRADE_PERSON_IDENTIFY, GDConstants.TRADE_PERSON_IDENTIFY);//交易人标识
@@ -74,7 +87,6 @@ public class PrePayFeeThdAction implements Executable{
 				String txnTime=DateUtils.formatAsHHmmss(txnTme);
 				context.setData(ParamKeys.TXN_DATE, txnDate);
 				context.setData(ParamKeys.TXN_TIME, txnTime);
-				
 				//TODO 
 				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW04");
 //				context.setData(ParamKeys.PAY_TYPE, "110");
