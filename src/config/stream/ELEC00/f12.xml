@@ -23,7 +23,7 @@
 	      <fixString name="accountsSerialNos" length="16" /><!-- 账务流水号 -->
 	      <fixString name="electricityYearMonth" length="6" /><!--  电费年月-->
 	      <fixString name="ccy" length="5" /><!--  货币符号-->
-	      <fixString name="txnAmt" length="16" /><!-- 原实扣金额 -->
+	      <fixString name="txnAmts" length="16" /><!-- 原实扣金额 -->
 	      
 	      <fixString name="CXMoney" length="16" /><!-- 冲销金额 -->
 	      <fixString name="CXReason" length="128" /><!-- 冲销原因 -->
