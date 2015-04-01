@@ -51,11 +51,11 @@ public class PrePayFeeThdAction extends BaseAction implements Executable{
 			
 			context.setData(GDParamKeys.SVRCOD, "11");             //GDConstants 常量
 			context.setData("accountsSerialNo", "032000172300328");
-//			context.setData("comNo", context.getData("company"));
-//			context.setData("rsvFld3", context.getData("accountsSerialNos"));
+			context.setData("comNo", context.getData("company"));
+			context.setData("rsvFld3", context.getData("accountsSerialNos"));
 			
-			context.setData("comNo", "032015");
-			context.setData("rsvFld3", "032000172300328");
+//			context.setData("comNo", "032015");
+//			context.setData("rsvFld3", "032000172300328");
 	}
 	/**
 	 *报文信息 
