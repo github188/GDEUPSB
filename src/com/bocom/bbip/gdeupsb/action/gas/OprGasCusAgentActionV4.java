@@ -99,7 +99,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			if (StringUtils.isNotBlank((String) infoList.get(0).get("CUSNME"))) {
 				context.setData("cusNme", infoList.get(0).get("CUSNME"));
 			}
-			context.setData("cusTyp", infoList.get(0).get("CUSTYP"));
+//			context.setData("cusTyp", infoList.get(0).get("CUSTYP"));
 			context.setData("optDat", infoList.get(0).get("OPTDAT"));
 			context.setData("optNod", infoList.get(0).get("OPTNOD"));
 			context.setData("idTyp", infoList.get(0).get("IDTYP"));
@@ -432,7 +432,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			throw new CoreException(GDErrorCodes.GAS_CUS_AGT_STOPNO);
 		}
 		logger.info("callThdStopOprateLclCusAgt end ... ...");
-
+ 
 	}
 
 	private void callThdUpdateOprateLclCusAgt(Context context)
