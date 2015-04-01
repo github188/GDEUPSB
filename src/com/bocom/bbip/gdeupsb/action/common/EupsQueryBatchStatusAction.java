@@ -34,7 +34,7 @@ public class EupsQueryBatchStatusAction extends BaseAction {
 		//EUPS 表中数据
 		GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=ret.get(0);
 		EupsBatchConsoleInfo eupsBatchConsoleInfos=new EupsBatchConsoleInfo();
-		eupsBatchConsoleInfos.setFleNme(gdEupsBatchConsoleInfo.getFleNme());
+		eupsBatchConsoleInfos.setFleNme(gdEupsBatchConsoleInfo.getRsvFld8());
 		EupsBatchConsoleInfo eupsBatchConsoleInfo=get(EupsBatchConsoleInfoRepository.class).find(eupsBatchConsoleInfos).get(0);
 		gdEupsBatchConsoleInfo.setBatSts(eupsBatchConsoleInfo.getBatSts());
 		gdEupsBatchConsoleInfo.setFleNme(eupsBatchConsoleInfo.getFleNme());
