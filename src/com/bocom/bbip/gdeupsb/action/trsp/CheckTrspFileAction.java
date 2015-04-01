@@ -1,11 +1,9 @@
 package com.bocom.bbip.gdeupsb.action.trsp;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
@@ -58,6 +56,8 @@ public class CheckTrspFileAction extends BaseAction{
 			@Autowired
 			EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
 			@Autowired
+			OperateFileAction operateFileAction;
+			@Autowired
 			@Qualifier("callThdTradeManager")
 			ThirdPartyAdaptor callThdTradeManager;
 			public void execute(Context context)throws CoreException,CoreRuntimeException{
@@ -79,7 +79,8 @@ public class CheckTrspFileAction extends BaseAction{
 		    	   		context.setData(GDParamKeys.END_DATE, DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
 		       }
 		        //外发第三方
-		        callThd(context);
+//		        callThd(context);
+		       context.setData("fileName", "trsptrsp.txt");
 		        //清除对账表中的信息
 		        get(TrspCheckTmpRepository.class).deleteAll("1");
 		        //文件内容添加到对账表
@@ -167,9 +168,9 @@ public class CheckTrspFileAction extends BaseAction{
 		        if(CollectionUtils.isNotEmpty(gdEupsbTrspFeeInfoList)){
 		        	context.setData(ParamKeys.RSP_CDE, "329999");
 		        	context.setData(ParamKeys.RSP_MSG, "系统错误");
+		        	printDetail(context, tChkNo, gdEupsbTrspFeeInfoList);
 		        	throw new CoreException("系统错误");
 		        }
-		        
 		        context.setData(GDParamKeys.MSGTYP, "N");
 		        context.setData(ParamKeys.RSP_CDE, "000000");
 		        context.setData(ParamKeys.RSP_MSG, "交易成功");
@@ -178,6 +179,7 @@ public class CheckTrspFileAction extends BaseAction{
 		        
 				//放到指定位置
 		        sendFile(context, fileName);
+		        printDetail(context, tChkNo, detailList);
 		      //清除对账表中的信息
 		        get(TrspCheckTmpRepository.class).deleteAll(tChkNo);
 		        logger.info("============对账结束");
@@ -206,55 +208,47 @@ public class CheckTrspFileAction extends BaseAction{
 	/**
 	 * 将文件拆分入对账表 更改交易表中对账状态
 	 */
-	public void fileInsertTrspCheckTmp(Context context,String tChkNo){
+	public void fileInsertTrspCheckTmp(Context context,String tChkNo) throws CoreException{
 		logger.info("~~~~~~~~~~~Start  CheckTrspFile   fileInsertTrspCheckTmp");
-		//io 每行读  在写入文件
 		String ftpNo="trspCheckFile";
 		EupsThdFtpConfig eupsThdFtpConfig=get(EupsThdFtpConfigRepository.class).findOne(ftpNo);
+		eupsThdFtpConfig.setFtpDir("1");
 		String path=eupsThdFtpConfig.getLocDir();
 		String fileName=context.getData("fileName").toString().trim();
-		try {
-			FileReader fileReader=new FileReader(path+"//"+fileName);
-			BufferedReader bufferedReader=new BufferedReader(fileReader);
-			String string=null;
-			GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo =new GDEupsbTrspFeeInfo();
-			gdEupsbTrspFeeInfo.setChkFlg("0");
-			//设置对账批次
-			gdEupsbTrspFeeInfo.setTchkNo(tChkNo);
-			//读行
-			while((string=bufferedReader.readLine())!=null){
-					String[] str=string.split("\\|");
-//					0银行交易日期|1银行流水号|2发生额|3发票号|4缴费月数|5车辆类型|6车牌号|7状态|				
-					TrspCheckTmp trspCheckTmp=new TrspCheckTmp();
-					trspCheckTmp.setTxnDat(DateUtils.parse(str[0],DateUtils.STYLE_SIMPLE_DATE));
-					trspCheckTmp.setSqn(str[1]);		
-					
-					double i=Double.parseDouble(str[2].toString());
-					double d=i/100;
-					DecimalFormat df=new DecimalFormat("#.00");
-					BigDecimal txnAmt=new BigDecimal(df.format(d));
-					trspCheckTmp.setTxnAmt(txnAmt);
-					
-					trspCheckTmp.setInvNo(str[3]);
-					trspCheckTmp.setPayMon(str[4]);
-					trspCheckTmp.setCarTyp(str[5]);
-					trspCheckTmp.setCarNo(str[6]);
-					trspCheckTmp.setStatue(str[7]);
-					
-					gdEupsbTrspFeeInfo.setThdKey(str[1]);
-					//更改对账状态
-					gdEupsbTrspFeeInfoRepository.update(gdEupsbTrspFeeInfo);
-					//插入对账表
-					trspCheckTmpRepository.insert(trspCheckTmp);
-			}
-			bufferedReader.close();
-			fileReader.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		eupsThdFtpConfig.setLocFleNme(fileName);
+		eupsThdFtpConfig.setRmtFleNme(fileName);
+		operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
+		
+		//文件解析入库
+		List<Map<String, Object>> mapList=operateFileAction.pareseFile(eupsThdFtpConfig, "trspCheckFile");
+		
+		GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo =new GDEupsbTrspFeeInfo();
+		gdEupsbTrspFeeInfo.setChkFlg("0");
+		//设置对账批次
+		gdEupsbTrspFeeInfo.setTchkNo(tChkNo);
+		for (Map<String, Object> map : mapList) {
+				TrspCheckTmp trspCheckTmp=new TrspCheckTmp();
+			System.out.println(map);
+				
+				trspCheckTmp.setTxnDat(DateUtils.parse(map.get("payDat").toString(),DateUtils.STYLE_SIMPLE_DATE));
+				trspCheckTmp.setSqn(map.get("thdKey").toString());		
+				
+				double i=Double.parseDouble(map.get("txnAmt").toString());
+				double d=i/100;
+				DecimalFormat df=new DecimalFormat("#.00");
+				BigDecimal txnAmt=new BigDecimal(df.format(d));
+				trspCheckTmp.setTxnAmt(txnAmt);
+				trspCheckTmp.setTchkNo(tChkNo);
+				trspCheckTmp.setInvNo(map.get("invNo").toString());
+				trspCheckTmp.setPayMon(map.get("payMon").toString());
+				trspCheckTmp.setCarTyp(map.get("carTyp").toString());
+				trspCheckTmp.setCarNo(map.get("carNo").toString());
+				trspCheckTmp.setStatue(map.get("status").toString());
+				
+				//更改对账状态
+				gdEupsbTrspFeeInfoRepository.update(gdEupsbTrspFeeInfo);
+				//插入对账表
+				trspCheckTmpRepository.insert(trspCheckTmp);
 		}
 		logger.info("~~~~~~~~~~~End  CheckTrspFile   fileInsertTrspCheckTmp");
 	}
@@ -265,21 +259,30 @@ public class CheckTrspFileAction extends BaseAction{
 		logger.info("~~~~~~~~~~~Start  CheckTrspFile   printFile");
 		//获取FTP信息,发送文件到指定路径
         EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("trspCheckFile");
+        eupsThdFtpConfig.setFtpDir("0");
         eupsThdFtpConfig.setLocFleNme(fileName);
+        eupsThdFtpConfig.setRmtFleNme("new"+fileName);
         operateFTPAction.putCheckFile(eupsThdFtpConfig);
 	}
 	/**
 	 * 打印清单
 	 */
-	public void printDetail(Context context,String tChkNo,List<Object> detailList)throws CoreException{
+	public void printDetail(Context context,String tChkNo,List<GDEupsbTrspFeeInfo> detailList)throws CoreException{
 		logger.info("~~~~~~~~~~~Start  CheckTrspFile   printDetail");
 		//报表模式
 		int i=Integer.parseInt(context.getData(GDParamKeys.JOURNAL_MODEL).toString());
+		context.setData(ParamKeys.TXN_TLR, "ABIR148");
 		String rptFil="Car"+context.getData(ParamKeys.TXN_TLR).toString()+context.getData(GDParamKeys.START_DATE).toString().substring(5)+".dat";
 		context.setData("rptFil", rptFil);
 		
 		String rptFmt="rptFmt";
+		System.out.println();
+		System.out.println();
+		System.out.println(111);
 		List<Map<String, String>> list=gdEupsbTrspFeeInfoRepository.findSumForTxnAmt(tChkNo);
+		System.out.println();
+		System.out.println();
+		System.out.println(222);
 		//得到总笔数  总金额
 		if(CollectionUtils.isEmpty(list)){
 			context.setData(ParamKeys.RSP_CDE, "329999");
