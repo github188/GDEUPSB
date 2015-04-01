@@ -38,6 +38,10 @@ public class PreCancelFeeAction implements Executable{
 		context.setData(ParamKeys.TXN_AMT, bigDecimal);
 		context.setData("CXMoney", bigDecimal);
 		context.setData(ParamKeys.CUS_NME, context.getData("CusNme"));
+		context.setData("accountsSerialNos", context.getData("accountsSerialNo"));
+		context.setData("comNos", "032015");
+		System.out.println();
+		System.out.println("~~~~~~~~~~"+context.getData("comNo"));
 		//TODO 
 		context.setData("thdObkCde", context.getData(ParamKeys.BANK_NO));
 			 	//TODO   comNo
