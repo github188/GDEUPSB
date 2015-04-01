@@ -37,10 +37,18 @@ public class EupsQueryBatchStatusAction extends BaseAction {
 		eupsBatchConsoleInfos.setFleNme(gdEupsBatchConsoleInfo.getRsvFld8());
 		EupsBatchConsoleInfo eupsBatchConsoleInfo=get(EupsBatchConsoleInfoRepository.class).find(eupsBatchConsoleInfos).get(0);
 		gdEupsBatchConsoleInfo.setBatSts(eupsBatchConsoleInfo.getBatSts());
-		gdEupsBatchConsoleInfo.setFleNme(eupsBatchConsoleInfo.getFleNme());
 		Assert.isNotEmpty(ret, ErrorCodes.EUPS_BAT_CTL_INFO_NOT_EXIST);
 		logger.info("批次信息:"+BeanUtils.toFlatMap(gdEupsBatchConsoleInfo));
-		context.getDataMapDirectly().putAll(BeanUtils.toFlatMap(gdEupsBatchConsoleInfo));
+		context.setData("batNo",gdEupsBatchConsoleInfo.getBatNo());
+		context.setData("comNo",gdEupsBatchConsoleInfo.getComNo());
+		context.setData("comNme",gdEupsBatchConsoleInfo.getComNme());
+		context.setData("eupsBusTyp",gdEupsBatchConsoleInfo.getEupsBusTyp());
+		context.setData("totCnt",eupsBatchConsoleInfo.getTotCnt());
+		context.setData("totAmt",eupsBatchConsoleInfo.getTotAmt());
+		context.setData("batSts",gdEupsBatchConsoleInfo.getBatSts());
+		context.setData("fleNme",gdEupsBatchConsoleInfo.getRsvFld8());
+		context.setData("thdBatNo",gdEupsBatchConsoleInfo.getRsvFld9());
+
 	}
 
 }
