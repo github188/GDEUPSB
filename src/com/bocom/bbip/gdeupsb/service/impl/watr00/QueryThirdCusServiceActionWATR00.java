@@ -44,7 +44,6 @@ public class QueryThirdCusServiceActionWATR00 extends BaseAction{
 		StepSequenceFactory s = context.getService("logNoService");
 		String logNo = s.create().toString();
 		context.setData("waterno", "JH"+logNo);//流水号生成
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+context);
 		context.setData("bankcode", "交行");
 		context.setData("salesdepart",((String)context.getData(ParamKeys.BR)).substring(2, 8));
 		context.setData("salesperson", ((String)context.getData(ParamKeys.TELLER)).substring(3));
@@ -57,9 +56,8 @@ public class QueryThirdCusServiceActionWATR00 extends BaseAction{
 		context.setData("md5digest", " ");
 		
 		context.setData("hno", context.getData("thdCusNo"));
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+context);
+		
 		Map<String,Object> thdReturnMessage = callThdTradeManager.trade(context);
-		System.out.println("!!!!!!!!!!!!!!!!!"+thdReturnMessage);
 		if(context.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL)){
 			CommThdRspCdeAction cRspCdeAction = new CommThdRspCdeAction();
 			String responseCode = cRspCdeAction.getThdRspCde(thdReturnMessage, 	context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
