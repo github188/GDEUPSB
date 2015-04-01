@@ -93,7 +93,8 @@ public class CommInsertUpdateCusAgentServiceActionWATR00 extends BaseAction{
 		
 			context.setData("ccy", "CNY");
 			context.setData("bvCde", "008");
-			get(BBIPPublicService.class).synExecute("eups.commInsertCusAgent", context);
+			context.setData("cusNo", context.getData("thdCusNo"));
+			get(BBIPPublicService.class).synExecute("gdeupsb.commInsertCusAgent", context);
 		}else if("1".equals(oprTyp)){
 			get(BBIPPublicService.class).synExecute("eups.commUpdateCusAgent", context);
 		}else{
