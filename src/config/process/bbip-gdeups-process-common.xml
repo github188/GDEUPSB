@@ -46,7 +46,7 @@
 	</process>
 	
 	<!--代扣协议签约    -->
-	<process id="gdeupsb.commInsertCusAgent" template="eups.commInsCusAgentTemplate" interceptors="eups.transMessageInterceptor">	
+	<process id="gdeupsb.commInsertCusAgent" template="gdeupsb.commInsCusAgentTemplate" interceptors="eups.transMessageInterceptor">	
 	   <actions>
 		<action id="preAction" ref="eups.commBeforeDealCusAgentAction" operations="insertBeforeDeal" />  <!-- 协议操作前预处理 -->
 		<action id="preAction" ref="eups.commInsertCusAgentServiceAction" operations="preInsertCusAgent"/> <!-- 签约前服务 -->
@@ -55,6 +55,19 @@
 		<!-- <action id="callThdAction" ref="eups.insertCusAgentThdStrategyAction" />  发第三方 -->
 		<action id="callThdAction" ref="eups.commInsertCusAgentServiceAction" operations="callThd"/> <!-- 发第三方服务 -->
 		
+	   </actions>
+	</process>
+	
+	<!--代扣协议删除-->
+	<process id="gdeupsb.commDelCusAgent" template="gdeupsb.commOprCusAgentTemplate" interceptors="eups.transMessageInterceptor">	
+	   <actions>
+		<action id="preAction" ref="eups.commDelCusAgentServiceAction" operations="preDelCusAgent"/> <!-- 删除前服务 -->
+		<action id="preAction" ref="eups.commBeforeDealCusAgentAction" operations="delBeforeDeal" /> <!-- 协议操作前预处理 -->
+		<action id="preAction" ref="eups.commInitCusAgentAction" /> <!-- 检查协议，预计协议流水 -->
+	    <action id="callACPSAction"  ref="eups.commDelCusAgentAction"/>	<!-- 发代收付 -->
+	   	<!--<action id="callThdAction" ref="eups.delCusAgentThdStrategyAction"/>  发第三方 -->
+	   	<action id="callThdAction" ref="eups.commDelCusAgentServiceAction" operations="callThd"/> <!-- 发第三方 -->
+	    
 	   </actions>
 	</process>
 	
