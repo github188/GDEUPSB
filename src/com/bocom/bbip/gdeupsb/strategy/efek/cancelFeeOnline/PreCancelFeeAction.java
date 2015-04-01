@@ -34,7 +34,7 @@ public class PreCancelFeeAction implements Executable{
 		context.setData(GDParamKeys.SVRCOD, "12");
 		context.setData(ParamKeys.THD_CUS_NO, context.getData(GDParamKeys.PAY_NO));
 		BigDecimal bigDecimal=new BigDecimal(context.getData(ParamKeys.TXN_AMT).toString()).scaleByPowerOfTen(2);
-		context.setData(ParamKeys.TXN_AMT, bigDecimal);
+		context.setData("txnAmts", bigDecimal);
 		context.setData("CXMoney", bigDecimal);
 		context.setData(ParamKeys.CUS_NME, context.getData("CusNme"));
 		context.setData("accountsSerialNos", context.getData("accountsSerialNo"));
