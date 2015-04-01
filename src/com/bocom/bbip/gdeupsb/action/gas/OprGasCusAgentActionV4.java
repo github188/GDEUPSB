@@ -359,7 +359,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 									stopCusAgtResult.getResponseMessage());
 						}
 						
-						
+						callThdStopOprateLclCusAgt(context);
 						
 						context.setData("cusTyp", cusTypBak);
 					}
