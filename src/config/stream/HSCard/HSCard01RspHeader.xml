@@ -6,6 +6,7 @@
 	filter="both,WEB-INF/classes/config/stream/HSCard/translateDict.txt">
 
 	<segment name="head" encoding="GBK">
+	
 		<fixString name="thdRspCde" length="4"/>  <!--返回码 -->
 		<fixString name="responseMessage" length="100"/>  <!--返回信息 -->
 	    <fixString name="TransCode" length="6"  referred="true" mapping="true"/>  
