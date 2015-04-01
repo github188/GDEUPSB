@@ -41,7 +41,7 @@ public class AgtFileSendPreAction extends BaseAction {
 		context.setData("busNam", busNam);
 
 		// 设置文件名称
-		String filNam = "GDS" + gdsBid + context.getData("begDat") + ".TXT";
+		String filNam = "GDS" + gdsBid +"_"+ context.getData("begDat") + ".TXT";
 		context.setData("filNam", filNam);
 	}
 
