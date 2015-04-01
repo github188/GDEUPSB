@@ -29,17 +29,12 @@ public class TallyCancelQryOnlineAction extends BaseAction{
 				eupsTransJournals.setMfmVchNo(mfmVchNo);
 				EupsTransJournal eupsTransJournal=eupsTransJournalRepository.find(eupsTransJournals).get(0);
 				if(null != eupsTransJournal){
-						context.setData("ApCode", "46");
-						context.setData("OFmtCd", "999");
 
 						context.setData(ParamKeys.TRADE_TXN_DIR, "C");//交易方向
 						//本次交易日期时间
 						Date date=new Date();
 						context.setData(ParamKeys.TXN_DTE, DateUtils.format(date,DateUtils.STYLE_yyyyMMdd));
 						context.setData(ParamKeys.TXN_TME, DateUtils.format(date,DateUtils.STYLE_HHmmss));
-						System.out.println();
-						System.out.println(context.getData(ParamKeys.TXN_DTE));
-						System.out.println(context.getData(ParamKeys.TXN_TME));
 						//原交易流水日期时间
 						context.setData(ParamKeys.OLD_TXN_SQN, eupsTransJournal.getSqn());
 						Date thdTxnDate=eupsTransJournal.getTxnDte();
@@ -65,10 +60,6 @@ public class TallyCancelQryOnlineAction extends BaseAction{
 						context.setData(GDParamKeys.PAY_TYPE, eupsTransJournal.getRsvFld5());
 						context.setData(GDParamKeys.ELECTRICITY_YEARMONTH, eupsTransJournal.getRsvFld6());
 						context.setData(GDParamKeys.ACCOUNTS_SERIAL_NO, eupsTransJournal.getRsvFld3());
-						
-						System.out.println();
-						System.out.println(eupsTransJournal.getRsvFld3());
-						System.out.println(eupsTransJournal.getMfmVchNo());
 				}else{
 					log.error("~~~~~~~~~~没有记录");
 					throw new CoreException("没有记录");
