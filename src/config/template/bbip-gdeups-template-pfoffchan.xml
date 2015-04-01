@@ -330,5 +330,43 @@
 			<end on="*" />
 		</step>
 	</flow-template>
+	
+	 <!-- 个人代扣协议签约 -->
+	<flow-template id="gdeupsb.commInsCusAgentTemplate">
+		<!-- 协议操作前处理 -->
+		<step id="init" useCtxState="true" transactional="txTemplate">
+			<action id="preAction"/>
+			<next on="BP_STATE_NORMAL" to="callACPS" />
+			<end on="*"/>
+		</step>
+		<!-- 发代收付 -->
+		<step id="callACPS" useCtxState="true"  transactional="txTemplate">
+			<action id="callACPSAction" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="callThd" />
+			<!-- <next on="BP_STATE_REVERSAL" to="reversalACPS" /> -->
+			<end on="*" />
+		</step>
+		<!-- 发第三方-->
+		<step id="callThd" useCtxState="true" transactional="txTemplate">
+			<action id="callThdAction" place-holder="true" />
+			<!-- <next on="BP_STATE_FAIL" to="reversalACPS" />
+			<next on="BP_STATE_REVERSAL" to="reversalThdAndACPS" />
+			<next on="BP_STATE_NORMAL" to="saveCusAgent" /> -->
+			<end on="*" />
+		</step>
+		<!-- 协议结果保存 -->
+		<!-- <step id="saveCusAgent" useCtxState="true" transactional="txTemplate">
+			<action id="saveCusAgentAction" place-holder="true" />
+			<action id="registerAction" place-holder="true" />
+		</step> -->
+		<!-- 冲代收付 -->
+		<!-- <step id="reversalACPS" useCtxState="true" transactional="txTemplate">
+			<action id="reversalACPSAction" place-holder="true" />
+		</step> -->
+		<!-- 冲一次第三方，冲代收付 -->
+		<!-- <step id="reversalThdAndACPS" next="reversalACPS" useCtxState="true" transactional="txTemplate">
+			<action id="reversalThdAction" place-holder="true" />
+		</step> -->
+	</flow-template>
 
 </x:beans>
