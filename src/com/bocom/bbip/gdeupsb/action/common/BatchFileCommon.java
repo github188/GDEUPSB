@@ -194,6 +194,13 @@ public class BatchFileCommon extends BaseAction {
 			GDEupsBatchConsoleInfo gdEupsBatchConsoleInfos=new GDEupsBatchConsoleInfo();
 			gdEupsBatchConsoleInfos.setRsvFld8(fleNme);
 			GDEupsBatchConsoleInfo gdEupsBatchConSoleInfo=get(GDEupsBatchConsoleInfoRepository.class).find(gdEupsBatchConsoleInfos).get(0);
+			gdEupsBatchConSoleInfo.setTotAmt(eupsBatchConSoleInfo.getTotAmt());
+			gdEupsBatchConSoleInfo.setTotCnt(eupsBatchConSoleInfo.getTotCnt());
+			gdEupsBatchConSoleInfo.setSucTotAmt(eupsBatchConSoleInfo.getSucTotAmt());
+			gdEupsBatchConSoleInfo.setSucTotCnt(eupsBatchConSoleInfo.getSucTotCnt());
+			gdEupsBatchConSoleInfo.setFalTotAmt(eupsBatchConSoleInfo.getFalTotAmt());
+			gdEupsBatchConSoleInfo.setFalTotCnt(eupsBatchConSoleInfo.getFalTotCnt());
+			get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(gdEupsBatchConSoleInfo);
 			return gdEupsBatchConSoleInfo;
 	}
 /**
