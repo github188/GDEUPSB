@@ -146,6 +146,11 @@
 		class="com.bocom.bbip.gdeupsb.strategy.sign.TlvAgtFileSendImlAction">
 	</bean>
 	
+		 <!-- 签约一站通-协议数据拷盘-广州数码 -->
+	<bean id="gdeups.agtFileSendImlServiceAction44108"
+		class="com.bocom.bbip.gdeupsb.strategy.sign.DigitAgtFileSendImlAction">
+	</bean>
+	
 
 
 	<!-- 费用查询处理前 -->
