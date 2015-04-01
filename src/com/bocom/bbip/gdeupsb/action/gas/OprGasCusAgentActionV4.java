@@ -53,6 +53,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		logger.info("Enter in OprGasCusAgentActionV4!...........");
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 
+		context.setData("thdthdCusNo", context.getData("thdCusNo"));
 		String cusTyp = context.getData("cusTyp");
 		if ("0".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡
 			context.setData("cusTyp", "1");
