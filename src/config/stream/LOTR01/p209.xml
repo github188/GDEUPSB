@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<record xmlns="http://www.bocom.com/jump/transformer/xml" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/xml xml.xsd"
+    name="pkgC">
+    <record name="return">
+        <string name="resultCode"/>
+        <string name="resultDes"/>
+    </record>
+    <record name="gamblerBasicInfo">
+        <string name="gambler_name"/>
+        <string name="register_time"/>
+        <string name="email"/>
+    </record>
+
+    <record name="gamblerAdditionalInfo">
+        <string name="city_id"/>
+        <string name="ID_type"/>
+        <string name="ID_no"/>
+        <string name="account_type"/>
+        <string name="charge_type"/>
+        <string name="prize_type"/>
+        <record name="bindDealer"/>
+            <string name="isBind"/>
+            <string name="dealer_id"/>
+        </record>
+        <record name="bindCard">
+            <string name="isBind" />
+            <string name="card_type" />
+            <string name="bank_id" />
+            <string name="bank_card" />
+        </record>
+        <string name="real_name"/>
+        <string name="sex" />
+        <string name="birthday" />
+        <string name="mobile" />
+        <string name="phone"/>
+        
+        <string name="gambler_status" />
+        <string name="gambler_points" />
+        <string name="gambler_exp" />
+        <string name="gambler_exp_levelup"/>
+         <ReadElement name="gambler_status" ETF_name="Status"/><!--彩民状态-->
+                 <ReadElement name="gambler_points" ETF_name="LotPot"/><!--彩民积分-->
+                 <ReadElement name="gambler_exp" ETF_name="LotExp"/><!--彩民经验值-->
+                 <ReadElement name="gambler_exp_levelup" ETF_name="LotExpLvl"/><!--升级所需经验值--> 
+        
+    </record>
+</record>

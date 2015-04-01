@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.action.lot;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,7 @@ import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdLotCusInf;
 import com.bocom.bbip.gdeupsb.repository.GdLotCusInfRepository;
 import com.bocom.bbip.utils.CollectionUtils;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -42,17 +44,19 @@ public class QueryRegisterAction  extends BaseAction{
             throw new CoreException(GDErrorCodes.EUPS_LOT_CAR_NOT_REG);
 
         }
-        context.setData("cusNam",lotCusInfs.get(0).getCusNam());
-        context.setData("idTyp",lotCusInfs.get(0).getIdTyp());
-        context.setData("idNo",lotCusInfs.get(0).getIdNo());
-        context.setData("mobTel",lotCusInfs.get(0).getMobTel());
-        context.setData("lotNam",lotCusInfs.get(0).getLotNam());
+        
         //向福彩中心发送彩民信息查询
         context.setData("action", "209");
         context.setData(ParamKeys.EUPS_BUSS_TYPE, "LOTR01");
-        context.setData("gambler_name", context.getData("lotNam"));
-        context.setData("gambler_pwd", context.getData("lotPsw"));
-        context.setData("modify_time", context.getData("fTXNTm"));
+        context.setData("version", "");
+        context.setData("sent_time", DateUtils.format(new Date(), DateUtils.STYLE_FULL));
+        context.setData("dealId", "141");
+        context.setData("gambler_name", lotCusInfs.get(0).getLotNam());
+        context.setData("gambler_pwd", lotCusInfs.get(0).getLotPsw());
+        Date regTime= DateUtils.parse(lotCusInfs.get(0).getRegTim(), DateUtils.STYLE_yyyyMMddHHmmss);
+        context.setData("modify_time",DateUtils.format(regTime, DateUtils.STYLE_FULL) );
+
+        System.out.println(">>>>>>>>>>><><><><><>"+context.getData("modify_time").toString());
         // 向福彩中心发送请求
         Map<String,Object> resultMap = new HashMap<String, Object>();
         resultMap = get(ThirdPartyAdaptor.class).trade(context);
@@ -63,9 +67,15 @@ public class QueryRegisterAction  extends BaseAction{
             if (StringUtils.isEmpty(responseCode)) {
                 throw new CoreException(GDErrorCodes.EUPS_THD_SYS_ERROR);
             }
-            log.info("QueryLot Fail!");
+            log.info("Query User Info Fail!");
             throw new CoreException(GDErrorCodes.EUPS_LOT_QRY_CUSINFO_FAIL);
         }
+        context.setData("cusNam",lotCusInfs.get(0).getCusNam());
+        context.setData("idTyp",lotCusInfs.get(0).getIdTyp());
+        context.setData("idNo",lotCusInfs.get(0).getIdNo());
+        context.setData("mobTel",lotCusInfs.get(0).getMobTel());
+        context.setData("lotNam",lotCusInfs.get(0).getLotNam());
+
         context.setData("MsgTyp",Constants.RESPONSE_TYPE_SUCC);
         context.setData(ParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
         context.setData(ParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
