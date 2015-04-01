@@ -328,8 +328,15 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 						@SuppressWarnings("unchecked")
 						List<Map<String, Object>> agentCollectAgreementMaps = (List<Map<String, Object>>) context
 								.getData("agentCollectAgreement");
-						context.setData("agdAgrNo", agentCollectAgreementMaps
-								.get(0).get("agdAgrNo"));
+						//返回的协议信息List可能包含多条信息，剔除与目标删除用户无关的协议信息
+						for(int i=0; i<agentCollectAgreementMaps.size(); i++){
+							if(!(context.getData(ParamKeys.THD_CUS_NME).equals(agentCollectAgreementMaps.get(i).get("agtSrvCusPnm")))){
+								agentCollectAgreementMaps.remove(i);
+							}
+						}
+						logger.info("==================");
+						context.setData("agentCollectAgreement", agentCollectAgreementMaps);
+						context.setData("agdAgrNo", agentCollectAgreementMaps.get(0).get("agdAgrNo"));
 
 						logger.info("==============agdAgrNo in context :"
 								+ context.getData("agdAgrNo"));
@@ -351,8 +358,9 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 							throw new CoreRuntimeException(
 									stopCusAgtResult.getResponseMessage());
 						}
-						logger.info("=============代收付删除成功，发THD删除协议===========");
-						callThdStopOprateLclCusAgt(context);
+						
+						
+						
 						context.setData("cusTyp", cusTypBak);
 					}
 				}
