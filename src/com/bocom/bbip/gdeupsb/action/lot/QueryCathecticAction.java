@@ -41,7 +41,7 @@ public class QueryCathecticAction extends BaseAction{
             endDate = DateUtils.format(date, DateUtils.STYLE_yyyyMMdd);
         }
          map.put("endDat",endDate);
-         map.put("gameId",context.getData("gameId"));
+         map.put("gameId","5");//银富通此交易为双色球投注查询
         String begDate = context.getData("begDat").toString().replace("-", "").trim();
         if (StringUtils.isEmpty(begDate)){
             Calendar calendar = Calendar.getInstance();
@@ -76,7 +76,7 @@ public class QueryCathecticAction extends BaseAction{
                 qryResultList.add(tempMap);
             }
             context.setData("rec", qryResultList);
-            context.setData(ParamKeys.RSP_CDE, Constants.RESPONSE_CODE_SUCC);
+            context.setData("rspCod", Constants.RESPONSE_CODE_SUCC);
             context.setData(ParamKeys.RSP_MSG, Constants.RESPONSE_MSG);
         }
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);

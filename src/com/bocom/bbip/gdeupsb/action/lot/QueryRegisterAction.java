@@ -77,7 +77,7 @@ public class QueryRegisterAction  extends BaseAction{
         context.setData("lotNam",lotCusInfs.get(0).getLotNam());
 
         context.setData("MsgTyp",Constants.RESPONSE_TYPE_SUCC);
-        context.setData(ParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
+        context.setData("rspCod",Constants.RESPONSE_CODE_SUCC);
         context.setData(ParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
 

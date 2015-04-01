@@ -34,6 +34,9 @@ public class GzFcXmlExchangeUtil{
 		"231|pkgC.return|resultCode.resultDes",
 		"231|pkgC.schemeInfo.betInfo|group.num",
 		"231|pkgC.gamblerInfo.chargeInfo|isSettled",
+		"209|pkgC.return|resultCode.resultDes",
+		"209|pkgC.gamblerAdditionalInfo.bindDealer|isBind",
+		"209|pkgC.gamblerAdditionalInfo.bindCard|isBind",
 	};
 	
 	//子节点转换为属性 (向福彩方发送的组包报文)

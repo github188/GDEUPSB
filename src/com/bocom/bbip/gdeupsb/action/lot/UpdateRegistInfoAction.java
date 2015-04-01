@@ -126,7 +126,7 @@ public class UpdateRegistInfoAction extends BaseAction {
         lotCusInfInput.setMobTel(context.getData("mobTel").toString());
         get(GdLotCusInfRepository.class).update(lotCusInfInput);
         context.setData("MsgTyp",Constants.RESPONSE_TYPE_SUCC);
-        context.setData(ParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
+        context.setData("rspCod",Constants.RESPONSE_CODE_SUCC);
         context.setData(ParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
     }
