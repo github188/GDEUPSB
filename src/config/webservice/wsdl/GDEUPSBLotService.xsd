@@ -179,13 +179,13 @@
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType" minOccurs="0"/>
-      <xs:element name="gameId" type="tns:gameId_SType"/>
-      <xs:element name="drawId" type="tns:drawId_SType"/>
+      <xs:element name="gameId" type="tns:gameId_SType" minOccurs="0"/>
+      <xs:element name="drawId" type="tns:drawId_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="lotDeductMoneyResponse_CType">
     <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="eupsBusTyp_SType">
@@ -216,7 +216,7 @@
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType" minOccurs="0"/>
-      <xs:element name="crdNo" type="tns:crdNo_SType"/>
+      <xs:element name="crdNo" type="tns:crdNo_SType" minOccurs="0"/>
       <xs:element name="betTyp" type="tns:betTyp_SType" minOccurs="0"/>
       <xs:element name="begDat" type="tns:begDat_SType" minOccurs="0"/>
       <xs:element name="endDat" type="tns:endDat_SType" minOccurs="0"/>
@@ -225,13 +225,13 @@
   </xs:complexType>
   <xs:complexType name="qryLotTxnJnlInfoResponse_CType">
     <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
-      <xs:element name="gameId" type="tns:gameId_SType"/>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="gameId" type="tns:gameId_SType" minOccurs="0"/>
       <xs:element name="pageNo" type="tns:pageNo_SType" minOccurs="0"/>
       <xs:element name="varSize" type="tns:varSize_SType" minOccurs="0"/>
       <xs:element name="ttl" type="tns:ttl_SType" minOccurs="0"/>
       <xs:element name="subTtl" type="tns:subTtl_SType" minOccurs="0"/>
-      <xs:element ref="tns:pageableResponse"/>
+      <xs:element ref="tns:pageableResponse" minOccurs="0"/>
       <xs:element name="rec" type="tns:rec_CType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
@@ -372,30 +372,30 @@
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType" minOccurs="0"/>
-      <xs:element name="crdNo" type="tns:crdNo_SType"/>
+      <xs:element name="crdNo" type="tns:crdNo_SType" minOccurs="0"/>
       <xs:element name="betTyp" type="tns:betTyp_SType" minOccurs="0"/>
       <xs:element name="schTyp" type="tns:schTyp_SType" minOccurs="0"/>
       <xs:element name="secLev" type="tns:secLev_SType" minOccurs="0"/>
-      <xs:element name="gameId" type="tns:gameId_SType"/>
-      <xs:element name="payId" type="tns:payId_SType"/>
+      <xs:element name="gameId" type="tns:gameId_SType" minOccurs="0"/>
+      <xs:element name="payId" type="tns:payId_SType" minOccurs="0"/>
       <xs:element name="drawId" type="tns:drawId_SType" minOccurs="0"/>
       <xs:element name="kenoId" type="tns:kenoId_SType" minOccurs="0"/>
       <xs:element name="betMod" type="tns:betMod_SType" minOccurs="0"/>
       <xs:element name="betMet" type="tns:betMet_SType" minOccurs="0"/>
-      <xs:element name="betMul" type="tns:betMul_SType"/>
-      <xs:element name="betAmt" type="tns:betAmt_SType"/>
-      <xs:element name="grpNum" type="tns:grpNum_SType"/>
-      <xs:element name="betNum" type="tns:betNum_SType"/>
-      <xs:element name="betLin" type="tns:betLin_SType"/>
+      <xs:element name="betMul" type="tns:betMul_SType" minOccurs="0"/>
+      <xs:element name="betAmt" type="tns:betAmt_SType" minOccurs="0"/>
+      <xs:element name="grpNum" type="tns:grpNum_SType" minOccurs="0"/>
+      <xs:element name="betNum" type="tns:betNum_SType" minOccurs="0"/>
+      <xs:element name="betLin" type="tns:betLin_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="cathecticOnTimeResponse_CType">
     <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
-      <xs:element name="txnLog" type="tns:txnLog_SType"/>
-      <xs:element name="cipher" type="tns:cipher_SType"/>
-      <xs:element name="verify" type="tns:verify_SType"/>
-      <xs:element name="lotNam" type="tns:lotNam_SType"/>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="txnLog" type="tns:txnLog_SType" minOccurs="0"/>
+      <xs:element name="cipher" type="tns:cipher_SType" minOccurs="0"/>
+      <xs:element name="verify" type="tns:verify_SType" minOccurs="0"/>
+      <xs:element name="lotNam" type="tns:lotNam_SType" minOccurs="0"/>
       <xs:element name="lotBal" type="tns:lotBal_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
@@ -500,19 +500,19 @@
       <xs:element ref="tns:requestHeader"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType" minOccurs="0"/>
       <xs:element name="cusNam" type="tns:cusNam_SType" minOccurs="0"/>
-      <xs:element name="crdNo" type="tns:crdNo_SType"/>
-      <xs:element name="idTyp" type="tns:idTyp_SType"/>
-      <xs:element name="idNo" type="tns:idNo_SType"/>
-      <xs:element name="actNo" type="tns:actNo_SType"/>
+      <xs:element name="crdNo" type="tns:crdNo_SType" minOccurs="0"/>
+      <xs:element name="idTyp" type="tns:idTyp_SType" minOccurs="0"/>
+      <xs:element name="idNo" type="tns:idNo_SType" minOccurs="0"/>
+      <xs:element name="actNo" type="tns:actNo_SType" minOccurs="0"/>
       <xs:element name="nodNo" type="tns:nodNo_SType" minOccurs="0"/>
-      <xs:element name="mobTel" type="tns:mobTel_SType"/>
+      <xs:element name="mobTel" type="tns:mobTel_SType" minOccurs="0"/>
       <xs:element name="email" type="tns:email_SType" minOccurs="0"/>
       <xs:element name="fixTel" type="tns:fixTel_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="lotRegistResponse_CType">
     <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
       <xs:element name="lotNam" type="tns:lotNam_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
@@ -585,33 +585,33 @@
       <xs:element ref="tns:requestHeader"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType" minOccurs="0"/>
       <xs:element name="cusNam" type="tns:cusNam_SType" minOccurs="0"/>
-      <xs:element name="crdNo" type="tns:crdNo_SType"/>
-      <xs:element name="idTyp" type="tns:idTyp_SType"/>
-      <xs:element name="idNo" type="tns:idNo_SType"/>
-      <xs:element name="mobTel" type="tns:mobTel_SType"/>
+      <xs:element name="crdNo" type="tns:crdNo_SType" minOccurs="0"/>
+      <xs:element name="idTyp" type="tns:idTyp_SType" minOccurs="0"/>
+      <xs:element name="idNo" type="tns:idNo_SType" minOccurs="0"/>
+      <xs:element name="mobTel" type="tns:mobTel_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="lotUpdateRegistInfoActionResponse_CType">
     <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
-      <xs:element name="mobTel" type="tns:mobTel_SType"/>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="mobTel" type="tns:mobTel_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="queryRegisterRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType" minOccurs="0"/>
-      <xs:element name="crdNo" type="tns:crdNo_SType"/>
+      <xs:element name="crdNo" type="tns:crdNo_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="queryRegisterResponse_CType">
     <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
-      <xs:element name="cusNam" type="tns:cusNam_SType"/>
-      <xs:element name="crdNo" type="tns:crdNo_SType"/>
-      <xs:element name="idTyp" type="tns:idTyp_SType"/>
-      <xs:element name="idNo" type="tns:idNo_SType"/>
-      <xs:element name="mobTel" type="tns:mobTel_SType"/>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="cusNam" type="tns:cusNam_SType" minOccurs="0"/>
+      <xs:element name="crdNo" type="tns:crdNo_SType" minOccurs="0"/>
+      <xs:element name="idTyp" type="tns:idTyp_SType" minOccurs="0"/>
+      <xs:element name="idNo" type="tns:idNo_SType" minOccurs="0"/>
+      <xs:element name="mobTel" type="tns:mobTel_SType" minOccurs="0"/>
       <xs:element name="lotNam" type="tns:lotNam_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
@@ -622,7 +622,7 @@
   </xs:complexType>
   <xs:complexType name="lotLoginResponse_CType">
     <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>
