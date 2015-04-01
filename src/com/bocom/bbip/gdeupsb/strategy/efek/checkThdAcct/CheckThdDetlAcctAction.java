@@ -92,6 +92,7 @@ public class CheckThdDetlAcctAction implements Executable {
 					context.setData(ParamKeys.TXN_TME, txnTme);
 					
 					//对账唯一标识码
+					context.setData(ParamKeys.COMPANY_NO, maps.get("COM_NO").toString());
 					String checkOneCode=maps.get("COM_NO").toString().substring(0,6)+DateUtils.format(txnDte, DateUtils.STYLE_yyyyMMdd)+maps.get("RSV_FLD4".toString());
 					context.setData("checkOneCode", checkOneCode);
 					
