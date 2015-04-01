@@ -337,19 +337,19 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 						context.setData("TransCode", "Stop");
 						logger.info("===========有协议，可删除");
 
-						 get(BBIPPublicService.class).synExecute(
-						 "eups.commDelCusAgent", context);
+//						 get(BBIPPublicService.class).synExecute(
+//						 "eups.commDelCusAgent", context);
 
-//						Result stopCusAgtResult = bgspServiceAccessObject
-//								.callServiceFlatting(
-//										"deleteAgentCollectAgreement",
-//										context.getDataMap());
-//						if (!"N".equals(stopCusAgtResult.getResponseType())) {
-//							throw new CoreRuntimeException(
-//									stopCusAgtResult.getResponseMessage());
-//						}
-//						logger.info("=============代收付删除成功，发THD删除协议===========");
-//						callThdStopOprateLclCusAgt(context);
+						Result stopCusAgtResult = bgspServiceAccessObject
+								.callServiceFlatting(
+										"deleteAgentCollectAgreement",
+										context.getDataMap());
+						if (!"N".equals(stopCusAgtResult.getResponseType())) {
+							throw new CoreRuntimeException(
+									stopCusAgtResult.getResponseMessage());
+						}
+						logger.info("=============代收付删除成功，发THD删除协议===========");
+						callThdStopOprateLclCusAgt(context);
 
 					}
 				}
