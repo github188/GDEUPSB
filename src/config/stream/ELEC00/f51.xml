@@ -19,7 +19,7 @@
 		<fixString name="xH"  length="2"  /><!--  序号-->
       	 <fixString name="fileName" length="36" /><!-- 文件名称-->
        <fixString name="fileMD5" length="32" /><!-- 文件MD5-->
-		<fixString name="batNo" length="27" /><!--  对账批次流水号-->
+		<!-- <fixString name="batNo" length="27" /> 对账批次流水号-->
 	     
 	   <!--   <fixString name="allCheckNumber"  length="2" /> 明细文件个数-->
 
