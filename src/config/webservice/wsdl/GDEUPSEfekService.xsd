@@ -624,6 +624,8 @@
       <xs:element name="bvNo" type="tns:bvNo_SType" minOccurs="0"/>
       <xs:element name="BilDat" type="tns:BilDat_SType" minOccurs="0"/>
       <xs:element name="password" type="tns:password_SType" minOccurs="0"/>
+      <xs:element name="company" type="tns:company_SType" minOccurs="0"/>
+      <xs:element name="accountsSerialNos" type="tns:accountsSerialNos_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="tallyOneOnlineResponse_CType">
@@ -761,6 +763,22 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="company_SType">
+    <xs:annotation>
+      <xs:documentation>编号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="accountsSerialNos_SType">
+    <xs:annotation>
+      <xs:documentation>第三方账务流水</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="16"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="mfmVchNo_SType">
