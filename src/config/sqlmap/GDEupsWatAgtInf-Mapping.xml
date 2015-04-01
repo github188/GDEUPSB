@@ -29,6 +29,59 @@
 		select
 		<include refid="baseColumnList" />
 		from ${GDEUPSB_SCHEMA}.GDEUPS_WAT_AGT_INF
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="agdAgrNo!=null">
+				AND AGD_AGR_NO=#{agdAgrNo,jdbcType=CHAR}
+			</if>
+			<if test="cusAc!=null">
+				AND CUS_AC=#{cusAc,jdbcType=CHAR}
+			</if>
+			<if test="cusNme!=null">
+				AND CUS_NME=#{cusNme,jdbcType=CHAR}
+			</if>
+			<if test="pwd!=null">
+				AND PWD=#{pwd,jdbcType=CHAR}
+			</if>
+			<if test="thdCusNo!=null">
+				AND THD_CUS_NO=#{thdCusNo,jdbcType=CHAR}
+			</if>
+			<if test="thdCusNme!=null">
+				AND THD_CUS_NME=#{thdCusNme,jdbcType=CHAR}
+			</if>
+			<if test="idTyp!=null">
+				AND ID_TYP=#{idTyp,jdbcType=CHAR}
+			</if>
+			<if test="idNo!=null">
+				AND ID_NO=#{idNo,jdbcType=CHAR}
+			</if>
+			<if test="blNme!=null">
+				AND BL_NME=#{blNme,jdbcType=CHAR}
+			</if>
+			<if test="addr!=null">
+				AND ADDR=#{addr,jdbcType=CHAR}
+			</if>
+			<if test="hphone!=null">
+				AND HPHONE=#{hphone,jdbcType=CHAR}
+			</if>
+			<if test="lphone!=null">
+				AND LPHONE=#{lphone,jdbcType=CHAR}
+			</if>
+			<if test="post!=null">
+				AND POST=#{post,jdbcType=CHAR}
+			</if>
+			<if test="sjman!=null">
+				AND SJMAN=#{sjman,jdbcType=CHAR}
+			</if>
+			<if test="postno!=null">
+				AND POSTNO=#{postno,jdbcType=CHAR}
+			</if>
+			<if test="taddr!=null">
+				AND TADDR=#{taddr,jdbcType=DECIMAL}
+			</if>
+			<if test="agtSts!=null">
+				AND AGT_STS=#{agtSts,jdbcType=DECIMAL}
+			</if>
+		</trim>
 	</select>
 
 	<insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdElecClrInf">
