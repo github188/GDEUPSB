@@ -337,19 +337,19 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 						context.setData("TransCode", "Stop");
 						logger.info("===========有协议，可删除");
 
-						// get(BBIPPublicService.class).synExecute(
-						// "eups.commDelCusAgent", context);
+						 get(BBIPPublicService.class).synExecute(
+						 "eups.commDelCusAgent", context);
 
-						Result stopCusAgtResult = bgspServiceAccessObject
-								.callServiceFlatting(
-										"deleteAgentCollectAgreement",
-										context.getDataMap());
-						if (!"N".equals(stopCusAgtResult.getResponseType())) {
-							throw new CoreRuntimeException(
-									stopCusAgtResult.getResponseMessage());
-						}
-						logger.info("=============代收付删除成功，发THD删除协议===========");
-						callThdStopOprateLclCusAgt(context);
+//						Result stopCusAgtResult = bgspServiceAccessObject
+//								.callServiceFlatting(
+//										"deleteAgentCollectAgreement",
+//										context.getDataMap());
+//						if (!"N".equals(stopCusAgtResult.getResponseType())) {
+//							throw new CoreRuntimeException(
+//									stopCusAgtResult.getResponseMessage());
+//						}
+//						logger.info("=============代收付删除成功，发THD删除协议===========");
+//						callThdStopOprateLclCusAgt(context);
 
 					}
 				}
@@ -680,7 +680,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 				.find(baseInfo);
 		String comNme = infoList.get(0).getComNme();
 		context.setData(ParamKeys.COMPANY_NAME, comNme);
-		map.put(ParamKeys.COMPANY_NAME, comNme);
+		map.put("comNum", comNme);
 
 		map.put(ParamKeys.BUS_TYP, "0"); // TODO 0-代收； 暂用0，待确认0-代收,1-代付,2-代缴
 											// 0-批量代收；1-批量代付；2-联机缴费；
