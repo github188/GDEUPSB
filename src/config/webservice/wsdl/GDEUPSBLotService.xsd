@@ -499,12 +499,12 @@
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType" minOccurs="0"/>
-      <xs:element name="cusNam" type="tns:cusNam_SType"/>
+      <xs:element name="cusNam" type="tns:cusNam_SType" minOccurs="0"/>
       <xs:element name="crdNo" type="tns:crdNo_SType"/>
       <xs:element name="idTyp" type="tns:idTyp_SType"/>
       <xs:element name="idNo" type="tns:idNo_SType"/>
       <xs:element name="actNo" type="tns:actNo_SType"/>
-      <xs:element name="nodNo" type="tns:nodNo_SType"/>
+      <xs:element name="nodNo" type="tns:nodNo_SType" minOccurs="0"/>
       <xs:element name="mobTel" type="tns:mobTel_SType"/>
       <xs:element name="email" type="tns:email_SType" minOccurs="0"/>
       <xs:element name="fixTel" type="tns:fixTel_SType" minOccurs="0"/>
@@ -584,7 +584,7 @@
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType" minOccurs="0"/>
-      <xs:element name="cusNam" type="tns:cusNam_SType"/>
+      <xs:element name="cusNam" type="tns:cusNam_SType" minOccurs="0"/>
       <xs:element name="crdNo" type="tns:crdNo_SType"/>
       <xs:element name="idTyp" type="tns:idTyp_SType"/>
       <xs:element name="idNo" type="tns:idNo_SType"/>
