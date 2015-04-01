@@ -83,6 +83,7 @@ public class CommInsertCusAgentServiceActionPGAS00 extends BaseAction implements
 				insCusInfo.setCusNme((String) context.getData(ParamKeys.CUS_NME));
 			}
 			insCusInfo.setAccTyp((String) context.getData("cusTyp"));
+			insCusInfo.setOptDat(date);
 			insCusInfo.setOptNod((String) context.getData(ParamKeys.OBK_BR));
 			insCusInfo.setIdTyp((String)context.getData(ParamKeys.ID_TYPE));
 			insCusInfo.setIdNo((String)context.getData(ParamKeys.ID_NO));

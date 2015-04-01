@@ -67,6 +67,7 @@ public class CommDelCusAgentServiceActionPGAS00 extends BaseAction implements Co
 			if(StringUtils.isNoneBlank((String) context.getData(ParamKeys.CUS_NME))){
 				insCusInfo.setCusNme((String) context.getData(ParamKeys.CUS_NME));
 			}
+			insCusInfo.setOptDat(date);
 			insCusInfo.setAccTyp((String) context.getData("cusTyp"));
 			insCusInfo.setOptNod((String) context.getData(ParamKeys.OBK_BR));
 			insCusInfo.setIdTyp((String)context.getData(ParamKeys.ID_TYPE));
