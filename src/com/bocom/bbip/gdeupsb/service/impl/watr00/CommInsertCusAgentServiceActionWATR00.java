@@ -42,6 +42,7 @@ public class CommInsertCusAgentServiceActionWATR00 implements	CommInsertCusAgent
 	public Map<String, Object> preInsertCusAgent(CustomerDomain customerdomain,List<CusAgentCollectDomain> list, Context context) throws CoreException {
 		logger.info("CommInsertCusAgentServiceActionWATR00 preInsertCusAgent start ... ...");
 	
+		System.out.println("!!!!!!!!!!!!!!!!!!!!1"+context.getData("customerInfo"));
 		logger.info("CommInsertCusAgentServiceActionWATR00 preInsertCusAgent end ... ...");
 		return null;
 	}
