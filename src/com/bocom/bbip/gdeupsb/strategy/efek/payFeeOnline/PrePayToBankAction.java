@@ -58,7 +58,7 @@ public class PrePayToBankAction implements Executable{
 				context.setData(ParamKeys.CHL_TYP, "L");  //<Set>CnlTyp=L</Set>
 				context.setData(ParamKeys.CCY_NO,Constants.EUPS_PAYMENT_TO_ACPS_CCY_CDE);
 			}
-			//TODO xtnAmt
+			//TODO txnAmt
 			double i=Double.parseDouble(context.getData(ParamKeys.TXN_AMT).toString());
 			double d=i/100;
 			DecimalFormat df=new DecimalFormat("#.00");
@@ -66,5 +66,11 @@ public class PrePayToBankAction implements Executable{
 			context.setData(ParamKeys.TXN_AMT,txnAmt );
 			context.setData(ParamKeys.BUS_TYP, "2");
 			context.setData("rsvFld3",context.getData("mfmVchNos"));
+			
+			System.out.println();
+			System.out.println();
+			System.out.println(context.getData("comNos"));
+			System.out.println(context.getData("comNo"));
+			context.setData("comNo","GDELEC00");
 		}
 }

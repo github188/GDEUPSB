@@ -33,5 +33,7 @@ public class AftPayToBankAction implements Executable{
 			BigDecimal hfe=new BigDecimal(context.getData("hfe").toString());
 			BigDecimal withholdMoney=respTxnAmt.add(hfe).scaleByPowerOfTen(2);
 			context.setData(GDParamKeys.WITHHOLD_MONEY, withholdMoney);
+			
+			context.setData("comNo",context.getData("comNos"));
 	}
 }
