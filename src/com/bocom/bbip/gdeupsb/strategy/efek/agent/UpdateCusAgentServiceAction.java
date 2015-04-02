@@ -52,8 +52,8 @@ public class UpdateCusAgentServiceAction extends BaseAction {
 							context.setData(ParamKeys.THD_CUS_NO,  context.getData("cusNo"));
 							context.setData(ParamKeys.TXN_DTE, DateUtils.format(txnDte,DateUtils.STYLE_yyyyMMdd));
 							context.setData(ParamKeys.TXN_TME, DateUtils.format(txnTme,DateUtils.STYLE_HHmmss));
-							
-							Map<String, Object> rspMap = callThdTradeManager.trade(context);
+							if(context.getData("callThd").toString().equals("callThd")){
+								Map<String,Object> rspMap = callThdTradeManager.trade(context);
 							
 								if(BPState.isBPStateNormal(context)){
 										if(null !=rspMap){
@@ -113,6 +113,7 @@ public class UpdateCusAgentServiceAction extends BaseAction {
 						                context.setData(ParamKeys.THD_RSP_MSG,Constants.RESPONSE_MSG_FAIL);
 						                throw new CoreException("发送失败");
 								}
+							}
 						}catch(CoreException e){
 							logger.info("Bypass call THIRD response failed or unknow error.");
 							context.setData(ParamKeys.TXN_STS, Constants.TXNSTS_REVERSE);
