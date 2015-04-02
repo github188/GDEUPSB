@@ -17,7 +17,7 @@ public class GdcheckThdSumAcctAction extends BaseAction{
 			CoreRuntimeException {
 		log.info("===========Start   GdcheckThdSumAcctAction");
 		context.setData(ParamKeys.EUPS_BUSS_TYPE, "ELEC00");
-//		context.setData(ParamKeys.FTP_ID, arg1);
+		context.setData("sqns", context.getData("sqn"));
 		String mothed="eups.checkThdSumAcct";
 		bbipPublicService.synExecute(mothed, context);
 		log.info("===========End   GdcheckThdSumAcctAction");
