@@ -40,8 +40,6 @@ public class CusAgentServiceAction extends BaseAction{
 				context.setData("agrExpDte", "99991231");
 				context.setData("agrChl","01");
 				context.setData("agtSrvCusId",context.getData("cusNo"));
-				context.setData("cusAc", context.getData("newCusAc"));
-				context.setData("cusNme", context.getData("newCusName"));
 				context.setData("bvCde", "009");
 				Map<String, Object> cusMap=setCustomerInfoMap(context);
 				//添加 customerInfo
