@@ -8,7 +8,9 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsTransJournal;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
+import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.utils.DateUtils;
@@ -23,6 +25,8 @@ public class PreCancelFeeAction implements Executable{
 	private final static Log logger=LogFactory.getLog(PreCancelFeeAction.class);
 	@Autowired
 	EupsThdTranCtlInfoRepository eupsThdTranCtlInfoRepository;
+	@Autowired
+	EupsTransJournalRepository eupsTransJournalRepository;
 	/**
 	 *抹账前处理 
 	 */
@@ -30,6 +34,16 @@ public class PreCancelFeeAction implements Executable{
 	public void execute(Context context) throws CoreException,CoreRuntimeException{
 		logger.info("==========Start  PreCancelFeeAction");
 		context.setData(ParamKeys.TRADE_TXN_DIR, "O");   //交易方向
+		
+		EupsTransJournal eupsTransJournal=eupsTransJournalRepository.findOne(context.getData("oldTxnSqn").toString());
+		String txnSts=eupsTransJournal.getTxnSts();
+		if(txnSts.equals("C")){
+				throw new CoreException("已进行抹账，不能再次抹账");
+		}else if(txnSts.equals("F") ){
+				throw new CoreException("交易失败，不能进行抹账");
+		}else if(txnSts.equals("R") ){
+				throw new CoreException("交易正在重发，不能经行抹账");
+		}
 		
 		context.setData(GDParamKeys.SVRCOD, "12");
 		context.setData(ParamKeys.THD_CUS_NO, context.getData(GDParamKeys.PAY_NO));
