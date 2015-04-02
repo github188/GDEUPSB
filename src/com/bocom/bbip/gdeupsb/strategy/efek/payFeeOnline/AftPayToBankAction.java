@@ -22,9 +22,15 @@ public class AftPayToBankAction implements Executable{
 	public void execute(Context context) throws CoreException,
 			CoreRuntimeException {
 			logger.info("==============Start   AftPayToBankAction");
+
+			
 			context.setData(ParamKeys.TXN_DTE, DateUtils.format((Date)context.getData(ParamKeys.TXN_DTE),DateUtils.STYLE_yyyyMMdd));
 			String txnDte=context.getData(ParamKeys.TXN_DTE).toString();
-			String txnTme=DateUtils.formatAsHHmmss((Date)context.getData(ParamKeys.TXN_TME));;
+			String txnTme=DateUtils.formatAsHHmmss((Date)context.getData(ParamKeys.TXN_TME));
+			
+			context.setData("txnDates", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
+			context.setData("txnTimes", txnTme);
+			
 			context.setData(ParamKeys.TXN_TME, DateUtils.parse((txnDte+txnTme),DateUtils.STYLE_yyyyMMddHHmmss));
 			context.setData(GDParamKeys.BAG_TYPE, "1");
 			
@@ -35,5 +41,6 @@ public class AftPayToBankAction implements Executable{
 			context.setData(GDParamKeys.WITHHOLD_MONEY, withholdMoney);
 			
 			context.setData("comNo",context.getData("comNos"));
+
 	}
 }
