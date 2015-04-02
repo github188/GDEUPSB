@@ -54,11 +54,11 @@
 		
 	<!--  协议新增-->
 	<action   class="com.bocom.bbip.gdeupsb.strategy.efek.agent.InsertCusAgentServiceAction"
-		id="eups.commInsertCusAgentAction" />		
+		id="eups.commInsertCusAgentActionELEC00" />		
 	<!--  协议修改-->
 	<action   class="com.bocom.bbip.gdeupsb.strategy.efek.agent.UpdateCusAgentServiceAction"
-		id="eups.commUpdateCusAgentAction" />		
+		id="eups.commUpdateCusAgentActionELEC00" />		
 	<!--  协议删除-->
 	<action   class="com.bocom.bbip.gdeupsb.strategy.efek.agent.DeleteCusAgentServiceAction"
-		id="eups.commDelCusAgentAction" />		
+		id="eups.commDelCusAgentActionELEC00" />		
 </x:beans>
