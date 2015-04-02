@@ -96,6 +96,49 @@ public class CommInsertUpdateCusAgentServiceActionWATR00 extends BaseAction{
 			context.setData("cusNo", context.getData("thdCusNo"));
 			get(BBIPPublicService.class).synExecute("gdeupsb.commInsertCusAgent", context);
 		}else if("1".equals(oprTyp)){
+			Map<String, Object> agentMap = new HashMap<String, Object>();
+//			agentMap.put("agdAgrNo", (String)context.getData("agdAgrNo"));
+//			agentMap.put("cusAc", (String)context.getData("cusAc"));
+			agentMap.put("acoAc", (String)context.getData("cusAc"));
+			agentMap.put("pwd", (String)context.getData("pwd"));
+//			agentMap.put("bvCde", (String)context.getData("agtCllCusId"));
+//			agentMap.put("bvNo", (String)context.getData("agtCllCusId"));
+			agentMap.put("comNo", "GDWATR0001");
+			agentMap.put("comNum", "汕头自来水公司");
+			
+			agentMap.put("busTyp","0");
+			agentMap.put("busKnd", "A115");
+//			agentMap.put("busKndNme", (String)context.getData("agtCllCusId"));
+			agentMap.put("ccy", "CNY");
+			agentMap.put("cusFeeDerFlg", "0");  //个人账户收费减免标志
+			agentMap.put("agtSrvCusId", (String)context.getData("thdCusNo"));
+			agentMap.put("agtSrvCusPnm", (String)context.getData("thdCusNme"));
+			agentMap.put("agrVldDte", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
+			agentMap.put("agrExpDte", "99991231");
+
+			
+			List<Map<String,Object>> agentCollectAgreement = new ArrayList<Map<String,Object>>();
+			agentCollectAgreement.add(agentMap);
+			context.setData(ParamKeys.AGENT_COLLECT_AGREEMENT, agentCollectAgreement);//上代收付用
+			
+			
+			
+			Map<String, Object> infoMap = new HashMap<String, Object>();
+			List<Map<String,Object>> customerInfo = new ArrayList<Map<String,Object>>();
+			infoMap.put("agtCllCusId", context.getData("agtCllCusId"));//TODO:修改协议时必输
+			infoMap.put("cusTyp", (String)context.getData("cusTyp"));
+//			infoMap.put("cusAc", "");
+			infoMap.put("ccy", "CNY");
+			infoMap.put("idTyp", context.getData("idTyp"));
+			infoMap.put("idNo", context.getData("idNo"));
+			
+			customerInfo.add(infoMap);
+			context.setData("agrChl", "1");//签约渠道设为公共事业缴费，上代收付用
+			context.setData("customerInfo", customerInfo);
+		
+			context.setData("ccy", "CNY");
+			context.setData("bvCde", "008");
+			context.setData("cusNo", context.getData("thdCusNo"));
 			get(BBIPPublicService.class).synExecute("gdeupsb.commUpdateCusAgent", context);
 		}else{
 			throw new CoreException("操作类型有误!");
