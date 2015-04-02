@@ -65,7 +65,7 @@ public class QryTxnJnlInfoAction extends BaseAction{
 				txnJnl.setCusAc(context.getData(ParamKeys.CUS_AC).toString());
 			}
 			if(!((null==context.getData(ParamKeys.MFM_VCH_NO)) || "".equals(context.getData(ParamKeys.MFM_VCH_NO)) ||  "?".equals(context.getData(ParamKeys.MFM_VCH_NO)) )){
-				txnJnl.setCusNme(context.getData(ParamKeys.MFM_VCH_NO).toString());
+				txnJnl.setMfmVchNo(context.getData(ParamKeys.MFM_VCH_NO).toString());
 			}
 			logger.info("==========" + txnJnl.getThdCusNo() + "====" + txnJnl.getCusAc() + "=====" + txnJnl.getMfmVchNo());
 			

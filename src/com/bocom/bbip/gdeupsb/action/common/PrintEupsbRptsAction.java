@@ -196,9 +196,9 @@ public class PrintEupsbRptsAction extends BaseAction {
 
 		logger.info("=============ready to print report list=============");
 
-		PrintWriter printWriter = null;
 
-		// TODO 拼装本地路径
+		// TODO 拼装本地路径 本地测试
+		PrintWriter printWriter = null;
 		StringBuffer sbLocDir = new StringBuffer();
 		sbLocDir.append("D:/testGash/checkFilTest/").append(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)).append("/");
 		try {
@@ -227,9 +227,9 @@ public class PrintEupsbRptsAction extends BaseAction {
 		// File(TransferUtils.resolveFilePath(mftploca, reportFileName)),
 		// reportFileName, MftpTransfer.FTYPE_NORMAL);
 
-		// reportHelper.createFileAndSendMFTP(context, result, fileName,
-		// mftpConfigInfo);
-		// context.setData("filName", fileName);
+		 reportHelper.createFileAndSendMFTP(context, result, fileName,
+		 mftpConfigInfo);
+		 context.setData("filName", fileName);
 
 		logger.info("PrintReportServiceActionPGAS00 execute end ... ...");
 
