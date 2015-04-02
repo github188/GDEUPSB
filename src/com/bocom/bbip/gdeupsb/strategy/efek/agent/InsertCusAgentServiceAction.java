@@ -43,7 +43,7 @@ public class InsertCusAgentServiceAction extends BaseAction {
 	@Override
 	public void execute(Context context) throws CoreException,
 			CoreRuntimeException {
-		logger.info("=============Start   InsertCusAgentServiceAction  InsertCusAgentServiceAction");
+		logger.info("=============Start   InsertCusAgentServiceAction");
 		//调用代收付'
 		String cusAc=context.getData("cusAc").toString();
 		context.setData(ParamKeys.CUS_AC, context.getData(GDParamKeys.NEWCUSAC));
@@ -126,5 +126,6 @@ public class InsertCusAgentServiceAction extends BaseAction {
 					context.setData(ParamKeys.TXN_TME, txnTme);
 				}
 		}
+		logger.info("=============End    InsertCusAgentServiceAction  ");
 	}
 }
