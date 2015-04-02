@@ -190,6 +190,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 					// "eups.commInsertCusAgent", context);
 
 					// 不使用代收付签模板，直接调用接口
+					
 					Result insertCusAgtResult = bgspServiceAccessObject
 							.callServiceFlatting(
 									"maintainAgentCollectAgreement",
@@ -201,7 +202,6 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 					logger.info("=============代收付签约成功，发THD签约===========");
 					callThdAndOprateLclCusAgt(context);
 					context.setData("cusTyp", cusTypBak);
-
 				}
 				if ("2".equals(context.getData("optFlg"))) { // 修改
 					setAgtCltAndCusInf(context);
