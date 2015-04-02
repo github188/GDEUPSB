@@ -52,4 +52,13 @@
 	<action   class="com.bocom.bbip.gdeupsb.action.efek.QryComNoByAreaAction"
 		id="gdeupsb.qryComNoByAreaAction" />		
 		
+	<!--  协议新增-->
+	<action   class="com.bocom.bbip.gdeupsb.strategy.efek.agent.InsertCusAgentServiceAction"
+		id="eups.CommInsertCusAgentServiceAction" />		
+	<!--  协议修改-->
+	<action   class="com.bocom.bbip.gdeupsb.strategy.efek.agent.UpdateCusAgentServiceAction"
+		id="eups.commUpdateCusAgentAction" />		
+	<!--  协议删除-->
+	<action   class="com.bocom.bbip.gdeupsb.strategy.efek.agent.DeleteCusAgentServiceAction"
+		id="eups.commDelCusAgentAction" />		
 </x:beans>
