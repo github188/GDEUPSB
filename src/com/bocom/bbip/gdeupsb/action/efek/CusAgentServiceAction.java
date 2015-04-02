@@ -30,12 +30,15 @@ public class CusAgentServiceAction extends BaseAction{
 		 */
 		public void execute(Context context)throws CoreException,CoreRuntimeException{
 			log.info("============Start  CusAgentServiceAction ");
+			
 				context.setData(GDParamKeys.SVRCOD, "30");
+				context.setData(ParamKeys.TRACE_NO, bbipPublicService.getTraceNo());
 				//TODO 
 				context.setData("idTyp", "01");
 				context.setData("ccy", "CNY");
 				context.setData("agrVldDte", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
 				context.setData("agrExpDte", "99991231");
+				context.setData("agrChl","01");
 				context.setData("agtSrvCusId",context.getData("cusNo"));
 				Map<String, Object> cusMap=setCustomerInfoMap(context);
 				//添加 customerInfo
@@ -67,7 +70,15 @@ public class CusAgentServiceAction extends BaseAction{
 				list.add(map);
 				context.setData(ParamKeys.AGENT_COLLECT_AGREEMENT, list);
 				constantOfSoapUI(context);
-				context.setData(ParamKeys.THD_CUS_NME, context.getData("settleAccountsName"));
+				context.setData("agtSrvCusPnm", context.getData("settleAccountsName"));
+				
+				System.out.println();
+				System.out.println();
+				System.out.println(context.getData("settleAccountsName"));
+				System.out.println(context.getData("cusNo"));
+				System.out.println(context.getData("agtSrvCusId"));
+				System.out.println(((List<Map<String , Object>>)context.getData(ParamKeys.AGENT_COLLECT_AGREEMENT)).get(0));
+				System.out.println(((List<Map<String , Object>>)context.getData("customerInfo")).get(0));
 				
 				bbipPublicService.synExecute(mothed, context);
 				
@@ -105,10 +116,12 @@ public class CusAgentServiceAction extends BaseAction{
 		private Map<String, Object> setCustomerInfoMap(Context context) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("agtCllCusId", context.getData("cusNo"));
+			map.put("agtSrvCusId", context.getData("cusNo"));
+			map.put("agtSrvCusPnm", context.getData("settleAccountsName"));
 			map.put("cusTyp", context.getData("cusTyp"));
-			map.put(ParamKeys.CUS_NO, context.getData(ParamKeys.THD_CUS_NO));
-			map.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
-			map.put(ParamKeys.CUS_NME, context.getData(ParamKeys.CUS_NME));
+			map.put(ParamKeys.CUS_NO, context.getData(ParamKeys.CUS_NO));
+			map.put(ParamKeys.CUS_AC, context.getData(GDParamKeys.NEWCUSAC));
+			map.put(ParamKeys.CUS_NME, context.getData(GDParamKeys.NEWCUSNAME));
 			map.put(ParamKeys.CCY, "CNY");
 			map.put(ParamKeys.ID_TYPE, context.getData(ParamKeys.ID_TYPE));
 			map.put("idNo", context.getData(ParamKeys.ID_NO));
@@ -119,16 +132,17 @@ public class CusAgentServiceAction extends BaseAction{
 				map.put("bvNo", (String) context.getData("bvNo"));
 			}
 			map.put("ourOthFlg", "0");
-			map.put(ParamKeys.THD_CUS_NO, context.getData(ParamKeys.THD_CUS_NO));
 			return map;
 		}
 
 		private Map<String, Object> setAgentCollectAgreementMap(Context context) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put(ParamKeys.BUS_TYP, "0");
+			map.put("cusNo", context.getData("cusNo"));
+			map.put("agtCllCusId", context.getData("cusNo"));
 			map.put("cusNme", context.getData("cusNme"));
-			map.put("thdCusNo", context.getData("cusNo"));
-
+			map.put("agtSrvCusId", context.getData("cusNo"));
+			map.put("agtSrvCusPnm", context.getData("settleAccountsName"));
 			map.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
 			map.put("acoAc", context.getData(ParamKeys.CUS_AC));
 			if (StringUtils.isNotBlank((String) context.getData("pwd"))) {
