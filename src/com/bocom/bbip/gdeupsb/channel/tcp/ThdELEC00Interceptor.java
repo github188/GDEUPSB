@@ -410,7 +410,11 @@ public class ThdELEC00Interceptor implements Interceptor {
         		if(context.getData(ParamKeys.TXN_DATE).toString().trim().length()==6 || context.getData(ParamKeys.TXN_DATE).toString().trim().length()==10){
         				rspTime=DateUtils.parse(context.getData(ParamKeys.TXN_DATE).toString());
         		}else{
-        				rspTime=(Date)context.getData(ParamKeys.TXN_DATE);
+        				if("eups.cancelUnilateralToBankELEC00".equals(context.getData(ParamKeys.SERVICE_NAME).toString())){
+        						rspTime=context.getData(ParamKeys.TXN_DATE);
+        				}else{
+        						rspTime=DateUtils.parse(context.getData(ParamKeys.TXN_DATE).toString());
+        				}
         		}
         }else if(null !=context.getData(ParamKeys.TXN_DATE) && context.getData(ParamKeys.SERVICE_NAME).toString().equals(SHG_PAY_ID+"ELEC00") && context.getData(ParamKeys.PAY_MDE).toString().equals("4")){
         		rspTime=(Date)context.getData(ParamKeys.TXN_DATE);
