@@ -47,15 +47,15 @@ public class CusAgentServiceAction extends BaseAction{
 				String oprTyp=context.getData("oprTyp").toString();
 				String mothed="";
 				if("0".equals(oprTyp)){
-					mothed="eups.commInsertCusAgent";
+					mothed="eups.commInsertCusAgenteELEC00";
 					context.setData(GDParamKeys.NEWBANKNO, "301");
 				}else if("1".equals(oprTyp)){
-					mothed="eups.commUpdateCusAgent";
+					mothed="eups.commUpdateCusAgentELEC00";
 					context.setData(GDParamKeys.NEWBANKNO, "301");
 					map.put("cusAc", context.getData("newCusAc"));
 					map.put("cusNme", context.getData("newCusName"));
 				}else {
-					mothed="eups.commDelCusAgent";
+					mothed="eups.commDelCusAgentELEC00";
 				}
 				//添加 agentCollectAgreement
 				List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();
