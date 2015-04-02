@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdEupsWatAgtInf" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdEupsWatAgtInf" >
+    <id column="AGD_AGR_NO" property="agdAgrNo" jdbcType="CHAR" />
+    <result column="CUS_AC" property="cusAc" jdbcType="CHAR" />
+    <result column="CUS_NME" property="cusNme" jdbcType="CHAR" />
+    <result column="PWD" property="pwd" jdbcType="CHAR" />
+    <result column="THD_CUS_NO" property="thdCusNo" jdbcType="CHAR" />
+    <result column="THD_CUS_NME" property="thdCusNme" jdbcType="CHAR" />
+    <result column="ID_TYP" property="idTyp" jdbcType="CHAR" />
+    <result column="ID_NO" property="idNo" jdbcType="CHAR" />
+    <result column="BL_NME" property="blNme" jdbcType="CHAR" />
+    <result column="ADDR" property="addr" jdbcType="CHAR" />
+    <result column="HPHONE" property="hphone" jdbcType="CHAR" />
+    <result column="LPHONE" property="lphone" jdbcType="CHAR" />
+    <result column="POST" property="post" jdbcType="CHAR" />
+    <result column="SJMAN" property="sjman" jdbcType="CHAR" />
+    <result column="POSTNO" property="postno" jdbcType="CHAR" />
+    <result column="TADDR" property="taddr" jdbcType="CHAR" />
+    <result column="AGT_STS" property="agtSts" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    AGD_AGR_NO, CUS_AC, CUS_NME, PWD, THD_CUS_NO, THD_CUS_NME, ID_TYP, ID_NO, BL_NME, 
+    ADDR, HPHONE, LPHONE, POST, SJMAN, POSTNO, TADDR, AGT_STS
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_WAT_AGT_INF
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="agdAgrNo!=null" >
+        AND  AGD_AGR_NO=#{agdAgrNo,jdbcType=CHAR}
+      </if>
+      <if test="cusAc!=null" >
+        AND  CUS_AC=#{cusAc,jdbcType=CHAR}
+      </if>
+      <if test="cusNme!=null" >
+        AND  CUS_NME=#{cusNme,jdbcType=CHAR}
+      </if>
+      <if test="pwd!=null" >
+        AND  PWD=#{pwd,jdbcType=CHAR}
+      </if>
+      <if test="thdCusNo!=null" >
+        AND  THD_CUS_NO=#{thdCusNo,jdbcType=CHAR}
+      </if>
+      <if test="thdCusNme!=null" >
+        AND  THD_CUS_NME=#{thdCusNme,jdbcType=CHAR}
+      </if>
+      <if test="idTyp!=null" >
+        AND  ID_TYP=#{idTyp,jdbcType=CHAR}
+      </if>
+      <if test="idNo!=null" >
+        AND  ID_NO=#{idNo,jdbcType=CHAR}
+      </if>
+      <if test="blNme!=null" >
+        AND  BL_NME=#{blNme,jdbcType=CHAR}
+      </if>
+      <if test="addr!=null" >
+        AND  ADDR=#{addr,jdbcType=CHAR}
+      </if>
+      <if test="hphone!=null" >
+        AND  HPHONE=#{hphone,jdbcType=CHAR}
+      </if>
+      <if test="lphone!=null" >
+        AND  LPHONE=#{lphone,jdbcType=CHAR}
+      </if>
+      <if test="post!=null" >
+        AND  POST=#{post,jdbcType=CHAR}
+      </if>
+      <if test="sjman!=null" >
+        AND  SJMAN=#{sjman,jdbcType=CHAR}
+      </if>
+      <if test="postno!=null" >
+        AND  POSTNO=#{postno,jdbcType=CHAR}
+      </if>
+      <if test="taddr!=null" >
+        AND  TADDR=#{taddr,jdbcType=CHAR}
+      </if>
+      <if test="agtSts!=null" >
+        AND  AGT_STS=#{agtSts,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_WAT_AGT_INF
+    where AGD_AGR_NO = #{agdAgrNo,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from ${GDEUPSB_SCHEMA}.GDEUPS_WAT_AGT_INF
+    where AGD_AGR_NO = #{agdAgrNo,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsWatAgtInf" >
+    insert into ${GDEUPSB_SCHEMA}.GDEUPS_WAT_AGT_INF
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="agdAgrNo != null" >
+        AGD_AGR_NO,
+      </if>
+      <if test="cusAc != null" >
+        CUS_AC,
+      </if>
+      <if test="cusNme != null" >
+        CUS_NME,
+      </if>
+      <if test="pwd != null" >
+        PWD,
+      </if>
+      <if test="thdCusNo != null" >
+        THD_CUS_NO,
+      </if>
+      <if test="thdCusNme != null" >
+        THD_CUS_NME,
+      </if>
+      <if test="idTyp != null" >
+        ID_TYP,
+      </if>
+      <if test="idNo != null" >
+        ID_NO,
+      </if>
+      <if test="blNme != null" >
+        BL_NME,
+      </if>
+      <if test="addr != null" >
+        ADDR,
+      </if>
+      <if test="hphone != null" >
+        HPHONE,
+      </if>
+      <if test="lphone != null" >
+        LPHONE,
+      </if>
+      <if test="post != null" >
+        POST,
+      </if>
+      <if test="sjman != null" >
+        SJMAN,
+      </if>
+      <if test="postno != null" >
+        POSTNO,
+      </if>
+      <if test="taddr != null" >
+        TADDR,
+      </if>
+      <if test="agtSts != null" >
+        AGT_STS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="agdAgrNo != null" >
+        #{agdAgrNo,jdbcType=CHAR},
+      </if>
+      <if test="cusAc != null" >
+        #{cusAc,jdbcType=CHAR},
+      </if>
+      <if test="cusNme != null" >
+        #{cusNme,jdbcType=CHAR},
+      </if>
+      <if test="pwd != null" >
+        #{pwd,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNo != null" >
+        #{thdCusNo,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNme != null" >
+        #{thdCusNme,jdbcType=CHAR},
+      </if>
+      <if test="idTyp != null" >
+        #{idTyp,jdbcType=CHAR},
+      </if>
+      <if test="idNo != null" >
+        #{idNo,jdbcType=CHAR},
+      </if>
+      <if test="blNme != null" >
+        #{blNme,jdbcType=CHAR},
+      </if>
+      <if test="addr != null" >
+        #{addr,jdbcType=CHAR},
+      </if>
+      <if test="hphone != null" >
+        #{hphone,jdbcType=CHAR},
+      </if>
+      <if test="lphone != null" >
+        #{lphone,jdbcType=CHAR},
+      </if>
+      <if test="post != null" >
+        #{post,jdbcType=CHAR},
+      </if>
+      <if test="sjman != null" >
+        #{sjman,jdbcType=CHAR},
+      </if>
+      <if test="postno != null" >
+        #{postno,jdbcType=CHAR},
+      </if>
+      <if test="taddr != null" >
+        #{taddr,jdbcType=CHAR},
+      </if>
+      <if test="agtSts != null" >
+        #{agtSts,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_WAT_AGT_INF
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="agdAgrNo!=null" >
+        AND  AGD_AGR_NO=#{agdAgrNo,jdbcType=CHAR}
+      </if>
+      <if test="cusAc!=null" >
+        AND  CUS_AC=#{cusAc,jdbcType=CHAR}
+      </if>
+      <if test="cusNme!=null" >
+        AND  CUS_NME=#{cusNme,jdbcType=CHAR}
+      </if>
+      <if test="pwd!=null" >
+        AND  PWD=#{pwd,jdbcType=CHAR}
+      </if>
+      <if test="thdCusNo!=null" >
+        AND  THD_CUS_NO=#{thdCusNo,jdbcType=CHAR}
+      </if>
+      <if test="thdCusNme!=null" >
+        AND  THD_CUS_NME=#{thdCusNme,jdbcType=CHAR}
+      </if>
+      <if test="idTyp!=null" >
+        AND  ID_TYP=#{idTyp,jdbcType=CHAR}
+      </if>
+      <if test="idNo!=null" >
+        AND  ID_NO=#{idNo,jdbcType=CHAR}
+      </if>
+      <if test="blNme!=null" >
+        AND  BL_NME=#{blNme,jdbcType=CHAR}
+      </if>
+      <if test="addr!=null" >
+        AND  ADDR=#{addr,jdbcType=CHAR}
+      </if>
+      <if test="hphone!=null" >
+        AND  HPHONE=#{hphone,jdbcType=CHAR}
+      </if>
+      <if test="lphone!=null" >
+        AND  LPHONE=#{lphone,jdbcType=CHAR}
+      </if>
+      <if test="post!=null" >
+        AND  POST=#{post,jdbcType=CHAR}
+      </if>
+      <if test="sjman!=null" >
+        AND  SJMAN=#{sjman,jdbcType=CHAR}
+      </if>
+      <if test="postno!=null" >
+        AND  POSTNO=#{postno,jdbcType=CHAR}
+      </if>
+      <if test="taddr!=null" >
+        AND  TADDR=#{taddr,jdbcType=CHAR}
+      </if>
+      <if test="agtSts!=null" >
+        AND  AGT_STS=#{agtSts,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsWatAgtInf" >
+    update ${GDEUPSB_SCHEMA}.GDEUPS_WAT_AGT_INF
+    <set >
+      <if test="cusAc != null" >
+        CUS_AC = #{cusAc,jdbcType=CHAR},
+      </if>
+      <if test="cusNme != null" >
+        CUS_NME = #{cusNme,jdbcType=CHAR},
+      </if>
+      <if test="pwd != null" >
+        PWD = #{pwd,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNo != null" >
+        THD_CUS_NO = #{thdCusNo,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNme != null" >
+        THD_CUS_NME = #{thdCusNme,jdbcType=CHAR},
+      </if>
+      <if test="idTyp != null" >
+        ID_TYP = #{idTyp,jdbcType=CHAR},
+      </if>
+      <if test="idNo != null" >
+        ID_NO = #{idNo,jdbcType=CHAR},
+      </if>
+      <if test="blNme != null" >
+        BL_NME = #{blNme,jdbcType=CHAR},
+      </if>
+      <if test="addr != null" >
+        ADDR = #{addr,jdbcType=CHAR},
+      </if>
+      <if test="hphone != null" >
+        HPHONE = #{hphone,jdbcType=CHAR},
+      </if>
+      <if test="lphone != null" >
+        LPHONE = #{lphone,jdbcType=CHAR},
+      </if>
+      <if test="post != null" >
+        POST = #{post,jdbcType=CHAR},
+      </if>
+      <if test="sjman != null" >
+        SJMAN = #{sjman,jdbcType=CHAR},
+      </if>
+      <if test="postno != null" >
+        POSTNO = #{postno,jdbcType=CHAR},
+      </if>
+      <if test="taddr != null" >
+        TADDR = #{taddr,jdbcType=CHAR},
+      </if>
+      <if test="agtSts != null" >
+        AGT_STS = #{agtSts,jdbcType=CHAR},
+      </if>
+    </set>
+    where AGD_AGR_NO = #{agdAgrNo,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_WAT_AGT_INF
+    <if test="_parameter" >
+      where AGD_AGR_NO in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
+</mapper>
