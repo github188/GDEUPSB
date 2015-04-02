@@ -30,10 +30,11 @@ public class QryComInfoAction extends BaseAction{
 		// 查询代收单位协议信息
 		 Result respData = get(BGSPServiceAccessObject.class).callServiceFlatting("queryCorporInfo", rspMap);
 		
-		 if(CollectionUtils.isEmpty(respData.getPayload())){			
-				throw new CoreRuntimeException("该单位未签约");
-		}
-		 
+//		 if(CollectionUtils.isEmpty(respData.getPayload())){			
+//				throw new CoreRuntimeException("该单位未签约");
+//		}
+		 System.out.println();
+		 System.out.println(respData);
 		 context.setDataMap(rspMap);
 		 logger.info("===============End   QryComInfoAction");
 	}
