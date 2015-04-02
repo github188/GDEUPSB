@@ -87,6 +87,7 @@ public class QryCusBaseMsgAction extends BaseAction{
 			context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
 			context.setData("PKGCNT", "000001");		
 			context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW19");		
+			context.setData("sqns", context.getData("sqn"));	
 					try{
 						Map<String, Object> rspMap = callThdTradeManager.trade(context);
 						

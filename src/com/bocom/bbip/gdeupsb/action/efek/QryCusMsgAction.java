@@ -38,6 +38,7 @@ public class QryCusMsgAction extends BaseAction{
 		context.setData(GDParamKeys.SVRCOD,"43");
 		String sqn=get(BBIPPublicService.class).getBBIPSequence();
 		context.setData(ParamKeys.SEQUENCE, sqn);
+		context.setData("sqns", sqn);
 		String txnDte=DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
 		String txnTme=DateUtils.formatAsHHmmss(new Date());
 		context.setData(ParamKeys.TXN_DTE, txnDte);
