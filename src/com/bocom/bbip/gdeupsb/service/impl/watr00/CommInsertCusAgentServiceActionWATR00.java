@@ -20,6 +20,9 @@ import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.spi.service.agent.CommInsertCusAgentService;
 import com.bocom.bbip.eups.spi.vo.CusAgentCollectDomain;
 import com.bocom.bbip.eups.spi.vo.CustomerDomain;
+import com.bocom.bbip.gdeupsb.entity.GDEupsWatAgtInf;
+import com.bocom.bbip.gdeupsb.repository.GDEupsWatAgtInfRepository;
+import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.euif.component.util.StringUtil;
 import com.bocom.jump.bp.core.Context;
@@ -37,6 +40,9 @@ public class CommInsertCusAgentServiceActionWATR00 implements	CommInsertCusAgent
 	@Autowired
 	@Qualifier("callThdTradeManager")
 	ThirdPartyAdaptor callThdTradeManager;
+	
+	@Autowired
+	GDEupsWatAgtInfRepository gdeupsWatAgtInfRepository;
 
 	@Override
 	public Map<String, Object> preInsertCusAgent(CustomerDomain customerdomain,List<CusAgentCollectDomain> list, Context context) throws CoreException {
@@ -133,6 +139,10 @@ public class CommInsertCusAgentServiceActionWATR00 implements	CommInsertCusAgent
 			throw new CoreException(ErrorCodes.EUPS_THD_SYS_ERROR);
 		}
 		logger.info("CommInsertCusAgentServiceActionWATR00 callThd end ... ...");
+		
+		context.setData("agdAgrNo", agentCollectAgreement.get("agdAgrNo"));
+		GDEupsWatAgtInf gdeups =	BeanUtils.toObject(context.getDataMap(), GDEupsWatAgtInf.class);
+		gdeupsWatAgtInfRepository.insert(gdeups);
 		return null;
 	}
 
