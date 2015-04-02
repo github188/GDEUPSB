@@ -45,20 +45,6 @@
       <xs:element name="response" type="tns:queryJournalOffChanResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:element name="commQueryCusAgentDetail" type="tns:commQueryCusAgentDetailReq_CType"/>
-  <xs:element name="commQueryCusAgentDetailResponse" type="tns:commQueryCusAgentDetailRsp_CType"/>
-  <xs:complexType name="commQueryCusAgentDetailReq_CType">
-    <xs:sequence>
-      <xs:element ref="gsp:requestInformation"/>
-      <xs:element name="request" type="tns:commQueryCusAgentDetailRequest_CType"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="commQueryCusAgentDetailRsp_CType">
-    <xs:sequence>
-      <xs:element ref="gsp:replyInformation"/>
-      <xs:element name="response" type="tns:commQueryCusAgentDetailResponse_CType"/>
-    </xs:sequence>
-  </xs:complexType>
   <xs:element name="payFeeOffChan" type="tns:payFeeOffChanReq_CType"/>
   <xs:element name="payFeeOffChanResponse" type="tns:payFeeOffChanRsp_CType"/>
   <xs:complexType name="payFeeOffChanReq_CType">
@@ -413,7 +399,7 @@
       <xs:documentation>密码</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:maxLength value="6"/>
+      <xs:maxLength value="20"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="comNo_SType">
@@ -752,6 +738,21 @@
     <xs:sequence>
       <xs:element ref="tns:responseHeader"/>
       <xs:element name="agdAgrNo" type="tns:agdAgrNo_SType" minOccurs="0"/>
+      <xs:element name="cusAC" type="tns:cusAC_SType"/>
+      <xs:element name="cusNme" type="tns:cusNme_SType" minOccurs="0"/>
+      <xs:element name="pwd" type="tns:pwd_SType"/>
+      <xs:element name="thdCusNo" type="tns:thdCusNo_SType"/>
+      <xs:element name="thdCusNme" type="tns:thdCusNme_SType" minOccurs="0"/>
+      <xs:element name="idTyp" type="tns:idTyp_SType" minOccurs="0"/>
+      <xs:element name="idNo" type="tns:idNo_SType" minOccurs="0"/>
+      <xs:element name="blNme" type="tns:blNme_SType" minOccurs="0"/>
+      <xs:element name="addr" type="tns:addr_SType" minOccurs="0"/>
+      <xs:element name="hphone" type="tns:hphone_SType" minOccurs="0"/>
+      <xs:element name="lphone" type="tns:lphone_SType" minOccurs="0"/>
+      <xs:element name="post" type="tns:post_SType" minOccurs="0"/>
+      <xs:element name="sjman" type="tns:sjman_SType" minOccurs="0"/>
+      <xs:element name="postno" type="tns:postno_SType" minOccurs="0"/>
+      <xs:element name="taddr" type="tns:taddr_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="eupsBusTyp_SType">
@@ -791,7 +792,7 @@
       <xs:documentation>第三方客户姓名</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:maxLength value="300"/>
+      <xs:maxLength value="60"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="blNme_SType">
@@ -799,7 +800,7 @@
       <xs:documentation>办理人姓名</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:maxLength value="32"/>
+      <xs:maxLength value="60"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="addr_SType">
@@ -807,7 +808,7 @@
       <xs:documentation>地址</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:maxLength value="40"/>
+      <xs:maxLength value="80"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="hphone_SType">
@@ -839,7 +840,7 @@
       <xs:documentation>收件人姓名</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:maxLength value="10"/>
+      <xs:maxLength value="60"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="postno_SType">
@@ -855,7 +856,7 @@
       <xs:documentation>邮寄地址</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:maxLength value="40"/>
+      <xs:maxLength value="80"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="commDelCusAgentRequest_CType">
@@ -863,17 +864,13 @@
       <xs:element ref="tns:requestHeader"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="agdAgrNo" type="tns:agdAgrNo_SType"/>
-      <xs:element name="addr" type="tns:addr_SType" minOccurs="0"/>
-      <xs:element name="hphone" type="tns:hphone_SType" minOccurs="0"/>
-      <xs:element name="lphone" type="tns:lphone_SType" minOccurs="0"/>
-      <xs:element name="post" type="tns:post_SType" minOccurs="0"/>
-      <xs:element name="sjman" type="tns:sjman_SType" minOccurs="0"/>
-      <xs:element name="postno" type="tns:postno_SType" minOccurs="0"/>
-      <xs:element name="taddr" type="tns:taddr_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="commDelCusAgentResponse_CType">
-    <xs:sequence/>
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="agdAgrNo" type="tns:agdAgrNo_SType" minOccurs="0"/>
+    </xs:sequence>
   </xs:complexType>
   <xs:complexType name="queryJournalOffChanRequest_CType">
     <xs:sequence>
@@ -942,20 +939,6 @@
       <xs:maxLength value="19"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:complexType name="commQueryCusAgentDetailRequest_CType">
-    <xs:sequence>
-      <xs:element ref="tns:requestHeader"/>
-      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
-      <xs:element name="agdAgrNo" type="tns:agdAgrNo_SType" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:complexType name="commQueryCusAgentDetailResponse_CType">
-    <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
-      <xs:element ref="tns:customerInfo" minOccurs="0"/>
-      <xs:element ref="tns:agentCollectAgreement" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
   <xs:complexType name="payFeeOffChanRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
@@ -1181,14 +1164,28 @@
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
-      <xs:element name="cusAc" type="tns:cusAc_SType"/>
+      <xs:element name="cusAC" type="tns:cusAC_SType" minOccurs="0"/>
+      <xs:element name="thdCusNo" type="tns:thdCusNo_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="commQueryCusAgentListResponse_CType">
     <xs:sequence>
       <xs:element ref="tns:responseHeader"/>
-      <xs:element ref="tns:customerInfo" minOccurs="0" maxOccurs="1"/>
-      <xs:element ref="tns:agentCollectAgreement" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="agdAgrNo" type="tns:agdAgrNo_SType" minOccurs="0"/>
+      <xs:element name="cusAC" type="tns:cusAC_SType" minOccurs="0"/>
+      <xs:element name="cusNme" type="tns:cusNme_SType" minOccurs="0"/>
+      <xs:element name="thdCusNo" type="tns:thdCusNo_SType" minOccurs="0"/>
+      <xs:element name="thdCusNme" type="tns:thdCusNme_SType" minOccurs="0"/>
+      <xs:element name="idTyp" type="tns:idTyp_SType" minOccurs="0"/>
+      <xs:element name="idNo" type="tns:idNo_SType" minOccurs="0"/>
+      <xs:element name="blNme" type="tns:blNme_SType" minOccurs="0"/>
+      <xs:element name="addr" type="tns:addr_SType" minOccurs="0"/>
+      <xs:element name="hphone" type="tns:hphone_SType" minOccurs="0"/>
+      <xs:element name="lphone" type="tns:lphone_SType" minOccurs="0"/>
+      <xs:element name="post" type="tns:post_SType" minOccurs="0"/>
+      <xs:element name="sjman" type="tns:sjman_SType" minOccurs="0"/>
+      <xs:element name="postno" type="tns:postno_SType" minOccurs="0"/>
+      <xs:element name="taddr" type="tns:taddr_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="printTransJournalRequest_CType">
@@ -1306,7 +1303,7 @@
       <xs:documentation>新地址</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:maxLength value="40"/>
+      <xs:maxLength value="80"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="oweFeeAmt_SType">
