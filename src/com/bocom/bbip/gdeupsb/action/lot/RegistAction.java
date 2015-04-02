@@ -116,7 +116,7 @@ public class RegistAction extends BaseAction {
         if (seqrecNoSub.length()<10) {
         	seqrecNoSub =GdExpCommonUtils.AddChar(seqrecNoSub, 10, '0', '1');
         }
-        String lotNam ="LOT"+seqrecNoSub.substring(0, 10);
+        String lotNam ="LOT"+seqrecNoSub.substring(seqrecNoSub.length()-10, seqrecNoSub.length());
         inputLotCusInf.setLotNam(lotNam);
         context.setData("lotNam",lotNam);
         if (null != context.getData("fixTel").toString()) {
@@ -139,8 +139,7 @@ public class RegistAction extends BaseAction {
         }
         context.setData("city_id", cityId);
         String sex = "0";
-        // gender 在何处赋值 TODO
-        String gender = context.getData("gender");
+        String gender ="1";// gender 在何处赋值 TODO
         if (gender.equals("0") || StringUtil .isEmptyOrNull(gender)) {
             sex="1";
         }
