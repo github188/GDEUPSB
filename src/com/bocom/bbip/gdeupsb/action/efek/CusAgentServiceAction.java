@@ -137,8 +137,8 @@ public class CusAgentServiceAction extends BaseAction{
 			map.put("agtSrvCusId", context.getData("cusNo"));
 			map.put("bvCde", "009");
 			map.put("agtSrvCusPnm", context.getData("settleAccountsName"));
-			map.put("cusAc", context.getData(ParamKeys.CUS_AC));
-			map.put("acoAc", context.getData(ParamKeys.CUS_AC));
+			map.put("cusAc", context.getData(GDParamKeys.NEWCUSAC));
+			map.put("acoAc", context.getData(GDParamKeys.NEWCUSAC));
 			if (StringUtils.isNotBlank((String) context.getData("pwd"))) {
 				map.put("pwd", (String) context.getData("pwd"));
 			}
