@@ -102,6 +102,7 @@
 				<bean
 					class="com.bocom.jump.bp.channel.tcp.interceptors.PayloadChannelInterceptor">
 					<property name="lengthSize" value="4" /><!-- 报文长度占4位 -->
+					<property name="lengthAddtive" value="-4" />
 				</bean>
 				<bean class="com.bocom.jump.bp.channel.interceptors.TransformInterceptor">
 					<property name="encodeTransforms"><!-- 发送报文编码配置 -->
@@ -110,6 +111,7 @@
 								<constructor-arg
 									value="packet://WEB-INF/classes/config/stream/WATR00/WATR00ThdRspHeader.xml" />
 							</bean>
+							<bean class="com.bocom.bbip.gdeupsb.channel.interceptors.WatrResponseTransform" />
 							<bean class="com.bocom.jump.bp.channel.interceptors.ResponseTransform" />
 						</array>
 					</property>
@@ -117,8 +119,7 @@
 						<array>
 							<bean class="com.bocom.jump.bp.channel.interceptors.RequestTransform" />
 							<bean class="com.bocom.jump.bp.channel.interceptors.DecoderTransform">
-								<constructor-arg
-									value="packet://WEB-INF/classes/config/stream/WATR00/WATR00ThdReqHeader.xml" />
+								<constructor-arg value="packet://WEB-INF/classes/config/stream/WATR00/WATR00ThdReqHeader.xml" />
 							</bean>
 						</array>
 					</property>
