@@ -5,6 +5,8 @@ import java.util.Date;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
+import com.bocom.bbip.eups.common.ErrorCodes;
+import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdTbcBasInf;
 import com.bocom.bbip.gdeupsb.repository.GdTbcBasInfRepository;
@@ -34,16 +36,16 @@ public class SignInAction extends BaseAction {
         GdTbcBasInf resultTbcBasInfo = get(GdTbcBasInfRepository.class).findOne(context.getData("dptId").toString());
         if (resultTbcBasInfo == null) {
             context.setData(GDParamKeys.RSP_CDE,"9999");
-            context.setData(GDParamKeys.RSP_MSG,"你提供的数据不存在!");
+            context.setData(GDParamKeys.RSP_MSG,GDErrorCodes.TBC_OFF_NOT_EXIST);
             return;
         } 
         if (resultTbcBasInfo.getSigSts().equals(Constants.TXN_CTL_STS_SIGNIN)) {
             context.setData(GDParamKeys.RSP_CDE,"9999");
-            context.setData(GDParamKeys.RSP_MSG,"第三方渠道已签到!");
+            context.setData(GDParamKeys.RSP_MSG,ErrorCodes.THD_CHL_ALDEAY_SIGN_IN);
             return;
         } else if (resultTbcBasInfo.getSigSts().equals(Constants.TXN_CTL_STS_CHECKBILL_ING)) {
             context.setData(GDParamKeys.RSP_CDE,"9999");
-            context.setData(GDParamKeys.RSP_MSG,"不是签到时间不允许第三方签到!");
+            context.setData(GDParamKeys.RSP_MSG,ErrorCodes.THD_CHL_SIGNIN_NOT_ALLOWWED);
             return;
         } else {
             GdTbcBasInf tbcBasInfo = BeanUtils.toObject(context.getDataMap(), GdTbcBasInf.class);
@@ -97,7 +99,7 @@ public class SignInAction extends BaseAction {
                 }*/
                 get(GdTbcBasInfRepository.class).update(tbcBasInfo);
                 } else {
-                throw new CoreException("主密钥不存在 !!");
+                throw new CoreException(GDErrorCodes.TBC_MAIN_KEY_NOT_EXIST);
             }
             context.setData(GDParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
             context.setData(GDParamKeys.RSP_MSG,Constants.RESPONSE_MSG);

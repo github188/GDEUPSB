@@ -5,6 +5,8 @@ import java.util.Date;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
+import com.bocom.bbip.eups.common.ErrorCodes;
+import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdTbcBasInf;
 import com.bocom.bbip.gdeupsb.repository.GdTbcBasInfRepository;
@@ -40,17 +42,17 @@ public class SignOutAction  extends BaseAction {
         GdTbcBasInf tbcBasInfo = get(GdTbcBasInfRepository.class).findOne(context.getData("dptId").toString());
         if (tbcBasInfo == null) {
             context.setData(GDParamKeys.RSP_CDE,"9999");
-            context.setData(GDParamKeys.RSP_MSG,"数据不存在!");
-            return;
+            context.setData(GDParamKeys.RSP_MSG,GDErrorCodes.TBC_OFF_NOT_EXIST);
+            throw new CoreException(GDErrorCodes.TBC_OFF_NOT_EXIST);
         } 
         if (tbcBasInfo.getSigSts().equals(Constants.TXN_CTL_STS_SIGNOUT)) {
             context.setData(GDParamKeys.RSP_CDE,"9999");
-            context.setData(GDParamKeys.RSP_MSG,"第三方渠道已签退!");
-            return;
+            context.setData(GDParamKeys.RSP_MSG,ErrorCodes.THD_CHL_ALDEAY_SIGN_OUT);
+            throw new CoreException(ErrorCodes.THD_CHL_ALDEAY_SIGN_OUT);
         } else if (tbcBasInfo.getSigSts().equals(Constants.TXN_CTL_STS_CHECKBILL_ING)) {
             context.setData(GDParamKeys.RSP_CDE,"9999");
-            context.setData(GDParamKeys.RSP_MSG,"不是签退时间不允许第三方签退!");
-            return;
+            context.setData(GDParamKeys.RSP_MSG,ErrorCodes.THD_CHL_SIGNIN_NOT_ALLOWWED);
+            throw new CoreException(ErrorCodes.THD_CHL_SIGNIN_NOT_ALLOWWED);
         } else {
             try {
                 GdTbcBasInf putTbcBasInfo = BeanUtils.toObject(context.getDataMap(), GdTbcBasInf.class);
@@ -59,7 +61,7 @@ public class SignOutAction  extends BaseAction {
                 putTbcBasInfo.setSigSts(Constants.TXN_CTL_STS_SIGNOUT);
                 get (GdTbcBasInfRepository.class).update(putTbcBasInfo);
             } catch (Exception e) {
-                throw new CoreException("数据库处理错误 !"+ e);
+                throw new CoreException(GDErrorCodes.TBC_DB_ERROR);
             }
         }
         context.setData(GDParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);

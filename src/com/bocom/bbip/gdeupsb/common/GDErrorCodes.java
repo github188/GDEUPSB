@@ -511,4 +511,15 @@ public final class GDErrorCodes {
 	/** 零余额：请求超时*/
 	public static final String REQUEST_TIME_OUT = "BBIP4400EU0699";
 	
+	// 烟草 
+	/** 主密钥不存在 !*/
+	public static final String TBC_MAIN_KEY_NOT_EXIST = "BBIP4400EU0500";
+	/** 您提供的单位未开户!*/
+	public static final String TBC_OFF_NOT_EXIST = "BBIP4400EU0501";
+	/** 数据库处理错误 !*/
+	public static final String TBC_DB_ERROR = "BBIP4400EU0502";
+	/**"无此用户信息 !"*/
+	public static final String TBC_USER_NOT_EXIST = "BBIP4400EU0503";
+	
+	
 }

@@ -8,6 +8,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.comp.BBIPPublicService;
+import com.bocom.bbip.comp.btp.BTPService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
@@ -19,6 +20,7 @@ import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdLotCusInf;
 import com.bocom.bbip.gdeupsb.repository.GdLotCusInfRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
+import com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
@@ -90,7 +92,6 @@ public class RegistAction extends BaseAction {
            } 
         }
         // <Set>CusNam=DELBOTHSPACE($ActNam)</Set> 前台及程序都没有 ActNam
-        context.setData("cusNam", context.getData("cusNam").toString().trim());
         String idNo = context.getData("idNo").toString().trim();
         String oIdNo = context.getData("oIdNo").toString().trim();
         if (!idNo.equals(oIdNo)) {
@@ -110,8 +111,14 @@ public class RegistAction extends BaseAction {
         inputLotCusInf.setIdNo(context.getData("idNo").toString().trim());
         String mobPh= context.getData("mobTel").toString().trim();
         inputLotCusInf.setMobTel(mobPh);
-        inputLotCusInf.setLotNam(mobPh);
-        context.setData("lotNam", mobPh);
+        String seqrecNo =((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
+        String seqrecNoSub = seqrecNo.replace(ParamKeys.BUSINESS_CODE_COLLECTION,"");
+        if (seqrecNoSub.length()<10) {
+        	seqrecNoSub =GdExpCommonUtils.AddChar(seqrecNoSub, 10, '0', '1');
+        }
+        String lotNam ="LOT"+seqrecNoSub.substring(0, 10);
+        inputLotCusInf.setLotNam(lotNam);
+        context.setData("lotNam",lotNam);
         if (null != context.getData("fixTel").toString()) {
             inputLotCusInf.setFixTel(context.getData("fixTel").toString().trim());
         }
@@ -133,11 +140,10 @@ public class RegistAction extends BaseAction {
         context.setData("city_id", cityId);
         String sex = "0";
         // gender 在何处赋值 TODO
-        // String gender = context.getData("gender").toString();
-        /*
-         * if (gender.equals("0") || StringUtil .isEmptyOrNull(gender)) {
-         * sex="1"; }else { sex="0"; }
-         */
+        String gender = context.getData("gender");
+        if (gender.equals("0") || StringUtil .isEmptyOrNull(gender)) {
+            sex="1";
+        }
         inputLotCusInf.setCityId(cityId);
         inputLotCusInf.setSex(sex);
         context.setData("sex", sex);

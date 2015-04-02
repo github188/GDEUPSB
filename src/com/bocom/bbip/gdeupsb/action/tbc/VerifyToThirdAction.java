@@ -14,6 +14,7 @@ import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsTransJournal;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
+import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdTbcBasInf;
 import com.bocom.bbip.gdeupsb.entity.GdTbcCusAgtInfo;
@@ -73,7 +74,7 @@ public class VerifyToThirdAction extends BaseAction {
             String cusAcNo = qryCusAcNo(context.getData("custId").toString());
             if (StringUtil.isEmptyOrNull(cusAcNo)) {
                 context.setData(GDParamKeys.RSP_CDE,"9999");
-                context.setData(GDParamKeys.RSP_MSG,"无此用户信息 !");
+                context.setData(GDParamKeys.RSP_MSG,GDErrorCodes.TBC_USER_NOT_EXIST);
                 return;
             }
             // 检查该客户在代收付是否已签约
@@ -95,7 +96,7 @@ public class VerifyToThirdAction extends BaseAction {
             String cusAcNo = qryCusAcNo(context.getData("custId").toString());
             if (StringUtil.isEmptyOrNull(cusAcNo)) {
                 context.setData(GDParamKeys.RSP_CDE,"9999");
-                context.setData(GDParamKeys.RSP_MSG,"无此用户信息 !");
+                context.setData(GDParamKeys.RSP_MSG,GDErrorCodes.TBC_USER_NOT_EXIST);
             }
             // 检查该客户在代收付是否已销户
             Map<String, Object> map = new HashMap<String, Object>();

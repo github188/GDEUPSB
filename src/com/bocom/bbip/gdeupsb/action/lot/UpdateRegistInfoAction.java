@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.bocom.bbip.comp.btp.BTPService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
@@ -16,6 +17,7 @@ import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdLotCusInf;
 import com.bocom.bbip.gdeupsb.repository.GdLotCusInfRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
+import com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
@@ -97,7 +99,13 @@ public class UpdateRegistInfoAction extends BaseAction {
         context.setData("city_id",lotCusInfos.get(0).getCityId());
         context.setData("version", "");
         context.setData("dealId", "141");
-        context.setData("lotNam", context.getData("mobTel"));
+        String seqrecNo =((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
+        String seqrecNoSub = seqrecNo.replace(ParamKeys.BUSINESS_CODE_COLLECTION,"");
+        if (seqrecNoSub.length()<10) {
+        	seqrecNoSub =GdExpCommonUtils.AddChar(seqrecNoSub, 10, '0', '1');
+        }
+        String lotNam ="LOT"+seqrecNoSub.substring(0, 10);
+        context.setData("lotNam",lotNam);
         Date regDate = new Date();
         String regTime= DateUtils.format(regDate, DateUtils.STYLE_FULL);
         context.setData("sent_time",regTime);
