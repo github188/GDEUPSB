@@ -13,7 +13,7 @@
 		<!-- 业务标识号	YWBSH	Varchar2(6)  -->
 					<fixString name="busIdentify" length="6" />
 		<!-- 交易标识号	JYBSH	Varchar2(20)  -->
-					<fixString name="sqn" length="20" />
+					<fixString name="sqns" length="20" />
 		<!-- 交易人标识	JYRBS	Varchar2(20)  -->
 					<fixString name="traPerIdenty" length="20" />
 		<!-- 交易码	JYM	Varchar2(2)  -->
