@@ -86,7 +86,7 @@ public class CommInsertUpdateCusAgentServiceActionWATR00 extends BaseAction{
 			infoMap.put("ccy", "CNY");
 			infoMap.put("idTyp", context.getData("idTyp"));
 			infoMap.put("idNo", context.getData("idNo"));
-			System.out.println("@@@@@@@@@@@@@@@@@@@@"+infoMap);
+			
 			customerInfo.add(infoMap);
 			context.setData("agrChl", "1");//签约渠道设为公共事业缴费，上代收付用
 			context.setData("customerInfo", customerInfo);
@@ -96,7 +96,7 @@ public class CommInsertUpdateCusAgentServiceActionWATR00 extends BaseAction{
 			context.setData("cusNo", context.getData("thdCusNo"));
 			get(BBIPPublicService.class).synExecute("gdeupsb.commInsertCusAgent", context);
 		}else if("1".equals(oprTyp)){
-			get(BBIPPublicService.class).synExecute("eups.commUpdateCusAgent", context);
+			get(BBIPPublicService.class).synExecute("gdeupsb.commUpdateCusAgent", context);
 		}else{
 			throw new CoreException("操作类型有误!");
 		}
