@@ -8,10 +8,13 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.gdeupsb.entity.GdEupsWatAgtInf;
+import com.bocom.bbip.gdeupsb.repository.GdEupsWatAgtInfRepository;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -24,6 +27,9 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
 public class CommInsertUpdateCusAgentServiceActionWATR00 extends BaseAction{
 	
 	private static Logger logger = LoggerFactory.getLogger(CommInsertUpdateCusAgentServiceActionWATR00.class);
+	
+	@Autowired
+	GdEupsWatAgtInfRepository gdEupsWatAgtInfRepository;
 	
 	@Override
 	public void execute(Context context) throws CoreException,	CoreRuntimeException {
@@ -96,6 +102,14 @@ public class CommInsertUpdateCusAgentServiceActionWATR00 extends BaseAction{
 			context.setData("cusNo", context.getData("thdCusNo"));
 			get(BBIPPublicService.class).synExecute("gdeupsb.commInsertCusAgent", context);
 		}else if("1".equals(oprTyp)){
+			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@"+context);
+			
+			//查询本地水费协议信息表，得到协议编号
+			GdEupsWatAgtInf gdEupsWatAgtInf = new GdEupsWatAgtInf();
+			gdEupsWatAgtInf.setThdCusNo((String)context.getData(ParamKeys.THD_CUS_NO));
+			List<GdEupsWatAgtInf> infoList = gdEupsWatAgtInfRepository.find(gdEupsWatAgtInf);
+			context.setData("agdAgrNo", infoList.get(0).getAgdAgrNo());
+			
 			Map<String, Object> agentMap = new HashMap<String, Object>();
 //			agentMap.put("agdAgrNo", (String)context.getData("agdAgrNo"));
 //			agentMap.put("cusAc", (String)context.getData("cusAc"));
@@ -115,6 +129,7 @@ public class CommInsertUpdateCusAgentServiceActionWATR00 extends BaseAction{
 			agentMap.put("agtSrvCusPnm", (String)context.getData("thdCusNme"));
 			agentMap.put("agrVldDte", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
 			agentMap.put("agrExpDte", "99991231");
+			agentMap.put("agdAgrNo", (String)context.getData("agdAgrNo"));
 
 			
 			List<Map<String,Object>> agentCollectAgreement = new ArrayList<Map<String,Object>>();
