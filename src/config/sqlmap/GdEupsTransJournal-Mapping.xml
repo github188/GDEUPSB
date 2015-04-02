@@ -1132,4 +1132,56 @@
 		and
 		eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR}) y
 	</select>
+	
+	
+	<!-- 流水信息查询 -->
+	<select id="findTxnJnlInfo" resultType="java.util.Map"
+		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
+				select
+		<include refid="baseColumnList" />
+		from ${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="sqn!=null">
+				AND SQN=#{sqn,jdbcType=CHAR}
+			</if>
+			<if test="mfmVchNo!=null">
+				AND MFM_VCH_NO=#{mfmVchNo,jdbcType=CHAR}
+			</if>
+			<if test="thdRgnNo!=null">
+				AND THD_RGN_NO=#{thdRgnNo,jdbcType=CHAR}
+			</if>
+			<if test="thdCusNo!=null">
+				AND THD_CUS_NO=#{thdCusNo,jdbcType=CHAR}
+			</if>
+			<if test="cusAc!=null">
+				AND CUS_AC=#{cusAc,jdbcType=CHAR}
+			</if>
+			<if test="chlTyp != null">
+				AND CHL_TYP = #{chlTyp,jdbcType=CHAR}
+			</if>
+			<if test="tmlNo != null">
+				AND TML_NO = #{tmlNo,jdbcType=CHAR}
+			</if>
+			<if test="busKnd != null">
+				AND BUS_KND = #{busKnd,jdbcType=CHAR}
+			</if>
+			<if test="eupsBusTyp != null">
+				AND EUPS_BUS_TYP = #{eupsBusTyp,jdbcType=CHAR}
+			</if>
+			<if test="txnSts != null">
+				AND TXN_STS = #{txnSts,jdbcType=CHAR}
+			</if>
+			<if test="comNo != null">
+				AND COM_NO = #{comNo,jdbcType=CHAR}
+			</if>
+			<if test="beginDate!=null">
+				AND TXN_DTE &gt;=#{beginDate,jdbcType=DATE}
+			</if>
+			<if test="endDate!=null">
+				AND TXN_DTE &lt;=#{endDate,jdbcType=DATE}
+			</if>
+		</trim>
+	</select>
+	
+	
 </mapper>
