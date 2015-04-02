@@ -11,7 +11,7 @@
 	<action id="gasAgentBatchFileToFTP" class="com.bocom.bbip.gdeupsb.action.gas.agentBat.GasAgentBatchFileToFtpAction"/>   
  
  <!-- 惠州燃气代扣流水信息查询  -->
-  <action id="qryHzThdJnlInfoAction" class="com.bocom.bbip.gdeupsb.action.gas.QryHzThdJnlInfoAction" />
+  <action id="qryHzThdJnlInfoAction" class="com.bocom.bbip.gdeupsb.action.common.QryTxnJnlInfoAction" />
   <!-- 惠州燃气代扣用户信息查询 -->
   <action id="qryHzThdCusInfoAction" class="com.bocom.bbip.gdeupsb.action.gas.QryHzThdCusInfoAction" />
   <!-- 惠州燃气报表打印 -->
