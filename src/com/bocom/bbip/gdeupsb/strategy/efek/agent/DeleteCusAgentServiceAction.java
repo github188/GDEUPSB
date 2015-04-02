@@ -7,6 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
@@ -23,7 +24,7 @@ import com.bocom.jump.bp.core.CoreException;
 /**
  * @author liyawei
  */
-public class DeleteCusAgentServiceAction implements CommDelCusAgentService{
+public class DeleteCusAgentServiceAction extends BaseAction implements CommDelCusAgentService{
 	private final static Log logger=LogFactory.getLog(DeleteCusAgentServiceAction.class);
 	@Autowired
 	@Qualifier("callThdTradeManager")
