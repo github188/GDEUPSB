@@ -73,6 +73,7 @@ public class PreCancelFeeAction implements Executable{
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
 				context.setData("PKGCNT", "000001");
+				context.setData("sqns", context.getData("sqn"));
 				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW05");
 				context.setData(ParamKeys.THD_TXN_DATE, DateUtils.format((Date)context.getData("thdTxnDte"), DateUtils.STYLE_yyyyMMdd));
 				context.setData(ParamKeys.THD_TXN_TIME, DateUtils.format((Date)context.getData("thdTxnTme"), DateUtils.STYLE_HHmmss));
