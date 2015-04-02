@@ -45,14 +45,14 @@ public class QryCusMsgAction extends BaseAction{
 		
 		callThd(context);
 		String comNo=context.getData("comNo").toString();
-		String bakFld1="";
-		if(comNo.equals("foshan")){
-				bakFld1="佛山";
-		}else if(comNo.equals("qingyuan")){
-				bakFld1="清远";
-		}else if(comNo.equals("zhongshan")){
-				bakFld1="中山";
-		}
+		String bakFld1=" ";
+//		if(comNo.equals("foshan")){
+//				bakFld1="佛山";
+//		}else if(comNo.equals("qingyuan")){
+//				bakFld1="清远";
+//		}else if(comNo.equals("zhongshan")){
+//				bakFld1="中山";
+//		}
 		context.setData(ParamKeys.BAK_FLD1, bakFld1);
 	}
 	/**
