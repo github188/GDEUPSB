@@ -78,6 +78,7 @@ public class PrePayFeeThdAction extends BaseAction implements Executable{
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
 				context.setData("PKGCNT", "000001");
+				context.setData("sqns", context.getData("sqn"));
 				
 				Date txnDte=context.getData(ParamKeys.TXN_DATE);
 				Date txnTme=context.getData(ParamKeys.TXN_TIME);
