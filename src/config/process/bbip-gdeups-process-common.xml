@@ -45,6 +45,7 @@
 		</actions>
 	</process>
 	
+	
 	<!--代扣协议签约    -->
 	<process id="gdeupsb.commInsertCusAgent" template="gdeupsb.commInsCusAgentTemplate" interceptors="eups.transMessageInterceptor">	
 	   <actions>
@@ -53,7 +54,7 @@
 		<action id="preAction" ref="eups.commInitCusAgentAction" /> <!-- 检查协议，预计协议流水 -->
 		<action id="callACPSAction" ref="eups.commInsertCusAgentAction" />   <!-- 发代收付 -->
 		<!-- <action id="callThdAction" ref="eups.insertCusAgentThdStrategyAction" />  发第三方 -->
-		<action id="callThdAction" ref="eups.commInsertCusAgentServiceAction" operations="callThd"/> <!-- 发第三方服务 -->
+		<action id="callThdAction" class="com.bocom.bbip.gdeupsb.service.impl.watr00.CommInsertCusAgentAction"/> <!-- 发第三方服务 -->
 		
 	   </actions>
 	</process>
