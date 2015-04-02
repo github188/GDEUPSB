@@ -55,6 +55,7 @@ public class GzagBatchDataResultFileAction extends BaseAction implements AfterBa
 	 */
 	public void afterBatchDeal(AfterBatchAcpDomain afterbatchacpdomain, Context context) throws CoreException {
 		logger.info("===============Start  GzagBatchDataResultFileAction");
+		//更改状态
 		get(BatchFileCommon.class).changeBatSts(context);
 		final String tlr=(String)context.getData(ParamKeys.TELLER);
 		final String br=(String)context.getData(ParamKeys.BR);
@@ -63,11 +64,9 @@ public class GzagBatchDataResultFileAction extends BaseAction implements AfterBa
         final String dir="/home/bbipadm/data/mftp/BBIP/"+systemCode+"/"+br+"/"+tlr+"/"+AcDate+"/";
 			//得到文件
 			EupsThdFtpConfig eupsThdFtpConfigFile = eupsThdFtpConfigRepository.findOne(ParamKeys.FTPID_BATCH_PAY_FILE_TO_ACP);
-			String batNo=context.getData("batNo").toString();
 			String fileNme=context.getData("batNo")+".result";
-			//第三方批次号
-			String thdBatNo=eupsBatchConsoleInfoRepository.findOne(batNo).getRsvFld1();
 			eupsThdFtpConfigFile.setRmtFleNme(fileNme);
+			eupsThdFtpConfigFile.setThdIpAdr("182.53.15.170");
 			eupsThdFtpConfigFile.setRmtWay(dir);
 			eupsThdFtpConfigFile.setFtpDir("1");
 			operateFTP.getFileFromFtp(eupsThdFtpConfigFile);
@@ -86,6 +85,7 @@ public class GzagBatchDataResultFileAction extends BaseAction implements AfterBa
 			String fileIDResult=fileId+"Result";
 			EupsThdFtpConfig eupsThdFtpConfig =eupsThdFtpConfigRepository.findOne(fileId);
 			// 生成文件
+			//TODO 生成文件名
 			operateFile.createCheckFile(eupsThdFtpConfig, fileIDResult, locName, resultMap);
 			logger.info("===============生成反盘文件成功");
 			// 将生成的文件上传至指定服务器
