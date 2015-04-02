@@ -15,17 +15,14 @@
   <wsdl:message name="commDelCusAgentRequestMessage">
     <wsdl:part name="commDelCusAgentRequest" element="gdeupsb:commDelCusAgent"/>
   </wsdl:message>
+  <wsdl:message name="commDelCusAgentResponseMessage">
+    <wsdl:part name="commDelCusAgentResponse" element="gdeupsb:commDelCusAgentResponse"/>
+  </wsdl:message>
   <wsdl:message name="queryJournalOffChanRequestMessage">
     <wsdl:part name="queryJournalOffChanRequest" element="gdeupsb:queryJournalOffChan"/>
   </wsdl:message>
   <wsdl:message name="queryJournalOffChanResponseMessage">
     <wsdl:part name="queryJournalOffChanResponse" element="gdeupsb:queryJournalOffChanResponse"/>
-  </wsdl:message>
-  <wsdl:message name="commQueryCusAgentDetailRequestMessage">
-    <wsdl:part name="commQueryCusAgentDetailRequest" element="gdeupsb:commQueryCusAgentDetail"/>
-  </wsdl:message>
-  <wsdl:message name="commQueryCusAgentDetailResponseMessage">
-    <wsdl:part name="commQueryCusAgentDetailResponse" element="gdeupsb:commQueryCusAgentDetailResponse"/>
   </wsdl:message>
   <wsdl:message name="payFeeOffChanRequestMessage">
     <wsdl:part name="payFeeOffChanRequest" element="gdeupsb:payFeeOffChan"/>
@@ -82,17 +79,14 @@
       <wsdl:output message="tns:commInsertCusAgentResponseMessage"/>
     </wsdl:operation>
     <wsdl:operation name="commDelCusAgent">
+      <wsdl:documentation/>
       <wsdl:input message="tns:commDelCusAgentRequestMessage"/>
+      <wsdl:output message="tns:commDelCusAgentResponseMessage"/>
     </wsdl:operation>
     <wsdl:operation name="queryJournalOffChan">
       <wsdl:documentation/>
       <wsdl:input message="tns:queryJournalOffChanRequestMessage"/>
       <wsdl:output message="tns:queryJournalOffChanResponseMessage"/>
-    </wsdl:operation>
-    <wsdl:operation name="commQueryCusAgentDetail">
-      <wsdl:documentation/>
-      <wsdl:input message="tns:commQueryCusAgentDetailRequestMessage"/>
-      <wsdl:output message="tns:commQueryCusAgentDetailResponseMessage"/>
     </wsdl:operation>
     <wsdl:operation name="payFeeOffChan">
       <wsdl:documentation/>
@@ -151,18 +145,12 @@
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
-    </wsdl:operation>
-    <wsdl:operation name="queryJournalOffChan">
-      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service/queryJournalOffChan"/>
-      <wsdl:input>
-        <soap:body use="literal"/>
-      </wsdl:input>
       <wsdl:output>
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="commQueryCusAgentDetail">
-      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service/commQueryCusAgentDetail"/>
+    <wsdl:operation name="queryJournalOffChan">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service/queryJournalOffChan"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -245,7 +233,7 @@
   </wsdl:binding>
   <wsdl:service name="GDEUPSWATR00Service">
     <wsdl:port name="GDEUPSWATR00ServicePort" binding="tns:GDEUPSWATR00ServiceSoapBinding">
-      <soap:address location="http://127.0.0.1:8080/GDEUPSB/ws/"/>
+      <soap:address location="http://127.0.0.1"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
