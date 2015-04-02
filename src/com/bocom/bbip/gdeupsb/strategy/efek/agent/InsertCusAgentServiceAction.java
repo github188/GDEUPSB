@@ -1,6 +1,5 @@
 package com.bocom.bbip.gdeupsb.strategy.efek.agent;
 
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -17,18 +16,18 @@ import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.repository.EupsCusAgentJournalRepository;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
-import com.bocom.bbip.eups.spi.service.agent.CommInsertCusAgentService;
-import com.bocom.bbip.eups.spi.vo.CusAgentCollectDomain;
-import com.bocom.bbip.eups.spi.vo.CustomerDomain;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.service.BGSPServiceAccessObject;
+import com.bocom.bbip.service.Result;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
+import com.bocom.jump.bp.core.CoreRuntimeException;
 /**
  * @author liyawei
  */
-public class InsertCusAgentServiceAction extends BaseAction implements CommInsertCusAgentService{
+public class InsertCusAgentServiceAction extends BaseAction {
 	private final static Log logger=LogFactory.getLog(InsertCusAgentServiceAction.class);
 	@Autowired
 	@Qualifier("callThdTradeManager")
@@ -37,12 +36,20 @@ public class InsertCusAgentServiceAction extends BaseAction implements CommInser
 	EupsTransJournalRepository eupsTransJournalRepository;
 	@Autowired
 	EupsCusAgentJournalRepository eupsCusAgentJournalRepository;
+	@Autowired
+	BGSPServiceAccessObject bgspServiceAccessObject;
 	@Override
-	public Map<String, Object> callThd(CustomerDomain customerdomain,
-			List<CusAgentCollectDomain> list, Context context)
-			throws CoreException {
-		logger.info("=============Start   InsertCusAgentServiceAction  callThd");
+	public void execute(Context context) throws CoreException,
+			CoreRuntimeException {
+		logger.info("=============Start   InsertCusAgentServiceAction  InsertCusAgentServiceAction");
+		//调用代收付
+		Result editCusAgtResult = bgspServiceAccessObject.callServiceFlatting("maintainAgentCollectAgreement",context.getDataMap());
+		System.out.println();
+		System.out.println("~~~~~~~~~~~"+editCusAgtResult);
+		System.out.println("~~~~~~~~~~~"+editCusAgtResult.getPayload());
+		
 		try{
+			context.setData(ParamKeys.THD_CUS_NO,  context.getData("cusNo"));
 			Map<String, Object> rspMap = callThdTradeManager.trade(context);
 			
 				if(BPState.isBPStateNormal(context)){
@@ -109,23 +116,5 @@ public class InsertCusAgentServiceAction extends BaseAction implements CommInser
 			context.setData(ParamKeys.THD_TXN_STS, Constants.TXNSTS_FAIL);
 			context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 		}
-		return null;
 	}
-	@Override
-	public Map<String, Object> preInsertCusAgent(CustomerDomain customerdomain,
-				List<CusAgentCollectDomain> list, Context context)
-				throws CoreException {
-		logger.info("=============Start   InsertCusAgentServiceAction  preInsertCusAgent");
-		context.setData(ParamKeys.THD_CUS_NO,  context.getData("cusNo"));
-		logger.info("=============End    InsertCusAgentServiceAction  preInsertCusAgent");
-		return null;
-		}
-	@Override
-	public Map<String, Object> reverseThd(CustomerDomain customerdomain,
-				List<CusAgentCollectDomain> list, Context context)
-				throws CoreException {
-		logger.info("=============Start   InsertCusAgentServiceAction  reverseThd");
-		logger.info("=============End     InsertCusAgentServiceAction  reverseThd");
-    	return null;
-    }
 }

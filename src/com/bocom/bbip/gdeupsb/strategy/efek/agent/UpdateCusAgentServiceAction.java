@@ -1,6 +1,5 @@
 package com.bocom.bbip.gdeupsb.strategy.efek.agent;
 
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -15,45 +14,26 @@ import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.eups.spi.service.agent.CommUpdateCusAgentService;
-import com.bocom.bbip.eups.spi.vo.CusAgentCollectDomain;
-import com.bocom.bbip.eups.spi.vo.CustomerDomain;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
+import com.bocom.jump.bp.core.CoreRuntimeException;
 /**
  *银行到供电变更代扣协议业务 
  *@author liyawei
  */
-public class UpdateCusAgentServiceAction extends BaseAction implements CommUpdateCusAgentService{
+public class UpdateCusAgentServiceAction extends BaseAction {
 	@Autowired
     @Qualifier("callThdTradeManager")
     ThirdPartyAdaptor callThdTradeManager;
     private final static Log logger=LogFactory.getLog(UpdateCusAgentServiceAction.class);
    @Override
-    public Map<String, Object> preUpdateCusAgent(CustomerDomain customerdomain,
-		List<CusAgentCollectDomain> list, Context context)
-		throws CoreException {
+   public void execute(Context context) throws CoreException,
+		CoreRuntimeException {
 	   logger.info("=============Start  UpdateCusAgentServiceAction ");
 	   
-	   if(StringUtils.isNotEmpty(context.getData(ParamKeys.THD_SEQUENCE).toString())){
-			context.setData(ParamKeys.OBK_BR, context.getData(GDParamKeys.NEWBANKNO));
-			context.setData(ParamKeys.CUS_AC, context.getData(GDParamKeys.NEWCUSAC));
-			context.setData(ParamKeys.CUS_NME, context.getData(GDParamKeys.NEWCUSNAME));
-	   }
-			
-	return null;
-}
-    /**
-     * 外发第三方
-     */
-    @Override
-    public Map<String, Object> callThd(CustomerDomain arg0,
-    		List<CusAgentCollectDomain> arg1, Context context)
-    		throws CoreException {
-		logger.info("===============Start   UpdateCusAgentServiceAction   callThdOther");
 		if(context.getData("callThd").toString().equals("callThd")){
 				try{
 					Map<String, Object> rspMap = callThdTradeManager.trade(context);
@@ -123,6 +103,5 @@ public class UpdateCusAgentServiceAction extends BaseAction implements CommUpdat
 					context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 				}
 		}
-    	return null;
     }
 }

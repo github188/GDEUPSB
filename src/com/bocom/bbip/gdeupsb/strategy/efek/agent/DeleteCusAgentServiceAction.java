@@ -14,24 +14,23 @@ import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.eups.spi.service.agent.CommDelCusAgentService;
-import com.bocom.bbip.eups.spi.vo.CustomerDomain;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
+import com.bocom.jump.bp.core.CoreRuntimeException;
 /**
  * @author liyawei
  */
-public class DeleteCusAgentServiceAction extends BaseAction implements CommDelCusAgentService{
+public class DeleteCusAgentServiceAction extends BaseAction{
 	private final static Log logger=LogFactory.getLog(DeleteCusAgentServiceAction.class);
 	@Autowired
 	@Qualifier("callThdTradeManager")
     ThirdPartyAdaptor callThdTradeManager;
-		@Override
-		public Map<String, Object> callThd(CustomerDomain customerdomain,
-				Context context) throws CoreException {
+	@Override
+	public void execute(Context context) throws CoreException,
+			CoreRuntimeException {
 			logger.info("=============Start   DeleteCusAgentServiceAction  callThd");
 			try{
 				Map<String, Object> rspMap = callThdTradeManager.trade(context);
@@ -100,13 +99,5 @@ public class DeleteCusAgentServiceAction extends BaseAction implements CommDelCu
 				context.setData(ParamKeys.THD_TXN_STS, Constants.TXNSTS_FAIL);
 				context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 			}
-			return null;
-		}
-		@Override
-		public Map<String, Object> preDelCusAgent(CustomerDomain customerdomain,
-			Context context) throws CoreException {
-			logger.info("=============Start   DeleteCusAgentServiceAction  preDelCusAgent");
-			logger.info("=============End    DeleteCusAgentServiceAction  preDelCusAgent");
-	    	return null;
-	    }
+	}
 }
