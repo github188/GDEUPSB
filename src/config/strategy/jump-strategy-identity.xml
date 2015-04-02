@@ -219,15 +219,15 @@
 
 	<!-- 对账信息查询 <bean id="eups.checkBkFileToThirdStrategyActionELEC00" class="com.bocom.bbip.gdeupsb.strategy.efek.checkBKFileToThirdAction"/> -->
 
-	<!-- 银行到供电变更代扣协议业务 修改 -->
+	<!-- 银行到供电变更代扣协议业务 修改
 	<bean id="eups.commUpdateCusAgentServiceActionELEC00" 
-	 	class="com.bocom.bbip.gdeupsb.strategy.efek.agent.UpdateCusAgentServiceAction" />
-	<!-- 银行到供电变更代扣协议业务 签约 -->
+	 	class="com.bocom.bbip.gdeupsb.strategy.efek.agent.UpdateCusAgentServiceAction" /> -->
+	<!-- 银行到供电变更代扣协议业务 签约 
 	<bean id="eups.commInsertCusAgentServiceActionELEC00"
-		class="com.bocom.bbip.gdeupsb.strategy.efek.agent.InsertCusAgentServiceAction" />
-	<!-- 银行到供电变更代扣协议业务 注销 -->
+		class="com.bocom.bbip.gdeupsb.strategy.efek.agent.InsertCusAgentServiceAction" />-->
+	<!-- 银行到供电变更代扣协议业务 注销 
 	<bean id="eups.commDelCusAgentServiceActionELEC00"
-		class="com.bocom.bbip.gdeupsb.strategy.efek.agent.DeleteCusAgentServiceAction" />
+		class="com.bocom.bbip.gdeupsb.strategy.efek.agent.DeleteCusAgentServiceAction" />-->
 
 
 	<!--商户资金转入 -->
