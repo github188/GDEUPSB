@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.strategy.efek.agent;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -16,6 +17,7 @@ import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -31,8 +33,15 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 	@Override
 	public void execute(Context context) throws CoreException,
 			CoreRuntimeException {
-			logger.info("=============Start   DeleteCusAgentServiceAction  callThd");
+			logger.info("=============Start   DeleteCusAgentServiceAction ");
+			
+			Date txnDte=(Date)context.getData(ParamKeys.TXN_DTE);
+			Date txnTme=DateUtils.parse(context.getData("txnTme").toString());
+			
 			try{
+				context.setData(ParamKeys.TXN_DTE, DateUtils.format(txnDte,DateUtils.STYLE_yyyyMMdd));
+				context.setData(ParamKeys.TXN_TME, DateUtils.format(txnTme,DateUtils.STYLE_HHmmss));
+				
 				Map<String, Object> rspMap = callThdTradeManager.trade(context);
 				
 					if(BPState.isBPStateNormal(context)){
@@ -98,6 +107,11 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 				context.setData(ParamKeys.TXN_STS, Constants.TXNSTS_REVERSE);
 				context.setData(ParamKeys.THD_TXN_STS, Constants.TXNSTS_FAIL);
 				context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
+			}finally{
+				context.setData(ParamKeys.TXN_DTE, txnDte);
+				context.setData(ParamKeys.TXN_TME, txnTme);
 			}
+			
+			logger.info("=============End   DeleteCusAgentServiceAction ");
 	}
 }

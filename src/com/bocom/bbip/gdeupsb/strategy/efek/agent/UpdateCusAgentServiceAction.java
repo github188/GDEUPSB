@@ -47,7 +47,6 @@ public class UpdateCusAgentServiceAction extends BaseAction {
 		Result editCusAgtResult = bgspServiceAccessObject.callServiceFlatting("maintainAgentCollectAgreement",context.getDataMap());
 		
 		if(editCusAgtResult.isSuccess()){
-				if(context.getData("callThd").toString().equals("callThd")){
 						try{
 							context.setData(ParamKeys.CUS_AC, cusAc);
 							context.setData(ParamKeys.THD_CUS_NO,  context.getData("cusNo"));
@@ -123,7 +122,6 @@ public class UpdateCusAgentServiceAction extends BaseAction {
 							context.setData(ParamKeys.TXN_DTE, txnDte);
 							context.setData(ParamKeys.TXN_TME, txnTme);
 						}
-				}
 		}
 		logger.info("=============End   UpdateCusAgentServiceAction ");
     }
