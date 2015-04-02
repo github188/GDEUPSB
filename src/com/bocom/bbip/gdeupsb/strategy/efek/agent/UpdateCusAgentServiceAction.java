@@ -1,6 +1,7 @@
 package com.bocom.bbip.gdeupsb.strategy.efek.agent;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -8,6 +9,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
@@ -43,6 +45,16 @@ public class UpdateCusAgentServiceAction extends BaseAction {
 		Date txnDte=(Date)context.getData(ParamKeys.TXN_DTE);
 		Date txnTme=DateUtils.parse(context.getData("txnTme").toString());
 		String cusAc=context.getData("cusAc").toString();
+		//列表查询 获得协议编号
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("cusAc", cusAc);
+		map.put("traceNo", context.getData(ParamKeys.TRACE_NO));
+		map.put("version", context.getData(ParamKeys.VERSION));
+		logger.info("~~~~~~~~~~列表查询开始 ");
+		Result accessObjList = bgspServiceAccessObject.callServiceFlatting("queryListAgentCollectAgreement",map);
+		logger.info("~~~~~~~~~~列表查询结束~~~~"+accessObjList);
+		
+		
 		context.setData(ParamKeys.CUS_AC, context.getData(GDParamKeys.NEWCUSAC));
 		Result editCusAgtResult = bgspServiceAccessObject.callServiceFlatting("maintainAgentCollectAgreement",context.getDataMap());
 		
