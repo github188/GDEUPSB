@@ -30,7 +30,7 @@ public class CusAgentServiceAction extends BaseAction{
 		 */
 		public void execute(Context context)throws CoreException,CoreRuntimeException{
 			log.info("============Start  CusAgentServiceAction ");
-			
+				context.setData("sqns", context.getData("sqn"));
 				context.setData(GDParamKeys.SVRCOD, "30");
 				context.setData(ParamKeys.TRACE_NO, bbipPublicService.getTraceNo());
 				//TODO 
@@ -40,12 +40,14 @@ public class CusAgentServiceAction extends BaseAction{
 				context.setData("agrExpDte", "99991231");
 				context.setData("agrChl","01");
 				context.setData("agtSrvCusId",context.getData("cusNo"));
+				context.setData("cusAc", context.getData("newCusAc"));
+				context.setData("cusNme", context.getData("newCusName"));
+				context.setData("bvCde", "009");
 				Map<String, Object> cusMap=setCustomerInfoMap(context);
 				//添加 customerInfo
 				List<Map<String, Object>> cusList=new ArrayList<Map<String,Object>>();
 				cusList.add(cusMap);
 				context.setData("customerInfo", cusList);				
-				
 				Map<String, Object> map=setAgentCollectAgreementMap(context);
 				String oprTyp=context.getData("oprTyp").toString();
 				String mothed="";
@@ -71,14 +73,6 @@ public class CusAgentServiceAction extends BaseAction{
 				context.setData(ParamKeys.AGENT_COLLECT_AGREEMENT, list);
 				constantOfSoapUI(context);
 				context.setData("agtSrvCusPnm", context.getData("settleAccountsName"));
-				
-				System.out.println();
-				System.out.println();
-				System.out.println(context.getData("settleAccountsName"));
-				System.out.println(context.getData("cusNo"));
-				System.out.println(context.getData("agtSrvCusId"));
-				System.out.println(((List<Map<String , Object>>)context.getData(ParamKeys.AGENT_COLLECT_AGREEMENT)).get(0));
-				System.out.println(((List<Map<String , Object>>)context.getData("customerInfo")).get(0));
 				
 				bbipPublicService.synExecute(mothed, context);
 				
@@ -109,7 +103,7 @@ public class CusAgentServiceAction extends BaseAction{
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
 				context.setData("PKGCNT", "000001");
-				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW04");		
+				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW07");		
 				context.setData("callThd", "callThd");
 			}
 
@@ -119,11 +113,12 @@ public class CusAgentServiceAction extends BaseAction{
 			map.put("agtSrvCusId", context.getData("cusNo"));
 			map.put("agtSrvCusPnm", context.getData("settleAccountsName"));
 			map.put("cusTyp", context.getData("cusTyp"));
-			map.put(ParamKeys.CUS_NO, context.getData(ParamKeys.CUS_NO));
-			map.put(ParamKeys.CUS_AC, context.getData(GDParamKeys.NEWCUSAC));
-			map.put(ParamKeys.CUS_NME, context.getData(GDParamKeys.NEWCUSNAME));
-			map.put(ParamKeys.CCY, "CNY");
-			map.put(ParamKeys.ID_TYPE, context.getData(ParamKeys.ID_TYPE));
+			map.put("cusNo", context.getData(ParamKeys.CUS_NO));
+			map.put("cusAc", context.getData("newCusAc"));
+			map.put("cusNme", context.getData("newCusName"));
+			map.put("ccy", "CNY");
+			map.put("bvCde", "009");
+			map.put("idTyp", context.getData(ParamKeys.ID_TYPE));
 			map.put("idNo", context.getData(ParamKeys.ID_NO));
 			//TODO
 			map.put("bvCde", "009");
@@ -142,8 +137,9 @@ public class CusAgentServiceAction extends BaseAction{
 			map.put("agtCllCusId", context.getData("cusNo"));
 			map.put("cusNme", context.getData("cusNme"));
 			map.put("agtSrvCusId", context.getData("cusNo"));
+			map.put("bvCde", "009");
 			map.put("agtSrvCusPnm", context.getData("settleAccountsName"));
-			map.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
+			map.put("cusAc", context.getData(ParamKeys.CUS_AC));
 			map.put("acoAc", context.getData(ParamKeys.CUS_AC));
 			if (StringUtils.isNotBlank((String) context.getData("pwd"))) {
 				map.put("pwd", (String) context.getData("pwd"));
@@ -158,18 +154,17 @@ public class CusAgentServiceAction extends BaseAction{
 			map.put("agtSrvCusPnm",context.getData("thdCusNme"));
 			map.put("agtSrvCusId",context.getData("cusNo"));
 			
-			map.put(ParamKeys.COMPANY_NO, context.getData(ParamKeys.COMPANY_NO));
+			map.put("comNo", context.getData(ParamKeys.COMPANY_NO));
 			EupsThdBaseInfo baseInfo = new EupsThdBaseInfo();
 			baseInfo.setEupsBusTyp((String) context.getData(ParamKeys.EUPS_BUSS_TYPE));
 			if (StringUtils.isNotBlank((String) context.getData(ParamKeys.COMPANY_NO))) {
 				baseInfo.setComNo((String) context.getData(ParamKeys.COMPANY_NO));
 			}
 			//TODO 调用代收付接口  获得单位名称
-//			List<EupsThdBaseInfo> infoList = get(EupsThdBaseInfoRepository.class).find(baseInfo);
-//			String comNme = infoList.get(0).getComNme();
-//			context.setData(ParamKeys.COMPANY_NAME, comNme);
-//			map.put(ParamKeys.COMPANY_NAME, comNme);
-
+//			String comNme=get(EupsThdBaseInfoRepository.class).findOne(context.getData("comNo").toString()).getComNme();
+//			map.put("comNum", comNme);
+//			context.setData("comNum", comNme);
+			
 			map.put(ParamKeys.CCY, "CNY");
 			// TODO 暂用0，待确认
 			map.put("cusFeeDerFlg", "0"); 
