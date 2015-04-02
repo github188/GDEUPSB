@@ -31,8 +31,10 @@ public class AftCancelFeeAction implements Executable{
 						Date thdTxnTme=DateUtils.parse(context.getData(ParamKeys.THD_TXN_DATE).toString()+context.getData(ParamKeys.THD_TXN_TIME).toString(),DateUtils.STYLE_yyyyMMddHHmmss);
 						context.setData(ParamKeys.THD_TXN_DATE, thdTxnDte);
 						context.setData(ParamKeys.THD_TXN_TIME, thdTxnTme);
+						context.setData("comNo", context.getData("comNos"));
 						context.setData(ParamKeys.TXN_DTE, DateUtils.formatAsSimpleDate((Date)context.getData(ParamKeys.TXN_DTE)));
 						EupsTransJournal eupsTransJournal=eupsTransJournalRepository.findOne(context.getData(ParamKeys.OLD_TXN_SQN).toString());
+						eupsTransJournal.setComNo(context.getData("comNos").toString());
 						eupsTransJournalRepository.update(eupsTransJournal);
 						context.setDataMap(BeanUtils.toMap(eupsTransJournal));
 				}
