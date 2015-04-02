@@ -83,8 +83,16 @@
 	        <action id="act" ref="eups.CommInsertUpdateCusAgentServiceActionWATR00"/>
 	   </actions>
 	</process>
+	
+	
+	<action id="eups.commQryWatCusAgentAction"
+		class="com.bocom.bbip.gdeupsb.action.wat.CommQryWatCusAgentAction" />
+	
 	<!-- add by hefw 20150114 end -->
-	
-	
-
+		<!-- 协议新增修改 -->
+	<process id="eups.commQryWatCusAgent" template="eups.simpleTran" interceptors="bbip.defaultInterceptors">	
+	   <actions>
+	        <action id="act" ref="eups.commQryWatCusAgentAction"/>
+	   </actions>
+	</process>
 </x:beans>
