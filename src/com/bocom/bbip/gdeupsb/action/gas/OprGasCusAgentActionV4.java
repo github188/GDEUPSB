@@ -61,7 +61,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		logger.info("Enter in OprGasCusAgentActionV4!...........");
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 
-		context.setData("thdthdCusNo", context.getData("thdCusNo"));
+//		context.setData("thdthdCusNo", context.getData("thdCusNo"));
 
 		// 备份，修改时用 TODO 修改做不了
 		String cusTypBak = context.getData("cusTyp");
@@ -353,10 +353,8 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 //						 get(BBIPPublicService.class).synExecute(
 //						 "eups.commDelCusAgent", context);
 
-						Result stopCusAgtResult = bgspServiceAccessObject
-								.callServiceFlatting(
-										"deleteAgentCollectAgreement",
-										context.getDataMap());
+						Result stopCusAgtResult 
+						= bgspServiceAccessObject.callServiceFlatting("deleteAgentCollectAgreement", context.getDataMap());
 						if (!"N".equals(stopCusAgtResult.getResponseType())) {
 							throw new CoreRuntimeException(
 									stopCusAgtResult.getResponseMessage());
