@@ -15,6 +15,8 @@ import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.gdeupsb.entity.GdEupsWatAgtInf;
+import com.bocom.bbip.gdeupsb.repository.GdEupsWatAgtInfRepository;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.euif.component.util.StringUtil;
 import com.bocom.jump.bp.core.Context;
@@ -28,6 +30,8 @@ private static Logger logger = LoggerFactory.getLogger(PreDelCusAgentAction.clas
 
 	@Autowired
 	ThirdPartyAdaptor callThdTradeManager;
+	@Autowired
+	GdEupsWatAgtInfRepository gdEupsWatAgtInfRepository;
 
 	@Override
 	public void execute(Context context) throws CoreException,	CoreRuntimeException {
@@ -115,5 +119,9 @@ private static Logger logger = LoggerFactory.getLogger(PreDelCusAgentAction.clas
 					throw new CoreException(ErrorCodes.EUPS_THD_SYS_ERROR);
 				}
 				logger.error(" callThd end!");
+				
+				GdEupsWatAgtInf gdeups = new GdEupsWatAgtInf();
+				gdeups.setAgdAgrNo((String)context.getData("agdAgrNo"));
+				gdEupsWatAgtInfRepository.delete(gdeups);
 	}
 }
