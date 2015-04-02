@@ -200,4 +200,25 @@
 			<action id="aftThdAction" ref="eups.payFeeOnlineServiceAction" operations="aftThdDeal"/>
 		</actions>
 	</process>
+	
+	
+	
+	<!-- 协议新增 -->
+	<process id="eups.commInsertCusAgenteELEC00" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	   <actions>
+	        <action id="act" ref="eups.commInsertCusAgentAction" />
+	   </actions>
+	</process>
+		<!-- 协议修改 -->
+	<process id="eups.commUpdateCusAgentELEC00" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	   <actions>
+	        <action id="act" ref="eups.commUpdateCusAgentAction"  />
+	   </actions>
+	</process>
+		<!-- 协议删除 -->
+	<process id="eups.commDelCusAgentELEC00" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	   <actions>
+	        <action id="act" ref="eups.commDelCusAgentAction" />
+	   </actions>
+	</process>
 </x:beans>
