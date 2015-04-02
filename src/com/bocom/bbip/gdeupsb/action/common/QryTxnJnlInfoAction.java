@@ -1,7 +1,6 @@
 package com.bocom.bbip.gdeupsb.action.common;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,11 +13,8 @@ import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.gdeupsb.common.GDConstants;
-import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal;
 import com.bocom.bbip.gdeupsb.repository.GdEupsTransJournalRepository;
-import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -35,7 +31,7 @@ public class QryTxnJnlInfoAction extends BaseAction{
 	private static Logger logger = LoggerFactory.getLogger(QryTxnJnlInfoAction.class);
 	
 	public void execute(Context context) throws CoreException, CoreRuntimeException{
-		logger.info("Enter in QryHzThdJnlInfoAction!!.....");
+		logger.info("Enter in QryTxnJnlInfoAction!!.....");
 		
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 		logger.info("=========context=====" + context);
@@ -71,12 +67,11 @@ public class QryTxnJnlInfoAction extends BaseAction{
 			if(!((null==context.getData(ParamKeys.MFM_VCH_NO)) || "".equals(context.getData(ParamKeys.MFM_VCH_NO)) ||  "?".equals(context.getData(ParamKeys.MFM_VCH_NO)) )){
 				txnJnl.setCusNme(context.getData(ParamKeys.MFM_VCH_NO).toString());
 			}
-			//
 			logger.info("==========" + txnJnl.getThdCusNo() + "====" + txnJnl.getCusAc() + "=====" + txnJnl.getMfmVchNo());
 			
 			txnJnl.setBeginDate(DateUtils.parse((String) context.getData("beginDate")));
 			txnJnl.setEndDate(DateUtils.parse((String) context.getData("endDate")));
-			logger.info("======" + txnJnl.getBeginDate() + "====" + txnJnl.getEndDate());
+			logger.info("== QRY JNL BETWEEN====" + txnJnl.getBeginDate() + " AND " + txnJnl.getEndDate());
 			
 			List<Map<String, Object>> qryTxnJnlInfo = get(GdEupsTransJournalRepository.class).findTxnJnlInfo(txnJnl);
 			if(CollectionUtils.isEmpty(qryTxnJnlInfo)){
@@ -85,50 +80,24 @@ public class QryTxnJnlInfoAction extends BaseAction{
 			}
 			
 			List<Map<String, Object>> temp = new ArrayList<Map<String,Object>>();
-			for(Map tmpMap : qryTxnJnlInfo){
+			for(Map<String, Object> tmpMap : qryTxnJnlInfo){
 				Map<String, Object> tmp = new HashMap<String, Object>();
-				
-//				<loop>
-//				sqn
-//				mfmVchNo
-//				thdSqn
-//				comNo
 				tmp.put("sqn", tmpMap.get("SQN"));
 				tmp.put("mfmVchNo", tmpMap.get("MFM_VCH_NO"));
 				tmp.put("thdSqn", tmpMap.get("THD_SQN"));
 				tmp.put("comNo", tmpMap.get("COM_NO"));
-//				thdCusNo
-//				cusNme
-//				cusAc
-//				reqTxnAmt
 				tmp.put("thdCusNo", tmpMap.get("THD_CUS_NO"));
 				tmp.put("cusNme", tmpMap.get("CUS_NME"));
 				tmp.put("cusAc", tmpMap.get("CUS_AC"));
 				tmp.put("reqTxnAmt", tmpMap.get("REQ_TXN_AMT"));
-//				hfe
-//				txnAmt
-//				txnDte
-//				txnTme
-//				acDte
-//				txnSts
 				tmp.put("hfe", tmpMap.get("HFE"));
 				tmp.put("txnAmt", tmpMap.get("TXN_AMT"));
 				tmp.put("txnDte", tmpMap.get("TXN_DTE"));
 				tmp.put("txnTme", tmpMap.get("TXN_TME"));
 				tmp.put("acDte", tmpMap.get("AC_DTE"));
 				tmp.put("txnSts", tmpMap.get("TXN_STS"));
-//				</loop>
-				
-				
 				temp.add(tmp);
 			}
-			
-
-
-			
-			
-			
-			
 			context.setData("loop", temp);
 			
 			
@@ -137,7 +106,6 @@ public class QryTxnJnlInfoAction extends BaseAction{
 //			
 //			List<Map<String,Object>> resultList=(List<Map<String, Object>>) BeanUtils.toMaps(txnJnlList);
 //			logger.info("==============resultList====" + resultList);
-//
 //			
 //			if(CollectionUtils.isEmpty(resultList)){
 //				context.setData(GDParamKeys.GAS_MSG_TYP, "E");
