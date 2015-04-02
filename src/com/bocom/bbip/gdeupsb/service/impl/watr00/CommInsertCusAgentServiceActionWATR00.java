@@ -57,9 +57,15 @@ public class CommInsertCusAgentServiceActionWATR00 implements
 		logger.info("CommInsertCusAgentServiceActionWATR00 preInsertCusAgent end ... ...");
 		return null;
 	}
-
+	
 	@Override
 	public Map<String, Object> callThd(CustomerDomain customerdomain,
+			List<CusAgentCollectDomain> list, Context context)
+			throws CoreException {
+		return null;
+	}
+	
+	public Map<String, Object> callThdExt(CustomerDomain customerdomain,
 			List<CusAgentCollectDomain> list, Context context)
 			throws CoreException {
 		logger.info("CommInsertCusAgentServiceActionWATR00 callThd start ... ...");
@@ -162,7 +168,9 @@ public class CommInsertCusAgentServiceActionWATR00 implements
 		GdEupsWatAgtInf gdeups = BeanUtils.toObject(context.getDataMap(),
 				GdEupsWatAgtInf.class);
 		gdEupsWatAgtInfRepository.insert(gdeups);
-		return null;
+		logger.info("@@@@@@@@@@@@@"+(String)context.getData("agdAgrNo"));
+		
+		return context.getDataMap();
 	}
 
 	@Override
