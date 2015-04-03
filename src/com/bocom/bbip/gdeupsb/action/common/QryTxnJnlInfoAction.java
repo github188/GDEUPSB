@@ -81,7 +81,7 @@ public class QryTxnJnlInfoAction extends BaseAction{
 				throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
 			}
 			
-			List<Map<String, Object>> temp = new ArrayList<Map<String,Object>>();
+			List<Map<String, Object>> tempList = new ArrayList<Map<String,Object>>();
 			for(Map<String, Object> tmpMap : qryTxnJnlInfo){
 				Map<String, Object> tmp = new HashMap<String, Object>();
 				tmp.put("sqn", tmpMap.get("SQN"));
@@ -91,24 +91,27 @@ public class QryTxnJnlInfoAction extends BaseAction{
 				tmp.put("thdCusNo", tmpMap.get("THD_CUS_NO"));
 				tmp.put("cusNme", tmpMap.get("CUS_NME"));
 				tmp.put("cusAc", tmpMap.get("CUS_AC"));
-				tmp.put("reqTxnAmt", ""+tmpMap.get("REQ_TXN_AMT"));
+				tmp.put("reqTxnAmt", tmpMap.get("REQ_TXN_AMT")+"");
 				tmp.put("hfe", ""+tmpMap.get("HFE"));
 				tmp.put("txnAmt", ""+tmpMap.get("TXN_AMT"));
 				/*tmp.put("reqTxnAmt", null);
 				tmp.put("hfe",  null);
 				tmp.put("txnAmt",  null);*/
 				tmp.put("txnDte", DateUtils.format((Date)tmpMap.get("TXN_DTE"), DateUtils.STYLE_SIMPLE_DATE));
-				tmp.put("txnTme", DateUtils.format((Date)tmpMap.get("TXN_TME"), DateUtils.STYLE_TRANS_TIME));
+				tmp.put("txnTme", DateUtils.format((Date)tmpMap.get("TXN_TME"), DateUtils.STYLE_FULL));
 				tmp.put("acDte", DateUtils.format((Date)tmpMap.get("AC_DTE"), DateUtils.STYLE_SIMPLE_DATE));
 		/*		tmp.put("txnDte", null);
 				tmp.put("txnTme", null);
 				tmp.put("acDte", null);*/
 				tmp.put("txnSts", tmpMap.get("TXN_STS"));
-				temp.add(tmp);
+				tempList.add(tmp);
 				System.out.println();
 				System.out.println(tmp);
+				
 			}
-			context.setData("loop", temp);
+			System.out.println();
+			System.out.println("temp.size():" + tempList.size());
+			context.setData("loop", tempList);
 			
 			
 //			List<GdEupsTransJournal> txnJnlList = get(GdEupsTransJournalRepository.class).findGasJnlInfo(txnJnl);
