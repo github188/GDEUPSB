@@ -40,6 +40,9 @@ public class CusAgentServiceAction extends BaseAction{
 				logger.info("============Start  CusAgentServiceAction ");
 				context.setData("sqns", context.getData("sqn"));
 				context.setData(GDParamKeys.SVRCOD, "30");
+				context.setData("comNos", context.getData(ParamKeys.COMPANY_NO));
+				logger.info("~~~~~~~~~comNo="+context.getData(ParamKeys.COMPANY_NO));
+				
 				context.setData(ParamKeys.TRACE_NO, bbipPublicService.getTraceNo());
 				//TODO 
 				context.setData("idTyp", "01");
