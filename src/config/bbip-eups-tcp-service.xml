@@ -99,11 +99,13 @@
 			<array>
 				<bean
 					class="com.bocom.jump.bp.channel.interceptors.RequestTracingInterceptor" />
-				<bean
+				<!-- <bean
 					class="com.bocom.jump.bp.channel.tcp.interceptors.PayloadChannelInterceptor">
-					<property name="lengthSize" value="4" /><!-- 报文长度占4位 -->
+					<property name="lengthSize" value="4" />报文长度占4位
 					<property name="lengthAddtive" value="-4" />
-				</bean>
+					
+				</bean> -->
+				<bean class="com.bocom.bbip.gdeupsb.channel.tcp.NoFrontPayloadChannelInterceptorEb" />
 				<bean class="com.bocom.jump.bp.channel.interceptors.TransformInterceptor">
 					<property name="encodeTransforms"><!-- 发送报文编码配置 -->
 						<array>
