@@ -230,19 +230,12 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 									String rsvFld4=firstLine.substring(55,58); //3
 									gdEupsBatchConsoleInfo.setRsvFld4(rsvFld4);
 									String rTotCnt=firstLine.substring(58,69); //11
-									System.out.println();
-									System.out.println(rTotCnt.trim()+"~~~");
-									System.out.println(totCnt.trim()+"~~~");
 
 									if(!rTotCnt.trim().equals(totCnt.trim())){
 											throw new CoreException("总笔数不相同");
 									}
 									gdEupsBatchConsoleInfo.setTotCnt(Integer.parseInt(totCnt));
 									String rTotAmt=firstLine.substring(69,85); //16
-									System.out.println();
-									System.out.println();
-									System.out.println(rTotAmt.trim()+"~~~");
-									System.out.println(totAmt.trim()+"~~~");
 									if(!rTotAmt.trim().equals(totAmt.trim())){
 										throw new CoreException("总金额不相同");
 									}
