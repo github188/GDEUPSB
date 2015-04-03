@@ -79,31 +79,37 @@ public class InsertCusAgentServiceAction extends BaseAction {
 							                    context.setData(ParamKeys.THD_TXN_STS, Constants.THD_TXNSTS_SUCCESS);
 							                    context.setData(ParamKeys.RSP_CDE, GDConstants.SUCCESS_CODE);
 							                    context.setData(ParamKeys.RSP_MSG, "交易成功");
+							                    context.setData(ParamKeys.RESPONSE_MESSAGE, "交易成功");
 							                }else if(BPState.isBPStateReversalFail(context)){
 							                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
 							                	context.setData(GDParamKeys.MSGTYP, "E");
 							                	context.setData(ParamKeys.RSP_CDE, "EFE999");
 							                	context.setData(ParamKeys.RSP_MSG, "交易失败");
+							                	context.setData(ParamKeys.RESPONSE_MESSAGE, "交易失败");
 							                }else if(BPState.isBPStateOvertime(context)){
 							                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
 							                	context.setData(GDParamKeys.MSGTYP, "E");
 							                	context.setData(ParamKeys.RSP_CDE, "EFE999");
 							                	context.setData(ParamKeys.RSP_MSG, "交易超时");
+							                	context.setData(ParamKeys.RESPONSE_MESSAGE, "交易超时");
 							                }else if(BPState.isBPStateSystemError(context)){
 							                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
 							                	context.setData(GDParamKeys.MSGTYP, "E");
 							                	context.setData(ParamKeys.RSP_CDE, "EFE999");
 							                	context.setData(ParamKeys.RSP_MSG, "系统错误");
+							                	context.setData(ParamKeys.RESPONSE_MESSAGE, "系统错误");
 							                }else if(BPState.isBPStateTransFail(context)){
 							                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
 							                	context.setData(GDParamKeys.MSGTYP, "E");
 							                	context.setData(ParamKeys.RSP_CDE, "EFE999");
 							                	context.setData(ParamKeys.RSP_MSG, "发送失败");
+							                	context.setData(ParamKeys.RESPONSE_MESSAGE, "发送失败");
 							                }else{
 							                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
 							                	context.setData(GDParamKeys.MSGTYP, "E");
 							                	context.setData(ParamKeys.RSP_CDE, "EFE999");
 							                	context.setData(ParamKeys.RSP_MSG, "交易失败，其他未知情况");
+							                	context.setData(ParamKeys.RESPONSE_MESSAGE, "交易失败，其他未知情况");
 							                }
 								}
 						}else{
