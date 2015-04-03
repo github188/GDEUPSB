@@ -30,7 +30,7 @@ public final class GDErrorCodes {
 
 	/** 广东电力对公对私标志错误 */
 	public static final String EUPS_ELE_GZ_PAY_MOD_FLAG_ERROR = "BBIP4400EU0101";
-
+   
 	/** 广东电力凭单号错误 */
 	public static final String EUPS_ELE_GZ_TCK_ERROR = "BBIP4400EU0102";
 
@@ -510,6 +510,9 @@ public final class GDErrorCodes {
 	
 	/** 零余额：请求超时*/
 	public static final String REQUEST_TIME_OUT = "BBIP4400EU0699";
+	
+	/** 申请电子柜员，不支持该业务类型*/
+	public static final String NO_SUPPORT_BUS_TYP = "BBIP4400EU0698";
 	
 	// 烟草 
 	/** 主密钥不存在 !*/
