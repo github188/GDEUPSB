@@ -242,7 +242,9 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 									BigDecimal totTxnAmt=(new BigDecimal(totAmt)).scaleByPowerOfTen(-2);
 									gdEupsBatchConsoleInfo.setTotAmt(totTxnAmt);
 									context.setData("totAmt", totTxnAmt);
-									String rsvFld1=firstLine.substring(85);
+									String rsvFld3=firstLine.substring(85,87);
+									gdEupsBatchConsoleInfo.setRsvFld1(rsvFld3);
+									String rsvFld1=firstLine.substring(87);
 									String rsvFld2=context.getData(ParamKeys.THD_SQN).toString();
 									gdEupsBatchConsoleInfo.setRsvFld1(rsvFld1);
 									gdEupsBatchConsoleInfo.setRsvFld2(rsvFld2);
