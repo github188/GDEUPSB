@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://chnegps.service.bankcomm.com/basic/atomic/operation.EGPSExtSysPayService" xmlns:chnegps="http://chnegps.service.bankcomm.com/basic/atomic/operation.EGPSExtSysPayService/Schema" name="EGPSExtSysPayService" targetNamespace="http://chnegps.service.bankcomm.com/basic/atomic/operation.EGPSExtSysPayService">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://chnegps.service.bankcomm.com/basic/atomic/operation.EGPSExtSysPayService">
+      <xsd:import namespace="http://chnegps.service.bankcomm.com/basic/atomic/operation.EGPSExtSysPayService/Schema" schemaLocation="EGPSExtSysPayService.xsd"/>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="extSysChlPayRequestMessage">
+    <wsdl:part name="extSysChlPayRequest" element="chnegps:extSysChlPay"/>
+  </wsdl:message>
+  <wsdl:message name="extSysChlPayResponseMessage">
+    <wsdl:part name="extSysChlPayResponse" element="chnegps:extSysChlPayResponse"/>
+  </wsdl:message>
+  <wsdl:message name="extSysChlPayWipeOutRequestMessage">
+    <wsdl:part name="extSysChlPayWipeOutRequest" element="chnegps:extSysChlPayWipeOut"/>
+  </wsdl:message>
+  <wsdl:message name="extSysChlPayWipeOutResponseMessage">
+    <wsdl:part name="extSysChlPayWipeOutResponse" element="chnegps:extSysChlPayWipeOutResponse"/>
+  </wsdl:message>
+  <wsdl:message name="synJouranlRequestMessage">
+    <wsdl:part name="synJouranlRequest" element="chnegps:synJouranl"/>
+  </wsdl:message>
+  <wsdl:message name="synJouranlResponseMessage">
+    <wsdl:part name="synJouranlResponse" element="chnegps:synJouranlResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="EGPSExtSysPayServicePortType">
+    <wsdl:operation name="extSysChlPay">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:extSysChlPayRequestMessage"/>
+      <wsdl:output message="tns:extSysChlPayResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="extSysChlPayWipeOut">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:extSysChlPayWipeOutRequestMessage"/>
+      <wsdl:output message="tns:extSysChlPayWipeOutResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="synJouranl">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:synJouranlRequestMessage"/>
+      <wsdl:output message="tns:synJouranlResponseMessage"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="EGPSExtSysPayServiceSoapBinding" type="tns:EGPSExtSysPayServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="extSysChlPay">
+      <soap:operation soapAction="http://chnegps.service.bankcomm.com/basic/atomic/operation.EGPSExtSysPayService/extSysChlPay"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="extSysChlPayWipeOut">
+      <soap:operation soapAction="http://chnegps.service.bankcomm.com/basic/atomic/operation.EGPSExtSysPayService/extSysChlPayWipeOut"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="synJouranl">
+      <soap:operation soapAction="http://chnegps.service.bankcomm.com/basic/atomic/operation.EGPSExtSysPayService/synJouranl"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="EGPSExtSysPayService">
+    <wsdl:port name="EGPSExtSysPayServicePort" binding="tns:EGPSExtSysPayServiceSoapBinding">
+      <soap:address location="http://127.0.0.1"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,13 @@
+<x:beans xmlns:x="http://www.springframework.org/schema/beans"
+	xmlns:jump="http://www.bocom.com/schema/jump-core" xmlns:osgi="http://www.springframework.org/schema/osgi"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:bbip-channel="http://www.bocom.com/schema/bbip-channel"
+	xsi:schemaLocation="http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-2.0-m1.xsd
+		http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.bocom.com/schema/bbip-channel http://www.bocom.com/schema/bbip-channel-1.0.xsd">
+ 
+	<bbip-channel:client-side-ws-def from="${system.code}" to="GDEGPS" wsdl="server/EGPSExtSysPayService/EGPSExtSysPayService.wsdl"
+		namespace="http://chnegps.service.bankcomm.com/basic/atomic/operation.EGPSExtSysPayService/Schema"
+		action="http://chnegps.service.bankcomm.com/basic/atomic/operation.EGPSExtSysPayService" />
+</x:beans>
