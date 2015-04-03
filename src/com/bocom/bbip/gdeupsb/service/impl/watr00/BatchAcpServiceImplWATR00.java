@@ -69,15 +69,21 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 	@Autowired
 	BTPService BTPservice;
 	
+	@Autowired
+	EupsActSysParaRepository eupsActSysParaRepository;
+	
 	@SuppressWarnings("unchecked")
 	@Override
 	public void prepareBatchDeal(PrepareBatchAcpDomain domain, Context context) throws CoreException {
-		logger.info("BatchAcpServiceImplWATR00 prepareBatchDeal start ... ...");
+		logger.info("BatchAcpServiceImplWATR00 prepareBatchDeal start ... ..."+context);
 		service.tryLock(lockKey, 60*1000L, 600L);//加锁
 		String br = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.BR, ErrorCodes.EUPS_FIELD_EMPTY);//机构号
 		String tlr = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.TELLER, ErrorCodes.EUPS_FIELD_EMPTY);//柜员号
 		String comNo = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.COMPANY_NO, ErrorCodes.EUPS_FIELD_EMPTY);//代理单位号
-		String acDate = DateUtils.format(service.getAcDate(), DateUtils.STYLE_yyyyMMdd);//会计日期
+		Date date=get(BBIPPublicService.class).getAcDate();
+		
+		String acDate = DateUtils.format(date, DateUtils.STYLE_yyyyMMdd);//会计日期
+		System.out.println("@@@@@@@@@@@@"+acDate);
 		
 		
 		EupsActSysPara eupsActSysPara = new EupsActSysPara();
@@ -99,16 +105,23 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		logger.info("dir_filNam["+dir+filNam+"]");
 		
 		
+		
 		//获取第三方批量文件并解析
 		buildBatchFile(context);
 		
 		String fileName = ContextUtils.assertVariableNotEmptyAndGet(context,ParamKeys.FLE_NME, ErrorCodes.EUPS_FILE_CREATE_NAME_ISEMPTY);
+		
+		
+		
+		
+		
 		Map<String, Object> fileMap = (Map<String, Object>) ContextUtils.assertVariableNotNullAndGet(context, "agtFileMap","agtFileMap不能为空");
 		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne("BatchFileFtpNo");
 		Assert.isNotNull(config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST,"第三方配置信息不存在");
 		config.setLocFleNme(fileName);
 		config.setRmtFleNme(fileName);
 		config.setRmtWay(dir);
+		config.setLocDir(dir);
 		/** 产生代收付格式文件 */
 		((OperateFileAction)get("opeFile")).createCheckFile(config, GDConstants.BATCH_FILE_FORMAT, fileName, fileMap);
 		/** 发送到指定路径 */
@@ -117,8 +130,14 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		context.setData(ParamKeys.TXN_MDE, "0");
 		context.setData(ParamKeys.TXN_CHL, "1");
 		context.setData(ParamKeys.THD_BAT_NO, context.getData("sqn"));
+		context.setData(ParamKeys.BUS_TYP, "0");
+		context.setData("reqTyp", "");
+		context.setData("sup1Id", "");
+		context.setData("sup2Id", "");
+		context.setData("authResnTbl", "");
+		context.setData("reqTme", new Date());
 		
-		get(BBIPPublicService.class).asynExecute("eups.batchPaySubmitDataProcess", context);
+		get(BBIPPublicService.class).synExecute("eups.batchPaySubmitDataProcess", context);
 //		Result result = get(BGSPServiceAccessObject.class).callServiceFlatting("", context.getDataMap());
 //		get(BatchFileCommon.class).sendBatchFileToACP(context);
 //		BatchFileCommon com = get("eups.batchFileCommon");
@@ -132,7 +151,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 //		context.setData(ParamKeys.TOT_CNT, map.get(ParamKeys.TOT_CNT));
 //		context.setData(ParamKeys.TOT_AMT, map.get(ParamKeys.TOT_AMT));
 		service.unlock(lockKey);
-		logger.info("BatchAcpServiceImplWATR00 prepareBatchDeal end ... ...");
+		logger.info("BatchAcpServiceImplWATR00 prepareBatchDeal end ... ..."+context);
 	}
 	/**
 	 * 创建批扣文件
@@ -159,6 +178,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		}
 		/** 插入批次控制表 */
 		String batNo =((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);//申请代收批次号
+		
 		info.setBatNo(batNo);//批次号
 		info.setBatSts(GDConstants.BATCH_STATUS_INIT);//批次状态
 		info.setFleNme((String)context.getVariable(ParamKeys.FLE_NME));//代收付批量文件名称
@@ -171,9 +191,10 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		info.setComNme((String)context.getData(ParamKeys.COMPANY_NAME));
 		info.setBusKnd((String)context.getData(ParamKeys.BUSS_KIND));
 		info.setTxnOrgCde((String) context.getData(ParamKeys.BR));
+		info.setEupsBusTyp((String)context.getData(ParamKeys.EUPS_BUSS_TYPE));
 		get(GDEupsBatchConsoleInfoRepository.class).insert(info);
-		context.getDataMapDirectly().putAll(BeanUtils.toFlatMap(info));
-		
+		context.setDataMap(BeanUtils.toMap(info));
+//		context.getDataMapDirectly().putAll(BeanUtils.toFlatMap(info));
 		Map<String,Object> ret = new HashMap<String,Object>();
 		Map<String,Object> header = new HashMap<String,Object>();
 		List<Object> detail = new ArrayList<Object>();
@@ -200,20 +221,24 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		logger.info("srcFile detail=["+srcFile.get(ParamKeys.EUPS_FILE_DETAIL)+"]");
 		Map<String,Object> srcHeader = (Map<String,Object>)srcFile.get(ParamKeys.EUPS_FILE_HEADER);
 		
+		System.out.println();
+		System.out.println();
+		System.out.println("~~~~~~~~~~~~"+srcHeader);
+		
 		//生成代扣文件头信息
 		header.put(ParamKeys.COMPANY_NO, eupsThdFtpConfig.getComNo());
 		header.put("totCount", srcHeader.get(ParamKeys.TOT_CNT));
-		header.put(ParamKeys.TOT_AMT, srcHeader.get(ParamKeys.TOT_AMT));
+		header.put(ParamKeys.TOT_AMT, new BigDecimal(srcHeader.get(ParamKeys.TOT_AMT).toString().trim()).scaleByPowerOfTen(-2));
 		GDEupsBatchConsoleInfo newInfo = new GDEupsBatchConsoleInfo();
 		newInfo.setBatNo(info.getBatNo());
 		String totCnt = (String)srcHeader.get(ParamKeys.TOT_CNT);
-		String totAmt = (String)srcHeader.get(ParamKeys.TOT_AMT);//分为单位
+		String totAmt = ((String)srcHeader.get(ParamKeys.TOT_AMT)).trim();//分为单位
 		
 		context.setData(ParamKeys.TOT_CNT, Integer.parseInt(totCnt));
-		context.setData(ParamKeys.TOT_AMT, NumberUtils.centToYuan(totAmt));
+		context.setData(ParamKeys.TOT_AMT, new BigDecimal(totAmt).scaleByPowerOfTen(-2));
 		
 		newInfo.setTotCnt(Integer.parseInt(totCnt));
-		newInfo.setTotAmt(NumberUtils.centToYuan(totAmt));//转换为以元为单位
+		newInfo.setTotAmt(new BigDecimal(totAmt).scaleByPowerOfTen(-2));//转换为以元为单位
 		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(newInfo);
 		//生成代扣文件体信息
 		List<Map<String,Object>> srcDetail = (List<Map<String, Object>>) srcFile.get(ParamKeys.EUPS_FILE_DETAIL);
@@ -225,10 +250,13 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		tmp.setStatus("U");
 		int i = 0;
 		for(Map<String,Object> map:srcDetail){
+			if(i==0){
+				i++;
+			}else{
 			Map<String,Object> temp = new HashMap<String,Object>();
 			temp.put("CUSAC", map.get("bcount"));
 			temp.put("CUSNME", "");
-			temp.put("TXNAMT", map.get("je"));
+			temp.put("TXNAMT", new BigDecimal(map.get("je").toString().trim()).scaleByPowerOfTen(-2));
 			temp.put("AGTSRVCUSID", map.get("hno"));
 			temp.put("AGTSRVCUSNME", "");
 			//本行标志
@@ -240,12 +268,17 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 			
 			String sqn = get(BBIPPublicService.class).getBBIPSequence();
 			tmp.setSqn(sqn);
-			tmp.setSeqNo(i++);
+			tmp.setSeqNo(i);
 			tmp.setHno((String)map.get("hno"));
+			
 			tmp.setSj((String)map.get("sj"));
 			tmp.setJe((String)map.get("je"));
-			tmp.setBcount((String)map.get("bcount"));
+			BigDecimal bigDecimal=new BigDecimal(map.get("bcount").toString().trim()).scaleByPowerOfTen(-2);
+			
+			tmp.setBcount(bigDecimal+"");
 			get(GdeupsWatBatInfTmpRepository.class).insert(tmp);
+			i++;
+		}
 		}
 		ret.put("header", header);
 		ret.put("detail", detail);
