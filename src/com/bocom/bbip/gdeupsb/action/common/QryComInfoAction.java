@@ -29,7 +29,7 @@ public class QryComInfoAction extends BaseAction{
 		 String  comNo=context.getData(ParamKeys.COMPANY_NO).toString();
 		 rspMap.put(ParamKeys.COMPANY_NO, comNo);
 		 rspMap.put("inqBusLstFlg", "N");
-		// 查询代收单位协议信息
+		
 		 EupsThdBaseInfo eupsThdBaseInfo=eupsThdBaseInfoRepository.findOne(comNo);
 		 context.setData("comNme", eupsThdBaseInfo.getComNme());
 		 logger.info("===============End   QryComInfoAction");
