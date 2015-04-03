@@ -1224,7 +1224,7 @@
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="payType" type="tns:payType_SType"/>
       <xs:element name="busType" type="tns:busType_SType"/>
-      <xs:element name="comNo" type="tns:comNo_SType"/>
+      <xs:element name="comNos" type="tns:comNos_SType"/>
       <xs:element name="payNo" type="tns:payNo_SType"/>
       <xs:element name="thdCusNme" type="tns:thdCusNme_SType" minOccurs="0"/>
       <xs:element name="payMde" type="tns:payMde_SType"/>
@@ -1247,6 +1247,14 @@
       <xs:element name="rspMsg" type="tns:rspMsg_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:simpleType name="comNos_SType">
+    <xs:annotation>
+      <xs:documentation>单位编码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:simpleType name="payInAdvMoney_SType">
     <xs:annotation>
       <xs:documentation>存入预付款</xs:documentation>

@@ -184,7 +184,7 @@
       <xs:element name="totAmt" type="tns:totAmt_SType"/>
       <xs:element name="txnDte" type="tns:txnDte_SType"/>
       <xs:element name="fleNme" type="tns:fleNme_SType"/>
-      <xs:element name="thdBatNo" type="tns:thdBatNo_SType"/>
+      <xs:element name="thdBatNo" type="tns:thdBatNo_SType" minOccurs="0"/>
       <xs:element name="txnMde" type="tns:txnMde_SType"/>
       <xs:element name="busTyp" type="tns:busTyp_SType"/>
     </xs:sequence>
