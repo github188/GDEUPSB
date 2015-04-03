@@ -5,6 +5,7 @@
 	encoding="utf-8" trace="true">
 	
 	<segment name="total"  encoding="utf-8">
+			<varString name="wz" type="D\t"/><!--  未知字段-->
 			<varString name="totCnt" type="D\t"/><!--  总记录-->
 			<varString name="totAmt" type="D\t"/><!--  总金额-->
 	</segment>
