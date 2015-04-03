@@ -27,14 +27,9 @@ public class QryComInfoAction extends BaseAction{
 		logger.info("===============Start   QryComInfoAction");
 		 Map<String,Object> rspMap = new HashMap<String, Object>();
 		 String  comNo=context.getData(ParamKeys.COMPANY_NO).toString();
-//		 context.setData("traceNo", bbipPublicService.getTraceNo());
 		 rspMap.put(ParamKeys.COMPANY_NO, comNo);
 		 rspMap.put("inqBusLstFlg", "N");
 		// 查询代收单位协议信息
-//		 Result respData = get(BGSPServiceAccessObject.class).callServiceFlatting("queryCorporInfo", rspMap);
-//		 if(CollectionUtils.isEmpty(respData.getPayload())){			
-//				throw new CoreRuntimeException("该单位未签约");
-//		}
 		 EupsThdBaseInfo eupsThdBaseInfo=eupsThdBaseInfoRepository.findOne(comNo);
 		 context.setData("comNme", eupsThdBaseInfo.getComNme());
 		 logger.info("===============End   QryComInfoAction");
