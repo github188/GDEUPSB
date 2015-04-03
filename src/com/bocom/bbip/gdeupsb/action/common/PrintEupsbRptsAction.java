@@ -16,13 +16,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.eupsreport.ReportHelper;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
+import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.entity.MFTPConfigInfo;
 import com.bocom.bbip.eups.repository.EupsThdBaseInfoRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
+import com.bocom.bbip.file.MftpTransfer;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
 import com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal;
 import com.bocom.bbip.gdeupsb.repository.GdEupsTransJournalRepository;
@@ -143,8 +146,12 @@ public class PrintEupsbRptsAction extends BaseAction {
 				+ prtDte + ".txt").toString()));
 
 		logger.info("==============fileName:" + fileName);
-
+		
+		//配置生成文件名字路径，其他信息从ftpCfg中获取
 		EupsThdFtpConfigRepository eupsThdFtpConfigRepository = get(EupsThdFtpConfigRepository.class);
+		EupsThdFtpConfig ftpCfg = get(OperateFTPAction.class).getFTPInfo("gdeupsbPrtCfg", eupsThdFtpConfigRepository);//TODO 配置ftpCfg
+//		ftpCfg.setLocFleNme(fileName.toString());
+		
 		ReportHelper reportHelper = get(ReportHelper.class);
 		MFTPConfigInfo mftpConfigInfo = reportHelper
 				.getMFTPConfigInfo(eupsThdFtpConfigRepository);
@@ -200,7 +207,9 @@ public class PrintEupsbRptsAction extends BaseAction {
 		// TODO 拼装本地路径 本地测试
 		PrintWriter printWriter = null;
 		StringBuffer sbLocDir = new StringBuffer();
-		sbLocDir.append("D:/testGash/checkFilTest/").append(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)).append("/");
+//		sbLocDir.append("D:/testGash/checkFilTest/").append(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)).append("/");
+		sbLocDir.append(ftpCfg.getLocDir()).append(context.getData(ParamKeys.TELLER)).append("/").append(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)).append("/");
+		
 		try {
 			File file = new File(sbLocDir.toString());
 			if (!file.exists()) {
@@ -223,13 +232,22 @@ public class PrintEupsbRptsAction extends BaseAction {
 			}
 		}
 
+		try {
+            get(MftpTransfer.class).send(sbLocDir.toString(), fileName.toString(), ftpCfg.getThdIpAdr());
+            log.info("mftp send success!");
+        } catch (Exception e) {
+            log.error("mftp send fail!");
+            throw new CoreException(ErrorCodes.EUPS_MFTP_FILEPUT_FAIL);
+        }
+		
 		// bbipPublicService.sendFileToBBOS(new
 		// File(TransferUtils.resolveFilePath(mftploca, reportFileName)),
 		// reportFileName, MftpTransfer.FTYPE_NORMAL);
 
-		 reportHelper.createFileAndSendMFTP(context, result, fileName,
-		 mftpConfigInfo);
-		 context.setData("filName", fileName);
+//		 reportHelper.createFileAndSendMFTP(context, result, fileName,
+//		 mftpConfigInfo);
+//		 context.setData("filName", fileName);
+		context.setData(ParamKeys.FLE_NME, fileName.toString());
 
 		logger.info("PrintReportServiceActionPGAS00 execute end ... ...");
 

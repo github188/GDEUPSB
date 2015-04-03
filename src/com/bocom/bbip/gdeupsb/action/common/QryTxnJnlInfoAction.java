@@ -1,6 +1,8 @@
 package com.bocom.bbip.gdeupsb.action.common;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,14 +91,22 @@ public class QryTxnJnlInfoAction extends BaseAction{
 				tmp.put("thdCusNo", tmpMap.get("THD_CUS_NO"));
 				tmp.put("cusNme", tmpMap.get("CUS_NME"));
 				tmp.put("cusAc", tmpMap.get("CUS_AC"));
-				tmp.put("reqTxnAmt", tmpMap.get("REQ_TXN_AMT"));
-				tmp.put("hfe", tmpMap.get("HFE"));
-				tmp.put("txnAmt", tmpMap.get("TXN_AMT"));
-				tmp.put("txnDte", tmpMap.get("TXN_DTE"));
-				tmp.put("txnTme", tmpMap.get("TXN_TME"));
-				tmp.put("acDte", tmpMap.get("AC_DTE"));
+				tmp.put("reqTxnAmt", ""+tmpMap.get("REQ_TXN_AMT"));
+				tmp.put("hfe", ""+tmpMap.get("HFE"));
+				tmp.put("txnAmt", ""+tmpMap.get("TXN_AMT"));
+				/*tmp.put("reqTxnAmt", null);
+				tmp.put("hfe",  null);
+				tmp.put("txnAmt",  null);*/
+				tmp.put("txnDte", DateUtils.format((Date)tmpMap.get("TXN_DTE"), DateUtils.STYLE_SIMPLE_DATE));
+				tmp.put("txnTme", DateUtils.format((Date)tmpMap.get("TXN_TME"), DateUtils.STYLE_TRANS_TIME));
+				tmp.put("acDte", DateUtils.format((Date)tmpMap.get("AC_DTE"), DateUtils.STYLE_SIMPLE_DATE));
+		/*		tmp.put("txnDte", null);
+				tmp.put("txnTme", null);
+				tmp.put("acDte", null);*/
 				tmp.put("txnSts", tmpMap.get("TXN_STS"));
 				temp.add(tmp);
+				System.out.println();
+				System.out.println(tmp);
 			}
 			context.setData("loop", temp);
 			
