@@ -44,6 +44,17 @@ public class InsertCusAgentServiceAction extends BaseAction {
 	public void execute(Context context) throws CoreException,
 			CoreRuntimeException {
 		logger.info("=============Start   InsertCusAgentServiceAction");
+		
+		//更改账户类型  代收付
+		String cusTyp=context.getData("cusTyp").toString();
+		//第三方
+		String cusType="";
+		if(cusTyp.equals("0")){
+			cusType="1";
+		}else if(cusTyp.equals("1")){
+			cusType="0";
+		}
+		context.setData("cusType", cusType);
 		//调用代收付'
 		String cusAc=context.getData("cusAc").toString();
 		context.setData(ParamKeys.COMPANY_NO, context.getData("comNo"));
