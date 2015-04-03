@@ -5,29 +5,29 @@
 	encoding="UTF-8" trace="true">
 	
  <!-- 主账号,磁条卡的第二磁道或第三磁道上获取的账号，或在交易时输入的主账户号，或读IC卡获得的卡号 -->
-	<varString name="cusAcEx2" index="2" type="C"  format="bcd" bcdLeftJustified="true" dynBitSet="true" /> 
+	<varString name="cusAcEx2" index="2" type="C"   dynBitSet="true" /> 
 	<!-- 交易处理码 -->
-	<fixString name="thdPayTyp3" index="3" length="6"  format="bcd"  />
+	<fixString name="thdPayTyp3" index="3" length="6"   dynBitSet="true"/>
 	<!-- 交易金额  -->
 	<fixString name="amount4" index="4" length="12"   dynBitSet="true"/>
 	<!-- 交易传输时间 -->
-	<fixString name="txnDateTime7" index="7"  length="10" format="bcd" dynBitSet="true"/>
+	<fixString name="txnDateTime7" index="7"  length="10"  dynBitSet="true"/>
  	<!-- 受卡方系统跟踪号 -->
-	<fixString name="transJournal11" index="11" length="12" format="bcd" dynBitSet="true"/>
+	<fixString name="transJournal11" index="11" length="12" dynBitSet="true"/>
 	<!-- 受卡方所在地时间 -->
-	<fixString name="bnkTxnTime12" index="12"  length="6" format="bcd" dynBitSet="true"/>
+	<fixString name="bnkTxnTime12" index="12"  length="6"   dynBitSet="true"/>
 	<!-- 受卡方所在地日期 -->
-	<fixString name="bnkTxnDate13" index="13"  length="4" format="bcd" dynBitSet="true"/>
+	<fixString name="bnkTxnDate13" index="13"  length="4"  dynBitSet="true"/>
 	<!-- 清算日期. -->
-	<fixString name="pwrtxnDate15" index="15"  length="4" format="bcd" dynBitSet="true"/>
+	<fixString name="pwrtxnDate15" index="15"  length="4"  dynBitSet="true"/>
 	<!-- 配营部类型 -->
 	<fixString name="pwrThdSub18" index="18" length="4" filling="0x00" dynBitSet="true"/>    <!--配营部类型-->
 		<!--交易手续费-->
 	<fixString name="pwrFee28" index="28" length="12" dynBitSet="true"/>   
 	<!-- 受理方机构标识码 -->
-	<varString name="eleBkNo32" index="32" type="C"  format="bcd" dynBitSet="true"/>
+	<varString name="eleBkNo32" index="32" type="C"   dynBitSet="true"/>
 		<!-- 发送机构标识码-->
-	<varString name="sndFlg33" index="33" type="C"  format="bcd" dynBitSet="true"/>
+	<varString name="sndFlg33" index="33" type="C"   dynBitSet="true"/>
 	<!-- 供电公司系统参考号-->
 	<fixString name="eleThdSqn37" index="37" length="12"   dynBitSet="true"/>
 	<!-- <fixString name="eleThdSqn37" index="37" length="12"  format="bcd"   dynBitSet="true"/> -->
@@ -41,10 +41,12 @@
     <varString name="remarkData48" index="48" type="CC" dynBitSet="true"/>
 	<!-- 交易货币代码,人民币的货币代码为156.-->
 	<fixString name="CCY" index="49" length="3" filling="0x00"  dynBitSet="true"/>
+	<!-- 个人密码 -->
+	<fixString name="password52" index="52" length="4" dynBitSet="true"/>
 	<!-- 网管信息码 -->
 	<fixString name="cmuCde70" index="70" length="3"    dynBitSet="true"/>
     <!-- 接收机构标识代码-->
-	<varString name="thdRgnNo100" index="100" type="C"  format="bcd"  dynBitSet="true"/>
+	<varString name="thdRgnNo100" index="100" type="C"    dynBitSet="true"/>
     <!-- F104 --> 
     <fixString name="traTyp104" index="104" length="2" filling="0x00"  dynBitSet="true"/>
 	<!-- MAC. -->
