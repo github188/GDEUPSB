@@ -520,6 +520,9 @@ public final class GDErrorCodes {
 	public static final String TBC_DB_ERROR = "BBIP4400EU0502";
 	/**"无此用户信息 !"*/
 	public static final String TBC_USER_NOT_EXIST = "BBIP4400EU0503";
-	
+	/**"通信异常或 其他错误!"*/
+	public static final String TBC_COM_OTHER_ERROR = "BBIP4400EU0504";
+	/** 请求服务超时*/
+	public static final String TBC_OUT_TIME_ERROR = "BBIP4400EU0505";
 	
 }

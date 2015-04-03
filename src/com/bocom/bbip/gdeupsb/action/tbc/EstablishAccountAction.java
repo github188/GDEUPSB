@@ -14,6 +14,7 @@ import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdTbcBasInf;
 import com.bocom.bbip.gdeupsb.entity.GdTbcCusAgtInfo;
@@ -96,7 +97,7 @@ public class EstablishAccountAction extends BaseAction {
         total.put("cusAc",  context.getData("actNo"));
         total.put("bk", bankId);
         total.put("br", context.getData(ParamKeys.BR));
-
+        log.info("向核心开户查询！");
         Result accessObject =  serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", total);
         if (accessObject.getResponseCode().equals("BBIP0004AGPM66")) {
             Map<String, Object> establishMap = getMap();
@@ -124,28 +125,28 @@ public class EstablishAccountAction extends BaseAction {
             establishMap.put("agrVldDte", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
             establishMap.put("agrExpDte", "21151230");
             establishMap.put("br", context.getData(ParamKeys.BR));
-
-            //代收付系统接口调用增加协议
-          
-                Result operateAcpAgtResult = serviceAccess.callServiceFlatting("maintainAgentCollectAgreement", establishMap);
-                log.info("===========respMap: " + operateAcpAgtResult.getPayload() + "===========");
-                if (!operateAcpAgtResult.isSuccess()) {
-                    Throwable e = operateAcpAgtResult.getException();
-                    if (Status.SEND_ERROR == operateAcpAgtResult.getStatus()) {
-                        context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
-                        context.setData(GDParamKeys.RSP_CDE,"9999");
-                        context.setData(GDParamKeys.RSP_MSG,"Call acp transfor or other error: "+e);
-                        return;
-                    }
-                    // 连接错误或等待超时,但不知道是否已上送,这里交易已处于未知状态
-                    context.setState(BPState.BUSINESS_PROCESSNIG_STATE_UNKOWN_FAIL);
-                    if (Status.TIMEOUT == operateAcpAgtResult.getStatus()) {
-                        context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
-                        context.setData(GDParamKeys.RSP_CDE,"9999");
-                        context.setData(GDParamKeys.RSP_MSG,"Call acp servcie occur time out.");
-                        return;
-                    }
+            Result operateAcpAgtResult = serviceAccess.callServiceFlatting("maintainAgentCollectAgreement", establishMap);
+            log.info("===========respMap: " + operateAcpAgtResult.getPayload() + "===========");
+            log.info("代收付系统接口调用增加协议");
+            if (!operateAcpAgtResult.isSuccess()) {
+                Throwable e = operateAcpAgtResult.getException();
+                if (Status.SEND_ERROR == operateAcpAgtResult.getStatus()) {
+                    context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
+                    context.setData(GDParamKeys.RSP_CDE,"9999");
+                    context.setData(GDParamKeys.RSP_MSG,GDErrorCodes.TBC_COM_OTHER_ERROR);
+                    log.error(GDErrorCodes.TBC_COM_OTHER_ERROR,e);
+                    throw new CoreException(GDErrorCodes.TBC_COM_OTHER_ERROR);
                 }
+                // 连接错误或等待超时,但不知道是否已上送,这里交易已处于未知状态
+                context.setState(BPState.BUSINESS_PROCESSNIG_STATE_UNKOWN_FAIL);
+                if (Status.TIMEOUT == operateAcpAgtResult.getStatus()) {
+                    context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
+                    context.setData(GDParamKeys.RSP_CDE,"9999");
+                    context.setData(GDParamKeys.RSP_MSG,GDErrorCodes.TBC_OUT_TIME_ERROR);
+                    log.error(GDErrorCodes.TBC_OUT_TIME_ERROR,e);
+                    throw new CoreException(GDErrorCodes.TBC_OUT_TIME_ERROR);
+                }
+            }
             //GDEUPS协议临时表添加数据
             GdTbcCusAgtInfo  cusAgtInfo =new  GdTbcCusAgtInfo();
             cusAgtInfo.setActNo(context.getData("actNo").toString());
@@ -190,17 +191,19 @@ public class EstablishAccountAction extends BaseAction {
                 if (Status.SEND_ERROR == result.getStatus()) {
                     context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
                     context.setData(GDParamKeys.RSP_CDE,"9999");
-                    context.setData(GDParamKeys.RSP_MSG,"Call acp transfor or other error: "+e);
-                    return;
+                    context.setData(GDParamKeys.RSP_MSG,GDErrorCodes.TBC_COM_OTHER_ERROR);
+                    log.error(GDErrorCodes.TBC_COM_OTHER_ERROR,e);
+                    throw new CoreException(GDErrorCodes.TBC_COM_OTHER_ERROR);
                 }
                 // 连接错误或等待超时,但不知道是否已上送,这里交易已处于未知状态
                 context.setState(BPState.BUSINESS_PROCESSNIG_STATE_UNKOWN_FAIL);
                 if (Status.TIMEOUT == result.getStatus()) {
                     context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
                     context.setData(GDParamKeys.RSP_CDE,"9999");
-                    context.setData(GDParamKeys.RSP_MSG,"Call acp servcie occur time out.");
-                    return;
-                }
+                    context.setData(GDParamKeys.RSP_MSG,GDErrorCodes.TBC_OUT_TIME_ERROR);
+                    log.error(GDErrorCodes.TBC_OUT_TIME_ERROR,e);
+                    throw new CoreException(GDErrorCodes.TBC_OUT_TIME_ERROR);
+                 }
             }
             //GDEUPS协议临时表更改数据
             GdTbcCusAgtInfo  cusAgtInfo =new  GdTbcCusAgtInfo();

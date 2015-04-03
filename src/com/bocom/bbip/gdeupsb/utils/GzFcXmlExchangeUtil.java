@@ -32,8 +32,6 @@ public class GzFcXmlExchangeUtil{
 		"212|pkgC.return|resultCode.resultDes",
 		"200|pkgC.return|resultCode.resultDes",
 		"231|pkgC.return|resultCode.resultDes",
-		"231|pkgC.schemeInfo.betInfo|group.num",
-		"231|pkgC.gamblerInfo.chargeInfo|isSettled",
 		"209|pkgC.return|resultCode.resultDes",
 		"209|pkgC.gamblerAdditionalInfo.bindDealer|isBind",
 		"209|pkgC.gamblerAdditionalInfo.bindCard|isBind",
@@ -44,6 +42,8 @@ public class GzFcXmlExchangeUtil{
 	private static String[] delEleRules = new String[]{
 		"201|pkgC.gamblerAdditionalInfo.bindCard|isBind",
 		"201|pkgC.bindDealer|isBind",
+		"231|pkgC.schemeInfo.betInfo|group.num",
+		"231|pkgC.gamblerInfo.chargeInfo|isSettled",
 	};
 	
 	/**

@@ -37,16 +37,16 @@ public class SignInAction extends BaseAction {
         if (resultTbcBasInfo == null) {
             context.setData(GDParamKeys.RSP_CDE,"9999");
             context.setData(GDParamKeys.RSP_MSG,GDErrorCodes.TBC_OFF_NOT_EXIST);
-            return;
+            throw new CoreException(GDErrorCodes.TBC_OFF_NOT_EXIST);
         } 
         if (resultTbcBasInfo.getSigSts().equals(Constants.TXN_CTL_STS_SIGNIN)) {
             context.setData(GDParamKeys.RSP_CDE,"9999");
             context.setData(GDParamKeys.RSP_MSG,ErrorCodes.THD_CHL_ALDEAY_SIGN_IN);
-            return;
+            throw new CoreException(ErrorCodes.THD_CHL_ALDEAY_SIGN_IN);
         } else if (resultTbcBasInfo.getSigSts().equals(Constants.TXN_CTL_STS_CHECKBILL_ING)) {
             context.setData(GDParamKeys.RSP_CDE,"9999");
             context.setData(GDParamKeys.RSP_MSG,ErrorCodes.THD_CHL_SIGNIN_NOT_ALLOWWED);
-            return;
+            throw new CoreException(ErrorCodes.THD_CHL_SIGNIN_NOT_ALLOWWED);
         } else {
             GdTbcBasInf tbcBasInfo = BeanUtils.toObject(context.getDataMap(), GdTbcBasInf.class);
             tbcBasInfo.setSigSts(Constants.TXN_CTL_STS_SIGNIN);

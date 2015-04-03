@@ -41,7 +41,12 @@ public class QueryCathecticAction extends BaseAction{
             endDate = DateUtils.format(date, DateUtils.STYLE_yyyyMMdd);
         }
          map.put("endDat",endDate);
-         map.put("gameId","5");//银富通此交易为双色球投注查询
+         //TODO 银付通测试前端没有传递gameId字段以后待确实，先定位5
+         String gameId = context.getData("gameId");
+         if(StringUtils.isEmpty(gameId)){
+        	 gameId="5";
+         }
+         map.put("gameId",gameId);
         String begDate = context.getData("begDat").toString().replace("-", "").trim();
         if (StringUtils.isEmpty(begDate)){
             Calendar calendar = Calendar.getInstance();

@@ -3,7 +3,33 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.bocom.com/jump/transformer/xml xml.xsd"
         name="pkgC">
-        <string name="gambler_name"/>
-        <string name="modify_time"/>
-        <string name="gambler_pwd"/>
+        <record name="schemeInfo">
+            <string name="dealer_serial"/>
+            <string name="scheme_type"/>
+            <string name="scheme_title"/>
+            <string name="secrecy_level"/>
+            <string name="create_time"/>
+            <string name="city_id"/>
+            <string name="game_id"/>
+            <string name="draw_id"/>
+            <string name="keno_draw_id"/>
+            <string name="play_id"/>
+            <string name="bet_method"/>
+            <string name="bet_mode"/>
+            <string name="bet_multiple"/>
+            <string name="bet_money"/>
+            <record name="betInfo">
+                <string name="group"/>
+                <string name="num"/>
+                <string name="bet_line"/>
+            </record>
+        </record>
+        <record name="gamblerInfo">
+            <string name="gambler_name"/>
+            <record name="chargeInfo">
+                <string name="isSettled"/>
+                <string name="account_type"/>
+                <string name="charge_id"/>
+            </record>
+        </record>
 </record>
