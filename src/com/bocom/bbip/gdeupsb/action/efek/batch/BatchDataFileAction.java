@@ -227,19 +227,29 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 									gdEupsBatchConsoleInfo.setRsvFld7(rsvFld7);
 									String rsvFld6=firstLine.substring(52,55); //3
 									gdEupsBatchConsoleInfo.setRsvFld6(rsvFld6);
-									String rTotCnt=firstLine.substring(55,66); //11
+									String rsvFld4=firstLine.substring(55,58); //3
+									gdEupsBatchConsoleInfo.setRsvFld4(rsvFld4);
+									String rTotCnt=firstLine.substring(58,69); //11
+									System.out.println();
+									System.out.println(rTotCnt.trim()+"~~~");
+									System.out.println(totCnt.trim()+"~~~");
+
 									if(!rTotCnt.trim().equals(totCnt.trim())){
 											throw new CoreException("总笔数不相同");
 									}
 									gdEupsBatchConsoleInfo.setTotCnt(Integer.parseInt(totCnt));
-									String rTotAmt=firstLine.substring(66,82); //16
+									String rTotAmt=firstLine.substring(69,85); //16
+									System.out.println();
+									System.out.println();
+									System.out.println(rTotAmt.trim()+"~~~");
+									System.out.println(totAmt.trim()+"~~~");
 									if(!rTotAmt.trim().equals(totAmt.trim())){
 										throw new CoreException("总金额不相同");
 									}
 									BigDecimal totTxnAmt=(new BigDecimal(totAmt)).scaleByPowerOfTen(-2);
 									gdEupsBatchConsoleInfo.setTotAmt(totTxnAmt);
 									context.setData("totAmt", totTxnAmt);
-									String rsvFld1=firstLine.substring(82);
+									String rsvFld1=firstLine.substring(85);
 									String rsvFld2=context.getData(ParamKeys.THD_SQN).toString();
 									gdEupsBatchConsoleInfo.setRsvFld1(rsvFld1);
 									gdEupsBatchConsoleInfo.setRsvFld2(rsvFld2);
