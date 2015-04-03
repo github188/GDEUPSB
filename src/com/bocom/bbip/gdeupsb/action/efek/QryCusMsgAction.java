@@ -47,7 +47,7 @@ public class QryCusMsgAction extends BaseAction{
 		callThd(context);
 		String comNo=context.getData("comNo").toString();
 		String bakFld1="";
-		if(comNo.equals("032015")){
+		if(comNo.equals("03060306")){
 				bakFld1="佛山";
 		}else if(comNo.equals("032015")){
 				bakFld1="清远";
