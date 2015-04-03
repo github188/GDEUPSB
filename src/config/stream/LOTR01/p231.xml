@@ -2,8 +2,20 @@
 <record xmlns="http://www.bocom.com/jump/transformer/xml" 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.bocom.com/jump/transformer/xml xml.xsd"
-        name="pkgC">
+    name="pkgC">
+    <record name="return">
+        <string name="resultCode"/>
+        <string name="resultDes"/>
+    </record>
+    <record name="schemeInfo">
+        <string name="dealer_serial"/>
+        <string name="scheme_id"/>
+        <string name="serial_no"/>
+        <string name="cipher"/>
+        <string name="checksum"/>
+    </record>
+    <record name="gamblerInfo">
         <string name="gambler_name"/>
-        <string name="modify_time"/>
-        <string name="gambler_pwd"/>
+        <string name="gambler_balance"/>
+    </record>
 </record>
