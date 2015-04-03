@@ -1,8 +1,5 @@
 package com.bocom.bbip.gdeupsb.action.common;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +22,7 @@ public class QryComInfoAction extends BaseAction{
 	
 	public void execute(Context context) throws CoreException,CoreRuntimeException{
 		logger.info("===============Start   QryComInfoAction");
-		 Map<String,Object> rspMap = new HashMap<String, Object>();
 		 String  comNo=context.getData(ParamKeys.COMPANY_NO).toString();
-		 rspMap.put(ParamKeys.COMPANY_NO, comNo);
-		 rspMap.put("inqBusLstFlg", "N");
-		
 		 EupsThdBaseInfo eupsThdBaseInfo=eupsThdBaseInfoRepository.findOne(comNo);
 		 context.setData("comNme", eupsThdBaseInfo.getComNme());
 		 logger.info("===============End   QryComInfoAction");
