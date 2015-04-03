@@ -496,37 +496,49 @@
     <xs:annotation>
       <xs:documentation>请求交易金额</xs:documentation>
     </xs:annotation>
-    <xs:restriction base="xs:decimal"/>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="18"/>
+    </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="hfe_SType">
     <xs:annotation>
       <xs:documentation>手续费</xs:documentation>
     </xs:annotation>
-    <xs:restriction base="xs:decimal"/>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="18"/>
+    </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="txnAmt_SType">
     <xs:annotation>
       <xs:documentation>交易金额</xs:documentation>
     </xs:annotation>
-    <xs:restriction base="xs:decimal"/>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="18"/>
+    </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="txnDte_SType">
     <xs:annotation>
       <xs:documentation>交易日期</xs:documentation>
     </xs:annotation>
-    <xs:restriction base="xs:date"/>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="txnTme_SType">
     <xs:annotation>
       <xs:documentation>交易时间</xs:documentation>
     </xs:annotation>
-    <xs:restriction base="xs:dateTime"/>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="acDte_SType">
     <xs:annotation>
       <xs:documentation>会计日期</xs:documentation>
     </xs:annotation>
-    <xs:restriction base="xs:date"/>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="txnSts_SType">
     <xs:annotation>
