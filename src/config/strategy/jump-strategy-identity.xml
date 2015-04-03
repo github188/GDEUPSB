@@ -338,6 +338,6 @@
  -->
  
  <!-- 零余额  -->
-<!--    <bean id="eups.specialAccountSystem"
-   class="com.bocom.bbip.gdeupsb.service.impl.zerobalance.SpecialAccountSystemServiceImplGDEUPSB"/> -->
+    <bean id="eups.specialAccountSystem"
+   class="com.bocom.bbip.gdeupsb.services.single.zerobalance.SpecialAccountSystemServiceImplGDEUPSA"/> 
 </beans>
