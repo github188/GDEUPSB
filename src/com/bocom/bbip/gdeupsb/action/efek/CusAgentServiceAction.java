@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsActSysPara;
 import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
+import com.bocom.bbip.eups.repository.EupsActSysParaRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.strategy.efek.agent.UpdateCusAgentServiceAction;
@@ -32,6 +34,8 @@ public class CusAgentServiceAction extends BaseAction{
 	BBIPPublicService bbipPublicService;
 	@Autowired
 	BGSPServiceAccessObject bgspServiceAccessObject;
+	@Autowired
+	EupsActSysParaRepository eupsActSysParaRepository;
 	private final static Log logger=LogFactory.getLog(UpdateCusAgentServiceAction.class);
 		/**
 		 * 协议新增修改注销
@@ -40,8 +44,14 @@ public class CusAgentServiceAction extends BaseAction{
 				logger.info("============Start  CusAgentServiceAction ");
 				context.setData("sqns", context.getData("sqn"));
 				context.setData(GDParamKeys.SVRCOD, "30");
-				context.setData("comNos", context.getData(ParamKeys.COMPANY_NO));
+				String comNo=context.getData("comNo").toString();
+				//代收付单位编号
+				EupsActSysPara eupsActSysPara=new EupsActSysPara();
+				eupsActSysPara.setComNo(comNo);
+				String sqlNo=eupsActSysParaRepository.find(eupsActSysPara).get(0).getSplNo();
+				context.setData("comNo", sqlNo);
 				logger.info("~~~~~~~~~comNo="+context.getData(ParamKeys.COMPANY_NO));
+				
 				
 				context.setData(ParamKeys.TRACE_NO, bbipPublicService.getTraceNo());
 				//TODO 
