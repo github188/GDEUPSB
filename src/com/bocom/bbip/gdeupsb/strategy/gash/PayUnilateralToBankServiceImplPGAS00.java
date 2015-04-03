@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.spi.service.single.PayUnilateralToBankService;
 import com.bocom.bbip.eups.spi.vo.CommHeadDomain;
@@ -14,6 +15,7 @@ import com.bocom.bbip.eups.spi.vo.PayFeeOnlineDomain;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.repository.GdGasCusAllRepository;
+import com.bocom.bbip.gdeupsb.utils.SetBrUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -31,6 +33,9 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 
 	@Autowired
 	GdGasCusAllRepository gdGasCusAllRepository;
+	
+	@Autowired
+	BBIPPublicService bbipPublicService;
 
 	// 交易前服务处理
 	@Override
@@ -44,6 +49,20 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 		context.setData(ParamKeys.BR, "01441131999");
 		context.setData(ParamKeys.BK, "01441999999");
 		
+//TODO 向业务取电子柜员
+	/**	
+		String chn = context.getData(ParamKeys.CHANNEL);
+		//设置签约网点
+        String br = SetBrUtils.setBr((String)context.getData(ParamKeys.EUPS_BUSS_TYPE));
+//        context.setData("extFields",br);
+		if(!chn.equals("00")){
+	        context.setData("br",br);
+	        //设置电子柜员
+	        context.setData("tlr", bbipPublicService.getETeller(br));
+		}
+		
+		logger.info("=====context after set tlr :" + context);
+		*/
 		context.setData("br1", context.getData(ParamKeys.BR).toString().subSequence(2, 8));
 		context.setData("txnTme1", DateUtils.format(new Date(), DateUtils.STYLE_FULL));
 		context.setData("reMark1", "扣款失败"); 
