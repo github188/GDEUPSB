@@ -15,7 +15,7 @@
 		<fixString name="totCnt"  length="11"></fixString><!-- 总笔数	ZBS	Number(10) -->
 		<fixString name="totAmt"  length="16"></fixString><!-- 总金额	ZJE	Number(14,2) -->	
 		<fixString name="rsvFld3"  length="2"></fixString>	
-		<fixString name="rsvFld1"  length="139"></fixString><!-- 处理说明 -->	
+		<fixString name="rsvFld1"  length="129"></fixString><!-- 处理说明 -->	
 	</segment>
 	
 </message>
