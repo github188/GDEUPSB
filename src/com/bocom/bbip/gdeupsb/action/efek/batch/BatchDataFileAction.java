@@ -107,10 +107,10 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 						context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_NAME, createFileName);
 						context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_MAP, resultMap);
 						//提交代收付
+						logger.info("==========End  BatchDataFileAction  prepareBatchDeal");
 						userProcessToSubmit(context);
 						//得到反盘文件 
 //						userProcessToGet(context);
-						logger.info("==========End  BatchDataFileAction  prepareBatchDeal");
 	}
 	/**
 	 * 文件map拼装
