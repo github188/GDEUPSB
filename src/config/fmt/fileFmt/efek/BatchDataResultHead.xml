@@ -13,7 +13,7 @@
 		<fixString name="rsvFld4"  length="3"></fixString><!-- 费用类型 -->
 		<fixString name="totCnt"  length="11"></fixString><!-- 总笔数	ZBS	Number(10) -->
 		<fixString name="totAmt"  length="16"></fixString><!-- 总金额	ZJE	Number(14,2) -->
-			
+		<fixString name="rsvFld3"  length="2"></fixString>
 		<fixString name="sucTotCnt"  length="11"></fixString><!-- 成功笔数 -->	
 		<fixString name="sucTotAmt"  length="16"></fixString><!-- 成功金额	 -->		
 		<fixString name="falTotCnt"  length="11"></fixString><!-- 失败笔数 -->
