@@ -134,7 +134,8 @@ public class BatchDataResultFileAction implements AfterBatchAcpService{
 						//<!--客户账号|姓名|金额|代理服务客户标识|代理服务客户姓名|本行标志|开户银行|备注一|备注二|状态|描述  -->
 						gdEupsEleTmp.setRsvFld5(eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2).signum()+"");
 						gdEupsEleTmp.setPaymentResult(eupsBatchInfoDetail.getSts());
-						gdEupsEleTmp.setBankNo(gdEupsEleTmp.getSqn());
+						gdEupsEleTmp.setBankSqn(gdEupsEleTmp.getSqn());
+						gdEupsEleTmp.setBankNo("301");
 						//TODO 
 						Date date=new Date();
 						gdEupsEleTmp.setRsvFld1(DateUtils.format(date, DateUtils.STYLE_yyyyMMdd));
