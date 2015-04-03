@@ -533,7 +533,7 @@
 	</file>
 	<file id="fmtin9" name="fmtin9" encoding="GBK" lineSeparator="\n">
 		<line name="header" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat09IN/header.xml" encoding="GBK" />
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat09IN/detail.xml"encoding="GBK" />
+		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat09IN/detail.xml" encoding="GBK"  />
 	</file>
 	<file id="fmtout9" name="fmtout9" encoding="GBK" lineSeparator="\n">
 		<line name="header" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat09OUT/header.xml" encoding="GBK" />
