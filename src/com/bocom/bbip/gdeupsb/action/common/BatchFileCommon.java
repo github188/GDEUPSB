@@ -71,9 +71,9 @@ public class BatchFileCommon extends BaseAction {
 		info.setTxnTlr((String) context.getData(ParamKeys.TELLER));
 		info.setTxnMde(Constants.TXN_MDE_FILE);
 		info.setTxnOrgCde((String) context.getData(ParamKeys.BR));
-//		/**该字段保存ParamKeys.THD_BAT_NO*/
-//		info.setRsvFld9(((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getBBIPSequence());
-//		context.setData(ParamKeys.THD_BAT_NO, info.getRsvFld9());
+		/**该字段保存ParamKeys.THD_BAT_NO*/
+		info.setRsvFld9(batNo);
+		context.setData(ParamKeys.THD_BAT_NO, batNo);
 		/**查询代收付ComNo*/
 		     String comNoAcps=null;
 		    EupsActSysPara eupsActSysPara = new EupsActSysPara();
