@@ -216,11 +216,12 @@
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType" minOccurs="0"/>
+      <xs:element name="gameId" type="tns:gameId_SType" minOccurs="0"/>
       <xs:element name="crdNo" type="tns:crdNo_SType" minOccurs="0"/>
       <xs:element name="betTyp" type="tns:betTyp_SType" minOccurs="0"/>
       <xs:element name="begDat" type="tns:begDat_SType" minOccurs="0"/>
       <xs:element name="endDat" type="tns:endDat_SType" minOccurs="0"/>
-      <xs:element ref="tns:pageableRequest"/>
+      <xs:element ref="tns:pageableRequest" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="qryLotTxnJnlInfoResponse_CType">
