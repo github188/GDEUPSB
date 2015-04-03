@@ -95,7 +95,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		context.setVariable(ParamKeys.FLE_NME, filNam);
 		//代扣文件放置目录
 		// /home/bbipadm/data/mftp/BBIP/请求系统/机构号/柜员号/会计日期
-		String dir = FILE_DIR_PREFIX+br+File.separator+tlr+File.separator+acDate+File.separator;
+		String dir = "/home/bbipadm/data/mftp/BBIP/GDEUPSB"+"/"+br+"/"+tlr+"/"+acDate+"/";
 		logger.info("dir_filNam["+dir+filNam+"]");
 		
 		
