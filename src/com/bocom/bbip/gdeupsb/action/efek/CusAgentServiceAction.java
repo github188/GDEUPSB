@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.comp.BBIPPublicService;
@@ -14,6 +16,9 @@ import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.strategy.efek.agent.UpdateCusAgentServiceAction;
+import com.bocom.bbip.service.BGSPServiceAccessObject;
+import com.bocom.bbip.service.Result;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
@@ -25,11 +30,14 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
 public class CusAgentServiceAction extends BaseAction{
 	@Autowired
 	BBIPPublicService bbipPublicService;
+	@Autowired
+	BGSPServiceAccessObject bgspServiceAccessObject;
+	private final static Log logger=LogFactory.getLog(UpdateCusAgentServiceAction.class);
 		/**
 		 * 协议新增修改注销
 		 */
 		public void execute(Context context)throws CoreException,CoreRuntimeException{
-			log.info("============Start  CusAgentServiceAction ");
+				logger.info("============Start  CusAgentServiceAction ");
 				context.setData("sqns", context.getData("sqn"));
 				context.setData(GDParamKeys.SVRCOD, "30");
 				context.setData(ParamKeys.TRACE_NO, bbipPublicService.getTraceNo());
@@ -41,28 +49,28 @@ public class CusAgentServiceAction extends BaseAction{
 				context.setData("agrChl","01");
 				context.setData("agtSrvCusId",context.getData("cusNo"));
 				context.setData("bvCde", "009");
-				Map<String, Object> cusMap=setCustomerInfoMap(context);
-				//添加 customerInfo
-				List<Map<String, Object>> cusList=new ArrayList<Map<String,Object>>();
-				cusList.add(cusMap);
-				context.setData("customerInfo", cusList);				
+	
 				Map<String, Object> map=setAgentCollectAgreementMap(context);
 				String oprTyp=context.getData("oprTyp").toString();
 				String mothed="";
+				String agdAgrNo="";
 				if("0".equals(oprTyp)){
-					log.info("~~~~~~~~~~~~~~~~~Enter  eups.commInsertCusAgenteELEC00 ");
+					logger.info("~~~~~~~~~~~~~~~~~Enter  eups.commInsertCusAgenteELEC00 ");
 					mothed="eups.commInsertCusAgenteELEC00";
 					context.setData(GDParamKeys.NEWBANKNO, "301");
 					map.put("cusAc", context.getData("newCusAc"));
 					map.put("cusNme", context.getData("newCusName"));
 				}else if("1".equals(oprTyp)){
-					log.info("~~~~~~~~~~~~~~~~~Enter  eups.commUpdateCusAgentELEC00 ");
+					//先删除协议，然后再添加 
+					logger.info("~~~~~~~~~~~~~~~~~Enter  eups.commUpdateCusAgentELEC00 ");
 					mothed="eups.commUpdateCusAgentELEC00";
 					context.setData(GDParamKeys.NEWBANKNO, "301");
 					map.put("cusAc", context.getData("newCusAc"));
 					map.put("cusNme", context.getData("newCusName"));
+					agdAgrNo=selectList(context);
+					map.put("agdAgrNo", agdAgrNo);
 				}else {
-					log.info("~~~~~~~~~~~~~~~~~Enter  eups.commDelCusAgentELEC00 ");
+					logger.info("~~~~~~~~~~~~~~~~~Enter  eups.commDelCusAgentELEC00 ");
 					mothed="eups.commDelCusAgentELEC00";
 				}
 				//添加 agentCollectAgreement
@@ -72,7 +80,19 @@ public class CusAgentServiceAction extends BaseAction{
 				constantOfSoapUI(context);
 				context.setData("agtSrvCusPnm", context.getData("settleAccountsName"));
 				
-				bbipPublicService.synExecute(mothed, context);
+				
+				//添加 customerInfo
+				Map<String, Object> cusMap=setCustomerInfoMap(context);
+				cusMap.put("cusMap", agdAgrNo);
+				List<Map<String, Object>> cusList=new ArrayList<Map<String,Object>>();
+				cusList.add(cusMap);
+				context.setData("customerInfo", cusList);			
+				if(agdAgrNo.isEmpty()){
+						bbipPublicService.synExecute(mothed, context);
+				}else{
+						bbipPublicService.synExecute("eups.commDelCusAgentELEC00", context);
+						bbipPublicService.synExecute("eups.commInsertCusAgenteELEC00", context);
+				}
 				
 				log.info("============End  CusAgentServiceAction");
 		}
@@ -176,5 +196,36 @@ public class CusAgentServiceAction extends BaseAction{
 			map.put(ParamKeys.CMU_TEL, context.getData(ParamKeys.CMU_TEL));
 			return map;
 
+		}
+		/**
+		 * 列表查询
+		 */
+		public String  selectList(Context context) throws CoreException{
+			String cusAc=context.getData("cusAc").toString();
+			//列表查询 获得协议编号
+			Map<String, Object> map=new HashMap<String, Object>();
+			map.put("cusAc", cusAc);
+			//header 设定
+			map.put("traceNo", context.getData(ParamKeys.TRACE_NO));
+			map.put("traceSrc", context.getData(ParamKeys.TRACE_SOURCE));
+			map.put("version", context.getData(ParamKeys.VERSION));
+			map.put("reqTme", new Date());
+			map.put("reqJrnNo", get(BBIPPublicService.class).getBBIPSequence());
+			map.put("reqSysCde", context.getData(ParamKeys.REQ_SYS_CDE));
+			map.put("tlr", context.getData(ParamKeys.TELLER));
+			map.put("chn", context.getData(ParamKeys.CHANNEL));
+			map.put("bk", context.getData(ParamKeys.BK));
+			map.put("br", context.getData(ParamKeys.BR));
+			logger.info("~~~~~~~~~~requestHeader~~~~map~~~~~ "+map);
+			logger.info("~~~~~~~~~~列表查询开始 ");
+			//上代收付取协议编号
+			Result accessObjList = bgspServiceAccessObject.callServiceFlatting("queryListAgentCollectAgreement",map);
+			logger.info("~~~~~~~~~~列表查询结束~~~~"+accessObjList);
+			List<Map<String,Object>> list=(List<Map<String, Object>>)accessObjList.getPayload().get("agentCollectAgreement");
+			String agdAgrNo=list.get(0).get("agdAgrNo").toString();
+			logger.info("~~~~~~~~~~~~~~~协议编号： "+agdAgrNo);
+			context.setData(ParamKeys.CUS_AC, context.getData(GDParamKeys.NEWCUSAC));
+			context.setData("agdAgrNo", agdAgrNo);
+			return agdAgrNo;
 		}
 }
