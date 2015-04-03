@@ -104,7 +104,7 @@ public class UpdateRegistInfoAction extends BaseAction {
         if (seqrecNoSub.length()<10) {
         	seqrecNoSub =GdExpCommonUtils.AddChar(seqrecNoSub, 10, '0', '1');
         }
-        String lotNam ="LOT"+seqrecNoSub.substring(seqrecNoSub.length()-10, seqrecNoSub.length());
+        String lotNam ="LOT"+seqrecNoSub.substring(0,6)+seqrecNoSub.substring(seqrecNoSub.length()-4, seqrecNoSub.length());
         context.setData("lotNam",lotNam);
         Date regDate = new Date();
         String regTime= DateUtils.format(regDate, DateUtils.STYLE_FULL);
