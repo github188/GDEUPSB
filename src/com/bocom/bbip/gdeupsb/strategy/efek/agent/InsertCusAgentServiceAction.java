@@ -46,6 +46,7 @@ public class InsertCusAgentServiceAction extends BaseAction {
 		logger.info("=============Start   InsertCusAgentServiceAction");
 		//调用代收付'
 		String cusAc=context.getData("cusAc").toString();
+		context.setData(ParamKeys.COMPANY_NO, context.getData("comNo"));
 		context.setData(ParamKeys.CUS_AC, context.getData(GDParamKeys.NEWCUSAC));
 		Result editCusAgtResult = bgspServiceAccessObject.callServiceFlatting("maintainAgentCollectAgreement",context.getDataMap());
 		if(editCusAgtResult.isSuccess()){
