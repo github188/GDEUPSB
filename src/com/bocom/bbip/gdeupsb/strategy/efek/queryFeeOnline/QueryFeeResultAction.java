@@ -87,6 +87,7 @@ public class QueryFeeResultAction implements Executable{
 											 	context.setDataMap(rspMap);
 								                context.setData(ParamKeys.THIRD_RETURN_MESSAGE, rspMap);
 								                List<Map<String, Object>> list=(List<Map<String, Object>>)rspMap.get("Information");
+//								                context.setData("InformationList", list);
 								               //页数
 								                pageGet(context, list);
 								                //返回list
@@ -204,6 +205,8 @@ public class QueryFeeResultAction implements Executable{
             BigDecimal capitial=new BigDecimal("0.00");
             DecimalFormat df=new DecimalFormat("#.00");
             List<Map<String, Object>> InformationList=new ArrayList<Map<String,Object>>();
+            context.setData("InformationList",list);
+            
             for (Map<String, Object> map : list) {
             		double  amt=Double.parseDouble(map.get(ParamKeys.OWE_FEE_AMT).toString());
             		amt=amt/100;
