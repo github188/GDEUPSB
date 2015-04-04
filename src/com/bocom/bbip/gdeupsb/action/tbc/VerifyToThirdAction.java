@@ -1,11 +1,14 @@
 package com.bocom.bbip.gdeupsb.action.tbc;
 
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
@@ -41,6 +44,9 @@ public class VerifyToThirdAction extends BaseAction {
     BGSPServiceAccessObject serviceAccess;
     @Autowired
     GdTbcCusAgtInfoRepository cusAgtInfoRepository;
+    @Autowired
+    BBIPPublicService publicService;
+    
     
     @Override
     public void execute(Context context) throws CoreException  {
@@ -70,46 +76,35 @@ public class VerifyToThirdAction extends BaseAction {
         }
         String txnCode = context.getData("oTTxnCd");
         if("8912".equals(txnCode)) {  //检查开户
-            // 检查该客户临时表信息
-            String cusAcNo = qryCusAcNo(context.getData("custId").toString());
-            if (StringUtil.isEmptyOrNull(cusAcNo)) {
-                context.setData(GDParamKeys.RSP_CDE,"9999");
-                context.setData(GDParamKeys.RSP_MSG,GDErrorCodes.TBC_USER_NOT_EXIST);
-                return;
-            }
-            // 检查该客户在代收付是否已签约
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("cusAc", cusAcNo);
-            Result accessObject =  serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", map);
-            if (CollectionUtils.isEmpty(accessObject.getPayload())) {
-                context.setData(ParamKeys.RSP_CDE,"9999");
-                context.setData(ParamKeys.RSP_MSG,"客户已注销或未开户!!");
-                context.setData(ParamKeys.OLD_TXN_SEQUENCE, null);
+        	 GdTbcCusAgtInfo cusAgtInfo =new GdTbcCusAgtInfo();
+        	 cusAgtInfo.setDptId(context.getData("dptId").toString());
+        	 cusAgtInfo.setCustId(context.getData("custId").toString());
+        	 cusAgtInfo.setStatus("0");
+        	 List<GdTbcCusAgtInfo> tbcCusAgtInfo =get(GdTbcCusAgtInfoRepository.class).find(cusAgtInfo);
+        	if (CollectionUtils.isEmpty(tbcCusAgtInfo)) {
+        		//TODO编码格式
+                context.setData(GDParamKeys.RET_CODE_OLD,GDConstants.RSP_FAIL_COD);
+                context.setData(GDParamKeys.RSP_MSG_OLD,"该客户未开户!");
+                context.setData("BANK_SEQ_OLD", null);
             } else {
-                context.setData(ParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
-                context.setData(ParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
-                context.setData(ParamKeys.OLD_TXN_SEQUENCE, null);
+                context.setData(GDParamKeys.RET_CODE_OLD,"0000");
+                context.setData(GDParamKeys.RSP_MSG_OLD,Constants.RESPONSE_MSG);
+                context.setData("BANK_SEQ_OLD", null);
             }
         } else if("8913".equals(txnCode)) { // 检查销户
-           
-         // 检查该客户临时表信息
-            String cusAcNo = qryCusAcNo(context.getData("custId").toString());
-            if (StringUtil.isEmptyOrNull(cusAcNo)) {
-                context.setData(GDParamKeys.RSP_CDE,"9999");
-                context.setData(GDParamKeys.RSP_MSG,GDErrorCodes.TBC_USER_NOT_EXIST);
-            }
-            // 检查该客户在代收付是否已销户
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("cusAc", cusAcNo);
-            Result accessObject = serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", map);
-            if (CollectionUtils.isEmpty(accessObject.getPayload())) {
-                context.setData(ParamKeys.RSP_CDE,"9999");
-                context.setData(ParamKeys.RSP_MSG,"客户未注销!!");
-                context.setData(ParamKeys.OLD_TXN_SEQUENCE, null);
+        	 GdTbcCusAgtInfo cusAgtInfo =new GdTbcCusAgtInfo();
+        	 cusAgtInfo.setDptId(context.getData("dptId").toString());
+        	 cusAgtInfo.setCustId(context.getData("custId").toString());
+        	 cusAgtInfo.setStatus("1");
+        	 List<GdTbcCusAgtInfo> tbcCusAgtInfo =get(GdTbcCusAgtInfoRepository.class).find(cusAgtInfo);
+            if (CollectionUtils.isEmpty(tbcCusAgtInfo)) {
+                context.setData(GDParamKeys.RET_CODE_OLD,GDConstants.RSP_FAIL_COD);
+                context.setData(GDParamKeys.RSP_MSG_OLD,"该客户销户失败!");
+                context.setData(GDParamKeys.BANK_SEQ_OLD, null);
             } else {
-                context.setData(ParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
+                context.setData(GDParamKeys.RET_CODE_OLD,"0000");
                 context.setData(ParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
-                context.setData(ParamKeys.OLD_TXN_SEQUENCE, null);
+                context.setData(GDParamKeys.BANK_SEQ_OLD, null);
             }
         } else if ("8914".equals(txnCode)){ // <!--扣款-->
             EupsTransJournal eupsTransJournal = eupsTransJournalRepository.findOne(context.getData("oTLogNo").toString());
@@ -120,8 +115,8 @@ public class VerifyToThirdAction extends BaseAction {
                 return;
             } else {
                  if (eupsTransJournal.getMfmTxnSts().equals("S")) {
-                     context.setData(GDParamKeys.RET_CODE_OLD,Constants.RESPONSE_CODE_SUCC);
-                     context.setData(GDParamKeys.RSP_MSG_OLD,Constants.RESPONSE_MSG);
+                     context.setData(GDParamKeys.RET_CODE_OLD,"0000");
+                     context.setData(GDParamKeys.RSP_MSG_OLD,"处理成功");
                      context.setData(GDParamKeys.BANK_SEQ_OLD,eupsTransJournal.getSqn());
                  } else if (eupsTransJournal.getMfmTxnSts().equals("T")) {
                      context.setData(GDParamKeys.RET_CODE_OLD,GDConstants.RSP_FAIL_COD);
@@ -145,12 +140,10 @@ public class VerifyToThirdAction extends BaseAction {
             context.setData(GDParamKeys.RSP_MSG_OLD,null);
             return;
         }
-        context.setData(GDParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
-        context.setData(GDParamKeys.RSP_MSG,"交易处理成功 !");
+        context.setData(GDParamKeys.RSP_CDE,"0000");
+        context.setData(GDParamKeys.RSP_MSG,"处理成功 ");
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
     }
-    private String qryCusAcNo(String custId){
-        GdTbcCusAgtInfo cusAgtInfo = cusAgtInfoRepository.findOne(custId);
-        return cusAgtInfo.getActNo();
-    }
+  
+   
 }

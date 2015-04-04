@@ -2,6 +2,7 @@ package com.bocom.bbip.gdeupsb.action.tbc;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ import com.bocom.bbip.gdeupsb.repository.GdTbcBasInfRepository;
 import com.bocom.bbip.gdeupsb.repository.GdTbcCusAgtInfoRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
+import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -76,6 +78,7 @@ public class EstablishAccountAction extends BaseAction {
         }
         
         //构成网点号
+        context.setData("comNum", resultTbcBasInfo.getDptNam());
         String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
         if (null == cAgtNo) {
             cAgtNo ="4410000560";
@@ -93,17 +96,20 @@ public class EstablishAccountAction extends BaseAction {
 
         context.setData("txnCtlSts", "0");
         //   检查该客户是否已签约
-        Map <String,Object> total= getMap();
-        total.put("cusAc",  context.getData("actNo"));
-        total.put("bk", bankId);
-        total.put("br", context.getData(ParamKeys.BR));
-        log.info("向核心开户查询！");
-        Result accessObject =  serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", total);
-        if (accessObject.getResponseCode().equals("BBIP0004AGPM66")) {
-            Map<String, Object> establishMap = getMap();
+        //TODO 检查该客户是否已签约  不能上代收付查询，代收付接口中只定义使用单独卡号查询，如果此卡签约了其他协议比如燃气则查询出来之后只能修改不能新增，为BUG
+        /* log.info("向核心开户查询！");
+        Map<String, Object> cusListMap = setAcpMap(context);
+        cusListMap.put(ParamKeys.CUS_AC,context.getData("actNo"));
+        context.setDataMap(cusListMap);
+        Result accessObjList = serviceAccess.callServiceFlatting("queryListAgentCollectAgreement",cusListMap);
+        */ 
+        GdTbcCusAgtInfo tbcCusAgtInfo = new GdTbcCusAgtInfo();
+        tbcCusAgtInfo.setActNo(context.getData("actNo").toString());
+        List<GdTbcCusAgtInfo> gdTbcAgtInfo = get(GdTbcCusAgtInfoRepository.class).find(tbcCusAgtInfo);
+        if (CollectionUtils.isEmpty(gdTbcAgtInfo)) { Map<String, Object> establishMap = getMap();
             establishMap.put("agrChl","01");
             establishMap.put("oprTyp", "0");
-            establishMap.put("cusTyp","1");
+            establishMap.put("cusTyp","0");
             establishMap.put("cusNo",context.getData("custId"));
             establishMap.put("cusNme",context.getData("tCusNm"));
             establishMap.put("idNo",context.getData("pasId"));
@@ -121,10 +127,11 @@ public class EstablishAccountAction extends BaseAction {
             establishMap.put("busKnd", "A087");//busKnd
             establishMap.put("busTyp", "0");
             establishMap.put("cusFeeDerFlg", "0");
-            establishMap.put("agtSrvCusId", context.getData("telNum").toString());
+            establishMap.put("agtSrvCusId", context.getData("CUST_ID").toString());
             establishMap.put("agrVldDte", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
             establishMap.put("agrExpDte", "21151230");
             establishMap.put("br", context.getData(ParamKeys.BR));
+    		
             Result operateAcpAgtResult = serviceAccess.callServiceFlatting("maintainAgentCollectAgreement", establishMap);
             log.info("===========respMap: " + operateAcpAgtResult.getPayload() + "===========");
             log.info("代收付系统接口调用增加协议");
@@ -182,8 +189,6 @@ public class EstablishAccountAction extends BaseAction {
             establishMap.put("agrVldDte", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
             establishMap.put("agrExpDte", "21151230");
             establishMap.put("br", context.getData(ParamKeys.BR));
-
-           
             Result result = serviceAccess.callServiceFlatting("maintainAgentCollectAgreement", establishMap);
             log.info("===========respMap: " + result.getPayload() + "===========");
             if (!result.isSuccess()) {
