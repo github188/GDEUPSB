@@ -50,6 +50,7 @@ public class QueryFeeResultAction implements Executable{
 	        Date thdTxnTme = DateUtils.parse(context.getData(GDParamKeys.TRADE_SEND_TIME).toString(),DateUtils.STYLE_HHmmss);
 	        context.setData(ParamKeys.THD_TXN_DATE, thdTxnDate);
 	        context.setData(ParamKeys.THD_TXN_TIME, thdTxnTme);
+	        context.setData(ParamKeys.BANK_NO, "301");
 	        
 		}
 		/**
