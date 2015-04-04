@@ -157,8 +157,14 @@ public class QueryFeeResultAction implements Executable{
 		 */
 		public void pageGet(Context context,List<Map<String, Object>> list){
 			logger.info("==========Start  QueryFeeResultAction  pageGet");
-			int pageNow=Integer.parseInt(context.getData("pageNum").toString());
-			int pageSize=Integer.parseInt(context.getData("pageSize").toString());
+			int pageNow=1;
+			if(context.getData("pageNum")!=null){
+					pageNow=Integer.parseInt(context.getData("pageNum").toString());
+			}
+			int pageSize=10;
+			if(context.getData("pageSize")!=null){
+					Integer.parseInt(context.getData("pageSize").toString());
+			}
 			int allSize=list.size();
 			//总页数
 			int pageAll=0;
