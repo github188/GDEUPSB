@@ -98,6 +98,7 @@ public class BatchFileCommon extends BaseAction {
 		//保存到控制表  
 		get(GDEupsBatchConsoleInfoRepository.class).insertConsoleInfo(info);
 		context.getDataMapDirectly().putAll(BeanUtils.toFlatMap(info));
+		context.setData("comNo", comNo);
 		logger.info("==============End  Insert  GDEupsBatchConsoleInfo");
 	}
 /**
@@ -132,6 +133,7 @@ public class BatchFileCommon extends BaseAction {
         
         EupsActSysPara eupsActSysPara = new EupsActSysPara();
         eupsActSysPara.setActSysTyp("0");
+        System.out.println("~~~~~~~~~~~~"+comNo);
         eupsActSysPara.setComNo(comNo);
         List resultList = ((EupsActSysParaRepository)get(EupsActSysParaRepository.class)).find(eupsActSysPara);
         Assert.isNotEmpty(resultList, ErrorCodes.EUPS_QUERY_NO_DATA);
