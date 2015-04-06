@@ -9,10 +9,17 @@
 	<!-- 汕头电力批次数据准备 -->
 	<!-- <bean id="eups.fileBatchPayCreateDataServiceActionELEC02" class="com.bocom.bbip.gdeupsb.action.zh.BatchAcpServiceImplELEC02"> 
 		</bean> -->
-	<!-- 珠海文本： 批次撤销 -->
+	<!-- 
+	珠海文本： 批次撤销
 	<bean id="cancelBatchProcessELEC00"
 		class="com.bocom.bbip.gdeupsb.action.zh.EupsZHAGCancelBatchAction">
 	</bean>
+	 -->
+	<!--  珠海文本 批量数据准备-->
+	<bean id="eups.fileBatchPayCreateDataServiceActionZHAG00" 
+	class="com.bocom.bbip.gdeupsb.action.zh.BatchAcpServiceImplZHAG00"/>
+	
+	
 	<!-- 汕头电力 批次撤销 -->
 	<bean id="cancelBatchProcessELEC02"
 		class=" com.bocom.bbip.gdeupsb.action.elec02.EupsCancelBatchProcess">
