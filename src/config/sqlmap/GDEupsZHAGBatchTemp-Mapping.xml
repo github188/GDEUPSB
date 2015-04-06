@@ -63,7 +63,7 @@
 		delete from ${GDEUPSB_SCHEMA}.GDEUPS_ZHAG_BATCH_TEMP
     
   </delete>
-	<select id="batchInsert" parameterType="java.util.List">
+	<insert id="batchInsert" parameterType="java.util.List">
 		insert into ${GDEUPSB_SCHEMA}.GDEUPS_ZHAG_BATCH_TEMP ( 
 		BAT_NO,
 		 
@@ -96,7 +96,7 @@
 			#{item.rsvFld3},
 			#{item.rsvFld4})
       </foreach>
-	</select>
+	</insert>
 
 
 
