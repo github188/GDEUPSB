@@ -6,7 +6,7 @@
 
 	
 	
-<!--  珠海文本 批量数据准备-->
-	<x:bean id="eups.fileBatchPayCreateDataServiceActionZHAG" class="com.bocom.bbip.gdeupsb.action.zh.BatchAcpServiceImplZHAG00"/>
+<!--  珠海文本 批量数据准备
+	<x:bean id="eups.fileBatchPayCreateDataServiceActionZHAG" class="com.bocom.bbip.gdeupsb.action.zh.BatchAcpServiceImplZHAG00"/>-->
 	
 </x:beans>
