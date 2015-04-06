@@ -236,7 +236,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		
 		context.setData(ParamKeys.TOT_CNT, Integer.parseInt(totCnt));
 		context.setData(ParamKeys.TOT_AMT, new BigDecimal(totAmt).scaleByPowerOfTen(-2));
-		
+		System.out.println("totAmt="+context.getData(ParamKeys.TOT_AMT));
 		newInfo.setTotCnt(Integer.parseInt(totCnt));
 		newInfo.setTotAmt(new BigDecimal(totAmt).scaleByPowerOfTen(-2));//转换为以元为单位
 		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(newInfo);
@@ -273,9 +273,9 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 			
 			tmp.setSj((String)map.get("sj"));
 			tmp.setJe((String)map.get("je"));
-			BigDecimal bigDecimal=new BigDecimal(map.get("bcount").toString().trim()).scaleByPowerOfTen(-2);
-			
-			tmp.setBcount(bigDecimal+"");
+			//BigDecimal bigDecimal=new BigDecimal(map.get("bcount").toString().trim()).scaleByPowerOfTen(-2);
+			tmp.setBcount((String)map.get("bcount"));
+			//tmp.setBcount(bigDecimal+"");
 			get(GdeupsWatBatInfTmpRepository.class).insert(tmp);
 			i++;
 		}
