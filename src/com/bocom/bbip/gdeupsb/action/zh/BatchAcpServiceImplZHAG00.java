@@ -116,13 +116,7 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 		String batNo=(String)context.getData(ParamKeys.BAT_NO);
 		Map<String, Object> selectMap=new HashMap<String, Object>();
 		selectMap.put("batNo", batNo);
-		System.out.println();
-		System.out.println();
-		System.out.println(gdEupsZHAGBatchTempRepository.findTot(selectMap));
 		Map<String, Object> map=gdEupsZHAGBatchTempRepository.findTot(selectMap).get(0);
-		System.out.println();
-		System.out.println();
-		System.out.println(map);
 		context.setData("totCnt", map.get("TOT_COUNT"));
 		BigDecimal bigDecimal=new BigDecimal(map.get("ALL_MONEY").toString());
 		context.setData("totAmt", bigDecimal);
