@@ -63,13 +63,13 @@ public class GzagBatchDataResultFileAction extends BaseAction implements AfterBa
         final String systemCode=systemConfig.getSystemCode();
         final String dir="/home/bbipadm/data/mftp/BBIP/"+systemCode+"/"+br+"/"+tlr+"/"+AcDate+"/";
 			//得到文件
-			EupsThdFtpConfig eupsThdFtpConfigFile = eupsThdFtpConfigRepository.findOne(ParamKeys.FTPID_BATCH_PAY_FILE_TO_ACP);
-			String fileNme=context.getData("batNo")+".result";
-			eupsThdFtpConfigFile.setRmtFleNme(fileNme);
-			eupsThdFtpConfigFile.setThdIpAdr("182.53.15.170");
-			eupsThdFtpConfigFile.setRmtWay(dir);
-			eupsThdFtpConfigFile.setFtpDir("1");
-			operateFTP.getFileFromFtp(eupsThdFtpConfigFile);
+//			EupsThdFtpConfig eupsThdFtpConfigFile = eupsThdFtpConfigRepository.findOne(ParamKeys.FTPID_BATCH_PAY_FILE_TO_ACP);
+//			String fileNme=context.getData("batNo")+".result";
+//			eupsThdFtpConfigFile.setRmtFleNme(fileNme);
+//			eupsThdFtpConfigFile.setThdIpAdr("182.53.15.219");
+//			eupsThdFtpConfigFile.setRmtWay(dir);
+//			eupsThdFtpConfigFile.setFtpDir("1");
+//			operateFTP.getFileFromFtp(eupsThdFtpConfigFile);
 			logger.info("============得到文件成功");
 			
 			GDEupsBatchConsoleInfo gdeupsBatchConsoleInfo =get(BatchFileCommon.class).eupsBatchConSoleInfoAndgdEupsBatchConSoleInfo(context);
