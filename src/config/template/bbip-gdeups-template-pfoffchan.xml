@@ -353,7 +353,7 @@
 		</step>
 	</flow-template>
 	
-	 <!-- 个人代扣协议修改，删除 -->
+	 <!-- 个人代扣协议修改 -->
 	<flow-template id="gdeupsb.commOprCusAgentTemplate">
 		<!-- 协议操作前处理 -->
 		<step id="init" useCtxState="true" transactional="txTemplate">
@@ -374,7 +374,27 @@
 		</step>
 		
 	</flow-template>
-	
+	 <!-- 个人代扣协议删除 -->
+	<flow-template id="gdeupsb.delAgentTemplate">
+		<!-- 协议操作前处理 -->
+		<step id="init" useCtxState="true" transactional="txTemplate">
+			<action id="preAction"/>
+			<next on="BP_STATE_NORMAL" to="callACPS" />
+			<end on="*"/>
+		</step>
+		<!-- 发代收付 -->
+		<step id="callACPS" useCtxState="true"  transactional="txTemplate">
+			<action id="callACPSAction" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="callThd" />
+			<end on="*"/>
+		</step>
+		<!-- 发第三方-->
+		<step id="callThd" useCtxState="true" transactional="txTemplate">
+			<action id="callThdAction" place-holder="true" />
+			<end on="*"/>
+		</step>
+		
+	</flow-template>
 	
 
 </x:beans>
