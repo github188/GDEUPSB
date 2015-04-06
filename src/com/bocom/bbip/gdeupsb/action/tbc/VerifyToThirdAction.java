@@ -1,9 +1,6 @@
 package com.bocom.bbip.gdeupsb.action.tbc;
 
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
@@ -17,15 +14,12 @@ import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsTransJournal;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
-import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdTbcBasInf;
 import com.bocom.bbip.gdeupsb.entity.GdTbcCusAgtInfo;
 import com.bocom.bbip.gdeupsb.repository.GdTbcBasInfRepository;
 import com.bocom.bbip.gdeupsb.repository.GdTbcCusAgtInfoRepository;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
-import com.bocom.bbip.service.Result;
-import com.bocom.euif.component.util.StringUtil;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 

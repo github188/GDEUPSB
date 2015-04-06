@@ -20,7 +20,7 @@ import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
 /**
- * 广东烟草公司信息维护
+ * 广东烟草公司信息维护 估计要删除  //TODO
  * @version 1.0.0 
  * DateTime 2015-01-16
  * @author GuiLin.Li
