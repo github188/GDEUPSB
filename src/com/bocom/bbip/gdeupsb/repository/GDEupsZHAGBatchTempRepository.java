@@ -18,6 +18,10 @@ public interface GDEupsZHAGBatchTempRepository extends
 	public List<GDEupsZhAGBatchTemp> findByBatNo(final String BatNo);
 	@Find
 	public List<Map> findByBatNo2(final String BatNo);
+	
+	public List<Map<String, Object>> findTot(Map<String, Object> map);
+	
+	
 	@Insert
 	public void batchInsert(List <GDEupsZhAGBatchTemp>list);
 
