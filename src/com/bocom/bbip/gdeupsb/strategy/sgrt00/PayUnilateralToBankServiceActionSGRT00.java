@@ -57,6 +57,7 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
         context.setData("aplCls", "438");
         context.setData("mstChk", "1");
         context.setData("itgTyp", "0");
+        context.setData(ParamKeys.COMPANY_NO, context.getData("cAgtNo"));
         context.setData(ParamKeys.TXN_TYP, Constants.RESPONSE_TYPE_SUCC);
         return null;
     }
@@ -76,7 +77,7 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
         // TODO; 不知何用
         context.setData("tCusId", context.getData("CUST_ID"));
         // TODO; 待确定
-        context.setData("rsFld2", context.getData("dptId"));
+        context.setData("rsFld2", context.getData("DPT_ID"));
         context.setData(ParamKeys.TXN_DATE, DateUtils.parse(context.getData("TRAN_TIME").toString().substring(0, 8), DateUtils.STYLE_yyyyMMdd));
         context.setData(ParamKeys.THD_CUS_NO, context.getData("CUST_ID"));
         GdTbcCusAgtInfo cusAgtInfo = cusAgtInfoRepository.findOne(context.getData("CUST_ID").toString());
@@ -85,7 +86,7 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
         context.setData(ParamKeys.BR, context.getData(ParamKeys.BR));
         context.setData(ParamKeys.TELLER, publicService.getETeller(context.getData(ParamKeys.BR).toString()));
         context.setData(ParamKeys.EUPS_BUSS_TYPE, "SGRT00");
-        context.setData(ParamKeys.TXN_AMT, context.getData("txnAmt"));//TODO 测试
+        context.setData(ParamKeys.TXN_AMT, context.getData("QTY_TRADE"));
 
         context.setData(ParamKeys.THD_TXN_CDE, "483805");
         return null;

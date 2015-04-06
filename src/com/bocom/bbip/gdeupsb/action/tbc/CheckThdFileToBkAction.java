@@ -95,7 +95,7 @@ public class CheckThdFileToBkAction extends BaseAction {
          
          fileHeader.put("top","<?xml version='1.0' encoding='UTF-8'?>\n<DLMAPS>\n<PUB>\n");
          fileHeader.put("TRADE_ID", "<TRADE_ID>8918</TRADE_ID>\n");
-         fileHeader.put("TRAN_TIME", "<TRAN_TIME>"+context.getData("txnDte").toString()+"</TRAN_TIME>\n");
+         fileHeader.put("TRAN_TIME", "<TRAN_TIME>"+context.getData("TRADE_DATE").toString()+"</TRAN_TIME>\n");
          fileHeader.put("BANK_ID", "<BANK_ID>"+context.getData("BANK_ID")+"</BANK_ID>\n");
          fileHeader.put("DPT_ID", "<DPT_ID>"+context.getData("DPT_ID")+"</DPT_ID>\n");
          fileHeader.put("TRADE_SEQ", "<TRADE_SEQ>"+resultList.get(0).get("tLogNo")+"</TRADE_SEQ>\n");
@@ -106,7 +106,7 @@ public class CheckThdFileToBkAction extends BaseAction {
          fileMap.put("tops", fileHeader);
          GdEupsTransJournal eupsTransJournal = new GdEupsTransJournal();
          eupsTransJournal.setTxnDte( DateUtils.parse(context.getData("TRADE_DATE").toString(), DateUtils.STYLE_yyyyMMdd));
-         eupsTransJournal.setComNo(context.getData(ParamKeys.COMPANY_NO).toString());
+         eupsTransJournal.setComNo(cAgtNo);
          eupsTransJournal.setSqn(context.getData("oLogNo").toString());
          List<GdEupsTransJournal> transJournalList =transJournalRepository.findTbcTransJournalDetails(eupsTransJournal);
          fileMap.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(transJournalList));

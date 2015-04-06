@@ -5,15 +5,15 @@
     trace="true" encoding="GBK">
     <segment name="tops">
         
-        <varString name="top" type="D|"></varString>
-        <varString name="TRADE_ID" type="D|"></varString>
-        <varString name="TRAN_TIME"  type="D|"></varString>
-        <varString name="BANK_ID"  type="D|"></varString>
-        <varString name="DPT_ID"  type="D|"></varString>
-        <varString name="TRADE_SEQ"  type="D|"></varString>
-        <varString name="APP_TYPE"  type="D|"></varString>
-        <varString name="pubEnd"  type="D|"></varString>
-        <varString name="RET_CODE"  type="D|"></varString>
-        <varString name="MSG"  type="D|"></varString>
+        <varString name="top" type="X"></varString>
+        <varString name="TRADE_ID" type="X"></varString>
+        <varString name="TRAN_TIME"  type="X"></varString>
+        <varString name="BANK_ID"  type="X"></varString>
+        <varString name="DPT_ID"  type="X"></varString>
+        <varString name="TRADE_SEQ"  type="X"></varString>
+        <varString name="APP_TYPE"  type="X"></varString>
+        <varString name="pubEnd"  type="X"></varString>
+        <varString name="RET_CODE"  type="X"></varString>
+        <varString name="MSG"  type="X"></varString>
     </segment>
 </message>

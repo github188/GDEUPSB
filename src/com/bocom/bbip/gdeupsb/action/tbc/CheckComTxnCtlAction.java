@@ -76,9 +76,10 @@ public class CheckComTxnCtlAction  extends BaseAction {
      */
     private GdTbcBasInf qryComTxnCtlInf(Context context) throws Exception {
         Assert.hasLengthInData(context, ParamKeys.EUPS_BUSS_TYPE, ErrorCodes.EUPS_BUS_TYP_ISEMPTY);
-        CommonUtil.isEmpty("交易日期", context.getData(ParamKeys.TXN_DTE));
-        GdTbcBasInf resultTbcBasInfo = get(GdTbcBasInfRepository.class).findOne(context.getData("dptId").toString());
-        
+        String txnDate = context.getData("TRAN_TIME");
+        CommonUtil.isEmpty("交易日期", txnDate);
+        String dpatId = context.getData("DPT_ID").toString();
+        GdTbcBasInf resultTbcBasInfo = get(GdTbcBasInfRepository.class).findOne(dpatId);
         Assert.isNotNull(resultTbcBasInfo, ErrorCodes.EUPS_THD_TRANS_CTLINFO_NOTEXIST);
         return resultTbcBasInfo;
     }

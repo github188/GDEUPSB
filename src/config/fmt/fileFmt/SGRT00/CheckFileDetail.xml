@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<message xmlns="http://www.bocom.com/jump/transformer/xml"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.bocom.com/jump/transformer/xml xml.xsd"
-	encoding="utf-8" trace="true">
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet spacket.xsd"
+    encoding="GBK" trace="true">
 	<segment name="detail" encoding="GBK">
 				<varString name="sqn"  type="D|"></varString>
 			    <varString name="actNo"  type="D|"></varString><!-- TODO weizhi -->

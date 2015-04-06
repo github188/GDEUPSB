@@ -66,7 +66,7 @@
 		lineSeparator="\n">
 		<line name="tops" ref="config/fmt/fileFmt/SGRT00/CheckFileDtlHead.xml"
 			encoding="GBK" />
-		<foreach name="detail" ref="config/fmt/fileFmt/SGRT00/CheckFileDeatil.xml"
+		<foreach name="detail" ref="config/fmt/fileFmt/SGRT00/CheckFileDetail.xml"
 			encoding="GBK" />
 		<line name="bottom" ref="config/fmt/fileFmt/SGRT00/CheckFileEnd.xml"
 			encoding="GBK" />
