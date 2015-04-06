@@ -105,8 +105,7 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 		List<Map<String,Object>> detail=(List<Map<String, Object>>) BeanUtils.toMaps(lt);
 		Map<String, Object> header = CollectionUtils.createMap();
 		logger.info("~~~~~~~~~~~comNoAcps："+context.getData("comNoAcps"));
-		//TODO 
-		context.setData(ParamKeys.COMPANY_NO, (String)context.getData("comNoAcps"));
+
 		Map<String, Object> temp = CollectionUtils.createMap();
 		temp.put(ParamKeys.EUPS_FILE_HEADER, context.getDataMapDirectly());
 		temp.put(ParamKeys.EUPS_FILE_DETAIL, detail);
