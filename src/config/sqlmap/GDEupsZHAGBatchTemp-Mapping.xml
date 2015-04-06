@@ -63,7 +63,7 @@
 		delete from ${GDEUPSB_SCHEMA}.GDEUPS_ZHAG_BATCH_TEMP
     
   </delete>
-	<insert id="batchInsert" parameterType="java.util.List">
+	<select id="batchInsert" parameterType="java.util.List">
 		insert into ${GDEUPSB_SCHEMA}.GDEUPS_ZHAG_BATCH_TEMP ( 
 		BAT_NO,
 		 
@@ -96,8 +96,13 @@
 			#{item.rsvFld3},
 			#{item.rsvFld4})
       </foreach>
-	</insert>
+	</select>
 
+<select id="findTot"  resultType="java.util.Map"  parameterType="java.util.Map">
+		select  count(*) as TOT_COUNT,sum(TXN_AMT) as ALL_MONEY  from  GDEUPSB.GDEUPS_ZHAG_BATCH_TEMP
+			 
+		where  BAT_NO=#{batNo,jdbcType=CHAR}  
 
+</select>
 
 </mapper>
