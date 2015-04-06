@@ -3,6 +3,7 @@ package com.bocom.bbip.gdeupsb.action.zh;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -104,14 +105,8 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 		}
 		List<Map<String,Object>> detail=(List<Map<String, Object>>) BeanUtils.toMaps(lt);
 		Map<String, Object> header = CollectionUtils.createMap();
-		logger.info("~~~~~~~~~~~comNoAcps："+context.getData("comNoAcps"));
-
-		Map<String, Object> temp = CollectionUtils.createMap();
-		temp.put(ParamKeys.EUPS_FILE_HEADER, context.getDataMapDirectly());
-		temp.put(ParamKeys.EUPS_FILE_DETAIL, detail);
-		context.setVariable("agtFileMap", temp);
-		
-		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).sendBatchFileToACP(context);
+		String comNoAcps=context.getData("comNoAcps").toString();
+		logger.info("~~~~~~~~~~~comNoAcps："+comNoAcps);
 		String batNo=(String)context.getData(ParamKeys.BAT_NO);
 		Map<String, Object> selectMap=new HashMap<String, Object>();
 		selectMap.put("batNo", batNo);
@@ -119,6 +114,19 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 		context.setData("totCnt", map.get("TOT_COUNT"));
 		BigDecimal bigDecimal=new BigDecimal(map.get("ALL_MONEY").toString());
 		context.setData("totAmt", bigDecimal);
+		
+//		List<Map<String, Object>> listMap=new ArrayList<Map<String,Object>>();
+		Map<String, Object> headerMap=new HashMap<String, Object>();
+		headerMap.put("comNo", comNoAcps);
+		headerMap.put("totAmt", bigDecimal);
+		headerMap.put("totCnt", map.get("TOT_COUNT"));
+		Map<String, Object> temp = CollectionUtils.createMap();
+		temp.put(ParamKeys.EUPS_FILE_HEADER,headerMap);
+		temp.put(ParamKeys.EUPS_FILE_DETAIL, detail);
+		context.setVariable("agtFileMap", temp);
+		
+		context.setData("comNos", comNoAcps);
+		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).sendBatchFileToACP(context);
 		logger.info("===============End  BatchAcpServiceImplZHAG00  prepareBatchDeal");
 	}
 	  private  Map<String, Object> pareseFileByPath(String filePath, String fileName, String fileId)
