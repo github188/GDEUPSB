@@ -51,7 +51,8 @@ public class BatchFileCommon extends BaseAction {
 	 * 检查批量是否可以进行
 	 */
 	public void BeforeBatchProcess(final Context context)throws CoreException {
-		logger.info("----before batch check----");
+		logger.info("==============Start  BatchFileCommon BeforeBatchProcess");
+		
 		String comNo=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.COMPANY_NO, ErrorCodes.EUPS_COM_NO_NOTEXIST);
 		String fleNme=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.FLE_NME, ErrorCodes.EUPS_FIELD_EMPTY,"fleNme");
 		String eupsBusTyp=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.EUPS_BUSS_TYPE, ErrorCodes.EUPS_BUS_TYP_ISEMPTY);
@@ -59,9 +60,13 @@ public class BatchFileCommon extends BaseAction {
 		/** 检查批次是否存在 */
 		GDEupsBatchConsoleInfo info = new GDEupsBatchConsoleInfo();
 		info.setFleNme(fleNme);
+		info.setEupsBusTyp(eupsBusTyp);
 		GDEupsBatchConsoleInfo ret =get(GDEupsBatchConsoleInfoRepository.class).findConsoleInfo(info);
-		Assert.isTrue(null==ret, GDErrorCodes.EUPS_BATCH_INFO_EXIST);
+		if(ret != null){
+				throw new CoreException("批次已存在");
+		}
 		/** 插入批次控制表 */
+		logger.info("==============Start  Insert  GDEupsBatchConsoleInfo");
 		String batNo =((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
 		info.setBatNo(batNo);
 		info.setEupsBusTyp(eupsBusTyp);
@@ -93,6 +98,7 @@ public class BatchFileCommon extends BaseAction {
 		//保存到控制表  
 		get(GDEupsBatchConsoleInfoRepository.class).insertConsoleInfo(info);
 		context.getDataMapDirectly().putAll(BeanUtils.toFlatMap(info));
+		logger.info("==============End  Insert  GDEupsBatchConsoleInfo");
 	}
 /**
  * 上锁
@@ -117,8 +123,9 @@ public class BatchFileCommon extends BaseAction {
 		final String comNo=(String)context.getData(ParamKeys.COMPANY_NO);
 		final String tlr=(String)context.getData(ParamKeys.TELLER);
 		final String br=(String)context.getData(ParamKeys.BR);
-        final String AcDate=DateUtils.format(
-        	((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getAcDate(),DateUtils.STYLE_yyyyMMdd);
+//		String br="01441999999";
+		context.setData(ParamKeys.BR, br);
+        final String AcDate=DateUtils.format(((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getAcDate(),DateUtils.STYLE_yyyyMMdd);
         final String systemCode=((SystemConfig)get(SystemConfig.class)).getSystemCode();
         final String dir="/home/bbipadm/data/mftp/BBIP/"+systemCode+"/"+br+"/"+tlr+"/"+AcDate+"/";
         context.setData("dir", dir);
@@ -152,6 +159,14 @@ public class BatchFileCommon extends BaseAction {
 		config.setFtpDir("1");
 		config.setRmtWay("/home/bbipadm/data/mftp/BBIP/");
 		get(EupsThdFtpConfigRepository.class).update(config);
+		
+		//更改状态为待提交
+		GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=new GDEupsBatchConsoleInfo();
+		String batNo=context.getData(ParamKeys.BAT_NO).toString();
+		gdEupsBatchConsoleInfo.setBatNo(batNo);
+		//待提交
+		gdEupsBatchConsoleInfo.setBatSts("W");
+		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(gdEupsBatchConsoleInfo);
 		logger.info("==============End sendBatchFileToACP and putCheckFile");
 	}
 	/**
