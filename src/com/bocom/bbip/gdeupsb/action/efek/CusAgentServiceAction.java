@@ -83,6 +83,8 @@ public class CusAgentServiceAction extends BaseAction{
 					agdAgrNo=selectList(context);
 					map.put("agdAgrNo", agdAgrNo);
 				}else {
+					agdAgrNo=selectList(context);
+					map.put("agdAgrNo", agdAgrNo);
 					logger.info("~~~~~~~~~~~~~~~~~Enter  eups.commDelCusAgentELEC00 ");
 					mothed="eups.commDelCusAgentELEC00";
 				}
@@ -229,6 +231,7 @@ public class CusAgentServiceAction extends BaseAction{
 			map.put("chn", context.getData(ParamKeys.CHANNEL));
 			map.put("bk", context.getData(ParamKeys.BK));
 			map.put("br", context.getData(ParamKeys.BR));
+			map.put("cusAc", context.getData("cusAc"));
 			logger.info("~~~~~~~~~~requestHeader~~~~map~~~~~ "+map);
 			logger.info("~~~~~~~~~~列表查询开始 ");
 			//上代收付取协议编号
