@@ -30,7 +30,7 @@ public final class GDErrorCodes {
 
 	/** 广东电力对公对私标志错误 */
 	public static final String EUPS_ELE_GZ_PAY_MOD_FLAG_ERROR = "BBIP4400EU0101";
-   
+
 	/** 广东电力凭单号错误 */
 	public static final String EUPS_ELE_GZ_TCK_ERROR = "BBIP4400EU0102";
 
@@ -45,6 +45,9 @@ public final class GDErrorCodes {
 
 	/** 广东电力已清算，不可发起该交易 */
 	public static final String EUPS_ELE_GZ_ALREADY_CLEAR_ERROR = "BBIP4400EU0106";
+
+	/** 广东电力不允许自动清算 */
+	public static final String EUPS_ELE_GZ_AUTO_CLEAR_ERROR = "BBIP4400EU0107";
 
 	/** 供电局系统:无效交易(数据格式) */
 	public static final String EUPS_ELE_GZ_DATE_FORMAT_ERROR = "BBIP4400EU0190";
@@ -367,14 +370,14 @@ public final class GDErrorCodes {
 	public static final String EUPS_LOT_CAR_HAV_REG = "BBIP4400EU1023";
 	/** 此手机已注册! */
 	public static final String EUPS_LOT_MOB_HAV_REG = "BBIP4400EU1024";
-	/**身份证号码不符!*/
-	public static final String EUPS_LOT_IDEN_NOEXIST= "BBIP4400EU1025";
-	/**地市编码转换出错*/
-	public static final String EUPS_LOT_SWIC_CITYNO_ERROR= "BBIP4400EU1026";
-	/**登记福彩用户表失败*/
-	public static final String EUPS_LOT_INSERT_USERINFO_FAIL= "BBIP4400EU1027";
-	/**彩民注册失败!*/
-	public static final String EUPS_LOT_REG_FAIL= "BBIP4400EU1028";
+	/** 身份证号码不符! */
+	public static final String EUPS_LOT_IDEN_NOEXIST = "BBIP4400EU1025";
+	/** 地市编码转换出错 */
+	public static final String EUPS_LOT_SWIC_CITYNO_ERROR = "BBIP4400EU1026";
+	/** 登记福彩用户表失败 */
+	public static final String EUPS_LOT_INSERT_USERINFO_FAIL = "BBIP4400EU1027";
+	/** 彩民注册失败! */
+	public static final String EUPS_LOT_REG_FAIL = "BBIP4400EU1028";
 	/** 此卡号未注册! */
 	public static final String EUPS_LOT_CAR_NOT_REG = "BBIP4400EU1029";
 	/** 彩民查询失败! */
@@ -387,24 +390,23 @@ public final class GDErrorCodes {
 	public static final String EUPS_LOT_UPDATE_CHECK_INFO_FAIL = "BBIP4400EU1033";
 	/** 对账更新状态失败!（updateMatchLotTxnJnl）对成功账 */
 	public static final String EUPS_LOT_UPDATE_TXN_JNL_FAIL = "BBIP4400EU1034";
-	
-	/** 对账更新状态失败!（updateMatchLotChkDtl） 对成功账*/
+
+	/** 对账更新状态失败!（updateMatchLotChkDtl） 对成功账 */
 	public static final String EUPS_LOT_UPDATE_CHK_DTL_FAIL = "BBIP4400EU1035";
-	
-	/** 对账更新状态失败!（MatchLotTxnJnl） 对失敗账*/
+
+	/** 对账更新状态失败!（MatchLotTxnJnl） 对失敗账 */
 	public static final String EUPS_LOT_UPDATE_FAIL_TXN_JNL = "BBIP4400EU1036";
-	/**统计购彩总金额失败  */
+	/** 统计购彩总金额失败 */
 	public static final String EUPS_LOT_CUM_CON_FAIL = "BBIP4400EU1037";
-	
-	/**对账更新状态失败!  */
+
+	/** 对账更新状态失败! */
 	public static final String EUPS_LOT_CHECK_CON_FAIL = "BBIP4400EU1038";
-	/**查询参数表失败!  */
+	/** 查询参数表失败! */
 	public static final String EUPS_LOT_QRY_SYS_FAIL = "BBIP4400EU1039";
-	/**用户名已注册！ */
+	/** 用户名已注册！ */
 	public static final String EUPS_LOT_USER_HAV_REG = "BBIP4400EU1040";
-	/**用户名未注册，请先注册！ */
+	/** 用户名未注册，请先注册！ */
 	public static final String EUPS_LOT_NOT_REG = "BBIP4400EU1041";
-	
 
 	public static final String EUPS_THD_ERROR_TIMEOUT = "BBIP4400EU0701";
 	public static final String EUPS_THD_ERROR_SENDFAILURE = "BBIP4400EU0702";
@@ -482,50 +484,50 @@ public final class GDErrorCodes {
 	public static final String EUPS_VECH00_1008_ERROR = "BBIP4400EU0818";
 	/** 没有找到确认支付的订单 */
 	public static final String EUPS_VECH00_1009_ERROR = "BBIP4400EU0819";
-	
+
 	/** 惠州燃气已存在协议 */
 	public static final String GAS_CUS_AGT_DOUBLE = "BBIP4400EU0620";
-	/** 惠州燃气协议新增失败*/
+	/** 惠州燃气协议新增失败 */
 	public static final String GAS_CUS_AGT_ADDNO = "BBIP4400EU0621";
-	/** 惠州燃气协议修改失败*/
+	/** 惠州燃气协议修改失败 */
 	public static final String GAS_CUS_AGT_EDITNO = "BBIP4400EU0622";
-	/** 惠州燃气协议删除失败*/
+	/** 惠州燃气协议删除失败 */
 	public static final String GAS_CUS_AGT_STOPNO = "BBIP4400EU0623";
-	/** 惠州燃气查询协议空*/
+	/** 惠州燃气查询协议空 */
 	public static final String GAS_QRY_AGT_ERR_EMT = "BBIP4400EU0624";
-	/** 惠州燃气：代收付已存在相关协议*/
+	/** 惠州燃气：代收付已存在相关协议 */
 	public static final String GAS_QRY_AGT_ERR_EXIST = "BBIP4400EU0625";
-	/** 惠州燃气：不存在协议*/
+	/** 惠州燃气：不存在协议 */
 	public static final String GAS_QRY_AGT_ERR_NO = "BBIP4400EU0626";
-	/** 惠州燃气：协议已报停*/
+	/** 惠州燃气：协议已报停 */
 	public static final String GAS_QRY_AGT_ERR_STOP = "BBIP4400EU0627";
-	/** 燃气返回存在相关协议*/
+	/** 燃气返回存在相关协议 */
 	public static final String GAS_QRY_AGT_ERR_DOUBLE = "BBIP4400EU0628";
-	/** 燃气返回操作失败*/
+	/** 燃气返回操作失败 */
 	public static final String GAS_CUS_AGT_OPRE = "BBIP4400EU0629";
-	/** 操作代收付协议失败*/
+	/** 操作代收付协议失败 */
 	public static final String GAS_OPR_ACP_ERR = "BBIP4400EU0630";
-	/** 系统错误，请联系管理员*/
+	/** 系统错误，请联系管理员 */
 	public static final String GAS_SYS_ERROR = "BBIP4400EU0601";
-	
-	/** 零余额：请求超时*/
+
+	/** 零余额：请求超时 */
 	public static final String REQUEST_TIME_OUT = "BBIP4400EU0699";
-	
-	/** 申请电子柜员，不支持该业务类型*/
+
+	/** 申请电子柜员，不支持该业务类型 */
 	public static final String NO_SUPPORT_BUS_TYP = "BBIP4400EU0698";
-	
-	// 烟草 
-	/** 主密钥不存在 !*/
+
+	// 烟草
+	/** 主密钥不存在 ! */
 	public static final String TBC_MAIN_KEY_NOT_EXIST = "BBIP4400EU0500";
-	/** 您提供的单位未开户!*/
+	/** 您提供的单位未开户! */
 	public static final String TBC_OFF_NOT_EXIST = "BBIP4400EU0501";
-	/** 数据库处理错误 !*/
+	/** 数据库处理错误 ! */
 	public static final String TBC_DB_ERROR = "BBIP4400EU0502";
-	/**"无此用户信息 !"*/
+	/** "无此用户信息 !" */
 	public static final String TBC_USER_NOT_EXIST = "BBIP4400EU0503";
-	/**"通信异常或 其他错误!"*/
+	/** "通信异常或 其他错误!" */
 	public static final String TBC_COM_OTHER_ERROR = "BBIP4400EU0504";
-	/** 请求服务超时*/
+	/** 请求服务超时 */
 	public static final String TBC_OUT_TIME_ERROR = "BBIP4400EU0505";
-	
+
 }
