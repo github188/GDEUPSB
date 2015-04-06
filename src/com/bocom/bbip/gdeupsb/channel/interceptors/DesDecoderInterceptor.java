@@ -1,6 +1,5 @@
 package com.bocom.bbip.gdeupsb.channel.interceptors;
 
-import com.bocom.bbip.gdeupsb.utils.GzFcXmlExchangeUtil;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.channel.Transform;
 

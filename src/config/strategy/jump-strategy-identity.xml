@@ -112,11 +112,6 @@
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.CancelPayServiceAction">
 	</bean>
 
-
-	<!--广东烟草发起对账 -->
-	<bean id="eups.checkThdFileToBkStrategyActionSGRT00"
-		class="com.bocom.bbip.gdeupsb.strategy.sgrt00.CheckThdFileToBkServiceAction">
-	</bean>
 	<!-- 签约一站通-协议维护-水务 -->
 	<bean id="gdeups.agtMdyDealImlServiceAction44101"
 		class="com.bocom.bbip.gdeupsb.strategy.sign.WaterAgtMdyDealImlAction">
@@ -340,10 +335,6 @@
 		class="com.bocom.bbip.gdeupsb.strategy.sgrt00.PayUnilateralToBankServiceActionSGRT00"
 		id="eups.payUnilateralToBankServiceActionSGRT00" />
 
-<!-- 
-	<bean class="com.bocom.bbip.gdeupsb.strategy.sgrt00.CommInsertCusAgentServiceActionSGRT00" id="eups.commInsertCusAgentServiceActionSGRT00" />
- -->
- 
  <!-- 零余额  -->
     <bean id="eups.specialAccountSystem"
    class="com.bocom.bbip.gdeupsb.services.single.zerobalance.SpecialAccountSystemServiceImplGDEUPSA"/> 

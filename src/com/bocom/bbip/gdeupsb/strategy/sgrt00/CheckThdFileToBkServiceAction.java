@@ -53,11 +53,10 @@ public class CheckThdFileToBkServiceAction  implements CheckThdFileToBkService {
         log.info("CheckFileToThirdAction start!");
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
         context.setData("txnTme", DateUtils.parse(context.getData("TRAN_TIME").toString(), DateUtils.STYLE_yyyyMMddHHmmss));
-        context.setData("bk", context.getData("BANK_ID"));
         context.setData("dptId", context.getData("DPT_ID"));
         //上面公共报文头，下面报文体
         context.setData("oLogNo", context.getData("BANK_SEQ"));
-       // context.setData(ParamKeys.TXN_DATE, DateUtils.parse(context.getData("TRADE_DATE").toString(), DateUtils.STYLE_yyyyMMdd));
+        context.setData(ParamKeys.TXN_DATE, DateUtils.parse(context.getData("TRADE_DATE").toString(), DateUtils.STYLE_yyyyMMdd));
         
         context.setData("devId", context.getData("DEV_ID"));
         context.setData("teller", context.getData("TELLER"));

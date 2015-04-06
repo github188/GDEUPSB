@@ -41,4 +41,7 @@
     <!--银行对烟草公司清算金额查询-->
     <action class="com.bocom.bbip.gdeupsb.action.tbc.QryClearAccountAction"
         id="gdeupsb.TbcQryClearAccountAction" />
+     <!--广东烟草对账-->
+    <action class="com.bocom.bbip.gdeupsb.action.tbc.CheckThdFileToBkAction"
+        id="gdeupsb.TbcCheckThdFileToBkAction" />
 </x:beans>
