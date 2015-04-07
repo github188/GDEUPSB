@@ -13,7 +13,7 @@
 
  -->
  	
- 	<fixString name="gasBk" length="4" default="CNJT"/>
+ 	<fixString name="gasBk" length="4" default="cnjt"/>
  	<fixString  name="Deli3" length="1" default=","/>
  		
 	<fixString name="thdCusNo" length="12"   /> 

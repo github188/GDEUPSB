@@ -19,15 +19,8 @@ Stop 为取消用户协议
 126	证件类型	2	
 129	证件号	32	
  -->
-	<!-- <fixString name="tCommd" length="10"/>
-	<fixString name="DeliA" length="1" default="," />
-	<fixString name="bk" length="4" default="CNJT"  />
-	<fixString  name="DeliA" length="1" default=","/> -->
-	
-	<!-- <fixString name="tCommd" length="10" />  -->
- 	<!-- <fixString name="DeliA"      length="1" default=","/> -->
  	
- 	<fixString name="gasBk" length="4" default="CNJT"/>
+ 	<fixString name="gasBk" length="4" default="cnjt"/>
  	<fixString  name="Deli3" length="1" default=","/>
  		
 	<fixString name="thdCusNo" length="12" /> 
