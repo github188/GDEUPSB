@@ -60,11 +60,11 @@
 	</process>
 	
 	<!--代扣协议删除-->
-	<process id="gdeupsb.commDelCusAgent" template="gdeupsb.commOprCusAgentTemplate" interceptors="eups.transMessageInterceptor">	
+	<process id="gdeupsb.commDelCusAgent" template="gdeupsb.delAgentTemplate" interceptors="eups.transMessageInterceptor">	
 	   <actions>
 		<action id="preAction" class = "com.bocom.bbip.gdeupsb.service.impl.watr00.PreDelCusAgentAction"/> <!-- 删除前服务 -->
-		<action id="preAction" ref="eups.commBeforeDealCusAgentAction" operations="delBeforeDeal" /> <!-- 协议操作前预处理 -->
-		<action id="preAction" ref="eups.commInitCusAgentAction" /> <!-- 检查协议，预计协议流水 -->
+		<!-- <action id="preAction" ref="eups.commBeforeDealCusAgentAction" operations="delBeforeDeal" /> 协议操作前预处理
+		<action id="preAction" ref="eups.commInitCusAgentAction" /> 检查协议，预计协议流水 -->
 	    <action id="callACPSAction"  ref="eups.commDelCusAgentAction"/>	<!-- 发代收付 -->
 	   	<!--<action id="callThdAction" ref="eups.delCusAgentThdStrategyAction"/>  发第三方 -->
 	   	<action id="callThdAction" class="com.bocom.bbip.gdeupsb.service.impl.watr00.CallThdAction"/> <!-- 发第三方 -->
