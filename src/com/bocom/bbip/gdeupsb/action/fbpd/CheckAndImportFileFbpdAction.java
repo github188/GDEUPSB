@@ -151,7 +151,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 	        Map<String, List<Map<String, Object>>> map = new HashMap<String, List<Map<String, Object>>>(); 
 	        FileMarshaller fileMarshaller = new FileMarshaller();
 	        
-	        if("WATR".equals(context.getData("comNo")) ){	//中山水费 WATR   fbpdWaterFmtIn
+	        if("4840000015".equals(context.getData("comNo"))  ){	//中山水费 WATR   fbpdWaterFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdWaterFmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -160,7 +160,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 //	        	String fileName = "waterFile";
 	        	parseOthrMapList(map, payOthrDetailLst, context, fleNme);
 	        }
-	        if("NELE1".equals(context.getData("comNo"))){	//NELE_in_484999_1 电费 fbpdNele1FmtIn
+	        if("4840000167".equals(context.getData("comNo"))){	//NELE_in_484999_1 电费 fbpdNele1FmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdNele1FmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -169,7 +169,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 //	        	String fileName = "nele1File";
 	        	parseOthrMapList(map, payOthrDetailLst, context, fleNme);
 	        }
-	        if("NELE".equals(context.getData("comNo"))){	//NELE_in_484999 电费	fbpdNeleFmtIn
+	        if("4840000016".equals(context.getData("comNo")) || "4840000484".equals(context.getData("comNo")) || "4840000352".equals(context.getData("comNo")) || "4840000363".equals(context.getData("comNo")) || "4840000475".equals(context.getData("comNo"))){	//NELE_in_484999 电费	fbpdNeleFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdNeleFmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -178,7 +178,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 //	        	String fileName = "neleFile";
 	        	parseNeleMapList(map, payNeleDetailLst, context, fleNme);
 	        }
-	        if("GGAS".equals(context.getData("comNo"))){	//GGAS_in_484999 中山煤气费	fbpdGgasFmtIn
+	        if("4840000018".equals(context.getData("comNo"))){	//GGAS_in_484999 中山煤气费	fbpdGgasFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdGgasFmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -187,7 +187,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 //	        	String fileName = "ggasFile";
 	        	parseOthrMapList(map, payOthrDetailLst, context, fleNme);
 	        }
-	        if("VANK".equals(context.getData("comNo"))){	//VANK_out_484999中山物业管理费 fbpdVankFmtIn
+	        if("4840000017".equals(context.getData("comNo"))){	//VANK_out_484999中山物业管理费 fbpdVankFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdVankFmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -196,7 +196,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 //	        	String fileName = "vankFile";
 	        	parseOthrMapList(map, payOthrDetailLst, context, fleNme);
 	        }
-	        if("TTOM".equals(context.getData("comNo"))){	//TTOM_in_484999中山铁通 fbpdTtomFmtIn
+	        if("4840000020".equals(context.getData("comNo"))){	//TTOM_in_484999中山铁通 fbpdTtomFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdTtomFmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -205,7 +205,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 //	        	String fileName = "ttomFile";
 	        	parseOthrMapList(map, payOthrDetailLst, context, fleNme);
 	        }
-	        if("CTTV".equals(context.getData("comNo"))){	//CTTV_in_484999 中山有线电视 fbpdCttvFmtIn
+	        if("4840000019".equals(context.getData("comNo"))){	//CTTV_in_484999 中山有线电视 fbpdCttvFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdCttvFmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -214,7 +214,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 //	        	String fileName = "cttvFile";
 	        	parseOthrMapList(map, payOthrDetailLst, context, fleNme);
 	        }
-	        if("NQTV".equals(context.getData("comNo"))){	//NQTV_in_484999南区有线电视 fbpdNqtvFmtIn
+	        if("4840000598".equals(context.getData("comNo"))){	//NQTV_in_484999南区有线电视 fbpdNqtvFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdNqtvFmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -223,7 +223,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 //	        	String fileName = "nqtvFile";
 	        	parseOthrMapList(map, payOthrDetailLst, context, fleNme);
 	        }
-	        if("XIND".equals(context.getData("comNo"))){	//XIND_in_484999 新都物业管理 fbpdXindFmtIn
+	        if("4840000414".equals(context.getData("comNo"))){	//XIND_in_484999 新都物业管理 fbpdXindFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdXindFmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -232,7 +232,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 //	        	String fileName = "xindFile";
 	        	parseOthrMapList(map, payOthrDetailLst, context, fleNme);
 	        }
-	        if("MPOS".equals(context.getData("comNo"))){	//MPOS_in_484999 中山移动POS fbpdMposFmtIn
+	        if("4840000416".equals(context.getData("comNo"))){	//MPOS_in_484999 中山移动POS fbpdMposFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdMposFmtIn", resource, Map.class);
 				} catch (JumpException e) {
