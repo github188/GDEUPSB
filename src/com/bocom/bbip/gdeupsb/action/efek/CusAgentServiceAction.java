@@ -74,21 +74,18 @@ public class CusAgentServiceAction extends BaseAction{
 					context.setData(GDParamKeys.NEWBANKNO, "301");
 					map.put("cusAc", context.getData("newCusAc"));
 					map.put("cusNme", context.getData("newCusName"));
-					bbipPublicService.synExecute(mothed, context);
 				}else if("1".equals(oprTyp)){
 					//先删除协议，然后再添加 
 					logger.info("~~~~~~~~~~~~~~~~~Enter  eups.commUpdateCusAgentELEC00 ");
+					mothed="eups.commDelCusAgentELEC00";
 					agdAgrNo=selectList(context);
 					map.put("agdAgrNo", agdAgrNo);
-					mothed="eups.commDelCusAgentELEC00";
-					bbipPublicService.synExecute("eups.commDelCusAgentELEC00", context);
 					i=1;
 				}else {
 					agdAgrNo=selectList(context);
 					map.put("agdAgrNo", agdAgrNo);
 					logger.info("~~~~~~~~~~~~~~~~~Enter  eups.commDelCusAgentELEC00 ");
 					mothed="eups.commDelCusAgentELEC00";
-					bbipPublicService.synExecute("eups.commDelCusAgentELEC00", context);
 				}
 				//添加 agentCollectAgreement
 				List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();
@@ -109,8 +106,9 @@ public class CusAgentServiceAction extends BaseAction{
 				List<Map<String, Object>> cusList=new ArrayList<Map<String,Object>>();
 				cusList.add(cusMap);
 				
-				context.setData("customerInfo", cusList);			
-						
+				context.setData("customerInfo", cusList);
+				
+				bbipPublicService.synExecute(mothed, context);
 				if(i==1){
 					mothed="eups.commInsertCusAgenteELEC00";
 					context.setData(GDParamKeys.NEWBANKNO, "301");
@@ -118,7 +116,7 @@ public class CusAgentServiceAction extends BaseAction{
 					map.put("cusNme", context.getData("newCusName"));
 					bbipPublicService.synExecute(mothed, context);
 				}
-				
+
 				log.info("============End  CusAgentServiceAction");
 		}
 		
@@ -249,6 +247,9 @@ public class CusAgentServiceAction extends BaseAction{
 			logger.info("~~~~~~~~~~列表查询开始 ");
 			//上代收付取协议编号
 			Result accessObjList = bgspServiceAccessObject.callServiceFlatting("queryListAgentCollectAgreement",map);
+			if(!accessObjList.isSuccess()){
+						throw new CoreException(accessObjList.getPayload().get("responseMessage").toString());
+			}
 			logger.info("~~~~~~~~~~列表查询结束~~~~"+accessObjList);
 			List<Map<String,Object>> list=(List<Map<String, Object>>)accessObjList.getPayload().get("agentCollectAgreement");
 			String agdAgrNo=list.get(0).get("agdAgrNo").toString();
