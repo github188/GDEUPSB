@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
@@ -59,6 +60,21 @@ public class InsertCusAgentServiceAction extends BaseAction {
 		String cusAc=context.getData("cusAc").toString();
 		context.setData(ParamKeys.COMPANY_NO, context.getData("comNo"));
 		context.setData(ParamKeys.CUS_AC, context.getData(GDParamKeys.NEWCUSAC));
+		
+		context.setData("traceNo", context.getData(ParamKeys.TRACE_NO));
+		context.setData("traceSrc", context.getData(ParamKeys.TRACE_SOURCE));
+		context.setData("version", context.getData(ParamKeys.VERSION));
+		context.setData("reqTme", new Date());
+		context.setData("reqJrnNo", get(BBIPPublicService.class).getBBIPSequence());
+		context.setData("reqSysCde", context.getData(ParamKeys.REQ_SYS_CDE));
+		context.setData("tlr", context.getData(ParamKeys.TELLER));
+		context.setData("chn", context.getData(ParamKeys.CHANNEL));
+		context.setData("bk", context.getData(ParamKeys.BK));
+		context.setData("br", context.getData(ParamKeys.BR));
+		if(context.getData(ParamKeys.THD_SQN)!=null){
+			context.setData("bk", "441999");
+			context.setData("br", "441800");
+		}
 		Result editCusAgtResult = bgspServiceAccessObject.callServiceFlatting("maintainAgentCollectAgreement",context.getDataMap());
 		logger.info("===========editCusAgtResult："+editCusAgtResult);
 
@@ -148,6 +164,11 @@ public class InsertCusAgentServiceAction extends BaseAction {
 					}
 			}
 		}
+		String thdTxnDte=context.getData("thdTxnDate").toString();
+		String thdTxnTme=context.getData("thdTxnTime").toString();
+		context.setData(ParamKeys.THD_TXN_DATE, DateUtils.parse(thdTxnDte));
+		context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse((thdTxnDte+thdTxnTme),DateUtils.STYLE_yyyyMMddHHmmss));
+		
 		context.setData(ParamKeys.TXN_TME,DateUtils.parse(context.getData(ParamKeys.TXN_TME).toString()));
 		logger.info("=============End    InsertCusAgentServiceAction  ");
 	}
