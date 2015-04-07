@@ -9,6 +9,7 @@ import java.net.Socket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.channel.CommunicationException;
 import com.bocom.jump.bp.channel.Gateway;
 
@@ -25,6 +26,9 @@ public class ZhLqSocketGateway implements Gateway {
 	private String host;
 	private int port;
 	private int timeout;
+	
+	String wjjsBz = "WJJSWJJSWJJSWJJSWJJSWJJSWJJSWJ"; //文件结束标志
+	String sucBz = "AGR"; //成功回执
 
 	public void setHost(String host) {
 		this.host = host;
@@ -72,18 +76,29 @@ public class ZhLqSocketGateway implements Gateway {
 			is = new DataInputStream(socket.getInputStream());
 			os = socket.getOutputStream();
 			exChange(is,os,txncod);
-			os.write(newreq);
-			log.info("send msg="+new String(newreq));
-			while (true) {
-				if (is.available() > 0) {
-					byte[] rb = new byte[2048];
-					int i = is.read(rb);
-					rsp = new byte[i];
-					System.arraycopy(rb, 0, rsp, 0, rsp.length);
-					log.info("recv msg="+new String(rsp));
-					break;
-				}
+			String len = StringUtils.leftPad(String.valueOf(newreq.length), 4, "0");
+			os.write(len.getBytes()); //外发报文长度
+			os.write(newreq); //外发请求报文
+			log.info("send msg="+len+new String(newreq, "GBK"));
+			String s4 = recvThree(is, 4);
+			if (!s4.equals("AGR")) {
+				throw new IOException("third 4 return error !");
 			}
+			
+			os.write(wjjsBz.getBytes()); //发送文件结束标志
+			log.info("send wjbz ok");
+			
+			byte[] rcvLen = new byte[4];
+			is.readFully(rcvLen);
+			int rlen = Integer.parseInt(new String(rcvLen).trim());
+			rsp = new byte[rlen];
+			is.readFully(rsp);
+			log.info("recv msg="+new String(rsp, "GBK"));
+			os.write(sucBz.getBytes());
+			
+			byte[] rcvbz = new byte[30];
+			is.readFully(rcvbz);
+			log.info("recv wjbz ok");
 		} catch (IOException e) {
 			e.printStackTrace();
 			log.error("交易外发失败,err msg :"+e.getMessage());
@@ -106,7 +121,7 @@ public class ZhLqSocketGateway implements Gateway {
 		byte[] allrsp = new byte[tb.length+rsp.length];
 		System.arraycopy(tb, 0, allrsp, 0, tb.length);
 		System.arraycopy(rsp, 0, allrsp, 6, rsp.length);
-		
+		log.info("rsp msg="+new String(allrsp));
 		return allrsp;
 	}
 	
@@ -118,17 +133,26 @@ public class ZhLqSocketGateway implements Gateway {
 	 * @throws IOException
 	 */
 	private void exChange(DataInputStream is, OutputStream os, String txncod) throws IOException {
-		recvThree(is, 0);
+		String str = recvThree(is, 0);
+		if (!str.equals("AGR")) {
+			throw new IOException("third 0 return error !");
+		}
 		
-		String exStr = "VER2.0";
+		String exStr = "VER2.0  ";
 		os.write(exStr.getBytes());
 		log.info("send msg1:"+exStr);
 		String s = recvThree(is, 1);
+		if (!s.equals("2.0")) {
+			throw new IOException("third 1 return error !");
+		}
 		
 		exStr="000000000"+txncod;
 		os.write(exStr.getBytes());
 		log.info("send msg2:"+exStr);
-		recvThree(is, 2);
+		str = recvThree(is, 2);
+		if (!str.equals("AGR")) {
+			throw new IOException("third 2 return error !");
+		}
 		
 		if (s.equals("2.0")) {
 			byte[] b2 = new byte[8];
@@ -142,9 +166,6 @@ public class ZhLqSocketGateway implements Gateway {
 		is.readFully(b1);
 		String str1 = new String(b1);
 		log.info("recv return str"+idx+" = "+str1);
-		if (!(str1.equals("AGR")||str1.equals("2.0"))) {
-			throw new IOException("third cann't allow conn !");
-		}
 		return str1;
 	}
 
@@ -155,7 +176,9 @@ public class ZhLqSocketGateway implements Gateway {
 
 			InetSocketAddress inetsocketaddress = new InetSocketAddress(host, port);
 			socket.connect(inetsocketaddress);
-			socket.setSoTimeout(timeout * 1000);
+			if (timeout > 0) {
+				socket.setSoTimeout(timeout * 1000);
+			}
 			log.info("conn ok");
 			return socket;
 		} catch (IOException ioexception) {
