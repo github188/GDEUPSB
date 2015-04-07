@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.comp.BBIPPublicService;
-import com.bocom.bbip.data.annotation.FindOne;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.spi.service.single.PayUnilateralToBankService;
 import com.bocom.bbip.eups.spi.vo.CommHeadDomain;
@@ -47,28 +46,24 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 		logger.info("PayUnilateralToBankServiceImplPGAS00@prepareCheckDeal start!");
 		logger.info("======context:" + context);
 
+		String bk = "01441999999";
+		String br = "";
 		//TODO  get tlr
+//		context.setData(ParamKeys.BR, br);//机构号 "01441131999"
+//		context.setData(ParamKeys.BK, bk);//分行号01491999999
+//		String trl = bbipPublicService.getETeller(bk);
+//		context.setData(ParamKeys.TELLER, trl);
+		
 		context.setData(ParamKeys.TELLER, "ABIR148");
 		context.setData(ParamKeys.BR, "01441131999");
 		context.setData(ParamKeys.BK, "01441999999");
-		
-//TODO 向业务取电子柜员
-	/**	
-		String chn = context.getData(ParamKeys.CHANNEL);
-		//设置签约网点
-        String br = SetBrUtils.setBr((String)context.getData(ParamKeys.EUPS_BUSS_TYPE));
-//        context.setData("extFields",br);
-		if(!chn.equals("00")){
-	        context.setData("br",br);
-	        //设置电子柜员
-	        context.setData("tlr", bbipPublicService.getETeller(br));
-		}
+
 		
 		logger.info("=====context after set tlr :" + context);
-		*/
+		
 		context.setData("br1", context.getData(ParamKeys.BR).toString().subSequence(2, 8));
 		context.setData("txnTme1", DateUtils.format(new Date(), DateUtils.STYLE_FULL));
-		context.setData("reMark1", "扣款失败"); 
+		context.setData("reMark1", "扣款失败"); //预置失败
 		logger.info("PayUnilateralToBankServiceImplPGAS00@prepareCheckDeal end!");
 		return null;
 	}
