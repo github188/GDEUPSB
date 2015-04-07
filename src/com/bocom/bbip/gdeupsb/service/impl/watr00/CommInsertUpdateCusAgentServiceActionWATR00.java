@@ -45,7 +45,7 @@ public class CommInsertUpdateCusAgentServiceActionWATR00 extends BaseAction{
 			agentMap.put("pwd", (String)context.getData("pwd"));
 //			agentMap.put("bvCde", (String)context.getData("agtCllCusId"));
 //			agentMap.put("bvNo", (String)context.getData("agtCllCusId"));
-			agentMap.put("comNo", "GDWATR0001");
+			agentMap.put("comNo", "4450000685");
 			agentMap.put("comNum", "汕头自来水公司");
 			
 			agentMap.put("busTyp","0");
@@ -117,7 +117,7 @@ public class CommInsertUpdateCusAgentServiceActionWATR00 extends BaseAction{
 			agentMap.put("pwd", (String)context.getData("pwd"));
 //			agentMap.put("bvCde", (String)context.getData("agtCllCusId"));
 //			agentMap.put("bvNo", (String)context.getData("agtCllCusId"));
-			agentMap.put("comNo", "GDWATR0001");
+			agentMap.put("comNo", "4450000685");
 			agentMap.put("comNum", "汕头自来水公司");
 			
 			agentMap.put("busTyp","0");

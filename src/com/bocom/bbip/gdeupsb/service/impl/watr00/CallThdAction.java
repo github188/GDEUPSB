@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.service.impl.watr00;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -38,11 +39,11 @@ private static Logger logger = LoggerFactory.getLogger(PreDelCusAgentAction.clas
 		logger.info("CallThdAction start......");
 		// TODO:为第三方接口报文字段赋值，发送请求至第三方
 				context.setData("type", "Y007");
-				context.setData("accountdate", DateUtils.format((Date)context.getData(ParamKeys.AC_DATE), DateUtils.STYLE_yyyyMMdd));
+				context.setData("accountdate", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
 				StepSequenceFactory s = context.getService("logNoService");
 				String logNo = s.create().toString();
 				context.setData("waterno", "JH"+logNo);//流水号生成
-				context.setData("bankcode", "JT");
+				context.setData("bankcode", "交行");
 				context.setData("salesdepart",((String)context.getData(ParamKeys.BR)).substring(2, 8));
 				context.setData("salesperson", ((String)context.getData(ParamKeys.TELLER)).substring(4, 7));
 				context.setData("busitime", DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMddHHmmss));
@@ -53,23 +54,27 @@ private static Logger logger = LoggerFactory.getLogger(PreDelCusAgentAction.clas
 				context.setData("password", "        ");
 				context.setData("md5digest", " ");
 				
-				List<Map<String,String>> agentCollectAgreements = context.getData("agentCollectAgreement");
-				List<Map<String,String>> customerInfos = context.getData("customerInfo");
-				Map<String,String> agentCollectAgreement = agentCollectAgreements.get(0);
-				Map<String,String> customerInfo = customerInfos.get(0);
-				String hno = agentCollectAgreement.get("agtSrvCusId");
-				String name = agentCollectAgreement.get("agtSrvCusPnm");
+				System.out.println("context="+context);
+				List<Map<String,Object>> infoList = context.getData("listAgreementInfo");
+				Map<String, Object> infoMap = infoList.get(0);
+				
+//				List<Map<String,String>> agentCollectAgreements = context.getData("agentCollectAgreement");
+//				List<Map<String,String>> customerInfos = context.getData("customerInfo");
+				
+				
+				String hno = (String)infoMap.get("agtSrvCusId");
+				String name = (String)infoMap.get("agtSrvCusPnm");
 				String addr = context.getData("addr");
 //						StepSequenceFactory s = context.getService("logNoService");
 				logNo = s.create().toString();
 				String wtno = logNo.substring(8);
 				String bank = "交行";
-				String czman = customerInfo.get("cusNme");
-				String bcount = customerInfo.get("cusAc");
+				String czman = (String)infoMap.get("cusNme");
+				String bcount =(String) infoMap.get("cusAc");
 				String byyno = ((String)context.getData(ParamKeys.BR)).substring(2, 8);
 				String byyman = ((String)context.getData(ParamKeys.TELLER)).substring(4, 7);
 				String wtdate = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
-				String wtman = customerInfo.get("cusNme");
+				String wtman = (String)infoMap.get("cusNme");
 				String haddr = " ";
 				String hphone = context.getData("hphone");
 				String lphone = context.getData("lphone");
@@ -120,8 +125,10 @@ private static Logger logger = LoggerFactory.getLogger(PreDelCusAgentAction.clas
 				}
 				logger.error(" callThd end!");
 				
+				List<String> agdAgrNoList = context.getData("agdAgrNo");
+				context.setData("agdAgrNo", agdAgrNoList.get(0));
 				GdEupsWatAgtInf gdeups = new GdEupsWatAgtInf();
-				gdeups.setAgdAgrNo((String)context.getData("agdAgrNo"));
+				gdeups.setAgdAgrNo(agdAgrNoList.get(0));
 				gdEupsWatAgtInfRepository.delete(gdeups);
 	}
 }
