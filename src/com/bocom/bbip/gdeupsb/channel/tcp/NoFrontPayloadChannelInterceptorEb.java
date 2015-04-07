@@ -31,7 +31,6 @@ public class NoFrontPayloadChannelInterceptorEb extends NoFrontLengthStreamResol
 
 	public void onResponse(ChannelContext channelContext, ContextEx context, Throwable throwable)
 	{
-		getClass().getResource("");
 		byte arrayOfByte[] = (byte[]) channelContext.getResponsePalyload();
 		try
 		{
