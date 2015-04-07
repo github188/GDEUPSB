@@ -33,8 +33,10 @@ import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
+import com.bocom.bbip.gdeupsb.entity.GdGasCusAll;
 import com.bocom.bbip.gdeupsb.entity.GdGashBatchTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
+import com.bocom.bbip.gdeupsb.repository.GdGasCusAllRepository;
 import com.bocom.bbip.gdeupsb.repository.GdGashBatchTmpRepository;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
@@ -58,6 +60,10 @@ public class BatchGashDealServiceAction extends BaseAction implements BatchAcpSe
 	@Autowired
 	BBIPPublicService bbipPublicService;
 	
+	@Autowired
+	GdGasCusAllRepository gdGasCusAllRepository;
+	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void prepareBatchDeal(PrepareBatchAcpDomain arg0, Context context)
 			throws CoreException {
@@ -68,49 +74,19 @@ public class BatchGashDealServiceAction extends BaseAction implements BatchAcpSe
 		context.setData(ParamKeys.BR, "01441131999");
 		context.setData(ParamKeys.BK, "01441999999");
 		
-		context.setData(ParamKeys.EUPS_BUSS_TYPE, "PGAS00");
-		context.setData(ParamKeys.COMPANY_NO, "GDPGAS0001");
 		context.setData(ParamKeys.FTP_ID, "PGAS00Bat");
 		
 		logger.info("============context:" + context);
 		
 		String fleNme = (String)context.getData(ParamKeys.FLE_NME);
+		
 		/**加锁*/
 		String comNo = (String)context.getData(ParamKeys.COMPANY_NO);
 		logger.info("==============comNo : " + comNo);
 		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).Lock(comNo);
 		
 		//检查批次是否重复录入，不是重复录入则插入一条数据进批次控制表
-		GDEupsBatchConsoleInfo info = new GDEupsBatchConsoleInfo();
-		info.setFleNme(fleNme);
-		GDEupsBatchConsoleInfo ret =get(GDEupsBatchConsoleInfoRepository.class).findConsoleInfo(info);
-		Assert.isTrue(null==ret, GDErrorCodes.EUPS_BATCH_INFO_EXIST);
-		/** 插入批次控制表 */
-		String batNo =((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
-		info.setBatNo(batNo);
-		info.setComNo((String)context.getData(ParamKeys.COMPANY_NO));
-		info.setBusKnd((String)context.getData(ParamKeys.BUSS_KIND));
-		info.setBatSts(GDConstants.BATCH_STATUS_INIT);
-		info.setFleNme(fleNme);
-		info.setSubDte(new Date());
-		info.setTxnTlr((String) context.getData(ParamKeys.TELLER));
-		info.setTxnMde(Constants.TXN_MDE_FILE);
-		info.setTxnOrgCde((String) context.getData(ParamKeys.BR));
-		/**该字段保存ParamKeys.THD_BAT_NO*/
-		info.setRsvFld9(((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getBBIPSequence());
-		context.setData(ParamKeys.THD_BAT_NO, info.getRsvFld9());
-		get(GDEupsBatchConsoleInfoRepository.class).insertConsoleInfo(info);
-		/**查询代收付ComNo*/
-		     String comNoAcps=null;
-		    EupsActSysPara eupsActSysPara = new EupsActSysPara();
-		    eupsActSysPara.setActSysTyp("0");
-		    eupsActSysPara.setComNo((String)context.getData(ParamKeys.COMPANY_NO));
-		    List<EupsActSysPara> resultList = ((EupsActSysParaRepository)get(EupsActSysParaRepository.class)).find(eupsActSysPara);
-		    if (CollectionUtils.isNotEmpty(resultList)) {
-		       comNoAcps = ((EupsActSysPara)resultList.get(0)).getSplNo();
-		    }
-		context.setData("comNoAcps", comNoAcps);
-		context.getDataMapDirectly().putAll(BeanUtils.toFlatMap(info));
+		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).BeforeBatchProcess(context);
 		
 		EupsThdFtpConfig config=get(EupsThdFtpConfigRepository.class).findOne((String)context.getData(ParamKeys.FTP_ID));
 		Assert.isFalse(null == config, ErrorCodes.EUPS_THD_FTP_CONFIG_NOTEXIST);
@@ -123,21 +99,32 @@ public class BatchGashDealServiceAction extends BaseAction implements BatchAcpSe
 		Assert.isFalse(null==result||0==result.size(), ErrorCodes.EUPS_FILE_PARESE_FAIL);
 		Map<String, Object> header =new HashMap<String, Object>();
 		
-		@SuppressWarnings("unchecked")
 		List<Map<String, Object>> detail = (List<Map<String, Object>>) result.get("detail");
 		GDEupsBatchConsoleInfo batInfo=ContextUtils.getDataAsObject(context, GDEupsBatchConsoleInfo.class);
 		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(batInfo);
 		
 		//将解析文件得到的数据放入临时表
+		String cusNo = null;
+		GdGasCusAll gdGasCusAll = new GdGasCusAll();
+		List<GdGasCusAll> infoList = new ArrayList<GdGasCusAll>();
 		List <GdGashBatchTmp>list=(List<GdGashBatchTmp>) BeanUtils.toObjects(detail, GdGashBatchTmp.class);
         for(GdGashBatchTmp tmp:list){
         	tmp.setSqn(get(BBIPPublicService.class).getBBIPSequence());
         	tmp.setBatNo((String)context.getData(ParamKeys.BAT_NO));
+        	cusNo = tmp.getCusNo();
+        	logger.info("==============cusNo:" + cusNo);
+        	gdGasCusAll.setCusNo(cusNo);
+        	infoList = (List<GdGasCusAll>) gdGasCusAllRepository.find(gdGasCusAll);
+        	//从协议表中取
+        	tmp.setCusNme(infoList.get(0).getCusNme());
+        	tmp.setTmpFld3(infoList.get(0).getThdCusNme());//thdCusNme
+        	tmp.setBk((String) detail.get(0).get("gasBk"));
+        	logger.info("============cusNme:" + tmp.getCusNme() + "===============thdCusNme:" + tmp.getTmpFld3());
+        	
         	get(GdGashBatchTmpRepository.class).insert(tmp);
         }
         
         List <GdGashBatchTmp>lt=get(GdGashBatchTmpRepository.class).findByBatNo((String)context.getData(ParamKeys.BAT_NO));
-        //  cusNo ----->  thdCusNo
         
         List<Map<String,Object>> gasBatDetail=new ArrayList<Map<String,Object>>();
         
@@ -148,16 +135,6 @@ public class BatchGashDealServiceAction extends BaseAction implements BatchAcpSe
         
         for(GdGashBatchTmp tmp : lt){
         	Map<String, Object> tmpMap = new HashMap<String, Object>();
-//        	<varString name="cusAc" type="D|" />
-//    		<varString name="cusNme" type="D|" />
-//    		<varString name="txnAmt" type="D|" />
-//    		<varString name="thdCusNo" type="D|" />
-//    		<varString name="thdCusNme" type="D|" />
-//    		<varString name="OUROTHFLG" type="D|" />
-//    		<varString name="OBKBK" type="D|" />
-//    		<varString name="RMK1" type="D|" />
-//    		<varString name="RMK2" type="D|" />
-			
         	//TODO：我行卡查询，开户行查询
 //        			if (accountService.isOurBankCard(tmp.getCusAc())) {
         				isOurBnk = "0"; // 我行卡
@@ -172,7 +149,7 @@ public class BatchGashDealServiceAction extends BaseAction implements BatchAcpSe
         	tmpMap.put("txnAmt", tmp.getTxnAmt());
         	tmpMap.put("thdCusNo", tmp.getCusNo());
         	tmpMap.put("OUROTHFLG", isOurBnk);
-//        	tmpMap.put("thdCusNme", value);
+        	tmpMap.put("thdCusNme", tmp.getTmpFld3());
 //        	tmpMap.put("OBKBK", value);
 //        	tmpMap.put("RMK1", value);
 //        	tmpMap.put("RMK2", value);
@@ -209,6 +186,9 @@ public class BatchGashDealServiceAction extends BaseAction implements BatchAcpSe
 		//得到反盘文件 
 		userProcessToGet(context);
 		//处理成第三方格式返回
+		
+		
+		context.setData("fleNmeBak", fleNme);
 		logger.info("==========End  BatchDataFileAction  prepareBatchDeal");
 		
 		

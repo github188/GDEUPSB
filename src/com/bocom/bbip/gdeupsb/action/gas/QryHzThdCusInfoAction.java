@@ -78,15 +78,15 @@ public class QryHzThdCusInfoAction extends BaseAction{
 		}
 		
 		context.setData("loopDtl", gasCusAllListDtl);
-		context.setData(GDParamKeys.GAS_AP_CDE, "32");
-	    context.setData(GDParamKeys.GAS_OFMT_COD, "z01");
-	    context.setData(GDParamKeys.GAS_PAGE_NO, "0001");
-	    context.setData(GDParamKeys.GAS_VAR_SIZE, "3");
-	    context.setData(GDParamKeys.GAS_TXN_TTL, "代扣用户信息浏览");
-	    context.setData(GDParamKeys.GAS_SUB_TTL, "查询内容");
-		context.setData(GDParamKeys.GAS_MSG_TYP, "N");
-		context.setData(GDParamKeys.GDEUPSB_RSP_MSG, "交易成功");
-		context.setData(GDParamKeys.GAS_RSP_COD, GDConstants.GDEUPSB_TXN_SUCC_CODE);
+//		context.setData(GDParamKeys.GAS_AP_CDE, "32");
+//	    context.setData(GDParamKeys.GAS_OFMT_COD, "z01");
+//	    context.setData(GDParamKeys.GAS_PAGE_NO, "0001");
+//	    context.setData(GDParamKeys.GAS_VAR_SIZE, "3");
+//	    context.setData(GDParamKeys.GAS_TXN_TTL, "代扣用户信息浏览");
+//	    context.setData(GDParamKeys.GAS_SUB_TTL, "查询内容");
+//		context.setData(GDParamKeys.GAS_MSG_TYP, "N");
+//		context.setData(GDParamKeys.GDEUPSB_RSP_MSG, "交易成功");
+//		context.setData(GDParamKeys.GAS_RSP_COD, GDConstants.GDEUPSB_TXN_SUCC_CODE);
 		logger.info("==========context=" + context);
 		
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);

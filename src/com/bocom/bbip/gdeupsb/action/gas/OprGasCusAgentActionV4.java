@@ -73,7 +73,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			cmuTelSts = true;
 		}
 
-		context.setData(GDParamKeys.GAS_BK, "CNJT");
+		context.setData(GDParamKeys.GAS_BK, "cnjt");
 		context.setData(ParamKeys.CUS_NO, context.getData(ParamKeys.THD_CUS_NO));
 		context.setData("agtSrvCusId", context.getData(ParamKeys.THD_CUS_NO));
 
