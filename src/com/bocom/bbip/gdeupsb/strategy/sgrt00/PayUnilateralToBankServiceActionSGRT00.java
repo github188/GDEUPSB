@@ -84,7 +84,8 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
         context.setData(ParamKeys.CUS_AC, cusAgtInfo.getActNo());
         context.setData(ParamKeys.THD_SEQUENCE, publicService.getBBIPSequence());
         context.setData(ParamKeys.BR, context.getData(ParamKeys.BR));
-        context.setData(ParamKeys.TELLER, publicService.getETeller(context.getData(ParamKeys.BR).toString()));
+        //context.setData(ParamKeys.TELLER, publicService.getETeller(context.getData(ParamKeys.BR).toString()));
+        context.setData(ParamKeys.TELLER, "ABIR148");
         context.setData(ParamKeys.EUPS_BUSS_TYPE, "SGRT00");
         context.setData(ParamKeys.TXN_AMT, context.getData("QTY_TRADE"));
 
