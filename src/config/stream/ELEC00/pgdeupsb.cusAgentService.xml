@@ -30,5 +30,7 @@
 							<fixString name="des1"  length="128" /><!-- 备注	BZ	Varchar2(128)-->	
 							
 							<fixString name="agtSts" length="1"/><!-- 签约状态 -->
-								
+							<fixString name="sqn" length="24"/>
+							<fixString name="txnDte" length="8"/>
+							<fixString name="txnTme" length="6"/>	
 	</segment>
