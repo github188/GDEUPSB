@@ -242,6 +242,10 @@ public class CusAgentServiceAction extends BaseAction{
 			map.put("chn", context.getData(ParamKeys.CHANNEL));
 			map.put("bk", context.getData(ParamKeys.BK));
 			map.put("br", context.getData(ParamKeys.BR));
+			if(context.getData(ParamKeys.THD_SQN)!=null){
+				map.put("bk", "441999");
+				map.put("br", "441800");
+			}
 			map.put("cusAc", context.getData("cusAc"));
 			logger.info("~~~~~~~~~~requestHeader~~~~map~~~~~ "+map);
 			logger.info("~~~~~~~~~~列表查询开始 ");
