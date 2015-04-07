@@ -586,5 +586,11 @@
 			encoding="GBK" />
 	</file>
 
-
+	<!-- 汕头水费 批量文件返回 -->
+	<file name="watBatchResult" id="watBatchResult" encoding="GBK"
+		lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/watr00/BatchDataResultDetail.xml" />
+		<line name="header" ref="config/fmt/fileFmt/watr00/BatchDataResultHead.xml" />
+	</file>
 </files>
