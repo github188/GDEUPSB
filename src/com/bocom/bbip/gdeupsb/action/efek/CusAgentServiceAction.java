@@ -78,12 +78,8 @@ public class CusAgentServiceAction extends BaseAction{
 				}else if("1".equals(oprTyp)){
 					//先删除协议，然后再添加 
 					logger.info("~~~~~~~~~~~~~~~~~Enter  eups.commUpdateCusAgentELEC00 ");
-					context.setData(GDParamKeys.NEWBANKNO, "301");
-					map.put("cusAc", context.getData("newCusAc"));
-					map.put("cusNme", context.getData("newCusName"));
 					agdAgrNo=selectList(context);
 					map.put("agdAgrNo", agdAgrNo);
-					
 					mothed="eups.commDelCusAgentELEC00";
 					bbipPublicService.synExecute("eups.commDelCusAgentELEC00", context);
 					i=1;
@@ -114,10 +110,12 @@ public class CusAgentServiceAction extends BaseAction{
 				cusList.add(cusMap);
 				
 				context.setData("customerInfo", cusList);			
-				
 						
 				if(i==1){
 					mothed="eups.commInsertCusAgenteELEC00";
+					context.setData(GDParamKeys.NEWBANKNO, "301");
+					map.put("cusAc", context.getData("newCusAc"));
+					map.put("cusNme", context.getData("newCusName"));
 					bbipPublicService.synExecute(mothed, context);
 				}
 				
