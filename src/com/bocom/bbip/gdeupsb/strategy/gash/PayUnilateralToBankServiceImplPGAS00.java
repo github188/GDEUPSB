@@ -8,12 +8,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.comp.BBIPPublicService;
+import com.bocom.bbip.data.annotation.FindOne;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.spi.service.single.PayUnilateralToBankService;
 import com.bocom.bbip.eups.spi.vo.CommHeadDomain;
 import com.bocom.bbip.eups.spi.vo.PayFeeOnlineDomain;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.entity.GdGasCusAll;
 import com.bocom.bbip.gdeupsb.repository.GdGasCusAllRepository;
 
 import com.bocom.bbip.utils.DateUtils;
@@ -45,6 +47,7 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 		logger.info("PayUnilateralToBankServiceImplPGAS00@prepareCheckDeal start!");
 		logger.info("======context:" + context);
 
+		//TODO  get tlr
 		context.setData(ParamKeys.TELLER, "ABIR148");
 		context.setData(ParamKeys.BR, "01441131999");
 		context.setData(ParamKeys.BK, "01441999999");
@@ -89,7 +92,13 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 		// 预置交易扣款失败
 		// context.setData(ParamKeys.RSP_MSG, "扣款失败");
 		context.setData(ParamKeys.BAK_FLD5, "扣款失败");
-
+		
+		
+		GdGasCusAll cusInfo = gdGasCusAllRepository.findOne((String)context.getData(ParamKeys.THD_CUS_NO));
+		context.setData(ParamKeys.CUS_NME, cusInfo.getCusNme());
+		context.setData(ParamKeys.THD_CUS_NME, cusInfo.getThdCusNme());
+		logger.info("=================== the cusNme is :" + context.getData(ParamKeys.CUS_NME));
+		logger.info("=================== the thdCusNme is :" + context.getData(ParamKeys.THD_CUS_NME));
 		// 查询用户信息（签约状态）select ActNam from Gascusall491 where UserNo='%s' and
 		// ActNo='%s' cusAc UserNo='%s' cusNo
 //		GdGasCusAll qryCusInf = new GdGasCusAll();
@@ -124,7 +133,7 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 		// len, des, LorR);
 		// context.setData(ParamKeys.TXN_AMOUNT, txnAmt2);
 		// <Set>TCusNm=$ActNam</Set>
-		context.setData(ParamKeys.THD_CUS_NME, context.getData("cusNme"));
+//		context.setData(ParamKeys.THD_CUS_NME, context.getData("cusNme"));
 		// <Set>CnlTyp=L</Set><!--交易渠道类型：L第三方系统-->
 		// context.setData(ParamKeys.CHL_TYP, "L");
 

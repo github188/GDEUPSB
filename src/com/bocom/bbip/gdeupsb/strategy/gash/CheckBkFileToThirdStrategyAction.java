@@ -65,9 +65,10 @@ public class CheckBkFileToThirdStrategyAction implements CheckBkFileToThirdServi
 		//select * from gastxnjnl491 where OptDat='%s' and TTxnCd='SMPCPAY'  and PkgFlg='0'	
 		
 		EupsTransJournal etj = new EupsTransJournal();
-		etj.setComNo(context.getData(ParamKeys.COMPANY_NO).toString().trim());
+//		etj.setComNo(context.getData(ParamKeys.COMPANY_NO).toString().trim());
+		etj.setEupsBusTyp((String) context.getData(ParamKeys.EUPS_BUSS_TYPE));
 		etj.setTxnDte((Date) (context.getData("fileDte")));
-		etj.setThdTxnCde("SMPCPAY");//460710?
+//TODO		etj.setThdTxnCde("SMPCPAY");//460710?
 
 		List<EupsTransJournal> chkEtjList = eupsTransJournalRepository.find(etj);
 		if (null == chkEtjList || CollectionUtils.isEmpty(chkEtjList)) {
@@ -78,7 +79,7 @@ public class CheckBkFileToThirdStrategyAction implements CheckBkFileToThirdServi
 		for (EupsTransJournal etjnl : chkEtjList) {
 			// 判断chkEtjList中的交易状态，取状态为“S”、“F”、的record
 			if ("S".equals(etjnl.getTxnSts()) || "F".equals(etjnl.getTxnSts())) {
-				etjnl.setBk("CNJT");
+				etjnl.setBk("cnjt");
 				etjLst.add(etjnl);
 			}
 		}
@@ -117,9 +118,10 @@ public class CheckBkFileToThirdStrategyAction implements CheckBkFileToThirdServi
 //		context.setData(ParamKeys.THD_TXN_CDE, thdTxnCde);
 //		String sqn = context.getData(ParamKeys.SEQUENCE);
 		// 交易日期
-		String fileDte = context.getData("fileDte");
+		String fileDte = null;
 		
-		if(StringUtils.isNotEmpty(fileDte)){
+		if(StringUtils.isNotBlank((String)context.getData("fileDte"))){
+			fileDte = context.getData("fileDte");
 			Date fileDate = DateUtils.parse(fileDte);
 			fileDte = DateUtils.format(fileDate, DateUtils.STYLE_yyyyMMdd);
 			context.setData("fileDte", fileDate);
