@@ -1,6 +1,7 @@
 package com.bocom.bbip.gdeupsb.strategy.efek.agent;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -75,6 +76,17 @@ public class InsertCusAgentServiceAction extends BaseAction {
 			context.setData("bk", "441999");
 			context.setData("br", "441800");
 		}
+		
+		System.out.println();
+		System.out.println("~~~~~~~~~~");
+		System.out.println();
+		System.out.println(context.getVariable("BBIP_HEADER"));
+		System.out.println();
+		System.out.println(context.getData("agentCollectAgreement"));
+		System.out.println();
+		System.out.println(context.getData("customerInfo"));
+		System.out.println();
+		
 		Result editCusAgtResult = bgspServiceAccessObject.callServiceFlatting("maintainAgentCollectAgreement",context.getDataMap());
 		logger.info("===========editCusAgtResult："+editCusAgtResult);
 
@@ -164,11 +176,12 @@ public class InsertCusAgentServiceAction extends BaseAction {
 					}
 			}
 		}
-		String thdTxnDte=context.getData("thdTxnDate").toString();
-		String thdTxnTme=context.getData("thdTxnTime").toString();
-		context.setData(ParamKeys.THD_TXN_DATE, DateUtils.parse(thdTxnDte));
-		context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse((thdTxnDte+thdTxnTme),DateUtils.STYLE_yyyyMMddHHmmss));
-		
+		if(context.getData(ParamKeys.THD_SQN) !=null){
+				String thdTxnDte=context.getData("thdTxnDate").toString();
+				String thdTxnTme=context.getData("thdTxnTime").toString();
+				context.setData(ParamKeys.THD_TXN_DATE, DateUtils.parse(thdTxnDte));
+				context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse((thdTxnDte+thdTxnTme),DateUtils.STYLE_yyyyMMddHHmmss));
+		}
 		context.setData(ParamKeys.TXN_TME,DateUtils.parse(context.getData(ParamKeys.TXN_TME).toString()));
 		logger.info("=============End    InsertCusAgentServiceAction  ");
 	}
