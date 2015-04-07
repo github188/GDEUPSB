@@ -67,26 +67,32 @@ public class CusAgentServiceAction extends BaseAction{
 				String oprTyp=context.getData("oprTyp").toString();
 				String mothed="";
 				String agdAgrNo="";
+				int i=0;
 				if("0".equals(oprTyp)){
 					logger.info("~~~~~~~~~~~~~~~~~Enter  eups.commInsertCusAgenteELEC00 ");
 					mothed="eups.commInsertCusAgenteELEC00";
 					context.setData(GDParamKeys.NEWBANKNO, "301");
 					map.put("cusAc", context.getData("newCusAc"));
 					map.put("cusNme", context.getData("newCusName"));
+					bbipPublicService.synExecute(mothed, context);
 				}else if("1".equals(oprTyp)){
 					//先删除协议，然后再添加 
 					logger.info("~~~~~~~~~~~~~~~~~Enter  eups.commUpdateCusAgentELEC00 ");
-					mothed="eups.commUpdateCusAgentELEC00";
 					context.setData(GDParamKeys.NEWBANKNO, "301");
 					map.put("cusAc", context.getData("newCusAc"));
 					map.put("cusNme", context.getData("newCusName"));
 					agdAgrNo=selectList(context);
 					map.put("agdAgrNo", agdAgrNo);
+					
+					mothed="eups.commDelCusAgentELEC00";
+					bbipPublicService.synExecute("eups.commDelCusAgentELEC00", context);
+					i=1;
 				}else {
 					agdAgrNo=selectList(context);
 					map.put("agdAgrNo", agdAgrNo);
 					logger.info("~~~~~~~~~~~~~~~~~Enter  eups.commDelCusAgentELEC00 ");
 					mothed="eups.commDelCusAgentELEC00";
+					bbipPublicService.synExecute("eups.commDelCusAgentELEC00", context);
 				}
 				//添加 agentCollectAgreement
 				List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();
@@ -102,11 +108,11 @@ public class CusAgentServiceAction extends BaseAction{
 				List<Map<String, Object>> cusList=new ArrayList<Map<String,Object>>();
 				cusList.add(cusMap);
 				context.setData("customerInfo", cusList);			
-				if(agdAgrNo.isEmpty()){
-						bbipPublicService.synExecute(mothed, context);
-				}else{
-						bbipPublicService.synExecute("eups.commDelCusAgentELEC00", context);
-						bbipPublicService.synExecute("eups.commInsertCusAgenteELEC00", context);
+				
+						
+				if(i==1){
+					mothed="eups.commInsertCusAgenteELEC00";
+					bbipPublicService.synExecute(mothed, context);
 				}
 				
 				log.info("============End  CusAgentServiceAction");
@@ -240,8 +246,8 @@ public class CusAgentServiceAction extends BaseAction{
 			List<Map<String,Object>> list=(List<Map<String, Object>>)accessObjList.getPayload().get("agentCollectAgreement");
 			String agdAgrNo=list.get(0).get("agdAgrNo").toString();
 			logger.info("~~~~~~~~~~~~~~~协议编号： "+agdAgrNo);
-			context.setData(ParamKeys.CUS_AC, context.getData(GDParamKeys.NEWCUSAC));
 			context.setData("agdAgrNo", agdAgrNo);
+			
 			return agdAgrNo;
 		}
 }
