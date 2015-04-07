@@ -211,7 +211,6 @@ public class EstablishAccountAction extends BaseAction {
 		log.info("============context after setAgtCltAndCusInf :" + context);
 	}
 
-
 	private Map<String, Object> setAcpMap(Context context) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("traceNo", context.getData(ParamKeys.TRACE_NO));
