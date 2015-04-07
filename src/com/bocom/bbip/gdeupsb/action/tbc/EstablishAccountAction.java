@@ -96,12 +96,6 @@ public class EstablishAccountAction extends BaseAction {
         context.setData("tTxnCd","483803");
         context.setData("txnCtlSts", "0");
         //   检查该客户是否已签约
-        log.info("向核心开户查询！");
-        Map<String, Object> cusListMap = setAcpMap(context);
-        cusListMap.put(ParamKeys.CUS_AC,context.getData("actNo"));
-        context.setDataMap(cusListMap);
-        Result accessObjList = serviceAccess.callServiceFlatting("queryListAgentCollectAgreement",cusListMap);
-        System.out.println(accessObjList);
         GdTbcCusAgtInfo tbcCusAgtInfo = new GdTbcCusAgtInfo();
         tbcCusAgtInfo.setActNo(context.getData("actNo").toString());
         List<GdTbcCusAgtInfo> gdTbcAgtInfo = get(GdTbcCusAgtInfoRepository.class).find(tbcCusAgtInfo);
@@ -109,8 +103,8 @@ public class EstablishAccountAction extends BaseAction {
         	setAgtCltAndCusInf(context);
         	context.setData("oprTyp", "0");
         	context.setData("agrChl", "01");
-        	context.setData("bk", "01441800999");//TODO
-        	context.setData("br", "01441999999");
+        	context.setData("bk", "01441999999");//TODO
+        	context.setData("br", "01441800999");
         	context.setData("cusNme", context.getData("tCusNm"));
         	context.setData("ccy", "CNY");
         	context.setData("idTyp", context.getData("pasTyp"));
@@ -152,8 +146,8 @@ public class EstablishAccountAction extends BaseAction {
         	setAgtCltAndCusInf(context);
         	context.setData("oprTyp", "0");
         	context.setData("agrChl", "01");
-        	context.setData("bk", "01441800999");//TODO
-        	context.setData("br", "01441999999");
+        	context.setData("bk", "01441999999");//TODO
+        	context.setData("br", "01441800999");
         	context.setData("cusNme", context.getData("tCusNm"));
         	context.setData("ccy", "CNY");
         	context.setData("idTyp", context.getData("pasTyp"));
@@ -211,20 +205,7 @@ public class EstablishAccountAction extends BaseAction {
 		log.info("============context after setAgtCltAndCusInf :" + context);
 	}
 
-	private Map<String, Object> setAcpMap(Context context) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("traceNo", context.getData(ParamKeys.TRACE_NO));
-		map.put("traceSrc", "GDEUPSB");
-		map.put("version", context.getData(ParamKeys.VERSION));
-		map.put("reqTme", new Date());
-		map.put("reqJrnNo", get(BBIPPublicService.class).getBBIPSequence());
-		map.put("reqSysCde","SGRT00");
-		map.put("tlr","ABIR148");
-		map.put("chn", context.getData(ParamKeys.CHANNEL));
-		map.put("bk", "01441800999");
-		map.put("br", "01441999999");
-		return map;
-	}
+	
 
 	private Map<String, Object> setCustomerInfoMap(Context context) {
 		Map<String, Object> map = new HashMap<String, Object>();
