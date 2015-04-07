@@ -60,6 +60,7 @@ public class InsertCusAgentServiceAction extends BaseAction {
 		context.setData(ParamKeys.COMPANY_NO, context.getData("comNo"));
 		context.setData(ParamKeys.CUS_AC, context.getData(GDParamKeys.NEWCUSAC));
 		Result editCusAgtResult = bgspServiceAccessObject.callServiceFlatting("maintainAgentCollectAgreement",context.getDataMap());
+		logger.info("===========editCusAgtResult："+editCusAgtResult);
 		if(editCusAgtResult.isSuccess()){
 			Date txnDte=(Date)context.getData(ParamKeys.TXN_DTE);
 			Date txnTme=DateUtils.parse(context.getData("txnTme").toString());
