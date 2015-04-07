@@ -1,10 +1,12 @@
 package com.bocom.bbip.gdeupsb.action.gas;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.mvel2.optimizers.impl.refl.nodes.ArrayLength;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
 import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
+import com.bocom.bbip.gdeupsb.entity.GdGashBatchTmp;
+import com.bocom.bbip.gdeupsb.repository.GdGashBatchTmpRepository;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
@@ -52,6 +56,9 @@ public class MsgToGasAftBatchAction implements AfterBatchAcpService {
 	@Autowired
 	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
 	
+	@Autowired
+	GdGashBatchTmpRepository gdGashBatchTmpRepository;
+	
 	private Logger logger = LoggerFactory.getLogger(MsgToGasAftBatchAction.class);
 	
 	@Override
@@ -70,9 +77,9 @@ public class MsgToGasAftBatchAction implements AfterBatchAcpService {
 		 * step7: 更新流水表
 		 * step8: 信息处理 rspMsg rspCod......
 		 */
-		String comNo = context.getData("comNo");
+		String comNo = context.getData(ParamKeys.COMPANY_NO);
 		//根据批次号查询批次信息
-		String batNo = context.getData("batNo");
+		String batNo = context.getData(ParamKeys.BAT_NO);
 		EupsBatchConsoleInfo eupsBatchConsoleInfo = new EupsBatchConsoleInfo();
 		eupsBatchConsoleInfo.setBatNo(batNo);
 		List<EupsBatchConsoleInfo> batchConsoleInfos = eupsBatchConsoleInfoRepository.find(eupsBatchConsoleInfo);
@@ -81,8 +88,7 @@ public class MsgToGasAftBatchAction implements AfterBatchAcpService {
 		}
 		
 		String txnDteTmp = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
-		String bk = context.getData("bk");
-		String locFileName = "file" + bk + txnDteTmp + ".txt";
+		String locFileName = "fileCNJT"  + txnDteTmp + ".txt";
 		
 		EupsThdFtpConfig ftpCfg = new EupsThdFtpConfig();
 		ftpCfg.setComNo(comNo);
@@ -133,7 +139,29 @@ public class MsgToGasAftBatchAction implements AfterBatchAcpService {
             logger.info("There are no records for select check trans journal ");
             throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
         }
-        map.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(chkEupsTransJournalList));
+        
+        List<EupsTransJournal> returnList = new ArrayList<EupsTransJournal>();
+        GdGashBatchTmp batchTmp = new GdGashBatchTmp();
+        batchTmp.setBatNo(batNo);
+        List<GdGashBatchTmp> getPayMonTmps = gdGashBatchTmpRepository.find(batchTmp); 
+        String payMon =  getPayMonTmps.get(0).getPayMon();
+        String rsvFld5 = null;
+        for(EupsTransJournal jnl : chkEupsTransJournalList){
+        	if("S".equals(jnl.getTxnSts())){
+        		jnl.setBakFld2("B0");
+        	}
+        	if("F".equals(jnl.getTxnSts())){
+        		jnl.setBakFld2("B3");
+        	}
+        	jnl.setBk("cnjt");
+        	jnl.setRsvFld6(payMon);
+        	
+        	rsvFld5 = DateUtils.format((Date)jnl.getTxnDte(), DateUtils.STYLE_SIMPLE_DATE);
+        	jnl.setRsvFld5(rsvFld5);
+        	
+        	returnList.add(jnl);
+        }
+        map.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(returnList));
         return map;
     }
 
