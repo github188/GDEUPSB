@@ -5,8 +5,8 @@
 	name="460432Req">
 							<fixString name="agrBr"  length="64"/><!-- 网点名称	WDMC	Varchar2(64)-->		
 							<fixString name="thdSqn"  length="24"/><!-- 交易流水号	JYLSH	Varchar2(24)-->		
-							<fixString name="thdTxnDte"  length="8"/><!-- 交易日期	JYRQ	Varchar2(8)-->		
-							<fixString name="thdTxnTme"  length="6"/><!-- 交易时间	JYSJ	Varchar2 (6)-->		
+							<fixString name="thdTxnDate"  length="8"/><!-- 交易日期	JYRQ	Varchar2(8)-->		
+							<fixString name="thdTxnTime"  length="6"/><!-- 交易时间	JYSJ	Varchar2 (6)-->		
 							
 							<fixString name="oprTyp"  length="1" /><!-- 签订标志	QDBZ	Varchar2(1)-->		
 							<fixString name="comNo"  length="8" /><!-- 单位编码-->
