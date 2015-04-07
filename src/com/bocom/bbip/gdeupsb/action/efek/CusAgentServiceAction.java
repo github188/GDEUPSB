@@ -43,7 +43,7 @@ public class CusAgentServiceAction extends BaseAction{
 		public void execute(Context context)throws CoreException,CoreRuntimeException{
 				logger.info("============Start  CusAgentServiceAction ");
 				context.setData("sqns", context.getData("sqn"));
-				context.setData(GDParamKeys.SVRCOD, "30");
+				
 				String comNo=context.getData("comNo").toString();
 				//代收付单位编号
 				EupsActSysPara eupsActSysPara=new EupsActSysPara();
@@ -62,7 +62,7 @@ public class CusAgentServiceAction extends BaseAction{
 				context.setData("agrChl","01");
 				context.setData("agtSrvCusId",context.getData("cusNo"));
 				context.setData("bvCde", "009");
-	
+
 				Map<String, Object> map=setAgentCollectAgreementMap(context);
 				String oprTyp=context.getData("oprTyp").toString();
 				String mothed="";
@@ -98,7 +98,12 @@ public class CusAgentServiceAction extends BaseAction{
 				List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();
 				list.add(map);
 				context.setData(ParamKeys.AGENT_COLLECT_AGREEMENT, list);
-				constantOfSoapUI(context);
+				//第三方如果空 设定一个值判断返回报文
+				if(context.getData(ParamKeys.THD_SQN)==null){
+						context.setData("callThd", "callThd");
+						constantOfSoapUI(context);
+						context.setData(GDParamKeys.SVRCOD, "30");
+				}
 				context.setData("agtSrvCusPnm", context.getData("settleAccountsName"));
 				
 				
@@ -107,6 +112,7 @@ public class CusAgentServiceAction extends BaseAction{
 				cusMap.put("cusMap", agdAgrNo);
 				List<Map<String, Object>> cusList=new ArrayList<Map<String,Object>>();
 				cusList.add(cusMap);
+				
 				context.setData("customerInfo", cusList);			
 				
 						
@@ -143,7 +149,6 @@ public class CusAgentServiceAction extends BaseAction{
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
 				context.setData("PKGCNT", "000000");
 				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW07");		
-				context.setData("callThd", "callThd");
 			}
 
 		private Map<String, Object> setCustomerInfoMap(Context context) {
