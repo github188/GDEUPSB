@@ -33,7 +33,7 @@
 	<fixString name="bakFld2" length="10"/>
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
 	
-	<fixString name="gasBk" length="4"   />
+	<fixString name="bk" length="4"   />
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
 	
 	<fixString name="thdsqn" length="18"    />
@@ -48,7 +48,7 @@
 	<fixString name="txnAmt" length="10"   />
 	<!-- <fixString  name="DeliA" length="1"  /> -->
 	
-	<fixString name="txnDte" length="10"   />
+	<fixString name="rsvFld5" length="10"   />
 	<!-- <fixString  name="DeliA" length="1" default=","/> -->
 	
 	</segment>
