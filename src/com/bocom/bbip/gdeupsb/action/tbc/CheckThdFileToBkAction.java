@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.action.tbc;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,7 @@ import com.bocom.bbip.gdeupsb.repository.GdEupsTransJournalRepository;
 import com.bocom.bbip.gdeupsb.repository.GdTbcBasInfRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.utils.BeanUtils;
+import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -86,7 +88,7 @@ public class CheckThdFileToBkAction extends BaseAction {
          transJournal.setComNo(cAgtNo);
          transJournal.setSqn(context.getData("oLogNo").toString());
          List<Map<String, Object>>resultList =transJournalRepository.findTbcTransJournal(transJournal);
-         if (null == resultList){
+         if (CollectionUtils.isEmpty(resultList)){
              throw new CoreException("无此交易信息");
          }
          Map<String, Object> fileMap = new HashMap<String, Object>();
@@ -98,8 +100,8 @@ public class CheckThdFileToBkAction extends BaseAction {
          fileHeader.put("TRAN_TIME", "<TRAN_TIME>"+context.getData("TRADE_DATE").toString()+"</TRAN_TIME>\n");
          fileHeader.put("BANK_ID", "<BANK_ID>"+context.getData("BANK_ID")+"</BANK_ID>\n");
          fileHeader.put("DPT_ID", "<DPT_ID>"+context.getData("DPT_ID")+"</DPT_ID>\n");
-         fileHeader.put("TRADE_SEQ", "<TRADE_SEQ>"+resultList.get(0).get("tLogNo")+"</TRADE_SEQ>\n");
-         fileHeader.put("APP_TYPE", "<APP_TYPE> </APP_TYPE>\n");
+         fileHeader.put("TRADE_SEQ", "<TRADE_SEQ>"+context.getData("oLogNo").toString()+"</TRADE_SEQ>\n");
+         fileHeader.put("APP_TYPE", "<APP_TYPE>"+context.getData("APP_TYPE").toString()+"</APP_TYPE>\n");
          fileHeader.put("pubEnd","</PUB>\n<OUT>\n");
          fileHeader.put("RET_CODE", "<RET_CODE>000000</RET_CODE>\n");
          fileHeader.put("MSG", "<MSG>交易成功</MSG>\n<RE>\n");
@@ -113,8 +115,11 @@ public class CheckThdFileToBkAction extends BaseAction {
          fileBottom.put("REEND", "\n</RE>\n<TOTAL>\n");
          fileBottom.put("DEV_ID", "<DEV_ID>"+context.getData("devId")+"</DEV_ID>\n");
          fileBottom.put("Teller", "<Teller>"+context.getData("teller") +"</Teller>\n");
-         fileBottom.put("SUCC_COUNT", "<SUCC_COUNT>"+resultList.get(0).get("totSum")+"</SUCC_COUNT>\n");
-         fileBottom.put("SUCC_AMT", "<SUCC_AMT>"+resultList.get(0).get("totAmt")+"</SUCC_AMT>\n</TOTAL>\n</OUT>\n</DLMAPS>");
+         fileBottom.put("SUCC_COUNT", "<SUCC_COUNT>"+resultList.get(0).get("TOTSUM").toString()+"</SUCC_COUNT>\n");
+         BigDecimal length=new BigDecimal(resultList.get(0).get("TOTAMT").toString());
+         length=length.divide(new BigDecimal("100"));
+ 		 System.out.println("》》》》》》》》》》》》length《《《《《《《《《"+length);
+         fileBottom.put("SUCC_AMT", "<SUCC_AMT>"+length.toString()+"</SUCC_AMT>\n</TOTAL>\n</OUT>\n</DLMAPS>");
          fileMap.put("bottom", fileBottom);
          try {
              operateFile.createCheckFile(eupsThdFtpConfig, "tbcCheckFile", locFileName, fileMap);
