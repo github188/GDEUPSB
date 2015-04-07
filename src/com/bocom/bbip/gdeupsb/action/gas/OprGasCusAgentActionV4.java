@@ -159,25 +159,35 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 					setAgtCltAndCusInf(context);
 
 					// 上代收付查询协议，先根据cusAc进行列表查询得到协议编号，再用协议编号查询明细（用户信息）
-					Map<String, Object> cusListMap = setAcpMap(context);
-					cusListMap.put(ParamKeys.CUS_AC,
-							context.getData(ParamKeys.CUS_AC));
-					context.setDataMap(cusListMap);
-
-					Result accessObjList = bgspServiceAccessObject
-							.callServiceFlatting(
-									"queryListAgentCollectAgreement",
-									cusListMap);
-					logger.info("=========after optFlg=1 accessObjList：【accessObjList.getResponseCode():"
-							+ accessObjList.getResponseCode()
-							+ "】【accessObjList.getResponseMessage():"
-							+ accessObjList.getResponseMessage()
-							+ "】【accessObjList.getResponseType()："
-							+ accessObjList.getResponseType() + "】");
-					if ("N".equals(accessObjList.getResponseType())) {
-						throw new CoreRuntimeException(
-								GDErrorCodes.GAS_QRY_AGT_ERR_EXIST);
+//					Map<String, Object> cusListMap = setAcpMap(context);
+//					cusListMap.put(ParamKeys.CUS_AC,
+//							context.getData(ParamKeys.CUS_AC));
+//					context.setDataMap(cusListMap);
+//
+//					Result accessObjList = bgspServiceAccessObject
+//							.callServiceFlatting(
+//									"queryListAgentCollectAgreement",
+//									cusListMap);
+//					logger.info("=========after optFlg=1 accessObjList：【accessObjList.getResponseCode():"
+//							+ accessObjList.getResponseCode()
+//							+ "】【accessObjList.getResponseMessage():"
+//							+ accessObjList.getResponseMessage()
+//							+ "】【accessObjList.getResponseType()："
+//							+ accessObjList.getResponseType() + "】");
+//					if ("N".equals(accessObjList.getResponseType())) {
+//						throw new CoreRuntimeException(
+//								GDErrorCodes.GAS_QRY_AGT_ERR_EXIST);
+//					}
+					
+					
+					//查询本地协议表是否存在该cusNo
+					GdGasCusAll gdGasCusAll = new GdGasCusAll();
+					gdGasCusAll.setCusNo((String) context.getData(ParamKeys.THD_CUS_NO));
+					List<GdGasCusAll> existCus = get(GdGasCusAllRepository.class).find(gdGasCusAll);
+					if(CollectionUtils.isEmpty(existCus)){
+						throw new CoreRuntimeException(GDErrorCodes.GAS_QRY_AGT_ERR_EXIST);
 					}
+					
 					logger.info("============未签约，可签约");
 					context.setData("tCommd", "Add");
 					context.setData("TransCode", "Add");
@@ -316,7 +326,8 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 							+ accessObjList.getResponseType() + "】");
 					if (!("N".equals(accessObjList.getResponseType()))) {
 						throw new CoreException(accessObjList.getResponseMessage());
-					} else {
+					}
+					else {
 						logger.info("======================context after qryCusAgtList:"
 								+ context);
 						context.setDataMap(accessObjList.getPayload());
@@ -326,7 +337,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 						@SuppressWarnings("unchecked")
 						List<Map<String, Object>> agentCollectAgreementMaps = (List<Map<String, Object>>) context
 								.getData("agentCollectAgreement");
-						//返回的协议信息List可能包含多条信息，剔除与目标删除用户无关的协议信息
+						//返回的协议信息List可能包含多条协议信息，剔除与目标删除用户无关的协议信息
 						for(int i=0; i<agentCollectAgreementMaps.size(); i++){
 							if(!(context.getData(ParamKeys.THD_CUS_NME).equals(agentCollectAgreementMaps.get(i).get("agtSrvCusPnm")))){
 								agentCollectAgreementMaps.remove(i);

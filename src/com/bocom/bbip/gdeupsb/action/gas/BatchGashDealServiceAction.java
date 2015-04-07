@@ -15,6 +15,9 @@ import org.springframework.core.io.Resource;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.comp.BBIPPublicServiceImpl;
+import com.bocom.bbip.comp.CommonRequest;
+import com.bocom.bbip.comp.account.AccountService;
+import com.bocom.bbip.comp.account.support.CusActInfResult;
 import com.bocom.bbip.comp.btp.BTPService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
@@ -62,6 +65,10 @@ public class BatchGashDealServiceAction extends BaseAction implements BatchAcpSe
 	
 	@Autowired
 	GdGasCusAllRepository gdGasCusAllRepository;
+	
+	@Autowired
+	AccountService accountService;
+	
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -132,17 +139,20 @@ public class BatchGashDealServiceAction extends BaseAction implements BatchAcpSe
     	
         // to sum totAmt
         BigDecimal totAmt = new BigDecimal(0.0);
-        
+        String cusAc = null;
+        String OBKBK = null;
         for(GdGashBatchTmp tmp : lt){
         	Map<String, Object> tmpMap = new HashMap<String, Object>();
         	//TODO：我行卡查询，开户行查询
-//        			if (accountService.isOurBankCard(tmp.getCusAc())) {
+        	cusAc = tmp.getCusAc();
+        			if (accountService.isOurBankCard(cusAc)) {
         				isOurBnk = "0"; // 我行卡
-//        			} else {
-//        				isOurBnk = "1"; // 他行卡
-//        				CusActInfResult actInf = accountService.getAcInf(CommonRequest.build(context), cusAc);
-//        				agtFileDeatailMap.put("OBKBK", actInf.getOpnBk());
-//        			}
+        			} else {
+        				isOurBnk = "1"; // 他行卡
+        				CusActInfResult actInf = accountService.getAcInf(CommonRequest.build(context), cusAc);
+        				OBKBK = actInf.getOpnBk();
+        				tmpMap.put("OBKBK", OBKBK);
+        			}
         	
         	tmpMap.put("cusAc", tmp.getCusAc());
         	tmpMap.put("cusNme", tmp.getCusNme());
