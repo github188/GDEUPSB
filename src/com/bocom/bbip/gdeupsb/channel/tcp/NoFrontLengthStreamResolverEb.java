@@ -21,24 +21,16 @@ public class NoFrontLengthStreamResolverEb
 	{
 		try {
 			int count = 0;
-			int a = 0;
-			while (count == 0) {
+			while (true) {
 				count = in.available();
-				Thread.sleep(500);
-				a++;
-				if (a > 10) {
+				if (count > 0) {
 					break;
 				}
 			}
 			byte[] resultByte = new byte[count];
-			int readCount = 0;
-			while (readCount < count) {
-				readCount += in.read(resultByte, readCount, count - readCount);
-			}
+			in.read(resultByte);
 			return resultByte;
 		} catch (IOException e) {
-			throw new RuntimeException("socket_read_error");
-		} catch (InterruptedException e) {
 			throw new RuntimeException("socket_read_error");
 		}
 	}
