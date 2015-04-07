@@ -138,20 +138,19 @@ public class PrintEupsbRptsAction extends BaseAction {
 			context.setData("TOTOTHERAMT", prtList.get(0).get("TOTOTHERAMT"));
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
 					.toString().trim()
-					+ "其他情况清单报表";
+					+ "_其他情况清单报表";
 		}
 		
 		context.setData("prtTtl", prtTtl);
-		fileName = new StringBuffer((new StringBuilder(prtTtl + "_" + br + "_"
-				+ prtDte + ".txt").toString()));
+		fileName = new StringBuffer((new StringBuilder(prtTtl))); 
+//		+ "_" + br + "_" + prtDte + ".txt").toString()
 
 		logger.info("==============fileName:" + fileName);
-		
+		 
 		//配置生成文件名字路径，其他信息从ftpCfg中获取
 		EupsThdFtpConfigRepository eupsThdFtpConfigRepository = get(EupsThdFtpConfigRepository.class);
-		EupsThdFtpConfig ftpCfg = get(OperateFTPAction.class).getFTPInfo("gdeupsbPrtCfg", eupsThdFtpConfigRepository);//TODO 配置ftpCfg
+//		EupsThdFtpConfig ftpCfg = get(OperateFTPAction.class).getFTPInfo("gdeupsbPrtCfg", eupsThdFtpConfigRepository);//TODO 配置ftpCfg
 //		ftpCfg.setLocFleNme(fileName.toString());
-		
 		ReportHelper reportHelper = get(ReportHelper.class);
 		MFTPConfigInfo mftpConfigInfo = reportHelper
 				.getMFTPConfigInfo(eupsThdFtpConfigRepository);
@@ -168,32 +167,32 @@ public class PrintEupsbRptsAction extends BaseAction {
 		String result = null;
 		Map<String, String> map = new HashMap<String, String>();
 
-		if ("0".equals(context.getData("prtTyp"))) {
+		if ("0".equals(context.getData("prtTyp"))) {//全部
 			map.put("commonPrtRpt", "config/report/common/commonPrintReport_all.vm");
 			render.setReportNameTemplateLocationMapping(map);
 			context.setData("eles", prtList);
 			result = render.renderAsString("commonPrtRpt", context);
 			logger.info(result);
-		} else if ("1".equals(context.getData("prtTyp"))) {
+		} else if ("1".equals(context.getData("prtTyp"))) {//成功
 			map.put("commonPrtRpt", "config/report/common/commonPrintReport_succ.vm");
 			render.setReportNameTemplateLocationMapping(map);
 			context.setData("eles", prtList);
 			result = render.renderAsString("commonPrtRpt", context);
 			logger.info(result);
-		} else if ("2".equals(context.getData("prtTyp"))) {
+		} else if ("2".equals(context.getData("prtTyp"))) {//失败
 			map.put("commonPrtRpt", "config/report/common/commonPrintReport_fail.vm");
 			render.setReportNameTemplateLocationMapping(map);
 			context.setData("eles", prtList);
 			result = render.renderAsString("commonPrtRpt", context);
 			logger.info(result);
-		} else if ("3".equals(context.getData("prtTyp"))) {
+		} else if ("3".equals(context.getData("prtTyp"))) {//存疑
 			map.put("commonPrtRpt", "config/report/common/commonPrintReport_doubt.vm");
 			render.setReportNameTemplateLocationMapping(map);
 			context.setData("eles", prtList);
 			result = render.renderAsString("commonPrtRpt", context);
 			logger.info(result);
 		}
-		else if ("4".equals(context.getData("prtTyp"))) {
+		else if ("4".equals(context.getData("prtTyp"))) {//其他
 			map.put("commonPrtRpt", "config/report/common/commonPrintReport_oth.vm");
 			render.setReportNameTemplateLocationMapping(map);
 			context.setData("eles", prtList);
@@ -203,42 +202,46 @@ public class PrintEupsbRptsAction extends BaseAction {
 
 		logger.info("=============ready to print report list=============");
 
+		//本地生成报表文件并发送到mftp服务器,打印机自动打印
+		reportHelper.createFileAndSendMFTP(context,result,fileName,mftpConfigInfo);
 
 		// TODO 拼装本地路径 本地测试
-		PrintWriter printWriter = null;
-		StringBuffer sbLocDir = new StringBuffer();
+//		PrintWriter printWriter = null;
+//		StringBuffer sbLocDir = new StringBuffer();
 //		sbLocDir.append("D:/testGash/checkFilTest/").append(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)).append("/");
-		sbLocDir.append(ftpCfg.getLocDir()).append(context.getData(ParamKeys.TELLER)).append("/").append(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)).append("/");
+//		sbLocDir.append(ftpCfg.getLocDir()).append("/").append(context.getData(ParamKeys.TELLER)).append("/").append(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)).append("/");
 		
-		try {
-			File file = new File(sbLocDir.toString());
-			if (!file.exists()) {
-				file.mkdirs();
-			}
-			printWriter = new PrintWriter(new BufferedWriter(
-					new OutputStreamWriter(new FileOutputStream(sbLocDir
-							.append(fileName).toString()), "GBK")));
-			printWriter.write(result);
-
-		} catch (IOException e) {
-			throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
-		} finally {
-			if (null != printWriter) {
-				try {
-					printWriter.close();
-				} catch (Exception e) {
-					throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
-				}
-			}
-		}
-
-		try {
-            get(MftpTransfer.class).send(sbLocDir.toString(), fileName.toString(), ftpCfg.getThdIpAdr());
-            log.info("mftp send success!");
-        } catch (Exception e) {
-            log.error("mftp send fail!");
-            throw new CoreException(ErrorCodes.EUPS_MFTP_FILEPUT_FAIL);
-        }
+        
+        
+//		try {
+//			File file = new File(sbLocDir.toString());
+//			if (!file.exists()) {
+//				file.mkdirs();
+//			}
+//			printWriter = new PrintWriter(new BufferedWriter(
+//					new OutputStreamWriter(new FileOutputStream(sbLocDir
+//							.append(fileName).toString()), "GBK")));
+//			printWriter.write(result);
+//
+//		} catch (IOException e) {
+//			throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
+//		} finally {
+//			if (null != printWriter) {
+//				try {
+//					printWriter.close();
+//				} catch (Exception e) {
+//					throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
+//				}
+//			}
+//		}
+//
+//		try {
+//            get(MftpTransfer.class).send(sbLocDir.toString(), fileName.toString(), ftpCfg.getThdIpAdr());
+//            log.info("mftp send success!");
+//        } catch (Exception e) {
+//            log.error("mftp send fail!");
+//            throw new CoreException(ErrorCodes.EUPS_MFTP_FILEPUT_FAIL);
+//        }
 		
 		// bbipPublicService.sendFileToBBOS(new
 		// File(TransferUtils.resolveFilePath(mftploca, reportFileName)),
@@ -247,6 +250,8 @@ public class PrintEupsbRptsAction extends BaseAction {
 //		 reportHelper.createFileAndSendMFTP(context, result, fileName,
 //		 mftpConfigInfo);
 //		 context.setData("filName", fileName);
+        String teller = (String)context.getData("tlr");
+        fileName.append("_p").append((new StringBuilder("_")).append(br).toString()).append((new StringBuilder("_")).append(teller).toString());
 		context.setData(ParamKeys.FLE_NME, fileName.toString());
 
 		logger.info("PrintReportServiceActionPGAS00 execute end ... ...");
