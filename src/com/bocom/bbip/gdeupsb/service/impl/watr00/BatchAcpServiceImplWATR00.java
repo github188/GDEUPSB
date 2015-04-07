@@ -261,7 +261,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 			}else{
 			Map<String,Object> temp = new HashMap<String,Object>();
 			temp.put("CUSAC", map.get("bcount"));
-			temp.put("CUSNME", "");
+			temp.put("CUSNME", "杨志平");
 			temp.put("TXNAMT", new BigDecimal(map.get("je").toString().trim()).scaleByPowerOfTen(-2));
 			temp.put("AGTSRVCUSID", map.get("hno"));
 			temp.put("AGTSRVCUSNME", "");
