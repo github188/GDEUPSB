@@ -146,8 +146,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			logger.info("=============context=======" + context);
 
 			logger.info("发燃气第三方，查看有无该用户编号信息");
-			Map<String, Object> thdRspMsg = callThdTradeManager.trade(
-					context);
+			Map<String, Object> thdRspMsg = callThdTradeManager.trade(context);
 			context.setDataMap(thdRspMsg);
 			logger.info("======================context after callThd qryUser========"
 					+ context);
