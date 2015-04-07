@@ -84,6 +84,8 @@ public class QryTxnJnlInfoAction extends BaseAction{
 			List<Map<String, Object>> tempList = new ArrayList<Map<String,Object>>();
 			for(Map<String, Object> tmpMap : qryTxnJnlInfo){
 				Map<String, Object> tmp = new HashMap<String, Object>();
+				
+				//wsdl接口全部为Char
 				tmp.put("sqn", tmpMap.get("SQN"));
 				tmp.put("mfmVchNo", tmpMap.get("MFM_VCH_NO"));
 				tmp.put("thdSqn", tmpMap.get("THD_SQN"));
@@ -91,6 +93,7 @@ public class QryTxnJnlInfoAction extends BaseAction{
 				tmp.put("thdCusNo", tmpMap.get("THD_CUS_NO"));
 				tmp.put("cusNme", tmpMap.get("CUS_NME"));
 				tmp.put("cusAc", tmpMap.get("CUS_AC"));
+				
 				tmp.put("reqTxnAmt", tmpMap.get("REQ_TXN_AMT")+"");
 				tmp.put("hfe", ""+tmpMap.get("HFE"));
 				tmp.put("txnAmt", ""+tmpMap.get("TXN_AMT"));
@@ -100,9 +103,10 @@ public class QryTxnJnlInfoAction extends BaseAction{
 				tmp.put("txnDte", DateUtils.format((Date)tmpMap.get("TXN_DTE"), DateUtils.STYLE_SIMPLE_DATE));
 				tmp.put("txnTme", DateUtils.format((Date)tmpMap.get("TXN_TME"), DateUtils.STYLE_FULL));
 				tmp.put("acDte", DateUtils.format((Date)tmpMap.get("AC_DTE"), DateUtils.STYLE_SIMPLE_DATE));
-		/*		tmp.put("txnDte", null);
+				/*tmp.put("txnDte", null);
 				tmp.put("txnTme", null);
 				tmp.put("acDte", null);*/
+				
 				tmp.put("txnSts", tmpMap.get("TXN_STS"));
 				tempList.add(tmp);
 				System.out.println();
@@ -112,6 +116,7 @@ public class QryTxnJnlInfoAction extends BaseAction{
 			System.out.println();
 			System.out.println("temp.size():" + tempList.size());
 			context.setData("loop", tempList);
+			logger.info("==============context after set loop to context:" + context);
 			
 			
 //			List<GdEupsTransJournal> txnJnlList = get(GdEupsTransJournalRepository.class).findGasJnlInfo(txnJnl);
