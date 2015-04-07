@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.action.tbc;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -15,7 +16,6 @@ import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdTbcBasInf;
@@ -93,49 +93,31 @@ public class EstablishAccountAction extends BaseAction {
         }
         context.setData("nodNo",nodNo);
         // 获取电子柜员
-        String bankId = context.getData(ParamKeys.BK).toString();
         context.setData("tTxnCd","483803");
-
         context.setData("txnCtlSts", "0");
         //   检查该客户是否已签约
         log.info("向核心开户查询！");
-        Map<String, Object> cusListMap =getMap();
+        Map<String, Object> cusListMap = setAcpMap(context);
         cusListMap.put(ParamKeys.CUS_AC,context.getData("actNo"));
         context.setDataMap(cusListMap);
         Result accessObjList = serviceAccess.callServiceFlatting("queryListAgentCollectAgreement",cusListMap);
-        if (accessObjList.getPayload().get("").equals("")){}
-
+        System.out.println(accessObjList);
         GdTbcCusAgtInfo tbcCusAgtInfo = new GdTbcCusAgtInfo();
         tbcCusAgtInfo.setActNo(context.getData("actNo").toString());
         List<GdTbcCusAgtInfo> gdTbcAgtInfo = get(GdTbcCusAgtInfoRepository.class).find(tbcCusAgtInfo);
         if (CollectionUtils.isEmpty(gdTbcAgtInfo)) { 
-        	Map<String, Object> establishMap = getMap();
-            establishMap.put("agrChl","01");
-            establishMap.put("oprTyp", "0");
-            establishMap.put("cusTyp","0");
-            establishMap.put("cusNo",context.getData("custId"));
-            establishMap.put("cusNme",context.getData("tCusNm"));
-            establishMap.put("idNo",context.getData("pasId"));
-            establishMap.put("idTyp",context.getData("pasTyp"));
-            establishMap.put("ccy","CNY");
-            establishMap.put("bvCde","007");
-            establishMap.put("bvNo","12345678");
-            establishMap.put("ourOthFlg","0");
-            establishMap.put("obkBk","441999");
-            establishMap.put("cmuTel",context.getData("telNum").toString());
-            establishMap.put("comNo",cAgtNo);
-            establishMap.put("cusAc",context.getData("actNo"));
-            establishMap.put("acTyp","3");
-            establishMap.put("bk", bankId);
-            establishMap.put("busKnd", "A087");//busKnd
-            establishMap.put("busTyp", "0");
-            establishMap.put("cusFeeDerFlg", "0");
-            establishMap.put("agtSrvCusId", context.getData("CUST_ID").toString());
-            establishMap.put("agrVldDte", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
-            establishMap.put("agrExpDte", "21151230");
-            establishMap.put("br", context.getData(ParamKeys.BR));
-    		
-            Result operateAcpAgtResult = serviceAccess.callServiceFlatting("maintainAgentCollectAgreement", establishMap);
+        	setAgtCltAndCusInf(context);
+        	context.setData("oprTyp", "0");
+        	context.setData("agrChl", "01");
+        	context.setData("bk", "01441800999");//TODO
+        	context.setData("br", "01441999999");
+        	context.setData("cusNme", context.getData("tCusNm"));
+        	context.setData("ccy", "CNY");
+        	context.setData("idTyp", context.getData("pasTyp"));
+        	context.setData("idNo", context.getData("pasId"));
+        	context.setData("reqTme",  new Date());
+        	
+               Result operateAcpAgtResult = serviceAccess.callServiceFlatting("maintainAgentCollectAgreement", context.getDataMap());
             log.info("===========respMap: " + operateAcpAgtResult.getPayload() + "===========");
             log.info("代收付系统接口调用增加协议");
             if (!operateAcpAgtResult.isSuccess()) {
@@ -167,32 +149,17 @@ public class EstablishAccountAction extends BaseAction {
             cusAgtInfo.setAccTyp(context.getData("accTyp").toString());
             cusAgtInfoRepository.insert(cusAgtInfo);
         } else {
-            Map<String, Object> establishMap = getMap();
-            establishMap.put("agrChl","01");
-            establishMap.put("oprTyp", "1");//0新增 1修改 
-            establishMap.put("cusTyp","0");
-            establishMap.put("cusNo",context.getData("custId"));
-            establishMap.put("cusNme",context.getData("tCusNm"));
-            establishMap.put("idNo",context.getData("pasId"));
-            establishMap.put("idTyp",context.getData("pasTyp"));
-            establishMap.put("ccy","CNY");
-            establishMap.put("bvCde","007");
-            establishMap.put("bvNo","12345678");
-            establishMap.put("ourOthFlg","0");
-            establishMap.put("obkBk",bankId);
-            establishMap.put("cmuTel",context.getData("telNum").toString());
-            establishMap.put("comNo",cAgtNo);
-            establishMap.put("cusAc",context.getData("actNo"));
-            establishMap.put("acTyp","3");
-            establishMap.put("bk", bankId);
-            establishMap.put("busKnd", "A087");
-            establishMap.put("busTyp", "0");
-            establishMap.put("cusFeeDerFlg", "0");
-            establishMap.put("agtSrvCusId", context.getData("telNum").toString());
-            establishMap.put("agrVldDte", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
-            establishMap.put("agrExpDte", "21151230");
-            establishMap.put("br", context.getData(ParamKeys.BR));
-            Result result = serviceAccess.callServiceFlatting("maintainAgentCollectAgreement", establishMap);
+        	setAgtCltAndCusInf(context);
+        	context.setData("oprTyp", "0");
+        	context.setData("agrChl", "01");
+        	context.setData("bk", "01441800999");//TODO
+        	context.setData("br", "01441999999");
+        	context.setData("cusNme", context.getData("tCusNm"));
+        	context.setData("ccy", "CNY");
+        	context.setData("idTyp", context.getData("pasTyp"));
+        	context.setData("idNo", context.getData("pasId"));
+        	context.setData("reqTme",  new Date());
+            Result result = serviceAccess.callServiceFlatting("maintainAgentCollectAgreement", context.getDataMap());
             log.info("===========respMap: " + result.getPayload() + "===========");
             if (!result.isSuccess()) {
                 Throwable e = result.getException();
@@ -228,121 +195,84 @@ public class EstablishAccountAction extends BaseAction {
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
     }
     
-    private Map<String, Object> getMap(){
-        Map<String, Object> map =  new HashMap<String, Object>();
-        map.put("traceNo", publicService.getTraceNo());
-        map.put("traceSrc", "GDEUPSB");
-        map.put("version","GDEUPSB-1.0.0");
-        map.put("reqTme", new Date());
-        map.put("reqJrnNo",  publicService.getBBIPSequence());
-        map.put("reqSysCde", "SGRT00");
-        map.put("tlr", "ABIR148");
-        map.put("chn", "00");
-        return map;
-    }
-    
-    private Map<String, Object> setCustomerInfoMap(Context context) {
+	private void setAgtCltAndCusInf(Context context) {
+		List<Map<String, Object>> agentCollectAgreementList = new ArrayList<Map<String, Object>>();
+		Map<String, Object> agentCollectAgreementListMap = setAgentCollectAgreementMap(context);
+		agentCollectAgreementList.add(agentCollectAgreementListMap);
+		context.setData("agentCollectAgreement", agentCollectAgreementList);
+		// context.setDataMap(agentCollectAgreementListMap);
+
+		List<Map<String, Object>> customerInfoList = new ArrayList<Map<String, Object>>();
+		Map<String, Object> customerInfoMap = setCustomerInfoMap(context);
+		customerInfoList.add(customerInfoMap);
+		context.setData("customerInfo", customerInfoList);
+		// context.setDataMap(customerInfoMap);
+
+		log.info("============context after setAgtCltAndCusInf :" + context);
+	}
+
+
+	private Map<String, Object> setAcpMap(Context context) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("agtCllCusId", context.getData("cusNo"));
-		map.put("agtSrvCusId", context.getData("cusNo"));
-		map.put("agtSrvCusPnm", context.getData("settleAccountsName"));
+		map.put("traceNo", context.getData(ParamKeys.TRACE_NO));
+		map.put("traceSrc", "GDEUPSB");
+		map.put("version", context.getData(ParamKeys.VERSION));
+		map.put("reqTme", new Date());
+		map.put("reqJrnNo", get(BBIPPublicService.class).getBBIPSequence());
+		map.put("reqSysCde","SGRT00");
+		map.put("tlr","ABIR148");
+		map.put("chn", context.getData(ParamKeys.CHANNEL));
+		map.put("bk", "01441800999");
+		map.put("br", "01441999999");
+		return map;
+	}
+
+	private Map<String, Object> setCustomerInfoMap(Context context) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("agtCllCusId", context.getData(ParamKeys.THD_CUS_NO));
 		map.put("cusTyp", context.getData("cusTyp"));
-		map.put("cusNo", context.getData(ParamKeys.CUS_NO));
-		map.put("cusAc", context.getData("newCusAc"));
-		map.put("cusNme", context.getData("newCusName"));
-		map.put("ccy", "CNY");
-		map.put("bvCde", "009");
-		map.put("idTyp", context.getData(ParamKeys.ID_TYPE));
-		map.put("idNo", context.getData(ParamKeys.ID_NO));
-		//TODO
-		map.put("bvCde", "009");
-		
+		map.put(ParamKeys.CUS_NO, context.getData("custId"));
+		map.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
+		map.put(ParamKeys.CUS_NME, context.getData("tCusNm"));
+		map.put(ParamKeys.CCY, "CNY");
+		map.put(ParamKeys.ID_TYPE, context.getData("pasTyp"));
+		map.put("idNo", context.getData("pasId"));
+		map.put("bvCde", context.getData("bvCde"));
 		if (StringUtils.isNotBlank((String) context.getData("bvNo"))) {
 			map.put("bvNo", (String) context.getData("bvNo"));
 		}
 		map.put("ourOthFlg", "0");
 		return map;
 	}
-
 	private Map<String, Object> setAgentCollectAgreementMap(Context context) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put(ParamKeys.BUS_TYP, "0");
-		map.put("cusNo", context.getData("cusNo"));
-		map.put("agtCllCusId", context.getData("cusNo"));
-		map.put("cusNme", context.getData("cusNme"));
-		map.put("agtSrvCusId", context.getData("cusNo"));
-		map.put("bvCde", "009");
-		map.put("agtSrvCusPnm", context.getData("settleAccountsName"));
-		map.put("cusAc", context.getData(GDParamKeys.NEWCUSAC));
-		map.put("acoAc", context.getData(GDParamKeys.NEWCUSAC));
-		if (StringUtils.isNotBlank((String) context.getData("pwd"))) {
-			map.put("pwd", (String) context.getData("pwd"));
+		if (StringUtils.isNotBlank((String) context.getData("agdAgrNo"))) {
+			map.put("agdAgrNo", context.getData("agdAgrNo"));
+		}
+		map.put(ParamKeys.CUS_AC, context.getData("actNo"));
+		map.put("acoAc", context.getData(ParamKeys.CUS_AC));
+		if (StringUtils.isNotBlank((String) context.getData("pasWrd"))) {
+			map.put("pwd", (String) context.getData("pasWrd"));
 		}
 		map.put("bvCde", context.getData("bvCde"));
-		map.put("buyTyp", "0");
-		map.put("busKnd", "A089");
-		map.put("agrVldDte", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
-		map.put("agrExpDte", "99991231");
-		map.put("agrTlr",context.getData(ParamKeys.TXN_TLR));
-		//TODO 
-		map.put("agtSrvCusPnm",context.getData("thdCusNme"));
-		map.put("agtSrvCusId",context.getData("cusNo"));
-		
-		map.put("comNo", context.getData(ParamKeys.COMPANY_NO));
-		EupsThdBaseInfo baseInfo = new EupsThdBaseInfo();
-		baseInfo.setEupsBusTyp((String) context.getData(ParamKeys.EUPS_BUSS_TYPE));
-		if (StringUtils.isNotBlank((String) context.getData(ParamKeys.COMPANY_NO))) {
-			baseInfo.setComNo((String) context.getData(ParamKeys.COMPANY_NO));
+		if (StringUtils.isNotBlank((String) context.getData("bvNo"))) {
+			map.put("bvNo", (String) context.getData("bvNo"));
 		}
-		//TODO 调用代收付接口  获得单位名称
-//		String comNme=get(EupsThdBaseInfoRepository.class).findOne(context.getData("comNo").toString()).getComNme();
-//		map.put("comNum", comNme);
-//		context.setData("comNum", comNme);
-		
-		map.put(ParamKeys.CCY, "CNY");
-		// TODO 暂用0，待确认
-		map.put("cusFeeDerFlg", "0"); 
-		map.put("agtSrvCusId", context.getData("agtSrvCusId"));
-		map.put("agtSrvCusPnm", context.getData(ParamKeys.THD_CUS_NME));
-		// YYYYMMDD默认当日
-		map.put("agrVldDte",DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)); 
-		// YYYYMMDD默认最大日，99991231
-		map.put("agrExpDte", "99991231"); 
-		map.put("idNo", context.getData(ParamKeys.ID_NO));
-		map.put(ParamKeys.CMU_TEL, context.getData(ParamKeys.CMU_TEL));
-		return map;
+		map.put(ParamKeys.COMPANY_NO,"4410011485");//TODO
+		map.put("comNum", context.getData("comNum"));
 
+		map.put(ParamKeys.BUS_TYP, "0"); // TODO 0-代收； 暂用0，待确认0-代收,1-代付,2-代缴
+											// 0-批量代收；1-批量代付；2-联机缴费；
+		map.put(ParamKeys.BUSS_KIND, "A123");
+		map.put(ParamKeys.CCY, "CNY");
+		map.put("cusFeeDerFlg", "0"); // TODO 暂用0，待确认
+		map.put("agtSrvCusId", context.getData("CUST_ID").toString());
+		map.put("agtSrvCusPnm", context.getData(ParamKeys.THD_CUS_NME));
+		map.put("agrVldDte",DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)); // YYYYMMDD默认当日
+		map.put("agrExpDte", "99991231"); // YYYYMMDD默认最大日，99991231
+		map.put(ParamKeys.CMU_TEL, context.getData("telNum"));
+		map.put(ParamKeys.THD_CUS_NO, context.getData(ParamKeys.THD_CUS_NO));
+		return map;
 	}
-	/**
-	 * 列表查询
-	 */
-	public String  selectList(Context context) throws CoreException{
-		String cusAc=context.getData("cusAc").toString();
-		//列表查询 获得协议编号
-		Map<String, Object> map=new HashMap<String, Object>();
-		map.put("cusAc", cusAc);
-		//header 设定
-		map.put("traceNo", context.getData(ParamKeys.TRACE_NO));
-		map.put("traceSrc", context.getData(ParamKeys.TRACE_SOURCE));
-		map.put("version", context.getData(ParamKeys.VERSION));
-		map.put("reqTme", new Date());
-		map.put("reqJrnNo", get(BBIPPublicService.class).getBBIPSequence());
-		map.put("reqSysCde", context.getData(ParamKeys.REQ_SYS_CDE));
-		map.put("tlr", context.getData(ParamKeys.TELLER));
-		map.put("chn", context.getData(ParamKeys.CHANNEL));
-		map.put("bk", context.getData(ParamKeys.BK));
-		map.put("br", context.getData(ParamKeys.BR));
-		map.put("cusAc", context.getData("cusAc"));
-		log.info("~~~~~~~~~~requestHeader~~~~map~~~~~ "+map);
-		log.info("~~~~~~~~~~列表查询开始 ");
-		//上代收付取协议编号
-		Result accessObjList = serviceAccess.callServiceFlatting("queryListAgentCollectAgreement",map);
-		log.info("~~~~~~~~~~列表查询结束~~~~"+accessObjList);
-		List<Map<String,Object>> list=(List<Map<String, Object>>)accessObjList.getPayload().get("agentCollectAgreement");
-		String agdAgrNo=list.get(0).get("agdAgrNo").toString();
-		log.info("~~~~~~~~~~~~~~~协议编号： "+agdAgrNo);
-		context.setData(ParamKeys.CUS_AC, context.getData(GDParamKeys.NEWCUSAC));
-		context.setData("agdAgrNo", agdAgrNo);
-		return agdAgrNo;
-	}
+
 }
