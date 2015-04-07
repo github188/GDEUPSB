@@ -77,10 +77,16 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 	public void prepareBatchDeal(PrepareBatchAcpDomain domain, Context context) throws CoreException {
 		logger.info("BatchAcpServiceImplWATR00 prepareBatchDeal start ... ..."+context);
 		service.tryLock(lockKey, 60*1000L, 600L);//加锁
-		String br = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.BR, ErrorCodes.EUPS_FIELD_EMPTY);//机构号
-		String tlr = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.TELLER, ErrorCodes.EUPS_FIELD_EMPTY);//柜员号
+//		String br = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.BR, ErrorCodes.EUPS_FIELD_EMPTY);//机构号
+//		String tlr = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.TELLER, ErrorCodes.EUPS_FIELD_EMPTY);//柜员号
+		//TODO:	先把虚拟柜员赋定值，以后需要改。
+		context.setData("br", "01441999999");
+		context.setData("tlr", "EBI0000");
+		String br = context.getData("br");
+		String tlr = context.getData("tlr");
 		String comNo = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.COMPANY_NO, ErrorCodes.EUPS_FIELD_EMPTY);//代理单位号
 		Date date=get(BBIPPublicService.class).getAcDate();
+		
 		
 		String acDate = DateUtils.format(date, DateUtils.STYLE_yyyyMMdd);//会计日期
 		System.out.println("@@@@@@@@@@@@"+acDate);
@@ -259,8 +265,9 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 			temp.put("TXNAMT", new BigDecimal(map.get("je").toString().trim()).scaleByPowerOfTen(-2));
 			temp.put("AGTSRVCUSID", map.get("hno"));
 			temp.put("AGTSRVCUSNME", "");
-			//本行标志
-			temp.put("OUROTHFLG", true==accountService.isOurBankCard((String) map.get(ParamKeys.CUS_AC))?"0":"1");
+			//TODO:本行标志暂全定0，还要改。
+//			temp.put("OUROTHFLG", true==accountService.isOurBankCard((String) map.get(ParamKeys.CUS_AC))?"0":"1");
+			temp.put("OUROTHFLG", "0");
 			temp.put("OBKBK", map.get("KKB"));
 			temp.put("RMK1", "");
 			temp.put("RMK2", "");
