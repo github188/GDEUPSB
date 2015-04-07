@@ -183,7 +183,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 					GdGasCusAll gdGasCusAll = new GdGasCusAll();
 					gdGasCusAll.setCusNo((String) context.getData(ParamKeys.THD_CUS_NO));
 					List<GdGasCusAll> existCus = get(GdGasCusAllRepository.class).find(gdGasCusAll);
-					if(!CollectionUtils.isEmpty(existCus)){
+					if(CollectionUtils.isNotEmpty(existCus)){
 						throw new CoreRuntimeException(GDErrorCodes.GAS_QRY_AGT_ERR_EXIST);
 					}
 					
@@ -199,7 +199,6 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 					// "eups.commInsertCusAgent", context);
 
 					// 不使用代收付签模板，直接调用接口
-					
 					Result insertCusAgtResult = bgspServiceAccessObject
 							.callServiceFlatting(
 									"maintainAgentCollectAgreement",
