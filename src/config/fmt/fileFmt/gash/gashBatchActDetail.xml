@@ -34,7 +34,7 @@
 	<fixString name="cusAc" length="32"   />
 	<fixString  name="Deli5" length="1" default=","/> 
 	
-	<fixString name="tmpFld2" length="6"   />
+	<fixString name="payMon" length="6"   />
 	<fixString  name="Deli6" length="1" default=","/> 
 	
 	<fixString name="txnAmt" length="10"   />
