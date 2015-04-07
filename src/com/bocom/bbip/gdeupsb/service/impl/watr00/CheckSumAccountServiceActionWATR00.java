@@ -37,24 +37,26 @@ public class CheckSumAccountServiceActionWATR00 extends BaseAction {
 		context.setData("txnSts", "S");
 		context.setData("txnTyp", "N");
 		context.setData("TransCode", "Y005");
+		
 		context.setData("accountdate", DateUtils.format((Date)context.getData(ParamKeys.AC_DATE), DateUtils.STYLE_yyyyMMdd));
 		
 		StepSequenceFactory s = context.getService("logNoService");
 		String logNo = s.create().toString();
 		context.setData("waterno", "JH"+logNo);//流水号生成
 		
-		context.setData("bankcode", "JT");
-		context.setData("salesdepart",((String)context.getData(ParamKeys.BR)).substring(2, 8));
-		context.setData("salesperson", ((String)context.getData(ParamKeys.TELLER)).substring(4, 7));
-		context.setData("busitime", DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMddHHmmss));
-		
-		context.setData("zprice", "");
-		context.setData("months", "");
-		context.setData("operano", "");
-		context.setData("password", "        ");
-		context.setData("md5digest", " ");
+//		context.setData("bankcode", "交行");
+//		context.setData("salesdepart",((String)context.getData(ParamKeys.BR)).substring(2, 8));
+//		context.setData("salesperson", ((String)context.getData(ParamKeys.TELLER)).substring(4, 7));
+//		context.setData("busitime", DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMddHHmmss));
+//		
+//		context.setData("zprice", "");
+//		context.setData("months", "");
+//		context.setData("operano", "");
+//		context.setData("password", "        ");
+//		context.setData("md5digest", " ");
 		
 		Map<String,Object> map =((SqlMap)get("sqlMap")).queryForObject("watr00.findCountAmt", context.getDataMap());//查询总金额、总笔数
+		
 		
 		String je = String.valueOf(map.get("JE"));
 		if(je==null||"null".equals(je)){
