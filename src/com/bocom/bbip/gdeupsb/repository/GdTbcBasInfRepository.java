@@ -6,6 +6,6 @@ import com.bocom.bbip.gdeupsb.entity.GdTbcBasInf;
 
 public interface GdTbcBasInfRepository extends PagingAndSortingRepository<GdTbcBasInf, String> {
 
-    @Update
-    public void update(GdTbcBasInf tbcBasInfo);
+	@Update
+	public void update(GdTbcBasInf tbcBasInfo);
 }

@@ -8,7 +8,7 @@ public class GdTbcCusAgtInfo {
     @GeneratedValue
     private String custId;
 
-    private String brno;
+    private String brNo;
 
     private String comNo;
 
@@ -18,9 +18,13 @@ public class GdTbcCusAgtInfo {
 
     private String cusNm;
 
+    private String cusTyp;
+
     private String pasTyp;
 
     private String pasId;
+
+    private String liceId;
 
     private String accTyp;
 
@@ -44,6 +48,10 @@ public class GdTbcCusAgtInfo {
 
     private String status;
 
+    private String rsvFld1;
+
+    private String rsvFld2;
+
     public String getCustId() {
         return custId;
     }
@@ -52,12 +60,12 @@ public class GdTbcCusAgtInfo {
         this.custId = custId;
     }
 
-    public String getBrno() {
-        return brno;
+    public String getBrNo() {
+        return brNo;
     }
 
-    public void setBrno(String brno) {
-        this.brno = brno;
+    public void setBrNo(String brNo) {
+        this.brNo = brNo;
     }
 
     public String getComNo() {
@@ -92,6 +100,14 @@ public class GdTbcCusAgtInfo {
         this.cusNm = cusNm;
     }
 
+    public String getCusTyp() {
+        return cusTyp;
+    }
+
+    public void setCusTyp(String cusTyp) {
+        this.cusTyp = cusTyp;
+    }
+
     public String getPasTyp() {
         return pasTyp;
     }
@@ -106,6 +122,14 @@ public class GdTbcCusAgtInfo {
 
     public void setPasId(String pasId) {
         this.pasId = pasId;
+    }
+
+    public String getLiceId() {
+        return liceId;
+    }
+
+    public void setLiceId(String liceId) {
+        this.liceId = liceId;
     }
 
     public String getAccTyp() {
@@ -194,5 +218,21 @@ public class GdTbcCusAgtInfo {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getRsvFld1() {
+        return rsvFld1;
+    }
+
+    public void setRsvFld1(String rsvFld1) {
+        this.rsvFld1 = rsvFld1;
+    }
+
+    public String getRsvFld2() {
+        return rsvFld2;
+    }
+
+    public void setRsvFld2(String rsvFld2) {
+        this.rsvFld2 = rsvFld2;
     }
 }

@@ -3,13 +3,15 @@
 <mapper namespace="com.bocom.bbip.gdeupsb.entity.GdTbcCusAgtInfo" >
   <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdTbcCusAgtInfo" >
     <id column="CUST_ID" property="custId" jdbcType="CHAR" />
-    <result column="BRNO" property="brno" jdbcType="CHAR" />
+    <result column="BR_NO" property="brNo" jdbcType="CHAR" />
     <result column="COM_NO" property="comNo" jdbcType="CHAR" />
     <result column="DPT_ID" property="dptId" jdbcType="CHAR" />
     <result column="COM_ID" property="comId" jdbcType="CHAR" />
     <result column="CUS_NM" property="cusNm" jdbcType="CHAR" />
+    <result column="CUS_TYP" property="cusTyp" jdbcType="CHAR" />
     <result column="PAS_TYP" property="pasTyp" jdbcType="CHAR" />
     <result column="PAS_ID" property="pasId" jdbcType="CHAR" />
+    <result column="LICE_ID" property="liceId" jdbcType="CHAR" />
     <result column="ACC_TYP" property="accTyp" jdbcType="CHAR" />
     <result column="ACT_NO" property="actNo" jdbcType="CHAR" />
     <result column="PAS_FLG" property="pasFlg" jdbcType="CHAR" />
@@ -21,10 +23,13 @@
     <result column="OPN_DAT" property="opnDat" jdbcType="CHAR" />
     <result column="CLS_DAT" property="clsDat" jdbcType="CHAR" />
     <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="RSV_FLD1" property="rsvFld1" jdbcType="VARCHAR" />
+    <result column="RSV_FLD2" property="rsvFld2" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="baseColumnList" >
-    CUST_ID, BRNO, COM_NO, DPT_ID, COM_ID, CUS_NM, PAS_TYP, PAS_ID, ACC_TYP, ACT_NO, 
-    PAS_FLG, PAS_WRD, ADDR, TEL_NUM, DEV_ID, TELLER, OPN_DAT, CLS_DAT, STATUS
+    CUST_ID, BR_NO, COM_NO, DPT_ID, COM_ID, CUS_NM, CUS_TYP, PAS_TYP, PAS_ID, LICE_ID, 
+    ACC_TYP, ACT_NO, PAS_FLG, PAS_WRD, ADDR, TEL_NUM, DEV_ID, TELLER, OPN_DAT, CLS_DAT, 
+    STATUS, RSV_FLD1, RSV_FLD2
   </sql>
   <select id="find" resultMap="basicResultMap" >
     select
@@ -34,8 +39,8 @@
       <if test="custId!=null" >
         AND  CUST_ID=#{custId,jdbcType=CHAR}
       </if>
-      <if test="brno!=null" >
-        AND  BRNO=#{brno,jdbcType=CHAR}
+      <if test="brNo!=null" >
+        AND  BR_NO=#{brNo,jdbcType=CHAR}
       </if>
       <if test="comNo!=null" >
         AND  COM_NO=#{comNo,jdbcType=CHAR}
@@ -49,11 +54,17 @@
       <if test="cusNm!=null" >
         AND  CUS_NM=#{cusNm,jdbcType=CHAR}
       </if>
+      <if test="cusTyp!=null" >
+        AND  CUS_TYP=#{cusTyp,jdbcType=CHAR}
+      </if>
       <if test="pasTyp!=null" >
         AND  PAS_TYP=#{pasTyp,jdbcType=CHAR}
       </if>
       <if test="pasId!=null" >
         AND  PAS_ID=#{pasId,jdbcType=CHAR}
+      </if>
+      <if test="liceId!=null" >
+        AND  LICE_ID=#{liceId,jdbcType=CHAR}
       </if>
       <if test="accTyp!=null" >
         AND  ACC_TYP=#{accTyp,jdbcType=CHAR}
@@ -88,6 +99,12 @@
       <if test="status!=null" >
         AND  STATUS=#{status,jdbcType=CHAR}
       </if>
+      <if test="rsvFld1!=null" >
+        AND  RSV_FLD1=#{rsvFld1,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld2!=null" >
+        AND  RSV_FLD2=#{rsvFld2,jdbcType=VARCHAR}
+      </if>
     </trim>
   </select>
   <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
@@ -106,8 +123,8 @@
       <if test="custId != null" >
         CUST_ID,
       </if>
-      <if test="brno != null" >
-        BRNO,
+      <if test="brNo != null" >
+        BR_NO,
       </if>
       <if test="comNo != null" >
         COM_NO,
@@ -121,11 +138,17 @@
       <if test="cusNm != null" >
         CUS_NM,
       </if>
+      <if test="cusTyp != null" >
+        CUS_TYP,
+      </if>
       <if test="pasTyp != null" >
         PAS_TYP,
       </if>
       <if test="pasId != null" >
         PAS_ID,
+      </if>
+      <if test="liceId != null" >
+        LICE_ID,
       </if>
       <if test="accTyp != null" >
         ACC_TYP,
@@ -160,13 +183,19 @@
       <if test="status != null" >
         STATUS,
       </if>
+      <if test="rsvFld1 != null" >
+        RSV_FLD1,
+      </if>
+      <if test="rsvFld2 != null" >
+        RSV_FLD2,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="custId != null" >
         #{custId,jdbcType=CHAR},
       </if>
-      <if test="brno != null" >
-        #{brno,jdbcType=CHAR},
+      <if test="brNo != null" >
+        #{brNo,jdbcType=CHAR},
       </if>
       <if test="comNo != null" >
         #{comNo,jdbcType=CHAR},
@@ -180,11 +209,17 @@
       <if test="cusNm != null" >
         #{cusNm,jdbcType=CHAR},
       </if>
+      <if test="cusTyp != null" >
+        #{cusTyp,jdbcType=CHAR},
+      </if>
       <if test="pasTyp != null" >
         #{pasTyp,jdbcType=CHAR},
       </if>
       <if test="pasId != null" >
         #{pasId,jdbcType=CHAR},
+      </if>
+      <if test="liceId != null" >
+        #{liceId,jdbcType=CHAR},
       </if>
       <if test="accTyp != null" >
         #{accTyp,jdbcType=CHAR},
@@ -219,6 +254,12 @@
       <if test="status != null" >
         #{status,jdbcType=CHAR},
       </if>
+      <if test="rsvFld1 != null" >
+        #{rsvFld1,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld2 != null" >
+        #{rsvFld2,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <select id="findCount" resultType="java.lang.Integer" >
@@ -227,8 +268,8 @@
       <if test="custId!=null" >
         AND  CUST_ID=#{custId,jdbcType=CHAR}
       </if>
-      <if test="brno!=null" >
-        AND  BRNO=#{brno,jdbcType=CHAR}
+      <if test="brNo!=null" >
+        AND  BR_NO=#{brNo,jdbcType=CHAR}
       </if>
       <if test="comNo!=null" >
         AND  COM_NO=#{comNo,jdbcType=CHAR}
@@ -242,11 +283,17 @@
       <if test="cusNm!=null" >
         AND  CUS_NM=#{cusNm,jdbcType=CHAR}
       </if>
+      <if test="cusTyp!=null" >
+        AND  CUS_TYP=#{cusTyp,jdbcType=CHAR}
+      </if>
       <if test="pasTyp!=null" >
         AND  PAS_TYP=#{pasTyp,jdbcType=CHAR}
       </if>
       <if test="pasId!=null" >
         AND  PAS_ID=#{pasId,jdbcType=CHAR}
+      </if>
+      <if test="liceId!=null" >
+        AND  LICE_ID=#{liceId,jdbcType=CHAR}
       </if>
       <if test="accTyp!=null" >
         AND  ACC_TYP=#{accTyp,jdbcType=CHAR}
@@ -281,13 +328,19 @@
       <if test="status!=null" >
         AND  STATUS=#{status,jdbcType=CHAR}
       </if>
+      <if test="rsvFld1!=null" >
+        AND  RSV_FLD1=#{rsvFld1,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld2!=null" >
+        AND  RSV_FLD2=#{rsvFld2,jdbcType=VARCHAR}
+      </if>
     </trim>
   </select>
   <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdTbcCusAgtInfo" >
     update ${GDEUPSB_SCHEMA}.GDEUPS_TBC_CUS_AGT_INFO
     <set >
-      <if test="brno != null" >
-        BRNO = #{brno,jdbcType=CHAR},
+      <if test="brNo != null" >
+        BR_NO = #{brNo,jdbcType=CHAR},
       </if>
       <if test="comNo != null" >
         COM_NO = #{comNo,jdbcType=CHAR},
@@ -301,11 +354,17 @@
       <if test="cusNm != null" >
         CUS_NM = #{cusNm,jdbcType=CHAR},
       </if>
+      <if test="cusTyp != null" >
+        CUS_TYP = #{cusTyp,jdbcType=CHAR},
+      </if>
       <if test="pasTyp != null" >
         PAS_TYP = #{pasTyp,jdbcType=CHAR},
       </if>
       <if test="pasId != null" >
         PAS_ID = #{pasId,jdbcType=CHAR},
+      </if>
+      <if test="liceId != null" >
+        LICE_ID = #{liceId,jdbcType=CHAR},
       </if>
       <if test="accTyp != null" >
         ACC_TYP = #{accTyp,jdbcType=CHAR},
@@ -339,6 +398,12 @@
       </if>
       <if test="status != null" >
         STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="rsvFld1 != null" >
+        RSV_FLD1 = #{rsvFld1,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld2 != null" >
+        RSV_FLD2 = #{rsvFld2,jdbcType=VARCHAR},
       </if>
     </set>
     where CUST_ID = #{custId,jdbcType=CHAR}
