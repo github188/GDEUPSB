@@ -2,7 +2,6 @@ package com.bocom.bbip.gdeupsb.action.fbpd;
 
 import java.io.File;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,18 +11,15 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.CollectionUtils;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
+import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.eups.entity.EupsBatchPayEntity;
-import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.BatchAcpService;
 import com.bocom.bbip.eups.spi.vo.PrepareBatchAcpDomain;
@@ -42,7 +38,6 @@ import com.bocom.bbip.gdeupsb.repository.GdFbpdObusBatchTmpRepository;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.FileUtils;
-import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -151,7 +146,8 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 	        Map<String, List<Map<String, Object>>> map = new HashMap<String, List<Map<String, Object>>>(); 
 	        FileMarshaller fileMarshaller = new FileMarshaller();
 	        
-	        if("4840000015".equals(context.getData("comNo"))  ){	//中山水费 WATR   fbpdWaterFmtIn
+	        String comNo = context.getData(ParamKeys.COMPANY_NO);
+	        if("4840000015".equals(comNo)  ){	//中山水费 WATR   fbpdWaterFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdWaterFmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -160,7 +156,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 //	        	String fileName = "waterFile";
 	        	parseOthrMapList(map, payOthrDetailLst, context, fleNme);
 	        }
-	        if("4840000167".equals(context.getData("comNo"))){	//NELE_in_484999_1 电费 fbpdNele1FmtIn
+	        if("4840000167".equals(comNo)){	//NELE_in_484999_1 电费 fbpdNele1FmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdNele1FmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -169,7 +165,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 //	        	String fileName = "nele1File";
 	        	parseOthrMapList(map, payOthrDetailLst, context, fleNme);
 	        }
-	        if("4840000016".equals(context.getData("comNo")) || "4840000484".equals(context.getData("comNo")) || "4840000352".equals(context.getData("comNo")) || "4840000363".equals(context.getData("comNo")) || "4840000475".equals(context.getData("comNo"))){	//NELE_in_484999 电费	fbpdNeleFmtIn
+	        if("4840000016".equals(comNo) || "4840000484".equals(comNo) || "4840000352".equals(comNo) || "4840000363".equals(comNo) || "4840000475".equals(comNo)){	//NELE_in_484999 电费	fbpdNeleFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdNeleFmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -178,7 +174,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 //	        	String fileName = "neleFile";
 	        	parseNeleMapList(map, payNeleDetailLst, context, fleNme);
 	        }
-	        if("4840000018".equals(context.getData("comNo"))){	//GGAS_in_484999 中山煤气费	fbpdGgasFmtIn
+	        if("4840000018".equals(comNo)){	//GGAS_in_484999 中山煤气费	fbpdGgasFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdGgasFmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -187,7 +183,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 //	        	String fileName = "ggasFile";
 	        	parseOthrMapList(map, payOthrDetailLst, context, fleNme);
 	        }
-	        if("4840000017".equals(context.getData("comNo"))){	//VANK_out_484999中山物业管理费 fbpdVankFmtIn
+	        if("4840000017".equals(comNo)){	//VANK_out_484999中山物业管理费 fbpdVankFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdVankFmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -196,7 +192,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 //	        	String fileName = "vankFile";
 	        	parseOthrMapList(map, payOthrDetailLst, context, fleNme);
 	        }
-	        if("4840000020".equals(context.getData("comNo"))){	//TTOM_in_484999中山铁通 fbpdTtomFmtIn
+	        if("4840000020".equals(comNo)){	//TTOM_in_484999中山铁通 fbpdTtomFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdTtomFmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -205,7 +201,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 //	        	String fileName = "ttomFile";
 	        	parseOthrMapList(map, payOthrDetailLst, context, fleNme);
 	        }
-	        if("4840000019".equals(context.getData("comNo"))){	//CTTV_in_484999 中山有线电视 fbpdCttvFmtIn
+	        if("4840000019".equals(comNo)){	//CTTV_in_484999 中山有线电视 fbpdCttvFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdCttvFmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -214,7 +210,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 //	        	String fileName = "cttvFile";
 	        	parseOthrMapList(map, payOthrDetailLst, context, fleNme);
 	        }
-	        if("4840000598".equals(context.getData("comNo"))){	//NQTV_in_484999南区有线电视 fbpdNqtvFmtIn
+	        if("4840000598".equals(comNo)){	//NQTV_in_484999南区有线电视 fbpdNqtvFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdNqtvFmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -223,7 +219,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 //	        	String fileName = "nqtvFile";
 	        	parseOthrMapList(map, payOthrDetailLst, context, fleNme);
 	        }
-	        if("4840000414".equals(context.getData("comNo"))){	//XIND_in_484999 新都物业管理 fbpdXindFmtIn
+	        if("4840000414".equals(comNo)){	//XIND_in_484999 新都物业管理 fbpdXindFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdXindFmtIn", resource, Map.class);
 				} catch (JumpException e) {
@@ -232,7 +228,7 @@ public class CheckAndImportFileFbpdAction implements BatchAcpService {
 //	        	String fileName = "xindFile";
 	        	parseOthrMapList(map, payOthrDetailLst, context, fleNme);
 	        }
-	        if("4840000416".equals(context.getData("comNo"))){	//MPOS_in_484999 中山移动POS fbpdMposFmtIn
+	        if("4840000416".equals(comNo)){	//MPOS_in_484999 中山移动POS fbpdMposFmtIn
 	        	try {
 					map=fileMarshaller.unmarshal("fbpdMposFmtIn", resource, Map.class);
 				} catch (JumpException e) {
