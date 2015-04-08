@@ -1184,4 +1184,12 @@
 	</select>
 	
 	
+	<!-- 查询广州电力清算流水信息 -->
+	<select id="findGzClrJnl" resultType="java.util.Map"
+		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
+			select
+		sum(TXN_AMT) TXNAMT,count(*) TXNCNT
+		from ${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL where EUPS_BUS_TYP='ELEC01' and MFM_TXN_STS='S' and TXN_STS='S'
+		and BAK_FLD1=#{bakFld1,jdbcType=CHAR} and (THD_TXN_CDE='HK' or THD_TXN_CDE='JF') 
+	</select>
 </mapper>
