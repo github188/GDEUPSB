@@ -334,11 +334,13 @@
     <xs:annotation>
       <xs:documentation>签约日期</xs:documentation>
     </xs:annotation>
-    <xs:restriction base="xs:dateTime"/>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="agrTme_SType">
     <xs:annotation>
-      <xs:documentation>签约柜员</xs:documentation>
+      <xs:documentation>签约网点</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="10"/>
