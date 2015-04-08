@@ -47,16 +47,16 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 		logger.info("======context:" + context);
 
 		String bk = "01441999999";
-		String br = "";
+		String br = "01491800999";
 		//TODO  get tlr
-//		context.setData(ParamKeys.BR, br);//机构号 "01441131999"
-//		context.setData(ParamKeys.BK, bk);//分行号01491999999
-//		String trl = bbipPublicService.getETeller(bk);
-//		context.setData(ParamKeys.TELLER, trl);
+		context.setData(ParamKeys.BR, br);//机构号 "01441131999"
+		context.setData(ParamKeys.BK, bk);//分行号01491999999
+		String trl = bbipPublicService.getETeller(bk);
+		context.setData(ParamKeys.TELLER, trl);
 		
-		context.setData(ParamKeys.TELLER, "ABIR148");
-		context.setData(ParamKeys.BR, "01441131999");
-		context.setData(ParamKeys.BK, "01441999999");
+//		context.setData(ParamKeys.TELLER, "ABIR148");
+//		context.setData(ParamKeys.BR, "01441131999");
+//		context.setData(ParamKeys.BK, "01441999999");
 
 		
 		logger.info("=====context after set tlr :" + context);

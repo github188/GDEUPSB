@@ -95,11 +95,11 @@ public class CnlPayUnilateralToBankServicePGAS00 implements
 //		context.setData(ParamKeys.MFM_TXN_STS, "S");// HTxnSt='S'
 		
 		
-		GdGasCusAll cusInfo = gdGasCusAllRepository.findOne((String)context.getData(ParamKeys.THD_CUS_NO));
-		context.setData(ParamKeys.CUS_NME, cusInfo.getCusNme());
-		context.setData(ParamKeys.THD_CUS_NME, cusInfo.getThdCusNme());
-		logger.info("=================== the cusNme is :" + context.getData(ParamKeys.CUS_NME));
-		logger.info("=================== the thdCusNme is :" + context.getData(ParamKeys.THD_CUS_NME));
+//		GdGasCusAll cusInfo = gdGasCusAllRepository.findOne((String)context.getData(ParamKeys.THD_CUS_NO));
+//		context.setData(ParamKeys.CUS_NME, cusInfo.getCusNme());
+//		context.setData(ParamKeys.THD_CUS_NME, cusInfo.getThdCusNme());
+//		logger.info("=================== the cusNme is :" + context.getData(ParamKeys.CUS_NME));
+//		logger.info("=================== the thdCusNme is :" + context.getData(ParamKeys.THD_CUS_NME));
 		
 		/*
 		 * 根据第三方发送过来的燃气托收流水（冲正流水）查找eups流水表，得原交易流水号并将其设置为旧流水号
