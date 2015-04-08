@@ -4,6 +4,13 @@
 						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
 
 
+	<!-- 查询燃气用户信息 -->
+	<process id="gdeupsb.qryGasCusInfo" template="eups.simpleTran"
+		interceptors="eups.transMessageInterceptor">
+		<actions>
+			<action id="act" ref="qryGasCusInfoAction" />
+		</actions>
+	</process>
 
 	<!-- 惠州燃气用户协议维护 -->
 	<process id="gdeupsb.oprGasCusAgent" template="eups.simpleTran"
@@ -70,13 +77,9 @@
 			<!-- 进入福彩对账文件下载交易，准备数据 -->
 			<action id="act" ref="downloadLotChkFileAction" />
 			<!-- 发送文件下载地址查询报文，获取文件地址 -->
-			<!-- <action id="act" ref="qryFilDownloadAdrAction" />
-			发送文件下载报文，下载文件
-			<action id="act" ref="downloadLotFilesAction" />
-			文件入库
-			<action id="act" ref="lotFilImportAction" />
-			入库后返回前端信息
-			<action id="act" ref="aftDownloadLotFilesAction" /> -->
+			<!-- <action id="act" ref="qryFilDownloadAdrAction" /> 发送文件下载报文，下载文件 <action 
+				id="act" ref="downloadLotFilesAction" /> 文件入库 <action id="act" ref="lotFilImportAction" 
+				/> 入库后返回前端信息 <action id="act" ref="aftDownloadLotFilesAction" /> -->
 		</actions>
 	</process>
 
@@ -87,13 +90,9 @@
 			<!-- 进入福彩对账文件下载交易，准备数据 -->
 			<action id="act" ref="downloadLotPrzFileAction" />
 			<!-- 发送文件下载地址查询报文，获取文件地址 -->
-			<!-- <action id="act" ref="qryFilDownloadAdrAction" />
-			发送文件下载报文，下载文件
-			<action id="act" ref="downloadLotFilesAction" />
-			文件入库
-			<action id="act" ref="lotFilImportAction" />
-			入库后返回前端信息
-			<action id="act" ref="aftDownloadLotFilesAction" /> -->
+			<!-- <action id="act" ref="qryFilDownloadAdrAction" /> 发送文件下载报文，下载文件 <action 
+				id="act" ref="downloadLotFilesAction" /> 文件入库 <action id="act" ref="lotFilImportAction" 
+				/> 入库后返回前端信息 <action id="act" ref="aftDownloadLotFilesAction" /> -->
 		</actions>
 	</process>
 
