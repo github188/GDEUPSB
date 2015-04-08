@@ -92,8 +92,9 @@ public class PrePrintAction extends BaseAction{
 //			 <Set>TLogNo=$LogNo</Set>
 			ctx.setDataMap(txnJnlList.get(0));
 			Date tactDt = new Date();
-
-			ctx.setData(GDParamKeys.TACT_DT, tactDt);
+			Date payDat = (Date)ctx.getData(GDParamKeys.PAY_DAT);
+			ctx.setData(GDParamKeys.TACT_DT, DateUtils.format(tactDt, DateUtils.STYLE_yyyyMMdd));
+			ctx.setData("payDat", DateUtils.format(payDat, DateUtils.STYLE_yyyyMMdd));
 			gdEupsbTrspTxnJnl.setSqn(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
 			gdEupsbTrspTxnJnl.setTlogNo(ctx.getData(ParamKeys.SEQUENCE).toString());
 			gdEupsbTrspTxnJnl.setTactDt(tactDt);
