@@ -172,7 +172,7 @@ public class InsertCusAgentServiceAction extends BaseAction {
 				context.setData(ParamKeys.THD_TXN_DATE, DateUtils.parse(thdTxnDte));
 				context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse((thdTxnDte+thdTxnTme),DateUtils.STYLE_yyyyMMddHHmmss));
 		}
-		context.setData(ParamKeys.TXN_TME,DateUtils.parse(context.getData(ParamKeys.TXN_TME).toString()));
+//		context.setData(ParamKeys.TXN_TME,DateUtils.parse(context.getData(ParamKeys.TXN_TME).toString()));
 		logger.info("=============End    InsertCusAgentServiceAction  ");
 	}
 }
