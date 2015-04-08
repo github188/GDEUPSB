@@ -6,6 +6,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import a.a.a.s;
+
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
@@ -49,13 +51,13 @@ public class QryCusMsgAction extends BaseAction{
 		callThd(context);
 		String comNo=context.getData("comNo").toString();
 		String bakFld1="";
-		if(comNo.equals("03060306")){
+//		if(comNo.equals("03060306")){
 				bakFld1="佛山";
-		}else if(comNo.equals("032015")){
-				bakFld1="清远";
-		}else if(comNo.equals("032015")){
+//		}else if(comNo.equals("032015")){
+//				bakFld1="清远";
+//		}else if(comNo.equals("032015")){
 				bakFld1="中山";
-		}
+//		}
 		context.setData(ParamKeys.BAK_FLD1, bakFld1);
 		context.setData("payNo", context.getData("payNo"));
 		System.out.println();
@@ -78,7 +80,7 @@ public class QryCusMsgAction extends BaseAction{
 			context.setData(GDParamKeys.REDUCE_SIGN, GDConstants.REDUCE_SIGN);//压缩标志
 			context.setData(GDParamKeys.TRADE_RETURN_CODE, GDConstants.TRADE_RETURN_CODE);//交易返回代码
 
-			
+			context.setData("sqns", context.getData(ParamKeys.SEQUENCE));
 			context.setData(GDParamKeys.NET_NAME, GDConstants.NET_NAME);//网点名称
 			context.setData(GDParamKeys.SECRETKEY_INDEX, GDConstants.SECRETKEY_INDEX);//密钥索引
 			context.setData(GDParamKeys.SECRETKEY_INIT, GDConstants.SECRETKEY_INIT);//密钥初始向量
