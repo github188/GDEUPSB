@@ -68,6 +68,7 @@ public class CusAgentServiceAction extends BaseAction{
 				String mothed="";
 				String agdAgrNo="";
 				int i=0;
+				
 				if("0".equals(oprTyp)){
 					logger.info("~~~~~~~~~~~~~~~~~Enter  eups.commInsertCusAgenteELEC00 ");
 					mothed="eups.commInsertCusAgenteELEC00";
@@ -112,8 +113,14 @@ public class CusAgentServiceAction extends BaseAction{
 				if(i==1){
 					mothed="eups.commInsertCusAgenteELEC00";
 					context.setData(GDParamKeys.NEWBANKNO, "301");
+					context.setData("oprTyp", "0");
 					map.put("cusAc", context.getData("newCusAc"));
 					map.put("cusNme", context.getData("newCusName"));
+					map.put("agdAgrNo", null);
+					context.setData("agdAgrNo", null);
+					
+					context.setData(ParamKeys.AGENT_COLLECT_AGREEMENT, list);
+					context.setData("customerInfo", cusList);
 					bbipPublicService.synExecute(mothed, context);
 				}
 
@@ -244,7 +251,6 @@ public class CusAgentServiceAction extends BaseAction{
 				map.put("br", "441800");
 			}
 			map.put("cusAc", context.getData("cusAc"));
-//			map.put("cusAc", "6222620710012838064");
 			logger.info("~~~~~~~~~~requestHeader~~~~map~~~~~ "+map);
 			logger.info("~~~~~~~~~~列表查询开始 ");
 			//上代收付取协议编号
