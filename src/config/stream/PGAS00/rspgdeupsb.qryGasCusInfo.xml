@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="08Response">
+<!-- 
+起始位置		说明			长度			备注
+	1		指令			10			QryUser或NOUser或UserStop[QryUser 为有用户信息/NOUser 为无此用户（用户编码错误）/UserStop为此用户已报停]
+	12		用户编码		12	
+	25		用户名		60	
+	86		用户地址		80	
+-->
+ 	
+	<fixString name="thdCusNo" length="12"    />
+	<fixString  name="Deli5" length="1" default=","/>
+	
+	<fixString name="thdCusNme" length="60"    />
+	<fixString  name="Deli6" length="1" default=","/>
+	
+	<fixString name="thdCusAdr" length="80"    />
+	<!-- <fixString  name="Deli7" length="1" /> -->
+</segment>

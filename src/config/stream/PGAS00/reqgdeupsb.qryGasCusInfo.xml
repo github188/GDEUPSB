@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="07Request">
+
+
+<!-- 惠州燃气QryUser  -->
+<!-- 
+1	指令	10	QryUser
+12	银行标志	4	CNJT
+17	用户编码	12	
+
+ -->
+ 	
+ 	<fixString name="gasBk" length="4" default="cnjt"/>
+ 	<fixString  name="Deli3" length="1" default=","/>
+ 		
+	<fixString name="thdCusNo" length="12"   /> 
+	<!-- <fixString  name="Deli4" length="1" /> -->
+
+</segment> 
