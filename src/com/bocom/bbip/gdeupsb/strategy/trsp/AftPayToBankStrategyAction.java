@@ -96,11 +96,9 @@ public class AftPayToBankStrategyAction implements Executable{
 
 		
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+ctx);
+		//插入缴费记录表
 		GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
-//		INSERT INTO rbfbtxnbok444(BrNo,ThdKey,CarTyp,TCusId,TCusNm,PayMon,PayDat,PayLog,TxnAmt,TxnCnl,ActTyp,ActNo,PayNod,PayTlr,PayTck,Status)
-//        VALUES('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','0')
-//   </Sentence>
-//   <Fields>BrNo|ThdKey|CarTyp|TCusId|TCusNm|PayMon|ActDat|LogNo|TxnAmt|TxnCnl|ActFlg|ActNo|NodNo|TlrId|TckNo|</Fields>
+
 		gdEupsbTrspFeeInfo.setBrNo(ctx.getData(ParamKeys.BR).toString());
 		gdEupsbTrspFeeInfo.setThdKey((String)ctx.getData(GDParamKeys.THD_KEY));
 		gdEupsbTrspFeeInfo.setCarTyp((String)ctx.getData(GDParamKeys.CAR_TYP));

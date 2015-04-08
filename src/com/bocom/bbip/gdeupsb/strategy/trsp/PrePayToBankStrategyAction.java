@@ -141,6 +141,7 @@ public class PrePayToBankStrategyAction implements Executable{
 //        ctx.setData("brNo", "443999");
 		
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+ctx);
+	
 		gdEupsbTrspTxnJnl = BeanUtils.toObject(ctx.getDataMap(),GDEupsbTrspTxnJnl.class);
 		
 		gdEupsbTrspTxnJnlRepository.insert(gdEupsbTrspTxnJnl);
