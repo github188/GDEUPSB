@@ -54,8 +54,10 @@ public class CancelBatchCheckAction extends BaseAction {
 					context.setData("cancelReslt", "批次撤销完成");
 		}else if(eupsBatchConsoleInfo.getBatSts().equals("S")){
 					context.setData("cancelReslt", "批次已完成，不能撤销");
+					context.setData("QSFlg", "3");
 		}else if(gdEupsBatchConsoleInfo.getBatSts().equals("C")){
 					context.setData("cancelReslt", "批次已撤销，不能再次撤销");
+					context.setData("QSFlg", "4");
 		}else{
 				throw new CoreException("批次batNo获取状态错误");
 		}
