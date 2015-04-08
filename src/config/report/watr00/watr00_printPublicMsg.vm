@@ -1,12 +1,7 @@
 #report(41)
 #rh(5)
-
-
-
-
-
-
-
+			汕头水费对公账户回执打印
+#end
 #set($p.index=0)
 #td(1,$d.eles)
 #set($p.index=$p.index+1) 
@@ -37,8 +32,5 @@
 入账    日期:?                          入账柜员:?              入账流水号:?
 打印    日期:$f.fmt($currentTime,'yyyyMMdd')                   打印柜员:$d.tlr        打印机构:$d.br
 
-
-
 #end 
-#end
 #end
