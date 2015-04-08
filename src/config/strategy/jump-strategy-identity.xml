@@ -112,6 +112,11 @@
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.CancelPayServiceAction">
 	</bean>
 
+
+	<!--广东烟草发起对账 -->
+	<--bean id="eups.checkThdFileToBkStrategyActionSGRT00"
+		class="com.bocom.bbip.gdeupsb.strategy.sgrt00.CheckThdFileToBkServiceAction">
+	</bean-->
 	<!-- 签约一站通-协议维护-水务 -->
 	<bean id="gdeups.agtMdyDealImlServiceAction44101"
 		class="com.bocom.bbip.gdeupsb.strategy.sign.WaterAgtMdyDealImlAction">
@@ -128,7 +133,7 @@
 	</bean>
 
 	<!-- 签约一站通-协议更新-水务 -->
-	<bean id="gdeups.agtDateUpdServiceActionWAT00"
+	<bean id="gdeups.agtDateUpdServiceAction44101"
 		class="com.bocom.bbip.gdeupsb.strategy.sign.WaterDateUpdImlAction">
 	</bean>
 
@@ -151,6 +156,16 @@
 		 <!-- 签约一站通-协议数据拷盘-广州数码 -->
 	<bean id="gdeups.agtFileSendImlServiceAction44108"
 		class="com.bocom.bbip.gdeupsb.strategy.sign.DigitAgtFileSendImlAction">
+	</bean>
+	
+	<!-- 签约一站通-协议更新-广州有线 -->
+	<bean id="gdeups.agtDateUpdServiceAction44107"
+		class="com.bocom.bbip.gdeupsb.strategy.sign.TlvDateUpdImlAction">
+	</bean>
+	
+		<!-- 签约一站通-协议更新-珠江数码-->
+	<bean id="gdeups.agtDateUpdServiceAction44108"
+		class="com.bocom.bbip.gdeupsb.strategy.sign.DegDateUpdImlAction">
 	</bean>
 	
 
@@ -335,6 +350,10 @@
 		class="com.bocom.bbip.gdeupsb.strategy.sgrt00.PayUnilateralToBankServiceActionSGRT00"
 		id="eups.payUnilateralToBankServiceActionSGRT00" />
 
+<!-- 
+	<bean class="com.bocom.bbip.gdeupsb.strategy.sgrt00.CommInsertCusAgentServiceActionSGRT00" id="eups.commInsertCusAgentServiceActionSGRT00" />
+ -->
+ 
  <!-- 零余额  -->
     <bean id="eups.specialAccountSystem"
    class="com.bocom.bbip.gdeupsb.services.single.zerobalance.SpecialAccountSystemServiceImplGDEUPSA"/> 
