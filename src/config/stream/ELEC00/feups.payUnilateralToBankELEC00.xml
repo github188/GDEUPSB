@@ -4,7 +4,6 @@
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
 	name="460422Resp">
 	
-		<fixString name="netName"  length="64"/><!--网点名称	WDMC	Varchar2(64)-->
 		<fixString name="sqn"  length="24"/><!--交易流水号	JYLSH	Varchar2(24)-->
 		<fixString name="txnDates"  length="8"/><!--交易日期	JYRQ	Varchar2(8)-->
 		<fixString name="txnTimes"  length="6"/><!--交易时间	JYSJ	Varchar2(6)-->
@@ -21,6 +20,18 @@
 		<fixString name="fulDedFlg"  length="1"/><!--部分缴费标志	BFJFBZ	Varchar2(1)-->
 		<fixString name="mfmVchNos"  length="16"/><!--账务流水号	ZWLSH	Varchar2(16)-->
 		<fixString name="electricityYearMonth"  length="6"/><!--电费年月	DFNY	Varchar2(6)-->
+		
 		<fixString name="ccy"  length="5"/><!--货币符号	HBFH	Varchar2(5)-->
 		<fixString name="respTxnAmt"  length="16"/><!--扣费金额	KFJE	Number(14,2)-->
+	
+		<fixString name="capital"  length="16"/><!--本金	BJ	Number(14,2)-->
+		<fixString name="dedit"  length="16"/><!--违约金	WYJ	Number(14,2)-->
+		<fixString name="YFFBZ"  length="1"/>
+		<fixString name="YFFJE"  length="16"/>
+		
+		<fixString name="respTxnAmts"  length="16"/><!--扣费金额	KFJE	Number(14,2)-->
+		<fixString name="chkMainMsg"  length="128"/><!--需校验的关键信息 XJYDGJXX-->
+		<fixString name="traSendDate"  length="8"/><!--扣款日期-->
+		<fixString name="traSendTime"  length="6"/><!--扣款日期时间-->
+		
 </segment>
