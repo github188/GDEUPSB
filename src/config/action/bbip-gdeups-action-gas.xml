@@ -1,45 +1,58 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <x:beans xmlns:x="http://www.springframework.org/schema/beans"
-    xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd       http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
-	
+	xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd       http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
 
- 
- <!-- 惠州燃气用户协议维护 -->
- 	<action id="oprGasCusAgentAction" class="com.bocom.bbip.gdeupsb.action.gas.OprGasCusAgentActionV4" />
-<!-- 惠州燃气用户协议文件上传（0全部，1新增） -->
-	<action id="gasAgentBatchFileToFTP" class="com.bocom.bbip.gdeupsb.action.gas.agentBat.GasAgentBatchFileToFtpAction"/>   
- 
- <!-- 惠州燃气代扣流水信息查询  -->
-  <action id="qryHzThdJnlInfoAction" class="com.bocom.bbip.gdeupsb.action.common.QryTxnJnlInfoAction" />
-  <!-- 惠州燃气代扣用户信息查询 -->
-  <action id="qryHzThdCusInfoAction" class="com.bocom.bbip.gdeupsb.action.gas.QryHzThdCusInfoAction" />
-  <!-- 惠州燃气报表打印 -->
-  <action id="prtGasJnlReport" class="com.bocom.bbip.gdeupsb.action.gas.PrintReportServiceActionPGAS00" />
-  
-  
-  
- 
-  <!-- 福彩中奖查询 -->
-  <action id="qryWinLotRecordAction" class="com.bocom.bbip.gdeupsb.action.lot.QryLotWinRecordAction" />
-  
-  <!-- 福彩实时投注查询 -->
-  <action id="qryLotBetRecordAction" class="com.bocom.bbip.gdeupsb.action.lot.QryLotBetRecordAction" />
-  
-  	<!-- ************************  福彩文件下载Start!  ************************ -->
-	<!-- <action id="qryFilDownloadAdrAction" class="com.bocom.bbip.gdeupsb.action.lot.QryFilDownloadAdrAction" />
-	<action id="downloadLotFilesAction" class="com.bocom.bbip.gdeupsb.action.lot.DownloadLotFilesAction" />
-  	<action id="lotFilImportAction" class="com.bocom.bbip.gdeupsb.action.lot.LotFilImportAction" />
-  	<action id="aftDownloadLotFilesAction" class="com.bocom.bbip.gdeupsb.action.lot.AftDownloadLotFilesAction" /> -->
-  	<!-- 福彩对账文件下载 -->
-  	<action id="downloadLotChkFileAction" class="com.bocom.bbip.gdeupsb.action.lot.DownloadLotChkFileAction" />
-  	<!-- 福彩返奖（中奖）文件下载 -->
-  	<action id="downloadLotPrzFileAction" class="com.bocom.bbip.gdeupsb.action.lot.DownloadLotPrzFileAction" />
-  	<!-- ************************  福彩文件下载End!  ************************ -->
-  	
-  	
-  	
-  	
-	
-	
+
+	<!-- 查询燃气用户信息 -->
+	<action id="qryGasCusInfoAction"
+		class="com.bocom.bbip.gdeupsb.action.gas.QryGasCusInfoAction" />
+
+	<!-- 惠州燃气用户协议维护 -->
+	<action id="oprGasCusAgentAction"
+		class="com.bocom.bbip.gdeupsb.action.gas.OprGasCusAgentActionV4" />
+	<!-- 惠州燃气用户协议文件上传（0全部，1新增） -->
+	<action id="gasAgentBatchFileToFTP"
+		class="com.bocom.bbip.gdeupsb.action.gas.agentBat.GasAgentBatchFileToFtpAction" />
+
+	<!-- 惠州燃气代扣流水信息查询 -->
+	<action id="qryHzThdJnlInfoAction"
+		class="com.bocom.bbip.gdeupsb.action.common.QryTxnJnlInfoAction" />
+	<!-- 惠州燃气代扣用户信息查询 -->
+	<action id="qryHzThdCusInfoAction"
+		class="com.bocom.bbip.gdeupsb.action.gas.QryHzThdCusInfoAction" />
+	<!-- 惠州燃气报表打印 -->
+	<action id="prtGasJnlReport"
+		class="com.bocom.bbip.gdeupsb.action.gas.PrintReportServiceActionPGAS00" />
+
+
+
+
+	<!-- 福彩中奖查询 -->
+	<action id="qryWinLotRecordAction"
+		class="com.bocom.bbip.gdeupsb.action.lot.QryLotWinRecordAction" />
+
+	<!-- 福彩实时投注查询 -->
+	<action id="qryLotBetRecordAction"
+		class="com.bocom.bbip.gdeupsb.action.lot.QryLotBetRecordAction" />
+
+	<!-- ************************ 福彩文件下载Start! ************************ -->
+	<!-- <action id="qryFilDownloadAdrAction" class="com.bocom.bbip.gdeupsb.action.lot.QryFilDownloadAdrAction" 
+		/> <action id="downloadLotFilesAction" class="com.bocom.bbip.gdeupsb.action.lot.DownloadLotFilesAction" 
+		/> <action id="lotFilImportAction" class="com.bocom.bbip.gdeupsb.action.lot.LotFilImportAction" 
+		/> <action id="aftDownloadLotFilesAction" class="com.bocom.bbip.gdeupsb.action.lot.AftDownloadLotFilesAction" 
+		/> -->
+	<!-- 福彩对账文件下载 -->
+	<action id="downloadLotChkFileAction"
+		class="com.bocom.bbip.gdeupsb.action.lot.DownloadLotChkFileAction" />
+	<!-- 福彩返奖（中奖）文件下载 -->
+	<action id="downloadLotPrzFileAction"
+		class="com.bocom.bbip.gdeupsb.action.lot.DownloadLotPrzFileAction" />
+	<!-- ************************ 福彩文件下载End! ************************ -->
+
+
+
+
+
+
 </x:beans>
