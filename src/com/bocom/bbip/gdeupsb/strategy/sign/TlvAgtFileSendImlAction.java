@@ -73,7 +73,6 @@ public class TlvAgtFileSendImlAction implements AgtFileSendImlService {
 		inpara.put("begDat", begDat);
 		inpara.put("endDat", endDat);
 
-		System.out.println("!!!!!!!!!!!!inpara=" + inpara);
 		// 查找拷盘数据
 		List<Map<String, Object>> fleSndList = gdsAgtWaterRepository.findFileSndInfoTel(inpara);
 		for(Map<String,Object> fleSndMap:fleSndList){
@@ -96,15 +95,15 @@ public class TlvAgtFileSendImlAction implements AgtFileSendImlService {
 
 //		if ("N".equals(isExport)) {
 //			// 更新协议的批次号与制盘标志：UpdAgtBatchId
-//			inpara.put("batchId", batNo);
-//			inpara.put("usbFlg", "N");
-//
-//			gdsAgtWaterRepository.updateBchUsbFlg(inpara);
-//		}
-//		if (0 == fleSndList.size()) {
-//			throw new CoreException(GDErrorCodes.EUPS_SIGN_NO_RECORD_FOUND);
-//		}
+		String fileName1=fileName.substring(6,fileName.indexOf("."));
+			inpara.put("batchId", fileName1);
+			inpara.put("usbFlg", "N");
+			gdsAgtWaterRepository.updateBchUsbFlg(inpara);
+		if (0 == fleSndList.size()) {
+			throw new CoreException(GDErrorCodes.EUPS_SIGN_NO_RECORD_FOUND);
+		}
 		log.info("广州有线协议数据拷盘处理结束!..");
+		context.setData("filNam",fileName.substring(6,fileName.indexOf(".")));
 		return null;
 	}
 }
