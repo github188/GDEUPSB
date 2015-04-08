@@ -2,7 +2,6 @@ package com.bocom.bbip.gdeupsb.action.gas;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,19 +13,14 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
 import com.bocom.bbip.comp.BBIPPublicService;
-import com.bocom.bbip.comp.BBIPPublicServiceImpl;
 import com.bocom.bbip.comp.CommonRequest;
 import com.bocom.bbip.comp.account.AccountService;
 import com.bocom.bbip.comp.account.support.CusActInfResult;
-import com.bocom.bbip.comp.btp.BTPService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
-import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.eups.entity.EupsActSysPara;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
-import com.bocom.bbip.eups.repository.EupsActSysParaRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.BatchAcpService;
 import com.bocom.bbip.eups.spi.vo.PrepareBatchAcpDomain;
@@ -34,7 +28,7 @@ import com.bocom.bbip.file.Marshaller;
 import com.bocom.bbip.file.transfer.TransferUtils;
 import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
-import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
+import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.entity.GdGasCusAll;
 import com.bocom.bbip.gdeupsb.entity.GdGashBatchTmp;
@@ -43,7 +37,6 @@ import com.bocom.bbip.gdeupsb.repository.GdGasCusAllRepository;
 import com.bocom.bbip.gdeupsb.repository.GdGashBatchTmpRepository;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
-import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.ContextUtils;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.core.Context;
@@ -147,6 +140,9 @@ public class BatchGashDealServiceAction extends BaseAction implements BatchAcpSe
         	cusAc = tmp.getCusAc();
         			if (accountService.isOurBankCard(cusAc)) {
         				isOurBnk = "0"; // 我行卡
+        				CusActInfResult actInf = accountService.getAcInf(CommonRequest.build(context), cusAc);
+        				OBKBK = actInf.getOpnBk();
+        				tmpMap.put("OBKBK", OBKBK);
         			} else {
         				isOurBnk = "1"; // 他行卡
         				CusActInfResult actInf = accountService.getAcInf(CommonRequest.build(context), cusAc);
@@ -178,7 +174,9 @@ public class BatchGashDealServiceAction extends BaseAction implements BatchAcpSe
 		
 		temp.put(ParamKeys.EUPS_FILE_HEADER, header);
 		temp.put(ParamKeys.EUPS_FILE_DETAIL, gasBatDetail);
-		context.setVariable("agtFileMap", temp);
+		
+		context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_NAME, fleNme);//原始文件名
+		context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_MAP, temp);
 		GDEupsBatchConsoleInfo console=new GDEupsBatchConsoleInfo();
 		console.setBatNo((String)context.getData(ParamKeys.BAT_NO));
 		/**更新批次状态为待提交*/
