@@ -14,6 +14,7 @@ import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.repository.GdGasCusAllRepository;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -68,7 +69,8 @@ public class QryHzThdCusInfoAction extends BaseAction{
 			cusAllDtlTemp.put("cusAc", maps.get("CUS_AC"));
 			cusAllDtlTemp.put("cusNme", maps.get("CUS_NME"));
 			cusAllDtlTemp.put("acTyp", maps.get("CUS_TYP"));
-			cusAllDtlTemp.put("creDte", maps.get("OPT_DAT"));
+//			cusAllDtlTemp.put("creDte", DateUtils.parse((String)maps.get("OPT_DAT"), "yyyy-MM-dd'T'HH:mm:ss"));
+			cusAllDtlTemp.put("creDte", (String)maps.get("OPT_DAT"));
 			cusAllDtlTemp.put("agrTme", maps.get("OPT_NOD"));
 			cusAllDtlTemp.put("idTyp", maps.get("ID_TYP"));
 			cusAllDtlTemp.put("idNo", maps.get("ID_NO"));
