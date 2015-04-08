@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdElecClrJnl" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdElecClrJnl" >
+    <id column="SQN" property="sqn" jdbcType="CHAR" />
+    <result column="BR_NO" property="brNo" jdbcType="CHAR" />
+    <result column="NOD_NO" property="nodNo" jdbcType="CHAR" />
+    <result column="TLR_ID" property="tlrId" jdbcType="CHAR" />
+    <result column="C_AGT_NO" property="cAgtNo" jdbcType="CHAR" />
+    <result column="CLR_DAT" property="clrDat" jdbcType="CHAR" />
+    <result column="CLR_TIM" property="clrTim" jdbcType="CHAR" />
+    <result column="CLR_RST" property="clrRst" jdbcType="CHAR" />
+    <result column="CLR_TYP" property="clrTyp" jdbcType="CHAR" />
+    <result column="CLR_TOT" property="clrTot" jdbcType="CHAR" />
+    <result column="CLR_AMT" property="clrAmt" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    SQN, BR_NO, NOD_NO, TLR_ID, C_AGT_NO, CLR_DAT, CLR_TIM, CLR_RST, CLR_TYP, CLR_TOT, 
+    CLR_AMT
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GD_ELEC_CLR_JNL
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="brNo!=null" >
+        AND  BR_NO=#{brNo,jdbcType=CHAR}
+      </if>
+      <if test="nodNo!=null" >
+        AND  NOD_NO=#{nodNo,jdbcType=CHAR}
+      </if>
+      <if test="tlrId!=null" >
+        AND  TLR_ID=#{tlrId,jdbcType=CHAR}
+      </if>
+      <if test="cAgtNo!=null" >
+        AND  C_AGT_NO=#{cAgtNo,jdbcType=CHAR}
+      </if>
+      <if test="clrDat!=null" >
+        AND  CLR_DAT=#{clrDat,jdbcType=CHAR}
+      </if>
+      <if test="clrTim!=null" >
+        AND  CLR_TIM=#{clrTim,jdbcType=CHAR}
+      </if>
+      <if test="clrRst!=null" >
+        AND  CLR_RST=#{clrRst,jdbcType=CHAR}
+      </if>
+      <if test="clrTyp!=null" >
+        AND  CLR_TYP=#{clrTyp,jdbcType=CHAR}
+      </if>
+      <if test="clrTot!=null" >
+        AND  CLR_TOT=#{clrTot,jdbcType=CHAR}
+      </if>
+      <if test="clrAmt!=null" >
+        AND  CLR_AMT=#{clrAmt,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GD_ELEC_CLR_JNL
+    where SQN = #{sqn,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from ${GDEUPSB_SCHEMA}.GD_ELEC_CLR_JNL
+    where SQN = #{sqn,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdElecClrJnl" >
+    insert into ${GDEUPSB_SCHEMA}.GD_ELEC_CLR_JNL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sqn != null" >
+        SQN,
+      </if>
+      <if test="brNo != null" >
+        BR_NO,
+      </if>
+      <if test="nodNo != null" >
+        NOD_NO,
+      </if>
+      <if test="tlrId != null" >
+        TLR_ID,
+      </if>
+      <if test="cAgtNo != null" >
+        C_AGT_NO,
+      </if>
+      <if test="clrDat != null" >
+        CLR_DAT,
+      </if>
+      <if test="clrTim != null" >
+        CLR_TIM,
+      </if>
+      <if test="clrRst != null" >
+        CLR_RST,
+      </if>
+      <if test="clrTyp != null" >
+        CLR_TYP,
+      </if>
+      <if test="clrTot != null" >
+        CLR_TOT,
+      </if>
+      <if test="clrAmt != null" >
+        CLR_AMT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sqn != null" >
+        #{sqn,jdbcType=CHAR},
+      </if>
+      <if test="brNo != null" >
+        #{brNo,jdbcType=CHAR},
+      </if>
+      <if test="nodNo != null" >
+        #{nodNo,jdbcType=CHAR},
+      </if>
+      <if test="tlrId != null" >
+        #{tlrId,jdbcType=CHAR},
+      </if>
+      <if test="cAgtNo != null" >
+        #{cAgtNo,jdbcType=CHAR},
+      </if>
+      <if test="clrDat != null" >
+        #{clrDat,jdbcType=CHAR},
+      </if>
+      <if test="clrTim != null" >
+        #{clrTim,jdbcType=CHAR},
+      </if>
+      <if test="clrRst != null" >
+        #{clrRst,jdbcType=CHAR},
+      </if>
+      <if test="clrTyp != null" >
+        #{clrTyp,jdbcType=CHAR},
+      </if>
+      <if test="clrTot != null" >
+        #{clrTot,jdbcType=CHAR},
+      </if>
+      <if test="clrAmt != null" >
+        #{clrAmt,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSB_SCHEMA}.GD_ELEC_CLR_JNL
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="brNo!=null" >
+        AND  BR_NO=#{brNo,jdbcType=CHAR}
+      </if>
+      <if test="nodNo!=null" >
+        AND  NOD_NO=#{nodNo,jdbcType=CHAR}
+      </if>
+      <if test="tlrId!=null" >
+        AND  TLR_ID=#{tlrId,jdbcType=CHAR}
+      </if>
+      <if test="cAgtNo!=null" >
+        AND  C_AGT_NO=#{cAgtNo,jdbcType=CHAR}
+      </if>
+      <if test="clrDat!=null" >
+        AND  CLR_DAT=#{clrDat,jdbcType=CHAR}
+      </if>
+      <if test="clrTim!=null" >
+        AND  CLR_TIM=#{clrTim,jdbcType=CHAR}
+      </if>
+      <if test="clrRst!=null" >
+        AND  CLR_RST=#{clrRst,jdbcType=CHAR}
+      </if>
+      <if test="clrTyp!=null" >
+        AND  CLR_TYP=#{clrTyp,jdbcType=CHAR}
+      </if>
+      <if test="clrTot!=null" >
+        AND  CLR_TOT=#{clrTot,jdbcType=CHAR}
+      </if>
+      <if test="clrAmt!=null" >
+        AND  CLR_AMT=#{clrAmt,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdElecClrJnl" >
+    update ${GDEUPSB_SCHEMA}.GD_ELEC_CLR_JNL
+    <set >
+      <if test="brNo != null" >
+        BR_NO = #{brNo,jdbcType=CHAR},
+      </if>
+      <if test="nodNo != null" >
+        NOD_NO = #{nodNo,jdbcType=CHAR},
+      </if>
+      <if test="tlrId != null" >
+        TLR_ID = #{tlrId,jdbcType=CHAR},
+      </if>
+      <if test="cAgtNo != null" >
+        C_AGT_NO = #{cAgtNo,jdbcType=CHAR},
+      </if>
+      <if test="clrDat != null" >
+        CLR_DAT = #{clrDat,jdbcType=CHAR},
+      </if>
+      <if test="clrTim != null" >
+        CLR_TIM = #{clrTim,jdbcType=CHAR},
+      </if>
+      <if test="clrRst != null" >
+        CLR_RST = #{clrRst,jdbcType=CHAR},
+      </if>
+      <if test="clrTyp != null" >
+        CLR_TYP = #{clrTyp,jdbcType=CHAR},
+      </if>
+      <if test="clrTot != null" >
+        CLR_TOT = #{clrTot,jdbcType=CHAR},
+      </if>
+      <if test="clrAmt != null" >
+        CLR_AMT = #{clrAmt,jdbcType=CHAR},
+      </if>
+    </set>
+    where SQN = #{sqn,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GD_ELEC_CLR_JNL
+    <if test="_parameter" >
+      where SQN in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
+</mapper>
