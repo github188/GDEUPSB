@@ -73,6 +73,20 @@
       <xs:element name="response" type="tns:agentFleSndUnSureDelResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:element name="actInfoQry" type="tns:actInfoQryReq_CType"/>
+  <xs:element name="actInfoQryResponse" type="tns:actInfoQryRsp_CType"/>
+  <xs:complexType name="actInfoQryReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:actInfoQryRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="actInfoQryRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:actInfoQryResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:element name="agtBatchFileInput" type="tns:agtBatchFileInputReq_CType"/>
   <xs:element name="agtBatchFileInputResponse" type="tns:agtBatchFileInputRsp_CType"/>
   <xs:complexType name="agtBatchFileInputReq_CType">
@@ -729,6 +743,37 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="actInfoQryRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
+      <xs:element name="cusAc" type="tns:cusAc_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="actInfoQryResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="bCusNo" type="tns:bCusNo_SType" minOccurs="0"/>
+      <xs:element name="idType" type="tns:idType_SType" minOccurs="0"/>
+      <xs:element name="idNo" type="tns:idNo_SType" minOccurs="0"/>
+      <xs:element name="cusNme" type="tns:cusNme_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="cusAc_SType">
+    <xs:annotation>
+      <xs:documentation>缴款帐号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="40"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="cusNme_SType">
+    <xs:annotation>
+      <xs:documentation>客户名称</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="agtBatchFileInputRequest_CType">
