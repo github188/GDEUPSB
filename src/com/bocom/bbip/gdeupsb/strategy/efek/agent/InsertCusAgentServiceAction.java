@@ -77,16 +77,6 @@ public class InsertCusAgentServiceAction extends BaseAction {
 			context.setData("br", "441800");
 		}
 		
-		System.out.println();
-		System.out.println("~~~~~~~~~~");
-		System.out.println();
-		System.out.println(context.getVariable("BBIP_HEADER"));
-		System.out.println();
-		System.out.println(context.getData("agentCollectAgreement"));
-		System.out.println();
-		System.out.println(context.getData("customerInfo"));
-		System.out.println();
-		
 		Result editCusAgtResult = bgspServiceAccessObject.callServiceFlatting("maintainAgentCollectAgreement",context.getDataMap());
 		logger.info("===========editCusAgtResult："+editCusAgtResult);
 
