@@ -63,7 +63,13 @@ public class BatchFileCommon extends BaseAction {
 		info.setEupsBusTyp(eupsBusTyp);
 		GDEupsBatchConsoleInfo ret =get(GDEupsBatchConsoleInfoRepository.class).findConsoleInfo(info);
 		if(ret != null){
-				throw new CoreException("批次已存在");
+				String batSts=ret.getBatSts();
+				if(batSts.equals("S")){
+						throw new CoreException("批次已完成，不能再次提交");
+				}else{
+						String batNo=ret.getBatNo();
+						get(GDEupsBatchConsoleInfoRepository.class).delete(batNo);
+				}
 		}
 		/** 插入批次控制表 */
 		logger.info("==============Start  Insert  GDEupsBatchConsoleInfo");
@@ -91,10 +97,15 @@ public class BatchFileCommon extends BaseAction {
 		context.setData("comNoAcps", comNoAcps);
 		//文本代收付 fileId 反盘文件时使用
 		info.setRsvFld7((String)context.getData("fileId"));
-		//文件名   和eups控制表关联  必须有
+		//文件名   和eups控制表关联  必须有   流水号
 		String batNoFile="BATC"+comNoAcps+"0.txt";
 		context.setData(ParamKeys.FLE_NME, batNoFile);
 		info.setRsvFld8(batNoFile);
+		String sqn=get(BBIPPublicServiceImpl.class).getBBIPSequence();
+		context.setData("rsvFld7", sqn);
+		info.setRsvFld7(sqn);
+		//rsvFld6  预留代收付生成批次号  
+		
 		//保存到控制表  
 		get(GDEupsBatchConsoleInfoRepository.class).insertConsoleInfo(info);
 		context.getDataMapDirectly().putAll(BeanUtils.toFlatMap(info));
@@ -196,6 +207,7 @@ public class BatchFileCommon extends BaseAction {
 	    ret.setFalTotCnt(falTotCnt);
 	    ret.setFalTotAmt(falTotAmt);
 	    ret.setExeDte(new Date());
+	    ret.setRsvFld7(context.getData(ParamKeys.BAT_NO).toString());
 		ret.setBatSts(GDConstants.BATCH_STATUS_COMPLETE);
 		//更改批次表
 		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(ret);
@@ -203,13 +215,15 @@ public class BatchFileCommon extends BaseAction {
 	}
 /**
  * EUPS_BATCH_CONSOLE_INFO和GDEUPS_BATCH_CONSOLE_INFO关联起来
+ * 代收付返回文件 部分处理
  */
 	public GDEupsBatchConsoleInfo  eupsBatchConSoleInfoAndgdEupsBatchConSoleInfo(Context context){
 			String batNo=context.getData("batNo").toString();
 			EupsBatchConsoleInfo eupsBatchConSoleInfo=get(EupsBatchConsoleInfoRepository.class).findOne(batNo);
-			String fleNme=eupsBatchConSoleInfo.getFleNme();
+			String rsvFld7=eupsBatchConSoleInfo.getRsvFld2();
 			GDEupsBatchConsoleInfo gdEupsBatchConsoleInfos=new GDEupsBatchConsoleInfo();
-			gdEupsBatchConsoleInfos.setRsvFld8(fleNme);
+			gdEupsBatchConsoleInfos.setRsvFld7(rsvFld7);
+			
 			GDEupsBatchConsoleInfo gdEupsBatchConSoleInfo=get(GDEupsBatchConsoleInfoRepository.class).find(gdEupsBatchConsoleInfos).get(0);
 			gdEupsBatchConSoleInfo.setTotAmt(eupsBatchConSoleInfo.getTotAmt());
 			gdEupsBatchConSoleInfo.setTotCnt(eupsBatchConSoleInfo.getTotCnt());
@@ -227,10 +241,10 @@ public class BatchFileCommon extends BaseAction {
 			logger.info("============Start  changeBatSts");
 			String batNo=context.getData(ParamKeys.BAT_NO).toString();
 			EupsBatchConsoleInfo  eupsBatchConsoleInfo=get(EupsBatchConsoleInfoRepository.class).findOne(batNo);
-			String fleNme=eupsBatchConsoleInfo.getFleNme();
+			String rsvfld7=eupsBatchConsoleInfo.getRsvFld2();
 			
 			GDEupsBatchConsoleInfo gdEupsBatchConsoleInfos=new GDEupsBatchConsoleInfo();
-			gdEupsBatchConsoleInfos.setRsvFld8(fleNme);
+			gdEupsBatchConsoleInfos.setRsvFld8(rsvfld7);
 			
 			GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=get(GDEupsBatchConsoleInfoRepository.class).find(gdEupsBatchConsoleInfos).get(0);
 			gdEupsBatchConsoleInfo.setExeDte(eupsBatchConsoleInfo.getExeDte());
