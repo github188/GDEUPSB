@@ -48,8 +48,8 @@ public class AftCancelAction extends BaseAction{
 //			gdEupsbTrspFeeInfo.setRvsDat(DateUtils.parse(ctx.getData(GDParamKeys.ACT_DAT).toString(),DateUtils.STYLE_SIMPLE_DATE));
 			gdEupsbTrspFeeInfo.setRvsDat(new Date());
 			gdEupsbTrspFeeInfo.setRvsNod(ctx.getData(ParamKeys.BK).toString());
-			gdEupsbTrspFeeInfo.setRvsTlr(ctx.getData(GDParamKeys.TLR_ID).toString());
-			gdEupsbTrspFeeInfo.setRvsTck(ctx.getData(GDParamKeys.TCK_NO).toString());
+			gdEupsbTrspFeeInfo.setRvsTlr(ctx.getData(ParamKeys.TELLER).toString());
+			gdEupsbTrspFeeInfo.setRvsTck(ctx.getData(ParamKeys.MFM_VCH_NO).toString());
 			gdEupsbTrspFeeInfo.setStatus(GDConstants.TF);
 			gdEupsbTrspFeeInfo.setThdKey(ctx.getData(GDParamKeys.THD_KEY).toString());
 			gdEupsbTrspFeeInfoRepository.updateCancelSt(gdEupsbTrspFeeInfo);
