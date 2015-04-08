@@ -202,7 +202,8 @@ public class PrintEupsbRptsAction extends BaseAction {
 		//本地生成报表文件并发送到mftp服务器,打印机自动打印
 		reportHelper.createFileAndSendMFTP(context,result,fileName,mftpConfigInfo); //TODO
 
-////////////////////////////////////////////////////////////////////////////////////
+/*****************************************************************************************************************************/
+		
 		// 拼装本地路径 本地测试
 //		PrintWriter printWriter = null;
 //		StringBuffer sbLocDir = new StringBuffer();
@@ -238,7 +239,8 @@ public class PrintEupsbRptsAction extends BaseAction {
 //            log.error("mftp send fail!");
 //            throw new CoreException(ErrorCodes.EUPS_MFTP_FILEPUT_FAIL);
 //        }
-//////////////////////////////////////////////////////////////////////////////////
+		
+/*****************************************************************************************************************************/
 		
 		
 		// bbipPublicService.sendFileToBBOS(new
