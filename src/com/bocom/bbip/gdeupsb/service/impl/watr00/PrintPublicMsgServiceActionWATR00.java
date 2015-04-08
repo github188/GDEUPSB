@@ -101,7 +101,7 @@ public class PrintPublicMsgServiceActionWATR00 extends BaseAction {
 		
 		Map<String, String> mapping = CollectionUtils.createMap();
 		VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
-		String sampleFile="config/report/zhTransport/transportInv.vm";
+		String sampleFile="config/report/watr00/watr00_printPublicMsg.vm";
 //		GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
 //		gdEupsbTrspFeeInfo.setPayLog(context.getData(ParamKeys.OLD_TXN_SEQUENCE).toString());
 //		List<GDEupsbTrspFeeInfo> feeInfoList = gdEupsbTrspFeeInfoRepository.find(gdEupsbTrspFeeInfo);
@@ -124,18 +124,52 @@ public class PrintPublicMsgServiceActionWATR00 extends BaseAction {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		String fileName = context.getData(GDParamKeys.INV_NO).toString()+context.getData(ParamKeys.TELLER)+"00";
+		String fileName = "159940";
 		BufferedOutputStream outStream = null;
 		try {
 
 			outStream = new BufferedOutputStream(new FileOutputStream(
-					"D:\\test"+fileName));
+					"D:/test/"+fileName));
 			outStream.write(result.getBytes(GDConstants.CHARSET_ENCODING_GBK));
 			outStream.close();
 		} catch (IOException e) {
 			throw new CoreException("BBIP0004EU0128");
 		}
 
+		
+		
+		
+		
+		
+		
+//		PrintWriter printWriter = null;
+//		StringBuffer sbLocDir = new StringBuffer();
+//		sbLocDir.append("D:/testGash/checkFilTest/").append(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)).append("/");
+//		sbLocDir.append(ftpCfg.getLocDir()).append("/").append(context.getData(ParamKeys.TELLER)).append("/").append(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)).append("/");
+		
+        
+        
+//		try {
+//			File file = new File(sbLocDir.toString());
+//			if (!file.exists()) {
+//				file.mkdirs();
+//			}
+//			printWriter = new PrintWriter(new BufferedWriter(
+//					new OutputStreamWriter(new FileOutputStream(sbLocDir
+//							.append(fileName).toString()), "GBK")));
+//			printWriter.write(result);
+//
+//		} catch (IOException e) {
+//			throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
+//		} finally {
+//			if (null != printWriter) {
+//				try {
+//					printWriter.close();
+//				} catch (Exception e) {
+//					throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
+//				}
+//			}
+//		}
 	
 
 
