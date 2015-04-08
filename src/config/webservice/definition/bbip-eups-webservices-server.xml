@@ -117,7 +117,13 @@
 		
 	
 	
-		
+		<!-- 查询燃气用户协议 -->
+		<server-side-ws-def wsdl="GDEUPSBGasCoreService.wsdl"
+		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBGasCoreService/Schema">
+		<qname-mappings>
+			<qname-mapping operation="qryGasCusInfo"  process-id="gdeupsb.qryGasCusInfo" />
+		</qname-mappings>
+	</server-side-ws-def>
 		
 		<!-- 惠州燃气用户协议维护 -->
 	<server-side-ws-def wsdl="GDEUPSBGasCoreService.wsdl"
