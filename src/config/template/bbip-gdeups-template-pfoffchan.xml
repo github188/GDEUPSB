@@ -374,6 +374,7 @@
 		</step>
 		
 	</flow-template>
+	
 	 <!-- 个人代扣协议删除 -->
 	<flow-template id="gdeupsb.delAgentTemplate">
 		<!-- 协议操作前处理 -->
@@ -395,6 +396,27 @@
 		</step>
 		
 	</flow-template>
+	
+	
+	
+	<!-- 电力自动清算模版 -->
+	<flow-template id="gdeupsb.eleAutoClearTempelate">
+		<step id="init" useCtxState="true" transactional="txTemplate">		
+		    <action id="preCallAction" place-holder="false" />
+			<next on="*" to="callHostPrc" />
+			<end on="BP_STATE_FAIL"/>
+		</step>
+		<step id="callHostPrc" useCtxState="true" transactional="txTemplate">
+			<action id="callHost" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="aftCallPrc" />
+			<end on="BP_STATE_FAIL"/>
+		</step>
+		<step id="aftCallPrc"  useCtxState="true" transactional="txTemplate">
+			<action id="aftCall"  place-holder="true"/>
+			<end on="*"/>
+		</step>
+	</flow-template>
+	
 	
 
 </x:beans>
