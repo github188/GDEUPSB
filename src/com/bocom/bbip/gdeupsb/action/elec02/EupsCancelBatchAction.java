@@ -23,7 +23,11 @@ public class EupsCancelBatchAction extends BaseAction {
         GDEupsBatchConsoleInfo info = new GDEupsBatchConsoleInfo();
 		info.setFleNme(fileName);
 		GDEupsBatchConsoleInfo ret = get(GDEupsBatchConsoleInfoRepository.class).findConsoleInfo(info);
-		Assert.isNotNull(ret, ErrorCodes.EUPS_BAT_CTL_INFO_NOT_EXIST);
+		if(null==ret){
+			context.setData("QSFlg", "4");
+			logger.info("批次控制信息不存在");
+			throw new CoreException(ErrorCodes.EUPS_BAT_CTL_INFO_NOT_EXIST);
+		}
 		context.setData(ParamKeys.BAT_NO, ret.getBatNo());
         /**批次撤销公共process*/
        	((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).
