@@ -34,9 +34,9 @@ public class PreCancelAction extends BaseAction{
 	GDEupsbTrspTxnJnlRepository gdEupsbTrspTxnJnlRepository;
 	public void execute(Context ctx) throws CoreException,CoreRuntimeException{
 		log.info("PreCancelAction start......");
-		ctx.setData(GDParamKeys.BR_NO, GDConstants.BR_NO);
+		ctx.setData(GDParamKeys.BR_NO, ctx.getData(ParamKeys.BR));
 		Date actDt = DateUtils.parse(DateUtils.format(new Date(), "yyyy-MM-dd"));
-		System.out.println(actDt);
+		
 		ctx.setData(GDParamKeys.ACT_DAT, actDt);
 //		ctx.setData(GDParamKeys.NOD_NO, "123");
 //		ctx.setData(GDParamKeys.TLR_ID, "123");

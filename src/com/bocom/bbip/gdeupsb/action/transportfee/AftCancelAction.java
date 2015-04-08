@@ -1,5 +1,7 @@
 package com.bocom.bbip.gdeupsb.action.transportfee;
 
+import java.util.Date;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.ErrorCodes;
+import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo;
@@ -43,8 +46,8 @@ public class AftCancelAction extends BaseAction{
 //			System.out.println(ctx.getData(GDParamKeys.ACT_DAT).toString());
 			
 //			gdEupsbTrspFeeInfo.setRvsDat(DateUtils.parse(ctx.getData(GDParamKeys.ACT_DAT).toString(),DateUtils.STYLE_SIMPLE_DATE));
-			gdEupsbTrspFeeInfo.setRvsDat(DateUtils.parse("2015-02-02"));
-			gdEupsbTrspFeeInfo.setRvsNod(ctx.getData(GDParamKeys.NOD_NO).toString());
+			gdEupsbTrspFeeInfo.setRvsDat(new Date());
+			gdEupsbTrspFeeInfo.setRvsNod(ctx.getData(ParamKeys.BK).toString());
 			gdEupsbTrspFeeInfo.setRvsTlr(ctx.getData(GDParamKeys.TLR_ID).toString());
 			gdEupsbTrspFeeInfo.setRvsTck(ctx.getData(GDParamKeys.TCK_NO).toString());
 			gdEupsbTrspFeeInfo.setStatus(GDConstants.TF);
