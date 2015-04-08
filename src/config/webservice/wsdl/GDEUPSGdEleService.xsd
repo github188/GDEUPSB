@@ -73,6 +73,34 @@
       <xs:element name="response" type="tns:eleaBnkPayFeeResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:element name="eleClrInfQry" type="tns:eleClrInfQryReq_CType"/>
+  <xs:element name="eleClrInfQryResponse" type="tns:eleClrInfQryRsp_CType"/>
+  <xs:complexType name="eleClrInfQryReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:eleClrInfQryRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="eleClrInfQryRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:eleClrInfQryResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="eleAutoClearParaUpd" type="tns:eleAutoClearParaUpdReq_CType"/>
+  <xs:element name="eleAutoClearParaUpdResponse" type="tns:eleAutoClearParaUpdRsp_CType"/>
+  <xs:complexType name="eleAutoClearParaUpdReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:eleAutoClearParaUpdRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="eleAutoClearParaUpdRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:eleAutoClearParaUpdResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:element name="eleaQryUsrPayInfo" type="tns:eleaQryUsrPayInfoReq_CType"/>
   <xs:element name="eleaQryUsrPayInfoResponse" type="tns:eleaQryUsrPayInfoRsp_CType"/>
   <xs:complexType name="eleaQryUsrPayInfoReq_CType">
@@ -728,6 +756,146 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="16"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="eleClrInfQryRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="delDte" type="tns:delDte_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="eleClrInfQryResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="clrInf" type="tns:clrInf_CType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="delDte_SType">
+    <xs:annotation>
+      <xs:documentation>电力清算日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="clrNodNo_SType">
+    <xs:annotation>
+      <xs:documentation>清算网点</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="clrTlrId_SType">
+    <xs:annotation>
+      <xs:documentation>清算柜员</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="7"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="clrCAgtNo_SType">
+    <xs:annotation>
+      <xs:documentation>清算单位协议号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="10"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="delTme_SType">
+    <xs:annotation>
+      <xs:documentation>电力清算时间</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="4"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="clrRst_SType">
+    <xs:annotation>
+      <xs:documentation>清算情况</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="clrTyp_SType">
+    <xs:annotation>
+      <xs:documentation>清算类型</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="clrTot_SType">
+    <xs:annotation>
+      <xs:documentation>清算笔数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="clrAmt_SType">
+    <xs:annotation>
+      <xs:documentation>清算金额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="15"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="clrInf_CType">
+    <xs:sequence>
+      <xs:element name="clrNodNo" type="tns:clrNodNo_SType" minOccurs="0"/>
+      <xs:element name="clrTlrId" type="tns:clrTlrId_SType" minOccurs="0"/>
+      <xs:element name="clrCAgtNo" type="tns:clrCAgtNo_SType" minOccurs="0"/>
+      <xs:element name="delDte" type="tns:delDte_SType" minOccurs="0"/>
+      <xs:element name="delTme" type="tns:delTme_SType" minOccurs="0"/>
+      <xs:element name="clrRst" type="tns:clrRst_SType" minOccurs="0"/>
+      <xs:element name="clrTyp" type="tns:clrTyp_SType" minOccurs="0"/>
+      <xs:element name="clrTot" type="tns:clrTot_SType" minOccurs="0"/>
+      <xs:element name="clrAmt" type="tns:clrAmt_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="eleAutoClearParaUpdRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="oprFlg" type="tns:oprFlg_SType" minOccurs="0"/>
+      <xs:element name="delDte" type="tns:delDte_SType" minOccurs="0"/>
+      <xs:element name="delTme" type="tns:delTme_SType" minOccurs="0"/>
+      <xs:element name="clrSts" type="tns:clrSts_SType" minOccurs="0"/>
+      <xs:element name="autFlg" type="tns:autFlg_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="eleAutoClearParaUpdResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="delDte" type="tns:delDte_SType" minOccurs="0"/>
+      <xs:element name="delTme" type="tns:delTme_SType" minOccurs="0"/>
+      <xs:element name="clrSts" type="tns:clrSts_SType" minOccurs="0"/>
+      <xs:element name="autFlg" type="tns:autFlg_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="oprFlg_SType">
+    <xs:annotation>
+      <xs:documentation>操作标志</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="clrSts_SType">
+    <xs:annotation>
+      <xs:documentation>清算状态</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="autFlg_SType">
+    <xs:annotation>
+      <xs:documentation>系统定时自动清算标志</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="eleaQryUsrPayInfoRequest_CType">

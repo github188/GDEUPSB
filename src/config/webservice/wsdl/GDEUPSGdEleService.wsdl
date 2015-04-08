@@ -36,6 +36,18 @@
   <wsdl:message name="eleaBnkPayFeeResponseMessage">
     <wsdl:part name="eleaBnkPayFeeResponse" element="gdeupsb:eleaBnkPayFeeResponse"/>
   </wsdl:message>
+  <wsdl:message name="eleClrInfQryRequestMessage">
+    <wsdl:part name="eleClrInfQryRequest" element="gdeupsb:eleClrInfQry"/>
+  </wsdl:message>
+  <wsdl:message name="eleClrInfQryResponseMessage">
+    <wsdl:part name="eleClrInfQryResponse" element="gdeupsb:eleClrInfQryResponse"/>
+  </wsdl:message>
+  <wsdl:message name="eleAutoClearParaUpdRequestMessage">
+    <wsdl:part name="eleAutoClearParaUpdRequest" element="gdeupsb:eleAutoClearParaUpd"/>
+  </wsdl:message>
+  <wsdl:message name="eleAutoClearParaUpdResponseMessage">
+    <wsdl:part name="eleAutoClearParaUpdResponse" element="gdeupsb:eleAutoClearParaUpdResponse"/>
+  </wsdl:message>
   <wsdl:message name="eleaQryUsrPayInfoRequestMessage">
     <wsdl:part name="eleaQryUsrPayInfoRequest" element="gdeupsb:eleaQryUsrPayInfo"/>
   </wsdl:message>
@@ -67,6 +79,16 @@
       <wsdl:documentation/>
       <wsdl:input message="tns:eleaBnkPayFeeRequestMessage"/>
       <wsdl:output message="tns:eleaBnkPayFeeResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="eleClrInfQry">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:eleClrInfQryRequestMessage"/>
+      <wsdl:output message="tns:eleClrInfQryResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="eleAutoClearParaUpd">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:eleAutoClearParaUpdRequestMessage"/>
+      <wsdl:output message="tns:eleAutoClearParaUpdResponseMessage"/>
     </wsdl:operation>
     <wsdl:operation name="eleaQryUsrPayInfo">
       <wsdl:documentation/>
@@ -114,6 +136,24 @@
     </wsdl:operation>
     <wsdl:operation name="eleaBnkPayFee">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdEleService/eleaBnkPayFee"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="eleClrInfQry">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdEleService/eleClrInfQry"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="eleAutoClearParaUpd">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSGdEleService/eleAutoClearParaUpd"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
