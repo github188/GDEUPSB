@@ -323,9 +323,9 @@
 		class="com.bocom.bbip.gdeupsb.action.gas.BatchGashDealServiceAction" />
 
 	<!-- HZ燃气：文件批量托收完成通知燃气 -->
-	<bean id="eups.afterBatchAcpServicePGAS00"
+	<bean id="eups.afterBatchAcpServiceActionPGAS00"
 		class="com.bocom.bbip.gdeupsb.action.gas.MsgToGasAftBatchAction" />
-
+		
 	<!-- 中山文件批量:文件录入及检查 -->
 	<bean id="eups.fileBatchPayCreateDataServiceActionZSAG00"
 		class="com.bocom.bbip.gdeupsb.action.fbpd.CheckAndImportFileFbpdAction" />
