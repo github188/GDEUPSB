@@ -142,7 +142,7 @@ public class CheckBkEleGzFileToThirdAction implements CheckBkFileToThirdService 
 
 		// 查询缴费明细信息
 		List<Map<String, Object>> jfDetailResult = gdEupsTransJournalRepository.findGzEleChkJFDetail(eupsTransJournal);
-		if (CollectionUtils.isNotEmpty(jfDetailResult)) {
+		if (CollectionUtils.isNotEmpty(jfHeaderResult)) {
 			checkFileJF.put("detail", jfDetailResult);
 		}
 
@@ -157,6 +157,11 @@ public class CheckBkEleGzFileToThirdAction implements CheckBkFileToThirdService 
 
 		eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("eleGzCheckJF");
 
+		log.info("缴费的文件为:"+fileNameJf+checkFileJF);
+		eupsThdFtpConfig.setRmtFleNme(fileNameJf);
+		eupsThdFtpConfig.setLocFleNme(fileNameJf);
+		
+		
 		operateFile.createCheckFile(eupsThdFtpConfig, "eleGzCheckJFFmt", fileNameJf, checkFileJF);
 
 		// ftpput缴费文件
