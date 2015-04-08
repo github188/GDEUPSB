@@ -39,7 +39,7 @@
 	
 	<bean id="gemsService" class="com.bocom.bbip.comp.gems.service.DefaultGemsServiceAccessObject"/>
 	
-	<--bean id="callHostByComNo" class="com.bocom.bbip.gdeupsb.action.common.CallHostByComNo"/-->
+	<!--bean id="callHostByComNo" class="com.bocom.bbip.gdeupsb.action.common.CallHostByComNo"/-->
 	
 	<!-- 签约协议 -->
 	<bean id="RegisterService" class="com.bocom.bbip.comp.register.RegisterService"/>
