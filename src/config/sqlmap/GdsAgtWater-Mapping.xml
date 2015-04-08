@@ -444,7 +444,6 @@
 		</trim>
 	</select>
 
-
 	<!-- 签约一站通:查询签约明细 -->
 	<select id="findSignDeatilList" resultType="java.util.Map">
 		select
@@ -453,7 +452,7 @@
 		TAgt_St tagtSt,
 		TCus_Id tcusId, Eff_Dat effDat,
 		Ivd_Dat ivdDat,
-		ErrMsg
+		LER_MSG 
 		errMsg ${extSql}
 		from ${AGTSTB}
 		<trim prefix="WHERE" prefixOverrides="AND">
@@ -598,9 +597,9 @@
 		Eff_Dat between #{begDat} and #{endDat} and
 		Sub_Sts='0' and TAgt_St in
 		( 'U','C' )
-		and length(trim(TCus_Id)) = 10 and USB_FLG='Y'
+		and USB_FLG='Y'
 	</update>
-
+<!-- length(trim(TCus_Id)) -->
 	<!-- 签约一站通协议维护:检查用户编号信息是否已存在 -->
 	<select id="findBatchCnt" resultType="java.lang.Integer">
 		select count(BATCH_ID) Cnt
@@ -657,6 +656,14 @@
 		Gds_BId=#{gdsBId}
 		and ACT_NO=#{actNo} and Sub_Sts='0'
 	</update>
+	
+		<!-- 签约一站通-协议更新:统计批次协议总数 -->
+	<select id="findBatchAgtCntAll" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		select count(*) totCnt from
+		${agtStb}
+		where BATCH_ID=#{batchId,jdbcType=CHAR}
+	</select>
 
 	<!-- 签约一站通-协议更新:统计批次协议总数 -->
 	<select id="findBatchAgtCnt" resultType="java.lang.Integer"
@@ -670,6 +677,14 @@
 	<select id="findActInfUsbFlg" resultType="java.lang.String">
 		select act_no from
 		${GDEUPSB_SCHEMA}.GDS_AGT_WATER
+		where BATCH_ID=#{batchId,jdbcType=CHAR}
+		and usb_flg != 'Y'
+	</select>
+	
+		<!-- 签约一站通-协议更新:统计批次协议总数 -->
+	<select id="findActInfUsbFlgAll" resultType="java.lang.String"  parameterType="java.util.Map">
+		select act_no from
+		${agtStb}
 		where BATCH_ID=#{batchId,jdbcType=CHAR}
 		and usb_flg != 'Y'
 	</select>
