@@ -22,6 +22,7 @@ import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspTxnJnl;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspFeeInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspTxnJnlRepository;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.channel.CommunicationException;
 import com.bocom.jump.bp.channel.DefaultTransport;
@@ -79,7 +80,8 @@ public class PrintCallThirdAction extends BaseAction{
 //		}
 //		ConnectThdUtils connectThdUtils = new ConnectThdUtils();
 //		Map<String,Object> thdReturnMessage = connectThdUtils.getThdResponse(enCodePath,deCodePath,ctx);
-		
+		String sqn = ctx.getData(ParamKeys.SEQUENCE).toString();
+		ctx.setData(GDParamKeys.TLOG_NO, StringUtils.substring(sqn, 2, 8)+StringUtils.substring(sqn, 14, 20));
 		Map<String,Object> thdReturnMessage = callThdTradeManager.trade(ctx);
 		log.info("call third start....[the state is" + ctx.getState() + "]");
 		
