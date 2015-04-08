@@ -38,7 +38,6 @@ public class AgtMdyRstUnsureDealAction extends BaseAction {
 		}
 		String agtSTb = gdsRunCtl.getAgtStb(); // 子表
 		String batchId = context.getData("batchId"); // 批次号
-
 		// 查询是否有该批次的数据
 		Map<String, Object> inpara = new HashMap<String, Object>();
 		inpara.put("agtSTb", agtSTb);
@@ -54,10 +53,10 @@ public class AgtMdyRstUnsureDealAction extends BaseAction {
 			}
 			log.info("record found!");
 		}
-
+//		String fileName1 = batchId.substring(6, batchId.indexOf("."));
+//		inpara.put("batchId", batchId);
 		// 更新批次制盘标志
 		gdsAgtWaterRepository.updateFleSndInf(inpara);
-
 	}
 
 }
