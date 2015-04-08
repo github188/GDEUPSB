@@ -149,11 +149,8 @@ public class PrintEupsbRptsAction extends BaseAction {
 		 
 		//配置生成文件名字路径，其他信息从ftpCfg中获取
 		EupsThdFtpConfigRepository eupsThdFtpConfigRepository = get(EupsThdFtpConfigRepository.class);
-//		EupsThdFtpConfig ftpCfg = get(OperateFTPAction.class).getFTPInfo("gdeupsbPrtCfg", eupsThdFtpConfigRepository);//TODO 配置ftpCfg
-//		ftpCfg.setLocFleNme(fileName.toString());
 		ReportHelper reportHelper = get(ReportHelper.class);
-		MFTPConfigInfo mftpConfigInfo = reportHelper
-				.getMFTPConfigInfo(eupsThdFtpConfigRepository);
+		MFTPConfigInfo mftpConfigInfo = reportHelper.getMFTPConfigInfo(eupsThdFtpConfigRepository); //TODO
 		logger.info((new StringBuilder("mftpConfigInfo:>>>>").append(BeanUtils
 				.toMap(mftpConfigInfo))).toString());
 
@@ -203,15 +200,14 @@ public class PrintEupsbRptsAction extends BaseAction {
 		logger.info("=============ready to print report list=============");
 
 		//本地生成报表文件并发送到mftp服务器,打印机自动打印
-		reportHelper.createFileAndSendMFTP(context,result,fileName,mftpConfigInfo);
+		reportHelper.createFileAndSendMFTP(context,result,fileName,mftpConfigInfo); //TODO
 
-		// TODO 拼装本地路径 本地测试
+////////////////////////////////////////////////////////////////////////////////////
+		// 拼装本地路径 本地测试
 //		PrintWriter printWriter = null;
 //		StringBuffer sbLocDir = new StringBuffer();
 //		sbLocDir.append("D:/testGash/checkFilTest/").append(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)).append("/");
 //		sbLocDir.append(ftpCfg.getLocDir()).append("/").append(context.getData(ParamKeys.TELLER)).append("/").append(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)).append("/");
-		
-        
         
 //		try {
 //			File file = new File(sbLocDir.toString());
@@ -242,6 +238,8 @@ public class PrintEupsbRptsAction extends BaseAction {
 //            log.error("mftp send fail!");
 //            throw new CoreException(ErrorCodes.EUPS_MFTP_FILEPUT_FAIL);
 //        }
+//////////////////////////////////////////////////////////////////////////////////
+		
 		
 		// bbipPublicService.sendFileToBBOS(new
 		// File(TransferUtils.resolveFilePath(mftploca, reportFileName)),
@@ -250,6 +248,7 @@ public class PrintEupsbRptsAction extends BaseAction {
 //		 reportHelper.createFileAndSendMFTP(context, result, fileName,
 //		 mftpConfigInfo);
 //		 context.setData("filName", fileName);
+		
         String teller = (String)context.getData("tlr");
         fileName.append("_p").append((new StringBuilder("_")).append(br).toString()).append((new StringBuilder("_")).append(teller).toString());
 		context.setData(ParamKeys.FLE_NME, fileName.toString());
