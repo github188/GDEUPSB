@@ -51,6 +51,12 @@ public final class GDErrorCodes {
 	
 	/** 广东电力清算时间非法 */
 	public static final String EUPS_ELE_GZ_CLEAR_TIME_ERROR = "BBIP4400EU0108";
+	
+	/** 广东电力不存在清算信息 */
+	public static final String EUPS_ELE_GZ_CLEAR_INFO_NOT_EXIST= "BBIP4400EU0109";
+	
+	/** 广东电力清算错误 */
+	public static final String EUPS_ELE_GZ_CLEAR_ERROR= "BBIP4400EU0110";
 
 	/** 供电局系统:无效交易(数据格式) */
 	public static final String EUPS_ELE_GZ_DATE_FORMAT_ERROR = "BBIP4400EU0190";
