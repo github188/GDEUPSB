@@ -65,4 +65,22 @@
 				AND TXN_STS ='S' AND TXN_TYP ='N'
 		</trim>
 	</select>
+	<select id="queryPublicMsgA" resultType="map" parameterType="map">
+		select A.TXN_TLR,B.AGT_SRV_CUS_ID,B.CUS_NME, B.TXN_DTE ,B.SQN ,B.TXN_AMT,B.CUS_AC from
+		EUPS.EUPS_BATCH_CONSOLE_INFO A, EUPS.EUPS_BATCH_INFO_DETAIL B
+		<trim prefix="WHERE" prefixOverrides="AND">
+			
+			<if test="beginDate!=null and beginDate!=''">
+				AND B.TXN_DTE &gt;= #{beginDate,jdbcType=VARCHAR}
+			</if>
+			<if test="endDate!=null and endDate!=''">
+				AND B.TXN_DTE &lt;= #{endDate,jdbcType=VARCHAR}
+			</if>
+			<if test="cusAc!=null and cusAc!=''">
+				AND B.CUS_AC = #{cusAc,jdbcType=VARCHAR}
+			</if>
+			
+				AND B.STS ='S' AND A.BAT_NO = B.BAT_NO AND A.BUS_KND = #{busKnd,jdbcType=VARCHAR}
+		</trim>
+	</select>
 </mapper>
