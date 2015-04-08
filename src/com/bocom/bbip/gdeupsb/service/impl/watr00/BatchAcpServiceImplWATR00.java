@@ -184,7 +184,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		}
 		/** 插入批次控制表 */
 		String batNo =((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);//申请代收批次号
-		
+		context.setData("batNo1", batNo);
 		info.setBatNo(batNo);//批次号
 		info.setBatSts(GDConstants.BATCH_STATUS_INIT);//批次状态
 		info.setFleNme((String)context.getVariable(ParamKeys.FLE_NME));//代收付批量文件名称
@@ -198,6 +198,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		info.setBusKnd((String)context.getData(ParamKeys.BUSS_KIND));
 		info.setTxnOrgCde((String) context.getData(ParamKeys.BR));
 		info.setEupsBusTyp((String)context.getData(ParamKeys.EUPS_BUSS_TYPE));
+		
 		get(GDEupsBatchConsoleInfoRepository.class).insert(info);
 		context.setDataMap(BeanUtils.toMap(info));
 //		context.getDataMapDirectly().putAll(BeanUtils.toFlatMap(info));
@@ -282,7 +283,9 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 			tmp.setJe((String)map.get("je"));
 			//BigDecimal bigDecimal=new BigDecimal(map.get("bcount").toString().trim()).scaleByPowerOfTen(-2);
 			tmp.setBcount((String)map.get("bcount"));
+			
 			//tmp.setBcount(bigDecimal+"");
+			tmp.setRmk1(context.getVariable(ParamKeys.FLE_NME).toString());
 			get(GdeupsWatBatInfTmpRepository.class).insert(tmp);
 			i++;
 		}

@@ -51,6 +51,7 @@ public class PrintPublicMsgServiceActionWATR00 extends BaseAction {
 		Map<String,Object> param = new HashMap<String,Object>();
 		param.put("beginDate", beginDate);
 		param.put("endDate", endDate);
+		param.put("busKnd", "A115");
 		if(cusAc==null||"".equals(cusAc.toString().trim())){
 			param.put("cusAc", null);
 		}else{
@@ -64,15 +65,15 @@ public class PrintPublicMsgServiceActionWATR00 extends BaseAction {
 //		MFTPConfigInfo mftpConfigInfo = reportHelper.getMFTPConfigInfo(eupsThdFtpConfigRepository);
 //		logger.info((new StringBuilder("mftpConfigInfo:>>>>").append(BeanUtils.toMap(mftpConfigInfo))).toString());
 //		
-		List<Map<String,Object>> eupsTransJournals = ((SqlMap)get("sqlMap")).queryForList("watr00.queryPublicMsg", param);
+		List<Map<String,Object>> eupsTransJournals = ((SqlMap)get("sqlMap")).queryForList("watr00.queryPublicMsgA", param);
 		for(Map<String,Object> m:eupsTransJournals){
 			m.put("cusAc", m.get("CUS_AC"));
-			m.put("cusNme", m.get("CUS_NMES"));
-			m.put("ccy", m.get("CCY"));
+			m.put("cusNme", m.get("CUS_NM"));
+			m.put("ccy", "CNY");
 			m.put("txnAmt", m.get("TXN_AMT"));
 			m.put("txnAmtInWord", StringUtils.amountInWords(String.valueOf(m.get("txnAmt"))));
-			m.put("thdCusNo", m.get("THD_CUS_NO"));
-			m.put("actDat", String.valueOf(m.get("AC_DTE")));
+			m.put("thdCusNo", m.get("AGT_SRV_CUS_ID"));
+			m.put("actDat", String.valueOf(m.get("TXN_DTE")));
 			m.put("txnTlr", m.get("TXN_TLR"));
 			m.put("sqn", m.get("SQN"));
 		}
@@ -88,7 +89,7 @@ public class PrintPublicMsgServiceActionWATR00 extends BaseAction {
 //		Map<String,String> map = new HashMap<String,String>();
 //		map.put("sample", "config/report/watr00/watr00_printPublicMsg.vm");
 //		render.setReportNameTemplateLocationMapping(map);
-//		context.setData("eles", eupsTransJournals);
+		context.setData("eles", eupsTransJournals);
 //		String result = render.renderAsString("sample", context);
 //		logger.info(result);
 //		String date = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);

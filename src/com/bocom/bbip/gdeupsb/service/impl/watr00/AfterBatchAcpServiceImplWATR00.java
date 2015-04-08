@@ -22,7 +22,9 @@ import com.bocom.bbip.eups.repository.EupsBatchInfoDetailRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
 import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
+import com.bocom.bbip.gdeupsb.entity.GdeupsWatBatInfTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsEleTmpRepository;
+import com.bocom.bbip.gdeupsb.repository.GdeupsWatBatInfTmpRepository;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
@@ -51,10 +53,14 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
 	@Autowired
 	EupsBatchInfoDetailRepository eupsBatchInfoDetailRepository;
+	
 
 	@Override
 	public void afterBatchDeal(AfterBatchAcpDomain domain, Context context)	throws CoreException {
 		logger.info("AfterBatchAcpServiceImplWATR00 start ... ...");
+		
+		
+		
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		String sqn = service.getBBIPSequence();
 		String date = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
