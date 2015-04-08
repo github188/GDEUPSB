@@ -7,18 +7,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.bocom.bbip.comp.BBIPPublicServiceImpl;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
-import com.bocom.bbip.gdeupsb.common.GDConstants;
-import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GDEupsEleTmpRepository;
-import com.bocom.bbip.service.Result;
-import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -50,32 +44,34 @@ public class CancelBatchAction extends BaseAction {
 		   		throw new CoreException("获取金额与交易金额不相等");
 	   }
 	   //批量 判断状态
-	   String batNo=gdEupsBatchConsoleInfo.getBatNo();
-	   GDEupsBatchConsoleInfo Infos=gdEupsBatchConsoleInfoRepository.findOne(batNo);
-	   String thdSqn=Infos.getRsvFld2();
-	   EupsBatchConsoleInfo eupsBatchConsoleInfo=new EupsBatchConsoleInfo();
-	   eupsBatchConsoleInfo.setRsvFld2(thdSqn);
-	   EupsBatchConsoleInfo eupsBatchConsoleInfoOne=eupsBatchConsoleInfoRepository.find(eupsBatchConsoleInfo).get(0);
-	   String eupsBatSts=eupsBatchConsoleInfoOne.getBatSts();
-	   if(eupsBatSts.equals(GDConstants.BATCH_STATUS_INIT) || eupsBatSts.equals(GDConstants.BATCH_STATUS_WAIT)){
-			   //上锁
-			   Result result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).tryLock(batNo, 60*1000L, 6000L);
-			   Assert.isTrue(result.isSuccess(), GDErrorCodes.EUPS_LOCK_FAIL);
-			   //更改批次控制表状态
-			   eupsBatchConsoleInfoOne.setBatSts("C");
-			   eupsBatchConsoleInfoRepository.update(eupsBatchConsoleInfoOne);
-			   
-			   GDEupsBatchConsoleInfo info=new GDEupsBatchConsoleInfo();
-			   info.setBatNo(batNo);
-			   info.setBatSts("C");
-			   gdEupsBatchConsoleInfoRepository.updateConsoleInfo(info);
-			   context.setData("cancelSign","C");
-			   //解锁
-			   result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).unlock(batNo);
-			   Assert.isTrue(result.isSuccess(), GDErrorCodes.EUPS_UNLOCK_FAIL);
-	   }else{
-		   		throw new CoreException(GDErrorCodes.EUPS_BATCH_STATUS_ERROR);
-	   }
+//	   String batNo=gdEupsBatchConsoleInfo.getBatNo();
+//	   GDEupsBatchConsoleInfo Infos=gdEupsBatchConsoleInfoRepository.findOne(batNo);
+//	   String thdSqn=Infos.getRsvFld2();
+//	   EupsBatchConsoleInfo eupsBatchConsoleInfo=new EupsBatchConsoleInfo();
+//	   eupsBatchConsoleInfo.setRsvFld2(thdSqn);
+//	   EupsBatchConsoleInfo eupsBatchConsoleInfoOne=eupsBatchConsoleInfoRepository.find(eupsBatchConsoleInfo).get(0);
+//	   String eupsBatSts=eupsBatchConsoleInfoOne.getBatSts();
+//	   if(eupsBatSts.equals(GDConstants.BATCH_STATUS_INIT) || eupsBatSts.equals(GDConstants.BATCH_STATUS_WAIT)){
+//			   //上锁
+//			   Result result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).tryLock(batNo, 60*1000L, 6000L);
+//			   Assert.isTrue(result.isSuccess(), GDErrorCodes.EUPS_LOCK_FAIL);
+//			   //更改批次控制表状态
+//			   eupsBatchConsoleInfoOne.setBatSts("C");
+//			   eupsBatchConsoleInfoRepository.update(eupsBatchConsoleInfoOne);
+//			   
+//			   GDEupsBatchConsoleInfo info=new GDEupsBatchConsoleInfo();
+//			   info.setBatNo(batNo);
+//			   info.setBatSts("C");
+//			   gdEupsBatchConsoleInfoRepository.updateConsoleInfo(info);
+//			   context.setData("cancelSign","C");
+//			   //解锁
+//			   result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).unlock(batNo);
+//			   Assert.isTrue(result.isSuccess(), GDErrorCodes.EUPS_UNLOCK_FAIL);
+//	   }else{
+//		   		throw new CoreException(GDErrorCodes.EUPS_BATCH_STATUS_ERROR);
+//	   }
+	   
+	   context.setData("cancelSign", "2");
 	   context.setData("thdTxnDate", DateUtils.format((Date)context.getData(ParamKeys.THD_TXN_DATE), DateUtils.STYLE_yyyyMMdd));
 	   context.setData("thdTxnTime", DateUtils.formatAsHHmmss((Date)context.getData(ParamKeys.THD_TXN_TIME)));
 	   context.setData(ParamKeys.TXN_DTE, DateUtils.formatAsTranstime((Date)context.getData(ParamKeys.TXN_DTE)));
