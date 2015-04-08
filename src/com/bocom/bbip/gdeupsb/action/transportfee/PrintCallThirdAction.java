@@ -15,6 +15,7 @@ import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspTxnJnl;
@@ -59,7 +60,7 @@ public class PrintCallThirdAction extends BaseAction{
 		log.info("PrintCallThirdAction start.......");
 		ctx.setState("fail");
 		GDEupsbTrspTxnJnl gdEupsbTrspTxnJnl = new GDEupsbTrspTxnJnl();
-		
+		ctx.setData(ParamKeys.THD_TXN_CDE, "PayCar");
 //		String enCodePath="packet://WEB-INF/classes/config/stream/TRSP00/f484014.xml";
 //		String deCodePath="packet://WEB-INF/classes/config/stream/TRSP00/p484004.xml";
 //		trspTransport.setEncodeTransforms(new Transform[] { new EncoderTransform(enCodePath), new RequestTransform() });

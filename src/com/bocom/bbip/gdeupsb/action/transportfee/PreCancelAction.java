@@ -38,9 +38,9 @@ public class PreCancelAction extends BaseAction{
 		Date actDt = DateUtils.parse(DateUtils.format(new Date(), "yyyy-MM-dd"));
 		System.out.println(actDt);
 		ctx.setData(GDParamKeys.ACT_DAT, actDt);
-		ctx.setData(GDParamKeys.NOD_NO, "123");
-		ctx.setData(GDParamKeys.TLR_ID, "123");
-		ctx.setData(GDParamKeys.TCK_NO, "123456789");
+//		ctx.setData(GDParamKeys.NOD_NO, "123");
+//		ctx.setData(GDParamKeys.TLR_ID, "123");
+//		ctx.setData(GDParamKeys.TCK_NO, "123456789");
 		Date payDat = DateUtils.parse(ctx.getData(GDParamKeys.PAY_DAT).toString(), "yyyy-MM-dd");
 		ctx.setData(GDParamKeys.PAY_DAT, payDat);
 		GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();

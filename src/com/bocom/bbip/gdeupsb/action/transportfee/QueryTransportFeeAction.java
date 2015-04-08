@@ -59,27 +59,6 @@ public class QueryTransportFeeAction extends BaseAction{
 		ctx.setData(GDParamKeys.TLOG_NO, StringUtils.substring(sqn, 2, 8)+StringUtils.substring(sqn, 14, 20));
 		ctx.setData(GDParamKeys.THD_KEY, sqn);
 		
-		
-		
-//		String enCodePath="packet://WEB-INF/classes/config/stream/TRSP00/f484011.xml";
-//		String deCodePath="packet://WEB-INF/classes/config/stream/TRSP00/p484011.xml";
-//		trspTransport.setEncodeTransforms(new Transform[] { new EncoderTransform(enCodePath), new RequestTransform() });
-//		trspTransport.setDecodeTransforms(new Transform[] { new DecoderTransform(deCodePath), new ResponseTransform() });
-//		trspTransport.setGateway(gateway);
-//		
-//		Map responseMessage=new HashMap();
-//		
-//		try {
-//			 responseMessage = (Map)trspTransport.submit(ctx.getDataMap(), ctx);
-//		} catch (CommunicationException e) {
-//			e.printStackTrace();
-//		} catch (JumpException e) {
-//			e.printStackTrace();
-//		}
-
-//		ConnectThdUtils connectThdUtils = new ConnectThdUtils();
-//		Map<String,Object> responseMessage = connectThdUtils.getThdReosponse(enCodePath,deCodePath,ctx);
-		
 
 		Map<String,Object> thdReturnMessage = callThdTradeManager.trade(ctx);
 		logger.info("call third start....[the state is" + ctx.getState() + "]");
@@ -112,7 +91,7 @@ public class QueryTransportFeeAction extends BaseAction{
 				ctx.setData("corpus", new BigDecimal((String)ctx.getData("corpus")));
 				ctx.setData("lateFee", new BigDecimal((String)ctx.getData("lateFee")));
 				ctx.setData("txnAmt", new BigDecimal((String)ctx.getData("txnAmt")));
-				log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+ctx);
+				
 				gdEupsbTrspPayInfo.setPayMon(ctx.getData(GDParamKeys.PAY_MON).toString());
 				gdEupsbTrspPayInfo.setTcusNm(ctx.getData(GDParamKeys.TCUS_NM).toString());
 				gdEupsbTrspPayInfo.setActDat((Date)ctx.getData(GDParamKeys.ACT_DAT));

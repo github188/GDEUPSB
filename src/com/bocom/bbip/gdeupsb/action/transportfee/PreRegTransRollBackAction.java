@@ -93,7 +93,7 @@ public class PreRegTransRollBackAction extends BaseAction{
 		ctx.setData(oTxnSt, ctx.getData(GDParamKeys.TXN_ST).toString());
 		ctx.setData(GDParamKeys.TTXN_CD, ctx.getData(GDParamKeys.TXN_COD));
 		
-		
+		log.info("RegTransRollBackAction end........");
 	}
 
 }

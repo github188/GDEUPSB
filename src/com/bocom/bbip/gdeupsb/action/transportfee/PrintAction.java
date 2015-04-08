@@ -45,7 +45,7 @@ public class PrintAction extends BaseAction{
 			ctx.setData(ParamKeys.RSP_MSG, "发票号码改变，请补打");
 			throw new CoreRuntimeException(GDErrorCodes.EUPS_INVOIC_NO_ERROR);
 		}
-		System.out.println("hahhahahahahahhahah");
+		
 
 		Date printDate = new Date();
 		Date begDat = DateUtils.parse((String)ctx.getData(GDParamKeys.BEG_DAT));
@@ -76,7 +76,7 @@ public class PrintAction extends BaseAction{
 		}
 
 		ctx.setDataMap(BeanUtils.toMap(feeInfoList.get(0)));
-		System.out.println("@@@@@@@@@@@@@@@@@@@@"+ctx);
+		
 		render.setReportNameTemplateLocationMapping(mapping);
 		String result = render.renderAsString("sample", ctx);
 		try {
@@ -90,7 +90,7 @@ public class PrintAction extends BaseAction{
 		try {
 
 			outStream = new BufferedOutputStream(new FileOutputStream(
-					"D:\\test"+fileName));
+					"/home/bbipadm/data/fmtp/"+fileName));
 			outStream.write(result.getBytes(GDConstants.CHARSET_ENCODING_GBK));
 			outStream.close();
 		} catch (IOException e) {
