@@ -82,34 +82,34 @@ public class DealFbpdBatchResultAction implements AfterBatchAcpService {
         //根据comNo指定文件格式
         String comNo = eupsBatchConsoleInfo.getComNo();
         String createFileFmt = null;
-        if("WATR".equals(comNo)){	//中山水费 WATR   fbpdWaterFmtOut
+        if("4840000015".equals(comNo)){	//中山水费 WATR   fbpdWaterFmtOut
         	createFileFmt = "fbpdWaterFmtOut";
         }
-        if("NELE1".equals(comNo)){	//NELE_out_484999_1 电费 fbpdNele1FmtOut
+        if("4840000167".equals(comNo)){	//NELE_out_484999_1 电费 fbpdNele1FmtOut
         	createFileFmt = "fbpdNele1FmtOut";
         }
-        if("NELE".equals(comNo)){	//NELE_out_484999 电费	fbpdNeleFmtOut
+        if("4840000016".equals(comNo) || "4840000484".equals(comNo) || "4840000352".equals(comNo) || "4840000363".equals(comNo) || "4840000475".equals(comNo)){	//NELE_out_484999 电费	fbpdNeleFmtOut
         	createFileFmt = "fbpdNeleFmtOut";
         }
-        if("GGAS".equals(comNo)){	//GGAS_out_484999 中山煤气费	fbpdGgasFmtOut
+        if("4840000018".equals(comNo)){	//GGAS_out_484999 中山煤气费	fbpdGgasFmtOut
         	createFileFmt = "fbpdGgasFmtOut";
         }
-        if("VANK".equals(comNo)){	//VANK_out_484999中山物业管理费 fbpdVankFmtOut
+        if("4840000017".equals(comNo)){	//VANK_out_484999中山物业管理费 fbpdVankFmtOut
         	createFileFmt = "fbpdVankFmtOut";
         }
-        if("TTOM".equals(comNo)){	//TTOM_out_484999中山铁通 fbpdTtomFmtOut
+        if("4840000020".equals(comNo)){	//TTOM_out_484999中山铁通 fbpdTtomFmtOut
         	createFileFmt = "fbpdTtomFmtOut";
         }
-        if("CTTV".equals(comNo)){	//CTTV_out_484999 中山有线电视 fbpdCttvFmtOut
+        if("4840000019".equals(comNo)){	//CTTV_out_484999 中山有线电视 fbpdCttvFmtOut
         	createFileFmt = "fbpdCttvFmtOut";
         }
-        if("NQTV".equals(comNo)){	//NQTV_out_484999南区有线电视 fbpdNqtvFmtOut
+        if("4840000598".equals(comNo)){	//NQTV_out_484999南区有线电视 fbpdNqtvFmtOut
         	createFileFmt = "fbpdNqtvFmtOut";
         }
-        if("XIND".equals(comNo)){	//XIND_out_484999 新都物业管理 fbpdXindFmtOut
+        if("4840000414".equals(comNo)){	//XIND_out_484999 新都物业管理 fbpdXindFmtOut
         	createFileFmt = "fbpdXindFmtOut";
         }
-        if("MPOS".equals(comNo)){	//MPOS_out_484999 中山移动POS fbpdMposFmtOut
+        if("4840000416".equals(comNo)){	//MPOS_out_484999 中山移动POS fbpdMposFmtOut
         	createFileFmt = "fbpdMposFmtOut";
         }
         
@@ -120,7 +120,7 @@ public class DealFbpdBatchResultAction implements AfterBatchAcpService {
         Map<String, Object> resultMapHead = new HashMap<String, Object>();
         Map<String, Object> detailMap = new HashMap<String, Object>();
         
-        if("NELE".equals(comNo)){ //NELE电费有header 
+        if("4840000016".equals(comNo) || "4840000484".equals(comNo) || "4840000352".equals(comNo) || "4840000363".equals(comNo) || "4840000475".equals(comNo)){ //NELE电费有header 
             resultMapHead.put("batFlg", "");	//TOTO 批量代收信息标识  待确定
             resultMapHead.put("ccy", "RMB");	//币种固定为RMB
             resultMapHead.put("payFlg", "1");	//收付标志,固定为收1
@@ -163,7 +163,7 @@ public class DealFbpdBatchResultAction implements AfterBatchAcpService {
             resultMap.put("detail", detailList);
         }
         
-        else if("MPOS".equals(comNo)){ //中山移动 Mpos  
+        else if("4840000416".equals(comNo)){ //中山移动 Mpos  
         	GdFbpdMposBatchTmp batchTmp = new GdFbpdMposBatchTmp();
             batchTmp.setPosFld2(DateUtils.format(eupsBatchConsoleInfo.getSubDte(), DateUtils.STYLE_yyyyMMdd));
             List<GdFbpdMposBatchTmp> mposDetailList =  gdFbpdMposBatchTmpRepository.find(batchTmp);
