@@ -534,6 +534,9 @@
       <if test="fleNme!=null" >
         AND  FLE_NME=#{fleNme,jdbcType=CHAR}
       </if>
+       <if test="eupsBusTyp != null" >
+        #{eupsBusTyp,jdbcType=VARCHAR},
+      </if>
       </trim>
   </select>
   <delete id="deleteConsoleInfo" parameterType="java.lang.String" >
@@ -815,4 +818,5 @@
     </set>
     where BAT_NO = #{batNo,jdbcType=CHAR}
   </update>
+  
 </mapper>
