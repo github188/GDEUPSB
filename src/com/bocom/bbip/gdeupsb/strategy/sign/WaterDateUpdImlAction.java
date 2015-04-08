@@ -81,9 +81,9 @@ public class WaterDateUpdImlAction implements AgtDataUpdImlService {
 			}
 			// 水务的签约每次最多可以签两个协议，对公的是两个协议，对私的是一个协议
 			Map<String, Object> agtSbinMap = new HashMap<String, Object>();
-			agtSbinMap.put("agtSTb", gdsRunCtl.getAgtStb()); // 子表
+			agtSbinMap.put("agtStb", gdsRunCtl.getAgtStb()); // 子表
 			agtSbinMap.put("tAgtSt", tAgtSt); // 状态
-			agtSbinMap.put("tErMsg", wtrDtlMap.get("errMsg")); // 错误码
+			agtSbinMap.put("terMsg", wtrDtlMap.get("errMsg")); // 错误码
 			agtSbinMap.put("gdsBId", gdsRunCtl.getGdsBid()); // 业务种类
 			agtSbinMap.put("actNo", wtrDtlMap.get("actNo")); // 帐号
 
@@ -93,7 +93,7 @@ public class WaterDateUpdImlAction implements AgtDataUpdImlService {
 				// 更新第一个协议号
 				agtSbinMap.put("gdsAId", gdsAId); // 协议号
 				try {
-					gdsAgtWaterRepository.updateAgtWtrDelSts(agtSbinMap);
+					gdsAgtWaterRepository.updateAgtWtrDelStsAll(agtSbinMap);
 				} catch (Exception e) {
 					errFlg = "1";
 					rspCod = "GDS999";
@@ -131,12 +131,11 @@ public class WaterDateUpdImlAction implements AgtDataUpdImlService {
 
 		// 如果批次号不为空，即本次有数据，则需要判断本批是否都回应了
 		if (StringUtils.isNotEmpty(batchId)) {
-
 			// 统计批次数量 statAgt44101Batch
-			GdsAgtWater gdsAgtWater = new GdsAgtWater();
-			gdsAgtWater.setBatchId(batchId);
-
-			List<Integer> cntList = gdsAgtWaterRepository.findBatchAgtCnt(gdsAgtWater);
+			Map<String,Object> inpara=new HashMap<String, Object>();
+			inpara.put("batchId", batchId);
+			inpara.put("agtStb", gdsRunCtl.getAgtStb());
+			List<Integer> cntList = gdsAgtWaterRepository.findBatchAgtCntAll(inpara);
 			int tolCnt = cntList.get(0);
 
 			String unusbMsg = new String();
@@ -145,7 +144,10 @@ public class WaterDateUpdImlAction implements AgtDataUpdImlService {
 				// 查询本批回盘标识还是Y的数据qryAgt44101Usbflg
 				List<String> actList = new ArrayList<String>();
 				try {
-					actList = gdsAgtWaterRepository.findActInfUsbFlg(batchId);
+					Map<String,Object> usbFlgPara=new HashMap<String,Object>();
+					usbFlgPara.put("batchId", batchId);
+					usbFlgPara.put("agtStb", gdsRunCtl.getAgtStb());
+					actList = gdsAgtWaterRepository.findActInfUsbFlg(usbFlgPara);
 				} catch (Exception e) {
 					Result ret1 = bbipPublicService.unlock(gdsRunCtl.getGdsBid());
 					int status1 = ret1.getStatus();
@@ -162,13 +164,13 @@ public class WaterDateUpdImlAction implements AgtDataUpdImlService {
 						unusbMsg + "'\n" + "请跟踪以上未回盘的账号信息.";
 			}
 
-			Map<String, Object> inpara = new HashMap<String, Object>();
-			inpara.put("agtSTb", gdsRunCtl.getAgtStb());
-			inpara.put("gdsBId", gdsRunCtl.getGdsBid());
-			inpara.put("batchId", batchId);
+			Map<String, Object> inparaMap = new HashMap<String, Object>();
+			inparaMap.put("agtStb", gdsRunCtl.getAgtStb());
+			inparaMap.put("gdsBId", gdsRunCtl.getGdsBid());
+			inparaMap.put("batchId", batchId);
 
 			// 更新本批次为可制盘 UpdAgt44101UsbFlg
-			gdsAgtWaterRepository.updateBatchUsbFlg(inpara);
+			gdsAgtWaterRepository.updateBatchUsbFlg(inparaMap);
 		}
 		context.setData("rstMsg", rstMsg);
 
