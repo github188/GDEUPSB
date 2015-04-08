@@ -6,6 +6,12 @@
       <xsd:import namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBGasCoreService/Schema" schemaLocation="GDEUPSBGasCoreService.xsd"/>
     </xsd:schema>
   </wsdl:types>
+  <wsdl:message name="qryGasCusInfoRequestMessage">
+    <wsdl:part name="qryGasCusInfoRequest" element="gdeupsb:qryGasCusInfo"/>
+  </wsdl:message>
+  <wsdl:message name="qryGasCusInfoResponseMessage">
+    <wsdl:part name="qryGasCusInfoResponse" element="gdeupsb:qryGasCusInfoResponse"/>
+  </wsdl:message>
   <wsdl:message name="qryCusInfoRequestMessage">
     <wsdl:part name="qryCusInfoRequest" element="gdeupsb:qryCusInfo"/>
   </wsdl:message>
@@ -43,6 +49,11 @@
     <wsdl:part name="uploadCusAgentFileResponse" element="gdeupsb:uploadCusAgentFileResponse"/>
   </wsdl:message>
   <wsdl:portType name="GDEUPSBGasCoreServicePortType">
+    <wsdl:operation name="qryGasCusInfo">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:qryGasCusInfoRequestMessage"/>
+      <wsdl:output message="tns:qryGasCusInfoResponseMessage"/>
+    </wsdl:operation>
     <wsdl:operation name="qryCusInfo">
       <wsdl:documentation/>
       <wsdl:input message="tns:qryCusInfoRequestMessage"/>
@@ -76,6 +87,15 @@
   </wsdl:portType>
   <wsdl:binding name="GDEUPSBGasCoreServiceSoapBinding" type="tns:GDEUPSBGasCoreServicePortType">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="qryGasCusInfo">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBGasCoreService/qryGasCusInfo"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="qryCusInfo">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBGasCoreService/qryCusInfo"/>
       <wsdl:input>
