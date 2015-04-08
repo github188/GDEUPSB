@@ -4,7 +4,7 @@
 						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
 
 
-	 <action id="eups.bbipPaymentExt" class="com.bocom.bbip.gdeupsb.action.BuaPaymentExt" />
+	<action id="eups.bbipPaymentExt" class="com.bocom.bbip.gdeupsb.action.BuaPaymentExt" />
 
 
 
@@ -35,23 +35,24 @@
 				operations="aftThdDeal" />
 		</actions>
 	</process>
-	
-	
-			<!-- 自定义联机单笔抹帐  -->
-	<process id="eups.automaticCancelProcessAdd" template="eups.autoCancelTemplateAdd"  interceptors="eups.thdTransInterceptor" >
-	   <actions>
-	   	   <action id="preIntAction" ref="eups.preIntCnlDealAction"/>
-	   	   <!-- 第三方抹账前处理 -->
+
+
+	<!-- 自定义联机单笔抹帐 -->
+	<process id="eups.automaticCancelProcessAdd" template="eups.autoCancelTemplateAdd"
+		interceptors="eups.thdTransInterceptor">
+		<actions>
+			<action id="preIntAction" ref="eups.preIntCnlDealAction" />
+			<!-- 第三方抹账前处理 -->
 			<action id="preCalAction" ref="eups.automaticCancelServiceAction"
 				operations="preCancel" />
 			<!-- 第三方抹账后处理 -->
 			<action id="aftCalAction" ref="eups.automaticCancelServiceAction"
 				operations="aftCancel" />
-	   	   
-	   </actions>
+
+		</actions>
 	</process>
-	
-		
+
+
 
 
 	<!-- 抹账第三方 -->
@@ -155,7 +156,8 @@
 	<process id="eups.fileBatchPayCreateDataProcessExt" template="eups.simpleTran"
 		interceptors="bbip.defaultInterceptors">
 		<actions>
-			<action id="act" ref="eups.fileBatchPayCreateDataServiceAction"	operations="prepareBatchDeal" />
+			<action id="act" ref="eups.fileBatchPayCreateDataServiceAction"
+				operations="prepareBatchDeal" />
 		</actions>
 	</process>
 
@@ -195,11 +197,11 @@
 			<action id="act" ref="gdeupsb.synExcCheckEleGzFileAction" />
 		</actions>
 	</process>
-	
+
 	<action class="com.bocom.bbip.gdeupsb.action.elea.EleGzComPayPrtAction"
 		id="gdeupsb.eleGzComPayPrtAction" />
-	
-		<!--电力对公缴费记账回执打印-->
+
+	<!--电力对公缴费记账回执打印 -->
 	<process id="gdeupsb.eleComPayPrtProcess" template="eups.simpleTran"
 		interceptors="bbip.defaultInterceptors">
 		<actions>
@@ -207,13 +209,71 @@
 		</actions>
 	</process>
 
+	<!--供电局财务对帐单生成 -->
+	<action class="com.bocom.bbip.gdeupsb.action.elea.EleChkFleAction"
+		id="gdeupsb.eleChkFleAction" />
+
+	<!--供电局财务对帐单生成交易 -->
+	<process id="gdeupsb.eleChkFleProcess" template="eups.simpleTran"
+		interceptors="bbip.defaultInterceptors">
+		<actions>
+			<action id="act" ref="gdeupsb.eleChkFleAction" />
+		</actions>
+	</process>
+
+	<!--广州电力自动清算，初始化 -->
+	<action class="com.bocom.bbip.gdeupsb.action.elea.EleAutoClearAction"
+		id="gdeupsb.eleAutoClearPreAction" />
+
+	<!--广州电力自动清算，账务处理 -->
+	<action class="com.bocom.bbip.gdeupsb.action.elea.EleAutoClearPayAction"
+		id="gdeupsb.eleAutoClearPayAction" />
+
+	<!--广州电力自动清算，更新账务处理结果 -->
+	<action class="com.bocom.bbip.gdeupsb.action.elea.EleAutoClearAftAction"
+		id="gdeupsb.eleAutoClearAftAction" />
+
+
+	<!--广州电力自动清算 -->
+	<process id="gdeupsb.eleAutoClearProcess" template="gdeupsb.eleAutoClearTempelate"
+		interceptors="bbip.bbipSchedulerInterceptor">
+		<actions>
+			<action id="preCallAction" ref="gdeupsb.eleAutoClearPreAction" />
+			<action id="callHost" ref="gdeupsb.eleAutoClearPayAction" />
+			<action id="aftCall" ref="gdeupsb.eleAutoClearAftAction" />
+		</actions>
+	</process>
+
+	<!--广州电力自动清算，更新账务处理结果 -->
+	<action class="com.bocom.bbip.gdeupsb.action.elea.EleAutoClrParaUpdAction"
+		id="gdeupsb.eleAutoClrParaUpd" />
+
+	<!--广州电力清算参数修改 -->
+	<process id="gdeupsb.eleAutoClrParaUpdProcess" template="eups.simpleTran"
+		interceptors="bbip.defaultInterceptors">
+		<actions>
+			<action id="act" ref="gdeupsb.eleAutoClrParaUpd" />
+		</actions>
+	</process>
+
+	<!--广州电力清算情况查询 -->
+	<action class="com.bocom.bbip.gdeupsb.action.elea.EleAutoClrInfQryAction"
+		id="gdeupsb.eleAutoClrInfQryAction" />
+
+	<!--广州电力清算情况查询 -->
+	<process id="gdeupsb.eleAutoClrInfQryProcess" template="eups.simpleTran"
+		interceptors="bbip.defaultInterceptors">
+		<actions>
+			<action id="act" ref="gdeupsb.eleAutoClrInfQryAction" />
+		</actions>
+	</process>
 
 	<!--签约一站通：协议浏览或打印 -->
 	<action class="com.bocom.bbip.gdeupsb.action.sign.AgtScanPrintAction"
 		id="gdeups.agtScanPrintAction" />
 
-	
-	
+
+
 
 	<!--签约一站通：协议浏览或打印 -->
 	<process id="gdeups.agtScanPrintProcess" template="eups.simpleTran"
@@ -335,8 +395,6 @@
 	<action class="com.bocom.bbip.gdeupsb.action.sign.AgtDateUpdPreAction"
 		id="gdeups.agtDateUpdPreAction" />
 
-
-
 	<!--签约一站通：协议更新:特色拓展点 -->
 	<action class="com.bocom.bbip.gdeupsb.expand.AgtDataUpdImlServiceAction"
 		id="gdeups.agtDateUpdServiceAction">
@@ -347,7 +405,6 @@
 			</x:bean>
 		</x:property>
 	</action>
-
 
 	<!--协议数据更新 -->
 	<process id="gdeups.agtDateUpdProcess" template="eups.simpleTran"
@@ -385,22 +442,27 @@
 			<action id="act" ref="gdeups.agtListCrpInfAction" />
 		</actions>
 	</process>
-	
-	
-	
-	
-	   <!-- 签约批量文件的导入 -->
-<!--    <process id="gdeupsb.batchSignFileInput" template="eups.simpleTran"
+
+	<!--签约一站通:查询客户信息 -->
+	<action class="com.bocom.bbip.gdeupsb.action.sign.AgtQryActInf"
+		id="eups.agtQryActInfByCrd" />
+	<!--福彩特色清算：清算轧差试算 -->
+	<process id="eups.agtQryActInfByCrdProcess" template="eups.simpleTran"
 		interceptors="bbip.defaultInterceptors">
 		<actions>
-			<action id="act" ref="gdeups.fileInputPreAction" />
-			<action id="act" ref="gdeups.agtFileSendImlServiceAction"  	operations="agtFleSndByGdsId" />
-			<action id="act" ref="gdeups.preSignDealCheckAction" />
+			<action id="act" ref="eups.agtQryActInfByCrd" />
 		</actions>
-	</process> -->
-	
-	
-	
+	</process>
+
+
+	<!-- 签约批量文件的导入 -->
+	<!-- <process id="gdeupsb.batchSignFileInput" template="eups.simpleTran" 
+		interceptors="bbip.defaultInterceptors"> <actions> <action id="act" ref="gdeups.fileInputPreAction" 
+		/> <action id="act" ref="gdeups.agtFileSendImlServiceAction" operations="agtFleSndByGdsId" 
+		/> <action id="act" ref="gdeups.preSignDealCheckAction" /> </actions> </process> -->
+
+
+
 
 	<!--清算轧差试算 -->
 	<action class="com.bocom.bbip.gdeupsb.action.lot.LotClearCountAction"
@@ -445,10 +507,10 @@
 			<action id="updGcRst" ref="gdeups.lotClrGcUpdAction" />	 <!-- 更新轧差结果 -->
 		</actions>
 	</process>
-	
-	
-	
-	
+
+
+
+
 	<!--签约一站通：代理协议校验拓展点 -->
 	<action class="com.bocom.bbip.gdeupsb.ext.ChlAutoSignInOutServiceActionExt"
 		id="eups.chlAutoSignInOutServiceActionExt">
@@ -459,23 +521,24 @@
 			</x:bean>
 		</x:property>
 	</action>
-	
-	
-	
-		<!--清算轧差-更新轧差结果 -->
+
+
+
+	<!--清算轧差-更新轧差结果 -->
 	<action class="com.bocom.bbip.gdeupsb.ext.ManageChlSignInOutActionExt"
 		id="eups.eupsManageChlSignInOutActionExt" />
-	
-	 <!-- 需传3个参数：签到签退标识：sigInOutFlg(0:第三方、1:渠道、2:第三方+渠道);单位编号：comNo;交易类型：txnTyp(0-签到;1-签退)-->
+
+	<!-- 需传3个参数：签到签退标识：sigInOutFlg(0:第三方、1:渠道、2:第三方+渠道);单位编号：comNo;交易类型：txnTyp(0-签到;1-签退) -->
 	<process id="eups.chlAutoSignInOutExt" template="eups.simpleTran"
 		interceptors="bbip.bbipSchedulerInterceptor">
 		<actions>
-		    <action id="act" ref="eups.chlAutoSignInOutInitAction" />
+			<action id="act" ref="eups.chlAutoSignInOutInitAction" />
 			<action id="act" ref="eups.eupsManageChlSignInOutActionExt" />
 			<action id="act" ref="eups.eupsManageThdTranCtlDetailAction" />
-			<action id="act" ref="eups.chlAutoSignInOutServiceActionExt" operations="signInOutDeal" />
+			<action id="act" ref="eups.chlAutoSignInOutServiceActionExt"
+				operations="signInOutDeal" />
 		</actions>
-	</process>	
-	
+	</process>
+
 </x:beans>
 
