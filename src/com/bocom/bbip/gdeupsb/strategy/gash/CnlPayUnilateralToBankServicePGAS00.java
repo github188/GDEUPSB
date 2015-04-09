@@ -54,7 +54,7 @@ public class CnlPayUnilateralToBankServicePGAS00 implements
 		if (context.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL)) {  //冲正成功
 //			context.setData(ParamKeys.MFM_TXN_STS, "C");
 //			context.setData(ParamKeys.TXN_STS, "C");
-			context.setData("TransCode", "Upay");
+			context.setData("TransCode", "UPay");
 			context.setData(ParamKeys.BAK_FLD5, "冲正成功");
 //			context.setData(ParamKeys.BAK_FLD4,
 //					context.getData(ParamKeys.TXN_AMOUNT));
