@@ -251,6 +251,7 @@ public class CusAgentServiceAction extends BaseAction{
 				map.put("br", "441800");
 			}
 			map.put("cusAc", context.getData("cusAc"));
+//			map.put("cusAc", "6222620710012838064");
 			logger.info("~~~~~~~~~~requestHeader~~~~map~~~~~ "+map);
 			logger.info("~~~~~~~~~~列表查询开始 ");
 			//上代收付取协议编号
