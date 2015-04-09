@@ -93,6 +93,7 @@ public class DestroyAccountAction extends BaseAction {
         String pasId = context.getData("pasId").toString().trim();
         String idNo =gdTbcAgtInfo.get(0).getPasId().trim();
         if (!idNo.equals(pasId)) {
+        	log.info("身份证号码不符，当前context中的pasId="+pasId+",数据库中记录的pasId="+idNo);
             context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
             context.setData(GDParamKeys.RSP_CDE,"9999");
             context.setData(GDParamKeys.RSP_MSG,"身份证号码不符!！！");
