@@ -396,7 +396,27 @@
 		</step>
 		
 	</flow-template>
-	
+	<!-- 珠海路桥作废发票退费 -->
+	<flow-template id="gdeupsb.invCancelTemplate">
+		<!-- 协议操作前处理 -->
+		<step id="init" useCtxState="true" transactional="txTemplate">
+			<action id="preAction"/>
+			<next on="BP_STATE_NORMAL" to="callACPS" />
+			<end on="*"/>
+		</step>
+		<!-- 发代收付 -->
+		<step id="callACPS" useCtxState="true"  transactional="txTemplate">
+			<action id="callACPSAction" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="callThd" />
+			<end on="*"/>
+		</step>
+		<!-- 发第三方-->
+		<step id="callThd" useCtxState="true" transactional="txTemplate">
+			<action id="callThdAction" place-holder="true" />
+			<end on="*"/>
+		</step>
+		
+	</flow-template>
 	
 	
 	<!-- 电力自动清算模版 -->
