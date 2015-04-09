@@ -15,6 +15,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import a.a.a.s;
+
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.comp.account.AccountService;
 import com.bocom.bbip.eups.action.BaseAction;
@@ -65,6 +67,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 				logger.info("==========Start  BatchDataFileAction  prepareBatchDeal");
 				String totAmt=context.getData("totAmt").toString();
 				String totCnt=context.getData("totCnt").toString();
+//				context.setData("comNo", "030613");
 				String comNo=context.getData("comNo").toString();
 				context.setData(ParamKeys.WS_TRANS_CODE, "20");
 				//文件名
@@ -120,7 +123,9 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 			BigDecimal totAmts=(new BigDecimal(totAmt)).scaleByPowerOfTen(-2);
 			//header
 			Map<String, Object> headMap=new HashMap<String, Object>();
-			headMap.put(ParamKeys.COMPANY_NO, comNo);
+			//TODO
+			System.out.println();
+			System.out.println("~~~~~~~~~~comNO="+comNo);
 			headMap.put(ParamKeys.COMPANY_NO, "4840000703");
 			headMap.put(GDParamKeys.TOT_COUNT, totCnt);
 			headMap.put(ParamKeys.TOT_AMT, totAmts);
@@ -176,7 +181,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 			eupsBatchConsoleInfo.setRsvFld2(rsvFld2);
 			String batNo=get(EupsBatchConsoleInfoRepository.class).find(eupsBatchConsoleInfo).get(0).getBatNo();
 			context.setData(ParamKeys.BAT_NO, batNo);
-			
+			context.setData("PKGCNT", "000000");
 			logger.info("==========End  BatchDataFileAction  userProcessToSubmit");
 
 		}
