@@ -135,7 +135,7 @@ public class BatchFileCommon extends BaseAction {
 	public void sendBatchFileToACP(final Context context) throws CoreException {
 		final String comNo=(String)context.getData(ParamKeys.COMPANY_NO);
 		String tlr=(String)context.getData(ParamKeys.TELLER);
-		tlr="4441031";
+		tlr="4842884";
 		context.setData("tlr", tlr);
 		final String br=(String)context.getData(ParamKeys.BR);
 //		String br="01441999999";
