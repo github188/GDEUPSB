@@ -81,7 +81,7 @@ public class InsertCusAgentServiceAction extends BaseAction {
 		logger.info("===========editCusAgtResult："+editCusAgtResult);
 
 		if(context.getData("callThd")!=null){
-			if(editCusAgtResult.isSuccess()){
+			if(editCusAgtResult.isSuccess() &&editCusAgtResult.getResponseType().toString().equals("N") ){
 				Date txnDte=(Date)context.getData(ParamKeys.TXN_DTE);
 				Date txnTme=DateUtils.parse(context.getData("txnTme").toString());
 					try{
@@ -103,7 +103,6 @@ public class InsertCusAgentServiceAction extends BaseAction {
 							                	responseCode=ErrorCodes.EUPS_THD_SYS_ERROR;
 							                }
 							                context.setData(ParamKeys.RESPONSE_CODE, responseCode);
-							                
 							             // 第三方交易成功
 								                if (GDConstants.SUCCESS_CODE.equals(responseCode)) {
 								                    logger.info("The third process response successful.");
