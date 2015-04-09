@@ -78,32 +78,26 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 										                    context.setData(ParamKeys.TXN_STS, Constants.TXNSTS_SUCCESS);
 										                    context.setData(ParamKeys.THD_TXN_STS, Constants.THD_TXNSTS_SUCCESS);
 										                    context.setData(ParamKeys.RSP_CDE, GDConstants.SUCCESS_CODE);
-										                    context.setData(ParamKeys.RSP_MSG, "交易成功");
 										                }else if(BPState.isBPStateReversalFail(context)){
 										                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
 										                	context.setData(GDParamKeys.MSGTYP, "E");
 										                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-										                	context.setData(ParamKeys.RSP_MSG, "交易失败");
 										                }else if(BPState.isBPStateOvertime(context)){
 										                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
 										                	context.setData(GDParamKeys.MSGTYP, "E");
 										                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-										                	context.setData(ParamKeys.RSP_MSG, "交易超时");
 										                }else if(BPState.isBPStateSystemError(context)){
 										                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
 										                	context.setData(GDParamKeys.MSGTYP, "E");
 										                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-										                	context.setData(ParamKeys.RSP_MSG, "系统错误");
 										                }else if(BPState.isBPStateTransFail(context)){
 										                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
 										                	context.setData(GDParamKeys.MSGTYP, "E");
 										                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-										                	context.setData(ParamKeys.RSP_MSG, "发送失败");
 										                }else{
 										                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
 										                	context.setData(GDParamKeys.MSGTYP, "E");
 										                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-										                	context.setData(ParamKeys.RSP_MSG, "交易失败，其他未知情况");
 										                }
 											}
 									}else{
@@ -125,9 +119,15 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 							}finally{
 								context.setData(ParamKeys.TXN_DTE, txnDte);
 								context.setData(ParamKeys.TXN_TME, txnTme);
+								context.setData("PKGCNT", "000000");
 							}
-					}else{
-						context.setData(ParamKeys.RSP_MSG, "交易失败");
+					}
+					if(context.getData(ParamKeys.THD_SQN)!=null){
+						String thdTxnDte=context.getData("thdTxnDate").toString();
+						String thdTxnTme=context.getData("thdTxnTime").toString();
+						context.setData(ParamKeys.THD_TXN_DATE, DateUtils.parse(thdTxnDte));
+						context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse((thdTxnDte+thdTxnTme),DateUtils.STYLE_yyyyMMddHHmmss));
+						context.setData("PKGCNT", "000000");
 					}
 			}
 			logger.info("=============End   DeleteCusAgentServiceAction ");

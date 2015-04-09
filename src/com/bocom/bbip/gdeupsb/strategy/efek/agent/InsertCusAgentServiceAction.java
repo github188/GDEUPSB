@@ -1,7 +1,6 @@
 package com.bocom.bbip.gdeupsb.strategy.efek.agent;
 
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -50,13 +49,23 @@ public class InsertCusAgentServiceAction extends BaseAction {
 		//更改账户类型  代收付
 		String cusTyp=context.getData("cusTyp").toString();
 		//第三方
-		String cusType="";
-		if(cusTyp.equals("0")){
-			cusType="1";
-		}else if(cusTyp.equals("1")){
-			cusType="0";
+		if(context.getData(ParamKeys.THD_SQN)!=null){
+				String cusType="";
+				if(cusTyp.equals("0")){
+					cusType="1";
+				}else if(cusTyp.equals("1")){
+					cusType="0";
+				}
+				context.setData("cusType", cusType);
+		}else{
+			String cusType=context.getData("cusTyp").toString();
+			if(cusType.equals("0")){
+					cusTyp="1";
+			}else if(cusType.equals("1")){
+					cusTyp="0";
+			}
+			context.setData("cusTyp", cusTyp);
 		}
-		context.setData("cusType", cusType);
 		//调用代收付'
 		String cusAc=context.getData("cusAc").toString();
 		context.setData(ParamKeys.COMPANY_NO, context.getData("comNo"));
@@ -109,37 +118,31 @@ public class InsertCusAgentServiceAction extends BaseAction {
 								                    context.setData(ParamKeys.TXN_STS, Constants.TXNSTS_SUCCESS);
 								                    context.setData(ParamKeys.THD_TXN_STS, Constants.THD_TXNSTS_SUCCESS);
 								                    context.setData(ParamKeys.RSP_CDE, GDConstants.SUCCESS_CODE);
-								                    context.setData(ParamKeys.RSP_MSG, "交易成功");
 								                    context.setData(ParamKeys.RESPONSE_MESSAGE, "交易成功");
 								                }else if(BPState.isBPStateReversalFail(context)){
 								                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
 								                	context.setData(GDParamKeys.MSGTYP, "E");
 								                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-								                	context.setData(ParamKeys.RSP_MSG, "交易失败");
 								                	context.setData(ParamKeys.RESPONSE_MESSAGE, "交易失败");
 								                }else if(BPState.isBPStateOvertime(context)){
 								                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
 								                	context.setData(GDParamKeys.MSGTYP, "E");
 								                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-								                	context.setData(ParamKeys.RSP_MSG, "交易超时");
 								                	context.setData(ParamKeys.RESPONSE_MESSAGE, "交易超时");
 								                }else if(BPState.isBPStateSystemError(context)){
 								                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
 								                	context.setData(GDParamKeys.MSGTYP, "E");
 								                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-								                	context.setData(ParamKeys.RSP_MSG, "系统错误");
 								                	context.setData(ParamKeys.RESPONSE_MESSAGE, "系统错误");
 								                }else if(BPState.isBPStateTransFail(context)){
 								                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
 								                	context.setData(GDParamKeys.MSGTYP, "E");
 								                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-								                	context.setData(ParamKeys.RSP_MSG, "发送失败");
 								                	context.setData(ParamKeys.RESPONSE_MESSAGE, "发送失败");
 								                }else{
 								                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
 								                	context.setData(GDParamKeys.MSGTYP, "E");
 								                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-								                	context.setData(ParamKeys.RSP_MSG, "交易失败，其他未知情况");
 								                	context.setData(ParamKeys.RESPONSE_MESSAGE, "交易失败，其他未知情况");
 								                }
 									}
@@ -162,9 +165,10 @@ public class InsertCusAgentServiceAction extends BaseAction {
 					}finally{
 						context.setData(ParamKeys.TXN_DTE, txnDte);
 						context.setData(ParamKeys.TXN_TME, txnTme);
+						context.setData("PKGCNT", "000000");
 					}
 			}else{
-					context.setData(ParamKeys.RSP_MSG, "交易失败");
+					context.setData("thdRspCde", "83");
 			}
 		}
 		if(context.getData(ParamKeys.THD_SQN) !=null){
@@ -172,6 +176,11 @@ public class InsertCusAgentServiceAction extends BaseAction {
 				String thdTxnTme=context.getData("thdTxnTime").toString();
 				context.setData(ParamKeys.THD_TXN_DATE, DateUtils.parse(thdTxnDte));
 				context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse((thdTxnDte+thdTxnTme),DateUtils.STYLE_yyyyMMddHHmmss));
+				if(editCusAgtResult.isSuccess() && editCusAgtResult.getResponseType().toString().equals("N") ){
+				}else{
+						context.setData("thdRspCde", "83");
+				}
+				context.setData("PKGCNT", "000000");
 		}
 //		context.setData(ParamKeys.TXN_TME,DateUtils.parse(context.getData(ParamKeys.TXN_TME).toString()));
 		logger.info("=============End    InsertCusAgentServiceAction  ");
