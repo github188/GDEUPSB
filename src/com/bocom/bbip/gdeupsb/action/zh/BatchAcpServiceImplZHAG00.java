@@ -104,7 +104,6 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 			temp.setThdCusNme(StringUtils.isBlank(temp.getCusNme())?temp.getThdCusNme():temp.getCusNme());
 		}
 		List<Map<String,Object>> detail=(List<Map<String, Object>>) BeanUtils.toMaps(lt);
-		Map<String, Object> header = CollectionUtils.createMap();
 		String comNoAcps=context.getData("comNoAcps").toString();
 		logger.info("~~~~~~~~~~~comNoAcps："+comNoAcps);
 		String batNo=(String)context.getData(ParamKeys.BAT_NO);
@@ -115,7 +114,6 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 		BigDecimal bigDecimal=new BigDecimal(map.get("ALL_MONEY").toString());
 		context.setData("totAmt", bigDecimal);
 		
-//		List<Map<String, Object>> listMap=new ArrayList<Map<String,Object>>();
 		Map<String, Object> headerMap=new HashMap<String, Object>();
 		headerMap.put("comNo", comNoAcps);
 		headerMap.put("totAmt", bigDecimal);
