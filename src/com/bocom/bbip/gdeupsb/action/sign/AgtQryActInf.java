@@ -13,8 +13,6 @@ import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
 
 public class AgtQryActInf extends BaseAction {
-	@Autowired
-	AccountService accountService;
 
 	@Override
 	public void execute(Context context) throws CoreException, CoreRuntimeException {
@@ -31,7 +29,7 @@ public class AgtQryActInf extends BaseAction {
 
 		} else if ("1".equals(actTyp) || "2".equals(actTyp) || "4".equals(actTyp)) { // 一本通,存折,卡
 			String cusAc = context.getData(ParamKeys.ACT_NO);
-			CusActInfResult actInf = accountService.getAcInf(CommonRequest.build(context), cusAc);
+			CusActInfResult actInf = get(AccountService.class).getAcInf(CommonRequest.build(context), cusAc);
 			log.info("返回的信息为:actInf" + actInf);
 			context.setData("actNo", cusAc); // 卡号
 			context.setData("ccyCod", "CNY"); // 币种
