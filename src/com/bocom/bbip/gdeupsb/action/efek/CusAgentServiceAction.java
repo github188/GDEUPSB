@@ -260,6 +260,9 @@ public class CusAgentServiceAction extends BaseAction{
 						throw new CoreException(accessObjList.getPayload().get("responseMessage").toString());
 			}
 			logger.info("~~~~~~~~~~列表查询结束~~~~"+accessObjList);
+			if(accessObjList.getPayload().get("agentCollectAgreement") ==null	){
+				context.setData("thdRspCde", "80");
+			}
 			List<Map<String,Object>> list=(List<Map<String, Object>>)accessObjList.getPayload().get("agentCollectAgreement");
 			String agdAgrNo=list.get(0).get("agdAgrNo").toString();
 			logger.info("~~~~~~~~~~~~~~~协议编号： "+agdAgrNo);
