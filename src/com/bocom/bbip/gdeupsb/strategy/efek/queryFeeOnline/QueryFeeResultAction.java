@@ -87,7 +87,6 @@ public class QueryFeeResultAction implements Executable{
 											 	context.setDataMap(rspMap);
 								                context.setData(ParamKeys.THIRD_RETURN_MESSAGE, rspMap);
 								                List<Map<String, Object>> list=(List<Map<String, Object>>)rspMap.get("Information");
-//								                context.setData("InformationList", list);
 								               //页数
 								                pageGet(context, list);
 								                //返回list
@@ -205,8 +204,8 @@ public class QueryFeeResultAction implements Executable{
             BigDecimal capitial=new BigDecimal("0.00");
             DecimalFormat df=new DecimalFormat("#.00");
             List<Map<String, Object>> InformationList=new ArrayList<Map<String,Object>>();
-            context.setData("InformationList",list);
             
+            List<Map<String, Object>> shpList=new ArrayList<Map<String,Object>>();
             for (Map<String, Object> map : list) {
             		double  amt=Double.parseDouble(map.get(ParamKeys.OWE_FEE_AMT).toString());
             		amt=amt/100;
@@ -227,15 +226,13 @@ public class QueryFeeResultAction implements Executable{
             		}
             		//行的list赋值 
             		Map<String, Object> mapInformation=new HashMap<String, Object>();
-//            		mapInformation.put("busType", map.get("busType"));
+            		
+            		Map<String, Object> mapList=new HashMap<String, Object>();
             		mapInformation.put("payType", map.get("payType"));
             		mapInformation.put("comNo", map.get("comNo"));
             		mapInformation.put("payNo", map.get("payNo"));
             		mapInformation.put("thdCusNme", map.get("thdCusNme"));
-//            		mapInformation.put("rsvFld6", map.get("rsvFld6"));
             		mapInformation.put("bankNo", map.get("bankNo"));
-//            		mapInformation.put("cusAc", map.get("cusAc"));
-//            		mapInformation.put("CusNme", map.get("cusNme"));
             		mapInformation.put("fulDedFlg", map.get("fulDedFlg"));
             		mapInformation.put("accountsSerialNo", map.get("accountsSerialNo"));
             		mapInformation.put("electricityYearMonth", map.get("electricityYearMonth"));
@@ -243,10 +240,28 @@ public class QueryFeeResultAction implements Executable{
             		mapInformation.put("oweFeeAmt", amtAdd);
             		mapInformation.put("capital",capitialAdd );
             		mapInformation.put("dedit",detitAdd );
+            		
+            		mapList.put("payType", map.get("payType"));
+            		mapList.put("comNo", map.get("comNo"));
+            		mapList.put("payNo", map.get("payNo"));
+            		mapList.put("bankNo", map.get("bankNo"));
+            		mapList.put("fulDedFlg", map.get("fulDedFlg"));
+            		mapList.put("accountsSerialNo", map.get("accountsSerialNo"));
+            		mapList.put("electricityYearMonth", map.get("electricityYearMonth"));
+            		//金额数值转换
+            		mapList.put("oweFeeAmt", amtAdd);
+            		mapList.put("capital",capitialAdd );
+            		mapList.put("dedit",detitAdd );
+            		
+            		
             		InformationList.add(mapInformation);
+            		shpList.add(mapList);
             		oweFeeAmt=oweFeeAmt.add(amtAdd);
 			}
             context.setData("Information", InformationList);
+            context.setData("InformationList", shpList);
+            context.setData("PKGCNT", context.getData("PKGCNT"));
+            
             //欠费总金额 总违约金  总本金 单位编码
             context.setData(ParamKeys.OWE_FEE_AMT, oweFeeAmt);
             context.setData("pbd",pbd );
