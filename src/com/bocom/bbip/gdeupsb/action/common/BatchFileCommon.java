@@ -56,7 +56,7 @@ public class BatchFileCommon extends BaseAction {
 		String comNo=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.COMPANY_NO, ErrorCodes.EUPS_COM_NO_NOTEXIST);
 		String fleNme=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.FLE_NME, ErrorCodes.EUPS_FIELD_EMPTY,"fleNme");
 		String eupsBusTyp=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.EUPS_BUSS_TYPE, ErrorCodes.EUPS_BUS_TYP_ISEMPTY);
-
+		Lock(comNo);
 		/** 检查批次是否存在 */
 		GDEupsBatchConsoleInfo info = new GDEupsBatchConsoleInfo();
 		info.setFleNme(fleNme);
@@ -110,10 +110,11 @@ public class BatchFileCommon extends BaseAction {
 		get(GDEupsBatchConsoleInfoRepository.class).insertConsoleInfo(info);
 		context.getDataMapDirectly().putAll(BeanUtils.toFlatMap(info));
 		context.setData("comNo", comNo);
+		unLock(comNo);
 		logger.info("==============End  Insert  GDEupsBatchConsoleInfo");
 	}
 /**
- * 上锁
+ * 解锁
  */
 	public void unLock(final String lockKey)throws CoreException {
 		Assert.isFalse(StringUtils.isBlank(lockKey), ErrorCodes.EUPS_FIELD_EMPTY, "lockKey");
@@ -121,7 +122,7 @@ public class BatchFileCommon extends BaseAction {
 		Assert.isTrue(result.isSuccess(), GDErrorCodes.EUPS_UNLOCK_FAIL);
 	}
 	/**
-	 * 解锁
+	 * 上锁
 	 */
 	public void Lock(final String lockKey)throws CoreException {
 		Assert.isFalse(StringUtils.isBlank(lockKey), ErrorCodes.EUPS_FIELD_EMPTY ,"lockKey");
@@ -133,7 +134,9 @@ public class BatchFileCommon extends BaseAction {
 	 */
 	public void sendBatchFileToACP(final Context context) throws CoreException {
 		final String comNo=(String)context.getData(ParamKeys.COMPANY_NO);
-		final String tlr=(String)context.getData(ParamKeys.TELLER);
+		String tlr=(String)context.getData(ParamKeys.TELLER);
+		tlr="4441031";
+		context.setData("tlr", tlr);
 		final String br=(String)context.getData(ParamKeys.BR);
 //		String br="01441999999";
 		context.setData(ParamKeys.BR, br);
