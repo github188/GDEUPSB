@@ -467,6 +467,7 @@ public final class GDErrorCodes {
 	/** 供电账户锁定，无法进行缴费，请致电供电95598 */
 	public static final String EUPS_ELEC00_100_ERROR = "BBIP4400EU0002";
 
+	public static final String EUPS_ELEC00_101_ERROR ="BBIP4400EU0003";
 	/** 批次状态为不可以撤销 */
 	public static final String EUPS_BATCH_STATUS_ERROR = "BBIP4400EU0352";
 	/** 批次已经存在 */
@@ -538,5 +539,7 @@ public final class GDErrorCodes {
 	public static final String TBC_COM_OTHER_ERROR = "BBIP4400EU0504";
 	/** 请求服务超时 */
 	public static final String TBC_OUT_TIME_ERROR = "BBIP4400EU0505";
+	
+
 
 }
