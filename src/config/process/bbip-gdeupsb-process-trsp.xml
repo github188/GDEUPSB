@@ -162,13 +162,13 @@
 	</process> 
 	
 	<!-- 作废发票退费 -->
-	 <process id="gdeupsb.trspInvoiceCancel" template="eups.simpleTran"
+	 <process id="gdeupsb.trspInvoiceCancel" template="gdeupsb.invCancelTemplate"
 		interceptors="eups.thdTransInterceptor">
 		<actions>
-		    <action id="act" class="com.bocom.bbip.gdeupsb.action.common.CheckComTxnCtlAction" operations="checkThdTxnCtlNormal" />
-		    <action id="act" class="com.bocom.bbip.gdeupsb.action.transportfee.PreInvoiceCancelAction"/>
-		    <action id="act" class="com.bocom.bbip.gdeupsb.action.transportfee.GDBuaPaymentCancelUsingReversalInvoice"/>
-		    <action id="act" class="com.bocom.bbip.gdeupsb.action.transportfee.InvoiceFinalAction"/>
+		    <action id="preAction" class="com.bocom.bbip.gdeupsb.action.common.CheckComTxnCtlAction" operations="checkThdTxnCtlNormal" />
+		    <action id="preAction" class="com.bocom.bbip.gdeupsb.action.transportfee.PreInvoiceCancelAction"/>
+		    <action id="callACPSAction" class="com.bocom.bbip.gdeupsb.action.transportfee.GDBuaPaymentCancelUsingReversalInvoice"/>
+		    <action id="callThdAction" class="com.bocom.bbip.gdeupsb.action.transportfee.InvoiceFinalAction"/>
 		</actions>
 	</process>
 	
