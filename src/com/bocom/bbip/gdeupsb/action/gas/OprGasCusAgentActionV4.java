@@ -668,6 +668,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			map.put("bvNo", (String) context.getData("bvNo"));
 		}
 		map.put("ourOthFlg", "0");
+		map.put("obkBk", context.getData(ParamKeys.BR));
 		return map;
 	}
 
@@ -711,6 +712,10 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		map.put("agrExpDte", "99991231"); // YYYYMMDD默认最大日，99991231
 		map.put(ParamKeys.CMU_TEL, context.getData(ParamKeys.CMU_TEL));
 		map.put(ParamKeys.THD_CUS_NO, context.getData(ParamKeys.THD_CUS_NO));
+		
+		map.put("ageBr", context.getData(ParamKeys.BK));
+		map.put("agrBr", context.getData(ParamKeys.BR));
+		
 		return map;
 	}
 

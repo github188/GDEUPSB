@@ -70,9 +70,17 @@ public class BatchGashDealServiceAction extends BaseAction implements BatchAcpSe
 		logger.info("批次前准备数据");
 		
 		//TODO: for test, 此处为了测试写死，后续需要修改
-		context.setData(ParamKeys.TELLER, "ABIR148");
-		context.setData(ParamKeys.BR, "01441131999");
-		context.setData(ParamKeys.BK, "01441999999");
+//		context.setData(ParamKeys.TELLER, "ABIR148");
+//		context.setData(ParamKeys.BR, "01441131999");
+//		context.setData(ParamKeys.BK, "01441999999");
+		
+		String bk = "01441999999";
+		String br = "01491800999";
+		//TODO  get tlr
+		context.setData(ParamKeys.BR, br);//机构号 "01441131999"
+		context.setData(ParamKeys.BK, bk);//分行号01491999999
+		String trl = bbipPublicService.getETeller(bk);
+		context.setData(ParamKeys.TELLER, trl);
 		
 		context.setData(ParamKeys.FTP_ID, "PGAS00Bat");
 		
@@ -83,7 +91,7 @@ public class BatchGashDealServiceAction extends BaseAction implements BatchAcpSe
 		/**加锁*/
 		String comNo = (String)context.getData(ParamKeys.COMPANY_NO);
 		logger.info("==============comNo : " + comNo);
-		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).Lock(comNo);
+//		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).Lock(comNo);
 		
 		//检查批次是否重复录入，不是重复录入则插入一条数据进批次控制表
 		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).BeforeBatchProcess(context);
@@ -184,7 +192,7 @@ public class BatchGashDealServiceAction extends BaseAction implements BatchAcpSe
 		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(console);
 		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).sendBatchFileToACP(context);
 		
-		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).unLock(comNo);
+//		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).unLock(comNo);
 		logger.info("批量文件数据准备结束-------------");
 		
 		logger.info("==============context:" + context);
