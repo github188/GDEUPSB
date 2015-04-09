@@ -535,7 +535,7 @@
         AND  FLE_NME=#{fleNme,jdbcType=CHAR}
       </if>
        <if test="eupsBusTyp != null" >
-        #{eupsBusTyp,jdbcType=VARCHAR},
+       and  EUPS_BUS_TYP =  #{eupsBusTyp,jdbcType=VARCHAR}
       </if>
       </trim>
   </select>
