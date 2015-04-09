@@ -82,8 +82,8 @@ public class InsertCusAgentServiceAction extends BaseAction {
 		context.setData("bk", context.getData(ParamKeys.BK));
 		context.setData("br", context.getData(ParamKeys.BR));
 		if(context.getData(ParamKeys.THD_SQN)!=null){
-			context.setData("bk", "441999");
-			context.setData("br", "441800");
+			context.setData("bk", "01441999999");
+			context.setData("br", "01441131999");
 		}
 		
 		Result editCusAgtResult = bgspServiceAccessObject.callServiceFlatting("maintainAgentCollectAgreement",context.getDataMap());
