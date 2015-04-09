@@ -412,7 +412,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		context.setProcessId("gdeupsb.oprGasCusAgentAction");
 		logger.info("===oprGasCusAgentAction=====context=" + context);
 
-		if ("StopOK".equals(context.getData("TransCode").toString().trim())) {
+		if ("StopOK".equalsIgnoreCase(context.getData("TransCode").toString().trim())) {
 			// 动态协议表
 			GdGasCusDay insCusInfo = new GdGasCusDay();
 			insCusInfo.setSequence(get(BBIPPublicService.class)
@@ -428,7 +428,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			}
 			insCusInfo.setOptDat(date);
 			insCusInfo.setAccTyp((String) context.getData("cusTyp"));
-			insCusInfo.setOptNod((String) context.getData(ParamKeys.OBK_BR));
+			insCusInfo.setOptNod((String)context.getData(ParamKeys.BR).toString().substring(2, 8));
 			insCusInfo.setIdTyp((String) context.getData(ParamKeys.ID_TYPE));
 			insCusInfo.setIdNo((String) context.getData(ParamKeys.ID_NO));
 			insCusInfo.setThdCusNam((String) context
@@ -443,10 +443,6 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			delGasCusAll.setCusAc((String) context.getData(ParamKeys.CUS_AC));
 			delGasCusAll.setCusNo((String) context.getData(ParamKeys.CUS_NO));
 			get(GdGasCusAllRepository.class).delete(delGasCusAll);
-
-			// context.setData("msgTyp", "N");
-			// context.setData("rspCod", GDConstants.GDEUPSB_TXN_SUCC_CODE);
-			// context.setData("rspMsg", "新增成功");
 
 			logger.info("============del本地协议，新增动态协议成功");
 		} else {
@@ -491,7 +487,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			insCusInfo.setCusNme((String) context.getData(ParamKeys.CUS_NME));
 			insCusInfo.setOptDat(date);
 			insCusInfo.setAccTyp((String) context.getData("cusTyp"));
-			insCusInfo.setOptNod((String) context.getData(ParamKeys.OBK_BR));
+			insCusInfo.setOptNod((String) context.getData(ParamKeys.BR).toString().substring(2, 8));
 			insCusInfo.setIdTyp((String) context.getData(ParamKeys.ID_TYPE));
 			insCusInfo.setIdNo((String) context.getData(ParamKeys.ID_NO));
 			insCusInfo.setThdCusNam((String) context
@@ -517,7 +513,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			updateGasCusAll.setCusTyp((String) context.getData("cusTyp"));
 			updateGasCusAll.setOptDat(date);
 			updateGasCusAll.setOptNod((String) context
-					.getData(ParamKeys.OBK_BR));
+					.getData(ParamKeys.BR));
 			updateGasCusAll.setIdTyp((String) context
 					.getData(ParamKeys.ID_TYPE));
 			updateGasCusAll.setIdNo((String) context.getData(ParamKeys.ID_NO));
@@ -581,7 +577,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			}
 			insCusInfo.setAccTyp((String) context.getData("cusTyp"));
 			insCusInfo.setOptDat(date);
-			insCusInfo.setOptNod((String) context.getData(ParamKeys.OBK_BR));
+			insCusInfo.setOptNod((String)context.getData(ParamKeys.BR).toString().substring(2, 8));
 			insCusInfo.setIdTyp((String) context.getData(ParamKeys.ID_TYPE));
 			insCusInfo.setIdNo((String) context.getData(ParamKeys.ID_NO));
 			insCusInfo.setThdCusNam((String) context
@@ -600,7 +596,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			addGasCusAll.setCusNme((String) context.getData(ParamKeys.CUS_NME));
 			addGasCusAll.setCusTyp((String) context.getData("cusTyp"));
 			addGasCusAll.setOptDat(date);
-			addGasCusAll.setOptNod((String) context.getData(ParamKeys.OBK_BR));
+			addGasCusAll.setOptNod((String) context.getData(ParamKeys.BR));
 			addGasCusAll.setIdTyp((String) context.getData(ParamKeys.ID_TYPE));
 			addGasCusAll.setIdNo((String) context.getData(ParamKeys.ID_NO));
 			addGasCusAll.setThdCusNme((String) context
