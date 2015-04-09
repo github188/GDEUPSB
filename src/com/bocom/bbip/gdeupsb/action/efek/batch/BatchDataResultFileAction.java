@@ -146,9 +146,9 @@ public class BatchDataResultFileAction implements AfterBatchAcpService{
 			Map<String, Object> headMap=new HashMap<String, Object>();
 			headMap.put("rsvFld5", gdEupsBatchConsoleInfoUpdate.getRsvFld5());
 			headMap.put("comNo", gdEupsBatchConsoleInfoUpdate.getComNo());
-			headMap.put("rsvFld8", gdEupsBatchConsoleInfoUpdate.getRsvFld8());
-			headMap.put("rsvFld7", gdEupsBatchConsoleInfoUpdate.getRsvFld7());
-			headMap.put("rsvFld6", gdEupsBatchConsoleInfoUpdate.getRsvFld6());
+			headMap.put("rsvFld13", "301");
+			headMap.put("rsvFld12", "RMB");
+			headMap.put("rsvFld11", "070");
 			headMap.put("totCnt", gdEupsBatchConsoleInfoUpdate.getTotCnt());
 			headMap.put("totAmt", gdEupsBatchConsoleInfoUpdate.getTotAmt().scaleByPowerOfTen(2).signum());
 			headMap.put("sucTotCnt", gdEupsBatchConsoleInfoUpdate.getSucTotCnt());

@@ -98,9 +98,9 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 									 BigDecimal txnAmt=gdEupsEleTmp.getPaymentMoney().scaleByPowerOfTen(-2);
 									 gdEupsEleTmp.setTxnAmt(txnAmt);
 									 gdEupsEleTmp.setRsvFld5(batNo);
-									 logger.info("~~~~~gdEupsEleTmp~~~~"+gdEupsEleTmp);
 									 gdEupsEleTmpRepository.insert(gdEupsEleTmp);
 						}
+						logger.info("==========success  insert  gdEupsEleTmp");
 						String createFileName=context.getData(ParamKeys.FLE_NME).toString();
 						//文件内容
 						Map<String, Object> resultMap=createFileMap(context,comNo,totAmt,totCnt);
@@ -147,9 +147,6 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 				}
 				agtFileBatchDetail.setOBKBK(gdEupsEleTmp.getBankNo());
 				
-				if(gdEupsEleTmp.getDedit() !=null){
-					agtFileBatchDetail.setTXNAMT(gdEupsEleTmp.getTxnAmt().add(gdEupsEleTmp.getDedit()));
-				}
 				//备注 不用
 				detailList.add(agtFileBatchDetail);
 			}
