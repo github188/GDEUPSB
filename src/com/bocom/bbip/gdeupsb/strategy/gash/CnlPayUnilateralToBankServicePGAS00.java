@@ -105,10 +105,16 @@ public class CnlPayUnilateralToBankServicePGAS00 implements
 			context.setData("TransCode", "NoPay");
 			throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
 		}
-		context.setData(ParamKeys.OLD_TXN_SQN, upPayJnlList.get(0).getSqn());
-		context.setData(ParamKeys.BUS_TYP, upPayJnlList.get(0).getRapTyp());  //TODO
-		logger.info("===============upPayJnlList.size()=" + upPayJnlList.size());
+		
+		
+		//TODO 验证对应的sqn是否已抹帐
+		
+		
+		
+//		context.setData(ParamKeys.BUS_TYP, upPayJnlList.get(0).getRapTyp());  //TODO
+//		logger.info("===============upPayJnlList.size()=" + upPayJnlList.size());
 		logger.info("===============sqn=" + upPayJnlList.get(0).getSqn());
+		context.setData(ParamKeys.OLD_TXN_SQN, upPayJnlList.get(0).getSqn());
 		logger.info("===============context=" + context);
 		logger.info("CnlPayUnilateralToBankServicePGAS00@preCclToBank end!");
 		
