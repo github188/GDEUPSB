@@ -47,7 +47,7 @@ public class QueryTransportFeeAction extends BaseAction{
 	@Autowired
 	ThirdPartyAdaptor callThdTradeManager;
 	
-	@SuppressWarnings({ "unchecked", "unused" })
+	
 	public void execute(Context ctx) throws CoreException,CoreRuntimeException{
 		logger.info("QueryTransportFeeAction start......");
 		
@@ -79,7 +79,7 @@ public class QueryTransportFeeAction extends BaseAction{
 			}else{
 
 				GDEupsbTrspPayInfo gdEupsbTrspPayInfo = new GDEupsbTrspPayInfo();
-				gdEupsbTrspPayInfo.setBrNo(ctx.getData(ParamKeys.BR).toString());
+				gdEupsbTrspPayInfo.setBrNo(ctx.getData(ParamKeys.BK).toString());
 				gdEupsbTrspPayInfo.setCarTyp(ctx.getData(GDParamKeys.CAR_TYP).toString());
 				gdEupsbTrspPayInfo.setCarNo(ctx.getData(GDParamKeys.CAR_NO).toString());
 				gdEupsbTrspPayInfoRepository.delete1(gdEupsbTrspPayInfo);

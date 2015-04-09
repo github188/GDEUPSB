@@ -48,16 +48,13 @@ public class PrePrintAction extends BaseAction{
 //		ctx.setData(GDParamKeys.NOD_NO, "123");
 //		ctx.setData(GDParamKeys.TLR_ID, "123");
 		
-		//TODO:現在用soup ui測，故需要對輸入的日期類型做轉換
-//		Date payDat = DateUtils.parse(DateUtils.formatAsSimpleDate((Date)ctx.getData("payDat")),"yyyy-mm-dd");
-//		ctx.setData("payDat", payDat);
         //查询缴费记录
 		
 		GDEupsbTrspTxnJnl gdEupsbTrspTxnJnl = new GDEupsbTrspTxnJnl();
-		gdEupsbTrspTxnJnl.setBrNo(ctx.getData(ParamKeys.BR).toString());
+		gdEupsbTrspTxnJnl.setBrNo(ctx.getData(ParamKeys.BK).toString());
 		gdEupsbTrspTxnJnl.setCarNo(ctx.getData(GDParamKeys.CAR_NO).toString());
 		gdEupsbTrspTxnJnl.setSqn(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
-		//TODO:payDat用界面測時還要處理，sqlmap里的sql語句也要改
+	
 		gdEupsbTrspTxnJnl.setActDat((Date)ctx.getData(GDParamKeys.PAY_DAT));
 		
 		List<Map<String, Object>> txnJnlList = gdEupsbTrspTxnJnlRepository.findPayInfo(gdEupsbTrspTxnJnl);

@@ -44,10 +44,11 @@ public class PreInvoiceCancelAction extends BaseAction{
 	
 	public void execute(Context ctx) throws CoreException,CoreRuntimeException{
 		log.info("PreInvoiceCancelAction start......");
-		ctx.setData(GDParamKeys.BR_NO, "443999");
+		ctx.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
+		ctx.setData(GDParamKeys.BR_NO, ctx.getData(ParamKeys.BK));
 		Date today = new Date();
-		ctx.setData(GDParamKeys.NOD_NO, "123");
-		ctx.setData(GDParamKeys.TLR_ID, "1234");
+		ctx.setData(GDParamKeys.NOD_NO, ctx.getData(ParamKeys.BR));
+		ctx.setData(GDParamKeys.TLR_ID, ctx.getData(ParamKeys.TELLER));
 		
 		GDEupsbTrspNpManag gdEupsbTrspNpManag = new GDEupsbTrspNpManag();
 		gdEupsbTrspNpManag.setCarNo(ctx.getData(GDParamKeys.CAR_NO).toString());
@@ -97,92 +98,61 @@ public class PreInvoiceCancelAction extends BaseAction{
 		if(CollectionUtils.isEmpty(txnJnlList)){
 			ctx.setData("ohTxnSt", "U");  //原主机交易状态设为初始状态
 			ctx.setData("otTxnSt", "U");  //原第三方交易状态设为初始状态
+			ctx.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
 		}else{
-			ctx.setData("ohTxnSt", txnJnlList.get(0).getHtxnSt());
-			ctx.setData("otTxnSt", txnJnlList.get(0).getTtxnSt());
-			ctx.setData(ParamKeys.OLD_TXN_SQN, txnJnlList.get(0).getSqn());
+			if(!"S".equals(ctx.getData("ohTxnSt"))){
+				//TODO:
+//				<Exec func="PUB:CallHostOther" error="IGNORE"><!--上主机查询交易结果-->
+//                <Arg name="HTxnCd" value="458980"/>
+//                <Arg name="ObjSvr" value="SHSTPUB1"/>
+//             </Exec>
+//             <If condition="~RetCod=0">
+//                <If condition="$CrcSts!=Y">
+//                   <Set>OHTxnSt=S</Set>
+//                </If>
+//                <Else>
+//                   <Set>OHTxnSt=C</Set>
+//                </Else>
+//             </If>
+//             <ElseIf condition="~RetCod=3">
+//                <Switch expression="$HRspCd">
+//                   <Case value="AG8001"/>
+//                   <Case value="AG8981"/>
+//                   <Case value="SC6129">
+//                      <Set>OHTxnSt=F</Set>
+//                      <Break/>
+//                   </Case>
+//                   <Case value="SC6034">
+//                      <Set>OHTxnSt=C</Set>
+//                      <Break/>
+//                   </Case>
+//                   <Default>
+//                      <Set>MsgTyp=E</Set>
+//                      <Set>RspCod=$HRspCd</Set>
+//                      <Return/>
+//                   </Default>
+//                </Switch>
+//             </ElseIf>
+//             <Else condition="~RetCod&lt;0">
+//                <Set>RspCod=329999</Set>
+//                <Set>RspMsg=上核心查流水失败</Set>
+//                <Return/>
+//             </Else>
+//             <Set>LogNo=$ORvsLog</Set>
+//             <Set>TLogNo=$ORvsLog</Set>
+				ctx.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
+			}
+//			ctx.setData("ohTxnSt", txnJnlList.get(0).getHtxnSt());
+//			ctx.setData("otTxnSt", txnJnlList.get(0).getTtxnSt());
+//			ctx.setData(ParamKeys.OLD_TXN_SQN, txnJnlList.get(0).getSqn());
 //		     <ElseIf condition="~RetCod=0">
-//	       TODO  :
-//			<If condition="IS_NOEQUAL_STRING($OHTxnSt,S)">
-//	           <Exec func="PUB:CallHostOther" error="IGNORE"><!--上主机查询交易结果-->
-//	              <Arg name="HTxnCd" value="458980"/>
-//	              <Arg name="ObjSvr" value="SHSTPUB1"/>
-//	           </Exec>
-			
-//	           <If condition="~RetCod=0">
-//	              <If condition="$CrcSts!=Y">
-//	                 <Set>OHTxnSt=S</Set>
-//	              </If>
-//	              <Else>
-//	                 <Set>OHTxnSt=C</Set>
-//	              </Else>
-//	           </If>
-//	           <ElseIf condition="~RetCod=3">
-//	              <Switch expression="$HRspCd">
-//	                 <Case value="AG8001"/>
-//	                 <Case value="AG8981"/>
-//	                 <Case value="SC6129">
-//	                    <Set>OHTxnSt=F</Set>
-//	                    <Break/>
-//	                 </Case>
-//	                 <Case value="SC6034">
-//	                    <Set>OHTxnSt=C</Set>
-//	                    <Break/>
-//	                 </Case>
-//	                 <Default>
-//	                    <Set>MsgTyp=E</Set>
-//	                    <Set>RspCod=$HRspCd</Set>
-//	                    <Return/>
-//	                 </Default>
-//	              </Switch>
-//	           </ElseIf>
-//	           <Else condition="~RetCod&lt;0">
-//	              <Set>RspCod=329999</Set>
-//	              <Set>RspMsg=上核心查流水失败</Set>
-//	              <Return/>
-//	           </Else>
-//	           <Set>LogNo=$ORvsLog</Set>
-//	           <Set>TLogNo=$ORvsLog</Set>
-//	        </If>
-//	     </ElseIf>
+			ctx.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
+
 		}
 
 
 		
-//		TODO:
-//			<!--上主机通过代付退费-->
-//        <Exec func="PUB:ReadRecord" error="IGNORE"><!--查询单位协议-->
-//           <Arg name="SqlCmd" value="Chk_CrpAgr"/>
-//        </Exec>
-//        <If condition="~RetCod=-1">
-//           <Set>MsgTyp=E</Set>
-//           <Set>RspCod=329999</Set>
-//           <Set>RspMsg=查询单位协议时系统错误</Set>
-//           <Return/>
-//        </If>
-//        <ElseIf condition="~RetCod=-2">
-//           <Set>MsgTyp=E</Set>
-//           <Set>RspCod=329999</Set><!--返回无有效单位协议-->
-//           <Set>RspMsg=无有效单位协议</Set>
-//           <Return/>
-//        </ElseIf>
-//        <If condition="@PARA.IsSignIn=1"><!--是否校验单位签到-->
-//           <Exec func="PUB:ReadRecord" error="IGNORE">
-//              <Arg name="SqlCmd" value="Chk_CrpSignIn"/>
-//           </Exec>
-//           <If condition="~RetCod=-1">
-//              <Set>MsgTyp=E</Set>
-//              <Set>RspCod=329999</Set>
-//              <Set>RspMsg=检查单位签到状态时系统错误</Set>
-//              <Return/>
-//           </If>
-//           <If condition="~RetCod=-2">
-//              <Set>MsgTyp=E</Set>
-//              <Set>RspCod=329999</Set><!--返回该单位未签到-->
-//              <Set>RspMsg=该单位未签到</Set>
-//              <Return/>
-//           </If>
-//        </If>
+
 		
 	}
 

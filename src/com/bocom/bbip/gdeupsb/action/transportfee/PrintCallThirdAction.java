@@ -62,24 +62,7 @@ public class PrintCallThirdAction extends BaseAction{
 		ctx.setState("fail");
 		GDEupsbTrspTxnJnl gdEupsbTrspTxnJnl = new GDEupsbTrspTxnJnl();
 		ctx.setData(ParamKeys.THD_TXN_CDE, "PayCar");
-//		String enCodePath="packet://WEB-INF/classes/config/stream/TRSP00/f484014.xml";
-//		String deCodePath="packet://WEB-INF/classes/config/stream/TRSP00/p484004.xml";
-//		trspTransport.setEncodeTransforms(new Transform[] { new EncoderTransform(enCodePath), new RequestTransform() });
-//		trspTransport.setDecodeTransforms(new Transform[] { new DecoderTransform(deCodePath), new ResponseTransform() });
-//		trspTransport.setGateway(gateway);
-//		
-//		
-//		Map responseMessage=new HashMap();
-//		
-//		try {
-//			 responseMessage = (Map)trspTransport.submit(ctx.getDataMap(), ctx);
-//		} catch (CommunicationException e) {
-//			e.printStackTrace();
-//		} catch (JumpException e) {
-//			e.printStackTrace();
-//		}
-//		ConnectThdUtils connectThdUtils = new ConnectThdUtils();
-//		Map<String,Object> thdReturnMessage = connectThdUtils.getThdResponse(enCodePath,deCodePath,ctx);
+
 		String sqn = ctx.getData(ParamKeys.SEQUENCE).toString();
 		ctx.setData(GDParamKeys.TLOG_NO, StringUtils.substring(sqn, 2, 8)+StringUtils.substring(sqn, 14, 20));
 		Map<String,Object> thdReturnMessage = callThdTradeManager.trade(ctx);
@@ -186,8 +169,6 @@ public class PrintCallThirdAction extends BaseAction{
 			}
 		}
 
-		
-		
 	}
 
 }

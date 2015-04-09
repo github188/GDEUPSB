@@ -59,7 +59,7 @@ public class InvoiceFinalAction extends BaseAction{
 				ctx.setData(ParamKeys.RSP_MSG, "路桥方交易失败");
 				throw new CoreRuntimeException(ErrorCodes.TRANSACTION_ERROR_OTHER);
 			}else{
-				if(!"000000".equals(thdReturnMessage.get(GDParamKeys.TRSP_CD))){
+				if(!"000".equals(thdReturnMessage.get(GDParamKeys.TRSP_CD))){
 					ctx.setData(GDParamKeys.TTXN_ST, "F");  //主机交易状态设为失败
 					ctx.setData(GDParamKeys.TXN_ST, "F");   //交易状态设为失败
 					gDEupsbTrspTxnJnl.setTtxnSt("F");

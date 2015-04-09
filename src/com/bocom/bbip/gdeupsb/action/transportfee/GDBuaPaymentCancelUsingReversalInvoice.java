@@ -43,7 +43,7 @@ public class GDBuaPaymentCancelUsingReversalInvoice extends BaseAction{
 	 public void execute(Context context) throws CoreException, CoreRuntimeException {
 		 log.info("GDBuaPaymentCancelUsingReversalInvoiceExt start......");
 			if("S".equals(context.getData("ohTxnSt"))){
-				return;
+				throw new CoreException("");
 			}
 //			<Set>PActNo=$TActNo</Set>
 //	        <Set>Mask=STRCAT(9,$BBusTyp)</Set>
@@ -51,6 +51,7 @@ public class GDBuaPaymentCancelUsingReversalInvoice extends BaseAction{
 //	        <Set>CashNo=121</Set>
 //	        <Set>VchChk=0</Set>
 //	        <Set>HTxnCd=@PARA.HTxnCd_C2P</Set>
+			context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 			context.setData(GDParamKeys.TLOG_NO, context.getData(GDParamKeys.SQN));
 			GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
 			//登记退费流水号
@@ -171,51 +172,51 @@ public class GDBuaPaymentCancelUsingReversalInvoice extends BaseAction{
 	        logger.info("start callBuaReversal!");
 	        Map<String, Object> rspMap = new HashMap<String, Object>();
 
-//	        BUAResult response = get(BUAServiceAccessObject.class).reversal(request, hostOpr);
+	        BUAResult response = get(BUAServiceAccessObject.class).reversal(request, hostOpr);
 
-//	        rspMap = response.getPayload();
-//	        logger.info("===========respMap: " + rspMap + "===========");
-//	        String hostRspCode = response.getResponseCode();
-//
-//	        if (Status.SEND_ERROR == response.getStatus()) {
-//	            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
-//	            logger.info("business error ,error message is thd return business error");
-//	        }
-//
-//	        if (Status.TIMEOUT == response.getStatus()) {
-//	            // 连接错误或等待超时,但不知道是否已上送,这里交易已处于未知状态
-//	            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_UNKOWN_FAIL);
-//	            logger.info("business error,error message is timeOut or connect error ");
-//	        }
-//	        if (Status.SYSTEM_ERROR == response.getStatus()) {
-//	            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_UNKOWN_FAIL);
-//	            logger.info("business error,unknow reason");
-//	        } else if (Status.SUCCESS != response.getStatus() && Status.FAIL != response.getStatus()) {
-//	            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_UNKOWN_FAIL);
-//	            logger.info("business error,business is not success ");
-//	        }
-//
-//	        context.setData(ParamKeys.AGTS_ACCOUNT_JOURNAL_NO, response.getAcoJrnNo());
-//	        context.setData(ParamKeys.AGTS_ACCOUNT_VOUCHER_NO, response.getAcoVchNo());
-//	        context.setData(ParamKeys.AGTS_ACCOUNT_DATE, response.getAcDte());
-//	        context.setData(ParamKeys.AGTS_BBIP_JOURNAL_NO, response.getTxnSqn());
-//	        context.setData(ParamKeys.MFM_RSP_MSG, response.getResponseMessage());
-//	        logger.info("===========bua payment reversal response: " + rspMap);
-//
-//	        if (Status.SUCCESS == response.getStatus()) {
-//	            logger.info("Call BBIP payment service response successful.");
-//	            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
-//	            context.setData(ParamKeys.REVERSE_RESULT_CODE, Constants.RESPONSE_CODE_SUCC_HOST);
-//	            logger.info("call host reversal suc!context=" + context.getDataMap());
-//	        } else if (Status.FAIL == response.getStatus()) {
-//	            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
-//	            context.setData(ParamKeys.REVERSE_RESULT_CODE, hostRspCode);
-//	            logger.info("Call BBIP payment service response Failed!!!! response map: " + rspMap);
-//	        } else {
-//	            logger.info("Call bua payment service unkown error, response is null.");
-//	            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_UNKOWN_FAIL);
-//	        }
-	        context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
+	        rspMap = response.getPayload();
+	        logger.info("===========respMap: " + rspMap + "===========");
+	        String hostRspCode = response.getResponseCode();
+
+	        if (Status.SEND_ERROR == response.getStatus()) {
+	            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
+	            logger.info("business error ,error message is thd return business error");
+	        }
+
+	        if (Status.TIMEOUT == response.getStatus()) {
+	            // 连接错误或等待超时,但不知道是否已上送,这里交易已处于未知状态
+	            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_UNKOWN_FAIL);
+	            logger.info("business error,error message is timeOut or connect error ");
+	        }
+	        if (Status.SYSTEM_ERROR == response.getStatus()) {
+	            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_UNKOWN_FAIL);
+	            logger.info("business error,unknow reason");
+	        } else if (Status.SUCCESS != response.getStatus() && Status.FAIL != response.getStatus()) {
+	            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_UNKOWN_FAIL);
+	            logger.info("business error,business is not success ");
+	        }
+
+	        context.setData(ParamKeys.AGTS_ACCOUNT_JOURNAL_NO, response.getAcoJrnNo());
+        context.setData(ParamKeys.AGTS_ACCOUNT_VOUCHER_NO, response.getAcoVchNo());
+	        context.setData(ParamKeys.AGTS_ACCOUNT_DATE, response.getAcDte());
+	        context.setData(ParamKeys.AGTS_BBIP_JOURNAL_NO, response.getTxnSqn());
+	        context.setData(ParamKeys.MFM_RSP_MSG, response.getResponseMessage());
+	        logger.info("===========bua payment reversal response: " + rspMap);
+
+	        if (Status.SUCCESS == response.getStatus()) {
+	            logger.info("Call BBIP payment service response successful.");
+	            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
+	            context.setData(ParamKeys.REVERSE_RESULT_CODE, Constants.RESPONSE_CODE_SUCC_HOST);
+	            logger.info("call host reversal suc!context=" + context.getDataMap());
+	        } else if (Status.FAIL == response.getStatus()) {
+	            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
+	            context.setData(ParamKeys.REVERSE_RESULT_CODE, hostRspCode);
+	            logger.info("Call BBIP payment service response Failed!!!! response map: " + rspMap);
+	        } else {
+	            logger.info("Call bua payment service unkown error, response is null.");
+	            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_UNKOWN_FAIL);
+	        }
+	        
 	    }
 
 	    /**
