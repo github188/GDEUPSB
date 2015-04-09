@@ -419,4 +419,11 @@
       </foreach>
     </if>
   </select>
+  
+  	<select id="findTot"  resultType="java.util.Map"  parameterType="java.util.Map">
+		select  count(*) as TOT_COUNT,sum(TXN_AMT) as ALL_MONEY  from  GDEUPSB.GDEUPS_FBPE_FILE_BATCH_TMP
+			 
+		where  RSV_FLD8=#{rsvFld8,jdbcType=CHAR}  
+
+</select>
 </mapper>
