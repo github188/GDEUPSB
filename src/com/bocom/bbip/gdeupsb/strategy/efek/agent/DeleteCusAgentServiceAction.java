@@ -126,6 +126,8 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 								context.setData(ParamKeys.TXN_DTE, txnDte);
 								context.setData(ParamKeys.TXN_TME, txnTme);
 							}
+					}else{
+						context.setData(ParamKeys.RSP_MSG, "交易失败");
 					}
 			}
 			logger.info("=============End   DeleteCusAgentServiceAction ");

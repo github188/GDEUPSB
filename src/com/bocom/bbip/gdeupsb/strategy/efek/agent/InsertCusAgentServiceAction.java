@@ -164,6 +164,8 @@ public class InsertCusAgentServiceAction extends BaseAction {
 						context.setData(ParamKeys.TXN_DTE, txnDte);
 						context.setData(ParamKeys.TXN_TME, txnTme);
 					}
+			}else{
+					context.setData(ParamKeys.RSP_MSG, "交易失败");
 			}
 		}
 		if(context.getData(ParamKeys.THD_SQN) !=null){
