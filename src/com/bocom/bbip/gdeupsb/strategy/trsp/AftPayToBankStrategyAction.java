@@ -58,7 +58,7 @@ public class AftPayToBankStrategyAction implements Executable{
 		
 		String actNo = ctx.getData(GDParamKeys.ACT_NO).toString();
 		String trDate = (String)ctx.getData(GDParamKeys.TR_DATE);
-		String sqn = ctx.getData(GDParamKeys.SQN).toString();
+		
 //		String tCusNam = ctx.getData(GDParamKeys.TCUS_NM).toString().substring(1, 30);
 		
 		
@@ -67,18 +67,10 @@ public class AftPayToBankStrategyAction implements Executable{
 		ctx.setData(GDParamKeys.TMP01, carNo);
 		ctx.setData(GDParamKeys.ACT_NO, actNo);
 		ctx.setData(GDParamKeys.TR_DATE, trDate);
-		ctx.setData(GDParamKeys.SQN, sqn);
+	
 //		ctx.setData(GDParamKeys.TCUS_NM, tCusNam);
 		
-//		查询是否存在发票记录
-//		GDEupsbPubInvInfo gdEupsbPubInvInfo = new GDEupsbPubInvInfo();
-//		gdEupsbPubInvInfo.setTmp01(carNo);
-//		gdEupsbPubInvInfo.setTmp02(car_typ);
-//		gdEupsbPubInvInfo.setActNo(actNo);
-//		List<GDEupsbPubInvInfo> invInfoList = gdEupsbPubInvInfoRepository.find(gdEupsbPubInvInfo);
-//		if(!CollectionUtils.isEmpty(invInfoList)){
-//			gdEupsbPubInvInfoRepository.delete(gdEupsbPubInvInfo);
-//		}
+
 		
 		GdeupsTyfInvRec gdeupsTyfInvRec = new GdeupsTyfInvRec();
 		gdeupsTyfInvRec.setTmp01(carNo);
@@ -99,7 +91,7 @@ public class AftPayToBankStrategyAction implements Executable{
 		//插入缴费记录表
 		GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
 
-		gdEupsbTrspFeeInfo.setBrNo(ctx.getData(ParamKeys.BR).toString());
+		gdEupsbTrspFeeInfo.setBrNo(ctx.getData(ParamKeys.BK).toString());
 		gdEupsbTrspFeeInfo.setThdKey((String)ctx.getData(GDParamKeys.THD_KEY));
 		gdEupsbTrspFeeInfo.setCarTyp((String)ctx.getData(GDParamKeys.CAR_TYP));
 		gdEupsbTrspFeeInfo.setCarNo((String)ctx.getData(GDParamKeys.CAR_NO));
@@ -111,9 +103,9 @@ public class AftPayToBankStrategyAction implements Executable{
 		gdEupsbTrspFeeInfo.setTxnCnl((String)ctx.getData(ParamKeys.CHANNEL)); //交易渠道
 		gdEupsbTrspFeeInfo.setActTyp((String)ctx.getData(GDParamKeys.ACT_TYP));//1111111111
 		gdEupsbTrspFeeInfo.setActNo((String)ctx.getData(GDParamKeys.ACT_NO));
-		gdEupsbTrspFeeInfo.setPayNod((String)ctx.getData(ParamKeys.BK)); //网点号
+		gdEupsbTrspFeeInfo.setPayNod((String)ctx.getData(ParamKeys.BR)); //网点号
 		gdEupsbTrspFeeInfo.setPayTlr((String)ctx.getData(ParamKeys.TELLER));  //银行柜员号
-		gdEupsbTrspFeeInfo.setPayTck((String)ctx.getData(ParamKeys.ACO_VCH_NO));//银行流水号!!!!!!!!!!!!!
+		gdEupsbTrspFeeInfo.setPayTck((String)ctx.getData(ParamKeys.MFM_VCH_NO));//银行流水号!!!!!!!!!!!!!
 		gdEupsbTrspFeeInfo.setStatus(GDConstants.JF);
 		
 		gdEupsbTrspFeeInfoRepository.insert(gdEupsbTrspFeeInfo);

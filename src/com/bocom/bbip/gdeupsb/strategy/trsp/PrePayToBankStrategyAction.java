@@ -68,7 +68,7 @@ public class PrePayToBankStrategyAction implements Executable{
 
 //		查询该用户是否存在已缴费未打发票的记录
 		GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
-		gdEupsbTrspFeeInfo.setBrNo(ctx.getData(ParamKeys.BR).toString());
+		gdEupsbTrspFeeInfo.setBrNo(ctx.getData(ParamKeys.BK).toString());
 		gdEupsbTrspFeeInfo.setCarNo(ctx.getData(GDParamKeys.CAR_NO).toString());
 		gdEupsbTrspFeeInfo.setCarTyp(ctx.getData(GDParamKeys.CAR_TYP).toString());
 		gdEupsbTrspFeeInfo.setStatus(GDConstants.JF);
@@ -95,7 +95,7 @@ public class PrePayToBankStrategyAction implements Executable{
 		
 //		检查本地费用表是否有待缴费用
 		GDEupsbTrspPayInfo gdEupsbTrspPayInfo = new GDEupsbTrspPayInfo();
-		gdEupsbTrspPayInfo.setBrNo(ctx.getData(ParamKeys.BR).toString());    
+		gdEupsbTrspPayInfo.setBrNo(ctx.getData(ParamKeys.BK).toString());    
 		gdEupsbTrspPayInfo.setCarNo(ctx.getData(GDParamKeys.CAR_NO).toString());
 		gdEupsbTrspPayInfo.setCarTyp(ctx.getData(GDParamKeys.CAR_TYP).toString());
 		gdEupsbTrspPayInfo.setPayMon((String)ctx.getData(GDParamKeys.PAY_MON));
@@ -106,15 +106,15 @@ public class PrePayToBankStrategyAction implements Executable{
 		
 		List<GDEupsbTrspPayInfo> payInfoList = gdEupsTrspPayInfoRepository.find(gdEupsbTrspPayInfo);
 		if(CollectionUtils.isEmpty(payInfoList)){
-			ctx.setData(ParamKeys.RSP_CDE, "478613s");
+			ctx.setData(ParamKeys.RSP_CDE, "478613");
 			ctx.setData(ParamKeys.RSP_MSG, "无待缴费数据");
-			log.info("222222222222222222222222222222222222222222222222222222222222222222222222222");
+			
 			ctx.setState("BUSINESS_PROCESSNIG_STATE_TRANS_FAIL");
 			throw new CoreException(ErrorCodes.EUPS_CHECK_FAIL);
 		}else{
 		
 			ctx.setDataMap(BeanUtils.toMap(payInfoList.get(0)));
-			log.info("555555555555555555555555555555555555555555555555555555555555555555555555555555555555");
+			
 		}
 		
 		
@@ -140,7 +140,7 @@ public class PrePayToBankStrategyAction implements Executable{
 //		
 //        ctx.setData("brNo", "443999");
 		
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+ctx);
+		
 	
 		gdEupsbTrspTxnJnl = BeanUtils.toObject(ctx.getDataMap(),GDEupsbTrspTxnJnl.class);
 		
