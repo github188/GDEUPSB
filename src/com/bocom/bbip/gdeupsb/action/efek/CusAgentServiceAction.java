@@ -10,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bea.wlw.runtime.core.config.WlwManifestDocument.WlwManifest.Project.TopLevelComponent.ExternalCallbacks.Control;
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ParamKeys;
@@ -125,7 +126,9 @@ public class CusAgentServiceAction extends BaseAction{
 					bbipPublicService.synExecute(mothed, context);
 					context.setData("oprTyp", "1");
 				}
-
+				if(context.getData(ParamKeys.THD_SQN)!=null){
+							context.setData("PKGCNT", "000000");
+				}
 				log.info("============End  CusAgentServiceAction");
 		}
 		
@@ -254,6 +257,8 @@ public class CusAgentServiceAction extends BaseAction{
 				map.put("bk", "01441999999");
 				map.put("br", "01441131999");
 				context.setData("tlr", "ABIR148");
+				context.setData("bk", "01441999999");
+				context.setData("br", "01441131999");
 			}
 			map.put("cusAc", context.getData("cusAc"));
 //			map.put("cusAc", "6222620710012838064");
@@ -262,7 +267,7 @@ public class CusAgentServiceAction extends BaseAction{
 			//上代收付取协议编号
 			Result accessObjList = bgspServiceAccessObject.callServiceFlatting("queryListAgentCollectAgreement",map);
 			if(!accessObjList.isSuccess()){
-						throw new CoreException(accessObjList.getPayload().get("responseMessage").toString());
+//						throw new CoreException(accessObjList.getPayload().get("responseMessage").toString());
 			}
 			logger.info("~~~~~~~~~~列表查询结束~~~~"+accessObjList);
 			if(accessObjList.getPayload().get("agentCollectAgreement") ==null	){
