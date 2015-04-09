@@ -52,7 +52,7 @@ public class CusAgentServiceAction extends BaseAction{
 				context.setData("comNo", sqlNo);
 				logger.info("~~~~~~~~~comNo="+context.getData(ParamKeys.COMPANY_NO));
 				
-				
+				context.setData("obkBk", "301");
 				context.setData(ParamKeys.TRACE_NO, bbipPublicService.getTraceNo());
 				//TODO 
 				context.setData("idTyp", "01");
@@ -77,6 +77,7 @@ public class CusAgentServiceAction extends BaseAction{
 					map.put("cusNme", context.getData("newCusName"));
 				}else if("1".equals(oprTyp)){
 					//先删除协议，然后再添加 
+					context.setData("oprTyp", "2");
 					logger.info("~~~~~~~~~~~~~~~~~Enter  eups.commUpdateCusAgentELEC00 ");
 					mothed="eups.commDelCusAgentELEC00";
 					agdAgrNo=selectList(context);
@@ -122,6 +123,7 @@ public class CusAgentServiceAction extends BaseAction{
 					context.setData(ParamKeys.AGENT_COLLECT_AGREEMENT, list);
 					context.setData("customerInfo", cusList);
 					bbipPublicService.synExecute(mothed, context);
+					context.setData("oprTyp", "1");
 				}
 
 				log.info("============End  CusAgentServiceAction");
@@ -186,6 +188,7 @@ public class CusAgentServiceAction extends BaseAction{
 			map.put("cusNme", context.getData("cusNme"));
 			map.put("agtSrvCusId", context.getData("cusNo"));
 			map.put("bvCde", "009");
+			map.put("obkBk", "301");
 			map.put("agtSrvCusPnm", context.getData("settleAccountsName"));
 			map.put("cusAc", context.getData(GDParamKeys.NEWCUSAC));
 			map.put("acoAc", context.getData(GDParamKeys.NEWCUSAC));
@@ -246,9 +249,11 @@ public class CusAgentServiceAction extends BaseAction{
 			map.put("chn", context.getData(ParamKeys.CHANNEL));
 			map.put("bk", context.getData(ParamKeys.BK));
 			map.put("br", context.getData(ParamKeys.BR));
+			map.put("obkBk", "301");
 			if(context.getData(ParamKeys.THD_SQN)!=null){
-				map.put("bk", "441999");
-				map.put("br", "441800");
+				map.put("bk", "01441999999");
+				map.put("br", "01441131999");
+				context.setData("tlr", "ABIR148");
 			}
 			map.put("cusAc", context.getData("cusAc"));
 //			map.put("cusAc", "6222620710012838064");
