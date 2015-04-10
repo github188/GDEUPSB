@@ -190,7 +190,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 	 */
 		public void userProcessToGet(Context context)throws CoreException{
 			logger.info("==========Start  BatchDataFileAction  userProcessToGet");
-			log.info(">>>>>Start  Down  AGTS  FileResult <<<<<<");
+			logger.info(">>>>>Start  Down  AGTS  FileResult <<<<<<");
 			//文件下载
 			String path=context.getData("dir").toString();
 			EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne(ParamKeys.FTPID_BATCH_PAY_FILE_TO_ACP);
@@ -200,7 +200,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 			eupsThdFtpConfig.setFtpDir("1");
 			eupsThdFtpConfig.setRmtWay(path);
 			operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
-			log.info(">>>>>Down Result File Success<<<<<<");
+			logger.info(">>>>>Down Result File Success<<<<<<");
 			String mothed="eups.commNotifyBatchStatus";
 			bbipPublicService.synExecute(mothed, context);
 			logger.info("==========End  BatchDataFileAction  userProcessToGet");
@@ -253,6 +253,8 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 									gdEupsBatchConsoleInfo.setRsvFld1(rsvFld1);
 									gdEupsBatchConsoleInfo.setRsvFld2(rsvFld2);
 									gdEupsBatchConsoleInfo.setBatNo(batNo);
+									gdEupsBatchConsoleInfo.setRsvFld7(context.getData(ParamKeys.SEQUENCE).toString());
+									gdEupsBatchConsoleInfo.setRsvFld8(context.getData("batNoFile").toString());
 									gdEupsBatchConsoleInfoRepository.updateConsoleInfo(gdEupsBatchConsoleInfo);
 									logger.info("==========Successful to update GDEupsBatchConsoleInfo");
 								i++;

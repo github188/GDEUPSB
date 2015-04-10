@@ -12,6 +12,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
@@ -39,7 +40,7 @@ import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
-public class BatchDataResultFileAction implements AfterBatchAcpService{
+public class BatchDataResultFileAction extends BaseAction implements AfterBatchAcpService{
 	private final static Log logger=LogFactory.getLog(BatchDataResultFileAction.class);
 	@Autowired
 	OperateFileAction operateFile;
@@ -56,13 +57,27 @@ public class BatchDataResultFileAction implements AfterBatchAcpService{
 	@Autowired
 	EupsBatchConsoleInfoRepository eupsBatchConsoleInfoRepository;
 	@Autowired
+	OperateFTPAction operateFTPAction;
+	@Autowired
 	@Qualifier("callThdTradeManager")
 	ThirdPartyAdaptor callThdTradeManager;
 	/**
 	 * 南方电网 结果文件处理
 	 */
 	public void afterBatchDeal(AfterBatchAcpDomain afterbatchacpdomain, Context context) throws CoreException {
-		logger.info("===============Start  BatchDataResultFileAction  afterBatchDeal");	
+			logger.info("===============Start  BatchDataResultFileAction  afterBatchDeal");	
+			logger.info(">>>>>Start  Down  AGTS  FileResult <<<<<<");
+			//文件下载
+			String path=context.getData("dir").toString();
+			EupsThdFtpConfig eupsThdFtpConfigs = get(EupsThdFtpConfigRepository.class).findOne(ParamKeys.FTPID_BATCH_PAY_FILE_TO_ACP);
+			String fileNames=context.getData("batNo")+".result";
+			eupsThdFtpConfigs.setLocDir(fileNames);
+			eupsThdFtpConfigs.setRmtFleNme(fileNames);
+			eupsThdFtpConfigs.setFtpDir("1");
+			eupsThdFtpConfigs.setRmtWay(path);
+			operateFTPAction.getFileFromFtp(eupsThdFtpConfigs);
+			logger.info(">>>>>Down Result File Success<<<<<<");
+		
 			//第三方 rsvFld9
 			String batNo=context.getData(ParamKeys.BAT_NO).toString();
 			String sqns=eupsBatchConsoleInfoRepository.findOne(batNo).getRsvFld2();
