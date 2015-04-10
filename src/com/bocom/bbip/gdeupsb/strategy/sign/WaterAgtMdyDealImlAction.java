@@ -184,6 +184,8 @@ public class WaterAgtMdyDealImlAction implements AgtMdyDealImlService {
 		} else {
 			log.error("操作类型错误!");
 			context.setData(GDParamKeys.SIGN_STATION_OEXTFLG, GDConstants.SIGN_STATION_OEXTFLG_N);
+			context.setData("responseType", "E");
+			context.setData("responseMessage", "操作类型错误");
 			throw new CoreException(GDErrorCodes.EUPS_SIGN_DEAL_TYPE_ERROR); // 操作选项错误
 		}
 		return null;
@@ -206,7 +208,7 @@ public class WaterAgtMdyDealImlAction implements AgtMdyDealImlService {
 
 		// 卡号限制判断
 		String actTyp = context.getData("actTyp"); // 账户性质
-		cardBinVerify(actTyp, actNo);
+		cardBinVerify(context, actTyp, actNo);
 
 		for (int i = 0; i < signDetailList.size(); i++) {
 
@@ -236,7 +238,7 @@ public class WaterAgtMdyDealImlAction implements AgtMdyDealImlService {
 			// 从detailList中获取用户编号，验证长度是否合法，协议是否可以签订等
 			String cusNo = (String) detailMap.get("TCusId"); // 用户编号
 			String tBusTyp = (String) detailMap.get("TBusTp"); // 业务类型
-			chechkCusInf(cusNo, tBusTyp, agtStb, i + 1);
+			chechkCusInf(context, cusNo, tBusTyp, agtStb, i + 1);
 
 			String gdsAId = (String) detailMap.get("GdsAId"); // 协议号
 			Map<String, Object> oldAgtInMap = new HashMap<String, Object>();
@@ -276,7 +278,7 @@ public class WaterAgtMdyDealImlAction implements AgtMdyDealImlService {
 	 * @param actNo
 	 * @throws CoreException
 	 */
-	private void cardBinVerify(String actTyp, String actNo) throws CoreException {
+	private void cardBinVerify(Context context, String actTyp, String actNo) throws CoreException {
 		log.info("start cardBinVerify,actTyp=" + actTyp);
 		if (Constants.PAY_MDE_4.equals(actTyp)) { // 卡
 			String carBin = actNo.substring(0, 9);
@@ -285,6 +287,8 @@ public class WaterAgtMdyDealImlAction implements AgtMdyDealImlService {
 			if (!"Y".equals(cardValid)) {
 				// TODO:根据GdsBId获得对应的BusNam（业务名称），使用我待测试的codeSwitch
 				String busNam = "水费";
+				context.setData("responseType", "E");
+				context.setData("responseMessage", "该卡不支持" + busNam + "签约");
 				throw new CoreException(GDErrorCodes.EUPS_SIGN_CARD_NOT_SUPPORT, "该卡不支持" + busNam + "签约");
 			}
 		}
@@ -296,9 +300,11 @@ public class WaterAgtMdyDealImlAction implements AgtMdyDealImlService {
 	 * @param cusNo
 	 * @throws CoreException
 	 */
-	private void chechkCusInf(String cusNo, String tBusTyp, String agtStb, int i) throws CoreException {
+	private void chechkCusInf(Context context, String cusNo, String tBusTyp, String agtStb, int i) throws CoreException {
 		// 校验用户编号长度
 		if (cusNo.length() != 10) {
+			context.setData("responseType", "E");
+			context.setData("responseMessage", "第" + i + "条记录，用户编号" + cusNo + "，长度不足10位");
 			throw new CoreException(GDErrorCodes.EUPS_SIGN_CUSNO_LENGTH_ERROR, "第" + i + "条记录，用户编号" + cusNo + "，长度不足10位");
 		}
 		// 校验是否存在已签约的数据
@@ -309,6 +315,8 @@ public class WaterAgtMdyDealImlAction implements AgtMdyDealImlService {
 
 		List<Map<String, Object>> coll = gdsAgtWaterRepository.findCusIsExist(inpara);
 		if (CollectionUtils.isNotEmpty(coll)) {
+			context.setData("responseType", "E");
+			context.setData("responseMessage", "第" + i + "条记录，用户编号为" + cusNo + "，已签约");
 			throw new CoreException(GDErrorCodes.EUPS_SIGN_AGT_EXIST, "第" + i + "条记录，用户编号为" + cusNo + "，已签约");
 		}
 
