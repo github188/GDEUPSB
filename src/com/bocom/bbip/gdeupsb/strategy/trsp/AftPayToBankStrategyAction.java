@@ -87,7 +87,7 @@ public class AftPayToBankStrategyAction implements Executable{
 		
 
 		
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+ctx);
+		
 		//插入缴费记录表
 		GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
 
