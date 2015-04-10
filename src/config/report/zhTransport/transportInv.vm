@@ -1,34 +1,31 @@
- #report(50)
+#report(50)
 #rh(5)
  
  
- 
- 
- 
- #end 
- 
- #para($str.trim($d.invNo))
- #para($str.trim($d.printYear))
- #para($str.trim($d.printMon))
- #para($str.trim($d.printDay))
- #para($str.trim($d.tcusNm))
- #para($str.trim($d.carName))
- #para($str.trim($d.carNo))
- #para($str.trim($d.carTyp))
- #para($d.feeStd)
- #para($d.corpus)
- #para($d.carDzs)
- #para($d.lateFee)
- #para($d.txnAmt)
- #para($d.begYear)
- #para($d.begMon)
- #para($d.begDay)
- #para($d.endYear)
- #para($d.endMon)
- #para($d.endDay)
- #para($d.txnAmt)      
- #para($d.txnAmt)
- #para($d.prtNod)
+#end 
+#td(22)
+#para($str.trim($d.invNo))
+#para($str.trim($d.printYear))
+#para($str.trim($d.printMon))
+#para($str.trim($d.printDay))
+#para($str.trim($d.tcusNm))
+#para($str.trim($d.carName))
+#para($str.trim($d.carNo))
+#para($str.trim($d.carTyp))
+#para($d.feeStd)
+#para($d.corpus)
+#para($d.carDzs)
+#para($d.lateFee)
+#para($d.txnAmt)
+#para($d.begYear)
+#para($d.begMon)
+#para($d.begDay)
+#para($d.endYear)
+#para($d.endMon)
+#para($d.endDay)
+#para($d.txnAmt)      
+#para($d.txnAmt)
+#para($d.prtNod)
  ?                                                           ?         ?       ? 
 
                             ?
@@ -49,4 +46,7 @@
 
                       珠海市路桥管理处          ?（交行）
 
+
+
+#end
 #end
