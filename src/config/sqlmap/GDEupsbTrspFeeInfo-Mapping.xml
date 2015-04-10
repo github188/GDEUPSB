@@ -1189,7 +1189,7 @@
         STATUS = #{status,jdbcType=CHAR},
       </if>
     </set>
-    where THD_KEY = #{thdKey,jdbcType=CHAR} AND STATUS = '0' AND BR_NO='443999'
+    where THD_KEY = #{thdKey,jdbcType=CHAR} AND STATUS = '0' AND BR_NO= #{brNo,jdbcType=CHAR}
   </update>
   <select id="findOrder" resultMap="basicResultMap" >
     select
