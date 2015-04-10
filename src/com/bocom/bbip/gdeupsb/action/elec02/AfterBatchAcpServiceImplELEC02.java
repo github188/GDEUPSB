@@ -41,7 +41,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements AfterB
 	@Override
 	public void afterBatchDeal(AfterBatchAcpDomain arg0, Context context)throws CoreException {
 		logger.info("电力返盘文件处理开始");
-		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).afterBatchProcess(context);
+		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).eupsBatchConSoleInfoAndgdEupsBatchConSoleInfo(context);
 		Map<String,Object>ret=new HashMap<String,Object>();
         final List result=(List<EupsBatchInfoDetail>)context.getVariable("detailList");
         Assert.isNotEmpty(result, ErrorCodes.EUPS_QUERY_NO_DATA);
