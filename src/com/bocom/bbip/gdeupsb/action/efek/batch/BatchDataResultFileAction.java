@@ -22,6 +22,7 @@ import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsBatchInfoDetail;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
+import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
 import com.bocom.bbip.eups.repository.EupsBatchInfoDetailRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
@@ -53,6 +54,8 @@ public class BatchDataResultFileAction implements AfterBatchAcpService{
 	@Autowired
 	EupsBatchInfoDetailRepository eupsBatchInfoDetailRepository;
 	@Autowired
+	EupsBatchConsoleInfoRepository eupsBatchConsoleInfoRepository;
+	@Autowired
 	@Qualifier("callThdTradeManager")
 	ThirdPartyAdaptor callThdTradeManager;
 	/**
@@ -61,9 +64,10 @@ public class BatchDataResultFileAction implements AfterBatchAcpService{
 	public void afterBatchDeal(AfterBatchAcpDomain afterbatchacpdomain, Context context) throws CoreException {
 		logger.info("===============Start  BatchDataResultFileAction  afterBatchDeal");	
 			//第三方 rsvFld9
-			String rsvFld9=context.getData(ParamKeys.THD_BAT_NO).toString();
+			String batNo=context.getData(ParamKeys.BAT_NO).toString();
+			String sqns=eupsBatchConsoleInfoRepository.findOne(batNo).getRsvFld2();
 			GDEupsBatchConsoleInfo  Info=new GDEupsBatchConsoleInfo();
-			Info.setRsvFld9(rsvFld9);
+			Info.setRsvFld9(sqns);
 			GDEupsBatchConsoleInfo  gdeupsBatchConsoleInfo = gdeupsBatchConsoleInfoRepository.find(Info).get(0);
 			//更改控制表
 			GDEupsBatchConsoleInfo gdEupsBatchConsoleInfoUpdate=updateInfo(context, gdeupsBatchConsoleInfo);
@@ -73,17 +77,22 @@ public class BatchDataResultFileAction implements AfterBatchAcpService{
 			try{
 					Map<String, Object> resultMap=createFileMap(context,gdEupsBatchConsoleInfoUpdate);
 					eupsThdFtpConfig.setFtpDir("0");
-					eupsThdFtpConfig.setLocDir(context.getData("dir").toString());
-					eupsThdFtpConfig.setRmtWay(context.getData("dir").toString());
+					String name=context.getData(ParamKeys.BAT_NO)+".result";
+					eupsThdFtpConfig.setLocFleNme(name);
+					eupsThdFtpConfig.setRmtFleNme(name);
+					eupsThdFtpConfig.setLocDir("/home/bbipadm/data/mftp/BBIP/GDEUPSB/01441800999/EFC0000/20150323/");
+					eupsThdFtpConfig.setRmtWay("/home/bbipadm/data/mftp/BBIP/GDEUPSB/01441800999/EFC0000/20150323/");
 					operateFile.createCheckFile(eupsThdFtpConfig, "efekBatchResult", fileName, resultMap);
 			}catch(CoreException e){
 					logger.info("~~~~~~~~~~~Error  Message",e);
 			}
 			// 将生成的文件上传至指定服务器
 			eupsThdFtpConfig.setLocFleNme(fileName);
-			eupsThdFtpConfig.setLocDir(context.getData("dir").toString());
+//			eupsThdFtpConfig.setLocDir(context.getData("dir").toString());
+//			eupsThdFtpConfig.setLocDir("/app/ics/tmp/gdeupsb/ftp/rsv/");
 			eupsThdFtpConfig.setRmtFleNme(fileName);
-			eupsThdFtpConfig.setRmtWay(context.getData("dir").toString());
+//			eupsThdFtpConfig.setRmtWay(context.getData("dir").toString());
+			eupsThdFtpConfig.setRmtWay("/app/ics/tmp/gdeupsb/ftp/rsv/");
 			eupsThdFtpConfig.setFtpDir("0");
 			operateFTP.putCheckFile(eupsThdFtpConfig);
 			
@@ -138,6 +147,7 @@ public class BatchDataResultFileAction implements AfterBatchAcpService{
 						gdEupsEleTmp.setBankNo("301");
 						//TODO 
 						Date date=new Date();
+						System.out.println();
 						gdEupsEleTmp.setRsvFld1(DateUtils.format(date, DateUtils.STYLE_yyyyMMdd));
 						gdEupsEleTmp.setRsvFld2(DateUtils.formatAsHHmmss(date));
 						gdEupsEleTmp.setBakFld(eupsBatchInfoDetail.getRmk1());
@@ -148,13 +158,13 @@ public class BatchDataResultFileAction implements AfterBatchAcpService{
 			headMap.put("comNo", gdEupsBatchConsoleInfoUpdate.getComNo());
 			headMap.put("rsvFld13", "301");
 			headMap.put("rsvFld12", "RMB");
-			headMap.put("rsvFld11", "070");
+			headMap.put("rsvFld4", gdEupsBatchConsoleInfoUpdate.getRsvFld4());
 			headMap.put("totCnt", gdEupsBatchConsoleInfoUpdate.getTotCnt());
-			headMap.put("totAmt", gdEupsBatchConsoleInfoUpdate.getTotAmt().scaleByPowerOfTen(2).signum());
+			headMap.put("totAmt",(int)gdEupsBatchConsoleInfoUpdate.getTotAmt().scaleByPowerOfTen(2).signum());
 			headMap.put("sucTotCnt", gdEupsBatchConsoleInfoUpdate.getSucTotCnt());
-			headMap.put("sucTotAmt", gdEupsBatchConsoleInfoUpdate.getSucTotAmt().scaleByPowerOfTen(2).signum());
+			headMap.put("sucTotAmt", (int)gdEupsBatchConsoleInfoUpdate.getSucTotAmt().scaleByPowerOfTen(2).signum());
 			headMap.put("falTotCnt", gdEupsBatchConsoleInfoUpdate.getFalTotCnt());
-			headMap.put("falTotAmt", gdEupsBatchConsoleInfoUpdate.getFalTotAmt().scaleByPowerOfTen(2).signum());
+			headMap.put("falTotAmt", (int)gdEupsBatchConsoleInfoUpdate.getFalTotAmt().scaleByPowerOfTen(2).signum());
 			headMap.put("txnTlr", gdEupsBatchConsoleInfoUpdate.getTxnTlr());
 			System.out.println();
 			System.out.println(headMap);
