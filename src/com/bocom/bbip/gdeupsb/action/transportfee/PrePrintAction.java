@@ -63,6 +63,8 @@ public class PrePrintAction extends BaseAction{
 //	           FROM   gdeupsb.TRSP_TXN_JNL as a ,gdeupsb.TRSP_FEE_INFO as b
 //	           WHERE  a.SQN=b.PAY_LOG AND a.BR_NO = #{brNo,jdbcType=CHAR} 
 //	           AND b.STATUS='0' AND a.CAR_NO = #{carNo,jdbcType=CHAR} AND a.SQN = #{sqn,jdbcType=CHAR}
+		
+		//TODO:
 		Map<String, Object> txnJnlMap = txnJnlList.get(0);
 		System.out.println("!!!!!!!!!!!!!!!!"+txnJnlList.get(0));
 		ctx.setData(GDParamKeys.TCUS_NM, txnJnlMap.get("TCUS_NM"));
