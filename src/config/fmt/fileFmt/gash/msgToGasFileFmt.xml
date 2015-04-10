@@ -31,25 +31,25 @@
   --> 
   
 	<fixString name="tmpFld1" length="10"/>
-	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	<fixString  name="Deli1" length="1" default=","/>
 	
 	<fixString name="bk" length="4"   />
-	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	<fixString  name="Deli2" length="1" default=","/>
 	
-	<fixString name="thdsqn" length="18"    />
-	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	<fixString name="thdSqn" length="18"    />
+	<fixString  name="Deli3" length="1" default=","/>
 	
 	<fixString name="cusNo" length="12"   /> 
-	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	<fixString  name="Deli4" length="1" default=","/>
 	
 	<fixString name="payMon" length="6"   />
-	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	<fixString  name="Deli5" length="1" default=","/> 
 	
 	<fixString name="txnAmt" length="10"   />
-	<!-- <fixString  name="DeliA" length="1"  /> -->
+	 <fixString  name="Deli6" length="1" default="," /> 
 	
-	<fixString name="txnDte" length="10"   />
-	<!-- <fixString  name="DeliA" length="1" default=","/> -->
+	<fixString name="txnDte" length="10" referred="true" expression='exp:@com.bocom.bbip.utils.DateUtils@format(this.txnDte,"yyyy-MM-dd")'  />
+<!-- 	<fixString  name="Deli7" length="1" default=","/> -->
 	
 	</segment>
 </message>
