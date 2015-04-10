@@ -49,9 +49,10 @@ public class AftCancelAction extends BaseAction{
 			gdEupsbTrspFeeInfo.setRvsDat(new Date());
 			gdEupsbTrspFeeInfo.setRvsNod(ctx.getData(ParamKeys.BR).toString());
 			gdEupsbTrspFeeInfo.setRvsTlr(ctx.getData(ParamKeys.TELLER).toString());
-			gdEupsbTrspFeeInfo.setRvsTck(ctx.getData(ParamKeys.MFM_VCH_NO).toString());
+			gdEupsbTrspFeeInfo.setRvsTck((String)ctx.getData(ParamKeys.MFM_VCH_NO));
 			gdEupsbTrspFeeInfo.setStatus(GDConstants.TF);
 			gdEupsbTrspFeeInfo.setThdKey(ctx.getData(GDParamKeys.THD_KEY).toString());
+			gdEupsbTrspFeeInfo.setBrNo(ctx.getData(ParamKeys.BK).toString());
 			gdEupsbTrspFeeInfoRepository.updateCancelSt(gdEupsbTrspFeeInfo);
 			
 			ctx.setState("complete");

@@ -34,7 +34,7 @@ public class NpQryAction extends BaseAction {
 		GDEupsbTrspNpManag gdEupsbTrspNpManag = new GDEupsbTrspNpManag();
 		gdEupsbTrspNpManag.setBegDat((Date) ctx.getData(GDParamKeys.BEG_DAT));
 		gdEupsbTrspNpManag.setEndDat((Date) ctx.getData(GDParamKeys.END_DAT));
-		gdEupsbTrspNpManag.setNodNo(ctx.getData(GDParamKeys.NOD_NO).toString());
+		gdEupsbTrspNpManag.setNodNo(ctx.getData(ParamKeys.BR).toString());
 		gdEupsbTrspNpManag.setStatus(ctx.getData(GDParamKeys.STATUS).toString());
 		gdEupsbTrspNpManag.setIdNo(ctx.getData("idNo").toString());
 		gdEupsbTrspNpManag.setCarNo(ctx.getData(GDParamKeys.CAR_NO).toString());

@@ -41,9 +41,9 @@ public class PrintNpAction extends BaseAction{
 	public void execute(Context ctx) throws CoreException,CoreRuntimeException{
 		log.info("PrintNpAction start......");
 		String today=DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
-		ctx.setData(GDParamKeys.NOD_NO, "123");
-		ctx.setData(GDParamKeys.TLR_ID, "1234");
-		ctx.setData(GDParamKeys.BR_NO, "443999");
+		ctx.setData(GDParamKeys.NOD_NO, ctx.getData(ParamKeys.BR));
+		ctx.setData(GDParamKeys.TLR_ID, ctx.getData(ParamKeys.TELLER));
+		ctx.setData(GDParamKeys.BR_NO, ctx.getData(ParamKeys.BK));
 		ctx.setData("oTlrId", ctx.getData(GDParamKeys.TLR_ID));
 
 

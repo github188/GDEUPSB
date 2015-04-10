@@ -34,12 +34,13 @@ public class PreCancelAction extends BaseAction{
 	GDEupsbTrspTxnJnlRepository gdEupsbTrspTxnJnlRepository;
 	public void execute(Context ctx) throws CoreException,CoreRuntimeException{
 		log.info("PreCancelAction start......");
-		ctx.setData(GDParamKeys.BR_NO, ctx.getData(ParamKeys.BR));
+		ctx.setData(GDParamKeys.BR_NO, ctx.getData(ParamKeys.BK));
+		
 		Date actDt = DateUtils.parse(DateUtils.format(new Date(), "yyyy-MM-dd"));
 		
 		ctx.setData(GDParamKeys.ACT_DAT, actDt);
-//		ctx.setData(GDParamKeys.NOD_NO, "123");
-//		ctx.setData(GDParamKeys.TLR_ID, "123");
+		ctx.setData(GDParamKeys.NOD_NO, ctx.getData(ParamKeys.BR));
+		ctx.setData(GDParamKeys.TLR_ID, ctx.getData(ParamKeys.TELLER));
 //		ctx.setData(GDParamKeys.TCK_NO, "123456789");
 		Date payDat = DateUtils.parse(ctx.getData(GDParamKeys.PAY_DAT).toString(), "yyyy-MM-dd");
 		ctx.setData(GDParamKeys.PAY_DAT, payDat);
@@ -57,10 +58,12 @@ public class PreCancelAction extends BaseAction{
 			ctx.setData(GDParamKeys.STATUS,gdeupsb.getStatus() );
 			ctx.setData(ParamKeys.TXN_AMOUNT,gdeupsb.getTxnAmt());
 			ctx.setData(GDParamKeys.ACT_NO,gdeupsb.getActNo() );
+			ctx.setData(ParamKeys.CUS_AC,gdeupsb.getActNo() );
 			ctx.setData(GDParamKeys.ACT_TYP,gdeupsb.getActTyp() );
 			ctx.setData(GDParamKeys.THD_KEY,gdeupsb.getThdKey() );
 			ctx.setData(GDParamKeys.CAR_TYP,gdeupsb.getCarTyp() );
 			ctx.setData(GDParamKeys.PAY_MON,gdeupsb.getPayMon() );
+			ctx.setData(ParamKeys.OLD_TXN_SQN, gdeupsb.getPayLog());
 //			TODO:ACTflg此字段表中没有		
 		}
 		
@@ -79,7 +82,7 @@ public class PreCancelAction extends BaseAction{
 
 		gdeupsb = BeanUtils.toObject(ctx.getDataMap(), GDEupsbTrspTxnJnl.class);
 		gdEupsbTrspTxnJnlRepository.insert(gdeupsb);
-
+		System.out.println("@@@@@@@@@@@context="+ctx);
 	}
 	
 }
