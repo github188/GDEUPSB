@@ -181,6 +181,8 @@ public class TlvAgtMdyDealImlAction implements AgtMdyDealImlService {
 		} else {
 			log.error("操作类型错误!");
 			context.setData(GDParamKeys.SIGN_STATION_OEXTFLG, GDConstants.SIGN_STATION_OEXTFLG_N);
+			context.setData("responseType", "E");
+			context.setData("responseMessage", "操作选项错误");
 			throw new CoreException(GDErrorCodes.EUPS_SIGN_DEAL_TYPE_ERROR); // 操作选项错误
 		}
 		return null;
@@ -203,29 +205,29 @@ public class TlvAgtMdyDealImlAction implements AgtMdyDealImlService {
 
 		// 卡号限制判断
 		String actTyp = context.getData("actTyp"); // 账户性质
-		cardBinVerify(actTyp, actNo);
+		cardBinVerify(context, actTyp, actNo);
 
 		for (int i = 0; i < signDetailList.size(); i++) {
 			Map<String, Object> detailMap = signDetailList.get(i);
 			log.info("签约子表明细数据为:[" + detailMap + "]");
-			
-			//请求字段转换
+
+			// 请求字段转换
 			detailMap.put("EffDat", detailMap.get("EFFDAT"));
 			detailMap.put("OrgCod", detailMap.get("ORGCOD"));
 			detailMap.put("SubSts", detailMap.get("SUBSTS"));
 			detailMap.put("GdsAId", detailMap.get("GDSAID"));
-			detailMap.put("BnkTyp", context.getVariable("BnkTyp"));  
-			detailMap.put("BnkNo",  "");
-			detailMap.put("bnkNam",  "交通银行广东省分行");
-			detailMap.put("TBusTp",  detailMap.get("TBUSTP"));
-			detailMap.put("TCusId",  detailMap.get("TCUSID"));
-			detailMap.put("TCusNm",  detailMap.get("TCUSNM"));
-			detailMap.put("IvdDat",  detailMap.get("IVDDAT"));
-			
+			detailMap.put("BnkTyp", context.getVariable("BnkTyp"));
+			detailMap.put("BnkNo", "");
+			detailMap.put("bnkNam", "交通银行广东省分行");
+			detailMap.put("TBusTp", detailMap.get("TBUSTP"));
+			detailMap.put("TCusId", detailMap.get("TCUSID"));
+			detailMap.put("TCusNm", detailMap.get("TCUSNM"));
+			detailMap.put("IvdDat", detailMap.get("IVDDAT"));
+
 			detailMap.put("agtSTb", agtStb); // 子表
 			detailMap.put("gdsBid", gdsBId); // 代理业务id
 			detailMap.put("actNo", actNo); // 卡号
-			System.out.println("~~~~~~~~~~~~~~~~~context=" + context);
+			log.info("~~~~~~~~~~~~~~~~~context=" + context);
 
 			detailMap.put("txnCnl", context.getData(GDParamKeys.SIGN_STATION_TXN_CNL)); // 操作渠道
 
@@ -258,7 +260,7 @@ public class TlvAgtMdyDealImlAction implements AgtMdyDealImlService {
 				detailMap.put("lagtSt", "U");
 				detailMap.put("tagtSt", "U");
 
-				System.out.println("+=======================detailMap=" + detailMap);
+				log.info("+=======================detailMap=" + detailMap);
 				gdsAgtWaterRepository.insertDetailAgtInf(detailMap);
 			}
 
@@ -272,7 +274,7 @@ public class TlvAgtMdyDealImlAction implements AgtMdyDealImlService {
 	 * @param actNo
 	 * @throws CoreException
 	 */
-	private void cardBinVerify(String actTyp, String actNo) throws CoreException {
+	private void cardBinVerify(Context context, String actTyp, String actNo) throws CoreException {
 		log.info("start cardBinVerify,actTyp=" + actTyp);
 		if (Constants.PAY_MDE_4.equals(actTyp)) { // 卡
 			String carBin = actNo.substring(0, 9);
@@ -353,6 +355,8 @@ public class TlvAgtMdyDealImlAction implements AgtMdyDealImlService {
 			if (!"Y".equals(cardValid)) {
 				// TODO:根据GdsBId获得对应的BusNam（业务名称），使用我待测试的codeSwitch
 				String busNam = "有线电视";
+				context.setData("responseType", "E");
+				context.setData("responseMessage", "该卡不支持" + busNam + "签约");
 				throw new CoreException(GDErrorCodes.EUPS_SIGN_CARD_NOT_SUPPORT, "该卡不支持" + busNam + "签约");
 			}
 		}
