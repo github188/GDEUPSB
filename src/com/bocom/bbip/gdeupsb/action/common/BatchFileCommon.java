@@ -99,6 +99,7 @@ public class BatchFileCommon extends BaseAction {
 			//文件名   和eups控制表关联  必须有   流水号
 			String batNoFile="BATC"+comNoAcps+"0.txt";
 			context.setData(ParamKeys.FLE_NME, batNoFile);
+			context.setData("batNoFile", batNoFile);
 			info.setRsvFld8(batNoFile);
 			String sqn=get(BBIPPublicServiceImpl.class).getBBIPSequence();
 			context.setData("rsvFld7", sqn);
