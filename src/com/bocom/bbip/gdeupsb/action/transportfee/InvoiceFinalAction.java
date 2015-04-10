@@ -18,6 +18,7 @@ import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspTxnJnl;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspFeeInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspTxnJnlRepository;
 import com.bocom.bbip.utils.BeanUtils;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -35,9 +36,10 @@ public class InvoiceFinalAction extends BaseAction{
 	public void execute(Context ctx) throws CoreException,CoreRuntimeException{
 		log.info("InvoiceFinalAction start......");
 		GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
-		ctx.setData("transCode", "484007");
+		ctx.setData("transCode", "CancPC");
 		if(!"S".equals(ctx.getData("otTxnSt"))){
 			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+ctx.getDataMap());
+			ctx.setData("tactDt", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
 			Map<String, Object> thdReturnMessage = callThdReturnMessage.trade(ctx);
 			GDEupsbTrspTxnJnl gDEupsbTrspTxnJnl=BeanUtils.toObject(ctx.getDataMap(), GDEupsbTrspTxnJnl.class);
 			

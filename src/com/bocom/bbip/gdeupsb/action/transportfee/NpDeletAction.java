@@ -34,7 +34,9 @@ public class NpDeletAction extends BaseAction{
 	public void execute(Context ctx) throws CoreException,CoreRuntimeException{
 		log.info("NpDeletAction start......");
 //		<Set>date1=GETDATETIME(YYYYMMDD)</Set>
-		ctx.setData(GDParamKeys.NOD_NO, "123");
+		ctx.setData(GDParamKeys.NOD_NO, ctx.getData(ParamKeys.BR));
+		ctx.setData(GDParamKeys.BR_NO, ctx.getData(ParamKeys.BK));
+		ctx.setData(GDParamKeys.TLR_ID, ctx.getData(ParamKeys.TELLER));
 		String today = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
 		ctx.setData(ParamKeys.AUTHOR_LEVEL, "01673478");
 		GDEupsbTrspNpManag gdEupsbTrspNpManag = new GDEupsbTrspNpManag();

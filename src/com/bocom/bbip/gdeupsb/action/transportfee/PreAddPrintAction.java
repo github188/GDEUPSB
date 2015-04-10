@@ -41,30 +41,19 @@ public class PreAddPrintAction extends BaseAction{
 	public void execute(Context ctx) throws CoreException,CoreRuntimeException{
 		ctx.setState("fail");
 		log.info("PreAddPrintAction start.......");
-		ctx.setData(GDParamKeys.NOD_NO, "123");
+		
 		String oinvNo = "oinvNo"; //原发票号
 		String prtFlg = "prtFlg"; //打印标志
 		String oprtFlg = "oprtFlg"; //前端输入的打印标志
-		ctx.setData("transCode", "484005");
+		ctx.setData("transCode", "ChgIPC");
 		//TODO:for test:前端要传柜员号，若没有则取虚拟柜员
-		ctx.setData(GDParamKeys.TLR_ID, "0356");
-//		TODO:
-//			<!-- 通过加锁控制批次状态 -->
-//        <Set>LckKey=STRCAT(rbfb:484005,:,$TCusId,:,$CarTyp)</Set>
-//        <Exec func="PUB:Lock" error="IGNORE"><!-- 通过加锁控制批次状态 -->
-//           <Arg name="RecKey" value="$LckKey"/>
-//           <Arg name="TimOut" value="60"/>
-//           <Arg name="AutoUnlock" value="yes"/>
-//        </Exec>
-//        <If condition="INTCMP(~RetCod,4,0)"><!--加锁失败-->
-//           <Set>MsgTyp=E</Set>
-//           <Set>RspCod=329999</Set>
-//           <Set>RspMsg=交易不允许并发</Set>
-//           <Return/>
-//        </If>
+		ctx.setData(GDParamKeys.TLR_ID, ctx.getData(ParamKeys.TELLER));
+		ctx.setData(GDParamKeys.NOD_NO, ctx.getData(ParamKeys.BR));
+		ctx.setData(GDParamKeys.BR_NO, ctx.getData(ParamKeys.BK));
+
 		
-		Date tactDt = new Date();
-		tactDt= DateUtils.parse(DateUtils.format(tactDt, "yyyy-MM-dd"));
+		
+		String tactDt= DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
 		ctx.setData(GDParamKeys.TACT_DT, tactDt);
 		
 		//查询缴费记录
@@ -72,23 +61,8 @@ public class PreAddPrintAction extends BaseAction{
 		gdEupsbTrspFeeInfo.setBrNo(GDConstants.BR_NO);
 		gdEupsbTrspFeeInfo.setCarNo(ctx.getData(GDParamKeys.CAR_NO).toString());
 		gdEupsbTrspFeeInfo.setCarTyp(ctx.getData(GDParamKeys.CAR_TYP).toString());
-		gdEupsbTrspFeeInfo.setTactDt(tactDt);
+		gdEupsbTrspFeeInfo.setTactDt(new Date());
 		List<GDEupsbTrspFeeInfo> feeInfoList = gdeupsbtrspfFeeInfoRepository.findLogNo(gdEupsbTrspFeeInfo);
-		System.out.println("111111111111111111111111111111111111111111111111111111111111");
-//		ctx.setDataMap(BeanUtils.toMap(feeInfoList.get(0)));
-		GDEupsbTrspFeeInfo a=feeInfoList.get(0);
-		ctx.setData(GDParamKeys.TLOG_NO, a.getTlogNo());
-		ctx.setData(oinvNo, a.getOinvNo());
-		ctx.setData(GDParamKeys.STATUS, a.getStatus());
-		ctx.setData(GDParamKeys.THD_KEY, a.getThdKey());
-		ctx.setData(GDParamKeys.PAY_LOG, a.getPayLog());
-		
-		ctx.setData(GDParamKeys.PRT_NOD, a.getPrtNod());
-		
-		System.out.println("22222222222222222222222222222222222222222222222222222222222222222222222");
-		System.out.println(ctx.getData(GDParamKeys.TACT_DT).toString());
-		
-		
 		if(CollectionUtils.isEmpty(feeInfoList)){
 			ctx.setData(ParamKeys.RSP_MSG, "无该车主的当日缴费打发票记录");
 			throw new  CoreRuntimeException(ErrorCodes.EUPS_FIND_ISEMPTY);
@@ -99,8 +73,16 @@ public class PreAddPrintAction extends BaseAction{
 			ctx.setData(ParamKeys.RSP_MSG, "交易检查错，非原发票打印网点");
 			throw new CoreRuntimeException(GDErrorCodes.EUPS_TXN_CHECK_ERROR);
 		}
+//		ctx.setDataMap(BeanUtils.toMap(feeInfoList.get(0)));
+		GDEupsbTrspFeeInfo a=feeInfoList.get(0);
+		ctx.setData(GDParamKeys.TLOG_NO, a.getTlogNo());
+		ctx.setData(oinvNo, a.getOinvNo());
+		ctx.setData(GDParamKeys.STATUS, a.getStatus());
+		ctx.setData(GDParamKeys.THD_KEY, a.getThdKey());
+		ctx.setData(GDParamKeys.PAY_LOG, a.getPayLog());
 		
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@context="+ctx);
+		ctx.setData(GDParamKeys.PRT_NOD, a.getPrtNod());
+		
 		String invNoValue = ctx.getData(GDParamKeys.INV_NO).toString().trim();
 
 		String oinvNoValue = ctx.getData(oinvNo).toString().trim();

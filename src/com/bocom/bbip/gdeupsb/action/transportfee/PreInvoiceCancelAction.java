@@ -88,6 +88,7 @@ public class PreInvoiceCancelAction extends BaseAction{
 			ctx.setData(GDParamKeys.INV_NO, feeInfoList.get(0).getInvNo());  //发票号
 			ctx.setData("otActDt", feeInfoList.get(0).getTactDt());  //打印日期
 			ctx.setData("oRvsLog", feeInfoList.get(0).getRvsLog());  //退费流水号
+			ctx.setData(ParamKeys.OLD_TXN_SQN, feeInfoList.get(0).getPayLog());
 		}
 		
 		//查询流水表记录

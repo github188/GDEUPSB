@@ -63,10 +63,10 @@ public class AddPrintCallThirdAction extends BaseAction{
 							
 							GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
 
-							gdEupsbTrspFeeInfo.setInvNo(ctx.getData(GDParamKeys.INV_NO).toString());
-							gdEupsbTrspFeeInfo.setThdKey(ctx.getData(GDParamKeys.THD_KEY).toString());
-							gdEupsbTrspFeeInfo.setPrtTlr(ctx.getData(GDParamKeys.TLR_ID).toString());
-							gdEupsbTrspFeeInfo.setPrtNod(ctx.getData(GDParamKeys.NOD_NO).toString());
+							gdEupsbTrspFeeInfo.setInvNo((String)ctx.getData(GDParamKeys.INV_NO));
+							gdEupsbTrspFeeInfo.setThdKey((String)ctx.getData(GDParamKeys.THD_KEY));
+							gdEupsbTrspFeeInfo.setPrtTlr((String)ctx.getData(GDParamKeys.TLR_ID));
+							gdEupsbTrspFeeInfo.setPrtNod((String)ctx.getData(GDParamKeys.NOD_NO));
 							gdEupsbTrspFeeInfoRepository.updateThdFeeInfo(gdEupsbTrspFeeInfo);
 							ctx.setState("complete");
 						}
