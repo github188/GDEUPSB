@@ -134,9 +134,10 @@ public class BatchFileCommon extends BaseAction {
 	 */
 	public void sendBatchFileToACP(final Context context) throws CoreException {
 		final String comNo=(String)context.getData(ParamKeys.COMPANY_NO);
+		Lock(comNo);
 		//TODO 
 		String tlr=(String)context.getData(ParamKeys.TELLER);
-		tlr="4842884";
+//		tlr="4842884";
 		context.setData("tlr", tlr);
 		final String br=(String)context.getData(ParamKeys.BR);
 //		String br="01441999999";
@@ -148,7 +149,6 @@ public class BatchFileCommon extends BaseAction {
         
         EupsActSysPara eupsActSysPara = new EupsActSysPara();
         eupsActSysPara.setActSysTyp("0");
-        System.out.println("~~~~~~~~~~~~"+comNo);
         eupsActSysPara.setComNo(comNo);
         List resultList = ((EupsActSysParaRepository)get(EupsActSysParaRepository.class)).find(eupsActSysPara);
         Assert.isNotEmpty(resultList, ErrorCodes.EUPS_QUERY_NO_DATA);
@@ -184,45 +184,17 @@ public class BatchFileCommon extends BaseAction {
 		//待提交
 		gdEupsBatchConsoleInfo.setBatSts("W");
 		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(gdEupsBatchConsoleInfo);
+		unLock(comNo);
 		logger.info("==============End sendBatchFileToACP and putCheckFile");
-	}
-	/**
-	 * 代收付返回文件 部分处理
-	 */
-	public void afterBatchProcess(Context context)throws CoreException{
-		final String thdbatNo=ContextUtils.assertDataNotEmptyAndGet(context, ParamKeys.THD_BAT_NO,  ErrorCodes.EUPS_FIELD_EMPTY,"thdBatNo");
-		GDEupsBatchConsoleInfo info = new GDEupsBatchConsoleInfo();
-		info.setRsvFld9(thdbatNo);
-		List<GDEupsBatchConsoleInfo> result =get(GDEupsBatchConsoleInfoRepository.class).find(info);
-		Assert.isNotEmpty(result, "BBIP0004EU0706", "代收付返回的批次号不存在");
-		//成功笔数金额  失败笔数金额
-		GDEupsBatchConsoleInfo ret=result.get(0);
-		Integer totCnt = ret.getTotCnt();
-	    BigDecimal totAmt = ret.getTotAmt();
-		Integer sucTotCnt = (Integer)context.getData("sucTotCnt");
-	    BigDecimal sucTotAmt = (BigDecimal)context.getData("sucTotAmt");
-
-	    Integer falTotCnt = Integer.valueOf(totCnt.intValue() - sucTotCnt.intValue());
-	    double falTotAmtdouble = totAmt.doubleValue() - sucTotAmt.doubleValue();
-	    BigDecimal falTotAmt = new BigDecimal(falTotAmtdouble);
-
-	    ret.setSucTotCnt(sucTotCnt);
-	    ret.setSucTotAmt(sucTotAmt);
-	    ret.setFalTotCnt(falTotCnt);
-	    ret.setFalTotAmt(falTotAmt);
-	    ret.setExeDte(new Date());
-	    ret.setRsvFld7(context.getData(ParamKeys.BAT_NO).toString());
-		ret.setBatSts(GDConstants.BATCH_STATUS_COMPLETE);
-		//更改批次表
-		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(ret);
-		context.getDataMapDirectly().putAll(BeanUtils.toMap(ret));
 	}
 /**
  * EUPS_BATCH_CONSOLE_INFO和GDEUPS_BATCH_CONSOLE_INFO关联起来
  * 代收付返回文件 部分处理
+ * @throws CoreException 
  */
-	public GDEupsBatchConsoleInfo  eupsBatchConSoleInfoAndgdEupsBatchConSoleInfo(Context context){
+	public GDEupsBatchConsoleInfo  eupsBatchConSoleInfoAndgdEupsBatchConSoleInfo(Context context) throws CoreException{
 			String batNo=context.getData("batNo").toString();
+			Lock(batNo);
 			EupsBatchConsoleInfo eupsBatchConSoleInfo=get(EupsBatchConsoleInfoRepository.class).findOne(batNo);
 			String rsvFld7=eupsBatchConSoleInfo.getRsvFld2();
 			GDEupsBatchConsoleInfo gdEupsBatchConsoleInfos=new GDEupsBatchConsoleInfo();
@@ -235,25 +207,9 @@ public class BatchFileCommon extends BaseAction {
 			gdEupsBatchConSoleInfo.setSucTotCnt(eupsBatchConSoleInfo.getSucTotCnt());
 			gdEupsBatchConSoleInfo.setFalTotAmt(eupsBatchConSoleInfo.getFalTotAmt());
 			gdEupsBatchConSoleInfo.setFalTotCnt(eupsBatchConSoleInfo.getFalTotCnt());
+			gdEupsBatchConSoleInfo.setBatSts("S");
 			get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(gdEupsBatchConSoleInfo);
+			unLock(batNo);
 			return gdEupsBatchConSoleInfo;
-	}
-/**
- * 批次完成后 更改批次信息
- */
-	public void changeBatSts(Context context){
-			logger.info("============Start  changeBatSts");
-			String batNo=context.getData(ParamKeys.BAT_NO).toString();
-			EupsBatchConsoleInfo  eupsBatchConsoleInfo=get(EupsBatchConsoleInfoRepository.class).findOne(batNo);
-			String rsvfld7=eupsBatchConsoleInfo.getRsvFld2();
-			
-			GDEupsBatchConsoleInfo gdEupsBatchConsoleInfos=new GDEupsBatchConsoleInfo();
-			gdEupsBatchConsoleInfos.setRsvFld8(rsvfld7);
-			
-			GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=get(GDEupsBatchConsoleInfoRepository.class).find(gdEupsBatchConsoleInfos).get(0);
-			gdEupsBatchConsoleInfo.setExeDte(eupsBatchConsoleInfo.getExeDte());
-			gdEupsBatchConsoleInfo.setBatSts("S");
-			get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(gdEupsBatchConsoleInfo);
-			logger.info("============End  changeBatSts");
 	}
 }
