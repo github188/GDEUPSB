@@ -82,7 +82,7 @@ public class MsgToGasAftBatchAction implements AfterBatchAcpService {
 					ftpCfg.setFtpDir("0");
 //					ftpCfg.setLocDir(context.getData("dir").toString());
 //					ftpCfg.setRmtWay(context.getData("dir").toString());
-					operateFileAction.createCheckFile(ftpCfg, "efekBatchResult", fileName, resultMap);
+					operateFileAction.createCheckFile(ftpCfg, "msgToGasFileFmt", fileName, resultMap);
 			}catch(CoreException e){
 					logger.info("~~~~~~~~~~~Error  Message",e);
 			}
@@ -95,9 +95,29 @@ public class MsgToGasAftBatchAction implements AfterBatchAcpService {
 			operateFTPAction.putCheckFile(ftpCfg);
 			
 			//TODO 通知第三方
-//			callThd(context);
+			callThd(context);
 			logger.info("===============End  BatchDataResultFileAction  afterBatchDeal");	
 		}
+	private void callThd(Context context) throws CoreException {
+		logger.info("=================start MsgToGasAftBatchAction callThd with context=======" + context);
+		
+		context.setProcessId("");
+		String batNo = context.getData(ParamKeys.BAT_NO);
+		GDEupsBatchConsoleInfo gdbat = new GDEupsBatchConsoleInfo();
+		gdbat.setBatNo(batNo);
+		List<GDEupsBatchConsoleInfo> gdbatBatchConsoleInfos = gdeupsBatchConsoleInfoRepository.find(batNo);
+		String fleNme = gdbatBatchConsoleInfos.get(0).getFleNme();
+		context.setData("fleNmeBak", fleNme);
+		context.setData("TransCode", "SMPCPAYTXT");
+		
+//		Map<String, Object> rspMap = 
+		callThdTradeManager.trade(context);
+		
+		
+		
+		context.setProcessId("");
+		logger.info("=================end MsgToGasAftBatchAction callThd with context=======" + context);
+	}
 	/**
 	 * 把信息保存到控制表
 	 */

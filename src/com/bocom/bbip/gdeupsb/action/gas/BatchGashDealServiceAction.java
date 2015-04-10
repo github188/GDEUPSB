@@ -21,7 +21,9 @@ import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
+import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.BatchAcpService;
 import com.bocom.bbip.eups.spi.vo.PrepareBatchAcpDomain;
@@ -203,11 +205,11 @@ public class BatchGashDealServiceAction extends BaseAction implements BatchAcpSe
 		
 		logger.info("==============context:" + context);
 		
+		context.setData("fleNmeBak", fleNme);
 		//提交代收付
 		userProcessToSubmit(context);
-		context.setData("fleNmeBak", fleNme);
 		//得到反盘文件 
-		userProcessToGet(context);
+//		userProcessToGet(context);
 		//处理成第三方格式返回
 		
 		
@@ -244,15 +246,29 @@ public class BatchGashDealServiceAction extends BaseAction implements BatchAcpSe
 				
 				Date date=new Date();
 				context.setData("reqTme",DateUtils.formatAsSimpleDate(date)+"T"+DateUtils.format(date, "HH:mm:ss"));
-							
+						
+				context.setData(ParamKeys.RSV_FLD2, context.getData(ParamKeys.SEQUENCE));
 				bbipPublicService.synExecute(mothed, context);
-				logger.info("==========End   eups.batchPaySubmitDataProcess  =============");
+				String	rsvFld2=context.getData(ParamKeys.SEQUENCE).toString();
+				EupsBatchConsoleInfo eupsBatchConsoleInfo =new EupsBatchConsoleInfo();
+				eupsBatchConsoleInfo.setRsvFld2(rsvFld2);
+				String batNo=get(EupsBatchConsoleInfoRepository.class).find(eupsBatchConsoleInfo).get(0).getBatNo();
+				context.setData(ParamKeys.BAT_NO, batNo);
+				
+//				bbipPublicService.synExecute(mothed, context);
+				logger.info("==========End   eups.batchPaySubmitDataProcess with context: " + context);
 			}
 		/**
 		 * 异步调用process  代收付回调函数：解析回盘文件并入库
 		 */
 			public void userProcessToGet(Context context)throws CoreException{
 				logger.info("==========Start eups.commNotifyBatchStatus=================");
+//				String batNo1 = context.getData("batNo1");
+//				context.setData(ParamKeys.BAT_NO, batNo1);
+//				logger.info("==================batNo:【" + context.getData(ParamKeys.BAT_NO) + "】");
+				
+				
+				
 				String mothed="eups.commNotifyBatchStatus";
 				bbipPublicService.synExecute(mothed, context);
 				logger.info("==========End  eups.commNotifyBatchStatus=================");
