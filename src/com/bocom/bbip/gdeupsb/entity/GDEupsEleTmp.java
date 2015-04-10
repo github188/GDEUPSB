@@ -50,11 +50,11 @@ public class GDEupsEleTmp {
 
     private String electricityYearmonth;
 
-    private BigDecimal paymentMoney;
+    private String paymentMoney;
 
-    private BigDecimal capitial;
+    private String capitial;
 
-    private BigDecimal dedit;
+    private String dedit;
 
     private String paymentResult;
 
@@ -246,27 +246,27 @@ public class GDEupsEleTmp {
         this.electricityYearmonth = electricityYearmonth;
     }
 
-    public BigDecimal getPaymentMoney() {
+    public String getPaymentMoney() {
         return paymentMoney;
     }
 
-    public void setPaymentMoney(BigDecimal paymentMoney) {
+    public void setPaymentMoney(String paymentMoney) {
         this.paymentMoney = paymentMoney;
     }
 
-    public BigDecimal getCapitial() {
+    public String getCapitial() {
         return capitial;
     }
 
-    public void setCapitial(BigDecimal capitial) {
+    public void setCapitial(String capitial) {
         this.capitial = capitial;
     }
 
-    public BigDecimal getDedit() {
+    public String getDedit() {
         return dedit;
     }
 
-    public void setDedit(BigDecimal dedit) {
+    public void setDedit(String dedit) {
         this.dedit = dedit;
     }
 
