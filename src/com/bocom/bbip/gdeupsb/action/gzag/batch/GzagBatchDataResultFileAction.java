@@ -55,8 +55,9 @@ public class GzagBatchDataResultFileAction extends BaseAction implements AfterBa
 	 */
 	public void afterBatchDeal(AfterBatchAcpDomain afterbatchacpdomain, Context context) throws CoreException {
 		logger.info("===============Start  GzagBatchDataResultFileAction");
+	
 		//更改状态
-		get(BatchFileCommon.class).changeBatSts(context);
+		GDEupsBatchConsoleInfo gdeupsBatchConsoleInfo =get(BatchFileCommon.class).eupsBatchConSoleInfoAndgdEupsBatchConSoleInfo(context);
 		final String tlr=(String)context.getData(ParamKeys.TELLER);
 		final String br=(String)context.getData(ParamKeys.BR);
         final String AcDate=DateUtils.format(bbipPublicService.getAcDate(),DateUtils.STYLE_yyyyMMdd);
@@ -72,16 +73,31 @@ public class GzagBatchDataResultFileAction extends BaseAction implements AfterBa
 //			operateFTP.getFileFromFtp(eupsThdFtpConfigFile);
 			logger.info("============得到文件成功");
 			
-			GDEupsBatchConsoleInfo gdeupsBatchConsoleInfo =get(BatchFileCommon.class).eupsBatchConSoleInfoAndgdEupsBatchConSoleInfo(context);
 			
 			//更改控制表 并得到控制信息
-			GDEupsBatchConsoleInfo info=updateInfo(context,gdeupsBatchConsoleInfo); 
-			String fileId=gdeupsBatchConsoleInfo.getRsvFld7();
+//			GDEupsBatchConsoleInfo info=updateInfo(context,gdeupsBatchConsoleInfo); 
+			String fileId="";
+			String comNo=gdeupsBatchConsoleInfo.getComNo();
+			if(comNo.equals("4410000578")){
+				fileId="lottBatchFile";   		//彩票返奖
+			}else if(comNo.equals("4410000560")){
+					fileId="insuBatchFile";		//广州电话银行保险
+			}else if(comNo.equals("4410000561")){
+					fileId="insuBatchFile";		//广州电话银行保险
+			}else if(comNo.equals("4410001102")){
+					fileId="yctBatchFile";			//羊城通
+			}else if(comNo.equals("4410001274")){
+					fileId="yktBatchFile";			//粤通卡
+			}else if(comNo.equals("4410001882")){
+					fileId="sptltBatchFile";		//体育彩票
+			}else{
+					throw new CoreException("Error  ");
+			}
 			//文件名
 			String locName=DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+fileId+".txt";
 			logger.info(">>>>>>>>>>>>>>>>>locName:"+locName);
 			//拼装Map文件
-			Map<String, Object> resultMap = createFileMap(context,info);
+			Map<String, Object> resultMap = createFileMap(context,gdeupsBatchConsoleInfo);
 			String fileIDResult=fileId+"Result";
 			EupsThdFtpConfig eupsThdFtpConfig =eupsThdFtpConfigRepository.findOne(fileId);
 			// 生成文件
