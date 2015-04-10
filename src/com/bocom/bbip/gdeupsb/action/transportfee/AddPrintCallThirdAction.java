@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.action.transportfee;
 
+import java.util.Date;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -15,6 +16,7 @@ import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspFeeInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspInvChgInfoRepository;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -42,6 +44,9 @@ public class AddPrintCallThirdAction extends BaseAction{
 //		            <Arg name="HTxnCd" value="@PARA.TTxnCd"/>
 //		            <Arg name="ObjSvr" value="@PARA.ThdSvr"/>
 //		         </Exec>
+				String tactDt= DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
+				ctx.setData(GDParamKeys.TACT_DT, tactDt);
+				ctx.setData("thdTxnCde", "ChgIPC");
 					Map<String,Object> thdReturnMessage = callThdTradeManager.trade(ctx);
 					log.info("callThdTradeManager start......");
 					if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_OVERTIME)){

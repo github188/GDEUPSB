@@ -53,8 +53,7 @@ public class PreAddPrintAction extends BaseAction{
 
 		
 		
-		String tactDt= DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
-		ctx.setData(GDParamKeys.TACT_DT, tactDt);
+		
 		
 		//查询缴费记录
 		GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
@@ -83,7 +82,7 @@ public class PreAddPrintAction extends BaseAction{
 		ctx.setData(GDParamKeys.FEE_STD, a.getFeeStd());
 		ctx.setData(GDParamKeys.CORPUS, a.getCorpus());
 		ctx.setData(GDParamKeys.LATE_FEE, a.getLateFee());
-		ctx.setData(GDParamKeys.CORPUS, a.getCorpus());
+		
 		
 		
 		ctx.setData(GDParamKeys.PRT_NOD, a.getPrtNod());
