@@ -133,41 +133,53 @@ public class MsgToGasAftBatchAction implements AfterBatchAcpService {
 			//代收付文件内容
 			List<EupsBatchInfoDetail> mapList=context.getVariable("detailList");
 //			List<GDEupsEleTmp> gdEupsEleTmpList = gdEupsEleTmpRepository.findAllOrderBySqn();
-			
-			List<GdGashBatchTmp> gasbatTmps = gdGashBatchTmpRepository.findAll(); //TODO 
+//			List<GdGashBatchTmp> gasbatTmps = gdGashBatchTmpRepository.findAll(); //TODO 
 			//内容主体
 			List<GdGashBatchTmp> list=new ArrayList<GdGashBatchTmp>();
-			for(int i=0;i<mapList.size();i++){
-				GdGashBatchTmp gdGashBatchTmp=gasbatTmps.get(i);
-						EupsBatchInfoDetail eupsBatchInfoDetail=mapList.get(i);
-						//<!--客户账号|姓名|金额|代理服务客户标识|代理服务客户姓名|本行标志|开户银行|备注一|备注二|状态|描述  -->
-//						gdEupsEleTmp.setRsvFld5(eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2).signum()+"");
-//						gdEupsEleTmp.setPaymentResult(eupsBatchInfoDetail.getSts());
-//						gdEupsEleTmp.setBankSqn(gdEupsEleTmp.getSqn());
-//						gdEupsEleTmp.setBankNo("301");
-//						//TODO 
-//						Date date=new Date();
-//						gdEupsEleTmp.setRsvFld1(DateUtils.format(date, DateUtils.STYLE_yyyyMMdd));
-//						gdEupsEleTmp.setRsvFld2(DateUtils.formatAsHHmmss(date));
-//						gdEupsEleTmp.setBakFld(eupsBatchInfoDetail.getRmk1());
-						
-						list.add(gdGashBatchTmp);
+			
+			String cusAc = null;
+			String cusNo = null;
+			String thdSts = null;
+			String batNo1 = context.getData("batNo1");
+			String sts = null;
+			
+			GdGashBatchTmp findInfo = new GdGashBatchTmp();
+			List<GdGashBatchTmp> listTmps = new ArrayList<GdGashBatchTmp>();
+			for(EupsBatchInfoDetail detail : mapList){
+				GdGashBatchTmp gdGashBatchTmp=new GdGashBatchTmp();
+				// TODO B0,B1,B2,B3   根据detail.getSts()/detail.getErrMsg()设定状态thdSts
+				sts = detail.getSts();
+				if("S".equals(sts)){
+					thdSts = "B0";
+				}
+				else if((!"S".equals(sts)) && "扣款金额不足".contains(detail.getErrMsg())){
+					thdSts = "B1";
+				}
+//				else if((!"S".equals(sts)) && "账户".contains(detail.getErrMsg())){
+//					thdSts = "B2";
+//				}
+				else{
+					thdSts = "B3";
+				}
+				gdGashBatchTmp.setTmpFld1(thdSts);
+				
+				gdGashBatchTmp.setBk("cnjt");
+				
+				cusAc = detail.getCusAc();
+				cusNo = detail.getAgtSrvCusId();
+				findInfo.setCusAc(cusAc);
+				findInfo.setCusNo(cusNo);
+				findInfo.setBatNo(batNo1);
+				listTmps = gdGashBatchTmpRepository.find(findInfo);
+				
+				gdGashBatchTmp.setThdSqn(listTmps.get(0).getThdSqn());
+				gdGashBatchTmp.setCusNo(cusNo);
+				gdGashBatchTmp.setPayMon(listTmps.get(0).getPayMon());
+				gdGashBatchTmp.setTxnAmt(String.valueOf(detail.getTxnAmt()));
+				gdGashBatchTmp.setTxnDte(detail.getTxnDte());
+				
+				list.add(gdGashBatchTmp);
 			}
-//			Map<String, Object> headMap=new HashMap<String, Object>();
-//			headMap.put("rsvFld5", gdEupsBatchConsoleInfoUpdate.getRsvFld5());
-//			headMap.put("comNo", gdEupsBatchConsoleInfoUpdate.getComNo());
-//			headMap.put("rsvFld13", "301");
-//			headMap.put("rsvFld12", "RMB");
-//			headMap.put("rsvFld11", "070");
-//			headMap.put("totCnt", gdEupsBatchConsoleInfoUpdate.getTotCnt());
-//			headMap.put("totAmt", gdEupsBatchConsoleInfoUpdate.getTotAmt().scaleByPowerOfTen(2).signum());
-//			headMap.put("sucTotCnt", gdEupsBatchConsoleInfoUpdate.getSucTotCnt());
-//			headMap.put("sucTotAmt", gdEupsBatchConsoleInfoUpdate.getSucTotAmt().scaleByPowerOfTen(2).signum());
-//			headMap.put("falTotCnt", gdEupsBatchConsoleInfoUpdate.getFalTotCnt());
-//			headMap.put("falTotAmt", gdEupsBatchConsoleInfoUpdate.getFalTotAmt().scaleByPowerOfTen(2).signum());
-//			headMap.put("txnTlr", gdEupsBatchConsoleInfoUpdate.getTxnTlr());
-//			System.out.println();
-//			System.out.println(headMap);
 			Map<String, Object> resultMap=new HashMap<String, Object>(); 
 //			resultMap.put(ParamKeys.EUPS_FILE_HEADER, headMap);
 //			System.out.println(resultMap.get(ParamKeys.EUPS_FILE_HEADER));

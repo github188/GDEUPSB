@@ -100,6 +100,8 @@ public class BatchGashDealServiceAction extends BaseAction implements BatchAcpSe
 		//检查批次是否重复录入，不是重复录入则插入一条数据进批次控制表
 		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).BeforeBatchProcess(context);
 		
+		String batNo1 = context.getData(ParamKeys.BAT_NO);
+		context.setData("batNo1", batNo1);
 		EupsThdFtpConfig config=get(EupsThdFtpConfigRepository.class).findOne((String)context.getData(ParamKeys.FTP_ID));
 		Assert.isFalse(null == config, ErrorCodes.EUPS_THD_FTP_CONFIG_NOTEXIST);
 
@@ -122,7 +124,7 @@ public class BatchGashDealServiceAction extends BaseAction implements BatchAcpSe
 		List <GdGashBatchTmp>list=(List<GdGashBatchTmp>) BeanUtils.toObjects(detail, GdGashBatchTmp.class);
         for(GdGashBatchTmp tmp:list){
         	tmp.setSqn(get(BBIPPublicService.class).getBBIPSequence());
-        	tmp.setBatNo((String)context.getData(ParamKeys.BAT_NO));
+        	tmp.setBatNo(batNo1);
         	cusNo = tmp.getCusNo();
         	logger.info("==============cusNo:" + cusNo);
         	gdGasCusAll.setCusNo(cusNo);
