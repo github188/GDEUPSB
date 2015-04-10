@@ -9,7 +9,7 @@
 		class="com.bocom.bbip.eups.action.common.GetHostTransDataLineProcess">
 	</bean>
 	<bean id="egpsExtSysPayService"
-		class="com.bocom.bbip.gdeupsb.common.service.GDEGPS.EGPSExtSysPayService"/>
+		class="com.bocom.bbip.gdeupsb.common.service.GDEGPS.EGPSExtSysPayService"/>  
 	<!--for FTP and File -->
 	<bean id="opeFTP" class="com.bocom.bbip.eups.action.common.OperateFTPAction" />
 	<bean id="opeFile" class="com.bocom.bbip.eups.action.common.OperateFileAction" />
