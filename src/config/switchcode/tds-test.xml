@@ -83,6 +83,81 @@
 		<key name="622262571" value="Y" />    <!--从化核算中心 -->
 	</table>
 	
+	<!-- 电信卡bin限制 -->
+	<table id="cardValidTel">
+		<key name="622261071" value="Y" />    <!--城区核算中心 -->
+		<key name="622260071" value="Y" />    <!--从化核算中心 -->
+		<key name="622259071" value="Y" />    <!--从化核算中心 -->
+		<key name="622258071" value="Y" />    <!--从化核算中心 -->
+		<key name="622262071" value="Y" />    <!--从化核算中心 -->
+		<key name="622261571" value="Y" />    <!--从化核算中心 -->
+		<key name="622260571" value="Y" />    <!--从化核算中心 -->
+		<key name="622259571" value="Y" />    <!--从化核算中心 -->
+		<key name="622258571" value="Y" />    <!--从化核算中心 -->
+		<key name="622262571" value="Y" />    <!--从化核算中心 -->
+		<!-- <key name="622261073" value="Y" />    从化核算中心
+		<key name="622260073" value="Y" />    从化核算中心
+		<key name="622259073" value="Y" />    从化核算中心
+		<key name="622258073" value="Y" />    从化核算中心
+		<key name="622262073" value="Y" />    从化核算中心
+		<key name="622261074" value="Y" />    从化核算中心
+		<key name="622260074" value="Y" />    从化核算中心
+		<key name="622259074" value="Y" />    从化核算中心
+		<key name="622258074" value="Y" />    从化核算中心
+		<key name="622262074" value="Y" />    从化核算中心
+		<key name="622261075" value="Y" />    从化核算中心
+		<key name="622260075" value="Y" />    从化核算中心
+		<key name="622259075" value="Y" />    从化核算中心
+		<key name="622258075" value="Y" />    从化核算中心
+		<key name="622262075" value="Y" />    从化核算中心
+		<key name="622261078" value="Y" />    从化核算中心
+		<key name="622260078" value="Y" />    从化核算中心
+		<key name="622259078" value="Y" />    从化核算中心
+		<key name="622258078" value="Y" />    从化核算中心
+		<key name="622262078" value="Y" />    从化核算中心
+		<key name="622261371" value="Y" />    从化核算中心
+		<key name="622260371" value="Y" />    从化核算中心
+		<key name="622259371" value="Y" />    从化核算中心
+		<key name="622258371" value="Y" />    从化核算中心
+		<key name="622262371" value="Y" />    从化核算中心
+		<key name="622261373" value="Y" />    从化核算中心
+		<key name="622260373" value="Y" />    从化核算中心
+		<key name="622259373" value="Y" />    从化核算中心
+		<key name="622258373" value="Y" />    从化核算中心
+		<key name="622262373" value="Y" />    从化核算中心
+		<key name="622261491" value="Y" />    从化核算中心
+		<key name="622260491" value="Y" />    从化核算中心
+		<key name="622259491" value="Y" />    从化核算中心
+		<key name="622258491" value="Y" />    从化核算中心
+		<key name="622262491" value="Y" />    从化核算中心
+		<key name="622261761" value="Y" />    从化核算中心
+		<key name="622260761" value="Y" />    从化核算中心
+		<key name="622259761" value="Y" />    从化核算中心
+		<key name="622258761" value="Y" />    从化核算中心
+		<key name="622262761" value="Y" />    从化核算中心
+		<key name="622261448" value="Y" />    从化核算中心
+		<key name="622260448" value="Y" />    从化核算中心
+		<key name="622259448" value="Y" />    从化核算中心
+		<key name="622258448" value="Y" />    从化核算中心
+		<key name="622262448" value="Y" />    从化核算中心
+		<key name="622261493" value="Y" />    从化核算中心
+		<key name="622260493" value="Y" />    从化核算中心
+		<key name="622259493" value="Y" />    从化核算中心
+		<key name="622258493" value="Y" />    从化核算中心
+		<key name="622262493" value="Y" />    从化核算中心
+		<key name="622261492" value="Y" />    从化核算中心
+		<key name="622260492" value="Y" />    从化核算中心
+		<key name="622259492" value="Y" />    从化核算中心
+		<key name="622258492" value="Y" />    从化核算中心
+		<key name="622262492" value="Y" />    从化核算中心
+		<key name="622261495" value="Y" />    从化核算中心
+		<key name="622260495" value="Y" />    从化核算中心
+		<key name="622259495" value="Y" />    从化核算中心
+		<key name="622258495" value="Y" />    从化核算中心
+		<key name="622262495" value="Y" />    从化核算中心 -->
+		
+	</table>
+	
 	 <!-- 业务名称-->
 	<table id="GdsBIdToBusNam">
 		<key name="44101" value="广州水务" />
