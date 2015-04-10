@@ -114,7 +114,7 @@
 		    <!-- <action id="preRegTransRollBackAct" class="com.bocom.bbip.gdeupsb.action.transportfee.PreAddPrintInvCancelAction"/> -->
 			<action id="regTransRollBackAct" class="com.bocom.bbip.gdeupsb.action.transportfee.PrintAddInvCancelAction"/>
 			<!-- <action id="aftRegTransRollBackAct" class="com.bocom.bbip.gdeupsb.action.transportfee.AftAddPrintInvCancelAction"/> -->
-		    <action id="finalizeAction" class="com.bocom.bbip.gdeupsb.action.transportfee.PrintAction"/>
+		    <action id="finalizeAction" class="com.bocom.bbip.gdeupsb.action.transportfee.AddPrintAction"/>
 		</actions>
 	</process>
 	
