@@ -93,24 +93,24 @@ public class BatchFileCommon extends BaseAction {
 		    if (CollectionUtils.isNotEmpty(resultList)) {
 		       comNoAcps = ((EupsActSysPara)resultList.get(0)).getSplNo();
 		    }
-		context.setData("comNoAcps", comNoAcps);
-		//文本代收付 fileId 反盘文件时使用
-		info.setRsvFld7((String)context.getData("fileId"));
-		//文件名   和eups控制表关联  必须有   流水号
-		String batNoFile="BATC"+comNoAcps+"0.txt";
-		context.setData(ParamKeys.FLE_NME, batNoFile);
-		info.setRsvFld8(batNoFile);
-		String sqn=get(BBIPPublicServiceImpl.class).getBBIPSequence();
-		context.setData("rsvFld7", sqn);
-		info.setRsvFld7(sqn);
-		//rsvFld6  预留代收付生成批次号  
-		
-		//保存到控制表  
-		get(GDEupsBatchConsoleInfoRepository.class).insertConsoleInfo(info);
-		context.getDataMapDirectly().putAll(BeanUtils.toFlatMap(info));
-		context.setData("comNo", comNo);
-		unLock(comNo);
-		logger.info("==============End  Insert  GDEupsBatchConsoleInfo");
+			context.setData("comNoAcps", comNoAcps);
+			//文本代收付 fileId 反盘文件时使用
+			info.setRsvFld7((String)context.getData("fileId"));
+			//文件名   和eups控制表关联  必须有   流水号
+			String batNoFile="BATC"+comNoAcps+"0.txt";
+			context.setData(ParamKeys.FLE_NME, batNoFile);
+			info.setRsvFld8(batNoFile);
+			String sqn=get(BBIPPublicServiceImpl.class).getBBIPSequence();
+			context.setData("rsvFld7", sqn);
+			info.setRsvFld7(sqn);
+			//rsvFld6  预留代收付生成批次号  
+			
+			//保存到控制表  
+			get(GDEupsBatchConsoleInfoRepository.class).insertConsoleInfo(info);
+			context.getDataMapDirectly().putAll(BeanUtils.toFlatMap(info));
+			context.setData("comNo", comNo);
+			unLock(comNo);
+			logger.info("==============End  Insert  GDEupsBatchConsoleInfo");
 	}
 /**
  * 解锁
