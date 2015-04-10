@@ -43,7 +43,12 @@ public class CusAgentServiceAction extends BaseAction{
 		 */
 		public void execute(Context context)throws CoreException,CoreRuntimeException{
 				logger.info("============Start  CusAgentServiceAction ");
-				context.setData("sqns", context.getData("sqn"));
+
+				if(context.getData(ParamKeys.THD_SQN)!=null){
+						context.setData("sqns", context.getData("sqns"));
+				}else{
+						context.setData("sqns", context.getData("sqn"));
+				}
 				
 				String comNo=context.getData("comNo").toString();
 				//代收付单位编号
