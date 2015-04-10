@@ -61,7 +61,6 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 		context.setData(ParamKeys.TXN_TME, txnTme);
 		//其他
 		context.setData(GDParamKeys.TOTNUM, "1");
-		context.setData("PKGCNT", "000001");
 		context.setData(GDParamKeys.SVRCOD, "50");
 		
 		//对账日期
@@ -92,7 +91,7 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 				context.setData(GDParamKeys.ALL_MONEY, allmoney);  
 				context.setData(GDParamKeys.BUS_TYPE, map.get("RSV_FLD4"));
 				context.setData(GDParamKeys.PAY_TYPE, map.get("RSV_FLD5"));
-
+				context.setData("PKGCNT", "000001");
 			        //外发第三方 
 			       callThd(context);
 			       
