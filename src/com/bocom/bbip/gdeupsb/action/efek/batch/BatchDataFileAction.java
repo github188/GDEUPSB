@@ -14,6 +14,8 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 
 import a.a.a.s;
 
@@ -22,6 +24,7 @@ import com.bocom.bbip.comp.account.AccountService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
+import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
@@ -29,6 +32,7 @@ import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.BatchAcpService;
 import com.bocom.bbip.eups.spi.vo.PrepareBatchAcpDomain;
+import com.bocom.bbip.file.transfer.sftp.SFTPTransfer;
 import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
@@ -78,7 +82,8 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 					EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecBatch");
 					eupsThdFtpConfig.setRmtFleNme(fleNme);
 					eupsThdFtpConfig.setLocFleNme(fleNme);
-					operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
+					fileSftp(context, eupsThdFtpConfig);
+//					operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
 					String batNo=context.getData(ParamKeys.BAT_NO).toString();
 					//该更控制表
 					updateInfo(context, eupsThdFtpConfig, batNo,totAmt ,totCnt);
@@ -266,6 +271,37 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 				}
 				context.setData(ParamKeys.TOT_CNT, Integer.parseInt(totCnt));
 				logger.info("==========End  BatchDataFileAction  updateInfo");
+		}
+/**
+ * sftp		
+ */
+		public void fileSftp(Context context,EupsThdFtpConfig eupsThdFtpConfig) throws CoreException{
+			logger.info("==========Start  BatchDataFileAction  fileSftp");
+			SFTPTransfer transferSFTPT = new SFTPTransfer();
+			transferSFTPT.setHost(((String) eupsThdFtpConfig.getThdIpAdr()).trim());
+			transferSFTPT.setPort(Integer.valueOf(eupsThdFtpConfig.getBidPot().trim()));
+			transferSFTPT.setUserName(((String) eupsThdFtpConfig.getOppNme().trim()));
+			transferSFTPT.setPassword(((String) eupsThdFtpConfig.getOppUsrPsw().trim()));
+			
+			logger.info("==========transferSFTPT："+transferSFTPT);
+			try {
+				logger.info("==========transferSFTPT  logon");
+				transferSFTPT.logon();
+				logger.info("==========logon end");
+				String rmtFilePath = (String) eupsThdFtpConfig.getRmtWay().trim();
+				String rmtfileName = (String) eupsThdFtpConfig.getRmtFleNme().trim();
+				String localPath = (String) eupsThdFtpConfig.getLocDir().trim();
+				logger.info("==========eupsThdFtpConfig"+eupsThdFtpConfig);
+				Resource localResource = new FileSystemResource(localPath);
+				logger.info("==========Resource："+localResource);
+				transferSFTPT.putResource(localResource, rmtFilePath, rmtfileName);
+			} catch (Exception e) {
+				throw new CoreException(ErrorCodes.EUPS_FTP_FILEPUT_NFAIL);
+			} finally {
+				logger.info("==========  transferSFTPT  finally");
+				transferSFTPT.logout();
+			}
+			logger.info("==========End  BatchDataFileAction  fileSftp");
 		}
 
 }
