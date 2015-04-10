@@ -17,9 +17,9 @@
     <result column="PAY_TYPE" property="payType" jdbcType="CHAR" />
     <result column="ACCOUNT_NO" property="accountNo" jdbcType="CHAR" />
     <result column="ELECTRICITY_YEARMONTH" property="electricityYearmonth" jdbcType="CHAR" />
-    <result column="PAYMENT_MONEY" property="paymentMoney" jdbcType="DECIMAL" />
-    <result column="CAPITIAL" property="capitial" jdbcType="DECIMAL" />
-    <result column="DEDIT" property="dedit" jdbcType="DECIMAL" />
+    <result column="PAYMENT_MONEY" property="paymentMoney" jdbcType="CHAR" />
+    <result column="CAPITIAL" property="capitial" jdbcType="CHAR" />
+    <result column="DEDIT" property="dedit" jdbcType="CHAR" />
     <result column="PAYMENT_RESULT" property="paymentResult" jdbcType="CHAR" />
     <result column="TXN_AMT" property="txnAmt" jdbcType="DECIMAL" />
     <result column="BANK_SQN" property="bankSqn" jdbcType="CHAR" />
@@ -89,13 +89,13 @@
         AND  ELECTRICITY_YEARMONTH=#{electricityYearmonth,jdbcType=CHAR}
       </if>
       <if test="paymentMoney!=null" >
-        AND  PAYMENT_MONEY=#{paymentMoney,jdbcType=DECIMAL}
+        AND  PAYMENT_MONEY=#{paymentMoney,jdbcType=CHAR}
       </if>
       <if test="capitial!=null" >
-        AND  CAPITIAL=#{capitial,jdbcType=DECIMAL}
+        AND  CAPITIAL=#{capitial,jdbcType=CHAR}
       </if>
       <if test="dedit!=null" >
-        AND  DEDIT=#{dedit,jdbcType=DECIMAL}
+        AND  DEDIT=#{dedit,jdbcType=CHAR}
       </if>
       <if test="paymentResult!=null" >
         AND  PAYMENT_RESULT=#{paymentResult,jdbcType=CHAR}
@@ -280,13 +280,13 @@
         #{electricityYearmonth,jdbcType=CHAR},
       </if>
       <if test="paymentMoney != null" >
-        #{paymentMoney,jdbcType=DECIMAL},
+        #{paymentMoney,jdbcType=CHAR},
       </if>
       <if test="capitial != null" >
-        #{capitial,jdbcType=DECIMAL},
+        #{capitial,jdbcType=CHAR},
       </if>
       <if test="dedit != null" >
-        #{dedit,jdbcType=DECIMAL},
+        #{dedit,jdbcType=CHAR},
       </if>
       <if test="paymentResult != null" >
         #{paymentResult,jdbcType=CHAR},
@@ -372,13 +372,13 @@
         AND  ELECTRICITY_YEARMONTH=#{electricityYearmonth,jdbcType=CHAR}
       </if>
       <if test="paymentMoney!=null" >
-        AND  PAYMENT_MONEY=#{paymentMoney,jdbcType=DECIMAL}
+        AND  PAYMENT_MONEY=#{paymentMoney,jdbcType=CHAR}
       </if>
       <if test="capitial!=null" >
-        AND  CAPITIAL=#{capitial,jdbcType=DECIMAL}
+        AND  CAPITIAL=#{capitial,jdbcType=CHAR}
       </if>
       <if test="dedit!=null" >
-        AND  DEDIT=#{dedit,jdbcType=DECIMAL}
+        AND  DEDIT=#{dedit,jdbcType=CHAR}
       </if>
       <if test="paymentResult!=null" >
         AND  PAYMENT_RESULT=#{paymentResult,jdbcType=CHAR}
@@ -461,13 +461,13 @@
         ELECTRICITY_YEARMONTH = #{electricityYearmonth,jdbcType=CHAR},
       </if>
       <if test="paymentMoney != null" >
-        PAYMENT_MONEY = #{paymentMoney,jdbcType=DECIMAL},
+        PAYMENT_MONEY = #{paymentMoney,jdbcType=CHAR},
       </if>
       <if test="capitial != null" >
-        CAPITIAL = #{capitial,jdbcType=DECIMAL},
+        CAPITIAL = #{capitial,jdbcType=CHAR},
       </if>
       <if test="dedit != null" >
-        DEDIT = #{dedit,jdbcType=DECIMAL},
+        DEDIT = #{dedit,jdbcType=CHAR},
       </if>
       <if test="paymentResult != null" >
         PAYMENT_RESULT = #{paymentResult,jdbcType=CHAR},
@@ -560,13 +560,13 @@
         ELECTRICITY_YEARMONTH = #{electricityYearmonth,jdbcType=CHAR},
       </if>
       <if test="paymentMoney != null" >
-        PAYMENT_MONEY = #{paymentMoney,jdbcType=DECIMAL},
+        PAYMENT_MONEY = #{paymentMoney,jdbcType=CHAR},
       </if>
       <if test="capitial != null" >
-        CAPITIAL = #{capitial,jdbcType=DECIMAL},
+        CAPITIAL = #{capitial,jdbcType=CHAR},
       </if>
       <if test="dedit != null" >
-        DEDIT = #{dedit,jdbcType=DECIMAL},
+        DEDIT = #{dedit,jdbcType=CHAR},
       </if>
       <if test="paymentResult != null" >
         PAYMENT_RESULT = #{paymentResult,jdbcType=CHAR},
