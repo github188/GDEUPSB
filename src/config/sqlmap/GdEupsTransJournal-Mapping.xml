@@ -967,7 +967,7 @@
 		(select
 		<include refid="baseColumnList" />
 		FROM eups.EUPS_TRANS_JOURNAL where TXN_DTE=#{txnDte,jdbcType=DATE} and
-		eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR}) a,
+		eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} ) a,
 		(select COALESCE(count(*), 0) totCnt, COALESCE(sum(TXN_AMT), 0) totAmt from eups.EUPS_TRANS_JOURNAL
 		where TXN_DTE=#{txnDte,jdbcType=DATE} and
 		eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR}) b,
