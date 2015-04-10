@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.action.elea;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,6 +8,7 @@ import java.util.Map;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.gdeupsb.repository.GdEupsTransJournalRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -24,7 +26,7 @@ public class EleChkFleAction extends BaseAction {
 		log.info("财务对帐文件生成 start!..");
 
 		String dptTyp = context.getData("dptTyp");
-		String clrDat=context.getData("clrDat");
+		Date clrDat = DateUtils.parse((String) context.getData("clrDat"));
 
 		log.info("当前的dptTyp=" + dptTyp);
 		// 获取CAgtNo
@@ -48,6 +50,8 @@ public class EleChkFleAction extends BaseAction {
 		// 产生上送供电方的文件
 		List<Map<String, Object>> reustlList = get(GdEupsTransJournalRepository.class).findGzEleHstSucJnl(para);
 		log.info("返回的list=" + reustlList);
+		
+		
 	}
 
 }
