@@ -262,10 +262,8 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 						@SuppressWarnings("unchecked")
 						List<Map<String, Object>> agentCollectAgreementMaps = (List<Map<String, Object>>) context
 								.getData("agentCollectAgreement");
-						agentCollectAgreementMaps.get(0).put(
-								"agrVldDte",
-								DateUtils.format(new Date(),
-										DateUtils.STYLE_yyyyMMdd));
+//TODO						agentCollectAgreementMaps.get(0).put("agrVldDte", DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMdd));
+						agentCollectAgreementMaps.get(0).put("agrVldDte", "20150101");
 						agentCollectAgreementMaps.get(0).put("agrExpDte",
 								"99991231");
 						agentCollectAgreementMaps.get(0).put(ParamKeys.CUS_AC,
@@ -709,8 +707,8 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		map.put("cusFeeDerFlg", "0"); // TODO 暂用0，待确认
 		map.put("agtSrvCusId", context.getData("agtSrvCusId"));
 		map.put("agtSrvCusPnm", context.getData(ParamKeys.THD_CUS_NME));
-		map.put("agrVldDte",
-				DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)); // YYYYMMDD默认当日
+//		map.put("agrVldDte",DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)); //  TODO YYYYMMDD默认当日
+		map.put("agrVldDte", "20150101");
 		map.put("agrExpDte", "99991231"); // YYYYMMDD默认最大日，99991231
 		map.put(ParamKeys.CMU_TEL, context.getData(ParamKeys.CMU_TEL));
 		map.put(ParamKeys.THD_CUS_NO, context.getData(ParamKeys.THD_CUS_NO));
