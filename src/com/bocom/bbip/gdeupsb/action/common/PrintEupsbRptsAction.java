@@ -200,37 +200,37 @@ public class PrintEupsbRptsAction extends BaseAction {
 		logger.info("=============ready to print report list=============");
 
 		//本地生成报表文件并发送到mftp服务器,打印机自动打印
-		reportHelper.createFileAndSendMFTP(context,result,fileName,mftpConfigInfo); //TODO
+//		reportHelper.createFileAndSendMFTP(context,result,fileName,mftpConfigInfo); //TODO
 
 /*****************************************************************************************************************************/
 		
 		// 拼装本地路径 本地测试
-//		PrintWriter printWriter = null;
-//		StringBuffer sbLocDir = new StringBuffer();
-//		sbLocDir.append("D:/testGash/checkFilTest/").append(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)).append("/");
+		PrintWriter printWriter = null;
+		StringBuffer sbLocDir = new StringBuffer();
+		sbLocDir.append("D:/testGash/checkFilTest/").append(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)).append("/");
 //		sbLocDir.append(ftpCfg.getLocDir()).append("/").append(context.getData(ParamKeys.TELLER)).append("/").append(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)).append("/");
         
-//		try {
-//			File file = new File(sbLocDir.toString());
-//			if (!file.exists()) {
-//				file.mkdirs();
-//			}
-//			printWriter = new PrintWriter(new BufferedWriter(
-//					new OutputStreamWriter(new FileOutputStream(sbLocDir
-//							.append(fileName).toString()), "GBK")));
-//			printWriter.write(result);
-//
-//		} catch (IOException e) {
-//			throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
-//		} finally {
-//			if (null != printWriter) {
-//				try {
-//					printWriter.close();
-//				} catch (Exception e) {
-//					throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
-//				}
-//			}
-//		}
+		try {
+			File file = new File(sbLocDir.toString());
+			if (!file.exists()) {
+				file.mkdirs();
+			}
+			printWriter = new PrintWriter(new BufferedWriter(
+					new OutputStreamWriter(new FileOutputStream(sbLocDir
+							.append(fileName).toString()), "GBK")));
+			printWriter.write(result);
+
+		} catch (IOException e) {
+			throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
+		} finally {
+			if (null != printWriter) {
+				try {
+					printWriter.close();
+				} catch (Exception e) {
+					throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
+				}
+			}
+		}
 //
 //		try {
 //            get(MftpTransfer.class).send(sbLocDir.toString(), fileName.toString(), ftpCfg.getThdIpAdr());
