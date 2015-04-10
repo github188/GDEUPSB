@@ -2,6 +2,7 @@ package com.bocom.bbip.gdeupsb.action.gas;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,10 +12,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.entity.EupsBatchInfoDetail;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
@@ -28,6 +31,7 @@ import com.bocom.bbip.gdeupsb.entity.GdGashBatchTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GdGashBatchTmpRepository;
 import com.bocom.bbip.utils.BeanUtils;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -37,7 +41,7 @@ import com.bocom.jump.bp.core.CoreException;
  * @author WangMQ
  * 
  */
-public class MsgToGasAftBatchAction implements AfterBatchAcpService {
+public class MsgToGasAftBatchAction extends BaseAction implements AfterBatchAcpService {
 	@Autowired
 	OperateFTPAction operateFTPAction;
 	@Autowired
@@ -61,38 +65,77 @@ public class MsgToGasAftBatchAction implements AfterBatchAcpService {
 
 	public void afterBatchDeal(AfterBatchAcpDomain afterbatchacpdomain, Context context) throws CoreException {
 		logger.info("===============Start  BatchDataResultFileAction  afterBatchDeal");	
-			//第三方 rsvFld9
-			String rsvFld9=context.getData(ParamKeys.THD_BAT_NO).toString();
-			GDEupsBatchConsoleInfo  Info=new GDEupsBatchConsoleInfo();
-			Info.setRsvFld9(rsvFld9);
-			GDEupsBatchConsoleInfo  gdeupsBatchConsoleInfo = gdeupsBatchConsoleInfoRepository.find(Info).get(0);
-			//更改控制表
-			GDEupsBatchConsoleInfo gdEupsBatchConsoleInfoUpdate=updateInfo(context, gdeupsBatchConsoleInfo);
-			//文件名
-//			String fileName="PTFH_301"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+context.getData(ParamKeys.BAT_NO).toString().substring(13)+".txt";
-//			EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecBatch");
+		logger.info(">>>>>Start  Down  AGTS  FileResult <<<<<<");
+		//文件下载
+//		String path=context.getData("dir").toString();
+//		EupsThdFtpConfig eupsThdFtpConfigs = get(EupsThdFtpConfigRepository.class).findOne(ParamKeys.FTPID_BATCH_PAY_FILE_TO_ACP);
+//		String fileNames=context.getData("batNo")+".result";
+//		eupsThdFtpConfigs.setLocDir(fileNames);
+//		eupsThdFtpConfigs.setRmtFleNme(fileNames);
+//		eupsThdFtpConfigs.setFtpDir("1");
+//		eupsThdFtpConfigs.setRmtWay(path);
+//		operateFTPAction.getFileFromFtp(eupsThdFtpConfigs);
+//		logger.info(">>>>>Down Result File Success<<<<<<");
+	
+		//第三方 rsvFld7
+		String batNo=context.getData(ParamKeys.BAT_NO).toString();
+		EupsBatchConsoleInfo eupsBatchConsoleInfo=eupsBatchConsoleInfoRepository.findOne(batNo);
+		String sqns=eupsBatchConsoleInfo.getRsvFld2();
+		GDEupsBatchConsoleInfo  Info=new GDEupsBatchConsoleInfo();
+		Info.setRsvFld7(sqns);
+		GDEupsBatchConsoleInfo  gdeupsBatchConsoleInfo = gdeupsBatchConsoleInfoRepository.find(Info).get(0);
+		String gdBatNo = gdeupsBatchConsoleInfo.getBatNo();
+		context.setData("gdBatNo", gdBatNo);
+		//更改控制表
+		GDEupsBatchConsoleInfo gdEupsBatchConsoleInfoUpdate=updateInfo(context,gdeupsBatchConsoleInfo ,eupsBatchConsoleInfo);
+		//文件名
+//			String fileName = context.getData("fleNmeBak");
+//			EupsThdFtpConfig ftpCfg = eupsThdFtpConfigRepository.findOne("batchPayFileToAcp");
+//			ftpCfg.setLocFleNme(fileName);
+//			ftpCfg.setRmtFleNme(fileName);
 			
-			String fileName = context.getData("fleNmeBak");
-			EupsThdFtpConfig ftpCfg = eupsThdFtpConfigRepository.findOne("PGAS00Bat");
-			ftpCfg.setLocFleNme(fileName);
-			ftpCfg.setRmtFleNme(fileName);
+			String fileName = "filecnjt" + DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd) + ".txt";
+			EupsThdFtpConfig gasFtpCfg = eupsThdFtpConfigRepository.findOne("PGAS00Bat");
+			gasFtpCfg.setLocFleNme(fileName);
+			gasFtpCfg.setRmtFleNme(fileName);
 			
+//			EupsThdFtpConfig ftpCfg = eupsThdFtpConfigRepository.findOne("batchPayFileToAcp");
+//			String name = context.getData(ParamKeys.BAT_NO) + ".result";
+//			ftpCfg.setLocFleNme(fileName);
+//			ftpCfg.setRmtFleNme(fileName);
+//			ftpCfg.setLocDir("C:/home/bbipadm/data/mftp/BBIP/GDEUPSB/01491800999/EFC0000/20150323/");
+//			ftpCfg.setRmtWay("/home/bbipadm/data/mftp/BBIP/GDEUPSB/01491800999/EFC0000/20150323/");
+
 			try{
-					Map<String, Object> resultMap=createFileMap(context,gdEupsBatchConsoleInfoUpdate);
-					ftpCfg.setFtpDir("0");
+				Map<String, Object> resultMap=createFileMap(context,gdEupsBatchConsoleInfoUpdate);
+				gasFtpCfg.setFtpDir("0");
+				
+//				gasFtpCfg.setLocDir("/home/bbipadm/data/mftp/BBIP/GDEUPSB/01441800999/EFC0000/20150323/");
+//				ftpCfg.setRmtWay("/home/bbipadm/data/mftp/BBIP/GDEUPSB/01441800999/EFC0000/20150323/");
+				operateFileAction.createCheckFile(gasFtpCfg, "msgToGasFileFmt", fileName, resultMap);
+		}catch(CoreException e){
+				logger.info("~~~~~~~~~~~Error  Message",e);
+		}
+			
+			
+			
+			
+//			try{
+//					Map<String, Object> resultMap=createFileMap(context,gdEupsBatchConsoleInfoUpdate);
+//					ftpCfg.setFtpDir("0");
 //					ftpCfg.setLocDir(context.getData("dir").toString());
 //					ftpCfg.setRmtWay(context.getData("dir").toString());
-					operateFileAction.createCheckFile(ftpCfg, "msgToGasFileFmt", fileName, resultMap);
-			}catch(CoreException e){
-					logger.info("~~~~~~~~~~~Error  Message",e);
-			}
+//					operateFileAction.createCheckFile(ftpCfg, "msgToGasFileFmt", fileName, resultMap);
+//			}catch(CoreException e){
+//					logger.info("~~~~~~~~~~~Error  Message",e);
+//			}
 			// 将生成的文件上传至指定服务器
-			ftpCfg.setLocFleNme(fileName);
+//			gasFtpCfg.setLocFleNme(fileName);
 //			ftpCfg.setLocDir(context.getData("dir").toString());
-			ftpCfg.setRmtFleNme(fileName);
+//			gasFtpCfg.setRmtFleNme(fileName);
 //			ftpCfg.setRmtWay(context.getData("dir").toString());
-			ftpCfg.setFtpDir("0");
-			operateFTPAction.putCheckFile(ftpCfg);
+			gasFtpCfg.setFtpDir("0");
+			operateFTPAction.putCheckFile(gasFtpCfg);
 			
 			//TODO 通知第三方
 			callThd(context);
@@ -101,11 +144,13 @@ public class MsgToGasAftBatchAction implements AfterBatchAcpService {
 	private void callThd(Context context) throws CoreException {
 		logger.info("=================start MsgToGasAftBatchAction callThd with context=======" + context);
 		
-		context.setProcessId("");
-		String batNo = context.getData(ParamKeys.BAT_NO);
+		String oldProcessId = context.getProcessId();
+		
+		context.setProcessId("eups.fileBatchPayCreateDataProcess");
+		String gdBatNo = context.getData("gdBatNo");
 		GDEupsBatchConsoleInfo gdbat = new GDEupsBatchConsoleInfo();
-		gdbat.setBatNo(batNo);
-		List<GDEupsBatchConsoleInfo> gdbatBatchConsoleInfos = gdeupsBatchConsoleInfoRepository.find(batNo);
+		gdbat.setBatNo(gdBatNo);
+		List<GDEupsBatchConsoleInfo> gdbatBatchConsoleInfos = gdeupsBatchConsoleInfoRepository.find(gdbat);
 		String fleNme = gdbatBatchConsoleInfos.get(0).getFleNme();
 		context.setData("fleNmeBak", fleNme);
 		context.setData("TransCode", "SMPCPAYTXT");
@@ -115,15 +160,15 @@ public class MsgToGasAftBatchAction implements AfterBatchAcpService {
 		
 		
 		
-		context.setProcessId("");
+		context.setProcessId(oldProcessId);
 		logger.info("=================end MsgToGasAftBatchAction callThd with context=======" + context);
 	}
 	/**
 	 * 把信息保存到控制表
 	 */
-	public GDEupsBatchConsoleInfo  updateInfo(Context context,GDEupsBatchConsoleInfo gdeupsBatchConsoleInfo){
+	public GDEupsBatchConsoleInfo  updateInfo(Context context,GDEupsBatchConsoleInfo gdeupsBatchConsoleInfo,EupsBatchConsoleInfo eupsBatchConsoleInfo){
 			logger.info("===============Start  BatchDataResultFileAction  updateInfo");	
-			Integer totCnt=Integer.parseInt(gdeupsBatchConsoleInfo.getTotCnt().toString());
+			Integer totCnt=Integer.parseInt(eupsBatchConsoleInfo.getTotCnt().toString());
 			//成功笔数
 			Integer sucTotCnt=Integer.parseInt(context.getData(GDParamKeys.SUC_TOT_CNT).toString());
 			gdeupsBatchConsoleInfo.setSucTotCnt(sucTotCnt);
@@ -131,7 +176,7 @@ public class MsgToGasAftBatchAction implements AfterBatchAcpService {
 			Integer falTotCnt=totCnt-sucTotCnt;
 			gdeupsBatchConsoleInfo.setFalTotCnt(falTotCnt);
 			
-			BigDecimal totAmt=gdeupsBatchConsoleInfo.getTotAmt();
+			BigDecimal totAmt=eupsBatchConsoleInfo.getTotAmt();
 			//成功总金额
 			BigDecimal sucTotAmt=new BigDecimal(context.getData("sucTotAmt").toString());
 			gdeupsBatchConsoleInfo.setSucTotAmt(sucTotAmt);
@@ -157,10 +202,10 @@ public class MsgToGasAftBatchAction implements AfterBatchAcpService {
 			//内容主体
 			List<GdGashBatchTmp> list=new ArrayList<GdGashBatchTmp>();
 			
+			String batNo = context.getData("gdBatNo");
 			String cusAc = null;
 			String cusNo = null;
 			String thdSts = null;
-			String batNo1 = context.getData("batNo1");
 			String sts = null;
 			
 			GdGashBatchTmp findInfo = new GdGashBatchTmp();
@@ -189,14 +234,14 @@ public class MsgToGasAftBatchAction implements AfterBatchAcpService {
 				cusNo = detail.getAgtSrvCusId();
 				findInfo.setCusAc(cusAc);
 				findInfo.setCusNo(cusNo);
-				findInfo.setBatNo(batNo1);
+				findInfo.setBatNo(batNo);
 				listTmps = gdGashBatchTmpRepository.find(findInfo);
 				
 				gdGashBatchTmp.setThdSqn(listTmps.get(0).getThdSqn());
 				gdGashBatchTmp.setCusNo(cusNo);
 				gdGashBatchTmp.setPayMon(listTmps.get(0).getPayMon());
 				gdGashBatchTmp.setTxnAmt(String.valueOf(detail.getTxnAmt()));
-				gdGashBatchTmp.setTxnDte(detail.getTxnDte());
+				gdGashBatchTmp.setTxnDte(DateUtils.parse(listTmps.get(0).getTmpFld5(), DateUtils.STYLE_SIMPLE_DATE));
 				
 				list.add(gdGashBatchTmp);
 			}
