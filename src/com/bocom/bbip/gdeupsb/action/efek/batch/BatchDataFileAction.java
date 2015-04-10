@@ -176,9 +176,9 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 			String mothed="eups.batchPaySubmitDataProcess";
 			context.setData(ParamKeys.RSV_FLD2, context.getData(ParamKeys.THD_SQN));
 			bbipPublicService.synExecute(mothed, context);
-			String	rsvFld2=context.getData(ParamKeys.THD_SQN).toString();
+			String	rsvFld3=context.getData(ParamKeys.THD_SQN).toString();
 			EupsBatchConsoleInfo eupsBatchConsoleInfo =new EupsBatchConsoleInfo();
-			eupsBatchConsoleInfo.setRsvFld2(rsvFld2);
+			eupsBatchConsoleInfo.setRsvFld3(rsvFld3);
 			String batNo=get(EupsBatchConsoleInfoRepository.class).find(eupsBatchConsoleInfo).get(0).getBatNo();
 			context.setData(ParamKeys.BAT_NO, batNo);
 			context.setData("PKGCNT", "000000");
