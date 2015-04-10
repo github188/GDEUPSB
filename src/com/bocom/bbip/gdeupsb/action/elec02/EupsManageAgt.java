@@ -8,10 +8,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.bocom.bbip.comp.BBIPPublicServiceImpl;
+import com.bocom.bbip.comp.CommonRequest;
+import com.bocom.bbip.comp.account.AccountService;
+import com.bocom.bbip.comp.account.support.CardInfo;
+import com.bocom.bbip.comp.account.support.CusActInfResult;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.bbip.service.Result;
+import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
@@ -23,6 +28,7 @@ public class EupsManageAgt extends BaseAction {
 	private static final int UPDATE=3;
 	private static final int QUERY=5;
 	private static final int DELETE=9;
+	
 	public void process(Context context) throws CoreException {
      logger.info("协议维护");
      context.setData("ActDat", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
@@ -31,21 +37,32 @@ public class EupsManageAgt extends BaseAction {
      final int oprType=Integer.parseInt((String)context.getData("CHT"));
 		switch (oprType) {
 		case ADD:
-            add(context);
+            addAgentDeal(context);
 			break;
 		case UPDATE:
-            update(context);
+            updateAgentDeal(context);
 			break;
 		case QUERY:
-             query(context);
+             queryAgentDeal(context);
 			break;
 		case DELETE:
-            delete(context);
+            deleteAgentDeal(context);
 			break;
 		}
 	}
 
-	private void add(Context context) throws CoreException {
+	private void addAgentDeal(Context context) throws CoreException {
+		//TODO：校验客户身份证号码，姓名
+		String cusAc=context.getData("OAC");  //卡号
+		CusActInfResult acInfo=get(AccountService.class).getAcInf(CommonRequest.build(context), cusAc);
+		String idNo=acInfo.getIdNo();
+//		if(){
+//			
+//		}
+	
+//		get(AccountService.class).getCardInfoByCardNo(card);
+		
+		
 		 Map<String,Object>map=new HashMap<String,Object>();
 		 Map<String,Object>agentCollectAgreement=new HashMap<String,Object>();
 		 Map<String,Object>customerInfo=new HashMap<String,Object>();
@@ -75,7 +92,7 @@ public class EupsManageAgt extends BaseAction {
        back(context,respData);
 	}
 
-	private void update(Context context) throws CoreException {
+	private void updateAgentDeal(Context context) throws CoreException {
 		 Map<String,Object>map=new HashMap<String,Object>();
 		 Map<String,Object>agentCollectAgreement=new HashMap<String,Object>();
 		 Map<String,Object>customerInfo=new HashMap<String,Object>();
@@ -105,17 +122,15 @@ public class EupsManageAgt extends BaseAction {
 	       back(context,respData);
 	}
 
-	private void query(Context context) throws CoreException {
-
-	  
-		 Map<String,Object>map=new HashMap<String,Object>();
+	private void queryAgentDeal(Context context) throws CoreException {
+		 Map<String,Object>map=context.getDataMap();
 	       map.put("cusAc", (String)context.getData("OAC"));
 	       Result respData = ((BGSPServiceAccessObject)get(BGSPServiceAccessObject.class)).
 	 	   callServiceFlatting("queryListAgentCollectAgreement", map);
 	        Map ret=back(context,respData);
 	}
 
-	private void delete(Context context) throws CoreException {
+	private void deleteAgentDeal(Context context) throws CoreException {
 		 Map<String,Object>map=new HashMap<String,Object>();
 	       map.put("cusAc", (String)context.getData("OAC"));
 	       Result respData = ((BGSPServiceAccessObject)get(BGSPServiceAccessObject.class)).
