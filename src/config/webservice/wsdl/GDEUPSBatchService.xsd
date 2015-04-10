@@ -187,6 +187,7 @@
       <xs:element name="thdBatNo" type="tns:thdBatNo_SType" minOccurs="0"/>
       <xs:element name="txnMde" type="tns:txnMde_SType"/>
       <xs:element name="busTyp" type="tns:busTyp_SType"/>
+      <xs:element name="rsvFld2" type="tns:rsvFld2_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="batchPaySubmitDataResponse_CType">
@@ -261,6 +262,14 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="rsvFld2_SType">
+    <xs:annotation>
+      <xs:documentation>流水</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="24"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:complexType name="cancelBatchRequest_CType">
@@ -385,6 +394,7 @@
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="comNo" type="tns:comNo_SType"/>
       <xs:element name="fleNme" type="tns:fleNme_SType"/>
+      <xs:element name="mothed" type="tns:mothed_SType"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="batchPayCreateDataResponse_CType">
@@ -394,8 +404,25 @@
       <xs:element name="fleNme" type="tns:fleNme_SType" minOccurs="0"/>
       <xs:element name="totCnt" type="tns:totCnt_SType" minOccurs="0"/>
       <xs:element name="totAmt" type="tns:totAmt_SType" minOccurs="0"/>
+      <xs:element name="rsvFld7" type="tns:rsvFld7_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:simpleType name="mothed_SType">
+    <xs:annotation>
+      <xs:documentation>获取文件方式</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="rsvFld7_SType">
+    <xs:annotation>
+      <xs:documentation>流水</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="24"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:complexType name="queryBatchInfoRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader" minOccurs="0"/>
