@@ -174,7 +174,8 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 			context.setData("reqTme",DateUtils.formatAsSimpleDate(date)+"T"+DateUtils.format(date, "HH:mm:ss"));
 			//提交
 			String mothed="eups.batchPaySubmitDataProcess";
-			context.setData(ParamKeys.RSV_FLD2, context.getData(ParamKeys.THD_SQN));
+			context.setData(ParamKeys.RSV_FLD3, context.getData(ParamKeys.THD_SQN));
+			context.setData(ParamKeys.RSV_FLD2, context.getData(ParamKeys.SEQUENCE));
 			bbipPublicService.synExecute(mothed, context);
 			String	rsvFld3=context.getData(ParamKeys.THD_SQN).toString();
 			EupsBatchConsoleInfo eupsBatchConsoleInfo =new EupsBatchConsoleInfo();
