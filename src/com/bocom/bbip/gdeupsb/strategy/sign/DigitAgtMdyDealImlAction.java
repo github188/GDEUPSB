@@ -81,7 +81,7 @@ public class DigitAgtMdyDealImlAction implements AgtMdyDealImlService {
 
 			List<Map<String, Object>> prvDatRes = new ArrayList<Map<String, Object>>(); // 返回list
 			List<Map<String, Object>> qryResult = gdsAgtWaterRepository.findSignDeatilForQry(inMap);
-			log.info("查询返回的list="+qryResult);
+			log.info("查询返回的list=" + qryResult);
 			// 循环组返回报文
 			for (Map<String, Object> qryMap : qryResult) {
 				log.info("查询返回的map为[" + qryMap + "]");

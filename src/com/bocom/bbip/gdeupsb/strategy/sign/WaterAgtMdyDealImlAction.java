@@ -82,6 +82,7 @@ public class WaterAgtMdyDealImlAction implements AgtMdyDealImlService {
 			List<Map<String, Object>> qryResult = gdsAgtWaterRepository.findSignDeatilForQry(inMap);
 			// context.setData(GDParamKeys.SIGN_STATION_AGT_QRY_RESULT,
 			// qryResult); // 返回信息
+			log.info("查询返回的list=" + qryResult);
 
 			// 循环组返回报文
 			for (Map<String, Object> qryMap : qryResult) {
