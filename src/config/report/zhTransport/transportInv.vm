@@ -2,49 +2,26 @@
 #rh(5)
  
  
-#end 
-#td(22)
-#para($str.trim($d.invNo))
-#para($str.trim($d.printYear))
-#para($str.trim($d.printMon))
-#para($str.trim($d.printDay))
-#para($str.trim($d.tcusNm))
-#para($str.trim($d.carName))
-#para($str.trim($d.carNo))
-#para($str.trim($d.carTyp))
-#para($d.feeStd)
-#para($d.corpus)
-#para($d.carDzs)
-#para($d.lateFee)
-#para($d.txnAmt)
-#para($d.begYear)
-#para($d.begMon)
-#para($d.begDay)
-#para($d.endYear)
-#para($d.endMon)
-#para($d.endDay)
-#para($d.txnAmt)      
-#para($d.txnAmt)
-#para($d.prtNod)
- ?                                                           ?         ?       ? 
+													$d.invNo			
+                                                               $str.trim($d.printYear)        $str.trim($d.printMon)       $str.trim($d.printDay) 
 
-                            ?
+                            $str.trim($d.tcusNm)
 
 
 
-                           ?              ?              ?     ?             本  金：?
+                          $str.trim($d.carName)              $str.trim($d.carNo)              $str.trim($d.carTyp)     $d.feeStd             本  金：$d.corpus
 
-                           ?                                                 滞纳金：?
+                          $d.carDzs                                                滞纳金：$d.lateFee
 
-                                                                             合  计：?
+                                                                             合  计：$d.txnAmt
 
                              备  注：
 
-                                   ?        ?      ?               ?        ?      ?
+                                   $d.begYear       $d.begMon      $d.begDay              $d.endYear       $d.endMon     $d.endDay
 
-                                                                       ?                ?
+                                                                      $d.txnAmt               $d.txnAmt
 
-                      珠海市路桥管理处          ?（交行）
+                      珠海市路桥管理处          $d.prtNod（交行）                                                         $d.invNo
 
 
 
