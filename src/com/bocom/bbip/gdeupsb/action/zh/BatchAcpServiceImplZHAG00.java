@@ -3,7 +3,6 @@ package com.bocom.bbip.gdeupsb.action.zh;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -62,11 +61,7 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 		/**批量前检查和初始化批量控制表 生成批次号batNo*/
 		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).BeforeBatchProcess(context);
 		logger.info("开始解析批量文件-------------");
-		/*try {
-			FileUtils.copyFile(null, null);
-		} catch (IOException e) {
-			throw new CoreException("", "");
-		}*/
+
 		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne("zhag00");
 		String fleNme=context.getData(ParamKeys.FLE_NME).toString();
 		config.setRmtFleNme(fleNme);
@@ -144,6 +139,8 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 	    logger.info("===============End  BatchAcpServiceImplZHAG00  pareseFileByPath");
 	    return map;
 	  }
+	  
+	  
 	  private String findFormat(final String comNo) {
 		  logger.info("===============Start  BatchAcpServiceImplZHAG00  findFormat");
 		  InputStream location=null;
