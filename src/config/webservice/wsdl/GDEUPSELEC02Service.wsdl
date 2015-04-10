@@ -12,6 +12,12 @@
   <wsdl:message name="queryJournalOffChanResponseMessage">
     <wsdl:part name="queryJournalOffChanResponse" element="gdeupsb:queryJournalOffChanResponse"/>
   </wsdl:message>
+  <wsdl:message name="agentChangeRequestMessage">
+    <wsdl:part name="agentChangeRequest" element="gdeupsb:agentChange"/>
+  </wsdl:message>
+  <wsdl:message name="agentChangeResponseMessage">
+    <wsdl:part name="agentChangeResponse" element="gdeupsb:agentChangeResponse"/>
+  </wsdl:message>
   <wsdl:message name="queryAgtInfoRequestMessage">
     <wsdl:part name="queryAgtInfoRequest" element="gdeupsb:queryAgtInfo"/>
   </wsdl:message>
@@ -72,6 +78,11 @@
       <wsdl:input message="tns:queryJournalOffChanRequestMessage"/>
       <wsdl:output message="tns:queryJournalOffChanResponseMessage"/>
     </wsdl:operation>
+    <wsdl:operation name="agentChange">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:agentChangeRequestMessage"/>
+      <wsdl:output message="tns:agentChangeResponseMessage"/>
+    </wsdl:operation>
     <wsdl:operation name="queryAgtInfo">
       <wsdl:documentation/>
       <wsdl:input message="tns:queryAgtInfoRequestMessage"/>
@@ -122,6 +133,15 @@
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     <wsdl:operation name="queryJournalOffChan">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/queryJournalOffChan"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="agentChange">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/agentChange"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
