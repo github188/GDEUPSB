@@ -67,8 +67,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		String cusTypBak = context.getData("cusTyp");
 		context.setData("cusAcBak", context.getData(ParamKeys.CUS_AC));
 		boolean cmuTelSts = false;
-		if (StringUtils
-				.isNoneBlank((String) context.getData(ParamKeys.CMU_TEL))) {
+		if (StringUtils.isNotBlank((String) context.getData(ParamKeys.CMU_TEL))) {
 			context.setData("cmuTelBak", context.getData(ParamKeys.CMU_TEL));
 			cmuTelSts = true;
 		}
@@ -85,7 +84,10 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		if ("4".equals(context.getData("optFlg"))) { // 4:查询交易
 
 			GdGasCusAll qryCusAll = new GdGasCusAll();
-			qryCusAll.setCusAc((String) context.getData(ParamKeys.CUS_AC));
+			
+			if(StringUtils.isNotBlank((String) context.getData(ParamKeys.CUS_AC))){
+				qryCusAll.setCusAc((String) context.getData(ParamKeys.CUS_AC));
+			}
 			qryCusAll.setCusNo((String) context.getData(ParamKeys.THD_CUS_NO));
 			List<Map<String, Object>> infoList = get(
 					GdGasCusAllRepository.class).findCusInfo(qryCusAll);

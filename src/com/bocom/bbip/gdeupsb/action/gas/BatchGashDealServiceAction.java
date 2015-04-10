@@ -2,6 +2,7 @@ package com.bocom.bbip.gdeupsb.action.gas;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,6 +39,7 @@ import com.bocom.bbip.gdeupsb.repository.GdGashBatchTmpRepository;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.ContextUtils;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -87,6 +89,8 @@ public class BatchGashDealServiceAction extends BaseAction implements BatchAcpSe
 		logger.info("============context:" + context);
 		
 		String fleNme = (String)context.getData(ParamKeys.FLE_NME);
+		logger.info("=================fleNme:" + fleNme);
+		
 		
 		/**加锁*/
 		String comNo = (String)context.getData(ParamKeys.COMPANY_NO);
@@ -199,12 +203,12 @@ public class BatchGashDealServiceAction extends BaseAction implements BatchAcpSe
 		
 		//提交代收付
 		userProcessToSubmit(context);
+		context.setData("fleNmeBak", fleNme);
 		//得到反盘文件 
 		userProcessToGet(context);
 		//处理成第三方格式返回
 		
 		
-		context.setData("fleNmeBak", fleNme);
 		logger.info("==========End  BatchDataFileAction  prepareBatchDeal");
 		
 		
@@ -233,19 +237,23 @@ public class BatchGashDealServiceAction extends BaseAction implements BatchAcpSe
 		 * 异步调用process   批量代扣数据提交
 		 */
 			public void userProcessToSubmit(Context context)throws CoreException{
-				logger.info("==========Start  BatchDataFileAction  userProcess");
+				logger.info("==========Start  eups.batchPaySubmitDataProcess  =============");
 				String mothed="eups.batchPaySubmitDataProcess";
+				
+				Date date=new Date();
+				context.setData("reqTme",DateUtils.formatAsSimpleDate(date)+"T"+DateUtils.format(date, "HH:mm:ss"));
+							
 				bbipPublicService.synExecute(mothed, context);
-				logger.info("==========End  BatchDataFileAction  userProcess");
+				logger.info("==========End   eups.batchPaySubmitDataProcess  =============");
 			}
 		/**
 		 * 异步调用process  代收付回调函数：解析回盘文件并入库
 		 */
 			public void userProcessToGet(Context context)throws CoreException{
-				logger.info("==========Start  BatchDataFileAction  userProcess");
+				logger.info("==========Start eups.commNotifyBatchStatus=================");
 				String mothed="eups.commNotifyBatchStatus";
 				bbipPublicService.synExecute(mothed, context);
-				logger.info("==========End  BatchDataFileAction  userProcess");
+				logger.info("==========End  eups.commNotifyBatchStatus=================");
 			}
 	  
 	  
