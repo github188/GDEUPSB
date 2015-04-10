@@ -263,7 +263,7 @@
     </trim>
   </select>
   <select id="findNpInfo" resultType="java.lang.Integer" >
-  SELECT NodNo NodNoF,PrtDat,CarNo,LogNo,InvNo,IdNo,Status,BegDat,EndDat,TLRID
+  
     select NOD_NO,PRT_DAT,CAR_NO,SQN,INV_NO,ID_NO,STATUS,BEG_DAT,END_DAT,TLR_ID
      from gdeupsb.TRSP_NP_MANAG WHERE
     
