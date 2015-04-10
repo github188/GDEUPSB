@@ -4,7 +4,6 @@ import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -18,12 +17,9 @@ import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
-import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo;
-import com.bocom.bbip.gdeupsb.entity.GdLotTxnJnl;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspFeeInfoRepository;
-import com.bocom.bbip.gdeupsb.repository.GdLotTxnJnlRepository;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
@@ -32,13 +28,14 @@ import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
 import com.bocom.jump.bp.support.CollectionUtils;
 
-public class PrintAction extends BaseAction{
-	private final static Log log = LogFactory.getLog(PrintAction.class);
+public class AddPrintAction extends BaseAction{
+	private final static Log log = LogFactory.getLog(AddPrintAction.class);
+	
 	@Autowired
 	GDEupsbTrspFeeInfoRepository gdEupsbTrspFeeInfoRepository;
-
+	
 	public void execute(Context ctx) throws CoreRuntimeException,CoreException{
-		log.info("PrintAction start.......");
+		log.info("AddPrintAction start.......");
 //		ctx.setData(GDParamKeys.OINV_NO, ctx.getData(GDParamKeys.INV_NO));
 //		//TODO:待考虑！！！！
 //		if(!ctx.getData(GDParamKeys.OINV_NO).toString().trim().equals(ctx.getData(GDParamKeys.INV_NO).toString().trim())){
@@ -48,8 +45,8 @@ public class PrintAction extends BaseAction{
 		
 
 		Date printDate = new Date();
-		Date begDat = DateUtils.parse((String)ctx.getData(GDParamKeys.BEG_DAT));
-		Date endDat = DateUtils.parse((String)ctx.getData(GDParamKeys.END_DAT));
+		Date begDat = ctx.getData(GDParamKeys.BEG_DAT);
+		Date endDat = ctx.getData(GDParamKeys.END_DAT);
 		ctx.setData("printYear", DateUtils.format(printDate, DateUtils.STYLE_yyyy));
 		ctx.setData("printMon", DateUtils.format(printDate, DateUtils.STYLE_MM));
 		ctx.setData("printDay", DateUtils.format(printDate, DateUtils.STYLE_dd));
@@ -63,10 +60,8 @@ public class PrintAction extends BaseAction{
 		Map<String, String> mapping = CollectionUtils.createMap();
 		VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
 		String sampleFile="config/report/zhTransport/transportInv.vm";
-		GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
-		gdEupsbTrspFeeInfo.setPayLog(ctx.getData(ParamKeys.OLD_TXN_SEQUENCE).toString());
-		List<GDEupsbTrspFeeInfo> feeInfoList = gdEupsbTrspFeeInfoRepository.find(gdEupsbTrspFeeInfo);
-		Assert.isNotEmpty(feeInfoList, ErrorCodes.EUPS_QUERY_NO_DATA);
+		
+		
 
 		mapping.put("sample", sampleFile);
 		try {
@@ -75,7 +70,7 @@ public class PrintAction extends BaseAction{
 			e.printStackTrace();
 		}
 
-		ctx.setDataMap(BeanUtils.toMap(feeInfoList.get(0)));
+		
 		
 		render.setReportNameTemplateLocationMapping(mapping);
 		String result = render.renderAsString("sample", ctx);
@@ -99,4 +94,5 @@ public class PrintAction extends BaseAction{
 		
          
 	}
+
 }

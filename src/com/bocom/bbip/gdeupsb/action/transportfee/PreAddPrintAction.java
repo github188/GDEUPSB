@@ -58,11 +58,37 @@ public class PreAddPrintAction extends BaseAction{
 		
 		//查询缴费记录
 		GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
-		gdEupsbTrspFeeInfo.setBrNo(GDConstants.BR_NO);
+		gdEupsbTrspFeeInfo.setBrNo(ctx.getData(ParamKeys.BK).toString());
 		gdEupsbTrspFeeInfo.setCarNo(ctx.getData(GDParamKeys.CAR_NO).toString());
 		gdEupsbTrspFeeInfo.setCarTyp(ctx.getData(GDParamKeys.CAR_TYP).toString());
 		gdEupsbTrspFeeInfo.setTactDt(new Date());
-		List<GDEupsbTrspFeeInfo> feeInfoList = gdeupsbtrspfFeeInfoRepository.findLogNo(gdEupsbTrspFeeInfo);
+		List<GDEupsbTrspFeeInfo> feeInfoList = gdeupsbtrspfFeeInfoRepository.find(gdEupsbTrspFeeInfo);
+//		TLOG_NO, OINVNO, STATUS, THD_KEY, PAY_LOG, PRT_NOD
+		
+//		ctx.setDataMap(BeanUtils.toMap(feeInfoList.get(0)));
+		GDEupsbTrspFeeInfo a=feeInfoList.get(0);
+		ctx.setData(GDParamKeys.TLOG_NO, a.getTlogNo());
+		ctx.setData(oinvNo, a.getInvNo());
+		ctx.setData(GDParamKeys.STATUS, a.getStatus());
+		ctx.setData(GDParamKeys.THD_KEY, a.getThdKey());
+		ctx.setData(GDParamKeys.PAY_LOG, a.getPayLog());
+		ctx.setData(GDParamKeys.TCUS_NM, a.getTcusNm());
+		ctx.setData(GDParamKeys.PAY_MON, a.getPayMon());
+		ctx.setData(GDParamKeys.TXN_AMT, a.getTxnAmt());
+		ctx.setData(GDParamKeys.ACT_NO, a.getActNo());
+		ctx.setData(GDParamKeys.BEG_DAT, a.getBegDat());
+		ctx.setData(GDParamKeys.END_DAT, a.getEndDat());
+		ctx.setData(GDParamKeys.CAR_NAME, a.getCarName());
+		ctx.setData(GDParamKeys.CAR_DZS, a.getCarDzs());
+		ctx.setData(GDParamKeys.FEE_STD, a.getFeeStd());
+		ctx.setData(GDParamKeys.CORPUS, a.getCorpus());
+		ctx.setData(GDParamKeys.LATE_FEE, a.getLateFee());
+		ctx.setData(GDParamKeys.CORPUS, a.getCorpus());
+		
+		
+		ctx.setData(GDParamKeys.PRT_NOD, a.getPrtNod());
+		System.out.println("@@@@@@@@@@@@@+"+ctx);
+
 		if(CollectionUtils.isEmpty(feeInfoList)){
 			ctx.setData(ParamKeys.RSP_MSG, "无该车主的当日缴费打发票记录");
 			throw new  CoreRuntimeException(ErrorCodes.EUPS_FIND_ISEMPTY);
@@ -73,16 +99,6 @@ public class PreAddPrintAction extends BaseAction{
 			ctx.setData(ParamKeys.RSP_MSG, "交易检查错，非原发票打印网点");
 			throw new CoreRuntimeException(GDErrorCodes.EUPS_TXN_CHECK_ERROR);
 		}
-//		ctx.setDataMap(BeanUtils.toMap(feeInfoList.get(0)));
-		GDEupsbTrspFeeInfo a=feeInfoList.get(0);
-		ctx.setData(GDParamKeys.TLOG_NO, a.getTlogNo());
-		ctx.setData(oinvNo, a.getOinvNo());
-		ctx.setData(GDParamKeys.STATUS, a.getStatus());
-		ctx.setData(GDParamKeys.THD_KEY, a.getThdKey());
-		ctx.setData(GDParamKeys.PAY_LOG, a.getPayLog());
-		
-		ctx.setData(GDParamKeys.PRT_NOD, a.getPrtNod());
-		
 		String invNoValue = ctx.getData(GDParamKeys.INV_NO).toString().trim();
 
 		String oinvNoValue = ctx.getData(oinvNo).toString().trim();
