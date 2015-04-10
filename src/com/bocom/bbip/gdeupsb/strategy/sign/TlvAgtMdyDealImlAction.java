@@ -23,6 +23,7 @@ import com.bocom.bbip.gdeupsb.expand.AgtMdyDealImlService;
 import com.bocom.bbip.gdeupsb.repository.GdsAgtInfRepository;
 import com.bocom.bbip.gdeupsb.repository.GdsAgtTrcRepository;
 import com.bocom.bbip.gdeupsb.repository.GdsAgtWaterRepository;
+import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
@@ -280,79 +281,9 @@ public class TlvAgtMdyDealImlAction implements AgtMdyDealImlService {
 			String carBin = actNo.substring(0, 9);
 
 			String cardValid = "Y";
-			// TODO:判断cardValid，使用我待测试的codeSwitch
-			// <Item CardBin="622261071" CardValid="Y"/>
-			// <Item CardBin="622260071" CardValid="Y"/>
-			// <Item CardBin="622259071" CardValid="Y"/>
-			// <Item CardBin="622258071" CardValid="Y"/>
-			// <Item CardBin="622262071" CardValid="Y"/>
-			// <Item CardBin="622261571" CardValid="Y"/>
-			// <Item CardBin="622260571" CardValid="Y"/>
-			// <Item CardBin="622259571" CardValid="Y"/>
-			// <Item CardBin="622258571" CardValid="Y"/>
-			// <Item CardBin="622262571" CardValid="Y"/>
-			// <Item CardBin="622261073" CardValid="Y"/>
-			// <Item CardBin="622260073" CardValid="Y"/>
-			// <Item CardBin="622259073" CardValid="Y"/>
-			// <Item CardBin="622258073" CardValid="Y"/>
-			// <Item CardBin="622262073" CardValid="Y"/>
-			// <Item CardBin="622261074" CardValid="Y"/>
-			// <Item CardBin="622260074" CardValid="Y"/>
-			// <Item CardBin="622259074" CardValid="Y"/>
-			// <Item CardBin="622258074" CardValid="Y"/>
-			// <Item CardBin="622262074" CardValid="Y"/>
-			// <Item CardBin="622261075" CardValid="Y"/>
-			// <Item CardBin="622260075" CardValid="Y"/>
-			// <Item CardBin="622259075" CardValid="Y"/>
-			// <Item CardBin="622258075" CardValid="Y"/>
-			// <Item CardBin="622262075" CardValid="Y"/>
-			// <Item CardBin="622261078" CardValid="Y"/>
-			// <Item CardBin="622260078" CardValid="Y"/>
-			// <Item CardBin="622259078" CardValid="Y"/>
-			// <Item CardBin="622258078" CardValid="Y"/>
-			// <Item CardBin="622262078" CardValid="Y"/>
-			// <Item CardBin="622261371" CardValid="Y"/>
-			// <Item CardBin="622260371" CardValid="Y"/>
-			// <Item CardBin="622259371" CardValid="Y"/>
-			// <Item CardBin="622258371" CardValid="Y"/>
-			// <Item CardBin="622262371" CardValid="Y"/>
-			// <Item CardBin="622261373" CardValid="Y"/>
-			// <Item CardBin="622260373" CardValid="Y"/>
-			// <Item CardBin="622259373" CardValid="Y"/>
-			// <Item CardBin="622258373" CardValid="Y"/>
-			// <Item CardBin="622262373" CardValid="Y"/>
-			// <Item CardBin="622261491" CardValid="Y"/>
-			// <Item CardBin="622260491" CardValid="Y"/>
-			// <Item CardBin="622259491" CardValid="Y"/>
-			// <Item CardBin="622258491" CardValid="Y"/>
-			// <Item CardBin="622262491" CardValid="Y"/>
-			// <Item CardBin="622261761" CardValid="Y"/>
-			// <Item CardBin="622260761" CardValid="Y"/>
-			// <Item CardBin="622259761" CardValid="Y"/>
-			// <Item CardBin="622258761" CardValid="Y"/>
-			// <Item CardBin="622262761" CardValid="Y"/>
-			// <Item CardBin="622261448" CardValid="Y"/>
-			// <Item CardBin="622260448" CardValid="Y"/>
-			// <Item CardBin="622259448" CardValid="Y"/>
-			// <Item CardBin="622258448" CardValid="Y"/>
-			// <Item CardBin="622262448" CardValid="Y"/>
-			// <Item CardBin="622261493" CardValid="Y"/>
-			// <Item CardBin="622260493" CardValid="Y"/>
-			// <Item CardBin="622259493" CardValid="Y"/>
-			// <Item CardBin="622258493" CardValid="Y"/>
-			// <Item CardBin="622262493" CardValid="Y"/>
-			// <Item CardBin="622261492" CardValid="Y"/>
-			// <Item CardBin="622260492" CardValid="Y"/>
-			// <Item CardBin="622259492" CardValid="Y"/>
-			// <Item CardBin="622258492" CardValid="Y"/>
-			// <Item CardBin="622262492" CardValid="Y"/>
-			// <Item CardBin="622261495" CardValid="Y"/>
-			// <Item CardBin="622260495" CardValid="Y"/>
-			// <Item CardBin="622259495" CardValid="Y"/>
-			// <Item CardBin="622258495" CardValid="Y"/>
-			// <Item CardBin="622262495" CardValid="Y"/>
-
-			if (!"Y".equals(cardValid)) {
+			
+			String cardVldFlg=CodeSwitchUtils.codeGenerator("cardValidTel", carBin);
+			if (!cardVldFlg.equals(cardValid)) {
 				// TODO:根据GdsBId获得对应的BusNam（业务名称），使用我待测试的codeSwitch
 				String busNam = "有线电视";
 				context.setData("responseType", "E");

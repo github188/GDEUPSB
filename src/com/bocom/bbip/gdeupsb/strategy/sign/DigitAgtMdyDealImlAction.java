@@ -299,11 +299,11 @@ public class DigitAgtMdyDealImlAction implements AgtMdyDealImlService {
 	 */
 	private void chechkCusInf(Context context, String cusNo, String tBusTyp, String agtStb, int i) throws CoreException {
 		// 校验用户编号长度
-		if (cusNo.length() != 10) {
-			context.setData("responseType", "E");
-			context.setData("responseMessage", "第" + i + "条记录，用户编号" + cusNo + "，长度不足10位");
-			throw new CoreException(GDErrorCodes.EUPS_SIGN_CUSNO_LENGTH_ERROR, "第" + i + "条记录，用户编号" + cusNo + "，长度不足10位");
-		}
+//		if (cusNo.length() != 10) {
+//			context.setData("responseType", "E");
+//			context.setData("responseMessage", "第" + i + "条记录，用户编号" + cusNo + "，长度不足10位");
+//			throw new CoreException(GDErrorCodes.EUPS_SIGN_CUSNO_LENGTH_ERROR, "第" + i + "条记录，用户编号" + cusNo + "，长度不足10位");
+//		}
 		// 校验是否存在已签约的数据
 		Map<String, Object> inpara = new HashMap<String, Object>();
 		inpara.put("agtSTb", agtStb);
