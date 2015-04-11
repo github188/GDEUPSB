@@ -103,6 +103,7 @@ public class BatchFileCommon extends BaseAction {
 			info.setRsvFld8(batNoFile);
 			String sqn=get(BBIPPublicServiceImpl.class).getBBIPSequence();
 			context.setData("rsvFld7", sqn);
+			context.setData(ParamKeys.SEQUENCE, sqn);
 			info.setRsvFld7(sqn);
 			//rsvFld6  预留代收付生成批次号  
 			
