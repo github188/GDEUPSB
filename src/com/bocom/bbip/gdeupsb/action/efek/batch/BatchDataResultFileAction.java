@@ -114,7 +114,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			operateFTP.putCheckFile(eupsThdFtpConfig);
 			
 			//TODO 通知第三方
-//			callThd(context);
+			callThd(context);
 			logger.info("===============End  BatchDataResultFileAction  afterBatchDeal");	
 		}
 	/**
@@ -179,6 +179,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			headMap.put("totCnt", gdEupsBatchConsoleInfoUpdate.getTotCnt());
 			headMap.put("totAmt",gdEupsBatchConsoleInfoUpdate.getTotAmt().scaleByPowerOfTen(2).intValue());
 			headMap.put("sucTotCnt", gdEupsBatchConsoleInfoUpdate.getSucTotCnt());
+			headMap.put("sucTotCnt", gdEupsBatchConsoleInfoUpdate.getPayCnt());
 			headMap.put("sucTotAmt", gdEupsBatchConsoleInfoUpdate.getSucTotAmt().scaleByPowerOfTen(2).intValue());
 			headMap.put("falTotCnt", gdEupsBatchConsoleInfoUpdate.getFalTotCnt());
 			headMap.put("falTotAmt", gdEupsBatchConsoleInfoUpdate.getFalTotAmt().scaleByPowerOfTen(2).intValue());
@@ -216,8 +217,9 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			context.setData(GDParamKeys.TRADE_RECEIVE, GDConstants.TRADE_RECEIVE);//交易接收方
 			context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 			context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
-			context.setData("PKGCNT", "000000");	
-					
+			context.setData("PKGCNT", "000001");	
+			context.setData(GDParamKeys.SVRCOD, "21");
+			
 					try{
 						Map<String, Object> rspMap = callThdTradeManager.trade(context);
 						

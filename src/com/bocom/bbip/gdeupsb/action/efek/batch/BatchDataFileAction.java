@@ -125,7 +125,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 			Map<String, Object> headMap=new HashMap<String, Object>();
 			//TODO
 			System.out.println();
-			System.out.println("~~~~~~~~~~comNO="+comNo);
+			System.out.println("~~~~~~~~~~comNo="+comNo);
 			headMap.put(ParamKeys.COMPANY_NO, "4840000703");
 			headMap.put(GDParamKeys.TOT_COUNT, totCnt);
 			headMap.put(ParamKeys.TOT_AMT, totAmts);
@@ -235,7 +235,6 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 									String rsvFld4=firstLine.substring(55,58); //3
 									gdEupsBatchConsoleInfo.setRsvFld4(rsvFld4);
 									String rTotCnt=firstLine.substring(58,69); //11
-
 									if(!rTotCnt.trim().equals(totCnt.trim())){
 											throw new CoreException("总笔数不相同");
 									}
@@ -248,14 +247,15 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 									gdEupsBatchConsoleInfo.setTotAmt(totTxnAmt);
 									context.setData("totAmt", totTxnAmt);
 									String rsvFld3=firstLine.substring(85,87);
-									gdEupsBatchConsoleInfo.setRsvFld1(rsvFld3);
+									gdEupsBatchConsoleInfo.setRsvFld3(rsvFld3);
 									String rsvFld1=firstLine.substring(87);
-									String rsvFld2=context.getData(ParamKeys.THD_SQN).toString();
+									String rsvFld2=context.getData(ParamKeys.THD_SQN).toString()+context.getData("txnDte")+context.getData("txnTme");
 									gdEupsBatchConsoleInfo.setRsvFld1(rsvFld1);
 									gdEupsBatchConsoleInfo.setRsvFld2(rsvFld2);
 									gdEupsBatchConsoleInfo.setBatNo(batNo);
 									gdEupsBatchConsoleInfo.setRsvFld7(context.getData(ParamKeys.SEQUENCE).toString());
 									gdEupsBatchConsoleInfo.setRsvFld8(context.getData("batNoFile").toString());
+									
 									gdEupsBatchConsoleInfoRepository.updateConsoleInfo(gdEupsBatchConsoleInfo);
 									logger.info("==========Successful to update GDEupsBatchConsoleInfo");
 								i++;
