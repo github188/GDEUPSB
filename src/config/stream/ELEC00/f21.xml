@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="460421Req">
+		
+	    <fixString name="rsvFld2" length="38" /> <!--原交易流水号、日期、时间   -->
+       <fixString name="comNo"   length=" 8" /> <!--单位编码-->
+       <fixString name="busType"   length=" 3" /> <!--收费方式-->
+       <fixString name="payType"   length=" 3" /> <!--费用类型-->
+       <fixString name="fileNme"   length="36" /> <!--文件名称-->
+       <fixString name="fileType"   length=" 2" value="02" /> <!--文件类型-->
+       <fixString name="rsvFld3"  length="32" /> <!--文件MD5-->
+       <fixString name="totCnt"    length="11" /> <!--总笔数-->
+       <fixString name="totAmt"    length="16" /> <!--总金额-->
+       <fixString name="sucTotCnt"   length="11" /> <!--成功笔数-->
+       <fixString name="sucTotAmt"   length="16" /> <!--成功金额-->
+       <fixString name="falTotCnt"   length="11" /> <!--失败笔数-->
+       <fixString name="falTotAmt"   length="16" /> <!--失败金额-->
+
+      
+	</segment>
