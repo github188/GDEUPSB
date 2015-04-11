@@ -480,7 +480,7 @@
       <xs:documentation>原账户/卡号</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:maxLength value="12"/>
+      <xs:maxLength value="21"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="KKB_SType">
