@@ -45,25 +45,7 @@ public class InvoiceFinalAction extends BaseAction{
 			ctx.setData(GDParamKeys.TLOG_NO, StringUtils.substring(sqn, 2, 8)+StringUtils.substring(sqn, 14, 20));
 			Map<String, Object> thdReturnMessage = callThdReturnMessage.trade(ctx);
 			GDEupsbTrspTxnJnl gDEupsbTrspTxnJnl=BeanUtils.toObject(ctx.getDataMap(), GDEupsbTrspTxnJnl.class);
-			
-			
-			if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_OVERTIME)){
-				ctx.setData(GDParamKeys.TTXN_ST, "T");  //主机交易状态设为超时
-				ctx.setData(GDParamKeys.TXN_ST, "U");   //交易状态设为初始状态
-				gDEupsbTrspTxnJnl.setTtxnSt("T");
-				gDEupsbTrspTxnJnl.setTxnSt("U");
-				gdEupsbTrspTxnJnlRepository.update(gDEupsbTrspTxnJnl);
-				ctx.setData(ParamKeys.RSP_MSG, "路桥方交易超时");
-				throw new CoreRuntimeException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
-			}else if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_FAIL)){
-				ctx.setData(GDParamKeys.TTXN_ST, "X");  //主机交易状态设为未发送
-				ctx.setData(GDParamKeys.TXN_ST, "X");   //交易状态设为初始状态
-				gDEupsbTrspTxnJnl.setTtxnSt("X");
-				gDEupsbTrspTxnJnl.setTxnSt("X");
-				gdEupsbTrspTxnJnlRepository.update(gDEupsbTrspTxnJnl);
-				ctx.setData(ParamKeys.RSP_MSG, "路桥方交易失败");
-				throw new CoreRuntimeException(ErrorCodes.TRANSACTION_ERROR_OTHER);
-			}else{
+			if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL)){
 				if("000".equals(thdReturnMessage.get(GDParamKeys.TRSP_CD))){
 					
 					ctx.setData(GDParamKeys.TTXN_ST, "S");  //主机交易状态设为成功
@@ -94,8 +76,25 @@ public class InvoiceFinalAction extends BaseAction{
 					gdEupsbTrspTxnJnlRepository.update(gDEupsbTrspTxnJnl);
 					throw new CoreRuntimeException(ErrorCodes.TRANSACTION_ERROR_OTHER);
 				}
-					
+			}else if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_FAIL)){
+				ctx.setData(GDParamKeys.TTXN_ST, "X");  //主机交易状态设为未发送
+				ctx.setData(GDParamKeys.TXN_ST, "X");   //交易状态设为初始状态
+				gDEupsbTrspTxnJnl.setTtxnSt("X");
+				gDEupsbTrspTxnJnl.setTxnSt("X");
+				gdEupsbTrspTxnJnlRepository.update(gDEupsbTrspTxnJnl);
+				ctx.setData(ParamKeys.RSP_MSG, "路桥方交易失败");
+				throw new CoreRuntimeException(ErrorCodes.TRANSACTION_ERROR_OTHER);
+			}else {
+				ctx.setData(GDParamKeys.TTXN_ST, "T");  //主机交易状态设为超时
+				ctx.setData(GDParamKeys.TXN_ST, "U");   //交易状态设为初始状态
+				gDEupsbTrspTxnJnl.setTtxnSt("T");
+				gDEupsbTrspTxnJnl.setTxnSt("U");
+				gdEupsbTrspTxnJnlRepository.update(gDEupsbTrspTxnJnl);
+				ctx.setData(ParamKeys.RSP_MSG, "路桥方交易超时");
+				throw new CoreRuntimeException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
 			}
+			
+			
 		}
 //		TODO:
 //			 <Set>FilNam=STRCAT(INVO,$TlrId,00)</Set>

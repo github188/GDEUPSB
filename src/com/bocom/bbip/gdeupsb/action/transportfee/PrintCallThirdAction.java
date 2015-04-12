@@ -67,47 +67,7 @@ public class PrintCallThirdAction extends BaseAction{
 		ctx.setData(GDParamKeys.TLOG_NO, StringUtils.substring(sqn, 2, 8)+StringUtils.substring(sqn, 14, 20));
 		Map<String,Object> thdReturnMessage = callThdTradeManager.trade(ctx);
 		log.info("call third start....[the state is" + ctx.getState() + "]");
-		
-
-		if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_OVERTIME)){
-			ctx.setData(GDParamKeys.TXN_ST, "U");
-			ctx.setData(GDParamKeys.TTXN_ST, "T");
-			//更新路桥方记账信息
-			gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
-			gdEupsbTrspTxnJnl.setTxnSt(ctx.getData(GDParamKeys.TXN_ST).toString());
-			gdEupsbTrspTxnJnl.setNodNo(ctx.getData(ParamKeys.BR).toString()); //银行网点号
-			gdEupsbTrspTxnJnl.setInvNo(ctx.getData(GDParamKeys.INV_NO).toString());
-			gdEupsbTrspTxnJnl.setSqn(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
-			gdEupsbTrspTxnJnlRepository.updateSt(gdEupsbTrspTxnJnl);
-			
-//			TODO: <If condition="IS_NOEQUAL_STRING($TxnCnl,TRM)">
-//          <Exec func="PUB:SetNoResponse"/>
-//       </If>
-//       <Exec func="PUB:DefaultErrorProc"/>
-
-			ctx.setData(ParamKeys.RSP_CDE, ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
-			ctx.setData(ParamKeys.RSP_MSG, "路桥方交易超时");
-			//TODO:此处throw待考虑是否放开
-			throw new CoreRuntimeException( ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
-		}else if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_TRANS_FAIL)){
-			ctx.setData(GDParamKeys.TXN_ST, "X");
-			ctx.setData(GDParamKeys.TTXN_ST, "X");
-			gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
-			gdEupsbTrspTxnJnl.setTxnSt(ctx.getData(GDParamKeys.TXN_ST).toString());
-			gdEupsbTrspTxnJnl.setNodNo(ctx.getData(ParamKeys.BR).toString());
-			gdEupsbTrspTxnJnl.setInvNo(ctx.getData(GDParamKeys.INV_NO).toString());
-			gdEupsbTrspTxnJnl.setSqn(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
-			gdEupsbTrspTxnJnlRepository.updateSt(gdEupsbTrspTxnJnl);
-			
-//			TODO: <If condition="IS_NOEQUAL_STRING($TxnCnl,TRM)">
-//          <Exec func="PUB:SetNoResponse"/>
-//       </If>
-//       <Exec func="PUB:DefaultErrorProc"/>
-
-			ctx.setData(ParamKeys.RSP_CDE, ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
-			ctx.setData(ParamKeys.RSP_MSG, "交易失败");
-			throw new CoreRuntimeException( ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
-		}else{
+		if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL)){
 			if("000".equals(thdReturnMessage.get(GDParamKeys.TRSP_CD))){	
 				ctx.setDataMap(thdReturnMessage);
 				ctx.setData(GDParamKeys.TXN_ST, "S");
@@ -169,6 +129,44 @@ public class PrintCallThirdAction extends BaseAction{
 				throw new CoreRuntimeException( ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
 				
 			}
+		}else if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_TRANS_FAIL)){
+			ctx.setData(GDParamKeys.TXN_ST, "X");
+			ctx.setData(GDParamKeys.TTXN_ST, "X");
+			gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
+			gdEupsbTrspTxnJnl.setTxnSt(ctx.getData(GDParamKeys.TXN_ST).toString());
+			gdEupsbTrspTxnJnl.setNodNo(ctx.getData(ParamKeys.BR).toString());
+			gdEupsbTrspTxnJnl.setInvNo(ctx.getData(GDParamKeys.INV_NO).toString());
+			gdEupsbTrspTxnJnl.setSqn(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
+			gdEupsbTrspTxnJnlRepository.updateSt(gdEupsbTrspTxnJnl);
+			
+//			TODO: <If condition="IS_NOEQUAL_STRING($TxnCnl,TRM)">
+//          <Exec func="PUB:SetNoResponse"/>
+//       </If>
+//       <Exec func="PUB:DefaultErrorProc"/>
+
+			ctx.setData(ParamKeys.RSP_CDE, ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
+			ctx.setData(ParamKeys.RSP_MSG, "交易失败");
+			throw new CoreRuntimeException( ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
+		}else {
+			ctx.setData(GDParamKeys.TXN_ST, "U");
+			ctx.setData(GDParamKeys.TTXN_ST, "T");
+			//更新路桥方记账信息
+			gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
+			gdEupsbTrspTxnJnl.setTxnSt(ctx.getData(GDParamKeys.TXN_ST).toString());
+			gdEupsbTrspTxnJnl.setNodNo(ctx.getData(ParamKeys.BR).toString()); //银行网点号
+			gdEupsbTrspTxnJnl.setInvNo(ctx.getData(GDParamKeys.INV_NO).toString());
+			gdEupsbTrspTxnJnl.setSqn(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
+			gdEupsbTrspTxnJnlRepository.updateSt(gdEupsbTrspTxnJnl);
+			
+//			TODO: <If condition="IS_NOEQUAL_STRING($TxnCnl,TRM)">
+//          <Exec func="PUB:SetNoResponse"/>
+//       </If>
+//       <Exec func="PUB:DefaultErrorProc"/>
+
+			ctx.setData(ParamKeys.RSP_CDE, ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
+			ctx.setData(ParamKeys.RSP_MSG, "路桥方交易超时");
+			//TODO:此处throw待考虑是否放开
+			throw new CoreRuntimeException( ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
 		}
 
 	}
