@@ -138,6 +138,13 @@ public class BatchFileCommon extends BaseAction {
 		Lock(comNo);
 		//TODO 
 		String tlr=(String)context.getData(ParamKeys.TELLER);
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println(tlr);
+		System.out.println();
+		System.out.println();
 //		tlr="4842884";
 //		context.setData("tlr", tlr);
 		final String br=(String)context.getData(ParamKeys.BR);
