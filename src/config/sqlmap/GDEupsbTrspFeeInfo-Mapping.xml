@@ -816,7 +816,7 @@
     AND (STATUS = #{status,jdbcType=CHAR} OR #{status,jdbcType=CHAR} = 'A') 
     
   </select>
-  <select id="findInfoCount" resultType="java.lang.Integer" >
+  <select id="findInfoCount" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo" resultType="java.lang.Integer" >
     select count(*) from gdeupsb.TRSP_FEE_INFO where BR_NO=#{brNo,jdbcType=CHAR} AND (CAR_NO=#{carNo,jdbcType=CHAR} OR 
     #{carNo,jdbcType=CHAR} = '粤C') AND  (PAY_DAT BETWEEN #{begDat,jdbcType=DATE} AND  #{endDat,jdbcType=DATE}) 
     AND (STATUS = #{status,jdbcType=CHAR} OR #{status,jdbcType=CHAR} = 'A') 
@@ -945,7 +945,7 @@
       </if>
      
     </set>
-    where THD_KEY = #{thdKey,jdbcType=CHAR} AND STATUS = '1' AND BR_NO='443999'
+    where THD_KEY = #{thdKey,jdbcType=CHAR} AND STATUS = '1' 
   </update>
  
  <select id="findForCancel" resultMap="basicResultMap" >
