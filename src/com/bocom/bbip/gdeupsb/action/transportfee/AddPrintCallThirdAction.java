@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
-import com.bocom.bbip.eups.common.Constants;
+import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo;
@@ -51,19 +51,13 @@ public class AddPrintCallThirdAction extends BaseAction{
 					log.info("callThdTradeManager start......");
 					if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_OVERTIME)){
 						ctx.setData(ParamKeys.RSP_MSG, "路桥方交易超时");
-//						throw new CoreRuntimeException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);			
-						System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@"+ctx.getState());
+						throw new CoreRuntimeException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);			
+						
 					}else if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_TRANS_FAIL)){
 						ctx.setData(ParamKeys.RSP_MSG, "路桥方交易失败");
-//						throw new CoreRuntimeException( ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
+						throw new CoreRuntimeException( ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
 					}else{
-						if(!"000".equals(thdReturnMessage.get("trspCd"))){
-							ctx.setData(ParamKeys.RSP_MSG, "路桥方返回：" + thdReturnMessage.get("trspCd"));
-//							throw new CoreRuntimeException( ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
-							System.out.println("路桥方返回：" + thdReturnMessage.get("trspCd"));
-							ctx.setState("error");
-							
-						}else{
+						if("000".equals(thdReturnMessage.get("trspCd"))){
 							ctx.setData(ParamKeys.RSP_CDE, "000");
 							
 							GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
@@ -74,6 +68,13 @@ public class AddPrintCallThirdAction extends BaseAction{
 							gdEupsbTrspFeeInfo.setPrtNod((String)ctx.getData(GDParamKeys.NOD_NO));
 							gdEupsbTrspFeeInfoRepository.updateThdFeeInfo(gdEupsbTrspFeeInfo);
 							ctx.setState("complete");
+							
+						}else{
+							ctx.setData(ParamKeys.RSP_MSG, "路桥方返回：" + thdReturnMessage.get("trspCd"));
+//							throw new CoreRuntimeException( ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
+							System.out.println("路桥方返回：" + thdReturnMessage.get("trspCd"));
+							throw new CoreRuntimeException( ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
+//							ctx.setState("error");
 						}
 					}
 					           

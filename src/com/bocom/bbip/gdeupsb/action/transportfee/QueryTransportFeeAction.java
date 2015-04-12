@@ -71,13 +71,7 @@ public class QueryTransportFeeAction extends BaseAction{
 			//TODO: <Set>RspCod=RBF999</Set>
 			throw new CoreRuntimeException(ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
 		}else{
-			if(!"000".equals(thdReturnMessage.get(GDParamKeys.TRSP_CD))){
-				ctx.setData(ParamKeys.RSP_MSG, "查询路桥方返回错误");
-				//TODO:<Set>RspMsg=STRCAT(路桥方返回: [,$TRspCd,],$TRspMsg)</Set>
-				//TODO: <Set>RspCod=RBF999</Set>
-				throw new CoreRuntimeException(ErrorCodes.EUPS_FAIL);
-			}else{
-
+			if("000".equals(thdReturnMessage.get(GDParamKeys.TRSP_CD))){
 				GDEupsbTrspPayInfo gdEupsbTrspPayInfo = new GDEupsbTrspPayInfo();
 				gdEupsbTrspPayInfo.setBrNo(ctx.getData(ParamKeys.BK).toString());
 				gdEupsbTrspPayInfo.setCarTyp(ctx.getData(GDParamKeys.CAR_TYP).toString());
@@ -99,6 +93,12 @@ public class QueryTransportFeeAction extends BaseAction{
 				gdEupsbTrspPayInfo.setTactDt(DateUtils.parse((String)ctx.getData(GDParamKeys.TACT_DT), DateUtils.STYLE_yyyyMMdd));
 				gdEupsbTrspPayInfo.setTxnAmt(new BigDecimal(ctx.getData(ParamKeys.TXN_AMOUNT).toString()));
 				gdEupsbTrspPayInfoRepository.insert(gdEupsbTrspPayInfo);
+			}else{
+				ctx.setData(ParamKeys.RSP_MSG, "查询路桥方返回错误");
+				//TODO:<Set>RspMsg=STRCAT(路桥方返回: [,$TRspCd,],$TRspMsg)</Set>
+				//TODO: <Set>RspCod=RBF999</Set>
+				throw new CoreRuntimeException(ErrorCodes.EUPS_FAIL);
+				
 			}
 		}
 	}

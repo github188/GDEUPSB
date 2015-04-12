@@ -55,10 +55,10 @@ public class FeeInfoQryAction extends BaseAction{
 //            <Return/>
 //         </If>
 		int totalElements;
-		ctx.setData(GDParamKeys.BR_NO, GDConstants.BR_NO);
+		ctx.setData(GDParamKeys.BR_NO, ctx.getData(ParamKeys.BK));
 		GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
 		gdEupsbTrspFeeInfo.setCarNo(ctx.getData(GDParamKeys.CAR_NO).toString());
-		gdEupsbTrspFeeInfo.setBrNo(GDConstants.BR_NO);
+		gdEupsbTrspFeeInfo.setBrNo(ctx.getData(ParamKeys.BK).toString());
 		gdEupsbTrspFeeInfo.setBegDat(DateUtils.parse(ctx.getData(GDParamKeys.BEG_DAT).toString(),DateUtils.STYLE_SIMPLE_DATE));
 		gdEupsbTrspFeeInfo.setEndDat(DateUtils.parse(ctx.getData(GDParamKeys.END_DAT).toString(),DateUtils.STYLE_SIMPLE_DATE));
 		log.info(DateUtils.parse(ctx.getData(GDParamKeys.BEG_DAT).toString(),DateUtils.STYLE_SIMPLE_DATE));

@@ -45,14 +45,9 @@ public class GDBuaPaymentCancelUsingReversalInvoice extends BaseAction {
 		if ("S".equals(context.getData("ohTxnSt"))) {
 			throw new CoreException("");
 		}
-		// <Set>PActNo=$TActNo</Set>
-		// <Set>Mask=STRCAT(9,$BBusTyp)</Set>
-		// <Set>CcyTyp=0</Set>
-		// <Set>CashNo=121</Set>
-		// <Set>VchChk=0</Set>
-		// <Set>HTxnCd=@PARA.HTxnCd_C2P</Set>
+		
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
-		context.setData(GDParamKeys.TLOG_NO, context.getData(GDParamKeys.SQN));
+		
 		GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
 		// 登记退费流水号
 		gdEupsbTrspFeeInfo.setThdKey(context.getData(GDParamKeys.THD_KEY)
@@ -124,18 +119,7 @@ public class GDBuaPaymentCancelUsingReversalInvoice extends BaseAction {
 		context.setData("cardType", cardTyp);
 		context.setData("actSysTyp", actSysTyp);
 
-		// }
-
-		// catch (Exception e) {
-		// logger.info("BbipPayment call BBIP has error：" + e.getMessage());
-		// context.setData(ParamKeys.RESPONSE_TYPE,
-		// Constants.RESPONSE_TYPE_FAIL);
-		// context.setData(ParamKeys.RESPONSE_CODE,
-		// ErrorCodes.TRANSACTION_ERROR_COMM_ERROR);
-		// context.setData(ParamKeys.RESPONSE_MESSAGE,
-		// Constants.RESPONSE_MSG_FAIL);
-		// // throw new CoreException(ErrorCodes.TRANSACTION_ERROR_COMM_ERROR);
-		// }
+		
 
 		if (context.getState().equals(
 				BPState.BUSINESS_PROCESSNIG_STATE_OVERTIME)) {

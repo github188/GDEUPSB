@@ -85,7 +85,7 @@ public class AddPrintAction extends BaseAction{
 		try {
 
 			outStream = new BufferedOutputStream(new FileOutputStream(
-					"D:\\test\\"+fileName));
+					"/home/bbipadm/data/mftp/"+fileName));
 			outStream.write(result.getBytes(GDConstants.CHARSET_ENCODING_GBK));
 			outStream.close();
 		} catch (IOException e) {

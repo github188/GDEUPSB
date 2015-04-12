@@ -108,27 +108,7 @@ public class PrintCallThirdAction extends BaseAction{
 			ctx.setData(ParamKeys.RSP_MSG, "交易失败");
 			throw new CoreRuntimeException( ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
 		}else{
-			if(!"000".equals(thdReturnMessage.get(GDParamKeys.TRSP_CD))){				
-				ctx.setData(GDParamKeys.TXN_ST, "F");
-				ctx.setData(GDParamKeys.TTXN_ST, "F");
-				gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
-				gdEupsbTrspTxnJnl.setTxnSt(ctx.getData(GDParamKeys.TXN_ST).toString());
-				gdEupsbTrspTxnJnl.setNodNo(ctx.getData(ParamKeys.BR).toString());
-				gdEupsbTrspTxnJnl.setInvNo(ctx.getData(GDParamKeys.INV_NO).toString());
-				gdEupsbTrspTxnJnl.setSqn(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
-				gdEupsbTrspTxnJnlRepository.updateSt(gdEupsbTrspTxnJnl);
-				
-//				TODO: <If condition="IS_NOEQUAL_STRING($TxnCnl,TRM)">
-//	          <Exec func="PUB:SetNoResponse"/>
-//	       </If>
-//	       <Exec func="PUB:DefaultErrorProc"/>
-
-				ctx.setData(ParamKeys.RSP_CDE, ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
-				ctx.setData(ParamKeys.RSP_MSG, "路桥方返回：" + thdReturnMessage.get(GDParamKeys.TRSP_CD));
-				throw new CoreRuntimeException( ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
-				
-
-			}else{
+			if("000".equals(thdReturnMessage.get(GDParamKeys.TRSP_CD))){	
 				ctx.setDataMap(thdReturnMessage);
 				ctx.setData(GDParamKeys.TXN_ST, "S");
 				ctx.setData(GDParamKeys.TTXN_ST, "S");
@@ -156,7 +136,7 @@ public class PrintCallThirdAction extends BaseAction{
 				gdEupsbTrspFeeInfo.setClgs((String)ctx.getData(GDParamKeys.CLGS));
 				gdEupsbTrspFeeInfo.setYybz((String)ctx.getData(GDParamKeys.YYBZ));
 				
-				gdEupsbTrspFeeInfo.setTlogNo(ctx.getData(GDParamKeys.SQN).toString());
+				gdEupsbTrspFeeInfo.setTlogNo(ctx.getData(GDParamKeys.TLOG_NO).toString());
 				gdEupsbTrspFeeInfo.setTactDt(tactDt);
 				
 			
@@ -165,7 +145,29 @@ public class PrintCallThirdAction extends BaseAction{
 				gdEupsbTrspFeeInfo.setPayLog(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
 				gdEupsbTrspFeeInfoRepository.updateStatus(gdEupsbTrspFeeInfo);
 				ctx.setState("complete");
+			
 
+			}else{
+				
+				ctx.setData(GDParamKeys.TXN_ST, "F");
+				ctx.setData(GDParamKeys.TTXN_ST, "F");
+				gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
+				gdEupsbTrspTxnJnl.setTxnSt(ctx.getData(GDParamKeys.TXN_ST).toString());
+				gdEupsbTrspTxnJnl.setNodNo(ctx.getData(ParamKeys.BR).toString());
+				gdEupsbTrspTxnJnl.setInvNo(ctx.getData(GDParamKeys.INV_NO).toString());
+				gdEupsbTrspTxnJnl.setSqn(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
+				gdEupsbTrspTxnJnlRepository.updateSt(gdEupsbTrspTxnJnl);
+				
+//				TODO: <If condition="IS_NOEQUAL_STRING($TxnCnl,TRM)">
+//	          <Exec func="PUB:SetNoResponse"/>
+//	       </If>
+//	       <Exec func="PUB:DefaultErrorProc"/>
+
+				ctx.setData(ParamKeys.RSP_CDE, ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
+				ctx.setData(ParamKeys.RSP_MSG, "路桥方返回：" + thdReturnMessage.get(GDParamKeys.TRSP_CD));
+				ctx.setState("fail");
+				throw new CoreRuntimeException( ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
+				
 			}
 		}
 

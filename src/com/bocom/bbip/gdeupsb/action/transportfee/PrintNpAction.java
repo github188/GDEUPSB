@@ -130,7 +130,7 @@ public class PrintNpAction extends BaseAction{
 		gdEupsbTrspNpManagC.setSqn(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
 		gdEupsbTrspNpManagC.setIdNo(ctx.getData(GDParamKeys.ID_NO).toString());
 		gdEupsbTrspNpManagRepository.updateSt(gdEupsbTrspNpManagC);
-		
+		System.out.println("@@@@@@@@@@@+"+ctx);
 	}
 
 }
