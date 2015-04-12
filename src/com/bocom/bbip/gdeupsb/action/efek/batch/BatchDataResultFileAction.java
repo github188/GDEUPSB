@@ -114,7 +114,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			operateFTP.putCheckFile(eupsThdFtpConfig);
 			
 			//TODO 通知第三方
-			callThd(context);
+//			callThd(context,gdeupsBatchConsoleInfo);
 			logger.info("===============End  BatchDataResultFileAction  afterBatchDeal");	
 		}
 	/**
@@ -196,7 +196,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 /**
  * 外发第三方
  */
-	public void callThd(Context context){
+	public void callThd(Context context,GDEupsBatchConsoleInfo gdeupsBatchConsoleInfo){
 		logger.info("========Start BatchDataResultFileAction callThd");	
 		
 		context.setData(GDParamKeys.TREATY_VERSION, GDConstants.TREATY_VERSION);//协议版本
