@@ -17,5 +17,5 @@ public interface GdFbpdObusBatchTmpRepository extends PagingAndSortingRepository
 	public List<Map<String, Object>> findTot(Map<String, Object> map);
 	
 	@Insert
-	public void batchInsert(List <GdFbpdObusBatchTmp>list);
+	public void batchInsert(List<GdFbpdObusBatchTmp> list);
 }

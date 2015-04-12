@@ -346,7 +346,7 @@
 		<foreach collection="list" item="item" index="index"
 			separator=",">
 			(
-			#{item.sqn}
+			#{item.sqn},
 			#{item.comNo},
 			#{item.cusAc},
 			#{item.cusNo},
@@ -362,7 +362,8 @@
 			#{item.tmpFld2},
 			#{item.tmpFld3},
 			#{item.tmpFld4},
-			#{item.tmpFld5})
+			#{item.tmpFld5}
+			)
 		</foreach>
 	</select>
   

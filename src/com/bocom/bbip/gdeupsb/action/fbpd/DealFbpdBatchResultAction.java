@@ -65,7 +65,7 @@ public class DealFbpdBatchResultAction implements AfterBatchAcpService {
 
   
     @Override
-    public void afterBatchDeal(AfterBatchAcpDomain arg0, Context context) throws CoreException {
+    public void afterBatchDeal(AfterBatchAcpDomain afterBatchAcpDomain, Context context) throws CoreException {
         logger.info("Enter in DealFbpdBatchResultAction! ");
         logger.info("============context=" + context);
         
