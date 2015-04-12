@@ -73,12 +73,22 @@ public class BatchAcpServiceImplZSAG00 extends BaseAction implements
 		/**批量前检查和初始化批量控制表 生成批次号batNo*/
 		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).BeforeBatchProcess(context);
 		logger.info("开始解析批量文件-------------");
-
-		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne("zsag00");
+		
 		String fleNme=context.getData(ParamKeys.FLE_NME).toString();
+		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne("zsag00");
+		config.setFtpDir("1");
 		config.setRmtFleNme(fleNme);
 		config.setLocFleNme(fleNme);
-		config.setFtpDir("1");
+		if(context.getData("mothed").equals("1")){
+			config.setThdIpAdr("182.53.15.187");
+			config.setFtpDir("1");
+			config.setOppNme("weblogic");
+			config.setOppUsrPsw("123456");
+			String path="./save/tfiles/" + context.getData(ParamKeys.BR) + "/" +context.getData(ParamKeys.TELLER)+"/";
+			logger.info("===============path:" + path);
+			config.setRmtWay(path);
+			config.setLocDir("D:/test/ZSAG00/");//TODO
+		}
 		((OperateFTPAction)get("opeFTP")).getFileFromFtp(config);
 		String path=config.getLocDir();
 		logger.info("===============获取文件成功");

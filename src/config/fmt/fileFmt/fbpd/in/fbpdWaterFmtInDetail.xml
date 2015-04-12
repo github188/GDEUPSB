@@ -24,7 +24,7 @@
 	<fixString name="cusNo" length="9" />
 	<fixString name="cusNme" length="30" />
 	<fixString name="thdCusNo" length="10" />
-	<fixString name="txnAmt" length="13" referred="true" expression="exp:@com.bocom.bbip.utils.NumberUtils@yuanToCent(this.txnAMt)" />
+	<fixString name="txnAmt" length="13" />  <!--  referred="true" expression="exp:@com.bocom.bbip.utils.NumberUtils@yuanToCent(this.txnAMt)"   -->
 		
 	</segment>
 </message>
