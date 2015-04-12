@@ -332,7 +332,7 @@
 
 	<!-- 中山文件批量:文件批量完成通知前端 -->
 	<bean id="eups.afterBatchAcpServiceActionZSAG00"
-		class="com.bocom.bbip.gdeupsb.action.fbpd.DealFbpdBatchResultAction" />
+		class="com.bocom.bbip.gdeupsb.action.fbpd.AfterBatchAcpServiceImplZSAG00" />
 
 
 	<!--汕头电力单边划扣 -->

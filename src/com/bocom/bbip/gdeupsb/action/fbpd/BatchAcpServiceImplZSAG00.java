@@ -120,7 +120,7 @@ public class BatchAcpServiceImplZSAG00 extends BaseAction implements
 		BigDecimal bigDecimal = new BigDecimal(0.00);
 		//数据放入临时表
 			if("4840000015".equals(comNo) || "4840000167".equals(comNo) || "4840000018".equals(comNo) || "4840000017".equals(comNo)
-			|| "4840000020".equals(comNo) ||"4840000019".equals(comNo) || "4840000598".equals(comNo) || "4840000414".equals(comNo)
+			|| "4840000020".equals(comNo) ||"4840000019".equals(comNo) || "4840000598".equals(comNo) || "4840000414".equals(comNo) || "4840000374".equals(comNo)
 			 ){	//OTHER
 				List <GdFbpdObusBatchTmp>list=(List<GdFbpdObusBatchTmp>) BeanUtils.toObjects(lst, GdFbpdObusBatchTmp.class);
 		        for(GdFbpdObusBatchTmp tmp:list){
