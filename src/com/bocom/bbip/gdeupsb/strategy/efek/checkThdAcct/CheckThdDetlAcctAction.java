@@ -70,7 +70,7 @@ public class CheckThdDetlAcctAction implements Executable {
 			context.setData(ParamKeys.TELLER_ID, "301_030600");  //收款人代码
 			context.setData("allCheckNumber", "1");
 			//对账类型  明细
-			context.setData("checkTyp", "05");
+			context.setData("checkTyp", "03");
 			
 			Map<String, Object> listMap=new HashMap<String, Object>();
 			listMap.put("txnDte", txnDte);
@@ -83,7 +83,10 @@ public class CheckThdDetlAcctAction implements Executable {
 						logger.info("~~~~~~~~~~~统计明细记录总数出错");
 						throw new CoreException("统计明细记录总数出错");
 			}
+			List<Map<String, Object>>  detailList=new ArrayList<Map<String,Object>>();
+			int i=0;
 			for(Map<String, Object> maps:mapList){
+					i++;
 					//流水
 					String sqn =bbipPublicService.getBBIPSequence();
 					context.setData(ParamKeys.SEQUENCE, sqn);
@@ -129,6 +132,12 @@ public class CheckThdDetlAcctAction implements Executable {
 				            operateFTPAction.putCheckFile(eupsThdFtpConfig);
 				            logger.info("=============对账文件上传成功==========");	
 				            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
+							
+							Map<String, Object> mapCallThd=new HashMap<String, Object>();
+							mapCallThd.put("xH", i);
+							mapCallThd.put("fileName", fileName);
+							mapCallThd.put("fileMD5", "");
+							detailList.add(mapCallThd);
 					} catch (Exception e) {
 			            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 			            logger.info("File create error : " + e.getMessage());          
@@ -137,8 +146,14 @@ public class CheckThdDetlAcctAction implements Executable {
 					context.setData(GDParamKeys.CHECKDATE, DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
 					context.setData(GDParamKeys.CHECKTIME, DateUtils.formatAsHHmmss(txnTme));
 					context.setData(GDParamKeys.SVRCOD, "51");
-					callThd(context);
 			}
+			String number=i+"";
+			while(number.length()<6){
+				number="0"+number;
+			}
+			context.setData("number", number);
+			context.setData("detailList", detailList);
+			callThd(context);
 			logger.info("====================End   CheckThdDetlAcctAction");
 	}
 	/**
@@ -267,8 +282,6 @@ public class CheckThdDetlAcctAction implements Executable {
 				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW18");
 				
 				context.setData("WJS", "1");
-				context.setData("number", "000001");
-				context.setData("xH", "1");
 				try{
 					Map<String, Object> rspMap = callThdTradeManager.trade(context);
 					
