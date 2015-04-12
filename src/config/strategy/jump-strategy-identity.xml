@@ -328,7 +328,7 @@
 		
 	<!-- 中山文件批量:文件录入及检查 -->
 	<bean id="eups.fileBatchPayCreateDataServiceActionZSAG00"
-		class="com.bocom.bbip.gdeupsb.action.fbpd.CheckAndImportFileFbpdAction" />
+		class="com.bocom.bbip.gdeupsb.action.fbpd.BatchAcpServiceImplZSAG00" />
 
 	<!-- 中山文件批量:文件批量完成通知前端 -->
 	<bean id="eups.afterBatchAcpServiceActionZSAG00"

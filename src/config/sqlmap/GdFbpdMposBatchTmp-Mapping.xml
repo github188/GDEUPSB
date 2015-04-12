@@ -1,357 +1,412 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdFbpdMposBatchTmp" >
-  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdFbpdMposBatchTmp" >
-    <id column="SQN" property="sqn" jdbcType="CHAR" />
-    <result column="THD_SQN" property="thdSqn" jdbcType="CHAR" />
-    <result column="POS_NO" property="posNo" jdbcType="CHAR" />
-    <result column="COM_AC" property="comAc" jdbcType="CHAR" />
-    <result column="COM_NO" property="comNo" jdbcType="CHAR" />
-    <result column="CUS_AC" property="cusAc" jdbcType="CHAR" />
-    <result column="TXN_DTE" property="txnDte" jdbcType="CHAR" />
-    <result column="TXN_TME" property="txnTme" jdbcType="CHAR" />
-    <result column="TXN_FEE" property="txnFee" jdbcType="CHAR" />
-    <result column="TXN_AMT" property="txnAmt" jdbcType="CHAR" />
-    <result column="TXN_CHR" property="txnChr" jdbcType="CHAR" />
-    <result column="TXN_RNT" property="txnRnt" jdbcType="CHAR" />
-    <result column="CHK_DATE" property="chkDate" jdbcType="CHAR" />
-    <result column="SEQ_NO" property="seqNo" jdbcType="CHAR" />
-    <result column="POS_FLD1" property="posFld1" jdbcType="CHAR" />
-    <result column="POS_FLD2" property="posFld2" jdbcType="CHAR" />
-    <result column="POS_FLD3" property="posFld3" jdbcType="CHAR" />
-    <result column="POS_FLD4" property="posFld4" jdbcType="CHAR" />
-    <result column="POS_FLD5" property="posFld5" jdbcType="CHAR" />
-  </resultMap>
-  <sql id="baseColumnList" >
-    SQN, THD_SQN, POS_NO, COM_AC, COM_NO, CUS_AC, TXN_DTE, TXN_TME, TXN_FEE, TXN_AMT, 
-    TXN_CHR, TXN_RNT, CHK_DATE, SEQ_NO, POS_FLD1, POS_FLD2, POS_FLD3, POS_FLD4, POS_FLD5
-  </sql>
-  <select id="find" resultMap="basicResultMap" >
-    select
-    <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_MPOS_BATCH_TMP
-    <trim prefix="WHERE" prefixOverrides="AND" >
-      <if test="sqn!=null" >
-        AND  SQN=#{sqn,jdbcType=CHAR}
-      </if>
-      <if test="thdSqn!=null" >
-        AND  THD_SQN=#{thdSqn,jdbcType=CHAR}
-      </if>
-      <if test="posNo!=null" >
-        AND  POS_NO=#{posNo,jdbcType=CHAR}
-      </if>
-      <if test="comAc!=null" >
-        AND  COM_AC=#{comAc,jdbcType=CHAR}
-      </if>
-      <if test="comNo!=null" >
-        AND  COM_NO=#{comNo,jdbcType=CHAR}
-      </if>
-      <if test="cusAc!=null" >
-        AND  CUS_AC=#{cusAc,jdbcType=CHAR}
-      </if>
-      <if test="txnDte!=null" >
-        AND  TXN_DTE=#{txnDte,jdbcType=CHAR}
-      </if>
-      <if test="txnTme!=null" >
-        AND  TXN_TME=#{txnTme,jdbcType=CHAR}
-      </if>
-      <if test="txnFee!=null" >
-        AND  TXN_FEE=#{txnFee,jdbcType=CHAR}
-      </if>
-      <if test="txnAmt!=null" >
-        AND  TXN_AMT=#{txnAmt,jdbcType=CHAR}
-      </if>
-      <if test="txnChr!=null" >
-        AND  TXN_CHR=#{txnChr,jdbcType=CHAR}
-      </if>
-      <if test="txnRnt!=null" >
-        AND  TXN_RNT=#{txnRnt,jdbcType=CHAR}
-      </if>
-      <if test="chkDate!=null" >
-        AND  CHK_DATE=#{chkDate,jdbcType=CHAR}
-      </if>
-      <if test="seqNo!=null" >
-        AND  SEQ_NO=#{seqNo,jdbcType=CHAR}
-      </if>
-      <if test="posFld1!=null" >
-        AND  POS_FLD1=#{posFld1,jdbcType=CHAR}
-      </if>
-      <if test="posFld2!=null" >
-        AND  POS_FLD2=#{posFld2,jdbcType=CHAR}
-      </if>
-      <if test="posFld3!=null" >
-        AND  POS_FLD3=#{posFld3,jdbcType=CHAR}
-      </if>
-      <if test="posFld4!=null" >
-        AND  POS_FLD4=#{posFld4,jdbcType=CHAR}
-      </if>
-      <if test="posFld5!=null" >
-        AND  POS_FLD5=#{posFld5,jdbcType=CHAR}
-      </if>
-    </trim>
-  </select>
-  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_MPOS_BATCH_TMP
-    where SQN = #{sqn,jdbcType=CHAR}
-  </select>
-  <delete id="delete" parameterType="java.lang.String" >
-    delete from ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_MPOS_BATCH_TMP
-    where SQN = #{sqn,jdbcType=CHAR}
-  </delete>
-  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdFbpdMposBatchTmp" >
-    insert into ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_MPOS_BATCH_TMP
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="sqn != null" >
-        SQN,
-      </if>
-      <if test="thdSqn != null" >
-        THD_SQN,
-      </if>
-      <if test="posNo != null" >
-        POS_NO,
-      </if>
-      <if test="comAc != null" >
-        COM_AC,
-      </if>
-      <if test="comNo != null" >
-        COM_NO,
-      </if>
-      <if test="cusAc != null" >
-        CUS_AC,
-      </if>
-      <if test="txnDte != null" >
-        TXN_DTE,
-      </if>
-      <if test="txnTme != null" >
-        TXN_TME,
-      </if>
-      <if test="txnFee != null" >
-        TXN_FEE,
-      </if>
-      <if test="txnAmt != null" >
-        TXN_AMT,
-      </if>
-      <if test="txnChr != null" >
-        TXN_CHR,
-      </if>
-      <if test="txnRnt != null" >
-        TXN_RNT,
-      </if>
-      <if test="chkDate != null" >
-        CHK_DATE,
-      </if>
-      <if test="seqNo != null" >
-        SEQ_NO,
-      </if>
-      <if test="posFld1 != null" >
-        POS_FLD1,
-      </if>
-      <if test="posFld2 != null" >
-        POS_FLD2,
-      </if>
-      <if test="posFld3 != null" >
-        POS_FLD3,
-      </if>
-      <if test="posFld4 != null" >
-        POS_FLD4,
-      </if>
-      <if test="posFld5 != null" >
-        POS_FLD5,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="sqn != null" >
-        #{sqn,jdbcType=CHAR},
-      </if>
-      <if test="thdSqn != null" >
-        #{thdSqn,jdbcType=CHAR},
-      </if>
-      <if test="posNo != null" >
-        #{posNo,jdbcType=CHAR},
-      </if>
-      <if test="comAc != null" >
-        #{comAc,jdbcType=CHAR},
-      </if>
-      <if test="comNo != null" >
-        #{comNo,jdbcType=CHAR},
-      </if>
-      <if test="cusAc != null" >
-        #{cusAc,jdbcType=CHAR},
-      </if>
-      <if test="txnDte != null" >
-        #{txnDte,jdbcType=CHAR},
-      </if>
-      <if test="txnTme != null" >
-        #{txnTme,jdbcType=CHAR},
-      </if>
-      <if test="txnFee != null" >
-        #{txnFee,jdbcType=CHAR},
-      </if>
-      <if test="txnAmt != null" >
-        #{txnAmt,jdbcType=CHAR},
-      </if>
-      <if test="txnChr != null" >
-        #{txnChr,jdbcType=CHAR},
-      </if>
-      <if test="txnRnt != null" >
-        #{txnRnt,jdbcType=CHAR},
-      </if>
-      <if test="chkDate != null" >
-        #{chkDate,jdbcType=CHAR},
-      </if>
-      <if test="seqNo != null" >
-        #{seqNo,jdbcType=CHAR},
-      </if>
-      <if test="posFld1 != null" >
-        #{posFld1,jdbcType=CHAR},
-      </if>
-      <if test="posFld2 != null" >
-        #{posFld2,jdbcType=CHAR},
-      </if>
-      <if test="posFld3 != null" >
-        #{posFld3,jdbcType=CHAR},
-      </if>
-      <if test="posFld4 != null" >
-        #{posFld4,jdbcType=CHAR},
-      </if>
-      <if test="posFld5 != null" >
-        #{posFld5,jdbcType=CHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="findCount" resultType="java.lang.Integer" >
-    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_MPOS_BATCH_TMP
-    <trim prefix="WHERE" prefixOverrides="AND" >
-      <if test="sqn!=null" >
-        AND  SQN=#{sqn,jdbcType=CHAR}
-      </if>
-      <if test="thdSqn!=null" >
-        AND  THD_SQN=#{thdSqn,jdbcType=CHAR}
-      </if>
-      <if test="posNo!=null" >
-        AND  POS_NO=#{posNo,jdbcType=CHAR}
-      </if>
-      <if test="comAc!=null" >
-        AND  COM_AC=#{comAc,jdbcType=CHAR}
-      </if>
-      <if test="comNo!=null" >
-        AND  COM_NO=#{comNo,jdbcType=CHAR}
-      </if>
-      <if test="cusAc!=null" >
-        AND  CUS_AC=#{cusAc,jdbcType=CHAR}
-      </if>
-      <if test="txnDte!=null" >
-        AND  TXN_DTE=#{txnDte,jdbcType=CHAR}
-      </if>
-      <if test="txnTme!=null" >
-        AND  TXN_TME=#{txnTme,jdbcType=CHAR}
-      </if>
-      <if test="txnFee!=null" >
-        AND  TXN_FEE=#{txnFee,jdbcType=CHAR}
-      </if>
-      <if test="txnAmt!=null" >
-        AND  TXN_AMT=#{txnAmt,jdbcType=CHAR}
-      </if>
-      <if test="txnChr!=null" >
-        AND  TXN_CHR=#{txnChr,jdbcType=CHAR}
-      </if>
-      <if test="txnRnt!=null" >
-        AND  TXN_RNT=#{txnRnt,jdbcType=CHAR}
-      </if>
-      <if test="chkDate!=null" >
-        AND  CHK_DATE=#{chkDate,jdbcType=CHAR}
-      </if>
-      <if test="seqNo!=null" >
-        AND  SEQ_NO=#{seqNo,jdbcType=CHAR}
-      </if>
-      <if test="posFld1!=null" >
-        AND  POS_FLD1=#{posFld1,jdbcType=CHAR}
-      </if>
-      <if test="posFld2!=null" >
-        AND  POS_FLD2=#{posFld2,jdbcType=CHAR}
-      </if>
-      <if test="posFld3!=null" >
-        AND  POS_FLD3=#{posFld3,jdbcType=CHAR}
-      </if>
-      <if test="posFld4!=null" >
-        AND  POS_FLD4=#{posFld4,jdbcType=CHAR}
-      </if>
-      <if test="posFld5!=null" >
-        AND  POS_FLD5=#{posFld5,jdbcType=CHAR}
-      </if>
-    </trim>
-  </select>
-  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdFbpdMposBatchTmp" >
-    update ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_MPOS_BATCH_TMP
-    <set >
-      <if test="thdSqn != null" >
-        THD_SQN = #{thdSqn,jdbcType=CHAR},
-      </if>
-      <if test="posNo != null" >
-        POS_NO = #{posNo,jdbcType=CHAR},
-      </if>
-      <if test="comAc != null" >
-        COM_AC = #{comAc,jdbcType=CHAR},
-      </if>
-      <if test="comNo != null" >
-        COM_NO = #{comNo,jdbcType=CHAR},
-      </if>
-      <if test="cusAc != null" >
-        CUS_AC = #{cusAc,jdbcType=CHAR},
-      </if>
-      <if test="txnDte != null" >
-        TXN_DTE = #{txnDte,jdbcType=CHAR},
-      </if>
-      <if test="txnTme != null" >
-        TXN_TME = #{txnTme,jdbcType=CHAR},
-      </if>
-      <if test="txnFee != null" >
-        TXN_FEE = #{txnFee,jdbcType=CHAR},
-      </if>
-      <if test="txnAmt != null" >
-        TXN_AMT = #{txnAmt,jdbcType=CHAR},
-      </if>
-      <if test="txnChr != null" >
-        TXN_CHR = #{txnChr,jdbcType=CHAR},
-      </if>
-      <if test="txnRnt != null" >
-        TXN_RNT = #{txnRnt,jdbcType=CHAR},
-      </if>
-      <if test="chkDate != null" >
-        CHK_DATE = #{chkDate,jdbcType=CHAR},
-      </if>
-      <if test="seqNo != null" >
-        SEQ_NO = #{seqNo,jdbcType=CHAR},
-      </if>
-      <if test="posFld1 != null" >
-        POS_FLD1 = #{posFld1,jdbcType=CHAR},
-      </if>
-      <if test="posFld2 != null" >
-        POS_FLD2 = #{posFld2,jdbcType=CHAR},
-      </if>
-      <if test="posFld3 != null" >
-        POS_FLD3 = #{posFld3,jdbcType=CHAR},
-      </if>
-      <if test="posFld4 != null" >
-        POS_FLD4 = #{posFld4,jdbcType=CHAR},
-      </if>
-      <if test="posFld5 != null" >
-        POS_FLD5 = #{posFld5,jdbcType=CHAR},
-      </if>
-    </set>
-    where SQN = #{sqn,jdbcType=CHAR}
-  </update>
-  <select id="findAll" resultMap="basicResultMap" >
-    select 
-    <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_MPOS_BATCH_TMP
-    <if test="_parameter" >
-      where SQN in
-      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
-        #{item}
-      </foreach>
-    </if>
-  </select>
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdFbpdMposBatchTmp">
+	<resultMap id="basicResultMap"
+		type="com.bocom.bbip.gdeupsb.entity.GdFbpdMposBatchTmp">
+		<id column="SQN" property="sqn" jdbcType="CHAR" />
+		<result column="THD_SQN" property="thdSqn" jdbcType="CHAR" />
+		<result column="POS_NO" property="posNo" jdbcType="CHAR" />
+		<result column="COM_AC" property="comAc" jdbcType="CHAR" />
+		<result column="COM_NO" property="comNo" jdbcType="CHAR" />
+		<result column="CUS_AC" property="cusAc" jdbcType="CHAR" />
+		<result column="TXN_DTE" property="txnDte" jdbcType="CHAR" />
+		<result column="TXN_TME" property="txnTme" jdbcType="CHAR" />
+		<result column="TXN_FEE" property="txnFee" jdbcType="CHAR" />
+		<result column="TXN_AMT" property="txnAmt" jdbcType="CHAR" />
+		<result column="TXN_CHR" property="txnChr" jdbcType="CHAR" />
+		<result column="TXN_RNT" property="txnRnt" jdbcType="CHAR" />
+		<result column="CHK_DATE" property="chkDate" jdbcType="CHAR" />
+		<result column="SEQ_NO" property="seqNo" jdbcType="CHAR" />
+		<result column="POS_FLD1" property="posFld1" jdbcType="CHAR" />
+		<result column="POS_FLD2" property="posFld2" jdbcType="CHAR" />
+		<result column="POS_FLD3" property="posFld3" jdbcType="CHAR" />
+		<result column="POS_FLD4" property="posFld4" jdbcType="CHAR" />
+		<result column="POS_FLD5" property="posFld5" jdbcType="CHAR" />
+	</resultMap>
+	<sql id="baseColumnList">
+		SQN, THD_SQN, POS_NO, COM_AC, COM_NO, CUS_AC, TXN_DTE, TXN_TME, TXN_FEE,
+		TXN_AMT,
+		TXN_CHR, TXN_RNT, CHK_DATE, SEQ_NO, POS_FLD1, POS_FLD2, POS_FLD3, POS_FLD4,
+		POS_FLD5
+	</sql>
+	<select id="find" resultMap="basicResultMap">
+		select
+		<include refid="baseColumnList" />
+		from ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_MPOS_BATCH_TMP
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="sqn!=null">
+				AND SQN=#{sqn,jdbcType=CHAR}
+			</if>
+			<if test="thdSqn!=null">
+				AND THD_SQN=#{thdSqn,jdbcType=CHAR}
+			</if>
+			<if test="posNo!=null">
+				AND POS_NO=#{posNo,jdbcType=CHAR}
+			</if>
+			<if test="comAc!=null">
+				AND COM_AC=#{comAc,jdbcType=CHAR}
+			</if>
+			<if test="comNo!=null">
+				AND COM_NO=#{comNo,jdbcType=CHAR}
+			</if>
+			<if test="cusAc!=null">
+				AND CUS_AC=#{cusAc,jdbcType=CHAR}
+			</if>
+			<if test="txnDte!=null">
+				AND TXN_DTE=#{txnDte,jdbcType=CHAR}
+			</if>
+			<if test="txnTme!=null">
+				AND TXN_TME=#{txnTme,jdbcType=CHAR}
+			</if>
+			<if test="txnFee!=null">
+				AND TXN_FEE=#{txnFee,jdbcType=CHAR}
+			</if>
+			<if test="txnAmt!=null">
+				AND TXN_AMT=#{txnAmt,jdbcType=CHAR}
+			</if>
+			<if test="txnChr!=null">
+				AND TXN_CHR=#{txnChr,jdbcType=CHAR}
+			</if>
+			<if test="txnRnt!=null">
+				AND TXN_RNT=#{txnRnt,jdbcType=CHAR}
+			</if>
+			<if test="chkDate!=null">
+				AND CHK_DATE=#{chkDate,jdbcType=CHAR}
+			</if>
+			<if test="seqNo!=null">
+				AND SEQ_NO=#{seqNo,jdbcType=CHAR}
+			</if>
+			<if test="posFld1!=null">
+				AND POS_FLD1=#{posFld1,jdbcType=CHAR}
+			</if>
+			<if test="posFld2!=null">
+				AND POS_FLD2=#{posFld2,jdbcType=CHAR}
+			</if>
+			<if test="posFld3!=null">
+				AND POS_FLD3=#{posFld3,jdbcType=CHAR}
+			</if>
+			<if test="posFld4!=null">
+				AND POS_FLD4=#{posFld4,jdbcType=CHAR}
+			</if>
+			<if test="posFld5!=null">
+				AND POS_FLD5=#{posFld5,jdbcType=CHAR}
+			</if>
+		</trim>
+	</select>
+	<select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String">
+		select
+		<include refid="baseColumnList" />
+		from ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_MPOS_BATCH_TMP
+		where SQN = #{sqn,jdbcType=CHAR}
+	</select>
+	<delete id="delete" parameterType="java.lang.String">
+		delete from ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_MPOS_BATCH_TMP
+		where SQN = #{sqn,jdbcType=CHAR}
+	</delete>
+	<insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdFbpdMposBatchTmp">
+		insert into ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_MPOS_BATCH_TMP
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="sqn != null">
+				SQN,
+			</if>
+			<if test="thdSqn != null">
+				THD_SQN,
+			</if>
+			<if test="posNo != null">
+				POS_NO,
+			</if>
+			<if test="comAc != null">
+				COM_AC,
+			</if>
+			<if test="comNo != null">
+				COM_NO,
+			</if>
+			<if test="cusAc != null">
+				CUS_AC,
+			</if>
+			<if test="txnDte != null">
+				TXN_DTE,
+			</if>
+			<if test="txnTme != null">
+				TXN_TME,
+			</if>
+			<if test="txnFee != null">
+				TXN_FEE,
+			</if>
+			<if test="txnAmt != null">
+				TXN_AMT,
+			</if>
+			<if test="txnChr != null">
+				TXN_CHR,
+			</if>
+			<if test="txnRnt != null">
+				TXN_RNT,
+			</if>
+			<if test="chkDate != null">
+				CHK_DATE,
+			</if>
+			<if test="seqNo != null">
+				SEQ_NO,
+			</if>
+			<if test="posFld1 != null">
+				POS_FLD1,
+			</if>
+			<if test="posFld2 != null">
+				POS_FLD2,
+			</if>
+			<if test="posFld3 != null">
+				POS_FLD3,
+			</if>
+			<if test="posFld4 != null">
+				POS_FLD4,
+			</if>
+			<if test="posFld5 != null">
+				POS_FLD5,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="sqn != null">
+				#{sqn,jdbcType=CHAR},
+			</if>
+			<if test="thdSqn != null">
+				#{thdSqn,jdbcType=CHAR},
+			</if>
+			<if test="posNo != null">
+				#{posNo,jdbcType=CHAR},
+			</if>
+			<if test="comAc != null">
+				#{comAc,jdbcType=CHAR},
+			</if>
+			<if test="comNo != null">
+				#{comNo,jdbcType=CHAR},
+			</if>
+			<if test="cusAc != null">
+				#{cusAc,jdbcType=CHAR},
+			</if>
+			<if test="txnDte != null">
+				#{txnDte,jdbcType=CHAR},
+			</if>
+			<if test="txnTme != null">
+				#{txnTme,jdbcType=CHAR},
+			</if>
+			<if test="txnFee != null">
+				#{txnFee,jdbcType=CHAR},
+			</if>
+			<if test="txnAmt != null">
+				#{txnAmt,jdbcType=CHAR},
+			</if>
+			<if test="txnChr != null">
+				#{txnChr,jdbcType=CHAR},
+			</if>
+			<if test="txnRnt != null">
+				#{txnRnt,jdbcType=CHAR},
+			</if>
+			<if test="chkDate != null">
+				#{chkDate,jdbcType=CHAR},
+			</if>
+			<if test="seqNo != null">
+				#{seqNo,jdbcType=CHAR},
+			</if>
+			<if test="posFld1 != null">
+				#{posFld1,jdbcType=CHAR},
+			</if>
+			<if test="posFld2 != null">
+				#{posFld2,jdbcType=CHAR},
+			</if>
+			<if test="posFld3 != null">
+				#{posFld3,jdbcType=CHAR},
+			</if>
+			<if test="posFld4 != null">
+				#{posFld4,jdbcType=CHAR},
+			</if>
+			<if test="posFld5 != null">
+				#{posFld5,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="findCount" resultType="java.lang.Integer">
+		select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_MPOS_BATCH_TMP
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="sqn!=null">
+				AND SQN=#{sqn,jdbcType=CHAR}
+			</if>
+			<if test="thdSqn!=null">
+				AND THD_SQN=#{thdSqn,jdbcType=CHAR}
+			</if>
+			<if test="posNo!=null">
+				AND POS_NO=#{posNo,jdbcType=CHAR}
+			</if>
+			<if test="comAc!=null">
+				AND COM_AC=#{comAc,jdbcType=CHAR}
+			</if>
+			<if test="comNo!=null">
+				AND COM_NO=#{comNo,jdbcType=CHAR}
+			</if>
+			<if test="cusAc!=null">
+				AND CUS_AC=#{cusAc,jdbcType=CHAR}
+			</if>
+			<if test="txnDte!=null">
+				AND TXN_DTE=#{txnDte,jdbcType=CHAR}
+			</if>
+			<if test="txnTme!=null">
+				AND TXN_TME=#{txnTme,jdbcType=CHAR}
+			</if>
+			<if test="txnFee!=null">
+				AND TXN_FEE=#{txnFee,jdbcType=CHAR}
+			</if>
+			<if test="txnAmt!=null">
+				AND TXN_AMT=#{txnAmt,jdbcType=CHAR}
+			</if>
+			<if test="txnChr!=null">
+				AND TXN_CHR=#{txnChr,jdbcType=CHAR}
+			</if>
+			<if test="txnRnt!=null">
+				AND TXN_RNT=#{txnRnt,jdbcType=CHAR}
+			</if>
+			<if test="chkDate!=null">
+				AND CHK_DATE=#{chkDate,jdbcType=CHAR}
+			</if>
+			<if test="seqNo!=null">
+				AND SEQ_NO=#{seqNo,jdbcType=CHAR}
+			</if>
+			<if test="posFld1!=null">
+				AND POS_FLD1=#{posFld1,jdbcType=CHAR}
+			</if>
+			<if test="posFld2!=null">
+				AND POS_FLD2=#{posFld2,jdbcType=CHAR}
+			</if>
+			<if test="posFld3!=null">
+				AND POS_FLD3=#{posFld3,jdbcType=CHAR}
+			</if>
+			<if test="posFld4!=null">
+				AND POS_FLD4=#{posFld4,jdbcType=CHAR}
+			</if>
+			<if test="posFld5!=null">
+				AND POS_FLD5=#{posFld5,jdbcType=CHAR}
+			</if>
+		</trim>
+	</select>
+	<update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GdFbpdMposBatchTmp">
+		update ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_MPOS_BATCH_TMP
+		<set>
+			<if test="thdSqn != null">
+				THD_SQN = #{thdSqn,jdbcType=CHAR},
+			</if>
+			<if test="posNo != null">
+				POS_NO = #{posNo,jdbcType=CHAR},
+			</if>
+			<if test="comAc != null">
+				COM_AC = #{comAc,jdbcType=CHAR},
+			</if>
+			<if test="comNo != null">
+				COM_NO = #{comNo,jdbcType=CHAR},
+			</if>
+			<if test="cusAc != null">
+				CUS_AC = #{cusAc,jdbcType=CHAR},
+			</if>
+			<if test="txnDte != null">
+				TXN_DTE = #{txnDte,jdbcType=CHAR},
+			</if>
+			<if test="txnTme != null">
+				TXN_TME = #{txnTme,jdbcType=CHAR},
+			</if>
+			<if test="txnFee != null">
+				TXN_FEE = #{txnFee,jdbcType=CHAR},
+			</if>
+			<if test="txnAmt != null">
+				TXN_AMT = #{txnAmt,jdbcType=CHAR},
+			</if>
+			<if test="txnChr != null">
+				TXN_CHR = #{txnChr,jdbcType=CHAR},
+			</if>
+			<if test="txnRnt != null">
+				TXN_RNT = #{txnRnt,jdbcType=CHAR},
+			</if>
+			<if test="chkDate != null">
+				CHK_DATE = #{chkDate,jdbcType=CHAR},
+			</if>
+			<if test="seqNo != null">
+				SEQ_NO = #{seqNo,jdbcType=CHAR},
+			</if>
+			<if test="posFld1 != null">
+				POS_FLD1 = #{posFld1,jdbcType=CHAR},
+			</if>
+			<if test="posFld2 != null">
+				POS_FLD2 = #{posFld2,jdbcType=CHAR},
+			</if>
+			<if test="posFld3 != null">
+				POS_FLD3 = #{posFld3,jdbcType=CHAR},
+			</if>
+			<if test="posFld4 != null">
+				POS_FLD4 = #{posFld4,jdbcType=CHAR},
+			</if>
+			<if test="posFld5 != null">
+				POS_FLD5 = #{posFld5,jdbcType=CHAR},
+			</if>
+		</set>
+		where SQN = #{sqn,jdbcType=CHAR}
+	</update>
+	<select id="findAll" resultMap="basicResultMap">
+		select
+		<include refid="baseColumnList" />
+		from ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_MPOS_BATCH_TMP
+		<if test="_parameter">
+			where SQN in
+			<foreach item="item" index="index" collection="list" open="("
+				separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+	</select>
+
+
+	<select id="findByBatNo" resultMap="basicResultMap"
+		parameterType="java.lang.String">
+		select * from
+		${GDEUPSB_SCHEMA}.GDEUPS_FBPD_MPOS_BATCH_TMP where POS_FLD5=#{batNo}
+	</select>
+	<select id="findTot" resultType="java.util.Map" parameterType="java.util.Map">
+		select count(*) as TOT_COUNT,sum(TXN_AMT) as ALL_MONEY from
+		${GDEUPSB_SCHEMA}.GDEUPS_FBPD_MPOS_BATCH_TMP
+
+		where
+		POS_FLD5=#{batNo,jdbcType=CHAR}
+
+	</select>
+
+	<select id="batchInsert" parameterType="java.util.List">
+		insert into ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_MPOS_BATCH_TMP (
+		SQN,
+		THD_SQN, POS_NO, COM_AC, COM_NO, CUS_AC, TXN_DTE, TXN_TME, TXN_FEE,
+		TXN_AMT, TXN_CHR, TXN_RNT, CHK_DATE, SEQ_NO, POS_FLD1, POS_FLD2,
+		POS_FLD3, POS_FLD4,
+		POS_FLD5 )
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(
+			#{item.sqn},
+			#{item.thdSqn},
+			#{item.posNo},
+			#{item.comAc},
+			#{item.comNo},
+			#{item.cusAc},
+			#{item.txnDte},
+			#{item.txnTme},
+			#{item.txnFee},
+			#{item.txnAmt},
+			#{item.txnChr},
+			#{item.txnRnt},
+			#{item.chkDate},
+			#{item.seqNo},
+			#{item.posFld1},
+			#{item.posFld2},
+			#{item.posFld3},
+			#{item.posFld4},
+			#{item.posFld5}
+			)
+		</foreach>
+	</select>
+
+
 </mapper>

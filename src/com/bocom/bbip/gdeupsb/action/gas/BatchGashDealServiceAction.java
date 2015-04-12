@@ -79,13 +79,14 @@ public class BatchGashDealServiceAction extends BaseAction implements
 		// context.setData(ParamKeys.BR, "01441131999");
 		// context.setData(ParamKeys.BK, "01441999999");
 
-		String bk = "01441999999";
-		String br = "01491800999";
+		String bk = "01491999999";//分行号01441999999 ?
+		String br = "01491800999";//网点号、机构号01491800999?
+		String tlr = null;//"4910153"
 		// TODO get tlr
-		context.setData(ParamKeys.BR, br);// 机构号 "01441131999"
 		context.setData(ParamKeys.BK, bk);// 分行号01491999999
-		String trl = bbipPublicService.getETeller(bk);
-		context.setData(ParamKeys.TELLER, trl);
+		context.setData(ParamKeys.BR, br);// 机构号 "01441131999"
+		tlr = bbipPublicService.getETeller(bk);
+		context.setData(ParamKeys.TELLER, tlr);
 
 		context.setData(ParamKeys.FTP_ID, "PGAS00Bat");
 
@@ -140,7 +141,7 @@ public class BatchGashDealServiceAction extends BaseAction implements
 			infoList = (List<GdGasCusAll>) gdGasCusAllRepository
 					.find(gdGasCusAll);
 			// 从协议表中取
-			tmp.setCusNme(infoList.get(0).getCusNme());
+			tmp.setTmpFld4(infoList.get(0).getCusNme());
 			tmp.setTmpFld3(infoList.get(0).getThdCusNme());// thdCusNme
 			tmp.setBk((String) detail.get(0).get("gasBk"));
 			tmp.setTmpFld5(DateUtils.format(new Date(), DateUtils.STYLE_SIMPLE_DATE));
@@ -165,25 +166,27 @@ public class BatchGashDealServiceAction extends BaseAction implements
 			Map<String, Object> tmpMap = new HashMap<String, Object>();
 			// TODO：我行卡查询，开户行查询
 			cusAc = tmp.getCusAc();
-			if (accountService.isOurBankCard(cusAc)) {
-				isOurBnk = "0"; // 我行卡
-				CusActInfResult actInf = accountService.getAcInf(
-						CommonRequest.build(context), cusAc);
-				OBKBK = actInf.getOpnBk();
-				tmpMap.put("OBKBK", OBKBK);
-			} else {
-				isOurBnk = "1"; // 他行卡
-				CusActInfResult actInf = accountService.getAcInf(
-						CommonRequest.build(context), cusAc);
-				OBKBK = actInf.getOpnBk();
-				tmpMap.put("OBKBK", OBKBK);
-			}
+			//TODO
+//			if (accountService.isOurBankCard(cusAc)) {
+//				isOurBnk = "0"; // 我行卡
+//				CusActInfResult actInf = accountService.getAcInf(
+//						CommonRequest.build(context), cusAc);
+//				OBKBK = actInf.getOpnBk();
+//				tmpMap.put("OBKBK", OBKBK);
+//			} else {
+//				isOurBnk = "1"; // 他行卡
+//				CusActInfResult actInf = accountService.getAcInf(
+//						CommonRequest.build(context), cusAc);
+//				OBKBK = actInf.getOpnBk();
+//				tmpMap.put("OBKBK", OBKBK);
+//			}
 
 			tmpMap.put("cusAc", tmp.getCusAc());
-			tmpMap.put("cusNme", tmp.getCusNme());
+			tmpMap.put("cusNme", tmp.getTmpFld4());
 			tmpMap.put("txnAmt", tmp.getTxnAmt());
 			tmpMap.put("thdCusNo", tmp.getCusNo());
-			tmpMap.put("OUROTHFLG", isOurBnk);
+//TODO			tmpMap.put("OUROTHFLG", isOurBnk);
+			tmpMap.put("OUROTHFLG", "0");
 			tmpMap.put("thdCusNme", tmp.getTmpFld3());
 			// tmpMap.put("OBKBK", value);
 			// tmpMap.put("RMK1", value);

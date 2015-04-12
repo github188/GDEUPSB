@@ -118,6 +118,27 @@ public class QryTxnJnlInfoAction extends BaseAction{
 			context.setData("loop", tempList);
 			logger.info("==============context after set loop to context:" + context);
 			
+			int pageNum = (Integer) context.getData("pageNum");
+			int pageSize = (Integer) context.getData("pageSize");
+
+			int totalElements = tempList.size();
+			int totalPages = 0;
+			if (totalElements % pageSize == 0) {
+				totalPages = totalElements / pageSize;
+			} else {
+				totalPages = totalElements / pageSize + 1;
+			}
+
+			List<Map<String, Object>> pageableResponse = new ArrayList<Map<String, Object>>();
+			Map<String, Object> pageMap = new HashMap<String, Object>();
+			pageMap.put("totalElements", totalElements);
+			pageMap.put("totalPages", totalPages);
+			pageableResponse.add(pageMap);
+			context.setData("pageableResponse", pageableResponse);
+			
+			context.setData("totalElements", totalElements);
+			context.setData("totalPages", totalPages);
+			
 			
 //			List<GdEupsTransJournal> txnJnlList = get(GdEupsTransJournalRepository.class).findGasJnlInfo(txnJnl);
 //			logger.info("==============txnJnlList====" + txnJnlList);

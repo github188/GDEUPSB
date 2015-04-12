@@ -322,4 +322,49 @@
       </foreach>
     </if>
   </select>
+  
+  
+  	<select id="findByBatNo" resultMap="basicResultMap"
+		parameterType="java.lang.String">
+		select * from
+		${GDEUPSB_SCHEMA}.GDEUPS_FBPD_OBUS_BATCH_TMP where TMP_FLD5=#{batNo}
+	</select>
+	<select id="findTot" resultType="java.util.Map" parameterType="java.util.Map">
+		select count(*) as TOT_COUNT,sum(TXN_AMT) as ALL_MONEY from
+		${GDEUPSB_SCHEMA}.GDEUPS_FBPD_OBUS_BATCH_TMP
+
+		where TMP_FLD5=#{batNo,jdbcType=CHAR}
+
+	</select>
+
+	<select id="batchInsert" parameterType="java.util.List">
+		insert into ${GDEUPSB_SCHEMA}.GDEUPS_FBPD_OBUS_BATCH_TMP (
+		SQN, COM_NO, CUS_AC, CUS_NO, CUS_NME, THD_CUS_NO, CCY,
+		TXN_AMT, SUC_FLG, CHR_DTE, SUB_DTE, SEQ_NO,
+		TMP_FLD1, TMP_FLD2, TMP_FLD3, TMP_FLD4, TMP_FLD5)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(
+			#{item.sqn}
+			#{item.comNo},
+			#{item.cusAc},
+			#{item.cusNo},
+			#{item.cusNme},
+			#{item.thdCusNo},
+			#{item.ccy},
+			#{item.txnAmt},
+			#{item.sucFlg},
+			#{item.chrDte},
+			#{item.subDte},
+			#{item.seqNo},
+			#{item.tmpFld1},
+			#{item.tmpFld2},
+			#{item.tmpFld3},
+			#{item.tmpFld4},
+			#{item.tmpFld5})
+		</foreach>
+	</select>
+  
+  
 </mapper>
