@@ -21,6 +21,7 @@ import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.repository.EupsAmountInfoRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
+import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
@@ -86,11 +87,16 @@ public class QueryFeeResultAction implements Executable{
 										if(null !=rspMap){
 											 	context.setDataMap(rspMap);
 								                context.setData(ParamKeys.THIRD_RETURN_MESSAGE, rspMap);
+//								                if(rspMap.get("thdRspCde").toString().trim().equals("18")){
+//								                		throw new CoreException("正在进行批量代扣业务，需等本业务完成后才能办理本手续");
+//								                		throw new CoreException(GDErrorCodes.EUPS_ELEC02_06_ERROR);
+//								                }
 								                List<Map<String, Object>> list=(List<Map<String, Object>>)rspMap.get("Information");
 								               //页数
 								                pageGet(context, list);
 								                //返回list
 								                creatList(list,context);
+
 								                //第三方返回码
 								                CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
 								                String responseCode = rspCdeAction.getThdRspCde(rspMap, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
