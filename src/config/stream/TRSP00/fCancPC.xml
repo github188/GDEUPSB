@@ -6,7 +6,7 @@
 	 <varString type="D|"  name="tactDt"  /> <!-- 交易日期 -->
 	 <varString type="D|" name="tlogNo"  /> <!-- 流水号-->
 	    <varString type="D|" name="otLogNo"  /> <!-- 原流水号-->
-	     <varString type="D|" name="invNo"  /> <!-- 新发票号 -->
+	     <varString type="D|" name="invNo"  /> <!-- 发票号 -->
 	    
      
 </segment>
