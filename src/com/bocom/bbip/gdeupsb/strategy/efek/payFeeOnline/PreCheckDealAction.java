@@ -44,7 +44,12 @@ public class PreCheckDealAction implements Executable{
 						context.setData("acTyp", "05");
 						context.setData("capital", new BigDecimal(context.getData("capital").toString()).scaleByPowerOfTen(-2));
 						context.setData("dedit", new BigDecimal(context.getData("dedit").toString()).scaleByPowerOfTen(-2));
+						context.setData("accountsSerialNo", context.getData("accountsSerialNos"));
 				}
 				logger.info("~~~~~~~~~~~交易日期："+context.getData(ParamKeys.TXN_DATE)+"~~~~~~~~~~~交易时间："+context.getData(ParamKeys.TXN_TIME));
+				
+				System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+				System.out.println(context.getData("accountsSerialNo"));
+				System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 	}
 }
