@@ -262,31 +262,47 @@
       </if>
     </trim>
   </select>
-  <select id="findNpInfo" resultType="java.util.Map"
-		parameterType="java.util.Map" >
+  <select id="findNpInfo" resultMap="basicResultMap" >
   
-    select NOD_NO,PRT_DAT,CAR_NO,SQN,INV_NO,ID_NO,STATUS,BEG_DAT,END_DAT,TLR_ID
+    select NOD_NO,PRT_DAT,CAR_NO,SQN,INV_NO,ID_NO,STATUS,BEG_DAT ,END_DAT,TLR_ID
      from gdeupsb.TRSP_NP_MANAG WHERE
     
-      (PRT_DAT BETWEEN #{begDat,jdbcType=DATE} AND #{endDat,jdbcType=DATE})
+     (PRT_DAT BETWEEN #{begDat,jdbcType=DATE} AND #{endDat,jdbcType=DATE})
       
-      AND (NOD_NO = #{nodNo,jdbcType=CHAR} OR ''= #{nodNo,jdbcType=CHAR})
-      AND (STATUS = #{status,jdbcType=CHAR} OR ''= #{status,jdbcType=CHAR})
-      AND (ID_NO = #{idNo,jdbcType=CHAR} OR ''= #{idNo,jdbcType=CHAR})
-      AND (CAR_NO = #{carNo,jdbcType=CHAR} OR ''= #{carNo,jdbcType=CHAR})  ORDER BY ID_NO
+      <if test="idNo != ''" >
+       and  NOD_NO = #{nodNo,jdbcType=CHAR}
+      </if>
+      <if test="status != ''" >
+       and  STATUS = #{status,jdbcType=CHAR}
+      </if>
+      <if test="idNo != ''" >
+       and  ID_NO = #{idNo,jdbcType=CHAR}
+      </if>
+      <if test="carNo != ''" >
+       and  CAR_NO = #{carNo,jdbcType=CHAR}
+      </if> 
+       ORDER BY ID_NO 
   </select>
   <select id="findNpInfoCount" resultType="java.lang.Integer">
   
     select count(*)
      from gdeupsb.TRSP_NP_MANAG WHERE
     
-  <!--     (PRT_DAT &gt;= #{begDat,jdbcType=DATE} AND PRT_DAT &lt;= #{endDat,jdbcType=DATE}) AND  --> 
+  (PRT_DAT BETWEEN #{begDat,jdbcType=DATE} AND #{endDat,jdbcType=DATE})
       
-     <!--  (NOD_NO = #{nodNo,jdbcType=CHAR} OR ''= #{nodNo,jdbcType=CHAR}) -->
-       <!-- (STATUS = #{status,jdbcType=CHAR} OR ''= #{status,jdbcType=CHAR}) -->
-        (ID_NO = #{idNo,jdbcType=CHAR} OR ''= #{idNo,jdbcType=CHAR})
-      AND (CAR_NO = #{carNo,jdbcType=CHAR} OR ''= #{carNo,jdbcType=CHAR})     
-       AND PRT_DAT between  #{begDat,jdbcType=DATE}  and  #{endDat,jdbcType=DATE}  
+      <if test="idNo != ''" >
+       and  NOD_NO = #{nodNo,jdbcType=CHAR}
+      </if>
+      <if test="status != ''" >
+       and  STATUS = #{status,jdbcType=CHAR}
+      </if>
+      <if test="idNo != ''" >
+       and  ID_NO = #{idNo,jdbcType=CHAR}
+      </if>
+      <if test="carNo != ''" >
+       and  CAR_NO = #{carNo,jdbcType=CHAR}
+      </if>
+      
   </select>
   <update id="updateSt" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspNpManag" >
     update gdeupsb.TRSP_NP_MANAG
