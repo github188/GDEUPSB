@@ -15,8 +15,8 @@ public interface GDEupsbTrspNpManagRepository extends PagingAndSortingRepository
 	public List<Integer> findCountSum(GDEupsbTrspNpManag gdeupsb);
 	
 	
-	 public Page<Map<String,Object>> findNpInfo(Pageable pageable, Object para);
-	public List<Map<String,Object>> findNpInfo(Object para);
+	 public Page<GDEupsbTrspNpManag> findNpInfo(Pageable pageable, Object para);
+	public List<GDEupsbTrspNpManag> findNpInfo(Object para);
 	   
 
 	 /** 协议信息查询-汇总*/
