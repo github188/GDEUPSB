@@ -61,7 +61,7 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 		
 		logger.info("=====context after set tlr :" + context);
 		
-		context.setData("br1", context.getData(ParamKeys.BR).toString().subSequence(2, 8));
+		context.setData("br1", context.getData(ParamKeys.BR).toString().substring(2, 8));
 		context.setData("txnTme1", DateUtils.format(new Date(), DateUtils.STYLE_FULL));
 		context.setData("reMark1", "扣款失败"); //预置失败
 		logger.info("PayUnilateralToBankServiceImplPGAS00@prepareCheckDeal end!");

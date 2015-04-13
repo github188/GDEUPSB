@@ -90,7 +90,7 @@ public class BatchGashDealServiceAction extends BaseAction implements
 		tlr = bbipPublicService.getETeller(bk);
 		context.setData(ParamKeys.TELLER, tlr);
 
-		context.setData(ParamKeys.FTP_ID, "PGAS00Bat");
+		context.setData(ParamKeys.FTP_ID, "PGAS00Bat"); 
 
 		logger.info("============context:" + context);
 
