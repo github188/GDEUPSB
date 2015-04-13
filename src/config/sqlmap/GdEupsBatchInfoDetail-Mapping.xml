@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdEupsBatchInfoDetail">
+	<resultMap id="basicResultMap"
+		type="com.bocom.bbip.gdeupsb.entity.GdEupsBatchInfoDetail">
+		<id column="SQN" property="sqn" jdbcType="CHAR" />
+		<result column="BAT_NO" property="batNo" jdbcType="CHAR" />
+		<result column="CUS_AC" property="cusAc" jdbcType="CHAR" />
+		<result column="CUS_NME" property="cusNme" jdbcType="VARCHAR" />
+		<result column="TXN_AMT" property="txnAmt" jdbcType="DECIMAL" />
+		<result column="AGT_SRV_CUS_ID" property="agtSrvCusId"
+			jdbcType="VARCHAR" />
+		<result column="AGT_SRV_CUS_NME" property="agtSrvCusNme"
+			jdbcType="VARCHAR" />
+		<result column="OUR_OTH_FLG" property="ourOthFlg" jdbcType="CHAR" />
+		<result column="OBK_BK" property="obkBk" jdbcType="VARCHAR" />
+		<result column="RMK1" property="rmk1" jdbcType="VARCHAR" />
+		<result column="RMK2" property="rmk2" jdbcType="VARCHAR" />
+		<result column="STS" property="sts" jdbcType="CHAR" />
+		<result column="ERR_MSG" property="errMsg" jdbcType="VARCHAR" />
+		<result column="TXN_DTE" property="txnDte" jdbcType="DATE" />
+	</resultMap>
+	<sql id="baseColumnList">
+		SQN, BAT_NO, CUS_AC, CUS_NME, TXN_AMT, AGT_SRV_CUS_ID, AGT_SRV_CUS_NME,
+		OUR_OTH_FLG,
+		OBK_BK, RMK1, RMK2, STS, ERR_MSG, TXN_DTE
+	</sql>
+	<select id="find" resultMap="basicResultMap">
+		select
+		<include refid="baseColumnList" />
+		from EUPS.EUPS_BATCH_INFO_DETAIL
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="sqn!=null">
+				AND SQN=#{sqn,jdbcType=CHAR}
+			</if>
+			<if test="batNo!=null">
+				AND BAT_NO=#{batNo,jdbcType=CHAR}
+			</if>
+			<if test="cusAc!=null">
+				AND CUS_AC=#{cusAc,jdbcType=CHAR}
+			</if>
+			<if test="cusNme!=null">
+				AND CUS_NME=#{cusNme,jdbcType=VARCHAR}
+			</if>
+			<if test="txnAmt!=null">
+				AND TXN_AMT=#{txnAmt,jdbcType=DECIMAL}
+			</if>
+			<if test="agtSrvCusId!=null">
+				AND AGT_SRV_CUS_ID=#{agtSrvCusId,jdbcType=VARCHAR}
+			</if>
+			<if test="agtSrvCusNme!=null">
+				AND AGT_SRV_CUS_NME=#{agtSrvCusNme,jdbcType=VARCHAR}
+			</if>
+			<if test="ourOthFlg!=null">
+				AND OUR_OTH_FLG=#{ourOthFlg,jdbcType=CHAR}
+			</if>
+			<if test="obkBk!=null">
+				AND OBK_BK=#{obkBk,jdbcType=VARCHAR}
+			</if>
+			<if test="rmk1!=null">
+				AND RMK1=#{rmk1,jdbcType=VARCHAR}
+			</if>
+			<if test="rmk2!=null">
+				AND RMK2=#{rmk2,jdbcType=VARCHAR}
+			</if>
+			<if test="sts!=null">
+				AND STS=#{sts,jdbcType=CHAR}
+			</if>
+			<if test="errMsg!=null">
+				AND ERR_MSG=#{errMsg,jdbcType=VARCHAR}
+			</if>
+			<if test="txnDte!=null">
+				AND TXN_DTE=#{txnDte,jdbcType=DATE}
+			</if>
+		</trim>
+	</select>
+	<select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String">
+		select
+		<include refid="baseColumnList" />
+		from EUPS.EUPS_BATCH_INFO_DETAIL
+		where SQN = #{sqn,jdbcType=CHAR}
+	</select>
+	<delete id="delete" parameterType="java.lang.String">
+		delete from EUPS.EUPS_BATCH_INFO_DETAIL
+		where SQN = #{sqn,jdbcType=CHAR}
+	</delete>
+	<insert id="insert" parameterType="com.bocom.bbip.eups.entity.EupsBatchInfoDetail">
+		insert into EUPS.EUPS_BATCH_INFO_DETAIL
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="sqn != null">
+				SQN,
+			</if>
+			<if test="batNo != null">
+				BAT_NO,
+			</if>
+			<if test="cusAc != null">
+				CUS_AC,
+			</if>
+			<if test="cusNme != null">
+				CUS_NME,
+			</if>
+			<if test="txnAmt != null">
+				TXN_AMT,
+			</if>
+			<if test="agtSrvCusId != null">
+				AGT_SRV_CUS_ID,
+			</if>
+			<if test="agtSrvCusNme != null">
+				AGT_SRV_CUS_NME,
+			</if>
+			<if test="ourOthFlg != null">
+				OUR_OTH_FLG,
+			</if>
+			<if test="obkBk != null">
+				OBK_BK,
+			</if>
+			<if test="rmk1 != null">
+				RMK1,
+			</if>
+			<if test="rmk2 != null">
+				RMK2,
+			</if>
+			<if test="sts != null">
+				STS,
+			</if>
+			<if test="errMsg != null">
+				ERR_MSG,
+			</if>
+			<if test="txnDte != null">
+				TXN_DTE,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="sqn != null">
+				#{sqn,jdbcType=CHAR},
+			</if>
+			<if test="batNo != null">
+				#{batNo,jdbcType=CHAR},
+			</if>
+			<if test="cusAc != null">
+				#{cusAc,jdbcType=CHAR},
+			</if>
+			<if test="cusNme != null">
+				#{cusNme,jdbcType=VARCHAR},
+			</if>
+			<if test="txnAmt != null">
+				#{txnAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="agtSrvCusId != null">
+				#{agtSrvCusId,jdbcType=VARCHAR},
+			</if>
+			<if test="agtSrvCusNme != null">
+				#{agtSrvCusNme,jdbcType=VARCHAR},
+			</if>
+			<if test="ourOthFlg != null">
+				#{ourOthFlg,jdbcType=CHAR},
+			</if>
+			<if test="obkBk != null">
+				#{obkBk,jdbcType=VARCHAR},
+			</if>
+			<if test="rmk1 != null">
+				#{rmk1,jdbcType=VARCHAR},
+			</if>
+			<if test="rmk2 != null">
+				#{rmk2,jdbcType=VARCHAR},
+			</if>
+			<if test="sts != null">
+				#{sts,jdbcType=CHAR},
+			</if>
+			<if test="errMsg != null">
+				#{errMsg,jdbcType=VARCHAR},
+			</if>
+			<if test="txnDte != null">
+				#{txnDte,jdbcType=DATE},
+			</if>
+		</trim>
+	</insert>
+	<select id="findCount" resultType="java.lang.Integer">
+		select count(*) from EUPS.EUPS_BATCH_INFO_DETAIL
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="sqn!=null">
+				AND SQN=#{sqn,jdbcType=CHAR}
+			</if>
+			<if test="batNo!=null">
+				AND BAT_NO=#{batNo,jdbcType=CHAR}
+			</if>
+			<if test="cusAc!=null">
+				AND CUS_AC=#{cusAc,jdbcType=CHAR}
+			</if>
+			<if test="cusNme!=null">
+				AND CUS_NME=#{cusNme,jdbcType=VARCHAR}
+			</if>
+			<if test="txnAmt!=null">
+				AND TXN_AMT=#{txnAmt,jdbcType=DECIMAL}
+			</if>
+			<if test="agtSrvCusId!=null">
+				AND AGT_SRV_CUS_ID=#{agtSrvCusId,jdbcType=VARCHAR}
+			</if>
+			<if test="agtSrvCusNme!=null">
+				AND AGT_SRV_CUS_NME=#{agtSrvCusNme,jdbcType=VARCHAR}
+			</if>
+			<if test="ourOthFlg!=null">
+				AND OUR_OTH_FLG=#{ourOthFlg,jdbcType=CHAR}
+			</if>
+			<if test="obkBk!=null">
+				AND OBK_BK=#{obkBk,jdbcType=VARCHAR}
+			</if>
+			<if test="rmk1!=null">
+				AND RMK1=#{rmk1,jdbcType=VARCHAR}
+			</if>
+			<if test="rmk2!=null">
+				AND RMK2=#{rmk2,jdbcType=VARCHAR}
+			</if>
+			<if test="sts!=null">
+				AND STS=#{sts,jdbcType=CHAR}
+			</if>
+			<if test="errMsg!=null">
+				AND ERR_MSG=#{errMsg,jdbcType=VARCHAR}
+			</if>
+			<if test="txnDte!=null">
+				AND TXN_DTE=#{txnDte,jdbcType=DATE}
+			</if>
+		</trim>
+	</select>
+	<update id="update" parameterType="com.bocom.bbip.eups.entity.EupsBatchInfoDetail">
+		update EUPS.EUPS_BATCH_INFO_DETAIL
+		<set>
+			<if test="batNo != null">
+				BAT_NO = #{batNo,jdbcType=CHAR},
+			</if>
+			<if test="cusAc != null">
+				CUS_AC = #{cusAc,jdbcType=CHAR},
+			</if>
+			<if test="cusNme != null">
+				CUS_NME = #{cusNme,jdbcType=VARCHAR},
+			</if>
+			<if test="txnAmt != null">
+				TXN_AMT = #{txnAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="agtSrvCusId != null">
+				AGT_SRV_CUS_ID = #{agtSrvCusId,jdbcType=VARCHAR},
+			</if>
+			<if test="agtSrvCusNme != null">
+				AGT_SRV_CUS_NME = #{agtSrvCusNme,jdbcType=VARCHAR},
+			</if>
+			<if test="ourOthFlg != null">
+				OUR_OTH_FLG = #{ourOthFlg,jdbcType=CHAR},
+			</if>
+			<if test="obkBk != null">
+				OBK_BK = #{obkBk,jdbcType=VARCHAR},
+			</if>
+			<if test="rmk1 != null">
+				RMK1 = #{rmk1,jdbcType=VARCHAR},
+			</if>
+			<if test="rmk2 != null">
+				RMK2 = #{rmk2,jdbcType=VARCHAR},
+			</if>
+			<if test="sts != null">
+				STS = #{sts,jdbcType=CHAR},
+			</if>
+			<if test="errMsg != null">
+				ERR_MSG = #{errMsg,jdbcType=VARCHAR},
+			</if>
+			<if test="txnDte != null">
+				TXN_DTE = #{txnDte,jdbcType=DATE},
+			</if>
+		</set>
+		where SQN = #{sqn,jdbcType=CHAR}
+	</update>
+	<select id="findAll" resultMap="basicResultMap">
+		select
+		<include refid="baseColumnList" />
+		from EUPS.EUPS_BATCH_INFO_DETAIL
+		<if test="_parameter">
+			where SQN in
+			<foreach item="item" index="index" collection="list" open="("
+				separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+	</select>
+
+	<select id="findFirmBatDetail" resultType="java.util.Map"
+		parameterType="java.util.Map">
+		SELECT * FROM
+		(SELECT COALESCE(COUNT(*), 0) TOTCNT1, COALESCE(SUM(TXN_AMT), 0) TOTAMT1 FROM
+		EUPS.EUPS_BATCH_INFO_DETAIL WHERE TXN_DTE &gt;=#{beginDate} AND
+		TXN_DTE &lt;=#{endDate} AND STS='S'AND SUBSTR(CUS_AC,1,4)!='4849' AND
+		LENGTH(RTRIM(CUS_AC)) IN (21,18) AND RMK2=#{comNo} ) A,
+		(SELECT * FROM EUPS.EUPS_BATCH_INFO_DETAIL WHERE TXN_DTE &gt;=#{beginDate}
+		AND TXN_DTE &lt;=#{endDate} AND STS='S' AND SUBSTR(CUS_AC,1,4)!='4849'
+		AND LENGTH(RTRIM(CUS_AC)) IN (21,18) AND RMK2=#{comNo} ) B
+	</select>
+
+	<select id="findBangBookBatDetail" resultType="java.util.Map"
+		parameterType="java.util.Map">
+		SELECT * FROM
+		(SELECT COALESCE(COUNT(*), 0) TOTCNT2, COALESCE(SUM(TXN_AMT), 0) TOTAMT2 FROM
+		EUPS.EUPS_BATCH_INFO_DETAIL WHERE TXN_DTE &gt;=#{beginDate} AND
+		TXN_DTE &lt;=#{endDate} AND STS='S' AND SUBSTR(CUS_AC,1,4) IN
+		('0750','4849') AND RMK2=#{comNo} ) A,
+		(SELECT * FROM EUPS.EUPS_BATCH_INFO_DETAIL WHERE TXN_DTE &gt;=#{beginDate}
+		AND TXN_DTE &lt;=#{endDate} AND STS='S' AND SUBSTR(CUS_AC,1,4) IN
+		('0750','4849') AND RMK2=#{comNo} ) B
+	</select>
+
+	<select id="findCardBatDetail" resultType="java.util.Map"
+		parameterType="java.util.Map">
+		SELECT * FROM
+		(SELECT COALESCE(COUNT(*), 0) TOTCNT3, COALESCE(SUM(TXN_AMT), 0) TOTAMT3 FROM
+		EUPS.EUPS_BATCH_INFO_DETAIL WHERE TXN_DTE &gt;=#{beginDate} AND
+		TXN_DTE &lt;=#{endDate} AND STS='S'AND LENGTH(RTRIM(CUS_AC))!=18 AND
+		SUBSTR(CUS_AC,1,1)='6' AND RMK2=#{comNo} ) A,
+		(SELECT * FROM EUPS.EUPS_BATCH_INFO_DETAIL WHERE TXN_DTE &gt;=#{beginDate}
+		AND TXN_DTE &lt;=#{endDate} AND STS='S' AND LENGTH(RTRIM(CUS_AC))!=18
+		AND SUBSTR(CUS_AC,1,1)='6' ANd RMK2=#{comNo} ) b
+	</select>
+
+
+</mapper>

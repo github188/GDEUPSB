@@ -1,0 +1,35 @@
+#report(50)
+#rh(4)
+ 			                    中山批量代收代付月报表
+#end
+#th(3)
+#para($ele, comNo)
+#para($ele, comNme)
+#para($ele, '批量代收')
+#para($ele, beginDate)
+#para($ele, endDate)
+  	单位编号: ?               单位名称: ?                         
+  	业务类型: ?
+  	开始日期: ?            结束日期:?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#end 
+#set($p.index=0)
+#td(1,$d.eles)#set($p.index=$p.index+1) 
+#para($ele, TotCnt1)
+#para($ele, TotAmt1)
+#para($ele, TotCnt2)
+#para($ele, TotAmt2)
+#para($ele, TotCnt3)
+#para($ele, TotAmt3)
+#para($ele, TotCnt)
+#para($ele, TotAmt)
+ 	对公总计：      总笔数：?                    总金额：?
+	存折总计：      总笔数：?                    总金额：?
+	卡 总 计：       总笔数：?                    总金额：?
+	 总    计:   总笔数: ?                   总金额: ?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+#end     
+#tf(2)   
+	操作柜员: $d.tlr                操作日期: $f.fmt($d.prtDte, 'yyyy年MM月dd日')
+#end
+#end

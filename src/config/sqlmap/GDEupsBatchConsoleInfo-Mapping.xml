@@ -819,4 +819,13 @@
     where BAT_NO = #{batNo,jdbcType=CHAR}
   </update>
   
+  <select id="findTotalInfo" resultType="java.util.Map"  parameterType="java.util.Map">
+	SELECT 
+	COALESCE(SUM(TOT_CNT), 0) BATTOTCNT, COALESCE(SUM(TOT_AMT), 0) BATTOTAMT,
+	COALESCE(SUM(SUC_TOT_CNT), 0) BATSUCCNT, COALESCE(SUM(SUC_TOT_AMT), 0) BATSUCTOTAME,
+	COALESCE(SUM(FAL_TOT_CNT), 0) BATFALTOTCNT, COALESCE(SUM(FAL_TOT_AMT), 0) BATFALTOTAMT 
+	FROM GDEUPSB.GDEUPS_BATCH_CONSOLE_INFO WHERE
+	COM_NO=#{comNo} AND SUB_DTE &gt;= #{beginDate} AND SUB_DTE &lt;= #{endDate}
+  </select>
+  
 </mapper>
