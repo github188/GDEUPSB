@@ -6,8 +6,6 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import a.a.a.s;
-
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
@@ -46,8 +44,7 @@ public class QryCusMsgAction extends BaseAction{
 		context.setData(ParamKeys.TXN_DTE, txnDte);
 		context.setData(ParamKeys.TXN_TME, txnTme);
 		
-		System.out.println();
-		System.out.println("===========payNo="+context.getData("payNo"));
+		log.info("===========payNo="+context.getData("payNo"));
 		callThd(context);
 		String comNo=context.getData("comNo").toString();
 		String bakFld1="";
