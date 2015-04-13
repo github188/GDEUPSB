@@ -12,6 +12,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
@@ -67,17 +68,6 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 	 */
 	public void afterBatchDeal(AfterBatchAcpDomain afterbatchacpdomain, Context context) throws CoreException {
 			logger.info("===============Start  BatchDataResultFileAction  afterBatchDeal");	
-//			logger.info(">>>>>Start  Down  AGTS  FileResult <<<<<<");
-//			//文件下载
-//			String path=context.getData("dir").toString();
-//			EupsThdFtpConfig eupsThdFtpConfigs = get(EupsThdFtpConfigRepository.class).findOne(ParamKeys.FTPID_BATCH_PAY_FILE_TO_ACP);
-//			String fileNames=context.getData("batNo")+".result";
-//			eupsThdFtpConfigs.setLocDir(fileNames);
-//			eupsThdFtpConfigs.setRmtFleNme(fileNames);
-//			eupsThdFtpConfigs.setFtpDir("1");
-//			eupsThdFtpConfigs.setRmtWay(path);
-//			operateFTPAction.getFileFromFtp(eupsThdFtpConfigs);
-//			logger.info(">>>>>Down Result File Success<<<<<<");
 		
 			//第三方 rsvFld9
 			String batNo=context.getData(ParamKeys.BAT_NO).toString();
@@ -89,7 +79,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			//更改控制表
 			GDEupsBatchConsoleInfo gdEupsBatchConsoleInfoUpdate=updateInfo(context,gdeupsBatchConsoleInfo ,eupsBatchConsoleInfo);
 			//文件名
-			String fileName="PTFH_301"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+context.getData(ParamKeys.BAT_NO).toString().substring(13)+".txt";
+			String fileName="PTFH"+gdEupsBatchConsoleInfoUpdate.getFleNme().substring(4);
 			EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecBatch");
 			try{
 					Map<String, Object> resultMap=createFileMap(context,gdEupsBatchConsoleInfoUpdate);
@@ -114,7 +104,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			operateFTP.putCheckFile(eupsThdFtpConfig);
 			
 			//TODO 通知第三方
-//			callThd(context,gdeupsBatchConsoleInfo);
+			callThd(context,gdeupsBatchConsoleInfo,fileName);
 			logger.info("===============End  BatchDataResultFileAction  afterBatchDeal");	
 		}
 	/**
@@ -175,11 +165,11 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			headMap.put("comNo", gdEupsBatchConsoleInfoUpdate.getComNo());
 			headMap.put("rsvFld13", "301");
 			headMap.put("rsvFld12", "RMB");
+			headMap.put("rsvFld3", gdEupsBatchConsoleInfoUpdate.getRsvFld3());
 			headMap.put("rsvFld4", gdEupsBatchConsoleInfoUpdate.getRsvFld4());
 			headMap.put("totCnt", gdEupsBatchConsoleInfoUpdate.getTotCnt());
 			headMap.put("totAmt",gdEupsBatchConsoleInfoUpdate.getTotAmt().scaleByPowerOfTen(2).intValue());
 			headMap.put("sucTotCnt", gdEupsBatchConsoleInfoUpdate.getSucTotCnt());
-			headMap.put("sucTotCnt", gdEupsBatchConsoleInfoUpdate.getPayCnt());
 			headMap.put("sucTotAmt", gdEupsBatchConsoleInfoUpdate.getSucTotAmt().scaleByPowerOfTen(2).intValue());
 			headMap.put("falTotCnt", gdEupsBatchConsoleInfoUpdate.getFalTotCnt());
 			headMap.put("falTotAmt", gdEupsBatchConsoleInfoUpdate.getFalTotAmt().scaleByPowerOfTen(2).intValue());
@@ -196,7 +186,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 /**
  * 外发第三方
  */
-	public void callThd(Context context,GDEupsBatchConsoleInfo gdeupsBatchConsoleInfo){
+	public void callThd(Context context,GDEupsBatchConsoleInfo gdeupsBatchConsoleInfo,String fileName){
 		logger.info("========Start BatchDataResultFileAction callThd");	
 		
 		context.setData(GDParamKeys.TREATY_VERSION, GDConstants.TREATY_VERSION);//协议版本
@@ -219,7 +209,29 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
 			context.setData("PKGCNT", "000001");	
 			context.setData(GDParamKeys.SVRCOD, "21");
+			String sqn= get(BBIPPublicService.class).getBBIPSequence();
+			context.setData("sqns",sqn);
+			context.setData("busIdentify", "YDLW01");
 			
+			String txnDte=DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
+			String txnTme=DateUtils.formatAsHHmmss(new Date());
+			context.setData("sqn",sqn);
+			context.setData("txnDte",txnDte);
+			context.setData("txnTme",txnTme);
+			  context.setData("rsvFld2",gdeupsBatchConsoleInfo.getRsvFld2());
+		       context.setData("comNo",gdeupsBatchConsoleInfo.getComNo());
+		       context.setData("busType",gdeupsBatchConsoleInfo.getRsvFld6());
+		       context.setData("payType",gdeupsBatchConsoleInfo.getRsvFld4());
+		       context.setData("fileNme",fileName);
+		       context.setData("fileType","02");
+		       context.setData("rsvFld3" ,gdeupsBatchConsoleInfo.getRsvFld3());
+		       context.setData("totCnt" ,gdeupsBatchConsoleInfo.getTotCnt());
+		       context.setData("totAmt" ,gdeupsBatchConsoleInfo.getTotAmt().scaleByPowerOfTen(2).intValue());
+		       context.setData("sucTotCnt",gdeupsBatchConsoleInfo.getSucTotCnt());
+		       context.setData("sucTotAmt",gdeupsBatchConsoleInfo.getSucTotAmt().scaleByPowerOfTen(2).intValue());
+		       context.setData("falTotCnt",gdeupsBatchConsoleInfo.getFalTotCnt());
+		       context.setData("falTotAmt",gdeupsBatchConsoleInfo.getFalTotAmt().scaleByPowerOfTen(2).intValue());
+		       
 					try{
 						Map<String, Object> rspMap = callThdTradeManager.trade(context);
 						
