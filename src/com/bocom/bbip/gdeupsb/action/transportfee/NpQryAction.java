@@ -34,46 +34,49 @@ public class NpQryAction extends BaseAction {
 
 		System.out.println(ctx.getDataMap());
 		// 统计总数,成功或失败
-//		GDEupsbTrspNpManag gdEupsbTrspNpManag = new GDEupsbTrspNpManag();
-//		gdEupsbTrspNpManag.setBegDat((Date) ctx.getData(GDParamKeys.BEG_DAT));
-//		gdEupsbTrspNpManag.setEndDat((Date) ctx.getData(GDParamKeys.END_DAT));
-//		gdEupsbTrspNpManag.setNodNo(ctx.getData(ParamKeys.BR).toString());
-//		gdEupsbTrspNpManag.setStatus(ctx.getData(GDParamKeys.STATUS).toString());
-//		gdEupsbTrspNpManag.setIdNo(ctx.getData("idNo").toString());
-//		gdEupsbTrspNpManag.setCarNo(ctx.getData(GDParamKeys.CAR_NO).toString());
-//		List<Integer> tolNum = gdEupsbTrspNpManagRepository.findCountSum(gdEupsbTrspNpManag);
-//		if (0 == tolNum.get(0)) {
-//			ctx.setData(ParamKeys.RSP_MSG, "无记录");
-//		} else {
-//			ctx.setData(ParamKeys.RSP_MSG, "交易成功");
-//		}
-
-//		Pageable pageable = BeanUtils.toObject(ctx.getDataMap(), PageRequest.class);
-//		Page<GDEupsbTrspNpManag> TrspNpManagPage = get(GDEupsbTrspNpManagRepository.class).findNpInfo(pageable, gdEupsbTrspNpManag);
-//		setResponseFromPage(ctx, "npResultList", TrspNpManagPage);
-		
-		
-		Map<String, Object> inpara = new HashMap<String, Object>();
-		inpara.put("begDat", (Date) ctx.getData(GDParamKeys.BEG_DAT));
-		inpara.put("endDat", (Date) ctx.getData(GDParamKeys.END_DAT));
-		inpara.put("nodNo", ctx.getData(ParamKeys.BR).toString());
-		inpara.put("carNo", ctx.getData(GDParamKeys.CAR_NO).toString());
-		inpara.put("status", ctx.getData(GDParamKeys.STATUS).toString());
-		inpara.put("idNo", ctx.getData("idNo").toString());
-
-		// 多页查询汇总信息
-		Pageable pageable = BeanUtils.toObject(ctx.getDataMap(), PageRequest.class);
-		Page<Map<String, Object>> result = get(GDEupsbTrspNpManagRepository.class).findNpInfo(pageable, inpara);
-		log.info("汇总信息查询结果=" + result);
-		if (result.getTotalElements() == 0) {
-			log.error("agt total info query is null!");
-			throw new CoreException(ErrorCodes.EUPS_CONSOLE_INFO_NOTEXIST); // 查无记录
+		GDEupsbTrspNpManag gdEupsbTrspNpManag = new GDEupsbTrspNpManag();
+		gdEupsbTrspNpManag.setBegDat((Date) ctx.getData(GDParamKeys.BEG_DAT));
+		gdEupsbTrspNpManag.setEndDat((Date) ctx.getData(GDParamKeys.END_DAT));
+		gdEupsbTrspNpManag.setNodNo(ctx.getData(ParamKeys.BR).toString());
+		gdEupsbTrspNpManag.setStatus(ctx.getData(GDParamKeys.STATUS).toString());
+		gdEupsbTrspNpManag.setIdNo(ctx.getData("idNo").toString());
+		gdEupsbTrspNpManag.setCarNo(ctx.getData(GDParamKeys.CAR_NO).toString());
+		List<Integer> tolNum = gdEupsbTrspNpManagRepository.findCountSum(gdEupsbTrspNpManag);
+		if (0 == tolNum.get(0)) {
+			ctx.setData(ParamKeys.RSP_MSG, "无记录");
+		} else {
+			ctx.setData(ParamKeys.RSP_MSG, "交易成功");
 		}
-		ctx.setData(ParamKeys.TOTAL_ELEMETS, result.getTotalElements());
-		ctx.setData(ParamKeys.TOTAL_PAGES, result.getTotalPages());
 
-		List<Map<String, Object>> npResultList = result.getElements();
-		ctx.setData("npResultList", npResultList); // 查询汇总返回信息
+		Pageable pageable = BeanUtils.toObject(ctx.getDataMap(), PageRequest.class);
+		Page<GDEupsbTrspNpManag> TrspNpManagPage = get(GDEupsbTrspNpManagRepository.class).findNpInfo(pageable, gdEupsbTrspNpManag);
+		setResponseFromPage(ctx, "npResultList", TrspNpManagPage);
+		
+		
+//		Map<String, Object> inpara = new HashMap<String, Object>();
+//		inpara.put("begDat", (Date) ctx.getData(GDParamKeys.BEG_DAT));
+//		inpara.put("endDat", (Date) ctx.getData(GDParamKeys.END_DAT));
+//		inpara.put("nodNo", ctx.getData(ParamKeys.BR).toString());
+//		inpara.put("carNo", ctx.getData(GDParamKeys.CAR_NO).toString());
+//		inpara.put("status", ctx.getData(GDParamKeys.STATUS).toString());
+//		inpara.put("idNo", ctx.getData("idNo").toString());
+//
+//		// 多页查询汇总信息
+//		Pageable pageable = BeanUtils.toObject(ctx.getDataMap(), PageRequest.class);
+//		Page<gdeupsb> result = get(GDEupsbTrspNpManagRepository.class).findNpInfo(pageable, inpara);
+//		log.info("汇总信息查询结果=" + result);
+//		if (result.getTotalElements() == 0) {
+//			log.error("agt total info query is null!");
+//			throw new CoreException(ErrorCodes.EUPS_CONSOLE_INFO_NOTEXIST); // 查无记录
+//		}
+//		ctx.setData(ParamKeys.TOTAL_ELEMETS, result.getTotalElements());
+//		ctx.setData(ParamKeys.TOTAL_PAGES, result.getTotalPages());
+//
+//		List<Map<String, Object>> npResultList = result.getElements();
+//		
+//		ctx.setData("npResultList", npResultList); // 查询汇总返回信息
+//		log.info("@@@@@@resultList="+ctx.getData("npResultList"));
+		
 	}
 
 }

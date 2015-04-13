@@ -47,7 +47,7 @@ public class InvoiceFinalAction extends BaseAction{
 			GDEupsbTrspTxnJnl gDEupsbTrspTxnJnl=BeanUtils.toObject(ctx.getDataMap(), GDEupsbTrspTxnJnl.class);
 			if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL)){
 				if("000".equals(thdReturnMessage.get(GDParamKeys.TRSP_CD))){
-					
+					ctx.setData(GDParamKeys.TACT_DT, DateUtils.parse((String)ctx.getData(GDParamKeys.TACT_DT)));
 					ctx.setData(GDParamKeys.TTXN_ST, "S");  //主机交易状态设为成功
 					ctx.setData(GDParamKeys.TXN_ST, "S");   //交易状态设为成功
 					gDEupsbTrspTxnJnl.setTtxnSt("S");
