@@ -46,11 +46,11 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 			Date txnDte=(Date)context.getData(ParamKeys.TXN_DTE);
 			Date txnTme=DateUtils.parse(context.getData("txnTme").toString());
 			Map<String, Object> map=createMap(context);
+			logger.info("~~~~~~~~~~~~~~map~~~~~ "+map);
+			Result delResult = bgspServiceAccessObject.callServiceFlatting("deleteAgentCollectAgreement",context.getDataMap());
+			logger.info("==========delResult："+delResult);
 			
 			if(context.getData(ParamKeys.THD_SQN)==null){
-					logger.info("~~~~~~~~~~~~~~map~~~~~ "+map);
-					Result delResult = bgspServiceAccessObject.callServiceFlatting("deleteAgentCollectAgreement",context.getDataMap());
-					logger.info("==========delResult："+delResult);
 					if(delResult.isSuccess()){
 							try{
 								constantOfSoapUI(context);
