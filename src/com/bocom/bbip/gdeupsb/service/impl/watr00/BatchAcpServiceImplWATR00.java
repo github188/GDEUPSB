@@ -1,7 +1,6 @@
 
 package com.bocom.bbip.gdeupsb.service.impl.watr00;
 
-import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,6 +16,7 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
 import com.bocom.bbip.comp.BBIPPublicService;
+import com.bocom.bbip.comp.CommonRequest;
 import com.bocom.bbip.comp.account.AccountService;
 import com.bocom.bbip.comp.btp.BTPService;
 import com.bocom.bbip.eups.action.BaseAction;
@@ -42,7 +42,6 @@ import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.ContextUtils;
 import com.bocom.bbip.utils.DateUtils;
-import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -80,8 +79,10 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 //		String br = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.BR, ErrorCodes.EUPS_FIELD_EMPTY);//机构号
 //		String tlr = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.TELLER, ErrorCodes.EUPS_FIELD_EMPTY);//柜员号
 		//TODO:	先把虚拟柜员赋定值，以后需要改。
-		context.setData("br", "01441999999");
-		context.setData("tlr", "EBI0000");
+		context.setData("br", "01445007999");
+		context.setData("tlr", "AFBM013");
+		context.setData("extFields", "01441800999");
+
 		String br = context.getData("br");
 		String tlr = context.getData("tlr");
 		String comNo = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.COMPANY_NO, ErrorCodes.EUPS_FIELD_EMPTY);//代理单位号
@@ -135,7 +136,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		
 		context.setData(ParamKeys.TXN_MDE, "0");
 		context.setData(ParamKeys.TXN_CHL, "1");
-		context.setData(ParamKeys.THD_BAT_NO, context.getData("sqn"));
+		//context.setData(ParamKeys.THD_BAT_NO, context.getData("sqn"));
 		context.setData(ParamKeys.BUS_TYP, "0");
 		context.setData("reqTyp", "");
 		context.setData("sup1Id", "");
@@ -184,7 +185,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		}
 		/** 插入批次控制表 */
 		String batNo =((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);//申请代收批次号
-		context.setData("batNo1", batNo);
+		
 		info.setBatNo(batNo);//批次号
 		info.setBatSts(GDConstants.BATCH_STATUS_INIT);//批次状态
 		info.setFleNme((String)context.getVariable(ParamKeys.FLE_NME));//代收付批量文件名称
@@ -198,7 +199,8 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		info.setBusKnd((String)context.getData(ParamKeys.BUSS_KIND));
 		info.setTxnOrgCde((String) context.getData(ParamKeys.BR));
 		info.setEupsBusTyp((String)context.getData(ParamKeys.EUPS_BUSS_TYPE));
-		
+		info.setRsvFld9(batNo);
+		context.setData(ParamKeys.THD_BAT_NO, batNo);
 		get(GDEupsBatchConsoleInfoRepository.class).insert(info);
 		context.setDataMap(BeanUtils.toMap(info));
 //		context.getDataMapDirectly().putAll(BeanUtils.toFlatMap(info));
@@ -216,7 +218,9 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 //		Assert.isNotNull(eupsThdFtpConfig, ErrorCodes.EUPS_FTP_INFO_NOTEXIST);
 		
 		eupsThdFtpConfig.setRmtFleNme(filename);
-		eupsThdFtpConfig.setRmtWay(path);
+		//eupsThdFtpConfig.setRmtWay("./");
+		//eupsThdFtpConfig.setLocDir("/home");
+		eupsThdFtpConfig.setLocFleNme(filename);
 		logger.info("start get batch file now,thd ftp info=["+BeanUtils.toFlatMap(eupsThdFtpConfig)+"]");
 		
 		operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
@@ -262,13 +266,15 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 			}else{
 			Map<String,Object> temp = new HashMap<String,Object>();
 			temp.put("CUSAC", map.get("bcount"));
-			temp.put("CUSNME", "郑永军");
+			//temp.put("CUSNME", "郑永军");
+			temp.put("CUSNME", accountService.getAcInf(CommonRequest.build(context), map.get("bcount").toString())
+					.getCusName());
 			temp.put("TXNAMT", new BigDecimal(map.get("je").toString().trim()).scaleByPowerOfTen(-2));
 			temp.put("AGTSRVCUSID", map.get("hno"));
 			temp.put("AGTSRVCUSNME", "");
 			//TODO:本行标志暂全定0，还要改。
 //			temp.put("OUROTHFLG", true==accountService.isOurBankCard((String) map.get(ParamKeys.CUS_AC))?"0":"1");
-			temp.put("OUROTHFLG", "0");
+			temp.put("OUROTHFLG", true==accountService.isOurBankCard((String) map.get("bcount"))?"0":"1");
 			temp.put("OBKBK", map.get("KKB"));
 			temp.put("RMK1", "");
 			temp.put("RMK2", "");
@@ -283,9 +289,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 			tmp.setJe((String)map.get("je"));
 			//BigDecimal bigDecimal=new BigDecimal(map.get("bcount").toString().trim()).scaleByPowerOfTen(-2);
 			tmp.setBcount((String)map.get("bcount"));
-			
 			//tmp.setBcount(bigDecimal+"");
-			tmp.setRmk1(context.getVariable(ParamKeys.FLE_NME).toString());
 			get(GdeupsWatBatInfTmpRepository.class).insert(tmp);
 			i++;
 		}
