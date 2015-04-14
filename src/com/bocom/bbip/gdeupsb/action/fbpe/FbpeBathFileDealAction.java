@@ -155,6 +155,7 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
             gdFbpeFileBatchTmp.setBankNam((String)orgMap.get("bankNam"));
             gdFbpeFileBatchTmp.setTxnNo((String)orgMap.get("txnNo"));
             gdFbpeFileBatchTmp.setRsvFld2((String)orgMap.get("rsvFld2"));
+            gdFbpeFileBatchTmp.setRsvFld5(batNo);
             
             if(orgMap.get("txnNo")==null){
             		gdFbpeFileBatchTmp.setTxnNo("fbpe");
