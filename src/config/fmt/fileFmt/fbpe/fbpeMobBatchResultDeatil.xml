@@ -3,15 +3,18 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
     encoding="utf-8" trace="true">
-    <segment name="" encoding="GBK">
-        <fixString name="smsSqn" length="20" />  <!-- 交易流水号-->
+    <segment name="detail" encoding="GBK">
+        <fixString name="smsSqn" length="8" />  <!-- 交易流水号-->
         <fixString name="rsvFld1" length="14" />  <!-- 备用字段1 代表手机号码,-->
-        <fixString name="cusNam" length="20" />  <!-- 客户姓名-->
-        <Item name="months" length="6"/>  <!--话费月份-->
+        <fixString name="cusNam" length="80" />  <!-- 客户姓名-->
+        <fixString name="months" length="6"/>  <!--话费月份-->
         <fixString name="txnAmt" length="14"  expression='exp:num.centToYuanAsString(str.trim($c.txnAmt))'/>  <!-- 应缴金额(不带小数点)-->
         <fixString name="cusAc" length="30"  />  <!--银行账号-->
-        <fixString name="bankNam" length="30" />  <!-- 银行名称 -->
-        <fixString name="bankNo" length="5" />  <!--银行代码 -->
-
+        <fixString name="bankNam" length="40" />  <!-- 银行名称 -->
+         <fixString name="mobComNam" length="80" />
+         <fixString name="mobComAc" length="32" />
+         <fixString name="AAC"  length="40" />
+         <fixString name="rsvFld7"	 length="1"/>	  <!--成功标志0-成功，1-不成功-->
+         <fixString name="rsvFld8"	 length="30"/>	  
    </segment> 
 </message>
