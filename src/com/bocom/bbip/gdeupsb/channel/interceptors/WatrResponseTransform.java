@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import com.bocom.bbip.eups.adaptor.exception.SocketReadException;
 import com.bocom.bbip.gdeupsb.channel.tcp.WatrSocketGateway;
 import com.bocom.bbip.utils.CryptoUtils;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.channel.Transform;
 
@@ -35,6 +36,27 @@ public class WatrResponseTransform implements Transform {
 
 			StringBuffer sb = new StringBuffer();
 			log.info("初始报文头(不含校验位)=" + sndStrPre.substring(0, 97));
+			String length= sndStrPre.substring(0, 4);
+			int sum=0;
+			byte[]bt=length.getBytes();
+			
+			sum+=1000*(bt[0]-48);sum+=100*(bt[1]-48);sum+=10*(bt[2]-48);sum+=(bt[3]-48);
+			sum+=4;
+			sndStrPre=sndStrPre.replace(sndStrPre.substring(0, 4), StringUtils.leftPad(String.valueOf(sum), 4, "0"));
+			length= sndStrPre.substring(0, 4);
+			String []len=new String[4];
+			String s="";
+			if(length.startsWith("0")){
+					len[0]=length.substring(1, 2);
+					len[1]=length.substring(2, 3);
+					len[2]=length.substring(3, 4);
+				     len[3]=" ";
+			}
+			StringBuilder builder=new StringBuilder();
+		    for(String ss:len){
+		    	builder.append(ss);
+		    }
+			sndStrPre=sndStrPre.replace(sndStrPre.substring(0, 4), builder.toString());
 			sb.append(sndStrPre.substring(0, 97)); // 初始报文头(不含校验位)
 			sb.append(md5Date);
 			
