@@ -130,7 +130,7 @@ public class CheckTrspFileAction extends BaseAction{
 					        		gdEupsbTrspFeeInfoNew.setPayMon(gdEupsbTrspFeeInfo.getPayMon());		 //月份
 					        		gdEupsbTrspFeeInfoNew.setCarTyp(gdEupsbTrspFeeInfo.getCarTyp());			 //车类型
 					        		gdEupsbTrspFeeInfoNew.setCarNo(gdEupsbTrspFeeInfo.getCarNo());				 //车牌号
-					        		gdEupsbTrspFeeInfoNew.setPayDat(gdEupsbTrspFeeInfo.getPayDat());			 //缴费日期
+					        		gdEupsbTrspFeeInfoNew.setCarDzs(DateUtils.format(gdEupsbTrspFeeInfo.getPayDat(), DateUtils.STYLE_yyyyMMdd));		 //缴费日期
 					        		gdEupsbTrspFeeInfoNew.setInvNo(gdEupsbTrspFeeInfo.getInvNo());				 //发票
 					        		gdEupsbTrspFeeInfoNew.setActNo(gdEupsbTrspFeeInfo.getActNo());				 //账号
 					        		gdEupsbTrspFeeInfoNew.setPayTlr(gdEupsbTrspFeeInfo.getPayTlr());				 //操作柜员
@@ -269,9 +269,7 @@ public class CheckTrspFileAction extends BaseAction{
 		logger.info("~~~~~~~~~~~Start  CheckTrspFile   printDetail");
 		//报表模式
 		int i=Integer.parseInt(context.getData(GDParamKeys.JOURNAL_MODEL).toString());
-		context.setData(ParamKeys.TXN_TLR, "ABIR148");
-		String rptFil="Car"+context.getData(ParamKeys.TXN_TLR).toString()+context.getData(GDParamKeys.START_DATE).toString().substring(5)+".dat";
-		context.setData("rptFil", rptFil);
+//		context.setData("rptFil", rptFil);
 		
 		String rptFmt="rptFmt";
 		List<Map<String, Object>> list=gdEupsbTrspFeeInfoRepository.findSumForTxnAmt(tChkNo);
@@ -310,27 +308,24 @@ public class CheckTrspFileAction extends BaseAction{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		String rptFil="Car"+context.getData("tlr").toString()+context.getData(GDParamKeys.START_DATE).toString().substring(5)+".dat";
 		//拼装文件
 		Map<String, String> map = new HashMap<String, String>();
-		map.put(rptFmt, path);
+		map.put(rptFil, path);
 		render.setReportNameTemplateLocationMapping(map);
-		context.setData("eles", list);
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		System.out.println("rptFmt");
-		System.out.println(context);
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		String result = render.renderAsString(rptFmt, context);
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		context.setData("eles", detailList);
+		String result = render.renderAsString(rptFil, context);
+		System.out.println("~~~~~~~~~~~~~result~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		System.out.println(result);
 		//文件路径
 		StringBuffer rpFmts=new StringBuffer();
 		rpFmts.append("H:\\");
-		File file =new File(rptFmt.toString());
+		File file =new File(rptFil.toString());
 		if(!file.exists()){
 				file.mkdirs();
 		}
 		try {
-			FileOutputStream fileOutputStream = new FileOutputStream(rpFmts.append(rptFmt).toString());
+			FileOutputStream fileOutputStream = new FileOutputStream(rpFmts.append(rptFil).toString());
 			OutputStreamWriter outputStreamWriter=new OutputStreamWriter(fileOutputStream,"GBK");
 			BufferedWriter bufferedWriter =new BufferedWriter(outputStreamWriter);
 			PrintWriter printWriter = new PrintWriter(bufferedWriter);
@@ -353,8 +348,8 @@ public class CheckTrspFileAction extends BaseAction{
 		
 		
 		//TODO 没有确定下名字rptFil  还是 fileName
-		String fileName=context.getData("fileName").toString();
+//		String fileName=context.getData("fileName").toString();
 		System.out.println("~~~~~~~~~~~~~sendFile~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		sendFile(context,rptFmt);
+//		sendFile(context,rptFmt);
 	}
 }
