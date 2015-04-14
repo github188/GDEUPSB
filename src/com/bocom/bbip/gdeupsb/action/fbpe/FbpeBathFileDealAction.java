@@ -1,10 +1,14 @@
 package com.bocom.bbip.gdeupsb.action.fbpe;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.io.FileUtils;
+import com.bocom.bbip.thd.org.apache.commons.lang3.ArrayUtils;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -83,11 +87,12 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
 		logger.info("===============获取文件成功");
         
 		String filePath=eupsThdFtpConfig.getLocDir();
+		String pathName=filePath+"//"+fileName;
 		//自行实现解析文件
         Map<String, List<Map<String, Object>>> map= new HashMap<String, List<Map<String,Object>>>();
         Resource resource=new FileSystemResource(TransferUtils.resolveFilePath(filePath, fileName));
         String comNo = context.getData("comNo").toString();
-        
+
         //根据单位编号寻找格式文件解析
         if(comNo.equals("4460000011")) {
             try { 
@@ -96,11 +101,13 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
                 e.printStackTrace();
             }
         } else if (comNo.equals("4460002194")) {
-            try {
-                map= marshaller.unmarshal("gasFbpeBatFmt", resource, Map.class);
-            } catch (JumpException e) {
-                e.printStackTrace();
-            }
+        		//解析文件
+        		try {
+					map=resourceFile(pathName);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
         }  else if (comNo.equals("4460000010")) {
             try {
                 map= marshaller.unmarshal("mobFbpeBatFmt", resource, Map.class);
@@ -140,19 +147,18 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
             gdFbpeFileBatchTmp.setCusNo((String)orgMap.get("cusNo"));
             gdFbpeFileBatchTmp.setCusAc((String)orgMap.get("cusAc"));
             gdFbpeFileBatchTmp.setCusNam((String)orgMap.get("cusNam"));
-            String txnAmt=(String)orgMap.get("txnAmt");
-            gdFbpeFileBatchTmp.setTxnAmt(txnAmt);
+            gdFbpeFileBatchTmp.setTxnAmt((String)orgMap.get("txnAmt"));
             gdFbpeFileBatchTmp.setCosMon((String)orgMap.get("months"));
             gdFbpeFileBatchTmp.setRsvFld1((String)orgMap.get("rsvFld1"));
             gdFbpeFileBatchTmp.setBankNo((String)orgMap.get("bankNo"));
             gdFbpeFileBatchTmp.setBankNam((String)orgMap.get("bankNam"));
             
+            gdFbpeFileBatchTmp.setTxnNo("fbpe");
             fileBatchTmpRepository.insert(gdFbpeFileBatchTmp);
-            bigDecimal=bigDecimal.add(new BigDecimal(txnAmt));
+            bigDecimal=bigDecimal.add(new BigDecimal((String)orgMap.get("txnAmt")).scaleByPowerOfTen(-2));
             payDetailLst.add(gdFbpeFileBatchTmp);
         }
         logger.info("===============End  insert  GDEUPS_FBPE_FILE_BATCH_TMP");
-
 		context.setData("totCnt", parseMap.size());
 		context.setData("totAmt", bigDecimal);
 		
@@ -161,7 +167,7 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
 		Map<String, Object> headerMap=new HashMap<String, Object>();
 		headerMap.put("comNo", comNoAcps);
 		headerMap.put("totAmt", bigDecimal);
-		headerMap.put("totCnt", parseMap.size());
+		headerMap.put("totCount", parseMap.size());
 		
 		logger.info("===============开始代收付文件数据准备");
 		Map<String, Object> temp = CollectionUtils.createMap();
@@ -192,7 +198,7 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
 				}else{
 					agtFileBatchDetail.setOUROTHFLG("1");
 				}
-				agtFileBatchDetail.setTXNAMT(new BigDecimal(gdeFbpeFileBatchTmp.getTxnAmt()));
+				agtFileBatchDetail.setTXNAMT(new BigDecimal(gdeFbpeFileBatchTmp.getTxnAmt()).scaleByPowerOfTen(-2));
 				//备注 不用
 				detailList.add(agtFileBatchDetail);
 			}
@@ -201,4 +207,61 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
 		return detailList;
     }
  
+    public Map<String, List<Map<String, Object>>> resourceFile(String pathName) throws IOException{
+    	 logger.info("===============Start  FbpeBathFileDealAction resourceFile");
+    	 Map<String, List<Map<String, Object>>> mapList=new HashMap<String, List<Map<String,Object>>>();
+    	 int LEN=3;
+		 int pos=0;
+		 int firstLen=0;
+		 int secondLen=0;
+		 int thirdLen=0;
+		 int fourthLen=0;
+		List<Map<String,Object>> ret=new ArrayList<Map<String,Object>>();
+		Map<String,Object>map=null;
+		File file=new File(pathName);
+		List<String>list=FileUtils.readLines(file, "gbk");
+		for(String str:list){
+			map=new HashMap<String,Object>();
+			byte[]b=str.getBytes("gbk");
+			byte _1st[]=ArrayUtils.subarray(b, pos, LEN);
+			firstLen=calLen(_1st);
+			pos=LEN;
+			byte[]_1stVal=ArrayUtils.subarray(b, pos, firstLen+pos);
+			pos=pos+firstLen;
+			map.put("cusNo", new String(_1stVal));
+			byte _2nd[]=ArrayUtils.subarray(b, pos, pos+LEN);
+			
+			secondLen=calLen(_2nd);
+			pos=pos+LEN;
+			byte[]_2ndVal=ArrayUtils.subarray(b, pos, secondLen+pos);
+			
+			map.put("cusAc", new String(_2ndVal));
+			pos=pos+secondLen;
+			byte _3rd[]=ArrayUtils.subarray(b, pos, pos+LEN);
+			thirdLen=calLen(_3rd);
+			pos=pos+LEN;
+			byte[]_3rdVal=ArrayUtils.subarray(b, pos, thirdLen+pos);
+			map.put("cusNam", new String(_3rdVal));
+			pos=pos+thirdLen;
+			byte _4th[]=ArrayUtils.subarray(b, pos, pos+LEN);
+			fourthLen=calLen(_4th);
+			pos=pos+LEN;
+			byte[]_4thVal=ArrayUtils.subarray(b, pos, fourthLen+pos);
+			map.put("txnAmt", new String(_4thVal));
+			ret.add(map);
+			  firstLen=0;
+			  secondLen=0;
+			  thirdLen=0;
+			  fourthLen=0;
+			  pos=0;
+		}
+		mapList.put("detail", ret);
+		 logger.info("===============End  FbpeBathFileDealAction resourceFile");
+		return mapList;
+    }
+	private  static int calLen(byte[]len){
+		int length=0;
+		length+=100*(len[0]-48);length+=10*(len[1]-48);length+=(len[2]-48);
+		return length;
+	}
 }
