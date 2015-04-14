@@ -62,7 +62,7 @@ public class WatrLengthStreamResolver  extends LengthStreamResolver {
             ByteArrayOutputStream localByteArrayOutputStream = new ByteArrayOutputStream(64);
             
             String lenStr1=new String(arrayOfByte1).trim();
-            lenStr1=StringUtils.leftPad(lenStr1, lengthSize, "0");
+            lenStr1=StringUtils.rightPad(lenStr1, lengthSize, " ");
             
             localByteArrayOutputStream.write(lenStr1.getBytes());
 
