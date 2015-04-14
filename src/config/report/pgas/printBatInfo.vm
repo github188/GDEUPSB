@@ -1,33 +1,34 @@
 #report(50)
 #rh(4)
- 			                                  (惠州分行)燃气代扣成功报表
+ 			                    $f.conv('prtFlg', $d.prtFlg)
 #end
 #th(2)
-#para('惠州分行')
 #para($d.beginDateY)
 #para($d.beginDateM)
 #para($d.beginDateD)
 #para($d.endDateY)
 #para($d.endDateM)
 #para($d.endDateD)
-                    分行:?               日期:     ?年  ?月  ?日 至 ?年  ?月  ?日     共$totalPages 页            第 $pageNumber 页
+                                  日期:     ?年  ?月  ?日 至 ?年  ?月  ?日     共$totalPages 页            第 $pageNumber 页
 ┏━━━━━┳━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
-┃   序号   ┃   交易类型   ┃       扣款账号       ┃      户名      ┃       缴费金额       ┃      交易日期      ┃      清算日期      ┃      会计流水号      ┃        前置流水号        ┃        燃气托收流水号        ┃
+┃   序号   ┃    批次号   ┃             流水号              ┃        燃气托收流水号        ┃                      账号                    ┃      户名      ┃        燃气编号       ┃      用户姓名    ┃        缴费金额       ┃      交易日期      ┃       交易状态     |          备注                               |       
 ┣━━━━━╋━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━╋━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━┫
 #end 
 #set($p.index=0)
 #td(1,$d.eles)#set($p.index=$p.index+1) 
 #para($p.index)
-#para($ele.txnTyp)
-#para($ele.cusAc)
-#para($ele.cusNme)
-#para($ele.txnAmt)
-#para($f.fmt($ele.txnDte, 'yyyy-MM-dd'))
-#para($f.fmt($ele.acDte, 'yyyy-MM-dd'))
-#para($ele.mfmVchNo)
-#para($ele.sqn)
-#para($ele.thdSqn)
-┃?         ┃?             ┃?                     ┃ ?              ┃?                     ┃?                   ┃?                   ┃?                     ┃?                         ┃?                             ┃        
+#para($ele.BAT_NO)
+#para($ele.SQN)
+#para($ele.RMK1)
+#para($ele.CUS_AC)
+#para($ele.CUS_NME)
+#para($ele.RMK2)
+#para($ele.AGT_SRV_CUS_NME)
+#para($ele.TXN_AMT)
+#para($ele.TXN_DTE)
+#para($f.conv('type', $ele.STS))
+#para($ele.ERR_MSG)
+┃?      ┃?                    ┃?                     ┃?                     ┃?                          ┃?                          ┃?                   ┃?                    ┃?          ┃?                  ┃?       ┃?                                               ┃        
 #end     
 #tf(2)   
 ┣━━━━━╋━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━╋━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━┫

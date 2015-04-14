@@ -1,6 +1,6 @@
 #report(50)
 #rh(4)
- 			                                  (惠州分行)燃气代扣失败报表
+ 			                    $f.conv('prtFlg', $d.prtFlg)
 #end
 #th(2)
 #para('惠州分行')
