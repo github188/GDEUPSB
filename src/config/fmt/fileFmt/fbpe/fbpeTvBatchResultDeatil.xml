@@ -7,7 +7,7 @@
         <fixString name="txnNo" length="3" />  <!--交易代码-->
         <fixString name="orgCde" length="3" />  <!-- 机构代码-->
         <fixString name="smsSqn" length="20" />  <!-- SMS交易流水号-->
-        <fixString name="rsvFld3" length="14"/><!-- 银行流水号 -->
+        <fixString name="sqn" length="14"/><!-- 银行流水号 -->
         <fixString name="tlrNo" length="6" />  <!-- 操作员号-->
         <fixString name="txnTim" length="14" />  <!-- 交易时间-->
         <fixString name="rsvFld7"	length="2"/>	<!-- 标识 00成功 其他失败-->
