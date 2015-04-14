@@ -87,6 +87,7 @@
 				<property name="host" value="182.59.28.80"/>
 				<property name="port" value="7600" />
 				<property name="timeout" value="30000" />
+				<property name="filePath" value="/" />
 				<!-- <property name="streamResolver">
 				
 				<bean class="com.bocom.jump.bp.channel.tcp.LengthStreamResolver" >
@@ -209,12 +210,10 @@
 					<constructor-arg
 						value="packet://WEB-INF/classes/config/stream/WATR00/WATR00ReqHeader.xml" />
 				</bean>
-				<bean class="com.bocom.bbip.gdeupsb.channel.tcp.WaterReqTransform" />
 			</array>
 		</property>
 		<property name="decodeTransforms">
 			<array>
-			    <bean class="com.bocom.bbip.gdeupsb.channel.tcp.WaterRspTransform" />
 				<bean class="com.bocom.jump.bp.channel.interceptors.DecoderTransform">
 					<constructor-arg
 						value="packet://WEB-INF/classes/config/stream/WATR00/WATR00RspHeader.xml" />
