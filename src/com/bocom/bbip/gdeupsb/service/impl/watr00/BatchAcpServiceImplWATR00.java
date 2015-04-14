@@ -32,6 +32,7 @@ import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.BatchAcpService;
 import com.bocom.bbip.eups.spi.vo.PrepareBatchAcpDomain;
 import com.bocom.bbip.file.fmt.FileMarshaller;
+import com.bocom.bbip.gdeupsb.action.common.OperateFTPActionExt;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.entity.GdeupsWatBatInfTmp;
@@ -59,8 +60,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 	private static final String lockKey = "BatchAcpServiceImplWATR00";
 	@Autowired
 	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
-	@Autowired
-	OperateFTPAction operateFTPAction;
+	
 	@Autowired
 	BBIPPublicService service;
 	@Autowired
@@ -74,6 +74,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 	@SuppressWarnings("unchecked")
 	@Override
 	public void prepareBatchDeal(PrepareBatchAcpDomain domain, Context context) throws CoreException {
+		
 		logger.info("BatchAcpServiceImplWATR00 prepareBatchDeal start ... ..."+context);
 		service.tryLock(lockKey, 60*1000L, 600L);//加锁
 //		String br = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.BR, ErrorCodes.EUPS_FIELD_EMPTY);//机构号
@@ -90,7 +91,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		
 		
 		String acDate = DateUtils.format(date, DateUtils.STYLE_yyyyMMdd);//会计日期
-		System.out.println("@@@@@@@@@@@@"+acDate);
+		log.info("@@@@@@@@@@@@@@acDate="+ acDate);
 		
 		
 		EupsActSysPara eupsActSysPara = new EupsActSysPara();
@@ -168,7 +169,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 	 */
 	@SuppressWarnings("unchecked")
 	private void buildBatchFile(Context context) throws CoreException{
-		
+		OperateFTPActionExt operateFTPAction = new OperateFTPActionExt();
 		String path = context.getData("path");
 		String filename = context.getData("filename");
 		
@@ -184,8 +185,8 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 			throw new CoreException("");
 		}
 		/** 插入批次控制表 */
-		String batNo =((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);//申请代收批次号
-		
+		//String batNo =((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);//申请代收批次号
+		String batNo= "789328674t32";
 		info.setBatNo(batNo);//批次号
 		info.setBatSts(GDConstants.BATCH_STATUS_INIT);//批次状态
 		info.setFleNme((String)context.getVariable(ParamKeys.FLE_NME));//代收付批量文件名称
@@ -220,6 +221,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		eupsThdFtpConfig.setRmtFleNme(filename);
 		//eupsThdFtpConfig.setRmtWay("./");
 		//eupsThdFtpConfig.setLocDir("/home");
+		logger.info("lhxzhenshuai"+eupsThdFtpConfig.getRmtWay()+eupsThdFtpConfig.getRmtFleNme());
 		eupsThdFtpConfig.setLocFleNme(filename);
 		logger.info("start get batch file now,thd ftp info=["+BeanUtils.toFlatMap(eupsThdFtpConfig)+"]");
 		
