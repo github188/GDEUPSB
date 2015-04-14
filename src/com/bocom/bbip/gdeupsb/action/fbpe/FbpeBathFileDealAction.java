@@ -7,9 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.io.FileUtils;
-import com.bocom.bbip.thd.org.apache.commons.lang3.ArrayUtils;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +34,7 @@ import com.bocom.bbip.gdeupsb.entity.AgtFileBatchDetail;
 import com.bocom.bbip.gdeupsb.entity.GdFbpeFileBatchTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GdFbpeFileBatchTmpRepository;
+import com.bocom.bbip.thd.org.apache.commons.lang3.ArrayUtils;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.core.Context;
@@ -135,7 +135,8 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
         logger.info("===============Start  insert  GDEUPS_FBPE_FILE_BATCH_TMP");
         for (Map<String, Object> orgMap : parseMap) {
             GdFbpeFileBatchTmp gdFbpeFileBatchTmp = new GdFbpeFileBatchTmp();
-            gdFbpeFileBatchTmp.setSqn(bbipPublicServiceImpl.getBBIPSequence());
+            String sqn=bbipPublicServiceImpl.getBBIPSequence().substring(6).trim();
+            gdFbpeFileBatchTmp.setSqn(sqn);
             gdFbpeFileBatchTmp.setAccAmt((String)orgMap.get("accAmt"));
             gdFbpeFileBatchTmp.setAccNo((String)orgMap.get("accNo"));
             gdFbpeFileBatchTmp.setActNo((String)orgMap.get("actNo"));
@@ -152,8 +153,12 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
             gdFbpeFileBatchTmp.setRsvFld1((String)orgMap.get("rsvFld1"));
             gdFbpeFileBatchTmp.setBankNo((String)orgMap.get("bankNo"));
             gdFbpeFileBatchTmp.setBankNam((String)orgMap.get("bankNam"));
+            gdFbpeFileBatchTmp.setTxnNo((String)orgMap.get("txnNo"));
+            gdFbpeFileBatchTmp.setRsvFld2((String)orgMap.get("rsvFld2"));
             
-            gdFbpeFileBatchTmp.setTxnNo("fbpe");
+            if(orgMap.get("txnNo")==null){
+            		gdFbpeFileBatchTmp.setTxnNo("fbpe");
+            }
             fileBatchTmpRepository.insert(gdFbpeFileBatchTmp);
             bigDecimal=bigDecimal.add(new BigDecimal((String)orgMap.get("txnAmt")).scaleByPowerOfTen(-2));
             payDetailLst.add(gdFbpeFileBatchTmp);
