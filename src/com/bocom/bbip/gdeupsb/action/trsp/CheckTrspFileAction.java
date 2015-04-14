@@ -9,7 +9,6 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.bocom.bbip.comp.BBIPPublicService;
-import com.bocom.bbip.comp.btp.BTPService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
@@ -63,7 +61,8 @@ public class CheckTrspFileAction extends BaseAction{
 			public void execute(Context context)throws CoreException,CoreRuntimeException{
 				logger.info("=================Start  CheckTrspFile");
 				
-				String tChkNo=((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
+//				String tChkNo=((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
+				String tChkNo=get(BBIPPublicService.class).getBBIPSequence();
 				context.setData(ParamKeys.WS_TRANS_CODE,"GetChk");
 				//交易上锁
 		        Result ret = get(BBIPPublicService.class).tryLock( tChkNo, (long) 0,(long) 600);
@@ -104,6 +103,9 @@ public class CheckTrspFileAction extends BaseAction{
 			        	if(gdEupsbTrspFeeInfo == null){
 			        			chkErr="企业多账";
 			        			chkFlg=3;
+					        	//跟新表中对账状态 
+					        	//更新银行单边账   设置3 = chkFlg
+					        	gdEupsbTrspFeeInfoRepository.updateChkFlg(tChkNo);
 			        	}else{
 					        		if(!gdEupsbTrspFeeInfo.getCarNo().equals(trspCheckTmp.getCarNo()) 
 					        				||  !gdEupsbTrspFeeInfo.getCarTyp().equals(trspCheckTmp.getCarTyp())){
@@ -136,34 +138,33 @@ public class CheckTrspFileAction extends BaseAction{
 					        		//是否打印  
 					        		gdEupsbTrspFeeInfoNew.setStatus("0");
 					        		
+					        		detailList.add(gdEupsbTrspFeeInfoNew);
 					        	//TODO 
 					        	if(1 !=chkFlg){
 						        		numErr=numErr+1;
 						        		AmtErr=AmtErr.add(trspCheckTmp.getTxnAmt());
 //			                           银行交易日期|银行流水号|发生额|发票号|缴费月数|车辆类型|车牌号|状态|
-					        			detailList.add(gdEupsbTrspFeeInfoNew);
 					        	}
-					        	context.setData("detailList", detailList);
-					        	if(3 !=chkFlg){
 					        			//跟新对账标志 
 						        		String checkFlg=chkFlg+"";
 						        		gdEupsbTrspFeeInfo.setChkFlg(checkFlg);
 						        		gdEupsbTrspFeeInfo.setTchkNo(tChkNo);
 						        		gdEupsbTrspFeeInfoRepository.update(gdEupsbTrspFeeInfo);
-					        	}
-					        	//跟新表中对账状态 
-					        	//更新银行单边账   设置3 = chkFlg
-					        	gdEupsbTrspFeeInfoRepository.updateChkFlg(tChkNo);
 				       }
 		        }
+		        
+	        	context.setData("detailList", detailList);
 		        context.setData(ParamKeys.TXN_AMT, AmtErr);
+		        log.info("============开始拼装文件");
 		        //拼装文件
 		        EupsThdFtpConfig eupsThdFtpConfig=get(EupsThdFtpConfigRepository.class).findOne("trspCheckFile");
 		        Map<String, Object> map =  new HashMap<String, Object>();
     	        map.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(detailList));
     			get(OperateFileAction.class).createCheckFile(eupsThdFtpConfig, "trspCheckFile", fileName, map);
-		        
+    			
+    			log.info("============是否全部对账");
     			//判断是否全部对账
+		        
 		        List<GDEupsbTrspFeeInfo> gdEupsbTrspFeeInfoList=gdEupsbTrspFeeInfoRepository.findNotCheck(tChkNo);
 		        if(CollectionUtils.isNotEmpty(gdEupsbTrspFeeInfoList)){
 		        	context.setData(ParamKeys.RSP_CDE, "329999");
@@ -213,7 +214,7 @@ public class CheckTrspFileAction extends BaseAction{
 		String ftpNo="trspCheckFile";
 		EupsThdFtpConfig eupsThdFtpConfig=get(EupsThdFtpConfigRepository.class).findOne(ftpNo);
 		eupsThdFtpConfig.setFtpDir("1");
-		String path=eupsThdFtpConfig.getLocDir();
+//		String path=eupsThdFtpConfig.getLocDir();
 		String fileName=context.getData("fileName").toString().trim();
 		eupsThdFtpConfig.setLocFleNme(fileName);
 		eupsThdFtpConfig.setRmtFleNme(fileName);
@@ -228,15 +229,12 @@ public class CheckTrspFileAction extends BaseAction{
 		gdEupsbTrspFeeInfo.setTchkNo(tChkNo);
 		for (Map<String, Object> map : mapList) {
 				TrspCheckTmp trspCheckTmp=new TrspCheckTmp();
-			System.out.println(map);
 				
-				trspCheckTmp.setTxnDat(DateUtils.parse(map.get("payDat").toString(),DateUtils.STYLE_SIMPLE_DATE));
+				trspCheckTmp.setTxnDat(DateUtils.parse(map.get("payDat").toString(),DateUtils.STYLE_yyyyMMdd));
 				trspCheckTmp.setSqn(map.get("thdKey").toString());		
+				gdEupsbTrspFeeInfo.setThdKey(map.get("thdKey").toString());
 				
-				double i=Double.parseDouble(map.get("txnAmt").toString());
-				double d=i/100;
-				DecimalFormat df=new DecimalFormat("#.00");
-				BigDecimal txnAmt=new BigDecimal(df.format(d));
+				BigDecimal txnAmt=new BigDecimal(map.get("txnAmt").toString()).scaleByPowerOfTen(-2);
 				trspCheckTmp.setTxnAmt(txnAmt);
 				trspCheckTmp.setTchkNo(tChkNo);
 				trspCheckTmp.setInvNo(map.get("invNo").toString());
@@ -276,21 +274,15 @@ public class CheckTrspFileAction extends BaseAction{
 		context.setData("rptFil", rptFil);
 		
 		String rptFmt="rptFmt";
-		System.out.println();
-		System.out.println();
-		System.out.println(111);
-		List<Map<String, String>> list=gdEupsbTrspFeeInfoRepository.findSumForTxnAmt(tChkNo);
-		System.out.println();
-		System.out.println();
-		System.out.println(222);
+		List<Map<String, Object>> list=gdEupsbTrspFeeInfoRepository.findSumForTxnAmt(tChkNo);
 		//得到总笔数  总金额
 		if(CollectionUtils.isEmpty(list)){
 			context.setData(ParamKeys.RSP_CDE, "329999");
 			context.setData(ParamKeys.RSP_MSG, "查询统计信息失败");
 			throw new  CoreException("查询统计信息失败");
 		}else{
-			int totCnt=Integer.parseInt(list.get(0).get("COUNT"));
-			BigDecimal totAmt=new BigDecimal(list.get(0).get("SUMTXNAMT"));
+			int totCnt=Integer.parseInt(list.get(0).get("COUNT")+"");
+			BigDecimal totAmt=new BigDecimal(list.get(0).get("SUMTXNAMT")+"");
 			context.setData(ParamKeys.TOT_CNT, totCnt);
 			context.setData(ParamKeys.TOT_AMT, totAmt);
 		}
@@ -323,11 +315,16 @@ public class CheckTrspFileAction extends BaseAction{
 		map.put(rptFmt, path);
 		render.setReportNameTemplateLocationMapping(map);
 		context.setData("eles", list);
-		String result = render.renderAsString("printBatch", context);
-		
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println("rptFmt");
+		System.out.println(context);
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		String result = render.renderAsString(rptFmt, context);
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println(result);
 		//文件路径
 		StringBuffer rpFmts=new StringBuffer();
-		rpFmts.append("E:\\home\\bbipadm\\common\\");
+		rpFmts.append("H:\\");
 		File file =new File(rptFmt.toString());
 		if(!file.exists()){
 				file.mkdirs();
@@ -357,6 +354,7 @@ public class CheckTrspFileAction extends BaseAction{
 		
 		//TODO 没有确定下名字rptFil  还是 fileName
 		String fileName=context.getData("fileName").toString();
-		sendFile(context,fileName);
+		System.out.println("~~~~~~~~~~~~~sendFile~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		sendFile(context,rptFmt);
 	}
 }
