@@ -42,12 +42,22 @@
 			  <action id="act" ref="queryStatus"  operations="process"/>
 		</actions>
 	</process>
-	<!-- 电力协议维护 -->
+	<!--  电力协议维护 -->
 	<process id="gdeups.manageELEC02AGT" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
 		<actions>
 			  <action id="act" ref="manageAGT"  operations="process"/>
 		</actions>
 	</process>
+	
+	<!-- 第三方电力协议维护 来自柜台-->
+	<process id="gdeups.manageCounterELEC02AGT" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
+		<actions>
+			  <action id="act" ref="manageCounterAGT"  operations="process"/>
+		</actions>
+	</process>
+	
+	
+	
 	<!-- 修改可疑信息 -->
 	<process id="gdeups.modifyStatus" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
 		<actions>
