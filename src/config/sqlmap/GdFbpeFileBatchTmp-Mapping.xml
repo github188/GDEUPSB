@@ -424,6 +424,77 @@
 		select  count(*) as TOT_COUNT,sum(TXN_AMT) as ALL_MONEY  from  GDEUPSB.GDEUPS_FBPE_FILE_BATCH_TMP
 			 
 		where  RSV_FLD8=#{rsvFld8,jdbcType=CHAR}  
-
 </select>
+ <update id="updateFbpe" parameterType="com.bocom.bbip.gdeupsb.entity.GdFbpeFileBatchTmp" >
+    update ${GDEUPSB_SCHEMA}.GDEUPS_FBPE_FILE_BATCH_TMP
+    <set >
+      <if test="txnNo != null" >
+        TXN_NO = #{txnNo,jdbcType=CHAR},
+      </if>
+      <if test="orgCde != null" >
+        ORG_CDE = #{orgCde,jdbcType=CHAR},
+      </if>
+      <if test="tlrNo != null" >
+        TLR_NO = #{tlrNo,jdbcType=CHAR},
+      </if>
+      <if test="txnTim != null" >
+        TXN_TIM = #{txnTim,jdbcType=CHAR},
+      </if>
+      <if test="cusNo != null" >
+        CUS_NO = #{cusNo,jdbcType=CHAR},
+      </if>
+      <if test="accNo != null" >
+        ACC_NO = #{accNo,jdbcType=CHAR},
+      </if>
+      <if test="cusAc != null" >
+        CUS_AC = #{cusAc,jdbcType=CHAR},
+      </if>
+      <if test="cusNam != null" >
+        CUS_NAM = #{cusNam,jdbcType=CHAR},
+      </if>
+      <if test="txnAmt != null" >
+        TXN_AMT = #{txnAmt,jdbcType=CHAR},
+      </if>
+      <if test="accAmt != null" >
+        ACC_AMT = #{accAmt,jdbcType=CHAR},
+      </if>
+      <if test="actNo != null" >
+        ACT_NO = #{actNo,jdbcType=CHAR},
+      </if>
+      <if test="bankNo != null" >
+        BANK_NO = #{bankNo,jdbcType=CHAR},
+      </if>
+      <if test="bankNam != null" >
+        BANK_NAM = #{bankNam,jdbcType=CHAR},
+      </if>
+      <if test="cosMon != null" >
+        COS_MON = #{cosMon,jdbcType=CHAR},
+      </if>
+      <if test="rsvFld1 != null" >
+        RSV_FLD1 = #{rsvFld1,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld2 != null" >
+        RSV_FLD2 = #{rsvFld2,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld3 != null" >
+        RSV_FLD3 = #{rsvFld3,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld4 != null" >
+        RSV_FLD4 = #{rsvFld4,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld5 != null" >
+        RSV_FLD5 = #{rsvFld5,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld6 != null" >
+        RSV_FLD6 = #{rsvFld6,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld7 != null" >
+        RSV_FLD7 = #{rsvFld7,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld8 != null" >
+        RSV_FLD8 = #{rsvFld8,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SQN = #{sqn,jdbcType=CHAR}
+  </update>
 </mapper>
