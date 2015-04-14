@@ -19,7 +19,7 @@
 #para($ele.tlogNo)
 #para($ele.carNo)
 #para($ele.carTyp)
-#para($ele.payDat)
+#para($ele.carDzs)
 #para($ele.payTlr)
 #para($ele.payNod)
 
