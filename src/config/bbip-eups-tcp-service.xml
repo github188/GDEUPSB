@@ -101,7 +101,7 @@
 				<bean
 					class="com.bocom.jump.bp.channel.interceptors.RequestTracingInterceptor" />
 				 <bean
-					class="com.bocom.jump.bp.channel.tcp.interceptors.PayloadChannelInterceptor">
+					class="com.bocom.bbip.gdeupsb.channel.tcp.WaterPayloadChannelInterceptor">
 					<property name="lengthSize" value="4" />
 					<property name="lengthAddtive" value="-4" />
 					
