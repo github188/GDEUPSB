@@ -65,7 +65,7 @@ public class WaterLengthStreamResolver implements StreamResolver {
         	  arrayOfByte1[k]=arrayOfByte11[k-1];
           }
 	      int i = paramNumberConverter.toInt(arrayOfByte1, paramInt1, paramInt2);
-
+          i-=4;
 	      if ((paramInt3 > 0) && 
 	        (i >= paramInt3)) {
 	        log.error("Length [" + i + "] exceeds the limit [" + paramInt3 + "]. ");
