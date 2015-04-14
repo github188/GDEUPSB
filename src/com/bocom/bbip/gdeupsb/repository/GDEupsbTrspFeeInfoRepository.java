@@ -31,7 +31,7 @@ public interface GDEupsbTrspFeeInfoRepository extends PagingAndSortingRepository
 
 	public List<GDEupsbTrspFeeInfo> findNotCheck(String tChkNo);
 
-	public List<Map<String, String>> findSumForTxnAmt(String tChkNo);
+	public List<Map<String, Object>> findSumForTxnAmt(String tChkNo);
 
 	public void updateSt(GDEupsbTrspFeeInfo gdeupsb);
 
