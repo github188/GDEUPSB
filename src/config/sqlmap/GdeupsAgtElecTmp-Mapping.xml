@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GdeupsAgtElecTmp" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdeupsAgtElecTmp" >
+    <result column="CHANGE_TYPE" property="changeType" jdbcType="CHAR" />
+    <result column="COM_CODE" property="comCode" jdbcType="CHAR" />
+    <result column="FEE_CODE" property="feeCode" jdbcType="CHAR" />
+    <result column="FEE_NUM" property="feeNum" jdbcType="CHAR" />
+    <result column="USER_NAME" property="userName" jdbcType="CHAR" />
+    <result column="OLD_BANK_NUM" property="oldBankNum" jdbcType="CHAR" />
+    <result column="OLD_CARD_NO" property="oldCardNo" jdbcType="CHAR" />
+    <result column="NEW_BANK_NUM" property="newBankNum" jdbcType="CHAR" />
+    <result column="ACT_NO" property="actNo" jdbcType="CHAR" />
+    <result column="ACOUNT_NAME" property="acountName" jdbcType="CHAR" />
+    <result column="ACT_TYPE" property="actType" jdbcType="CHAR" />
+    <result column="PER_COM_FLAG" property="perComFlag" jdbcType="CHAR" />
+    <result column="ID_TYPE" property="idType" jdbcType="CHAR" />
+    <result column="ID_NO" property="idNo" jdbcType="CHAR" />
+    <result column="CHECK_SEND_TYPE" property="checkSendType" jdbcType="CHAR" />
+    <result column="INVOICE_SNED_TYPE" property="invoiceSnedType" jdbcType="CHAR" />
+    <result column="POINT_NUM" property="pointNum" jdbcType="CHAR" />
+    <result column="INVOICE_SNED_MAN" property="invoiceSnedMan" jdbcType="CHAR" />
+    <result column="INVOICE_SEND_ZIP" property="invoiceSendZip" jdbcType="CHAR" />
+    <result column="INVOICE_SEND_ADDR" property="invoiceSendAddr" jdbcType="CHAR" />
+    <result column="CHECK_SEND_MAN" property="checkSendMan" jdbcType="CHAR" />
+    <result column="CHECK_SEND_ZIP" property="checkSendZip" jdbcType="CHAR" />
+    <result column="CHECK_SEND_ADDR" property="checkSendAddr" jdbcType="CHAR" />
+    <result column="NOTIFY_TYPE" property="notifyType" jdbcType="CHAR" />
+    <result column="EMAIL" property="email" jdbcType="CHAR" />
+    <result column="PHONE_NUM" property="phoneNum" jdbcType="CHAR" />
+    <result column="TEL_NUM" property="telNum" jdbcType="CHAR" />
+    <result column="REMARK" property="remark" jdbcType="CHAR" />
+    <result column="PRCESS_PASSWORD" property="prcessPassword" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    CHANGE_TYPE, COM_CODE, FEE_CODE, FEE_NUM, USER_NAME, OLD_BANK_NUM, OLD_CARD_NO, NEW_BANK_NUM, 
+    ACT_NO, ACOUNT_NAME, ACT_TYPE, PER_COM_FLAG, ID_TYPE, ID_NO, CHECK_SEND_TYPE, INVOICE_SNED_TYPE, 
+    POINT_NUM, INVOICE_SNED_MAN, INVOICE_SEND_ZIP, INVOICE_SEND_ADDR, CHECK_SEND_MAN, 
+    CHECK_SEND_ZIP, CHECK_SEND_ADDR, NOTIFY_TYPE, EMAIL, PHONE_NUM, TEL_NUM, REMARK, 
+    PRCESS_PASSWORD
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_AGT_ELEC_TMP
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="changeType!=null" >
+        AND  CHANGE_TYPE=#{changeType,jdbcType=CHAR}
+      </if>
+      <if test="comCode!=null" >
+        AND  COM_CODE=#{comCode,jdbcType=CHAR}
+      </if>
+      <if test="feeCode!=null" >
+        AND  FEE_CODE=#{feeCode,jdbcType=CHAR}
+      </if>
+      <if test="feeNum!=null" >
+        AND  FEE_NUM=#{feeNum,jdbcType=CHAR}
+      </if>
+      <if test="userName!=null" >
+        AND  USER_NAME=#{userName,jdbcType=CHAR}
+      </if>
+      <if test="oldBankNum!=null" >
+        AND  OLD_BANK_NUM=#{oldBankNum,jdbcType=CHAR}
+      </if>
+      <if test="oldCardNo!=null" >
+        AND  OLD_CARD_NO=#{oldCardNo,jdbcType=CHAR}
+      </if>
+      <if test="newBankNum!=null" >
+        AND  NEW_BANK_NUM=#{newBankNum,jdbcType=CHAR}
+      </if>
+      <if test="actNo!=null" >
+        AND  ACT_NO=#{actNo,jdbcType=CHAR}
+      </if>
+      <if test="acountName!=null" >
+        AND  ACOUNT_NAME=#{acountName,jdbcType=CHAR}
+      </if>
+      <if test="actType!=null" >
+        AND  ACT_TYPE=#{actType,jdbcType=CHAR}
+      </if>
+      <if test="perComFlag!=null" >
+        AND  PER_COM_FLAG=#{perComFlag,jdbcType=CHAR}
+      </if>
+      <if test="idType!=null" >
+        AND  ID_TYPE=#{idType,jdbcType=CHAR}
+      </if>
+      <if test="idNo!=null" >
+        AND  ID_NO=#{idNo,jdbcType=CHAR}
+      </if>
+      <if test="checkSendType!=null" >
+        AND  CHECK_SEND_TYPE=#{checkSendType,jdbcType=CHAR}
+      </if>
+      <if test="invoiceSnedType!=null" >
+        AND  INVOICE_SNED_TYPE=#{invoiceSnedType,jdbcType=CHAR}
+      </if>
+      <if test="pointNum!=null" >
+        AND  POINT_NUM=#{pointNum,jdbcType=CHAR}
+      </if>
+      <if test="invoiceSnedMan!=null" >
+        AND  INVOICE_SNED_MAN=#{invoiceSnedMan,jdbcType=CHAR}
+      </if>
+      <if test="invoiceSendZip!=null" >
+        AND  INVOICE_SEND_ZIP=#{invoiceSendZip,jdbcType=CHAR}
+      </if>
+      <if test="invoiceSendAddr!=null" >
+        AND  INVOICE_SEND_ADDR=#{invoiceSendAddr,jdbcType=CHAR}
+      </if>
+      <if test="checkSendMan!=null" >
+        AND  CHECK_SEND_MAN=#{checkSendMan,jdbcType=CHAR}
+      </if>
+      <if test="checkSendZip!=null" >
+        AND  CHECK_SEND_ZIP=#{checkSendZip,jdbcType=CHAR}
+      </if>
+      <if test="checkSendAddr!=null" >
+        AND  CHECK_SEND_ADDR=#{checkSendAddr,jdbcType=CHAR}
+      </if>
+      <if test="notifyType!=null" >
+        AND  NOTIFY_TYPE=#{notifyType,jdbcType=CHAR}
+      </if>
+      <if test="email!=null" >
+        AND  EMAIL=#{email,jdbcType=CHAR}
+      </if>
+      <if test="phoneNum!=null" >
+        AND  PHONE_NUM=#{phoneNum,jdbcType=CHAR}
+      </if>
+      <if test="telNum!=null" >
+        AND  TEL_NUM=#{telNum,jdbcType=CHAR}
+      </if>
+      <if test="remark!=null" >
+        AND  REMARK=#{remark,jdbcType=CHAR}
+      </if>
+      <if test="prcessPassword!=null" >
+        AND  PRCESS_PASSWORD=#{prcessPassword,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdeupsAgtElecTmp" >
+    insert into ${GDEUPSB_SCHEMA}.GDEUPS_AGT_ELEC_TMP
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="changeType != null" >
+        CHANGE_TYPE,
+      </if>
+      <if test="comCode != null" >
+        COM_CODE,
+      </if>
+      <if test="feeCode != null" >
+        FEE_CODE,
+      </if>
+      <if test="feeNum != null" >
+        FEE_NUM,
+      </if>
+      <if test="userName != null" >
+        USER_NAME,
+      </if>
+      <if test="oldBankNum != null" >
+        OLD_BANK_NUM,
+      </if>
+      <if test="oldCardNo != null" >
+        OLD_CARD_NO,
+      </if>
+      <if test="newBankNum != null" >
+        NEW_BANK_NUM,
+      </if>
+      <if test="actNo != null" >
+        ACT_NO,
+      </if>
+      <if test="acountName != null" >
+        ACOUNT_NAME,
+      </if>
+      <if test="actType != null" >
+        ACT_TYPE,
+      </if>
+      <if test="perComFlag != null" >
+        PER_COM_FLAG,
+      </if>
+      <if test="idType != null" >
+        ID_TYPE,
+      </if>
+      <if test="idNo != null" >
+        ID_NO,
+      </if>
+      <if test="checkSendType != null" >
+        CHECK_SEND_TYPE,
+      </if>
+      <if test="invoiceSnedType != null" >
+        INVOICE_SNED_TYPE,
+      </if>
+      <if test="pointNum != null" >
+        POINT_NUM,
+      </if>
+      <if test="invoiceSnedMan != null" >
+        INVOICE_SNED_MAN,
+      </if>
+      <if test="invoiceSendZip != null" >
+        INVOICE_SEND_ZIP,
+      </if>
+      <if test="invoiceSendAddr != null" >
+        INVOICE_SEND_ADDR,
+      </if>
+      <if test="checkSendMan != null" >
+        CHECK_SEND_MAN,
+      </if>
+      <if test="checkSendZip != null" >
+        CHECK_SEND_ZIP,
+      </if>
+      <if test="checkSendAddr != null" >
+        CHECK_SEND_ADDR,
+      </if>
+      <if test="notifyType != null" >
+        NOTIFY_TYPE,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="phoneNum != null" >
+        PHONE_NUM,
+      </if>
+      <if test="telNum != null" >
+        TEL_NUM,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="prcessPassword != null" >
+        PRCESS_PASSWORD,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="changeType != null" >
+        #{changeType,jdbcType=CHAR},
+      </if>
+      <if test="comCode != null" >
+        #{comCode,jdbcType=CHAR},
+      </if>
+      <if test="feeCode != null" >
+        #{feeCode,jdbcType=CHAR},
+      </if>
+      <if test="feeNum != null" >
+        #{feeNum,jdbcType=CHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=CHAR},
+      </if>
+      <if test="oldBankNum != null" >
+        #{oldBankNum,jdbcType=CHAR},
+      </if>
+      <if test="oldCardNo != null" >
+        #{oldCardNo,jdbcType=CHAR},
+      </if>
+      <if test="newBankNum != null" >
+        #{newBankNum,jdbcType=CHAR},
+      </if>
+      <if test="actNo != null" >
+        #{actNo,jdbcType=CHAR},
+      </if>
+      <if test="acountName != null" >
+        #{acountName,jdbcType=CHAR},
+      </if>
+      <if test="actType != null" >
+        #{actType,jdbcType=CHAR},
+      </if>
+      <if test="perComFlag != null" >
+        #{perComFlag,jdbcType=CHAR},
+      </if>
+      <if test="idType != null" >
+        #{idType,jdbcType=CHAR},
+      </if>
+      <if test="idNo != null" >
+        #{idNo,jdbcType=CHAR},
+      </if>
+      <if test="checkSendType != null" >
+        #{checkSendType,jdbcType=CHAR},
+      </if>
+      <if test="invoiceSnedType != null" >
+        #{invoiceSnedType,jdbcType=CHAR},
+      </if>
+      <if test="pointNum != null" >
+        #{pointNum,jdbcType=CHAR},
+      </if>
+      <if test="invoiceSnedMan != null" >
+        #{invoiceSnedMan,jdbcType=CHAR},
+      </if>
+      <if test="invoiceSendZip != null" >
+        #{invoiceSendZip,jdbcType=CHAR},
+      </if>
+      <if test="invoiceSendAddr != null" >
+        #{invoiceSendAddr,jdbcType=CHAR},
+      </if>
+      <if test="checkSendMan != null" >
+        #{checkSendMan,jdbcType=CHAR},
+      </if>
+      <if test="checkSendZip != null" >
+        #{checkSendZip,jdbcType=CHAR},
+      </if>
+      <if test="checkSendAddr != null" >
+        #{checkSendAddr,jdbcType=CHAR},
+      </if>
+      <if test="notifyType != null" >
+        #{notifyType,jdbcType=CHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=CHAR},
+      </if>
+      <if test="phoneNum != null" >
+        #{phoneNum,jdbcType=CHAR},
+      </if>
+      <if test="telNum != null" >
+        #{telNum,jdbcType=CHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=CHAR},
+      </if>
+      <if test="prcessPassword != null" >
+        #{prcessPassword,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_AGT_ELEC_TMP
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="changeType!=null" >
+        AND  CHANGE_TYPE=#{changeType,jdbcType=CHAR}
+      </if>
+      <if test="comCode!=null" >
+        AND  COM_CODE=#{comCode,jdbcType=CHAR}
+      </if>
+      <if test="feeCode!=null" >
+        AND  FEE_CODE=#{feeCode,jdbcType=CHAR}
+      </if>
+      <if test="feeNum!=null" >
+        AND  FEE_NUM=#{feeNum,jdbcType=CHAR}
+      </if>
+      <if test="userName!=null" >
+        AND  USER_NAME=#{userName,jdbcType=CHAR}
+      </if>
+      <if test="oldBankNum!=null" >
+        AND  OLD_BANK_NUM=#{oldBankNum,jdbcType=CHAR}
+      </if>
+      <if test="oldCardNo!=null" >
+        AND  OLD_CARD_NO=#{oldCardNo,jdbcType=CHAR}
+      </if>
+      <if test="newBankNum!=null" >
+        AND  NEW_BANK_NUM=#{newBankNum,jdbcType=CHAR}
+      </if>
+      <if test="actNo!=null" >
+        AND  ACT_NO=#{actNo,jdbcType=CHAR}
+      </if>
+      <if test="acountName!=null" >
+        AND  ACOUNT_NAME=#{acountName,jdbcType=CHAR}
+      </if>
+      <if test="actType!=null" >
+        AND  ACT_TYPE=#{actType,jdbcType=CHAR}
+      </if>
+      <if test="perComFlag!=null" >
+        AND  PER_COM_FLAG=#{perComFlag,jdbcType=CHAR}
+      </if>
+      <if test="idType!=null" >
+        AND  ID_TYPE=#{idType,jdbcType=CHAR}
+      </if>
+      <if test="idNo!=null" >
+        AND  ID_NO=#{idNo,jdbcType=CHAR}
+      </if>
+      <if test="checkSendType!=null" >
+        AND  CHECK_SEND_TYPE=#{checkSendType,jdbcType=CHAR}
+      </if>
+      <if test="invoiceSnedType!=null" >
+        AND  INVOICE_SNED_TYPE=#{invoiceSnedType,jdbcType=CHAR}
+      </if>
+      <if test="pointNum!=null" >
+        AND  POINT_NUM=#{pointNum,jdbcType=CHAR}
+      </if>
+      <if test="invoiceSnedMan!=null" >
+        AND  INVOICE_SNED_MAN=#{invoiceSnedMan,jdbcType=CHAR}
+      </if>
+      <if test="invoiceSendZip!=null" >
+        AND  INVOICE_SEND_ZIP=#{invoiceSendZip,jdbcType=CHAR}
+      </if>
+      <if test="invoiceSendAddr!=null" >
+        AND  INVOICE_SEND_ADDR=#{invoiceSendAddr,jdbcType=CHAR}
+      </if>
+      <if test="checkSendMan!=null" >
+        AND  CHECK_SEND_MAN=#{checkSendMan,jdbcType=CHAR}
+      </if>
+      <if test="checkSendZip!=null" >
+        AND  CHECK_SEND_ZIP=#{checkSendZip,jdbcType=CHAR}
+      </if>
+      <if test="checkSendAddr!=null" >
+        AND  CHECK_SEND_ADDR=#{checkSendAddr,jdbcType=CHAR}
+      </if>
+      <if test="notifyType!=null" >
+        AND  NOTIFY_TYPE=#{notifyType,jdbcType=CHAR}
+      </if>
+      <if test="email!=null" >
+        AND  EMAIL=#{email,jdbcType=CHAR}
+      </if>
+      <if test="phoneNum!=null" >
+        AND  PHONE_NUM=#{phoneNum,jdbcType=CHAR}
+      </if>
+      <if test="telNum!=null" >
+        AND  TEL_NUM=#{telNum,jdbcType=CHAR}
+      </if>
+      <if test="remark!=null" >
+        AND  REMARK=#{remark,jdbcType=CHAR}
+      </if>
+      <if test="prcessPassword!=null" >
+        AND  PRCESS_PASSWORD=#{prcessPassword,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_AGT_ELEC_TMP
+  </select>
+</mapper>
