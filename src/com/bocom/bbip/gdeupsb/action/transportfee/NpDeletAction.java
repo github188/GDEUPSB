@@ -38,7 +38,7 @@ public class NpDeletAction extends BaseAction{
 		ctx.setData(GDParamKeys.BR_NO, ctx.getData(ParamKeys.BK));
 		ctx.setData(GDParamKeys.TLR_ID, ctx.getData(ParamKeys.TELLER));
 		String today = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
-		ctx.setData(ParamKeys.AUTHOR_LEVEL, "01673478");
+//		ctx.setData(ParamKeys.AUTHOR_LEVEL, "01673478");
 		GDEupsbTrspNpManag gdEupsbTrspNpManag = new GDEupsbTrspNpManag();
 		gdEupsbTrspNpManag.setIdNo(ctx.getData(GDParamKeys.ID_NO).toString());
 		gdEupsbTrspNpManag.setStatus("0");
@@ -62,11 +62,12 @@ public class NpDeletAction extends BaseAction{
 			}else{
 
 				// 授权原因码并校验是否已授权
-				String authTlr = ctx.getData(ParamKeys.AUTHOR_LEVEL);
-				if (StringUtils.isEmpty(authTlr)) {
-					throw new CoreException(ErrorCodes.EUPS_CANCEL_CHECK_AUTH_FAIL);
-				}
-				ctx.setData(GDConstants.AUTH_REASON, "484021");// 授权原因码 EFE000
+				//TODO:
+//				String authTlr = ctx.getData(ParamKeys.AUTHOR_LEVEL);
+//				if (StringUtils.isEmpty(authTlr)) {
+//					throw new CoreException(ErrorCodes.EUPS_CANCEL_CHECK_AUTH_FAIL);
+//				}
+//				ctx.setData(GDConstants.AUTH_REASON, "484021");// 授权原因码 EFE000
 
 				//查询需要打印的数据
 				GDEupsbTrspNpManag gdEupsbTrspNpManag2 = new GDEupsbTrspNpManag();
