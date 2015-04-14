@@ -13,9 +13,9 @@
         <fixString name="cusNo" length="20" />  <!-- DVB客户编号-->
         <fixString name="cusAc" length="20" />  <!-- IC卡号-->
         <fixString name="cusNam" length="20" />  <!-- DVB客户姓名-->
-        <fixString name="txnAmt" length="10" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@transYuanToFen(this.txnAMt)"/>  <!-- 应缴金额(带小数点)-->
-        <fixString name="accAmt" length="10" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@transYuanToFen(this.txnAMt)"/>  <!-- 扣帐金额(带小数点)-->
-        <fixString name="actNo" length="20" />  <!--银行账号-->
+        <fixString name="txnAmt" length="10"expression='exp:num.centToYuanAsString(str.trim($c.txnAmt))'/>  <!-- 应缴金额(带小数点)-->
+        <fixString name="accAmt" length="10" expression='exp:num.centToYuanAsString(str.trim($c.txnAmt))'/>  <!-- 扣帐金额(带小数点)-->
+        <fixString name="cusAc" length="20" />  <!--银行账号-->
 
     </segment>
 </message>
