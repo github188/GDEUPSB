@@ -12,9 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
+import com.bocom.bbip.eups.entity.EupsBatchInfoDetail;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
+import com.bocom.bbip.eups.repository.EupsBatchInfoDetailRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
 import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
@@ -34,9 +35,12 @@ import com.bocom.jump.bp.core.CoreException;
  */
 public class FbpeBatchResultDealAction implements AfterBatchAcpService {
 
+	@Autowired
+	EupsBatchInfoDetailRepository eupsBatchInfoDetailRepository;
     @Autowired
     EupsBatchConsoleInfoRepository eupsBatchConsoleInfoRepository;
-
+    @Autowired
+    GdFbpeFileBatchTmpRepository gdFbpeFileBatchTmpRepository;
     @Autowired
     GDEupsBatchConsoleInfoRepository gdEupsBatchConsoleInfoRepository;
     
@@ -60,7 +64,8 @@ public class FbpeBatchResultDealAction implements AfterBatchAcpService {
     @Override
     public void afterBatchDeal(AfterBatchAcpDomain arg0, Context context) throws CoreException {
     	logger.info("BatchFbpeResultDealAction Start! ");
-        //保存到控制表 
+       String batNos=context.getData("batNos").toString();
+    	//保存到控制表 
         GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=batchFileCommon.eupsBatchConSoleInfoAndgdEupsBatchConSoleInfo(context);
         Map<String, Object> resultMap = new HashMap<String, Object>();
          //返回头  只有移动有
@@ -69,6 +74,19 @@ public class FbpeBatchResultDealAction implements AfterBatchAcpService {
         resultMapHead.put("rsvFld2", gdEupsBatchConsoleInfo.getSucTotAmt());
         resultMap.put(ParamKeys.EUPS_FILE_HEADER, resultMapHead);
 
+        
+        EupsBatchInfoDetail eupsBatchInfoDetails=new EupsBatchInfoDetail();
+        eupsBatchInfoDetails.setBatNo(batNos);
+        List<EupsBatchInfoDetail> eupsBatchInfoDetailList=eupsBatchInfoDetailRepository.find(eupsBatchInfoDetails);
+        for (EupsBatchInfoDetail eupsBatchInfoDetail : eupsBatchInfoDetailList) {
+				String sqn=eupsBatchInfoDetail.getSqn();
+				GdFbpeFileBatchTmp gdFbpeFileBatchTmps=new GdFbpeFileBatchTmp();
+				gdFbpeFileBatchTmps.setSqn(sqn);
+				gdFbpeFileBatchTmps.setRsvFld7(eupsBatchInfoDetail.getSts());
+				gdFbpeFileBatchTmps.setRsvFld8(eupsBatchInfoDetail.getErrMsg());
+				gdFbpeFileBatchTmpRepository.updateFbpe(gdFbpeFileBatchTmps);
+		}
+        
         // 生成返回明细信息
         List<Map<String, Object>> detailList = new ArrayList<Map<String, Object>>();
         String batNo=gdEupsBatchConsoleInfo.getBatNo();

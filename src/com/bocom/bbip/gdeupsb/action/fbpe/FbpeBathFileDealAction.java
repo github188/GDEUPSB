@@ -132,10 +132,10 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
         List<Map<String, Object>> parseMap = (List<Map<String, Object>>) map.get("detail");  //文件体
         BigDecimal bigDecimal=new BigDecimal("0.00");
         
+        String sqn=bbipPublicServiceImpl.getBBIPSequence().substring(6).trim();
         logger.info("===============Start  insert  GDEUPS_FBPE_FILE_BATCH_TMP");
         for (Map<String, Object> orgMap : parseMap) {
             GdFbpeFileBatchTmp gdFbpeFileBatchTmp = new GdFbpeFileBatchTmp();
-            String sqn=bbipPublicServiceImpl.getBBIPSequence().substring(6).trim();
             gdFbpeFileBatchTmp.setSqn(sqn);
             gdFbpeFileBatchTmp.setAccAmt((String)orgMap.get("accAmt"));
             gdFbpeFileBatchTmp.setAccNo((String)orgMap.get("accNo"));
@@ -177,7 +177,7 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
 		
 		logger.info("===============开始代收付文件数据准备");
 		Map<String, Object> temp = CollectionUtils.createMap();
-		List<AgtFileBatchDetail> detailList=createList(context, payDetailLst);
+		List<AgtFileBatchDetail> detailList=createList(context, payDetailLst,sqn);
 		temp.put(ParamKeys.EUPS_FILE_HEADER,headerMap);
 		temp.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(detailList));
         context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_MAP, temp);
@@ -188,7 +188,7 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
     /**
      * 生成代收付文件数据准备
     */
-    public List<AgtFileBatchDetail> createList(Context context,List<GdFbpeFileBatchTmp> payDetailLst){
+    public List<AgtFileBatchDetail> createList(Context context,List<GdFbpeFileBatchTmp> payDetailLst,String sqn){
 		logger.info("=================Start  FbpeBathFileDealAction  createMap ");
 		
 			List<AgtFileBatchDetail> detailList=new ArrayList<AgtFileBatchDetail>();
@@ -205,7 +205,8 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
 					agtFileBatchDetail.setOUROTHFLG("1");
 				}
 				agtFileBatchDetail.setTXNAMT(new BigDecimal(gdeFbpeFileBatchTmp.getTxnAmt()).scaleByPowerOfTen(-2));
-				//备注 不用
+				//备注 
+				agtFileBatchDetail.setRMK1(sqn);
 				detailList.add(agtFileBatchDetail);
 			}
 		
