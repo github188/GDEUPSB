@@ -23,5 +23,8 @@
 	<action id="gdeupsb.printBatchInfoAction" class="com.bocom.bbip.gdeupsb.action.common.PrintBatchInfoAction"/>
 	
 	<!-- 报表打印 -->
-	<action id="gdeupsb.printEupsbRptsAction" class="com.bocom.bbip.gdeupsb.action.common.PrintEupsbRptsAction" />	
+	<action id="gdeupsb.printEupsbRptsAction" class="com.bocom.bbip.gdeupsb.action.common.PrintEupsbRptsActionBak" />
+	
+	<action id="gdeupsb.gdPrintReportAction" class="com.bocom.bbip.gdeupsb.action.common.GdPrintReportAction" />
+		
 </x:beans>

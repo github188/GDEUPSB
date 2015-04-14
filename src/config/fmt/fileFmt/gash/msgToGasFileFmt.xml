@@ -33,7 +33,7 @@
 	<fixString name="tmpFld1" length="10"/>
 	<fixString  name="Deli1" length="1" default=","/>
 	
-	<fixString name="bk" length="4"   />
+	<fixString name="tmpFld5" length="4"   />
 	<fixString  name="Deli2" length="1" default=","/>
 	
 	<fixString name="thdSqn" length="18"    />

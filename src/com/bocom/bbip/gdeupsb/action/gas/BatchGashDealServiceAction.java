@@ -128,6 +128,7 @@ public class BatchGashDealServiceAction extends BaseAction implements
 				GDEupsBatchConsoleInfo.class);
 		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(batInfo);
 
+		Date txnDate = new Date();
 		// 将解析文件得到的数据放入临时表
 		String cusNo = null;
 		GdGasCusAll gdGasCusAll = new GdGasCusAll();
@@ -145,8 +146,9 @@ public class BatchGashDealServiceAction extends BaseAction implements
 			// 从协议表中取
 			tmp.setTmpFld4(infoList.get(0).getCusNme());
 			tmp.setTmpFld3(infoList.get(0).getThdCusNme());// thdCusNme
-			tmp.setBk((String) detail.get(0).get("gasBk"));
-			tmp.setTmpFld5(DateUtils.format(new Date(), DateUtils.STYLE_SIMPLE_DATE));
+			tmp.setBk(bk);
+			tmp.setTmpFld5((String) detail.get(0).get("gasBk"));
+			tmp.setTxnDte(txnDate);
 			logger.info("============cusNme:" + tmp.getCusNme()
 					+ "===============thdCusNme:" + tmp.getTmpFld3());
 
@@ -192,7 +194,7 @@ public class BatchGashDealServiceAction extends BaseAction implements
 			tmpMap.put("thdCusNme", tmp.getTmpFld3());
 			// tmpMap.put("OBKBK", value);
 			// tmpMap.put("RMK1", value);
-			// tmpMap.put("RMK2", value);
+			tmpMap.put("RMK2", comNo);
 			totAmt = totAmt.add(new BigDecimal(tmp.getTxnAmt()));
 			gasBatDetail.add(tmpMap);
 		}

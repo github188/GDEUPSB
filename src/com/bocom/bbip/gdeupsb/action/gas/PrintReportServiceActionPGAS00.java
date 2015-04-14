@@ -26,6 +26,8 @@ import com.bocom.bbip.eups.entity.MFTPConfigInfo;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
+import com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal;
+import com.bocom.bbip.gdeupsb.repository.GdEupsTransJournalRepository;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
@@ -47,10 +49,6 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 //		结束日期	endDate
 //		报表类型	prtFlg
 		
-		//报表类型非1非2，直接报错，输入错误
-		if(!("1".equals(context.getData(ParamKeys.PRT_FLG)) || "2".equals(context.getData(ParamKeys.PRT_FLG)))){
-			throw new CoreException("wrong input");
-		}
 		
 		////////////////////FOR  TEST       //////////////
 		context.setData("pNodNo1", "CNJT");
@@ -58,7 +56,8 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 		context.setData("txnDte1", DateUtils.format((Date)context.getData(ParamKeys.TXN_DTE), DateUtils.STYLE_SIMPLE_DATE));
 		//////////////////////////////////////////////////
 		
-		//TODO 判断需打印的报表类型，1—代扣成功报表 2—代扣失败报表   					DONE
+		//TODO 判断需打印的报表类型，1—单笔代扣成功报表 2—单笔代扣失败报表   					DONE
+		//TODO 前端ADD 3-批量代扣成功报表  4-批量代扣失败报表
 		//配VM文件
 		StringBuffer fileName = null;
 		String br = context.getData(ParamKeys.BR);
@@ -109,6 +108,12 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 			sunAmt = sunAmt.add(perJnl.getTxnAmt());
 		}
 		context.setData("sumAmt", sunAmt);
+		GdEupsTransJournal findRptData = new GdEupsTransJournal(); 
+		//TODO 单笔成功
+		//TODO 单笔失败
+		//TODO 批量成功
+		//TODO 批量成功
+		
 		
 		
 		EupsThdFtpConfigRepository eupsThdFtpConfigRepository = get(EupsThdFtpConfigRepository.class);

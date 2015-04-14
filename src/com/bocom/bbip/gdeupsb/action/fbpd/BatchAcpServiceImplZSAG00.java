@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -41,6 +42,7 @@ import com.bocom.bbip.gdeupsb.repository.GdFbpdObusBatchTmpRepository;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.ContextUtils;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -135,6 +137,7 @@ public class BatchAcpServiceImplZSAG00 extends BaseAction implements
 					.toObjects(lst, GdFbpdObusBatchTmp.class);
 			for (GdFbpdObusBatchTmp tmp : list) {
 				tmp.setSqn(bbipPublicService.getBBIPSequence());
+				tmp.setSubDte(DateUtils.format(new Date(), DateUtils.STYLE_SIMPLE_DATE));
 				tmp.setTmpFld5((String) context.getData(ParamKeys.BAT_NO));
 			}
 			/** 插入临时表中 */
@@ -172,6 +175,7 @@ public class BatchAcpServiceImplZSAG00 extends BaseAction implements
 					.toObjects(lst, GdFbpdNeleBatchTmp.class);
 			for (GdFbpdNeleBatchTmp tmp : list) {
 				tmp.setSqn(bbipPublicService.getBBIPSequence());
+				tmp.setSubDte(DateUtils.format(new Date(), DateUtils.STYLE_SIMPLE_DATE));
 				tmp.setRsFld5((String) context.getData(ParamKeys.BAT_NO));
 			}
 			/** 插入临时表中 */
@@ -208,6 +212,7 @@ public class BatchAcpServiceImplZSAG00 extends BaseAction implements
 					.toObjects(lst, GdFbpdMposBatchTmp.class);
 			for (GdFbpdMposBatchTmp tmp : list) {
 				tmp.setSqn(bbipPublicService.getBBIPSequence());
+				tmp.setTxnDte(DateUtils.format(new Date(), DateUtils.STYLE_SIMPLE_DATE));
 				tmp.setPosFld5((String) context.getData(ParamKeys.BAT_NO));
 			}
 			/** 插入临时表中 */
@@ -237,41 +242,6 @@ public class BatchAcpServiceImplZSAG00 extends BaseAction implements
 			context.setData("totAmt", bigDecimal);
 
 		}
-		/********************************************/
-		// List <GDEupsZhAGBatchTemp>list=(List<GDEupsZhAGBatchTemp>)
-		// BeanUtils.toObjects(lst, GDEupsZhAGBatchTemp.class);
-		// for(GDEupsZhAGBatchTemp tmp:list){
-		// tmp.setBatNo((String)context.getData(ParamKeys.BAT_NO));
-		// }
-		// /**插入临时表中*/
-		// logger.info("~~~~~~~Start ~~~~将数据插入临时表");
-		// // gdEupsZHAGBatchTempRepository.batchInsert(list);
-		// ((SqlMap)get("sqlMap")).insert("com.bocom.bbip.gdeupsb.entity.GDEupsZhAGBatchTemp.batchInsert",
-		// list);
-		// logger.info("~~~~~~~End  ~~~~将数据插入临时表");
-		// List
-		// <GDEupsZhAGBatchTemp>lt=get(GDEupsZHAGBatchTempRepository.class).findByBatNo((String)context.getData(ParamKeys.BAT_NO));
-		// for(GDEupsZhAGBatchTemp temp:lt){
-		// temp.setCusAc(StringUtils.isBlank(temp.getCusAc())?temp.getThdCusNo():temp.getCusAc());
-		// temp.setCusNme(StringUtils.isBlank(temp.getCusNme())?temp.getThdCusNme():temp.getCusNme());
-		// temp.setThdCusNo(StringUtils.isBlank(temp.getCusAc())?temp.getThdCusNo():temp.getCusAc());
-		// temp.setThdCusNme(StringUtils.isBlank(temp.getCusNme())?temp.getThdCusNme():temp.getCusNme());
-		// }
-		// List<Map<String,Object>> detail=(List<Map<String, Object>>)
-		// BeanUtils.toMaps(lt);
-		// String comNoAcps=context.getData("comNoAcps").toString();
-		// logger.info("~~~~~~~~~~~comNoAcps："+comNoAcps);
-		// String batNo=(String)context.getData(ParamKeys.BAT_NO);
-		// Map<String, Object> selectMap=new HashMap<String, Object>();
-		// selectMap.put("batNo", batNo);
-		// Map<String, Object>
-		// map=gdEupsZHAGBatchTempRepository.findTot(selectMap).get(0);
-		// context.setData("totCnt", map.get("TOT_COUNT"));
-		// BigDecimal bigDecimal=new
-		// BigDecimal(map.get("ALL_MONEY").toString());
-		// context.setData("totAmt", bigDecimal);
-
-		/********************************************/
 
 		for (Map<String, Object> tmpMap : detail) {
 			tmpMap.put("RMK2", comNo);
@@ -340,44 +310,4 @@ public class BatchAcpServiceImplZSAG00 extends BaseAction implements
 		return propMap.get(comNo);
 	}
 
-	/**
-	 * private List<Map<String, Object>> parseOthrMapList( Map<String,
-	 * List<Map<String, Object>>> map, List<GdFbpdObusBatchTmp>
-	 * payOthrDetailLst, Context context, String fleNme){ // Map<String,Object>
-	 * orgHeadMap=(Map<String, Object>) map.get("header"); List<Map<String,
-	 * Object>> parseMap = (List<Map<String, Object>>) map.get("detail"); //文件体
-	 * // List<Map<String, Object>> parseMap =
-	 * operateFile.pareseFile(eupsThdFtpInf, "eleGzBatFmt"); // 解析只有detail文件 for
-	 * (Map<String, Object> orgMap : parseMap) {
-	 * 
-	 * // GdFbpdObusBatchTmp batchTmp = new GdFbpdObusBatchTmp(); //
-	 * batchTmp.setComNo((String)orgMap.get("comNo")); //
-	 * batchTmp.setCusAc((String)orgMap.get("cusAc")); //
-	 * batchTmp.setCusNo((String)orgMap.get("cusNo"));; //
-	 * batchTmp.setCusNme((String)orgMap.get("cusNme")); //
-	 * batchTmp.setThdCusNo((String)orgMap.get("thdCusNo")); //
-	 * batchTmp.setCcy((String)orgMap.get("ccy")); //
-	 * batchTmp.setTxnAmt((String)orgMap.get("txnAmt")); //
-	 * batchTmp.setSucFlg((String)orgMap.get("sucFlg")); //
-	 * batchTmp.setChrDte((String)orgMap.get("chrDte")); //
-	 * batchTmp.setSubDte((String)orgMap.get("subDte")); //
-	 * batchTmp.setSeqNo((String)orgMap.get("seqNo")); //
-	 * batchTmp.setTmpFld1((String)orgMap.get("tmpFld1")); //
-	 * batchTmp.setTmpFld2((String)orgMap.get("tmpFld2")); //
-	 * batchTmp.setTmpFld3((String)orgMap.get("tmpFld3")); //
-	 * batchTmp.setTmpFld4((String)orgMap.get("tmpFld4")); //
-	 * batchTmp.setTmpFld5((String)orgMap.get("tmpFld5"));
-	 * 
-	 * GdFbpdObusBatchTmp batchTmp = BeanUtils.toObject(orgMap,
-	 * GdFbpdObusBatchTmp.class);
-	 * batchTmp.setSqn(bbipPublicService.getBBIPSequence());
-	 * gdFbpdObusBatchTmpRepository.insert(batchTmp); //
-	 * payOthrDetailLst.add(batchTmp); }
-	 * 
-	 * // context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_NAME, fleNme); //
-	 * context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_MAP,
-	 * payOthrDetailLst);
-	 * 
-	 * return null; }
-	 */
 }

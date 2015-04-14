@@ -1,11 +1,7 @@
 package com.bocom.bbip.gdeupsb.action.common;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,32 +10,38 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
-import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.eupsreport.ReportHelper;
-import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
-import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.entity.MFTPConfigInfo;
 import com.bocom.bbip.eups.repository.EupsThdBaseInfoRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
-import com.bocom.bbip.file.MftpTransfer;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
 import com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal;
 import com.bocom.bbip.gdeupsb.repository.GdEupsTransJournalRepository;
+import com.bocom.bbip.gdeupsb.utils.GdFileUtils;
+import com.bocom.bbip.gdeupsb.utils.GdReportUtils;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
+import com.bocom.jump.bp.SystemConfig;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
 
-public class PrintEupsbRptsAction extends BaseAction {
+public class PrintEupsbRptsActionBak extends BaseAction {
 
+	@Autowired
+	private BBIPPublicService bbipPublicService;
+	@Autowired
+	private SystemConfig systemConfig;
+	
 	private static Logger logger = LoggerFactory
-			.getLogger(PrintEupsbRptsAction.class);
+			.getLogger(PrintEupsbRptsActionBak.class);
 
 	public void execute(Context context) throws CoreException,
 			CoreRuntimeException {
@@ -146,7 +148,8 @@ public class PrintEupsbRptsAction extends BaseAction {
 //		+ "_" + br + "_" + prtDte + ".txt").toString()
 
 		logger.info("==============fileName:" + fileName);
-		 
+		String reportPath = GdReportUtils.reportPath(bbipPublicService,
+				systemConfig);
 		//配置生成文件名字路径，其他信息从ftpCfg中获取
 		EupsThdFtpConfigRepository eupsThdFtpConfigRepository = get(EupsThdFtpConfigRepository.class);
 		ReportHelper reportHelper = get(ReportHelper.class);
@@ -156,10 +159,12 @@ public class PrintEupsbRptsAction extends BaseAction {
 
 		VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
 		try {
-			render.afterPropertiesSet();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			try {
+				render.afterPropertiesSet();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		
 
 		String result = null;
 		Map<String, String> map = new HashMap<String, String>();
@@ -186,7 +191,7 @@ public class PrintEupsbRptsAction extends BaseAction {
 			map.put("commonPrtRpt", "config/report/common/commonPrintReport_doubt.vm");
 			render.setReportNameTemplateLocationMapping(map);
 			context.setData("eles", prtList);
-			result = render.renderAsString("commonPrtRpt", context);
+				result = render.renderAsString("commonPrtRpt", context);
 			logger.info(result);
 		}
 		else if ("4".equals(context.getData("prtTyp"))) {//其他
@@ -198,9 +203,19 @@ public class PrintEupsbRptsAction extends BaseAction {
 		}
 
 		logger.info("=============ready to print report list=============");
+	
+			GdFileUtils.write(
+					new File((new StringBuffer(String.valueOf(reportPath)))
+							.append(fileName).toString()), result, "GBK");
+			context.setVariable("reportDir", reportPath);
+			context.setVariable("reportName", fileName.toString());
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
 
 		//本地生成报表文件并发送到mftp服务器,打印机自动打印
-		reportHelper.createFileAndSendMFTP(context,result,fileName,mftpConfigInfo); //TODO
+//		reportHelper.createFileAndSendMFTP(context,result,fileName,mftpConfigInfo); //TODO
 
 /*****************************************************************************************************************************/
 		
