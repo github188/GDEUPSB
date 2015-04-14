@@ -19,7 +19,7 @@ public interface GdEupsBatchInfoDetailRepository extends
 	public List<Map<String, Object>> findFirmBatDetail(Map<String, Object> map);
 	
 	@Find
-	public List<Map<String, Object>> findBangBookBatDetail(Map<String, Object> map);
+	public List<Map<String, Object>> findBankBookBatDetail(Map<String, Object> map);
 	
 	@Find
 	public List<Map<String, Object>> findCardBatDetail(Map<String, Object> map);

@@ -1198,4 +1198,46 @@
 		where COM_NO in (#{cAgtNoPl,jdbcType=CHAR},#{cAgtNoDl,jdbcType=CHAR},#{cAgtNoYh,jdbcType=CHAR})
 		AND AC_DTE=#{acDte,jdbcType=CHAR} AND MFM_TXN_STS='S'
 	</select>
+	
+	<!-- 燃气报表打印—成功 findGasSucJnlInfo -->
+	<select id="findGasSucJnlInfo" resultType="java.util.Map"
+		parameterType="java.util.Map">
+		select * from
+		(select c.* from eups.EUPS_TRANS_JOURNAL c
+		where c.TXN_STS='S' AND
+		c.MFM_TXN_STS='S' and c.THD_TXN_STS!='U' and
+		c.THD_TXN_STS!='F' and
+		c.THD_TXN_STS!='T' and
+		c.TXN_DTE &gt;=#{beginDte} and
+		c.TXN_DTE &lt;=#{endDte} and
+		c.COM_NO=#{comNo} and c.TXN_TYP!='C') a,
+		(select COALESCE(count(*), 0) succCnt, COALESCE(sum(TXN_AMT), 0) totSuccAmt from
+		eups.EUPS_TRANS_JOURNAL d where d.TXN_STS='S' AND d.MFM_TXN_STS='S'
+		and d.THD_TXN_STS!='U' and d.THD_TXN_STS!='F' and d.THD_TXN_STS!='T'
+		and d.TXN_DTE &gt;=#{beginDte} and
+		d.TXN_DTE &lt;=#{endDte} and
+		d.COM_NO=#{comNo} and d.TXN_TYP!='C') b
+	</select>
+
+	<!-- 燃气报表打印—失败 findGasFalJnlInfo -->
+	<select id="findGasFalJnlInfo" resultType="java.util.Map"
+		parameterType="java.util.Map">
+		select * from
+		(select * from eups.EUPS_TRANS_JOURNAL
+		where TXN_STS='F' AND (MFM_TXN_STS='F'
+		or (MFM_TXN_STS='S' and
+		THD_TXN_STS='F')) and TXN_DTE &gt;=#{beginDte} and
+		TXN_DTE &lt;=#{endDte} and
+		com_NO=#{comNo} and TXN_TYP!='C') a,
+		(select
+		COALESCE(count(*), 0) failCnt, COALESCE(sum(TXN_AMT), 0) totFailAmt from
+		eups.EUPS_TRANS_JOURNAL
+		where TXN_STS='F' AND (MFM_TXN_STS='F' or
+		(MFM_TXN_STS='S' and
+		THD_TXN_STS='F')) and TXN_DTE &gt;=#{beginDte} and
+		TXN_DTE &lt;=#{endDte} and
+		com_NO=#{comNo} and TXN_TYP!='C') b
+	</select>
+	
+	
 </mapper>

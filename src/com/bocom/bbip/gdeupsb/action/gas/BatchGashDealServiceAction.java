@@ -193,7 +193,7 @@ public class BatchGashDealServiceAction extends BaseAction implements
 			tmpMap.put("OUROTHFLG", "0");
 			tmpMap.put("thdCusNme", tmp.getTmpFld3());
 			// tmpMap.put("OBKBK", value);
-			// tmpMap.put("RMK1", value);
+			tmpMap.put("RMK1", tmp.getThdSqn());
 			tmpMap.put("RMK2", comNo);
 			totAmt = totAmt.add(new BigDecimal(tmp.getTxnAmt()));
 			gasBatDetail.add(tmpMap);

@@ -81,4 +81,10 @@ public interface GdEupsTransJournalRepository extends PagingAndSortingRepository
     /** 财务对账:查询广州电力主机成功流水*/
 	public List<Map<String, Object>> findGzEleHstSucJnl(Map<String, Object> para);
 
+	/** 燃气单笔代扣成功流水 */
+	public List<Map<String, Object>> findGasSucJnlInfo(Map<String, Object> detailMap);
+	/** 燃气单笔代扣失败流水 */
+	public List<Map<String, Object>> findGasFalJnlInfo(Map<String, Object> detailMap);
+	
+
 }

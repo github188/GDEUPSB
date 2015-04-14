@@ -46,22 +46,17 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
  * 
  */
 public class OprGasCusAgentActionV4 extends BaseAction {
-
 	@Autowired
 	AccountService accountService;
-
 	@Autowired
 	BGSPServiceAccessObject bgspServiceAccessObject;
-
 	@Autowired
 	BBIPPublicService bbipPublicService;
-
 	@Autowired
 	@Qualifier("callThdTradeManager")
 	ThirdPartyAdaptor callThdTradeManager;
 
-	// final String AC_DTE = DateUtils.format((Date)
-	// bbipPublicService.getAcDate(), DateUtils.STYLE_yyyyMMdd);
+//	private final String AC_DTE = DateUtils.format((Date) bbipPublicService.getAcDate(), DateUtils.STYLE_yyyyMMdd);
 
 	public static Logger logger = LoggerFactory
 			.getLogger(OprGasCusAgentActionV4.class);
@@ -171,32 +166,8 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 				context.setData("bvCde", "009");
 			}
 
-			// 前端授权，此处只检查
-			// 非查询交易要授权
-			// String authTlr = context.getData(ParamKeys.AUTHOR_LEVEL);
-			// if (StringUtils.isEmpty(authTlr)) {
-			// throw new CoreException(ErrorCodes.EUPS_CANCEL_CHECK_AUTH_FAIL);
-			// }
-			//
-			// logger.info("已授权，可进行交易");
-
 			// <Set>TActNo=491800012620190029499</Set>
 			context.setData("TActNo", GDConstants.GAS_THD_ACT_NO);
-			// context.setData("TransCode", "QryUser");
-			//
-			// // 发燃气第三方，查看有无该用户编号信息
-			// logger.info("=============context=======" + context);
-			//
-			// logger.info("发燃气第三方，查看有无该用户编号信息");
-			// Map<String, Object> thdRspMsg =
-			// callThdTradeManager.trade(context);
-			// context.setDataMap(thdRspMsg);
-			// logger.info("======================context after callThd qryUser========"
-			// + context);
-			//
-			// if ("QryUser"
-			// .equals(context.getData("TransCode").toString().trim())) {//
-			// 燃气返回QryUser,说明燃气存在该用户编号，银行可新增，可修改,可删除
 
 			if ("1".equals(optFlg)) { // 新增
 
@@ -237,14 +208,12 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 				setAgtCltAndCusInf(context);
 
 				// 上代收付查询协议，先根据cusAc进行列表查询
-				Map<String, Object> cusListMap = setAcpMap(context);
-				cusListMap.put(ParamKeys.CUS_AC,
-						context.getData(ParamKeys.CUS_AC));
-				context.setDataMap(cusListMap);
+//				Map<String, Object> cusListMap = setAcpMap(context);
+//				cusListMap.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
+//				context.setDataMap(cusListMap);
+//				Result accessObjList = bgspServiceAccessObject.callServiceFlatting("queryListAgentCollectAgreement", cusListMap);
 
-				Result accessObjList = bgspServiceAccessObject
-						.callServiceFlatting("queryListAgentCollectAgreement",
-								cusListMap);
+				Result accessObjList = bgspServiceAccessObject.callServiceFlatting("queryListAgentCollectAgreement", context.getDataMap());
 				logger.info("=========after optFlg=2 accessObjList：【accessObjList.getResponseCode():"
 						+ accessObjList.getResponseCode()
 						+ "】【accessObjList.getResponseMessage():"
@@ -324,14 +293,12 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 				setAgtCltAndCusInf(context);
 
 				// 上代收付查询协议，先根据cusAc进行列表查询得到协议编号，再用协议编号查询明细（用户信息）
-				Map<String, Object> cusListMap = setAcpMap(context);
-				cusListMap.put(ParamKeys.CUS_AC,
-						context.getData(ParamKeys.CUS_AC));
-				context.setDataMap(cusListMap);
-
-				Result accessObjList = bgspServiceAccessObject
-						.callServiceFlatting("queryListAgentCollectAgreement",
-								cusListMap);
+//				Map<String, Object> cusListMap = setAcpMap(context);
+//				cusListMap.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
+//				context.setDataMap(cusListMap);
+//				Result accessObjList = bgspServiceAccessObject.callServiceFlatting("queryListAgentCollectAgreement", cusListMap);
+				
+				Result accessObjList = bgspServiceAccessObject.callServiceFlatting("queryListAgentCollectAgreement", context.getDataMap());
 				logger.info("========after optFlg=3 queryListAgentCollectAgreement ======="
 						+ context);
 				logger.info("=========after optFlg=3 accessObjList：【accessObjList.getResponseCode():"
@@ -343,8 +310,6 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 				if (!("N".equals(accessObjList.getResponseType()))) {
 					throw new CoreException(accessObjList.getResponseMessage());
 				} else {
-					logger.info("======================context after qryCusAgtList:"
-							+ context);
 					context.setDataMap(accessObjList.getPayload());
 					logger.info("======================context after qryCusAgtList & setDataMap:"
 							+ context);
@@ -369,9 +334,6 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 							.get("agdAgrNo"));
 					context.setData("agdAgrNo", agdAgrNoList);
 
-					logger.info("==============agdAgrNo in context :"
-							+ context.getData("agdAgrNo"));
-
 					logger.info("============ context after set agdAgrNo : "
 							+ context);
 
@@ -392,17 +354,6 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 					context.setData("cusTyp", cusTypBak);
 				}
 			}
-			// } else if
-			// ("NOUser".equals(context.getData("TransCode").toString()
-			// .trim())) {
-			// throw new CoreRuntimeException(GDErrorCodes.GAS_QRY_AGT_ERR_NO);
-			// } else if ("UserStop".equals(context.getData("TransCode")
-			// .toString().trim())) { // UserStop为此用户已报停
-			// throw new CoreRuntimeException(
-			// GDErrorCodes.GAS_QRY_AGT_ERR_STOP);
-			// } else {
-			// throw new CoreRuntimeException(GDErrorCodes.GAS_SYS_ERROR);
-			// }
 		}
 
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
@@ -645,22 +596,22 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 
 		logger.info("============context after setAgtCltAndCusInf :" + context);
 	}
-
-	private Map<String, Object> setAcpMap(Context context) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("traceNo", context.getData(ParamKeys.TRACE_NO));
-		map.put("traceSrc", context.getData(ParamKeys.TRACE_SOURCE));
-		map.put("version", context.getData(ParamKeys.VERSION));
-		map.put("reqTme", new Date());
-		map.put("reqJrnNo", get(BBIPPublicService.class).getBBIPSequence());
-		map.put("reqSysCde", context.getData(ParamKeys.REQ_SYS_CDE));
-		map.put("tlr", context.getData(ParamKeys.TELLER));
-		map.put("chn", context.getData(ParamKeys.CHANNEL));
-		map.put("bk", context.getData(ParamKeys.BK));
-		map.put("br", context.getData(ParamKeys.BR));
-		context.setDataMap(map);
-		return map;
-	}
+	
+//	private Map<String, Object> setAcpMap(Context context) {
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("traceNo", context.getData(ParamKeys.TRACE_NO));
+//		map.put("traceSrc", context.getData(ParamKeys.TRACE_SOURCE));
+//		map.put("version", context.getData(ParamKeys.VERSION));
+//		map.put("reqTme", new Date());
+//		map.put("reqJrnNo", get(BBIPPublicService.class).getBBIPSequence());
+//		map.put("reqSysCde", context.getData(ParamKeys.REQ_SYS_CDE));
+//		map.put("tlr", context.getData(ParamKeys.TELLER));
+//		map.put("chn", context.getData(ParamKeys.CHANNEL));
+//		map.put("bk", context.getData(ParamKeys.BK));
+//		map.put("br", context.getData(ParamKeys.BR));
+//		context.setDataMap(map);
+//		return map;
+//	}
 
 	private Map<String, Object> setCustomerInfoMap(Context context) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -727,5 +678,4 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 
 		return map;
 	}
-
 }

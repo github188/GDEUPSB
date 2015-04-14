@@ -292,7 +292,7 @@
 		AND LENGTH(RTRIM(CUS_AC)) IN (21,18) AND RMK2=#{comNo} ) B
 	</select>
 
-	<select id="findBangBookBatDetail" resultType="java.util.Map"
+	<select id="findBankBookBatDetail" resultType="java.util.Map"
 		parameterType="java.util.Map">
 		SELECT * FROM
 		(SELECT COALESCE(COUNT(*), 0) TOTCNT2, COALESCE(SUM(TXN_AMT), 0) TOTAMT2 FROM

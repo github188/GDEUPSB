@@ -70,7 +70,7 @@ public class PrintMonRptAction extends BaseAction {
 		List<Map<String, Object>> firmBatDetail = get(
 				GdEupsBatchInfoDetailRepository.class).findFirmBatDetail(map);
 		List<Map<String, Object>> bankBookBatDetail = get(
-				GdEupsBatchInfoDetailRepository.class).findBangBookBatDetail(
+				GdEupsBatchInfoDetailRepository.class).findBankBookBatDetail(
 				map);
 		List<Map<String, Object>> cardBatDetail = get(
 				GdEupsBatchInfoDetailRepository.class).findCardBatDetail(map);

@@ -1,7 +1,11 @@
 package com.bocom.bbip.gdeupsb.action.common;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.eupsreport.ReportHelper;
+import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
 import com.bocom.bbip.eups.entity.MFTPConfigInfo;
@@ -45,7 +50,7 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 
 	public void execute(Context context) throws CoreException,
 			CoreRuntimeException {
-		logger.info("Enter in PrintEupsbRptsAction....");
+		logger.info("Enter in PrintEupsbRptsActionBak....");
 		logger.info("===============context:" + context);
 
 		// 业务类型eupsBusTyp 必输
@@ -148,8 +153,8 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 //		+ "_" + br + "_" + prtDte + ".txt").toString()
 
 		logger.info("==============fileName:" + fileName);
-		String reportPath = GdReportUtils.reportPath(bbipPublicService,
-				systemConfig);
+//		String reportPath = GdReportUtils.reportPath(bbipPublicService,
+//				systemConfig);
 		//配置生成文件名字路径，其他信息从ftpCfg中获取
 		EupsThdFtpConfigRepository eupsThdFtpConfigRepository = get(EupsThdFtpConfigRepository.class);
 		ReportHelper reportHelper = get(ReportHelper.class);
@@ -158,7 +163,7 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 				.toMap(mftpConfigInfo))).toString());
 
 		VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
-		try {
+//		try {
 			try {
 				render.afterPropertiesSet();
 			} catch (Exception e) {
@@ -204,15 +209,15 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 
 		logger.info("=============ready to print report list=============");
 	
-			GdFileUtils.write(
-					new File((new StringBuffer(String.valueOf(reportPath)))
-							.append(fileName).toString()), result, "GBK");
-			context.setVariable("reportDir", reportPath);
-			context.setVariable("reportName", fileName.toString());
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		
+//			GdFileUtils.write(
+//					new File((new StringBuffer(String.valueOf(reportPath)))
+//							.append(fileName).toString()), result, "GBK");
+//			context.setVariable("reportDir", reportPath);
+//			context.setVariable("reportName", fileName.toString());
+//		} catch (IOException e1) {
+//			e1.printStackTrace();
+//		}
+//		
 
 		//本地生成报表文件并发送到mftp服务器,打印机自动打印
 //		reportHelper.createFileAndSendMFTP(context,result,fileName,mftpConfigInfo); //TODO
@@ -220,32 +225,32 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 /*****************************************************************************************************************************/
 		
 		// 拼装本地路径 本地测试
-//		PrintWriter printWriter = null;
-//		StringBuffer sbLocDir = new StringBuffer();
-//		sbLocDir.append("D:/testGash/checkFilTest/").append(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)).append("/");
-////		sbLocDir.append(ftpCfg.getLocDir()).append("/").append(context.getData(ParamKeys.TELLER)).append("/").append(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)).append("/");
-//        
-//		try {
-//			File file = new File(sbLocDir.toString());
-//			if (!file.exists()) {
-//				file.mkdirs();
-//			}
-//			printWriter = new PrintWriter(new BufferedWriter(
-//					new OutputStreamWriter(new FileOutputStream(sbLocDir
-//							.append(fileName).toString()), "GBK")));
-//			printWriter.write(result);
-//
-//		} catch (IOException e) {
-//			throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
-//		} finally {
-//			if (null != printWriter) {
-//				try {
-//					printWriter.close();
-//				} catch (Exception e) {
-//					throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
-//				}
-//			}
-//		}
+		PrintWriter printWriter = null;
+		StringBuffer sbLocDir = new StringBuffer();
+		sbLocDir.append("D:/testGash/checkFilTest/").append(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)).append("/");
+//		sbLocDir.append(ftpCfg.getLocDir()).append("/").append(context.getData(ParamKeys.TELLER)).append("/").append(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)).append("/");
+        
+		try {
+			File file = new File(sbLocDir.toString());
+			if (!file.exists()) {
+				file.mkdirs();
+			}
+			printWriter = new PrintWriter(new BufferedWriter(
+					new OutputStreamWriter(new FileOutputStream(sbLocDir
+							.append(fileName).toString()), "GBK")));
+			printWriter.write(result);
+
+		} catch (IOException e) {
+			throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
+		} finally {
+			if (null != printWriter) {
+				try {
+					printWriter.close();
+				} catch (Exception e) {
+					throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
+				}
+			}
+		}
 //
 //		try {
 //            get(MftpTransfer.class).send(sbLocDir.toString(), fileName.toString(), ftpCfg.getThdIpAdr());
@@ -270,7 +275,7 @@ public class PrintEupsbRptsActionBak extends BaseAction {
         fileName.append("_p").append((new StringBuilder("_")).append(br).toString()).append((new StringBuilder("_")).append(teller).toString());
 		context.setData(ParamKeys.FLE_NME, fileName.toString());
 
-		logger.info("PrintReportServiceActionPGAS00 execute end ... ...");
+		logger.info("PrintEupsbRptsActionBak execute end ... ...");
 
 	}
 }

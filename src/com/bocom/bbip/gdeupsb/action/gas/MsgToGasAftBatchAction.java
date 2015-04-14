@@ -138,7 +138,7 @@ public class MsgToGasAftBatchAction extends BaseAction implements AfterBatchAcpS
 			operateFTPAction.putCheckFile(gasFtpCfg);
 			
 			//TODO 通知第三方
-			callThd(context);
+//			callThd(context);
 			logger.info("===============End  BatchDataResultFileAction  afterBatchDeal");	
 		}
 	private void callThd(Context context) throws CoreException {
@@ -202,7 +202,7 @@ public class MsgToGasAftBatchAction extends BaseAction implements AfterBatchAcpS
 			//内容主体
 			List<GdGashBatchTmp> list=new ArrayList<GdGashBatchTmp>();
 			
-			String batNo = context.getData("gdBatNo");
+			String gdBatNo = context.getData("gdBatNo");
 			String cusAc = null;
 			String cusNo = null;
 			String thdSts = null;
@@ -212,19 +212,30 @@ public class MsgToGasAftBatchAction extends BaseAction implements AfterBatchAcpS
 			List<GdGashBatchTmp> listTmps = new ArrayList<GdGashBatchTmp>();
 			for(EupsBatchInfoDetail detail : mapList){
 				GdGashBatchTmp gdGashBatchTmp=new GdGashBatchTmp();
+				
+				detail.setTxnDte(new Date());
+				get(EupsBatchInfoDetailRepository.class).update(detail);
+				
 				// TODO B0,B1,B2,B3   根据detail.getSts()/detail.getErrMsg()设定状态thdSts
 				sts = detail.getSts();
 				if("S".equals(sts)){
 					thdSts = "B0";
-				}
-				else if((!"S".equals(sts)) && "扣款金额不足".contains(detail.getErrMsg())){
-					thdSts = "B1";
-				}
-//				else if((!"S".equals(sts)) && "账户".contains(detail.getErrMsg())){
+					//TODO 更新临时表BAT_STS为S
+					gdGashBatchTmp.setBatNo("S");
+					
+				}else{
+					if("扣款金额不足".contains(detail.getErrMsg())){
+						thdSts = "B1";
+					}
+//				if((!"S".equals(sts)) && "账户".contains(detail.getErrMsg())){
 //					thdSts = "B2";
 //				}
-				else{
-					thdSts = "B3";
+					else{
+						thdSts = "B3";
+					}
+					//TODO 更新临时表BAT_STS为F
+					gdGashBatchTmp.setBatNo("F");
+					
 				}
 				gdGashBatchTmp.setTmpFld1(thdSts);
 				
@@ -234,15 +245,15 @@ public class MsgToGasAftBatchAction extends BaseAction implements AfterBatchAcpS
 				cusNo = detail.getAgtSrvCusId();
 				findInfo.setCusAc(cusAc);
 				findInfo.setCusNo(cusNo);
-				findInfo.setBatNo(batNo);
+				findInfo.setBatNo(gdBatNo);
 				listTmps = gdGashBatchTmpRepository.find(findInfo);
 				
 				gdGashBatchTmp.setThdSqn(listTmps.get(0).getThdSqn());
 				gdGashBatchTmp.setCusNo(cusNo);
 				gdGashBatchTmp.setPayMon(listTmps.get(0).getPayMon());
 				gdGashBatchTmp.setTxnAmt(String.valueOf(detail.getTxnAmt()));
-				gdGashBatchTmp.setTxnDte(DateUtils.parse(listTmps.get(0).getTmpFld5(), DateUtils.STYLE_SIMPLE_DATE));
-				
+				gdGashBatchTmp.setTxnDte(listTmps.get(0).getTxnDte());
+				gdGashBatchTmp.setTmpFld5("gasBk");
 				list.add(gdGashBatchTmp);
 			}
 			Map<String, Object> resultMap=new HashMap<String, Object>(); 
