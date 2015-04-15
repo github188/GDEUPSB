@@ -9,6 +9,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.comp.BBIPPublicServiceImpl;
@@ -17,6 +18,12 @@ import com.bocom.bbip.comp.account.AccountService;
 import com.bocom.bbip.comp.account.support.CardInfo;
 import com.bocom.bbip.comp.account.support.CusActInfResult;
 import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
+import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
+import com.bocom.bbip.eups.adaptor.support.CallThdService;
+import com.bocom.bbip.eups.common.BPState;
+import com.bocom.bbip.eups.common.Constants;
+import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
@@ -38,11 +45,19 @@ public class EupsManageCounterAgt extends BaseAction {
 	private static final int UPDATE=3;
 	private static final int QUERY=5;
 	private static final int DELETE=9;
+	
 	@Autowired
 	BBIPPublicService bbipPublicService;
 	
+	@Qualifier("callThdTradeManager")
+    ThirdPartyAdaptor callThdTradeManager;
+	
 	public void process(Context context) throws CoreException {
      logger.info("协议维护");
+     context.setData("ActDat", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
+     context.setData("LogNo", StringUtils.substring(
+    		 ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getBBIPSequence(),4));
+     
     
      final int oprType=Integer.parseInt((String)context.getData("CHT"));
 		switch (oprType) {
@@ -115,7 +130,20 @@ public class EupsManageCounterAgt extends BaseAction {
 			
 			Result respData = ((BGSPServiceAccessObject)get(BGSPServiceAccessObject.class)).
 			callServiceFlatting("maintainAgentCollectAgreement", context.getDataMap());
-			back(context,respData);
+			Map <String,Object> mapResult = back(context,respData);
+			
+			//返回协议编号
+//			getAgdAgrNoByMap(context, mapResult);
+//			
+//			//外发第三方
+//			callThd(context);
+//			
+//			//冲正代收付 
+//			if(GDConstants.SUCCESS_CODE.toString().equals((String)context.getData(ParamKeys.RSP_CDE))){
+//				respData = ((BGSPServiceAccessObject)get(BGSPServiceAccessObject.class)).
+//		   			     callServiceFlatting("deleteAgentCollectAgreement", context.getDataMap());
+//		       	back(context,respData);
+//			}
 			
 			//代收付签约成功后，新增本地库
 		    addGdeupsAgtElecTmp( context);
@@ -206,6 +234,7 @@ public class EupsManageCounterAgt extends BaseAction {
 	}
 
 	private void queryAgentDeal(Context context) throws CoreException {
+	    	context.setData("agrChl", "01");
 			Map<String,Object>map=context.getDataMap();
 			map.put("cusAc", (String)context.getData("OAC"));
 			Result respData = ((BGSPServiceAccessObject)get(BGSPServiceAccessObject.class)).
@@ -294,6 +323,9 @@ public class EupsManageCounterAgt extends BaseAction {
 	       agentCollectAgreementMap.put("agtSrvCusPnm", (String)context.getData("busKnd")); //代理服务客户姓名 这个是必输项
 	       
 	       agentCollectAgreementMap.put("pedAgrSts", "");
+	       agentCollectAgreementMap.put("cnlSts", "");
+	       agentCollectAgreementMap.put("agrChl", "01");
+	       
 	       agentCollectAgreementMap.put("cmuTel", (String)context.getData("MOB"));
 	       return agentCollectAgreementMap;
 
@@ -406,25 +438,45 @@ public class EupsManageCounterAgt extends BaseAction {
 		return agdAgrNo;
 	}
 	
+	
+	/**
+	 * 协议编号查询
+	 */
+	private String  getAgdAgrNoByMap(Context context,Map<String,Object> map) throws CoreException{
+		
+		if(map.get("agentCollectAgreement") ==null	){
+			context.setData("thdRspCde", "80");
+		}
+		List<Map<String,Object>> list=(List<Map<String, Object>>)map.get("agentCollectAgreement");
+		String agdAgrNo=(String) list.get(0).get("agdAgrNo");
+		logger.info("~~~~~~~~~~~~~~~协议编号： "+agdAgrNo);
+		context.setData("agdAgrNo", agdAgrNo);
+		
+		return agdAgrNo;
+	}
+	
+	
 	//为查询返回报文复制
 	private void setResponseResultFromAgts(Context context ,Result respData){
 		
-		if(respData.getPayload().get("agentCollectAgreement") ==null || respData.getPayload().get("customerInfo") == null){
+		if(respData.getPayload().get("agentCollectAgreement") ==null ){
 			context.setData("thdRspCde", "80");
 		}
 		//协议信息集合
 		List<Map<String,Object>> agreementlist=(List<Map<String, Object>>)respData.getPayload().get("agentCollectAgreement");
-		//客户信息集合
-		List<Map<String,Object>> customerlist =(List<Map<String, Object>>)respData.getPayload().get("customerInfo");
+		
+		Map<String, Object> customerMap = respData.getPayload();
 
 		Map<String,Object>  agreementMap = agreementlist.get(0);
-		Map<String,Object>  customerMap = customerlist.get(0);
 
 		
 		context.setData("PAgtNo",(String) agreementMap.get("agdAgrNo"));  //协议编号
 		context.setData("comNo", "4450000002");		//单位编号
 		context.setData("CLM", (String)agreementMap.get("agtSrvCusPnm"));		//第三方客户名称
-		context.setData("JFH", (String)customerMap.get("cusNo"));		//缴费号码
+		
+		
+
+		context.setData("JFH", (String)agreementMap.get("agtSrvCusId"));		//缴费号码
 		context.setData("ACN", (String)agreementMap.get("cusAc"));		//账号
 		context.setData("ActNm",(String) customerMap.get("cusNme"));		//mingcheng
 		context.setData("IdTyp", (String)customerMap.get("idTyp"));		//证件类型
@@ -433,5 +485,79 @@ public class EupsManageCounterAgt extends BaseAction {
 		context.setData("MOB", (String)agreementMap.get("cmuTel"));		//联系手机号
 
 	}
+	
+	
+
+	/**
+	 * 外发第三方
+	 */
+	private void callThd(Context context) throws CoreException{
+		Date txnDte=(Date)context.getData(ParamKeys.TXN_DTE);
+		Date txnTme=DateUtils.parse(context.getData("txnTme").toString());
+		
+		context.setData(ParamKeys.TXN_DTE, DateUtils.format(txnDte,DateUtils.STYLE_yyyyMMdd));
+		context.setData(ParamKeys.TXN_TME, DateUtils.format(txnTme,DateUtils.STYLE_HHmmss));
+		context.setData(GDParamKeys.SVRCOD, "30");
+		
+		Map<String, Object> rspMap = callThdTradeManager.trade(context);
+			if(BPState.isBPStateNormal(context)){
+				if(null !=rspMap){
+					 	context.setDataMap(rspMap);
+		                context.setData(ParamKeys.THIRD_RETURN_MESSAGE, rspMap);
+		                //第三方返回码
+		                CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
+		                String responseCode = rspCdeAction.getThdRspCde(rspMap, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
+		                logger.info("third response code="+responseCode);
+		                if(StringUtils.isEmpty(responseCode)){
+		                	responseCode=ErrorCodes.EUPS_THD_SYS_ERROR;
+		                }
+		                context.setData(ParamKeys.RESPONSE_CODE, responseCode);
+		             // 第三方交易成功
+			                if (GDConstants.SUCCESS_CODE.equals(responseCode)) {
+			                    logger.info("The third process response successful.");
+			                    context.setData(ParamKeys.TXN_STS, Constants.TXNSTS_SUCCESS);
+			                    context.setData(ParamKeys.THD_TXN_STS, Constants.THD_TXNSTS_SUCCESS);
+			                    context.setData(ParamKeys.RSP_CDE, GDConstants.SUCCESS_CODE);
+			                    context.setData(ParamKeys.RESPONSE_MESSAGE, "交易成功");
+			                }else if(BPState.isBPStateReversalFail(context)){
+			                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
+			                	context.setData(GDParamKeys.MSGTYP, "E");
+			                	context.setData(ParamKeys.RSP_CDE, "EFE999");
+			                	context.setData(ParamKeys.RESPONSE_MESSAGE, "交易失败");
+			                }else if(BPState.isBPStateOvertime(context)){
+			                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
+			                	context.setData(GDParamKeys.MSGTYP, "E");
+			                	context.setData(ParamKeys.RSP_CDE, "EFE999");
+			                	context.setData(ParamKeys.RESPONSE_MESSAGE, "交易超时");
+			                }else if(BPState.isBPStateSystemError(context)){
+			                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
+			                	context.setData(GDParamKeys.MSGTYP, "E");
+			                	context.setData(ParamKeys.RSP_CDE, "EFE999");
+			                	context.setData(ParamKeys.RESPONSE_MESSAGE, "系统错误");
+			                }else if(BPState.isBPStateTransFail(context)){
+			                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
+			                	context.setData(GDParamKeys.MSGTYP, "E");
+			                	context.setData(ParamKeys.RSP_CDE, "EFE999");
+			                	context.setData(ParamKeys.RESPONSE_MESSAGE, "发送失败");
+			                }else{
+			                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
+			                	context.setData(GDParamKeys.MSGTYP, "E");
+			                	context.setData(ParamKeys.RSP_CDE, "EFE999");
+			                	context.setData(ParamKeys.RESPONSE_MESSAGE, "交易失败，其他未知情况");
+			                }
+				}
+		}else{
+				logger.info("~~~~~~~~~~~发送失败");
+			    context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
+                context.setData(ParamKeys.TXN_STS, Constants.TXNSTS_REVERSE);
+                context.setData(ParamKeys.THD_TXN_STS, Constants.TXNSTS_FAIL);
+                context.setData(ParamKeys.RESPONSE_TYPE, Constants.RESPONSE_TYPE_FAIL);
+                context.setData(ParamKeys.RESPONSE_CODE, ErrorCodes.EUPS_THD_SYS_ERROR);
+                context.setData(ParamKeys.RESPONSE_MESSAGE, Constants.RESPONSE_MSG_FAIL);
+                context.setData(ParamKeys.THD_RSP_MSG,Constants.RESPONSE_MSG_FAIL);
+                throw new CoreException("发送失败");
+		}
+	}
+
 	
 }
