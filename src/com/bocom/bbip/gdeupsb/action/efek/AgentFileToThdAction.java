@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
+import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
@@ -19,6 +20,7 @@ import com.bocom.bbip.eups.entity.EupsCusAgentJournal;
 import com.bocom.bbip.eups.repository.EupsCusAgentJournalRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.repository.GDEupsCusAgentJournalRepository;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
@@ -31,33 +33,52 @@ public class AgentFileToThdAction extends BaseAction{
 	@Qualifier("callThdTradeManager")
 	ThirdPartyAdaptor callThdTradeManager;
 	@Autowired
+	GDEupsCusAgentJournalRepository gdEupsCusAgentJournalRepository;
+	@Autowired
 	EupsCusAgentJournalRepository eupsCusAgentJournalRepository;
+	@Autowired
+	OperateFileAction operateFileAction;
 		@Override
 		public void execute(Context context) throws CoreException,
 				CoreRuntimeException {
 				log.info("==============Start  AgentFileToThdAction");
 				Date date=new Date();
 				Date txnDate=DateUtils.parse(DateUtils.format(date, DateUtils.STYLE_yyyyMMdd),DateUtils.STYLE_yyyyMMdd);
-				EupsCusAgentJournal eupsCusAgentJournal=new EupsCusAgentJournal();
-				eupsCusAgentJournal.setTxnDte(txnDate);
-				eupsCusAgentJournal.setEupsBusTyp("ELEC00");
-				//得到今日协议变更
-				List<EupsCusAgentJournal> list=eupsCusAgentJournalRepository.find(eupsCusAgentJournal);
-				//TODO
-				String comNo="";
-				//文件内容
-				Map<String, Object> detailMap=new HashMap<String, Object>();
-				detailMap.put("detail", BeanUtils.toMaps(list));
-				//首行
-				Map<String, Object> headerMap=new HashMap<String, Object>();
-				headerMap.put("comNo", comNo);
-				headerMap.put("bankNo", "301");
-				headerMap.put("count", list.size());
-				headerMap.put("totCnt", list.size());
-				Map<String, Object> resultMap=new HashMap<String, Object>();
-				resultMap.put("header", headerMap);
-				resultMap.put("detail", detailMap);
-				callThd(context);
+				Map<String, Object> map=new HashMap<String, Object>();
+				map.put("txnDte", txnDate);
+				List<Map<String, Object>> comNoList=gdEupsCusAgentJournalRepository.findAllGroupByComNo(map);
+				int i=1;
+				for(Map<String, Object> mapList:comNoList){
+						String comNo=mapList.get("COM_NO").toString();
+						//得到今日协议变更
+						EupsCusAgentJournal eupsCusAgentJournal=new EupsCusAgentJournal();
+						eupsCusAgentJournal.setComNo(mapList.get("COM_NO").toString());
+						eupsCusAgentJournal.setTxnDte(txnDate);
+						eupsCusAgentJournal.setEupsBusTyp("ELEC00");
+						List<EupsCusAgentJournal> list=eupsCusAgentJournalRepository.find(eupsCusAgentJournal);
+						//文件内容
+						Map<String, Object> detailMap=new HashMap<String, Object>();
+						detailMap.put("detail", BeanUtils.toMaps(list));
+						//首行
+						Map<String, Object> headerMap=new HashMap<String, Object>();
+						headerMap.put("comNo", comNo);
+						headerMap.put("bankNo", "301");
+						headerMap.put("count", list.size());
+						headerMap.put("totCnt", list.size());
+						Map<String, Object> resultMap=new HashMap<String, Object>();
+						resultMap.put("header", headerMap);
+						resultMap.put("detail", detailMap);
+						//生成文件
+						String string=i+"";
+						while(string.length()<4){
+								string="0"+string;
+						}
+						String locName="PL0301"+comNo+DateUtils.format(txnDate, DateUtils.STYLE_yyyyMMdd)+string+".txt";
+//						PL_＋银行代码（4位）+供电单位编码（8位）＋查询日期（yyyymmdd）A+序号（4）.txt
+						
+//						operateFileAction.createCheckFile(eupsThdFtpConfig, "", locName, resultMap);
+						callThd(context);
+				}
 				log.info("==============End   AgentFileToThdAction");
 		}
 		
