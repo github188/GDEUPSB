@@ -20,8 +20,10 @@ import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsActSysPara;
+import com.bocom.bbip.eups.entity.EupsCusAgentJournal;
 import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
 import com.bocom.bbip.eups.repository.EupsActSysParaRepository;
+import com.bocom.bbip.eups.repository.EupsCusAgentJournalRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.strategy.efek.agent.UpdateCusAgentServiceAction;
@@ -42,6 +44,8 @@ public class CusAgentServiceAction extends BaseAction{
 	BGSPServiceAccessObject bgspServiceAccessObject;
 	@Autowired
 	EupsActSysParaRepository eupsActSysParaRepository;
+	@Autowired
+	EupsCusAgentJournalRepository eupsCusAgentJournalRepository;
 	@Qualifier("callThdTradeManager")
     ThirdPartyAdaptor callThdTradeManager;
 	private final static Log logger=LogFactory.getLog(UpdateCusAgentServiceAction.class);
@@ -141,6 +145,24 @@ public class CusAgentServiceAction extends BaseAction{
 				if(context.getData(ParamKeys.THD_SQN)!=null){
 							context.setData("PKGCNT", "000000");
 				}
+				//保存到EupsCusAgentJournal表中
+				log.info("============insert   EupsCusAgentJournal");
+				EupsCusAgentJournal eupsCusAgentJournal=new EupsCusAgentJournal();
+				eupsCusAgentJournal.setSqn(context.getData("sqn").toString());
+				String rsvFld3=DateUtils.format((Date)context.getData(ParamKeys.TXN_DTE), DateUtils.STYLE_yyyyMMdd)+DateUtils.formatAsHHmmss((Date)context.getData(ParamKeys.TXN_TME));
+				eupsCusAgentJournal.setRsvFld3(rsvFld3);
+				String rsvFld1=context.getData("oprTyp").toString().trim()+context.getData("agtSts").toString().trim();
+				eupsCusAgentJournal.setRsvFld1(rsvFld1);
+				eupsCusAgentJournal.setThdCusNo((String)context.getData("cusNo"));
+				eupsCusAgentJournal.setCusAc((String)context.getData("cusAc"));
+				eupsCusAgentJournal.setCusNme((String)context.getData("cusNme"));
+				eupsCusAgentJournal.setIdTyp((String)context.getData("idTyp"));
+				eupsCusAgentJournal.setIdNo((String)context.getData("idNo"));
+				eupsCusAgentJournal.setTel((String)context.getData("cmuTel"));
+				eupsCusAgentJournal.setTxnDte((Date)context.getData(ParamKeys.TXN_DTE));
+				eupsCusAgentJournalRepository.insert(eupsCusAgentJournal);
+				
+				log.info("============End  insert   EupsCusAgentJournal");
 				log.info("============End  CusAgentServiceAction");
 		}
 		
