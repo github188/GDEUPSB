@@ -7,8 +7,7 @@
 	<segment name="detail"  encoding="GBK">
 	
 			<fixString name="sqn" length="24" />
-			<fixString name="txnDte" length="8" />
-			<fixString name="txnTme" length="6" />
+			<fixString name="rsvFld3" length="14" />
 			<fixString name="rsvFld1" length="2" />
 			<fixString name="thdCusNo" length="20" />
 			<fixString name="bankNo" length="4" />
@@ -18,7 +17,7 @@
 			<fixString name="idNo" length="32" />
 			<fixString name="tel" length="20" />
 			<fixString name="rsvFld2" length="20" />
-			<fixString name="rsvFld3" length="64" />
+			<fixString name="eml" length="64" />
 	</segment>
 	
 </message>
