@@ -56,6 +56,7 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 		
 		//流水日期时间
 		Date txnDte=DateUtils.parse(DateUtils.formatAsSimpleDate(new Date()));
+		txnDte=DateUtils.parse("2015-04-10");
 		Date txnTme=DateUtils.parse(DateUtils.formatAsTranstime(new Date()));
 		context.setData(ParamKeys.TXN_DTE, txnDte);
 		context.setData(ParamKeys.TXN_TME, txnTme);
@@ -140,6 +141,7 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 				context.setData(ParamKeys.BAT_NO, batNo);
 				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW17");
 				context.setData(ParamKeys.THD_CUS_NO, "");
+				context.setData("sqns",bbipPublicService.getBBIPSequence());
 				try{
 					Map<String, Object> rspMap = callThdTradeManager.trade(context);
 					
