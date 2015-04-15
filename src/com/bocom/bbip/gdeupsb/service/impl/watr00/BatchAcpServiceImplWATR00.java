@@ -185,8 +185,8 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 			throw new CoreException("");
 		}
 		/** 插入批次控制表 */
-		//String batNo =((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);//申请代收批次号
-		String batNo= "789328674t32";
+		String batNo =((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);//申请代收批次号
+		
 		info.setBatNo(batNo);//批次号
 		info.setBatSts(GDConstants.BATCH_STATUS_INIT);//批次状态
 		info.setFleNme((String)context.getVariable(ParamKeys.FLE_NME));//代收付批量文件名称
@@ -269,15 +269,20 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 			Map<String,Object> temp = new HashMap<String,Object>();
 			temp.put("CUSAC", map.get("bcount"));
 			//temp.put("CUSNME", "郑永军");
-			temp.put("CUSNME", accountService.getAcInf(CommonRequest.build(context), map.get("bcount").toString())
-					.getCusName().trim());
+			String name=accountService.getAcInf(CommonRequest.build(context), map.get("bcount").toString())
+					.getCusName();
+			temp.put("CUSNME", null==name?"":name.trim());
 			temp.put("TXNAMT", new BigDecimal(map.get("je").toString().trim()).scaleByPowerOfTen(-2));
 			temp.put("AGTSRVCUSID", map.get("hno"));
 			temp.put("AGTSRVCUSNME", "");
 			//TODO:本行标志暂全定0，还要改。
 //			temp.put("OUROTHFLG", true==accountService.isOurBankCard((String) map.get(ParamKeys.CUS_AC))?"0":"1");
 			temp.put("OUROTHFLG", true==accountService.isOurBankCard((String) map.get("bcount"))?"0":"1");
-			temp.put("OBKBK", map.get("KKB"));
+			String kkh = accountService.getAcInf(CommonRequest.build(context), map.get("bcount").toString()).getOpnBr();
+			if("1".equals(temp.get("OUROTHFLG"))&&null==kkh){
+				kkh="3355";
+			}
+			temp.put("OBKBK",kkh);
 			temp.put("RMK1", "");
 			temp.put("RMK2", "");
 			detail.add(temp);
