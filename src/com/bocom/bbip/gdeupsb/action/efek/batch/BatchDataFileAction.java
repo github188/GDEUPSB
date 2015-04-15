@@ -8,7 +8,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.math.BigDecimal;
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,6 +18,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
+
+import a.a.a.s;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.comp.account.AccountService;
@@ -69,7 +70,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 	@Override
 	public void prepareBatchDeal(PrepareBatchAcpDomain preparebatchacpdomain,
 			Context context) throws CoreException {
-		
+		context.setData("tlr", "EFC0000");
 				logger.info("==========Start  BatchDataFileAction  prepareBatchDeal");
 				String totAmt=context.getData("totAmt").toString();
 				String totCnt=context.getData("totCnt").toString();
@@ -162,6 +163,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 										agtFileBatchDetail.setOUROTHFLG("1");
 							}
 				}
+				agtFileBatchDetail.setOUROTHFLG("0");
 				agtFileBatchDetail.setOBKBK(gdEupsEleTmp.getBankNo());
 				
 				//备注 不用
