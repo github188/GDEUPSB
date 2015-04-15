@@ -20,7 +20,9 @@ import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.eupsreport.ReportHelper;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
 import com.bocom.bbip.eups.entity.MFTPConfigInfo;
+import com.bocom.bbip.eups.repository.EupsThdBaseInfoRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
@@ -70,30 +72,69 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 		detailMap.put("beginDte", DateUtils.parse(beginDate, DateUtils.STYLE_SIMPLE_DATE));
 		detailMap.put("endDte", DateUtils.parse(endDate, DateUtils.STYLE_SIMPLE_DATE));
 		
+		context.setData("beginDte", DateUtils.parse(beginDate, DateUtils.STYLE_SIMPLE_DATE));
+		context.setData("endDte", DateUtils.parse(endDate, DateUtils.STYLE_SIMPLE_DATE));
+		
+		
+		String comNme = get(EupsThdBaseInfoRepository.class).findOne("4910000430").getComNme();
+		context.setData("comNme", comNme);
+		
 		List<Map<String, Object>> prtList = new ArrayList<Map<String, Object>>();
 
 		if("1".equals(prtFlg)){
+			prtList = get(GdEupsTransJournalRepository.class).findGasAllJnlInfo(detailMap);
+			context.setData("TOTCNT", prtList.get(0).get("TOTCNT"));
+			context.setData("TOTAMT", prtList.get(0).get("TOTAMT"));
+			
+			context.setData("SUCCCNT", prtList.get(0).get("SUCCCNT"));
+			context.setData("TOTSUCCAMT", prtList.get(0).get("TOTSUCCAMT"));
+			
+			context.setData("FAILCNT", prtList.get(0).get("FAILCNT"));
+			context.setData("TOTFAILAMT", prtList.get(0).get("TOTFAILAMT"));
+			
+			context.setData("DOUBTCNT", prtList.get(0).get("DOUBATCNT"));
+			context.setData("TOTDOUBTAMT", prtList.get(0).get("TOTDOUBATAMT"));
+			
+			context.setData("OTHERCNT", prtList.get(0).get("OTHERCNT"));
+			context.setData("TOTOTHERAMT", prtList.get(0).get("TOTOTHERAMT"));
+			
+			//TODO .vm
+			fileName = new StringBuffer((new StringBuilder("(惠州分行)燃气单笔代扣汇总报表_"+ br + "_" + beginDate + "_" + endDate).append(".txt").toString()));
+		}
+		if("2".equals(prtFlg)){
 			prtList = get(GdEupsTransJournalRepository.class).findGasSucJnlInfo(detailMap);
 			context.setData("sumCnt", prtList.get(0).get("SUCCCNT"));
 			context.setData("sumAmt", prtList.get(0).get("TOTSUCCAMT"));
 			fileName = new StringBuffer((new StringBuilder("(惠州分行)燃气单笔代扣成功报表_"+ br + "_" + beginDate + "_" + endDate).append(".txt").toString()));
 		}
-		if("2".equals(prtFlg)){
+		if("3".equals(prtFlg)){
 			prtList = get(GdEupsTransJournalRepository.class).findGasFalJnlInfo(detailMap);
 			context.setData("sumCnt", prtList.get(0).get("FAILCNT"));
 			context.setData("sumAmt", prtList.get(0).get("TOTFAILAMT"));
 			fileName = new StringBuffer((new StringBuilder("(惠州分行)燃气单笔代扣失败报表_"+ br + "_" + beginDate + "_" + endDate).append(".txt").toString()));
 		}
-		if("3".equals(prtFlg)){
+		if("4".equals(prtFlg)){
+			prtList = get(GDEupsBatchConsoleInfoRepository.class).findGasBatAllRecord(detailMap);
+			context.setData("sumCnt", prtList.get(0).get("SUM_TOT_CNT"));
+			context.setData("sumAmt", prtList.get(0).get("SUM_TOT_AMT"));
+			context.setData("sumSucCnt", prtList.get(0).get("SUM_SUC_TOT_CNT"));
+			context.setData("sumSucAmt", prtList.get(0).get("SUM_SUC_TOT_AMT"));
+			context.setData("sumFalCnt", prtList.get(0).get("SUM_FAL_TOT_CNT"));
+			context.setData("sumFalAmt", prtList.get(0).get("SUM_FAL_TOT_AMT"));
+			
+			//TODO .vm
+			fileName = new StringBuffer((new StringBuilder("(惠州分行)燃气批量代扣汇总报表_"+ br + "_" + beginDate + "_" + endDate).append(".txt").toString()));
+		}
+		if("5".equals(prtFlg)){
 			prtList = get(GDEupsBatchConsoleInfoRepository.class).findGasBatSucRecord(detailMap);
 			context.setData("sumCnt", prtList.get(0).get("SUM_SUC_TOT_CNT"));
 			context.setData("sumAmt", prtList.get(0).get("SUM_SUC_TOT_AMT"));
 			fileName = new StringBuffer((new StringBuilder("(惠州分行)燃气批量代扣成功报表_"+ br + "_" + beginDate + "_" + endDate).append(".txt").toString()));
 		}
-		if("4".equals(prtFlg)){
+		if("6".equals(prtFlg)){
 			prtList = get(GDEupsBatchConsoleInfoRepository.class).findGasBatFalRecord(detailMap);
 			context.setData("sumCnt", prtList.get(0).get("SUM_FAL_TOT_CNT"));
-			context.setData("sumAmt", "SUM_FAL_TOT_AMT");
+			context.setData("sumAmt", prtList.get(0).get("SUM_FAL_TOT_AMT"));
 			fileName = new StringBuffer((new StringBuilder("(惠州分行)燃气批量代扣失败报表_"+ br + "_" + beginDate + "_" + endDate).append(".txt").toString()));
 		}
 		
@@ -120,18 +161,38 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 		
 		String result = null;
 		Map<String, String> map = new HashMap<String, String>();
-		if("1".equals(prtFlg) || "2".equals(prtFlg)){
+		if("1".equals(prtFlg)){
+			context.setData("prtTtl", "(惠州分行)燃气单笔代扣汇总报表");
+			map.put("gasAllJnlRpt", "config/report/pgas/PrintgasAllReport.vm");
+			render.setReportNameTemplateLocationMapping(map);
+			context.setData("eles", prtList);
+			result = render.renderAsString("gasAllJnlRpt", context);
+			logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>> result >>>>>>>>>>>>>>>>>>>>>>>>>>");
+			logger.info(result);
+		}
+		if("2".equals(prtFlg) || "3".equals(prtFlg)){
 			map.put("gasJnlRpt", "config/report/pgas/printTransJournal.vm");
 			render.setReportNameTemplateLocationMapping(map);
 			context.setData("eles", prtList);
 			result = render.renderAsString("gasJnlRpt", context);
+			logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>> result >>>>>>>>>>>>>>>>>>>>>>>>>>");
 			logger.info(result);
 		}
-		if("3".equals(prtFlg) || "4".equals(prtFlg) ){
+		
+		if("4".equals(prtFlg) ){
+			map.put("gasBatAllRpt", "config/report/pgas/printBatInfoAll.vm");
+			render.setReportNameTemplateLocationMapping(map);
+			context.setData("eles", prtList);
+			result = render.renderAsString("gasBatAllRpt", context);
+			logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>> result >>>>>>>>>>>>>>>>>>>>>>>>>>");
+			logger.info(result);
+		}
+		if("5".equals(prtFlg) || "6".equals(prtFlg)){
 			map.put("gasBatRpt", "config/report/pgas/printBatInfo.vm");
 			render.setReportNameTemplateLocationMapping(map);
 			context.setData("eles", prtList);
 			result = render.renderAsString("gasBatRpt", context);
+			logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>> result >>>>>>>>>>>>>>>>>>>>>>>>>>");
 			logger.info(result);
 		}
 		

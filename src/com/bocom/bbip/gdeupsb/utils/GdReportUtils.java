@@ -10,7 +10,6 @@ import com.bocom.jump.bp.SystemConfig;
 
 public class GdReportUtils
 {
-private static Logger logger = LoggerFactory.getLogger(GdReportUtils.class);
     public GdReportUtils()
     {
     }
@@ -18,7 +17,6 @@ private static Logger logger = LoggerFactory.getLogger(GdReportUtils.class);
     public static String reportPath(BBIPPublicService bbipPublicService, SystemConfig systemConfig)
     {
         String reportPath = (new StringBuilder(String.valueOf(bbipPublicService.getParam("BBIP", "BBIP_DATA_PATH")))).append("/").append(systemConfig.getSystemCode()).append("/").append(bbipPublicService.getAcDateAsString()).append("/report").append("/").toString();
-        logger.info("================reportPath:[" + reportPath + "]");
         return reportPath;
     }
 }

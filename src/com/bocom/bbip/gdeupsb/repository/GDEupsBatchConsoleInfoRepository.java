@@ -31,5 +31,8 @@ public interface GDEupsBatchConsoleInfoRepository extends PagingAndSortingReposi
 	public List<Map<String, Object>> findGasBatSucRecord(Map<String, Object> detailMap);
 	@Find
 	public List<Map<String, Object>> findGasBatFalRecord(Map<String, Object> detailMap);
+	@Find
+	public List<Map<String, Object>> findGasBatAllRecord(
+			Map<String, Object> detailMap);
 	
 }

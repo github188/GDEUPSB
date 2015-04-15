@@ -10,4 +10,6 @@ public interface GdGashBatchTmpRepository extends PagingAndSortingRepository<GdG
 	
 	@Find
 	public List<GdGashBatchTmp> findByBatNo(final String data);
+
+	public void update(GdGashBatchTmp gdGashBatchTmp);
 }

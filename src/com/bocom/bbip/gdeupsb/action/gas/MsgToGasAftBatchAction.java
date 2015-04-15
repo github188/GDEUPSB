@@ -213,15 +213,16 @@ public class MsgToGasAftBatchAction extends BaseAction implements AfterBatchAcpS
 			for(EupsBatchInfoDetail detail : mapList){
 				GdGashBatchTmp gdGashBatchTmp=new GdGashBatchTmp();
 				
-				detail.setTxnDte(new Date());
-				get(EupsBatchInfoDetailRepository.class).update(detail);
+//				detail.setTxnDte(new Date());
+//				
+//				get(EupsBatchInfoDetailRepository.class).update(detail);
 				
 				// TODO B0,B1,B2,B3   根据detail.getSts()/detail.getErrMsg()设定状态thdSts
 				sts = detail.getSts();
 				if("S".equals(sts)){
 					thdSts = "B0";
 					//TODO 更新临时表BAT_STS为S
-					gdGashBatchTmp.setBatNo("S");
+					gdGashBatchTmp.setBatSts("S");
 					
 				}else{
 					if("扣款金额不足".contains(detail.getErrMsg())){
@@ -234,9 +235,11 @@ public class MsgToGasAftBatchAction extends BaseAction implements AfterBatchAcpS
 						thdSts = "B3";
 					}
 					//TODO 更新临时表BAT_STS为F
-					gdGashBatchTmp.setBatNo("F");
+					gdGashBatchTmp.setBatSts("F");
 					
 				}
+//				gdGashBatchTmpRepository.update(gdGashBatchTmp);
+				
 				gdGashBatchTmp.setTmpFld1(thdSts);
 				
 				gdGashBatchTmp.setBk("cnjt");
@@ -253,7 +256,7 @@ public class MsgToGasAftBatchAction extends BaseAction implements AfterBatchAcpS
 				gdGashBatchTmp.setPayMon(listTmps.get(0).getPayMon());
 				gdGashBatchTmp.setTxnAmt(String.valueOf(detail.getTxnAmt()));
 				gdGashBatchTmp.setTxnDte(listTmps.get(0).getTxnDte());
-				gdGashBatchTmp.setTmpFld5("gasBk");
+				gdGashBatchTmp.setTmpFld2("cnjt");
 				list.add(gdGashBatchTmp);
 			}
 			Map<String, Object> resultMap=new HashMap<String, Object>(); 

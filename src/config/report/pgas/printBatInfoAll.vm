@@ -1,0 +1,51 @@
+#report(50)
+#rh(4)
+ 			                    $f.conv('prtFlg', $d.prtFlg)
+#end
+#th(2)
+#para($d.beginDateY)
+#para($d.beginDateM)
+#para($d.beginDateD)
+#para($d.endDateY)
+#para($d.endDateM)
+#para($d.endDateD)
+                                  日期:     ?年  ?月  ?日 至 ?年  ?月  ?日     共$totalPages 页            第 $pageNumber 页
+┏━━━━━┳━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━┓
+┃   序号   ┃    批次号   ┃             流水号              ┃        燃气托收流水号        ┃                      账号                    ┃      户名      ┃        燃气编号       ┃      用户姓名    ┃        缴费金额       ┃      交易日期      ┃       交易状态     |          备注                               |       
+┣━━━━━╋━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━╋━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━┫
+#end 
+#set($p.index=0)
+#td(1,$d.eles)#set($p.index=$p.index+1) 
+#para($p.index)
+#para($ele.BAT_NO)
+#para($ele.SQN)
+#para($ele.RMK1)
+#para($ele.CUS_AC)
+#para($ele.CUS_NME)
+#para($ele.RMK2)
+#para($ele.AGT_SRV_CUS_NME)
+#para($ele.TXN_AMT)
+#para($ele.TXN_DTE)
+#para($f.conv('type', $ele.STS))
+#para($ele.ERR_MSG)
+┃?      ┃?                    ┃?                     ┃?                     ┃?                          ┃?                          ┃?                   ┃?                    ┃?          ┃?                  ┃?       ┃?                                               ┃        
+#end     
+#tf(7)   
+#para($d.sumCnt)
+#para($d.sumAmt)
+#para($d.sumSucCnt)
+#para($d.sumSucAmt)
+#para($d.sumFalCnt)
+#para($d.sumFalAmt)
+#para($d.br)
+#para($d.tlr)
+#para($f.fmt($d.txnDte, 'yyyy-MM-dd'))
+┣━━━━━╋━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━╋━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━┫
+┃合计                    总笔数:?         总金额：?                      ┃
+┃		      成功总笔数:?      成功总金额：?                    ┃
+┃		      失败总笔数:?      失败总金额：?                    ┃                                                                                       ┃
+┣━━━━━╋━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━╋━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━┫
+┃	                                                                       打印部门：?           打印柜员：?          打印日期：?
+┗━━━━━┻━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━┻━━━━━━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━┛
+#end
+#end

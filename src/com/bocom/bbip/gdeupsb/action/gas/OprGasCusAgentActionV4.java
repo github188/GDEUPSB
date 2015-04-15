@@ -67,7 +67,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		String AC_DTE = DateUtils.format((Date) bbipPublicService.getAcDate(), DateUtils.STYLE_yyyyMMdd);
 		 logger.info("============acDte:" + AC_DTE);
 		 
-		 context.setData("AC_DTE", AC_DTE);
+		 context.setData("STR_AC_DTE", AC_DTE);
 		 
 		// context.setData("thdthdCusNo", context.getData("thdCusNo"));
 
@@ -126,28 +126,19 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			String cusAc = context.getData(ParamKeys.CUS_AC);
 //			String cusAc = "6222604910001021082";
 			// 校验卡折使用状态
-			CusActInfResult cusactinfresult = new CusActInfResult();
-			// 获取bk
-			// ChpsNodInf chpsNodInf = new ChpsNodInf();
-			// chpsNodInf = baseService.findByCtrAcpBkn(GDConstants.EXG_ARA_GZ,
-			// (String) context.getData(Fields.RCV_CTR_ACP_BKN));
-			// // 申请电子柜员
-			// String branchCode = chpsNodInf.getBk();
-			// String ETekker = bbippublicservice.getETeller(branchCode);
-			// context.setData("tlr", ETekker);
-			try {
-				cusactinfresult = accountService.getAcInf(
-						CommonRequest.build(context), cusAc);
-			} catch (CoreException e) {
-				e.printStackTrace();
-			}
-
-			logger.info("=============cusactinfresult:cusactinfresult.getCusAcSts()="
-					+ cusactinfresult.getCusAcSts()
-					+ " &&&&& cusactinfresult.getCdSts()="
-					+ cusactinfresult.getCdSts());
-			String cdSts = cusactinfresult.getCdSts();
-			String cusAcSts = cusactinfresult.getCusAcSts();
+//			CusActInfResult cusactinfresult = new CusActInfResult();
+//			try {
+//				cusactinfresult = accountService.getAcInf(
+//						CommonRequest.build(context), cusAc);
+//			} catch (CoreException e) {
+//				e.printStackTrace();
+//			}
+//			logger.info("=============cusactinfresult:cusactinfresult.getCusAcSts()="
+//					+ cusactinfresult.getCusAcSts()
+//					+ " &&&&& cusactinfresult.getCdSts()="
+//					+ cusactinfresult.getCdSts());
+//			String cdSts = cusactinfresult.getCdSts();
+//			String cusAcSts = cusactinfresult.getCusAcSts();
 
 			// TODO判断状态
 			// if(){
@@ -167,9 +158,6 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 				context.setData("cusTyp", "0");
 				context.setData("bvCde", "009");
 			}
-
-			// <Set>TActNo=491800012620190029499</Set>
-			context.setData("TActNo", GDConstants.GAS_THD_ACT_NO);
 
 			if ("1".equals(optFlg)) { // 新增
 
@@ -198,10 +186,14 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 				Result insertCusAgtResult = bgspServiceAccessObject
 						.callServiceFlatting("maintainAgentCollectAgreement",
 								context.getDataMap());
-				if (!"N".equals(insertCusAgtResult.getResponseType())) {
+				if(!insertCusAgtResult.isSuccess()){
 					throw new CoreRuntimeException(
 							insertCusAgtResult.getResponseMessage());
 				}
+//				if (!"N".equals(insertCusAgtResult.getResponseType())) {
+//					throw new CoreRuntimeException(
+//							insertCusAgtResult.getResponseMessage());
+//				}
 				logger.info("=============代收付签约成功，发THD签约===========");
 				callThdAndAddThdLclCusAgt(context);
 				context.setData("cusTyp", cusTypBak);
@@ -669,7 +661,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		map.put("cusFeeDerFlg", "0"); // TODO 暂用0，待确认
 		map.put("agtSrvCusId", context.getData("agtSrvCusId"));
 		map.put("agtSrvCusPnm", context.getData(ParamKeys.THD_CUS_NME));
-		map.put("agrVldDte", context.getData("AC_DTE"));
+		map.put("agrVldDte", context.getData("STR_AC_DTE"));
 //		map.put("agrVldDte", "20150101");
 		map.put("agrExpDte", "99991231"); // YYYYMMDD默认最大日，99991231
 		map.put(ParamKeys.CMU_TEL, context.getData(ParamKeys.CMU_TEL));

@@ -82,9 +82,15 @@ public interface GdEupsTransJournalRepository extends PagingAndSortingRepository
 	public List<Map<String, Object>> findGzEleHstSucJnl(Map<String, Object> para);
 
 	/** 燃气单笔代扣成功流水 */
+	@Find
 	public List<Map<String, Object>> findGasSucJnlInfo(Map<String, Object> detailMap);
 	/** 燃气单笔代扣失败流水 */
+	@Find
 	public List<Map<String, Object>> findGasFalJnlInfo(Map<String, Object> detailMap);
+	/** 燃气单笔代扣汇总流水 */
+	@Find
+	public List<Map<String, Object>> findGasAllJnlInfo(
+			Map<String, Object> detailMap);
 	
 
 }
