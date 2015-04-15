@@ -146,7 +146,7 @@ public class EupsManageCounterAgt extends BaseAction {
 //			}
 			
 			//代收付签约成功后，新增本地库
-		    addGdeupsAgtElecTmp( context);
+//		    addGdeupsAgtElecTmp( context);
 	}
 
 	private void updateAgentDeal(Context context) throws CoreException {
@@ -182,13 +182,15 @@ public class EupsManageCounterAgt extends BaseAction {
     		   
     		   	 Map<String,Object>map=context.getDataMap();
 			     String agdAgrNo=getAgdAgrNoByCusAc(context,cusAcOld);  //获得协议编号
-			     map.put("agdAgrNo", agdAgrNo);
+			     List agdAgrNoList = new ArrayList<String>();
+			     agdAgrNoList.add(agdAgrNo);
+			     map.put("agdAgrNo", agdAgrNoList);
 			     Result  respData = ((BGSPServiceAccessObject)get(BGSPServiceAccessObject.class)).
 			     callServiceFlatting("deleteAgentCollectAgreement", map);
 			     back(context,respData);
 			     
 			     //删除本地协议
-			     delGdeupsAgtElecTmp( context);
+//			     delGdeupsAgtElecTmp( context);
 			     
 			     context.setData("oprTyp", "0");
 			     context.setData("agrChl", "01");
@@ -206,29 +208,29 @@ public class EupsManageCounterAgt extends BaseAction {
 	 			 callServiceFlatting("maintainAgentCollectAgreement", context.getDataMap());
 	 			 back(context,respData);
 	 			 //新增本地协议
-			     addGdeupsAgtElecTmp( context);
+//			     addGdeupsAgtElecTmp( context);
 
     		  
 	       //不修改账号的时候
 	       }else{
-	    	   context.setData("agrChl", "01");
-    		   context.setData("oprTyp", "1");
-    		   context.setData("cusAc", cusAcOld);
-    		   
-    		   agentCollectAgreementMap = setAgentCollectAgreementMap(context,cusAcOld);
-    		   customerInfoMap = setCustomerInfoMap(context,cusAcOld);
-    		   customerInfo.add(customerInfoMap);
-    		   agentCollectAgreement.add(agentCollectAgreementMap);
-   		    	//新增的两个集合
-    		   context.setData("agentCollectAgreement", agentCollectAgreement);
-    		   context.setData("customerInfo", customerInfo);
-    		   
-		       Result respData = ((BGSPServiceAccessObject)get(BGSPServiceAccessObject.class)).
-		       callServiceFlatting("maintainAgentCollectAgreement", context.getDataMap());
-		       back(context,respData);
-		       
-		       //修改本地协议
-			   modifyGdeupsAgtElecTmp( context);
+//	    	   context.setData("agrChl", "01");
+//    		   context.setData("oprTyp", "1");
+//    		   context.setData("cusAc", cusAcOld);
+//    		   
+//    		   agentCollectAgreementMap = setAgentCollectAgreementMap(context,cusAcOld);
+//    		   customerInfoMap = setCustomerInfoMap(context,cusAcOld);
+//    		   customerInfo.add(customerInfoMap);
+//    		   agentCollectAgreement.add(agentCollectAgreementMap);
+//   		    	//新增的两个集合
+//    		   context.setData("agentCollectAgreement", agentCollectAgreement);
+//    		   context.setData("customerInfo", customerInfo);
+//    		   
+//		       Result respData = ((BGSPServiceAccessObject)get(BGSPServiceAccessObject.class)).
+//		       callServiceFlatting("maintainAgentCollectAgreement", context.getDataMap());
+//		       back(context,respData);
+//		       
+//		       //修改本地协议
+//			   modifyGdeupsAgtElecTmp( context);
 		       
 	       } 
 	}
@@ -251,12 +253,20 @@ public class EupsManageCounterAgt extends BaseAction {
 		     
 		     
 		     final String agdAgrNo=(String)getAgdAgrNoByCusAc(context, (String)context.getData("OAC"));
-		     map.put("agdAgrNo", agdAgrNo);
+//		     List agdAgrNoList = new ArrayList<Map<String,Object>>();
+//		     Map agdAgrNoMap = new HashMap<String,Object>();
+//		     agdAgrNoMap.put("agdAgrNo", agdAgrNo);
+//		     agdAgrNoList.add(agdAgrNoMap);
+		     
+		     List agdAgrNoList = new ArrayList<String>();
+		     agdAgrNoList.add(agdAgrNo);
+		     
+		     map.put("agdAgrNo", agdAgrNoList);
 		     Result respData = ((BGSPServiceAccessObject)get(BGSPServiceAccessObject.class)).
 		     callServiceFlatting("deleteAgentCollectAgreement", map);
 		     Map ret=back(context,respData);
 		     //删除本地库
-		      delGdeupsAgtElecTmp( context);
+//		      delGdeupsAgtElecTmp( context);
 	}
 	
 	//此方法没有修改
