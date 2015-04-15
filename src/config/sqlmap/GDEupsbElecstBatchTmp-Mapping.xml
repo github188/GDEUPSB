@@ -38,12 +38,12 @@
   <sql id="baseColumnList1" >
     BAT_NO, COM_NO, TXN_TLR, SUB_DTE, CUS_AC, CUS_NME, TXN_AMT, THD_CUS_NO, THD_CUS_NME, 
     OBK_BR, RSV_FLD1, RSV_FLD2, RSV_FLD3, RSV_FLD4, RSV_FLD5, RSV_FLD6, RSV_FLD7, RSV_FLD8, 
-    RSV_FLD9, RSV_FLD10, RSV_FLD11, RSV_FLD12, RSV_FLD13, RSV_FLD14, RSV_FLD15, RSV_FLD16
+    RSV_FLD9, RSV_FLD10, RSV_FLD11, RSV_FLD12, RSV_FLD13, RSV_FLD14, RSV_FLD15, RSV_FLD16, RSV_FLD17
   </sql>
   <select id="find" resultMap="basicResultMap" >
     select
     <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC02_BATCH_TEMP
+    from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
     <trim prefix="WHERE" prefixOverrides="AND" >
       <if test="sqn!=null" >
         AND  SQN=#{sqn,jdbcType=INTEGER}
@@ -131,15 +131,15 @@
   <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC02_BATCH_TEMP
+    from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
     where SQN = #{sqn,jdbcType=INTEGER}
   </select>
   <delete id="delete" parameterType="java.lang.Integer" >
-    delete from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC02_BATCH_TEMP
+    delete from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
     where SQN = #{sqn,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbElecstBatchTmp" >
-    insert into ${GDEUPSB_SCHEMA}.GDEUPS_ELEC02_BATCH_TEMP
+    insert into ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="sqn != null" >
         SQN,
@@ -308,7 +308,7 @@
     </trim>
   </insert>
   <select id="findCount" resultType="java.lang.Integer" >
-    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC02_BATCH_TEMP
+    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
     <trim prefix="WHERE" prefixOverrides="AND" >
       <if test="sqn!=null" >
         AND  SQN=#{sqn,jdbcType=INTEGER}
@@ -394,7 +394,7 @@
     </trim>
   </select>
   <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbElecstBatchTmp" >
-    update ${GDEUPSB_SCHEMA}.GDEUPS_ELEC02_BATCH_TEMP
+    update ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
     <set >
       <if test="batNo != null" >
         BAT_NO = #{batNo,jdbcType=CHAR},
@@ -489,7 +489,7 @@
     </if>
   </select>
   <select id="batchInsert" parameterType="java.util.List">
-    insert into ${GDEUPSB_SCHEMA}.GDEUPS_ELEC02_BATCH_TEMP
+    insert into ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
      (<include refid="baseColumnList1" />)
      values
      	<foreach collection="list" item="item" index="index" separator=",">
@@ -518,14 +518,19 @@
 			#{item.rsvFld13},
 			#{item.rsvFld14},
 			#{item.rsvFld15},
-			#{item.rsvFld16})
+			#{item.rsvFld16},
+			#{item.rsvFld17}
+			)
       </foreach>
   
   
   </select>
   <select id="findByBatNo" resultMap="basicResultMap"
 		parameterType="java.lang.String">
-		select * from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC02_BATCH_TEMP where BAT_NO=#{batNo}
+		select * from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP where BAT_NO=#{batNo}
 
 	</select>
+	<delete id="deleteByBatNo">
+	delete from  ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP where BAT_NO=#{batNo}
+	</delete>
 </mapper>
