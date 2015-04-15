@@ -97,13 +97,13 @@ public class GzagBatchDataFileAction extends BaseAction implements BatchAcpServi
 			eupsThdFtpConfig.setFtpDir("1");
 			eupsThdFtpConfig.setLocFleNme(fileName);
 			eupsThdFtpConfig.setRmtFleNme(fileName);
-			if(context.getData("mothed").equals("1")){
+			if(context.getData("mothed").toString().trim().equals("1")){
 				eupsThdFtpConfig.setFtpDir("182.53.15.187");
 				eupsThdFtpConfig.setOppNme("weblogic");
 				eupsThdFtpConfig.setOppUsrPsw("123456");
-				String path="./save/tfiles/"+context.getData("tlr").toString()+"/";
+				String path="./save/tfiles/" + context.getData(ParamKeys.BR)+ "/" + context.getData(ParamKeys.TELLER) + "/";
 				eupsThdFtpConfig.setRmtWay(path);
-				eupsThdFtpConfig.setLocDir(path);
+//				eupsThdFtpConfig.setLocDir(path);
 			}
 			operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
 			logger.info("==============Get file Success ");
