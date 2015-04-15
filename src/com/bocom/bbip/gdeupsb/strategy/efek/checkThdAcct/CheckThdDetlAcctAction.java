@@ -61,8 +61,14 @@ public class CheckThdDetlAcctAction implements Executable {
 	public void execute(Context context) throws CoreException,
 			CoreRuntimeException {
 			logger.info("=======Start CheckThdDetlAcctAction");
+			
+	        //TODO 
+	        context.setData(ParamKeys.TXN_TLR, "ABIR148");
+	        context.setData(ParamKeys.CHL_TYP, "90");
+	        
 			//日期
 			Date txnDte=DateUtils.parse(DateUtils.formatAsSimpleDate(new Date()));
+			txnDte=DateUtils.parse("2015-04-10");
 			context.setData(ParamKeys.TXN_DTE, txnDte);
 			//一些常量
 			context.setData(GDParamKeys.TOTNUM, "1");
@@ -284,7 +290,7 @@ public class CheckThdDetlAcctAction implements Executable {
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
 				context.setData("PKGCNT", "000001");
 				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW18");
-				
+				context.setData("sqns",context.getData(ParamKeys.SEQUENCE));
 				context.setData("WJS", "1");
 				try{
 					Map<String, Object> rspMap = callThdTradeManager.trade(context);
