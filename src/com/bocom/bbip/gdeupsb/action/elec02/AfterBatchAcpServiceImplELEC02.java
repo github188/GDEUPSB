@@ -41,11 +41,11 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements AfterB
 	@Override
 	public void afterBatchDeal(AfterBatchAcpDomain arg0, Context context)throws CoreException {
 		logger.info("电力返盘文件处理开始");
-		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).eupsBatchConSoleInfoAndgdEupsBatchConSoleInfo(context);
+		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).afterBatchProcess(context);
 		Map<String,Object>ret=new HashMap<String,Object>();
         final List result=(List<EupsBatchInfoDetail>)context.getVariable("detailList");
         Assert.isNotEmpty(result, ErrorCodes.EUPS_QUERY_NO_DATA);
-        EupsThdFtpConfig config=get(EupsThdFtpConfigRepository.class).findOne((String)context.getData(ParamKeys.FTP_ID));
+        EupsThdFtpConfig config=get(EupsThdFtpConfigRepository.class).findOne("elec02batch");
 		Assert.isFalse(null == config, ErrorCodes.EUPS_THD_FTP_CONFIG_NOTEXIST);
         List<Map<String,String>>resultMap=(List<Map<String, String>>) BeanUtils.toMaps(result);
 		List <GDEupsbElecstBatchTmp>lt=get(GDEupsbElecstBatchTmpRepository.class).findByBatNo((String)context.getData(ParamKeys.BAT_NO));
@@ -56,7 +56,11 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements AfterB
 		
 		ret.put("header", context.getDataMapDirectly());
 		ret.put("detail", tempMap);
-        ((OperateFileAction)get("opeFile")).createCheckFile(config, "ELEC02BatchBack", null, ret);
+		config.setLocDir("E:\\");
+		config.setLocFleNme("elecfs20150412.txt");
+		config.setRmtWay("/app/ics/dat/efe");
+		config.setRmtFleNme("elecfs20150412.txt");
+        ((OperateFileAction)get("opeFile")).createCheckFile(config, "ELEC02BatchBack", "elecfs20150412.txt", ret);
 
 		((OperateFTPAction)get("opeFTP")).putCheckFile(config);
 		/**通知第三方*/
@@ -64,7 +68,6 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements AfterB
 		 context.setData("WD0", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
 		 String logNo=((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getBBIPSequence();
 		 context.setData("LogNo", StringUtils.substring(logNo, 4));
-		 String etlr=StringUtils.substring(logNo, 15);
 		 String tmn=StringUtils.substring(logNo, 8);
 		 context.setData("TMN", tmn);
 		 context.setData("FileName", "");
