@@ -235,6 +235,6 @@ public class FbpeBatchResultDealAction implements AfterBatchAcpService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
+    	//放置文件
     }
 }
