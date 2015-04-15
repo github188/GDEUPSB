@@ -19,6 +19,7 @@ import com.bocom.bbip.eups.entity.EupsCusAgentJournal;
 import com.bocom.bbip.eups.repository.EupsCusAgentJournalRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
@@ -42,14 +43,20 @@ public class AgentFileToThdAction extends BaseAction{
 				eupsCusAgentJournal.setEupsBusTyp("ELEC00");
 				//得到今日协议变更
 				List<EupsCusAgentJournal> list=eupsCusAgentJournalRepository.find(eupsCusAgentJournal);
+				//TODO
+				String comNo="";
+				//文件内容
+				Map<String, Object> detailMap=new HashMap<String, Object>();
+				detailMap.put("detail", BeanUtils.toMaps(list));
 				//首行
 				Map<String, Object> headerMap=new HashMap<String, Object>();
-//				headerMap.put("comNo", value);
+				headerMap.put("comNo", comNo);
 				headerMap.put("bankNo", "301");
 				headerMap.put("count", list.size());
 				headerMap.put("totCnt", list.size());
 				Map<String, Object> resultMap=new HashMap<String, Object>();
-				
+				resultMap.put("header", headerMap);
+				resultMap.put("detail", detailMap);
 				callThd(context);
 				log.info("==============End   AgentFileToThdAction");
 		}
