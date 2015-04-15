@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
 	name="Y005Response">
-			<fixString name="je"               length="11"/>   <!-- 总金额 -->
-			<fixString name="count"          length="11"/>   <!-- 总笔数 -->
-			<fixString name="reserved"     length="10"/>   <!-- 保留字段 -->
+			<fixString name="je"               length="11" default="0"/>   <!-- 总金额 -->
+			<fixString name="count"          length="11" default="0"/>   <!-- 总笔数 -->
+			<fixString name="reserved"     length="10" default=" "/>   <!-- 保留字段 -->
 </segment>
