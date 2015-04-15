@@ -1,6 +1,9 @@
 package com.bocom.bbip.gdeupsb.strategy.efek.agent;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -119,36 +122,32 @@ public class InsertCusAgentServiceAction extends BaseAction {
 								                    context.setData(ParamKeys.THD_TXN_STS, Constants.THD_TXNSTS_SUCCESS);
 								                    context.setData(ParamKeys.RSP_CDE, GDConstants.SUCCESS_CODE);
 								                    context.setData(ParamKeys.RESPONSE_MESSAGE, "交易成功");
-								                }else if(BPState.isBPStateReversalFail(context)){
-								                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
+								                }else{
+								                	//第三方失败  协议删除
+													String agdAgrNo=selectAgent(context);
+													context.setData("agdAgrNo", agdAgrNo);
+													Map<String, Object> map=createMap(context);
+													logger.info("~~~~~~~~~~~~~~map~~~~~ "+map);
+													Result delResult = bgspServiceAccessObject.callServiceFlatting("deleteAgentCollectAgreement",context.getDataMap());
+													logger.info("=======新增协议，第三方失败后，删除协议===delResult："+delResult);
+								              
+													context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
 								                	context.setData(GDParamKeys.MSGTYP, "E");
 								                	context.setData(ParamKeys.RSP_CDE, "EFE999");
 								                	context.setData(ParamKeys.RESPONSE_MESSAGE, "交易失败");
-								                }else if(BPState.isBPStateOvertime(context)){
-								                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
-								                	context.setData(GDParamKeys.MSGTYP, "E");
-								                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-								                	context.setData(ParamKeys.RESPONSE_MESSAGE, "交易超时");
-								                }else if(BPState.isBPStateSystemError(context)){
-								                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
-								                	context.setData(GDParamKeys.MSGTYP, "E");
-								                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-								                	context.setData(ParamKeys.RESPONSE_MESSAGE, "系统错误");
-								                }else if(BPState.isBPStateTransFail(context)){
-								                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
-								                	context.setData(GDParamKeys.MSGTYP, "E");
-								                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-								                	context.setData(ParamKeys.RESPONSE_MESSAGE, "发送失败");
-								                }else{
-								                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
-								                	context.setData(GDParamKeys.MSGTYP, "E");
-								                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-								                	context.setData(ParamKeys.RESPONSE_MESSAGE, "交易失败，其他未知情况");
 								                }
 									}
 							}else{
 									logger.info("~~~~~~~~~~~发送失败");
-								    context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
+									//第三方失败  协议删除
+									String agdAgrNo=selectAgent(context);
+									context.setData("agdAgrNo", agdAgrNo);
+									Map<String, Object> map=createMap(context);
+									logger.info("~~~~~~~~~~~~~~map~~~~~ "+map);
+									Result delResult = bgspServiceAccessObject.callServiceFlatting("deleteAgentCollectAgreement",context.getDataMap());
+									logger.info("=======新增协议，第三方失败后，删除协议===delResult："+delResult);
+								  
+									context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 					                context.setData(ParamKeys.TXN_STS, Constants.TXNSTS_REVERSE);
 					                context.setData(ParamKeys.THD_TXN_STS, Constants.TXNSTS_FAIL);
 					                context.setData(ParamKeys.RESPONSE_TYPE, Constants.RESPONSE_TYPE_FAIL);
@@ -184,5 +183,71 @@ public class InsertCusAgentServiceAction extends BaseAction {
 		}
 //		context.setData(ParamKeys.TXN_TME,DateUtils.parse(context.getData(ParamKeys.TXN_TME).toString()));
 		logger.info("=============End    InsertCusAgentServiceAction  ");
+	}
+	public String  selectAgent(Context context){
+		String cusAc=context.getData("cusAc").toString();
+		//列表查询 获得协议编号
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("cusAc", cusAc);
+		//header 设定
+		map.put("traceNo", context.getData(ParamKeys.TRACE_NO));
+		map.put("traceSrc", context.getData(ParamKeys.TRACE_SOURCE));
+		map.put("version", context.getData(ParamKeys.VERSION));
+		map.put("reqTme", new Date());
+		map.put("reqJrnNo", get(BBIPPublicService.class).getBBIPSequence());
+		map.put("reqSysCde", context.getData(ParamKeys.REQ_SYS_CDE));
+		map.put("tlr", context.getData(ParamKeys.TELLER));
+		map.put("chn", context.getData(ParamKeys.CHANNEL));
+		map.put("bk", context.getData(ParamKeys.BK));
+		map.put("br", context.getData(ParamKeys.BR));
+		map.put("obkBk", "301");
+		if(context.getData(ParamKeys.THD_SQN)!=null){
+			map.put("bk", "01441999999");
+			map.put("br", "01441131999");
+			context.setData("tlr", "ABIR148");
+			context.setData("bk", "01441999999");
+			context.setData("br", "01441131999");
+		}
+		map.put("cusAc", context.getData("cusAc"));
+		logger.info("~~~~~~~~~~requestHeader~~~~map~~~~~ "+map);
+		logger.info("~~~~~~~~~~列表查询开始 ");
+		//上代收付取协议编号
+		Result accessObjList = bgspServiceAccessObject.callServiceFlatting("queryListAgentCollectAgreement",map);
+		if(!accessObjList.isSuccess()){
+//					throw new CoreException(accessObjList.getPayload().get("responseMessage").toString());
+		}
+		logger.info("~~~~~~~~~~列表查询结束~~~~"+accessObjList);
+		if(accessObjList.getPayload().get("agentCollectAgreement") ==null	){
+			context.setData("thdRspCde", "80");
+		}
+		List<Map<String,Object>> list=(List<Map<String, Object>>)accessObjList.getPayload().get("agentCollectAgreement");
+		String agdAgrNo=list.get(0).get("agdAgrNo").toString();
+		logger.info("~~~~~~~~~~~~~~~协议编号： "+agdAgrNo);
+		context.setData("agdAgrNo", agdAgrNo);
+		return agdAgrNo;
+	}
+
+	public Map<String, Object> createMap(Context context){
+		logger.info("=============Start   DeleteCusAgentServiceAction  createMap");
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("traceNo", context.getData(ParamKeys.TRACE_NO));
+		map.put("traceSrc", context.getData(ParamKeys.TRACE_SOURCE));
+		map.put("version", context.getData(ParamKeys.VERSION));
+		map.put("reqTme", new Date());
+		map.put("reqJrnNo", get(BBIPPublicService.class).getBBIPSequence());
+		map.put("reqSysCde", context.getData(ParamKeys.REQ_SYS_CDE));
+		map.put("tlr", context.getData(ParamKeys.TELLER));
+		map.put("chn", context.getData(ParamKeys.CHANNEL));
+		map.put("bk", context.getData(ParamKeys.BK));
+		map.put("br", context.getData(ParamKeys.BR));
+		//协议编号
+		String agdAgrNo=context.getData("agdAgrNo").toString();
+		map.put("agdAgrNo", agdAgrNo);
+		
+		List<String> agdAgrNoList=new ArrayList<String>();
+		agdAgrNoList.add(agdAgrNo);
+		context.setData("agdAgrNo", agdAgrNoList);
+		logger.info("=============End   DeleteCusAgentServiceAction  createMap");
+		return map;
 	}
 }
