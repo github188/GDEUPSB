@@ -56,7 +56,6 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 	@Qualifier("callThdTradeManager")
 	ThirdPartyAdaptor callThdTradeManager;
 
-//	private final String AC_DTE = DateUtils.format((Date) bbipPublicService.getAcDate(), DateUtils.STYLE_yyyyMMdd);
 
 	public static Logger logger = LoggerFactory
 			.getLogger(OprGasCusAgentActionV4.class);
@@ -65,8 +64,11 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			CoreRuntimeException {
 		logger.info("Enter in OprGasCusAgentActionV4!...........");
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
-		// logger.info("============acDte:" + AC_DTE);
-
+		String AC_DTE = DateUtils.format((Date) bbipPublicService.getAcDate(), DateUtils.STYLE_yyyyMMdd);
+		 logger.info("============acDte:" + AC_DTE);
+		 
+		 context.setData("AC_DTE", AC_DTE);
+		 
 		// context.setData("thdthdCusNo", context.getData("thdCusNo"));
 
 		// 备份，修改时用 TODO 修改做不了
@@ -121,8 +123,8 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 
 			logger.info("========PGAS00 用户协议查询完成=======");
 		} else {
-			// TODO String cusAc = context.getData(ParamKeys.CUS_AC);
-			String cusAc = "6222604910001021082";
+			String cusAc = context.getData(ParamKeys.CUS_AC);
+//			String cusAc = "6222604910001021082";
 			// 校验卡折使用状态
 			CusActInfResult cusactinfresult = new CusActInfResult();
 			// 获取bk
@@ -250,10 +252,10 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 					List<Map<String, Object>> agentCollectAgreementMaps = (List<Map<String, Object>>) context
 							.getData("agentCollectAgreement");
 					// TODO
-					// agentCollectAgreementMaps.get(0).put("agrVldDte",
-					// AC_DTE);
-					agentCollectAgreementMaps.get(0).put("agrVldDte",
-							"20150101");
+					 agentCollectAgreementMaps.get(0).put("agrVldDte",
+					 AC_DTE);
+//					agentCollectAgreementMaps.get(0).put("agrVldDte",
+//							"20150101");
 					agentCollectAgreementMaps.get(0).put("agrExpDte",
 							"99991231");
 					agentCollectAgreementMaps.get(0).put(ParamKeys.CUS_AC,
@@ -667,8 +669,8 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		map.put("cusFeeDerFlg", "0"); // TODO 暂用0，待确认
 		map.put("agtSrvCusId", context.getData("agtSrvCusId"));
 		map.put("agtSrvCusPnm", context.getData(ParamKeys.THD_CUS_NME));
-		// TODO map.put("agrVldDte", AC_DTE);
-		map.put("agrVldDte", "20150101");
+		map.put("agrVldDte", context.getData("AC_DTE"));
+//		map.put("agrVldDte", "20150101");
 		map.put("agrExpDte", "99991231"); // YYYYMMDD默认最大日，99991231
 		map.put(ParamKeys.CMU_TEL, context.getData(ParamKeys.CMU_TEL));
 		map.put(ParamKeys.THD_CUS_NO, context.getData(ParamKeys.THD_CUS_NO));
