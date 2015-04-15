@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	encoding="GBK"  trace="true">
+	
+	<segment name="header" encoding="GBK">
+		<fixString name="comNo"  length="8"></fixString>
+		<fixString name="bankNo"  length="4"></fixString>
+		<fixString name="count"  length="11"></fixString>
+		<fixString name="totCnt"  length="11"></fixString>
+	</segment>
+	
+</message>
