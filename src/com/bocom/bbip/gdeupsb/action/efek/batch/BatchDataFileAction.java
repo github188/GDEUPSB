@@ -92,7 +92,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 					
 					String batNo=context.getData(ParamKeys.BAT_NO).toString();
 					//该更控制表
-					updateInfo(context, eupsThdFtpConfig, batNo,totAmt ,totCnt);
+					String string=updateInfo(context, eupsThdFtpConfig, batNo,totAmt ,totCnt);
 					//获取文件并解析入库   数据库文件名
 					List<Map<String, Object>> mapList=operateFileAction.pareseFile(eupsThdFtpConfig, "batchFile");
 					if(CollectionUtils.isEmpty(mapList)){
@@ -118,7 +118,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 						logger.info("==========success  insert  gdEupsEleTmp");
 						String createFileName=context.getData(ParamKeys.FLE_NME).toString();
 						//文件内容
-						Map<String, Object> resultMap=createFileMap(context,comNo,totAmt,totCnt);
+						Map<String, Object> resultMap=createFileMap(context,comNo,totAmt,totCnt,string);
 						context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_NAME, createFileName);
 						context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_MAP, resultMap);
 						//提交代收付
@@ -128,7 +128,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 	/**
 	 * 文件map拼装
 	 */
-		public Map<String, Object> createFileMap(Context context,String comNo,String totAmt,String totCnt){
+		public Map<String, Object> createFileMap(Context context,String comNo,String totAmt,String totCnt,String string){
 			logger.info("=================Start  BatchDataFileAction  createFileMap ");
 			BigDecimal totAmts=(new BigDecimal(totAmt)).scaleByPowerOfTen(-2);
 			//header
@@ -153,10 +153,14 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 //				agtFileBatchDetail.setAGTSRVCUSNME(gdEupsEleTmp.getThdCusNme());
 				agtFileBatchDetail.setRMK2(gdEupsEleTmp.getThdCusNo());
 				//本行标志
-				if(get(AccountService.class).isOurBankCard(cusAc)){
-					agtFileBatchDetail.setOUROTHFLG("0");
+				if(string.trim().equals("50")){
+							agtFileBatchDetail.setOUROTHFLG("0");
 				}else{
-					agtFileBatchDetail.setOUROTHFLG("1");
+							if(get(AccountService.class).isOurBankCard(cusAc)){
+										agtFileBatchDetail.setOUROTHFLG("0");
+							}else{
+										agtFileBatchDetail.setOUROTHFLG("1");
+							}
 				}
 				agtFileBatchDetail.setOBKBK(gdEupsEleTmp.getBankNo());
 				
@@ -217,8 +221,9 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 	/**
 	 * 第一行数据保存到控制表中
 	 */
-		public void updateInfo(Context context,EupsThdFtpConfig eupsThdFtpConfig,String batNo,String totAmt,String totCnt) throws CoreException{
+		public String  updateInfo(Context context,EupsThdFtpConfig eupsThdFtpConfig,String batNo,String totAmt,String totCnt) throws CoreException{
 				logger.info("==========Start  BatchDataFileAction  updateInfo");
+				String string=null;
 				String fleNme=context.getData(ParamKeys.FLE_NME).toString();
 				String filePath=eupsThdFtpConfig.getLocDir();
 				try {
@@ -267,6 +272,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 									gdEupsBatchConsoleInfoRepository.updateConsoleInfo(gdEupsBatchConsoleInfo);
 									logger.info("==========Successful to update GDEupsBatchConsoleInfo");
 								i++;
+								string=rsvFld3;
 						}
 						bufferedReader.close();
 						fileReader.close();
@@ -279,6 +285,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 				}
 				context.setData(ParamKeys.TOT_CNT, Integer.parseInt(totCnt));
 				logger.info("==========End  BatchDataFileAction  updateInfo");
+				return string;
 		}
 		/**
 		 * 从第三方下载文件 
