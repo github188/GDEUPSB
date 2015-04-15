@@ -56,7 +56,7 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 		
 		//流水日期时间
 		Date txnDte=DateUtils.parse(DateUtils.formatAsSimpleDate(new Date()));
-		txnDte=DateUtils.parse("2015-04-10");
+//		txnDte=DateUtils.parse("2015-04-10");
 		Date txnTme=DateUtils.parse(DateUtils.formatAsTranstime(new Date()));
 		context.setData(ParamKeys.TXN_DTE, txnDte);
 		context.setData(ParamKeys.TXN_TME, txnTme);
