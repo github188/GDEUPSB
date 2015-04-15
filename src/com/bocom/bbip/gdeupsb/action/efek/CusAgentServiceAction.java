@@ -160,6 +160,7 @@ public class CusAgentServiceAction extends BaseAction{
 				eupsCusAgentJournal.setIdNo((String)context.getData("idNo"));
 				eupsCusAgentJournal.setTel((String)context.getData("cmuTel"));
 				eupsCusAgentJournal.setTxnDte((Date)context.getData(ParamKeys.TXN_DTE));
+				eupsCusAgentJournal.setRsvFld2("301");;
 				eupsCusAgentJournalRepository.insert(eupsCusAgentJournal);
 				
 				log.info("============End  insert   EupsCusAgentJournal");
