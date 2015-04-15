@@ -67,6 +67,14 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 		config.setRmtFleNme(fleNme);
 		config.setLocFleNme(fleNme);
 		config.setFtpDir("1");
+		if(context.getData("mothed").toString().trim().equals("1")){
+			config.setThdIpAdr("182.53.15.187");
+			config.setFtpDir("1");
+			config.setOppNme("weblogic");
+			config.setOppUsrPsw("123456");
+			String path = "./save/tfiles/" + context.getData(ParamKeys.BR)+ "/" + context.getData(ParamKeys.TELLER) + "/";
+			config.setRmtWay(path);
+		}
 		((OperateFTPAction)get("opeFTP")).getFileFromFtp(config);
 		String path=config.getLocDir();
 		logger.info("===============获取文件成功");
