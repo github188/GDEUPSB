@@ -87,11 +87,29 @@ public class FbpeBatchResultDealAction implements AfterBatchAcpService {
 				gdFbpeFileBatchTmpRepository.updateFbpe(gdFbpeFileBatchTmps);
 		}
         
-        // 生成返回明细信息
+        //根据单位编号寻找返盘格式文件解析
+        String fmtFileName =null;
+        String comNo=gdEupsBatchConsoleInfo.getComNo();
+        int i=0;
+        if(comNo.equals("4460000011")) { 
+            fmtFileName="tvFbpeBatResultFmt";
+            i=1;
+        } else if (comNo.equals("4460002194")) {
+        	 i=2;
+            //燃气  自己写
+        }  else if (comNo.equals("4460000010")) {
+        	 i=3;
+            fmtFileName="mobFbpeBatResultFmt";
+        } else if (comNo.equals("4460000014")) {
+        	 i=4;
+            fmtFileName="telFbpeBatResultFmt";
+        }
+        
         List<Map<String, Object>> detailList = new ArrayList<Map<String, Object>>();
         String batNo=gdEupsBatchConsoleInfo.getBatNo();
         GdFbpeFileBatchTmp gdFbpeFileBatchTmp=new GdFbpeFileBatchTmp();
         gdFbpeFileBatchTmp.setRsvFld5(batNo);
+        // 生成返回明细信息
         List<GdFbpeFileBatchTmp> batchDetailList = fileRepository.find(gdFbpeFileBatchTmp);
         for (GdFbpeFileBatchTmp batchDetail : batchDetailList) {
             Map<String, Object> detailMap = new HashMap<String, Object>();
@@ -102,8 +120,32 @@ public class FbpeBatchResultDealAction implements AfterBatchAcpService {
             detailMap.put("sqn", batchDetail.getSqn());
             detailMap.put("tlrNo", batchDetail.getTlrNo());
             detailMap.put("txnTim", batchDetail.getTxnTim());
-            
-            detailMap.put("rsvFld7", batchDetail.getRsvFld7());     //状态
+            String sts=batchDetail.getRsvFld7();
+            if(i==1){
+	            	if(sts.equals("S")){
+	                		sts="00";
+	            	}
+            }else if(i==2){
+            	//TODO 
+	            	if(sts.equals("S")){
+	                		sts="1";
+	            	}else{
+	            			sts="0";
+	            	}
+            }else if(i==3){
+	            	if(sts.equals("S")){
+	                		sts="1";
+	            	}else{
+	            			sts="0";
+	            	}
+            }else if(i==4){
+	            	if(sts.equals("S")){
+	                		sts="1";
+	            	}else{
+	            			sts="0";
+	            	}
+            }
+            detailMap.put("rsvFld7", sts);     //状态
             detailMap.put("rsvFld8",batchDetail.getRsvFld2());     // 失败原因
             
             detailMap.put("accNo", batchDetail.getAccNo());
@@ -124,18 +166,6 @@ public class FbpeBatchResultDealAction implements AfterBatchAcpService {
         }
         resultMap.put("detail", detailList);
 
-        //根据单位编号寻找返盘格式文件解析
-        String fmtFileName =null;
-        String comNo=gdEupsBatchConsoleInfo.getComNo();
-        if(comNo.equals("4460000011")) { 
-            fmtFileName="tvFbpeBatResultFmt";
-        } else if (comNo.equals("4460002194")) {
-            //燃气  自己写
-        }  else if (comNo.equals("4460000010")) {
-            fmtFileName="mobFbpeBatResultFmt";
-        } else if (comNo.equals("4460000014")) {
-            fmtFileName="telFbpeBatResultFmt";
-        }
         EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("fbpeBathReturnFmt");
 
         String fileName = context.getData("filNam")+"_"+batNo+"_"+ context.getData("bk");
