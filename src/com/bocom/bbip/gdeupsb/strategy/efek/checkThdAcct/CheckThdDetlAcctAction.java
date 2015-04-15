@@ -128,6 +128,7 @@ public class CheckThdDetlAcctAction implements Executable {
 							
 							//生成对账文件到指定路径
 							eupsThdFtpConfig.setLocFleNme(fileName);
+							//TODO  sftp
 							operateFileAction.createCheckFile(eupsThdFtpConfig, "elecCheckFile", fileName, map);
 							 logger.info("=============对账文件生成成功==========");
 							 
