@@ -89,8 +89,8 @@ public class InsertCusAgentServiceAction extends BaseAction {
 		Result editCusAgtResult = bgspServiceAccessObject.callServiceFlatting("maintainAgentCollectAgreement",context.getDataMap());
 		logger.info("===========editCusAgtResult："+editCusAgtResult);
 
-		if(context.getData("callThd")!=null){
-			if(editCusAgtResult.isSuccess() &&editCusAgtResult.getResponseType().toString().equals("N") ){
+		if(editCusAgtResult.isSuccess() &&editCusAgtResult.getResponseType().toString().equals("N") ){
+			if(context.getData("callThd")!=null){
 				Date txnDte=(Date)context.getData(ParamKeys.TXN_DTE);
 				Date txnTme=DateUtils.parse(context.getData("txnTme").toString());
 					try{

@@ -50,8 +50,8 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 			Result delResult = bgspServiceAccessObject.callServiceFlatting("deleteAgentCollectAgreement",context.getDataMap());
 			logger.info("==========delResult："+delResult);
 			
-			if(context.getData(ParamKeys.THD_SQN)==null){
-					if(delResult.isSuccess()){
+			if(delResult.isSuccess()){
+					if(context.getData(ParamKeys.THD_SQN)==null){
 							try{
 								constantOfSoapUI(context);
 								context.setData(ParamKeys.TXN_DTE, DateUtils.format(txnDte,DateUtils.STYLE_yyyyMMdd));
