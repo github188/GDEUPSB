@@ -22,7 +22,6 @@ import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
 import com.bocom.bbip.eups.repository.EupsThdBaseInfoRepository;
-import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdGasCusAll;
@@ -56,7 +55,6 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 	@Qualifier("callThdTradeManager")
 	ThirdPartyAdaptor callThdTradeManager;
 
-
 	public static Logger logger = LoggerFactory
 			.getLogger(OprGasCusAgentActionV4.class);
 
@@ -64,11 +62,12 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			CoreRuntimeException {
 		logger.info("Enter in OprGasCusAgentActionV4!...........");
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
-		String AC_DTE = DateUtils.format((Date) bbipPublicService.getAcDate(), DateUtils.STYLE_yyyyMMdd);
-		 logger.info("============acDte:" + AC_DTE);
-		 
-		 context.setData("STR_AC_DTE", AC_DTE);
-		 
+		String AC_DTE = DateUtils.format((Date) bbipPublicService.getAcDate(),
+				DateUtils.STYLE_yyyyMMdd);
+		logger.info("============acDte:" + AC_DTE);
+
+		context.setData("STR_AC_DTE", AC_DTE);
+
 		// context.setData("thdthdCusNo", context.getData("thdCusNo"));
 
 		// 备份，修改时用 TODO 修改做不了
@@ -124,26 +123,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			logger.info("========PGAS00 用户协议查询完成=======");
 		} else {
 			String cusAc = context.getData(ParamKeys.CUS_AC);
-//			String cusAc = "6222604910001021082";
-			// 校验卡折使用状态
-//			CusActInfResult cusactinfresult = new CusActInfResult();
-//			try {
-//				cusactinfresult = accountService.getAcInf(
-//						CommonRequest.build(context), cusAc);
-//			} catch (CoreException e) {
-//				e.printStackTrace();
-//			}
-//			logger.info("=============cusactinfresult:cusactinfresult.getCusAcSts()="
-//					+ cusactinfresult.getCusAcSts()
-//					+ " &&&&& cusactinfresult.getCdSts()="
-//					+ cusactinfresult.getCdSts());
-//			String cdSts = cusactinfresult.getCdSts();
-//			String cusAcSts = cusactinfresult.getCusAcSts();
-
-			// TODO判断状态
-			// if(){
-			//
-			// }
+			// String cusAc = "6222604910001021082";
 
 			String cusTyp = context.getData("cusTyp");
 			if ("0".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡
@@ -160,6 +140,8 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			}
 
 			if ("1".equals(optFlg)) { // 新增
+
+				checkCusAcSts(context, cusAc);
 
 				// 查询本地协议表是否存在该cusNo
 				GdGasCusAll gdGasCusAll = new GdGasCusAll();
@@ -186,28 +168,36 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 				Result insertCusAgtResult = bgspServiceAccessObject
 						.callServiceFlatting("maintainAgentCollectAgreement",
 								context.getDataMap());
-				if(!insertCusAgtResult.isSuccess()){
+				if (!insertCusAgtResult.isSuccess()) {
 					throw new CoreRuntimeException(
 							insertCusAgtResult.getResponseMessage());
 				}
-//				if (!"N".equals(insertCusAgtResult.getResponseType())) {
-//					throw new CoreRuntimeException(
-//							insertCusAgtResult.getResponseMessage());
-//				}
+				// if (!"N".equals(insertCusAgtResult.getResponseType())) {
+				// throw new CoreRuntimeException(
+				// insertCusAgtResult.getResponseMessage());
+				// }
 				logger.info("=============代收付签约成功，发THD签约===========");
 				callThdAndAddThdLclCusAgt(context);
 				context.setData("cusTyp", cusTypBak);
 			}
 			if ("2".equals(optFlg)) { // 修改
+
+				checkCusAcSts(context, cusAc);
+
 				setAgtCltAndCusInf(context);
 
 				// 上代收付查询协议，先根据cusAc进行列表查询
-//				Map<String, Object> cusListMap = setAcpMap(context);
-//				cusListMap.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
-//				context.setDataMap(cusListMap);
-//				Result accessObjList = bgspServiceAccessObject.callServiceFlatting("queryListAgentCollectAgreement", cusListMap);
+				// Map<String, Object> cusListMap = setAcpMap(context);
+				// cusListMap.put(ParamKeys.CUS_AC,
+				// context.getData(ParamKeys.CUS_AC));
+				// context.setDataMap(cusListMap);
+				// Result accessObjList =
+				// bgspServiceAccessObject.callServiceFlatting("queryListAgentCollectAgreement",
+				// cusListMap);
 
-				Result accessObjList = bgspServiceAccessObject.callServiceFlatting("queryListAgentCollectAgreement", context.getDataMap());
+				Result accessObjList = bgspServiceAccessObject
+						.callServiceFlatting("queryListAgentCollectAgreement",
+								context.getDataMap());
 				logger.info("=========after optFlg=2 accessObjList：【accessObjList.getResponseCode():"
 						+ accessObjList.getResponseCode()
 						+ "】【accessObjList.getResponseMessage():"
@@ -244,10 +234,9 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 					List<Map<String, Object>> agentCollectAgreementMaps = (List<Map<String, Object>>) context
 							.getData("agentCollectAgreement");
 					// TODO
-					 agentCollectAgreementMaps.get(0).put("agrVldDte",
-					 AC_DTE);
-//					agentCollectAgreementMaps.get(0).put("agrVldDte",
-//							"20150101");
+					agentCollectAgreementMaps.get(0).put("agrVldDte", AC_DTE);
+					// agentCollectAgreementMaps.get(0).put("agrVldDte",
+					// "20150101");
 					agentCollectAgreementMaps.get(0).put("agrExpDte",
 							"99991231");
 					agentCollectAgreementMaps.get(0).put(ParamKeys.CUS_AC,
@@ -287,12 +276,17 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 				setAgtCltAndCusInf(context);
 
 				// 上代收付查询协议，先根据cusAc进行列表查询得到协议编号，再用协议编号查询明细（用户信息）
-//				Map<String, Object> cusListMap = setAcpMap(context);
-//				cusListMap.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
-//				context.setDataMap(cusListMap);
-//				Result accessObjList = bgspServiceAccessObject.callServiceFlatting("queryListAgentCollectAgreement", cusListMap);
-				
-				Result accessObjList = bgspServiceAccessObject.callServiceFlatting("queryListAgentCollectAgreement", context.getDataMap());
+				// Map<String, Object> cusListMap = setAcpMap(context);
+				// cusListMap.put(ParamKeys.CUS_AC,
+				// context.getData(ParamKeys.CUS_AC));
+				// context.setDataMap(cusListMap);
+				// Result accessObjList =
+				// bgspServiceAccessObject.callServiceFlatting("queryListAgentCollectAgreement",
+				// cusListMap);
+
+				Result accessObjList = bgspServiceAccessObject
+						.callServiceFlatting("queryListAgentCollectAgreement",
+								context.getDataMap());
 				logger.info("========after optFlg=3 queryListAgentCollectAgreement ======="
 						+ context);
 				logger.info("=========after optFlg=3 accessObjList：【accessObjList.getResponseCode():"
@@ -339,10 +333,15 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 					Result stopCusAgtResult = bgspServiceAccessObject
 							.callServiceFlatting("deleteAgentCollectAgreement",
 									context.getDataMap());
-					if (!"N".equals(stopCusAgtResult.getResponseType())) {
+
+					if (!stopCusAgtResult.isSuccess()) {
 						throw new CoreRuntimeException(
 								stopCusAgtResult.getResponseMessage());
 					}
+					// if (!"N".equals(stopCusAgtResult.getResponseType())) {
+					// throw new CoreRuntimeException(
+					// stopCusAgtResult.getResponseMessage());
+					// }
 
 					callThdAndStopThdLclCusAgt(context);
 					context.setData("cusTyp", cusTypBak);
@@ -351,6 +350,39 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		}
 
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
+	}
+
+	private void checkCusAcSts(Context context, String cusAc)
+			throws CoreException {
+		// 校验卡折使用状态
+		CusActInfResult cusactinfresult = new CusActInfResult();
+		try {
+			cusactinfresult = accountService.getAcInf(
+					CommonRequest.build(context), cusAc);
+		} catch (CoreException e) {
+			e.printStackTrace();
+		}
+		logger.info("=============cusactinfresult:cusactinfresult.getCusAcSts()="
+				+ cusactinfresult.getCusAcSts()
+				+ " &&&&& cusactinfresult.getCdSts()="
+				+ cusactinfresult.getCdSts());
+
+		String cusAcSts = cusactinfresult.getCusAcSts();
+
+		// TODO判断状态
+		if ("00".equals(cusAcSts)) {
+			throw new CoreException("该帐号处于不正常状态，不可进行交易");
+		} else if ("01".equals(cusAcSts)) {
+			throw new CoreException("该账号为预开户，不可进行交易");
+		} else if ("02".equals(cusAcSts)) {
+			throw new CoreException("该账号待激活，不可进行交易");
+		} else if ("04".equals(cusAcSts)) {
+			throw new CoreException("该账号处于抹帐状态，不可进行交易");
+		} else if ("05".equals(cusAcSts)) {
+			throw new CoreException("该账号已销户，不可进行交易");
+		} else if ("06".equals(cusAcSts)) {
+			throw new CoreException("该账号已销卡，不可进行交易"); 
+		}
 	}
 
 	private void callThdAndStopThdLclCusAgt(Context context)
@@ -590,22 +622,22 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 
 		logger.info("============context after setAgtCltAndCusInf :" + context);
 	}
-	
-//	private Map<String, Object> setAcpMap(Context context) {
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("traceNo", context.getData(ParamKeys.TRACE_NO));
-//		map.put("traceSrc", context.getData(ParamKeys.TRACE_SOURCE));
-//		map.put("version", context.getData(ParamKeys.VERSION));
-//		map.put("reqTme", new Date());
-//		map.put("reqJrnNo", get(BBIPPublicService.class).getBBIPSequence());
-//		map.put("reqSysCde", context.getData(ParamKeys.REQ_SYS_CDE));
-//		map.put("tlr", context.getData(ParamKeys.TELLER));
-//		map.put("chn", context.getData(ParamKeys.CHANNEL));
-//		map.put("bk", context.getData(ParamKeys.BK));
-//		map.put("br", context.getData(ParamKeys.BR));
-//		context.setDataMap(map);
-//		return map;
-//	}
+
+	// private Map<String, Object> setAcpMap(Context context) {
+	// Map<String, Object> map = new HashMap<String, Object>();
+	// map.put("traceNo", context.getData(ParamKeys.TRACE_NO));
+	// map.put("traceSrc", context.getData(ParamKeys.TRACE_SOURCE));
+	// map.put("version", context.getData(ParamKeys.VERSION));
+	// map.put("reqTme", new Date());
+	// map.put("reqJrnNo", get(BBIPPublicService.class).getBBIPSequence());
+	// map.put("reqSysCde", context.getData(ParamKeys.REQ_SYS_CDE));
+	// map.put("tlr", context.getData(ParamKeys.TELLER));
+	// map.put("chn", context.getData(ParamKeys.CHANNEL));
+	// map.put("bk", context.getData(ParamKeys.BK));
+	// map.put("br", context.getData(ParamKeys.BR));
+	// context.setDataMap(map);
+	// return map;
+	// }
 
 	private Map<String, Object> setCustomerInfoMap(Context context) {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -662,7 +694,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		map.put("agtSrvCusId", context.getData("agtSrvCusId"));
 		map.put("agtSrvCusPnm", context.getData(ParamKeys.THD_CUS_NME));
 		map.put("agrVldDte", context.getData("STR_AC_DTE"));
-//		map.put("agrVldDte", "20150101");
+		// map.put("agrVldDte", "20150101");
 		map.put("agrExpDte", "99991231"); // YYYYMMDD默认最大日，99991231
 		map.put(ParamKeys.CMU_TEL, context.getData(ParamKeys.CMU_TEL));
 		map.put(ParamKeys.THD_CUS_NO, context.getData(ParamKeys.THD_CUS_NO));

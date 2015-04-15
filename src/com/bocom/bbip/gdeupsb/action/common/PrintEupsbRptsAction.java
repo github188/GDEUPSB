@@ -49,7 +49,7 @@ public class PrintEupsbRptsAction extends BaseAction {
 		// 业务类型eupsBusTyp 必输
 		// 单位编码comNo 非必输
 		// 需打印交易日期（交易发起前一天？）prtDte 必输yyyy-MM-dd
-		// 报表类型 (全部0，成功1，失败2,可疑3) prtFlg 必输
+		// 报表类型 (全部0，成功1，失败2,可疑3) prtTyp 必输
 		// 输出：
 		// 成功（打印报表）/失败
 
@@ -107,6 +107,7 @@ public class PrintEupsbRptsAction extends BaseAction {
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
 					.toString().trim()
 					+ "全部交易清单报表";
+			
 		}
 		if ("1".equals(context.getData("prtTyp"))) {
 			prtList = get(GdEupsTransJournalRepository.class).findSuccTxnList(eupsJnl);
@@ -142,8 +143,8 @@ public class PrintEupsbRptsAction extends BaseAction {
 		}
 		
 		context.setData("prtTtl", prtTtl);
-		fileName = new StringBuffer((new StringBuilder(prtTtl))); 
-//		+ "_" + br + "_" + prtDte + ".txt").toString()
+		fileName = new StringBuffer((new StringBuffer((String) context.getData(ParamKeys.EUPS_BUSS_TYPE)).append("_").append(prtDte).append(".txt")));
+//		+ "_" + br + "_" + prtDte + ".txt").toString();
 
 		logger.info("==============fileName:" + fileName);
 		 
@@ -204,7 +205,7 @@ public class PrintEupsbRptsAction extends BaseAction {
 
 /*****************************************************************************************************************************/
 		
-		// 拼装本地路径 本地测试
+//		// 拼装本地路径 本地测试
 		PrintWriter printWriter = null;
 		StringBuffer sbLocDir = new StringBuffer();
 		sbLocDir.append("D:/testGash/checkFilTest/").append(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)).append("/");

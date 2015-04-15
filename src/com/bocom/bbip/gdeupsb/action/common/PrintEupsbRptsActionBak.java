@@ -64,7 +64,7 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 				DateUtils.format(new Date(), DateUtils.STYLE_SIMPLE_DATE));
 
 		// 配VM文件
-//		StringBuffer fileName = null;
+		String fileName = null;
 		String br = context.getData(ParamKeys.BR);
 		String prtDte = context.getData("prtDte");
 
@@ -114,6 +114,7 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
 					.toString().trim()
 					+ "_全部交易清单报表";
+			fileName = context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_All.txt";
 		}
 		if ("1".equals(context.getData("prtTyp"))) {
 			prtList = get(GdEupsTransJournalRepository.class).findSuccTxnList(eupsJnl);
@@ -122,6 +123,7 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
 					.toString().trim()
 					+ "_成功交易清单报表";
+			fileName = context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_Suss.txt";
 		}
 		if ("2".equals(context.getData("prtTyp"))) {
 			prtList = get(GdEupsTransJournalRepository.class).findFailTxnList(eupsJnl);
@@ -130,6 +132,7 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
 					.toString().trim()
 					+ "_失败交易清单报表";
+			fileName = context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_Fail.txt";
 		}
 		if ("3".equals(context.getData("prtTyp"))) {
 			prtList =get(GdEupsTransJournalRepository.class).findDoubtTxnList(eupsJnl);
@@ -138,6 +141,7 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
 					.toString().trim()
 					+ "_可疑交易清单报表";
+			fileName = context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_Doubt.txt";
 		}
 		if ("4".equals(context.getData("prtTyp"))) {
 			prtList = get(GdEupsTransJournalRepository.class).findOthTxnList(eupsJnl);
@@ -146,6 +150,7 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
 					.toString().trim()
 					+ "_其他情况清单报表";
+			fileName = context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_Other.txt";
 		}
 		
 		context.setData("prtTtl", prtTtl);
@@ -213,9 +218,9 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 	
 			GdFileUtils.write(
 					new File((new StringBuffer(String.valueOf(reportPath)))
-							.append(prtTtl + ".txt").toString()), result, "GBK");
+							.append(fileName).toString()), result, "GBK");
 			context.setVariable("reportDir", reportPath);
-			context.setVariable("reportName", prtTtl + ".txt");
+			context.setVariable("reportName", fileName);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
