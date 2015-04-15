@@ -1,0 +1,804 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GDEupsCusAgentJournal" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GDEupsCusAgentJournal" >
+    <id column="SQN" property="sqn" jdbcType="CHAR" />
+    <result column="EUPS_BUS_TYP" property="eupsBusTyp" jdbcType="CHAR" />
+    <result column="AGD_AGR_NO" property="agdAgrNo" jdbcType="CHAR" />
+    <result column="AGR_OPR_TYP" property="agrOprTyp" jdbcType="CHAR" />
+    <result column="COM_NO" property="comNo" jdbcType="CHAR" />
+    <result column="COM_NME" property="comNme" jdbcType="VARCHAR" />
+    <result column="CUS_AC" property="cusAc" jdbcType="CHAR" />
+    <result column="CUS_NME" property="cusNme" jdbcType="VARCHAR" />
+    <result column="ACO_AC" property="acoAc" jdbcType="CHAR" />
+    <result column="BAT_NO" property="batNo" jdbcType="CHAR" />
+    <result column="BAT_SEQ" property="batSeq" jdbcType="CHAR" />
+    <result column="BUS_TYP" property="busTyp" jdbcType="CHAR" />
+    <result column="BUS_KND" property="busKnd" jdbcType="CHAR" />
+    <result column="TPS_STS" property="tpsSts" jdbcType="CHAR" />
+    <result column="THD_CUS_NO" property="thdCusNo" jdbcType="CHAR" />
+    <result column="THD_CUS_NME" property="thdCusNme" jdbcType="VARCHAR" />
+    <result column="THD_STS" property="thdSts" jdbcType="CHAR" />
+    <result column="ID_TYP" property="idTyp" jdbcType="CHAR" />
+    <result column="ID_NO" property="idNo" jdbcType="VARCHAR" />
+    <result column="TEL" property="tel" jdbcType="VARCHAR" />
+    <result column="AGR_BR" property="agrBr" jdbcType="CHAR" />
+    <result column="AGR_TLR" property="agrTlr" jdbcType="CHAR" />
+    <result column="ATH_TLR" property="athTlr" jdbcType="CHAR" />
+    <result column="CRE_DTE" property="creDte" jdbcType="DATE" />
+    <result column="AGR_VLD_DTE" property="agrVldDte" jdbcType="DATE" />
+    <result column="AGR_EXP_DTE" property="agrExpDte" jdbcType="DATE" />
+    <result column="AGR_STS" property="agrSts" jdbcType="CHAR" />
+    <result column="TXN_DTE" property="txnDte" jdbcType="DATE" />
+    <result column="TXN_TME" property="txnTme" jdbcType="TIMESTAMP" />
+    <result column="RSV_FLD1" property="rsvFld1" jdbcType="CHAR" />
+    <result column="RSV_FLD2" property="rsvFld2" jdbcType="CHAR" />
+    <result column="RSV_FLD3" property="rsvFld3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    SQN, EUPS_BUS_TYP, AGD_AGR_NO, AGR_OPR_TYP, COM_NO, COM_NME, CUS_AC, CUS_NME, ACO_AC, 
+    BAT_NO, BAT_SEQ, BUS_TYP, BUS_KND, TPS_STS, THD_CUS_NO, THD_CUS_NME, THD_STS, ID_TYP, 
+    ID_NO, TEL, AGR_BR, AGR_TLR, ATH_TLR, CRE_DTE, AGR_VLD_DTE, AGR_EXP_DTE, AGR_STS, 
+    TXN_DTE, TXN_TME, RSV_FLD1, RSV_FLD2, RSV_FLD3
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${EUPS_SCHEMA}.EUPS_CUS_AGENT_JOURNAL
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="eupsBusTyp!=null" >
+        AND  EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
+      </if>
+      <if test="agdAgrNo!=null" >
+        AND  AGD_AGR_NO=#{agdAgrNo,jdbcType=CHAR}
+      </if>
+      <if test="agrOprTyp!=null" >
+        AND  AGR_OPR_TYP=#{agrOprTyp,jdbcType=CHAR}
+      </if>
+      <if test="comNo!=null" >
+        AND  COM_NO=#{comNo,jdbcType=CHAR}
+      </if>
+      <if test="comNme!=null" >
+        AND  COM_NME=#{comNme,jdbcType=VARCHAR}
+      </if>
+      <if test="cusAc!=null" >
+        AND  CUS_AC=#{cusAc,jdbcType=CHAR}
+      </if>
+      <if test="cusNme!=null" >
+        AND  CUS_NME=#{cusNme,jdbcType=VARCHAR}
+      </if>
+      <if test="acoAc!=null" >
+        AND  ACO_AC=#{acoAc,jdbcType=CHAR}
+      </if>
+      <if test="batNo!=null" >
+        AND  BAT_NO=#{batNo,jdbcType=CHAR}
+      </if>
+      <if test="batSeq!=null" >
+        AND  BAT_SEQ=#{batSeq,jdbcType=CHAR}
+      </if>
+      <if test="busTyp!=null" >
+        AND  BUS_TYP=#{busTyp,jdbcType=CHAR}
+      </if>
+      <if test="busKnd!=null" >
+        AND  BUS_KND=#{busKnd,jdbcType=CHAR}
+      </if>
+      <if test="tpsSts!=null" >
+        AND  TPS_STS=#{tpsSts,jdbcType=CHAR}
+      </if>
+      <if test="thdCusNo!=null" >
+        AND  THD_CUS_NO=#{thdCusNo,jdbcType=CHAR}
+      </if>
+      <if test="thdCusNme!=null" >
+        AND  THD_CUS_NME=#{thdCusNme,jdbcType=VARCHAR}
+      </if>
+      <if test="thdSts!=null" >
+        AND  THD_STS=#{thdSts,jdbcType=CHAR}
+      </if>
+      <if test="idTyp!=null" >
+        AND  ID_TYP=#{idTyp,jdbcType=CHAR}
+      </if>
+      <if test="idNo!=null" >
+        AND  ID_NO=#{idNo,jdbcType=VARCHAR}
+      </if>
+      <if test="tel!=null" >
+        AND  TEL=#{tel,jdbcType=VARCHAR}
+      </if>
+      <if test="agrBr!=null" >
+        AND  AGR_BR=#{agrBr,jdbcType=CHAR}
+      </if>
+      <if test="agrTlr!=null" >
+        AND  AGR_TLR=#{agrTlr,jdbcType=CHAR}
+      </if>
+      <if test="athTlr!=null" >
+        AND  ATH_TLR=#{athTlr,jdbcType=CHAR}
+      </if>
+      <if test="creDte!=null" >
+        AND  CRE_DTE=#{creDte,jdbcType=DATE}
+      </if>
+      <if test="agrVldDte!=null" >
+        AND  AGR_VLD_DTE=#{agrVldDte,jdbcType=DATE}
+      </if>
+      <if test="agrExpDte!=null" >
+        AND  AGR_EXP_DTE=#{agrExpDte,jdbcType=DATE}
+      </if>
+      <if test="agrSts!=null" >
+        AND  AGR_STS=#{agrSts,jdbcType=CHAR}
+      </if>
+      <if test="txnDte!=null" >
+        AND  TXN_DTE=#{txnDte,jdbcType=DATE}
+      </if>
+      <if test="txnTme!=null" >
+        AND  TXN_TME=#{txnTme,jdbcType=TIMESTAMP}
+      </if>
+      <if test="rsvFld1!=null" >
+        AND  RSV_FLD1=#{rsvFld1,jdbcType=CHAR}
+      </if>
+      <if test="rsvFld2!=null" >
+        AND  RSV_FLD2=#{rsvFld2,jdbcType=CHAR}
+      </if>
+      <if test="rsvFld3!=null" >
+        AND  RSV_FLD3=#{rsvFld3,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from ${EUPS_SCHEMA}.EUPS_CUS_AGENT_JOURNAL
+    where SQN = #{sqn,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from ${EUPS_SCHEMA}.EUPS_CUS_AGENT_JOURNAL
+    where SQN = #{sqn,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsCusAgentJournal" >
+    insert into ${EUPS_SCHEMA}.EUPS_CUS_AGENT_JOURNAL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sqn != null" >
+        SQN,
+      </if>
+      <if test="eupsBusTyp != null" >
+        EUPS_BUS_TYP,
+      </if>
+      <if test="agdAgrNo != null" >
+        AGD_AGR_NO,
+      </if>
+      <if test="agrOprTyp != null" >
+        AGR_OPR_TYP,
+      </if>
+      <if test="comNo != null" >
+        COM_NO,
+      </if>
+      <if test="comNme != null" >
+        COM_NME,
+      </if>
+      <if test="cusAc != null" >
+        CUS_AC,
+      </if>
+      <if test="cusNme != null" >
+        CUS_NME,
+      </if>
+      <if test="acoAc != null" >
+        ACO_AC,
+      </if>
+      <if test="batNo != null" >
+        BAT_NO,
+      </if>
+      <if test="batSeq != null" >
+        BAT_SEQ,
+      </if>
+      <if test="busTyp != null" >
+        BUS_TYP,
+      </if>
+      <if test="busKnd != null" >
+        BUS_KND,
+      </if>
+      <if test="tpsSts != null" >
+        TPS_STS,
+      </if>
+      <if test="thdCusNo != null" >
+        THD_CUS_NO,
+      </if>
+      <if test="thdCusNme != null" >
+        THD_CUS_NME,
+      </if>
+      <if test="thdSts != null" >
+        THD_STS,
+      </if>
+      <if test="idTyp != null" >
+        ID_TYP,
+      </if>
+      <if test="idNo != null" >
+        ID_NO,
+      </if>
+      <if test="tel != null" >
+        TEL,
+      </if>
+      <if test="agrBr != null" >
+        AGR_BR,
+      </if>
+      <if test="agrTlr != null" >
+        AGR_TLR,
+      </if>
+      <if test="athTlr != null" >
+        ATH_TLR,
+      </if>
+      <if test="creDte != null" >
+        CRE_DTE,
+      </if>
+      <if test="agrVldDte != null" >
+        AGR_VLD_DTE,
+      </if>
+      <if test="agrExpDte != null" >
+        AGR_EXP_DTE,
+      </if>
+      <if test="agrSts != null" >
+        AGR_STS,
+      </if>
+      <if test="txnDte != null" >
+        TXN_DTE,
+      </if>
+      <if test="txnTme != null" >
+        TXN_TME,
+      </if>
+      <if test="rsvFld1 != null" >
+        RSV_FLD1,
+      </if>
+      <if test="rsvFld2 != null" >
+        RSV_FLD2,
+      </if>
+      <if test="rsvFld3 != null" >
+        RSV_FLD3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sqn != null" >
+        #{sqn,jdbcType=CHAR},
+      </if>
+      <if test="eupsBusTyp != null" >
+        #{eupsBusTyp,jdbcType=CHAR},
+      </if>
+      <if test="agdAgrNo != null" >
+        #{agdAgrNo,jdbcType=CHAR},
+      </if>
+      <if test="agrOprTyp != null" >
+        #{agrOprTyp,jdbcType=CHAR},
+      </if>
+      <if test="comNo != null" >
+        #{comNo,jdbcType=CHAR},
+      </if>
+      <if test="comNme != null" >
+        #{comNme,jdbcType=VARCHAR},
+      </if>
+      <if test="cusAc != null" >
+        #{cusAc,jdbcType=CHAR},
+      </if>
+      <if test="cusNme != null" >
+        #{cusNme,jdbcType=VARCHAR},
+      </if>
+      <if test="acoAc != null" >
+        #{acoAc,jdbcType=CHAR},
+      </if>
+      <if test="batNo != null" >
+        #{batNo,jdbcType=CHAR},
+      </if>
+      <if test="batSeq != null" >
+        #{batSeq,jdbcType=CHAR},
+      </if>
+      <if test="busTyp != null" >
+        #{busTyp,jdbcType=CHAR},
+      </if>
+      <if test="busKnd != null" >
+        #{busKnd,jdbcType=CHAR},
+      </if>
+      <if test="tpsSts != null" >
+        #{tpsSts,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNo != null" >
+        #{thdCusNo,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNme != null" >
+        #{thdCusNme,jdbcType=VARCHAR},
+      </if>
+      <if test="thdSts != null" >
+        #{thdSts,jdbcType=CHAR},
+      </if>
+      <if test="idTyp != null" >
+        #{idTyp,jdbcType=CHAR},
+      </if>
+      <if test="idNo != null" >
+        #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="agrBr != null" >
+        #{agrBr,jdbcType=CHAR},
+      </if>
+      <if test="agrTlr != null" >
+        #{agrTlr,jdbcType=CHAR},
+      </if>
+      <if test="athTlr != null" >
+        #{athTlr,jdbcType=CHAR},
+      </if>
+      <if test="creDte != null" >
+        #{creDte,jdbcType=DATE},
+      </if>
+      <if test="agrVldDte != null" >
+        #{agrVldDte,jdbcType=DATE},
+      </if>
+      <if test="agrExpDte != null" >
+        #{agrExpDte,jdbcType=DATE},
+      </if>
+      <if test="agrSts != null" >
+        #{agrSts,jdbcType=CHAR},
+      </if>
+      <if test="txnDte != null" >
+        #{txnDte,jdbcType=DATE},
+      </if>
+      <if test="txnTme != null" >
+        #{txnTme,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rsvFld1 != null" >
+        #{rsvFld1,jdbcType=CHAR},
+      </if>
+      <if test="rsvFld2 != null" >
+        #{rsvFld2,jdbcType=CHAR},
+      </if>
+      <if test="rsvFld3 != null" >
+        #{rsvFld3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${EUPS_SCHEMA}.EUPS_CUS_AGENT_JOURNAL
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="eupsBusTyp!=null" >
+        AND  EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
+      </if>
+      <if test="agdAgrNo!=null" >
+        AND  AGD_AGR_NO=#{agdAgrNo,jdbcType=CHAR}
+      </if>
+      <if test="agrOprTyp!=null" >
+        AND  AGR_OPR_TYP=#{agrOprTyp,jdbcType=CHAR}
+      </if>
+      <if test="comNo!=null" >
+        AND  COM_NO=#{comNo,jdbcType=CHAR}
+      </if>
+      <if test="comNme!=null" >
+        AND  COM_NME=#{comNme,jdbcType=VARCHAR}
+      </if>
+      <if test="cusAc!=null" >
+        AND  CUS_AC=#{cusAc,jdbcType=CHAR}
+      </if>
+      <if test="cusNme!=null" >
+        AND  CUS_NME=#{cusNme,jdbcType=VARCHAR}
+      </if>
+      <if test="acoAc!=null" >
+        AND  ACO_AC=#{acoAc,jdbcType=CHAR}
+      </if>
+      <if test="batNo!=null" >
+        AND  BAT_NO=#{batNo,jdbcType=CHAR}
+      </if>
+      <if test="batSeq!=null" >
+        AND  BAT_SEQ=#{batSeq,jdbcType=CHAR}
+      </if>
+      <if test="busTyp!=null" >
+        AND  BUS_TYP=#{busTyp,jdbcType=CHAR}
+      </if>
+      <if test="busKnd!=null" >
+        AND  BUS_KND=#{busKnd,jdbcType=CHAR}
+      </if>
+      <if test="tpsSts!=null" >
+        AND  TPS_STS=#{tpsSts,jdbcType=CHAR}
+      </if>
+      <if test="thdCusNo!=null" >
+        AND  THD_CUS_NO=#{thdCusNo,jdbcType=CHAR}
+      </if>
+      <if test="thdCusNme!=null" >
+        AND  THD_CUS_NME=#{thdCusNme,jdbcType=VARCHAR}
+      </if>
+      <if test="thdSts!=null" >
+        AND  THD_STS=#{thdSts,jdbcType=CHAR}
+      </if>
+      <if test="idTyp!=null" >
+        AND  ID_TYP=#{idTyp,jdbcType=CHAR}
+      </if>
+      <if test="idNo!=null" >
+        AND  ID_NO=#{idNo,jdbcType=VARCHAR}
+      </if>
+      <if test="tel!=null" >
+        AND  TEL=#{tel,jdbcType=VARCHAR}
+      </if>
+      <if test="agrBr!=null" >
+        AND  AGR_BR=#{agrBr,jdbcType=CHAR}
+      </if>
+      <if test="agrTlr!=null" >
+        AND  AGR_TLR=#{agrTlr,jdbcType=CHAR}
+      </if>
+      <if test="athTlr!=null" >
+        AND  ATH_TLR=#{athTlr,jdbcType=CHAR}
+      </if>
+      <if test="creDte!=null" >
+        AND  CRE_DTE=#{creDte,jdbcType=DATE}
+      </if>
+      <if test="agrVldDte!=null" >
+        AND  AGR_VLD_DTE=#{agrVldDte,jdbcType=DATE}
+      </if>
+      <if test="agrExpDte!=null" >
+        AND  AGR_EXP_DTE=#{agrExpDte,jdbcType=DATE}
+      </if>
+      <if test="agrSts!=null" >
+        AND  AGR_STS=#{agrSts,jdbcType=CHAR}
+      </if>
+      <if test="txnDte!=null" >
+        AND  TXN_DTE=#{txnDte,jdbcType=DATE}
+      </if>
+      <if test="txnTme!=null" >
+        AND  TXN_TME=#{txnTme,jdbcType=TIMESTAMP}
+      </if>
+      <if test="rsvFld1!=null" >
+        AND  RSV_FLD1=#{rsvFld1,jdbcType=CHAR}
+      </if>
+      <if test="rsvFld2!=null" >
+        AND  RSV_FLD2=#{rsvFld2,jdbcType=CHAR}
+      </if>
+      <if test="rsvFld3!=null" >
+        AND  RSV_FLD3=#{rsvFld3,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsCusAgentJournal" >
+    update ${EUPS_SCHEMA}.EUPS_CUS_AGENT_JOURNAL
+    <set >
+      <if test="eupsBusTyp != null" >
+        EUPS_BUS_TYP = #{eupsBusTyp,jdbcType=CHAR},
+      </if>
+      <if test="agdAgrNo != null" >
+        AGD_AGR_NO = #{agdAgrNo,jdbcType=CHAR},
+      </if>
+      <if test="agrOprTyp != null" >
+        AGR_OPR_TYP = #{agrOprTyp,jdbcType=CHAR},
+      </if>
+      <if test="comNo != null" >
+        COM_NO = #{comNo,jdbcType=CHAR},
+      </if>
+      <if test="comNme != null" >
+        COM_NME = #{comNme,jdbcType=VARCHAR},
+      </if>
+      <if test="cusAc != null" >
+        CUS_AC = #{cusAc,jdbcType=CHAR},
+      </if>
+      <if test="cusNme != null" >
+        CUS_NME = #{cusNme,jdbcType=VARCHAR},
+      </if>
+      <if test="acoAc != null" >
+        ACO_AC = #{acoAc,jdbcType=CHAR},
+      </if>
+      <if test="batNo != null" >
+        BAT_NO = #{batNo,jdbcType=CHAR},
+      </if>
+      <if test="batSeq != null" >
+        BAT_SEQ = #{batSeq,jdbcType=CHAR},
+      </if>
+      <if test="busTyp != null" >
+        BUS_TYP = #{busTyp,jdbcType=CHAR},
+      </if>
+      <if test="busKnd != null" >
+        BUS_KND = #{busKnd,jdbcType=CHAR},
+      </if>
+      <if test="tpsSts != null" >
+        TPS_STS = #{tpsSts,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNo != null" >
+        THD_CUS_NO = #{thdCusNo,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNme != null" >
+        THD_CUS_NME = #{thdCusNme,jdbcType=VARCHAR},
+      </if>
+      <if test="thdSts != null" >
+        THD_STS = #{thdSts,jdbcType=CHAR},
+      </if>
+      <if test="idTyp != null" >
+        ID_TYP = #{idTyp,jdbcType=CHAR},
+      </if>
+      <if test="idNo != null" >
+        ID_NO = #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        TEL = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="agrBr != null" >
+        AGR_BR = #{agrBr,jdbcType=CHAR},
+      </if>
+      <if test="agrTlr != null" >
+        AGR_TLR = #{agrTlr,jdbcType=CHAR},
+      </if>
+      <if test="athTlr != null" >
+        ATH_TLR = #{athTlr,jdbcType=CHAR},
+      </if>
+      <if test="creDte != null" >
+        CRE_DTE = #{creDte,jdbcType=DATE},
+      </if>
+      <if test="agrVldDte != null" >
+        AGR_VLD_DTE = #{agrVldDte,jdbcType=DATE},
+      </if>
+      <if test="agrExpDte != null" >
+        AGR_EXP_DTE = #{agrExpDte,jdbcType=DATE},
+      </if>
+      <if test="agrSts != null" >
+        AGR_STS = #{agrSts,jdbcType=CHAR},
+      </if>
+      <if test="txnDte != null" >
+        TXN_DTE = #{txnDte,jdbcType=DATE},
+      </if>
+      <if test="txnTme != null" >
+        TXN_TME = #{txnTme,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rsvFld1 != null" >
+        RSV_FLD1 = #{rsvFld1,jdbcType=CHAR},
+      </if>
+      <if test="rsvFld2 != null" >
+        RSV_FLD2 = #{rsvFld2,jdbcType=CHAR},
+      </if>
+      <if test="rsvFld3 != null" >
+        RSV_FLD3 = #{rsvFld3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SQN = #{sqn,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${EUPS_SCHEMA}.EUPS_CUS_AGENT_JOURNAL
+    <if test="_parameter" >
+      where SQN in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
+  
+    <!-- 自定义 -->
+  <update id="updateJournal" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsCusAgentJournal" >
+    update ${EUPS_SCHEMA}.EUPS_CUS_AGENT_JOURNAL
+    <set >
+      <if test="eupsBusTyp != null" >
+        EUPS_BUS_TYP = #{eupsBusTyp,jdbcType=CHAR},
+      </if>
+      <if test="agdAgrNo != null" >
+        AGD_AGR_NO = #{agdAgrNo,jdbcType=CHAR},
+      </if>
+      <if test="agrOprTyp != null" >
+        AGR_OPR_TYP = #{agrOprTyp,jdbcType=CHAR},
+      </if>
+      <if test="comNo != null" >
+        COM_NO = #{comNo,jdbcType=CHAR},
+      </if>
+      <if test="comNme != null" >
+        COM_NME = #{comNme,jdbcType=VARCHAR},
+      </if>
+      <if test="cusAc != null" >
+        CUS_AC = #{cusAc,jdbcType=CHAR},
+      </if>
+      <if test="cusNme != null" >
+        CUS_NME = #{cusNme,jdbcType=VARCHAR},
+      </if>
+      <if test="acoAc != null" >
+        ACO_AC = #{acoAc,jdbcType=CHAR},
+      </if>
+      <if test="batNo != null" >
+        BAT_NO = #{batNo,jdbcType=CHAR},
+      </if>
+      <if test="batSeq != null" >
+        BAT_SEQ = #{batSeq,jdbcType=CHAR},
+      </if>
+      <if test="busTyp != null" >
+        BUS_TYP = #{busTyp,jdbcType=CHAR},
+      </if>
+      <if test="busKnd != null" >
+        BUS_KND = #{busKnd,jdbcType=CHAR},
+      </if>
+      <if test="tpsSts != null" >
+        TPS_STS = #{tpsSts,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNo != null" >
+        THD_CUS_NO = #{thdCusNo,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNme != null" >
+        THD_CUS_NME = #{thdCusNme,jdbcType=VARCHAR},
+      </if>
+      <if test="thdSts != null" >
+        THD_STS = #{thdSts,jdbcType=CHAR},
+      </if>
+      <if test="idTyp != null" >
+        ID_TYP = #{idTyp,jdbcType=CHAR},
+      </if>
+      <if test="idNo != null" >
+        ID_NO = #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        TEL = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="agrBr != null" >
+        AGR_BR = #{agrBr,jdbcType=CHAR},
+      </if>
+      <if test="agrTlr != null" >
+        AGR_TLR = #{agrTlr,jdbcType=CHAR},
+      </if>
+      <if test="athTlr != null" >
+        ATH_TLR = #{athTlr,jdbcType=CHAR},
+      </if>
+      <if test="creDte != null" >
+        CRE_DTE = #{creDte,jdbcType=DATE},
+      </if>
+      <if test="agrVldDte != null" >
+        AGR_VLD_DTE = #{agrVldDte,jdbcType=DATE},
+      </if>
+      <if test="agrExpDte != null" >
+        AGR_EXP_DTE = #{agrExpDte,jdbcType=DATE},
+      </if>
+      <if test="agrSts != null" >
+        AGR_STS = #{agrSts,jdbcType=CHAR},
+      </if>
+      <if test="txnDte != null" >
+        TXN_DTE = #{txnDte,jdbcType=DATE},
+      </if>
+      <if test="txnTme != null" >
+        TXN_TME = #{txnTme,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rsvFld1 != null" >
+        RSV_FLD1 = #{rsvFld1,jdbcType=CHAR},
+      </if>
+      <if test="rsvFld2 != null" >
+        RSV_FLD2 = #{rsvFld2,jdbcType=CHAR},
+      </if>
+      <if test="rsvFld3 != null" >
+        RSV_FLD3 = #{rsvFld3,jdbcType=VARCHAR},
+      </if>
+    </set>
+     where
+      <if test="comNo != null" >
+        COM_NO = #{comNo,jdbcType=CHAR} and
+      </if> 
+      <if test="cusAc != null" >
+        CUS_AC = #{cusAc,jdbcType=CHAR} and
+      </if>
+      <if test="busTyp != null" >
+        BUS_TYP = #{busTyp,jdbcType=CHAR} and
+      </if>
+      <if test="busKnd != null" >
+        BUS_KND = #{busKnd,jdbcType=CHAR} and
+      </if>
+      <if test="thdCusNo != null" >
+        THD_CUS_NO = #{thdCusNo,jdbcType=CHAR} and
+      </if>
+      <if test="agrOprTyp != null" >
+        AGR_OPR_TYP = #{agrOprTyp,jdbcType=CHAR}
+      </if>
+  </update>
+  
+    <update id="updateByAgrNo" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsCusAgentJournal" >
+    update ${EUPS_SCHEMA}.EUPS_CUS_AGENT_JOURNAL
+    <set >
+      <if test="eupsBusTyp != null" >
+        EUPS_BUS_TYP = #{eupsBusTyp,jdbcType=CHAR},
+      </if>
+      <if test="agdAgrNo != null" >
+        AGD_AGR_NO = #{agdAgrNo,jdbcType=CHAR},
+      </if>
+      <if test="agrOprTyp != null" >
+        AGR_OPR_TYP = #{agrOprTyp,jdbcType=CHAR},
+      </if>
+      <if test="comNo != null" >
+        COM_NO = #{comNo,jdbcType=CHAR},
+      </if>
+      <if test="comNme != null" >
+        COM_NME = #{comNme,jdbcType=VARCHAR},
+      </if>
+      <if test="cusAc != null" >
+        CUS_AC = #{cusAc,jdbcType=CHAR},
+      </if>
+      <if test="cusNme != null" >
+        CUS_NME = #{cusNme,jdbcType=VARCHAR},
+      </if>
+      <if test="acoAc != null" >
+        ACO_AC = #{acoAc,jdbcType=CHAR},
+      </if>
+      <if test="batNo != null" >
+        BAT_NO = #{batNo,jdbcType=CHAR},
+      </if>
+      <if test="batSeq != null" >
+        BAT_SEQ = #{batSeq,jdbcType=CHAR},
+      </if>
+      <if test="busTyp != null" >
+        BUS_TYP = #{busTyp,jdbcType=CHAR},
+      </if>
+      <if test="busKnd != null" >
+        BUS_KND = #{busKnd,jdbcType=CHAR},
+      </if>
+      <if test="tpsSts != null" >
+        TPS_STS = #{tpsSts,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNo != null" >
+        THD_CUS_NO = #{thdCusNo,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNme != null" >
+        THD_CUS_NME = #{thdCusNme,jdbcType=VARCHAR},
+      </if>
+      <if test="thdSts != null" >
+        THD_STS = #{thdSts,jdbcType=CHAR},
+      </if>
+      <if test="idTyp != null" >
+        ID_TYP = #{idTyp,jdbcType=CHAR},
+      </if>
+      <if test="idNo != null" >
+        ID_NO = #{idNo,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        TEL = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="agrBr != null" >
+        AGR_BR = #{agrBr,jdbcType=CHAR},
+      </if>
+      <if test="agrTlr != null" >
+        AGR_TLR = #{agrTlr,jdbcType=CHAR},
+      </if>
+      <if test="athTlr != null" >
+        ATH_TLR = #{athTlr,jdbcType=CHAR},
+      </if>
+      <if test="creDte != null" >
+        CRE_DTE = #{creDte,jdbcType=DATE},
+      </if>
+      <if test="agrVldDte != null" >
+        AGR_VLD_DTE = #{agrVldDte,jdbcType=DATE},
+      </if>
+      <if test="agrExpDte != null" >
+        AGR_EXP_DTE = #{agrExpDte,jdbcType=DATE},
+      </if>
+      <if test="agrSts != null" >
+        AGR_STS = #{agrSts,jdbcType=CHAR},
+      </if>
+      <if test="txnDte != null" >
+        TXN_DTE = #{txnDte,jdbcType=DATE},
+      </if>
+      <if test="txnTme != null" >
+        TXN_TME = #{txnTme,jdbcType=TIMESTAMP},
+      </if>
+      <if test="rsvFld1 != null" >
+        RSV_FLD1 = #{rsvFld1,jdbcType=CHAR},
+      </if>
+      <if test="rsvFld2 != null" >
+        RSV_FLD2 = #{rsvFld2,jdbcType=CHAR},
+      </if>
+      <if test="rsvFld3 != null" >
+        RSV_FLD3 = #{rsvFld3,jdbcType=VARCHAR},
+      </if>
+    </set>
+     where
+      <if test="agdAgrNo != null" >
+        AGD_AGR_NO = #{agdAgrNo,jdbcType=CHAR} and
+      </if>
+      <if test="agrOprTyp != null" >
+        AGR_OPR_TYP = #{agrOprTyp,jdbcType=CHAR}
+      </if>
+  </update>
+  
+  <!-- 协议 根据单位编号分组 -->
+  <select id="findAllGroupByComNo"  resultType="java.util.Map"  parameterType="java.util.Map">
+ 	select 
+				COM_NO ,count(*) as totCnt
+     from 
+				eups.EUPS_CUS_AGENT_JOURNAL
+	where 
+				EUPS_BUS_TYP='ELEC00'  and  TXN_DTE=#{txnDte,jdbcType=CHAR}  
+	group by 
+				 COM_NO
+	</select>
+</mapper>
