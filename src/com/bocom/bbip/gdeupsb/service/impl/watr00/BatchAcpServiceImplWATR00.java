@@ -270,7 +270,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 			temp.put("CUSAC", map.get("bcount"));
 			//temp.put("CUSNME", "郑永军");
 			temp.put("CUSNME", accountService.getAcInf(CommonRequest.build(context), map.get("bcount").toString())
-					.getCusName());
+					.getCusName().trim());
 			temp.put("TXNAMT", new BigDecimal(map.get("je").toString().trim()).scaleByPowerOfTen(-2));
 			temp.put("AGTSRVCUSID", map.get("hno"));
 			temp.put("AGTSRVCUSNME", "");
