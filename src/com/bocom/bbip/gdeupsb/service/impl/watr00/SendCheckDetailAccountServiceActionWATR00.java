@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,7 @@ import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.eups.utils.SupportFtpUtils;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.FileUtils;
 import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.euif.component.util.StringUtil;
 import com.bocom.jump.bp.core.Context;
@@ -66,13 +68,20 @@ public class SendCheckDetailAccountServiceActionWATR00 extends BaseAction {
 		context.setData("eupeBusTyp", "WATR00");
 		context.setData("txnSts", "S");
 		context.setData("txnTyp", "N");
-		
-		Map<String,Object> map =((SqlMap)get("sqlMap")).queryForObject("watr00.findCountAmt", context.getDataMap());//查询总金额、总笔数
-		String je = String.valueOf(map.get("JE"));
+		Date startDat=DateUtils.parse(context.getData("beginDate").toString());
+		Date endDat=DateUtils.parse(context.getData("endDate").toString());
+		context.setData("startDat", startDat);
+		context.setData("endDat", endDat);
+		Map<String,Object> map =((SqlMap)get("sqlMap")).queryForObject("watr00.findCheckSum", context.getDataMap());//查询总金额、总笔数
+		String je = String.valueOf(map.get("TOTAMT"));
 		if(je==null||"null".equals(je)){
 			je = "0";
 		}
-		String count = String.valueOf( map.get("COUNT"));
+		
+		String count = String.valueOf( map.get("TOTCNT"));
+		if(count==null||"null".equals(count)){
+			count = "0";
+		}
 		context.setData("je", NumberUtils.yuanToCentString(je));
 		context.setData("count", count);
 		logger.info("je:["+je+"]count:["+count+"]");
@@ -82,59 +91,59 @@ public class SendCheckDetailAccountServiceActionWATR00 extends BaseAction {
 //		List<EupsTransJournal> eupsTransJournals = get(EupsTransJournalRepository.class).find(eupsTransJournal);
 		
 		String filename = "WATR00"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";
-		File file = new File(filename);
-		
-		try {
-			file.createNewFile();
-			PrintWriter writer = new PrintWriter(file);
+		File file = new File("E:\\"+filename);
+		List<String>ret=new ArrayList<String>();
+	
+			//file.createNewFile();
+			//PrintWriter writer = new PrintWriter(file);
 			for(Map<String,Object> m:list){
 //				String thdCusNo = String.format("%09s", m.get("THD_CUS_NO").toString());
 //				String txnDte = String.format("%08s", m.get("TXN_DTE").toString().replaceAll("-", ""));
 //				String txnAmt = String.format("%11s", m.get("TXN_AMT").toString().replaceAll("\\.", ""));
 //				String cusAc = String.format("%40s", m.get("CUS_AC").toString());
-				
-				String thdCusNo =  m.get("THD_CUS_NO").toString();
-				String txnDte = m.get("TXN_DTE").toString().replaceAll("-", "");
-				String txnAmt = m.get("TXN_AMT").toString().replaceAll("\\.", "");
-				String cusAc =  m.get("CUS_AC").toString();
+				String str="";
+				String thdCusNo =  m.get("HNO").toString();
+				String txnDte = m.get("ACT_DAT").toString().replaceAll("-", "");
+				String txnAmt = m.get("JE").toString().replaceAll("\\.", "");
+				String cusAc =  m.get("BCOUNT").toString();
 				logger.info("thdCusNo:["+thdCusNo+"]txnDte:["+txnDte+"]txnAmt:["+txnAmt+"]cusAc:["+cusAc+"]");
-				writer.print(String.format("%9s",thdCusNo));
+				/*writer.print(String.format("%9s",thdCusNo));
 				writer.print(String.format("%8s",txnDte));
 				writer.print(String.format("%11s",txnAmt));
 				writer.print(String.format("%40s",cusAc));
-				writer.print("\t");
+				writer.print("\t");*/
+				str+=String.format("%9s",thdCusNo);
+				str+=(String.format("%8s",txnDte));
+				str+=(String.format("%11s",txnAmt));
+				str+=(String.format("%40s",cusAc));
+				str+=("\t");
+				ret.add(str);
 			}
-			writer.println();
-			writer.print(count);
-			writer.print("\t");
-			writer.print(je);
-			writer.close();
+			
+			String string="";
+			string+=count;
+			string+="\t";
+			string+=je;
+			ret.add(string);
+			//writer.println();
+			//writer.print(count);
+			//writer.print("\t");
+			//writer.print(je);
+			//writer.close();
 			logger.info("filename:["+file.getName()+"]");
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
+		try {
+			FileUtils.writeLines(file, ret);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 		
-		//TODO:获取FTP信息，修改对账文件存放目录
-		EupsCheckControl eupsCheckControl = BeanUtils.toObject(context.getDataMap(), EupsCheckControl.class);
-		List<EupsCheckControl> eupsCheckControls = get(EupsCheckControlRepository.class).find(eupsCheckControl);
-		if(eupsCheckControls==null||eupsCheckControls.size()==0){
-			logger.error("对账控制信息不存在");
-			throw new CoreException(ErrorCodes.EUPS_CHECK_CONTROL_INFO_NOTEXIST);
-		}
-		String processId = ((EupsCheckControl)eupsCheckControls.get(0)).getChkPro().trim();
-		if(processId==null||processId.length()==0){
-			logger.error("必输项没有输入:数据域{processId}");
-			throw new CoreException(ErrorCodes.EUPS_FIELD_EMPTY);
-		}
-		log.info((new StringBuilder("process:")).append(processId).toString());
-		String ftpNo = ((EupsCheckControl)eupsCheckControls.get(0)).getFtpNo();
-        context.setData("ftpNo", ftpNo);
+		
         EupsThdFtpConfig eupsThdFtpConfig = new EupsThdFtpConfig();
-        eupsThdFtpConfig.setFtpNo(ftpNo);
+        eupsThdFtpConfig.setFtpNo("waterBatchFile");
         eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).find(eupsThdFtpConfig).get(0);
-		
+        eupsThdFtpConfig.setLocFleNme("E:\\"+filename);
+        eupsThdFtpConfig.setRmtFleNme(filename);
         SupportFtpUtils ftp = new SupportFtpUtils();
         try {
 			ftp.connect(eupsThdFtpConfig.getThdIpAdr(), Integer.parseInt(eupsThdFtpConfig.getBidPot()),
