@@ -133,7 +133,7 @@ public class EupsManageCounterAgt extends BaseAction {
 			Map <String,Object> mapResult = back(context,respData);
 			
 			//返回协议编号
-//			getAgdAgrNoByMap(context, mapResult);
+			getAgdAgrNoByMap(context, mapResult);
 //			
 //			//外发第三方
 //			callThd(context);
