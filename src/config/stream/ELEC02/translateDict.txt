@@ -26,4 +26,4 @@ TransCode.eups.signOutThird=91
 TransCode.gdeups.manageELEC02AGT=31
 
 ##汕头电力批量ftp返回文件
-#TransCode.gdeups.manageELEC02AGT=824
+TransCode.gdeups.commNotifyBatchStatus=824
