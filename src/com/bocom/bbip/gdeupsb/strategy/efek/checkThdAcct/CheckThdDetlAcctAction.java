@@ -114,9 +114,12 @@ public class CheckThdDetlAcctAction implements Executable {
 							String	comNo  =(String)maps.get("COM_NO");
 							String  busType=(String)maps.get("RSV_FLD4");
 							String  payType=(String)maps.get("RSV_FLD5");
-							
+							String xuhao=i+"";
+							while(xuhao.length()<3){
+								xuhao="0"+xuhao;
+							}
 							String bankNo=context.getData(ParamKeys.BANK_NO).toString();
-							String fileName = "DZ05"+busType+payType+"_"+bankNo+comNo+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";
+							String fileName = "DZ"+busType+payType+"_"+bankNo+comNo+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+xuhao+".txt";
 
 							context.setData("fileName", fileName);
 							context.setData("batNo", sqn);
