@@ -131,10 +131,10 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
         List <GdFbpeFileBatchTmp> payDetailLst = new ArrayList<GdFbpeFileBatchTmp>();
         List<Map<String, Object>> parseMap = (List<Map<String, Object>>) map.get("detail");  //文件体
         BigDecimal bigDecimal=new BigDecimal("0.00");
-        
-        String sqn=bbipPublicServiceImpl.getBBIPSequence().substring(6).trim();
+        String SQN=context.getData(ParamKeys.SEQUENCE).toString();
         logger.info("===============Start  insert  GDEUPS_FBPE_FILE_BATCH_TMP");
         for (Map<String, Object> orgMap : parseMap) {
+        	String sqn=bbipPublicServiceImpl.getBBIPSequence().substring(6).trim();
             GdFbpeFileBatchTmp gdFbpeFileBatchTmp = new GdFbpeFileBatchTmp();
             gdFbpeFileBatchTmp.setSqn(sqn);
             gdFbpeFileBatchTmp.setAccAmt((String)orgMap.get("accAmt"));
@@ -177,7 +177,7 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
 		
 		logger.info("===============开始代收付文件数据准备");
 		Map<String, Object> temp = CollectionUtils.createMap();
-		List<AgtFileBatchDetail> detailList=createList(context, payDetailLst,sqn);
+		List<AgtFileBatchDetail> detailList=createList(context, payDetailLst,SQN);
 		temp.put(ParamKeys.EUPS_FILE_HEADER,headerMap);
 		temp.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(detailList));
         context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_MAP, temp);
