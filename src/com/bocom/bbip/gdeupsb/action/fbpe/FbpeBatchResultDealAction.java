@@ -1,5 +1,7 @@
 package com.bocom.bbip.gdeupsb.action.fbpe;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +26,7 @@ import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.entity.GdFbpeFileBatchTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GdFbpeFileBatchTmpRepository;
+import com.bocom.bbip.utils.FileUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -64,7 +67,7 @@ public class FbpeBatchResultDealAction implements AfterBatchAcpService {
     @Override
     public void afterBatchDeal(AfterBatchAcpDomain arg0, Context context) throws CoreException {
     	logger.info("BatchFbpeResultDealAction Start! ");
-       String batNos=context.getData("batNos").toString();
+       String batNos=context.getData("batNo").toString();
     	//保存到控制表 
         GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=batchFileCommon.eupsBatchConSoleInfoAndgdEupsBatchConSoleInfo(context);
         Map<String, Object> resultMap = new HashMap<String, Object>();
@@ -96,7 +99,9 @@ public class FbpeBatchResultDealAction implements AfterBatchAcpService {
             i=1;
         } else if (comNo.equals("4460002194")) {
         	 i=2;
-            //燃气  自己写
+            //TODO 燃气  自己写
+        	 String pathName="E:\\home\\bbipadm\\common\\"+batNos+".txt";
+        	 createGasFile(context,eupsBatchInfoDetailList,pathName);
         }  else if (comNo.equals("4460000010")) {
         	 i=3;
             fmtFileName="mobFbpeBatResultFmt";
@@ -104,7 +109,7 @@ public class FbpeBatchResultDealAction implements AfterBatchAcpService {
         	 i=4;
             fmtFileName="telFbpeBatResultFmt";
         }
-        
+
         List<Map<String, Object>> detailList = new ArrayList<Map<String, Object>>();
         String batNo=gdEupsBatchConsoleInfo.getBatNo();
         GdFbpeFileBatchTmp gdFbpeFileBatchTmp=new GdFbpeFileBatchTmp();
@@ -167,7 +172,7 @@ public class FbpeBatchResultDealAction implements AfterBatchAcpService {
         resultMap.put("detail", detailList);
 
         EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("fbpeBathReturnFmt");
-
+        //文件名
         String fileName = context.getData("filNam")+"_"+batNo+"_"+ context.getData("bk");
         eupsThdFtpConfig.setFtpDir("1");
         eupsThdFtpConfig.setLocDir("dat/fbp/"+fileName);
@@ -182,5 +187,54 @@ public class FbpeBatchResultDealAction implements AfterBatchAcpService {
         eupsThdFtpConfig.setRmtFleNme(fileName);
         operateFTP.putCheckFile(eupsThdFtpConfig);
     }
-
+    public void createGasFile(Context context,List<EupsBatchInfoDetail> eupsBatchInfoDetailList,String pathName){
+    	List<String> list=new ArrayList<String>();
+    	for (EupsBatchInfoDetail eupsBatchInfoDetail : eupsBatchInfoDetailList) {
+				 	String cusNo=eupsBatchInfoDetail.getAgtSrvCusId();
+				 	String cusAc=eupsBatchInfoDetail.getCusAc();
+				 	String cusNme=eupsBatchInfoDetail.getCusNme();
+				 	String txnAmt=eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2)+"";
+				 	int length1=cusNo.length();
+				 	String cusNoLength=""+length1;
+				 	while(cusNoLength.length()<3){
+				 			cusNoLength="0"+cusNoLength;
+				 	}
+				 	int length2=cusAc.length();
+				 	String cusAcLength=""+length2;
+				 	while(cusAcLength.length()<3){
+				 		cusAcLength="0"+cusAcLength;
+				 	}
+				 	int length3=cusNme.length();
+				 	String cusNmeLength=length3+"";
+				 	while(cusNmeLength.length()<3){
+				 			cusNmeLength="0"+cusNmeLength;
+				 	}
+				 	int length4=txnAmt.length();
+				 	String txnAmtLength=length4+"";
+				 	while(txnAmtLength.length()<3){
+				 			txnAmtLength="0"+txnAmtLength;
+				 	}
+				 	String sts=eupsBatchInfoDetail.getSts();
+				 	String stsLength="001";
+				 	String errMsg=eupsBatchInfoDetail.getErrMsg();
+				 	String errMsgLength=errMsg.length()+"";
+				 	while(errMsgLength.length()<3){
+				 			errMsgLength="0"+errMsgLength;
+				 	}
+				 	//写文件
+				 	String line=cusNoLength+cusNo+cusAcLength+cusAc+cusNmeLength+cusNme+txnAmtLength+txnAmt+stsLength+sts+errMsgLength+errMsg;
+				 	list.add(line);
+			}
+    	File file=new File(pathName);
+    	if(!file.exists()){
+    			file.mkdirs();
+    	}
+    	try {
+			FileUtils.writeLines(file, list);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    }
 }
