@@ -86,9 +86,9 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 					eupsThdFtpConfig.setLocFleNme(fleNme);
 					eupsThdFtpConfig.setRmtWay("/app/ics/dat/efek/recv");
 //					fileSftp(context, eupsThdFtpConfig);
-//					operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
+					operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
 					
-					downloadFileToThird(eupsThdFtpConfig);
+//					downloadFileToThird(eupsThdFtpConfig);
 					
 					String batNo=context.getData(ParamKeys.BAT_NO).toString();
 					//该更控制表
