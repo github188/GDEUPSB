@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="watr00" >
+
+
+ 	<!-- 根据业务类型和交易日期统计笔数,金额 -->
+	<select id="findCheckSum" resultType="map">
+		select sum(cast(SUC_TOT_CNT as bigint))as totCnt , sum(SUC_TOT_AMT)as totAmt from
+		 ${GDEUPSB_SCHEMA}.GDEUPS_BATCH_CONSOLE_INFO
+		where  SUB_DTE &gt;=#{startDat} and SUB_DTE&lt;=#{endDat} and EUPS_BUS_TYP='WATR00' 
+	</select>
   	<!-- 根据业务类型和交易日期统计笔数,金额 -->
 	<select id="findCountAmt" resultType="map">
 		select count(*) count , sum(txn_amt) je from
@@ -25,25 +33,9 @@
 	</select>
 	<!-- 根据业务类型和交易日期查询明细笔数,金额 -->
 	<select id="findDetailAmt" resultType="map">
-		select * from
-		${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL
-		<trim prefix="WHERE" prefixOverrides="AND">
-			<if test="eupsBusTyp!=null">
-				AND EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=VARCHAR}
-			</if>
-			<if test="beginDate!=null">
-				AND TXN_DTE &gt;= #{beginDate,jdbcType=VARCHAR}
-			</if>
-			<if test="endDate!=null">
-				AND TXN_DTE &lt;= #{endDate,jdbcType=VARCHAR}
-			</if>
-			<if test="txnSts!=null">
-				AND TXN_STS =#{txnSts,jdbcType=VARCHAR}
-			</if>
-			<if test="txnTyp!=null">
-				AND TXN_TYP =#{txnTyp,jdbcType=VARCHAR}
-			</if>
-		</trim>
+		select * from 
+		${GDEUPSB_SCHEMA}.GDEUPS_WAT_BAT_INF_TMP
+	     where ACT_DAT  &gt;=#{startDat} and ACT_DAT &lt;=#{endDat} 
 	</select>
 	<!-- 查询对公回执信息 -->
 	<select id="queryPublicMsg" resultType="map" parameterType="map">
@@ -63,24 +55,6 @@
 				AND CUS_AC = #{cusAc,jdbcType=VARCHAR}
 			</if>
 				AND TXN_STS ='S' AND TXN_TYP ='N'
-		</trim>
-	</select>
-	<select id="queryPublicMsgA" resultType="map" parameterType="map">
-		select A.TXN_TLR,B.AGT_SRV_CUS_ID,B.CUS_NME, B.TXN_DTE ,B.SQN ,B.TXN_AMT,B.CUS_AC from
-		EUPS.EUPS_BATCH_CONSOLE_INFO A, EUPS.EUPS_BATCH_INFO_DETAIL B
-		<trim prefix="WHERE" prefixOverrides="AND">
-			
-			<if test="beginDate!=null and beginDate!=''">
-				AND B.TXN_DTE &gt;= #{beginDate,jdbcType=VARCHAR}
-			</if>
-			<if test="endDate!=null and endDate!=''">
-				AND B.TXN_DTE &lt;= #{endDate,jdbcType=VARCHAR}
-			</if>
-			<if test="cusAc!=null and cusAc!=''">
-				AND B.CUS_AC = #{cusAc,jdbcType=VARCHAR}
-			</if>
-			
-				AND B.STS ='S' AND A.BAT_NO = B.BAT_NO AND A.BUS_KND = #{busKnd,jdbcType=VARCHAR}
 		</trim>
 	</select>
 </mapper>
