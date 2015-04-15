@@ -89,4 +89,12 @@
 			<action id="act" class="com.bocom.bbip.gdeupsb.action.elec02.SignInOutElec02"/>
 		</actions>
 	</process>
+
+	<!-- fan pan  -->
+	<process id="gdeups.commNotifyBatchStatus" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
+		<actions>
+			  <action id="act" ref="afterBatchelec"  />
+		</actions>
+	</process>
+
 </x:beans>
