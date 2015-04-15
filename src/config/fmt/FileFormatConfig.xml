@@ -144,6 +144,14 @@
 			ref="config/fmt/fileFmt/efek/BatchDataResultDetail.xml" />
 	</file>
 
+	<!-- 南方电网 核对协议 -->
+	<file name="efekAgent" id="efekBatch" encoding="GBK"
+		lineSeparator="\n">
+		<line name="header" ref="config/fmt/fileFmt/efek/AgentDataHead.xml" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/efek/AgentDataDetail.xml" />
+	</file>
+	
 
 	<!-- 珠海路桥 -->
 	<file name="trspCheckFile" id="trspCheckFile" encoding="GBK"
