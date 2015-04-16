@@ -141,7 +141,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 
 			if ("1".equals(optFlg)) { // 新增
 
-				checkCusAcSts(context, cusAc);
+//				checkCusAcSts(context, cusAc);
 
 				// 查询本地协议表是否存在该cusNo
 				GdGasCusAll gdGasCusAll = new GdGasCusAll();
@@ -306,13 +306,13 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 					List<Map<String, Object>> agentCollectAgreementMaps = (List<Map<String, Object>>) context
 							.getData("agentCollectAgreement");
 					// 返回的协议信息List可能包含多条协议信息，剔除与目标删除用户无关的协议信息
-					for (int i = 0; i < agentCollectAgreementMaps.size(); i++) {
-						if (!(context.getData(ParamKeys.THD_CUS_NME)
-								.equals(agentCollectAgreementMaps.get(i).get(
-										"agtSrvCusPnm")))) {
-							agentCollectAgreementMaps.remove(i);
-						}
-					}
+//					for (int i = 0; i < agentCollectAgreementMaps.size(); i++) {
+//						if (!(context.getData(ParamKeys.THD_CUS_NME)
+//								.equals(agentCollectAgreementMaps.get(i).get(
+//										"agtSrvCusPnm")))) {
+//							agentCollectAgreementMaps.remove(i);
+//						}
+//					}
 					logger.info("==================");
 					context.setData("agentCollectAgreement",
 							agentCollectAgreementMaps);
@@ -321,6 +321,14 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 					agdAgrNoList.add((String) agentCollectAgreementMaps.get(0)
 							.get("agdAgrNo"));
 					context.setData("agdAgrNo", agdAgrNoList);
+					
+					List<Map<String, Object>> customerInfoMaps = (List<Map<String, Object>>) context
+							.getData("customerInfo");
+					
+					String idNo = (String) customerInfoMaps.get(0).get("idNo");
+					String idTyp = customerInfoMaps.get(0).get("idTyp").toString().trim();
+					context.setData(ParamKeys.ID_NO, idNo);
+					context.setData(ParamKeys.ID_TYPE, idTyp);
 
 					logger.info("============ context after set agdAgrNo : "
 							+ context);
@@ -338,10 +346,15 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 						throw new CoreRuntimeException(
 								stopCusAgtResult.getResponseMessage());
 					}
+					
+					
+					
 					// if (!"N".equals(stopCusAgtResult.getResponseType())) {
 					// throw new CoreRuntimeException(
 					// stopCusAgtResult.getResponseMessage());
 					// }
+					
+					
 
 					callThdAndStopThdLclCusAgt(context);
 					context.setData("cusTyp", cusTypBak);
@@ -367,8 +380,13 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 				+ " &&&&& cusactinfresult.getCdSts()="
 				+ cusactinfresult.getCdSts());
 
-		String cusAcSts = cusactinfresult.getCusAcSts();
+		
 
+		
+		if("E".equals(cusactinfresult.getResponseType())){
+			throw new CoreException(cusactinfresult.getResponseMessage());
+		}
+		String cusAcSts = cusactinfresult.getCusAcSts();
 		// TODO判断状态
 		if ("00".equals(cusAcSts)) {
 			throw new CoreException("该帐号处于不正常状态，不可进行交易");
@@ -698,6 +716,10 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		map.put("agrExpDte", "99991231"); // YYYYMMDD默认最大日，99991231
 		map.put(ParamKeys.CMU_TEL, context.getData(ParamKeys.CMU_TEL));
 		map.put(ParamKeys.THD_CUS_NO, context.getData(ParamKeys.THD_CUS_NO));
+		
+		//TODO
+		map.put("pedAgrSts", "0");
+		map.put("cnlSts", "10000000000000000010");
 
 		map.put("ageBr", context.getData(ParamKeys.BK));
 		map.put("agrBr", context.getData(ParamKeys.BR));

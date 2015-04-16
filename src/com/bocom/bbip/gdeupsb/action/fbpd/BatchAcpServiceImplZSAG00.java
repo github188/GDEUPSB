@@ -101,7 +101,7 @@ public class BatchAcpServiceImplZSAG00 extends BaseAction implements
 					+ "/" + context.getData(ParamKeys.TELLER) + "/";
 			logger.info("===============path:" + path);
 			config.setRmtWay(path);
-			config.setLocDir("D:/test/ZSAG00/");// TODO
+//			config.setLocDir("D:/test/ZSAG00/");// TODO
 		}
 		((OperateFTPAction) get("opeFTP")).getFileFromFtp(config);
 		String path = config.getLocDir();
