@@ -342,17 +342,17 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 							.callServiceFlatting("deleteAgentCollectAgreement",
 									context.getDataMap());
 
-					if (!stopCusAgtResult.isSuccess()) {
-						throw new CoreRuntimeException(
-								stopCusAgtResult.getResponseMessage());
-					}
+//					if (!stopCusAgtResult.isSuccess()) {
+//						throw new CoreRuntimeException(
+//								stopCusAgtResult.getResponseMessage());
+//					}
 					
 					
 					
-					// if (!"N".equals(stopCusAgtResult.getResponseType())) {
-					// throw new CoreRuntimeException(
-					// stopCusAgtResult.getResponseMessage());
-					// }
+					 if (!"N".equals(stopCusAgtResult.getResponseType())) {
+					 throw new CoreRuntimeException(
+					 stopCusAgtResult.getResponseMessage());
+					 }
 					
 					
 
@@ -424,7 +424,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			// 燃气协议表
 			GdGasCusAll delGasCusAll = new GdGasCusAll();
 			delGasCusAll.setCusAc((String) context.getData(ParamKeys.CUS_AC));
-			delGasCusAll.setCusNo((String) context.getData(ParamKeys.CUS_NO));
+			delGasCusAll.setCusNo((String) context.getData(ParamKeys.THD_CUS_NO));
 			get(GdGasCusAllRepository.class).delete(delGasCusAll);
 			// 动态协议表
 			GdGasCusDay insCusInfo = new GdGasCusDay();
