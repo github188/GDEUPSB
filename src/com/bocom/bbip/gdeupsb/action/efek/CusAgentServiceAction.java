@@ -20,10 +20,8 @@ import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsActSysPara;
-import com.bocom.bbip.eups.entity.EupsCusAgentJournal;
 import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
 import com.bocom.bbip.eups.repository.EupsActSysParaRepository;
-import com.bocom.bbip.eups.repository.EupsCusAgentJournalRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.strategy.efek.agent.UpdateCusAgentServiceAction;
@@ -44,8 +42,7 @@ public class CusAgentServiceAction extends BaseAction{
 	BGSPServiceAccessObject bgspServiceAccessObject;
 	@Autowired
 	EupsActSysParaRepository eupsActSysParaRepository;
-	@Autowired
-	EupsCusAgentJournalRepository eupsCusAgentJournalRepository;
+
 	@Qualifier("callThdTradeManager")
     ThirdPartyAdaptor callThdTradeManager;
 	private final static Log logger=LogFactory.getLog(UpdateCusAgentServiceAction.class);
