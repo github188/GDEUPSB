@@ -49,16 +49,20 @@ public class EupsManageCounterAgt extends BaseAction {
 	@Autowired
 	BBIPPublicService bbipPublicService;
 	
-	@Qualifier("callThdTradeManager")
-    ThirdPartyAdaptor callThdTradeManager;
+	@Autowired
+	ThirdPartyAdaptor callThdTradeManager;
 	
 	public void process(Context context) throws CoreException {
      logger.info("协议维护");
-     context.setData("ActDat", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
-     context.setData("LogNo", StringUtils.substring(
+     context.setData("WDO", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
+     context.setData("TLogNo", StringUtils.substring(
     		 ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getBBIPSequence(),4));
      
-    
+     context.setData("AppTradeCode", "30");
+     context.setData("SBN", "");
+     context.setData("eupsBusTyp", "ELEC02");
+     context.setData("OAC", (String)context.getData("ActNo"));
+
      final int oprType=Integer.parseInt((String)context.getData("CHT"));
 		switch (oprType) {
 		case ADD:
@@ -87,12 +91,15 @@ public class EupsManageCounterAgt extends BaseAction {
 		 	List<Map<String,Object>>customerInfo=new ArrayList<Map<String,Object>>();
 		 	context.setData("agrChl", "01");
 		 	context.setData("oprTyp", "0");
-	   
+		 	context.setData("TIdNo","121");
+		 
 	       	Map<String,Object>agentCollectAgreementMap=setAgentCollectAgreementMap(context,(String)context.getData("OAC"));
 	       	Map<String,Object>customerInfoMap=setCustomerInfoMap(context,(String)context.getData("OAC"));
 
 	       	customerInfo.add(customerInfoMap);
 	       	agentCollectAgreement.add(agentCollectAgreementMap);
+	       	
+	       	
 	       	
 	       	//参数里放集合
 	       	context.setData("agentCollectAgreement", agentCollectAgreement);
@@ -100,7 +107,7 @@ public class EupsManageCounterAgt extends BaseAction {
 	       	
 	       	//参数里把map,不放回出问题
 	       	context.setData("cusTyp", "0"); //客户类型
-			context.setData("idTyp", "01");
+	       	context.setData("idTyp", "01");
 			context.setData("idNo", (String)context.getData("TIdNo"));
 			
 			context.setData("ccy", "CNY");
@@ -128,14 +135,16 @@ public class EupsManageCounterAgt extends BaseAction {
 			context.setData("br", context.getData(ParamKeys.BR));
 			context.setData("obkBk", "301");
 			
+			
+			//暂时注销
 			Result respData = ((BGSPServiceAccessObject)get(BGSPServiceAccessObject.class)).
 			callServiceFlatting("maintainAgentCollectAgreement", context.getDataMap());
 			Map <String,Object> mapResult = back(context,respData);
 			
 			//返回协议编号
 			getAgdAgrNoByMap(context, mapResult);
-//			
-//			//外发第三方
+			
+			//外发第三方
 //			callThd(context);
 //			
 //			//冲正代收付 
@@ -265,6 +274,10 @@ public class EupsManageCounterAgt extends BaseAction {
 		     Result respData = ((BGSPServiceAccessObject)get(BGSPServiceAccessObject.class)).
 		     callServiceFlatting("deleteAgentCollectAgreement", map);
 		     Map ret=back(context,respData);
+		     
+		   //外发第三方
+//		   callThd(context);
+		     
 		     //删除本地库
 //		      delGdeupsAgtElecTmp( context);
 	}
@@ -303,7 +316,7 @@ public class EupsManageCounterAgt extends BaseAction {
 	       customerInfoMap.put("agtCllCusId", (String)context.getData("JFH"));			//客户id
 	       customerInfoMap.put("cusAc",cusAc );	//客户账号
 	       customerInfoMap.put("cusNme", (String)context.getData("UsrNam"));//客户名称   
-	       customerInfoMap.put("idTyp",(String)context.getData("TIdTyp"));
+	       customerInfoMap.put("idTyp",(String)context.getData("IdTyp"));
 	       customerInfoMap.put("ccy", "CNY");
 	       customerInfoMap.put("idNo",(String)context.getData("TIdNo"));
 	       customerInfoMap.put("drwMde", "");  		//支取方式
@@ -483,8 +496,6 @@ public class EupsManageCounterAgt extends BaseAction {
 		context.setData("PAgtNo",(String) agreementMap.get("agdAgrNo"));  //协议编号
 		context.setData("comNo", "4450000002");		//单位编号
 		context.setData("CLM", (String)agreementMap.get("agtSrvCusPnm"));		//第三方客户名称
-		
-		
 
 		context.setData("JFH", (String)agreementMap.get("agtSrvCusId"));		//缴费号码
 		context.setData("ACN", (String)agreementMap.get("cusAc"));		//账号
@@ -496,18 +507,12 @@ public class EupsManageCounterAgt extends BaseAction {
 
 	}
 	
-	
 
 	/**
 	 * 外发第三方
 	 */
 	private void callThd(Context context) throws CoreException{
-		Date txnDte=(Date)context.getData(ParamKeys.TXN_DTE);
-		Date txnTme=DateUtils.parse(context.getData("txnTme").toString());
 		
-		context.setData(ParamKeys.TXN_DTE, DateUtils.format(txnDte,DateUtils.STYLE_yyyyMMdd));
-		context.setData(ParamKeys.TXN_TME, DateUtils.format(txnTme,DateUtils.STYLE_HHmmss));
-		context.setData(GDParamKeys.SVRCOD, "30");
 		
 		Map<String, Object> rspMap = callThdTradeManager.trade(context);
 			if(BPState.isBPStateNormal(context)){
