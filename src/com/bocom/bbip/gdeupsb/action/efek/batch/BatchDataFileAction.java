@@ -162,7 +162,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 										agtFileBatchDetail.setOUROTHFLG("1");
 							}
 				}
-				agtFileBatchDetail.setOUROTHFLG("0");
+//				agtFileBatchDetail.setOUROTHFLG("0");
 				agtFileBatchDetail.setOBKBK(gdEupsEleTmp.getBankNo());
 				
 				//备注 不用
