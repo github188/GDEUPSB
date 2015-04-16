@@ -246,9 +246,16 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 							.append(fileName).toString()), result, "GBK");
 			context.setVariable("reportDir", reportPath);
 			context.setVariable("reportName", fileName);
+			
+			logger.info("放到前端完成");
+			context.setData("filePath", reportPath);
+			context.setData("fleNme", fileName);
+			
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
+		
+		
 
 		//本地生成报表文件并发送到mftp服务器,打印机自动打印
 //		reportHelper.createFileAndSendMFTP(context,result,fileName,mftpConfigInfo); //TODO

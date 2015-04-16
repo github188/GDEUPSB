@@ -122,7 +122,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 
 			logger.info("========PGAS00 用户协议查询完成=======");
 		} else {
-			String cusAc = context.getData(ParamKeys.CUS_AC);
+			String cusAc = context.getData(ParamKeys.CUS_AC).toString().trim();
 			// String cusAc = "6222604910001021082";
 
 			String cusTyp = context.getData("cusTyp");
@@ -141,7 +141,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 
 			if ("1".equals(optFlg)) { // 新增
 
-//				checkCusAcSts(context, cusAc);
+				checkCusAcSts(context, cusAc);
 
 				// 查询本地协议表是否存在该cusNo
 				GdGasCusAll gdGasCusAll = new GdGasCusAll();
@@ -375,18 +375,12 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		} catch (CoreException e) {
 			e.printStackTrace();
 		}
-		logger.info("=============cusactinfresult:cusactinfresult.getCusAcSts()="
-				+ cusactinfresult.getCusAcSts()
-				+ " &&&&& cusactinfresult.getCdSts()="
-				+ cusactinfresult.getCdSts());
-
-		
-
 		
 		if("E".equals(cusactinfresult.getResponseType())){
 			throw new CoreException(cusactinfresult.getResponseMessage());
 		}
 		String cusAcSts = cusactinfresult.getCusAcSts();
+		logger.info("///////////////// cusAcSts:" + cusAcSts);
 		// TODO判断状态
 		if ("00".equals(cusAcSts)) {
 			throw new CoreException("该帐号处于不正常状态，不可进行交易");

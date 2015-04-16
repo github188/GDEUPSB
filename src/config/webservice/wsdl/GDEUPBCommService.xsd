@@ -583,6 +583,7 @@
   <xs:complexType name="prtRptServiceResponse_CType">
     <xs:sequence>
       <xs:element ref="tns:responseHeader"/>
+      <xs:element name="fleNme" type="tns:fleNme_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="eupsBusTyp_SType">
@@ -607,6 +608,14 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="6"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="fleNme_SType">
+    <xs:annotation>
+      <xs:documentation>文件名</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="256"/>
     </xs:restriction>
   </xs:simpleType>
 </xs:schema>
