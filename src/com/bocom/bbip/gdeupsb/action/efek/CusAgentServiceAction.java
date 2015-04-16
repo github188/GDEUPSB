@@ -60,7 +60,7 @@ public class CusAgentServiceAction extends BaseAction{
 				}else{
 						context.setData("sqns", context.getData("sqn"));
 				}
-				
+				String cusAc=context.getData("cusAc");
 				String comNo=context.getData("comNo").toString();
 				//代收付单位编号
 				EupsActSysPara eupsActSysPara=new EupsActSysPara();
@@ -92,6 +92,7 @@ public class CusAgentServiceAction extends BaseAction{
 					context.setData(GDParamKeys.NEWBANKNO, "301");
 					map.put("cusAc", context.getData("newCusAc"));
 					map.put("cusNme", context.getData("newCusName"));
+					cusAc=context.getData("newCusAc");
 				}else if("1".equals(oprTyp)){
 					//先删除协议，然后再添加 
 					context.setData("oprTyp", "2");
@@ -141,29 +142,11 @@ public class CusAgentServiceAction extends BaseAction{
 					context.setData("customerInfo", cusList);
 					bbipPublicService.synExecute(mothed, context);
 					context.setData("oprTyp", "1");
+					cusAc=context.getData("newCusAc");
 				}
 				if(context.getData(ParamKeys.THD_SQN)!=null){
 							context.setData("PKGCNT", "000000");
 				}
-				//保存到EupsCusAgentJournal表中
-				log.info("============insert   EupsCusAgentJournal");
-				EupsCusAgentJournal eupsCusAgentJournal=new EupsCusAgentJournal();
-				eupsCusAgentJournal.setSqn(context.getData("sqn").toString());
-				String rsvFld3=DateUtils.format((Date)context.getData(ParamKeys.TXN_DTE), DateUtils.STYLE_yyyyMMdd)+DateUtils.formatAsHHmmss((Date)context.getData(ParamKeys.TXN_TME));
-				eupsCusAgentJournal.setRsvFld3(rsvFld3);
-				String rsvFld1=context.getData("oprTyp").toString().trim()+context.getData("agtSts").toString().trim();
-				eupsCusAgentJournal.setRsvFld1(rsvFld1);
-				eupsCusAgentJournal.setThdCusNo((String)context.getData("cusNo"));
-				eupsCusAgentJournal.setCusAc((String)context.getData("cusAc"));
-				eupsCusAgentJournal.setCusNme((String)context.getData("cusNme"));
-				eupsCusAgentJournal.setIdTyp((String)context.getData("idTyp"));
-				eupsCusAgentJournal.setIdNo((String)context.getData("idNo"));
-				eupsCusAgentJournal.setTel((String)context.getData("cmuTel"));
-				eupsCusAgentJournal.setTxnDte((Date)context.getData(ParamKeys.TXN_DTE));
-				eupsCusAgentJournal.setRsvFld2("301");;
-				eupsCusAgentJournalRepository.insert(eupsCusAgentJournal);
-				
-				log.info("============End  insert   EupsCusAgentJournal");
 				log.info("============End  CusAgentServiceAction");
 		}
 		
@@ -296,7 +279,7 @@ public class CusAgentServiceAction extends BaseAction{
 				context.setData("br", "01441131999");
 			}
 			map.put("cusAc", context.getData("cusAc"));
-//			map.put("cusAc", "6222620710012838064");
+			map.put("cusAc", "6222620710012838064");
 			logger.info("~~~~~~~~~~requestHeader~~~~map~~~~~ "+map);
 			logger.info("~~~~~~~~~~列表查询开始 ");
 			//上代收付取协议编号
