@@ -58,6 +58,7 @@ public class VerifyToThirdAction extends BaseAction {
         context.setData("teller", context.getData("TELLER"));
         context.setData(ParamKeys.TXN_DTE, context.getData(ParamKeys.TXN_TME).toString().substring(0,8));
         
+        //检查系统签到状态
         GdTbcBasInf resultTbcBasInfo = get(GdTbcBasInfRepository.class).findOne(context.getData("dptId").toString());
         if (resultTbcBasInfo == null) {
             throw new CoreException(ErrorCodes.THD_CHL_NOT_FOUND);
@@ -68,6 +69,7 @@ public class VerifyToThirdAction extends BaseAction {
         if (resultTbcBasInfo.getSigSts().equals(Constants.TXN_CTL_STS_CHECKBILL_ING)) {
             throw new CoreException(ErrorCodes.THD_CHL_SIGNIN_NOT_ALLOWWED);
         }
+        
         String txnCode = context.getData("oTTxnCd");
         if("8912".equals(txnCode)) {  //检查开户
         	 GdTbcCusAgtInfo cusAgtInfo =new GdTbcCusAgtInfo();
@@ -106,7 +108,8 @@ public class VerifyToThirdAction extends BaseAction {
                 context.setData(GDParamKeys.RSP_CDE,GDConstants.RSP_FAIL_COD);
                 context.setData(GDParamKeys.RSP_MSG,"此交易不存在!");
                 context.setData(GDParamKeys.BANK_SEQ_OLD, null);
-                return;
+//              return;
+                throw new CoreException(GDParamKeys.RSP_MSG);
             } else {
                  if (eupsTransJournal.getMfmTxnSts().equals("S")) {
                      context.setData(GDParamKeys.RET_CODE_OLD,"0000");
@@ -132,7 +135,8 @@ public class VerifyToThirdAction extends BaseAction {
             context.setData(GDParamKeys.BANK_SEQ_OLD, null);
             context.setData(GDParamKeys.RET_CODE_OLD,null);
             context.setData(GDParamKeys.RSP_MSG_OLD,null);
-            return;
+//          return;
+            throw new CoreException(GDParamKeys.RSP_MSG);
         }
         context.setData(GDParamKeys.RSP_CDE,"0000");
         context.setData(GDParamKeys.RSP_MSG,"处理成功 ");

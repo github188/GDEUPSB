@@ -71,6 +71,7 @@ public class EstablishAccountAction extends BaseAction {
         context.setData("devId", context.getData("DEV_ID"));
         context.setData("teller", context.getData("TELLER"));
 
+        //检查系统签到状态
         GdTbcBasInf resultTbcBasInfo = get(GdTbcBasInfRepository.class).findOne(context.getData("dptId").toString());
         if (null == resultTbcBasInfo) {
             throw new CoreException(ErrorCodes.THD_CHL_NOT_FOUND);
@@ -79,29 +80,34 @@ public class EstablishAccountAction extends BaseAction {
             throw new CoreException(ErrorCodes.THD_CHL_ALDEAY_SIGN_OUT);
         }
         
-        //构成网点号
+        //获取柜员号
+        context.setData("tlr", "ABIR148");//TODO获取柜员号
+        
+        //转换机构编号
         context.setData("comNum", resultTbcBasInfo.getDptNam());
         String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
         if (null == cAgtNo) {
             cAgtNo ="4410000560";
         }
         context.setData("cAgtNo", cAgtNo);
+        
+        //构成网点号
         String brNo = cAgtNo.substring(0,3)+"999";
         String nodNo = CodeSwitchUtils.codeGenerator("GDYC_nodSwitch",brNo);
         if (null == nodNo) {
-            nodNo ="441800";
+        	nodNo = "01441800999";
         }
         context.setData("nodNo",nodNo);
-        // TODO:获取电子柜员
+
         context.setData("tTxnCd","483803");
         context.setData("txnCtlSts", "0");
         context.setData("bk", "01441999999");//TODO
     	context.setData("br", "01441800999");
-        
-        
-        //   检查该客户是否已签约
-        String cusAc=context.getData("actNo").toString();  //帐号
-        
+    	
+    	//TODO 查询账户(对公/对私)信息
+              
+        //检查该客户是否已签约
+        String cusAc=context.getData("actNo").toString();  //帐号        
         GdTbcCusAgtInfo tbcCusAgtInfo = new GdTbcCusAgtInfo();
         tbcCusAgtInfo.setActNo(cusAc);
         List<GdTbcCusAgtInfo> gdTbcAgtInfo = get(GdTbcCusAgtInfoRepository.class).find(tbcCusAgtInfo);
@@ -118,9 +124,13 @@ public class EstablishAccountAction extends BaseAction {
         	context.setData("cusAc", cusAc );   //帐号
         	context.setData("cusNo", context.getData("custId") );  //第三方客户标志
         	
-               Result operateAcpAgtResult = serviceAccess.callServiceFlatting("maintainAgentCollectAgreement", context.getDataMap());
+            Result operateAcpAgtResult = serviceAccess.callServiceFlatting("maintainAgentCollectAgreement", context.getDataMap());
             log.info("===========respMap: " + operateAcpAgtResult.getPayload() + "===========");
             if (!operateAcpAgtResult.isSuccess()) {
+            	
+            	context.setData(GDParamKeys.RSP_CDE,"9999");
+                context.setData(GDParamKeys.RSP_MSG,operateAcpAgtResult.getResponseMessage());
+                
                 Throwable e = operateAcpAgtResult.getException();
                 if (Status.SEND_ERROR == operateAcpAgtResult.getStatus()) {
                     context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
@@ -166,6 +176,9 @@ public class EstablishAccountAction extends BaseAction {
             Result result = serviceAccess.callServiceFlatting("maintainAgentCollectAgreement", context.getDataMap());
             log.info("===========respMap: " + result.getPayload() + "===========");
             if (!result.isSuccess()) {
+            	context.setData(GDParamKeys.RSP_CDE,"9999");
+                context.setData(GDParamKeys.RSP_MSG,result.getResponseMessage());
+                
                 Throwable e = result.getException();
                 if (Status.SEND_ERROR == result.getStatus()) {
                     context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);

@@ -54,7 +54,7 @@ public class DestroyAccountAction extends BaseAction {
         //上面公共报文头，下面报文体
         context.setData("custId", context.getData("CUST_ID"));
         context.setData("cusNam", context.getData("CUST_NAME"));
-        context.setData("cusTyp", context.getData("CUST_TYPE"));
+        context.setData("cusTyp", context.getData("CUST_TYPE"));//客户类型
         context.setData("pasId", context.getData("PASS_ID"));
         context.setData("liceId", context.getData("LICE_ID"));
         context.setData("accTyp", context.getData("ACC_TYPE"));
@@ -76,36 +76,55 @@ public class DestroyAccountAction extends BaseAction {
         List<GdTbcCusAgtInfo> gdTbcAgtInfo = get(GdTbcCusAgtInfoRepository.class).find(tbcCusAgtInfo);
         if (CollectionUtils.isEmpty(gdTbcAgtInfo)){
             context.setData(GDParamKeys.RSP_CDE,"9999");
-            context.setData(GDParamKeys.RSP_MSG,"账号已注销!！！");
-            return; 
+            context.setData(GDParamKeys.RSP_MSG,"账户已注销!");
+            throw new CoreException(GDParamKeys.RSP_MSG);
         }
         
-        //检查用户名是否匹配
+        //校验客户姓名
         String cusNme = context.getData("cusNam").toString().trim();
         String tCusNm = gdTbcAgtInfo.get(0).getCusNm().trim();
         if (!cusNme.equals(tCusNm)) {
             context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
             context.setData(GDParamKeys.RSP_CDE,"9999");
-            context.setData(GDParamKeys.RSP_MSG,"客户姓名不符!！！");
-            return;
+            context.setData(GDParamKeys.RSP_MSG,"客户姓名不符!");
+            throw new CoreException(GDParamKeys.RSP_MSG);
         }
-
+                
+        String cusTyp = context.getData("CusTyp").toString().trim();
         String pasId = context.getData("pasId").toString().trim();
         String idNo =gdTbcAgtInfo.get(0).getPasId().trim();
-        if (!idNo.equals(pasId)) {
-        	log.info("身份证号码不符，当前context中的pasId="+pasId+",数据库中记录的pasId="+idNo);
-            context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
-            context.setData(GDParamKeys.RSP_CDE,"9999");
-            context.setData(GDParamKeys.RSP_MSG,"身份证号码不符!！！");
-            return;
+        String liceId = context.getData("liceId").toString().trim();
+        String LiceId = gdTbcAgtInfo.get(0).getLiceId().trim();
+        
+        //校验身份证号
+        if ("01".equals(cusTyp)) {
+            if (!idNo.equals(pasId)) {
+            	log.info("身份证号码不符，当前context中的pasId=" + pasId + ",数据库中记录的pasId=" + idNo);
+                context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
+                context.setData(GDParamKeys.RSP_CDE,"9999");
+                context.setData(GDParamKeys.RSP_MSG,"身份证号码不符！");
+                throw new CoreException(GDParamKeys.RSP_MSG);
+            }
         }
+        //校验营业执照号
+        else {
+            if (!LiceId.equals(liceId)) {
+            	log.info("营业执照号码不符，当前context中的liceId=" + liceId + ",数据库中记录的LiceId=" + LiceId);
+                context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
+                context.setData(GDParamKeys.RSP_CDE,"9999");
+                context.setData(GDParamKeys.RSP_MSG,"营业执照号码不符!");
+                throw new CoreException(GDParamKeys.RSP_MSG);
+            }
+        }
+        
+        //校验卡/账户号码
         String actNo = context.getData("actNo").toString().trim();
         String cusAc =gdTbcAgtInfo.get(0).getActNo().trim();
         if (!cusAc.equals(actNo)) {
             context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
             context.setData(GDParamKeys.RSP_CDE,"9999");
-            context.setData(GDParamKeys.RSP_MSG,"卡/账户号码不符!！！");
-            return;
+            context.setData(GDParamKeys.RSP_MSG,"卡/账户号码不符!");
+            throw new CoreException(GDParamKeys.RSP_MSG);
         }
 
         selectList(context);
@@ -113,6 +132,10 @@ public class DestroyAccountAction extends BaseAction {
         log.info("===========respMap: " + result.getPayload() + "===========");
         
         if (!result.isSuccess()) {
+        	
+        	context.setData(GDParamKeys.RSP_CDE,"9999");
+            context.setData(GDParamKeys.RSP_MSG,result.getResponseMessage());
+            
             Throwable e = result.getException();
             if (Status.SEND_ERROR == result.getStatus()) {
                 context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
@@ -121,7 +144,7 @@ public class DestroyAccountAction extends BaseAction {
                 log.error(GDErrorCodes.TBC_COM_OTHER_ERROR,e);
                 throw new CoreException(GDErrorCodes.TBC_COM_OTHER_ERROR);
             }
-            // 连接错误或等待超时,但不知道是否已上送,这里交易已处于未知状态
+            // 连接错误或等待超时,但不知道是否已上送,这里交易已处于为止状态
             context.setState(BPState.BUSINESS_PROCESSNIG_STATE_UNKOWN_FAIL);
             if (Status.TIMEOUT == result.getStatus()) {
                 context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
@@ -155,7 +178,7 @@ public class DestroyAccountAction extends BaseAction {
 		map.put("reqSysCde", context.getData(ParamKeys.REQ_SYS_CDE));
 		map.put("tlr", context.getData(ParamKeys.TELLER));
 		map.put("chn", context.getData(ParamKeys.CHANNEL));
-		map.put("bk", "01441999999");//TODO
+		map.put("bk", "01441999999");
 		map.put("br", "01441800999");
 		map.put("cusAc", context.getData("actNo"));
 		log.info("~~~~~~~~~~requestHeader~~~~map~~~~~ "+map);

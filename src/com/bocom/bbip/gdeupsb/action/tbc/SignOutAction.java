@@ -39,21 +39,21 @@ public class SignOutAction  extends BaseAction {
             cAgtNo ="4410000560";
         }
         context.setData("cAgtNo", cAgtNo);
-        GdTbcBasInf tbcBasInfo = get(GdTbcBasInfRepository.class).findOne(context.getData("dptId").toString());
-        if (tbcBasInfo == null) {
-            context.setData(GDParamKeys.RSP_CDE,"9999");
-            context.setData(GDParamKeys.RSP_MSG,GDErrorCodes.TBC_OFF_NOT_EXIST);
-            throw new CoreException(GDErrorCodes.TBC_OFF_NOT_EXIST);
-        } 
-        if (tbcBasInfo.getSigSts().equals(Constants.TXN_CTL_STS_SIGNOUT)) {
-            context.setData(GDParamKeys.RSP_CDE,"9999");
-            context.setData(GDParamKeys.RSP_MSG,ErrorCodes.THD_CHL_ALDEAY_SIGN_OUT);
-            throw new CoreException(ErrorCodes.THD_CHL_ALDEAY_SIGN_OUT);
-        } else if (tbcBasInfo.getSigSts().equals(Constants.TXN_CTL_STS_CHECKBILL_ING)) {
-            context.setData(GDParamKeys.RSP_CDE,"9999");
-            context.setData(GDParamKeys.RSP_MSG,ErrorCodes.THD_CHL_SIGNIN_NOT_ALLOWWED);
-            throw new CoreException(ErrorCodes.THD_CHL_SIGNIN_NOT_ALLOWWED);
-        } else {
+//        GdTbcBasInf tbcBasInfo = get(GdTbcBasInfRepository.class).findOne(context.getData("dptId").toString());
+//        if (tbcBasInfo == null) {
+//            context.setData(GDParamKeys.RSP_CDE,"9999");
+//            context.setData(GDParamKeys.RSP_MSG,GDErrorCodes.TBC_OFF_NOT_EXIST);
+//            throw new CoreException(GDErrorCodes.TBC_OFF_NOT_EXIST);
+//        } 
+//        if (tbcBasInfo.getSigSts().equals(Constants.TXN_CTL_STS_SIGNOUT)) {
+//            context.setData(GDParamKeys.RSP_CDE,"9999");
+//            context.setData(GDParamKeys.RSP_MSG,ErrorCodes.THD_CHL_ALDEAY_SIGN_OUT);
+//            throw new CoreException(ErrorCodes.THD_CHL_ALDEAY_SIGN_OUT);
+//        } else if (tbcBasInfo.getSigSts().equals(Constants.TXN_CTL_STS_CHECKBILL_ING)) {
+//            context.setData(GDParamKeys.RSP_CDE,"9999");
+//            context.setData(GDParamKeys.RSP_MSG,ErrorCodes.THD_CHL_SIGNIN_NOT_ALLOWWED);
+//            throw new CoreException(ErrorCodes.THD_CHL_SIGNIN_NOT_ALLOWWED);
+//        } else {
             try {
                 GdTbcBasInf putTbcBasInfo = BeanUtils.toObject(context.getDataMap(), GdTbcBasInf.class);
                 Date date =DateUtils.parse(context.getData("txnTme").toString().substring(0,8), DateUtils.STYLE_yyyyMMdd);
@@ -63,7 +63,7 @@ public class SignOutAction  extends BaseAction {
             } catch (Exception e) {
                 throw new CoreException(GDErrorCodes.TBC_DB_ERROR);
             }
-        }
+ //       }
         context.setData(GDParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
         context.setData(GDParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);

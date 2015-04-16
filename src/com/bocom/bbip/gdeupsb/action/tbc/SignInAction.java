@@ -1,5 +1,7 @@
 package com.bocom.bbip.gdeupsb.action.tbc;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 
 import com.bocom.bbip.eups.action.BaseAction;
@@ -32,7 +34,8 @@ public class SignInAction extends BaseAction {
 		context.setData("dptId", context.getData("DPT_ID"));
 		context.setData("devId", context.getData("DEV_ID"));
 		context.setData("teller", context.getData("TELLER"));
-
+		
+		//获得加密密码
 		GdTbcBasInf resultTbcBasInfo = get(GdTbcBasInfRepository.class)
 				.findOne(context.getData("dptId").toString());
 		if (resultTbcBasInfo == null) {
@@ -40,18 +43,18 @@ public class SignInAction extends BaseAction {
 			context.setData(GDParamKeys.RSP_MSG, GDErrorCodes.TBC_OFF_NOT_EXIST);
 			throw new CoreException(GDErrorCodes.TBC_OFF_NOT_EXIST);
 		}
-		if (resultTbcBasInfo.getSigSts().equals(Constants.TXN_CTL_STS_SIGNIN)) {
-			context.setData(GDParamKeys.RSP_CDE, "9999");
-			context.setData(GDParamKeys.RSP_MSG,
-					ErrorCodes.THD_CHL_ALDEAY_SIGN_IN);
-			throw new CoreException(ErrorCodes.THD_CHL_ALDEAY_SIGN_IN);
-		} else if (resultTbcBasInfo.getSigSts().equals(
-				Constants.TXN_CTL_STS_CHECKBILL_ING)) {
-			context.setData(GDParamKeys.RSP_CDE, "9999");
-			context.setData(GDParamKeys.RSP_MSG,
-					ErrorCodes.THD_CHL_SIGNIN_NOT_ALLOWWED);
-			throw new CoreException(ErrorCodes.THD_CHL_SIGNIN_NOT_ALLOWWED);
-		} else {
+//		if (resultTbcBasInfo.getSigSts().equals(Constants.TXN_CTL_STS_SIGNIN)) {
+//			context.setData(GDParamKeys.RSP_CDE, "9999");
+//			context.setData(GDParamKeys.RSP_MSG,
+//					ErrorCodes.THD_CHL_ALDEAY_SIGN_IN);
+//			throw new CoreException(ErrorCodes.THD_CHL_ALDEAY_SIGN_IN);
+//		} else if (resultTbcBasInfo.getSigSts().equals(
+//				Constants.TXN_CTL_STS_CHECKBILL_ING)) {
+//			context.setData(GDParamKeys.RSP_CDE, "9999");
+//			context.setData(GDParamKeys.RSP_MSG,
+//					ErrorCodes.THD_CHL_SIGNIN_NOT_ALLOWWED);
+//			throw new CoreException(ErrorCodes.THD_CHL_SIGNIN_NOT_ALLOWWED);
+//		} else {
 			GdTbcBasInf tbcBasInfo = BeanUtils.toObject(context.getDataMap(),
 					GdTbcBasInf.class);
 			tbcBasInfo.setSigSts(Constants.TXN_CTL_STS_SIGNIN);
@@ -62,13 +65,21 @@ public class SignInAction extends BaseAction {
 
 			// 根据默认算法生成一个密钥
 			Date timeStp = new Date();
-			String mainkey = DateUtils.format(timeStp,
-					DateUtils.STYLE_yyyyMMddHHmmss);
+//			String mainkey = DateUtils.format(timeStp,
+//					DateUtils.STYLE_yyyyMMddHHmmss);
+			
+			String mainkey = DateUtils.format(timeStp,"yyMMddHHmmss");//by zds
+			
 			if (null != resultTbcBasInfo.getComKey()) {
 				mainkey = resultTbcBasInfo.getComKey() + mainkey;
 			}
+			
+			String newKey = getMD5Code(mainkey).substring(0, 16);//by zds		
+			context.setData("NEW_KEY", newKey);
+			
+			//生成通讯密钥文件
+			
 			// tbcBasInfo.setComKey(mainkey);
-
 			// ;加密秘钥
 			// String readyMD5 = buildReadyStr(context);
 			// String beforeMacChk =GDEUPSConstants.EUPS_TBC_BLANK, macChk
@@ -112,8 +123,45 @@ public class SignInAction extends BaseAction {
 			}
 			context.setData(GDParamKeys.RSP_CDE, Constants.RESPONSE_CODE_SUCC);
 			context.setData(GDParamKeys.RSP_MSG, Constants.RESPONSE_MSG);
-			context.setData("NEW_KEY", mainkey);
+			
 			context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
-		}
+//		}
 	}
+	
+    public static String getMD5Code(String strObj) {
+        String resultString = null;
+        try {
+            resultString = new String(strObj);
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            // md.digest() 该函数返回值为存放哈希值结果的byte数组
+            resultString = byteToString(md.digest(strObj.getBytes()));
+        } catch (NoSuchAlgorithmException ex) {
+            ex.printStackTrace();
+        }
+        return resultString;
+    }
+    
+    // 转换字节数组为16进制字串
+    private static String byteToString(byte[] bByte) {
+        StringBuffer sBuffer = new StringBuffer();
+        for (int i = 0; i < bByte.length; i++) {
+            sBuffer.append(byteToArrayString(bByte[i]));
+        }
+        return sBuffer.toString();
+    }
+    
+    // 返回形式为数字跟字符串
+    private static String byteToArrayString(byte bByte) {
+        int iRet = bByte;
+        // System.out.println("iRet="+iRet);
+        if (iRet < 0) {
+            iRet += 256;
+        }
+        int iD1 = iRet / 16;
+        int iD2 = iRet % 16;
+        return strDigits[iD1] + strDigits[iD2];
+    }
+    
+    private final static String[] strDigits = { "0", "1", "2", "3", "4", "5",
+        "6", "7", "8", "9", "a", "b", "c", "d", "e", "f" };
 }

@@ -63,7 +63,8 @@ public class QryRemainingAction extends BaseAction {
         context.setData("devId", context.getData("DEV_ID"));
         context.setData("teller", context.getData("TELLER"));
         context.setData(ParamKeys.TXN_DTE, context.getData(ParamKeys.TXN_TME).toString().substring(0,8));
-
+        
+        //检查系统签到状态
         GdTbcBasInf resultTbcBasInfo = get(GdTbcBasInfRepository.class).findOne(context.getData("dptId").toString());
         if (resultTbcBasInfo == null) {
             throw new CoreException(ErrorCodes.THD_CHL_NOT_FOUND);
@@ -73,11 +74,12 @@ public class QryRemainingAction extends BaseAction {
         } else if (resultTbcBasInfo.getSigSts().equals(Constants.TXN_CTL_STS_CHECKBILL_ING)) {
             throw new CoreException(ErrorCodes.THD_CHL_SIGNIN_NOT_ALLOWWED);
         } else {
-            String cusAc = qryCusAcNo(context.getData("custId").toString());
+            String cusAc = qryCusAcNo(context.getData("custId").toString(),context);
             if (StringUtil.isEmptyOrNull(cusAc)) {
                 context.setData(GDParamKeys.RSP_CDE,"9999");
                 context.setData(GDParamKeys.RSP_MSG,"无此用户信息 !");
-                return;
+//              return;
+                throw new CoreException(GDParamKeys.RSP_MSG);
             }
             //   检查该客户是否已签约
             Map<String, Object> map = getMap();
@@ -91,7 +93,8 @@ public class QryRemainingAction extends BaseAction {
                 context.setData(ParamKeys.RSP_CDE,"9999");
                 context.setData(ParamKeys.RSP_MSG,"该客户未开户!");
                 context.setData("bal", "0");
-                return;
+//              return;
+                throw new CoreException(GDParamKeys.RSP_MSG);
             } 
             context.setData("tCusNm", accessObject.getData("cusNme"));
             context.setData("actNo", accessObject.getData("cusAc"));
@@ -105,7 +108,7 @@ public class QryRemainingAction extends BaseAction {
             String brNo = cAgtNo.substring(0,3)+"999";
             String nodNo = CodeSwitchUtils.codeGenerator("GDYC_nodSwitch", brNo);
             if (null == nodNo) {
-                nodNo ="441800";
+                nodNo ="01441800999";
             }
             context.setData("nodNo",nodNo);
             // 取电子柜员号 获取不到tlr
@@ -135,9 +138,17 @@ public class QryRemainingAction extends BaseAction {
         }
     }
     //协议临时表查询客户账户
-    private String qryCusAcNo(String custId){
+    private String qryCusAcNo(String custId,Context context){
         GdTbcCusAgtInfo cusAgtInfo = cusAgtInfoRepository.findOne(custId);
-        return cusAgtInfo.getActNo();
+        if (cusAgtInfo == null) {
+        	context.setData(ParamKeys.RSP_CDE,"9999");
+            context.setData(ParamKeys.RSP_MSG,"该客户未开户!");
+            return null;
+        }
+        else {
+            return cusAgtInfo.getActNo();
+        }
+
     }
     
     private Map<String, Object> getMap(){
