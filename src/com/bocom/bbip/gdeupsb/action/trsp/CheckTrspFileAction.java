@@ -101,7 +101,10 @@ public class CheckTrspFileAction extends BaseAction {
 		List<GDEupsbTrspFeeInfo> detailList = new ArrayList<GDEupsbTrspFeeInfo>();
 		for (TrspCheckTmp trspCheckTmp : list) {
 			// 根据流水得到每条数据
-			GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = gdEupsbTrspFeeInfoRepository.findOne(trspCheckTmp.getSqn());
+			GDEupsbTrspFeeInfo gdEupsbTrspFeeInfos=new GDEupsbTrspFeeInfo();
+			gdEupsbTrspFeeInfos.setTlogNo(trspCheckTmp.getSqn());
+			GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = gdEupsbTrspFeeInfoRepository.find(gdEupsbTrspFeeInfos).get(0);
+			System.out.println(">>>>>>>>>>>>>>>>gdEupsbTrspFeeInfo>>>>>>"+gdEupsbTrspFeeInfo);
 			if (gdEupsbTrspFeeInfo == null) {
 				chkErr = "企业多账";
 				chkFlg = 3;
@@ -142,10 +145,16 @@ public class CheckTrspFileAction extends BaseAction {
 				gdEupsbTrspFeeInfoNew.setActNo(gdEupsbTrspFeeInfo.getActNo()); // 账号
 				gdEupsbTrspFeeInfoNew.setPayTlr(gdEupsbTrspFeeInfo.getPayTlr()); // 操作柜员
 				gdEupsbTrspFeeInfoNew.setPayNod(gdEupsbTrspFeeInfo.getPayNod()); // 网点
+				gdEupsbTrspFeeInfoNew.setPayLog(gdEupsbTrspFeeInfo.getPayLog()); // 主机流水
+				gdEupsbTrspFeeInfoNew.setTlogNo(gdEupsbTrspFeeInfo.getTlogNo()); // 发票号
+				gdEupsbTrspFeeInfoNew.setStatus(gdEupsbTrspFeeInfo.getStatus()); //状态
 				// 是否打印
 				gdEupsbTrspFeeInfoNew.setStatus("0");
 
 				detailList.add(gdEupsbTrspFeeInfoNew);
+				System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+				System.out.println(gdEupsbTrspFeeInfoNew);
+				System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 				// TODO
 				if (1 != chkFlg) {
 					numErr = numErr + 1;
@@ -159,10 +168,19 @@ public class CheckTrspFileAction extends BaseAction {
 				gdEupsbTrspFeeInfoRepository.update(gdEupsbTrspFeeInfo);
 			}
 		}
-
+		
 		context.setData("detailList", detailList);
 		context.setData(ParamKeys.TXN_AMT, AmtErr);
 		log.info("============开始拼装文件");
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println(context.getData("detailList"));
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println();
+		System.out.println();
+		System.out.println();
 		// 拼装文件
 		EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne("trspCheckFile");
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -189,7 +207,7 @@ public class CheckTrspFileAction extends BaseAction {
 		sendFile(context, fileName);
 		printDetail(context, tChkNo, detailList);
 		// 清除对账表中的信息
-		get(TrspCheckTmpRepository.class).deleteAll(tChkNo);
+		get(TrspCheckTmpRepository.class).deleteAll("1");
 		logger.info("============对账结束");
 	}
 
@@ -236,16 +254,17 @@ public class CheckTrspFileAction extends BaseAction {
 		logger.info("~~~~~~~~~~~Start  CheckTrspFile   fileInsertTrspCheckTmp");
 		String ftpNo = "trspCheckFile";
 		EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne(ftpNo);
-		//获取文件
-		eupsThdFtpConfig.setFtpDir("1");
+		//获取本地文件
+		eupsThdFtpConfig.setFtpDir("0");
 		// String path=eupsThdFtpConfig.getLocDir();
 		String fileName = context.getData("fileName").toString().trim();
 		eupsThdFtpConfig.setLocFleNme(fileName);
 		eupsThdFtpConfig.setRmtFleNme(fileName);
+//		eupsThdFtpConfig.setRmtWay("/app/rbfb/dat/rbfb");
 		eupsThdFtpConfig.setLocDir("/home/bbipadm/common/");
-		eupsThdFtpConfig.setRmtWay("/home/bbipadm/common/");
-		operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
-
+		operateFTPAction.putCheckFile(eupsThdFtpConfig);
+		
+		
 		// 文件解析入库
 		List<Map<String, Object>> mapList = operateFileAction.pareseFile(eupsThdFtpConfig, "trspCheckFile");
 		System.out.println();
@@ -270,7 +289,7 @@ public class CheckTrspFileAction extends BaseAction {
 			trspCheckTmp.setSqn(map.get("thdKey").toString());
 			gdEupsbTrspFeeInfo.setThdKey(map.get("thdKey").toString());
 
-			BigDecimal txnAmt = new BigDecimal(map.get("txnAmt").toString()).scaleByPowerOfTen(-2);
+			BigDecimal txnAmt = new BigDecimal(map.get("txnAmt").toString());
 			trspCheckTmp.setTxnAmt(txnAmt);
 			trspCheckTmp.setTchkNo(tChkNo);
 			trspCheckTmp.setInvNo(map.get("invNo").toString());
@@ -319,8 +338,11 @@ public class CheckTrspFileAction extends BaseAction {
 			throw new CoreException("查询统计信息失败");
 		} else {
 			int totCnt = Integer.parseInt(list.get(0).get("COUNT") + "");
-			BigDecimal totAmt = new BigDecimal(list.get(0).get("SUMTXNAMT")
-					+ "");
+			
+			BigDecimal totAmt =new BigDecimal("0.00");
+			if(list.get(0).get("SUMTXNAMT")!=null){
+					totAmt= new BigDecimal(list.get(0).get("SUMTXNAMT")+ "");
+			}
 			context.setData(ParamKeys.TOT_CNT, totCnt);
 			context.setData(ParamKeys.TOT_AMT, totAmt);
 		}
