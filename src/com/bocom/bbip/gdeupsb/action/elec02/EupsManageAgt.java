@@ -132,32 +132,7 @@ public class EupsManageAgt extends BaseAction {
 			context.setData("br", context.getData(ParamKeys.BR));
 			context.setData("obkBk", "301");
 			
-			context.setData("tlrTmlId", "");
-			context.setData("reqTyp", "");
-			context.setData("authLvl", "");
-			context.setData("sup1Id", "");
-			context.setData("sup1Auth", "");
-			context.setData("sup2Id", "");
-			context.setData("sup2Auth", "");
-			context.setData("authResnTbl", "");
-			context.setData("authLog", "");
-			context.setData("filler", "");
-
-			
-
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-				
-			
+		
 			Result respData = ((BGSPServiceAccessObject)get(BGSPServiceAccessObject.class)).
 			callServiceFlatting("maintainAgentCollectAgreement", context.getDataMap());
 			back(context,respData);
