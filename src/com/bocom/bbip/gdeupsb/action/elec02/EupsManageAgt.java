@@ -46,6 +46,22 @@ public class EupsManageAgt extends BaseAction {
      context.setData("ActDat", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
      context.setData("LogNo", StringUtils.substring(
     		 ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getBBIPSequence(),4));
+     
+     
+     	//header 设定
+		context.setData("traceNo", "2016018520150407193200123456");
+		context.setData("traceSrc", "HPFS0036");
+		context.setData("version", "0.01");
+		context.setData("reqTme", "2015-03-09T15:06:40");
+		context.setData("reqJrnNo", get(BBIPPublicService.class).getBBIPSequence());
+		context.setData("reqSysCde", "");
+		context.setData("tlr", "ABIR148");
+		context.setData("chn", "00");
+		context.setData("bk", "01441999999");
+		context.setData("br", "01441131999");
+		context.setData("obkBk", "301");
+     
+     
      final int oprType=Integer.parseInt((String)context.getData("CHT"));
 		switch (oprType) {
 		case ADD:
@@ -115,6 +131,32 @@ public class EupsManageAgt extends BaseAction {
 			context.setData("bk", context.getData(ParamKeys.BK));
 			context.setData("br", context.getData(ParamKeys.BR));
 			context.setData("obkBk", "301");
+			
+			context.setData("tlrTmlId", "");
+			context.setData("reqTyp", "");
+			context.setData("authLvl", "");
+			context.setData("sup1Id", "");
+			context.setData("sup1Auth", "");
+			context.setData("sup2Id", "");
+			context.setData("sup2Auth", "");
+			context.setData("authResnTbl", "");
+			context.setData("authLog", "");
+			context.setData("filler", "");
+
+			
+
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+				
 			
 			Result respData = ((BGSPServiceAccessObject)get(BGSPServiceAccessObject.class)).
 			callServiceFlatting("maintainAgentCollectAgreement", context.getDataMap());
@@ -213,6 +255,21 @@ public class EupsManageAgt extends BaseAction {
 	private void queryAgentDeal(Context context) throws CoreException {
 			Map<String,Object>map=context.getDataMap();
 			map.put("cusAc", (String)context.getData("OAC"));
+			
+			//header 设定
+			context.setData("traceNo", context.getData(ParamKeys.TRACE_NO));
+			context.setData("traceSrc", context.getData(ParamKeys.TRACE_SOURCE));
+			context.setData("version", context.getData(ParamKeys.VERSION));
+			context.setData("reqTme", new Date());
+			context.setData("reqJrnNo", get(BBIPPublicService.class).getBBIPSequence());
+			context.setData("reqSysCde", context.getData(ParamKeys.REQ_SYS_CDE));
+			context.setData("tlr", context.getData(ParamKeys.TELLER));
+			context.setData("chn", context.getData(ParamKeys.CHANNEL));
+			context.setData("bk", context.getData(ParamKeys.BK));
+			context.setData("br", context.getData(ParamKeys.BR));
+			context.setData("obkBk", "301");
+			
+			
 			Result respData = ((BGSPServiceAccessObject)get(BGSPServiceAccessObject.class)).
 			callServiceFlatting("queryListAgentCollectAgreement", map);
 			Map ret=back(context,respData);
@@ -318,7 +375,7 @@ public class EupsManageAgt extends BaseAction {
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("cusAc", cusAc);
 		//header 设定
-		map.put("traceNo", context.getData(ParamKeys.TRACE_NO));
+		map.put("traceNo", "2016018520150407193200123456");
 		map.put("traceSrc", context.getData(ParamKeys.TRACE_SOURCE));
 		map.put("version", context.getData(ParamKeys.VERSION));
 		map.put("reqTme", new Date());
