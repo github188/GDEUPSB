@@ -74,6 +74,7 @@ public class EupsManageAgt extends BaseAction {
 		 	List<Map<String,Object>>customerInfo=new ArrayList<Map<String,Object>>();
 		 	context.setData("agrChl", "01");
 		 	context.setData("oprTyp", "0");
+		 	
 	   
 	       	Map<String,Object>agentCollectAgreementMap=setAgentCollectAgreementMap(context,(String)context.getData("OAC"));
 	       	Map<String,Object>customerInfoMap=setCustomerInfoMap(context,(String)context.getData("OAC"));
@@ -156,7 +157,9 @@ public class EupsManageAgt extends BaseAction {
     		   
     		   	 Map<String,Object>map=context.getDataMap();
 			     String agdAgrNo=getAgdAgrNoByCusAc(context,cusAcOld);  //获得协议编号
-			     map.put("agdAgrNo", agdAgrNo);
+			     List agdAgrNoList = new ArrayList<String>();
+			     agdAgrNoList.add(agdAgrNo);
+			     map.put("agdAgrNo", agdAgrNoList);
 			     Result  respData = ((BGSPServiceAccessObject)get(BGSPServiceAccessObject.class)).
 			     callServiceFlatting("deleteAgentCollectAgreement", map);
 			     back(context,respData);
@@ -185,21 +188,21 @@ public class EupsManageAgt extends BaseAction {
     		  
 	       //不修改账号的时候
 	       }else{
-	    	   context.setData("agrChl", "01");
-    		   context.setData("oprTyp", "1");
-    		   context.setData("cusAc", cusAcOld);
-    		   
-    		   agentCollectAgreementMap = setAgentCollectAgreementMap(context,cusAcOld);
-    		   customerInfoMap = setCustomerInfoMap(context,cusAcOld);
-    		   customerInfo.add(customerInfoMap);
-    		   agentCollectAgreement.add(agentCollectAgreementMap);
-   		    	//新增的两个集合
-    		   context.setData("agentCollectAgreement", agentCollectAgreement);
-    		   context.setData("customerInfo", customerInfo);
-    		   
-		       Result respData = ((BGSPServiceAccessObject)get(BGSPServiceAccessObject.class)).
-		       callServiceFlatting("maintainAgentCollectAgreement", context.getDataMap());
-		       back(context,respData);
+//	    	   context.setData("agrChl", "01");
+//    		   context.setData("oprTyp", "1");
+//    		   context.setData("cusAc", cusAcOld);
+//    		   
+//    		   agentCollectAgreementMap = setAgentCollectAgreementMap(context,cusAcOld);
+//    		   customerInfoMap = setCustomerInfoMap(context,cusAcOld);
+//    		   customerInfo.add(customerInfoMap);
+//    		   agentCollectAgreement.add(agentCollectAgreementMap);
+//   		    	//新增的两个集合
+//    		   context.setData("agentCollectAgreement", agentCollectAgreement);
+//    		   context.setData("customerInfo", customerInfo);
+//    		   
+//		       Result respData = ((BGSPServiceAccessObject)get(BGSPServiceAccessObject.class)).
+//		       callServiceFlatting("maintainAgentCollectAgreement", context.getDataMap());
+//		       back(context,respData);
 		       
 		       //修改本地协议
 //			   modifyGdeupsAgtElecTmp( context);
@@ -224,7 +227,10 @@ public class EupsManageAgt extends BaseAction {
 		     
 		     
 		     final String agdAgrNo=(String)getAgdAgrNoByCusAc(context, (String)context.getData("OAC"));
-		     map.put("agdAgrNo", agdAgrNo);
+		     
+		     List agdAgrNoList = new ArrayList<String>();
+		     agdAgrNoList.add(agdAgrNo);
+		     map.put("agdAgrNo", agdAgrNoList);
 		     Result respData = ((BGSPServiceAccessObject)get(BGSPServiceAccessObject.class)).
 		     callServiceFlatting("deleteAgentCollectAgreement", map);
 		     Map ret=back(context,respData);
@@ -266,7 +272,7 @@ public class EupsManageAgt extends BaseAction {
 	       customerInfoMap.put("agtCllCusId", (String)context.getData("JFH"));			//客户id
 	       customerInfoMap.put("cusAc",cusAc );	//客户账号
 	       customerInfoMap.put("cusNme", (String)context.getData("UsrNam"));//客户名称   
-	       customerInfoMap.put("idTyp",(String)context.getData("TIdTyp"));
+	       customerInfoMap.put("idTyp",(String)context.getData("IdTyp"));
 	       customerInfoMap.put("ccy", "CNY");
 	       customerInfoMap.put("idNo",(String)context.getData("TIdNo"));
 	       customerInfoMap.put("drwMde", "");  		//支取方式
@@ -296,75 +302,13 @@ public class EupsManageAgt extends BaseAction {
 	       agentCollectAgreementMap.put("agtSrvCusPnm", (String)context.getData("busKnd")); //代理服务客户姓名 这个是必输项
 	       
 	       agentCollectAgreementMap.put("pedAgrSts", "");
+	       agentCollectAgreementMap.put("cnlSts", "");
+	       agentCollectAgreementMap.put("agrChl", "01");
 	       agentCollectAgreementMap.put("cmuTel", (String)context.getData("MOB"));
 	       return agentCollectAgreementMap;
 
 	}
 
-	//新增本地协议
-	private void addGdeupsAgtElecTmp(Context context){
-		
-		GdeupsAgtElecTmp agtElecTmp = toGdeupsAgtElecTmp(context);
-		get(GdeupsAgtElecTmpRepository.class).insert(agtElecTmp);
-		
-	}
-	
-	//修改本地协议
-	private void modifyGdeupsAgtElecTmp(Context context ){
-		
-		GdeupsAgtElecTmp agtElecTmp = toGdeupsAgtElecTmp(context);
-		get(GdeupsAgtElecTmpRepository.class).save(agtElecTmp);
-	}
-	
-	//删除本地协议
-	private void delGdeupsAgtElecTmp(Context context){
-		
-		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
-		
-		agtElecTmp.setActNo( (String)context.getData("OAC"));
-		agtElecTmp.setFeeNum( (String)context.getData("JFH"));
-		get(GdeupsAgtElecTmpRepository.class).delete(agtElecTmp);
-		
-	}
-	
-	
-	//封装GdeupsAgtElecTmp对象
-	private GdeupsAgtElecTmp toGdeupsAgtElecTmp( Context context){
-		
-		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
-		
-		agtElecTmp.setChangeType( (String)context.getData("CHT"));
-		agtElecTmp.setComCode( (String)context.getData("ECD"));
-		agtElecTmp.setFeeCode( (String)context.getData("EDD"));
-		agtElecTmp.setFeeNum( (String)context.getData("JFH"));
-		agtElecTmp.setUserName( (String)context.getData("UsrNam"));
-		agtElecTmp.setOldBankNum( (String)context.getData("OKH"));
-		agtElecTmp.setOldCardNo( (String)context.getData("OAC"));
-		agtElecTmp.setNewBankNum( (String)context.getData("KKB"));
-		agtElecTmp.setActNo( (String)context.getData("TActNo"));
-		agtElecTmp.setAcountName( (String)context.getData("TActNm"));
-		agtElecTmp.setActType( (String)context.getData("ACT"));	
-		agtElecTmp.setPerComFlag( (String)context.getData("GPF"));
-		agtElecTmp.setIdType( (String)context.getData("IdTyp"));
-		agtElecTmp.setIdNo( (String)context.getData("TIdNo"));
-		agtElecTmp.setCheckSendType( (String)context.getData("ZPF"));
-		agtElecTmp.setInvoiceSnedType( (String)context.getData("FPF"));
-		agtElecTmp.setPointNum( (String)context.getData("JLD"));
-		agtElecTmp.setInvoiceSnedMan( (String)context.getData("FPM"));
-		agtElecTmp.setInvoiceSendZip( (String)context.getData("FPC"));
-		agtElecTmp.setInvoiceSendAddr( (String)context.getData("FPA"));
-		agtElecTmp.setCheckSendMan( (String)context.getData("ZPM"));
-		agtElecTmp.setCheckSendZip( (String)context.getData("ZPC"));
-		agtElecTmp.setCheckSendAddr( (String)context.getData("ZPA"));
-		agtElecTmp.setNotifyType( (String)context.getData("YBZ"));
-		agtElecTmp.setEmail( (String)context.getData("EML"));
-		agtElecTmp.setPhoneNum( (String)context.getData("MOB"));
-		agtElecTmp.setTelNum( (String)context.getData("TEL"));
-		agtElecTmp.setRemark( (String)context.getData("TXT"));
-		agtElecTmp.setPrcessPassword( (String)context.getData("Pin"));
-
-		return  agtElecTmp;
-	}
 	
 	/**
 	 * 协议编号查询
@@ -411,22 +355,21 @@ public class EupsManageAgt extends BaseAction {
 	//为查询返回报文复制
 	private void setResponseResultFromAgts(Context context ,Result respData){
 		
-		if(respData.getPayload().get("agentCollectAgreement") ==null || respData.getPayload().get("customerInfo") == null){
+		if(respData.getPayload().get("agentCollectAgreement") ==null ){
 			context.setData("thdRspCde", "80");
 		}
 		//协议信息集合
 		List<Map<String,Object>> agreementlist=(List<Map<String, Object>>)respData.getPayload().get("agentCollectAgreement");
-		//客户信息集合
-		List<Map<String,Object>> customerlist =(List<Map<String, Object>>)respData.getPayload().get("customerInfo");
+		
+		Map<String, Object> customerMap = respData.getPayload();
 
 		Map<String,Object>  agreementMap = agreementlist.get(0);
-		Map<String,Object>  customerMap = customerlist.get(0);
 
 		
 		context.setData("PAgtNo",(String) agreementMap.get("agdAgrNo"));  //协议编号
 		context.setData("comNo", "4450000002");		//单位编号
 		context.setData("CLM", (String)agreementMap.get("agtSrvCusPnm"));		//第三方客户名称
-		context.setData("JFH", (String)customerMap.get("cusNo"));		//缴费号码
+		context.setData("JFH", (String)agreementMap.get("agtSrvCusId"));		//缴费号码
 		context.setData("ACN", (String)agreementMap.get("cusAc"));		//账号
 		context.setData("TActNm",(String) customerMap.get("cusNme"));		//名称
 		context.setData("IdTyp", (String)customerMap.get("idTyp"));		//证件类型
@@ -435,5 +378,6 @@ public class EupsManageAgt extends BaseAction {
 		context.setData("MOB", (String)agreementMap.get("cmuTel"));		//联系手机号
 
 	}
+
 	
 }
