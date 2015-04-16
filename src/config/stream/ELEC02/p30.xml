@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="20Request">
+	<fixString name="WTC" length="12" default="301" />   <!--委托节点代码 -->
+	<fixString name="WDO" length="8 " />              <!--工作日期 -->
+	<fixString name="LogNo" length="16" />              <!--银行流水 -->
+	<fixString name="OWC" length="12" default="301" />   <!--原委托节点代码 -->
+	<fixString name="ODT" length="8" />              <!--原委托日期 -->
+	<fixString name="OLZ" length="16" />              <!--原业务流水 -->
+	<fixString name="CLM"     length="40" />  <!--客户名称      -->  
+    <fixString name="ECD"     length="12" />  <!--收付费企业代码-->
+    <fixString name="EDD"     length="3 "/>   <!--费项代码      -->  
+    <fixString name="JFH"     length="32"/>   <!--缴费号        -->
+    <fixString name="ACN"     length="32" />  <!--帐号/卡号     -->
+    <fixString name="KKH"     length="12"/>   <!--开户行行号    --> 
+</segment>
