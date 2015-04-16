@@ -202,13 +202,15 @@ public class CheckTrspFileAction extends BaseAction {
 		context.setData("thdTxnCde", "GetChk");
 		String txnDte=DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
 		context.setData(ParamKeys.TXN_DTE, txnDte);
+		context.setData(ParamKeys.SEQUENCE, get(BBIPPublicService.class).getBBIPSequence());
 		try {
 			Map<String, Object> rspMap = callThdTradeManager.trade(context);
 			String responseCode = rspMap.get(ParamKeys.THIRD_RETURN_CODE).toString();
 			logger.info("==================Call Third  Success");
 			context.setData(GDParamKeys.RETCOD, responseCode);
 //			context.setData("fileName", rspMap.get("fileName"));
-
+			String fileName=(String)rspMap.get("fileName");
+			context.setData("fileName", fileName);
 			if (!Constants.RESPONSE_CODE_SUCC.equals(responseCode)) {
 				context.setData(GDParamKeys.MSGTYP, "E");
 				context.setData(ParamKeys.RSP_CDE, "329999");
@@ -218,6 +220,12 @@ public class CheckTrspFileAction extends BaseAction {
 		} catch (CoreException e) {
 			logger.info("CheckTrspFile   callThd  error=" + e);
 		}
+		
+		System.out.println();
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println(context.getData("fileName"));
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		System.out.println();
 	}
 
 	/**
@@ -240,7 +248,15 @@ public class CheckTrspFileAction extends BaseAction {
 
 		// 文件解析入库
 		List<Map<String, Object>> mapList = operateFileAction.pareseFile(eupsThdFtpConfig, "trspCheckFile");
-
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`");
+		System.out.println(mapList);
+		
+		if(CollectionUtils.isEmpty(mapList)){
+					throw new CoreException(context.getData("startDate")+"~~"+context.getData("endDate")+"时段内，没有发生缴费");
+		}
 		GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
 		gdEupsbTrspFeeInfo.setChkFlg("0");
 		// 设置对账批次
