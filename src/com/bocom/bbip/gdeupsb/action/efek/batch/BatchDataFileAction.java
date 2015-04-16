@@ -70,7 +70,6 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 	@Override
 	public void prepareBatchDeal(PrepareBatchAcpDomain preparebatchacpdomain,
 			Context context) throws CoreException {
-		context.setData("tlr", "EFC0000");
 				logger.info("==========Start  BatchDataFileAction  prepareBatchDeal");
 				String totAmt=context.getData("totAmt").toString();
 				String totCnt=context.getData("totCnt").toString();
