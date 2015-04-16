@@ -58,11 +58,25 @@ public class EupsManageCounterAgt extends BaseAction {
      context.setData("TLogNo", StringUtils.substring(
     		 ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getBBIPSequence(),4));
      
+     context.setData("LogNo", StringUtils.substring(
+    		 ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getBBIPSequence(),4));
+     
      context.setData("AppTradeCode", "30");
      context.setData("SBN", "");
      context.setData("eupsBusTyp", "ELEC02");
+     
+     context.setData("StartAddr", "301");
+     context.setData("DestAddr", "4450000002");
+     context.setData("MesgID", "30111234567");
+     context.setData("WorkDate", "");
+     context.setData("SendTime", "20150416102000");
+     context.setData("mesgPRI", "9");
+     context.setData("recordNum", "0");
+     context.setData("FileName", "                               ");
+     context.setData("zipFlag", "0");
+     
      context.setData("OAC", (String)context.getData("ActNo"));
-
+  
      final int oprType=Integer.parseInt((String)context.getData("CHT"));
 		switch (oprType) {
 		case ADD:
@@ -91,7 +105,7 @@ public class EupsManageCounterAgt extends BaseAction {
 		 	List<Map<String,Object>>customerInfo=new ArrayList<Map<String,Object>>();
 		 	context.setData("agrChl", "01");
 		 	context.setData("oprTyp", "0");
-		 	context.setData("TIdNo","121");
+		 	context.setData("TIdNo","320324198603121876");
 		 
 	       	Map<String,Object>agentCollectAgreementMap=setAgentCollectAgreementMap(context,(String)context.getData("OAC"));
 	       	Map<String,Object>customerInfoMap=setCustomerInfoMap(context,(String)context.getData("OAC"));
@@ -145,9 +159,9 @@ public class EupsManageCounterAgt extends BaseAction {
 			getAgdAgrNoByMap(context, mapResult);
 			
 			//外发第三方
-//			callThd(context);
+			callThd(context);
 //			
-//			//冲正代收付 
+			//冲正代收付 
 //			if(GDConstants.SUCCESS_CODE.toString().equals((String)context.getData(ParamKeys.RSP_CDE))){
 //				respData = ((BGSPServiceAccessObject)get(BGSPServiceAccessObject.class)).
 //		   			     callServiceFlatting("deleteAgentCollectAgreement", context.getDataMap());
