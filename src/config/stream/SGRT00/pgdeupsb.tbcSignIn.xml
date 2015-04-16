@@ -5,5 +5,5 @@
     name="OUT">
         <string name="RET_CODE" />
         <string name="MSG" />
-        <string name="NEW_KEY" />  <!--通讯秘钥-->
+        <string name="NEW_KEY" />  <!--新通讯秘钥-->
 </record>

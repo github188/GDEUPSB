@@ -8,6 +8,6 @@
        <string name="PASS_FLAG" /> <!-- 密码校验标志（0） -->
        <string name="PASSWORD" /> <!-- 密码（PASS_FLAG=0：为空） -->
        <string name="QTY_TRADE" /> <!-- 支付金额 -->
-       <string name="DEV_ID"/>
-       <string name="TELLER"/>
+       <string name="DEV_ID"/> <!-- 设备号 -->
+       <string name="TELLER"/> <!-- 操作号 -->
 </record>

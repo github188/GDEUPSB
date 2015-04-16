@@ -3,9 +3,9 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.bocom.com/jump/transformer/xml xml.xsd"
     name="IN">
-       <string name="TRADE_SEQ_OLD"/>
-       <string name="TRADE_ID_OLD"/>
-       <string name="CUST_ID_OLD"/>
-       <string name="DEV_ID"/>
-       <string name="TELLER"/>
+       <string name="TRADE_SEQ_OLD"/> <!-- 待查询烟草交易流水号 -->
+       <string name="TRADE_ID_OLD"/> <!-- 原交易码 -->
+       <string name="CUST_ID_OLD"/> <!-- 烟草公司客户号 -->
+       <string name="DEV_ID"/> <!-- 设备号 -->
+       <string name="TELLER"/> <!-- 操作号 -->
 </record>

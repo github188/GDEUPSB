@@ -5,5 +5,5 @@
     name="OUT">
         <string name="RET_CODE" />
         <string name="MSG" />
-        <string name="ACCOUNT" />  <!-- 余额 -->
+        <string name="ACCOUNT" />  <!-- 账户余额 -->
 </record>

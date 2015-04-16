@@ -10,6 +10,6 @@
        <string name="LICE_ID" />  <!-- 营业执照号码 -->
        <string name="ACC_TYPE" />  <!-- 卡/账户类型 -->
        <string name="ACC" />  <!-- 卡/账户号码 -->
-       <string name="DEV_ID"/>
-       <string name="TELLER"/>
+       <string name="DEV_ID"/> <!-- 设备号 -->
+       <string name="TELLER"/> <!-- 操作号 -->
 </record>

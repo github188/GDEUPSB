@@ -16,6 +16,6 @@
        <string name="PASSWORD" />  <!-- 密码-->
        <string name="ADDR" />  <!--联系地址-->
        <string name="TEL" />  <!--电话号码-->
-       <string name="DEV_ID"/>
-       <string name="TELLER"/>
+       <string name="DEV_ID"/> <!-- 设备号 -->
+       <string name="TELLER"/> <!-- 操作号 -->
 </record>
