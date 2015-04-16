@@ -40,6 +40,8 @@ public class GdPrintReportAction extends BaseAction
         } else
         {
             transfer.send(reportPath, printReportName, "182.53.15.187");
+            context.setData("printReportName", printReportName);
+            
             return;
         }
     }

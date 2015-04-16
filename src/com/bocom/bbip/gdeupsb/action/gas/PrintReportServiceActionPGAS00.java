@@ -1,11 +1,7 @@
 package com.bocom.bbip.gdeupsb.action.gas;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,26 +10,34 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
-import com.bocom.bbip.eups.action.eupsreport.ReportHelper;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.eups.entity.MFTPConfigInfo;
 import com.bocom.bbip.eups.repository.EupsThdBaseInfoRepository;
-import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
+import com.bocom.bbip.gdeupsb.action.common.GdPrintReportAction;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GdEupsTransJournalRepository;
-import com.bocom.bbip.utils.BeanUtils;
+import com.bocom.bbip.gdeupsb.utils.GdFileUtils;
+import com.bocom.bbip.gdeupsb.utils.GdReportUtils;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.jump.bp.SystemConfig;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
 
 public class PrintReportServiceActionPGAS00 extends BaseAction {
 
+	
+	@Autowired
+	private BBIPPublicService bbipPublicService;
+	@Autowired
+	private SystemConfig systemConfig;
+	
 	private static Logger logger = LoggerFactory
 			.getLogger(PrintReportServiceActionPGAS00.class);
 
@@ -168,14 +172,18 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 		logger.info("================prtList.size:" + prtList.size());
 		
 
-		EupsThdFtpConfigRepository eupsThdFtpConfigRepository = get(EupsThdFtpConfigRepository.class);
-		ReportHelper reportHelper = get(ReportHelper.class);
-		MFTPConfigInfo mftpConfigInfo = reportHelper
-				.getMFTPConfigInfo(eupsThdFtpConfigRepository);
-		logger.info((new StringBuilder("mftpConfigInfo:>>>>").append(BeanUtils
-				.toMap(mftpConfigInfo))).toString());
+//		EupsThdFtpConfigRepository eupsThdFtpConfigRepository = get(EupsThdFtpConfigRepository.class);
+//		ReportHelper reportHelper = get(ReportHelper.class);
+//		MFTPConfigInfo mftpConfigInfo = reportHelper
+//				.getMFTPConfigInfo(eupsThdFtpConfigRepository);
+//		logger.info((new StringBuilder("mftpConfigInfo:>>>>").append(BeanUtils
+//				.toMap(mftpConfigInfo))).toString());
 
+		String reportPath = GdReportUtils.reportPath(bbipPublicService,
+				systemConfig);
 		VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
+		
+		
 		try {
 			render.afterPropertiesSet();
 		} catch (Exception e) {
@@ -219,31 +227,58 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 			logger.info(result);
 		}
 		
-		PrintWriter printWriter = null;
 		
-		// TODO 拼装本地路径
-		StringBuffer sbLocDir = new StringBuffer();
-		sbLocDir.append("D:/testGash/checkFilTest/");
+		
+		logger.info("=============ready to print report list=============");
+		
 		try {
-			File file = new File(sbLocDir.toString());
-			if (!file.exists()) {
-				file.mkdirs();
-			}
-			printWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
-							new FileOutputStream(sbLocDir.append(fileName).toString()), "GBK")));
-			printWriter.write(result);
+			GdFileUtils.write(
+					new File((new StringBuffer(String.valueOf(reportPath)))
+							.append(fileName).toString()), result, "GBK");
+			
+			context.setVariable("reportDir", reportPath);
+			context.setVariable("reportName", fileName);
+			
+			get(GdPrintReportAction.class).execute(context);
+			
+			logger.info("放到前端完成");
+			context.setData("filePath", reportPath);
+			String printReportName = context.getData("printReportName");
+			context.setData("rspMsg", printReportName);
 			
 		} catch (IOException e) {
-			throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
-		} finally {
-			if (null != printWriter) {
-				try {
-					printWriter.close();
-				} catch (Exception e) {
-					throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
-				}
-			}
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
+		
+
+		
+//		PrintWriter printWriter = null;
+//		
+//		// TODO 拼装本地路径
+//		StringBuffer sbLocDir = new StringBuffer();
+//		sbLocDir.append("D:/testGash/checkFilTest/");
+//		try {
+//			File file = new File(sbLocDir.toString());
+//			if (!file.exists()) {
+//				file.mkdirs();
+//			}
+//			printWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
+//							new FileOutputStream(sbLocDir.append(fileName).toString()), "GBK")));
+//			printWriter.write(result);
+//			
+//		} catch (IOException e) {
+//			throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
+//		} finally {
+//			if (null != printWriter) {
+//				try {
+//					printWriter.close();
+//				} catch (Exception e) {
+//					throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
+//				}
+//			}
+//		}
     
 //    bbipPublicService.sendFileToBBOS(new File(TransferUtils.resolveFilePath(mftploca, reportFileName)), reportFileName, MftpTransfer.FTYPE_NORMAL);
 	

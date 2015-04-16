@@ -42,7 +42,7 @@
 	<process id="gdeupsb.printEupsbRpts" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
 		<actions>
 			  <action id="act" ref="gdeupsb.printEupsbRptsAction"   />
-			 <action id="act" ref="gdeupsb.gdPrintReportAction"   />
+			<!--  <action id="act" ref="gdeupsb.gdPrintReportAction"   /> -->
 		</actions>
 	</process>
 	

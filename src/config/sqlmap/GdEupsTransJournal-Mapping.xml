@@ -1287,35 +1287,33 @@
 	<select id="findGasAllJnlInfo" resultType="java.util.Map"
 		parameterType="java.util.Map">
 		select * FROM
-		(select
-		<include refid="baseColumnList" />
-		FROM eups.EUPS_TRANS_JOURNAL where TXN_DTE &gt;=#{#beginDte} and
+		(select * FROM eups.EUPS_TRANS_JOURNAL where TXN_DTE &gt;=#{beginDte} and
 		TXN_DTE &lt;=#{endDte} and
 		COM_NO=#{comNo} ) a,
 		(select
 		COALESCE(count(*), 0) totCnt, COALESCE(sum(TXN_AMT), 0) totAmt from
 		eups.EUPS_TRANS_JOURNAL
-		where TXN_DTE &gt;=#{#beginDte} and TXN_DTE
+		where TXN_DTE &gt;=#{beginDte} and TXN_DTE
 		&lt;=#{endDte} and
 		COM_NO=#{comNo}) b,
 		(select COALESCE(count(*), 0)
 		succCnt, COALESCE(sum(TXN_AMT), 0) totSuccAmt from
 		eups.EUPS_TRANS_JOURNAL d where d.TXN_STS='S' AND d.MFM_TXN_STS='S'
 		and d.THD_TXN_STS!='U' and d.THD_TXN_STS!='F' and d.THD_TXN_STS!='T'
-		and d.TXN_DTE &gt;=#{#beginDte} and d.TXN_DTE &lt;=#{endDte} and
+		and d.TXN_DTE &gt;=#{beginDte} and d.TXN_DTE &lt;=#{endDte} and
 		d.COM_NO=#{comNo} and d.TXN_TYP!='C') c,
 		(select COALESCE(count(*), 0)
 		failCnt, COALESCE(sum(TXN_AMT), 0) totFailAmt from
 		eups.EUPS_TRANS_JOURNAL where TXN_STS='F' AND (MFM_TXN_STS='F' or
 		(MFM_TXN_STS='S' and THD_TXN_STS='F')) and
-		TXN_DTE &gt;=#{#beginDte}
+		TXN_DTE &gt;=#{beginDte}
 		and TXN_DTE &lt;=#{endDte} and
 		COM_NO=#{comNo} and TXN_TYP!='C') e,
 		(select COALESCE(count(*), 0) doubtCnt, COALESCE(sum(TXN_AMT), 0)
 		totDoubtAmt from
 		eups.EUPS_TRANS_JOURNAL c where c.MFM_TXN_STS='S' and
 		c.THD_TXN_STS!='S' and c.THD_TXN_STS!='F' and c.MFM_TXN_STS!='C' and
-		c.TXN_TYP!='C' and c.TXN_DTE &gt;=#{#beginDte} and c.TXN_DTE
+		c.TXN_TYP!='C' and c.TXN_DTE &gt;=#{beginDte} and c.TXN_DTE
 		&lt;=#{endDte} and
 		c.COM_NO=#{comNo}) d,
 		(select COALESCE(count(*), 0)
@@ -1323,14 +1321,14 @@
 		eups.EUPS_TRANS_JOURNAL where sqn not in(select a.sqn from (select
 		distinct a.sqn as sqn from eups.EUPS_TRANS_JOURNAL a where
 		a.TXN_STS='F' AND (a.MFM_TXN_STS='F' or (a.MFM_TXN_STS='S' and
-		a.THD_TXN_STS='F')) and a.TXN_DTE &gt;=#{#beginDte} and a.TXN_DTE
+		a.THD_TXN_STS='F')) and a.TXN_DTE &gt;=#{beginDte} and a.TXN_DTE
 		&lt;=#{endDte} and
 		a.COM_NO=#{comNo} and a.TXN_TYP!='C') a) and
 		sqn not
 		in(select b.sqn from(select distinct b.sqn as sqn from
 		eups.EUPS_TRANS_JOURNAL b where b.MFM_TXN_STS='S' and
 		b.THD_TXN_STS!='S' and b.THD_TXN_STS!='F' and b.MFM_TXN_STS!='C' and
-		b.TXN_TYP!='C' and b.TXN_DTE &gt;=#{#beginDte} and b.TXN_DTE
+		b.TXN_TYP!='C' and b.TXN_DTE &gt;=#{beginDte} and b.TXN_DTE
 		&lt;=#{endDte} and
 		b.COM_NO=#{comNo})b) and sqn not in(select
 		c.sqn
@@ -1338,10 +1336,10 @@
 		c.TXN_STS='S' AND c.MFM_TXN_STS='S' and c.THD_TXN_STS!='U' and
 		c.THD_TXN_STS!='F' and c.THD_TXN_STS!='T' and
 		c.TXN_DTE
-		&gt;=#{#beginDte} and c.TXN_DTE &lt;=#{endDte} and
+		&gt;=#{beginDte} and c.TXN_DTE &lt;=#{endDte} and
 		c.COM_NO=#{comNo}
 		and c.TXN_TYP!='C')c) and
-		TXN_DTE &gt;=#{#beginDte} and TXN_DTE
+		TXN_DTE &gt;=#{beginDte} and TXN_DTE
 		&lt;=#{endDte} and
 		COM_NO=#{comNo}) y
 	</select>

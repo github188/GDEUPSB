@@ -1,6 +1,6 @@
 #report(50)
 #rh(4)
- 			                                  				$d.prtTtl
+ 			                            $f.conv('prtFlg', $d.prtFlg)
 #end
 #th(4)
 #para($f.fmt($d.beginDte, 'yyyy年 MM月 dd日'))

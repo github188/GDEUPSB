@@ -247,9 +247,12 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			context.setVariable("reportDir", reportPath);
 			context.setVariable("reportName", fileName);
 			
+			get(GdPrintReportAction.class).execute(context);
+			
 			logger.info("放到前端完成");
 			context.setData("filePath", reportPath);
-			context.setData("fleNme", fileName);
+			String printReportName = context.getData("printReportName");
+			context.setData("fleNme", printReportName);
 			
 		} catch (IOException e1) {
 			e1.printStackTrace();
