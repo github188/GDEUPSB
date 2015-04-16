@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="30Request">
+	<fixString name="SBN" length="12" />     <!--发起业务的节点代码 -->
+	<fixString name="WDO" length="8 " />     <!--工作日期 -->
+	<fixString name="TLogNo" length="16" />  <!--供电局流水 -->
+	<fixString name="CHT" length="1" />      <!--变更方式 0-新增,3-修改,5-查询,9-注销 -->
+	<fixString name="ECD" length="12" />     <!--收付费企业代码 -->
+	<fixString name="EDD" length="3" />     <!--费项代码 -->
+	<fixString name="JFH" length="32" />     <!--缴费号 -->
+	<fixString name="UsrNam" length="64"/>   <!--用户名称 -->
+	<fixString name="OKH" length="12" />     <!--原开户行行号 -->
+	<fixString name="OAC" length="32" />     <!--原账户/卡号 -->
+	<fixString name="KKB" length="12" />     <!--新开户行行号 -->
+	<fixString name="ActNo" length="32" />  <!--新账户/卡号 -->
+	<fixString name="ActNm" length="40" />  <!--新客户名称 -->
+	<fixString name="ACT" length="1" />      <!--帐号类型 -->
+	<fixString name="GPF" length="1" />      <!--个人/集团标志   -->
+	<fixString name="IdTyp" length="2 " />  <!--证件类型 -->
+	<fixString name="TIdNo" length="32" />   <!--证件号码 -->
+	<fixString name="ZPF"      length="1 " /> <!--账单邮寄类型    -->
+    <fixString name="FPF"      length="1 " /> <!--发票邮寄类型    -->
+    <fixString name="JLD"      length="5 " /> <!--计量点号        -->
+    <fixString name="FPM"      length="40" /> <!--发票邮寄人      -->
+    <fixString name="FPC"      length="6 " /> <!--发票邮寄邮编    -->
+    <fixString name="FPA"      length="60" /> <!--发票邮寄地址    -->
+    <fixString name="ZPM"      length="40" /> <!--帐单邮寄人      -->
+    <fixString name="ZPC"      length="6 " /> <!--帐单邮寄邮编    -->
+    <fixString name="ZPA"      length="60" /> <!--帐单邮寄地址    -->
+    <fixString name="YBZ"      length="1 " /> <!--余额不足通知方式-->
+    <fixString name="EML"      length="64" /> <!--E-MAIL          -->
+    <fixString name="MOB"      length="30" /> <!--联系手机号      -->
+    <fixString name="TEL"      length="60" /> <!--联系电话        -->
+    <fixString name="TXT"      length="64" /> <!--备注            -->   
+</segment>
