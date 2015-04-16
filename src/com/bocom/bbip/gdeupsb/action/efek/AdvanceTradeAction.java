@@ -88,6 +88,8 @@ public class AdvanceTradeAction extends BaseAction {
 			context.setData("CAgtNo", "EFE9999999"); // 清算单位协议号要改
 
 			context.setData("GthFlg", "N");// <Set>GthFlg=N</Set>
+		}else if(ActFlg.equals("5")){
+			context.setData(ParamKeys.BAK_FLD1, "支票代扣电费");
 		}
 			context.setData(GDParamKeys.SVRCOD, "13");
 			callThd(context);
@@ -125,5 +127,6 @@ public class AdvanceTradeAction extends BaseAction {
 				context.setData(ParamKeys.BANK_NO, "301");
 				context.setData("thdObkCde", "301");
 				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW19");		
+				context.setData("sqns", context.getData(ParamKeys.SEQUENCE));
 	}
 }
