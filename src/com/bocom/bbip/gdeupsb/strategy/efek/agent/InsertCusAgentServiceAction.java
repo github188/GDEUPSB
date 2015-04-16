@@ -19,6 +19,7 @@ import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsCusAgentJournal;
 import com.bocom.bbip.eups.repository.EupsCusAgentJournalRepository;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
@@ -121,6 +122,28 @@ public class InsertCusAgentServiceAction extends BaseAction {
 								                    context.setData(ParamKeys.THD_TXN_STS, Constants.THD_TXNSTS_SUCCESS);
 								                    context.setData(ParamKeys.RSP_CDE, GDConstants.SUCCESS_CODE);
 								                    context.setData(ParamKeys.RESPONSE_MESSAGE, "交易成功");
+								                    
+								    				//保存到EupsCusAgentJournal表中
+								    				log.info("============insert   EupsCusAgentJournal");
+								    				EupsCusAgentJournal eupsCusAgentJournal=new EupsCusAgentJournal();
+								    				eupsCusAgentJournal.setSqn(context.getData("sqn").toString());
+								    				eupsCusAgentJournal.setEupsBusTyp("ELEC00");
+								    				String rsvFld3=DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMddHHmmss);
+								    				eupsCusAgentJournal.setRsvFld3(rsvFld3);
+								    				String rsvFld1=context.getData("oprTyp").toString().trim()+context.getData("agtSts").toString().trim();
+								    				eupsCusAgentJournal.setRsvFld1(rsvFld1);
+								    				eupsCusAgentJournal.setThdCusNo((String)context.getData("cusNo"));
+								    				eupsCusAgentJournal.setCusAc(cusAc);
+								    				eupsCusAgentJournal.setCusNme((String)context.getData("cusNme"));
+								    				eupsCusAgentJournal.setIdTyp((String)context.getData("idTyp"));
+								    				eupsCusAgentJournal.setIdNo((String)context.getData("idNo"));
+								    				eupsCusAgentJournal.setTel((String)context.getData("cmuTel"));
+								    				eupsCusAgentJournal.setTxnDte((Date)context.getData(ParamKeys.TXN_DTE));
+								    				eupsCusAgentJournal.setRsvFld2("301");;
+								    				eupsCusAgentJournalRepository.insert(eupsCusAgentJournal);
+								    				
+								    				log.info("============End  insert   EupsCusAgentJournal");
+								    				
 								                }else{
 								                	//第三方失败  协议删除
 													String agdAgrNo=selectAgent(context);
