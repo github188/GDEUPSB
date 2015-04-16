@@ -15,6 +15,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
@@ -99,6 +100,10 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 		String prtTtl = null;
 		if ("0".equals(context.getData("prtTyp"))) {
 			prtList = get(GdEupsTransJournalRepository.class).findAllTxnList(eupsJnl);
+			if (null == prtList || CollectionUtils.isEmpty(prtList)) {
+				logger.info("There are no records for select check trans journal ");
+				throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
+			}
 			
 			context.setData("TOTCNT", prtList.get(0).get("TOTCNT"));
 			context.setData("TOTAMT", prtList.get(0).get("TOTAMT"));
@@ -118,6 +123,11 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 		}
 		if ("1".equals(context.getData("prtTyp"))) {
 			prtList = get(GdEupsTransJournalRepository.class).findSuccTxnList(eupsJnl);
+			if (null == prtList || CollectionUtils.isEmpty(prtList)) {
+				logger.info("There are no records for select check trans journal ");
+				throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
+			}
+			
 			context.setData("SUCCCNT", prtList.get(0).get("SUCCCNT"));
 			context.setData("TOTSUCCAMT", prtList.get(0).get("TOTSUCCAMT"));
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
@@ -127,6 +137,11 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 		}
 		if ("2".equals(context.getData("prtTyp"))) {
 			prtList = get(GdEupsTransJournalRepository.class).findFailTxnList(eupsJnl);
+			if (null == prtList || CollectionUtils.isEmpty(prtList)) {
+				logger.info("There are no records for select check trans journal ");
+				throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
+			}
+			
 			context.setData("FAILCNT", prtList.get(0).get("FAILCNT"));
 			context.setData("TOTFAILAMT", prtList.get(0).get("TOTFAILAMT"));
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
@@ -136,6 +151,11 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 		}
 		if ("3".equals(context.getData("prtTyp"))) {
 			prtList =get(GdEupsTransJournalRepository.class).findDoubtTxnList(eupsJnl);
+			if (null == prtList || CollectionUtils.isEmpty(prtList)) {
+				logger.info("There are no records for select check trans journal ");
+				throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
+			}
+			
 			context.setData("DOUBTCNT", prtList.get(0).get("DOUBTCNT"));
 			context.setData("TOTDOUBTAMT", prtList.get(0).get("TOTDOUBTAMT"));
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
@@ -145,6 +165,11 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 		}
 		if ("4".equals(context.getData("prtTyp"))) {
 			prtList = get(GdEupsTransJournalRepository.class).findOthTxnList(eupsJnl);
+			if (null == prtList || CollectionUtils.isEmpty(prtList)) {
+				logger.info("There are no records for select check trans journal ");
+				throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
+			}
+			
 			context.setData("OTHERCNT", prtList.get(0).get("OTHERCNT"));
 			context.setData("TOTOTHERAMT", prtList.get(0).get("TOTOTHERAMT"));
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)

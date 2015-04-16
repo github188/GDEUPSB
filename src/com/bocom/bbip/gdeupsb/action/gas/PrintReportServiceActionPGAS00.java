@@ -83,6 +83,10 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 
 		if("1".equals(prtFlg)){
 			prtList = get(GdEupsTransJournalRepository.class).findGasAllJnlInfo(detailMap);
+			if (null == prtList || CollectionUtils.isEmpty(prtList)) {
+				logger.info("There are no records for select check trans journal ");
+				throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
+			}
 			context.setData("TOTCNT", prtList.get(0).get("TOTCNT"));
 			context.setData("TOTAMT", prtList.get(0).get("TOTAMT"));
 			
@@ -103,18 +107,30 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 		}
 		if("2".equals(prtFlg)){
 			prtList = get(GdEupsTransJournalRepository.class).findGasSucJnlInfo(detailMap);
+			if (null == prtList || CollectionUtils.isEmpty(prtList)) {
+				logger.info("There are no records for select check trans journal ");
+				throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
+			}
 			context.setData("sumCnt", prtList.get(0).get("SUCCCNT"));
 			context.setData("sumAmt", prtList.get(0).get("TOTSUCCAMT"));
 			fileName = new StringBuffer((new StringBuilder("(惠州分行)燃气单笔代扣成功报表_"+ br + "_" + beginDate + "_" + endDate).append(".txt").toString()));
 		}
 		if("3".equals(prtFlg)){
 			prtList = get(GdEupsTransJournalRepository.class).findGasFalJnlInfo(detailMap);
+			if (null == prtList || CollectionUtils.isEmpty(prtList)) {
+				logger.info("There are no records for select check trans journal ");
+				throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
+			}
 			context.setData("sumCnt", prtList.get(0).get("FAILCNT"));
 			context.setData("sumAmt", prtList.get(0).get("TOTFAILAMT"));
 			fileName = new StringBuffer((new StringBuilder("(惠州分行)燃气单笔代扣失败报表_"+ br + "_" + beginDate + "_" + endDate).append(".txt").toString()));
 		}
 		if("4".equals(prtFlg)){
 			prtList = get(GDEupsBatchConsoleInfoRepository.class).findGasBatAllRecord(detailMap);
+			if (null == prtList || CollectionUtils.isEmpty(prtList)) {
+				logger.info("There are no records for select check trans journal ");
+				throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
+			}
 			context.setData("sumCnt", prtList.get(0).get("SUM_TOT_CNT"));
 			context.setData("sumAmt", prtList.get(0).get("SUM_TOT_AMT"));
 			context.setData("sumSucCnt", prtList.get(0).get("SUM_SUC_TOT_CNT"));
@@ -127,12 +143,20 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 		}
 		if("5".equals(prtFlg)){
 			prtList = get(GDEupsBatchConsoleInfoRepository.class).findGasBatSucRecord(detailMap);
+			if (null == prtList || CollectionUtils.isEmpty(prtList)) {
+				logger.info("There are no records for select check trans journal ");
+				throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
+			}
 			context.setData("sumCnt", prtList.get(0).get("SUM_SUC_TOT_CNT"));
 			context.setData("sumAmt", prtList.get(0).get("SUM_SUC_TOT_AMT"));
 			fileName = new StringBuffer((new StringBuilder("(惠州分行)燃气批量代扣成功报表_"+ br + "_" + beginDate + "_" + endDate).append(".txt").toString()));
 		}
 		if("6".equals(prtFlg)){
 			prtList = get(GDEupsBatchConsoleInfoRepository.class).findGasBatFalRecord(detailMap);
+			if (null == prtList || CollectionUtils.isEmpty(prtList)) {
+				logger.info("There are no records for select check trans journal ");
+				throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
+			}
 			context.setData("sumCnt", prtList.get(0).get("SUM_FAL_TOT_CNT"));
 			context.setData("sumAmt", prtList.get(0).get("SUM_FAL_TOT_AMT"));
 			fileName = new StringBuffer((new StringBuilder("(惠州分行)燃气批量代扣失败报表_"+ br + "_" + beginDate + "_" + endDate).append(".txt").toString()));
