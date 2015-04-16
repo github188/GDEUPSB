@@ -13,6 +13,7 @@ import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.spi.service.single.PayUnilateralToBankService;
 import com.bocom.bbip.eups.spi.vo.CommHeadDomain;
 import com.bocom.bbip.eups.spi.vo.PayFeeOnlineDomain;
+import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdTbcCusAgtInfo;
 import com.bocom.bbip.gdeupsb.repository.GdTbcCusAgtInfoRepository;
@@ -81,6 +82,13 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
         context.setData(ParamKeys.TXN_DATE, DateUtils.parse(context.getData("TRAN_TIME").toString().substring(0, 8), DateUtils.STYLE_yyyyMMdd));
         context.setData(ParamKeys.THD_CUS_NO, context.getData("CUST_ID"));
         GdTbcCusAgtInfo cusAgtInfo = cusAgtInfoRepository.findOne(context.getData("CUST_ID").toString());
+        
+		if (cusAgtInfo == null) {
+			context.setData(GDParamKeys.RSP_CDE, "9999");
+			context.setData(GDParamKeys.RSP_MSG, "客户未签约");
+			throw new CoreException(GDParamKeys.RSP_MSG);
+		}
+        
         context.setData(ParamKeys.CUS_AC, cusAgtInfo.getActNo());
         context.setData(ParamKeys.THD_SEQUENCE, publicService.getBBIPSequence());
         context.setData(ParamKeys.BR, context.getData(ParamKeys.BR));
