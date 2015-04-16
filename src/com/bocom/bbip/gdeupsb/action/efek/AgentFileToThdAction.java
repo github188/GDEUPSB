@@ -17,7 +17,9 @@ import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsCusAgentJournal;
+import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsCusAgentJournalRepository;
+import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.repository.GDEupsCusAgentJournalRepository;
@@ -38,6 +40,8 @@ public class AgentFileToThdAction extends BaseAction{
 	EupsCusAgentJournalRepository eupsCusAgentJournalRepository;
 	@Autowired
 	OperateFileAction operateFileAction;
+	@Autowired
+	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
 		@Override
 		public void execute(Context context) throws CoreException,
 				CoreRuntimeException {
@@ -74,9 +78,11 @@ public class AgentFileToThdAction extends BaseAction{
 								string="0"+string;
 						}
 						String locName="PL0301"+comNo+DateUtils.format(txnDate, DateUtils.STYLE_yyyyMMdd)+string+".txt";
-//						PL_＋银行代码（4位）+供电单位编码（8位）＋查询日期（yyyymmdd）A+序号（4）.txt
-						
-//						operateFileAction.createCheckFile(eupsThdFtpConfig, "", locName, resultMap);
+						EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("efekAgent");
+						eupsThdFtpConfig.setLocFleNme(locName);
+						eupsThdFtpConfig.setRmtFleNme(locName);
+						eupsThdFtpConfig.setFtpDir("1");
+						operateFileAction.createCheckFile(eupsThdFtpConfig, "efekAgent", locName, resultMap);
 						callThd(context);
 				}
 				log.info("==============End   AgentFileToThdAction");
