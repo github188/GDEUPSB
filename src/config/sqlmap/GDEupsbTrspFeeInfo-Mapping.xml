@@ -1336,4 +1336,11 @@
     ORDER BY THD_KEY DESC
   </select>
 
+	  <select id="findOneByTlogNo" resultMap="basicResultMap" parameterType="java.lang.String" >
+   				 	select 
+				   			 <include refid="baseColumnList" />
+				    from gdeupsb.TRSP_FEE_INFO
+				    where  TLOG_NO= #{tlogNo,jdbcType=CHAR}
+  </select>
+  
 </mapper>
