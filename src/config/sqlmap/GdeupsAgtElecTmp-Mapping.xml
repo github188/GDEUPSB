@@ -456,24 +456,8 @@
   
   
   
-  <select id="findBase" resultMap="basicResultMap" parameterType="com.bocom.bbip.gdeupsb.entity.GdeupsAgtElecTmp">
-    select
-    <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_AGT_ELEC_TMP
-    <trim prefix="WHERE" prefixOverrides="AND" >
-    
-      
-      <if test="actNo!=null" >
-        AND  ACT_NO=#{actNo,jdbcType=CHAR}
-      </if>
-      <if test="feeNum!=null" >
-        AND  FEE_NUM=#{feeNum,jdbcType=CHAR}
-      </if>
-     
-    </trim>
-    </select>
-    
-    
+ 
+  
     <select id="findBase" resultMap="basicResultMap" parameterType="com.bocom.bbip.gdeupsb.entity.GdeupsAgtElecTmp">
     select
     <include refid="baseColumnList" />
