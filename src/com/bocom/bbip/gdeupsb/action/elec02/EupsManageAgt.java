@@ -81,8 +81,8 @@ public class EupsManageAgt extends BaseAction {
 		 	context.setData("oprTyp", "0");
 		 	
 	   
-	       	Map<String,Object>agentCollectAgreementMap=setAgentCollectAgreementMap(context,(String)context.getData("OAC"));
-	       	Map<String,Object>customerInfoMap=setCustomerInfoMap(context,(String)context.getData("OAC"));
+	       	Map<String,Object>agentCollectAgreementMap=setAgentCollectAgreementMap(context,(String)context.getData("TActNo"));
+	       	Map<String,Object>customerInfoMap=setCustomerInfoMap(context,(String)context.getData("TActNo"));
 
 	       	customerInfo.add(customerInfoMap);
 	       	agentCollectAgreement.add(agentCollectAgreementMap);
@@ -103,7 +103,7 @@ public class EupsManageAgt extends BaseAction {
 			context.setData("bvCde", "007");   //凭证代码 "007-磁条卡；008-IC卡；009-磁条和IC复合卡；704-储蓄存折；
 			context.setData("cusNo", (String)context.getData("JFH"));     			//客户号
 			context.setData(ParamKeys.COMPANY_NO, "4450000002");
-			context.setData(ParamKeys.CUS_AC, (String)context.getData("OAC"));
+			context.setData(ParamKeys.CUS_AC, (String)context.getData("TActNo"));
 			context.setData("buyTyp", "0");
 			context.setData("busKnd", "A089");
 			
@@ -154,7 +154,7 @@ public class EupsManageAgt extends BaseAction {
 			context.setData("bvCde", "007");   //凭证代码 "007-磁条卡；008-IC卡；009-磁条和IC复合卡；704-储蓄存折；
 			context.setData("cusNo", (String)context.getData("JFH"));     			//客户号
 			context.setData(ParamKeys.COMPANY_NO, "4450000002");  //可以从本地库里查询
-			context.setData(ParamKeys.CUS_AC, context.getData("OAC"));
+			context.setData(ParamKeys.CUS_AC, context.getData("TActNo"));
 			context.setData("buyTyp", "0");
 			context.setData("busKnd", "A089");
 	    	   
@@ -218,7 +218,7 @@ public class EupsManageAgt extends BaseAction {
 
 	private void queryAgentDeal(Context context) throws CoreException {
 			Map<String,Object>map=context.getDataMap();
-			map.put("cusAc", (String)context.getData("OAC"));
+			map.put("cusAc", (String)context.getData("TActNo"));
 			
 			//header 设定
 			context.setData("traceNo", context.getData(ParamKeys.TRACE_NO));
