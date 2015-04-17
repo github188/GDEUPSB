@@ -43,7 +43,7 @@
 		</actions>
 	</process>
 	<!--  电力协议维护 -->
-	<process id="gdeups.manageELEC02AGT" template="eups.simpleTran"	interceptors="thdTransInterceptor" >
+	<process id="gdeups.manageELEC02AGT" template="eups.simpleTran"	interceptors="eups.thdTransInterceptor" >
 		<actions>
 			  <action id="act" ref="manageAGT"  operations="process"/>
 		</actions>
