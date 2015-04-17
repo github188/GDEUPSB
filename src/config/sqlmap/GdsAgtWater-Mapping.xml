@@ -577,8 +577,8 @@
 	
 	<!-- 签约一站通协议拷盘:查找拷盘数据(广州有线/珠江数码) -->
 	<select id="findFileSndInfoTel" resultType="java.util.Map">
-		select
-		a.Act_Typ actTyp, a.Act_No actNo, a.Act_Nm actNm, a.Id_Typ idTyp, a.Id_No idNo, a.Mob_Tel mobTel,
+		select 
+		a.Act_Typ actTyp, a.Act_No actNo, b.TCUS_NM actNm, a.Id_Typ idTyp, a.Id_No idNo, a.Mob_Tel mobTel,
                b.TCus_Id tCusId, b.Txn_Cnl txnCnl, b.Eff_Dat effDat, b.Ivd_Dat ivdDat
 		from ${agtMTb} a, ${agtSTb} b
 		where a.Gds_BId=#{gdsBId}
