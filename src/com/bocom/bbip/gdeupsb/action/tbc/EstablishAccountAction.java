@@ -52,7 +52,8 @@ public class EstablishAccountAction extends BaseAction {
         
         //转换
         context.setData("txnTme", context.getData("TRAN_TIME"));
-        context.setData(ParamKeys.BK, context.getData("BANK_ID"));
+//      context.setData(ParamKeys.BK, context.getData("BANK_ID"));
+        context.setData(ParamKeys.BK, "01441999999");
         context.setData("dptId", context.getData("DPT_ID"));
         //上面公共报文头，下面报文体
         context.setData("custId", context.getData("CUST_ID"));
@@ -80,8 +81,10 @@ public class EstablishAccountAction extends BaseAction {
             throw new CoreException(ErrorCodes.THD_CHL_ALDEAY_SIGN_OUT);
         }
         
-        //获取柜员号
-        context.setData("tlr", "ABIR148");//TODO获取柜员号
+        //获取虚拟柜员号 add by zds
+        String tlr = publicService.getETeller("01441999999");
+        System.out.println("tlr=" + tlr);
+        context.setData("tlr", tlr);
         
         //转换机构编号
         context.setData("comNum", resultTbcBasInfo.getDptNam());
