@@ -45,5 +45,8 @@ public interface GDEupsbTrspFeeInfoRepository extends PagingAndSortingRepository
 	
 	public GDEupsbTrspFeeInfo findOneByTlogNo(String tlogNo);
 
-	public List<GDEupsbTrspFeeInfo> findNoPrintList(String tlogNo);
+	public List<GDEupsbTrspFeeInfo> findNoPrintList(Map<String, Object> map);
+	
+	public List<Map<String, Object>> findStatuesDeatil(Map<String, Object> map);
+	
 }
