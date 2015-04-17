@@ -1372,7 +1372,7 @@
     and STATUS='0'
   </select>
 
-	  <select id="findStatuesDeatil" resultMap="basicResultMap"  parameterType="java.util.Map">
+	  <select id="findStatuesDeatil" resultType="java.util.Map"  parameterType="java.util.Map">
    		 select  STATUS,count(*) as TOT_CNT,sum(TXN_AMT) as TOT_AMT   from gdeupsb.TRSP_FEE_INFO
 	    where   PAY_DAT BETWEEN #{startDate,jdbcType=DATE} AND  #{endDate,jdbcType=DATE}
 	     group by STATUS
