@@ -149,7 +149,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 
 			if ("1".equals(optFlg)) { // 新增
 
-				checkCusAcSts(context);
+//				checkCusAcSts(context);
 
 				// 查询本地协议表是否存在该cusNo
 				GdGasCusAll gdGasCusAll = new GdGasCusAll();
@@ -190,7 +190,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			}
 			if ("2".equals(optFlg)) { // 修改
 
-				checkCusAcSts(context);
+//				checkCusAcSts(context);
 
 				setAgtCltAndCusInf(context);
 
