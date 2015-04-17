@@ -45,5 +45,5 @@ public interface GDEupsbTrspFeeInfoRepository extends PagingAndSortingRepository
 	
 	public GDEupsbTrspFeeInfo findOneByTlogNo(String tlogNo);
 
-
+	public List<GDEupsbTrspFeeInfo> findNoPrintList(String tlogNo);
 }
