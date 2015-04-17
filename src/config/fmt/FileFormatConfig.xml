@@ -159,6 +159,10 @@
 		<foreach name="detail" ref="config/fmt/fileFmt/TRSP00/CheckFileDetail.xml" />
 	</file>
 
+	<file name="trspCheckCreateFile" id="trspCheckFile" encoding="GBK"
+		lineSeparator="\n">
+		<foreach name="detail" ref="config/fmt/fileFmt/TRSP00/CreateCheckFileDetail.xml" />
+	</file>
 
 	<!-- 银行文件对账第三方（华商一卡通） -->
 	<file id="HSCardFile" name="HSCardFile" encoding="UTF-8"
