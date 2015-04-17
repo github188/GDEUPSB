@@ -146,8 +146,8 @@ public class BatchGashDealServiceAction extends BaseAction implements
 			// 从协议表中取
 			tmp.setTmpFld4(infoList.get(0).getCusNme());
 			tmp.setTmpFld3(infoList.get(0).getThdCusNme());// thdCusNme
-			tmp.setBk(bk);
-			tmp.setTmpFld2((String) detail.get(0).get("gasBk"));
+			tmp.setBk((String) detail.get(0).get("gasBk"));
+			tmp.setTmpFld2(bk);
 			tmp.setTxnDte(txnDate);
 			logger.info("============cusNme:" + tmp.getCusNme()
 					+ "===============thdCusNme:" + tmp.getTmpFld3());

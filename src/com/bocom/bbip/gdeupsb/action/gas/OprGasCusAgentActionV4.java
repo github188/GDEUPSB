@@ -173,13 +173,13 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 				// "eups.commInsertCusAgent", context);
 
 				// 不使用代收付签模板以及processId，直接调用接口
-//				Result insertCusAgtResult = bgspServiceAccessObject
-//						.callServiceFlatting("maintainAgentCollectAgreement",
-//								context.getDataMap());
-//				if (!insertCusAgtResult.isSuccess()) {
-//					throw new CoreRuntimeException(
-//							insertCusAgtResult.getResponseMessage());
-//				}
+				Result insertCusAgtResult = bgspServiceAccessObject
+						.callServiceFlatting("maintainAgentCollectAgreement",
+								context.getDataMap());
+				if (!insertCusAgtResult.isSuccess()) {
+					throw new CoreRuntimeException(
+							insertCusAgtResult.getResponseMessage());
+				}
 				// if (!"N".equals(insertCusAgtResult.getResponseType())) {
 				// throw new CoreRuntimeException(
 				// insertCusAgtResult.getResponseMessage());
@@ -195,13 +195,6 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 				setAgtCltAndCusInf(context);
 
 				// 上代收付查询协议，先根据cusAc进行列表查询
-				// Map<String, Object> cusListMap = setAcpMap(context);
-				// cusListMap.put(ParamKeys.CUS_AC,
-				// context.getData(ParamKeys.CUS_AC));
-				// context.setDataMap(cusListMap);
-				// Result accessObjList =
-				// bgspServiceAccessObject.callServiceFlatting("queryListAgentCollectAgreement",
-				// cusListMap);
 
 				Result accessObjList = bgspServiceAccessObject
 						.callServiceFlatting("queryListAgentCollectAgreement",
@@ -284,13 +277,6 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 				setAgtCltAndCusInf(context);
 				context.setData("agrChl", "01");
 				// 上代收付查询协议，先根据cusAc进行列表查询得到协议编号，再用协议编号查询明细（用户信息）
-				// Map<String, Object> cusListMap = setAcpMap(context);
-				// cusListMap.put(ParamKeys.CUS_AC,
-				// context.getData(ParamKeys.CUS_AC));
-				// context.setDataMap(cusListMap);
-				// Result accessObjList =
-				// bgspServiceAccessObject.callServiceFlatting("queryListAgentCollectAgreement",
-				// cusListMap);
 
 				Result accessObjList = bgspServiceAccessObject
 						.callServiceFlatting("queryListAgentCollectAgreement",
@@ -352,15 +338,15 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 							.callServiceFlatting("deleteAgentCollectAgreement",
 									context.getDataMap());
 
-					// if (!stopCusAgtResult.isSuccess()) {
-					// throw new CoreRuntimeException(
-					// stopCusAgtResult.getResponseMessage());
-					// }
+					 if (!stopCusAgtResult.isSuccess()) {
+					 throw new CoreRuntimeException(
+					 stopCusAgtResult.getResponseMessage());
+					 }
 
-					if (!"N".equals(stopCusAgtResult.getResponseType())) {
-						throw new CoreRuntimeException(
-								stopCusAgtResult.getResponseMessage());
-					}
+//					if (!"N".equals(stopCusAgtResult.getResponseType())) {
+//						throw new CoreRuntimeException(
+//								stopCusAgtResult.getResponseMessage());
+//					}
 
 					 callThdAndStopThdLclCusAgt(context);
 					context.setData("cusTyp", cusTypBak);
