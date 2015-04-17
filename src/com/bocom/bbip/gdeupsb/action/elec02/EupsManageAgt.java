@@ -1,6 +1,7 @@
 package com.bocom.bbip.gdeupsb.action.elec02;
 
 import java.util.Date;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,10 +76,15 @@ public class EupsManageAgt extends BaseAction {
 			agtElecTmp.setFeeNum(feeNum); //
 		}
 		agtElecTmp.setActNo((String) context.getData("TActNo")); // 账号
-		agtElecTmp = get(GdeupsAgtElecTmpRepository.class).findBase(agtElecTmp);
-
-		// 查询结果数据处理
-		setResponseResultFromAgts(context, agtElecTmp);
+		List<GdeupsAgtElecTmp> list = get(GdeupsAgtElecTmpRepository.class).findBase(agtElecTmp);
+		if(list.size()>0){
+			agtElecTmp = list.get(0);
+			//查询结果数据处理
+			setResponseResultFromAgts(context,agtElecTmp);
+		}else{
+			log.info("没有查询到协议信息！");
+			 throw new CoreException("没有查询到协议信息！");
+		}
 	}
 
 	// 删除交易
