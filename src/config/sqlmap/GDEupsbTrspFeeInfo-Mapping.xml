@@ -1364,12 +1364,18 @@
 				    where  TLOG_NO= #{tlogNo,jdbcType=CHAR}
   </select>
   
-  <select id="findNoPrintList" resultMap="basicResultMap"  parameterType="java.lang.String">
+  <select id="findNoPrintList" resultMap="basicResultMap"  parameterType="java.util.Map">
     select 
     <include refid="baseColumnList" />
     from gdeupsb.TRSP_FEE_INFO
-    where TCHK_NO=#{tchkNo,jdbcType=CHAR}
+    where (PAY_DAT BETWEEN #{startDate,jdbcType=DATE} AND  #{endDate,jdbcType=DATE})
     and STATUS='0'
   </select>
 
+	  <select id="findStatuesDeatil" resultMap="basicResultMap"  parameterType="java.util.Map">
+   		 select  STATUS,count(*) as TOT_CNT,sum(TXN_AMT) as TOT_AMT   from gdeupsb.TRSP_FEE_INFO
+	    where   PAY_DAT BETWEEN #{startDate,jdbcType=DATE} AND  #{endDate,jdbcType=DATE}
+	     group by STATUS
+  </select>
+  
 </mapper>
