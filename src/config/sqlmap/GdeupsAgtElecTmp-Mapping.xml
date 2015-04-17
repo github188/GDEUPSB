@@ -471,7 +471,93 @@
       </if>
      
     </trim>
+    </select>
+    
+    
+    <select id="findBase" resultMap="basicResultMap" parameterType="com.bocom.bbip.gdeupsb.entity.GdeupsAgtElecTmp">
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_AGT_ELEC_TMP
+    <trim prefix="WHERE" prefixOverrides="AND" >
+    
+      
+      <if test="actNo!=null" >
+        AND  ACT_NO=#{actNo,jdbcType=CHAR}
+      </if>
+      <if test="feeNum!=null" >
+        AND  FEE_NUM=#{feeNum,jdbcType=CHAR}
+      </if>
+     
+    </trim>
   </select>
+   
+   <delete id="deleteByAc" parameterType="com.bocom.bbip.gdeupsb.entity.GdeupsAgtElecTmp" >
+    delete from ${GDEUPSB_SCHEMA}.GDEUPS_AGT_ELEC_TMP
+    where ACT_NO = #{actNo,jdbcType=CHAR}
+  </delete>
+  
+  
+  <update id="updateByAc" parameterType="com.bocom.bbip.gdeupsb.entity.GdeupsAgtElecTmp" >
+    update ${GDEUPSB_SCHEMA}.GDEUPS_AGT_ELEC_TMP
+    <set >
+    <if test="actType != null" >
+        ACT_TYPE = #{actType,jdbcType=CHAR},
+      </if>
+      <if test="perComFlag != null" >
+        PER_COM_FLAG = #{perComFlag,jdbcType=CHAR},
+      </if>
+      <if test="idType != null" >
+        ID_TYPE = #{idType,jdbcType=CHAR},
+      </if>
+      <if test="idNo != null" >
+        ID_NO = #{idNo,jdbcType=CHAR},
+      </if>
+      <if test="checkSendType != null" >
+        CHECK_SEND_TYPE = #{checkSendType,jdbcType=CHAR},
+      </if>
+      <if test="invoiceSnedType != null" >
+        INVOICE_SNED_TYPE = #{invoiceSnedType,jdbcType=CHAR},
+      </if>
+      <if test="pointNum != null" >
+        POINT_NUM = #{pointNum,jdbcType=CHAR},
+      </if>
+      <if test="invoiceSnedMan != null" >
+        INVOICE_SNED_MAN = #{invoiceSnedMan,jdbcType=CHAR},
+      </if>
+      <if test="invoiceSendZip != null" >
+        INVOICE_SEND_ZIP = #{invoiceSendZip,jdbcType=CHAR},
+      </if>
+      <if test="invoiceSendAddr != null" >
+        INVOICE_SEND_ADDR = #{invoiceSendAddr,jdbcType=CHAR},
+      </if>
+      <if test="checkSendMan != null" >
+        CHECK_SEND_MAN = #{checkSendMan,jdbcType=CHAR},
+      </if>
+      <if test="checkSendZip != null" >
+        CHECK_SEND_ZIP = #{checkSendZip,jdbcType=CHAR},
+      </if>
+      <if test="checkSendAddr != null" >
+        CHECK_SEND_ADDR = #{checkSendAddr,jdbcType=CHAR},
+      </if>
+      <if test="notifyType != null" >
+        NOTIFY_TYPE = #{notifyType,jdbcType=CHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=CHAR},
+      </if>
+      <if test="phoneNum != null" >
+        PHONE_NUM = #{phoneNum,jdbcType=CHAR},
+      </if>
+      <if test="telNum != null" >
+        TEL_NUM = #{telNum,jdbcType=CHAR},
+      </if>
+      <if test="prcessPassword != null" >
+        PRCESS_PASSWORD = #{prcessPassword,jdbcType=CHAR},
+      </if>
+      
+    </set>
+    where  ACT_NO = #{actNo,jdbcType=CHAR}
+  </update>
   
   
 </mapper>
