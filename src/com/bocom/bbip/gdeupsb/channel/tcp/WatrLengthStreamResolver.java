@@ -54,7 +54,11 @@ public class WatrLengthStreamResolver  extends LengthStreamResolver {
 
             byte[] arrayOfByte1 = new byte[lengthOffset + lengthSize];
             localDataInputStream.readFully(arrayOfByte1);
-
+            
+            String b=new String(arrayOfByte1);
+        	b=StringUtils.leftPad(b.trim(), arrayOfByte1.length, "0");
+        	arrayOfByte1=b.getBytes();
+        	
             int i = paramNumberConverter.toInt(arrayOfByte1, lengthOffset, lengthSize);
             i += lengthAddtive;
             //TODO：前置长度需要算在总长度类的需要在此处减去前置长度位数
