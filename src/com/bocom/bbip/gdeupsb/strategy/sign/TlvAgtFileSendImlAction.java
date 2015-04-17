@@ -76,6 +76,7 @@ public class TlvAgtFileSendImlAction implements AgtFileSendImlService {
 		// 查找拷盘数据
 		List<Map<String, Object>> fleSndList = gdsAgtWaterRepository.findFileSndInfoTel(inpara);
 		for(Map<String,Object> fleSndMap:fleSndList){
+			fleSndMap.put("filNam", fileName.substring(6, fileName.indexOf(".")));
 			fleSndMap.put("busNam", context.getData("busNam"));
 			fleSndMap.put("bnkDes", "交通银行");
 			fleSndMap.put("brNo", context.getData(ParamKeys.BK));   //分行号
@@ -93,6 +94,7 @@ public class TlvAgtFileSendImlAction implements AgtFileSendImlService {
 
 		operateFileAction.createCheckFile(eupsThdFtpConfig, "datFleSndTel", fileName, resultMap);
 
+		
 //		if ("N".equals(isExport)) {
 //			// 更新协议的批次号与制盘标志：UpdAgtBatchId
 		String fileName1=fileName.substring(6,fileName.indexOf("."));

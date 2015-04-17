@@ -69,6 +69,9 @@ public class WaterAgtFileSendImlAction implements AgtFileSendImlService {
 
 		// TODO:生成返盘文件
 		while (true) {
+			
+			
+			
 			break;
 		}
 
