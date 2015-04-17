@@ -2,9 +2,12 @@ package com.bocom.bbip.gdeupsb.action.elec02;
 
 
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
@@ -61,17 +64,25 @@ public class EupsManageCounterAgt extends BaseAction {
 			GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
 				
 			String feeNum = (String)context.getData("JFH");
+			String actNo = (String)context.getData("ActNo");
 			if(feeNum != null && feeNum.trim()!= ""){
 				agtElecTmp.setFeeNum(feeNum );      //
 			}
+			
+			if(actNo != null && actNo.trim()!= ""){
+				agtElecTmp.setActNo(actNo );      //
+			}
+			
+			List<GdeupsAgtElecTmp> list = get(GdeupsAgtElecTmpRepository.class).findBase(agtElecTmp);
+			if(list.size()>0){
+				agtElecTmp = list.get(0);
+				//查询结果数据处理
+				setResponseResultFromAgts(context,agtElecTmp);
+			}else{
+				log.info("没有查询到协议信息！");
+				 throw new CoreException("BBIP0004EU0045");
+			}
 
-			agtElecTmp.setActNo( (String)context.getData("ActNo"));      //账号
-			
-			agtElecTmp = get(GdeupsAgtElecTmpRepository.class).findBase(agtElecTmp);
-			
-			//查询结果数据处理
-			setResponseResultFromAgts(context,agtElecTmp);
-			
 	}
 
 	//删除交易
