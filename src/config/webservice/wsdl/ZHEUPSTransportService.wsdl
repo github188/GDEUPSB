@@ -12,6 +12,12 @@
   <wsdl:message name="trspFeeMonQryResponseMessage">
     <wsdl:part name="trspFeeMonQryResponse" element="gdeupsb:trspFeeMonQryResponse"/>
   </wsdl:message>
+  <wsdl:message name="nodCheckTrspFileRequestMessage">
+    <wsdl:part name="nodCheckTrspFileRequest" element="gdeupsb:nodCheckTrspFile"/>
+  </wsdl:message>
+  <wsdl:message name="nodCheckTrspFileResponseMessage">
+    <wsdl:part name="nodCheckTrspFileResponse" element="gdeupsb:nodCheckTrspFileResponse"/>
+  </wsdl:message>
   <wsdl:message name="trspPrintNPRequestMessage">
     <wsdl:part name="trspPrintNPRequest" element="gdeupsb:trspPrintNP"/>
   </wsdl:message>
@@ -120,6 +126,11 @@
       <wsdl:input message="tns:trspFeeMonQryRequestMessage"/>
       <wsdl:output message="tns:trspFeeMonQryResponseMessage"/>
     </wsdl:operation>
+    <wsdl:operation name="nodCheckTrspFile">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:nodCheckTrspFileRequestMessage"/>
+      <wsdl:output message="tns:nodCheckTrspFileResponseMessage"/>
+    </wsdl:operation>
     <wsdl:operation name="trspPrintNP">
       <wsdl:documentation/>
       <wsdl:input message="tns:trspPrintNPRequestMessage"/>
@@ -210,6 +221,15 @@
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
     <wsdl:operation name="trspFeeMonQry">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/trspFeeMonQry"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="nodCheckTrspFile">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.ZHEUPSTransportService/nodCheckTrspFile"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>

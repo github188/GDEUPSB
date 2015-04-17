@@ -17,6 +17,20 @@
       <xs:element name="response" type="tns:trspFeeMonQryResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:element name="nodCheckTrspFile" type="tns:nodCheckTrspFileReq_CType"/>
+  <xs:element name="nodCheckTrspFileResponse" type="tns:nodCheckTrspFileRsp_CType"/>
+  <xs:complexType name="nodCheckTrspFileReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:nodCheckTrspFileRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="nodCheckTrspFileRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:nodCheckTrspFileResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:element name="trspPrintNP" type="tns:trspPrintNPReq_CType"/>
   <xs:element name="trspPrintNPResponse" type="tns:trspPrintNPRsp_CType"/>
   <xs:complexType name="trspPrintNPReq_CType">
@@ -377,6 +391,89 @@
   <xs:simpleType name="carNo_SType">
     <xs:annotation>
       <xs:documentation>车牌号码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="nodCheckTrspFileRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="startDate" type="tns:startDate_SType"/>
+      <xs:element name="endDate" type="tns:endDate_SType"/>
+      <xs:element name="nodNo" type="tns:nodNo_SType" minOccurs="0"/>
+      <xs:element name="journalModel" type="tns:journalModel_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="nodCheckTrspFileResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="chkFlg" type="tns:chkFlg_SType" minOccurs="0"/>
+      <xs:element name="sucCnt" type="tns:sucCnt_SType" minOccurs="0"/>
+      <xs:element name="sucAmt" type="tns:sucAmt_SType" minOccurs="0"/>
+      <xs:element name="filNam" type="tns:filNam_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="startDate_SType">
+    <xs:annotation>
+      <xs:documentation>起始日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="endDate_SType">
+    <xs:annotation>
+      <xs:documentation>终止日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="nodNo_SType">
+    <xs:annotation>
+      <xs:documentation>网点号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="11"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="journalModel_SType">
+    <xs:annotation>
+      <xs:documentation>统计方式</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="chkFlg_SType">
+    <xs:annotation>
+      <xs:documentation>对账结果标志</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="sucCnt_SType">
+    <xs:annotation>
+      <xs:documentation>总笔数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="sucAmt_SType">
+    <xs:annotation>
+      <xs:documentation>总金额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="17"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="filNam_SType">
+    <xs:annotation>
+      <xs:documentation>报表文件名</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="20"/>
@@ -942,33 +1039,12 @@
   <xs:complexType name="checkTrspFileResponse_CType">
     <xs:sequence>
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
-      <xs:element name="returnMessage" type="tns:returnMessage_SType" minOccurs="0"/>
+      <xs:element name="chkFlg" type="tns:chkFlg_SType" minOccurs="0"/>
+      <xs:element name="sucCnt" type="tns:sucCnt_SType" minOccurs="0"/>
+      <xs:element name="sucAmt" type="tns:sucAmt_SType" minOccurs="0"/>
+      <xs:element name="filNam" type="tns:filNam_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="startDate_SType">
-    <xs:annotation>
-      <xs:documentation>起始日期</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="8"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="endDate_SType">
-    <xs:annotation>
-      <xs:documentation>终止日期</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="8"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="journalModel_SType">
-    <xs:annotation>
-      <xs:documentation>统计方式</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="1"/>
-    </xs:restriction>
-  </xs:simpleType>
   <xs:complexType name="transportFeeChargeRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader" minOccurs="0"/>
@@ -1016,10 +1092,7 @@
   </xs:complexType>
   <xs:complexType name="ptPrintQryRequest_CType">
     <xs:sequence>
-      <xs:element ref="tns:requestHeader" minOccurs="0"/>
-      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
-      <xs:element ref="tns:pageableRequest"/>
-      <xs:element name="carNo" type="tns:carNo_SType"/>
+      <xs:element ref="tns:requestHeader"/>
       <xs:element name="carTyp" type="tns:carTyp_SType" minOccurs="0"/>
       <xs:element name="actNo" type="tns:actNo_SType"/>
     </xs:sequence>
@@ -1120,14 +1193,6 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="1"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="nodNo_SType">
-    <xs:annotation>
-      <xs:documentation>网点号</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="6"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="prtDat_SType">
