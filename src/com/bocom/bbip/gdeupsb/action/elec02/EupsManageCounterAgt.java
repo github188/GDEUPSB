@@ -80,7 +80,7 @@ public class EupsManageCounterAgt extends BaseAction {
 				setResponseResultFromAgts(context,agtElecTmp);
 			}else{
 				log.info("没有查询到协议信息！");
-				 throw new CoreException("BBIP0004EU0045");
+				 throw new CoreException("没有查询到协议信息！");
 			}
 
 	}
