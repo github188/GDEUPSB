@@ -1,11 +1,48 @@
 package com.bocom.bbip.gdeupsb.entity;
 
 public class GdeupsAgtElecTmp {
-    private String changeType;
 
+	
+    private String brNo ;
+	
+   private String agtNo ;
+   private String comNo ;
+   private String bankNo ;
     private String comCode;
 
-    private String feeCode;
+    public String getBrNo() {
+		return brNo;
+	}
+
+	public void setBrNo(String brNo) {
+		this.brNo = brNo;
+	}
+
+	public String getAgtNo() {
+		return agtNo;
+	}
+
+	public void setAgtNo(String agtNo) {
+		this.agtNo = agtNo;
+	}
+
+	public String getComNo() {
+		return comNo;
+	}
+
+	public void setComNo(String comNo) {
+		this.comNo = comNo;
+	}
+
+	public String getBankNo() {
+		return bankNo;
+	}
+
+	public void setBankNo(String bankNo) {
+		this.bankNo = bankNo;
+	}
+
+	private String feeCode;
 
     private String feeNum;
 
@@ -59,14 +96,7 @@ public class GdeupsAgtElecTmp {
 
     private String prcessPassword;
 
-    public String getChangeType() {
-        return changeType;
-    }
-
-    public void setChangeType(String changeType) {
-        this.changeType = changeType;
-    }
-
+   
     public String getComCode() {
         return comCode;
     }
