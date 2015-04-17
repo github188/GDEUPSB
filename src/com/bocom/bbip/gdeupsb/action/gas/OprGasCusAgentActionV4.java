@@ -173,13 +173,13 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 				// "eups.commInsertCusAgent", context);
 
 				// 不使用代收付签模板以及processId，直接调用接口
-				Result insertCusAgtResult = bgspServiceAccessObject
-						.callServiceFlatting("maintainAgentCollectAgreement",
-								context.getDataMap());
-				if (!insertCusAgtResult.isSuccess()) {
-					throw new CoreRuntimeException(
-							insertCusAgtResult.getResponseMessage());
-				}
+//				Result insertCusAgtResult = bgspServiceAccessObject
+//						.callServiceFlatting("maintainAgentCollectAgreement",
+//								context.getDataMap());
+//				if (!insertCusAgtResult.isSuccess()) {
+//					throw new CoreRuntimeException(
+//							insertCusAgtResult.getResponseMessage());
+//				}
 				// if (!"N".equals(insertCusAgtResult.getResponseType())) {
 				// throw new CoreRuntimeException(
 				// insertCusAgtResult.getResponseMessage());
@@ -362,7 +362,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 								stopCusAgtResult.getResponseMessage());
 					}
 
-					// callThdAndStopThdLclCusAgt(context);
+					 callThdAndStopThdLclCusAgt(context);
 					context.setData("cusTyp", cusTypBak);
 				}
 			}
