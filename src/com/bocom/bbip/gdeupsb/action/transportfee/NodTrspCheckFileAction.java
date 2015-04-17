@@ -59,6 +59,9 @@ public class NodTrspCheckFileAction extends BaseAction{
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		Date startDate = DateUtils.parse((String)ctx.getData("startDate"));
+		if(ctx.getData("endDate")==null){
+				ctx.setData("endDate",DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
+		}
 		Date endDate = DateUtils.parse((String)ctx.getData("endDate"));
 		map.put("startDate", startDate);
 		map.put("endDate", endDate);
