@@ -75,7 +75,6 @@ public class EupsManageCounterAgt extends BaseAction {
      context.setData("FileName", "                               ");
      context.setData("zipFlag", "0");
      
-     context.setData("OAC", (String)context.getData("ActNo"));
   
      final int oprType=Integer.parseInt((String)context.getData("CHT"));
 		switch (oprType) {
@@ -105,10 +104,12 @@ public class EupsManageCounterAgt extends BaseAction {
 		 	List<Map<String,Object>>customerInfo=new ArrayList<Map<String,Object>>();
 		 	context.setData("agrChl", "01");
 		 	context.setData("oprTyp", "0");
-		 	context.setData("TIdNo","320324198603121876");
+		 	
+		 	//可以查出来
+		 	context.setData("TIdNo","320324199803121876");
 		 
-	       	Map<String,Object>agentCollectAgreementMap=setAgentCollectAgreementMap(context,(String)context.getData("OAC"));
-	       	Map<String,Object>customerInfoMap=setCustomerInfoMap(context,(String)context.getData("OAC"));
+	       	Map<String,Object>agentCollectAgreementMap=setAgentCollectAgreementMap(context,(String)context.getData("ActNo"));
+	       	Map<String,Object>customerInfoMap=setCustomerInfoMap(context,(String)context.getData("ActNo"));
 
 	       	customerInfo.add(customerInfoMap);
 	       	agentCollectAgreement.add(agentCollectAgreementMap);
@@ -131,7 +132,7 @@ public class EupsManageCounterAgt extends BaseAction {
 			context.setData("bvCde", "007");   //凭证代码 "007-磁条卡；008-IC卡；009-磁条和IC复合卡；704-储蓄存折；
 			context.setData("cusNo", (String)context.getData("JFH"));     			//客户号
 			context.setData(ParamKeys.COMPANY_NO, "4450000002");
-			context.setData(ParamKeys.CUS_AC, (String)context.getData("OAC"));
+			context.setData(ParamKeys.CUS_AC, (String)context.getData("ActNo"));
 			context.setData("buyTyp", "0");
 			context.setData("busKnd", "A089");
 			
@@ -196,7 +197,7 @@ public class EupsManageCounterAgt extends BaseAction {
 			context.setData("bvCde", "007");   //凭证代码 "007-磁条卡；008-IC卡；009-磁条和IC复合卡；704-储蓄存折；
 			context.setData("cusNo", (String)context.getData("JFH"));     			//客户号
 			context.setData(ParamKeys.COMPANY_NO, "4450000002");  //可以从本地库里查询
-			context.setData(ParamKeys.CUS_AC, context.getData("OAC"));
+			context.setData(ParamKeys.CUS_AC, context.getData("ActNo"));
 			context.setData("buyTyp", "0");
 			context.setData("busKnd", "A089");
 	    	   
@@ -261,7 +262,7 @@ public class EupsManageCounterAgt extends BaseAction {
 	private void queryAgentDeal(Context context) throws CoreException {
 	    	context.setData("agrChl", "01");
 			Map<String,Object>map=context.getDataMap();
-			map.put("cusAc", (String)context.getData("OAC"));
+			map.put("cusAc", (String)context.getData("ActNo"));
 			Result respData = ((BGSPServiceAccessObject)get(BGSPServiceAccessObject.class)).
 			callServiceFlatting("queryListAgentCollectAgreement", map);
 			Map ret=back(context,respData);
@@ -275,7 +276,7 @@ public class EupsManageCounterAgt extends BaseAction {
 			 Map<String,Object>map=context.getDataMap();
 		     
 		     
-		     final String agdAgrNo=(String)getAgdAgrNoByCusAc(context, (String)context.getData("OAC"));
+		     final String agdAgrNo=(String)getAgdAgrNoByCusAc(context, (String)context.getData("ActNo"));
 //		     List agdAgrNoList = new ArrayList<Map<String,Object>>();
 //		     Map agdAgrNoMap = new HashMap<String,Object>();
 //		     agdAgrNoMap.put("agdAgrNo", agdAgrNo);
@@ -388,7 +389,7 @@ public class EupsManageCounterAgt extends BaseAction {
 		
 		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
 		
-		agtElecTmp.setActNo( (String)context.getData("OAC"));
+		agtElecTmp.setActNo( (String)context.getData("ActNo"));
 		agtElecTmp.setFeeNum( (String)context.getData("JFH"));
 		get(GdeupsAgtElecTmpRepository.class).delete(agtElecTmp);
 		
