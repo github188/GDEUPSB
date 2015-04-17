@@ -1336,6 +1336,27 @@
     ORDER BY THD_KEY DESC
   </select>
 
+
+
+  <select id="find0" resultMap="basicResultMap" parameterType="java.util.Map">
+    select STATUS,count(*) count,count(TXN_AMT) amt from gdeupsb.TRSP_FEE_INFO
+    where BR_NO = #{bk,jdbcType=CHAR} and((STATUS='0' AND (PAY_DAT between #{startDate,jdbcType=CHAR} AND #{endDate,jdbcType=CHAR} ) and PAY_NOD= #{nodNo,jdbcType=CHAR})
+    or (STATUS='1' AND (TACT_DT between #{startDate,jdbcType=CHAR} AND #{endDate,jdbcType=CHAR}) and PRT_NOD= #{nodNo,jdbcType=CHAR})
+    or ((STATUS='2' or STATUS='3') AND (RVS_DAT between #{startDate,jdbcType=CHAR} AND #{endDate,jdbcType=CHAR}) AND RVS_NOD= #{nodNo,jdbcType=CHAR}))
+   group by STATUS
+  </select>
+  
+  <select id="findSum" resultType="java.util.Map" parameterType="java.util.Map">
+   SELECT count(*) as OrnCnt,value(sum(cast(Txn_Amt as BIGINT)),0) as OrnAmt,
+                        value(sum(case when Status='1' then 1 else 0 end ),0) as SucCnt,
+                        value(sum(case when Status='1' then BIGINT(Txn_Amt) else 0 end ),0) as SucAmt
+                 FROM  gdeupsb.TRSP_FEE_INFO
+                 WHERE  Br_No= #{bk,jdbcType=CHAR}
+                 AND  ((Status='0' and (Pay_Dat between #{startDate,jdbcType=CHAR} AND #{endDate,jdbcType=CHAR}) and (Pay_Nod= #{nodNo,jdbcType=CHAR}))
+                 OR   (Status='1' and (TAct_Dt between #{startDate,jdbcType=CHAR} AND #{endDate,jdbcType=CHAR}) and (Prt_Nod= #{nodNo,jdbcType=CHAR}) )
+                 OR   ((Status='2' or Status='3') and (Rvs_Dat between #{startDate,jdbcType=CHAR} AND #{endDate,jdbcType=CHAR}) and (Rvs_Nod= #{nodNo,jdbcType=CHAR}))) 
+  </select>
+
 	  <select id="findOneByTlogNo" resultMap="basicResultMap" parameterType="java.lang.String" >
    				 	select 
 				   			 <include refid="baseColumnList" />
@@ -1343,4 +1364,5 @@
 				    where  TLOG_NO= #{tlogNo,jdbcType=CHAR}
   </select>
   
+
 </mapper>
