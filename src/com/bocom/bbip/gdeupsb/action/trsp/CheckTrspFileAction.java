@@ -194,11 +194,12 @@ public class CheckTrspFileAction extends BaseAction {
 		// 判断是否全部对账
 
 		List<GDEupsbTrspFeeInfo> gdEupsbTrspFeeInfoList = gdEupsbTrspFeeInfoRepository.findNotCheck(tChkNo);
+		//TODO 
 		if (CollectionUtils.isNotEmpty(gdEupsbTrspFeeInfoList)) {
-			context.setData(ParamKeys.RSP_CDE, "329999");
-			context.setData(ParamKeys.RSP_MSG, "系统错误");
-			printDetail(context, tChkNo, gdEupsbTrspFeeInfoList);
-			throw new CoreException("系统错误");
+//			context.setData(ParamKeys.RSP_CDE, "329999");
+//			context.setData(ParamKeys.RSP_MSG, "系统错误");
+//			printDetail(context, tChkNo, gdEupsbTrspFeeInfoList);
+//			throw new CoreException("系统错误");
 		}
 		context.setData(GDParamKeys.MSGTYP, "N");
 		context.setData(ParamKeys.RSP_CDE, "000000");
@@ -368,7 +369,7 @@ public class CheckTrspFileAction extends BaseAction {
 			}
 		} else if (1 == i) {// ~~~~~~~~~~~~~清单方式
 			rptFmt = rptFmt + 1;
-		} else if (2 == i) {// ~~~~~~~~~~~~~更改发票清单
+		} else if (2 == i) {// ~~~~~~~~~~~~~更改发票清单    修改
 			rptFmt = rptFmt + 2;
 		} else if (3 == i) {// ~~~~~~~~~~~~~以缴费未打印发票清单
 			rptFmt = rptFmt + 3;
