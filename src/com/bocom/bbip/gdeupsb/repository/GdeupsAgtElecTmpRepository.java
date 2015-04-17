@@ -13,4 +13,14 @@ PagingAndSortingRepository<GdeupsAgtElecTmp, String>
  {
 	@Find
 	public GdeupsAgtElecTmp findBase(GdeupsAgtElecTmp agtElec);
+	
+	@Find
+	public void deleteByAc(GdeupsAgtElecTmp agtElec);
+	
+	@Find
+	public void updateByAc(GdeupsAgtElecTmp agtElec);
+	
+	
+	
+	
 }
