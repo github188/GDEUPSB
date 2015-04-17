@@ -217,5 +217,13 @@
 		</actions>
 	</process>
 	
+	<!-- 协办行对账-->
+	 <process id="gdeupsb.nodTrspCheckFile" template="eups.simpleTran"
+		interceptors="eups.thdTransInterceptor">
+		<actions>
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.common.CheckComTxnCtlAction" operations="checkThdTxnCtlNormal" />
+		    <action id="act" class="com.bocom.bbip.gdeupsb.action.transportfee.NodTrspCheckFileAction"/>
+		</actions>
+	</process>
 	
 </x:beans>
