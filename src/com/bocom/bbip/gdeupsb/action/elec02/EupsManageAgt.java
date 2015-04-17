@@ -48,18 +48,7 @@ public class EupsManageAgt extends BaseAction {
     		 ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getBBIPSequence(),4));
      
      
-     	//header 设定
-		context.setData("traceNo", "2016018520150407193200123456");
-		context.setData("traceSrc", "HPFS0036");
-		context.setData("version", "0.01");
-		context.setData("reqTme", "2015-03-09T15:06:40");
-		context.setData("reqJrnNo", get(BBIPPublicService.class).getBBIPSequence());
-		context.setData("reqSysCde", "");
-		context.setData("tlr", "ABIR148");
-		context.setData("chn", "00");
-		context.setData("bk", "01441999999");
-		context.setData("br", "01441131999");
-		context.setData("obkBk", "301");
+     	
      
      
      final int oprType=Integer.parseInt((String)context.getData("CHT"));
