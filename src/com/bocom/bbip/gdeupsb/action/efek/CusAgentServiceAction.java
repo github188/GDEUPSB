@@ -27,6 +27,7 @@ import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.strategy.efek.agent.UpdateCusAgentServiceAction;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.bbip.service.Result;
+import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
@@ -90,6 +91,7 @@ public class CusAgentServiceAction extends BaseAction{
 					map.put("cusAc", context.getData("newCusAc"));
 					map.put("cusNme", context.getData("newCusName"));
 					cusAc=context.getData("newCusAc");
+					
 				}else if("1".equals(oprTyp)){
 					//先删除协议，然后再添加 
 					context.setData("oprTyp", "2");
@@ -104,6 +106,7 @@ public class CusAgentServiceAction extends BaseAction{
 					logger.info("~~~~~~~~~~~~~~~~~Enter  eups.commDelCusAgentELEC00 ");
 					mothed="eups.commDelCusAgentELEC00";
 				}
+				context.setData("cusAc", cusAc);
 				//添加 agentCollectAgreement
 				List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();
 				list.add(map);
@@ -276,13 +279,13 @@ public class CusAgentServiceAction extends BaseAction{
 				context.setData("br", "01441131999");
 			}
 			map.put("cusAc", context.getData("cusAc"));
-			map.put("cusAc", "6222620710012838064");
+//			map.put("cusAc", "6222600620032807508");
 			logger.info("~~~~~~~~~~requestHeader~~~~map~~~~~ "+map);
 			logger.info("~~~~~~~~~~列表查询开始 ");
 			//上代收付取协议编号
 			Result accessObjList = bgspServiceAccessObject.callServiceFlatting("queryListAgentCollectAgreement",map);
 			if(!accessObjList.isSuccess()){
-//						throw new CoreException(accessObjList.getPayload().get("responseMessage").toString());
+						throw new CoreException(accessObjList.getPayload().get("responseMessage").toString());
 			}
 			logger.info("~~~~~~~~~~列表查询结束~~~~"+accessObjList);
 			if(accessObjList.getPayload().get("agentCollectAgreement") ==null	){
