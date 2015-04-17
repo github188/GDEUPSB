@@ -311,7 +311,7 @@ public class EupsManageAgt extends BaseAction {
 	       customerInfoMap.put("bvCde", "007");   	//凭证代码
 	       customerInfoMap.put("bvNo", "");    		//凭证.号码
 	       customerInfoMap.put("ourOthFlg", "0");    //本他行标志
-	       customerInfoMap.put("obkBk",(String)context.getData("OKH")); 	//新的开户行号
+	       customerInfoMap.put("obkBk","301"); 	//新的开户行号
 		return customerInfoMap;
 	}
 
