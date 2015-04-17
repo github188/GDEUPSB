@@ -802,7 +802,7 @@
 </update>
 
 <select id="findNotCheck"   resultMap="basicResultMap"   parameterType="java.lang.String">
-		select * from gdeupsb.TRSP_FEE_INFO where  TCHK_NO=#{tChkNo,jdbcType=CHAR} and CHK_FLG='0'
+		select * from gdeupsb.TRSP_FEE_INFO where  TCHK_NO=#{tChkNo,jdbcType=CHAR} and CHK_FLG !='1'
 </select>
 <select id="findSumForTxnAmt"  resultType="java.util.Map"  parameterType="java.lang.String">
 		select count(*) as COUNT ,sum(TXN_AMT) as SUMTXNAMT from gdeupsb.TRSP_FEE_INFO 
@@ -1364,5 +1364,12 @@
 				    where  TLOG_NO= #{tlogNo,jdbcType=CHAR}
   </select>
   
+  <select id="findNoPrintList" resultMap="basicResultMap"  parameterType="java.lang.String">
+    select 
+    <include refid="baseColumnList" />
+    from gdeupsb.TRSP_FEE_INFO
+    where TCHK_NO=#{tchkNo,jdbcType=CHAR}
+    and STATUS='0'
+  </select>
 
 </mapper>
