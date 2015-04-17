@@ -2,7 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.bocom.bbip.gdeupsb.entity.GdeupsAgtElecTmp" >
   <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GdeupsAgtElecTmp" >
-    <result column="CHANGE_TYPE" property="changeType" jdbcType="CHAR" />
+    <result column="BR_NO" property="brNo" jdbcType="CHAR" />
+    <result column="AGT_NO" property="agtNo" jdbcType="CHAR" />
+    
+    <result column="COM_NO" property="comNo" jdbcType="CHAR" />
+    
+    <result column="BANK_NO" property="bankNo" jdbcType="CHAR" />
+    
     <result column="COM_CODE" property="comCode" jdbcType="CHAR" />
     <result column="FEE_CODE" property="feeCode" jdbcType="CHAR" />
     <result column="FEE_NUM" property="feeNum" jdbcType="CHAR" />
@@ -33,7 +39,7 @@
     <result column="PRCESS_PASSWORD" property="prcessPassword" jdbcType="CHAR" />
   </resultMap>
   <sql id="baseColumnList" >
-    CHANGE_TYPE, COM_CODE, FEE_CODE, FEE_NUM, USER_NAME, OLD_BANK_NUM, OLD_CARD_NO, NEW_BANK_NUM, 
+     BR_NO , AGT_NO ,COM_NO , BANK_NO, COM_CODE, FEE_CODE, FEE_NUM, USER_NAME, OLD_BANK_NUM, OLD_CARD_NO, NEW_BANK_NUM, 
     ACT_NO, ACOUNT_NAME, ACT_TYPE, PER_COM_FLAG, ID_TYPE, ID_NO, CHECK_SEND_TYPE, INVOICE_SNED_TYPE, 
     POINT_NUM, INVOICE_SNED_MAN, INVOICE_SEND_ZIP, INVOICE_SEND_ADDR, CHECK_SEND_MAN, 
     CHECK_SEND_ZIP, CHECK_SEND_ADDR, NOTIFY_TYPE, EMAIL, PHONE_NUM, TEL_NUM, REMARK, 
@@ -44,8 +50,17 @@
     <include refid="baseColumnList" />
     from ${GDEUPSB_SCHEMA}.GDEUPS_AGT_ELEC_TMP
     <trim prefix="WHERE" prefixOverrides="AND" >
-      <if test="changeType!=null" >
-        AND  CHANGE_TYPE=#{changeType,jdbcType=CHAR}
+    <if test="brNo != null" >
+        #{brNo,jdbcType=CHAR},
+      </if>
+      <if test="agtNo != null" >
+        #{agtNo,jdbcType=CHAR},
+      </if>
+      <if test="comNo != null" >
+        #{comNo,jdbcType=CHAR},
+      </if>
+      <if test="bankNo != null" >
+        #{bankNo,jdbcType=CHAR},
       </if>
       <if test="comCode!=null" >
         AND  COM_CODE=#{comCode,jdbcType=CHAR}
@@ -136,8 +151,17 @@
   <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdeupsAgtElecTmp" >
     insert into ${GDEUPSB_SCHEMA}.GDEUPS_AGT_ELEC_TMP
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="changeType != null" >
-        CHANGE_TYPE,
+      <if test="brNo != null" >
+        BR_NO,
+      </if>
+      <if test="agtNo != null" >
+        AGT_NO,
+      </if>
+      <if test="comNo != null" >
+        COM_NO,
+      </if>
+      <if test="bankNo != null" >
+        BANK_NO,
       </if>
       <if test="comCode != null" >
         COM_CODE,
@@ -225,8 +249,17 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="changeType != null" >
-        #{changeType,jdbcType=CHAR},
+      <if test="brNo != null" >
+        #{brNo,jdbcType=CHAR},
+      </if>
+      <if test="agtNo != null" >
+        #{agtNo,jdbcType=CHAR},
+      </if>
+      <if test="comNo != null" >
+        #{comNo,jdbcType=CHAR},
+      </if>
+      <if test="bankNo != null" >
+        #{bankNo,jdbcType=CHAR},
       </if>
       <if test="comCode != null" >
         #{comCode,jdbcType=CHAR},
@@ -317,8 +350,17 @@
   <select id="findCount" resultType="java.lang.Integer" >
     select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_AGT_ELEC_TMP
     <trim prefix="WHERE" prefixOverrides="AND" >
-      <if test="changeType!=null" >
-        AND  CHANGE_TYPE=#{changeType,jdbcType=CHAR}
+      <if test="brNo != null" >
+        BR_NO,
+      </if>
+      <if test="agtNo != null" >
+        AGT_NO,
+      </if>
+      <if test="comNo != null" >
+        COM_NO,
+      </if>
+      <if test="bankNo != null" >
+        BANK_NO,
       </if>
       <if test="comCode!=null" >
         AND  COM_CODE=#{comCode,jdbcType=CHAR}
@@ -411,4 +453,25 @@
     <include refid="baseColumnList" />
     from ${GDEUPSB_SCHEMA}.GDEUPS_AGT_ELEC_TMP
   </select>
+  
+  
+  
+  <select id="findBase" resultMap="basicResultMap" parameterType="com.bocom.bbip.gdeupsb.entity.GdeupsAgtElecTmp">
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_AGT_ELEC_TMP
+    <trim prefix="WHERE" prefixOverrides="AND" >
+    
+      
+      <if test="actNo!=null" >
+        AND  ACT_NO=#{actNo,jdbcType=CHAR}
+      </if>
+      <if test="feeNum!=null" >
+        AND  FEE_NUM=#{feeNum,jdbcType=CHAR}
+      </if>
+     
+    </trim>
+  </select>
+  
+  
 </mapper>
