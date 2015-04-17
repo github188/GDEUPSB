@@ -1,6 +1,5 @@
 package com.bocom.bbip.gdeupsb.action.gas;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -628,22 +627,6 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 
 		logger.info("============context after setAgtCltAndCusInf :" + context);
 	}
-
-	// private Map<String, Object> setAcpMap(Context context) {
-	// Map<String, Object> map = new HashMap<String, Object>();
-	// map.put("traceNo", context.getData(ParamKeys.TRACE_NO));
-	// map.put("traceSrc", context.getData(ParamKeys.TRACE_SOURCE));
-	// map.put("version", context.getData(ParamKeys.VERSION));
-	// map.put("reqTme", new Date());
-	// map.put("reqJrnNo", get(BBIPPublicService.class).getBBIPSequence());
-	// map.put("reqSysCde", context.getData(ParamKeys.REQ_SYS_CDE));
-	// map.put("tlr", context.getData(ParamKeys.TELLER));
-	// map.put("chn", context.getData(ParamKeys.CHANNEL));
-	// map.put("bk", context.getData(ParamKeys.BK));
-	// map.put("br", context.getData(ParamKeys.BR));
-	// context.setDataMap(map);
-	// return map;
-	// }
 
 	private Map<String, Object> setCustomerInfoMap(Context context) {
 		Map<String, Object> map = new HashMap<String, Object>();

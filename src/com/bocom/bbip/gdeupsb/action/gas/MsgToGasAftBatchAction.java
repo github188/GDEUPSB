@@ -31,6 +31,7 @@ import com.bocom.bbip.gdeupsb.entity.GdGashBatchTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GdGashBatchTmpRepository;
 import com.bocom.bbip.utils.BeanUtils;
+import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -158,8 +159,6 @@ public class MsgToGasAftBatchAction extends BaseAction implements AfterBatchAcpS
 //		Map<String, Object> rspMap = 
 		callThdTradeManager.trade(context);
 		
-		
-		
 		context.setProcessId(oldProcessId);
 		logger.info("=================end MsgToGasAftBatchAction callThd with context=======" + context);
 	}
@@ -197,6 +196,10 @@ public class MsgToGasAftBatchAction extends BaseAction implements AfterBatchAcpS
 			logger.info("===============Start  BatchDataResultFileAction  createFileMap");	
 			//代收付文件内容
 			List<EupsBatchInfoDetail> mapList=context.getVariable("detailList");
+//			
+			 logger.info(">>>>>>>>>>>>>>>>>>>>> mapList.size(): " + CollectionUtils.isEmpty(mapList));
+			 logger.info(">>>>>>>>>>>>>>>>>>>>> mapList.size(): " + context.getVariable("detailList"));
+			
 //			List<GDEupsEleTmp> gdEupsEleTmpList = gdEupsEleTmpRepository.findAllOrderBySqn();
 //			List<GdGashBatchTmp> gasbatTmps = gdGashBatchTmpRepository.findAll(); //TODO 
 			//内容主体
@@ -225,12 +228,12 @@ public class MsgToGasAftBatchAction extends BaseAction implements AfterBatchAcpS
 					gdGashBatchTmp.setBatSts("S");
 					
 				}else{
-					if("扣款金额不足".contains(detail.getErrMsg())){
+					if((!("S".equals(sts))) && "扣款金额不足".contains(detail.getErrMsg())){
 						thdSts = "B1";
 					}
-//				if((!"S".equals(sts)) && "账户".contains(detail.getErrMsg())){
-//					thdSts = "B2";
-//				}
+					else if((!("S".equals(sts))) && "不存在代扣协议".contains(detail.getErrMsg())){
+					thdSts = "B2";
+				}
 					else{
 						thdSts = "B3";
 					}
