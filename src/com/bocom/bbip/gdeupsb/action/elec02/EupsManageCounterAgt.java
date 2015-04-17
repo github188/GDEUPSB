@@ -159,7 +159,7 @@ public class EupsManageCounterAgt extends BaseAction {
 			getAgdAgrNoByMap(context, mapResult);
 			
 			//外发第三方
-			callThd(context);
+//			callThd(context);
 //			
 			//冲正代收付 
 //			if(GDConstants.SUCCESS_CODE.toString().equals((String)context.getData(ParamKeys.RSP_CDE))){
