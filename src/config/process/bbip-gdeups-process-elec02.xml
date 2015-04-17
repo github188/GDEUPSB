@@ -43,7 +43,7 @@
 		</actions>
 	</process>
 	<!--  电力协议维护 -->
-	<process id="gdeups.manageELEC02AGT" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
+	<process id="gdeups.manageELEC02AGT" template="eups.simpleTran"	interceptors="thdTransInterceptor" >
 		<actions>
 			  <action id="act" ref="manageAGT"  operations="process"/>
 		</actions>
@@ -81,7 +81,7 @@
 	       <action id="batchSinglePayAct" ref="eups.batchSinglePayFeeAction"/>
 	   </actions>
 	</process>
-	<!--向第三方签到签退 -->
+	<!--向第三方签到签退
 	<process id="gdeupsb.signInOutThird" template="eups.simpleTran"
 		interceptors="eups.thdTransInterceptor">
 		<actions>
@@ -89,7 +89,16 @@
 			<action id="act" class="com.bocom.bbip.gdeupsb.action.elec02.SignInOutElec02"/>
 		</actions>
 	</process>
+	 -->
 
+
+<!--向第三方签到签退 -->
+	<process id="gdeupsb.signInOutThird" template="eups.simpleTran"
+		interceptors="bbip.defaultInterceptors">
+		<actions>
+			<action id="act" class="com.bocom.bbip.gdeupsb.action.elec02.SignInOutAction"  />
+		</actions>
+	</process>
 	<!-- fan pan  -->
 	<process id="gdeups.commNotifyBatchStatus" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
 		<actions>
