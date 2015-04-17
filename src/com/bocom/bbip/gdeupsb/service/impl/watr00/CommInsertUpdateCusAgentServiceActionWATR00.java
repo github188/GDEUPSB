@@ -102,7 +102,7 @@ public class CommInsertUpdateCusAgentServiceActionWATR00 extends BaseAction{
 			context.setData("cusNo", context.getData("thdCusNo"));
 			get(BBIPPublicService.class).synExecute("gdeupsb.commInsertCusAgent", context);
 		}else if("1".equals(oprTyp)){
-			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@"+context);
+			
 			
 			//查询本地水费协议信息表，得到协议编号
 			GdEupsWatAgtInf gdEupsWatAgtInf = new GdEupsWatAgtInf();
