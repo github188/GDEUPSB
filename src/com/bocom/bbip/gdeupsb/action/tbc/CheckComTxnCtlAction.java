@@ -25,7 +25,7 @@ public class CheckComTxnCtlAction  extends BaseAction {
     public void checkThdTxnCtlNormal(Context context) throws Exception {
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
         
-        //金额转换分-元 add by zds
+        //金额转换分-元   add by zds
         String txnAmt = context.getData("QTY_TRADE"); 
         context.setData("txnAmt", changeF2Y(txnAmt));
         
