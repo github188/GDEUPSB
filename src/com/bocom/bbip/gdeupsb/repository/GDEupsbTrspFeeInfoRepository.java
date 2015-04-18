@@ -49,4 +49,7 @@ public interface GDEupsbTrspFeeInfoRepository extends PagingAndSortingRepository
 	
 	public List<Map<String, Object>> findStatuesDeatil(Map<String, Object> map);
 	
+	public void updateMsgStatue(Map<String, Object> map);
+	
+	
 }
