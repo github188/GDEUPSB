@@ -241,6 +241,6 @@
     where SQN = #{sqn,jdbcType=CHAR}
   </update>
   <select id="findNotCheck"   resultMap="basicResultMap"   parameterType="java.lang.String">
-		select * from gdeupsb.TRSP_FEE_INFO where  TCHK_NO=#{tChkNo,jdbcType=CHAR} and STATUE='2'
+		select * from gdeupsb.TRSP_CHECK_TMP where  TCHK_NO=#{tChkNo,jdbcType=CHAR} and STATUE!='2'
 </select>
 </mapper>
