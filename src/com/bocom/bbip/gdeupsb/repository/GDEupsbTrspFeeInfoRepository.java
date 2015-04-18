@@ -3,6 +3,7 @@ package com.bocom.bbip.gdeupsb.repository;
 import java.util.List;
 import java.util.Map;
 
+import com.bocom.bbip.data.annotation.Find;
 import com.bocom.bbip.data.domain.Page;
 import com.bocom.bbip.data.domain.Pageable;
 import com.bocom.bbip.data.repository.PagingAndSortingRepository;
@@ -39,7 +40,7 @@ public interface GDEupsbTrspFeeInfoRepository extends PagingAndSortingRepository
 	public List<GDEupsbTrspFeeInfo> findOrder(GDEupsbTrspFeeInfo gdeupsb);
 
 	
-	public List<GDEupsbTrspFeeInfo> find0(Object map);
+	public List<Map<String, Object>> find0(Object map);
 	
 	public List<Map<String, Object>> findSum(Object map);
 
@@ -49,6 +50,10 @@ public interface GDEupsbTrspFeeInfoRepository extends PagingAndSortingRepository
 	public List<GDEupsbTrspFeeInfo> findNoPrintList(Map<String, Object> map);
 	
 	public List<Map<String, Object>> findStatuesDeatil(Map<String, Object> map);
+
+	/** 协办行对账--清单方式  add by WangMQ */
+	@Find
+	public List<Map<String, Object>> find1(Map<String, Object> map);
 	
 	public void updateMsgStatue(Map<String, Object> map);
 	
