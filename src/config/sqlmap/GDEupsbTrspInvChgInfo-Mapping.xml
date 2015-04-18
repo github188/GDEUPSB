@@ -226,4 +226,13 @@
       </foreach>
     </if>
   </select>
+  
+  	  <select id="findInvGroup" resultMap="basicResultMap"  parameterType="java.util.Map">
+   		 select  
+   				 <include refid="baseColumnList" />
+   		 from
+   		    		 gdeupsb.TRSP_INV_CHG_INFO
+	  	  where   
+	  	  			ACT_DAT BETWEEN #{startDate,jdbcType=DATE} AND  #{endDate,jdbcType=DATE}
+ 	 </select>
 </mapper>
