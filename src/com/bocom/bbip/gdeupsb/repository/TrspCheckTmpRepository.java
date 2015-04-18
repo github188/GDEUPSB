@@ -17,4 +17,5 @@ public interface TrspCheckTmpRepository extends PagingAndSortingRepository<TrspC
 		public List<TrspCheckTmp> findNotCheck(String tChkNo);
 		
 		public void updateStatus(TrspCheckTmp trspCheckTmp);
+		
 }
