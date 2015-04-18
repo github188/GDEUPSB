@@ -38,7 +38,7 @@ public class CheckSumAccountServiceActionWATR00 extends BaseAction {
 		console.setBatSts("S");
 		console.setSubDte(new Date());
 		console.setComNo(context.getData(ParamKeys.COMPANY_NO).toString());
-        List<EupsBatchConsoleInfo>ret=get(EupsBatchConsoleInfoRepository.class).find(console);
+        List<EupsBatchConsoleInfo> ret=get(EupsBatchConsoleInfoRepository.class).find(console);
         context.getDataMapDirectly().putAll(BeanUtils.toMap(ret.get(0)));
         ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).synExecute("eups.commNotifyBatchStatusExt", context);
 		context.setData("eupeBusTyp", "WATR00");

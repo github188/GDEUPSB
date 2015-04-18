@@ -69,8 +69,8 @@ private static Logger logger = LoggerFactory.getLogger(PreDelCusAgentAction.clas
 				logNo = s.create().toString();
 				String wtno = logNo.substring(8);
 				String bank = "交行";
-				String czman = (String)infoMap.get("cusNme");
-				String bcount =(String) infoMap.get("cusAc");
+				String czman = (String)context.getData("cusNme");
+				String bcount =(String)context.getData("cusAc");
 				String byyno = ((String)context.getData(ParamKeys.BR)).substring(2, 8);
 				String byyman = ((String)context.getData(ParamKeys.TELLER)).substring(4, 7);
 				String wtdate = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
@@ -103,6 +103,7 @@ private static Logger logger = LoggerFactory.getLogger(PreDelCusAgentAction.clas
 				context.setData("postno", postno);
 				context.setData("taddr", taddr);
 				context.setData("status", status);
+				
 				
 				Map<String,Object> thdReturnMessage = callThdTradeManager.trade(context);
 				

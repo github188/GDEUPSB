@@ -221,7 +221,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		eupsThdFtpConfig.setRmtFleNme(filename);
 		//eupsThdFtpConfig.setRmtWay("./");
 		//eupsThdFtpConfig.setLocDir("/home");
-		logger.info("lhxzhenshuai"+eupsThdFtpConfig.getRmtWay()+eupsThdFtpConfig.getRmtFleNme());
+		
 		eupsThdFtpConfig.setLocFleNme(filename);
 		logger.info("start get batch file now,thd ftp info=["+BeanUtils.toFlatMap(eupsThdFtpConfig)+"]");
 		

@@ -76,7 +76,7 @@ public class CommInsertCusAgentAction extends BaseAction{
 		String wtno = logNo.substring(8);
 		String bank = "交行";
 		String czman = customerInfo.get("cusNme");
-		String bcount = customerInfo.get("cusAc");
+		String bcount = agentCollectAgreement.get("cusAc");
 		String byyno = ((String) context.getData(ParamKeys.BR)).substring(2, 8);
 		String byyman = ((String) context.getData(ParamKeys.TELLER)).substring(
 				4, 7);
