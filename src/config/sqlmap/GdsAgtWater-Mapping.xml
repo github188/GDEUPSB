@@ -550,8 +550,8 @@
 		'JH'||#{actDat}||#{tSeqNo} RptFil,
 		right('000000'||rtrim(char(row_number()over())),6) DtlSeq,
 		a.Act_No
-		ActNo, a.Act_Nm ActNm, a.Tel_No TelNo, a.Mob_Tel Mob_Tel, a.EMail
-		EMail,
+		ActNo, a.Act_Nm ActNm, a.Tel_No TelNo, a.Mob_Tel MobTel, a.EMail
+		EMail,b.TCUS_NM tcusNm,
 		a.Id_Typ IdTyp, a.Id_No IdNo,
 		b.Txn_Cnl TxnCnl, b.Bnk_No BnkNo,
 		b.Bnk_Typ BnkTyp, b.Bnk_Nam BnkNam, b.Eff_Dat
