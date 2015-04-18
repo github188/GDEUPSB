@@ -55,6 +55,7 @@ public class PrePayToBankStrategyAction implements Executable{
 //		TODO: <Call package="BRBFJUD" function="JudAreNo">    <!--检查是否珠海借记卡-->
 //        <Input name="ActNo|"/>
 //      </Call>
+		ctx.setData("extFields", "01444001999");
 		CommonRequest comReq = new CommonRequest();
 		ctx.setData(ParamKeys.BUS_TYP, Constants.BUS_TYP_2); //待缴
 		//TODO:此处把密码校验标志设为1，以后还要改为0
