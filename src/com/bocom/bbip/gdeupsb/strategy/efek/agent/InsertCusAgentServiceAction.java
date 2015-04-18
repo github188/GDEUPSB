@@ -71,7 +71,7 @@ public class InsertCusAgentServiceAction extends BaseAction {
 			context.setData("cusTyp", cusTyp);
 		}
 		//调用代收付'
-		String cusAc=context.getData("cusAc").toString();
+		String cusAc=context.getData("cusAc").toString();		
 		context.setData(ParamKeys.COMPANY_NO, context.getData("comNo"));
 		context.setData(ParamKeys.CUS_AC, context.getData(GDParamKeys.NEWCUSAC));
 		
@@ -145,8 +145,9 @@ public class InsertCusAgentServiceAction extends BaseAction {
 								    				log.info("============End  insert   EupsCusAgentJournal");
 								    				
 								                }else{
+								                	
 								                	//第三方失败  协议删除
-													String agdAgrNo=selectAgent(context);
+													String agdAgrNo=selectAgent(context,cusAc);
 													context.setData("agdAgrNo", agdAgrNo);
 													Map<String, Object> map=createMap(context);
 													logger.info("~~~~~~~~~~~~~~map~~~~~ "+map);
@@ -162,7 +163,8 @@ public class InsertCusAgentServiceAction extends BaseAction {
 							}else{
 									logger.info("~~~~~~~~~~~发送失败");
 									//第三方失败  协议删除
-									String agdAgrNo=selectAgent(context);
+									
+									String agdAgrNo=selectAgent(context,cusAc);
 									context.setData("agdAgrNo", agdAgrNo);
 									Map<String, Object> map=createMap(context);
 									logger.info("~~~~~~~~~~~~~~map~~~~~ "+map);
@@ -206,8 +208,22 @@ public class InsertCusAgentServiceAction extends BaseAction {
 //		context.setData(ParamKeys.TXN_TME,DateUtils.parse(context.getData(ParamKeys.TXN_TME).toString()));
 		logger.info("=============End    InsertCusAgentServiceAction  ");
 	}
-	public String  selectAgent(Context context){
-		String cusAc=context.getData("cusAc").toString();
+	public String  selectAgent(Context context,String cusAc){
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`");
+		System.out.println(cusAc);
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`");
+		System.out.println("~~~~~~~~~~~~~~~"+context.getData("cusAc"));
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		
 		//列表查询 获得协议编号
 		Map<String, Object> map=new HashMap<String, Object>();
 		map.put("cusAc", cusAc);
@@ -230,7 +246,7 @@ public class InsertCusAgentServiceAction extends BaseAction {
 			context.setData("bk", "01441999999");
 			context.setData("br", "01441131999");
 		}
-		map.put("cusAc", context.getData("cusAc"));
+		map.put("cusAc", cusAc);
 		logger.info("~~~~~~~~~~requestHeader~~~~map~~~~~ "+map);
 		logger.info("~~~~~~~~~~列表查询开始 ");
 		//上代收付取协议编号
