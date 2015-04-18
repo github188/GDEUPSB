@@ -56,10 +56,10 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements AfterB
 		
 		ret.put("header", context.getDataMapDirectly());
 		ret.put("detail", tempMap);
-		config.setLocDir("E:\\");
-		config.setLocFleNme("elecfs20150412.txt");
-		config.setRmtWay("/app/ics/dat/efe");
-		config.setRmtFleNme("elecfs20150412.txt");
+//		config.setLocDir("E:\\");
+//		config.setLocFleNme("elecfs20150412.txt");
+//		config.setRmtWay("/app/ics/dat/efe");
+//		config.setRmtFleNme("elecfs20150412.txt");
         ((OperateFileAction)get("opeFile")).createCheckFile(config, "ELEC02BatchBack", "elecfs20150412.txt", ret);
 
 		((OperateFTPAction)get("opeFTP")).putCheckFile(config);
