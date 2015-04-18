@@ -1378,4 +1378,11 @@
 	     group by STATUS
   </select>
   
+  <update id="updateMsgStatue"  parameterType="java.util.Map">
+		update gdeupsb.TRSP_FEE_INFO 
+		set TCHK_NO = #{tchkNo,jdbcType=CHAR},CHK_FLG='0'
+		where PAY_DAT BETWEEN #{startDate,jdbcType=DATE} AND  #{endDate,jdbcType=DATE}
+</update>
+
+  
 </mapper>
