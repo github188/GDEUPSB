@@ -206,4 +206,38 @@
 	<update id="updateAll" parameterType="java.lang.String" >
 			update GDEUPSB.TRSP_CHECK_TMP set STATUE='0' WHERE  TCHK_NO=#{tchkNo,jdbcType=CHAR}
 	</update>
+	<update id="updateAllStatue" parameterType="java.lang.String" >
+			update GDEUPSB.TRSP_CHECK_TMP set STATUE='0' WHERE  TCHK_NO=#{tchkNo,jdbcType=CHAR}
+	</update>
+	
+	<update id="updateStatus" parameterType="com.bocom.bbip.gdeupsb.entity.TrspCheckTmp" >
+    update GDEUPSB.TRSP_CHECK_TMP
+    <set >
+      <if test="tchkNo != null" >
+        TCHK_NO = #{tchkNo,jdbcType=CHAR},
+      </if>
+      <if test="txnDat != null" >
+        TXN_DAT = #{txnDat,jdbcType=DATE},
+      </if>
+      <if test="txnAmt != null" >
+        TXN_AMT = #{txnAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="invNo != null" >
+        INV_NO = #{invNo,jdbcType=CHAR},
+      </if>
+      <if test="payMon != null" >
+        PAY_MON = #{payMon,jdbcType=CHAR},
+      </if>
+      <if test="carTyp != null" >
+        CAR_TYP = #{carTyp,jdbcType=CHAR},
+      </if>
+      <if test="carNo != null" >
+        CAR_NO = #{carNo,jdbcType=CHAR},
+      </if>
+      <if test="statue != null" >
+        STATUE = #{statue,jdbcType=CHAR},
+      </if>
+    </set>
+    where SQN = #{sqn,jdbcType=CHAR}
+  </update>
 </mapper>
