@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.action.transportfee;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -31,7 +32,7 @@ public class NpQryAction extends BaseAction {
 
 	public void execute(Context ctx) throws CoreException, CoreRuntimeException {
 		log.info("NpQryAction start......");
-
+//---------------------------------------------------------------------------------------------
 		System.out.println(ctx.getDataMap());
 		// 统计总数,成功或失败
 		GDEupsbTrspNpManag gdEupsbTrspNpManag = new GDEupsbTrspNpManag();
@@ -51,6 +52,21 @@ public class NpQryAction extends BaseAction {
 		Pageable pageable = BeanUtils.toObject(ctx.getDataMap(), PageRequest.class);
 		Page<GDEupsbTrspNpManag> TrspNpManagPage = get(GDEupsbTrspNpManagRepository.class).findNpInfo(pageable, gdEupsbTrspNpManag);
 		setResponseFromPage(ctx, "npResultList", TrspNpManagPage);
+//		
+//		--------------------------------------------------------------------------------------
+//		List<Map<String, Object>>  npResultList = new ArrayList<Map<String,Object>>();
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("nodNo", "1243");
+//		map.put("carNo", "1243");
+//		map.put("sqn", "1243");
+//		map.put("invNo", "1243");
+//		map.put("idNo", "1243");
+//		map.put("status", "1243");
+//		map.put("tlrId", "1243");
+//		npResultList.add(map);
+//		ctx.setData("npResultList", npResultList);
+//		ctx.setData("ttl", "0");
+//		ctx.setData("subTtl", "0");
 		
 		
 //		Map<String, Object> inpara = new HashMap<String, Object>();
