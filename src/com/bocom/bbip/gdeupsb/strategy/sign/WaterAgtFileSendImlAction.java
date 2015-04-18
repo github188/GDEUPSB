@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.strategy.sign;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.comp.btp.BTPService;
+import com.bocom.bbip.eups.action.common.OperateFileAction;
+import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
+import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdsRunCtl;
@@ -21,6 +25,10 @@ import com.bocom.jump.bp.core.CoreException;
 public class WaterAgtFileSendImlAction implements AgtFileSendImlService {
 
 	private final static Logger log = LoggerFactory.getLogger(WaterAgtFileSendImlAction.class);
+	
+
+	@Autowired
+	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
 
 	@Autowired
 	BBIPPublicService bbipPublicService;
@@ -30,6 +38,9 @@ public class WaterAgtFileSendImlAction implements AgtFileSendImlService {
 
 	@Autowired
 	GdsAgtWaterRepository gdsAgtWaterRepository;
+
+	@Autowired
+	OperateFileAction operateFileAction;
 
 	@Override
 	public Map<String, Object> agtFleSndDelService(Context context) throws CoreException {
@@ -63,15 +74,39 @@ public class WaterAgtFileSendImlAction implements AgtFileSendImlService {
 		inpara.put("begDat", begDat);
 		inpara.put("endDat", endDat);
 
+		List<Map<String,Object>> fileList=new ArrayList<Map<String,Object>>();
+		String otcusId=new String();
+		String tmpDat=new String();
 		// 查找拷盘数据
 		List<Map<String, Object>> fleSndList = gdsAgtWaterRepository.findFileSndInfo(inpara);
-		System.out.println("fleSndList=" + fleSndList);
-
-		// TODO:生成返盘文件
+		for(Map<String,Object> fileMap:fleSndList){
+			//获取客户标志，生成tmpDat
+			String tcusId=(String)fileMap.get("TCUSID");
+			String gdsAid=(String)fileMap.get("GDSAID");   //gdsAid
+			if(!tcusId.equals(otcusId)){
+				tmpDat="\n";
+			}
+			else{
+				tmpDat="\n"+gdsAid;
+			}
+			otcusId=tcusId;
+			fileMap.put("tmp1", "301581000019");
+			fileMap.put("tmp2", "交通银行广东省分行");
+			fileMap.put("tmpDat", tmpDat);
+			fileList.add(fileMap);
+		}
+		log.info("经过处理过后，fileList="+fileList);
+		Map<String, Object> resultMap = new HashMap<String, Object>();
+		resultMap.put("detail", fileList);
+		
+		// 按照RCV44101 读取广州自来水处理结果文件
+		EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("watAgtFileSnd");
+		eupsThdFtpConfig.setLocFleNme(fileName);
+		eupsThdFtpConfig.setRmtFleNme(fileName);
+		operateFileAction.createCheckFile(eupsThdFtpConfig, "datFleSndWat", fileName, resultMap);
+		
+		// TODO:ftp文件
 		while (true) {
-			
-			
-			
 			break;
 		}
 
