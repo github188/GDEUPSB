@@ -10,20 +10,20 @@
 #para($d.endDate)
 打印日期：?          报表柜员：?         日期范围：?        到 ?
 -----------------------------------------------------------------------------------------------------------------
-                      序号                                新发票号码                旧发票号码             车牌号                               车类型                   操作日期                   操作柜员             网点号
+             序号                  新发票号码                                 旧发票号码                           车牌号                    车类型        操作日期                操作柜员      网点号
 #end
 #set($p.index=0)
 #td(1,$d.eles)#set($p.index=$p.index+1) 
 #para($p.index)
 #para($ele.invNo)
-#para($ele.tlogNo)
+#para($ele.oinvNo)
 #para($ele.carNo)
 #para($ele.carTyp)
-#para($ele.carDzs)
-#para($ele.payTlr)
-#para($ele.payNod)
+#para($ele.actDat)
+#para($ele.tlrId)
+#para($ele.nodNo)
 
-?                                              ?                                                       ?                                                     ?                  ?                  ?                     ?                       ?
+?                              ?                                        ?                                                     ?                  ?                  ?                     ?                       ?
 #end   
 #tf(2)
 -----------------------------------------------------------------------------------------------------------------
