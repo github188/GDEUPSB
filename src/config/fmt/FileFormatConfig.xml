@@ -591,6 +591,12 @@
 	<file id="fmtout21" name="fmtout21" encoding="GBK" lineSeparator="\n">
 		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat21OUT/detail.xml" encoding="GBK" />
 	</file>
+	
+    <!-- 水务数据拷盘 -->
+	<file id="datFleSndWat" name="datFleSndWat" encoding="GBK" lineSeparator="\n">
+		<foreach name="detail" ref="config/fmt/fileFmt/sign/datFleSndWat.xml"
+			encoding="GBK" />
+	</file>
 
 	<!-- 广州有线数据拷盘返盘文件 -->
 	<file id="datFleSndTel" name="datFleSndTel" encoding="GBK" lineSeparator="\n">
