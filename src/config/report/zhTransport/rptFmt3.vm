@@ -17,7 +17,7 @@
 #para($p.index)
 #para($ele.carNo)
 #para($ele.carTyp)
-#para($ele.payDat)
+#para($ele.carDzs)
 #para($ele.payMon)
 #para($ele.actNo)
 #para($ele.txnAmt)
