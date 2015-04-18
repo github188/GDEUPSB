@@ -11,6 +11,7 @@ import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdsRunCtl;
 import com.bocom.bbip.gdeupsb.repository.GdsRunCtlRepository;
+import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.service.Result;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
@@ -38,22 +39,12 @@ public class AgtMdyDealPreAction extends BaseAction {
 		context.setData("gdsBid", gdsBid);  //字段转换
 		context.setData("brno", (String)context.getData(ParamKeys.BR));
 		String txnCnl = null;
-		// TODO:codeswitch:
-		String chl = context.getData(ParamKeys.CHANNEL); // 渠道标志
-		if (StringUtils.isEmpty(chl)) {
-			txnCnl = "0";
-		} else if ("WB441".equals(chl)) {
-			txnCnl = "2";
-		} else if ("MT441".equals(chl)) {
-			txnCnl = "5";
-		} else if ("MB441".equals(chl)) {
-			txnCnl = "6";
-		}
-		//TODO: 为测试，添加默认渠道类型
-		else{
-			txnCnl = "0";
-		}
 
+		String chl = context.getData(ParamKeys.CHANNEL); // 渠道标志
+		txnCnl=CodeSwitchUtils.codeGenerator("TxnSrcToTxnCnl",chl);
+		if(null==txnCnl){
+			txnCnl="0";
+		}
 		GdsRunCtl gdsRunCtl = gdsRunCtlRepository.findOne(gdsBid);
 		if (null == gdsRunCtl) {
 			throw new CoreException(GDErrorCodes.EUPS_SIGN_GDSBID_NOT_EXIST);
