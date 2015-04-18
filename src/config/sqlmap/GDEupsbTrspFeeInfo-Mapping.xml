@@ -1,1383 +1,1517 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo" >
-  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo" >
-    <id column="THD_KEY" property="thdKey" jdbcType="CHAR" />
-    <result column="BR_NO" property="brNo" jdbcType="CHAR" />
-    <result column="CAR_TYP" property="carTyp" jdbcType="CHAR" />
-    <result column="CAR_NO" property="carNo" jdbcType="CHAR" />
-    <result column="TCUS_NM" property="tcusNm" jdbcType="CHAR" />
-    <result column="PAY_MON" property="payMon" jdbcType="CHAR" />
-    <result column="PAY_DAT" property="payDat" jdbcType="DATE" />
-    <result column="PAY_LOG" property="payLog" jdbcType="CHAR" />
-    <result column="PAY_NOD" property="payNod" jdbcType="CHAR" />
-    <result column="PAY_TLR" property="payTlr" jdbcType="CHAR" />
-    <result column="PAY_TCK" property="payTck" jdbcType="CHAR" />
-    <result column="TXN_AMT" property="txnAmt" jdbcType="DECIMAL" />
-    <result column="TXN_CNL" property="txnCnl" jdbcType="CHAR" />
-    <result column="ACT_TYP" property="actTyp" jdbcType="CHAR" />
-    <result column="ACT_NO" property="actNo" jdbcType="CHAR" />
-    <result column="TACT_DT" property="tactDt" jdbcType="DATE" />
-    <result column="TLOG_NO" property="tlogNo" jdbcType="CHAR" />
-    <result column="PRT_NOD" property="prtNod" jdbcType="CHAR" />
-    <result column="PRT_TLR" property="prtTlr" jdbcType="CHAR" />
-    <result column="RVS_LOG" property="rvsLog" jdbcType="CHAR" />
-    <result column="RVS_DAT" property="rvsDat" jdbcType="DATE" />
-    <result column="RVS_NOD" property="rvsNod" jdbcType="CHAR" />
-    <result column="RVS_TLR" property="rvsTlr" jdbcType="CHAR" />
-    <result column="RVS_TCK" property="rvsTck" jdbcType="CHAR" />
-    <result column="TCHK_NO" property="tchkNo" jdbcType="CHAR" />
-    <result column="CHK_TIM" property="chkTim" jdbcType="TIME" />
-    <result column="CHK_FLG" property="chkFlg" jdbcType="CHAR" />
-    <result column="INV_NO" property="invNo" jdbcType="CHAR" />
-    <result column="BEG_DAT" property="begDat" jdbcType="DATE" />
-    <result column="END_DAT" property="endDat" jdbcType="DATE" />
-    <result column="CAR_NAME" property="carName" jdbcType="CHAR" />
-    <result column="CAR_DZS" property="carDzs" jdbcType="CHAR" />
-    <result column="CNT_STD" property="cntStd" jdbcType="CHAR" />
-    <result column="FEE_STD" property="feeStd" jdbcType="DECIMAL" />
-    <result column="CORPUS" property="corpus" jdbcType="DECIMAL" />
-    <result column="LATE_FEE" property="lateFee" jdbcType="DECIMAL" />
-    <result column="CLGS" property="clgs" jdbcType="CHAR" />
-    <result column="YYBZ" property="yybz" jdbcType="CHAR" />
-    <result column="STATUS" property="status" jdbcType="CHAR" />
-  </resultMap>
-  <sql id="baseColumnList" >
-    THD_KEY, BR_NO, CAR_TYP, CAR_NO, TCUS_NM, PAY_MON, PAY_DAT, PAY_LOG, PAY_NOD, PAY_TLR, 
-    PAY_TCK, TXN_AMT, TXN_CNL, ACT_TYP, ACT_NO, TACT_DT, TLOG_NO, PRT_NOD, PRT_TLR, RVS_LOG, 
-    RVS_DAT, RVS_NOD, RVS_TLR, RVS_TCK, TCHK_NO, CHK_TIM, CHK_FLG, INV_NO, BEG_DAT, END_DAT, 
-    CAR_NAME, CAR_DZS, CNT_STD, FEE_STD, CORPUS, LATE_FEE, CLGS, YYBZ, STATUS
-  </sql>
-  <select id="find" resultMap="basicResultMap" >
-    select
-    <include refid="baseColumnList" />
-    from gdeupsb.TRSP_FEE_INFO
-    <trim prefix="WHERE" prefixOverrides="AND" >
-      <if test="thdKey!=null" >
-        AND  THD_KEY=#{thdKey,jdbcType=CHAR}
-      </if>
-      <if test="brNo!=null" >
-        AND  BR_NO=#{brNo,jdbcType=CHAR}
-      </if>
-      <if test="carTyp!=null" >
-        AND  CAR_TYP=#{carTyp,jdbcType=CHAR}
-      </if>
-      <if test="carNo!=null" >
-        AND  CAR_NO=#{carNo,jdbcType=CHAR}
-      </if>
-      <if test="tcusNm!=null" >
-        AND  TCUS_NM=#{tcusNm,jdbcType=CHAR}
-      </if>
-      <if test="payMon!=null" >
-        AND  PAY_MON=#{payMon,jdbcType=CHAR}
-      </if>
-      <if test="payDat!=null" >
-        AND  PAY_DAT=#{payDat,jdbcType=DATE}
-      </if>
-      <if test="payLog!=null" >
-        AND  PAY_LOG=#{payLog,jdbcType=CHAR}
-      </if>
-      <if test="payNod!=null" >
-        AND  PAY_NOD=#{payNod,jdbcType=CHAR}
-      </if>
-      <if test="payTlr!=null" >
-        AND  PAY_TLR=#{payTlr,jdbcType=CHAR}
-      </if>
-      <if test="payTck!=null" >
-        AND  PAY_TCK=#{payTck,jdbcType=CHAR}
-      </if>
-      <if test="txnAmt!=null" >
-        AND  TXN_AMT=#{txnAmt,jdbcType=DECIMAL}
-      </if>
-      <if test="txnCnl!=null" >
-        AND  TXN_CNL=#{txnCnl,jdbcType=CHAR}
-      </if>
-      <if test="actTyp!=null" >
-        AND  ACT_TYP=#{actTyp,jdbcType=CHAR}
-      </if>
-      <if test="actNo!=null" >
-        AND  ACT_NO=#{actNo,jdbcType=CHAR}
-      </if>
-      <if test="tactDt!=null" >
-        AND  TACT_DT=#{tactDt,jdbcType=DATE}
-      </if>
-      <if test="tlogNo!=null" >
-        AND  TLOG_NO=#{tlogNo,jdbcType=CHAR}
-      </if>
-      <if test="prtNod!=null" >
-        AND  PRT_NOD=#{prtNod,jdbcType=CHAR}
-      </if>
-      <if test="prtTlr!=null" >
-        AND  PRT_TLR=#{prtTlr,jdbcType=CHAR}
-      </if>
-      <if test="rvsLog!=null" >
-        AND  RVS_LOG=#{rvsLog,jdbcType=CHAR}
-      </if>
-      <if test="rvsDat!=null" >
-        AND  RVS_DAT=#{rvsDat,jdbcType=DATE}
-      </if>
-      <if test="rvsNod!=null" >
-        AND  RVS_NOD=#{rvsNod,jdbcType=CHAR}
-      </if>
-      <if test="rvsTlr!=null" >
-        AND  RVS_TLR=#{rvsTlr,jdbcType=CHAR}
-      </if>
-      <if test="rvsTck!=null" >
-        AND  RVS_TCK=#{rvsTck,jdbcType=CHAR}
-      </if>
-      <if test="tchkNo!=null" >
-        AND  TCHK_NO=#{tchkNo,jdbcType=CHAR}
-      </if>
-      <if test="chkTim!=null" >
-        AND  CHK_TIM=#{chkTim,jdbcType=TIME}
-      </if>
-      <if test="chkFlg!=null" >
-        AND  CHK_FLG=#{chkFlg,jdbcType=CHAR}
-      </if>
-      <if test="invNo!=null" >
-        AND  INV_NO=#{invNo,jdbcType=CHAR}
-      </if>
-      <if test="begDat!=null" >
-        AND  BEG_DAT=#{begDat,jdbcType=DATE}
-      </if>
-      <if test="endDat!=null" >
-        AND  END_DAT=#{endDat,jdbcType=DATE}
-      </if>
-      <if test="carName!=null" >
-        AND  CAR_NAME=#{carName,jdbcType=CHAR}
-      </if>
-      <if test="carDzs!=null" >
-        AND  CAR_DZS=#{carDzs,jdbcType=CHAR}
-      </if>
-      <if test="cntStd!=null" >
-        AND  CNT_STD=#{cntStd,jdbcType=CHAR}
-      </if>
-      <if test="feeStd!=null" >
-        AND  FEE_STD=#{feeStd,jdbcType=DECIMAL}
-      </if>
-      <if test="corpus!=null" >
-        AND  CORPUS=#{corpus,jdbcType=DECIMAL}
-      </if>
-      <if test="lateFee!=null" >
-        AND  LATE_FEE=#{lateFee,jdbcType=DECIMAL}
-      </if>
-      <if test="clgs!=null" >
-        AND  CLGS=#{clgs,jdbcType=CHAR}
-      </if>
-      <if test="yybz!=null" >
-        AND  YYBZ=#{yybz,jdbcType=CHAR}
-      </if>
-      <if test="status!=null" >
-        AND  STATUS=#{status,jdbcType=CHAR}
-      </if>
-    </trim>
-  </select>
-  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
-    select 
-    <include refid="baseColumnList" />
-    from gdeupsb.TRSP_FEE_INFO
-    where THD_KEY = #{thdKey,jdbcType=CHAR}
-  </select>
-  <delete id="delete" parameterType="java.lang.String" >
-    delete from gdeupsb.TRSP_FEE_INFO
-    where THD_KEY = #{thdKey,jdbcType=CHAR}
-  </delete>
-  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo" >
-    insert into gdeupsb.TRSP_FEE_INFO
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="thdKey != null" >
-        THD_KEY,
-      </if>
-      <if test="brNo != null" >
-        BR_NO,
-      </if>
-      <if test="carTyp != null" >
-        CAR_TYP,
-      </if>
-      <if test="carNo != null" >
-        CAR_NO,
-      </if>
-      <if test="tcusNm != null" >
-        TCUS_NM,
-      </if>
-      <if test="payMon != null" >
-        PAY_MON,
-      </if>
-      <if test="payDat != null" >
-        PAY_DAT,
-      </if>
-      <if test="payLog != null" >
-        PAY_LOG,
-      </if>
-      <if test="payNod != null" >
-        PAY_NOD,
-      </if>
-      <if test="payTlr != null" >
-        PAY_TLR,
-      </if>
-      <if test="payTck != null" >
-        PAY_TCK,
-      </if>
-      <if test="txnAmt != null" >
-        TXN_AMT,
-      </if>
-      <if test="txnCnl != null" >
-        TXN_CNL,
-      </if>
-      <if test="actTyp != null" >
-        ACT_TYP,
-      </if>
-      <if test="actNo != null" >
-        ACT_NO,
-      </if>
-      <if test="tactDt != null" >
-        TACT_DT,
-      </if>
-      <if test="tlogNo != null" >
-        TLOG_NO,
-      </if>
-      <if test="prtNod != null" >
-        PRT_NOD,
-      </if>
-      <if test="prtTlr != null" >
-        PRT_TLR,
-      </if>
-      <if test="rvsLog != null" >
-        RVS_LOG,
-      </if>
-      <if test="rvsDat != null" >
-        RVS_DAT,
-      </if>
-      <if test="rvsNod != null" >
-        RVS_NOD,
-      </if>
-      <if test="rvsTlr != null" >
-        RVS_TLR,
-      </if>
-      <if test="rvsTck != null" >
-        RVS_TCK,
-      </if>
-      <if test="tchkNo != null" >
-        TCHK_NO,
-      </if>
-      <if test="chkTim != null" >
-        CHK_TIM,
-      </if>
-      <if test="chkFlg != null" >
-        CHK_FLG,
-      </if>
-      <if test="invNo != null" >
-        INV_NO,
-      </if>
-      <if test="begDat != null" >
-        BEG_DAT,
-      </if>
-      <if test="endDat != null" >
-        END_DAT,
-      </if>
-      <if test="carName != null" >
-        CAR_NAME,
-      </if>
-      <if test="carDzs != null" >
-        CAR_DZS,
-      </if>
-      <if test="cntStd != null" >
-        CNT_STD,
-      </if>
-      <if test="feeStd != null" >
-        FEE_STD,
-      </if>
-      <if test="corpus != null" >
-        CORPUS,
-      </if>
-      <if test="lateFee != null" >
-        LATE_FEE,
-      </if>
-      <if test="clgs != null" >
-        CLGS,
-      </if>
-      <if test="yybz != null" >
-        YYBZ,
-      </if>
-      <if test="status != null" >
-        STATUS,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="thdKey != null" >
-        #{thdKey,jdbcType=CHAR},
-      </if>
-      <if test="brNo != null" >
-        #{brNo,jdbcType=CHAR},
-      </if>
-      <if test="carTyp != null" >
-        #{carTyp,jdbcType=CHAR},
-      </if>
-      <if test="carNo != null" >
-        #{carNo,jdbcType=CHAR},
-      </if>
-      <if test="tcusNm != null" >
-        #{tcusNm,jdbcType=CHAR},
-      </if>
-      <if test="payMon != null" >
-        #{payMon,jdbcType=CHAR},
-      </if>
-      <if test="payDat != null" >
-        #{payDat,jdbcType=DATE},
-      </if>
-      <if test="payLog != null" >
-        #{payLog,jdbcType=CHAR},
-      </if>
-      <if test="payNod != null" >
-        #{payNod,jdbcType=CHAR},
-      </if>
-      <if test="payTlr != null" >
-        #{payTlr,jdbcType=CHAR},
-      </if>
-      <if test="payTck != null" >
-        #{payTck,jdbcType=CHAR},
-      </if>
-      <if test="txnAmt != null" >
-        #{txnAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="txnCnl != null" >
-        #{txnCnl,jdbcType=CHAR},
-      </if>
-      <if test="actTyp != null" >
-        #{actTyp,jdbcType=CHAR},
-      </if>
-      <if test="actNo != null" >
-        #{actNo,jdbcType=CHAR},
-      </if>
-      <if test="tactDt != null" >
-        #{tactDt,jdbcType=DATE},
-      </if>
-      <if test="tlogNo != null" >
-        #{tlogNo,jdbcType=CHAR},
-      </if>
-      <if test="prtNod != null" >
-        #{prtNod,jdbcType=CHAR},
-      </if>
-      <if test="prtTlr != null" >
-        #{prtTlr,jdbcType=CHAR},
-      </if>
-      <if test="rvsLog != null" >
-        #{rvsLog,jdbcType=CHAR},
-      </if>
-      <if test="rvsDat != null" >
-        #{rvsDat,jdbcType=DATE},
-      </if>
-      <if test="rvsNod != null" >
-        #{rvsNod,jdbcType=CHAR},
-      </if>
-      <if test="rvsTlr != null" >
-        #{rvsTlr,jdbcType=CHAR},
-      </if>
-      <if test="rvsTck != null" >
-        #{rvsTck,jdbcType=CHAR},
-      </if>
-      <if test="tchkNo != null" >
-        #{tchkNo,jdbcType=CHAR},
-      </if>
-      <if test="chkTim != null" >
-        #{chkTim,jdbcType=TIME},
-      </if>
-      <if test="chkFlg != null" >
-        #{chkFlg,jdbcType=CHAR},
-      </if>
-      <if test="invNo != null" >
-        #{invNo,jdbcType=CHAR},
-      </if>
-      <if test="begDat != null" >
-        #{begDat,jdbcType=DATE},
-      </if>
-      <if test="endDat != null" >
-        #{endDat,jdbcType=DATE},
-      </if>
-      <if test="carName != null" >
-        #{carName,jdbcType=CHAR},
-      </if>
-      <if test="carDzs != null" >
-        #{carDzs,jdbcType=CHAR},
-      </if>
-      <if test="cntStd != null" >
-        #{cntStd,jdbcType=CHAR},
-      </if>
-      <if test="feeStd != null" >
-        #{feeStd,jdbcType=DECIMAL},
-      </if>
-      <if test="corpus != null" >
-        #{corpus,jdbcType=DECIMAL},
-      </if>
-      <if test="lateFee != null" >
-        #{lateFee,jdbcType=DECIMAL},
-      </if>
-      <if test="clgs != null" >
-        #{clgs,jdbcType=CHAR},
-      </if>
-      <if test="yybz != null" >
-        #{yybz,jdbcType=CHAR},
-      </if>
-      <if test="status != null" >
-        #{status,jdbcType=CHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="findCount" resultType="java.lang.Integer" >
-    select count(*) from gdeupsb.TRSP_FEE_INFO
-    <trim prefix="WHERE" prefixOverrides="AND" >
-      <if test="thdKey!=null" >
-        AND  THD_KEY=#{thdKey,jdbcType=CHAR}
-      </if>
-      <if test="brNo!=null" >
-        AND  BR_NO=#{brNo,jdbcType=CHAR}
-      </if>
-      <if test="carTyp!=null" >
-        AND  CAR_TYP=#{carTyp,jdbcType=CHAR}
-      </if>
-      <if test="carNo!=null" >
-        AND  CAR_NO=#{carNo,jdbcType=CHAR}
-      </if>
-      <if test="tcusNm!=null" >
-        AND  TCUS_NM=#{tcusNm,jdbcType=CHAR}
-      </if>
-      <if test="payMon!=null" >
-        AND  PAY_MON=#{payMon,jdbcType=CHAR}
-      </if>
-      <if test="payDat!=null" >
-        AND  PAY_DAT=#{payDat,jdbcType=DATE}
-      </if>
-      <if test="payLog!=null" >
-        AND  PAY_LOG=#{payLog,jdbcType=CHAR}
-      </if>
-      <if test="payNod!=null" >
-        AND  PAY_NOD=#{payNod,jdbcType=CHAR}
-      </if>
-      <if test="payTlr!=null" >
-        AND  PAY_TLR=#{payTlr,jdbcType=CHAR}
-      </if>
-      <if test="payTck!=null" >
-        AND  PAY_TCK=#{payTck,jdbcType=CHAR}
-      </if>
-      <if test="txnAmt!=null" >
-        AND  TXN_AMT=#{txnAmt,jdbcType=DECIMAL}
-      </if>
-      <if test="txnCnl!=null" >
-        AND  TXN_CNL=#{txnCnl,jdbcType=CHAR}
-      </if>
-      <if test="actTyp!=null" >
-        AND  ACT_TYP=#{actTyp,jdbcType=CHAR}
-      </if>
-      <if test="actNo!=null" >
-        AND  ACT_NO=#{actNo,jdbcType=CHAR}
-      </if>
-      <if test="tactDt!=null" >
-        AND  TACT_DT=#{tactDt,jdbcType=DATE}
-      </if>
-      <if test="tlogNo!=null" >
-        AND  TLOG_NO=#{tlogNo,jdbcType=CHAR}
-      </if>
-      <if test="prtNod!=null" >
-        AND  PRT_NOD=#{prtNod,jdbcType=CHAR}
-      </if>
-      <if test="prtTlr!=null" >
-        AND  PRT_TLR=#{prtTlr,jdbcType=CHAR}
-      </if>
-      <if test="rvsLog!=null" >
-        AND  RVS_LOG=#{rvsLog,jdbcType=CHAR}
-      </if>
-      <if test="rvsDat!=null" >
-        AND  RVS_DAT=#{rvsDat,jdbcType=DATE}
-      </if>
-      <if test="rvsNod!=null" >
-        AND  RVS_NOD=#{rvsNod,jdbcType=CHAR}
-      </if>
-      <if test="rvsTlr!=null" >
-        AND  RVS_TLR=#{rvsTlr,jdbcType=CHAR}
-      </if>
-      <if test="rvsTck!=null" >
-        AND  RVS_TCK=#{rvsTck,jdbcType=CHAR}
-      </if>
-      <if test="tchkNo!=null" >
-        AND  TCHK_NO=#{tchkNo,jdbcType=CHAR}
-      </if>
-      <if test="chkTim!=null" >
-        AND  CHK_TIM=#{chkTim,jdbcType=TIME}
-      </if>
-      <if test="chkFlg!=null" >
-        AND  CHK_FLG=#{chkFlg,jdbcType=CHAR}
-      </if>
-      <if test="invNo!=null" >
-        AND  INV_NO=#{invNo,jdbcType=CHAR}
-      </if>
-      <if test="begDat!=null" >
-        AND  BEG_DAT=#{begDat,jdbcType=DATE}
-      </if>
-      <if test="endDat!=null" >
-        AND  END_DAT=#{endDat,jdbcType=DATE}
-      </if>
-      <if test="carName!=null" >
-        AND  CAR_NAME=#{carName,jdbcType=CHAR}
-      </if>
-      <if test="carDzs!=null" >
-        AND  CAR_DZS=#{carDzs,jdbcType=CHAR}
-      </if>
-      <if test="cntStd!=null" >
-        AND  CNT_STD=#{cntStd,jdbcType=CHAR}
-      </if>
-      <if test="feeStd!=null" >
-        AND  FEE_STD=#{feeStd,jdbcType=DECIMAL}
-      </if>
-      <if test="corpus!=null" >
-        AND  CORPUS=#{corpus,jdbcType=DECIMAL}
-      </if>
-      <if test="lateFee!=null" >
-        AND  LATE_FEE=#{lateFee,jdbcType=DECIMAL}
-      </if>
-      <if test="clgs!=null" >
-        AND  CLGS=#{clgs,jdbcType=CHAR}
-      </if>
-      <if test="yybz!=null" >
-        AND  YYBZ=#{yybz,jdbcType=CHAR}
-      </if>
-      <if test="status!=null" >
-        AND  STATUS=#{status,jdbcType=CHAR}
-      </if>
-    </trim>
-  </select>
-  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo" >
-    update gdeupsb.TRSP_FEE_INFO
-    <set >
-      <if test="brNo != null" >
-        BR_NO = #{brNo,jdbcType=CHAR},
-      </if>
-      <if test="carTyp != null" >
-        CAR_TYP = #{carTyp,jdbcType=CHAR},
-      </if>
-      <if test="carNo != null" >
-        CAR_NO = #{carNo,jdbcType=CHAR},
-      </if>
-      <if test="tcusNm != null" >
-        TCUS_NM = #{tcusNm,jdbcType=CHAR},
-      </if>
-      <if test="payMon != null" >
-        PAY_MON = #{payMon,jdbcType=CHAR},
-      </if>
-      <if test="payDat != null" >
-        PAY_DAT = #{payDat,jdbcType=DATE},
-      </if>
-      <if test="payLog != null" >
-        PAY_LOG = #{payLog,jdbcType=CHAR},
-      </if>
-      <if test="payNod != null" >
-        PAY_NOD = #{payNod,jdbcType=CHAR},
-      </if>
-      <if test="payTlr != null" >
-        PAY_TLR = #{payTlr,jdbcType=CHAR},
-      </if>
-      <if test="payTck != null" >
-        PAY_TCK = #{payTck,jdbcType=CHAR},
-      </if>
-      <if test="txnAmt != null" >
-        TXN_AMT = #{txnAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="txnCnl != null" >
-        TXN_CNL = #{txnCnl,jdbcType=CHAR},
-      </if>
-      <if test="actTyp != null" >
-        ACT_TYP = #{actTyp,jdbcType=CHAR},
-      </if>
-      <if test="actNo != null" >
-        ACT_NO = #{actNo,jdbcType=CHAR},
-      </if>
-      <if test="tactDt != null" >
-        TACT_DT = #{tactDt,jdbcType=DATE},
-      </if>
-      <if test="tlogNo != null" >
-        TLOG_NO = #{tlogNo,jdbcType=CHAR},
-      </if>
-      <if test="prtNod != null" >
-        PRT_NOD = #{prtNod,jdbcType=CHAR},
-      </if>
-      <if test="prtTlr != null" >
-        PRT_TLR = #{prtTlr,jdbcType=CHAR},
-      </if>
-      <if test="rvsLog != null" >
-        RVS_LOG = #{rvsLog,jdbcType=CHAR},
-      </if>
-      <if test="rvsDat != null" >
-        RVS_DAT = #{rvsDat,jdbcType=DATE},
-      </if>
-      <if test="rvsNod != null" >
-        RVS_NOD = #{rvsNod,jdbcType=CHAR},
-      </if>
-      <if test="rvsTlr != null" >
-        RVS_TLR = #{rvsTlr,jdbcType=CHAR},
-      </if>
-      <if test="rvsTck != null" >
-        RVS_TCK = #{rvsTck,jdbcType=CHAR},
-      </if>
-      <if test="tchkNo != null" >
-        TCHK_NO = #{tchkNo,jdbcType=CHAR},
-      </if>
-      <if test="chkTim != null" >
-        CHK_TIM = #{chkTim,jdbcType=TIME},
-      </if>
-      <if test="chkFlg != null" >
-        CHK_FLG = #{chkFlg,jdbcType=CHAR},
-      </if>
-      <if test="invNo != null" >
-        INV_NO = #{invNo,jdbcType=CHAR},
-      </if>
-      <if test="begDat != null" >
-        BEG_DAT = #{begDat,jdbcType=DATE},
-      </if>
-      <if test="endDat != null" >
-        END_DAT = #{endDat,jdbcType=DATE},
-      </if>
-      <if test="carName != null" >
-        CAR_NAME = #{carName,jdbcType=CHAR},
-      </if>
-      <if test="carDzs != null" >
-        CAR_DZS = #{carDzs,jdbcType=CHAR},
-      </if>
-      <if test="cntStd != null" >
-        CNT_STD = #{cntStd,jdbcType=CHAR},
-      </if>
-      <if test="feeStd != null" >
-        FEE_STD = #{feeStd,jdbcType=DECIMAL},
-      </if>
-      <if test="corpus != null" >
-        CORPUS = #{corpus,jdbcType=DECIMAL},
-      </if>
-      <if test="lateFee != null" >
-        LATE_FEE = #{lateFee,jdbcType=DECIMAL},
-      </if>
-      <if test="clgs != null" >
-        CLGS = #{clgs,jdbcType=CHAR},
-      </if>
-      <if test="yybz != null" >
-        YYBZ = #{yybz,jdbcType=CHAR},
-      </if>
-      <if test="status != null" >
-        STATUS = #{status,jdbcType=CHAR},
-      </if>
-    </set>
-    where THD_KEY = #{thdKey,jdbcType=CHAR}
-  </update>
-  <select id="findAll" resultMap="basicResultMap" >
-    select 
-    <include refid="baseColumnList" />
-    from gdeupsb.TRSP_FEE_INFO
-    <if test="_parameter" >
-      where THD_KEY in
-      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
-        #{item}
-      </foreach>
-    </if>
-  </select>
-  
-  <update id="updateStatus" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo" >
-    update gdeupsb.TRSP_FEE_INFO
-    <set >
-      <if test="brNo != null" >
-        BR_NO = #{brNo,jdbcType=CHAR},
-      </if>
-      <if test="carTyp != null" >
-        CAR_TYP = #{carTyp,jdbcType=CHAR},
-      </if>
-      <if test="carNo != null" >
-        CAR_NO = #{carNo,jdbcType=CHAR},
-      </if>
-      <if test="tcusNm != null" >
-        TCUS_NM = #{tcusNm,jdbcType=CHAR},
-      </if>
-      <if test="payMon != null" >
-        PAY_MON = #{payMon,jdbcType=CHAR},
-      </if>
-      <if test="payDat != null" >
-        PAY_DAT = #{payDat,jdbcType=DATE},
-      </if>
-      <if test="payNod != null" >
-        PAY_NOD = #{payNod,jdbcType=CHAR},
-      </if>
-      <if test="payTlr != null" >
-        PAY_TLR = #{payTlr,jdbcType=CHAR},
-      </if>
-      <if test="payTck != null" >
-        PAY_TCK = #{payTck,jdbcType=CHAR},
-      </if>
-      <if test="txnAmt != null" >
-        TXN_AMT = #{txnAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="txnCnl != null" >
-        TXN_CNL = #{txnCnl,jdbcType=CHAR},
-      </if>
-      <if test="actTyp != null" >
-        ACT_TYP = #{actTyp,jdbcType=CHAR},
-      </if>
-      <if test="actNo != null" >
-        ACT_NO = #{actNo,jdbcType=CHAR},
-      </if>
-      <if test="tactDt != null" >
-        TACT_DT = #{tactDt,jdbcType=DATE},
-      </if>
-      <if test="tlogNo != null" >
-        TLOG_NO = #{tlogNo,jdbcType=CHAR},
-      </if>
-      <if test="prtNod != null" >
-        PRT_NOD = #{prtNod,jdbcType=CHAR},
-      </if>
-      <if test="prtTlr != null" >
-        PRT_TLR = #{prtTlr,jdbcType=CHAR},
-      </if>
-      <if test="rvsLog != null" >
-        RVS_LOG = #{rvsLog,jdbcType=CHAR},
-      </if>
-      <if test="rvsDat != null" >
-        RVS_DAT = #{rvsDat,jdbcType=DATE},
-      </if>
-      <if test="rvsNod != null" >
-        RVS_NOD = #{rvsNod,jdbcType=CHAR},
-      </if>
-      <if test="rvsTlr != null" >
-        RVS_TLR = #{rvsTlr,jdbcType=CHAR},
-      </if>
-      <if test="rvsTck != null" >
-        RVS_TCK = #{rvsTck,jdbcType=CHAR},
-      </if>
-      <if test="tchkNo != null" >
-        TCHK_NO = #{tchkNo,jdbcType=CHAR},
-      </if>
-      <if test="chkTim != null" >
-        CHK_TIM = #{chkTim,jdbcType=TIME},
-      </if>
-      <if test="chkFlg != null" >
-        CHK_FLG = #{chkFlg,jdbcType=CHAR},
-      </if>
-      <if test="invNo != null" >
-        INV_NO = #{invNo,jdbcType=CHAR},
-      </if>
-      <if test="begDat != null" >
-        BEG_DAT = #{begDat,jdbcType=DATE},
-      </if>
-      <if test="endDat != null" >
-        END_DAT = #{endDat,jdbcType=DATE},
-      </if>
-      <if test="carName != null" >
-        CAR_NAME = #{carName,jdbcType=CHAR},
-      </if>
-      <if test="carDzs != null" >
-        CAR_DZS = #{carDzs,jdbcType=CHAR},
-      </if>
-      <if test="cntStd != null" >
-        CNT_STD = #{cntStd,jdbcType=CHAR},
-      </if>
-      <if test="feeStd != null" >
-        FEE_STD = #{feeStd,jdbcType=DECIMAL},
-      </if>
-      <if test="corpus != null" >
-        CORPUS = #{corpus,jdbcType=DECIMAL},
-      </if>
-      <if test="lateFee != null" >
-        LATE_FEE = #{lateFee,jdbcType=DECIMAL},
-      </if>
-      <if test="clgs != null" >
-        CLGS = #{clgs,jdbcType=CHAR},
-      </if>
-      <if test="yybz != null" >
-        YYBZ = #{yybz,jdbcType=CHAR},
-      </if>
-     
-        STATUS = '1'
-      
-    </set>
-    where PAY_LOG = #{payLog,jdbcType=CHAR} AND STATUS = '0'
-  </update>
- 
-<update id="updateChkFlg"  parameterType="java.lang.String">
-		update gdeupsb.TRSP_FEE_INFO 
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo">
+	<resultMap id="basicResultMap"
+		type="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo">
+		<id column="THD_KEY" property="thdKey" jdbcType="CHAR" />
+		<result column="BR_NO" property="brNo" jdbcType="CHAR" />
+		<result column="CAR_TYP" property="carTyp" jdbcType="CHAR" />
+		<result column="CAR_NO" property="carNo" jdbcType="CHAR" />
+		<result column="TCUS_NM" property="tcusNm" jdbcType="CHAR" />
+		<result column="PAY_MON" property="payMon" jdbcType="CHAR" />
+		<result column="PAY_DAT" property="payDat" jdbcType="DATE" />
+		<result column="PAY_LOG" property="payLog" jdbcType="CHAR" />
+		<result column="PAY_NOD" property="payNod" jdbcType="CHAR" />
+		<result column="PAY_TLR" property="payTlr" jdbcType="CHAR" />
+		<result column="PAY_TCK" property="payTck" jdbcType="CHAR" />
+		<result column="TXN_AMT" property="txnAmt" jdbcType="DECIMAL" />
+		<result column="TXN_CNL" property="txnCnl" jdbcType="CHAR" />
+		<result column="ACT_TYP" property="actTyp" jdbcType="CHAR" />
+		<result column="ACT_NO" property="actNo" jdbcType="CHAR" />
+		<result column="TACT_DT" property="tactDt" jdbcType="DATE" />
+		<result column="TLOG_NO" property="tlogNo" jdbcType="CHAR" />
+		<result column="PRT_NOD" property="prtNod" jdbcType="CHAR" />
+		<result column="PRT_TLR" property="prtTlr" jdbcType="CHAR" />
+		<result column="RVS_LOG" property="rvsLog" jdbcType="CHAR" />
+		<result column="RVS_DAT" property="rvsDat" jdbcType="DATE" />
+		<result column="RVS_NOD" property="rvsNod" jdbcType="CHAR" />
+		<result column="RVS_TLR" property="rvsTlr" jdbcType="CHAR" />
+		<result column="RVS_TCK" property="rvsTck" jdbcType="CHAR" />
+		<result column="TCHK_NO" property="tchkNo" jdbcType="CHAR" />
+		<result column="CHK_TIM" property="chkTim" jdbcType="TIME" />
+		<result column="CHK_FLG" property="chkFlg" jdbcType="CHAR" />
+		<result column="INV_NO" property="invNo" jdbcType="CHAR" />
+		<result column="BEG_DAT" property="begDat" jdbcType="DATE" />
+		<result column="END_DAT" property="endDat" jdbcType="DATE" />
+		<result column="CAR_NAME" property="carName" jdbcType="CHAR" />
+		<result column="CAR_DZS" property="carDzs" jdbcType="CHAR" />
+		<result column="CNT_STD" property="cntStd" jdbcType="CHAR" />
+		<result column="FEE_STD" property="feeStd" jdbcType="DECIMAL" />
+		<result column="CORPUS" property="corpus" jdbcType="DECIMAL" />
+		<result column="LATE_FEE" property="lateFee" jdbcType="DECIMAL" />
+		<result column="CLGS" property="clgs" jdbcType="CHAR" />
+		<result column="YYBZ" property="yybz" jdbcType="CHAR" />
+		<result column="STATUS" property="status" jdbcType="CHAR" />
+	</resultMap>
+	<sql id="baseColumnList">
+		THD_KEY, BR_NO, CAR_TYP, CAR_NO, TCUS_NM, PAY_MON, PAY_DAT,
+		PAY_LOG, PAY_NOD,
+		PAY_TLR,
+		PAY_TCK, TXN_AMT, TXN_CNL, ACT_TYP, ACT_NO,
+		TACT_DT, TLOG_NO, PRT_NOD,
+		PRT_TLR, RVS_LOG,
+		RVS_DAT, RVS_NOD, RVS_TLR,
+		RVS_TCK, TCHK_NO, CHK_TIM, CHK_FLG, INV_NO,
+		BEG_DAT, END_DAT,
+		CAR_NAME,
+		CAR_DZS, CNT_STD, FEE_STD, CORPUS, LATE_FEE, CLGS, YYBZ, STATUS
+	</sql>
+	<select id="find" resultMap="basicResultMap">
+		select
+		<include refid="baseColumnList" />
+		from gdeupsb.TRSP_FEE_INFO
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="thdKey!=null">
+				AND THD_KEY=#{thdKey,jdbcType=CHAR}
+			</if>
+			<if test="brNo!=null">
+				AND BR_NO=#{brNo,jdbcType=CHAR}
+			</if>
+			<if test="carTyp!=null">
+				AND CAR_TYP=#{carTyp,jdbcType=CHAR}
+			</if>
+			<if test="carNo!=null">
+				AND CAR_NO=#{carNo,jdbcType=CHAR}
+			</if>
+			<if test="tcusNm!=null">
+				AND TCUS_NM=#{tcusNm,jdbcType=CHAR}
+			</if>
+			<if test="payMon!=null">
+				AND PAY_MON=#{payMon,jdbcType=CHAR}
+			</if>
+			<if test="payDat!=null">
+				AND PAY_DAT=#{payDat,jdbcType=DATE}
+			</if>
+			<if test="payLog!=null">
+				AND PAY_LOG=#{payLog,jdbcType=CHAR}
+			</if>
+			<if test="payNod!=null">
+				AND PAY_NOD=#{payNod,jdbcType=CHAR}
+			</if>
+			<if test="payTlr!=null">
+				AND PAY_TLR=#{payTlr,jdbcType=CHAR}
+			</if>
+			<if test="payTck!=null">
+				AND PAY_TCK=#{payTck,jdbcType=CHAR}
+			</if>
+			<if test="txnAmt!=null">
+				AND TXN_AMT=#{txnAmt,jdbcType=DECIMAL}
+			</if>
+			<if test="txnCnl!=null">
+				AND TXN_CNL=#{txnCnl,jdbcType=CHAR}
+			</if>
+			<if test="actTyp!=null">
+				AND ACT_TYP=#{actTyp,jdbcType=CHAR}
+			</if>
+			<if test="actNo!=null">
+				AND ACT_NO=#{actNo,jdbcType=CHAR}
+			</if>
+			<if test="tactDt!=null">
+				AND TACT_DT=#{tactDt,jdbcType=DATE}
+			</if>
+			<if test="tlogNo!=null">
+				AND TLOG_NO=#{tlogNo,jdbcType=CHAR}
+			</if>
+			<if test="prtNod!=null">
+				AND PRT_NOD=#{prtNod,jdbcType=CHAR}
+			</if>
+			<if test="prtTlr!=null">
+				AND PRT_TLR=#{prtTlr,jdbcType=CHAR}
+			</if>
+			<if test="rvsLog!=null">
+				AND RVS_LOG=#{rvsLog,jdbcType=CHAR}
+			</if>
+			<if test="rvsDat!=null">
+				AND RVS_DAT=#{rvsDat,jdbcType=DATE}
+			</if>
+			<if test="rvsNod!=null">
+				AND RVS_NOD=#{rvsNod,jdbcType=CHAR}
+			</if>
+			<if test="rvsTlr!=null">
+				AND RVS_TLR=#{rvsTlr,jdbcType=CHAR}
+			</if>
+			<if test="rvsTck!=null">
+				AND RVS_TCK=#{rvsTck,jdbcType=CHAR}
+			</if>
+			<if test="tchkNo!=null">
+				AND TCHK_NO=#{tchkNo,jdbcType=CHAR}
+			</if>
+			<if test="chkTim!=null">
+				AND CHK_TIM=#{chkTim,jdbcType=TIME}
+			</if>
+			<if test="chkFlg!=null">
+				AND CHK_FLG=#{chkFlg,jdbcType=CHAR}
+			</if>
+			<if test="invNo!=null">
+				AND INV_NO=#{invNo,jdbcType=CHAR}
+			</if>
+			<if test="begDat!=null">
+				AND BEG_DAT=#{begDat,jdbcType=DATE}
+			</if>
+			<if test="endDat!=null">
+				AND END_DAT=#{endDat,jdbcType=DATE}
+			</if>
+			<if test="carName!=null">
+				AND CAR_NAME=#{carName,jdbcType=CHAR}
+			</if>
+			<if test="carDzs!=null">
+				AND CAR_DZS=#{carDzs,jdbcType=CHAR}
+			</if>
+			<if test="cntStd!=null">
+				AND CNT_STD=#{cntStd,jdbcType=CHAR}
+			</if>
+			<if test="feeStd!=null">
+				AND FEE_STD=#{feeStd,jdbcType=DECIMAL}
+			</if>
+			<if test="corpus!=null">
+				AND CORPUS=#{corpus,jdbcType=DECIMAL}
+			</if>
+			<if test="lateFee!=null">
+				AND LATE_FEE=#{lateFee,jdbcType=DECIMAL}
+			</if>
+			<if test="clgs!=null">
+				AND CLGS=#{clgs,jdbcType=CHAR}
+			</if>
+			<if test="yybz!=null">
+				AND YYBZ=#{yybz,jdbcType=CHAR}
+			</if>
+			<if test="status!=null">
+				AND STATUS=#{status,jdbcType=CHAR}
+			</if>
+		</trim>
+	</select>
+	<select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String">
+		select
+		<include refid="baseColumnList" />
+		from gdeupsb.TRSP_FEE_INFO
+		where THD_KEY = #{thdKey,jdbcType=CHAR}
+	</select>
+	<delete id="delete" parameterType="java.lang.String">
+		delete from
+		gdeupsb.TRSP_FEE_INFO
+		where THD_KEY = #{thdKey,jdbcType=CHAR}
+	</delete>
+	<insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo">
+		insert into gdeupsb.TRSP_FEE_INFO
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="thdKey != null">
+				THD_KEY,
+			</if>
+			<if test="brNo != null">
+				BR_NO,
+			</if>
+			<if test="carTyp != null">
+				CAR_TYP,
+			</if>
+			<if test="carNo != null">
+				CAR_NO,
+			</if>
+			<if test="tcusNm != null">
+				TCUS_NM,
+			</if>
+			<if test="payMon != null">
+				PAY_MON,
+			</if>
+			<if test="payDat != null">
+				PAY_DAT,
+			</if>
+			<if test="payLog != null">
+				PAY_LOG,
+			</if>
+			<if test="payNod != null">
+				PAY_NOD,
+			</if>
+			<if test="payTlr != null">
+				PAY_TLR,
+			</if>
+			<if test="payTck != null">
+				PAY_TCK,
+			</if>
+			<if test="txnAmt != null">
+				TXN_AMT,
+			</if>
+			<if test="txnCnl != null">
+				TXN_CNL,
+			</if>
+			<if test="actTyp != null">
+				ACT_TYP,
+			</if>
+			<if test="actNo != null">
+				ACT_NO,
+			</if>
+			<if test="tactDt != null">
+				TACT_DT,
+			</if>
+			<if test="tlogNo != null">
+				TLOG_NO,
+			</if>
+			<if test="prtNod != null">
+				PRT_NOD,
+			</if>
+			<if test="prtTlr != null">
+				PRT_TLR,
+			</if>
+			<if test="rvsLog != null">
+				RVS_LOG,
+			</if>
+			<if test="rvsDat != null">
+				RVS_DAT,
+			</if>
+			<if test="rvsNod != null">
+				RVS_NOD,
+			</if>
+			<if test="rvsTlr != null">
+				RVS_TLR,
+			</if>
+			<if test="rvsTck != null">
+				RVS_TCK,
+			</if>
+			<if test="tchkNo != null">
+				TCHK_NO,
+			</if>
+			<if test="chkTim != null">
+				CHK_TIM,
+			</if>
+			<if test="chkFlg != null">
+				CHK_FLG,
+			</if>
+			<if test="invNo != null">
+				INV_NO,
+			</if>
+			<if test="begDat != null">
+				BEG_DAT,
+			</if>
+			<if test="endDat != null">
+				END_DAT,
+			</if>
+			<if test="carName != null">
+				CAR_NAME,
+			</if>
+			<if test="carDzs != null">
+				CAR_DZS,
+			</if>
+			<if test="cntStd != null">
+				CNT_STD,
+			</if>
+			<if test="feeStd != null">
+				FEE_STD,
+			</if>
+			<if test="corpus != null">
+				CORPUS,
+			</if>
+			<if test="lateFee != null">
+				LATE_FEE,
+			</if>
+			<if test="clgs != null">
+				CLGS,
+			</if>
+			<if test="yybz != null">
+				YYBZ,
+			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="thdKey != null">
+				#{thdKey,jdbcType=CHAR},
+			</if>
+			<if test="brNo != null">
+				#{brNo,jdbcType=CHAR},
+			</if>
+			<if test="carTyp != null">
+				#{carTyp,jdbcType=CHAR},
+			</if>
+			<if test="carNo != null">
+				#{carNo,jdbcType=CHAR},
+			</if>
+			<if test="tcusNm != null">
+				#{tcusNm,jdbcType=CHAR},
+			</if>
+			<if test="payMon != null">
+				#{payMon,jdbcType=CHAR},
+			</if>
+			<if test="payDat != null">
+				#{payDat,jdbcType=DATE},
+			</if>
+			<if test="payLog != null">
+				#{payLog,jdbcType=CHAR},
+			</if>
+			<if test="payNod != null">
+				#{payNod,jdbcType=CHAR},
+			</if>
+			<if test="payTlr != null">
+				#{payTlr,jdbcType=CHAR},
+			</if>
+			<if test="payTck != null">
+				#{payTck,jdbcType=CHAR},
+			</if>
+			<if test="txnAmt != null">
+				#{txnAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="txnCnl != null">
+				#{txnCnl,jdbcType=CHAR},
+			</if>
+			<if test="actTyp != null">
+				#{actTyp,jdbcType=CHAR},
+			</if>
+			<if test="actNo != null">
+				#{actNo,jdbcType=CHAR},
+			</if>
+			<if test="tactDt != null">
+				#{tactDt,jdbcType=DATE},
+			</if>
+			<if test="tlogNo != null">
+				#{tlogNo,jdbcType=CHAR},
+			</if>
+			<if test="prtNod != null">
+				#{prtNod,jdbcType=CHAR},
+			</if>
+			<if test="prtTlr != null">
+				#{prtTlr,jdbcType=CHAR},
+			</if>
+			<if test="rvsLog != null">
+				#{rvsLog,jdbcType=CHAR},
+			</if>
+			<if test="rvsDat != null">
+				#{rvsDat,jdbcType=DATE},
+			</if>
+			<if test="rvsNod != null">
+				#{rvsNod,jdbcType=CHAR},
+			</if>
+			<if test="rvsTlr != null">
+				#{rvsTlr,jdbcType=CHAR},
+			</if>
+			<if test="rvsTck != null">
+				#{rvsTck,jdbcType=CHAR},
+			</if>
+			<if test="tchkNo != null">
+				#{tchkNo,jdbcType=CHAR},
+			</if>
+			<if test="chkTim != null">
+				#{chkTim,jdbcType=TIME},
+			</if>
+			<if test="chkFlg != null">
+				#{chkFlg,jdbcType=CHAR},
+			</if>
+			<if test="invNo != null">
+				#{invNo,jdbcType=CHAR},
+			</if>
+			<if test="begDat != null">
+				#{begDat,jdbcType=DATE},
+			</if>
+			<if test="endDat != null">
+				#{endDat,jdbcType=DATE},
+			</if>
+			<if test="carName != null">
+				#{carName,jdbcType=CHAR},
+			</if>
+			<if test="carDzs != null">
+				#{carDzs,jdbcType=CHAR},
+			</if>
+			<if test="cntStd != null">
+				#{cntStd,jdbcType=CHAR},
+			</if>
+			<if test="feeStd != null">
+				#{feeStd,jdbcType=DECIMAL},
+			</if>
+			<if test="corpus != null">
+				#{corpus,jdbcType=DECIMAL},
+			</if>
+			<if test="lateFee != null">
+				#{lateFee,jdbcType=DECIMAL},
+			</if>
+			<if test="clgs != null">
+				#{clgs,jdbcType=CHAR},
+			</if>
+			<if test="yybz != null">
+				#{yybz,jdbcType=CHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="findCount" resultType="java.lang.Integer">
+		select count(*) from gdeupsb.TRSP_FEE_INFO
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="thdKey!=null">
+				AND THD_KEY=#{thdKey,jdbcType=CHAR}
+			</if>
+			<if test="brNo!=null">
+				AND BR_NO=#{brNo,jdbcType=CHAR}
+			</if>
+			<if test="carTyp!=null">
+				AND CAR_TYP=#{carTyp,jdbcType=CHAR}
+			</if>
+			<if test="carNo!=null">
+				AND CAR_NO=#{carNo,jdbcType=CHAR}
+			</if>
+			<if test="tcusNm!=null">
+				AND TCUS_NM=#{tcusNm,jdbcType=CHAR}
+			</if>
+			<if test="payMon!=null">
+				AND PAY_MON=#{payMon,jdbcType=CHAR}
+			</if>
+			<if test="payDat!=null">
+				AND PAY_DAT=#{payDat,jdbcType=DATE}
+			</if>
+			<if test="payLog!=null">
+				AND PAY_LOG=#{payLog,jdbcType=CHAR}
+			</if>
+			<if test="payNod!=null">
+				AND PAY_NOD=#{payNod,jdbcType=CHAR}
+			</if>
+			<if test="payTlr!=null">
+				AND PAY_TLR=#{payTlr,jdbcType=CHAR}
+			</if>
+			<if test="payTck!=null">
+				AND PAY_TCK=#{payTck,jdbcType=CHAR}
+			</if>
+			<if test="txnAmt!=null">
+				AND TXN_AMT=#{txnAmt,jdbcType=DECIMAL}
+			</if>
+			<if test="txnCnl!=null">
+				AND TXN_CNL=#{txnCnl,jdbcType=CHAR}
+			</if>
+			<if test="actTyp!=null">
+				AND ACT_TYP=#{actTyp,jdbcType=CHAR}
+			</if>
+			<if test="actNo!=null">
+				AND ACT_NO=#{actNo,jdbcType=CHAR}
+			</if>
+			<if test="tactDt!=null">
+				AND TACT_DT=#{tactDt,jdbcType=DATE}
+			</if>
+			<if test="tlogNo!=null">
+				AND TLOG_NO=#{tlogNo,jdbcType=CHAR}
+			</if>
+			<if test="prtNod!=null">
+				AND PRT_NOD=#{prtNod,jdbcType=CHAR}
+			</if>
+			<if test="prtTlr!=null">
+				AND PRT_TLR=#{prtTlr,jdbcType=CHAR}
+			</if>
+			<if test="rvsLog!=null">
+				AND RVS_LOG=#{rvsLog,jdbcType=CHAR}
+			</if>
+			<if test="rvsDat!=null">
+				AND RVS_DAT=#{rvsDat,jdbcType=DATE}
+			</if>
+			<if test="rvsNod!=null">
+				AND RVS_NOD=#{rvsNod,jdbcType=CHAR}
+			</if>
+			<if test="rvsTlr!=null">
+				AND RVS_TLR=#{rvsTlr,jdbcType=CHAR}
+			</if>
+			<if test="rvsTck!=null">
+				AND RVS_TCK=#{rvsTck,jdbcType=CHAR}
+			</if>
+			<if test="tchkNo!=null">
+				AND TCHK_NO=#{tchkNo,jdbcType=CHAR}
+			</if>
+			<if test="chkTim!=null">
+				AND CHK_TIM=#{chkTim,jdbcType=TIME}
+			</if>
+			<if test="chkFlg!=null">
+				AND CHK_FLG=#{chkFlg,jdbcType=CHAR}
+			</if>
+			<if test="invNo!=null">
+				AND INV_NO=#{invNo,jdbcType=CHAR}
+			</if>
+			<if test="begDat!=null">
+				AND BEG_DAT=#{begDat,jdbcType=DATE}
+			</if>
+			<if test="endDat!=null">
+				AND END_DAT=#{endDat,jdbcType=DATE}
+			</if>
+			<if test="carName!=null">
+				AND CAR_NAME=#{carName,jdbcType=CHAR}
+			</if>
+			<if test="carDzs!=null">
+				AND CAR_DZS=#{carDzs,jdbcType=CHAR}
+			</if>
+			<if test="cntStd!=null">
+				AND CNT_STD=#{cntStd,jdbcType=CHAR}
+			</if>
+			<if test="feeStd!=null">
+				AND FEE_STD=#{feeStd,jdbcType=DECIMAL}
+			</if>
+			<if test="corpus!=null">
+				AND CORPUS=#{corpus,jdbcType=DECIMAL}
+			</if>
+			<if test="lateFee!=null">
+				AND LATE_FEE=#{lateFee,jdbcType=DECIMAL}
+			</if>
+			<if test="clgs!=null">
+				AND CLGS=#{clgs,jdbcType=CHAR}
+			</if>
+			<if test="yybz!=null">
+				AND YYBZ=#{yybz,jdbcType=CHAR}
+			</if>
+			<if test="status!=null">
+				AND STATUS=#{status,jdbcType=CHAR}
+			</if>
+		</trim>
+	</select>
+	<update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo">
+		update gdeupsb.TRSP_FEE_INFO
+		<set>
+			<if test="brNo != null">
+				BR_NO = #{brNo,jdbcType=CHAR},
+			</if>
+			<if test="carTyp != null">
+				CAR_TYP = #{carTyp,jdbcType=CHAR},
+			</if>
+			<if test="carNo != null">
+				CAR_NO = #{carNo,jdbcType=CHAR},
+			</if>
+			<if test="tcusNm != null">
+				TCUS_NM = #{tcusNm,jdbcType=CHAR},
+			</if>
+			<if test="payMon != null">
+				PAY_MON = #{payMon,jdbcType=CHAR},
+			</if>
+			<if test="payDat != null">
+				PAY_DAT = #{payDat,jdbcType=DATE},
+			</if>
+			<if test="payLog != null">
+				PAY_LOG = #{payLog,jdbcType=CHAR},
+			</if>
+			<if test="payNod != null">
+				PAY_NOD = #{payNod,jdbcType=CHAR},
+			</if>
+			<if test="payTlr != null">
+				PAY_TLR = #{payTlr,jdbcType=CHAR},
+			</if>
+			<if test="payTck != null">
+				PAY_TCK = #{payTck,jdbcType=CHAR},
+			</if>
+			<if test="txnAmt != null">
+				TXN_AMT = #{txnAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="txnCnl != null">
+				TXN_CNL = #{txnCnl,jdbcType=CHAR},
+			</if>
+			<if test="actTyp != null">
+				ACT_TYP = #{actTyp,jdbcType=CHAR},
+			</if>
+			<if test="actNo != null">
+				ACT_NO = #{actNo,jdbcType=CHAR},
+			</if>
+			<if test="tactDt != null">
+				TACT_DT = #{tactDt,jdbcType=DATE},
+			</if>
+			<if test="tlogNo != null">
+				TLOG_NO = #{tlogNo,jdbcType=CHAR},
+			</if>
+			<if test="prtNod != null">
+				PRT_NOD = #{prtNod,jdbcType=CHAR},
+			</if>
+			<if test="prtTlr != null">
+				PRT_TLR = #{prtTlr,jdbcType=CHAR},
+			</if>
+			<if test="rvsLog != null">
+				RVS_LOG = #{rvsLog,jdbcType=CHAR},
+			</if>
+			<if test="rvsDat != null">
+				RVS_DAT = #{rvsDat,jdbcType=DATE},
+			</if>
+			<if test="rvsNod != null">
+				RVS_NOD = #{rvsNod,jdbcType=CHAR},
+			</if>
+			<if test="rvsTlr != null">
+				RVS_TLR = #{rvsTlr,jdbcType=CHAR},
+			</if>
+			<if test="rvsTck != null">
+				RVS_TCK = #{rvsTck,jdbcType=CHAR},
+			</if>
+			<if test="tchkNo != null">
+				TCHK_NO = #{tchkNo,jdbcType=CHAR},
+			</if>
+			<if test="chkTim != null">
+				CHK_TIM = #{chkTim,jdbcType=TIME},
+			</if>
+			<if test="chkFlg != null">
+				CHK_FLG = #{chkFlg,jdbcType=CHAR},
+			</if>
+			<if test="invNo != null">
+				INV_NO = #{invNo,jdbcType=CHAR},
+			</if>
+			<if test="begDat != null">
+				BEG_DAT = #{begDat,jdbcType=DATE},
+			</if>
+			<if test="endDat != null">
+				END_DAT = #{endDat,jdbcType=DATE},
+			</if>
+			<if test="carName != null">
+				CAR_NAME = #{carName,jdbcType=CHAR},
+			</if>
+			<if test="carDzs != null">
+				CAR_DZS = #{carDzs,jdbcType=CHAR},
+			</if>
+			<if test="cntStd != null">
+				CNT_STD = #{cntStd,jdbcType=CHAR},
+			</if>
+			<if test="feeStd != null">
+				FEE_STD = #{feeStd,jdbcType=DECIMAL},
+			</if>
+			<if test="corpus != null">
+				CORPUS = #{corpus,jdbcType=DECIMAL},
+			</if>
+			<if test="lateFee != null">
+				LATE_FEE = #{lateFee,jdbcType=DECIMAL},
+			</if>
+			<if test="clgs != null">
+				CLGS = #{clgs,jdbcType=CHAR},
+			</if>
+			<if test="yybz != null">
+				YYBZ = #{yybz,jdbcType=CHAR},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=CHAR},
+			</if>
+		</set>
+		where THD_KEY = #{thdKey,jdbcType=CHAR}
+	</update>
+	<select id="findAll" resultMap="basicResultMap">
+		select
+		<include refid="baseColumnList" />
+		from gdeupsb.TRSP_FEE_INFO
+		<if test="_parameter">
+			where THD_KEY in
+			<foreach item="item" index="index" collection="list" open="("
+				separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+	</select>
+
+	<update id="updateStatus" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo">
+		update gdeupsb.TRSP_FEE_INFO
+		<set>
+			<if test="brNo != null">
+				BR_NO = #{brNo,jdbcType=CHAR},
+			</if>
+			<if test="carTyp != null">
+				CAR_TYP = #{carTyp,jdbcType=CHAR},
+			</if>
+			<if test="carNo != null">
+				CAR_NO = #{carNo,jdbcType=CHAR},
+			</if>
+			<if test="tcusNm != null">
+				TCUS_NM = #{tcusNm,jdbcType=CHAR},
+			</if>
+			<if test="payMon != null">
+				PAY_MON = #{payMon,jdbcType=CHAR},
+			</if>
+			<if test="payDat != null">
+				PAY_DAT = #{payDat,jdbcType=DATE},
+			</if>
+			<if test="payNod != null">
+				PAY_NOD = #{payNod,jdbcType=CHAR},
+			</if>
+			<if test="payTlr != null">
+				PAY_TLR = #{payTlr,jdbcType=CHAR},
+			</if>
+			<if test="payTck != null">
+				PAY_TCK = #{payTck,jdbcType=CHAR},
+			</if>
+			<if test="txnAmt != null">
+				TXN_AMT = #{txnAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="txnCnl != null">
+				TXN_CNL = #{txnCnl,jdbcType=CHAR},
+			</if>
+			<if test="actTyp != null">
+				ACT_TYP = #{actTyp,jdbcType=CHAR},
+			</if>
+			<if test="actNo != null">
+				ACT_NO = #{actNo,jdbcType=CHAR},
+			</if>
+			<if test="tactDt != null">
+				TACT_DT = #{tactDt,jdbcType=DATE},
+			</if>
+			<if test="tlogNo != null">
+				TLOG_NO = #{tlogNo,jdbcType=CHAR},
+			</if>
+			<if test="prtNod != null">
+				PRT_NOD = #{prtNod,jdbcType=CHAR},
+			</if>
+			<if test="prtTlr != null">
+				PRT_TLR = #{prtTlr,jdbcType=CHAR},
+			</if>
+			<if test="rvsLog != null">
+				RVS_LOG = #{rvsLog,jdbcType=CHAR},
+			</if>
+			<if test="rvsDat != null">
+				RVS_DAT = #{rvsDat,jdbcType=DATE},
+			</if>
+			<if test="rvsNod != null">
+				RVS_NOD = #{rvsNod,jdbcType=CHAR},
+			</if>
+			<if test="rvsTlr != null">
+				RVS_TLR = #{rvsTlr,jdbcType=CHAR},
+			</if>
+			<if test="rvsTck != null">
+				RVS_TCK = #{rvsTck,jdbcType=CHAR},
+			</if>
+			<if test="tchkNo != null">
+				TCHK_NO = #{tchkNo,jdbcType=CHAR},
+			</if>
+			<if test="chkTim != null">
+				CHK_TIM = #{chkTim,jdbcType=TIME},
+			</if>
+			<if test="chkFlg != null">
+				CHK_FLG = #{chkFlg,jdbcType=CHAR},
+			</if>
+			<if test="invNo != null">
+				INV_NO = #{invNo,jdbcType=CHAR},
+			</if>
+			<if test="begDat != null">
+				BEG_DAT = #{begDat,jdbcType=DATE},
+			</if>
+			<if test="endDat != null">
+				END_DAT = #{endDat,jdbcType=DATE},
+			</if>
+			<if test="carName != null">
+				CAR_NAME = #{carName,jdbcType=CHAR},
+			</if>
+			<if test="carDzs != null">
+				CAR_DZS = #{carDzs,jdbcType=CHAR},
+			</if>
+			<if test="cntStd != null">
+				CNT_STD = #{cntStd,jdbcType=CHAR},
+			</if>
+			<if test="feeStd != null">
+				FEE_STD = #{feeStd,jdbcType=DECIMAL},
+			</if>
+			<if test="corpus != null">
+				CORPUS = #{corpus,jdbcType=DECIMAL},
+			</if>
+			<if test="lateFee != null">
+				LATE_FEE = #{lateFee,jdbcType=DECIMAL},
+			</if>
+			<if test="clgs != null">
+				CLGS = #{clgs,jdbcType=CHAR},
+			</if>
+			<if test="yybz != null">
+				YYBZ = #{yybz,jdbcType=CHAR},
+			</if>
+
+			STATUS = '1'
+
+		</set>
+		where PAY_LOG = #{payLog,jdbcType=CHAR} AND STATUS = '0'
+	</update>
+
+	<update id="updateChkFlg" parameterType="java.lang.String">
+		update
+		gdeupsb.TRSP_FEE_INFO
 		set CHK_FLG = '3'
-		where TCHK_NO = #{tChkNo,jdbcType=CHAR} and CHK_FLG = '0'
-</update>
+		where TCHK_NO =
+		#{tChkNo,jdbcType=CHAR} and CHK_FLG =
+		'0'
+	</update>
 
-<select id="findNotCheck"   resultMap="basicResultMap"   parameterType="java.lang.String">
-		select * from gdeupsb.TRSP_FEE_INFO where  TCHK_NO=#{tChkNo,jdbcType=CHAR} and CHK_FLG !='1'
-</select>
-<select id="findSumForTxnAmt"  resultType="java.util.Map"  parameterType="java.lang.String">
-		select count(*) as COUNT ,sum(TXN_AMT) as SUMTXNAMT from gdeupsb.TRSP_FEE_INFO 
-		where TCHK_NO=#{tChkNo,jdbcType=CHAR} and CHK_FLG='1'
-</select>
-
-
-  <select id="findInfo" resultMap="basicResultMap" >
-    select * from gdeupsb.TRSP_FEE_INFO where 
-    <if test="carNo != null" >
-        CAR_NO = #{carNo,jdbcType=CHAR}
-     </if>
-     <if test="brNo != null" >
-      AND  BR_NO = #{brNo,jdbcType=CHAR}
-     </if>
-     <if test="status != null" >
-       AND  STATUS = #{status,jdbcType=CHAR}
-     </if>
-     AND  (PAY_DAT BETWEEN #{begDat,jdbcType=DATE} AND  #{endDat,jdbcType=DATE})
-      <!-- BR_NO=#{brNo,jdbcType=CHAR} AND (CAR_NO=#{carNo,jdbcType=CHAR} OR 
-    #{carNo,jdbcType=CHAR} = '粤C') AND  (PAY_DAT BETWEEN #{begDat,jdbcType=DATE} AND  #{endDat,jdbcType=DATE}) 
-    AND (STATUS = #{status,jdbcType=CHAR} OR #{status,jdbcType=CHAR} = 'A') --> 
-    
-  </select>
-  <select id="findInfoCount" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo" resultType="java.lang.Integer" >
-    select count(*) from gdeupsb.TRSP_FEE_INFO where 
-    <if test="carNo != null" >
-        CAR_NO = #{carNo,jdbcType=CHAR}
-     </if>
-     <if test="brNo != null" >
-       AND BR_NO = #{brNo,jdbcType=CHAR}
-     </if>
-     <if test="status != null" >
-      AND  STATUS = #{status,jdbcType=CHAR}
-     </if>
-     AND  (PAY_DAT BETWEEN #{begDat,jdbcType=DATE} AND  #{endDat,jdbcType=DATE}) 
-    
-  </select>
- 
-	<select id="findLogNo" resultMap="basicResultMap" >
-    select TLOG_NO,INV_NO oinvNo,STATUS,THD_KEY,PAY_LOG,PRT_NOD from gdeupsb.TRSP_FEE_INFO where BR_NO=#{brNo,jdbcType=CHAR} AND CAR_NO=#{carNo,jdbcType=CHAR}  
-    AND  CAR_TYP=#{carTyp,jdbcType=CHAR} AND TACT_DT=#{tactDt,jdbcType=DATE}  ORDER BY TLOG_NO DESC fetch first 1 rows only
-    
-  </select>
-   <update id="updateThdFeeInfo" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo" >
-    update gdeupsb.TRSP_FEE_INFO
-    <set >
-     
-      <if test="carTyp != null" >
-        CAR_TYP = #{carTyp,jdbcType=CHAR},
-      </if>
-       <if test="status != null" >
-        STATUS = #{status,jdbcType=CHAR},
-      </if>
-      <if test="carNo != null" >
-        CAR_NO = #{carNo,jdbcType=CHAR},
-      </if>
-      <if test="tcusNm != null" >
-        TCUS_NM = #{tcusNm,jdbcType=CHAR},
-      </if>
-      <if test="payMon != null" >
-        PAY_MON = #{payMon,jdbcType=CHAR},
-      </if>
-      <if test="payDat != null" >
-        PAY_DAT = #{payDat,jdbcType=DATE},
-      </if>
-      <if test="payLog != null" >
-        PAY_LOG = #{payLog,jdbcType=CHAR},
-      </if>
-      <if test="payNod != null" >
-        PAY_NOD = #{payNod,jdbcType=CHAR},
-      </if>
-      <if test="payTlr != null" >
-        PAY_TLR = #{payTlr,jdbcType=CHAR},
-      </if>
-      <if test="payTck != null" >
-        PAY_TCK = #{payTck,jdbcType=CHAR},
-      </if>
-      <if test="txnAmt != null" >
-        TXN_AMT = #{txnAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="txnCnl != null" >
-        TXN_CNL = #{txnCnl,jdbcType=CHAR},
-      </if>
-      <if test="actTyp != null" >
-        ACT_TYP = #{actTyp,jdbcType=CHAR},
-      </if>
-      <if test="actNo != null" >
-        ACT_NO = #{actNo,jdbcType=CHAR},
-      </if>
-      <if test="tactDt != null" >
-        TACT_DT = #{tactDt,jdbcType=DATE},
-      </if>
-      <if test="tlogNo != null" >
-        TLOG_NO = #{tlogNo,jdbcType=CHAR},
-      </if>
-      <if test="prtNod != null" >
-        PRT_NOD = #{prtNod,jdbcType=CHAR},
-      </if>
-      <if test="prtTlr != null" >
-        PRT_TLR = #{prtTlr,jdbcType=CHAR},
-      </if>
-      <if test="rvsLog != null" >
-        RVS_LOG = #{rvsLog,jdbcType=CHAR},
-      </if>
-      <if test="rvsDat != null" >
-        RVS_DAT = #{rvsDat,jdbcType=DATE},
-      </if>
-      <if test="rvsNod != null" >
-        RVS_NOD = #{rvsNod,jdbcType=CHAR},
-      </if>
-      <if test="rvsTlr != null" >
-        RVS_TLR = #{rvsTlr,jdbcType=CHAR},
-      </if>
-      <if test="rvsTck != null" >
-        RVS_TCK = #{rvsTck,jdbcType=CHAR},
-      </if>
-      <if test="tchkNo != null" >
-        TCHK_NO = #{tchkNo,jdbcType=CHAR},
-      </if>
-      <if test="chkTim != null" >
-        CHK_TIM = #{chkTim,jdbcType=TIME},
-      </if>
-      <if test="chkFlg != null" >
-        CHK_FLG = #{chkFlg,jdbcType=CHAR},
-      </if>
-      <if test="invNo != null" >
-        INV_NO = #{invNo,jdbcType=CHAR},
-      </if>
-      <if test="begDat != null" >
-        BEG_DAT = #{begDat,jdbcType=DATE},
-      </if>
-      <if test="endDat != null" >
-        END_DAT = #{endDat,jdbcType=DATE},
-      </if>
-      <if test="carName != null" >
-        CAR_NAME = #{carName,jdbcType=CHAR},
-      </if>
-      <if test="carDzs != null" >
-        CAR_DZS = #{carDzs,jdbcType=CHAR},
-      </if>
-      <if test="cntStd != null" >
-        CNT_STD = #{cntStd,jdbcType=CHAR},
-      </if>
-      <if test="feeStd != null" >
-        FEE_STD = #{feeStd,jdbcType=DECIMAL},
-      </if>
-      <if test="corpus != null" >
-        CORPUS = #{corpus,jdbcType=DECIMAL},
-      </if>
-      <if test="lateFee != null" >
-        LATE_FEE = #{lateFee,jdbcType=DECIMAL},
-      </if>
-      <if test="clgs != null" >
-        CLGS = #{clgs,jdbcType=CHAR},
-      </if>
-      <if test="yybz != null" >
-        YYBZ = #{yybz,jdbcType=CHAR},
-      </if>
-     
-    </set>
-    where THD_KEY = #{thdKey,jdbcType=CHAR} AND STATUS = '1' 
-  </update>
- 
- <select id="findForCancel" resultMap="basicResultMap" >
-    select
-    <include refid="baseColumnList" />
-    from gdeupsb.TRSP_FEE_INFO
-    <trim prefix="WHERE" prefixOverrides="AND" >
-      <if test="thdKey!=null" >
-        AND  THD_KEY=#{thdKey,jdbcType=CHAR}
-      </if>
-      <if test="brNo!=null" >
-        AND  BR_NO=#{brNo,jdbcType=CHAR}
-      </if>
-      <if test="carTyp!=null" >
-        AND  CAR_TYP=#{carTyp,jdbcType=CHAR}
-      </if>
-      <if test="carNo!=null" >
-        AND  CAR_NO=#{carNo,jdbcType=CHAR}
-      </if>
-      <if test="tcusNm!=null" >
-        AND  TCUS_NM=#{tcusNm,jdbcType=CHAR}
-      </if>
-      <if test="payMon!=null" >
-        AND  PAY_MON=#{payMon,jdbcType=CHAR}
-      </if>
-      <if test="payDat!=null" >
-        AND  PAY_DAT=#{payDat,jdbcType=DATE}
-      </if>
-      <if test="payLog!=null" >
-        AND  PAY_LOG=#{payLog,jdbcType=CHAR}
-      </if>
-      <if test="payNod!=null" >
-        AND  PAY_NOD=#{payNod,jdbcType=CHAR}
-      </if>
-      <if test="payTlr!=null" >
-        AND  PAY_TLR=#{payTlr,jdbcType=CHAR}
-      </if>
-      <if test="payTck!=null" >
-        AND  PAY_TCK=#{payTck,jdbcType=CHAR}
-      </if>
-      <if test="txnAmt!=null" >
-        AND  TXN_AMT=#{txnAmt,jdbcType=DECIMAL}
-      </if>
-      <if test="txnCnl!=null" >
-        AND  TXN_CNL=#{txnCnl,jdbcType=CHAR}
-      </if>
-      <if test="actTyp!=null" >
-        AND  ACT_TYP=#{actTyp,jdbcType=CHAR}
-      </if>
-      <if test="actNo!=null" >
-        AND  ACT_NO=#{actNo,jdbcType=CHAR}
-      </if>
-      <if test="tactDt!=null" >
-        AND  TACT_DT=#{tactDt,jdbcType=DATE}
-      </if>
-      <if test="tlogNo!=null" >
-        AND  TLOG_NO=#{tlogNo,jdbcType=CHAR}
-      </if>
-      <if test="prtNod!=null" >
-        AND  PRT_NOD=#{prtNod,jdbcType=CHAR}
-      </if>
-      <if test="prtTlr!=null" >
-        AND  PRT_TLR=#{prtTlr,jdbcType=CHAR}
-      </if>
-      <if test="rvsLog!=null" >
-        AND  RVS_LOG=#{rvsLog,jdbcType=CHAR}
-      </if>
-      <if test="rvsDat!=null" >
-        AND  RVS_DAT=#{rvsDat,jdbcType=DATE}
-      </if>
-      <if test="rvsNod!=null" >
-        AND  RVS_NOD=#{rvsNod,jdbcType=CHAR}
-      </if>
-      <if test="rvsTlr!=null" >
-        AND  RVS_TLR=#{rvsTlr,jdbcType=CHAR}
-      </if>
-      <if test="rvsTck!=null" >
-        AND  RVS_TCK=#{rvsTck,jdbcType=CHAR}
-      </if>
-      <if test="tchkNo!=null" >
-        AND  TCHK_NO=#{tchkNo,jdbcType=CHAR}
-      </if>
-      <if test="chkTim!=null" >
-        AND  CHK_TIM=#{chkTim,jdbcType=TIME}
-      </if>
-      <if test="chkFlg!=null" >
-        AND  CHK_FLG=#{chkFlg,jdbcType=CHAR}
-      </if>
-      <if test="invNo!=null" >
-        AND  INV_NO=#{invNo,jdbcType=CHAR}
-      </if>
-      <if test="begDat!=null" >
-        AND  BEG_DAT=#{begDat,jdbcType=DATE}
-      </if>
-      <if test="endDat!=null" >
-        AND  END_DAT=#{endDat,jdbcType=DATE}
-      </if>
-      <if test="carName!=null" >
-        AND  CAR_NAME=#{carName,jdbcType=CHAR}
-      </if>
-      <if test="carDzs!=null" >
-        AND  CAR_DZS=#{carDzs,jdbcType=CHAR}
-      </if>
-      <if test="cntStd!=null" >
-        AND  CNT_STD=#{cntStd,jdbcType=CHAR}
-      </if>
-      <if test="feeStd!=null" >
-        AND  FEE_STD=#{feeStd,jdbcType=DECIMAL}
-      </if>
-      <if test="corpus!=null" >
-        AND  CORPUS=#{corpus,jdbcType=DECIMAL}
-      </if>
-      <if test="lateFee!=null" >
-        AND  LATE_FEE=#{lateFee,jdbcType=DECIMAL}
-      </if>
-      <if test="clgs!=null" >
-        AND  CLGS=#{clgs,jdbcType=CHAR}
-      </if>
-      <if test="yybz!=null" >
-        AND  YYBZ=#{yybz,jdbcType=CHAR}
-      </if>
-      <if test="status!=null" >
-        AND  STATUS=#{status,jdbcType=CHAR}
-      </if>
-    </trim>
-    order by THD_KEY DESC fetch first 1 rows only
-  </select>
- <update id="updateCancelSt" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo" >
-    update gdeupsb.TRSP_FEE_INFO
-    <set >
-     
-      <if test="carTyp != null" >
-        CAR_TYP = #{carTyp,jdbcType=CHAR},
-      </if>
-      <if test="carNo != null" >
-        CAR_NO = #{carNo,jdbcType=CHAR},
-      </if>
-      <if test="tcusNm != null" >
-        TCUS_NM = #{tcusNm,jdbcType=CHAR},
-      </if>
-      <if test="payMon != null" >
-        PAY_MON = #{payMon,jdbcType=CHAR},
-      </if>
-      <if test="payDat != null" >
-        PAY_DAT = #{payDat,jdbcType=DATE},
-      </if>
-      <if test="payLog != null" >
-        PAY_LOG = #{payLog,jdbcType=CHAR},
-      </if>
-      <if test="payNod != null" >
-        PAY_NOD = #{payNod,jdbcType=CHAR},
-      </if>
-      <if test="payTlr != null" >
-        PAY_TLR = #{payTlr,jdbcType=CHAR},
-      </if>
-      <if test="payTck != null" >
-        PAY_TCK = #{payTck,jdbcType=CHAR},
-      </if>
-      <if test="txnAmt != null" >
-        TXN_AMT = #{txnAmt,jdbcType=DECIMAL},
-      </if>
-      <if test="txnCnl != null" >
-        TXN_CNL = #{txnCnl,jdbcType=CHAR},
-      </if>
-      <if test="actTyp != null" >
-        ACT_TYP = #{actTyp,jdbcType=CHAR},
-      </if>
-      <if test="actNo != null" >
-        ACT_NO = #{actNo,jdbcType=CHAR},
-      </if>
-      <if test="tactDt != null" >
-        TACT_DT = #{tactDt,jdbcType=DATE},
-      </if>
-      <if test="tlogNo != null" >
-        TLOG_NO = #{tlogNo,jdbcType=CHAR},
-      </if>
-      <if test="prtNod != null" >
-        PRT_NOD = #{prtNod,jdbcType=CHAR},
-      </if>
-      <if test="prtTlr != null" >
-        PRT_TLR = #{prtTlr,jdbcType=CHAR},
-      </if>
-      <if test="rvsLog != null" >
-        RVS_LOG = #{rvsLog,jdbcType=CHAR},
-      </if>
-      <if test="rvsDat != null" >
-        RVS_DAT = #{rvsDat,jdbcType=DATE},
-      </if>
-      <if test="rvsNod != null" >
-        RVS_NOD = #{rvsNod,jdbcType=CHAR},
-      </if>
-      <if test="rvsTlr != null" >
-        RVS_TLR = #{rvsTlr,jdbcType=CHAR},
-      </if>
-      <if test="rvsTck != null" >
-        RVS_TCK = #{rvsTck,jdbcType=CHAR},
-      </if>
-      <if test="tchkNo != null" >
-        TCHK_NO = #{tchkNo,jdbcType=CHAR},
-      </if>
-      <if test="chkTim != null" >
-        CHK_TIM = #{chkTim,jdbcType=TIME},
-      </if>
-      <if test="chkFlg != null" >
-        CHK_FLG = #{chkFlg,jdbcType=CHAR},
-      </if>
-      <if test="invNo != null" >
-        INV_NO = #{invNo,jdbcType=CHAR},
-      </if>
-      <if test="begDat != null" >
-        BEG_DAT = #{begDat,jdbcType=DATE},
-      </if>
-      <if test="endDat != null" >
-        END_DAT = #{endDat,jdbcType=DATE},
-      </if>
-      <if test="carName != null" >
-        CAR_NAME = #{carName,jdbcType=CHAR},
-      </if>
-      <if test="carDzs != null" >
-        CAR_DZS = #{carDzs,jdbcType=CHAR},
-      </if>
-      <if test="cntStd != null" >
-        CNT_STD = #{cntStd,jdbcType=CHAR},
-      </if>
-      <if test="feeStd != null" >
-        FEE_STD = #{feeStd,jdbcType=DECIMAL},
-      </if>
-      <if test="corpus != null" >
-        CORPUS = #{corpus,jdbcType=DECIMAL},
-      </if>
-      <if test="lateFee != null" >
-        LATE_FEE = #{lateFee,jdbcType=DECIMAL},
-      </if>
-      <if test="clgs != null" >
-        CLGS = #{clgs,jdbcType=CHAR},
-      </if>
-      <if test="yybz != null" >
-        YYBZ = #{yybz,jdbcType=CHAR},
-      </if>
-     <if test="status != null" >
-        STATUS = #{status,jdbcType=CHAR},
-      </if>
-    </set>
-    where THD_KEY = #{thdKey,jdbcType=CHAR} AND STATUS = '0' AND BR_NO= #{brNo,jdbcType=CHAR}
-  </update>
-  <select id="findOrder" resultMap="basicResultMap" >
-    select
-    <include refid="baseColumnList" />
-    from gdeupsb.TRSP_FEE_INFO
-    <trim prefix="WHERE" prefixOverrides="AND" >
-      <if test="thdKey!=null" >
-        AND  THD_KEY=#{thdKey,jdbcType=CHAR}
-      </if>
-      <if test="brNo!=null" >
-        AND  BR_NO=#{brNo,jdbcType=CHAR}
-      </if>
-      <if test="carTyp!=null" >
-        AND  CAR_TYP=#{carTyp,jdbcType=CHAR}
-      </if>
-      <if test="carNo!=null" >
-        AND  CAR_NO=#{carNo,jdbcType=CHAR}
-      </if>
-      <if test="tcusNm!=null" >
-        AND  TCUS_NM=#{tcusNm,jdbcType=CHAR}
-      </if>
-      <if test="payMon!=null" >
-        AND  PAY_MON=#{payMon,jdbcType=CHAR}
-      </if>
-      <if test="payDat!=null" >
-        AND  PAY_DAT=#{payDat,jdbcType=DATE}
-      </if>
-      <if test="payLog!=null" >
-        AND  PAY_LOG=#{payLog,jdbcType=CHAR}
-      </if>
-      <if test="payNod!=null" >
-        AND  PAY_NOD=#{payNod,jdbcType=CHAR}
-      </if>
-      <if test="payTlr!=null" >
-        AND  PAY_TLR=#{payTlr,jdbcType=CHAR}
-      </if>
-      <if test="payTck!=null" >
-        AND  PAY_TCK=#{payTck,jdbcType=CHAR}
-      </if>
-      <if test="txnAmt!=null" >
-        AND  TXN_AMT=#{txnAmt,jdbcType=DECIMAL}
-      </if>
-      <if test="txnCnl!=null" >
-        AND  TXN_CNL=#{txnCnl,jdbcType=CHAR}
-      </if>
-      <if test="actTyp!=null" >
-        AND  ACT_TYP=#{actTyp,jdbcType=CHAR}
-      </if>
-      <if test="actNo!=null" >
-        AND  ACT_NO=#{actNo,jdbcType=CHAR}
-      </if>
-      <if test="tactDt!=null" >
-        AND  TACT_DT=#{tactDt,jdbcType=DATE}
-      </if>
-      <if test="tlogNo!=null" >
-        AND  TLOG_NO=#{tlogNo,jdbcType=CHAR}
-      </if>
-      <if test="prtNod!=null" >
-        AND  PRT_NOD=#{prtNod,jdbcType=CHAR}
-      </if>
-      <if test="prtTlr!=null" >
-        AND  PRT_TLR=#{prtTlr,jdbcType=CHAR}
-      </if>
-      <if test="rvsLog!=null" >
-        AND  RVS_LOG=#{rvsLog,jdbcType=CHAR}
-      </if>
-      <if test="rvsDat!=null" >
-        AND  RVS_DAT=#{rvsDat,jdbcType=DATE}
-      </if>
-      <if test="rvsNod!=null" >
-        AND  RVS_NOD=#{rvsNod,jdbcType=CHAR}
-      </if>
-      <if test="rvsTlr!=null" >
-        AND  RVS_TLR=#{rvsTlr,jdbcType=CHAR}
-      </if>
-      <if test="rvsTck!=null" >
-        AND  RVS_TCK=#{rvsTck,jdbcType=CHAR}
-      </if>
-      <if test="tchkNo!=null" >
-        AND  TCHK_NO=#{tchkNo,jdbcType=CHAR}
-      </if>
-      <if test="chkTim!=null" >
-        AND  CHK_TIM=#{chkTim,jdbcType=TIME}
-      </if>
-      <if test="chkFlg!=null" >
-        AND  CHK_FLG=#{chkFlg,jdbcType=CHAR}
-      </if>
-      <if test="invNo!=null" >
-        AND  INV_NO=#{invNo,jdbcType=CHAR}
-      </if>
-      <if test="begDat!=null" >
-        AND  BEG_DAT=#{begDat,jdbcType=DATE}
-      </if>
-      <if test="endDat!=null" >
-        AND  END_DAT=#{endDat,jdbcType=DATE}
-      </if>
-      <if test="carName!=null" >
-        AND  CAR_NAME=#{carName,jdbcType=CHAR}
-      </if>
-      <if test="carDzs!=null" >
-        AND  CAR_DZS=#{carDzs,jdbcType=CHAR}
-      </if>
-      <if test="cntStd!=null" >
-        AND  CNT_STD=#{cntStd,jdbcType=CHAR}
-      </if>
-      <if test="feeStd!=null" >
-        AND  FEE_STD=#{feeStd,jdbcType=DECIMAL}
-      </if>
-      <if test="corpus!=null" >
-        AND  CORPUS=#{corpus,jdbcType=DECIMAL}
-      </if>
-      <if test="lateFee!=null" >
-        AND  LATE_FEE=#{lateFee,jdbcType=DECIMAL}
-      </if>
-      <if test="clgs!=null" >
-        AND  CLGS=#{clgs,jdbcType=CHAR}
-      </if>
-      <if test="yybz!=null" >
-        AND  YYBZ=#{yybz,jdbcType=CHAR}
-      </if>
-      <if test="status!=null" >
-        AND  STATUS=#{status,jdbcType=CHAR}
-      </if>
-    </trim>
-    ORDER BY THD_KEY DESC
-  </select>
+	<select id="findNotCheck" resultMap="basicResultMap"
+		parameterType="java.lang.String">
+		select * from gdeupsb.TRSP_FEE_INFO where
+		TCHK_NO=#{tChkNo,jdbcType=CHAR} and CHK_FLG !='1'
+	</select>
+	<select id="findSumForTxnAmt" resultType="java.util.Map"
+		parameterType="java.lang.String">
+		select count(*) as COUNT ,sum(TXN_AMT) as SUMTXNAMT from
+		gdeupsb.TRSP_FEE_INFO
+		where TCHK_NO=#{tChkNo,jdbcType=CHAR} and
+		CHK_FLG='1'
+	</select>
 
 
+	<select id="findInfo" resultMap="basicResultMap">
+		select * from gdeupsb.TRSP_FEE_INFO where
+		<if test="carNo != null">
+			CAR_NO = #{carNo,jdbcType=CHAR}
+		</if>
+		<if test="brNo != null">
+			AND BR_NO = #{brNo,jdbcType=CHAR}
+		</if>
+		<if test="status != null">
+			AND STATUS = #{status,jdbcType=CHAR}
+		</if>
+		AND (PAY_DAT BETWEEN #{begDat,jdbcType=DATE} AND
+		#{endDat,jdbcType=DATE})
+		<!-- BR_NO=#{brNo,jdbcType=CHAR} AND (CAR_NO=#{carNo,jdbcType=CHAR} OR 
+			#{carNo,jdbcType=CHAR} = '粤C') AND (PAY_DAT BETWEEN #{begDat,jdbcType=DATE} 
+			AND #{endDat,jdbcType=DATE}) AND (STATUS = #{status,jdbcType=CHAR} OR #{status,jdbcType=CHAR} 
+			= 'A') -->
 
-  <select id="find0" resultMap="basicResultMap" parameterType="java.util.Map">
-    select STATUS,count(*) count,count(TXN_AMT) amt from gdeupsb.TRSP_FEE_INFO
-    where BR_NO = #{bk,jdbcType=CHAR} and((STATUS='0' AND (PAY_DAT between #{startDate,jdbcType=CHAR} AND #{endDate,jdbcType=CHAR} ) and PAY_NOD= #{nodNo,jdbcType=CHAR})
-    or (STATUS='1' AND (TACT_DT between #{startDate,jdbcType=CHAR} AND #{endDate,jdbcType=CHAR}) and PRT_NOD= #{nodNo,jdbcType=CHAR})
-    or ((STATUS='2' or STATUS='3') AND (RVS_DAT between #{startDate,jdbcType=CHAR} AND #{endDate,jdbcType=CHAR}) AND RVS_NOD= #{nodNo,jdbcType=CHAR}))
-   group by STATUS
-  </select>
-  
-  <select id="findSum" resultType="java.util.Map" parameterType="java.util.Map">
-   SELECT count(*) as OrnCnt,value(sum(cast(Txn_Amt as BIGINT)),0) as OrnAmt,
-                        value(sum(case when Status='1' then 1 else 0 end ),0) as SucCnt,
-                        value(sum(case when Status='1' then BIGINT(Txn_Amt) else 0 end ),0) as SucAmt
-                 FROM  gdeupsb.TRSP_FEE_INFO
-                 WHERE  Br_No= #{bk,jdbcType=CHAR}
-                 AND  ((Status='0' and (Pay_Dat between #{startDate,jdbcType=CHAR} AND #{endDate,jdbcType=CHAR}) and (Pay_Nod= #{nodNo,jdbcType=CHAR}))
-                 OR   (Status='1' and (TAct_Dt between #{startDate,jdbcType=CHAR} AND #{endDate,jdbcType=CHAR}) and (Prt_Nod= #{nodNo,jdbcType=CHAR}) )
-                 OR   ((Status='2' or Status='3') and (Rvs_Dat between #{startDate,jdbcType=CHAR} AND #{endDate,jdbcType=CHAR}) and (Rvs_Nod= #{nodNo,jdbcType=CHAR}))) 
-  </select>
+	</select>
+	<select id="findInfoCount" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo"
+		resultType="java.lang.Integer">
+		select count(*) from gdeupsb.TRSP_FEE_INFO where
+		<if test="carNo != null">
+			CAR_NO = #{carNo,jdbcType=CHAR}
+		</if>
+		<if test="brNo != null">
+			AND BR_NO = #{brNo,jdbcType=CHAR}
+		</if>
+		<if test="status != null">
+			AND STATUS = #{status,jdbcType=CHAR}
+		</if>
+		AND (PAY_DAT BETWEEN #{begDat,jdbcType=DATE} AND
+		#{endDat,jdbcType=DATE})
 
-	  <select id="findOneByTlogNo" resultMap="basicResultMap" parameterType="java.lang.String" >
-   				 	select 
-				   			 <include refid="baseColumnList" />
-				    from gdeupsb.TRSP_FEE_INFO
-				    where  TLOG_NO= #{tlogNo,jdbcType=CHAR}
-  </select>
-  
-  <select id="findNoPrintList" resultMap="basicResultMap"  parameterType="java.util.Map">
-    select 
-    <include refid="baseColumnList" />
-    from gdeupsb.TRSP_FEE_INFO
-    where (PAY_DAT BETWEEN #{startDate,jdbcType=DATE} AND  #{endDate,jdbcType=DATE})
-    and STATUS='0'
-  </select>
+	</select>
 
-	  <select id="findStatuesDeatil" resultType="java.util.Map"  parameterType="java.util.Map">
-   		 select  STATUS,count(*) as TOT_CNT,sum(TXN_AMT) as TOT_AMT   from gdeupsb.TRSP_FEE_INFO
-	    where   PAY_DAT BETWEEN #{startDate,jdbcType=DATE} AND  #{endDate,jdbcType=DATE}
-	     group by STATUS
-  </select>
-  
+	<select id="findLogNo" resultMap="basicResultMap">
+		select TLOG_NO,INV_NO
+		oinvNo,STATUS,THD_KEY,PAY_LOG,PRT_NOD from
+		gdeupsb.TRSP_FEE_INFO where
+		BR_NO=#{brNo,jdbcType=CHAR} AND
+		CAR_NO=#{carNo,jdbcType=CHAR}
+		AND
+		CAR_TYP=#{carTyp,jdbcType=CHAR} AND TACT_DT=#{tactDt,jdbcType=DATE}
+		ORDER BY TLOG_NO DESC fetch first 1 rows only
+
+	</select>
+	<update id="updateThdFeeInfo" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo">
+		update gdeupsb.TRSP_FEE_INFO
+		<set>
+
+			<if test="carTyp != null">
+				CAR_TYP = #{carTyp,jdbcType=CHAR},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=CHAR},
+			</if>
+			<if test="carNo != null">
+				CAR_NO = #{carNo,jdbcType=CHAR},
+			</if>
+			<if test="tcusNm != null">
+				TCUS_NM = #{tcusNm,jdbcType=CHAR},
+			</if>
+			<if test="payMon != null">
+				PAY_MON = #{payMon,jdbcType=CHAR},
+			</if>
+			<if test="payDat != null">
+				PAY_DAT = #{payDat,jdbcType=DATE},
+			</if>
+			<if test="payLog != null">
+				PAY_LOG = #{payLog,jdbcType=CHAR},
+			</if>
+			<if test="payNod != null">
+				PAY_NOD = #{payNod,jdbcType=CHAR},
+			</if>
+			<if test="payTlr != null">
+				PAY_TLR = #{payTlr,jdbcType=CHAR},
+			</if>
+			<if test="payTck != null">
+				PAY_TCK = #{payTck,jdbcType=CHAR},
+			</if>
+			<if test="txnAmt != null">
+				TXN_AMT = #{txnAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="txnCnl != null">
+				TXN_CNL = #{txnCnl,jdbcType=CHAR},
+			</if>
+			<if test="actTyp != null">
+				ACT_TYP = #{actTyp,jdbcType=CHAR},
+			</if>
+			<if test="actNo != null">
+				ACT_NO = #{actNo,jdbcType=CHAR},
+			</if>
+			<if test="tactDt != null">
+				TACT_DT = #{tactDt,jdbcType=DATE},
+			</if>
+			<if test="tlogNo != null">
+				TLOG_NO = #{tlogNo,jdbcType=CHAR},
+			</if>
+			<if test="prtNod != null">
+				PRT_NOD = #{prtNod,jdbcType=CHAR},
+			</if>
+			<if test="prtTlr != null">
+				PRT_TLR = #{prtTlr,jdbcType=CHAR},
+			</if>
+			<if test="rvsLog != null">
+				RVS_LOG = #{rvsLog,jdbcType=CHAR},
+			</if>
+			<if test="rvsDat != null">
+				RVS_DAT = #{rvsDat,jdbcType=DATE},
+			</if>
+			<if test="rvsNod != null">
+				RVS_NOD = #{rvsNod,jdbcType=CHAR},
+			</if>
+			<if test="rvsTlr != null">
+				RVS_TLR = #{rvsTlr,jdbcType=CHAR},
+			</if>
+			<if test="rvsTck != null">
+				RVS_TCK = #{rvsTck,jdbcType=CHAR},
+			</if>
+			<if test="tchkNo != null">
+				TCHK_NO = #{tchkNo,jdbcType=CHAR},
+			</if>
+			<if test="chkTim != null">
+				CHK_TIM = #{chkTim,jdbcType=TIME},
+			</if>
+			<if test="chkFlg != null">
+				CHK_FLG = #{chkFlg,jdbcType=CHAR},
+			</if>
+			<if test="invNo != null">
+				INV_NO = #{invNo,jdbcType=CHAR},
+			</if>
+			<if test="begDat != null">
+				BEG_DAT = #{begDat,jdbcType=DATE},
+			</if>
+			<if test="endDat != null">
+				END_DAT = #{endDat,jdbcType=DATE},
+			</if>
+			<if test="carName != null">
+				CAR_NAME = #{carName,jdbcType=CHAR},
+			</if>
+			<if test="carDzs != null">
+				CAR_DZS = #{carDzs,jdbcType=CHAR},
+			</if>
+			<if test="cntStd != null">
+				CNT_STD = #{cntStd,jdbcType=CHAR},
+			</if>
+			<if test="feeStd != null">
+				FEE_STD = #{feeStd,jdbcType=DECIMAL},
+			</if>
+			<if test="corpus != null">
+				CORPUS = #{corpus,jdbcType=DECIMAL},
+			</if>
+			<if test="lateFee != null">
+				LATE_FEE = #{lateFee,jdbcType=DECIMAL},
+			</if>
+			<if test="clgs != null">
+				CLGS = #{clgs,jdbcType=CHAR},
+			</if>
+			<if test="yybz != null">
+				YYBZ = #{yybz,jdbcType=CHAR},
+			</if>
+
+		</set>
+		where THD_KEY = #{thdKey,jdbcType=CHAR} AND STATUS = '1'
+	</update>
+
+	<select id="findForCancel" resultMap="basicResultMap">
+		select
+		<include refid="baseColumnList" />
+		from gdeupsb.TRSP_FEE_INFO
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="thdKey!=null">
+				AND THD_KEY=#{thdKey,jdbcType=CHAR}
+			</if>
+			<if test="brNo!=null">
+				AND BR_NO=#{brNo,jdbcType=CHAR}
+			</if>
+			<if test="carTyp!=null">
+				AND CAR_TYP=#{carTyp,jdbcType=CHAR}
+			</if>
+			<if test="carNo!=null">
+				AND CAR_NO=#{carNo,jdbcType=CHAR}
+			</if>
+			<if test="tcusNm!=null">
+				AND TCUS_NM=#{tcusNm,jdbcType=CHAR}
+			</if>
+			<if test="payMon!=null">
+				AND PAY_MON=#{payMon,jdbcType=CHAR}
+			</if>
+			<if test="payDat!=null">
+				AND PAY_DAT=#{payDat,jdbcType=DATE}
+			</if>
+			<if test="payLog!=null">
+				AND PAY_LOG=#{payLog,jdbcType=CHAR}
+			</if>
+			<if test="payNod!=null">
+				AND PAY_NOD=#{payNod,jdbcType=CHAR}
+			</if>
+			<if test="payTlr!=null">
+				AND PAY_TLR=#{payTlr,jdbcType=CHAR}
+			</if>
+			<if test="payTck!=null">
+				AND PAY_TCK=#{payTck,jdbcType=CHAR}
+			</if>
+			<if test="txnAmt!=null">
+				AND TXN_AMT=#{txnAmt,jdbcType=DECIMAL}
+			</if>
+			<if test="txnCnl!=null">
+				AND TXN_CNL=#{txnCnl,jdbcType=CHAR}
+			</if>
+			<if test="actTyp!=null">
+				AND ACT_TYP=#{actTyp,jdbcType=CHAR}
+			</if>
+			<if test="actNo!=null">
+				AND ACT_NO=#{actNo,jdbcType=CHAR}
+			</if>
+			<if test="tactDt!=null">
+				AND TACT_DT=#{tactDt,jdbcType=DATE}
+			</if>
+			<if test="tlogNo!=null">
+				AND TLOG_NO=#{tlogNo,jdbcType=CHAR}
+			</if>
+			<if test="prtNod!=null">
+				AND PRT_NOD=#{prtNod,jdbcType=CHAR}
+			</if>
+			<if test="prtTlr!=null">
+				AND PRT_TLR=#{prtTlr,jdbcType=CHAR}
+			</if>
+			<if test="rvsLog!=null">
+				AND RVS_LOG=#{rvsLog,jdbcType=CHAR}
+			</if>
+			<if test="rvsDat!=null">
+				AND RVS_DAT=#{rvsDat,jdbcType=DATE}
+			</if>
+			<if test="rvsNod!=null">
+				AND RVS_NOD=#{rvsNod,jdbcType=CHAR}
+			</if>
+			<if test="rvsTlr!=null">
+				AND RVS_TLR=#{rvsTlr,jdbcType=CHAR}
+			</if>
+			<if test="rvsTck!=null">
+				AND RVS_TCK=#{rvsTck,jdbcType=CHAR}
+			</if>
+			<if test="tchkNo!=null">
+				AND TCHK_NO=#{tchkNo,jdbcType=CHAR}
+			</if>
+			<if test="chkTim!=null">
+				AND CHK_TIM=#{chkTim,jdbcType=TIME}
+			</if>
+			<if test="chkFlg!=null">
+				AND CHK_FLG=#{chkFlg,jdbcType=CHAR}
+			</if>
+			<if test="invNo!=null">
+				AND INV_NO=#{invNo,jdbcType=CHAR}
+			</if>
+			<if test="begDat!=null">
+				AND BEG_DAT=#{begDat,jdbcType=DATE}
+			</if>
+			<if test="endDat!=null">
+				AND END_DAT=#{endDat,jdbcType=DATE}
+			</if>
+			<if test="carName!=null">
+				AND CAR_NAME=#{carName,jdbcType=CHAR}
+			</if>
+			<if test="carDzs!=null">
+				AND CAR_DZS=#{carDzs,jdbcType=CHAR}
+			</if>
+			<if test="cntStd!=null">
+				AND CNT_STD=#{cntStd,jdbcType=CHAR}
+			</if>
+			<if test="feeStd!=null">
+				AND FEE_STD=#{feeStd,jdbcType=DECIMAL}
+			</if>
+			<if test="corpus!=null">
+				AND CORPUS=#{corpus,jdbcType=DECIMAL}
+			</if>
+			<if test="lateFee!=null">
+				AND LATE_FEE=#{lateFee,jdbcType=DECIMAL}
+			</if>
+			<if test="clgs!=null">
+				AND CLGS=#{clgs,jdbcType=CHAR}
+			</if>
+			<if test="yybz!=null">
+				AND YYBZ=#{yybz,jdbcType=CHAR}
+			</if>
+			<if test="status!=null">
+				AND STATUS=#{status,jdbcType=CHAR}
+			</if>
+		</trim>
+		order by THD_KEY DESC fetch first 1 rows only
+	</select>
+	<update id="updateCancelSt" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo">
+		update gdeupsb.TRSP_FEE_INFO
+		<set>
+
+			<if test="carTyp != null">
+				CAR_TYP = #{carTyp,jdbcType=CHAR},
+			</if>
+			<if test="carNo != null">
+				CAR_NO = #{carNo,jdbcType=CHAR},
+			</if>
+			<if test="tcusNm != null">
+				TCUS_NM = #{tcusNm,jdbcType=CHAR},
+			</if>
+			<if test="payMon != null">
+				PAY_MON = #{payMon,jdbcType=CHAR},
+			</if>
+			<if test="payDat != null">
+				PAY_DAT = #{payDat,jdbcType=DATE},
+			</if>
+			<if test="payLog != null">
+				PAY_LOG = #{payLog,jdbcType=CHAR},
+			</if>
+			<if test="payNod != null">
+				PAY_NOD = #{payNod,jdbcType=CHAR},
+			</if>
+			<if test="payTlr != null">
+				PAY_TLR = #{payTlr,jdbcType=CHAR},
+			</if>
+			<if test="payTck != null">
+				PAY_TCK = #{payTck,jdbcType=CHAR},
+			</if>
+			<if test="txnAmt != null">
+				TXN_AMT = #{txnAmt,jdbcType=DECIMAL},
+			</if>
+			<if test="txnCnl != null">
+				TXN_CNL = #{txnCnl,jdbcType=CHAR},
+			</if>
+			<if test="actTyp != null">
+				ACT_TYP = #{actTyp,jdbcType=CHAR},
+			</if>
+			<if test="actNo != null">
+				ACT_NO = #{actNo,jdbcType=CHAR},
+			</if>
+			<if test="tactDt != null">
+				TACT_DT = #{tactDt,jdbcType=DATE},
+			</if>
+			<if test="tlogNo != null">
+				TLOG_NO = #{tlogNo,jdbcType=CHAR},
+			</if>
+			<if test="prtNod != null">
+				PRT_NOD = #{prtNod,jdbcType=CHAR},
+			</if>
+			<if test="prtTlr != null">
+				PRT_TLR = #{prtTlr,jdbcType=CHAR},
+			</if>
+			<if test="rvsLog != null">
+				RVS_LOG = #{rvsLog,jdbcType=CHAR},
+			</if>
+			<if test="rvsDat != null">
+				RVS_DAT = #{rvsDat,jdbcType=DATE},
+			</if>
+			<if test="rvsNod != null">
+				RVS_NOD = #{rvsNod,jdbcType=CHAR},
+			</if>
+			<if test="rvsTlr != null">
+				RVS_TLR = #{rvsTlr,jdbcType=CHAR},
+			</if>
+			<if test="rvsTck != null">
+				RVS_TCK = #{rvsTck,jdbcType=CHAR},
+			</if>
+			<if test="tchkNo != null">
+				TCHK_NO = #{tchkNo,jdbcType=CHAR},
+			</if>
+			<if test="chkTim != null">
+				CHK_TIM = #{chkTim,jdbcType=TIME},
+			</if>
+			<if test="chkFlg != null">
+				CHK_FLG = #{chkFlg,jdbcType=CHAR},
+			</if>
+			<if test="invNo != null">
+				INV_NO = #{invNo,jdbcType=CHAR},
+			</if>
+			<if test="begDat != null">
+				BEG_DAT = #{begDat,jdbcType=DATE},
+			</if>
+			<if test="endDat != null">
+				END_DAT = #{endDat,jdbcType=DATE},
+			</if>
+			<if test="carName != null">
+				CAR_NAME = #{carName,jdbcType=CHAR},
+			</if>
+			<if test="carDzs != null">
+				CAR_DZS = #{carDzs,jdbcType=CHAR},
+			</if>
+			<if test="cntStd != null">
+				CNT_STD = #{cntStd,jdbcType=CHAR},
+			</if>
+			<if test="feeStd != null">
+				FEE_STD = #{feeStd,jdbcType=DECIMAL},
+			</if>
+			<if test="corpus != null">
+				CORPUS = #{corpus,jdbcType=DECIMAL},
+			</if>
+			<if test="lateFee != null">
+				LATE_FEE = #{lateFee,jdbcType=DECIMAL},
+			</if>
+			<if test="clgs != null">
+				CLGS = #{clgs,jdbcType=CHAR},
+			</if>
+			<if test="yybz != null">
+				YYBZ = #{yybz,jdbcType=CHAR},
+			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=CHAR},
+			</if>
+		</set>
+		where THD_KEY = #{thdKey,jdbcType=CHAR} AND STATUS = '0' AND BR_NO=
+		#{brNo,jdbcType=CHAR}
+	</update>
+	<select id="findOrder" resultMap="basicResultMap">
+		select
+		<include refid="baseColumnList" />
+		from gdeupsb.TRSP_FEE_INFO
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="thdKey!=null">
+				AND THD_KEY=#{thdKey,jdbcType=CHAR}
+			</if>
+			<if test="brNo!=null">
+				AND BR_NO=#{brNo,jdbcType=CHAR}
+			</if>
+			<if test="carTyp!=null">
+				AND CAR_TYP=#{carTyp,jdbcType=CHAR}
+			</if>
+			<if test="carNo!=null">
+				AND CAR_NO=#{carNo,jdbcType=CHAR}
+			</if>
+			<if test="tcusNm!=null">
+				AND TCUS_NM=#{tcusNm,jdbcType=CHAR}
+			</if>
+			<if test="payMon!=null">
+				AND PAY_MON=#{payMon,jdbcType=CHAR}
+			</if>
+			<if test="payDat!=null">
+				AND PAY_DAT=#{payDat,jdbcType=DATE}
+			</if>
+			<if test="payLog!=null">
+				AND PAY_LOG=#{payLog,jdbcType=CHAR}
+			</if>
+			<if test="payNod!=null">
+				AND PAY_NOD=#{payNod,jdbcType=CHAR}
+			</if>
+			<if test="payTlr!=null">
+				AND PAY_TLR=#{payTlr,jdbcType=CHAR}
+			</if>
+			<if test="payTck!=null">
+				AND PAY_TCK=#{payTck,jdbcType=CHAR}
+			</if>
+			<if test="txnAmt!=null">
+				AND TXN_AMT=#{txnAmt,jdbcType=DECIMAL}
+			</if>
+			<if test="txnCnl!=null">
+				AND TXN_CNL=#{txnCnl,jdbcType=CHAR}
+			</if>
+			<if test="actTyp!=null">
+				AND ACT_TYP=#{actTyp,jdbcType=CHAR}
+			</if>
+			<if test="actNo!=null">
+				AND ACT_NO=#{actNo,jdbcType=CHAR}
+			</if>
+			<if test="tactDt!=null">
+				AND TACT_DT=#{tactDt,jdbcType=DATE}
+			</if>
+			<if test="tlogNo!=null">
+				AND TLOG_NO=#{tlogNo,jdbcType=CHAR}
+			</if>
+			<if test="prtNod!=null">
+				AND PRT_NOD=#{prtNod,jdbcType=CHAR}
+			</if>
+			<if test="prtTlr!=null">
+				AND PRT_TLR=#{prtTlr,jdbcType=CHAR}
+			</if>
+			<if test="rvsLog!=null">
+				AND RVS_LOG=#{rvsLog,jdbcType=CHAR}
+			</if>
+			<if test="rvsDat!=null">
+				AND RVS_DAT=#{rvsDat,jdbcType=DATE}
+			</if>
+			<if test="rvsNod!=null">
+				AND RVS_NOD=#{rvsNod,jdbcType=CHAR}
+			</if>
+			<if test="rvsTlr!=null">
+				AND RVS_TLR=#{rvsTlr,jdbcType=CHAR}
+			</if>
+			<if test="rvsTck!=null">
+				AND RVS_TCK=#{rvsTck,jdbcType=CHAR}
+			</if>
+			<if test="tchkNo!=null">
+				AND TCHK_NO=#{tchkNo,jdbcType=CHAR}
+			</if>
+			<if test="chkTim!=null">
+				AND CHK_TIM=#{chkTim,jdbcType=TIME}
+			</if>
+			<if test="chkFlg!=null">
+				AND CHK_FLG=#{chkFlg,jdbcType=CHAR}
+			</if>
+			<if test="invNo!=null">
+				AND INV_NO=#{invNo,jdbcType=CHAR}
+			</if>
+			<if test="begDat!=null">
+				AND BEG_DAT=#{begDat,jdbcType=DATE}
+			</if>
+			<if test="endDat!=null">
+				AND END_DAT=#{endDat,jdbcType=DATE}
+			</if>
+			<if test="carName!=null">
+				AND CAR_NAME=#{carName,jdbcType=CHAR}
+			</if>
+			<if test="carDzs!=null">
+				AND CAR_DZS=#{carDzs,jdbcType=CHAR}
+			</if>
+			<if test="cntStd!=null">
+				AND CNT_STD=#{cntStd,jdbcType=CHAR}
+			</if>
+			<if test="feeStd!=null">
+				AND FEE_STD=#{feeStd,jdbcType=DECIMAL}
+			</if>
+			<if test="corpus!=null">
+				AND CORPUS=#{corpus,jdbcType=DECIMAL}
+			</if>
+			<if test="lateFee!=null">
+				AND LATE_FEE=#{lateFee,jdbcType=DECIMAL}
+			</if>
+			<if test="clgs!=null">
+				AND CLGS=#{clgs,jdbcType=CHAR}
+			</if>
+			<if test="yybz!=null">
+				AND YYBZ=#{yybz,jdbcType=CHAR}
+			</if>
+			<if test="status!=null">
+				AND STATUS=#{status,jdbcType=CHAR}
+			</if>
+		</trim>
+		ORDER BY THD_KEY DESC
+	</select>
+
+
+	<select id="find0" resultType="java.util.Map" parameterType="java.util.Map">
+				select * from (
+		select STATUS, count(*) count,count(TXN_AMT) amt from
+		gdeupsb.TRSP_FEE_INFO
+		where BR_NO =#{bk}
+		and((STATUS='0' AND (PAY_DAT
+		between ${startDate, jdbcType=DATE} AND #{endDate, jdbcType=DATE} ) and
+		PAY_NOD=#{nodNo})
+		or
+		(STATUS='1' AND (TACT_DT between #{startDate, jdbcType=DATE} AND #{endDate, jdbcType=DATE}) and
+		PRT_NOD=#{nodNo})
+		or ((STATUS='2' or STATUS='3') AND (RVS_DAT between
+		#{startDate, jdbcType=DATE} AND
+		#{endDate, jdbcType=DATE}) AND RVS_NOD=#{nodNo}))
+		group by STATUS
+		)a,
+		(
+		SELECT count(*) as OrnCnt,value(sum(cast(Txn_Amt as BIGINT)),0) as
+		OrnAmt,
+		value(sum(case when Status='1' then 1 else 0 end ),0) as
+		SucCnt,
+		value(sum(case when Status='1' then BIGINT(Txn_Amt) else 0 end
+		),0) as
+		SucAmt
+		FROM gdeupsb.TRSP_FEE_INFO
+		WHERE Br_No=#{bk}
+		AND
+		((Status='0' and (Pay_Dat between #{startDate, jdbcType=DATE} and #{endDate, jdbcType=DATE}) and
+		Pay_Nod=#{nodNo})
+		OR (Status='1' and (TAct_Dt between
+		#{startDate, jdbcType=DATE} and #{endDate, jdbcType=DATE}) and
+		Prt_Nod=#{nodNo} )
+		OR ((Status='2' or Status='3') and (Rvs_Dat between #{startDate, jdbcType=DATE} and
+		#{endDate, jdbcType=DATE}) and Rvs_Nod=#{nodNo}))
+		) b
+	</select>
+
+
+	<select id="find1" resultType="java.util.Map" parameterType="java.util.Map">
+		select * from
+		(
+		SELECT case when Status='0' then Pay_Dat when Status='1'
+		then TAct_Dt else
+		Rvs_Dat end Txn_Dat,
+		case when Status='0' then Pay_Nod
+		when Status='1' then Prt_Nod else
+		Rvs_Nod end Nod_No,
+		case when
+		Status='0' then Pay_Tlr when Status='1' then Prt_Tlr else
+		Rvs_Tlr end
+		Tlr_Id,
+		Act_No,car_NO,Car_Typ,Txn_Amt,Inv_No,
+		case when (Status='0' or
+		Status='1') then Pay_Tck else Rvs_Tck end
+		Tck_No,Status
+		FROM
+		gdeupsb.TRSP_FEE_INFO
+		WHERE Br_No=#{bk}
+		AND ((Status='0' and (Pay_Dat
+		between #{startDate, jdbcType=DATE} and #{endDate, jdbcType=DATE}) and
+		Pay_Nod=#{nodNo})
+		OR (Status='1' and (TAct_Dt between #{startDate, jdbcType=DATE} and
+		#{endDate, jdbcType=DATE}) and
+		Prt_Nod=#{nodNo} )
+		OR ((Status='2' or
+		Status='3') and (Rvs_Dat between #{startDate, jdbcType=DATE} and
+		#{endDate, jdbcType=DATE}) and
+		Rvs_Nod=#{nodNo}))
+		ORDER By Txn_Dat,Nod_No,Inv_No ) a
+		,
+		(
+		SELECT count(*) as OrnCnt,value(sum(cast(Txn_Amt as BIGINT)),0) as
+		OrnAmt,
+		value(sum(case when Status='1' then 1 else 0 end ),0) as
+		SucCnt,
+		value(sum(case when Status='1' then BIGINT(Txn_Amt) else 0 end
+		),0) as
+		SucAmt
+		FROM gdeupsb.TRSP_FEE_INFO
+		WHERE Br_No=#{bk}
+		AND
+		((Status='0' and (Pay_Dat between #{startDate, jdbcType=DATE} and #{endDate, jdbcType=DATE}) and
+		Pay_Nod=#{nodNo})
+		OR (Status='1' and (TAct_Dt between
+		#{startDate, jdbcType=DATE} and #{endDate, jdbcType=DATE}) and
+		Prt_Nod=#{nodNo}  )
+		OR ((Status='2' or Status='3') and (Rvs_Dat between #{startDate, jdbcType=DATE} and
+		#{startDate, jdbcType=DATE}) and Rvs_Nod=#{nodNo})) ) b
+	</select>
+
+
+	<select id="findSum" resultType="java.util.Map" parameterType="java.util.Map">
+		SELECT count(*) as OrnCnt,value(sum(cast(Txn_Amt as BIGINT)),0) as
+		OrnAmt,
+		value(sum(case when Status='1' then 1 else 0 end ),0) as
+		SucCnt,
+		value(sum(case when Status='1' then BIGINT(Txn_Amt) else 0 end
+		),0) as SucAmt
+		FROM gdeupsb.TRSP_FEE_INFO
+		WHERE Br_No=
+		#{bk,jdbcType=CHAR}
+		AND ((Status='0' and (Pay_Dat between
+		#{startDate,jdbcType=CHAR} AND
+		#{endDate,jdbcType=CHAR}) and (Pay_Nod=
+		#{nodNo,jdbcType=CHAR}))
+		OR (Status='1' and (TAct_Dt between
+		#{startDate,jdbcType=CHAR} AND
+		#{endDate,jdbcType=CHAR}) and (Prt_Nod=
+		#{nodNo,jdbcType=CHAR}) )
+		OR ((Status='2' or Status='3') and (Rvs_Dat
+		between
+		#{startDate,jdbcType=CHAR} AND #{endDate,jdbcType=CHAR}) and
+		(Rvs_Nod=
+		#{nodNo,jdbcType=CHAR})))
+	</select>
+
+	<select id="findOneByTlogNo" resultMap="basicResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="baseColumnList" />
+		from gdeupsb.TRSP_FEE_INFO
+		where TLOG_NO= #{tlogNo,jdbcType=CHAR}
+	</select>
+
+	<select id="findNoPrintList" resultMap="basicResultMap"
+		parameterType="java.util.Map">
+		select
+		<include refid="baseColumnList" />
+		from gdeupsb.TRSP_FEE_INFO
+		where (PAY_DAT BETWEEN
+		#{startDate,jdbcType=DATE} AND
+		#{endDate,jdbcType=DATE})
+		and STATUS='0'
+	</select>
+
+	<select id="findStatuesDeatil" resultType="java.util.Map"
+		parameterType="java.util.Map">
+		select STATUS,count(*) as TOT_CNT,sum(TXN_AMT) as
+		TOT_AMT from
+		gdeupsb.TRSP_FEE_INFO
+		where PAY_DAT BETWEEN
+		#{startDate,jdbcType=DATE} AND
+		#{endDate,jdbcType=DATE}
+		group by STATUS
+	</select>
+
   <update id="updateMsgStatue"  parameterType="java.util.Map">
 		update gdeupsb.TRSP_FEE_INFO 
 		set TCHK_NO = #{tchkNo,jdbcType=CHAR},CHK_FLG='0'
