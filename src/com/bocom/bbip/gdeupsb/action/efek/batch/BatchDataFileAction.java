@@ -1,12 +1,9 @@
 package com.bocom.bbip.gdeupsb.action.efek.batch;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,17 +13,14 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.commons.net.telnet.TelnetClient;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
-
-import a.a.a.s;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.comp.account.AccountService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
-import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
@@ -34,7 +28,6 @@ import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.BatchAcpService;
 import com.bocom.bbip.eups.spi.vo.PrepareBatchAcpDomain;
-import com.bocom.bbip.file.transfer.sftp.SFTPTransfer;
 import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
@@ -46,12 +39,15 @@ import com.bocom.bbip.gdeupsb.repository.GDEupsEleTmpRepository;
 import com.bocom.bbip.thd.org.apache.commons.collections.CollectionUtils;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
-import com.bocom.bbip.utils.IOUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
+import com.jcraft.jsch.JSchException;
 
 public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 	private final static Log logger=LogFactory.getLog(BatchDataFileAction.class);
+    private final String JLZF_BACK_FILE_AFTTYPE = ".tmp";
+    private final String JLZF_ORGFILE_AFTTYPE = ".txt";
+
 		/**
 		 * 批量代收付  数据准备  提交
 		 */
@@ -84,8 +80,12 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 					EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecBatch");
 					eupsThdFtpConfig.setRmtFleNme(fleNme);
 					eupsThdFtpConfig.setLocFleNme(fleNme);
-					eupsThdFtpConfig.setRmtWay("/app/ics/dat/efek/recv");
-//					fileSftp(context, eupsThdFtpConfig);
+					try{
+						RecvEnCryptFile(eupsThdFtpConfig.getLocDir().replace("/tmp", ""), fleNme, fleNme.replace(JLZF_BACK_FILE_AFTTYPE, JLZF_ORGFILE_AFTTYPE));
+					}catch(IOException e){
+							logger.info("==========Error    RecvEnCryptFile   ",e);
+					}
+					eupsThdFtpConfig.setRmtWay("/app/ics/app/efek/recv");
 					operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
 					
 //					downloadFileToThird(eupsThdFtpConfig);
@@ -295,33 +295,53 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 		 */
 		public void downloadFileToThird(EupsThdFtpConfig eupsThdFtpConfig) throws CoreException {
 			logger.info("===================Start   downloadFileToThird");
-			SFTPTransfer transferSFTPT = new SFTPTransfer();
-			transferSFTPT.setHost("182.53.201.46");
-			transferSFTPT.setPort(Integer.valueOf(eupsThdFtpConfig.getBidPot().trim()));
-			transferSFTPT.setUserName("bcm");
-			//TODO
-			transferSFTPT.setPassword("");
-			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@"+transferSFTPT);
-			try {
-				transferSFTPT.logon();
-				System.out.println();
-				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@"+transferSFTPT);
-				String localFilePath = (String)eupsThdFtpConfig.getLocDir().trim();
-				String rmtFileLocation = (String)eupsThdFtpConfig.getRmtWay().trim();
-				Resource resource = transferSFTPT.getResource(rmtFileLocation);
-
-				if (null != resource) {
-					File localFile = new File(localFilePath);
-					OutputStream fos = new FileOutputStream(localFile);
-					IOUtils.copy(resource.getInputStream(), fos);
-					fos.close();
-				}
-			} catch (Exception e) {
-				throw new CoreException(ErrorCodes.EUPS_FTP_FILEDOWN_FAIL);
-			} finally {
-				transferSFTPT.logout();
-			}
+//			SFTPTransfer transferSFTPT = new SFTPTransfer();
+//			transferSFTPT.setHost("182.53.15.200");
+//			transferSFTPT.setPort(Integer.valueOf(eupsThdFtpConfig.getBidPot().trim()));
+//			transferSFTPT.setUserName("bcm");
+//			//TODO
+//			transferSFTPT.setPassword("");
+//			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@"+transferSFTPT);
+//			try {
+//				transferSFTPT.logon();
+//				System.out.println();
+//				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@"+transferSFTPT);
+//				String localFilePath = (String)eupsThdFtpConfig.getLocDir().trim();
+//				String rmtFileLocation = (String)eupsThdFtpConfig.getRmtWay().trim();
+//				Resource resource = transferSFTPT.getResource(rmtFileLocation);
+//
+//				if (null != resource) {
+//					File localFile = new File(localFilePath);
+//					OutputStream fos = new FileOutputStream(localFile);
+//					IOUtils.copy(resource.getInputStream(), fos);
+//					fos.close();
+//				}
+//			} catch (Exception e) {
+//				throw new CoreException(ErrorCodes.EUPS_FTP_FILEDOWN_FAIL);
+//			} finally {
+//				transferSFTPT.logout();
+//			}
 			logger.info("===================End   downloadFileToThird");
 		}
+		/**
+		 * 接受文件调用加密
+		 */
+		//TODO  打包
+		//TODO  服务器
+		//TODO  服务器
+		//TODO  服务器
+		//TODO  服务器
+	    public  Process RecvEnCryptFile(String excPath, String srcFile, String objFile) throws IOException {
+	    	logger.info("================Start BatchDataFileActiion  RecvEnCryptFile");	    	
+//	        String cmd = excPath + "bin/JlzfDesFile" + " " + excPath + "tmp/" + srcFile + " " + excPath + "tmp/" + objFile + " 0";
+	        String cmd="./EfeFilRecv.sh 182.53.201.46 bcm exchange   dat/efek/recv  "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
+	        logger.info("cmd=" + cmd);
+	        String[] command = new String[] {"/bin/sh","-c",cmd};
+	        Process proc = Runtime.getRuntime().exec(command);
+	        
+	        logger.info("en-file success!");
+	        logger.info("================End BatchDataFileActiion  RecvEnCryptFile");
+	        return proc;
+	    }
 }
 
