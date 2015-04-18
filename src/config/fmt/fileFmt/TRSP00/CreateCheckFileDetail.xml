@@ -11,6 +11,6 @@
 				<varString name="payMon"  type="D|"></varString>		<!-- 缴费月数 -->
 				<varString name="carTyp"  type="D|"></varString>			<!--  车辆类型-->
 				<varString name="carNo"  type="D|"></varString>			<!--  车牌号-->
-				<varString name="status"  type="D|"></varString>			<!--  交易状态-->
+				<varString name="tcusNm"  type="D|"></varString>			<!--  交易状态-->
 		</segment>
 </message>		
