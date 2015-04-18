@@ -8,5 +8,6 @@ import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspInvChgInfo;
 
 public interface GDEupsbTrspInvChgInfoRepository extends PagingAndSortingRepository<GDEupsbTrspInvChgInfo, String> {
 
+	
 	public List<GDEupsbTrspInvChgInfo> findInvGroup(Map<String, Object> map);
 }

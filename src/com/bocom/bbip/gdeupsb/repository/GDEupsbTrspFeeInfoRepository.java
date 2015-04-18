@@ -11,6 +11,7 @@ import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo;
 public interface GDEupsbTrspFeeInfoRepository extends PagingAndSortingRepository<GDEupsbTrspFeeInfo, String> {
 	public void update(GDEupsbTrspFeeInfo gdeupsb);
 
+	
 	public void updateStatus(GDEupsbTrspFeeInfo gdeupsb);
 
 	public int findInfoCount(GDEupsbTrspFeeInfo gdeupsb);
