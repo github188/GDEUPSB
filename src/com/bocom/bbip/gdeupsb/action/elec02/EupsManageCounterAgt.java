@@ -51,7 +51,15 @@ public class EupsManageCounterAgt extends BaseAction {
 
 	private void addAgentDeal(Context context) throws CoreException {
 		GdeupsAgtElecTmp agtElecTmp = toGdeupsAgtElecTmp(context);
-		get(GdeupsAgtElecTmpRepository.class).insert(agtElecTmp);
+		List<GdeupsAgtElecTmp> list = get(GdeupsAgtElecTmpRepository.class).findBase(agtElecTmp);
+		if(list.size()>0){
+			log.info("协议已经存在");
+			throw new CoreException("协议已经存在");
+		}else{
+			get(GdeupsAgtElecTmpRepository.class).insert(agtElecTmp);
+			log.info("新增协议成功");
+
+		}
 	}
 
 	private void updateAgentDeal(Context context) throws CoreException {
@@ -65,11 +73,11 @@ public class EupsManageCounterAgt extends BaseAction {
 				
 			String feeNum = (String)context.getData("JFH");
 			String actNo = (String)context.getData("ActNo");
-			if(feeNum != null && feeNum.trim()!= ""){
+			if(feeNum != null &&  !"".equals(feeNum.trim())){
 				agtElecTmp.setFeeNum(feeNum );      //
 			}
 			
-			if(actNo != null && actNo.trim()!= ""){
+			if(actNo != null && !"".equals(actNo.trim())){
 				agtElecTmp.setActNo(actNo );      //
 			}
 			
