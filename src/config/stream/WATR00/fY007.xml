@@ -14,7 +14,7 @@
 			<fixString name="byyman" length="6"/>   <!-- 营业员代号 -->
 			<fixString name="wtdate" length="8"/>   <!-- 委托时间 -->
 			<fixString name="wtman" length="8"/>   <!-- 委托人 -->
-			<fixString name="idno" length="20"/>   <!-- 身份证号码 -->
+			<fixString name="idNo" length="20"/>   <!-- 身份证号码 -->
 			<fixString name="haddr" length="40"/>   <!-- 家庭地址 -->
 			<fixString name="hphone" length="15"/>   <!-- 家庭电话 -->
 			<fixString name="lphone" length="15"/>   <!-- 手机号码 -->
