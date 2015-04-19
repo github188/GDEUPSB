@@ -105,10 +105,10 @@ public class CheckTrspFileAction extends BaseAction {
 		int chkFlg = -1;
 		// 轮询对账
 		List<GDEupsbTrspFeeInfo> detailList = new ArrayList<GDEupsbTrspFeeInfo>();
-		// 临时使用实体类 定义类型和数据 使其生成文件使用
-		GDEupsbTrspFeeInfo gdEupsbTrspFeeInfoNew = new GDEupsbTrspFeeInfo();
 		Map<String, Object> fileMap=new HashMap<String, Object>();
 		for (TrspCheckTmp trspCheckTmp : list) {			
+			// 临时使用实体类 定义类型和数据 使其生成文件使用
+			GDEupsbTrspFeeInfo gdEupsbTrspFeeInfoNew = new GDEupsbTrspFeeInfo();
 			// 根据流水得到每条数据
 			GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = gdEupsbTrspFeeInfoRepository.findOneByTlogNo(trspCheckTmp.getSqn());
 			if (gdEupsbTrspFeeInfo == null) {
@@ -152,7 +152,7 @@ public class CheckTrspFileAction extends BaseAction {
 								sucTotCnt++;
 						}
 				}
-				System.out.println(">>>>>>>>>>>>>>><<<<<<"+sucTotCnt);			
+					
 				// 临时使用实体类 定义类型和数据 使其生成文件使用
 				gdEupsbTrspFeeInfoNew.setTcusNm(chkErr); // 错误
 				gdEupsbTrspFeeInfoNew.setThdKey(trspCheckTmp.getSqn()); // 流水
@@ -178,7 +178,6 @@ public class CheckTrspFileAction extends BaseAction {
 					gdEupsbTrspFeeInfoNew.setStatus("已作废");
 				}
 					
-				
 				// TODO
 				if (1 != chkFlg) {
 					numErr = numErr + 1;
@@ -191,9 +190,18 @@ public class CheckTrspFileAction extends BaseAction {
 				gdEupsbTrspFeeInfo.setTchkNo(tChkNo);
 				gdEupsbTrspFeeInfoRepository.update(gdEupsbTrspFeeInfo);
 				trspCheckTmp.setStatue("2");
-			}		
 				detailList.add(gdEupsbTrspFeeInfoNew);
+			}		
+				
+				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+				System.out.println(gdEupsbTrspFeeInfoNew.getThdKey());
+				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		}
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+		for (GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo2 : detailList) {
+			 System.out.println(gdEupsbTrspFeeInfo2.getThdKey());
+		}
+		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		context.setData("sucTotCnt", sucTotCnt);
 		context.setData("sucTotAmt", sucTotAmt);
 
@@ -238,6 +246,8 @@ public class CheckTrspFileAction extends BaseAction {
 			context.setData(ParamKeys.RSP_MSG, "系统错误");
 			List<GDEupsbTrspFeeInfo> gdEupsbTrspFeeInfoList=new ArrayList<GDEupsbTrspFeeInfo>();
 			for (TrspCheckTmp trspCheckTmps : trspCheckTmpList) {
+				// 临时使用实体类 定义类型和数据 使其生成文件使用
+				GDEupsbTrspFeeInfo gdEupsbTrspFeeInfoNew = new GDEupsbTrspFeeInfo();
 				gdEupsbTrspFeeInfoNew.setTcusNm(chkErr); // 错误
 				gdEupsbTrspFeeInfoNew.setThdKey(trspCheckTmps.getSqn()); // 流水
 				gdEupsbTrspFeeInfoNew.setTxnAmt(trspCheckTmps.getTxnAmt()); // 金额
@@ -430,6 +440,7 @@ public class CheckTrspFileAction extends BaseAction {
 			for (GDEupsbTrspInvChgInfo gdEupsbTrspInvChgInfo : gdEupsbTrspInvChgInfoList) {
 				gdEupsbTrspInvChgInfo.setSqn(DateUtils.format(gdEupsbTrspInvChgInfo.getActDat(), DateUtils.STYLE_SIMPLE_DATE));
 			}
+			context.setData("totCnt", gdEupsbTrspInvChgInfoList.size());
 		} else if (3 == i) {// ~~~~~~~~~~~~~以缴费未打印发票清单
 			rptFmt = rptFmt + 3;
 			detailList=gdEupsbTrspFeeInfoRepository.findNoPrintList(mapSelect);	
