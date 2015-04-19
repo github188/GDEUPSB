@@ -20,7 +20,7 @@ import com.bocom.jump.bp.core.CoreException;
 
 public class EupsManageAgt extends BaseAction {
 	private static Logger logger = LoggerFactory
-			.getLogger(EupsManageCounterAgt.class);
+			.getLogger(EupsManageAgt.class);
 	private static final int ADD = 0;
 	private static final int UPDATE = 3;
 	private static final int QUERY = 5;

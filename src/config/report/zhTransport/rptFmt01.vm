@@ -15,7 +15,7 @@
 #set($p.index=0)
 #td(1,$d.eles)#set($p.index=$p.index+1) 
 #para($p.index)
-#para($ele.TXN_DTE)
+#para($ele.TXN_DAT)
 #para($ele.NOD_NO)
 #para($ele.TLR_ID)
 #para($ele.ACT_NO)

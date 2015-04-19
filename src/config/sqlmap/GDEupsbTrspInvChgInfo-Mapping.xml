@@ -16,7 +16,8 @@
 		<result column="TLR_ID" property="tlrId" jdbcType="CHAR" />
 	</resultMap>
 	<sql id="baseColumnList">
-		SQN, THD_KEY, TLOG_NO, INV_NO, OINV_NO, CAR_TYP, CAR_NO, TACT_DT, ACT_DAT,
+		SQN, THD_KEY, TLOG_NO, INV_NO, OINV_NO, CAR_TYP, CAR_NO,
+		TACT_DT, ACT_DAT,
 		NOD_NO,
 		TLR_ID
 	</sql>
@@ -67,7 +68,8 @@
 		where SQN = #{sqn,jdbcType=CHAR}
 	</select>
 	<delete id="delete" parameterType="java.lang.String">
-		delete from gdeupsb.TRSP_INV_CHG_INFO
+		delete from
+		gdeupsb.TRSP_INV_CHG_INFO
 		where SQN = #{sqn,jdbcType=CHAR}
 	</delete>
 	<insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspInvChgInfo">
@@ -234,24 +236,27 @@
 		select * from (
 		SELECT Inv_No,OInv_No,Car_Typ,car_no,Tlr_Id OTlrId,Act_Dat,Nod_No ONodNo
 		FROM gdeupsb.TRSP_INV_CHG_INFO
-		WHERE Nod_No=#{nodNo}
-		AND (Act_Dat between #{startDate, jdbcType=DATE} and #{endDate, jdbcType=DATE})
+		WHERE (Nod_No=#{nodNo})
+		AND (Act_Dat between #{startDate, jdbcType=DATE} and #{endDate,
+		jdbcType=DATE})
 		ORDER By Act_Dat ) a,
 		(
 		SELECT count(sqn) as TolNum
 		FROM gdeupsb.TRSP_INV_CHG_INFO
-		WHERE Nod_No=#{nodNo}
-		AND (Act_Dat between #{startDate, jdbcType=DATE} and #{endDate, jdbcType=DATE})
+		WHERE (Nod_No=#{nodNo})
+		AND (Act_Dat between #{startDate, jdbcType=DATE} and #{endDate,
+		jdbcType=DATE})
 		) b
 	</select>
 
-  
-  	  <select id="findInvGroup" resultMap="basicResultMap"  parameterType="java.util.Map">
-   		 select  
-   				 <include refid="baseColumnList" />
-   		 from
-   		    		 gdeupsb.TRSP_INV_CHG_INFO
-	  	  where   
-	  	  			ACT_DAT BETWEEN #{startDate,jdbcType=DATE} AND  #{endDate,jdbcType=DATE}
- 	 </select>
+
+	<select id="findInvGroup" resultMap="basicResultMap"
+		parameterType="java.util.Map">
+		select
+		<include refid="baseColumnList" />
+		from
+		gdeupsb.TRSP_INV_CHG_INFO
+		where
+		ACT_DAT BETWEEN #{startDate,jdbcType=DATE} AND #{endDate,jdbcType=DATE}
+	</select>
 </mapper>

@@ -1367,39 +1367,31 @@
 
 
 	<select id="find0" resultType="java.util.Map" parameterType="java.util.Map">
-				select * from (
-		select STATUS, count(*) count,count(TXN_AMT) amt from
-		gdeupsb.TRSP_FEE_INFO
-		where BR_NO =#{bk}
-		and((STATUS='0' AND (PAY_DAT
-		between ${startDate, jdbcType=DATE} AND #{endDate, jdbcType=DATE} ) and
-		PAY_NOD=#{nodNo})
-		or
-		(STATUS='1' AND (TACT_DT between #{startDate, jdbcType=DATE} AND #{endDate, jdbcType=DATE}) and
-		PRT_NOD=#{nodNo})
-		or ((STATUS='2' or STATUS='3') AND (RVS_DAT between
-		#{startDate, jdbcType=DATE} AND
-		#{endDate, jdbcType=DATE}) AND RVS_NOD=#{nodNo}))
-		group by STATUS
+		select * from (
+		SELECT Status,count(*) as count,value(sum(cast(Txn_Amt as BIGINT)),0) as amt
+		FROM gdeupsb.TRSP_FEE_INFO
+		WHERE Br_No= #{bk}
+		AND ((Status='0' and (Pay_Dat between #{startDate, jdbcType=DATE} and
+		#{endDate, jdbcType=DATE}) and (Pay_Nod=#{nodNo} ))
+		OR (Status='1' and (TAct_Dt between #{startDate, jdbcType=DATE} and
+		#{endDate, jdbcType=DATE}) and (Prt_Nod=#{nodNo} ) )
+		OR ((Status='2' or Status='3') and (Rvs_Dat between #{startDate,
+		jdbcType=DATE} and #{endDate, jdbcType=DATE}) and (Rvs_Nod=#{nodNo})))
+		GROUP BY Status
 		)a,
 		(
-		SELECT count(*) as OrnCnt,value(sum(cast(Txn_Amt as BIGINT)),0) as
-		OrnAmt,
-		value(sum(case when Status='1' then 1 else 0 end ),0) as
-		SucCnt,
-		value(sum(case when Status='1' then BIGINT(Txn_Amt) else 0 end
-		),0) as
+		SELECT count(*) as OrnCnt,value(sum(cast(Txn_Amt as BIGINT)),0) as OrnAmt,
+		value(sum(case when Status='1' then 1 else 0 end ),0) as SucCnt,
+		value(sum(case when Status='1' then BIGINT(Txn_Amt) else 0 end ),0) as
 		SucAmt
 		FROM gdeupsb.TRSP_FEE_INFO
 		WHERE Br_No=#{bk}
-		AND
-		((Status='0' and (Pay_Dat between #{startDate, jdbcType=DATE} and #{endDate, jdbcType=DATE}) and
-		Pay_Nod=#{nodNo})
-		OR (Status='1' and (TAct_Dt between
-		#{startDate, jdbcType=DATE} and #{endDate, jdbcType=DATE}) and
-		Prt_Nod=#{nodNo} )
-		OR ((Status='2' or Status='3') and (Rvs_Dat between #{startDate, jdbcType=DATE} and
-		#{endDate, jdbcType=DATE}) and Rvs_Nod=#{nodNo}))
+		AND ((Status='0' and (Pay_Dat between #{startDate, jdbcType=DATE} and
+		#{endDate, jdbcType=DATE}) and (Pay_Nod=#{nodNo}))
+		OR (Status='1' and (TAct_Dt between #{startDate, jdbcType=DATE} and
+		#{endDate, jdbcType=DATE}) and (Prt_Nod=#{nodNo}) )
+		OR ((Status='2' or Status='3') and (Rvs_Dat between #{startDate,
+		jdbcType=DATE} and #{endDate, jdbcType=DATE}) and (Rvs_Nod=#{nodNo})))
 		) b
 	</select>
 
@@ -1417,28 +1409,35 @@
 		Status='0' then Pay_Tlr when Status='1' then Prt_Tlr else
 		Rvs_Tlr end
 		Tlr_Id,
-		Act_No,car_NO,Car_Typ,Txn_Amt,Inv_No,
-		case when (Status='0' or
-		Status='1') then Pay_Tck else Rvs_Tck end
+		Act_No,car_NO,Car_Typ,Txn_Amt,Inv_No,PAY_LOG,
+		case when
+		(Status='0' or Status='1') then Pay_Tck else Rvs_Tck end
 		Tck_No,Status
-		FROM
-		gdeupsb.TRSP_FEE_INFO
+		FROM gdeupsb.TRSP_FEE_INFO
 		WHERE Br_No=#{bk}
-		AND ((Status='0' and (Pay_Dat
-		between #{startDate, jdbcType=DATE} and #{endDate, jdbcType=DATE}) and
-		Pay_Nod=#{nodNo})
-		OR (Status='1' and (TAct_Dt between #{startDate, jdbcType=DATE} and
-		#{endDate, jdbcType=DATE}) and
-		Prt_Nod=#{nodNo} )
-		OR ((Status='2' or
-		Status='3') and (Rvs_Dat between #{startDate, jdbcType=DATE} and
-		#{endDate, jdbcType=DATE}) and
-		Rvs_Nod=#{nodNo}))
-		ORDER By Txn_Dat,Nod_No,Inv_No ) a
-		,
+		AND
+		((Status='0' and
+		(Pay_Dat between #{startDate, jdbcType=DATE} and
+		#{endDate,
+		jdbcType=DATE}) and
+		(Pay_Nod=#{nodNo} ))
+		OR (Status='1' and
+		(TAct_Dt
+		between #{startDate, jdbcType=DATE} and #{endDate,
+		jdbcType=DATE}) and
+		(Prt_Nod=#{nodNo} ) )
+		OR ((Status='2' or Status='3')
+		and (Rvs_Dat
+		between #{startDate, jdbcType=DATE} and
+		#{endDate,
+		jdbcType=DATE}) and
+		(Rvs_Nod=#{nodNo})))
+		ORDER By Txn_Dat,Nod_No,Inv_No
+		) a ,
 		(
-		SELECT count(*) as OrnCnt,value(sum(cast(Txn_Amt as BIGINT)),0) as
-		OrnAmt,
+		SELECT
+		count(*) as OrnCnt,value(sum(cast(Txn_Amt as BIGINT)),0)
+		as OrnAmt,
 		value(sum(case when Status='1' then 1 else 0 end ),0) as
 		SucCnt,
 		value(sum(case when Status='1' then BIGINT(Txn_Amt) else 0 end
@@ -1447,13 +1446,22 @@
 		FROM gdeupsb.TRSP_FEE_INFO
 		WHERE Br_No=#{bk}
 		AND
-		((Status='0' and (Pay_Dat between #{startDate, jdbcType=DATE} and #{endDate, jdbcType=DATE}) and
-		Pay_Nod=#{nodNo})
-		OR (Status='1' and (TAct_Dt between
-		#{startDate, jdbcType=DATE} and #{endDate, jdbcType=DATE}) and
-		Prt_Nod=#{nodNo}  )
-		OR ((Status='2' or Status='3') and (Rvs_Dat between #{startDate, jdbcType=DATE} and
-		#{startDate, jdbcType=DATE}) and Rvs_Nod=#{nodNo})) ) b
+		((Status='0' and
+		(Pay_Dat between #{startDate, jdbcType=DATE} and
+		#{endDate,
+		jdbcType=DATE}) and
+		(Pay_Nod=#{nodNo} ))
+		OR (Status='1' and
+		(TAct_Dt
+		between #{startDate, jdbcType=DATE} and #{endDate,
+		jdbcType=DATE}) and
+		(Prt_Nod=#{nodNo} ) )
+		OR ((Status='2' or Status='3')
+		and (Rvs_Dat
+		between #{startDate, jdbcType=DATE} and
+		#{endDate,
+		jdbcType=DATE}) and
+		(Rvs_Nod=#{nodNo} ))) ) b
 	</select>
 
 
@@ -1512,11 +1520,14 @@
 		group by STATUS
 	</select>
 
-  <update id="updateMsgStatue"  parameterType="java.util.Map">
-		update gdeupsb.TRSP_FEE_INFO 
+	<update id="updateMsgStatue" parameterType="java.util.Map">
+		update
+		gdeupsb.TRSP_FEE_INFO
 		set TCHK_NO = #{tchkNo,jdbcType=CHAR},CHK_FLG='0'
-		where PAY_DAT BETWEEN #{startDate,jdbcType=DATE} AND  #{endDate,jdbcType=DATE}
-</update>
+		where PAY_DAT BETWEEN
+		#{startDate,jdbcType=DATE} AND
+		#{endDate,jdbcType=DATE}
+	</update>
 
-  
+
 </mapper>

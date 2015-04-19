@@ -152,7 +152,7 @@ public class NodTrspCheckFileAction extends BaseAction {
 
 		String rptFmt = "rptFmt";
 /**
-		// 重写 得到总笔数 总金额
+ 		// 重写 得到总笔数 总金额
 		List<Map<String, Object>> list = gdEupsbTrspFeeInfoRepository
 				.findSum(mapSum);
 		System.out.println("@@@list=" + list);
@@ -179,7 +179,7 @@ public class NodTrspCheckFileAction extends BaseAction {
 			rptFmt = rptFmt + "01";
 		} else if (2 == i) {// ~~~~~~~~~~~~~更改发票清单
 			rptFmt = rptFmt + "02";
-		} else if (3 == i) {// ~~~~~~~~~~~~~未打印发票清单
+		} else if (3 == i) {// ~~~~~~~~~~~~~未打印发票清单 协办行对账无此交易
 			rptFmt = rptFmt + "03";
 		} else {
 			context.setData(GDParamKeys.MSGTYP, "E");
@@ -213,7 +213,7 @@ public class NodTrspCheckFileAction extends BaseAction {
 		System.out
 				.println("~~~~~~~~~~~~~result~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		System.out.println(result);
-		// 文件路径
+/**		// 文件路径
 		StringBuffer rpFmts = new StringBuffer();
 		rpFmts.append("D:/test/trspTest/");
 		File file = new File(rptFil.toString());
@@ -250,5 +250,35 @@ public class NodTrspCheckFileAction extends BaseAction {
 		System.out
 				.println("~~~~~~~~~~~~~sendFile~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		// sendFile(context,rptFmt);
+		
+*/
+		////////////////    FOR LCL TEST  /////////////
+		PrintWriter printWriter = null;
+		
+		// TODO 拼装本地路径
+		StringBuffer sbLocDir = new StringBuffer();
+		sbLocDir.append("D:/testGash/checkFilTest/");
+		try {
+			File file = new File(sbLocDir.toString());
+			if (!file.exists()) {
+				file.mkdirs();
+			}
+			printWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
+							new FileOutputStream(sbLocDir.append(rptFil).toString()), "GBK")));
+			printWriter.write(result);
+			
+		} catch (IOException e) {
+			throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
+		} finally {
+			if (null != printWriter) {
+				try {
+					printWriter.close();
+				} catch (Exception e) {
+					throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
+				}
+			}
+		}
+		
+		
 	}
 }

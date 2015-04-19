@@ -165,10 +165,6 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 			fileName = new StringBuffer((new StringBuilder("(惠州分行)燃气批量代扣失败报表_"+ br + "_" + beginDate + "_" + endDate).append(".txt").toString()));
 		}
 		
-		if (null == prtList || CollectionUtils.isEmpty(prtList)) {
-			logger.info("There are no records for select check trans journal ");
-			throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
-		}
 		logger.info("================prtList.size:" + prtList.size());
 		
 
