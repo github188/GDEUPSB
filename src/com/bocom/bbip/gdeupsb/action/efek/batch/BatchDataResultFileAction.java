@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.action.efek.batch;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -101,6 +102,13 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 //			eupsThdFtpConfig.setRmtWay(context.getData("dir").toString());
 			eupsThdFtpConfig.setRmtWay("/app/ics/tmp/gdeupsb/ftp/rsv/");
 			eupsThdFtpConfig.setFtpDir("0");
+			
+			try {
+				RecvEnCryptFile(eupsThdFtpConfig.getLocDir(), fileName, fileName);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			operateFTP.putCheckFile(eupsThdFtpConfig);
 			
 			//TODO 通知第三方
@@ -301,4 +309,17 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 						context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 					}	
 	}
+    public  Process RecvEnCryptFile(String excPath, String srcFile, String objFile) throws IOException {
+    	logger.info("================Start BatchDataFileActiion  RecvEnCryptFile");	    	
+//        String cmd = excPath + "bin/JlzfDesFile" + " " + excPath + "tmp/" + srcFile + " " + excPath + "tmp/" + objFile + " 0";
+        String cmd="./EfeFilSend.sh 182.53.201.46 bcm exchange   dat/efek/send  "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
+        logger.info("cmd=" + cmd);
+        String[] command = new String[] {"/bin/sh","-c",cmd};
+        Process proc = Runtime.getRuntime().exec(command);
+        
+        logger.info("en-file success!");
+        logger.info("================End BatchDataFileActiion  RecvEnCryptFile");
+        return proc;
+    }
+	
 }
