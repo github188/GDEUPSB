@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.bocom.bbip.comp.BBIPPublicService;
+import com.bocom.bbip.comp.BBIPPublicServiceImpl;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
@@ -40,6 +41,7 @@ import com.bocom.bbip.gdeupsb.repository.GDEupsEleTmpRepository;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
+import com.bocom.jump.bp.SystemConfig;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -80,7 +82,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			//更改控制表
 			GDEupsBatchConsoleInfo gdEupsBatchConsoleInfoUpdate=updateInfo(context,gdeupsBatchConsoleInfo ,eupsBatchConsoleInfo);
 			//文件名
-			String fileName="PTFH"+gdEupsBatchConsoleInfoUpdate.getFleNme().substring(4);
+			String fileName="ceshiPTFH"+gdEupsBatchConsoleInfoUpdate.getFleNme().substring(4);
 			EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecBatch");
 			try{
 					Map<String, Object> resultMap=createFileMap(context,gdEupsBatchConsoleInfoUpdate);
@@ -88,6 +90,13 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 					String name=context.getData(ParamKeys.BAT_NO)+".result";
 					eupsThdFtpConfig.setLocFleNme(name);
 					eupsThdFtpConfig.setRmtFleNme(name);
+					
+//					final String tlr=(String)context.getData(ParamKeys.TELLER);
+//					final String br=(String)context.getData(ParamKeys.BR);
+//			        final String AcDate=DateUtils.format(((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getAcDate(),DateUtils.STYLE_yyyyMMdd);
+//			        final String systemCode=((SystemConfig)get(SystemConfig.class)).getSystemCode();
+//			        final String dir="/home/bbipadm/data/mftp/BBIP/"+systemCode+"/"+br+"/"+tlr+"/"+AcDate+"/";
+			        
 					eupsThdFtpConfig.setLocDir("/home/bbipadm/data/mftp/BBIP/GDEUPSB/01441800999/EFC0000/20150323/");
 					eupsThdFtpConfig.setRmtWay("/home/bbipadm/data/mftp/BBIP/GDEUPSB/01441800999/EFC0000/20150323/");
 					operateFile.createCheckFile(eupsThdFtpConfig, "efekBatchResult", fileName, resultMap);
@@ -100,8 +109,9 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 //			eupsThdFtpConfig.setLocDir("/app/ics/tmp/gdeupsb/ftp/rsv/");
 			eupsThdFtpConfig.setRmtFleNme(fileName);
 //			eupsThdFtpConfig.setRmtWay(context.getData("dir").toString());
-			eupsThdFtpConfig.setRmtWay("/app/ics/tmp/gdeupsb/ftp/rsv/");
+			eupsThdFtpConfig.setRmtWay("/app/ics/dat/efek/send/");
 			eupsThdFtpConfig.setFtpDir("0");
+			operateFTP.putCheckFile(eupsThdFtpConfig);
 			
 			try {
 				RecvEnCryptFile(eupsThdFtpConfig.getLocDir(), fileName, fileName);
@@ -109,7 +119,6 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			operateFTP.putCheckFile(eupsThdFtpConfig);
 			
 			//TODO 通知第三方
 			callThd(context,gdeupsBatchConsoleInfo,fileName);
@@ -312,9 +321,11 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
     public  Process RecvEnCryptFile(String excPath, String srcFile, String objFile) throws IOException {
     	logger.info("================Start BatchDataFileActiion  RecvEnCryptFile");	    	
 //        String cmd = excPath + "bin/JlzfDesFile" + " " + excPath + "tmp/" + srcFile + " " + excPath + "tmp/" + objFile + " 0";
-        String cmd="./EfeFilSend.sh 182.53.201.46 bcm exchange   dat/efek/send  "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
+    	String cd="cd app/efek/bin";
+    	logger.info("cd=" + cd);
+    	String cmd="/app/ics/app/efek/bin  ./EfeFilSend.sh 182.53.201.46 bcm exchange   dat/efek/send  "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
         logger.info("cmd=" + cmd);
-        String[] command = new String[] {"/bin/sh","-c",cmd};
+        String[] command = new String[] { cd,cmd};
         Process proc = Runtime.getRuntime().exec(command);
         
         logger.info("en-file success!");
