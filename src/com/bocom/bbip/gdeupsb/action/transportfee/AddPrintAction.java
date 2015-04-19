@@ -23,6 +23,7 @@ import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspFeeInfoRepository;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -43,7 +44,7 @@ public class AddPrintAction extends BaseAction{
 //			throw new CoreRuntimeException(GDErrorCodes.EUPS_INVOIC_NO_ERROR);
 //		}
 		
-
+		ctx.setData("bigTxnAmt", StringUtils.amountInWords((String)ctx.getData(GDParamKeys.TXN_AMT)));
 		Date printDate = new Date();
 		Date begDat = ctx.getData(GDParamKeys.BEG_DAT);
 		Date endDat = ctx.getData(GDParamKeys.END_DAT);

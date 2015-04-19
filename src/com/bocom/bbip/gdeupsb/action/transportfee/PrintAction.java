@@ -12,6 +12,7 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.config.TxNamespaceHandler;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
@@ -27,6 +28,7 @@ import com.bocom.bbip.gdeupsb.repository.GdLotTxnJnlRepository;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -59,7 +61,7 @@ public class PrintAction extends BaseAction{
 		ctx.setData("endYear", DateUtils.format(endDat, DateUtils.STYLE_yyyy));
 		ctx.setData("endMon", DateUtils.format(endDat, DateUtils.STYLE_MM));
 		ctx.setData("endDay", DateUtils.format(endDat, DateUtils.STYLE_dd));
-		
+		ctx.setData("bigTxnAmt", StringUtils.amountInWords((String)ctx.getData(GDParamKeys.TXN_AMT)));
 		Map<String, String> mapping = CollectionUtils.createMap();
 		VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
 		String sampleFile="config/report/zhTransport/transportInv.vm";

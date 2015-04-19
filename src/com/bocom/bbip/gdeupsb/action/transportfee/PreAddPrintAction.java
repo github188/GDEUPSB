@@ -115,6 +115,7 @@ public class PreAddPrintAction extends BaseAction{
 		if("1".equals(ctx.getData(prtFlg))){
 
 			ctx.setState("fail");
+			ctx.setData(GDParamKeys.ACT_DAT, new Date());
 			GDEupsbTrspInvChgInfo gdEupsbTrspInvChgInfo = BeanUtils.toObject(ctx.getDataMap(), GDEupsbTrspInvChgInfo.class);
 			gdEupsbTrspInvChgInfoRepository.insert(gdEupsbTrspInvChgInfo);
 			ctx.setState("callThd");
