@@ -37,7 +37,7 @@ public class GDParamKeys {
 	public static final String GZ_ELE_PAY_MONTH = "payMonth";
 
 	/** 电费用户帐号 **/
-	public static final String GZ_ELE_CUS_AC = "cusAcEx2";
+	public static final String GZ_ELE_CUS_AC = "cusAcEx";
 
 	/** 电费用户帐号 **/
 	public static final String GZ_ELE_THD_PAY_TYP = "thdPayTyp3";
@@ -52,32 +52,32 @@ public class GDParamKeys {
 	public static final String GZ_ELE_TXN_DTE_TME = "txnDateTime7";
 
 	/** 银行交易流水号 **/
-	public static final String GZ_ELE_TXN_JNL = "transJournal11";
+	public static final String GZ_ELE_TXN_JNL = "transJournal";
 
 	/** 受理方所在地时间 **/
-	public static final String GZ_ELE_TXN_TME = "bnkTxnTime12";
+	public static final String GZ_ELE_TXN_TME = "bnkTxnTime";
 
 	/** 受理方所在地日期 **/
-	public static final String GZ_ELE_BNK_TXN_DTE = "bnkTxnDate13";
+	public static final String GZ_ELE_BNK_TXN_DTE = "bnkTxnDate";
 
 	/** 配型部类型 **/
-	public static final String GZ_ELE_THD_DPT_TYP = "pwrThdSub18";
+	public static final String GZ_ELE_THD_DPT_TYP = "pwrThdSub";
 
 	/** 电费处理标志 **/
 	public static final String GZ_ELE_DEAL_CODE = "dealCod";
 
 	/** 电费受理方机构标识码 **/
-	public static final String GZ_ELE_RCS_NO = "eleBkNo32";
+	public static final String GZ_ELE_RCS_NO = "eleBkNo";
 	/** 电费接收机构标识码 **/
-	public static final String GZ_ELE_RSC_ORG = "thdRgnNo100";
+	public static final String GZ_ELE_RSC_ORG = "thdRgnNo";
 	/** 电费货币代码 **/
 	public static final String GZ_ELE_CCY_COD = "CCY";
 	/** 电费受理方终端标识码 **/
-	public static final String GZ_ELE_TTRM_ID = "tTrmId41";
+	public static final String GZ_ELE_TTRM_ID = "tTrmId";
 	/** 电费交易类别 **/
-	public static final String GZ_ELE_TRA_TYP = "traTyp104";
+	public static final String GZ_ELE_TRA_TYP = "traTyp";
 	/** 电费受理方标识码 **/
-	public static final String GZ_ELE_TDL_ID = "delTdlId42";
+	public static final String GZ_ELE_TDL_ID = "delTdlId";
 	/** 电费清算日期 **/
 	public static final String GZ_ELE_TXN_DTE = "pwrtxnDate15";
 	/** 帐户类型 */
