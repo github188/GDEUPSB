@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message>
+    <!-- 主账号,磁条卡的第二磁道或第三磁道上获取的账号，或在交易时输入的主账户号，或读IC卡获得的卡号 -->
+	<varInteger name="cusAcEx" index="2" type="LL"/>
+	<!-- 交易处理码 -->
+	<fixString name="thdPayTyp" index="3" length="6"/>
+	<!-- 交易金额  -->
+	<fixString name="thdTxnAmt" index="4" length="12"/>
+	<!-- 交易传输时间 -->
+	<fixString name="txnDateTime7" index="7"  length="10"/>
+ 	<!-- 受卡方系统跟踪号 -->
+	<fixString name="transJournal" index="11" length="12"/>
+	<!-- 受卡方所在地时间 -->
+	<fixString name="bnkTxnTime" index="12"  length="6"/>
+	<!-- 受卡方所在地日期 -->
+	<fixString name="bnkTxnDate" index="13"  length="4"/>
+	<!-- 清算日期. -->
+	<fixString name="pwrtxnDate" index="15"  length="4"/>
+	<!-- 配营部类型 -->
+	<fixString name="pwrThdSub18" index="18" length="4"/>
+	<!--交易手续费-->
+	<fixString name="pwrFee" index="28" length="12"/>   
+	<!-- 受理方机构标识码 -->
+	<varInteger name="eleBkNo" index="32" type="LL"/>
+	<!-- 发送机构标识码-->
+	<varInteger name="sndFlg" index="33" type="LL"/>
+	<!-- 供电公司系统参考号-->
+	<fixString name="eleThdSqn" index="37" length="12"/>
+	<!--应答码.-->
+	<fixString name="thdRspCde" index="39" length="2" />
+	<!-- 受理方终端标识码-->
+	<fixString name="tTrmId" index="41" length="8" />
+	<!-- 用户划帐协议资料信息 -->
+	<fixString name="cusAgtInf44" index="44" type="LLL" format="hex"/>
+	<!-- 受理方标识码-->
+	<fixString name="delTdlId42" index="42" length="15" />
+	<!-- 附加数据－私有  -->
+    <varString name="remarkData" index="48" type="LL" format="hex"/>
+	<!-- 交易货币代码,人民币的货币代码为156.-->
+	<fixString name="CCY" index="49" length="3" />
+	<!-- 个人密码 -->
+	<fixString name="password" index="52" length="8"  />
+	<!-- 冲正附加数据 -->
+	<fixString name="cnlRmk" index="60" length="4" format="hex"/>
+	<!-- 网管信息码 -->
+	<fixInteger name="cmuCde" index="70" length="3"/>
+    <!-- 接收机构标识代码-->
+	<varInteger name="thdRgnNo100" index="100" type="LL"/>
+    <!-- F104 --> 
+    <fixString name="traTyp104" index="104" length="2" />
+	<!-- MAC. -->
+ 	<fixString name="msgIdfCde128" index="128" length="16"/>
+ </message>
