@@ -168,6 +168,13 @@
 				   </actions>
 			</process>
 	
+			<!-- 南方电网  异步调用反盘文件 临时-->		
+		<process id="gdeupsb.fileResult"  template="eups.simpleTran"  interceptors="bbip.bbipSchedulerInterceptor">
+				  <actions>
+				   			  <action id="act"  ref="gdeupsb.fileResultAction"/>
+				   </actions>
+			</process>
+	
 	<!-- 南方电网  供电批量代扣取消交易-->		
 		<process id="gdeupsb.cancelBatch"  template="eups.simpleTran"  interceptors="eups.thdELEC00Interceptor">
 				  <actions>
