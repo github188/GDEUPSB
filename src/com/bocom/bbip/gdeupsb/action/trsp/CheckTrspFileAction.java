@@ -293,7 +293,7 @@ public class CheckTrspFileAction extends BaseAction {
 //			context.setData("fileName", rspMap.get("fileName"));
 			String fileName=(String)rspMap.get("fileName");
 			context.setData("fileName", fileName);
-			if (!Constants.RESPONSE_CODE_SUCC.equals(responseCode)) {
+			if (!"000".equals(responseCode)) {
 				context.setData(GDParamKeys.MSGTYP, "E");
 				context.setData(ParamKeys.RSP_CDE, "329999");
 				context.setData(ParamKeys.RSP_MSG, "调用路桥方时:系统错误或超时或未发送,请检查后重做");
@@ -319,7 +319,7 @@ public class CheckTrspFileAction extends BaseAction {
 		String fileName = context.getData("fileName").toString().trim();
 		eupsThdFtpConfig.setLocFleNme(fileName);
 		eupsThdFtpConfig.setRmtFleNme(fileName);
-		eupsThdFtpConfig.setLocDir("/app/ics/dat/rbfb/");
+		eupsThdFtpConfig.setLocDir("dat/rbfb/");
 		operateFTPAction.putCheckFile(eupsThdFtpConfig);
 		
 		
