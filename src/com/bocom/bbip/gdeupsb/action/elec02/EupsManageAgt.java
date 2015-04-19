@@ -105,7 +105,7 @@ public class EupsManageAgt extends BaseAction {
 		get(GdeupsAgtElecTmpRepository.class).delete(agtElecTmp);
 	}
 
-	// 为查询返回报文赋值
+	//为查询返回报文赋值
 	private void setResponseResultFromAgts(Context context,
 			GdeupsAgtElecTmp agtElecTmp) {
 
