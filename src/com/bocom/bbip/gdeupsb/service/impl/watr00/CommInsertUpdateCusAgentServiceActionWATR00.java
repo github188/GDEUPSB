@@ -38,6 +38,8 @@ public class CommInsertUpdateCusAgentServiceActionWATR00 extends BaseAction{
 		context.setData(ParamKeys.CUS_AC, context.getData("cusAC"));
 		context.setData(ParamKeys.BUS_TYP, "0");  //业务类型暂定为代收
 		if("0".equals(oprTyp)){
+			context.setData("ageBr", context.getData(ParamKeys.BK));
+			context.setData("agrBr", context.getData(ParamKeys.BR));
 			Map<String, Object> agentMap = new HashMap<String, Object>();
 //			agentMap.put("agdAgrNo", (String)context.getData("agdAgrNo"));
 //			agentMap.put("cusAc", (String)context.getData("cusAc"));
@@ -57,6 +59,8 @@ public class CommInsertUpdateCusAgentServiceActionWATR00 extends BaseAction{
 			agentMap.put("agtSrvCusPnm", (String)context.getData("thdCusNme"));
 			agentMap.put("agrVldDte", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
 			agentMap.put("agrExpDte", "99991231");
+			agentMap.put("ageBr", context.getData(ParamKeys.BK));
+			agentMap.put("agrBr", context.getData(ParamKeys.BR));
 //			agentMap.put("agrVldDte", (String)context.getData("agtCllCusId"));
 //			agentMap.put("des1", (String)context.getData("agtCllCusId"));
 //			agentMap.put("des2", (String)context.getData("agtCllCusId"));

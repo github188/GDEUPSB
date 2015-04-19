@@ -22,6 +22,7 @@ import com.bocom.bbip.eups.repository.EupsBatchInfoDetailRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
 import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
+import com.bocom.bbip.gdeupsb.action.common.OperateFTPActionExt;
 import com.bocom.bbip.gdeupsb.entity.GdeupsWatBatInfTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsEleTmpRepository;
 import com.bocom.bbip.gdeupsb.repository.GdeupsWatBatInfTmpRepository;
@@ -41,8 +42,7 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 	private static Logger logger = LoggerFactory.getLogger(AfterBatchAcpServiceImplWATR00.class);
 	@Autowired
 	OperateFileAction operateFile;
-	@Autowired
-	OperateFTPAction operateFTP;
+	
 	@Autowired
 	BBIPPublicService service;
 	@Autowired
@@ -101,6 +101,8 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 		// 将生成的文件上传至指定服务器
 		eupsThdFtpConfig.setLocFleNme(fileName);
 		eupsThdFtpConfig.setRmtFleNme(fileName);
+		logger.info("@@@@@@@@@@@@eups=" + eupsThdFtpConfig);
+		OperateFTPActionExt operateFTP = new OperateFTPActionExt();
 		operateFTP.putCheckFile(eupsThdFtpConfig);
 		
 		
