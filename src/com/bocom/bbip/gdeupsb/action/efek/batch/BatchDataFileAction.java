@@ -80,12 +80,12 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 					EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecBatch");
 					eupsThdFtpConfig.setRmtFleNme(fleNme);
 					eupsThdFtpConfig.setLocFleNme(fleNme);
-					try{
-						RecvEnCryptFile(eupsThdFtpConfig.getLocDir().replace("/tmp", ""), fleNme, fleNme.replace(JLZF_BACK_FILE_AFTTYPE, JLZF_ORGFILE_AFTTYPE));
-					}catch(IOException e){
-							logger.info("==========Error    RecvEnCryptFile   ",e);
-					}
-					eupsThdFtpConfig.setRmtWay("/app/ics/app/efek/recv");
+//					try{
+//						RecvEnCryptFile(eupsThdFtpConfig.getLocDir().replace("/tmp", ""), fleNme, fleNme.replace(JLZF_BACK_FILE_AFTTYPE, JLZF_ORGFILE_AFTTYPE));
+//					}catch(IOException e){
+//							logger.info("==========Error    RecvEnCryptFile   ",e);
+//					}
+//					eupsThdFtpConfig.setRmtWay("/app/ics/app/efek/recv");
 					operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
 					
 //					downloadFileToThird(eupsThdFtpConfig);
