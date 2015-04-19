@@ -87,7 +87,7 @@
 				<property name="host" value="182.59.28.80"/>
 				<property name="port" value="7600" />
 				<property name="timeout" value="30000" />
-				<property name="filePath" value="/home/bbipadm/common/" />
+				<property name="filePath" value="/app/ics/dat/rbfb/" />
 				<!-- <property name="streamResolver">
 				
 				<bean class="com.bocom.jump.bp.channel.tcp.LengthStreamResolver" >
