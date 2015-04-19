@@ -7,8 +7,8 @@
 #  filter="format,packets/translateDict.txt"
 #  filter="parse,packets/translateDict.txt"
 
-TransCode.eups.payUnilateralToBank=0200
-TransCode.0200=eups.payUnilateralToBank
+TransCode.eups.payUnilateralToBank=020002
+TransCode.020002=eups.payUnilateralToBank
 TransCode.0400=eups.cancelUnilateralToBank
 TransCode.eups.cancelUnilateralToBank=0400
 TransCode.0820=gdeups.eleCmuTestProcess
