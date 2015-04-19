@@ -56,6 +56,13 @@ public class EupsManageAgt extends BaseAction {
 	//TODO catch exceptions
 	
 	private void addAgentDeal(Context context) throws CoreException {
+		
+		String gpf = (String) context.getData("GPF");
+		if("G".equals(gpf.trim())){
+			log.info("第三方发起不能签对公协议");
+			throw new CoreException("第三方发起不能签对公协议！");
+		}
+		
 		// 新增，入库本地
 		GdeupsAgtElecTmp agtElecTmp = toGdeupsAgtElecTmp(context);
 		
