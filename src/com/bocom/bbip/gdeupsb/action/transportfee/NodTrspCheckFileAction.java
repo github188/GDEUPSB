@@ -15,6 +15,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.omg.CORBA.CTX_RESTRICT_SCOPE;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -58,6 +59,7 @@ public class NodTrspCheckFileAction extends BaseAction {
 
 	public void execute(Context ctx) throws CoreException, CoreRuntimeException {
 		log.info("NodTrspCheckFileAction start......");
+		ctx.setData("chkFlg", "F");
 
 		// nodCheckTrspFile 输入 交易请求头 requestHeader REF
 		// nodCheckTrspFile 输入 业务类型 eupsBusTyp CHAR 10 Y
@@ -135,7 +137,8 @@ public class NodTrspCheckFileAction extends BaseAction {
 		// }
 		// printDetail(ctx, list, map);
 		// }
-
+		ctx.setData("chkFlg", "S");
+		
 	}
 
 	/**
@@ -204,6 +207,7 @@ public class NodTrspCheckFileAction extends BaseAction {
 		String rptFil = "Car"
 				+ context.getData("tlr").toString()
 				+ context.getData(GDParamKeys.START_DATE).toString().substring(4) + ".dat";
+		context.setData("filNam", rptFil);
 		// 拼装文件
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(rptFil, path);
@@ -266,7 +270,7 @@ public class NodTrspCheckFileAction extends BaseAction {
 			printWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
 							new FileOutputStream(sbLocDir.append(rptFil).toString()), "GBK")));
 			printWriter.write(result);
-			
+	
 		} catch (IOException e) {
 			throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
 		} finally {
