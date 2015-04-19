@@ -371,6 +371,7 @@ public class CheckTrspFileAction extends BaseAction {
 		EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("trspCheckFile");
 		eupsThdFtpConfig.setFtpDir("0");
 		eupsThdFtpConfig.setLocFleNme(fileName);
+		eupsThdFtpConfig.setRmtWay("/app/ics/tmp/gdeupsb/ftp/rsv");
 		eupsThdFtpConfig.setRmtFleNme("new" + fileName);
 		operateFTPAction.putCheckFile(eupsThdFtpConfig);
 	}
