@@ -66,7 +66,9 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 
 		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne("elec02BatchThdFile");
 		Assert.isFalse(null == config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST, "批量文件不存在");
-		// 获取远程文件
+		// 获取远程文件名称  需要注意
+//		config.setRmtFleNme(contex.getData("FilNam"));
+		
 		get(OperateFTPAction.class).getFileFromFtp(config);
 
 		// 解析文件
