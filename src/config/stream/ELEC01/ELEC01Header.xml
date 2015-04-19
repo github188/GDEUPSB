@@ -2,14 +2,12 @@
 <message xmlns="http://www.bocom.com/jump/transformer/packet"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
-	 type="LLLL" encoding="GBK" trace="true">
+   type="LLLL"  encoding="UTF-8" trace="true"  filter="both,WEB-INF/classes/config/stream/ELEC01/translateDict.txt">
 	<segment name="pwr8583head">
 	<!-- 交易处理码 -->
-		<fixString name="messageType" length="4"/>
+		<varString name="TransCode"  type="D|" referred="true" mapping="true"/>
 	</segment>
 	<segment name="body">
-	    <varbytes type="X" name="ISO8583" format="none" >
-	  		<include elementFactory="iso8583://WEB-INF/classes/config/stream/" path="ELEC01/ELEC01Map"/>
-	    </varbytes>
+	     <include keys="TransCode"  encodePrefix="f"  decodePrefix="p"/>
 	</segment>
 </message>
