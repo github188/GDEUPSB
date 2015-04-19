@@ -16,7 +16,7 @@ import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
-import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
+import com.bocom.bbip.gdeupsb.utils.macgen.MacGenerator;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.bbip.utils.StringUtils;
@@ -43,10 +43,13 @@ public class QueryElecUserStrategyAction implements Executable {
 		log.info("QueryElecUserStrategyAction start!..");
 
 		String tlr = context.getData(ParamKeys.TELLER); // 柜员号
-		String tmlId = context.getData(ParamKeys.TERMINAL); // 终端号
+		String tmlId = context.getData("tlrTmlId"); // 终端号
+		if (null == tmlId) {
+			tmlId = context.getData(ParamKeys.TERMINAL); // 终端号
+		}
 
-		context.setData(ParamKeys.MESSAGE_TYPE, "0100");
-		context.setData(GDParamKeys.GZ_ELE_CUS_AC, context.getData(ParamKeys.CUS_AC)); // 帐号
+//		context.setData("TransCode", "020001");
+		context.setData("cusAcEx", context.getData(ParamKeys.CUS_AC)); // 帐号
 
 		context.setData(GDParamKeys.GZ_ELE_TXN_DTE_TME, DateUtils.STYLE_MMddHHmmss);
 
@@ -57,13 +60,12 @@ public class QueryElecUserStrategyAction implements Executable {
 		context.setData(GDParamKeys.GZ_ELE_TXN_TME, DateUtils.format(new Date(), DateUtils.STYLE_HHmmss)); // 受理方所在时间
 		context.setData(GDParamKeys.GZ_ELE_BNK_TXN_DTE, DateUtils.format(new Date(), DateUtils.STYLE_MMdd)); // 受理方所在日期
 
-		context.setData(GDParamKeys.GZ_ELE_DEAL_CODE, GDConstants.GZ_ELE_DEAL_CODE); // 处理码
-		context.setData(GDParamKeys.GZ_ELE_RCS_NO, GDConstants.GZ_ELE_DEAL_ORG_CODE); // 受理方机构标识码
+		context.setData("thdPayTyp", GDConstants.GZ_ELE_DEAL_CODE); // 处理码
+		context.setData("eleBkNo", GDConstants.GZ_ELE_DEAL_ORG_CODE); // 受理方机构标识码
 		context.setData("rcvOrg", GDConstants.GZ_ELE_RECEIVE_ORG_CODE); // 接收机构标识码
-		context.setData(ParamKeys.CCY, GDConstants.GZ_ELE_CCY); // 货币代码
-		context.setData(GDParamKeys.GZ_ELE_TTRM_ID, StringUtils.leftPad(tmlId, 8, ' ')); // 受理方终端标识码
-		context.setData(GDParamKeys.GZ_ELE_TDL_ID, StringUtils.leftPad(tlr, 15, ' '));// 受理方标识码
-		context.setData("traTyp", GDConstants.GZ_ELE_TXN_TYP_JF); // 交易类别
+		context.setData("CCY", GDConstants.GZ_ELE_CCY); // 货币代码
+		context.setData("tTrmId", tmlId); // 受理方终端标识码
+		context.setData("delTdlId", tlr);// 受理方标识码
 
 		String thdCusNo = context.getData(ParamKeys.THD_CUS_NO).toString().trim();
 		thdCusNo = StringUtils.leftPad(thdCusNo, 21, ' ');
@@ -73,10 +75,12 @@ public class QueryElecUserStrategyAction implements Executable {
 		if (StringUtils.isEmpty(lchkTm)) {
 			lchkTm = "  999999";
 		}
+		context.setData("thdRgnNo", GDConstants.GZ_ELE_RECEIVE_ORG_CODE); // 电力机构标识码
+		context.setData("traTyp", GDConstants.GZ_ELE_TXN_TYP_JF); // 交易类别
 
-		String rmk = thdCusNo + lchkTm + "01" + StringUtils.leftPad(" ", 68); // 附加数据
-
-		context.setData("remarkData48", rmk);
+		 String rmk = thdCusNo + lchkTm + "01";
+		 // 附加数据
+		 context.setData("remarkData", rmk);
 
 		Map<String, Object> resultInfo = thirdPartyAdaptor.trade(context);
 		// 获取返回码
@@ -93,13 +97,13 @@ public class QueryElecUserStrategyAction implements Executable {
 		}
 
 		// 配型部类型处理
-		context.setData("dptTyp", resultInfo.get("pwrThdSub18"));
+		context.setData("dptTyp", resultInfo.get("pwrThdSub"));
 
 		// 交易日期时间
-		String chkTim = (String) resultInfo.get("txnDateTime7");
+		String chkTim = (String) resultInfo.get("txnDateTime");
 		context.setData("chkTim", chkTim);
 
-		String remarkData = (String) resultInfo.get("remarkData48"); // 附加字段
+		String remarkData = (String) resultInfo.get("remarkData"); // 附加字段
 		// 客户编号21+电费月份6+产品代码2+原系统参考号12+用电地址用户56
 		// String thdCusId=remarkData.substring(0,21);
 		log.info("#########remarkData=" + remarkData);
@@ -119,7 +123,7 @@ public class QueryElecUserStrategyAction implements Executable {
 		if (StringUtils.isNotEmpty(usrNme)) {
 			context.setData("cusNme", usrNme.trim()); // 户名
 		}
-		context.setData("oweFeeAmt", NumberUtils.centToYuan(resultInfo.get("amount4")));
+		context.setData("oweFeeAmt", NumberUtils.centToYuan(resultInfo.get("amount")));
 		log.info("QueryElecUserStrategyAction end!..context=" + context.getDataMap());
 	}
 
