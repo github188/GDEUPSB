@@ -105,9 +105,10 @@ public class CheckTrspFileAction extends BaseAction {
 		int chkFlg = -1;
 		// 轮询对账
 		List<GDEupsbTrspFeeInfo> detailList = new ArrayList<GDEupsbTrspFeeInfo>();
+		// 临时使用实体类 定义类型和数据 使其生成文件使用
+		GDEupsbTrspFeeInfo gdEupsbTrspFeeInfoNew = new GDEupsbTrspFeeInfo();
+		Map<String, Object> fileMap=new HashMap<String, Object>();
 		for (TrspCheckTmp trspCheckTmp : list) {			
-			// 临时使用实体类 定义类型和数据 使其生成文件使用
-			GDEupsbTrspFeeInfo gdEupsbTrspFeeInfoNew = new GDEupsbTrspFeeInfo();
 			// 根据流水得到每条数据
 			GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = gdEupsbTrspFeeInfoRepository.findOneByTlogNo(trspCheckTmp.getSqn());
 			if (gdEupsbTrspFeeInfo == null) {
@@ -122,7 +123,6 @@ public class CheckTrspFileAction extends BaseAction {
 				gdEupsbTrspFeeInfoNew.setCarNo(trspCheckTmp.getCarNo()); // 车牌号
 				gdEupsbTrspFeeInfoNew.setCarDzs(DateUtils.format(trspCheckTmp.getTxnDat(),DateUtils.STYLE_yyyyMMdd)); // 缴费日期								
 				gdEupsbTrspFeeInfoNew.setInvNo(trspCheckTmp.getInvNo()); // 发票
-				gdEupsbTrspFeeInfoNew.setStatus("F");  
 				// 跟新表中对账状态
 				// 更新银行单边账 设置3 = chkFlg
 			} else {
@@ -152,6 +152,7 @@ public class CheckTrspFileAction extends BaseAction {
 								sucTotCnt++;
 						}
 				}
+				System.out.println(">>>>>>>>>>>>>>><<<<<<"+sucTotCnt);			
 				// 临时使用实体类 定义类型和数据 使其生成文件使用
 				gdEupsbTrspFeeInfoNew.setTcusNm(chkErr); // 错误
 				gdEupsbTrspFeeInfoNew.setThdKey(trspCheckTmp.getSqn()); // 流水
@@ -176,7 +177,7 @@ public class CheckTrspFileAction extends BaseAction {
 				}else if(gdEupsbTrspFeeInfo.getStatus().toString().trim().equals("3")){
 					gdEupsbTrspFeeInfoNew.setStatus("已作废");
 				}
-				
+					
 				
 				// TODO
 				if (1 != chkFlg) {
@@ -190,17 +191,31 @@ public class CheckTrspFileAction extends BaseAction {
 				gdEupsbTrspFeeInfo.setTchkNo(tChkNo);
 				gdEupsbTrspFeeInfoRepository.update(gdEupsbTrspFeeInfo);
 				trspCheckTmp.setStatue("2");
-				trspCheckTmpRepository.updateStatus(trspCheckTmp);
 			}		
 				detailList.add(gdEupsbTrspFeeInfoNew);
 		}
-		//银行多账
-		gdEupsbTrspFeeInfoRepository.updateChkFlg(tChkNo);
-		
-		
-		
 		context.setData("sucTotCnt", sucTotCnt);
 		context.setData("sucTotAmt", sucTotAmt);
+
+		//银行多账
+		GDEupsbTrspFeeInfo gdEupsbTrspFeeInfoS=new GDEupsbTrspFeeInfo();
+		gdEupsbTrspFeeInfoS.setChkFlg("0");
+		gdEupsbTrspFeeInfoS.setTchkNo(tChkNo);
+
+		List<GDEupsbTrspFeeInfo> eupsbTrspFeeInfoList=gdEupsbTrspFeeInfoRepository.find(gdEupsbTrspFeeInfoS);
+		int totCnt=Integer.parseInt(context.getData("totCnt").toString());
+		BigDecimal totAmt=new BigDecimal(context.getData("totAmt").toString());
+		for (GDEupsbTrspFeeInfo gdEupsbTrspFeeInfos : eupsbTrspFeeInfoList) {
+				totCnt++;
+				totAmt=totAmt.add(gdEupsbTrspFeeInfos.getTxnAmt());
+				gdEupsbTrspFeeInfos.setTcusNm("银行多账"); // 银行
+				gdEupsbTrspFeeInfos.setCarDzs(DateUtils.format(gdEupsbTrspFeeInfos.getPayDat(),DateUtils.STYLE_yyyyMMdd)); // 缴费日期												
+				detailList.add(gdEupsbTrspFeeInfos);
+		}
+		context.setData("totCnt", totCnt);
+		context.setData("totAmt", totAmt);
+		fileMap.put("detail", BeanUtils.toMaps(detailList));
+		
 		context.setData("detailList", detailList);
 		context.setData("amtErr", AmtErr);
 		context.setData("numErr", numErr);
@@ -210,20 +225,19 @@ public class CheckTrspFileAction extends BaseAction {
 		EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne("trspCheckFile");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(detailList));
-		get(OperateFileAction.class).createCheckFile(eupsThdFtpConfig,"trspCheckCreateFile", fileName, map);
-		
+		eupsThdFtpConfig.setFtpDir("0");
+		get(OperateFileAction.class).createCheckFile(eupsThdFtpConfig,"trspCheckCreateFile", fileName, fileMap);
+//		get(OperateFTPAction.class).putCheckFile(eupsThdFtpConfig);
 		log.info("============是否全部对账");
 		// 判断是否全部对账
 
 		List<TrspCheckTmp> trspCheckTmpList = trspCheckTmpRepository.findNotCheck(tChkNo);
 		//TODO 
-		if (CollectionUtils.isNotEmpty(trspCheckTmpList)) {
+		if (CollectionUtils.isEmpty(trspCheckTmpList)) {
 			context.setData(ParamKeys.RSP_CDE, "329999");
 			context.setData(ParamKeys.RSP_MSG, "系统错误");
 			List<GDEupsbTrspFeeInfo> gdEupsbTrspFeeInfoList=new ArrayList<GDEupsbTrspFeeInfo>();
 			for (TrspCheckTmp trspCheckTmps : trspCheckTmpList) {
-				// 临时使用实体类 定义类型和数据 使其生成文件使用
-				GDEupsbTrspFeeInfo gdEupsbTrspFeeInfoNew=new GDEupsbTrspFeeInfo();
 				gdEupsbTrspFeeInfoNew.setTcusNm(chkErr); // 错误
 				gdEupsbTrspFeeInfoNew.setThdKey(trspCheckTmps.getSqn()); // 流水
 				gdEupsbTrspFeeInfoNew.setTxnAmt(trspCheckTmps.getTxnAmt()); // 金额
@@ -357,6 +371,7 @@ public class CheckTrspFileAction extends BaseAction {
 	 */
 	public void printDetail(Context context, String tChkNo,
 			List<GDEupsbTrspFeeInfo> detailList) throws CoreException {
+		System.out.println(">>>>>>>>>>>>>>>"+context.getData("sucTotCnt"));
 		logger.info("~~~~~~~~~~~Start  CheckTrspFile   printDetail");
 		// 报表模式
 		int i = Integer.parseInt(context.getData(GDParamKeys.JOURNAL_MODEL).toString());
@@ -380,17 +395,17 @@ public class CheckTrspFileAction extends BaseAction {
 			statuesList=gdEupsbTrspFeeInfoRepository.findStatuesDeatil(mapSelect);
 			BigDecimal totAmt=new BigDecimal("0.00");
 			BigDecimal sucTotAmt=new BigDecimal("0.00");
-			int suctotCnt=0;
+			int sucTotCnt=0;
 			int totCnt=0;
 			for (Map<String, Object> map : statuesList) {
 					String status=  map.get("STATUS").toString().trim();
 					if(status.equals("0")){
 							map.put("STS", "未打印");
-							suctotCnt++;
+							sucTotCnt=sucTotCnt+Integer.parseInt(map.get("TOT_CNT").toString().trim());
 							sucTotAmt=sucTotAmt.add(new BigDecimal(map.get("TOT_AMT").toString()));
 					 }else if(status.equals("1")){
 						 	map.put("STS", "已打印");
-						 	suctotCnt++;
+							sucTotCnt=sucTotCnt+Integer.parseInt(map.get("TOT_CNT").toString().trim());
 						 	sucTotAmt=sucTotAmt.add(new BigDecimal(map.get("TOT_AMT").toString()));
 					 }else if(status.equals("2")){
 						 	map.put("STS", "已退费");
@@ -404,7 +419,7 @@ public class CheckTrspFileAction extends BaseAction {
 			}	
 			context.setData("totCnt", totCnt);
 			context.setData("totAmt", totAmt);
-			context.setData("suctotCnt", suctotCnt);
+			context.setData("sucTotCnt", sucTotCnt);
 			context.setData("sucTotAmt", sucTotAmt);
 
 		} else if (1 == i) {// ~~~~~~~~~~~~~清单方式
@@ -412,6 +427,9 @@ public class CheckTrspFileAction extends BaseAction {
 		} else if (2 == i) {// ~~~~~~~~~~~~~更改发票清单    修改错的
 			rptFmt = rptFmt + 2;			 
 			gdEupsbTrspInvChgInfoList=gdEupsbTrspInvChgInfoRepository.findInvGroup(mapSelect);
+			for (GDEupsbTrspInvChgInfo gdEupsbTrspInvChgInfo : gdEupsbTrspInvChgInfoList) {
+				gdEupsbTrspInvChgInfo.setSqn(DateUtils.format(gdEupsbTrspInvChgInfo.getActDat(), DateUtils.STYLE_SIMPLE_DATE));
+			}
 		} else if (3 == i) {// ~~~~~~~~~~~~~以缴费未打印发票清单
 			rptFmt = rptFmt + 3;
 			detailList=gdEupsbTrspFeeInfoRepository.findNoPrintList(mapSelect);	
@@ -441,7 +459,7 @@ public class CheckTrspFileAction extends BaseAction {
 		map.put(rptFil, path);
 		render.setReportNameTemplateLocationMapping(map);
 		context.setData("eles", detailList);
-		if(CollectionUtils.isNotEmpty(statuesList)){
+		if(i==0){
 				context.setData("eles", statuesList);
 		}
 		if(i==2){
