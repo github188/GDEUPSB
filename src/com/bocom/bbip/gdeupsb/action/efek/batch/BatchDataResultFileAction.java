@@ -323,7 +323,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 //        String cmd = excPath + "bin/JlzfDesFile" + " " + excPath + "tmp/" + srcFile + " " + excPath + "tmp/" + objFile + " 0";
     	String cd="cd app/efek/bin";
     	logger.info("cd=" + cd);
-    	String cmd="/app/ics/app/efek/bin  ./EfeFilSend.sh 182.53.201.46 bcm exchange   dat/efek/send  "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
+    	String cmd="./EfeFilSend.sh 182.53.201.46 bcm exchange   dat/efek/send  "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
         logger.info("cmd=" + cmd);
         String[] command = new String[] { cd,cmd};
         Process proc = Runtime.getRuntime().exec(command);
