@@ -209,20 +209,6 @@ public class InsertCusAgentServiceAction extends BaseAction {
 		logger.info("=============End    InsertCusAgentServiceAction  ");
 	}
 	public String  selectAgent(Context context,String cusAc){
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`");
-		System.out.println(cusAc);
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`");
-		System.out.println("~~~~~~~~~~~~~~~"+context.getData("cusAc"));
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
 		
 		//列表查询 获得协议编号
 		Map<String, Object> map=new HashMap<String, Object>();
