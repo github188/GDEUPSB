@@ -19,7 +19,7 @@
 
                                    $d.begYear       $d.begMon      $d.begDay              $d.endYear       $d.endMon     $d.endDay
 
-                                                                      $d.txnAmt               $d.txnAmt
+                                                                                    $d.bigTxnAmt               
 
                       珠海市路桥管理处          $d.prtNod（交行）                                                         $d.invNo
 
