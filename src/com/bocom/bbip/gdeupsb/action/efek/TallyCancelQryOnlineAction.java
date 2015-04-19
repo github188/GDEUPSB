@@ -27,6 +27,7 @@ public class TallyCancelQryOnlineAction extends BaseAction{
 				String mfmVchNo=context.getData(ParamKeys.MFM_VCH_NO).toString();
 				EupsTransJournal eupsTransJournals=new EupsTransJournal();
 				eupsTransJournals.setMfmVchNo(mfmVchNo);
+				eupsTransJournals.setEupsBusTyp("ELEC00");
 				EupsTransJournal eupsTransJournal=eupsTransJournalRepository.find(eupsTransJournals).get(0);
 				if(null != eupsTransJournal){
 
