@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.action.elec02;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -44,6 +45,29 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements AfterB
 //		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).afterBatchProcess(context);
 		Map<String,Object>ret=new HashMap<String,Object>();
         final List result=(List<EupsBatchInfoDetail>)context.getVariable("detailList");
+        
+        
+        //把代扣协议不存在的添加到代收付返回的数据中去 begin
+        String batNo = (String) context.getData("batNo");
+        GDEupsbElecstBatchTmp tmp = new GDEupsbElecstBatchTmp();
+        tmp.setBatNo(batNo);
+        tmp.setRsvFld12("1");
+        List<GDEupsbElecstBatchTmp>tmpList = get(GDEupsbElecstBatchTmpRepository.class).find(tmp);
+        for (GDEupsbElecstBatchTmp batchTmp : tmpList) {
+        	EupsBatchInfoDetail detail = new EupsBatchInfoDetail();
+        	detail.setBatNo(batchTmp.getBatNo());
+        	detail.setCusAc(batchTmp.getCusAc());
+        	detail.setCusNme(batchTmp.getCusNme());
+        	detail.setAgtSrvCusId(batchTmp.getThdCusNo());
+        	detail.setAgtSrvCusNme(batchTmp.getThdCusNme());
+        	detail.setSts("X");
+        	detail.setTxnAmt(new BigDecimal(batchTmp.getTxnAmt()));
+        	detail.setErrMsg("不存在代扣协议");
+        	result.add(detail);
+        }
+        //把代扣协议不存在的添加到代收付返回的数据中去 end
+        
+        
         Assert.isNotEmpty(result, ErrorCodes.EUPS_QUERY_NO_DATA);
         EupsThdFtpConfig config=get(EupsThdFtpConfigRepository.class).findOne("elec02batch");
 		Assert.isFalse(null == config, ErrorCodes.EUPS_THD_FTP_CONFIG_NOTEXIST);
@@ -56,12 +80,16 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements AfterB
 		
 		ret.put("header", context.getDataMapDirectly());
 		ret.put("detail", tempMap);
+		//这个要从配置项读取
 //		config.setLocDir("E:\\");
 //		config.setLocFleNme("elecfs20150412.txt");
 //		config.setRmtWay("/app/ics/dat/efe");
 //		config.setRmtFleNme("elecfs20150412.txt");
-        ((OperateFileAction)get("opeFile")).createCheckFile(config, "ELEC02BatchBack", "elecfs20150412.txt", ret);
+//      ((OperateFileAction)get("opeFile")).createCheckFile(config, "ELEC02BatchBack", "elecfs20150412.txt", ret);
 
+        ((OperateFileAction)get("opeFile")).createCheckFile(config, "ELEC02BatchBack", config.getLocFleNme(), ret);
+
+        
 		((OperateFTPAction)get("opeFTP")).putCheckFile(config);
 		/**通知第三方*/
 		 context.setData("TransCode", "23");
