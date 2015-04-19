@@ -2,6 +2,7 @@ package com.bocom.bbip.gdeupsb.action.efek;
 
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -10,6 +11,7 @@ import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsTransJournal;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -28,7 +30,12 @@ public class TallyCancelQryOnlineAction extends BaseAction{
 				EupsTransJournal eupsTransJournals=new EupsTransJournal();
 				eupsTransJournals.setMfmVchNo(mfmVchNo);
 				eupsTransJournals.setEupsBusTyp("ELEC00");
-				EupsTransJournal eupsTransJournal=eupsTransJournalRepository.find(eupsTransJournals).get(0);
+				eupsTransJournals.setTxnDte(DateUtils.parse(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd),DateUtils.STYLE_yyyyMMdd));
+				List<EupsTransJournal> list=eupsTransJournalRepository.find(eupsTransJournals);
+				if(CollectionUtils.isEmpty(list)){
+						throw new CoreException("该交易不是当日交易，或交易不存在");
+				}
+				EupsTransJournal eupsTransJournal=list.get(0);
 				if(null != eupsTransJournal){
 
 						context.setData(ParamKeys.TRADE_TXN_DIR, "C");//交易方向
