@@ -47,7 +47,9 @@
 		<!--  异步调用 对明细-->
 	<action   class="com.bocom.bbip.gdeupsb.strategy.efek.checkThdAcct.GdcheckThdDetlAcctAction"
 		id="gdeupsb.checkThdDetlAcctAction" />
-				
+	<!--  异步调用 批量返回  临时-->
+	<action   class="com.bocom.bbip.gdeupsb.action.efek.FileResultAction"
+		id="gdeupsb.fileResultAction" />					
 	<!--  嵌套 查询单位编号-->
 	<action   class="com.bocom.bbip.gdeupsb.action.efek.QryComNoByAreaAction"
 		id="gdeupsb.qryComNoByAreaAction" />		
