@@ -9,6 +9,7 @@
 	<table id="eleGzComNoGen">
 		<key name="0001" value="GDELEC01" />
 		<key name="0000" value="GDELEC01" />
+		<key name="1300" value="GDELEC01" />
 		<key name="4" value="this is tds,key=4,value=7" />
 	</table>
 
@@ -20,6 +21,15 @@
 		<key name="1200" value="xxxxxxxxxx" />
 		<key name="1300" value="xxxxxxxxxx" />
 	</table>
+	
+	<!-- 缴费一站通渠道转换 -->
+	<table id="TxnSrcToTxnCnl">
+		<key name="00" value="0" />  <!-- 柜面 -->
+		<key name="20" value="2" />  <!-- 网银 -->
+		<key name="30" value="5" />  <!-- 自助渠道 -->
+		<key name="51" value="6" />  <!-- 手机银行 -->
+	</table>
+	
 
 	<table id="tds2">
 		<key name="3" value="this is tds2,key=3,value=a" />
