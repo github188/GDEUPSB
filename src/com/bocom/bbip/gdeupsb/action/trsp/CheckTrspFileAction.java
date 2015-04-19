@@ -319,8 +319,7 @@ public class CheckTrspFileAction extends BaseAction {
 		String fileName = context.getData("fileName").toString().trim();
 		eupsThdFtpConfig.setLocFleNme(fileName);
 		eupsThdFtpConfig.setRmtFleNme(fileName);
-//		eupsThdFtpConfig.setRmtWay("/app/rbfb/dat/rbfb");
-		eupsThdFtpConfig.setLocDir("/home/bbipadm/common/");
+		eupsThdFtpConfig.setLocDir("/app/ics/dat/rbfb/");
 		operateFTPAction.putCheckFile(eupsThdFtpConfig);
 		
 		
