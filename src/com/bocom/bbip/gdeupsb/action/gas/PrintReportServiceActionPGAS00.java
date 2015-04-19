@@ -1,7 +1,13 @@
 package com.bocom.bbip.gdeupsb.action.gas;
 
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,6 +17,8 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.comp.BBIPPublicService;
@@ -19,11 +27,9 @@ import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.repository.EupsThdBaseInfoRepository;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
-import com.bocom.bbip.gdeupsb.action.common.GdPrintReportAction;
+import com.bocom.bbip.file.transfer.ftp.FTPTransfer;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GdEupsTransJournalRepository;
-import com.bocom.bbip.gdeupsb.utils.GdFileUtils;
-import com.bocom.bbip.gdeupsb.utils.GdReportUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.SystemConfig;
 import com.bocom.jump.bp.core.Context;
@@ -32,7 +38,8 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
 
 public class PrintReportServiceActionPGAS00 extends BaseAction {
 
-	
+	@Autowired
+	private VelocityTemplatedReportRender render;
 	@Autowired
 	private BBIPPublicService bbipPublicService;
 	@Autowired
@@ -167,64 +174,150 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 		
 		logger.info("================prtList.size:" + prtList.size());
 		
-
-//		EupsThdFtpConfigRepository eupsThdFtpConfigRepository = get(EupsThdFtpConfigRepository.class);
-//		ReportHelper reportHelper = get(ReportHelper.class);
-//		MFTPConfigInfo mftpConfigInfo = reportHelper
-//				.getMFTPConfigInfo(eupsThdFtpConfigRepository);
-//		logger.info((new StringBuilder("mftpConfigInfo:>>>>").append(BeanUtils
-//				.toMap(mftpConfigInfo))).toString());
-
-		String reportPath = GdReportUtils.reportPath(bbipPublicService,
-				systemConfig);
-		VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
-		
-		
-		try {
-			render.afterPropertiesSet();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
+		String filPath = "/home/bbipadm/data/GDEUPSB/report/";//TODO
+		String sampleFile = null;
 		String result = null;
 		Map<String, String> map = new HashMap<String, String>();
 		if("1".equals(prtFlg)){
-			context.setData("prtTtl", "(惠州分行)燃气单笔代扣汇总报表");
-			map.put("gasAllJnlRpt", "config/report/pgas/PrintgasAllReport.vm");
-			render.setReportNameTemplateLocationMapping(map);
-			context.setData("eles", prtList);
-			result = render.renderAsString("gasAllJnlRpt", context);
+			sampleFile = "config/report/pgas/PrintgasAllReport.vm";
+//			render.setReportNameTemplateLocationMapping(map);
+//			context.setData("eles", prtList);
+			
+			/*result = render.renderAsString("gasAllJnlRpt", context);
 			logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>> result >>>>>>>>>>>>>>>>>>>>>>>>>>");
-			logger.info(result);
+			logger.info(result);*/
+			
+//			rptFmtName = "gasAllJnlRpt";
+//			createRptFileAndSendToBBOS(context, rptFmtName, fileName);
+			
 		}
 		if("2".equals(prtFlg) || "3".equals(prtFlg)){
-			map.put("gasJnlRpt", "config/report/pgas/printTransJournal.vm");
-			render.setReportNameTemplateLocationMapping(map);
-			context.setData("eles", prtList);
-			result = render.renderAsString("gasJnlRpt", context);
+			sampleFile = "config/report/pgas/printTransJournal.vm";
+//			render.setReportNameTemplateLocationMapping(map);
+//			context.setData("eles", prtList);
+			
+			/*result = render.renderAsString("gasJnlRpt", context);
 			logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>> result >>>>>>>>>>>>>>>>>>>>>>>>>>");
-			logger.info(result);
+			logger.info(result);*/
+			
+//			rptFmtName = "gasJnlRpt";
+//			createRptFileAndSendToBBOS(context, rptFmtName, fileName);
 		}
 		
 		if("4".equals(prtFlg) ){
-			map.put("gasBatAllRpt", "config/report/pgas/printBatInfoAll.vm");
-			render.setReportNameTemplateLocationMapping(map);
-			context.setData("eles", prtList);
-			result = render.renderAsString("gasBatAllRpt", context);
+			sampleFile = "config/report/pgas/printBatInfoAll.vm";
+//			render.setReportNameTemplateLocationMapping(map);
+//			context.setData("eles", prtList);
+			
+			/*result = render.renderAsString("gasBatAllRpt", context);
 			logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>> result >>>>>>>>>>>>>>>>>>>>>>>>>>");
-			logger.info(result);
+			logger.info(result);*/
+			
+//			rptFmtName = "gasBatAllRpt";
+//			createRptFileAndSendToBBOS(context, rptFmtName, fileName);
 		}
 		if("5".equals(prtFlg) || "6".equals(prtFlg)){
-			map.put("gasBatRpt", "config/report/pgas/printBatInfo.vm");
-			render.setReportNameTemplateLocationMapping(map);
-			context.setData("eles", prtList);
-			result = render.renderAsString("gasBatRpt", context);
+			sampleFile = "config/report/pgas/printBatInfo.vm";
+//			render.setReportNameTemplateLocationMapping(map);
+//			context.setData("eles", prtList);
+//			
+			/*result = render.renderAsString("gasBatRpt", context);
 			logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>> result >>>>>>>>>>>>>>>>>>>>>>>>>>");
-			logger.info(result);
+			logger.info(result);*/
+			
+//			rptFmtName = "gasBatRpt";
+//			createRptFileAndSendToBBOS(context, rptFmtName, fileName);
 		}
+		map.put("sample", sampleFile);
+
+		try {
+			render.afterPropertiesSet();
+		} catch (Exception e) {
+//			IsbeUtils.busException(GDISBEErrorCodes.BBIP_GDISBE_CREATE_REPORT_ERROR);
+		}
+		context.setData("eles", prtList);
+		render.setReportNameTemplateLocationMapping(map);
+		result = render.renderAsString("sample", context);
+		logger.info("====================== result =================");
+		logger.info(result);
+		
+		String JYPath = filPath + fileName.toString();
+		logger.info("====================== JYPath =================");
+		logger.info(JYPath);
+		
+		BufferedOutputStream outStream = null;
 		
 		
 		
+		PrintWriter printWriter = null;
+		StringBuffer sbLocDir = new StringBuffer();
+		sbLocDir.append(filPath);
+		try {
+			File file = new File(sbLocDir.toString());
+			if (!file.exists()) {
+				file.mkdirs();
+			}
+			printWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
+							new FileOutputStream(sbLocDir.append(fileName.toString()).toString()), "GBK")));
+			printWriter.write(result);
+			
+		} catch (IOException e) {
+			throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
+		} finally {
+			if (null != printWriter) {
+				try {
+					printWriter.close();
+				} catch (Exception e) {
+					throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
+				}
+			}
+		}
+		logger.info("报表文件生成！！NEXT 上传FTP");
+		
+	/**	
+		try {
+			outStream = new BufferedOutputStream(new FileOutputStream(JYPath));
+			outStream.write(result.getBytes("gbk"));
+		} catch (Exception e) {
+			throw new CoreException("文件生成失败");
+//			IsbeUtils.busException(GDISBEErrorCodes.BBIP_GDISBE_CREATE_REPORT_ERROR);
+		} finally {
+			try {
+				if(outStream!=null){
+					outStream.close();
+				}
+			} catch (IOException e) {
+//				IsbeUtils.busException(GDISBEErrorCodes.BBIP_GDISBE_CREATE_REPORT_ERROR);
+			}
+		}
+*/		
+		//上传FTP
+		FTPTransfer tFTPTransfer = new FTPTransfer();
+		 // TODO FTP上传设置
+        tFTPTransfer.setHost("182.53.15.187");
+		tFTPTransfer.setPort(21);
+		tFTPTransfer.setUserName("weblogic");
+		tFTPTransfer.setPassword("123456");
+		
+		
+        try {
+        	tFTPTransfer.logon();
+            Resource tResource = new FileSystemResource(JYPath);
+            tFTPTransfer.putResource(tResource, "/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/", fileName.toString());
+
+        } catch (Exception e) {
+        	throw new CoreException("文件上传失败");
+//        	IsbeUtils.busException(ErrorCodes.BBIP_ISBE_CHECK_PUT_FILE_ERR);
+        } finally {
+        	tFTPTransfer.logout();
+        }
+		
+        context.setData("rspMsg", fileName.toString());
+		 logger.info("文件上传完成，等待打印！" + context);
+		
+		 
+		 //作废	
+		/**
 		logger.info("=============ready to print report list=============");
 		
 		try {
@@ -246,9 +339,7 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-
+		*/
 		
 //		PrintWriter printWriter = null;
 //		
