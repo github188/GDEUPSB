@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet spacket.xsd"
+	encoding="gbk" trace="true">
+	<segment name="detail" encoding="GBK">
+		<varString name="RPTFIL" type="D|" />  
+		<varString name="DTLSEQ" type="D|" /> 
+		<varString name="BNKDAT" type="D|" />  
+		<varString name="IDTYP" type="D|" /> 
+		<varString name="TCUSID" type="D|" />  
+		<varString name="TCUSNM" type="D|" />  
+		<varString name="ACTNO" type="D|" /> 
+		<varString name="tmp1" type="D|"  default="301581000019"/> 
+		<varString name="BNKTYP" type="D|"  default="交通银行"/>  
+		<varString name="tmp2" type="D|"  default="交通银行广东省分行"/>  
+		<varString name="TELNO" type="D|" />  
+		<varString name="MOBTEL" type="D|" />  
+		<varString name="EMail" type="D|" /> 
+		<varString name="IDNO" type="D|" />  
+		<varString name="PRVFLG" type="D|" />  
+		<varString name="GDSAID" type="D|" />  
+		<varString name="tmpDat" type="D|" />
+	</segment>
+</message>
