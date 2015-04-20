@@ -36,6 +36,7 @@ public class AftPayFeeAction implements Executable{
 		}else{
 					context.setData(ParamKeys.TXN_STS, "F");
 		}
+		context.setData("comNo", context.getData("company"));
 		String thdTxnDte=context.getData(ParamKeys.THD_TXN_DATE).toString();
 		context.setData(ParamKeys.THD_TXN_DATE, DateUtils.parse(thdTxnDte,DateUtils.STYLE_yyyyMMdd));
 		context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse(thdTxnDte+context.getData(ParamKeys.TXN_TME).toString(),DateUtils.STYLE_yyyyMMddHHmmss));
