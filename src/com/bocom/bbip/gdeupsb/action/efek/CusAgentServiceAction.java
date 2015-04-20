@@ -27,7 +27,6 @@ import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.strategy.efek.agent.UpdateCusAgentServiceAction;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.bbip.service.Result;
-import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
@@ -55,6 +54,9 @@ public class CusAgentServiceAction extends BaseAction{
 
 				if(context.getData(ParamKeys.THD_SQN)!=null){
 						context.setData("sqns", context.getData("sqns"));
+						if(context.getData("oprTyp").toString().trim().equals("1")){
+								context.setData("callThd", "callThd");
+						}
 				}else{
 						context.setData("sqns", context.getData("sqn"));
 				}
