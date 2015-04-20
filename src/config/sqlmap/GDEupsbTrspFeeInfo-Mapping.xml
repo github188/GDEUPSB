@@ -836,15 +836,12 @@
 		<if test="brNo != null">
 			AND BR_NO = #{brNo,jdbcType=CHAR}
 		</if>
-		<if test="status != null">
+		<if test="status != ''">
 			AND STATUS = #{status,jdbcType=CHAR}
 		</if>
 		AND (PAY_DAT BETWEEN #{begDat,jdbcType=DATE} AND
 		#{endDat,jdbcType=DATE})
-		<!-- BR_NO=#{brNo,jdbcType=CHAR} AND (CAR_NO=#{carNo,jdbcType=CHAR} OR 
-			#{carNo,jdbcType=CHAR} = '粤C') AND (PAY_DAT BETWEEN #{begDat,jdbcType=DATE} 
-			AND #{endDat,jdbcType=DATE}) AND (STATUS = #{status,jdbcType=CHAR} OR #{status,jdbcType=CHAR} 
-			= 'A') -->
+		
 
 	</select>
 	<select id="findInfoCount" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo"
