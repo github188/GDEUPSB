@@ -313,7 +313,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
         String telnet ="telnet 182.53.15.200";
         String nameAndPwd="icsadm";
         String cd ="cd app/efek/bin";
-        String cmd="./EfeFilSend.sh 182.53.201.46 bcm exchange   dat/efek/send  "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
+        String cmd="./EfeFilSend.sh 182.53.201.46 bcm exchange  dat/efek/send  "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
         logger.info("cmd=" + cmd);
         String[] command = new String[] {telnet,nameAndPwd,nameAndPwd,cd,cmd};
         Process proc = Runtime.getRuntime().exec(command);
