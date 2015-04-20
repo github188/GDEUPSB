@@ -69,7 +69,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 	 */
 	public void afterBatchDeal(AfterBatchAcpDomain afterbatchacpdomain, Context context) throws CoreException {
 			logger.info("===============Start  BatchDataResultFileAction  afterBatchDeal");	
-		
+
 			//第三方 rsvFld9
 			String batNo=context.getData(ParamKeys.BAT_NO).toString();
 			EupsBatchConsoleInfo eupsBatchConsoleInfo=eupsBatchConsoleInfoRepository.findOne(batNo);
