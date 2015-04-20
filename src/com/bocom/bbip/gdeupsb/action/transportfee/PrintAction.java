@@ -1,6 +1,7 @@
 package com.bocom.bbip.gdeupsb.action.transportfee;
 
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -14,6 +15,8 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.config.TxNamespaceHandler;
 
+import com.bocom.bbip.comp.BBIPPublicService;
+import com.bocom.bbip.comp.BBIPPublicServiceImpl;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
@@ -38,6 +41,9 @@ public class PrintAction extends BaseAction{
 	private final static Log log = LogFactory.getLog(PrintAction.class);
 	@Autowired
 	GDEupsbTrspFeeInfoRepository gdEupsbTrspFeeInfoRepository;
+	
+	@Autowired
+	BBIPPublicServiceImpl bbipPublicService;
 
 	public void execute(Context ctx) throws CoreRuntimeException,CoreException{
 		log.info("PrintAction start.......");
@@ -95,10 +101,24 @@ public class PrintAction extends BaseAction{
 					"/home/bbipadm/data/mftp/"+fileName));
 			outStream.write(result.getBytes(GDConstants.CHARSET_ENCODING_GBK));
 			outStream.close();
+			
 		} catch (IOException e) {
 			throw new CoreException("BBIP0004EU0128");
 		}
 		
+		String path = "/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/";
+		
+		String FilNam = "/home/bbipadm/data/mftp/" +fileName;
+		try {
+			
+			log.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+			log.info("FilNam=" + FilNam);
+			log.info("path + filname=" + path + fileName);
+			bbipPublicService.sendFileToBBOS(new File(FilNam), path + fileName, "p");
+			
+		}catch (Exception e) {
+			throw new CoreException(ErrorCodes.EUPS_FAIL);
+		}
          
 	}
 }
