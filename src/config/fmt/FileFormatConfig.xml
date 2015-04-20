@@ -145,7 +145,7 @@
 	</file>
 
 	<!-- 南方电网 核对协议 -->
-	<file name="efekAgent" id="efekBatch" encoding="GBK"
+	<file name="efekAgent" id="efekAgent" encoding="GBK"
 		lineSeparator="\n">
 		<line name="header" ref="config/fmt/fileFmt/efek/AgentDataHead.xml" />
 		<foreach name="detail"
