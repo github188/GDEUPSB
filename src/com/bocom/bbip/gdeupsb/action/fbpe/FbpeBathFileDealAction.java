@@ -201,7 +201,7 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
 				agtFileBatchDetail.setOUROTHFLG("0");
 				agtFileBatchDetail.setTXNAMT(new BigDecimal(gdeFbpeFileBatchTmp.getTxnAmt()).scaleByPowerOfTen(-2));
 				//备注 
-				agtFileBatchDetail.setRMK1(sqn);
+				agtFileBatchDetail.setRMK1(gdeFbpeFileBatchTmp.getSqn());
 				detailList.add(agtFileBatchDetail);
 			}
 		
