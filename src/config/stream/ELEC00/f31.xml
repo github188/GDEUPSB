@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="460431Req">
+	
+		<fixString name="sqn" length="24" /><!-- 交易流水号 -->
+		<fixString name="txnDate" length="8" /><!-- 交易日期 -->
+		<fixString name="txnTime" length="6" /><!--  交易时间-->
+		<fixString name="fleNme" length="6" /><!-- 文件名称-->
+		<fixString name="fleTyp" length="6" /><!--  文件类型-->
+		<fixString name="fleMd5" length="6" /><!--  文件MD5-->
+	
+	</segment>
