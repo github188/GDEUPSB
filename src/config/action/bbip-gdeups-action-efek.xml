@@ -44,6 +44,9 @@
 	<!--  异步调用 对总账-->
 	<action   class="com.bocom.bbip.gdeupsb.strategy.efek.checkThdAcct.GdcheckThdSumAcctAction"
 		id="gdeupsb.checkThdSumAcctAction" />	
+		
+	<action   class="com.bocom.bbip.gdeupsb.action.efek.AgentFileToThdAction"
+		id="gdeupsb.AgentFileToThdAction" />					
 		<!--  异步调用 对明细-->
 	<action   class="com.bocom.bbip.gdeupsb.strategy.efek.checkThdAcct.GdcheckThdDetlAcctAction"
 		id="gdeupsb.checkThdDetlAcctAction" />
