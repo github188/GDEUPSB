@@ -402,19 +402,19 @@ public class CheckTrspFileAction extends BaseAction {
 			rptFmt = rptFmt + 0;
 			statuesList=gdEupsbTrspFeeInfoRepository.findStatuesDeatil(mapSelect);
 			BigDecimal totAmt=new BigDecimal("0.00");
-			BigDecimal sucTotAmt=new BigDecimal("0.00");
+//			BigDecimal sucTotAmt=new BigDecimal("0.00");
 			int sucTotCnt=0;
 			int totCnt=0;
 			for (Map<String, Object> map : statuesList) {
 					String status=  map.get("STATUS").toString().trim();
 					if(status.equals("0")){
 							map.put("STS", "未打印");
-							sucTotCnt=sucTotCnt+Integer.parseInt(map.get("TOT_CNT").toString().trim());
-							sucTotAmt=sucTotAmt.add(new BigDecimal(map.get("TOT_AMT").toString()));
+//							sucTotCnt=sucTotCnt+Integer.parseInt(map.get("TOT_CNT").toString().trim());
+//							sucTotAmt=sucTotAmt.add(new BigDecimal(map.get("TOT_AMT").toString()));
 					 }else if(status.equals("1")){
 						 	map.put("STS", "已打印");
-							sucTotCnt=sucTotCnt+Integer.parseInt(map.get("TOT_CNT").toString().trim());
-						 	sucTotAmt=sucTotAmt.add(new BigDecimal(map.get("TOT_AMT").toString()));
+//							sucTotCnt=sucTotCnt+Integer.parseInt(map.get("TOT_CNT").toString().trim());
+//						 	sucTotAmt=sucTotAmt.add(new BigDecimal(map.get("TOT_AMT").toString()));
 					 }else if(status.equals("2")){
 						 	map.put("STS", "已退费");
 					 }else if(status.equals("3")){
@@ -427,8 +427,8 @@ public class CheckTrspFileAction extends BaseAction {
 			}	
 			context.setData("totCnt", totCnt);
 			context.setData("totAmt", totAmt);
-			context.setData("sucTotCnt", sucTotCnt);
-			context.setData("sucTotAmt", sucTotAmt);
+//			context.setData("sucTotCnt", sucTotCnt);
+//			context.setData("sucTotAmt", sucTotAmt);
 
 		} else if (1 == i) {// ~~~~~~~~~~~~~清单方式
 			rptFmt = rptFmt + 1;
