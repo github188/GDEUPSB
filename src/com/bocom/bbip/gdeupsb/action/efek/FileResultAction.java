@@ -17,7 +17,7 @@ public class FileResultAction extends BaseAction{
 				CoreRuntimeException {
 				log.info("=====================Start   FileResultAction");
 				context.setData(ParamKeys.EUPS_BUSS_TYPE, "ELEC00");
-				context.setData("batNo", "150408TPO300300044");
+				context.setData("batNo", "150408TPO300300169");
 				bbipPublicService.synExecute("eups.commNotifyBatchStatus", context);
 				log.info("=====================End   FileResultAction");
 		}
