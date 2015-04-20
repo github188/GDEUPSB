@@ -49,68 +49,68 @@ public class AddPrintAction extends BaseAction{
 //			throw new CoreRuntimeException(GDErrorCodes.EUPS_INVOIC_NO_ERROR);
 //		}
 		
-		ctx.setData("bigTxnAmt", StringUtils.amountInWords((String)ctx.getData(GDParamKeys.TXN_AMT)));
-		Date printDate = new Date();
-		Date begDat = ctx.getData(GDParamKeys.BEG_DAT);
-		Date endDat = ctx.getData(GDParamKeys.END_DAT);
-		ctx.setData("printYear", DateUtils.format(printDate, DateUtils.STYLE_yyyy));
-		ctx.setData("printMon", DateUtils.format(printDate, DateUtils.STYLE_MM));
-		ctx.setData("printDay", DateUtils.format(printDate, DateUtils.STYLE_dd));
-		ctx.setData("begYear", DateUtils.format(begDat, DateUtils.STYLE_yyyy));
-		ctx.setData("begMon", DateUtils.format(begDat, DateUtils.STYLE_MM));
-		ctx.setData("begDay", DateUtils.format(begDat, DateUtils.STYLE_dd));
-		ctx.setData("endYear", DateUtils.format(endDat, DateUtils.STYLE_yyyy));
-		ctx.setData("endMon", DateUtils.format(endDat, DateUtils.STYLE_MM));
-		ctx.setData("endDay", DateUtils.format(endDat, DateUtils.STYLE_dd));
-		
-		Map<String, String> mapping = CollectionUtils.createMap();
-		VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
-		String sampleFile="config/report/zhTransport/transportInv.vm";
-		
-		
-
-		mapping.put("sample", sampleFile);
-		try {
-			render.afterPropertiesSet();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		
-		
-		render.setReportNameTemplateLocationMapping(mapping);
-		String result = render.renderAsString("sample", ctx);
-		try {
-			log.info("generate report content:****"+new String(result.getBytes(GDConstants.CHARSET_ENCODING_GBK)));
-		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		String fileName = ctx.getData(GDParamKeys.INV_NO).toString()+ctx.getData(ParamKeys.TELLER)+"00";
-		BufferedOutputStream outStream = null;
-		try {
-
-			outStream = new BufferedOutputStream(new FileOutputStream(
-					"/home/bbipadm/data/mftp/BBIP/GDEUPSB/trsp/"+fileName));
-			outStream.write(result.getBytes(GDConstants.CHARSET_ENCODING_GBK));
-			outStream.close();
-		} catch (IOException e) {
-			throw new CoreException("BBIP0004EU0128");
-		}
-		
-		String path = "/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/";
-		
-		String FilNam = "/home/bbipadm/data/mftp/" +fileName;
-		try {
-			
-			log.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-			log.info("FilNam=" + FilNam);
-			log.info("path + filname=" + path + fileName);
-			bbipPublicService.sendFileToBBOS(new File(FilNam), path + fileName, "p");
-			
-		}catch (Exception e) {
-			throw new CoreException(ErrorCodes.EUPS_FAIL);
-		}
+//		ctx.setData("bigTxnAmt", StringUtils.amountInWords((String)ctx.getData(GDParamKeys.TXN_AMT)));
+//		Date printDate = new Date();
+//		Date begDat = ctx.getData(GDParamKeys.BEG_DAT);
+//		Date endDat = ctx.getData(GDParamKeys.END_DAT);
+//		ctx.setData("printYear", DateUtils.format(printDate, DateUtils.STYLE_yyyy));
+//		ctx.setData("printMon", DateUtils.format(printDate, DateUtils.STYLE_MM));
+//		ctx.setData("printDay", DateUtils.format(printDate, DateUtils.STYLE_dd));
+//		ctx.setData("begYear", DateUtils.format(begDat, DateUtils.STYLE_yyyy));
+//		ctx.setData("begMon", DateUtils.format(begDat, DateUtils.STYLE_MM));
+//		ctx.setData("begDay", DateUtils.format(begDat, DateUtils.STYLE_dd));
+//		ctx.setData("endYear", DateUtils.format(endDat, DateUtils.STYLE_yyyy));
+//		ctx.setData("endMon", DateUtils.format(endDat, DateUtils.STYLE_MM));
+//		ctx.setData("endDay", DateUtils.format(endDat, DateUtils.STYLE_dd));
+//		
+//		Map<String, String> mapping = CollectionUtils.createMap();
+//		VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
+//		String sampleFile="config/report/zhTransport/transportInv.vm";
+//		
+//		
+//
+//		mapping.put("sample", sampleFile);
+//		try {
+//			render.afterPropertiesSet();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//
+//		
+//		
+//		render.setReportNameTemplateLocationMapping(mapping);
+//		String result = render.renderAsString("sample", ctx);
+//		try {
+//			log.info("generate report content:****"+new String(result.getBytes(GDConstants.CHARSET_ENCODING_GBK)));
+//		} catch (UnsupportedEncodingException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		String fileName = ctx.getData(GDParamKeys.INV_NO).toString()+ctx.getData(ParamKeys.TELLER)+"00";
+//		BufferedOutputStream outStream = null;
+//		try {
+//
+//			outStream = new BufferedOutputStream(new FileOutputStream(
+//					"/home/bbipadm/data/mftp/BBIP/GDEUPSB/trsp/"+fileName));
+//			outStream.write(result.getBytes(GDConstants.CHARSET_ENCODING_GBK));
+//			outStream.close();
+//		} catch (IOException e) {
+//			throw new CoreException("BBIP0004EU0128");
+//		}
+//		
+//		String path = "/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/";
+//		
+//		String FilNam = "/home/bbipadm/data/mftp/" +fileName;
+//		try {
+//			
+//			log.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+//			log.info("FilNam=" + FilNam);
+//			log.info("path + filname=" + path + fileName);
+//			bbipPublicService.sendFileToBBOS(new File(FilNam), path + fileName, "p");
+//			
+//		}catch (Exception e) {
+//			throw new CoreException(ErrorCodes.EUPS_FAIL);
+//		}
          
 	}
 

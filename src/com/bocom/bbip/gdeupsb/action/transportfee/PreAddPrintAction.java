@@ -85,7 +85,7 @@ public class PreAddPrintAction extends BaseAction{
 		ctx.setData(GDParamKeys.FEE_STD, a.getFeeStd());
 		ctx.setData(GDParamKeys.CORPUS, a.getCorpus());
 		ctx.setData(GDParamKeys.LATE_FEE, a.getLateFee());
-		
+		ctx.setData(GDParamKeys.CNT_STD, a.getCntStd());
 		
 		
 		ctx.setData(GDParamKeys.PRT_NOD, a.getPrtNod());
