@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
+import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.entity.EupsBatchInfoDetail;
@@ -53,8 +54,9 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
 	@Autowired
 	EupsBatchInfoDetailRepository eupsBatchInfoDetailRepository;
+	@Autowired
+	ThirdPartyAdaptor thirdPartyAdaptor;
 	
-
 	@Override
 	public void afterBatchDeal(AfterBatchAcpDomain domain, Context context)	throws CoreException {
 		logger.info("AfterBatchAcpServiceImplWATR00 start ... ...");
@@ -95,6 +97,11 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 			map = BeanUtils.toMap(detailList.get(i));
 			map.put("sj", date);
 			list1.add(map);
+			if("S".equals(detailList.get(i).getSts())){
+				map.put("sts", "1");
+			}else{
+				map.put("sts", "4");
+			}
 		}
 		resultMap.put(ParamKeys.EUPS_FILE_DETAIL, list1);
 		
@@ -105,34 +112,34 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 		// 将生成的文件上传至指定服务器
 		eupsThdFtpConfig.setLocFleNme(fileName);
 		eupsThdFtpConfig.setRmtFleNme(fileName);
-		logger.info("@@@@@@@@@@@@eups=" + eupsThdFtpConfig);
+		logger.info("@@@@@@@@@@@@eupsThdFtpConfig=" + eupsThdFtpConfig);
 		OperateFTPActionExt operateFTP = new OperateFTPActionExt();
 		operateFTP.putCheckFile(eupsThdFtpConfig);
 		
 		
 		
 		context.setData("type", "Y004");
-		context.setData("accountdate", date);
+		context.setData("accountdate", DateUtils.format((Date)context.getData(ParamKeys.AC_DATE), DateUtils.STYLE_yyyyMMdd));
 		
 		StepSequenceFactory s = context.getService("logNoService");
 		String logNo = s.create().toString();
 		context.setData("waterno", "JH"+logNo);//流水号生成
-		
 		context.setData("bankcode", "交行");
 		context.setData("salesdepart",((String)context.getData(ParamKeys.BR)).substring(2, 8));
-		context.setData("salesperson", ((String)context.getData(ParamKeys.TELLER)).substring(4, 7));
+		context.setData("salesperson", ((String)context.getData(ParamKeys.TELLER)).substring(3));
 		context.setData("busitime", DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMddHHmmss));
-		context.setData("thdRspCde", "0");
-		context.setData("zprice", "");
-		context.setData("months", "");
+		context.setData("thdRspCde", "");
+		context.setData("zprice", "0");
+		context.setData("months", "0");
 		context.setData("operano", "");
 		context.setData("password", "        ");
 		context.setData("md5digest", " ");
 		
 		
-		context.setData("path", context.getData("path"));
-		context.setData("filename", context.getData("filename"));
-		context.setData("filesize", context.getData("filesize"));
+		context.setData("path", eupsThdFtpConfig.getRmtWay());
+		context.setData("filename", fileName);
+		context.setData("filesize", "");
+		thirdPartyAdaptor.trade(context);
 		logger.info("AfterBatchAcpServiceImplWATR00 end ... ...");
 	}
 
