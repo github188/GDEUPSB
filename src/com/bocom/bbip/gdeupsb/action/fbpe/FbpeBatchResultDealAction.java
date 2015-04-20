@@ -101,7 +101,11 @@ public class FbpeBatchResultDealAction implements AfterBatchAcpService {
         	 i=2;
             //TODO 燃气  自己写
         	 String pathName="E:\\home\\bbipadm\\common\\"+batNos+".txt";
-        	 createGasFile(context,eupsBatchInfoDetailList,pathName);
+         	File file=new File(pathName);
+        	if(!file.exists()){
+        			file.mkdirs();
+        	}
+        	 createGasFile(context,eupsBatchInfoDetailList,pathName,file);
         }  else if (comNo.equals("4460000010")) {
         	 i=3;
             fmtFileName="mobFbpeBatResultFmt";
@@ -117,6 +121,7 @@ public class FbpeBatchResultDealAction implements AfterBatchAcpService {
         // 生成返回明细信息
         List<GdFbpeFileBatchTmp> batchDetailList = fileRepository.find(gdFbpeFileBatchTmp);
         for (GdFbpeFileBatchTmp batchDetail : batchDetailList) {
+        	
             Map<String, Object> detailMap = new HashMap<String, Object>();
             
             detailMap.put("txnNo", batchDetail.getTxnNo());
@@ -126,6 +131,7 @@ public class FbpeBatchResultDealAction implements AfterBatchAcpService {
             detailMap.put("tlrNo", batchDetail.getTlrNo());
             detailMap.put("txnTim", batchDetail.getTxnTim());
             String sts=batchDetail.getRsvFld7();
+            System.out.println(">>>>>>>>>>>>>sts>>>>>>>>>"+sts+"<<<<<<<<<<<<<<<<<<<");
             if(i==1){
 	            	if(sts.equals("S")){
 	                		sts="00";
@@ -187,11 +193,7 @@ public class FbpeBatchResultDealAction implements AfterBatchAcpService {
         eupsThdFtpConfig.setRmtFleNme(fileName);
         operateFTP.putCheckFile(eupsThdFtpConfig);
     }
-    public void createGasFile(Context context,List<EupsBatchInfoDetail> eupsBatchInfoDetailList,String pathName){
-    	File file=new File(pathName);
-    	if(!file.exists()){
-    			file.mkdirs();
-    	}
+    public void createGasFile(Context context,List<EupsBatchInfoDetail> eupsBatchInfoDetailList,String pathName,File file){
     	List<String> list=new ArrayList<String>();
     	for (EupsBatchInfoDetail eupsBatchInfoDetail : eupsBatchInfoDetailList) {
 				 	String cusNo=eupsBatchInfoDetail.getAgtSrvCusId();
