@@ -40,7 +40,7 @@ public class PreCheckDealAction implements Executable{
 //				context.setData(ParamKeys.PAYFEE_TYPE, Constants.TXN_PAYFEE_TYPE_PAYMENT);
 				//TODO  试用
 				context.setData("extFields", "01441800999");
-				if(context.getData("traceSrc").toString().equals("WE441") || context.getData("traceSrc").toString().equals("MB441")){
+				if(((String)context.getData("traceSrc")).equals("WE441") || ((String)context.getData("traceSrc")).equals("MB441")){
 						context.setData("acTyp", "05");
 						context.setData("capital", new BigDecimal(context.getData("capital").toString()).scaleByPowerOfTen(-2));
 						context.setData("dedit", new BigDecimal(context.getData("dedit").toString()).scaleByPowerOfTen(-2));
