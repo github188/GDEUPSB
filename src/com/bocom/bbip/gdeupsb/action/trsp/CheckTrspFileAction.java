@@ -26,7 +26,6 @@ import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
-import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
@@ -319,9 +318,8 @@ public class CheckTrspFileAction extends BaseAction {
 		String fileName = context.getData("fileName").toString().trim();
 		eupsThdFtpConfig.setLocFleNme(fileName);
 		eupsThdFtpConfig.setRmtFleNme(fileName);
-		eupsThdFtpConfig.setLocDir("dat/rbfb/");
-		operateFTPAction.putCheckFile(eupsThdFtpConfig);
-		
+		eupsThdFtpConfig.setLocDir("app/ics/dat/rbfb/");
+//		operateFTPAction.putCheckFile(eupsThdFtpConfig);		
 		
 		// 文件解析入库
 		List<Map<String, Object>> mapList = operateFileAction.pareseFile(eupsThdFtpConfig, "trspCheckFile");
