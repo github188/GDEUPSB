@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.bocom.bbip.comp.BBIPPublicService;
-import com.bocom.bbip.comp.btp.BTPService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
@@ -137,8 +136,8 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
 				//申请批次号
-				String batNo=((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
-				context.setData(ParamKeys.BAT_NO, batNo);
+//				String batNo=((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
+				context.setData(ParamKeys.BAT_NO, context.getData(ParamKeys.SEQUENCE));
 				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW17");
 				context.setData(ParamKeys.THD_CUS_NO, "");
 				context.setData("sqns",bbipPublicService.getBBIPSequence());
