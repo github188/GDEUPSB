@@ -111,7 +111,7 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 			context.setData("TOTOTHERAMT", prtList.get(0).get("TOTOTHERAMT"));
 			
 			//TODO .vm
-			fileName = new StringBuffer((new StringBuilder("PGAS00DanBiAll_"+ br + "_" + beginDate + "_" + endDate).append(".txt").toString()));
+			fileName = new StringBuffer((new StringBuilder("PGAS00DanBiAll_" + "_" + beginDate + "_" + endDate).append(".txt").toString()));
 		}
 		if("2".equals(prtFlg)){
 			prtList = get(GdEupsTransJournalRepository.class).findGasSucJnlInfo(detailMap);

@@ -33,6 +33,7 @@ import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspInvChgInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.TrspCheckTmpRepository;
 import com.bocom.bbip.thd.org.apache.commons.collections.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -65,6 +66,7 @@ public class NodTrspCheckFileAction extends BaseAction {
 		// String
 		// tChkNo=((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
 		String journalModel = (String) ctx.getData("journalModel");
+		String nodNo = null;
 		Map<String, Object> map = new HashMap<String, Object>();
 
 		Date startDate = DateUtils.parse((String) ctx.getData("startDate"));
@@ -72,10 +74,16 @@ public class NodTrspCheckFileAction extends BaseAction {
 			ctx.setData("endDate",
 					DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
 		}
+		
+		if(StringUtils.isBlank((String) ctx.getData("nodNo"))){
+			nodNo = ctx.getData(ParamKeys.BR);
+		}
+		nodNo = (String) ctx.getData("nodNo");
+		
 		Date endDate = DateUtils.parse((String) ctx.getData("endDate"));
 		map.put("startDate", startDate);
 		map.put("endDate", endDate);
-		map.put("nodNo", (String) ctx.getData("nodNo"));
+		map.put("nodNo", nodNo);
 		map.put("bk", ctx.getData(ParamKeys.BK).toString());
 		if ("0".equals(journalModel)) { // 汇总
 			// 得到搜索的集合
