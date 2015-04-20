@@ -160,7 +160,14 @@
 				   			  <action id="act"  ref="gdeupsb.checkThdSumAcctAction"/>
 				   </actions>
 			</process>		
-			
+
+		<!-- 南方电网  核对代扣协议-->		
+		<process id="gdeupsb.AgentFileToThd"  template="eups.simpleTran"  interceptors="bbip.bbipSchedulerInterceptor">
+				  <actions>
+				   			  <action id="act"  ref="gdeupsb.AgentFileToThdAction"/>
+				   </actions>
+			</process>		
+						
 		<!-- 南方电网  异步调用对明细-->		
 		<process id="gdeupsb.checkThdDetlAcct"  template="eups.simpleTran"  interceptors="bbip.bbipSchedulerInterceptor">
 				  <actions>
