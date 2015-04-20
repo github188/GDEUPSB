@@ -20,5 +20,7 @@ public class FileResultAction extends BaseAction{
 				context.setData("batNo", "150408TPO300300169");
 				bbipPublicService.synExecute("eups.commNotifyBatchStatus", context);
 				log.info("=====================End   FileResultAction");
+				
+				
 		}
 }
