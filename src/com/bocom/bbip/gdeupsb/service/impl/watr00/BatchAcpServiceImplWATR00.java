@@ -249,7 +249,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		
 		context.setData(ParamKeys.TOT_CNT, Integer.parseInt(totCnt));
 		context.setData(ParamKeys.TOT_AMT, new BigDecimal(totAmt).scaleByPowerOfTen(-2));
-		System.out.println("totAmt="+context.getData(ParamKeys.TOT_AMT));
+		logger.info("totAmt="+context.getData(ParamKeys.TOT_AMT));
 		newInfo.setTotCnt(Integer.parseInt(totCnt));
 		newInfo.setTotAmt(new BigDecimal(totAmt).scaleByPowerOfTen(-2));//转换为以元为单位
 		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(newInfo);
