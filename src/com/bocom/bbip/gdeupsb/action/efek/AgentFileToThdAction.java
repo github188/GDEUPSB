@@ -46,8 +46,10 @@ public class AgentFileToThdAction extends BaseAction{
 		public void execute(Context context) throws CoreException,
 				CoreRuntimeException {
 				log.info("==============Start  AgentFileToThdAction");
+				context.setData(ParamKeys.EUPS_BUSS_TYPE, "ELEC00");
+				context.setData("TransCode", "31");
 				Date date=new Date();
-				Date txnDate=DateUtils.parse(DateUtils.format(date, DateUtils.STYLE_yyyyMMdd),DateUtils.STYLE_yyyyMMdd);
+				Date txnDate=DateUtils.parse(DateUtils.format(date, DateUtils.STYLE_SIMPLE_DATE),DateUtils.STYLE_SIMPLE_DATE);
 				Map<String, Object> map=new HashMap<String, Object>();
 				map.put("txnDte", txnDate);
 				List lists=gdEupsCusAgentJournalRepository.findAll();
@@ -61,9 +63,12 @@ public class AgentFileToThdAction extends BaseAction{
 						eupsCusAgentJournal.setTxnDte(txnDate);
 						eupsCusAgentJournal.setEupsBusTyp("ELEC00");
 						List<EupsCusAgentJournal> list=eupsCusAgentJournalRepository.find(eupsCusAgentJournal);
-						//文件内容
-						Map<String, Object> detailMap=new HashMap<String, Object>();
-						detailMap.put("detail", BeanUtils.toMaps(list));
+						for (EupsCusAgentJournal eupsCusAgentJournals : list) {
+							eupsCusAgentJournals.setIdNo(eupsCusAgentJournals.getIdNo().trim());
+							if(eupsCusAgentJournals.getTel()!=null){
+									eupsCusAgentJournals.setTel(eupsCusAgentJournals.getTel().toString().trim());
+							}
+						}
 						//首行
 						Map<String, Object> headerMap=new HashMap<String, Object>();
 						headerMap.put("comNo", comNo);
@@ -72,13 +77,16 @@ public class AgentFileToThdAction extends BaseAction{
 						headerMap.put("totCnt", list.size());
 						Map<String, Object> resultMap=new HashMap<String, Object>();
 						resultMap.put("header", headerMap);
-						resultMap.put("detail", detailMap);
+						resultMap.put("detail", BeanUtils.toMaps(list));
 						//生成文件
 						String string=i+"";
 						while(string.length()<3){
 								string="0"+string;
 						}
 						String locName="HDXY0301"+comNo+DateUtils.format(txnDate, DateUtils.STYLE_yyyyMMdd)+string+".txt";
+						context.setData("fleNme", locName);
+						context.setData("fleTyp", "04");
+						context.setData("fleMd5", "");
 						EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("efekAgent");
 						eupsThdFtpConfig.setLocFleNme(locName);
 						eupsThdFtpConfig.setRmtFleNme(locName);
