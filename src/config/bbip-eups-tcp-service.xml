@@ -330,7 +330,7 @@
 		<property name="default" ref="tcpEndpoint_ELEC00" />
 	</bean>
 	<bean id="tcpChannel_ELEC00" class="com.bocom.jump.bp.channel.tcp.SocketServer">
-		<property name="host" value="0.0.0.0" />
+		<property name="host" value="127.0.0.1" />
 		<property name="port" value="33251" />
 		<property name="soTimeout" value="10000" />
 		<property name="mapping" ref="tcpMapping_ELEC00" />
@@ -369,7 +369,7 @@
 				</bean>
 				<bean class="com.bocom.jump.bp.channel.interceptors.ContextInterceptor"></bean>
 				<bean class="com.bocom.bbip.eups.interceptor.ServiceThdInterceptor">
-					<constructor-arg value="33251" />
+					<constructor-arg value="9001" />
 				</bean>
 			</array>
 		</property>
@@ -464,7 +464,7 @@
 				<bean
 					class="com.bocom.jump.bp.channel.interceptors.RequestTracingInterceptor" />
 				 <bean
-					class="com.bocom.bbip.gdeupsb.channel.tcp.NoFrontPayloadChannelInterceptorEb">
+					class="com.bocom.bbip.gdeupsb.channel.tcp.NoFrontPayloadChannelInterceptorSd">
 				</bean> 
 				<bean class="com.bocom.jump.bp.channel.interceptors.TransformInterceptor">
 					<property name="encodeTransforms"><!-- 发送报文编码配置 -->
