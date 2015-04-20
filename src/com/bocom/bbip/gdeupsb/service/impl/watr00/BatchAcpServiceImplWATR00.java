@@ -276,7 +276,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 			temp.put("AGTSRVCUSID", map.get("hno"));
 			temp.put("AGTSRVCUSNME", "");
 			//TODO:本行标志暂全定0，还要改。
-			temp.put("OUROTHFLG", true==accountService.isOurBankCard((String) map.get(ParamKeys.CUS_AC))?"0":"1");
+			temp.put("OUROTHFLG", "0");
 //			temp.put("OUROTHFLG", true==accountService.isOurBankCard((String) map.get("bcount"))?"0":"1");
 			String kkh = accountService.getAcInf(CommonRequest.build(context), map.get("bcount").toString()).getOpnBr();
 //			if("1".equals(temp.get("OUROTHFLG"))&&null==kkh){
