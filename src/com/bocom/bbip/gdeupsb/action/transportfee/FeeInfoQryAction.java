@@ -62,7 +62,7 @@ public class FeeInfoQryAction extends BaseAction{
 		gdEupsbTrspFeeInfo.setBegDat(DateUtils.parse(ctx.getData(GDParamKeys.BEG_DAT).toString(),DateUtils.STYLE_SIMPLE_DATE));
 		gdEupsbTrspFeeInfo.setEndDat(DateUtils.parse(ctx.getData(GDParamKeys.END_DAT).toString(),DateUtils.STYLE_SIMPLE_DATE));
 		log.info(DateUtils.parse(ctx.getData(GDParamKeys.BEG_DAT).toString(),DateUtils.STYLE_SIMPLE_DATE));
-		gdEupsbTrspFeeInfo.setStatus(ctx.getData(GDParamKeys.STATUS).toString());
+		gdEupsbTrspFeeInfo.setStatus((String)ctx.getData(GDParamKeys.STATUS));
 		if("T".equals(ctx.getData("tiaTyp"))){  //tiaTyp来源未知
 			totalElements = gdEupsbTrspFeeInfoRepository.findInfoCount(gdEupsbTrspFeeInfo);
 			if(totalElements == 0){
@@ -78,11 +78,11 @@ public class FeeInfoQryAction extends BaseAction{
 //			 Pageable pageable =new PageRequest(pageNum,pageSize);
 //			 System.out.println(123);
 //			List<GDEupsbTrspFeeInfo> feeInfoList = gdEupsbTrspFeeInfoRepository.findInfo(pageable,gdEupsbTrspFeeInfo);
-		 System.out.println(123);
+		 
 			Pageable pageable =  BeanUtils.toObject(ctx.getDataMap(), PageRequest.class);
 			Page<GDEupsbTrspFeeInfo> TrspFeeInfoPage = get(GDEupsbTrspFeeInfoRepository.class).findInfo(pageable,gdEupsbTrspFeeInfo);
 			
-			System.out.println(5646);
+			
 //				List<Map<String,Object>> resultList=(List<Map<String, Object>>) BeanUtils.toMaps(feeInfoList);
 //				ctx.setData("resultList", resultList);
 			setResponseFromPage(ctx, "resultList", TrspFeeInfoPage);
