@@ -87,6 +87,7 @@ public class FbpeBatchResultDealAction implements AfterBatchAcpService {
 				gdFbpeFileBatchTmps.setSqn(sqn);
 				gdFbpeFileBatchTmps.setRsvFld7(eupsBatchInfoDetail.getSts());
 				gdFbpeFileBatchTmps.setRsvFld8(eupsBatchInfoDetail.getErrMsg());
+				System.out.println(">>>>>>>>>>>>>>>>>rsvFld7"+gdFbpeFileBatchTmps.getRsvFld7()+"<<<<<<<<<<<");
 				gdFbpeFileBatchTmpRepository.updateFbpe(gdFbpeFileBatchTmps);
 		}
         
@@ -121,7 +122,7 @@ public class FbpeBatchResultDealAction implements AfterBatchAcpService {
         // 生成返回明细信息
         List<GdFbpeFileBatchTmp> batchDetailList = fileRepository.find(gdFbpeFileBatchTmp);
         for (GdFbpeFileBatchTmp batchDetail : batchDetailList) {
-        	
+        	System.out.println("~~~~~~~~~~~~~~~~~~~~>>>>>>>"+batchDetail);
             Map<String, Object> detailMap = new HashMap<String, Object>();
             
             detailMap.put("txnNo", batchDetail.getTxnNo());
