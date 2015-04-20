@@ -99,7 +99,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			// 将生成的文件上传至指定服务器
 			eupsThdFtpConfig.setLocFleNme(fileName);
 			eupsThdFtpConfig.setRmtFleNme(fileName);
-			eupsThdFtpConfig.setRmtWay("/home/bbipadm/data/GDEUPSB/efek/send/");
+			eupsThdFtpConfig.setRmtWay("/app/ics/dat/efek/send");
 			eupsThdFtpConfig.setFtpDir("0");
 			operateFTP.putCheckFile(eupsThdFtpConfig);
 			
