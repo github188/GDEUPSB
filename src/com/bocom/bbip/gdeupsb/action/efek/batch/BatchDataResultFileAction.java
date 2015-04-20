@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.action.efek.batch;
 
+import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -88,12 +89,6 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 					String name=context.getData(ParamKeys.BAT_NO)+".result";
 					eupsThdFtpConfig.setLocFleNme(name);
 					eupsThdFtpConfig.setRmtFleNme(name);
-					
-//					final String tlr=(String)context.getData(ParamKeys.TELLER);
-//					final String br=(String)context.getData(ParamKeys.BR);
-//			        final String AcDate=DateUtils.format(((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getAcDate(),DateUtils.STYLE_yyyyMMdd);
-//			        final String systemCode=((SystemConfig)get(SystemConfig.class)).getSystemCode();
-//			        final String dir="/home/bbipadm/data/mftp/BBIP/"+systemCode+"/"+br+"/"+tlr+"/"+AcDate+"/";
 			        
 					eupsThdFtpConfig.setLocDir("/home/bbipadm/data/mftp/BBIP/GDEUPSB/01441800999/EFC0000/20150323/");
 					eupsThdFtpConfig.setRmtWay("/home/bbipadm/data/mftp/BBIP/GDEUPSB/01441800999/EFC0000/20150323/");
@@ -103,11 +98,8 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			}
 			// 将生成的文件上传至指定服务器
 			eupsThdFtpConfig.setLocFleNme(fileName);
-//			eupsThdFtpConfig.setLocDir(context.getData("dir").toString());
-//			eupsThdFtpConfig.setLocDir("/app/ics/tmp/gdeupsb/ftp/rsv/");
 			eupsThdFtpConfig.setRmtFleNme(fileName);
-//			eupsThdFtpConfig.setRmtWay(context.getData("dir").toString());
-			eupsThdFtpConfig.setRmtWay("/app/ics/dat/efek/send/");
+			eupsThdFtpConfig.setRmtWay("/home/bbipadm/data/GDEUPSB/efek/send/");
 			eupsThdFtpConfig.setFtpDir("0");
 			operateFTP.putCheckFile(eupsThdFtpConfig);
 			
@@ -319,13 +311,12 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
     public  Process RecvEnCryptFile(String excPath, String srcFile, String objFile) throws IOException {
     	logger.info("================Start BatchDataFileActiion  RecvEnCryptFile");	    	
 //        String cmd = excPath + "bin/JlzfDesFile" + " " + excPath + "tmp/" + srcFile + " " + excPath + "tmp/" + objFile + " 0";
-    	String cd="cd app/efek/bin";
-    	logger.info("cd=" + cd);
+    	File dir=new File("app/efek/bin");
     	String cmd="./EfeFilSend.sh 182.53.201.46 bcm exchange   dat/efek/send  "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
         logger.info("cmd=" + cmd);
-        String[] command = new String[] { cd,cmd};
-        Process proc = Runtime.getRuntime().exec(command);
-        
+        String[] command = new String[] {cmd};
+        Process proc = Runtime.getRuntime().exec(command,null,dir);
+      
         logger.info("en-file success!");
         logger.info("================End BatchDataFileActiion  RecvEnCryptFile");
         return proc;
