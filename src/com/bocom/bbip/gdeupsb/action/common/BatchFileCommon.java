@@ -78,6 +78,7 @@ public class BatchFileCommon extends BaseAction {
 		info.setEupsBusTyp(eupsBusTyp);
 		info.setBatSts(GDConstants.BATCH_STATUS_INIT);
 		info.setFleNme(fleNme);
+		info.setComNo(context.getData(comNo).toString());
 		info.setSubDte(new Date());
 		info.setTxnTlr((String) context.getData(ParamKeys.TELLER));
 		info.setTxnMde(Constants.TXN_MDE_FILE);
