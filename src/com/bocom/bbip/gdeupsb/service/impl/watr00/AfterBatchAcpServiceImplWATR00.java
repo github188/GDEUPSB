@@ -69,9 +69,13 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 		EupsBatchConsoleInfo eupsBatchConsoleInfo = eupsBatchConsoleInfoRepository.findOne(batNo);
 		//头部
 		Map<String, Object> resultMapHead = BeanUtils.toMap(eupsBatchConsoleInfo);
+		resultMapHead.put("abc", "HDR2");
 		resultMap.put(ParamKeys.EUPS_FILE_HEADER, resultMapHead);
+		Map<String, Object> hdr1 = new HashMap<String, Object>();
+		hdr1.put("HDR1", "HDR1");
+		resultMap.put("head", hdr1);
 		//文件名
-		String fileName="BJH"+StringUtils.substring(sqn, 0, 8)+StringUtils.substring(sqn, 15, 20);
+		String fileName="BJH"+StringUtils.substring(sqn, 0, 8)+StringUtils.substring(sqn, 15, 20)+".dat";
 		//文件内容 
 //		GDEupsEleTmp gdEupsEleTmps =new GDEupsEleTmp();
 //		gdEupsEleTmps.setRsvFld5(batNo);
