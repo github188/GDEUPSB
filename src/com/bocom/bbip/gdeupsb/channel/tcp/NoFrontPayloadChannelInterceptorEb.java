@@ -23,11 +23,11 @@ public class NoFrontPayloadChannelInterceptorEb extends NoFrontLengthStreamResol
 		try
 		{
 			
-			byte[] ints=resolve(socket.getInputStream());
-			byte[] deal=new byte[ints.length-10];
-//			syste
-			System.arraycopy(ints, 10, deal, 0, deal.length);
-			channelContext.setRequestPayload(deal);
+//			byte[] ints=resolve(socket.getInputStream());
+//			byte[] deal=new byte[ints.length-10];
+////			syste
+//			System.arraycopy(ints, 10, deal, 0, deal.length);
+			channelContext.setRequestPayload(resolve(socket.getInputStream()));
 		} catch (IOException io)
 		{
 			throw new JumpException("JUMPTP8000", "socket_read_error", io);
