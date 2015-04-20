@@ -74,10 +74,10 @@ public class AgentFileToThdAction extends BaseAction{
 						resultMap.put("detail", detailMap);
 						//生成文件
 						String string=i+"";
-						while(string.length()<4){
+						while(string.length()<3){
 								string="0"+string;
 						}
-						String locName="PL0301"+comNo+DateUtils.format(txnDate, DateUtils.STYLE_yyyyMMdd)+string+".txt";
+						String locName="HDXY0301"+comNo+DateUtils.format(txnDate, DateUtils.STYLE_yyyyMMdd)+string+".txt";
 						EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("efekAgent");
 						eupsThdFtpConfig.setLocFleNme(locName);
 						eupsThdFtpConfig.setRmtFleNme(locName);
