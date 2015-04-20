@@ -13,7 +13,6 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.commons.net.telnet.TelnetClient;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.comp.BBIPPublicService;
@@ -41,12 +40,9 @@ import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
-import com.jcraft.jsch.JSchException;
 
 public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 	private final static Log logger=LogFactory.getLog(BatchDataFileAction.class);
-    private final String JLZF_BACK_FILE_AFTTYPE = ".tmp";
-    private final String JLZF_ORGFILE_AFTTYPE = ".txt";
 
 		/**
 		 * 批量代收付  数据准备  提交
