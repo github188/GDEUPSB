@@ -92,6 +92,7 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 										    				eupsCusAgentJournal.setRsvFld3(rsvFld3);
 										    				String rsvFld1=context.getData("oprTyp").toString().trim()+context.getData("agtSts").toString().trim();
 										    				eupsCusAgentJournal.setRsvFld1(rsvFld1);
+										    				eupsCusAgentJournal.setComNo(context.getData("comNos").toString());
 										    				eupsCusAgentJournal.setThdCusNo((String)context.getData("cusNo"));
 										    				eupsCusAgentJournal.setCusAc(context.getData("cusAc").toString());
 										    				eupsCusAgentJournal.setCusNme((String)context.getData("cusNme"));
