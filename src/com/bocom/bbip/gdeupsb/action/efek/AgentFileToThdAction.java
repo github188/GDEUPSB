@@ -51,8 +51,6 @@ public class AgentFileToThdAction extends BaseAction{
 				Map<String, Object> map=new HashMap<String, Object>();
 				map.put("txnDte", txnDate);
 				List lists=gdEupsCusAgentJournalRepository.findAll();
-				System.out.println();
-				System.out.println(lists);
 				List<Map<String, Object>> comNoList=gdEupsCusAgentJournalRepository.findAllGroupByComNo(map);
 				int i=1;
 				for(Map<String, Object> mapList:comNoList){
