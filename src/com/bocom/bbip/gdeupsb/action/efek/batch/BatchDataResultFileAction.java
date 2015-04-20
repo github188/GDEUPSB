@@ -309,13 +309,9 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 	}
     public  Process RecvEnCryptFile(String excPath, String srcFile, String objFile) throws IOException {
     	logger.info("================Start BatchDataFileActiion  RecvEnCryptFile");	    	
-//        String cmd = excPath + "bin/JlzfDesFile" + " " + excPath + "tmp/" + srcFile + " " + excPath + "tmp/" + objFile + " 0";
-        String telnet ="telnet 182.53.15.200";
-        String nameAndPwd="icsadm";
-        String cd ="cd app/efek/bin";
-        String cmd="./EfeFilSend.sh 182.53.201.46 bcm exchange  dat/efek/send  "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
+        String cmd=".ssh>ssh icsadm@182.53.15.200 /app/ics/app/efek/bin/EfeFilSend.sh 182.53.201.46 bcm exchange dat/efek/send "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
         logger.info("cmd=" + cmd);
-        String[] command = new String[] {telnet,nameAndPwd,nameAndPwd,cd,cmd};
+        String[] command = new String[] {cmd};
         Process proc = Runtime.getRuntime().exec(command);
       
         logger.info("en-file success!");
