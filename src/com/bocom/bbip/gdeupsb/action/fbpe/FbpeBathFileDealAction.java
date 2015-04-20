@@ -199,11 +199,7 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
 				String cusAc=gdeFbpeFileBatchTmp.getCusAc();
 				agtFileBatchDetail.setCUSAC(cusAc);
 				//本行标志
-				if(get(AccountService.class).isOurBankCard(cusAc)){
-						agtFileBatchDetail.setOUROTHFLG("0");
-				}else{
-					agtFileBatchDetail.setOUROTHFLG("1");
-				}
+				agtFileBatchDetail.setOUROTHFLG("1");
 				agtFileBatchDetail.setTXNAMT(new BigDecimal(gdeFbpeFileBatchTmp.getTxnAmt()).scaleByPowerOfTen(-2));
 				//备注 
 				agtFileBatchDetail.setRMK1(sqn);
