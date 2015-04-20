@@ -98,7 +98,7 @@ public class PrintAction extends BaseAction{
 		try {
 
 			outStream = new BufferedOutputStream(new FileOutputStream(
-					"/home/bbipadm/data/mftp/"+fileName));
+					"/home/bbipadm/data/mftp/BBIP/GDEUPSB/trsp/"+fileName));
 			outStream.write(result.getBytes(GDConstants.CHARSET_ENCODING_GBK));
 			outStream.close();
 			
