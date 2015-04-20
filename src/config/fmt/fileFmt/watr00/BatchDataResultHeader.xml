@@ -5,9 +5,8 @@
 	encoding="utf-8" trace="true">
 	
 	<segment name="total"  encoding="utf-8">
-			<varString name="abc"    type="D\t"/>
-			<varString name="totCnt" type="D\t"/><!--  总记录-->
-			<varString name="totAmt" type="D\t"/><!--  总金额-->
+			<varString name="HDR1"    type="D\t"/>
+			
 	</segment>
 	
 </message>
