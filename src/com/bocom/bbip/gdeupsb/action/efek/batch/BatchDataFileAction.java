@@ -81,7 +81,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 //					}catch(IOException e){
 //							logger.info("==========Error    RecvEnCryptFile   ",e);
 //					}
-//					eupsThdFtpConfig.setRmtWay("/app/ics/app/efek/recv");
+					eupsThdFtpConfig.setRmtWay("/app/ics/tmp/gdeupsb/ftp/rsv");
 					operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
 					
 //					downloadFileToThird(eupsThdFtpConfig);
