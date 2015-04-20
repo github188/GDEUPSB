@@ -91,6 +91,8 @@ public interface GdEupsTransJournalRepository extends PagingAndSortingRepository
 	@Find
 	public List<Map<String, Object>> findGasAllJnlInfo(
 			Map<String, Object> detailMap);
+	@Find
+	public List<Map<String, Object>> findRptJnlInfo(GdEupsTransJournal eupsJnl);
 	
 
 }

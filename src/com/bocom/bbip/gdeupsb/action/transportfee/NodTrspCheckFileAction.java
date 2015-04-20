@@ -63,6 +63,8 @@ public class NodTrspCheckFileAction extends BaseAction {
 		log.info("NodTrspCheckFileAction start......");
 		ctx.setData("chkFlg", "F");
 
+		//TODO 返回全段字匹配问题
+		
 		// String
 		// tChkNo=((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
 		String journalModel = (String) ctx.getData("journalModel");
