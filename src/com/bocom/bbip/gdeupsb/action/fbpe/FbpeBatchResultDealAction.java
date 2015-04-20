@@ -188,6 +188,10 @@ public class FbpeBatchResultDealAction implements AfterBatchAcpService {
         operateFTP.putCheckFile(eupsThdFtpConfig);
     }
     public void createGasFile(Context context,List<EupsBatchInfoDetail> eupsBatchInfoDetailList,String pathName){
+    	File file=new File(pathName);
+    	if(!file.exists()){
+    			file.mkdirs();
+    	}
     	List<String> list=new ArrayList<String>();
     	for (EupsBatchInfoDetail eupsBatchInfoDetail : eupsBatchInfoDetailList) {
 				 	String cusNo=eupsBatchInfoDetail.getAgtSrvCusId();
@@ -225,10 +229,6 @@ public class FbpeBatchResultDealAction implements AfterBatchAcpService {
 				 	String line=cusNoLength+cusNo+cusAcLength+cusAc+cusNmeLength+cusNme+txnAmtLength+txnAmt+stsLength+sts+errMsgLength+errMsg;
 				 	list.add(line);
 			}
-    	File file=new File(pathName);
-    	if(!file.exists()){
-    			file.mkdirs();
-    	}
     	try {
 			FileUtils.writeLines(file, list);
 		} catch (IOException e) {
