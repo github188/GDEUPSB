@@ -1,13 +1,11 @@
 package com.bocom.bbip.gdeupsb.action.gas;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -113,7 +111,7 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 			context.setData("TOTOTHERAMT", prtList.get(0).get("TOTOTHERAMT"));
 			
 			//TODO .vm
-			fileName = new StringBuffer((new StringBuilder("(惠州分行)燃气单笔代扣汇总报表_"+ br + "_" + beginDate + "_" + endDate).append(".txt").toString()));
+			fileName = new StringBuffer((new StringBuilder("惠州燃气单笔代扣汇总报表_"+ br + "_" + beginDate + "_" + endDate).append(".txt").toString()));
 		}
 		if("2".equals(prtFlg)){
 			prtList = get(GdEupsTransJournalRepository.class).findGasSucJnlInfo(detailMap);
@@ -123,7 +121,7 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 			}
 			context.setData("sumCnt", prtList.get(0).get("SUCCCNT"));
 			context.setData("sumAmt", prtList.get(0).get("TOTSUCCAMT"));
-			fileName = new StringBuffer((new StringBuilder("(惠州分行)燃气单笔代扣成功报表_"+ br + "_" + beginDate + "_" + endDate).append(".txt").toString()));
+			fileName = new StringBuffer((new StringBuilder("惠州燃气单笔代扣成功报表_"+ br + "_" + beginDate + "_" + endDate).append(".txt").toString()));
 		}
 		if("3".equals(prtFlg)){
 			prtList = get(GdEupsTransJournalRepository.class).findGasFalJnlInfo(detailMap);
@@ -133,7 +131,7 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 			}
 			context.setData("sumCnt", prtList.get(0).get("FAILCNT"));
 			context.setData("sumAmt", prtList.get(0).get("TOTFAILAMT"));
-			fileName = new StringBuffer((new StringBuilder("(惠州分行)燃气单笔代扣失败报表_"+ br + "_" + beginDate + "_" + endDate).append(".txt").toString()));
+			fileName = new StringBuffer((new StringBuilder("惠州燃气单笔代扣失败报表_"+ br + "_" + beginDate + "_" + endDate).append(".txt").toString()));
 		}
 		if("4".equals(prtFlg)){
 			prtList = get(GDEupsBatchConsoleInfoRepository.class).findGasBatAllRecord(detailMap);
@@ -149,7 +147,7 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 			context.setData("sumFalAmt", prtList.get(0).get("SUM_FAL_TOT_AMT"));
 			
 			//TODO .vm
-			fileName = new StringBuffer((new StringBuilder("(惠州分行)燃气批量代扣汇总报表_"+ br + "_" + beginDate + "_" + endDate).append(".txt").toString()));
+			fileName = new StringBuffer((new StringBuilder("惠州燃气批量代扣汇总报表_"+ br + "_" + beginDate + "_" + endDate).append(".txt").toString()));
 		}
 		if("5".equals(prtFlg)){
 			prtList = get(GDEupsBatchConsoleInfoRepository.class).findGasBatSucRecord(detailMap);
@@ -159,7 +157,7 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 			}
 			context.setData("sumCnt", prtList.get(0).get("SUM_SUC_TOT_CNT"));
 			context.setData("sumAmt", prtList.get(0).get("SUM_SUC_TOT_AMT"));
-			fileName = new StringBuffer((new StringBuilder("(惠州分行)燃气批量代扣成功报表_"+ br + "_" + beginDate + "_" + endDate).append(".txt").toString()));
+			fileName = new StringBuffer((new StringBuilder("惠州燃气批量代扣成功报表_"+ br + "_" + beginDate + "_" + endDate).append(".txt").toString()));
 		}
 		if("6".equals(prtFlg)){
 			prtList = get(GDEupsBatchConsoleInfoRepository.class).findGasBatFalRecord(detailMap);
@@ -169,7 +167,7 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 			}
 			context.setData("sumCnt", prtList.get(0).get("SUM_FAL_TOT_CNT"));
 			context.setData("sumAmt", prtList.get(0).get("SUM_FAL_TOT_AMT"));
-			fileName = new StringBuffer((new StringBuilder("(惠州分行)燃气批量代扣失败报表_"+ br + "_" + beginDate + "_" + endDate).append(".txt").toString()));
+			fileName = new StringBuffer((new StringBuilder("惠州燃气批量代扣失败报表_"+ br + "_" + beginDate + "_" + endDate).append(".txt").toString()));
 		}
 		
 		logger.info("================prtList.size:" + prtList.size());
@@ -245,7 +243,7 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 		logger.info("====================== JYPath =================");
 		logger.info(JYPath);
 		
-		BufferedOutputStream outStream = null;
+//		BufferedOutputStream outStream = null;
 		
 		
 		

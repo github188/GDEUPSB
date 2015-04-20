@@ -15,23 +15,20 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
-import com.bocom.bbip.eups.action.eupsreport.ReportHelper;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
-import com.bocom.bbip.eups.entity.MFTPConfigInfo;
 import com.bocom.bbip.eups.repository.EupsThdBaseInfoRepository;
-import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
+import com.bocom.bbip.file.transfer.ftp.FTPTransfer;
 import com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal;
 import com.bocom.bbip.gdeupsb.repository.GdEupsTransJournalRepository;
-import com.bocom.bbip.gdeupsb.utils.GdFileUtils;
-import com.bocom.bbip.gdeupsb.utils.GdReportUtils;
-import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.SystemConfig;
@@ -41,6 +38,8 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
 
 public class PrintEupsbRptsActionBak extends BaseAction {
 
+	@Autowired
+	VelocityTemplatedReportRender render ;
 	@Autowired
 	private BBIPPublicService bbipPublicService;
 	@Autowired
@@ -179,142 +178,121 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 		}
 		
 		context.setData("prtTtl", prtTtl);
-//		fileName = new StringBuffer((new StringBuffer(prtTtl))); 
-//		+ "_" + br + "_" + prtDte + ".txt").toString()
-
-//		logger.info("==============fileName:" + fileName);
-		String reportPath = GdReportUtils.reportPath(bbipPublicService,
-				systemConfig);
-		logger.info(">>>>>>>>>>>>>> reportPath :" + reportPath);
-		//配置生成文件名字路径，其他信息从ftpCfg中获取
-		
-//		EupsThdFtpConfigRepository eupsThdFtpConfigRepository = get(EupsThdFtpConfigRepository.class);
-//		ReportHelper reportHelper = get(ReportHelper.class);
-//		MFTPConfigInfo mftpConfigInfo = reportHelper.getMFTPConfigInfo(eupsThdFtpConfigRepository); //TODO
-//		logger.info((new StringBuilder("mftpConfigInfo:>>>>").append(BeanUtils
-//				.toMap(mftpConfigInfo))).toString());
-
-		VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
-		try {
-			try {
-				render.afterPropertiesSet();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		
-
+		String sampleFile = null;
 		String result = null;
+		String filPath = "/home/bbipadm/data/GDEUPSB/report/";//TODO
 		Map<String, String> map = new HashMap<String, String>();
 
 		if ("0".equals(context.getData("prtTyp"))) {//全部
-			map.put("commonPrtRpt", "config/report/common/commonPrintReport_all.vm");
-			render.setReportNameTemplateLocationMapping(map);
-			context.setData("eles", prtList);
-			result = render.renderAsString("commonPrtRpt", context);
-			logger.info(result);
+			sampleFile = "config/report/common/commonPrintReport_all.vm";
+//			map.put("commonPrtRpt", "config/report/common/commonPrintReport_all.vm");
+//			render.setReportNameTemplateLocationMapping(map);
+//			context.setData("eles", prtList);
+//			result = render.renderAsString("commonPrtRpt", context);
+//			logger.info(result);
 		} else if ("1".equals(context.getData("prtTyp"))) {//成功
-			map.put("commonPrtRpt", "config/report/common/commonPrintReport_succ.vm");
-			render.setReportNameTemplateLocationMapping(map);
-			context.setData("eles", prtList);
-			result = render.renderAsString("commonPrtRpt", context);
-			logger.info(result);
+			sampleFile = "config/report/common/commonPrintReport_succ.vm";
+//			map.put("commonPrtRpt", "config/report/common/commonPrintReport_succ.vm");
+//			render.setReportNameTemplateLocationMapping(map);
+//			context.setData("eles", prtList);
+//			result = render.renderAsString("commonPrtRpt", context);
+//			logger.info(result);
 		} else if ("2".equals(context.getData("prtTyp"))) {//失败
-			map.put("commonPrtRpt", "config/report/common/commonPrintReport_fail.vm");
-			render.setReportNameTemplateLocationMapping(map);
-			context.setData("eles", prtList);
-			result = render.renderAsString("commonPrtRpt", context);
-			logger.info(result);
+			sampleFile = "config/report/common/commonPrintReport_fail.vm";
+//			map.put("commonPrtRpt", "config/report/common/commonPrintReport_fail.vm");
+//			render.setReportNameTemplateLocationMapping(map);
+//			context.setData("eles", prtList);
+//			result = render.renderAsString("commonPrtRpt", context);
+//			logger.info(result);
 		} else if ("3".equals(context.getData("prtTyp"))) {//存疑
-			map.put("commonPrtRpt", "config/report/common/commonPrintReport_doubt.vm");
-			render.setReportNameTemplateLocationMapping(map);
-			context.setData("eles", prtList);
-				result = render.renderAsString("commonPrtRpt", context);
-			logger.info(result);
+			sampleFile = "config/report/common/commonPrintReport_doubt.vm";
+//			map.put("commonPrtRpt", "config/report/common/commonPrintReport_doubt.vm");
+//			render.setReportNameTemplateLocationMapping(map);
+//			context.setData("eles", prtList);
+//				result = render.renderAsString("commonPrtRpt", context);
+//			logger.info(result);
 		}
 		else if ("4".equals(context.getData("prtTyp"))) {//其他
-			map.put("commonPrtRpt", "config/report/common/commonPrintReport_oth.vm");
-			render.setReportNameTemplateLocationMapping(map);
-			context.setData("eles", prtList);
-			result = render.renderAsString("commonPrtRpt", context);
-			logger.info(result);
+			sampleFile = "config/report/common/commonPrintReport_oth.vm";
+//			map.put("commonPrtRpt", "config/report/common/commonPrintReport_oth.vm");
+//			render.setReportNameTemplateLocationMapping(map);
+//			context.setData("eles", prtList);
+//			result = render.renderAsString("commonPrtRpt", context);
+//			logger.info(result);
 		}
 
 		logger.info("=============ready to print report list=============");
-	
-			GdFileUtils.write(
-					new File((new StringBuffer(String.valueOf(reportPath)))
-							.append(fileName).toString()), result, "GBK");
-			context.setVariable("reportDir", reportPath);
-			context.setVariable("reportName", fileName);
-			
-//			get(GdPrintReportAction.class).execute(context);
-			
-			logger.info("放到前端完成");
-			context.setData("filePath", reportPath);
-			String printReportName = context.getData("printReportName");
-			context.setData("fleNme", printReportName);
-			
-		} catch (IOException e1) {
-			e1.printStackTrace();
+		
+		map.put("sample", sampleFile);
+
+		try {
+			render.afterPropertiesSet();
+		} catch (Exception e) {
+//			IsbeUtils.busException(GDISBEErrorCodes.BBIP_GDISBE_CREATE_REPORT_ERROR);
 		}
+		context.setData("eles", prtList);
+		render.setReportNameTemplateLocationMapping(map);
+		result = render.renderAsString("sample", context);
+		logger.info("====================== result =================");
+		logger.info(result);
+		
+		String JYPath = filPath + fileName;
+		logger.info("====================== JYPath =================");
+		logger.info(JYPath);
+		
+//		BufferedOutputStream outStream = null;
+
+		PrintWriter printWriter = null;
+		StringBuffer sbLocDir = new StringBuffer();
+		sbLocDir.append(filPath);
+		try {
+			File file = new File(sbLocDir.toString());
+			if (!file.exists()) {
+				file.mkdirs();
+			}
+			printWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
+							new FileOutputStream(sbLocDir.append(fileName).toString()), "GBK")));
+			printWriter.write(result);
+			
+		} catch (IOException e) {
+			throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
+		} finally {
+			if (null != printWriter) {
+				try {
+					printWriter.close();
+				} catch (Exception e) {
+					throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
+				}
+			}
+		}
+		logger.info("报表文件生成！！NEXT 上传FTP");
+		
+		//上传FTP
+		FTPTransfer tFTPTransfer = new FTPTransfer();
+		 // TODO FTP上传设置
+        tFTPTransfer.setHost("182.53.15.187");
+		tFTPTransfer.setPort(21);
+		tFTPTransfer.setUserName("weblogic");
+		tFTPTransfer.setPassword("123456");
 		
 		
+        try {
+        	tFTPTransfer.logon();
+            Resource tResource = new FileSystemResource(JYPath);
+            tFTPTransfer.putResource(tResource, "/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/", fileName);
 
-		//本地生成报表文件并发送到mftp服务器,打印机自动打印
-//		reportHelper.createFileAndSendMFTP(context,result,fileName,mftpConfigInfo); //TODO
-
+        } catch (Exception e) {
+        	throw new CoreException("文件上传失败");
+//        	IsbeUtils.busException(ErrorCodes.BBIP_ISBE_CHECK_PUT_FILE_ERR);
+        } finally {
+        	tFTPTransfer.logout();
+        }
+		
+        context.setData("fleNme", fileName);
+		 logger.info("文件上传完成，等待打印！" + context);
+		
+	
 /*****************************************************************************************************************************/
-		
-		// 拼装本地路径 本地测试
-//		PrintWriter printWriter = null;
-//		StringBuffer sbLocDir = new StringBuffer();
-//		sbLocDir.append("D:/testGash/checkFilTest/").append(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)).append("/");
-//		sbLocDir.append(ftpCfg.getLocDir()).append("/").append(context.getData(ParamKeys.TELLER)).append("/").append(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)).append("/");
-        
-//		try {
-//			File file = new File(sbLocDir.toString());
-//			if (!file.exists()) {
-//				file.mkdirs();
-//			}
-//			printWriter = new PrintWriter(new BufferedWriter(
-//					new OutputStreamWriter(new FileOutputStream(sbLocDir
-//							.append(fileName).toString()), "GBK")));
-//			printWriter.write(result);
-//
-//		} catch (IOException e) {
-//			throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
-//		} finally {
-//			if (null != printWriter) {
-//				try {
-//					printWriter.close();
-//				} catch (Exception e) {
-//					throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
-//				}
-//			}
-//		}
-//
-//		try {
-//            get(MftpTransfer.class).send(sbLocDir.toString(), fileName.toString(), ftpCfg.getThdIpAdr());
-//            log.info("mftp send success!");
-//        } catch (Exception e) {
-//            log.error("mftp send fail!");
-//            throw new CoreException(ErrorCodes.EUPS_MFTP_FILEPUT_FAIL);
-//        }
-		
-/*****************************************************************************************************************************/
-		
-		
-		// bbipPublicService.sendFileToBBOS(new
-		// File(TransferUtils.resolveFilePath(mftploca, reportFileName)),
-		// reportFileName, MftpTransfer.FTYPE_NORMAL);
-
-//		 reportHelper.createFileAndSendMFTP(context, result, fileName,
-//		 mftpConfigInfo);
-//		 context.setData("filName", fileName);
-		
-//        String teller = (String)context.getData("tlr");
-//        fileName.append("_p").append((new StringBuilder("_")).append(br).toString()).append((new StringBuilder("_")).append(teller).toString());
-//		context.setData(ParamKeys.FLE_NME, fileName.toString());
 
 		logger.info("PrintEupsbRptsActionBak execute end ... ...");
 

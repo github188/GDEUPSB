@@ -3,6 +3,20 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPBCommService/Schema" xmlns:gsp="http://gsp.bankcomm.com" xmlns:bbip="http://bbip.bankcomm.com" targetNamespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPBCommService/Schema" elementFormDefault="qualified">
   <xs:import namespace="http://gsp.bankcomm.com" schemaLocation="headerOfSOAP.xsd"/>
   <xs:import namespace="http://bbip.bankcomm.com" schemaLocation="headerOfBbip.xsd"/>
+  <xs:element name="qryRptInfo" type="tns:qryRptInfoReq_CType"/>
+  <xs:element name="qryRptInfoResponse" type="tns:qryRptInfoRsp_CType"/>
+  <xs:complexType name="qryRptInfoReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:qryRptInfoRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="qryRptInfoRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:qryRptInfoResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:element name="prtRptService" type="tns:prtRptServiceReq_CType"/>
   <xs:element name="prtRptServiceResponse" type="tns:prtRptServiceRsp_CType"/>
   <xs:complexType name="prtRptServiceReq_CType">
@@ -571,7 +585,7 @@
       <xs:element name="eml" type="tns:eml_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="prtRptServiceRequest_CType">
+  <xs:complexType name="qryRptInfoRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
@@ -580,10 +594,25 @@
       <xs:element name="prtTyp" type="tns:prtTyp_SType"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="prtRptServiceResponse_CType">
+  <xs:complexType name="qryRptInfoResponse_CType">
     <xs:sequence>
       <xs:element ref="tns:responseHeader"/>
-      <xs:element name="fleNme" type="tns:fleNme_SType" minOccurs="0"/>
+      <xs:element name="totCnt" type="tns:totCnt_SType" minOccurs="0"/>
+      <xs:element name="totAmt" type="tns:totAmt_SType" minOccurs="0"/>
+      <xs:element name="succCnt" type="tns:succCnt_SType" minOccurs="0"/>
+      <xs:element name="totSuccAmt" type="tns:totSuccAmt_SType" minOccurs="0"/>
+      <xs:element name="failCnt" type="tns:failCnt_SType" minOccurs="0"/>
+      <xs:element name="totFailAmt" type="tns:totFailAmt_SType" minOccurs="0"/>
+      <xs:element name="doubtCnt" type="tns:doubtCnt_SType" minOccurs="0"/>
+      <xs:element name="totDoubtAmt" type="tns:totDoubtAmt_SType" minOccurs="0"/>
+      <xs:element name="otherCnt" type="tns:otherCnt_SType" minOccurs="0"/>
+      <xs:element name="totOtherAmt" type="tns:totOtherAmt_SType" minOccurs="0"/>
+      <xs:element name="batTotCnt" type="tns:batTotCnt_SType" minOccurs="0"/>
+      <xs:element name="batTotAmt" type="tns:batTotAmt_SType" minOccurs="0"/>
+      <xs:element name="batSucCnt" type="tns:batSucCnt_SType" minOccurs="0"/>
+      <xs:element name="batSucAmt" type="tns:batSucAmt_SType" minOccurs="0"/>
+      <xs:element name="batFalCnt" type="tns:batFalCnt_SType" minOccurs="0"/>
+      <xs:element name="batFalAmt" type="tns:batFalAmt_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="eupsBusTyp_SType">
@@ -610,6 +639,149 @@
       <xs:maxLength value="6"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:simpleType name="totCnt_SType">
+    <xs:annotation>
+      <xs:documentation>单笔代扣总笔数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="totAmt_SType">
+    <xs:annotation>
+      <xs:documentation>单笔代扣总金额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="succCnt_SType">
+    <xs:annotation>
+      <xs:documentation>单笔代扣成功总笔数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="totSuccAmt_SType">
+    <xs:annotation>
+      <xs:documentation>单笔代扣成功总金额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="failCnt_SType">
+    <xs:annotation>
+      <xs:documentation>单笔代扣失败总笔数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="totFailAmt_SType">
+    <xs:annotation>
+      <xs:documentation>单笔代扣失败总金额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="doubtCnt_SType">
+    <xs:annotation>
+      <xs:documentation>单笔代扣存疑总笔数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="totDoubtAmt_SType">
+    <xs:annotation>
+      <xs:documentation>单笔代扣存疑总金额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="otherCnt_SType">
+    <xs:annotation>
+      <xs:documentation>单笔代扣其他情况总笔数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="totOtherAmt_SType">
+    <xs:annotation>
+      <xs:documentation>单笔代扣其他情况总金额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="batTotCnt_SType">
+    <xs:annotation>
+      <xs:documentation>批量总笔数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="batTotAmt_SType">
+    <xs:annotation>
+      <xs:documentation>批量总金额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="batSucCnt_SType">
+    <xs:annotation>
+      <xs:documentation>批量成功总笔数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="batSucAmt_SType">
+    <xs:annotation>
+      <xs:documentation>批量成功总金额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="batFalCnt_SType">
+    <xs:annotation>
+      <xs:documentation>批量失败总笔数</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="batFalAmt_SType">
+    <xs:annotation>
+      <xs:documentation>批量失败总金额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="100"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:complexType name="prtRptServiceRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
+      <xs:element name="prtDte" type="tns:prtDte_SType"/>
+      <xs:element name="prtTyp" type="tns:prtTyp_SType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="prtRptServiceResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element name="fleNme" type="tns:fleNme_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:simpleType name="fleNme_SType">
     <xs:annotation>
       <xs:documentation>文件名</xs:documentation>

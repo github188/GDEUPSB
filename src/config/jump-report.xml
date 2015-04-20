@@ -16,4 +16,19 @@
 	</x:bean>
 
 	<x:bean id="internalFunc" class="com.bocom.bbip.gdeups.utils.ReportFunctionUtils"/> -->
+	
+<!-- <x:bean id="reportRender"
+		class="com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender">
+		<property name="reportNameTemplateLocationMapping">
+			<map>
+			<entry key="AcdZhTotalReport" value="config/report/AcdZhTotalReport.vm" />
+			<entry key="gasAllJnlRpt" value="config/report/pgas/PrintgasAllReport.vm" />
+			<entry key="gasJnlRpt" value="config/report/pgas/printTransJournal.vm" />
+			<entry key="gasBatAllRpt" value="config/report/pgas/printBatInfoAll.vm" />
+			<entry key="gasBatRpt" value="config/report/pgas/printBatInfo.vm" />
+			</map>
+		</property>
+		<property name="encoding" value="UTF-8" />
+	</x:bean> -->	
+	
 </x:beans>

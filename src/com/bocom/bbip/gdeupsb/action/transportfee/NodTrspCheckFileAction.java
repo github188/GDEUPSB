@@ -2,23 +2,21 @@ package com.bocom.bbip.gdeupsb.action.transportfee;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.omg.CORBA.CTX_RESTRICT_SCOPE;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
@@ -28,6 +26,7 @@ import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
+import com.bocom.bbip.file.transfer.ftp.FTPTransfer;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspFeeInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspInvChgInfoRepository;
@@ -39,6 +38,8 @@ import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
 
 public class NodTrspCheckFileAction extends BaseAction {
+	@Autowired
+	VelocityTemplatedReportRender render ;
 	@Autowired
 	TrspCheckTmpRepository trspCheckTmpRepository;
 	@Autowired
@@ -54,24 +55,12 @@ public class NodTrspCheckFileAction extends BaseAction {
 	@Autowired
 	@Qualifier("callThdTradeManager")
 	ThirdPartyAdaptor callThdTradeManager;
-	private final static Log log = LogFactory
-			.getLog(NodTrspCheckFileAction.class);
+	private final static Logger log = LoggerFactory
+			.getLogger(NodTrspCheckFileAction.class);
 
 	public void execute(Context ctx) throws CoreException, CoreRuntimeException {
 		log.info("NodTrspCheckFileAction start......");
 		ctx.setData("chkFlg", "F");
-
-		// nodCheckTrspFile 输入 交易请求头 requestHeader REF
-		// nodCheckTrspFile 输入 业务类型 eupsBusTyp CHAR 10 Y
-		// nodCheckTrspFile 输入 起始日期 startDate CHAR 8 Y
-		// nodCheckTrspFile 输入 终止日期 endDate CHAR 8 Y
-		// nodCheckTrspFile 输入 网点号 nodNo CHAR 11
-		// nodCheckTrspFile 输入 统计方式 journalModel VARCHAR 1 Y
-		// nodCheckTrspFile 输出 交易返回头 responseHeader REF
-		// nodCheckTrspFile 输出 对账结果标志 chkFlg CHAR 1
-		// nodCheckTrspFile 输出 总笔数 sucCnt CHAR 8
-		// nodCheckTrspFile 输出 总金额 sucAmt CHAR 17
-		// nodCheckTrspFile 输出 报表文件名 filNam CHAR 20
 
 		// String
 		// tChkNo=((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
@@ -182,7 +171,7 @@ public class NodTrspCheckFileAction extends BaseAction {
 			rptFmt = rptFmt + "01";
 		} else if (2 == i) {// ~~~~~~~~~~~~~更改发票清单
 			rptFmt = rptFmt + "02";
-		} else if (3 == i) {// ~~~~~~~~~~~~~未打印发票清单 协办行对账无此交易
+		} else if (3 == i) {// ~~~~~~~~~~~~~未打印发票清单 协办行对账无此交易 //TODO
 			rptFmt = rptFmt + "03";
 		} else {
 			context.setData(GDParamKeys.MSGTYP, "E");
@@ -190,7 +179,86 @@ public class NodTrspCheckFileAction extends BaseAction {
 			context.setData(ParamKeys.RSP_MSG, "统计模式错误");
 			throw new CoreException("统计模式错误");
 		}
-		String path = "config/report/zhTransport/" + rptFmt + ".vm";
+		String vmPath = "config/report/zhTransport/" + rptFmt + ".vm";
+		
+		
+		Map<String, String> mapping = new HashMap<String, String>();
+		mapping.put("sample", vmPath);
+		
+		try {
+			render.afterPropertiesSet();
+		} catch (Exception e) {
+//			IsbeUtils.busException(GDISBEErrorCodes.BBIP_GDISBE_CREATE_REPORT_ERROR);
+		}
+		context.setData("eles", detailList);
+		render.setReportNameTemplateLocationMapping(mapping);
+		
+		String filPath = "/home/bbipadm/data/GDEUPSB/report/";//TODO
+		String result = null;
+		String rptFil = "Car"
+				+ context.getData("tlr").toString()
+				+ context.getData(GDParamKeys.START_DATE).toString().substring(4) + ".dat";
+		
+		result = render.renderAsString("sample", context);
+		log.info("====================== result =================");
+		log.info(result);
+		
+		String JYPath = filPath + rptFil;
+		log.info("====================== JYPath =================");
+		log.info(JYPath);
+		
+//		BufferedOutputStream outStream = null;
+
+		PrintWriter printWriter = null;
+		StringBuffer sbLocDir = new StringBuffer();
+		sbLocDir.append(filPath);
+		try {
+			File file = new File(sbLocDir.toString());
+			if (!file.exists()) {
+				file.mkdirs();
+			}
+			printWriter = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
+							new FileOutputStream(sbLocDir.append(rptFil).toString()), "GBK")));
+			printWriter.write(result);
+			
+		} catch (IOException e) {
+			throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
+		} finally {
+			if (null != printWriter) {
+				try {
+					printWriter.close();
+				} catch (Exception e) {
+					throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
+				}
+			}
+		}
+		log.info("报表文件生成！！NEXT 上传FTP");
+		
+		//上传FTP
+		FTPTransfer tFTPTransfer = new FTPTransfer();
+		 // TODO FTP上传设置
+        tFTPTransfer.setHost("182.53.15.187");
+		tFTPTransfer.setPort(21);
+		tFTPTransfer.setUserName("weblogic");
+		tFTPTransfer.setPassword("123456");
+		
+        try {
+        	tFTPTransfer.logon();
+            Resource tResource = new FileSystemResource(JYPath);
+            tFTPTransfer.putResource(tResource, "/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/", rptFil);
+
+        } catch (Exception e) {
+        	throw new CoreException("文件上传失败");
+        } finally {
+        	tFTPTransfer.logout();
+        }
+		
+        context.setData("filNam", rptFil);
+		 log.info("文件上传完成，等待打印！" + context);
+		
+		
+		//////////////////////////////////////
+		/**
 		
 		log.info(">>>>>>>>>>>>>rptFmt=" + rptFmt);
 		log.info(">>>>>>>>>>>>>path=" + path);
@@ -207,7 +275,7 @@ public class NodTrspCheckFileAction extends BaseAction {
 		String rptFil = "Car"
 				+ context.getData("tlr").toString()
 				+ context.getData(GDParamKeys.START_DATE).toString().substring(4) + ".dat";
-		context.setData("filNam", rptFil);
+		
 		// 拼装文件
 		Map<String, String> map = new HashMap<String, String>();
 		map.put(rptFil, path);
@@ -255,7 +323,7 @@ public class NodTrspCheckFileAction extends BaseAction {
 				.println("~~~~~~~~~~~~~sendFile~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		// sendFile(context,rptFmt);
 		
-*/
+
 		////////////////    FOR LCL TEST  /////////////
 		PrintWriter printWriter = null;
 		
@@ -282,7 +350,8 @@ public class NodTrspCheckFileAction extends BaseAction {
 				}
 			}
 		}
+		*/
 		
-		
+//		context.setData("filNam", rptFil);
 	}
 }
