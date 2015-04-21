@@ -159,6 +159,7 @@ public class InsertCusAgentServiceAction extends BaseAction {
 								                	context.setData(GDParamKeys.MSGTYP, "E");
 								                	context.setData(ParamKeys.RSP_CDE, "EFE999");
 								                	context.setData(ParamKeys.RESPONSE_MESSAGE, "交易失败");
+								                	throw new CoreException(responseCode);
 								                }
 									}
 							}else{
@@ -179,7 +180,6 @@ public class InsertCusAgentServiceAction extends BaseAction {
 					                context.setData(ParamKeys.RESPONSE_CODE, ErrorCodes.EUPS_THD_SYS_ERROR);
 					                context.setData(ParamKeys.RESPONSE_MESSAGE, Constants.RESPONSE_MSG_FAIL);
 					                context.setData(ParamKeys.THD_RSP_MSG,Constants.RESPONSE_MSG_FAIL);
-					                throw new CoreException("发送失败");
 							}
 					}catch(CoreException e){
 						logger.info("Bypass call THIRD response failed or unknow error.");
