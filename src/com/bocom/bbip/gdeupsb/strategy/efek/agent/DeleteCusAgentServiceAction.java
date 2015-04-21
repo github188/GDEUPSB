@@ -55,7 +55,7 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 			logger.info("==========delResult："+delResult);
 			
 			if(delResult.isSuccess()){
-					if(context.getData("callThd")!=null){
+					if(context.getData("callThd")!=null && context.getData(ParamKeys.SERVICE_NAME).toString().trim().equals("gdeupsb.cusAgentService")){
 							try{
 								constantOfSoapUI(context);
 								context.setData(ParamKeys.TXN_DTE, DateUtils.format(txnDte,DateUtils.STYLE_yyyyMMdd));
