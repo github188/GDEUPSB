@@ -54,7 +54,7 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 			Result delResult = bgspServiceAccessObject.callServiceFlatting("deleteAgentCollectAgreement",context.getDataMap());
 			logger.info("==========delResult："+delResult);
 			System.out.println(context.getData("callThd"));
-			if(context.getData(ParamKeys.SERVICE_NAME).toString().trim().equals("gdeupsb.cusAgentService") && context.getData("oprTyp").toString().trim().equals("1")){
+			if(context.getData(ParamKeys.SERVICE_NAME).toString().trim().equals("gdeupsb.cusAgentService") && context.getData("oprTypeBank").toString().trim().equals("1")){
 					context.setData("callThd", null);
 			}
 			System.out.println(context.getData("callThd"));
