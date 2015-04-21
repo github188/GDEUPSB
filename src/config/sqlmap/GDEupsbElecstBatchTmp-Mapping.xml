@@ -1,498 +1,509 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.bocom.bbip.gdeupsb.entity.GDEupsbElecstBatchTmp" >
-  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.GDEupsbElecstBatchTmp" >
-    <id column="SQN" property="sqn" jdbcType="INTEGER" />
-    <result column="BAT_NO" property="batNo" jdbcType="CHAR" />
-    <result column="COM_NO" property="comNo" jdbcType="CHAR" />
-    <result column="TXN_TLR" property="txnTlr" jdbcType="CHAR" />
-    <result column="SUB_DTE" property="subDte" jdbcType="DATE" />
-    <result column="CUS_AC" property="cusAc" jdbcType="VARCHAR" />
-    <result column="CUS_NME" property="cusNme" jdbcType="VARCHAR" />
-    <result column="TXN_AMT" property="txnAmt" jdbcType="VARCHAR" />
-    <result column="THD_CUS_NO" property="thdCusNo" jdbcType="VARCHAR" />
-    <result column="THD_CUS_NME" property="thdCusNme" jdbcType="VARCHAR" />
-    <result column="OBK_BR" property="obkBr" jdbcType="VARCHAR" />
-    <result column="RSV_FLD1" property="rsvFld1" jdbcType="VARCHAR" />
-    <result column="RSV_FLD2" property="rsvFld2" jdbcType="VARCHAR" />
-    <result column="RSV_FLD3" property="rsvFld3" jdbcType="VARCHAR" />
-    <result column="RSV_FLD4" property="rsvFld4" jdbcType="VARCHAR" />
-    <result column="RSV_FLD5" property="rsvFld5" jdbcType="VARCHAR" />
-    <result column="RSV_FLD6" property="rsvFld6" jdbcType="VARCHAR" />
-    <result column="RSV_FLD7" property="rsvFld7" jdbcType="VARCHAR" />
-    <result column="RSV_FLD8" property="rsvFld8" jdbcType="VARCHAR" />
-    <result column="RSV_FLD9" property="rsvFld9" jdbcType="VARCHAR" />
-    <result column="RSV_FLD10" property="rsvFld10" jdbcType="VARCHAR" />
-    <result column="RSV_FLD11" property="rsvFld11" jdbcType="VARCHAR" />
-    <result column="RSV_FLD12" property="rsvFld12" jdbcType="VARCHAR" />
-    <result column="RSV_FLD13" property="rsvFld13" jdbcType="VARCHAR" />
-    <result column="RSV_FLD14" property="rsvFld14" jdbcType="VARCHAR" />
-    <result column="RSV_FLD15" property="rsvFld15" jdbcType="VARCHAR" />
-    <result column="RSV_FLD16" property="rsvFld16" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="baseColumnList" >
-    SQN, BAT_NO, COM_NO, TXN_TLR, SUB_DTE, CUS_AC, CUS_NME, TXN_AMT, THD_CUS_NO, THD_CUS_NME, 
-    OBK_BR, RSV_FLD1, RSV_FLD2, RSV_FLD3, RSV_FLD4, RSV_FLD5, RSV_FLD6, RSV_FLD7, RSV_FLD8, 
-    RSV_FLD9, RSV_FLD10, RSV_FLD11, RSV_FLD12, RSV_FLD13, RSV_FLD14, RSV_FLD15, RSV_FLD16
-  </sql>
-  <sql id="baseColumnList1" >
-    BAT_NO, COM_NO, TXN_TLR, SUB_DTE, CUS_AC, CUS_NME, TXN_AMT, THD_CUS_NO, THD_CUS_NME, 
-    OBK_BR, RSV_FLD1, RSV_FLD2, RSV_FLD3, RSV_FLD4, RSV_FLD5, RSV_FLD6, RSV_FLD7, RSV_FLD8, 
-    RSV_FLD9, RSV_FLD10, RSV_FLD11, RSV_FLD12, RSV_FLD13, RSV_FLD14, RSV_FLD15, RSV_FLD16, RSV_FLD17
-  </sql>
-  <select id="find" resultMap="basicResultMap" >
-    select
-    <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
-    <trim prefix="WHERE" prefixOverrides="AND" >
-      <if test="sqn!=null" >
-        AND  SQN=#{sqn,jdbcType=INTEGER}
-      </if>
-      <if test="batNo!=null" >
-        AND  BAT_NO=#{batNo,jdbcType=CHAR}
-      </if>
-      <if test="comNo!=null" >
-        AND  COM_NO=#{comNo,jdbcType=CHAR}
-      </if>
-      <if test="txnTlr!=null" >
-        AND  TXN_TLR=#{txnTlr,jdbcType=CHAR}
-      </if>
-      <if test="subDte!=null" >
-        AND  SUB_DTE=#{subDte,jdbcType=DATE}
-      </if>
-      <if test="cusAc!=null" >
-        AND  CUS_AC=#{cusAc,jdbcType=VARCHAR}
-      </if>
-      <if test="cusNme!=null" >
-        AND  CUS_NME=#{cusNme,jdbcType=VARCHAR}
-      </if>
-      <if test="txnAmt!=null" >
-        AND  TXN_AMT=#{txnAmt,jdbcType=VARCHAR}
-      </if>
-      <if test="thdCusNo!=null" >
-        AND  THD_CUS_NO=#{thdCusNo,jdbcType=VARCHAR}
-      </if>
-      <if test="thdCusNme!=null" >
-        AND  THD_CUS_NME=#{thdCusNme,jdbcType=VARCHAR}
-      </if>
-      <if test="obkBr!=null" >
-        AND  OBK_BR=#{obkBr,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld1!=null" >
-        AND  RSV_FLD1=#{rsvFld1,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld2!=null" >
-        AND  RSV_FLD2=#{rsvFld2,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld3!=null" >
-        AND  RSV_FLD3=#{rsvFld3,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld4!=null" >
-        AND  RSV_FLD4=#{rsvFld4,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld5!=null" >
-        AND  RSV_FLD5=#{rsvFld5,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld6!=null" >
-        AND  RSV_FLD6=#{rsvFld6,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld7!=null" >
-        AND  RSV_FLD7=#{rsvFld7,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld8!=null" >
-        AND  RSV_FLD8=#{rsvFld8,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld9!=null" >
-        AND  RSV_FLD9=#{rsvFld9,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld10!=null" >
-        AND  RSV_FLD10=#{rsvFld10,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld11!=null" >
-        AND  RSV_FLD11=#{rsvFld11,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld12!=null" >
-        AND  RSV_FLD12=#{rsvFld12,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld13!=null" >
-        AND  RSV_FLD13=#{rsvFld13,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld14!=null" >
-        AND  RSV_FLD14=#{rsvFld14,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld15!=null" >
-        AND  RSV_FLD15=#{rsvFld15,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld16!=null" >
-        AND  RSV_FLD16=#{rsvFld16,jdbcType=VARCHAR}
-      </if>
-    </trim>
-  </select>
-  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.Integer" >
-    select 
-    <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
-    where SQN = #{sqn,jdbcType=INTEGER}
-  </select>
-  <delete id="delete" parameterType="java.lang.Integer" >
-    delete from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
-    where SQN = #{sqn,jdbcType=INTEGER}
-  </delete>
-  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbElecstBatchTmp" >
-    insert into ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="sqn != null" >
-        SQN,
-      </if>
-      <if test="batNo != null" >
-        BAT_NO,
-      </if>
-      <if test="comNo != null" >
-        COM_NO,
-      </if>
-      <if test="txnTlr != null" >
-        TXN_TLR,
-      </if>
-      <if test="subDte != null" >
-        SUB_DTE,
-      </if>
-      <if test="cusAc != null" >
-        CUS_AC,
-      </if>
-      <if test="cusNme != null" >
-        CUS_NME,
-      </if>
-      <if test="txnAmt != null" >
-        TXN_AMT,
-      </if>
-      <if test="thdCusNo != null" >
-        THD_CUS_NO,
-      </if>
-      <if test="thdCusNme != null" >
-        THD_CUS_NME,
-      </if>
-      <if test="obkBr != null" >
-        OBK_BR,
-      </if>
-      <if test="rsvFld1 != null" >
-        RSV_FLD1,
-      </if>
-      <if test="rsvFld2 != null" >
-        RSV_FLD2,
-      </if>
-      <if test="rsvFld3 != null" >
-        RSV_FLD3,
-      </if>
-      <if test="rsvFld4 != null" >
-        RSV_FLD4,
-      </if>
-      <if test="rsvFld5 != null" >
-        RSV_FLD5,
-      </if>
-      <if test="rsvFld6 != null" >
-        RSV_FLD6,
-      </if>
-      <if test="rsvFld7 != null" >
-        RSV_FLD7,
-      </if>
-      <if test="rsvFld8 != null" >
-        RSV_FLD8,
-      </if>
-      <if test="rsvFld9 != null" >
-        RSV_FLD9,
-      </if>
-      <if test="rsvFld10 != null" >
-        RSV_FLD10,
-      </if>
-      <if test="rsvFld11 != null" >
-        RSV_FLD11,
-      </if>
-      <if test="rsvFld12 != null" >
-        RSV_FLD12,
-      </if>
-      <if test="rsvFld13 != null" >
-        RSV_FLD13,
-      </if>
-      <if test="rsvFld14 != null" >
-        RSV_FLD14,
-      </if>
-      <if test="rsvFld15 != null" >
-        RSV_FLD15,
-      </if>
-      <if test="rsvFld16 != null" >
-        RSV_FLD16,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="sqn != null" >
-        #{sqn,jdbcType=INTEGER},
-      </if>
-      <if test="batNo != null" >
-        #{batNo,jdbcType=CHAR},
-      </if>
-      <if test="comNo != null" >
-        #{comNo,jdbcType=CHAR},
-      </if>
-      <if test="txnTlr != null" >
-        #{txnTlr,jdbcType=CHAR},
-      </if>
-      <if test="subDte != null" >
-        #{subDte,jdbcType=DATE},
-      </if>
-      <if test="cusAc != null" >
-        #{cusAc,jdbcType=VARCHAR},
-      </if>
-      <if test="cusNme != null" >
-        #{cusNme,jdbcType=VARCHAR},
-      </if>
-      <if test="txnAmt != null" >
-        #{txnAmt,jdbcType=VARCHAR},
-      </if>
-      <if test="thdCusNo != null" >
-        #{thdCusNo,jdbcType=VARCHAR},
-      </if>
-      <if test="thdCusNme != null" >
-        #{thdCusNme,jdbcType=VARCHAR},
-      </if>
-      <if test="obkBr != null" >
-        #{obkBr,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld1 != null" >
-        #{rsvFld1,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld2 != null" >
-        #{rsvFld2,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld3 != null" >
-        #{rsvFld3,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld4 != null" >
-        #{rsvFld4,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld5 != null" >
-        #{rsvFld5,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld6 != null" >
-        #{rsvFld6,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld7 != null" >
-        #{rsvFld7,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld8 != null" >
-        #{rsvFld8,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld9 != null" >
-        #{rsvFld9,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld10 != null" >
-        #{rsvFld10,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld11 != null" >
-        #{rsvFld11,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld12 != null" >
-        #{rsvFld12,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld13 != null" >
-        #{rsvFld13,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld14 != null" >
-        #{rsvFld14,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld15 != null" >
-        #{rsvFld15,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld16 != null" >
-        #{rsvFld16,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
-  <select id="findCount" resultType="java.lang.Integer" >
-    select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
-    <trim prefix="WHERE" prefixOverrides="AND" >
-      <if test="sqn!=null" >
-        AND  SQN=#{sqn,jdbcType=INTEGER}
-      </if>
-      <if test="batNo!=null" >
-        AND  BAT_NO=#{batNo,jdbcType=CHAR}
-      </if>
-      <if test="comNo!=null" >
-        AND  COM_NO=#{comNo,jdbcType=CHAR}
-      </if>
-      <if test="txnTlr!=null" >
-        AND  TXN_TLR=#{txnTlr,jdbcType=CHAR}
-      </if>
-      <if test="subDte!=null" >
-        AND  SUB_DTE=#{subDte,jdbcType=DATE}
-      </if>
-      <if test="cusAc!=null" >
-        AND  CUS_AC=#{cusAc,jdbcType=VARCHAR}
-      </if>
-      <if test="cusNme!=null" >
-        AND  CUS_NME=#{cusNme,jdbcType=VARCHAR}
-      </if>
-      <if test="txnAmt!=null" >
-        AND  TXN_AMT=#{txnAmt,jdbcType=VARCHAR}
-      </if>
-      <if test="thdCusNo!=null" >
-        AND  THD_CUS_NO=#{thdCusNo,jdbcType=VARCHAR}
-      </if>
-      <if test="thdCusNme!=null" >
-        AND  THD_CUS_NME=#{thdCusNme,jdbcType=VARCHAR}
-      </if>
-      <if test="obkBr!=null" >
-        AND  OBK_BR=#{obkBr,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld1!=null" >
-        AND  RSV_FLD1=#{rsvFld1,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld2!=null" >
-        AND  RSV_FLD2=#{rsvFld2,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld3!=null" >
-        AND  RSV_FLD3=#{rsvFld3,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld4!=null" >
-        AND  RSV_FLD4=#{rsvFld4,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld5!=null" >
-        AND  RSV_FLD5=#{rsvFld5,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld6!=null" >
-        AND  RSV_FLD6=#{rsvFld6,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld7!=null" >
-        AND  RSV_FLD7=#{rsvFld7,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld8!=null" >
-        AND  RSV_FLD8=#{rsvFld8,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld9!=null" >
-        AND  RSV_FLD9=#{rsvFld9,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld10!=null" >
-        AND  RSV_FLD10=#{rsvFld10,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld11!=null" >
-        AND  RSV_FLD11=#{rsvFld11,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld12!=null" >
-        AND  RSV_FLD12=#{rsvFld12,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld13!=null" >
-        AND  RSV_FLD13=#{rsvFld13,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld14!=null" >
-        AND  RSV_FLD14=#{rsvFld14,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld15!=null" >
-        AND  RSV_FLD15=#{rsvFld15,jdbcType=VARCHAR}
-      </if>
-      <if test="rsvFld16!=null" >
-        AND  RSV_FLD16=#{rsvFld16,jdbcType=VARCHAR}
-      </if>
-    </trim>
-  </select>
-  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbElecstBatchTmp" >
-    update ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
-    <set >
-      <if test="batNo != null" >
-        BAT_NO = #{batNo,jdbcType=CHAR},
-      </if>
-      <if test="comNo != null" >
-        COM_NO = #{comNo,jdbcType=CHAR},
-      </if>
-      <if test="txnTlr != null" >
-        TXN_TLR = #{txnTlr,jdbcType=CHAR},
-      </if>
-      <if test="subDte != null" >
-        SUB_DTE = #{subDte,jdbcType=DATE},
-      </if>
-      <if test="cusAc != null" >
-        CUS_AC = #{cusAc,jdbcType=VARCHAR},
-      </if>
-      <if test="cusNme != null" >
-        CUS_NME = #{cusNme,jdbcType=VARCHAR},
-      </if>
-      <if test="txnAmt != null" >
-        TXN_AMT = #{txnAmt,jdbcType=VARCHAR},
-      </if>
-      <if test="thdCusNo != null" >
-        THD_CUS_NO = #{thdCusNo,jdbcType=VARCHAR},
-      </if>
-      <if test="thdCusNme != null" >
-        THD_CUS_NME = #{thdCusNme,jdbcType=VARCHAR},
-      </if>
-      <if test="obkBr != null" >
-        OBK_BR = #{obkBr,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld1 != null" >
-        RSV_FLD1 = #{rsvFld1,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld2 != null" >
-        RSV_FLD2 = #{rsvFld2,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld3 != null" >
-        RSV_FLD3 = #{rsvFld3,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld4 != null" >
-        RSV_FLD4 = #{rsvFld4,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld5 != null" >
-        RSV_FLD5 = #{rsvFld5,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld6 != null" >
-        RSV_FLD6 = #{rsvFld6,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld7 != null" >
-        RSV_FLD7 = #{rsvFld7,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld8 != null" >
-        RSV_FLD8 = #{rsvFld8,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld9 != null" >
-        RSV_FLD9 = #{rsvFld9,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld10 != null" >
-        RSV_FLD10 = #{rsvFld10,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld11 != null" >
-        RSV_FLD11 = #{rsvFld11,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld12 != null" >
-        RSV_FLD12 = #{rsvFld12,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld13 != null" >
-        RSV_FLD13 = #{rsvFld13,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld14 != null" >
-        RSV_FLD14 = #{rsvFld14,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld15 != null" >
-        RSV_FLD15 = #{rsvFld15,jdbcType=VARCHAR},
-      </if>
-      <if test="rsvFld16 != null" >
-        RSV_FLD16 = #{rsvFld16,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where SQN = #{sqn,jdbcType=INTEGER}
-  </update>
-  <select id="findAll" resultMap="basicResultMap" >
-    select 
-    <include refid="baseColumnList" />
-    from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC02_BATCH_TEMP
-    <if test="_parameter" >
-      where SQN in
-      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
-        #{item}
-      </foreach>
-    </if>
-  </select>
-  <select id="batchInsert" parameterType="java.util.List">
-    insert into ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
-     (<include refid="baseColumnList1" />)
-     values
-     	<foreach collection="list" item="item" index="index" separator=",">
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.GDEupsbElecstBatchTmp">
+	<resultMap id="basicResultMap"
+		type="com.bocom.bbip.gdeupsb.entity.GDEupsbElecstBatchTmp">
+		<id column="SQN" property="sqn" jdbcType="INTEGER" />
+		<result column="BAT_NO" property="batNo" jdbcType="CHAR" />
+		<result column="COM_NO" property="comNo" jdbcType="CHAR" />
+		<result column="TXN_TLR" property="txnTlr" jdbcType="CHAR" />
+		<result column="SUB_DTE" property="subDte" jdbcType="DATE" />
+		<result column="CUS_AC" property="cusAc" jdbcType="VARCHAR" />
+		<result column="CUS_NME" property="cusNme" jdbcType="VARCHAR" />
+		<result column="TXN_AMT" property="txnAmt" jdbcType="VARCHAR" />
+		<result column="THD_CUS_NO" property="thdCusNo" jdbcType="VARCHAR" />
+		<result column="THD_CUS_NME" property="thdCusNme" jdbcType="VARCHAR" />
+		<result column="OBK_BR" property="obkBr" jdbcType="VARCHAR" />
+		<result column="RSV_FLD1" property="rsvFld1" jdbcType="VARCHAR" />
+		<result column="RSV_FLD2" property="rsvFld2" jdbcType="VARCHAR" />
+		<result column="RSV_FLD3" property="rsvFld3" jdbcType="VARCHAR" />
+		<result column="RSV_FLD4" property="rsvFld4" jdbcType="VARCHAR" />
+		<result column="RSV_FLD5" property="rsvFld5" jdbcType="VARCHAR" />
+		<result column="RSV_FLD6" property="rsvFld6" jdbcType="VARCHAR" />
+		<result column="RSV_FLD7" property="rsvFld7" jdbcType="VARCHAR" />
+		<result column="RSV_FLD8" property="rsvFld8" jdbcType="VARCHAR" />
+		<result column="RSV_FLD9" property="rsvFld9" jdbcType="VARCHAR" />
+		<result column="RSV_FLD10" property="rsvFld10" jdbcType="VARCHAR" />
+		<result column="RSV_FLD11" property="rsvFld11" jdbcType="VARCHAR" />
+		<result column="RSV_FLD12" property="rsvFld12" jdbcType="VARCHAR" />
+		<result column="RSV_FLD13" property="rsvFld13" jdbcType="VARCHAR" />
+		<result column="RSV_FLD14" property="rsvFld14" jdbcType="VARCHAR" />
+		<result column="RSV_FLD15" property="rsvFld15" jdbcType="VARCHAR" />
+		<result column="RSV_FLD16" property="rsvFld16" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="baseColumnList">
+		SQN, BAT_NO, COM_NO, TXN_TLR, SUB_DTE, CUS_AC, CUS_NME, TXN_AMT,
+		THD_CUS_NO, THD_CUS_NME,
+		OBK_BR, RSV_FLD1, RSV_FLD2, RSV_FLD3, RSV_FLD4, RSV_FLD5, RSV_FLD6, RSV_FLD7,
+		RSV_FLD8,
+		RSV_FLD9, RSV_FLD10, RSV_FLD11, RSV_FLD12, RSV_FLD13, RSV_FLD14, RSV_FLD15,
+		RSV_FLD16
+	</sql>
+	<sql id="baseColumnList1">
+		BAT_NO, COM_NO, TXN_TLR, SUB_DTE, CUS_AC, CUS_NME, TXN_AMT, THD_CUS_NO,
+		THD_CUS_NME,
+		OBK_BR, RSV_FLD1, RSV_FLD2, RSV_FLD3, RSV_FLD4, RSV_FLD5, RSV_FLD6, RSV_FLD7,
+		RSV_FLD8,
+		RSV_FLD9, RSV_FLD10, RSV_FLD11, RSV_FLD12, RSV_FLD13, RSV_FLD14, RSV_FLD15,
+		RSV_FLD16, RSV_FLD17
+	</sql>
+	<select id="find" resultMap="basicResultMap">
+		select
+		<include refid="baseColumnList" />
+		from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="sqn!=null">
+				AND SQN=#{sqn,jdbcType=INTEGER}
+			</if>
+			<if test="batNo!=null">
+				AND BAT_NO=#{batNo,jdbcType=CHAR}
+			</if>
+			<if test="comNo!=null">
+				AND COM_NO=#{comNo,jdbcType=CHAR}
+			</if>
+			<if test="txnTlr!=null">
+				AND TXN_TLR=#{txnTlr,jdbcType=CHAR}
+			</if>
+			<if test="subDte!=null">
+				AND SUB_DTE=#{subDte,jdbcType=DATE}
+			</if>
+			<if test="cusAc!=null">
+				AND CUS_AC=#{cusAc,jdbcType=VARCHAR}
+			</if>
+			<if test="cusNme!=null">
+				AND CUS_NME=#{cusNme,jdbcType=VARCHAR}
+			</if>
+			<if test="txnAmt!=null">
+				AND TXN_AMT=#{txnAmt,jdbcType=VARCHAR}
+			</if>
+			<if test="thdCusNo!=null">
+				AND THD_CUS_NO=#{thdCusNo,jdbcType=VARCHAR}
+			</if>
+			<if test="thdCusNme!=null">
+				AND THD_CUS_NME=#{thdCusNme,jdbcType=VARCHAR}
+			</if>
+			<if test="obkBr!=null">
+				AND OBK_BR=#{obkBr,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld1!=null">
+				AND RSV_FLD1=#{rsvFld1,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld2!=null">
+				AND RSV_FLD2=#{rsvFld2,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld3!=null">
+				AND RSV_FLD3=#{rsvFld3,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld4!=null">
+				AND RSV_FLD4=#{rsvFld4,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld5!=null">
+				AND RSV_FLD5=#{rsvFld5,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld6!=null">
+				AND RSV_FLD6=#{rsvFld6,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld7!=null">
+				AND RSV_FLD7=#{rsvFld7,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld8!=null">
+				AND RSV_FLD8=#{rsvFld8,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld9!=null">
+				AND RSV_FLD9=#{rsvFld9,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld10!=null">
+				AND RSV_FLD10=#{rsvFld10,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld11!=null">
+				AND RSV_FLD11=#{rsvFld11,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld12!=null">
+				AND RSV_FLD12=#{rsvFld12,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld13!=null">
+				AND RSV_FLD13=#{rsvFld13,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld14!=null">
+				AND RSV_FLD14=#{rsvFld14,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld15!=null">
+				AND RSV_FLD15=#{rsvFld15,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld16!=null">
+				AND RSV_FLD16=#{rsvFld16,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</select>
+	<select id="findOne" resultMap="basicResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="baseColumnList" />
+		from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
+		where SQN = #{sqn,jdbcType=INTEGER}
+	</select>
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
+		where SQN = #{sqn,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbElecstBatchTmp">
+		insert into ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="sqn != null">
+				SQN,
+			</if>
+			<if test="batNo != null">
+				BAT_NO,
+			</if>
+			<if test="comNo != null">
+				COM_NO,
+			</if>
+			<if test="txnTlr != null">
+				TXN_TLR,
+			</if>
+			<if test="subDte != null">
+				SUB_DTE,
+			</if>
+			<if test="cusAc != null">
+				CUS_AC,
+			</if>
+			<if test="cusNme != null">
+				CUS_NME,
+			</if>
+			<if test="txnAmt != null">
+				TXN_AMT,
+			</if>
+			<if test="thdCusNo != null">
+				THD_CUS_NO,
+			</if>
+			<if test="thdCusNme != null">
+				THD_CUS_NME,
+			</if>
+			<if test="obkBr != null">
+				OBK_BR,
+			</if>
+			<if test="rsvFld1 != null">
+				RSV_FLD1,
+			</if>
+			<if test="rsvFld2 != null">
+				RSV_FLD2,
+			</if>
+			<if test="rsvFld3 != null">
+				RSV_FLD3,
+			</if>
+			<if test="rsvFld4 != null">
+				RSV_FLD4,
+			</if>
+			<if test="rsvFld5 != null">
+				RSV_FLD5,
+			</if>
+			<if test="rsvFld6 != null">
+				RSV_FLD6,
+			</if>
+			<if test="rsvFld7 != null">
+				RSV_FLD7,
+			</if>
+			<if test="rsvFld8 != null">
+				RSV_FLD8,
+			</if>
+			<if test="rsvFld9 != null">
+				RSV_FLD9,
+			</if>
+			<if test="rsvFld10 != null">
+				RSV_FLD10,
+			</if>
+			<if test="rsvFld11 != null">
+				RSV_FLD11,
+			</if>
+			<if test="rsvFld12 != null">
+				RSV_FLD12,
+			</if>
+			<if test="rsvFld13 != null">
+				RSV_FLD13,
+			</if>
+			<if test="rsvFld14 != null">
+				RSV_FLD14,
+			</if>
+			<if test="rsvFld15 != null">
+				RSV_FLD15,
+			</if>
+			<if test="rsvFld16 != null">
+				RSV_FLD16,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="sqn != null">
+				#{sqn,jdbcType=INTEGER},
+			</if>
+			<if test="batNo != null">
+				#{batNo,jdbcType=CHAR},
+			</if>
+			<if test="comNo != null">
+				#{comNo,jdbcType=CHAR},
+			</if>
+			<if test="txnTlr != null">
+				#{txnTlr,jdbcType=CHAR},
+			</if>
+			<if test="subDte != null">
+				#{subDte,jdbcType=DATE},
+			</if>
+			<if test="cusAc != null">
+				#{cusAc,jdbcType=VARCHAR},
+			</if>
+			<if test="cusNme != null">
+				#{cusNme,jdbcType=VARCHAR},
+			</if>
+			<if test="txnAmt != null">
+				#{txnAmt,jdbcType=VARCHAR},
+			</if>
+			<if test="thdCusNo != null">
+				#{thdCusNo,jdbcType=VARCHAR},
+			</if>
+			<if test="thdCusNme != null">
+				#{thdCusNme,jdbcType=VARCHAR},
+			</if>
+			<if test="obkBr != null">
+				#{obkBr,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld1 != null">
+				#{rsvFld1,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld2 != null">
+				#{rsvFld2,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld3 != null">
+				#{rsvFld3,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld4 != null">
+				#{rsvFld4,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld5 != null">
+				#{rsvFld5,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld6 != null">
+				#{rsvFld6,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld7 != null">
+				#{rsvFld7,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld8 != null">
+				#{rsvFld8,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld9 != null">
+				#{rsvFld9,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld10 != null">
+				#{rsvFld10,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld11 != null">
+				#{rsvFld11,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld12 != null">
+				#{rsvFld12,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld13 != null">
+				#{rsvFld13,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld14 != null">
+				#{rsvFld14,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld15 != null">
+				#{rsvFld15,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld16 != null">
+				#{rsvFld16,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="findCount" resultType="java.lang.Integer">
+		select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="sqn!=null">
+				AND SQN=#{sqn,jdbcType=INTEGER}
+			</if>
+			<if test="batNo!=null">
+				AND BAT_NO=#{batNo,jdbcType=CHAR}
+			</if>
+			<if test="comNo!=null">
+				AND COM_NO=#{comNo,jdbcType=CHAR}
+			</if>
+			<if test="txnTlr!=null">
+				AND TXN_TLR=#{txnTlr,jdbcType=CHAR}
+			</if>
+			<if test="subDte!=null">
+				AND SUB_DTE=#{subDte,jdbcType=DATE}
+			</if>
+			<if test="cusAc!=null">
+				AND CUS_AC=#{cusAc,jdbcType=VARCHAR}
+			</if>
+			<if test="cusNme!=null">
+				AND CUS_NME=#{cusNme,jdbcType=VARCHAR}
+			</if>
+			<if test="txnAmt!=null">
+				AND TXN_AMT=#{txnAmt,jdbcType=VARCHAR}
+			</if>
+			<if test="thdCusNo!=null">
+				AND THD_CUS_NO=#{thdCusNo,jdbcType=VARCHAR}
+			</if>
+			<if test="thdCusNme!=null">
+				AND THD_CUS_NME=#{thdCusNme,jdbcType=VARCHAR}
+			</if>
+			<if test="obkBr!=null">
+				AND OBK_BR=#{obkBr,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld1!=null">
+				AND RSV_FLD1=#{rsvFld1,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld2!=null">
+				AND RSV_FLD2=#{rsvFld2,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld3!=null">
+				AND RSV_FLD3=#{rsvFld3,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld4!=null">
+				AND RSV_FLD4=#{rsvFld4,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld5!=null">
+				AND RSV_FLD5=#{rsvFld5,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld6!=null">
+				AND RSV_FLD6=#{rsvFld6,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld7!=null">
+				AND RSV_FLD7=#{rsvFld7,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld8!=null">
+				AND RSV_FLD8=#{rsvFld8,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld9!=null">
+				AND RSV_FLD9=#{rsvFld9,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld10!=null">
+				AND RSV_FLD10=#{rsvFld10,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld11!=null">
+				AND RSV_FLD11=#{rsvFld11,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld12!=null">
+				AND RSV_FLD12=#{rsvFld12,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld13!=null">
+				AND RSV_FLD13=#{rsvFld13,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld14!=null">
+				AND RSV_FLD14=#{rsvFld14,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld15!=null">
+				AND RSV_FLD15=#{rsvFld15,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld16!=null">
+				AND RSV_FLD16=#{rsvFld16,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</select>
+	<update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbElecstBatchTmp">
+		update ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
+		<set>
+			<if test="batNo != null">
+				BAT_NO = #{batNo,jdbcType=CHAR},
+			</if>
+			<if test="comNo != null">
+				COM_NO = #{comNo,jdbcType=CHAR},
+			</if>
+			<if test="txnTlr != null">
+				TXN_TLR = #{txnTlr,jdbcType=CHAR},
+			</if>
+			<if test="subDte != null">
+				SUB_DTE = #{subDte,jdbcType=DATE},
+			</if>
+			<if test="cusAc != null">
+				CUS_AC = #{cusAc,jdbcType=VARCHAR},
+			</if>
+			<if test="cusNme != null">
+				CUS_NME = #{cusNme,jdbcType=VARCHAR},
+			</if>
+			<if test="txnAmt != null">
+				TXN_AMT = #{txnAmt,jdbcType=VARCHAR},
+			</if>
+			<if test="thdCusNo != null">
+				THD_CUS_NO = #{thdCusNo,jdbcType=VARCHAR},
+			</if>
+			<if test="thdCusNme != null">
+				THD_CUS_NME = #{thdCusNme,jdbcType=VARCHAR},
+			</if>
+			<if test="obkBr != null">
+				OBK_BR = #{obkBr,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld1 != null">
+				RSV_FLD1 = #{rsvFld1,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld2 != null">
+				RSV_FLD2 = #{rsvFld2,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld3 != null">
+				RSV_FLD3 = #{rsvFld3,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld4 != null">
+				RSV_FLD4 = #{rsvFld4,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld5 != null">
+				RSV_FLD5 = #{rsvFld5,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld6 != null">
+				RSV_FLD6 = #{rsvFld6,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld7 != null">
+				RSV_FLD7 = #{rsvFld7,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld8 != null">
+				RSV_FLD8 = #{rsvFld8,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld9 != null">
+				RSV_FLD9 = #{rsvFld9,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld10 != null">
+				RSV_FLD10 = #{rsvFld10,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld11 != null">
+				RSV_FLD11 = #{rsvFld11,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld12 != null">
+				RSV_FLD12 = #{rsvFld12,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld13 != null">
+				RSV_FLD13 = #{rsvFld13,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld14 != null">
+				RSV_FLD14 = #{rsvFld14,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld15 != null">
+				RSV_FLD15 = #{rsvFld15,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld16 != null">
+				RSV_FLD16 = #{rsvFld16,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where SQN = #{sqn,jdbcType=INTEGER}
+	</update>
+	<select id="findAll" resultMap="basicResultMap">
+		select
+		<include refid="baseColumnList" />
+		from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC02_BATCH_TEMP
+		<if test="_parameter">
+			where SQN in
+			<foreach item="item" index="index" collection="list" open="("
+				separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+	</select>
+	<select id="batchInsert" parameterType="java.util.List">
+		insert into ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
+		(
+		<include refid="baseColumnList1" />
+		)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
 			( #{item.batNo},
 			#{item.comNo},
 			#{item.txnTlr},
@@ -521,16 +532,23 @@
 			#{item.rsvFld16},
 			#{item.rsvFld17}
 			)
-      </foreach>
-  
-  
-  </select>
-  <select id="findByBatNo" resultMap="basicResultMap"
+		</foreach>
+
+
+	</select>
+	<select id="findByBatNo" resultMap="basicResultMap"
 		parameterType="java.lang.String">
-		select * from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP where BAT_NO=#{batNo}
+		select * from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
+		where BAT_NO=#{batNo}
 
 	</select>
 	<delete id="deleteByBatNo">
-	delete from  ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP where BAT_NO=#{batNo}
+		delete from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP where BAT_NO=#{batNo}
 	</delete>
+	<select id="findByBatNoAndSigned" resultMap="basicResultMap"
+		parameterType="java.lang.String">
+		select * from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
+		where BAT_NO=#{batNo} and RSV_FLD12='0'
+
+	</select>
 </mapper>

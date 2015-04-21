@@ -35,6 +35,7 @@ import com.bocom.bbip.gdeupsb.entity.GdeupsAgtElecTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbElecstBatchTmpRepository;
 import com.bocom.bbip.gdeupsb.repository.GdeupsAgtElecTmpRepository;
+import com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.CollectionUtils;
@@ -49,6 +50,8 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
 public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpService {
 	@Autowired
 	BBIPPublicService bbipPublicService;
+	@Autowired
+	GDEupsbElecstBatchTmpRepository gdEupsbElecstBatchTmpRepository;
 
 	private static final Log logger = LogFactory.getLog(BatchAcpServiceImplELEC02.class);
 
@@ -62,7 +65,7 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 		// get(GDConstants.BATCH_FILE_COMMON_UTILS)).Lock(comNo);
 		/** 批量前检查和初始化批量控制表 生成批次号batNo */
 		((BatchFileCommon) get(GDConstants.BATCH_FILE_COMMON_UTILS)).BeforeBatchProcess(context);
-		logger.info("开始解析批量文件-------------");
+		logger.info("开始解析批量文件-------------with conetxt: " + context);
 
 		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne("elec02BatchThdFile");
 		Assert.isFalse(null == config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST, "FTP配置不存在");
@@ -81,9 +84,9 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 		// context.getDataMapDirectly().putAll(head);
 
 		// 获取批次号
-		String batchNo = context.getData(ParamKeys.BAT_NO);
+		String batchNo = context.getData(ParamKeys.THD_BAT_NO);
 		// context.setData(ParamKeys.BAT_NO, batchNo);
-
+		logger.info("=============>>>>>>>>>>>>>the batNo is : " + batchNo );
 		List<Map<String, Object>> agtFileDetail = new ArrayList<Map<String, Object>>(); // 代收付文件detail
 
 		/** 插入临时表中 */
@@ -93,7 +96,19 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 		int i = 0;
 		BigDecimal amtTot = new BigDecimal("0.00");
 		for (GDEupsbElecstBatchTmp tmp : listToBatchTmp) {
-			Map<String, Object> detailMap = new HashMap<String, Object>();
+			
+			//TODO logNo 返盘用！
+//			银行收费流水号	16x
+//			格式：
+//			BBB+YYMMDD+NNNNNNN
+//			其中：
+//			BBB银行代号，如中行为001
+//			YYMMDD年月日，如070808为07年8月8日
+//			NNNNNNN 每日流水号，每天从1开始（左补0），
+//			如0000001
+//			3011504210000001
+			
+//			Map<String, Object> detailMap = new HashMap<String, Object>();
 			// 判断在本地是否存在协议,若存在，则本地批次表更新为0，否则更新为1
 			String cusAc = tmp.getCusAc();
 			GdeupsAgtElecTmp agtElec = new GdeupsAgtElecTmp();
@@ -109,21 +124,45 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 				// 存在协议信息,将信息添加到代收付文件detial里面去
 				// 计算总金额总笔数
 				tmp.setRsvFld12("0");
-				BigDecimal amtB = new BigDecimal(tmp.getTxnAmt());
-				amtB = amtB.divide(new BigDecimal("100"));
-				amtTot = amtTot.add(amtB);
-				amtTot = amtTot.setScale(2);
-				i++;
+//				BigDecimal amtB = new BigDecimal(tmp.getTxnAmt());
+//				amtB = amtB.divide(new BigDecimal("100"));
+//				amtTot = amtTot.add(amtB);
+//				amtTot = amtTot.setScale(2);
+//				i++;
 				
 				//金额转换
-				tmp.setTxnAmt(amtB.toString());
-				detailMap = BeanUtils.toMap(tmp);
-				detailMap.put("RMK1", tmp.getSqn());
-				agtFileDetail.add(detailMap);
+//				tmp.setTxnAmt(amtB.toString());
+//				detailMap = BeanUtils.toMap(tmp);
+//				detailMap.put("RMK1", tmp.getSqn());
+//				agtFileDetail.add(detailMap);
 			}
 			tmp.setBatNo(batchNo);
-			get(GDEupsbElecstBatchTmpRepository.class).insert(tmp);
+			gdEupsbElecstBatchTmpRepository.insert(tmp);
 		}
+//		GDEupsbElecstBatchTmp batchTmp = new GDEupsbElecstBatchTmp();
+//		batchTmp.setBatNo(batchNo);
+//		logger.info("========>>>>>>>>> the batNo in batchTmp is : " + batchTmp.getBatNo());
+		List<GDEupsbElecstBatchTmp> toAcpList = gdEupsbElecstBatchTmpRepository.findByBatNoAndSigned(batchNo);
+		if (null == toAcpList || CollectionUtils.isEmpty(toAcpList)) {
+			logger.info("There are no records for select check trans journal ");
+			throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
+		}
+		for(GDEupsbElecstBatchTmp batTmp : toAcpList ){
+			Map<String, Object> detailMap = new HashMap<String, Object>();
+			BigDecimal amtB = new BigDecimal(batTmp.getTxnAmt());
+			amtB = amtB.divide(new BigDecimal("100"));
+			amtTot = amtTot.add(amtB);
+			amtTot = amtTot.setScale(2);
+			i++;
+			
+			//金额转换
+			batTmp.setTxnAmt(amtB.toString());
+			detailMap = BeanUtils.toMap(batTmp);
+			detailMap.put("OUROTHFLG", "0");
+			detailMap.put("RMK1", batTmp.getSqn());
+			agtFileDetail.add(detailMap);
+		}
+		
 
 		Map<String, Object> headAgt = new HashMap<String, Object>();
 		headAgt.put("totCnt", i);

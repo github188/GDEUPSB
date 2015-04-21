@@ -443,7 +443,7 @@
 	</bean>
 	
 <!-- 汕头电力第三方接出 start-->
-<bean id="Pool_ELEC02" class="com.bocom.jump.bp.util.Jdk15ThreadPool">
+<!-- <bean id="Pool_ELEC02" class="com.bocom.jump.bp.util.Jdk15ThreadPool">
 		<property name="name" value="tcpChannel_ELEC02" />
 		<property name="poolSize" value="10" />
 		<property name="workQueueSize" value="1024" />
@@ -455,6 +455,62 @@
 	<property name="host" value="0.0.0.0" />
 	<property name="port" value="30112" />
 	<property name="soTimeout" value="100000" />
+	<property name="mapping" ref="tcpMapping_ELEC02" />
+		<property name="threadPool" ref="Pool_ELEC02" />
+	</bean>
+<bean id="tcpEndpoint_ELEC02" class="com.bocom.jump.bp.channel.DefaultEndpoint">
+		<property name="interceptors">
+			<array>
+				<bean
+					class="com.bocom.jump.bp.channel.interceptors.RequestTracingInterceptor" />
+				 <bean
+					class="com.bocom.bbip.gdeupsb.channel.tcp.NoFrontPayloadChannelInterceptorSd">
+				</bean> 
+				<bean class="com.bocom.jump.bp.channel.interceptors.TransformInterceptor">
+					<property name="encodeTransforms">发送报文编码配置
+						<array>
+							<bean class="com.bocom.jump.bp.channel.interceptors.EncoderTransform">
+								<constructor-arg
+									value="packet://WEB-INF/classes/config/stream/ELEC02/ELEC02RsponseHeader.xml" />
+							</bean>
+							<bean class="com.bocom.jump.bp.channel.interceptors.ResponseTransform" />
+						</array>
+					</property>
+					<property name="decodeTransforms">接收报文解码配置
+						<array>
+							<bean class="com.bocom.jump.bp.channel.interceptors.RequestTransform" />
+							<bean class="com.bocom.jump.bp.channel.interceptors.DecoderTransform">
+								<constructor-arg
+									value="packet://WEB-INF/classes/config/stream/ELEC02/ELEC02RequestHeader.xml" />
+							</bean>
+						</array>
+					</property>
+					<property name="exceptionHandler" ref="exceptionHandler" />
+				</bean>
+				<bean class="com.bocom.bbip.gdeupsb.channel.tcp.ContextInterceptorExt"></bean>
+				<bean class="com.bocom.bbip.gdeupsb.channel.tcp.ServiceThdInterceptorExt">
+					<constructor-arg value="30112" />
+				</bean>
+			</array>
+		</property>
+	</bean> -->
+<!-- 汕头电力第三方接出 end-->
+
+
+
+<!-- 汕头电力第三方接出 start-->
+<bean id="Pool_ELEC02" class="com.bocom.jump.bp.util.Jdk15ThreadPool">
+		<property name="name" value="tcpChannel_ELEC02" />
+		<property name="poolSize" value="10" />
+		<property name="workQueueSize" value="1024" />
+	</bean>
+<bean id="tcpMapping_ELEC02" class="com.bocom.bbip.channel.tcp.EdgeSupportSocketURIEndpointMapping">
+	<property name="default" ref="tcpEndpoint_ELEC02" />
+</bean>
+<bean id="tcpChannel_ELEC02" class="com.bocom.jump.bp.channel.tcp.SocketServer">
+	<property name="host" value="0.0.0.0" />
+	<property name="port" value="30112" />
+	<property name="soTimeout" value="10000" />
 	<property name="mapping" ref="tcpMapping_ELEC02" />
 		<property name="threadPool" ref="Pool_ELEC02" />
 	</bean>
@@ -494,6 +550,8 @@
 			</array>
 		</property>
 	</bean>
-<!-- 汕头电力第三方接出 end-->
+
+
+
 
 </beans>
