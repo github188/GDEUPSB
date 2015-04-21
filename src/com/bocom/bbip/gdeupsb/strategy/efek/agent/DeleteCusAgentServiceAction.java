@@ -55,7 +55,7 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 			logger.info("==========delResult："+delResult);
 			
 			if(delResult.isSuccess()){
-					if(context.getData("callThd")!=null && context.getData(ParamKeys.SERVICE_NAME).toString().trim().equals("gdeupsb.cusAgentServiceThd")){
+					if(context.getData("callThd")!=null && !context.getData(ParamKeys.SERVICE_NAME).toString().trim().equals("gdeupsb.cusAgentServiceThd")){
 							try{
 								constantOfSoapUI(context);
 								context.setData(ParamKeys.TXN_DTE, DateUtils.format(txnDte,DateUtils.STYLE_yyyyMMdd));
@@ -99,7 +99,7 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 										    				eupsCusAgentJournal.setIdTyp((String)context.getData("idTyp"));
 										    				eupsCusAgentJournal.setIdNo((String)context.getData("idNo"));
 										    				eupsCusAgentJournal.setTel((String)context.getData("cmuTel"));
-										    				eupsCusAgentJournal.setTxnDte((Date)context.getData(ParamKeys.TXN_DTE));
+										    				eupsCusAgentJournal.setTxnDte(DateUtils.parse(DateUtils.format(new Date(), DateUtils.STYLE_SIMPLE_DATE),DateUtils.STYLE_SIMPLE_DATE));
 										    				eupsCusAgentJournal.setRsvFld2("301");;
 										    				eupsCusAgentJournalRepository.insert(eupsCusAgentJournal);
 										    				
