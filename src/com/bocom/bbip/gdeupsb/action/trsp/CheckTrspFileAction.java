@@ -19,6 +19,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.comp.btp.BTPService;
@@ -30,6 +32,7 @@ import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
+import com.bocom.bbip.file.transfer.ftp.FTPTransfer;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspInvChgInfo;
@@ -378,8 +381,7 @@ public class CheckTrspFileAction extends BaseAction {
 	 * 打印清单
 	 */
 	public void printDetail(Context context, String tChkNo,
-			List<GDEupsbTrspFeeInfo> detailList) throws CoreException {
-		System.out.println(">>>>>>>>>>>>>>>"+context.getData("sucTotCnt"));
+		List<GDEupsbTrspFeeInfo> detailList) throws CoreException {
 		logger.info("~~~~~~~~~~~Start  CheckTrspFile   printDetail");
 		// 报表模式
 		int i = Integer.parseInt(context.getData(GDParamKeys.JOURNAL_MODEL).toString());
@@ -403,7 +405,6 @@ public class CheckTrspFileAction extends BaseAction {
 			statuesList=gdEupsbTrspFeeInfoRepository.findStatuesDeatil(mapSelect);
 			BigDecimal totAmt=new BigDecimal("0.00");
 //			BigDecimal sucTotAmt=new BigDecimal("0.00");
-			int sucTotCnt=0;
 			int totCnt=0;
 			for (Map<String, Object> map : statuesList) {
 					String status=  map.get("STATUS").toString().trim();
@@ -479,7 +480,7 @@ public class CheckTrspFileAction extends BaseAction {
 		System.out.println(result);
 		// 文件路径
 		StringBuffer rpFmts = new StringBuffer();
-		rpFmts.append("F:\\");
+		rpFmts.append("/home/bbipadm/data/GDEUPSB/report/");
 		File file = new File(rptFil.toString());
 		if (!file.exists()) {
 			file.mkdirs();
@@ -514,5 +515,26 @@ public class CheckTrspFileAction extends BaseAction {
 		System.out
 				.println("~~~~~~~~~~~~~sendFile~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		// sendFile(context,rptFmt);
+		
+		FTPTransfer tFTPTransfer = new FTPTransfer();
+		 // TODO FTP上传设置
+       tFTPTransfer.setHost("182.53.15.187");
+		tFTPTransfer.setPort(21);
+		tFTPTransfer.setUserName("weblogic");
+		tFTPTransfer.setPassword("123456");
+		
+       try {
+       	tFTPTransfer.logon();
+           Resource tResource = new FileSystemResource("/home/bbipadm/data/GDEUPSB/report/"+rptFil);
+           tFTPTransfer.putResource(tResource, "/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/", rptFil);
+
+       } catch (Exception e) {
+       	throw new CoreException("文件上传失败");
+       } finally {
+       	tFTPTransfer.logout();
+       }
+		
+       context.setData("filNam", rptFil);
+       log.info("文件上传完成，等待打印！" + context);
 	}
 }
