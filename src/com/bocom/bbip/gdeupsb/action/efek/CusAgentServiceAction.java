@@ -98,6 +98,7 @@ public class CusAgentServiceAction extends BaseAction{
 				}else if("1".equals(oprTyp)){
 					//先删除协议，然后再添加 
 					context.setData("oprTyp", "2");
+					context.setData("oprTypeBank", "1");
 					logger.info("~~~~~~~~~~~~~~~~~Enter  eups.commUpdateCusAgentELEC00 ");
 					mothed="eups.commDelCusAgentELEC00";
 					agdAgrNo=selectList(context);
