@@ -28,11 +28,11 @@ public class QryReportInfoAction extends BaseAction {
 
 	private Logger logger = LoggerFactory.getLogger(QryReportInfoAction.class);
 
-	public void execute(Context context) throws CoreException{
+	public void execute(Context context) throws CoreException {
 		logger.info("-------------------->>>>>>>>>>>> QryReportInfoAction start! ----------------------->>>>>>>>>>");
 		String prtDte = context.getData("prtDte");
 		Date printDate = DateUtils.parse(prtDte);
-		//如果单位编号为空，需根据业务类型确定单位编号
+		// 如果单位编号为空，需根据业务类型确定单位编号
 		EupsThdBaseInfo baseInfo = new EupsThdBaseInfo();
 		baseInfo.setEupsBusTyp((String) context
 				.getData(ParamKeys.EUPS_BUSS_TYPE));
@@ -57,42 +57,19 @@ public class QryReportInfoAction extends BaseAction {
 			eupsJnl.setComNo((String) context.getData(ParamKeys.COMPANY_NO));
 		}
 		eupsJnl.setTxnDte(DateUtils.parse(prtDte));
+
+		String prtTyp = context.getData("prtTyp");
 		
-		//TODO 统计单笔交易信息
-		List<Map<String, Object>> prtList = get(GdEupsTransJournalRepository.class).findRptJnlInfo(eupsJnl);
+		if("0".equals(prtTyp) || "1".equals(prtTyp) || "2".equals(prtTyp) || "3".equals(prtTyp) || "4".equals(prtTyp) ){
+		// TODO 统计单笔交易信息
+		List<Map<String, Object>> prtList = get(
+				GdEupsTransJournalRepository.class).findRptJnlInfo(eupsJnl);
 		if (null == prtList || CollectionUtils.isEmpty(prtList)) {
 			logger.info("There are no records for select check trans journal ");
 			throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
 		}
-		
-		//TODO 统计批量交易信息  批量交易不是一天只有一个批次的！！！
-		EupsBatchConsoleInfo eupsBatchConsoleInfo = new EupsBatchConsoleInfo();
-//		eupsBatchConsoleInfo.setSubDte(printDate);//TODO
-		eupsBatchConsoleInfo.setExeDte(printDate);
-		eupsBatchConsoleInfo.setComNo(comNo);
-		List<EupsBatchConsoleInfo> batInfoList = get(EupsBatchConsoleInfoRepository.class).find(eupsBatchConsoleInfo);
-		if (null == batInfoList || CollectionUtils.isEmpty(batInfoList)) {
-			logger.info("There are no records for select check trans journal ");
-			throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
-		}
-		
-		int batTotCnt = 0;
-		int batSucCnt = 0;
-		int batFalCnt = 0;
-		BigDecimal batTotAmt = new BigDecimal(0.00);
-		BigDecimal batSucAmt = new BigDecimal(0.00); 
-		BigDecimal batFalAmt = new BigDecimal(0.00);
-		
-		for(EupsBatchConsoleInfo perInfo : batInfoList){
-			batTotCnt = batTotCnt + perInfo.getTotCnt();
-			batSucCnt = batSucCnt + perInfo.getSucTotCnt();
-			batFalCnt = batFalCnt + perInfo.getFalTotCnt();
-			batTotAmt = batTotAmt.add(perInfo.getTotAmt());
-			batSucAmt = batSucAmt.add(perInfo.getSucTotAmt());
-			batFalAmt = batFalAmt.add(perInfo.getFalTotAmt());
-		}
-		
-//返回信息
+
+		// 返回信息
 		context.setData("totCnt", prtList.get(0).get("TOTCNT") + "");
 		context.setData("totAmt", prtList.get(0).get("TOTAMT") + "");
 		context.setData("succCnt", prtList.get(0).get("SUCCCNT") + "");
@@ -103,7 +80,38 @@ public class QryReportInfoAction extends BaseAction {
 		context.setData("totDoubtAmt", prtList.get(0).get("TOTDOUBTAMT") + "");
 		context.setData("otherCnt", prtList.get(0).get("OTHERCNT") + "");
 		context.setData("totOtherAmt", prtList.get(0).get("TOTOTHERAMT") + "");
-		
+
+		}
+		else{
+		// TODO 统计批量交易信息 批量交易不是一天只有一个批次的！！！
+		EupsBatchConsoleInfo eupsBatchConsoleInfo = new EupsBatchConsoleInfo();
+		// eupsBatchConsoleInfo.setSubDte(printDate);//TODO
+		eupsBatchConsoleInfo.setExeDte(printDate);
+		eupsBatchConsoleInfo.setComNo(comNo);
+		List<EupsBatchConsoleInfo> batInfoList = get(
+				EupsBatchConsoleInfoRepository.class)
+				.find(eupsBatchConsoleInfo);
+		if (null == batInfoList || CollectionUtils.isEmpty(batInfoList)) {
+			logger.info("There are no records for select check trans journal ");
+			throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
+		}
+
+		int batTotCnt = 0;
+		int batSucCnt = 0;
+		int batFalCnt = 0;
+		BigDecimal batTotAmt = new BigDecimal(0.00);
+		BigDecimal batSucAmt = new BigDecimal(0.00);
+		BigDecimal batFalAmt = new BigDecimal(0.00);
+
+		for (EupsBatchConsoleInfo perInfo : batInfoList) {
+			batTotCnt = batTotCnt + perInfo.getTotCnt();
+			batSucCnt = batSucCnt + perInfo.getSucTotCnt();
+			batFalCnt = batFalCnt + perInfo.getFalTotCnt();
+			batTotAmt = batTotAmt.add(perInfo.getTotAmt());
+			batSucAmt = batSucAmt.add(perInfo.getSucTotAmt());
+			batFalAmt = batFalAmt.add(perInfo.getFalTotAmt());
+		}
+
 		context.setData("batTotCnt", batTotCnt + "");
 		context.setData("batTotAmt", batTotAmt + "");
 		context.setData("batSucCnt", batSucCnt + "");
@@ -111,8 +119,7 @@ public class QryReportInfoAction extends BaseAction {
 		context.setData("batFalCnt", batFalCnt + "");
 		context.setData("batFalAmt", batFalAmt + "");
 		
+		}
 
-		
-		
 	}
 }
