@@ -739,6 +739,17 @@
   <xs:complexType name="trspAddPrintInvoicResponse_CType">
     <xs:sequence>
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="txnAmt" type="tns:txnAmt_SType" minOccurs="0"/>
+      <xs:element name="carNo" type="tns:carNo_SType" minOccurs="0"/>
+      <xs:element name="carTyp" type="tns:carTyp_SType" minOccurs="0"/>
+      <xs:element name="begDat" type="tns:begDat_SType" minOccurs="0"/>
+      <xs:element name="endDat" type="tns:endDat_SType" minOccurs="0"/>
+      <xs:element name="carName" type="tns:carName_SType" minOccurs="0"/>
+      <xs:element name="carDzs" type="tns:carDzs_SType" minOccurs="0"/>
+      <xs:element name="cntStd" type="tns:cntStd_SType" minOccurs="0"/>
+      <xs:element name="corpus" type="tns:corpus_SType" minOccurs="0"/>
+      <xs:element name="lateFee" type="tns:lateFee_SType" minOccurs="0"/>
+      <xs:element name="tcusNm" type="tns:tcusNm_SType" minOccurs="0"/>
       <xs:element name="message" type="tns:message_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
@@ -774,6 +785,16 @@
       <xs:element name="sqn" type="tns:sqn_SType" minOccurs="0"/>
       <xs:element name="tactDt" type="tns:tactDt_SType" minOccurs="0"/>
       <xs:element name="txnAmt" type="tns:txnAmt_SType" minOccurs="0"/>
+      <xs:element name="carNo" type="tns:carNo_SType" minOccurs="0"/>
+      <xs:element name="carTyp" type="tns:carTyp_SType" minOccurs="0"/>
+      <xs:element name="begDat" type="tns:begDat_SType" minOccurs="0"/>
+      <xs:element name="endDat" type="tns:endDat_SType" minOccurs="0"/>
+      <xs:element name="carName" type="tns:carName_SType" minOccurs="0"/>
+      <xs:element name="carDzs" type="tns:carDzs_SType" minOccurs="0"/>
+      <xs:element name="cntStd" type="tns:cntStd_SType" minOccurs="0"/>
+      <xs:element name="corpus" type="tns:corpus_SType" minOccurs="0"/>
+      <xs:element name="lateFee" type="tns:lateFee_SType" minOccurs="0"/>
+      <xs:element name="tcusNm" type="tns:tcusNm_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="sqn_SType">
