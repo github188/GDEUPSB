@@ -52,12 +52,13 @@ public class CusAgentServiceAction extends BaseAction{
 		public void execute(Context context)throws CoreException,CoreRuntimeException{
 				logger.info("============Start  CusAgentServiceAction ");
 
-				if(context.getData(ParamKeys.THD_SQN)!=null){
+				if(context.getData(ParamKeys.THD_SQN)!=null){										
 						context.setData("sqns", context.getData("sqns"));
 						if(context.getData("oprTyp").toString().trim().equals("1")){
 								context.setData("callThd", "callThd");
 						}
 				}else{
+						context.setData("bankToThd", "bankToThd");	
 						context.setData("sqns", context.getData("sqn"));
 				}
 				String cusAc=context.getData("cusAc");
@@ -117,7 +118,6 @@ public class CusAgentServiceAction extends BaseAction{
 				context.setData(ParamKeys.AGENT_COLLECT_AGREEMENT, list);
 				//第三方如果空 设定一个值判断返回报文
 				if(context.getData(ParamKeys.THD_SQN)==null){
-						context.setData("callThd", "callThd");
 						constantOfSoapUI(context);
 						context.setData(GDParamKeys.SVRCOD, "30");
 				}
