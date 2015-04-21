@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.service.impl.watr00;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -72,6 +73,7 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 		//头部
 		Map<String, Object> resultMapHead = BeanUtils.toMap(eupsBatchConsoleInfo);
 		resultMapHead.put("abc", "HDR2");
+//		BigDecimal totAmt = resultMapHead.get("totAmt");
 		resultMap.put(ParamKeys.EUPS_FILE_HEADER, resultMapHead);
 		Map<String, Object> hdr1 = new HashMap<String, Object>();
 		hdr1.put("HDR1", "HDR1");
@@ -142,7 +144,5 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 		thirdPartyAdaptor.trade(context);
 		logger.info("AfterBatchAcpServiceImplWATR00 end ... ...");
 	}
-
-	
 
 }

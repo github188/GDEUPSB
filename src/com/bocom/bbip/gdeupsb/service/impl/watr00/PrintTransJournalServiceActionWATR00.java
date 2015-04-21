@@ -42,8 +42,8 @@ public class PrintTransJournalServiceActionWATR00 extends BaseAction {
         GdeupsWatBatInfTmp tmp = new GdeupsWatBatInfTmp();
         tmp.setActDat(DateUtils.parse(txnDat));
         tmp.setStatus("S");
-        List<GdeupsWatBatInfTmp>ret=get(GdeupsWatBatInfTmpRepository.class).find(tmp);
-        List<Map<String,Object>>retMap=(List<Map<String, Object>>) BeanUtils.toMaps(ret);
+        List<GdeupsWatBatInfTmp> ret=get(GdeupsWatBatInfTmpRepository.class).find(tmp);
+        List<Map<String,Object>> retMap=(List<Map<String, Object>>) BeanUtils.toMaps(ret);
         double totAmt=0.0;
         for(Map map:retMap){
         	map.put("cusAc", map.get("bcount"));
