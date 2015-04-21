@@ -1,6 +1,5 @@
 package com.bocom.bbip.gdeupsb.strategy.elcgd;
 
-import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
@@ -26,7 +24,6 @@ import com.bocom.bbip.gdeupsb.repository.GdElecClrInfRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.gdeupsb.utils.actswitch.EleActSwitch;
 import com.bocom.bbip.utils.CollectionUtils;
-import com.bocom.bbip.utils.CryptoUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.jump.bp.core.Context;
@@ -53,6 +50,7 @@ public class PayUnilateralToBankServiceAction implements PayUnilateralToBankServ
 			throws CoreException {
 		log.info("PayUnilateralToBankServiceAction prepareCheckDeal start!");
 		context.setData("MsgId", "0210");
+		//将返回信息初始化为22，其他错误
 		// 初始化设置
 //		context.setData("transJournal", "000000000000");
 		Date nowDate = new Date();
@@ -96,7 +94,7 @@ public class PayUnilateralToBankServiceAction implements PayUnilateralToBankServ
 		}
 
 		// 设置第三方请求日期及第三方请求时间
-		String dtm = context.getData("txnDateTime7"); // 第三方请求时间MMDDhhmmss
+		String dtm = context.getData("txnDateTime"); // 第三方请求时间MMDDhhmmss
 		String year = DateUtils.format(new Date(), "yyyy");
 		String thdTxnTme = year + dtm; // 第三方交易请求时间
 		log.info("第三方交易日期时间为：" + thdTxnTme);
@@ -104,9 +102,15 @@ public class PayUnilateralToBankServiceAction implements PayUnilateralToBankServ
 		context.setData(ParamKeys.THD_SEQUENCE, context.getData("eleThdSqn"));
 
 		// TODO:for test
-		 context.setData("cusAcEx", "6222620710007282286");
+//		 context.setData("cusAcEx", "6222620710007282286");
 
 		context.setData(ParamKeys.CUS_AC, context.getData("cusAcEx"));
+		
+		//TODO:待考虑此处是否对后续有影响
+				String sqn = context.getData(ParamKeys.SEQUENCE);
+				String sqn2 = sqn.substring(sqn.length() - 4, sqn.length());
+				context.setData("transJournal", sqn.substring(0, 8) + sqn2); // 银行交易流水号
+				context.setData("rsvFld2", sqn.substring(0, 8) + sqn2); // 银行交易流水号,存在rsvFld2中，用于进行抹帐等交易
 
 		// 数据初始化，防止第三方返回错误
 		return null;
@@ -117,21 +121,23 @@ public class PayUnilateralToBankServiceAction implements PayUnilateralToBankServ
 			throws CoreException {
 		// 检查单位协议，可以不检查，因为代收付一定会检查单位协议
 		log.info("PayUnilateralToBankServiceAction prePayToBank start!..");
-		String txnAmt = context.getData("thdTxnAmt");
+		String txnAmt = context.getData("amount");
 		BigDecimal realAmt = NumberUtils.centToYuan(txnAmt);
 		context.setData(ParamKeys.TXN_AMOUNT, realAmt);
 
 		// TODO:for test
-		 context.setData(ParamKeys.TXN_AMOUNT, new BigDecimal("0.01"));
+//		 context.setData(ParamKeys.TXN_AMOUNT, new BigDecimal("0.01"));
 
 		context.setData(ParamKeys.THD_TXN_CDE, "HK"); // 设置第三方交易码为划扣，用于对账
 
 		// 第48域值分解，获取客户编号，电费月份，产品代码，原系统参考号
-		String rmkDte = context.getData("remarkData");
+		String rmkDte = context.getData("rmkTmp");
+		rmkDte=rmkDte.substring(rmkDte.indexOf("start")+5);
 		String thdCusNo = rmkDte.substring(0, 21);
 		String eleMonth = rmkDte.substring(21, 27);
 		String prdCde = rmkDte.substring(27, 29);
-
+		
+		context.setData("rsvFld1", rmkDte);
 		context.setData(ParamKeys.THD_CUS_NO, thdCusNo.trim()); // 第三方客户标志
 		context.setData(ParamKeys.BAK_FLD2, eleMonth); // 设置备用字段2为电费月份
 		context.setData(ParamKeys.BAK_FLD4, prdCde); // 设置备用字段4为产品代码
@@ -168,9 +174,9 @@ public class PayUnilateralToBankServiceAction implements PayUnilateralToBankServ
 
 		log.info("PayUnilateralToBankServiceAction aftPayToBank start!..");
 		// 返回主机流水号给第三方，以此作为唯一性标志(会计流水号及平台流水号都超长了)
-		String mfmJrnNo = context.getData("acJrnNo"); // 获取主机流水号
-		context.setData("mfmJrnNo", mfmJrnNo); // 主机流水号,标准版未计入流水表
-		context.setData("transJournal", mfmJrnNo); // 银行交易流水号,此处用主机流水号代替银行方交易流水号
+//		String mfmJrnNo = context.getData("acJrnNo"); // 获取主机流水号
+//		context.setData("mfmJrnNo", mfmJrnNo); // 主机流水号,标准版未计入流水表
+//		context.setData("transJournal", mfmJrnNo); // 银行交易流水号,此处用主机流水号代替银行方交易流水号
 
 		Date nowTme = new Date();
 		Date bnkTxnDate = context.getData("acDte");

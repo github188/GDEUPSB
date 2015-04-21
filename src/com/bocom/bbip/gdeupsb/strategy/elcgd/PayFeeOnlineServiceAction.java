@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.strategy.elcgd;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +27,7 @@ import com.bocom.bbip.gdeupsb.repository.GdElecClrInfRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -143,6 +145,10 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 			context.setData(ParamKeys.AC_TYP, "00");
 		}
 
+		// TODO: for test,用卡测试
+		payMde = Constants.PAY_MDE_4; // 卡
+		context.setData(ParamKeys.AC_TYP, "05");
+
 		context.setData(ParamKeys.PAY_MDE, payMde);
 
 		context.setData("bvNo", context.getData("vchNo")); // 凭证号码
@@ -166,6 +172,9 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 
 		context.setData(ParamKeys.THD_TXN_CDE, "JF"); // 第三方交易码设置为缴费，用于对账
 		String vchTyp = context.getData(ParamKeys.BV_KIND); // 凭证种类
+		
+		//TODO:for test
+		context.setData("txnAmt", new BigDecimal("0.01"));
 		// TODO:需要支持以下支付方式:现金缴费,银行卡,活期存折,本外活本,个人支票,本票,现金支票,转账支票,划线支票
 		// 对私
 		// if (GDConstants.GZ_ELE_PAY_KND_CASH.equals(vchTyp) ||
@@ -201,49 +210,44 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 			Context context) throws CoreException {
 		log.info("PreThdElecStrategyAction start!..");
 
-		// <Set>TraTyp=JF</Set>
-		// <Set>TxnAmt=ADDCHAR(DELSPACE($TxnAmt,all),12,0,1)</Set> <!--交易金额-->
-		// <Set>Fee=ADDCHAR(DELSPACE($Fee,all),12,0,1)</Set> <!--手续费-->
-		// <Set>TCusId=ADDCHAR(DELSPACE($TCusId,all),21, ,1)</Set> <!--客户编号-->
-		// <Set>ChkNum=ADDCHAR(DELSPACE($ChkNum,all),25, ,1)</Set> <!--支票号码-->
-		// <Set>OData=STRCAT(ADDCHAR($TCusId,21,
-		// ,1),$LChkTm,01,SPACE(12),$PayTyp,ADDCHAR($ChkNum,25, ,1))</Set>
-		// <!--附加数据-->
-		// <Set>RsFld1=$OData</Set> <!--数据备用-->
-		// <Set>MacFlag=0</Set> <!--发送MAC生成-->
-		// <Quote name="MakeMac"/>
-		// <Set>MsgMac=$MAC</Set>
-
 		context.setData(ParamKeys.MESSAGE_TYPE, "0200");
 		context.setData(GDParamKeys.GZ_ELE_CUS_AC, context.getData(ParamKeys.CUS_AC)); // 客户帐号
-		context.setData("thdPayTyp3", "020000");
-		context.setData("amount4", context.getData(ParamKeys.TXN_AMOUNT)); // 交易金额
+		context.setData("thdPayTyp", "020000");
+		
+		//TODO:for test取消交易金额
+		context.setData("txnAmt", new BigDecimal("4128.71"));
+		
+		context.setData("amount", NumberUtils.yuanToCent(context.getData(ParamKeys.TXN_AMOUNT))); // 交易金额
 
 		String mfmJrnNo = context.getData("acJrnNo"); // 获取主机流水号
 		context.setData("mfmJrnNo", mfmJrnNo); // 主机流水号,标准版未计入流水表
-		context.setData("transJournal11", mfmJrnNo); // 银行交易流水号,此处用主机流水号代替银行方交易流水号
-
+		context.setData("bakFld7", mfmJrnNo); 
+		
+		//TODO:待考虑此处是否对后续有影响
+		String sqn = context.getData(ParamKeys.SEQUENCE);
+		String sqn2 = sqn.substring(sqn.length() - 4, sqn.length());
+		context.setData("transJournal", sqn.substring(0, 8) + sqn2); // 银行交易流水号
+		context.setData("rsvFld2", sqn.substring(0, 8) + sqn2); // 银行交易流水号,存在rsvFld2中，用于进行抹帐等交易
+		
+		
 		Date nowTme = new Date();
 		Date bnkTxnDate = context.getData("acDte");
-		context.setData("bnkTxnTime12", DateUtils.format(nowTme, DateUtils.STYLE_HHmmss));
+		context.setData("bnkTxnTime", DateUtils.format(nowTme, DateUtils.STYLE_HHmmss));
 
 		if (null != bnkTxnDate) {
-			context.setData("bnkTxnDate13", DateUtils.format(bnkTxnDate, DateUtils.STYLE_MMdd));
+			context.setData("bnkTxnDate", DateUtils.format(bnkTxnDate, DateUtils.STYLE_MMdd));
 		} else {
-			context.setData("bnkTxnDate13", DateUtils.format(nowTme, DateUtils.STYLE_MMdd));
+			context.setData("bnkTxnDate", DateUtils.format(nowTme, DateUtils.STYLE_MMdd));
 		}
-		context.setData("pwrFee28", context.getData(ParamKeys.FEE)); // 手续费
-
+		context.setData("pwrFee", NumberUtils.yuanToCent(context.getData(ParamKeys.FEE))); // 手续费
+		
+		//TODO:要确保终端号及柜员号不为空
 		String ttrmId = (String) context.getData(ParamKeys.TERMINAL);
-		if (StringUtils.isNotEmpty(ttrmId)) {
-			ttrmId = StringUtils.rightPad(ttrmId, 8, ' ');
-		} else {
-			ttrmId = "        ";
+		if(StringUtils.isEmpty(ttrmId)){
+			ttrmId=(String) context.getData("tlrTmlId");
 		}
-
 		String crpID = context.getData(ParamKeys.TELLER);
-		crpID = StringUtils.rightPad(crpID, 15, ' ');
-
+		
 		context.setData(GDParamKeys.GZ_ELE_RCS_NO, GDConstants.GZ_ELE_DEAL_ORG_CODE);
 		context.setData(GDParamKeys.GZ_ELE_CCY_COD, GDConstants.GZ_ELE_CCY);
 		context.setData(GDParamKeys.GZ_ELE_TTRM_ID, ttrmId);
@@ -259,15 +263,18 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 
 		String lchkTm = context.getData("lChkTm");
 		if (StringUtils.isEmpty(lchkTm)) {
-			lchkTm = "999999";
+			lchkTm = "99999999";
 		}
 		String vchNo = context.getData("vchNo"); // 凭证号码
 
-		rmkDte.append(StringUtils.leftPad(thdCusNo, 21)).append(lchkTm).append("01").append(StringUtils.leftPad(" ", 12))
+		rmkDte.append(StringUtils.leftPad(thdCusNo, 21)).append(lchkTm).append("01")
+		.append(StringUtils.leftPad(" ", 12))
 				.append(context.getData(GDParamKeys.GZ_ELE_FEE_WAY)).append(StringUtils.leftPad(vchNo, 25));
 
-		context.setData("remarkData48", rmkDte.toString());
-
+		context.setData("remarkData", rmkDte.toString());
+		//TODO:mac
+		context.setData("msgIdfCde", "11111111");
+		
 		return null;
 	}
 
@@ -275,13 +282,22 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 	public Map<String, Object> aftThdDeal(CommHeadDomain commheaddomain, PayFeeOnlineRetDomain payfeeonlineretdomain, Context context)
 			throws CoreException {
 		log.info("PayFeeOnlineServiceAction aftThdDeal start!..");
+		
+		//jump自动将48域前置空格截取，此处做特殊处理，补回原来的空格
+		String thdRemark=context.getData("remarkData");
+		
+		String subStr=thdRemark.substring(0,thdRemark.indexOf("9901"));
+		subStr=StringUtils.leftPad(subStr, 31-4, ' ');
+		String aftStr=thdRemark.substring(thdRemark.indexOf("9901"));
+		context.setData("remarkData", subStr+aftStr);
+		context.setData(ParamKeys.RSV_FLD1, subStr+aftStr);
 
-		context.setData(ParamKeys.THD_SEQUENCE, context.getData("eleThdSqn37"));
+		context.setData(ParamKeys.THD_SEQUENCE, context.getData("eleThdSqn"));
 
 		String clrYear = DateUtils.format(new Date(), "yyyy");
 
 		// 第三方清算日期处理-将第三方清算日期作为第三方交易日期存储
-		String eleClrDte = context.getData("pwrtxnDate15");
+		String eleClrDte = context.getData("pwrtxnDate");
 		if (StringUtils.isNotEmpty(eleClrDte)) {
 			eleClrDte = eleClrDte.trim();
 			String thdTxnDteStr = clrYear + eleClrDte;
@@ -289,16 +305,14 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 		}
 
 		// 第三方交易时间处理
-		String eleTxnTme = context.getData("txnDateTime7");
+		String eleTxnTme = context.getData("txnDateTime");
 		if (StringUtils.isNotEmpty(eleTxnTme)) {
 			String thdTxnTmeStr = clrYear + eleTxnTme;
 			context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse(thdTxnTmeStr, DateUtils.STYLE_yyyyMMddHHmmss));
 		}
 
 		// 将附加数据保存到数据库
-		context.setData(ParamKeys.RSV_FLD1, context.getData("remarkData48"));
-
-		context.setData("eleClrDte", eleClrDte); // 供电公司清算日期
+		context.setData("eleClrDte", aftStr); // 供电公司清算日期
 
 		return null;
 	}
