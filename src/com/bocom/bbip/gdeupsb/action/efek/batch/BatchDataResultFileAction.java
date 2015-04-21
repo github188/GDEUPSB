@@ -80,7 +80,8 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			//更改控制表
 			GDEupsBatchConsoleInfo gdEupsBatchConsoleInfoUpdate=updateInfo(context,gdeupsBatchConsoleInfo ,eupsBatchConsoleInfo);
 			//文件名
-			String fileName="ceshiPTFH"+gdEupsBatchConsoleInfoUpdate.getFleNme().substring(4);
+			String fileName="PTFH"+gdEupsBatchConsoleInfoUpdate.getFleNme().substring(4);
+//			String fileName="asd.txt";
 			EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecBatch");
 			try{
 					Map<String, Object> resultMap=createFileMap(context,gdEupsBatchConsoleInfoUpdate);
@@ -107,8 +108,10 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			
 			//TODO 通知第三方
 			callThd(context,gdeupsBatchConsoleInfo,fileName);
 			logger.info("===============End  BatchDataResultFileAction  afterBatchDeal");	
@@ -307,14 +310,14 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 						context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 					}	
 	}
-    public  Process RecvEnCryptFile(String excPath, String srcFile, String objFile) throws IOException {
+    public  Process RecvEnCryptFile(String excPath, String srcFile, String objFile) throws IOException, InterruptedException {
     	logger.info("================Start BatchDataFileActiion  RecvEnCryptFile");	    	
-        String cmd=".ssh>ssh icsadm@182.53.15.200 /app/ics/app/efek/bin/EfeFilSend.sh 182.53.201.46 bcm exchange dat/efek/send "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
+        String cmd="ssh icsadm@182.53.15.200 /app/ics/app/efek/bin/EfeFilSend.sh 182.53.201.46 bcm exchange dat/efek/send "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
         logger.info("cmd=" + cmd);
         String[] command = new String[] {cmd};
         Process proc = Runtime.getRuntime().exec(command);
-      
         logger.info("en-file success!");
+        proc.wait(3000);
         logger.info("================End BatchDataFileActiion  RecvEnCryptFile");
         return proc;
     }
