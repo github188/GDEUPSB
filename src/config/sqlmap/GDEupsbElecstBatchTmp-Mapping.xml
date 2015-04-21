@@ -3,7 +3,7 @@
 <mapper namespace="com.bocom.bbip.gdeupsb.entity.GDEupsbElecstBatchTmp">
 	<resultMap id="basicResultMap"
 		type="com.bocom.bbip.gdeupsb.entity.GDEupsbElecstBatchTmp">
-		<id column="SQN" property="sqn" jdbcType="INTEGER" />
+		<id column="SQN" property="sqn" jdbcType="CHAR" />
 		<result column="BAT_NO" property="batNo" jdbcType="CHAR" />
 		<result column="COM_NO" property="comNo" jdbcType="CHAR" />
 		<result column="TXN_TLR" property="txnTlr" jdbcType="CHAR" />
@@ -53,7 +53,7 @@
 		from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
 		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="sqn!=null">
-				AND SQN=#{sqn,jdbcType=INTEGER}
+				AND SQN=#{sqn,jdbcType=CHAR}
 			</if>
 			<if test="batNo!=null">
 				AND BAT_NO=#{batNo,jdbcType=CHAR}
@@ -139,11 +139,11 @@
 		select
 		<include refid="baseColumnList" />
 		from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
-		where SQN = #{sqn,jdbcType=INTEGER}
+		where SQN = #{sqn,jdbcType=CHAR}
 	</select>
 	<delete id="delete" parameterType="java.lang.Integer">
 		delete from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
-		where SQN = #{sqn,jdbcType=INTEGER}
+		where SQN = #{sqn,jdbcType=CHAR}
 	</delete>
 	<insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbElecstBatchTmp">
 		insert into ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
@@ -232,7 +232,7 @@
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="sqn != null">
-				#{sqn,jdbcType=INTEGER},
+				#{sqn,jdbcType=CHAR},
 			</if>
 			<if test="batNo != null">
 				#{batNo,jdbcType=CHAR},
@@ -318,7 +318,7 @@
 		select count(*) from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
 		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="sqn!=null">
-				AND SQN=#{sqn,jdbcType=INTEGER}
+				AND SQN=#{sqn,jdbcType=CHAR}
 			</if>
 			<if test="batNo!=null">
 				AND BAT_NO=#{batNo,jdbcType=CHAR}
@@ -482,7 +482,7 @@
 				RSV_FLD16 = #{rsvFld16,jdbcType=VARCHAR},
 			</if>
 		</set>
-		where SQN = #{sqn,jdbcType=INTEGER}
+		where SQN = #{sqn,jdbcType=CHAR}
 	</update>
 	<select id="findAll" resultMap="basicResultMap">
 		select
