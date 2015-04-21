@@ -93,7 +93,7 @@ public class InsertCusAgentServiceAction extends BaseAction {
 		Result editCusAgtResult = bgspServiceAccessObject.callServiceFlatting("maintainAgentCollectAgreement",context.getDataMap());
 		logger.info("===========editCusAgtResult："+editCusAgtResult);
 		if(editCusAgtResult.isSuccess() && editCusAgtResult.getResponseType().toString().equals("N") ){
-			if(context.getData("callThd")!=null){
+			if(context.getData("bankToThd")!=null){
 					Date txnDte=(Date)context.getData(ParamKeys.TXN_DTE);
 					Date txnTme=DateUtils.parse(context.getData("txnTme").toString());
 					try{
@@ -192,7 +192,27 @@ public class InsertCusAgentServiceAction extends BaseAction {
 						context.setData("PKGCNT", "000000");
 					}
 			}else{
-					context.setData("thdRspCde", "83");
+				//保存到EupsCusAgentJournal表中
+				log.info("============insert   EupsCusAgentJournal");
+				EupsCusAgentJournal eupsCusAgentJournal=new EupsCusAgentJournal();
+				eupsCusAgentJournal.setSqn(context.getData("sqn").toString());
+				eupsCusAgentJournal.setEupsBusTyp("ELEC00");
+				String rsvFld3=DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMddHHmmss);
+				eupsCusAgentJournal.setRsvFld3(rsvFld3);
+				String rsvFld1=context.getData("oprTyp").toString().trim()+context.getData("agtSts").toString().trim();
+				eupsCusAgentJournal.setRsvFld1(rsvFld1);
+				eupsCusAgentJournal.setThdCusNo((String)context.getData("cusNo"));
+				eupsCusAgentJournal.setCusAc(cusAc);
+				eupsCusAgentJournal.setCusNme((String)context.getData("cusNme"));
+				eupsCusAgentJournal.setIdTyp((String)context.getData("idTyp"));
+				eupsCusAgentJournal.setIdNo((String)context.getData("idNo"));
+				eupsCusAgentJournal.setTel((String)context.getData("cmuTel"));
+				eupsCusAgentJournal.setTxnDte(new Date());
+				eupsCusAgentJournal.setRsvFld2("301");
+				eupsCusAgentJournal.setComNo(context.getData("comNos").toString());
+				eupsCusAgentJournalRepository.insert(eupsCusAgentJournal);
+				
+				log.info("============End  insert   EupsCusAgentJournal");
 			}
 		}else{
 			context.setData("thdRspCde", "83");
