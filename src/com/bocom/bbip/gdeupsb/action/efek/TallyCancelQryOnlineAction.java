@@ -37,7 +37,9 @@ public class TallyCancelQryOnlineAction extends BaseAction{
 				}
 				EupsTransJournal eupsTransJournal=list.get(0);
 				if(null != eupsTransJournal){
-
+						if(eupsTransJournal.getTxnSts().equals("C")){
+								throw new CoreException("该交易以抹账");
+						}
 						context.setData(ParamKeys.TRADE_TXN_DIR, "C");//交易方向
 						//本次交易日期时间
 						Date date=new Date();
@@ -49,17 +51,12 @@ public class TallyCancelQryOnlineAction extends BaseAction{
 						context.setData(ParamKeys.THD_TXN_DATE, DateUtils.format(thdTxnDate,DateUtils.STYLE_yyyyMMdd));
 						Date thdTxnTime=eupsTransJournal.getTxnTme();
 						context.setData(ParamKeys.THD_TXN_TIME, DateUtils.format(thdTxnTime,DateUtils.STYLE_HHmmss));
-//TODO						context.setData(ParamKeys.BUS_TYP, );
 						context.setData(GDParamKeys.PAY_NO, eupsTransJournal.getThdCusNo());
 						context.setData(ParamKeys.PAYFEE_TYPE, eupsTransJournal.getPfeTyp());
 						context.setData(ParamKeys.COMPANY_NO, eupsTransJournal.getComNo());
-//TODO						context.setData(ParamKeys.TXN_ORG_CDE, );
-//TODO						context.setData(ParamKeys.BANK_NO, );
 						context.setData(ParamKeys.ORDER_REG_AC, eupsTransJournal.getCusAc());
 						context.setData("CusNme", eupsTransJournal.getCusNme());
 						context.setData(ParamKeys.FULL_DED_FLAG,eupsTransJournal.getFulDedFlg() );
-//						context.setData(GDParamKeys.ACCOUNTS_SERIAL_NO, eupsTransJournal.getThdSqn());
-//TODO						context.setData(GDParamKeys.ELECTRICITY_YEARMONTH, );
 						context.setData(ParamKeys.CCY, eupsTransJournal.getCcy());
 						context.setData(ParamKeys.TXN_AMT, eupsTransJournal.getTxnAmt());
 						context.setData(ParamKeys.CUS_AC, eupsTransJournal.getCusAc());
