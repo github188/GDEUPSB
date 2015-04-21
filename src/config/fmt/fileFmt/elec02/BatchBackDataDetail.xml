@@ -8,10 +8,11 @@
 	
 		    <fixString name="PNO"     length="10"  alias="rsvFld1"/>  <!--编号-->
 			<fixString name="thdCusNo"     length="32" />  <!--缴费号-->
-			<fixString name="KKB"     length="12"/>  <!--客户开户行行号-->
+			<fixString name="KKB"     length="12" alias="rsvFld13"/>  <!--客户开户行行号-->
 			<fixString name="cusAc"   length="32" />  <!--账号-->
 			<fixString name="txnAmt"  length="12"/>  <!--金额-->
-			<fixString name="SucFlg"  length="1" expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse(this.sts,"S","1","0")'/>  <!-- 标识 -->
+			<!-- <fixString name="SucFlg"  length="1" expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse(this.sts,"S","1","0")'/> -->  <!-- 标识 -->
+			<fixString name="SucFlg"  length="1" expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse(this.rsvFld15,"S","1","0")'/> 
 			<fixString name="SKDF"   length="12" expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse(this.SucFlg,"1",this.txnAmt,"0")'/>
 			<fixString name="logNo"  length="16"/>		
 			<fixString name="DMO"     length="40"  alias="rsvFld3"/>  <!--说明-->
