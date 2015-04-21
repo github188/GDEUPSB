@@ -194,16 +194,7 @@ public class CheckTrspFileAction extends BaseAction {
 				trspCheckTmp.setStatue("2");
 				detailList.add(gdEupsbTrspFeeInfoNew);
 			}		
-				
-				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-				System.out.println(gdEupsbTrspFeeInfoNew.getThdKey());
-				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 		}
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		for (GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo2 : detailList) {
-			 System.out.println(gdEupsbTrspFeeInfo2.getThdKey());
-		}
-		System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 		context.setData("sucTotCnt", sucTotCnt);
 		context.setData("sucTotAmt", sucTotAmt);
 
@@ -317,12 +308,10 @@ public class CheckTrspFileAction extends BaseAction {
 		EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne(ftpNo);
 		//获取本地文件
 		eupsThdFtpConfig.setFtpDir("0");
-		// String path=eupsThdFtpConfig.getLocDir();
 		String fileName = context.getData("fileName").toString().trim();
 		eupsThdFtpConfig.setLocFleNme(fileName);
 		eupsThdFtpConfig.setRmtFleNme(fileName);
-		eupsThdFtpConfig.setLocDir("app/ics/dat/rbfb/");
-//		operateFTPAction.putCheckFile(eupsThdFtpConfig);		
+		eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/trsp/");
 		
 		// 文件解析入库
 		List<Map<String, Object>> mapList = operateFileAction.pareseFile(eupsThdFtpConfig, "trspCheckFile");
@@ -333,8 +322,6 @@ public class CheckTrspFileAction extends BaseAction {
 		BigDecimal totAmt=new BigDecimal("0.00");
 		for (Map<String, Object> map : mapList) {
 			TrspCheckTmp trspCheckTmp = new TrspCheckTmp();
-//			trspCheckTmp.setTxnDat(DateUtils.parse(
-//					map.get("payDat").toString());
 			trspCheckTmp.setTxnDat(DateUtils.parse(map.get("payDat").toString()));
 			trspCheckTmp.setSqn(map.get("thdKey").toString());
 
