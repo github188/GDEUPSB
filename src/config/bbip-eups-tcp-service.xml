@@ -351,7 +351,7 @@
 						<array>
 							<bean class="com.bocom.jump.bp.channel.interceptors.EncoderTransform">
 								<constructor-arg
-									value="packet://WEB-INF/classes/config/stream/ELEC00/ELEC00RspHeader.xml" />
+									value="packet://WEB-INF/classes/config/stream/ELEC00/ELEC00RespHeader1.xml" />
 							</bean>
 							<bean class="com.bocom.jump.bp.channel.interceptors.ResponseTransform" />
 						</array>
