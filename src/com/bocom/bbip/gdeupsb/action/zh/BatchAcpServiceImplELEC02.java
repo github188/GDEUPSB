@@ -136,6 +136,7 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 //				detailMap.put("RMK1", tmp.getSqn());
 //				agtFileDetail.add(detailMap);
 			}
+			tmp.setSqn(bbipPublicService.getBBIPSequence());
 			tmp.setBatNo(batchNo);
 			gdEupsbElecstBatchTmpRepository.insert(tmp);
 		}

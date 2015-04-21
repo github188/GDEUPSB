@@ -66,13 +66,13 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements AfterB
 //        00000000500820080802                      301         445900191847000013202           郭燕光                                  594         2                                        050702  2014091 郭鸿铭                                  445006040010149018423           490         104         1    1248922894      
 //        00000000510820080802                      301         445900191847000013202           郭燕光                                  520         2                                        050702  2014101 郭鸿铭                                  445006040010149018423           420         100         1    1252792281      
         //明细表中的RMK1对应临时表sqn 解决批次信息排序问题
-         Integer tmpSqn = null;
+        String tmpSqn = null;
          String sts = null;
          String errMsg = null; 
         for(EupsBatchInfoDetail dtl : result){
         	GDEupsbElecstBatchTmp elec02batchTmp = new GDEupsbElecstBatchTmp();
         	
-        	tmpSqn = Integer.parseInt(dtl.getRmk1());
+        	tmpSqn = dtl.getRmk1();
         	sts = dtl.getSts();
         	
         	elec02batchTmp.setSqn(tmpSqn);
@@ -97,8 +97,6 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements AfterB
         		
         	}
 */
-
-        	
         	
         	gdEupsbElecstBatchTmpRepository.update(elec02batchTmp);
         }
