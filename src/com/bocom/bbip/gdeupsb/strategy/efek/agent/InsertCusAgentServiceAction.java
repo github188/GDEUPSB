@@ -194,6 +194,9 @@ public class InsertCusAgentServiceAction extends BaseAction {
 			}else{
 					context.setData("thdRspCde", "83");
 			}
+		}else{
+			context.setData("thdRspCde", "83");
+			throw new CoreException("签约失败");
 		}
 		if(context.getData(ParamKeys.THD_SQN) !=null){
 				String thdTxnDte=context.getData("thdTxnDate").toString();

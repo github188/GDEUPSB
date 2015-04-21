@@ -156,6 +156,9 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 						context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse((thdTxnDte+thdTxnTme),DateUtils.STYLE_yyyyMMddHHmmss));
 						context.setData("PKGCNT", "000000");
 					}
+			}else{
+					context.setData("thdRspCde", "83");
+					throw new CoreException("解约失败");
 			}
 			logger.info("=============End   DeleteCusAgentServiceAction ");
 	}
