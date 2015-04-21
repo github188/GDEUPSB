@@ -269,7 +269,7 @@
     
      (PRT_DAT BETWEEN #{begDat,jdbcType=DATE} AND #{endDat,jdbcType=DATE})
       
-      <if test="idNo != ''" >
+      <if test="nodNo != ''" >
        and  NOD_NO = #{nodNo,jdbcType=CHAR}
       </if>
       <if test="status != ''" >
@@ -290,7 +290,7 @@
     
   (PRT_DAT BETWEEN #{begDat,jdbcType=DATE} AND #{endDat,jdbcType=DATE})
       
-      <if test="idNo != ''" >
+      <if test="nodNo != ''" >
        and  NOD_NO = #{nodNo,jdbcType=CHAR}
       </if>
       <if test="status != ''" >
@@ -301,7 +301,7 @@
       </if>
       <if test="carNo != ''" >
        and  CAR_NO = #{carNo,jdbcType=CHAR}
-      </if>
+      </if> 
       
   </select>
   <update id="updateSt" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbTrspNpManag" >
