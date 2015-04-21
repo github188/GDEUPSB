@@ -39,8 +39,8 @@ public class GDParamKeys {
 	/** 电费用户帐号 **/
 	public static final String GZ_ELE_CUS_AC = "cusAcEx";
 
-	/** 电费用户帐号 **/
-	public static final String GZ_ELE_THD_PAY_TYP = "thdPayTyp3";
+	/** 电费处理码 **/
+	public static final String GZ_ELE_THD_PAY_TYP = "thdPayTyp";
 
 	/** 电费配型部类型 */
 	public static final String GZ_ELE_DPT_TYP = "dptTyp";
@@ -64,7 +64,7 @@ public class GDParamKeys {
 	public static final String GZ_ELE_THD_DPT_TYP = "pwrThdSub";
 
 	/** 电费处理标志 **/
-	public static final String GZ_ELE_DEAL_CODE = "dealCod";
+//	public static final String GZ_ELE_DEAL_CODE = "dealCod";
 
 	/** 电费受理方机构标识码 **/
 	public static final String GZ_ELE_RCS_NO = "eleBkNo";
