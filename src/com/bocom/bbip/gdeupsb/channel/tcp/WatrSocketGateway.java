@@ -170,7 +170,10 @@ public class WatrSocketGateway implements Gateway<Object, Object> {
 			String detailDate = new String(sndStrPre.substring(129).getBytes("GBK"),"GBK");
 
 			log.info("detailDate,即拼接在后面的报文内容=" + detailDate);
-			String md5Date = CryptoUtils.md5(detailDate.toString().getBytes("GBK")); // 校验位
+			
+			byte[] orgB=new byte[129];
+			
+			String md5Date = CryptoUtils.md5(orgB); // 校验位
 			log.info("md5Date=" + md5Date);
 
 			StringBuffer sb = new StringBuffer();
