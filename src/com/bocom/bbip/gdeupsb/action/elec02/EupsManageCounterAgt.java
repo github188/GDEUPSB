@@ -79,17 +79,11 @@ public class EupsManageCounterAgt extends BaseAction {
 		
 		//外发thd
 		Map<String, Object> callThdRsp = callThdTradeManager.trade(context);
-		CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
-		String responseCode = rspCdeAction.getThdRspCde(callThdRsp, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
+		context.setDataMap(callThdRsp);
+		
 		if (BPState.isBPStateOvertime(context)) {
 			throw new CoreException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
-		} else if (!Constants.RESPONSE_CODE_SUCC.equals(responseCode)) {
-			if (StringUtils.isEmpty(responseCode)) {
-				throw new CoreException(GDErrorCodes.EUPS_ELE_ST_UNKNOWN_ERROR);
-			}
-			throw new CoreException(responseCode);
-		}
-		context.setDataMap(callThdRsp);
+		} 
 
 		final int oprType = Integer.parseInt((String) context.getData("CHT"));
 		switch (oprType) {
