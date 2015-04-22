@@ -152,6 +152,7 @@ public class CheckThdDetlAcctAction implements Executable {
 							Map<String, Object> mapCallThd=new HashMap<String, Object>();
 							mapCallThd.put("xH", i);
 							mapCallThd.put("fileName", fileName);
+							mapCallThd.put("fleMD5", context.getData("fleMD5"));
 							detailList.add(mapCallThd);
 					} catch (Exception e) {
 			            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
