@@ -300,6 +300,9 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 	        String cmd="ssh icsadm@182.53.15.200 /app/ics/app/efek/bin/EfeFilRecv.sh 182.53.201.46 bcm exchange dat/efek/recv "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
 	        logger.info("cmd=" + cmd);
 	        Process proc = Runtime.getRuntime().exec(cmd);
+	        proc.waitFor();
+	        //TODO  proc.exitValue();返回是否有文件
+	       
 	        logger.info("en-file success!");
 	        logger.info("================End BatchDataFileActiion  RecvEnCryptFile");
 	        
