@@ -73,7 +73,10 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 		//头部
 		Map<String, Object> resultMapHead = BeanUtils.toMap(eupsBatchConsoleInfo);
 		resultMapHead.put("abc", "HDR2");
-//		BigDecimal totAmt = resultMapHead.get("totAmt");
+		BigDecimal a = (BigDecimal)resultMapHead.get("totAmt");
+		Double b = Double.parseDouble(a.toString());
+		b = b*100;
+		resultMapHead.put("totAmt", b);
 		resultMap.put(ParamKeys.EUPS_FILE_HEADER, resultMapHead);
 		Map<String, Object> hdr1 = new HashMap<String, Object>();
 		hdr1.put("HDR1", "HDR1");
@@ -98,12 +101,17 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 		for(i=0;i< detailList.size();i++){
 			map = BeanUtils.toMap(detailList.get(i));
 			map.put("sj", date);
-			list1.add(map);
+			
+			BigDecimal c = (BigDecimal)map.get(ParamKeys.TXN_AMT);
+			Double d = Double.parseDouble(c.toString());
+			d = d *  100;
+			map.put(ParamKeys.TXN_AMT, d);
 			if("S".equals(detailList.get(i).getSts())){
 				map.put("sts", "1");
 			}else{
 				map.put("sts", "4");
 			}
+			list1.add(map);
 		}
 		resultMap.put(ParamKeys.EUPS_FILE_DETAIL, list1);
 		
