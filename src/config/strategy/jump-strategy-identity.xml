@@ -168,7 +168,35 @@
 		class="com.bocom.bbip.gdeupsb.strategy.sign.DegDateUpdImlAction">
 	</bean>
 	
-
+	
+	<!-- 签约一站通-协议维护-广东联通  tandun by add -->
+	<bean id="gdeups.agtMdyDealImlServiceAction44102"
+		class="com.bocom.bbip.gdeupsb.strategy.sign.GduncbAgtMdyDealImlAction">
+	</bean>
+	 <!-- 签约一站通-协议维护-广东移动  tandun by add -->
+	<bean id="gdeups.agtMdyDealImlServiceAction44103"
+		class="com.bocom.bbip.gdeupsb.strategy.sign.GdmobbAgtMdyDealImlAction">
+	</bean>
+	
+  <!-- 签约一站通-协议更新-广东联通 tandun by add -->
+	<bean id="gdeups.agtDateUpdServiceAction44102"
+		class="com.bocom.bbip.gdeupsb.strategy.sign.GduncbDateUpdImlAction">
+	</bean>
+	
+	<!-- 签约一站通-协议校验-广东联通  tandun by add-->
+	<bean id="gdeups.agtValidCheckServiceAction44102"
+		class="com.bocom.bbip.gdeupsb.strategy.sign.GduncbAgtValidCheckImlAction">
+	</bean>
+	<!-- 签约一站通-协议校验-广东移动 tandun by add-->
+	<bean id="gdeups.agtValidCheckServiceAction44103"
+		class="com.bocom.bbip.gdeupsb.strategy.sign.GdmobbAgtValidCheckImlAction">
+	</bean>
+	
+	<!-- 广东联通 签约一站通-协议数据拷盘 tandun by add-->
+	<bean id="gdeups.agtFileSendImlServiceAction44102"
+		class="com.bocom.bbip.gdeupsb.strategy.sign.GduncbAgtFileSendImlAction">
+	</bean>
+	
 
 	<!-- 费用查询处理前 -->
 	<bean id="eups.prepareQueryDealStrategyActionELEC00"
