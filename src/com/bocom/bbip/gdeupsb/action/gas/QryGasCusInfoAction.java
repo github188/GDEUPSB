@@ -37,16 +37,17 @@ public class QryGasCusInfoAction extends BaseAction {
 		context.setData("gasBk", "cnjt");
 		Map<String, Object> thdRspMsg = callThdTradeManager.trade(context);
 		
-		CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
-		String responseCode = rspCdeAction.getThdRspCde(thdRspMsg, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
+//		CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
+//		String responseCode = rspCdeAction.getThdRspCde(thdRspMsg, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
 		if (BPState.isBPStateOvertime(context)) {
 			throw new CoreException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
-		} else if (!Constants.RESPONSE_CODE_SUCC.equals(responseCode)) {
-			if (StringUtils.isEmpty(responseCode)) {
-				throw new CoreException(GDErrorCodes.EUPS_ELE_GZ_UNKNOWN_ERROR);
-			}
-			throw new CoreException(responseCode);
-		}
+		} 
+//		else if (!Constants.RESPONSE_CODE_SUCC.equals(responseCode)) {
+//			if (StringUtils.isEmpty(responseCode)) {
+//				throw new CoreException(GDErrorCodes.EUPS_ELE_GZ_UNKNOWN_ERROR);
+//			}
+//			throw new CoreException(responseCode);
+//		}
 		
 		context.setData("responseCode", Constants.RESPONSE_CODE_SUCC); 
 		context.setDataMap(thdRspMsg);
