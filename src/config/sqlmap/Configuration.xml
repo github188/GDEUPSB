@@ -6,6 +6,7 @@
 <properties>
 <property name="EUPS_SCHEMA" value="EUPS" />
 <property name="GDEUPSB_SCHEMA" value="GDEUPSB" />
+<property name="GDEUPSA_SCHEMA" value="GDEUPSA" />
 <property name="SZXEUPS_SCHEMA" value="SZXEUPS" />
 </properties>
 <settings>
