@@ -56,7 +56,7 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 	@Autowired
 	EupsBatchInfoDetailRepository eupsBatchInfoDetailRepository;
 	@Autowired
-	ThirdPartyAdaptor thirdPartyAdaptor;
+	ThirdPartyAdaptor callThdTradeManager;
 	
 	@Override
 	public void afterBatchDeal(AfterBatchAcpDomain domain, Context context)	throws CoreException {
@@ -73,10 +73,11 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 		//头部
 		Map<String, Object> resultMapHead = BeanUtils.toMap(eupsBatchConsoleInfo);
 		resultMapHead.put("abc", "HDR2");
-		BigDecimal a = (BigDecimal)resultMapHead.get("totAmt");
-		Double b = Double.parseDouble(a.toString());
+		
+		Double b = Double.parseDouble(resultMapHead.get("totAmt").toString());
 		b = b*100;
-		resultMapHead.put("totAmt", b);
+		int totAmt = b.intValue();
+		resultMapHead.put("totAmt", totAmt);
 		resultMap.put(ParamKeys.EUPS_FILE_HEADER, resultMapHead);
 		Map<String, Object> hdr1 = new HashMap<String, Object>();
 		hdr1.put("HDR1", "HDR1");
@@ -97,15 +98,16 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 		List<Object> list1 = new ArrayList<Object>();
 		Map<String, Object> map = new HashMap<String, Object>();
 		int i=0;
-	
+		int txnAmtA;
 		for(i=0;i< detailList.size();i++){
 			map = BeanUtils.toMap(detailList.get(i));
 			map.put("sj", date);
 			
-			BigDecimal c = (BigDecimal)map.get(ParamKeys.TXN_AMT);
-			Double d = Double.parseDouble(c.toString());
+		
+			Double d = Double.parseDouble(map.get(ParamKeys.TXN_AMT).toString());
 			d = d *  100;
-			map.put(ParamKeys.TXN_AMT, d);
+			txnAmtA = d.intValue();
+			map.put(ParamKeys.TXN_AMT, txnAmtA);
 			if("S".equals(detailList.get(i).getSts())){
 				map.put("sts", "1");
 			}else{
@@ -129,7 +131,7 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 		
 		
 		context.setData("type", "Y004");
-		context.setData("accountdate", DateUtils.format((Date)context.getData(ParamKeys.AC_DATE), DateUtils.STYLE_yyyyMMdd));
+		context.setData("accountdate", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
 		
 		StepSequenceFactory s = context.getService("logNoService");
 		String logNo = s.create().toString();
@@ -149,7 +151,7 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 		context.setData("path", eupsThdFtpConfig.getRmtWay());
 		context.setData("filename", fileName);
 		context.setData("filesize", "");
-		thirdPartyAdaptor.trade(context);
+		callThdTradeManager.trade(context);
 		logger.info("AfterBatchAcpServiceImplWATR00 end ... ...");
 	}
 
