@@ -78,4 +78,17 @@ public interface GdsAgtWaterRepository extends PagingAndSortingRepository<GdsAgt
 	/** 更新协议子表为可制盘*/
 	public void updateBatchUsbFlg(Map<String, Object> inpara);
 	
+
+	/** 广东移动签约一站通-协议维护：将原子表信息作废  add by tandun*/
+	public void updateGdmobbOldAgtInf(Map<String, Object> inpara);
+	
+	/**广东移动 签约一站通-协议维护：新增协议子表协议信息 add by tandun*/
+	public void insertgdmobbDetailAgtInf(Map<String, Object> inpara);
+	
+	/** 广东联通签约一站通-协议维护：将原子表信息作废 add by tandun */
+	public void updateGduncbOldAgtInf(Map<String, Object> inpara);
+	
+	/**广东联通 签约一站通-协议维护：新增协议子表协议信息 add by tandun*/
+	public void insertgduncbDetailAgtInf(Map<String, Object> inpara);
+	
 }
