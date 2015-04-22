@@ -24,10 +24,14 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
  */
 public class OperateFileService extends BaseAction implements ApplicationContextAware{
 	private static final Logger logger = LoggerFactory.getLogger(OperateFileService.class);
-	@Autowired
-	private Resource resource;
+
+	//private Resource resource;
 	@Autowired
 	private FileMarshaller marshaller;
+
+	public OperateFileService()
+    {
+    }
 	@SuppressWarnings("unchecked")
 	public Map<String,Object> pareseFile(EupsThdFtpConfig eupsThdFtpConfig, String fileId)
 			throws CoreException, CoreRuntimeException
@@ -36,7 +40,7 @@ public class OperateFileService extends BaseAction implements ApplicationContext
 		Map<String,Object> map = new HashMap<String,Object>();
 		try
 		{
-			resource = new FileSystemResource(TransferUtils.resolveFilePath(eupsThdFtpConfig.getLocDir().trim(), eupsThdFtpConfig.getLocFleNme().trim()));
+			FileSystemResource resource = new FileSystemResource(TransferUtils.resolveFilePath(eupsThdFtpConfig.getLocDir().trim(), eupsThdFtpConfig.getLocFleNme().trim()));
 			map = marshaller.unmarshal(fileId, resource, Map.class);
 		}
 		catch(JumpException e)
@@ -55,7 +59,7 @@ public class OperateFileService extends BaseAction implements ApplicationContext
 		Map<String,Object> map = new HashMap<String,Object>();
 		try
 		{
-			resource = new FileSystemResource(TransferUtils.resolveFilePath(filePath, fileName));
+			FileSystemResource resource= new FileSystemResource(TransferUtils.resolveFilePath(filePath, fileName));
 			map = marshaller.unmarshal(fileId, resource, Map.class);
 		}
 		catch(JumpException e)
