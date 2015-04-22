@@ -30,5 +30,10 @@
 	
 	<import resource="classpath*:config/service/**/*.xml"/>
 	
+		<!-- 一站式签约发送第三方TCP tandun add by -->
+	<import resource="classpath*:/config/GDEUPSB-*.xml" />
+	
+	<import resource="classpath*:/config/tcp/GDEUPSB-*.xml" />
+	
 	
 </beans>
