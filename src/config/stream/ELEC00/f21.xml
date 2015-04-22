@@ -12,7 +12,7 @@
        <fixString name="payType"   length=" 3" /> <!--费用类型-->
        <fixString name="fileNme"   length="36" /> <!--文件名称-->
        <fixString name="fileType"   length=" 2" /> <!--文件类型-->
-       <fixString name="rsvFld3"  length="32" /> <!--文件MD5-->
+       <fixString name="fleMD5"  length="32" /> <!--文件MD5-->
        <fixString name="totCnt"    length="11" /> <!--总笔数-->
        <fixString name="totAmt"    length="16" /> <!--总金额-->
        <fixString name="sucTotCnt"   length="11" /> <!--成功笔数-->
