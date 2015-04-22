@@ -217,6 +217,7 @@ public class AgentFileToThdAction extends BaseAction{
 		        String cmd="ssh icsadm@182.53.15.200 /app/ics/app/efek/bin/EfeFilSend.sh 182.53.201.46 bcm exchange dat/efek/send "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
 		        log.info("cmd=" + cmd);
 		        Process proc = Runtime.getRuntime().exec(cmd);
+		        proc.waitFor();
 		        log.info("en-file success!");
 		        log.info("================End BatchDataFileActiion  RecvEnCryptFile");
 		        
