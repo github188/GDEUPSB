@@ -1,5 +1,7 @@
 package com.bocom.bbip.gdeupsb.action.efek.batch;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -42,6 +44,7 @@ import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
+import com.bocom.jump.bp.core.CoreRuntimeException;
 
 public class BatchDataResultFileAction extends BaseAction implements AfterBatchAcpService{
 	private final static Log logger=LogFactory.getLog(BatchDataResultFileAction.class);
@@ -81,7 +84,6 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			GDEupsBatchConsoleInfo gdEupsBatchConsoleInfoUpdate=updateInfo(context,gdeupsBatchConsoleInfo ,eupsBatchConsoleInfo);
 			//文件名
 			String fileName="PTFH"+gdEupsBatchConsoleInfoUpdate.getFleNme().substring(4);
-//			String fileName="asd.txt";
 			EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecBatch");
 			try{
 					Map<String, Object> resultMap=createFileMap(context,gdEupsBatchConsoleInfoUpdate);
@@ -104,7 +106,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			operateFTP.putCheckFile(eupsThdFtpConfig);
 			
 			try {
-				RecvEnCryptFile(eupsThdFtpConfig.getLocDir(), fileName, fileName);
+				RecvEnCryptFile(eupsThdFtpConfig.getLocDir(), fileName, fileName,context);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -289,7 +291,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 								                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
 								                	context.setData(GDParamKeys.MSGTYP, "E");
 								                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-								                	context.setData(ParamKeys.RSP_MSG, "交易失败，其他未知情况");
+								                	throw new CoreException(responseCode);
 								                }
 									}
 							}else{
@@ -310,15 +312,31 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 						context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 					}	
 	}
-    public  Process RecvEnCryptFile(String excPath, String srcFile, String objFile) throws IOException, InterruptedException {
+    public  Process RecvEnCryptFile(String excPath, String srcFile, String objFile,Context context) throws IOException, InterruptedException, CoreRuntimeException, CoreException {
     	logger.info("================Start BatchDataFileActiion  RecvEnCryptFile");	    	
         String cmd="ssh icsadm@182.53.15.200 /app/ics/app/efek/bin/EfeFilSend.sh 182.53.201.46 bcm exchange dat/efek/send "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
         logger.info("cmd=" + cmd);
-        String[] command = new String[] {cmd};
-        Process proc = Runtime.getRuntime().exec(command);
+        Process proc = Runtime.getRuntime().exec(cmd);
         logger.info("en-file success!");
-        proc.wait(3000);
         logger.info("================End BatchDataFileActiion  RecvEnCryptFile");
+        
+        //获取MD5
+        logger.info("================Start Get  FileMD5");
+        EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("efekMD5");
+        eupsThdFtpConfig.setLocDir("/app/ics/dat/efek/send/");
+        eupsThdFtpConfig.setRmtWay("/home/bbipadm/data/GDEUPSB/efek/");
+        eupsThdFtpConfig.setLocFleNme(srcFile+".MD5");
+        eupsThdFtpConfig.setRmtFleNme(srcFile+".MD5");
+        operateFTP.getFileFromFtp(eupsThdFtpConfig);
+        FileReader fileReader=new FileReader(eupsThdFtpConfig.getLocDir()+eupsThdFtpConfig.getLocFleNme());
+        BufferedReader bufferedReader=new BufferedReader(fileReader);
+        String firstLine=null;
+        String rsvFld3="";
+        while((firstLine=bufferedReader.readLine())!=null){
+        		rsvFld3=firstLine;
+        }
+        context.setData("rsvFld3", rsvFld3);
+        logger.info("================End Get  FileMD5");
         return proc;
     }
 	

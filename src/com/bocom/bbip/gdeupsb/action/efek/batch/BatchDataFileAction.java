@@ -40,6 +40,7 @@ import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
+import com.bocom.jump.bp.core.CoreRuntimeException;
 
 public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 	private final static Log logger=LogFactory.getLog(BatchDataFileAction.class);
@@ -82,7 +83,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 //							logger.info("==========Error    RecvEnCryptFile   ",e);
 //					}
 					eupsThdFtpConfig.setRmtWay("/app/ics/tmp/gdeupsb/ftp/rsv");
-					operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
+//					operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
 					
 //					downloadFileToThird(eupsThdFtpConfig);
 					
@@ -90,6 +91,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 					//该更控制表
 					String string=updateInfo(context, eupsThdFtpConfig, batNo,totAmt ,totCnt);
 					//获取文件并解析入库   数据库文件名
+					if(1==2){
 					List<Map<String, Object>> mapList=operateFileAction.pareseFile(eupsThdFtpConfig, "batchFile");
 					if(CollectionUtils.isEmpty(mapList)){
 								throw new CoreException("处理状态异常或获取数据异常");
@@ -120,6 +122,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 						//提交代收付
 						logger.info("==========End  BatchDataFileAction  prepareBatchDeal");
 						userProcessToSubmit(context);
+					}
 	}
 	/**
 	 * 文件map拼装
@@ -322,21 +325,14 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 		/**
 		 * 接受文件调用加密
 		 */
-		//TODO  打包
-		//TODO  服务器
-		//TODO  服务器
-		//TODO  服务器
-		//TODO  服务器
-	    public  Process RecvEnCryptFile(String excPath, String srcFile, String objFile) throws IOException {
+	    public  Process RecvEnCryptFile(String excPath, String srcFile, String objFile,Context context) throws IOException, InterruptedException, CoreRuntimeException, CoreException {
 	    	logger.info("================Start BatchDataFileActiion  RecvEnCryptFile");	    	
-//	        String cmd = excPath + "bin/JlzfDesFile" + " " + excPath + "tmp/" + srcFile + " " + excPath + "tmp/" + objFile + " 0";
-	        String cmd="./EfeFilRecv.sh 182.53.201.46 bcm exchange   dat/efek/recv  "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
+	        String cmd="ssh icsadm@182.53.15.200 /app/ics/app/efek/bin/EfeFilRecv.sh 182.53.201.46 bcm exchange dat/efek/recv "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
 	        logger.info("cmd=" + cmd);
-	        String[] command = new String[] {"/bin/sh","-c",cmd};
-	        Process proc = Runtime.getRuntime().exec(command);
-	        
+	        Process proc = Runtime.getRuntime().exec(cmd);
 	        logger.info("en-file success!");
 	        logger.info("================End BatchDataFileActiion  RecvEnCryptFile");
+	        
 	        return proc;
 	    }
 }
