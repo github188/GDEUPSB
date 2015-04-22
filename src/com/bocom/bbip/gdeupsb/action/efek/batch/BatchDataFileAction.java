@@ -76,22 +76,28 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 					//文件下载
 					EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecBatch");
 					eupsThdFtpConfig.setRmtFleNme(fleNme);
-					eupsThdFtpConfig.setLocFleNme(fleNme);
-//					try{
-//						RecvEnCryptFile(eupsThdFtpConfig.getLocDir().replace("/tmp", ""), fleNme, fleNme.replace(JLZF_BACK_FILE_AFTTYPE, JLZF_ORGFILE_AFTTYPE));
-//					}catch(IOException e){
-//							logger.info("==========Error    RecvEnCryptFile   ",e);
-//					}
-					eupsThdFtpConfig.setRmtWay("/app/ics/tmp/gdeupsb/ftp/rsv");
-//					operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
+					eupsThdFtpConfig.setLocFleNme(fleNme);					
+						try {
+							RecvEnCryptFile(eupsThdFtpConfig.getLocDir(), fleNme, fleNme,context);
+						} catch (CoreRuntimeException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					
-//					downloadFileToThird(eupsThdFtpConfig);
-					
+					eupsThdFtpConfig.setRmtWay("/app/ics/dat/efek/recv/");
+					eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/efek/");
+					operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
+									
 					String batNo=context.getData(ParamKeys.BAT_NO).toString();
 					//该更控制表
 					String string=updateInfo(context, eupsThdFtpConfig, batNo,totAmt ,totCnt);
 					//获取文件并解析入库   数据库文件名
-					if(1==2){
 					List<Map<String, Object>> mapList=operateFileAction.pareseFile(eupsThdFtpConfig, "batchFile");
 					if(CollectionUtils.isEmpty(mapList)){
 								throw new CoreException("处理状态异常或获取数据异常");
@@ -122,7 +128,6 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 						//提交代收付
 						logger.info("==========End  BatchDataFileAction  prepareBatchDeal");
 						userProcessToSubmit(context);
-					}
 	}
 	/**
 	 * 文件map拼装
@@ -286,41 +291,6 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 				context.setData(ParamKeys.TOT_CNT, Integer.parseInt(totCnt));
 				logger.info("==========End  BatchDataFileAction  updateInfo");
 				return string;
-		}
-		/**
-		 * 从第三方下载文件 
-		 * @param eupsThdFtpConfig
-		 * @throws CoreException 
-		 */
-		public void downloadFileToThird(EupsThdFtpConfig eupsThdFtpConfig) throws CoreException {
-			logger.info("===================Start   downloadFileToThird");
-//			SFTPTransfer transferSFTPT = new SFTPTransfer();
-//			transferSFTPT.setHost("182.53.15.200");
-//			transferSFTPT.setPort(Integer.valueOf(eupsThdFtpConfig.getBidPot().trim()));
-//			transferSFTPT.setUserName("bcm");
-//			//TODO
-//			transferSFTPT.setPassword("");
-//			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@"+transferSFTPT);
-//			try {
-//				transferSFTPT.logon();
-//				System.out.println();
-//				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@"+transferSFTPT);
-//				String localFilePath = (String)eupsThdFtpConfig.getLocDir().trim();
-//				String rmtFileLocation = (String)eupsThdFtpConfig.getRmtWay().trim();
-//				Resource resource = transferSFTPT.getResource(rmtFileLocation);
-//
-//				if (null != resource) {
-//					File localFile = new File(localFilePath);
-//					OutputStream fos = new FileOutputStream(localFile);
-//					IOUtils.copy(resource.getInputStream(), fos);
-//					fos.close();
-//				}
-//			} catch (Exception e) {
-//				throw new CoreException(ErrorCodes.EUPS_FTP_FILEDOWN_FAIL);
-//			} finally {
-//				transferSFTPT.logout();
-//			}
-			logger.info("===================End   downloadFileToThird");
 		}
 		/**
 		 * 接受文件调用加密

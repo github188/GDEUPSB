@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.bocom.bbip.comp.BBIPPublicService;
+import com.bocom.bbip.comp.BBIPPublicServiceImpl;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
@@ -42,6 +43,7 @@ import com.bocom.bbip.gdeupsb.repository.GDEupsEleTmpRepository;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
+import com.bocom.jump.bp.SystemConfig;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -84,16 +86,23 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			GDEupsBatchConsoleInfo gdEupsBatchConsoleInfoUpdate=updateInfo(context,gdeupsBatchConsoleInfo ,eupsBatchConsoleInfo);
 			//文件名
 			String fileName="PTFH"+gdEupsBatchConsoleInfoUpdate.getFleNme().substring(4);
-			EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecBatch");
+			//取文件s路径
+			String tlr=(String)context.getData(ParamKeys.TELLER);
+			String br=(String)context.getData(ParamKeys.BR);
+			context.setData(ParamKeys.BR, br);
+	        String AcDate=DateUtils.format(((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getAcDate(),DateUtils.STYLE_yyyyMMdd);
+	        String systemCode=((SystemConfig)get(SystemConfig.class)).getSystemCode();
+	        String dir="/home/bbipadm/data/mftp/BBIP/"+systemCode+"/"+br+"/"+tlr+"/"+AcDate+"/";
+	        						
+	        EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecBatch");		
 			try{
 					Map<String, Object> resultMap=createFileMap(context,gdEupsBatchConsoleInfoUpdate);
 					eupsThdFtpConfig.setFtpDir("0");
 					String name=context.getData(ParamKeys.BAT_NO)+".result";
 					eupsThdFtpConfig.setLocFleNme(name);
-					eupsThdFtpConfig.setRmtFleNme(name);
-			        
-					eupsThdFtpConfig.setLocDir("/home/bbipadm/data/mftp/BBIP/GDEUPSB/01441800999/EFC0000/20150323/");
-					eupsThdFtpConfig.setRmtWay("/home/bbipadm/data/mftp/BBIP/GDEUPSB/01441800999/EFC0000/20150323/");
+					eupsThdFtpConfig.setRmtFleNme(name);			        
+					eupsThdFtpConfig.setLocDir(dir);
+					eupsThdFtpConfig.setRmtWay(dir);
 					operateFile.createCheckFile(eupsThdFtpConfig, "efekBatchResult", fileName, resultMap);
 			}catch(CoreException e){
 					logger.info("~~~~~~~~~~~Error  Message",e);
@@ -235,7 +244,6 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 		       context.setData("payType",gdeupsBatchConsoleInfo.getRsvFld4());
 		       context.setData("fileNme",fileName);
 		       context.setData("fileType","02");
-		       context.setData("rsvFld3" ,gdeupsBatchConsoleInfo.getRsvFld3());
 		       context.setData("totCnt" ,gdeupsBatchConsoleInfo.getTotCnt());
 		       context.setData("totAmt" ,gdeupsBatchConsoleInfo.getTotAmt().scaleByPowerOfTen(2).intValue());
 		       context.setData("sucTotCnt",gdeupsBatchConsoleInfo.getSucTotCnt());
@@ -323,8 +331,8 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
         //获取MD5
         logger.info("================Start Get  FileMD5");
         EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("efekMD5");
-        eupsThdFtpConfig.setLocDir("/app/ics/dat/efek/send/");
-        eupsThdFtpConfig.setRmtWay("/home/bbipadm/data/GDEUPSB/efek/");
+        eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/efek/");
+        eupsThdFtpConfig.setRmtWay("/app/ics/dat/efek/send");
         eupsThdFtpConfig.setLocFleNme(srcFile+".MD5");
         eupsThdFtpConfig.setRmtFleNme(srcFile+".MD5");
         operateFTP.getFileFromFtp(eupsThdFtpConfig);
@@ -335,7 +343,10 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
         while((firstLine=bufferedReader.readLine())!=null){
         		rsvFld3=firstLine;
         }
-        context.setData("rsvFld3", rsvFld3);
+        if(StringUtils.isEmpty(rsvFld3)){
+        		throw new CoreException("获取文件MD5失败");
+        }
+        context.setData("fleMD5", rsvFld3);
         logger.info("================End Get  FileMD5");
         return proc;
     }
