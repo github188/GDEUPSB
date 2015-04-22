@@ -76,7 +76,8 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 					//文件下载
 					EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecBatch");
 					eupsThdFtpConfig.setRmtFleNme(fleNme);
-					eupsThdFtpConfig.setLocFleNme(fleNme);					
+					eupsThdFtpConfig.setLocFleNme(fleNme);		
+					eupsThdFtpConfig.setFtpDir("1");
 						try {
 							RecvEnCryptFile(eupsThdFtpConfig.getLocDir(), fleNme, fleNme,context);
 						} catch (CoreRuntimeException e) {
@@ -90,10 +91,8 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 							e.printStackTrace();
 						}
 					
-					eupsThdFtpConfig.setRmtWay("/app/ics/dat/efek/recv/");
 					eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/efek/");
 					operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
-									
 					String batNo=context.getData(ParamKeys.BAT_NO).toString();
 					//该更控制表
 					String string=updateInfo(context, eupsThdFtpConfig, batNo,totAmt ,totCnt);
@@ -200,6 +199,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 			String batNo=get(EupsBatchConsoleInfoRepository.class).find(eupsBatchConsoleInfo).get(0).getBatNo();
 			context.setData(ParamKeys.BAT_NO, batNo);
 			context.setData("PKGCNT", "000000");
+			context.setData("allLen", "180");
 			logger.info("==========End  BatchDataFileAction  userProcessToSubmit");
 
 		}
