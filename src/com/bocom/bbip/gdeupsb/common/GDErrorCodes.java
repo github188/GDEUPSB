@@ -540,6 +540,7 @@ public final class GDErrorCodes {
 	/** 请求服务超时 */
 	public static final String TBC_OUT_TIME_ERROR = "BBIP4400EU0505";
 	
-
+	/** 汕头电力未知错误 */
+	public static final String EUPS_ELE_ST_UNKNOWN_ERROR = "BBIP4400EU0300";
 
 }

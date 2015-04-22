@@ -364,6 +364,7 @@
   <xs:complexType name="agentChangeRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="CHT" type="tns:CHT_SType"/>
       <xs:element name="ECD" type="tns:ECD_SType" minOccurs="0"/>
       <xs:element name="EDD" type="tns:EDD_SType" minOccurs="0"/>
