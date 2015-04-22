@@ -30,6 +30,7 @@
 		<result column="RSV_FLD14" property="rsvFld14" jdbcType="VARCHAR" />
 		<result column="RSV_FLD15" property="rsvFld15" jdbcType="VARCHAR" />
 		<result column="RSV_FLD16" property="rsvFld16" jdbcType="VARCHAR" />
+		<result column="RSV_FLD17" property="rsvFld17" jdbcType="VARCHAR" />
 	</resultMap>
 	<sql id="baseColumnList">
 		SQN, BAT_NO, COM_NO, TXN_TLR, SUB_DTE, CUS_AC, CUS_NME, TXN_AMT,
@@ -37,7 +38,7 @@
 		OBK_BR, RSV_FLD1, RSV_FLD2, RSV_FLD3, RSV_FLD4, RSV_FLD5, RSV_FLD6, RSV_FLD7,
 		RSV_FLD8,
 		RSV_FLD9, RSV_FLD10, RSV_FLD11, RSV_FLD12, RSV_FLD13, RSV_FLD14, RSV_FLD15,
-		RSV_FLD16
+		RSV_FLD16, RSV_FLD17
 	</sql>
 	<sql id="baseColumnList1">
 		BAT_NO, COM_NO, TXN_TLR, SUB_DTE, CUS_AC, CUS_NME, TXN_AMT, THD_CUS_NO,
@@ -132,6 +133,9 @@
 			</if>
 			<if test="rsvFld16!=null">
 				AND RSV_FLD16=#{rsvFld16,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld17!=null">
+				AND RSV_FLD17=#{rsvFld17,jdbcType=VARCHAR}
 			</if>
 		</trim>
 	</select>
@@ -229,6 +233,9 @@
 			<if test="rsvFld16 != null">
 				RSV_FLD16,
 			</if>
+			<if test="rsvFld17 != null">
+				RSV_FLD17,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="sqn != null">
@@ -311,6 +318,9 @@
 			</if>
 			<if test="rsvFld16 != null">
 				#{rsvFld16,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld17 != null">
+				#{rsvFld17,jdbcType=VARCHAR},
 			</if>
 		</trim>
 	</insert>
@@ -398,6 +408,9 @@
 			<if test="rsvFld16!=null">
 				AND RSV_FLD16=#{rsvFld16,jdbcType=VARCHAR}
 			</if>
+			<if test="rsvFld17!=null">
+				AND RSV_FLD17=#{rsvFld17,jdbcType=VARCHAR}
+			</if>
 		</trim>
 	</select>
 	<update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbElecstBatchTmp">
@@ -480,6 +493,9 @@
 			</if>
 			<if test="rsvFld16 != null">
 				RSV_FLD16 = #{rsvFld16,jdbcType=VARCHAR},
+			</if>
+			<if test="rsvFld17!=null">
+				RSV_FLD17=#{rsvFld17,jdbcType=VARCHAR}
 			</if>
 		</set>
 		where SQN = #{sqn,jdbcType=CHAR}

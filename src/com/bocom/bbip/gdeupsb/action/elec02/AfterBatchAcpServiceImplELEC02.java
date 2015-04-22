@@ -10,6 +10,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import weblogic.descriptor.descriptorgen.interfacegen;
+
 import com.bocom.bbip.comp.BBIPPublicServiceImpl;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
@@ -21,6 +23,7 @@ import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.entity.EupsBatchInfoDetail;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
+import com.bocom.bbip.eups.repository.EupsBatchInfoDetailRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
 import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
@@ -53,10 +56,32 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements AfterB
 	@Override
 	public void afterBatchDeal(AfterBatchAcpDomain arg0, Context context)throws CoreException {
 		logger.info("电力返盘文件处理开始");
-//		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).afterBatchProcess(context);
-		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).eupsBatchConSoleInfoAndgdEupsBatchConSoleInfo(context);
+//		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).eupsBatchConSoleInfoAndgdEupsBatchConSoleInfo(context);
+		
+		String batNo=context.getData("batNo").toString();
+		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).Lock(batNo);
+		EupsBatchConsoleInfo eupsBatchConSoleInfo=get(EupsBatchConsoleInfoRepository.class).findOne(batNo);
+		String rsvFld9=eupsBatchConSoleInfo.getRsvFld1();//本地batNo
+		GDEupsBatchConsoleInfo gdEupsBatchConsoleInfos=new GDEupsBatchConsoleInfo();
+		gdEupsBatchConsoleInfos.setRsvFld9(rsvFld9);
+		
+		GDEupsBatchConsoleInfo gdEupsBatchConSoleInfo=get(GDEupsBatchConsoleInfoRepository.class).find(gdEupsBatchConsoleInfos).get(0);
+		gdEupsBatchConSoleInfo.setTotAmt(eupsBatchConSoleInfo.getTotAmt());
+		gdEupsBatchConSoleInfo.setTotCnt(eupsBatchConSoleInfo.getTotCnt());
+		gdEupsBatchConSoleInfo.setSucTotAmt(eupsBatchConSoleInfo.getSucTotAmt());
+		gdEupsBatchConSoleInfo.setSucTotCnt(eupsBatchConSoleInfo.getSucTotCnt());
+		gdEupsBatchConSoleInfo.setFalTotAmt(eupsBatchConSoleInfo.getFalTotAmt());
+		gdEupsBatchConSoleInfo.setFalTotCnt(eupsBatchConSoleInfo.getFalTotCnt());
+		gdEupsBatchConSoleInfo.setExeDte((Date)eupsBatchConSoleInfo.getExeDte());
+		gdEupsBatchConSoleInfo.setBatSts("S");
+		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(gdEupsBatchConSoleInfo);
+		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).unLock(batNo);
+		
 		Map<String,Object>ret=new HashMap<String,Object>();
-        final List<EupsBatchInfoDetail> result=(List<EupsBatchInfoDetail>)context.getVariable("detailList");
+//        final List<EupsBatchInfoDetail> result=(List<EupsBatchInfoDetail>)context.getVariable("detailList");
+		EupsBatchInfoDetail eupsBatchInfoDetail = new EupsBatchInfoDetail();
+		eupsBatchInfoDetail.setBatNo(batNo);
+		 final List<EupsBatchInfoDetail> result=get(EupsBatchInfoDetailRepository.class).find(eupsBatchInfoDetail);
         Assert.isNotEmpty(result, ErrorCodes.EUPS_QUERY_NO_DATA);
         
         
@@ -74,7 +99,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements AfterB
         	
         	tmpSqn = dtl.getRmk1();
         	sts = dtl.getSts();
-        	
+        	elec02batchTmp.setRsvFld17(DateUtils.format(new Date(), "yyyyMMddHHmmss"));
         	elec02batchTmp.setSqn(tmpSqn);
         	
         	elec02batchTmp.setRsvFld15(sts);//TODO
@@ -103,15 +128,15 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements AfterB
         
         //更新临时表后取数据组成回盘文件
         
-        String batNo=context.getData(ParamKeys.BAT_NO).toString();
-		EupsBatchConsoleInfo eupsBatchConsoleInfo=eupsBatchConsoleInfoRepository.findOne(batNo);
-		String sqns=eupsBatchConsoleInfo.getRsvFld2();
-		GDEupsBatchConsoleInfo  Info=new GDEupsBatchConsoleInfo();
-		Info.setRsvFld7(sqns);
-		GDEupsBatchConsoleInfo  gdeupsBatchConsoleInfo = gdeupsBatchConsoleInfoRepository.find(Info).get(0);
-		String gdBatNo = gdeupsBatchConsoleInfo.getBatNo();
+//        String batNo=context.getData(ParamKeys.BAT_NO).toString();
+//		EupsBatchConsoleInfo eupsBatchConsoleInfo=eupsBatchConsoleInfoRepository.findOne(batNo);
+//		String sqns=eupsBatchConsoleInfo.getRsvFld1();
+//		GDEupsBatchConsoleInfo  Info=new GDEupsBatchConsoleInfo();
+//		Info.setRsvFld7(sqns);
+//		GDEupsBatchConsoleInfo  gdeupsBatchConsoleInfo = gdeupsBatchConsoleInfoRepository.find(Info).get(0);
+//		String gdBatNo = gdeupsBatchConsoleInfo.getBatNo();
         
-        List<GDEupsbElecstBatchTmp> tempList = gdEupsbElecstBatchTmpRepository.findByBatNo(gdBatNo);
+        List<GDEupsbElecstBatchTmp> tempList = gdEupsbElecstBatchTmpRepository.findByBatNo(rsvFld9);
         Assert.isNotEmpty(tempList, ErrorCodes.EUPS_QUERY_NO_DATA);
         
         /**
@@ -150,8 +175,36 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements AfterB
         EupsThdFtpConfig config=get(EupsThdFtpConfigRepository.class).findOne("elec02BatchThdFile");
 		Assert.isFalse(null == config, ErrorCodes.EUPS_THD_FTP_CONFIG_NOTEXIST);
 		config.setFtpDir("0");
+		config.setLocDir("D:/test");
+		config.setLocFleNme("batchBack.txt");//TODO
 		
-		ret.put("header", context.getDataMapDirectly());
+		GDEupsBatchConsoleInfo  batchConsoleInfo = get(GDEupsBatchConsoleInfoRepository.class).findOne(rsvFld9);
+		int totCnt = Integer.parseInt((String)batchConsoleInfo.getRsvFld3());
+		int sucCnt = batchConsoleInfo.getSucTotCnt();//已更新为上代收付后的成功笔数
+		int failCnt = totCnt - sucCnt;
+		
+		BigDecimal totAmt = new BigDecimal(batchConsoleInfo.getRsvFld2());
+		BigDecimal sucAmt = batchConsoleInfo.getSucTotAmt();//元
+		sucAmt = sucAmt.multiply(new BigDecimal(100));//分
+		BigDecimal failAmt = totAmt.subtract(sucAmt);
+		
+		batchConsoleInfo.setTotCnt(totCnt);
+		batchConsoleInfo.setSucTotCnt(sucCnt);
+		batchConsoleInfo.setFalTotCnt(failCnt);
+		batchConsoleInfo.setTotAmt(totAmt);
+		batchConsoleInfo.setSucTotAmt(sucAmt);
+		batchConsoleInfo.setFalTotAmt(failAmt);
+		
+		batchConsoleInfo.setRsvFld6("RMB");
+		
+		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(batchConsoleInfo);
+		
+		batchConsoleInfo.setRsvFld8("1");
+		batchConsoleInfo.setRsvFld2("0000");
+		batchConsoleInfo.setRsvFld3("交易成功");
+		
+//		ret.put("header", context.getDataMapDirectly());
+		ret.put("header", batchConsoleInfo);
 		ret.put("detail", tempList);
 		//这个要从配置项读取
 //		config.setLocDir("E:\\");
@@ -162,7 +215,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements AfterB
 
         ((OperateFileAction)get("opeFile")).createCheckFile(config, "ELEC02BatchBack", config.getLocFleNme(), ret);
 
-        config.setFtpDir("");//TODO
+        config.setFtpDir("0");//0-外发
 		((OperateFTPAction)get("opeFTP")).putCheckFile(config);
 		/**通知第三方*/ 
 		 context.setData("TransCode", "23");
@@ -172,7 +225,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements AfterB
 		 String tmn=StringUtils.substring(logNo, 8);
 		 context.setData("TMN", tmn);
 		 context.setData("FileName", ""); //TODO
-		 context.setData("recordNum", (String)context.getData("totCnt"));
+		 context.setData("recordNum", context.getData("totCnt"));
 		 Map<String,Object>thdResult= get(CallThdService.class).callTHD(context);
 		 logger.info("电力返盘文件处理结束");
 	}

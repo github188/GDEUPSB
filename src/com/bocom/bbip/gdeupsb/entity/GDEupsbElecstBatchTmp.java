@@ -60,6 +60,16 @@ public class GDEupsbElecstBatchTmp {
 	private String rsvFld15;
 
 	private String rsvFld16;
+	
+	private String rsvFld17;
+
+	public String getRsvFld17() {
+		return rsvFld17;
+	}
+
+	public void setRsvFld17(String rsvFld17) {
+		this.rsvFld17 = rsvFld17;
+	}
 
 	public String getSqn() {
 		return sqn;

@@ -60,6 +60,11 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 	public void prepareBatchDeal(PrepareBatchAcpDomain domain, Context context) throws CoreException {
 		final String comNo = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.COMPANY_NO, ErrorCodes.EUPS_FIELD_EMPTY);
 
+		//TODO
+//		BK
+//		ETLR
+		
+		
 		/** 上锁 */
 		// ((BatchFileCommon)
 		// get(GDConstants.BATCH_FILE_COMMON_UTILS)).Lock(comNo);

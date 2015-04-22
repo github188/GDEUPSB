@@ -1,6 +1,7 @@
 package com.bocom.bbip.gdeupsb.utils;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.Date;
 
 import org.apache.commons.logging.Log;
@@ -465,4 +466,14 @@ public class GdExpCommonUtils {
 			return new String(chs, 0, count);
 	}
 
+	public static final BigDecimal deletePointAnd00(BigDecimal txnAmt) {
+		DecimalFormat df=new DecimalFormat("#");
+		txnAmt=new BigDecimal(df.format(txnAmt));
+		return txnAmt;
+		
+	}
+	
+	
+
+	
 }
