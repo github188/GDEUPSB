@@ -3,10 +3,12 @@ package com.bocom.bbip.gdeupsb.channel.tcp;
 import java.io.IOException;
 import java.net.Socket;
 
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.channel.ChannelContext;
 import com.bocom.jump.bp.channel.tcp.interceptors.SocketChannelInterceptor;
 import com.bocom.jump.bp.core.ContextEx;
+import com.bocom.jump.bp.util.Hex;
 
 public class NoFrontPayloadChannelInterceptorEb extends NoFrontLengthStreamResolverEb
 		implements SocketChannelInterceptor
@@ -37,6 +39,11 @@ public class NoFrontPayloadChannelInterceptorEb extends NoFrontLengthStreamResol
 	public void onResponse(ChannelContext channelContext, ContextEx context, Throwable throwable)
 	{
 		byte arrayOfByte[] = (byte[]) channelContext.getResponsePalyload();
+		
+        int len=arrayOfByte.length-10;
+        String lenS=StringUtils.rightPad(String.valueOf(len), 10, " ");
+        System.arraycopy(lenS.getBytes(), 0, arrayOfByte, 0, 10);
+        System.out.println("处理后，byte=\n"+Hex.toDumpString(arrayOfByte)+",发送的报文转化为明文为:"+new String(arrayOfByte));
 		try
 		{
 			((Socket) channelContext.getResponse()).getOutputStream().write(arrayOfByte);
