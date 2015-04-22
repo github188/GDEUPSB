@@ -480,6 +480,17 @@
     where ACT_NO = #{actNo,jdbcType=CHAR}
   </delete>
   
+	<delete id="delete" parameterType="java.lang.String" >
+    delete from ${GDEUPSB_SCHEMA}.GDEUPS_AGT_ELEC_TMP
+    <trim prefix="WHERE" prefixOverrides="AND" > 
+      <if test="actNo!=null" >
+        AND  ACT_NO=#{actNo,jdbcType=CHAR}
+      </if>
+        <if test="feeNum!=null" >
+        AND  FEE_NUM=#{feeNum,jdbcType=CHAR}
+      </if>
+      </trim>
+  </delete>
   
   <update id="updateByAc" parameterType="com.bocom.bbip.gdeupsb.entity.GdeupsAgtElecTmp" >
     update ${GDEUPSB_SCHEMA}.GDEUPS_AGT_ELEC_TMP
