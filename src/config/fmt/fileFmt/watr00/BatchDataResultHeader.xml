@@ -5,7 +5,7 @@
 	encoding="utf-8" trace="true">
 	
 	<segment name="total"  encoding="utf-8">
-			<varString name="HDR1"    type="D\t"/>
+			<fixString name="HDR1"    length="4"/>
 			
 	</segment>
 	

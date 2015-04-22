@@ -5,11 +5,15 @@
 	encoding="utf-8" trace="true">
 	
 	<segment name="detail"  encoding="utf-8">
-			<varString name="agtSrvCusId" type="D\t"/><!--  户号-->
-			 <varString name="sj" type="D\t"/> <!--时间 -->
-			<varString name="txnAmt" type="D\t"/><!--  金额-->
-			<varString name="cusAc" type="D\t"/><!--  账号-->
-			<varString name="sts" type="D\t"/><!--  状态-->
+			<fixString name="agtSrvCusId" length="9" /><!--  户号-->
+			<varString  name="Deli0" type="D\t"/>  <!--  制表符-->
+			 <fixString name="sj" length="8" /> <!--时间 -->
+			 <varString  name="Deli1" type="D\t"/>  <!--  制表符-->
+			<fixString name="txnAmt" length="11" /><!--  金额-->
+			<varString  name="Deli2" type="D\t"/>  <!--  制表符-->
+			<fixString name="cusAc" length="40" /><!--  账号-->
+			<varString  name="Deli3" type="D\t"/>  <!--  制表符-->
+			<fixString name="sts" length="1"/><!--  状态-->
 	</segment>
 	
 </message>
