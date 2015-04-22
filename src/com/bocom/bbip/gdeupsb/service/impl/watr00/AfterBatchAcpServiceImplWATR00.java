@@ -154,6 +154,7 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 		context.setData("path", "");
 		context.setData("filename", fileName);
 		context.setData("filesize", fileSize);
+		context.setData("reserved", "");
 		callThdTradeManager.trade(context);
 		logger.info("AfterBatchAcpServiceImplWATR00 end ... ...");
 	}
