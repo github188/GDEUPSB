@@ -543,7 +543,42 @@
 		#{TCusNm},#{EffDat},
 		#{IvdDat},#{txnCnl})
 	</insert>
-
+  <!-- 通讯广东移动 更新原有协议信息 -->
+	<update id="updateGdmobbOldAgtInf" parameterType="java.util.Map">
+		update ${GDEUPSA_SCHEMA}.GDS_AGT_MOB
+		set
+		Sub_Sts=#{SUBSTS},LAGT_ST=#{lagtSt},TAGT_ST=#{tagtSt},BNK_TYP=#{BnkTyp},BNK_NO=#{BnkNo},BNK_NAM=#{bnkNam}
+		,ORG_COD=#{orgCod},TBUS_TP=#{TBusTp},TCUS_ID=#{TCusId},TCUS_NM=#{TCusNm},EFF_DAT=#{EffDat},IVD_DAT=#{IvdDat},TAgt_Tp=#{TAgtTp}
+		,MCUS_ID=#{MCusId}
+		where GDS_BID=#{gdsBid} and ACT_NO=#{actNo} and GDS_AID=#{GDSAID} and
+		TCUS_ID=#{TCusId}
+	</update>
+	<!-- 通讯广东移动新增一条协议信息 -->
+	<insert id="insertgdmobbDetailAgtInf" parameterType="java.util.Map">
+		insert into
+		${agtSTb}
+		(SUB_STS,LAGT_ST,TAGT_ST,TXN_CNL,GDS_BID,ACT_NO,GDS_AID,BNK_TYP,BNK_NO,BNK_NAM,ORG_COD,TBUS_TP,TCUS_ID,TCUS_NM,MCUS_ID,MCUS_NM,EFF_DAT,IVD_DAT,TAgt_Tp)
+		values
+		(#{SUBSTS},#{lagtSt},#{tagtSt},#{txnCnl},#{gdsBid},#{actNo},#{GDSAID},#{BnkTyp},#{BnkNo},#{bnkNam},#{OrgCod},#{TBusTp},#{TCusId},#{TCusNm},#{MCusId},#{MCusNm},#{EffDat},#{IvdDat},#{TAgtTp})
+	</insert>
+	
+	 	<!-- 通讯广东联通 更新原有协议信息 -->
+	<update id="updateGduncbOldAgtInf" parameterType="java.util.Map">
+		update ${agtSTb}
+		set
+		Sub_Sts=#{SUBSTS},LAGT_ST=#{lagtSt},TAGT_ST=#{tagtSt},BNK_TYP=#{BnkTyp},BNK_NO=#{BnkNo},BNK_NAM=#{bnkNam}
+		,ORG_COD=#{orgCod},TBUS_TP=#{TBusTp},TCUS_ID=#{TCusId},TCUS_NM=#{TCusNm},EFF_DAT=#{EffDat},IVD_DAT=#{IvdDat}
+		where GDS_BID=#{gdsBid} and ACT_NO=#{actNo} and GDS_AID=#{GDSAID} and
+		TCUS_ID=#{TCusId}
+	</update>
+	<!-- 通讯广东联通新增一条协议信息 -->
+	<insert id="insertgduncbDetailAgtInf" parameterType="java.util.Map">
+		insert into
+		${agtSTb}
+		(SUB_STS,LAGT_ST,TAGT_ST,TXN_CNL,GDS_BID,ACT_NO,GDS_AID,BNK_TYP,BNK_NO,BNK_NAM,ORG_COD,TBUS_TP,TCUS_ID,TCUS_NM,EFF_DAT,IVD_DAT)
+		values
+		(#{SUBSTS},#{lagtSt},#{tagtSt},#{txnCnl},#{gdsBid},#{actNo},#{GDSAID},#{BnkTyp},#{BnkNo},#{bnkNam},#{OrgCod},#{TBusTp},#{TCusId},#{TCusNm},#{EffDat},#{IvdDat})
+	</insert>
 	<!-- 签约一站通协议拷盘:查找拷盘数据 -->
 	<select id="findFileSndInfo" resultType="java.util.Map">
 		select
