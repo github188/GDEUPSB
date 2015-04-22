@@ -1,0 +1,42 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:jump="http://www.bocom.com/schema/jump-core" xmlns:osgi="http://www.springframework.org/schema/osgi"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-2.0-m1.xsd
+						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+
+	<!-- ======================================== -->
+	<!-- TCP CHANNEL(Client HMF) COMMON CONFIG    -->
+	<!-- ======================================== -->
+	<bean id="GDUNCBTransport" class="com.bocom.jump.bp.channel.DefaultTransport">
+		<property name="gateway">
+			<bean class="com.bocom.jump.bp.channel.tcp.SocketGateway">
+				<property name="host" value="${GDEUPSB.tcpClient.gduncb.ip}" />
+				<property name="port" value="${GDEUPSB.tcpClient.gduncb.port}" />
+				<property name="soTimeout" value="30000" />
+				<property name="connectTimeout" value="30000" />
+				<property name="streamResolver">
+						<bean class="com.bocom.bbip.eups.adaptor.channel.NoFrontLengthStreamResolver"/>
+				</property>
+			</bean>
+		</property>
+		<property name="encodeTransforms">
+			<array>
+				<bean class="com.bocom.jump.bp.channel.interceptors.EncoderTransform">
+					<constructor-arg value="packet://WEB-INF/classes/config/stream/GDUNCB/GDUNCBReqHeader.xml"/>
+					<property name="idName" value="TransCode"/>
+				</bean>
+				<bean class="com.bocom.bbip.gdeupsb.interceptors.GduncbTcpInterceptorsTransfrom"/>
+			</array>
+		</property>
+		<property name="decodeTransforms">
+			<array>
+				<bean class="com.bocom.bbip.gdeupsb.interceptors.GduncbDecodeTcpInterceptersTranfrom" />
+				<bean class="com.bocom.jump.bp.channel.interceptors.DecoderTransform">
+					<constructor-arg value="packet://WEB-INF/classes/config/stream/GDUNCB/GDUNCBRspHeader.xml"/>
+					<property name="idName" value="TransCode"/>
+				</bean>
+			</array>
+		</property>
+	</bean>
+</beans>
