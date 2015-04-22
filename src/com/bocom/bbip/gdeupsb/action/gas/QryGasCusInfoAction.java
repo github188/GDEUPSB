@@ -36,6 +36,7 @@ public class QryGasCusInfoAction extends BaseAction {
 		context.setData("TransCode", "QryUser");
 		context.setData("gasBk", "cnjt");
 		Map<String, Object> thdRspMsg = callThdTradeManager.trade(context);
+		context.setDataMap(thdRspMsg);
 		
 //		CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
 //		String responseCode = rspCdeAction.getThdRspCde(thdRspMsg, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
@@ -49,8 +50,8 @@ public class QryGasCusInfoAction extends BaseAction {
 //			throw new CoreException(responseCode);
 //		}
 		
-		context.setData("responseCode", Constants.RESPONSE_CODE_SUCC); 
-		context.setDataMap(thdRspMsg);
+//		context.setData("responseCode", Constants.RESPONSE_CODE_SUCC); 
+		
 		logger.info("======================context after callThd qryUser========"
 				+ context);
 

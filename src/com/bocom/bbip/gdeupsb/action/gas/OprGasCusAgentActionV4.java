@@ -404,6 +404,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		context.setProcessId("gdeupsb.oprGasCusAgent1");
 
 		Map<String, Object> tradeMap1 = callThdTradeManager.trade(context);
+		context.setDataMap(tradeMap1);
 //		CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
 //		String responseCode = rspCdeAction.getThdRspCde(tradeMap1, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
 		if (BPState.isBPStateOvertime(context)) {
@@ -415,7 +416,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 //			}
 //			throw new CoreException(responseCode);
 //		}
-		context.setDataMap(tradeMap1);
+		
 
 		context.setData("optDat", date);
 		context.setData("optNod", context.getData("NodNo"));
@@ -479,6 +480,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		context.setProcessId("gdeupsb.oprGasCusAgent1");
 
 		Map<String, Object> tradeMap1 = callThdTradeManager.trade(context);
+		context.setDataMap(tradeMap1);
 //		CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
 //		String responseCode = rspCdeAction.getThdRspCde(tradeMap1, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
 		if (BPState.isBPStateOvertime(context)) {
@@ -490,7 +492,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 //			}
 //			throw new CoreException(responseCode);
 //		}
-		context.setDataMap(tradeMap1);
+		
 
 		context.setData("optDat", date);
 		context.setData("optNod", context.getData("NodNo"));
@@ -569,6 +571,8 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		context.setProcessId("gdeupsb.oprGasCusAgent1");
 
 		Map<String, Object> tradeMap1 = callThdTradeManager.trade(context);
+		context.setDataMap(tradeMap1);
+		
 //		CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
 //		String responseCode = rspCdeAction.getThdRspCde(tradeMap1, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
 		if (BPState.isBPStateOvertime(context)) {
@@ -580,7 +584,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 //			}
 //			throw new CoreException(responseCode);
 //		}
-		context.setDataMap(tradeMap1);
+		
 
 		context.setData("optDat", date);
 		context.setData("optNod", context.getData("NodNo"));
