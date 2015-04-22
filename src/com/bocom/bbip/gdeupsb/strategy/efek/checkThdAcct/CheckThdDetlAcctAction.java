@@ -71,7 +71,7 @@ public class CheckThdDetlAcctAction implements Executable {
 	        
 			//日期
 			Date txnDte=DateUtils.calDate(DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())),-1);
-//			txnDte=DateUtils.parse("2015-04-10");
+			txnDte=DateUtils.parse("2015-04-22");
 			context.setData(ParamKeys.TXN_DTE, txnDte);
 			//一些常量
 			context.setData(GDParamKeys.TOTNUM, "1");
