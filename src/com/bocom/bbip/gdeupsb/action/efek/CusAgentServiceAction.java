@@ -51,7 +51,7 @@ public class CusAgentServiceAction extends BaseAction{
 		 */
 		public void execute(Context context)throws CoreException,CoreRuntimeException{
 				logger.info("============Start  CusAgentServiceAction ");
-				context.setData("newCusName", "qwe");
+//				context.setData("newCusName", "qwe");
 				String cusAc=context.getData("cusAc");
 				String comNo=context.getData("comNo").toString();
 				context.setData("comNos", comNo);
