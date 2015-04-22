@@ -11,5 +11,5 @@ public interface GDEupsEleTmpRepository extends PagingAndSortingRepository<GDEup
 		
 		public void updateInfo(String cusAc,String thdCusNo);
 		
-		public List<GDEupsEleTmp> findAllOrderBySqn();
+		public List<GDEupsEleTmp> findAllOrderBySqn(String batNo);
 }
