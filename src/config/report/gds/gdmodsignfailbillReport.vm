@@ -1,0 +1,28 @@
+#report(45)
+#rh(6)
+                                                交通银行广东省分行代扣批量签约失败清单
+  
+  企业种类:$f.conv('gdsBid',$d.gdsBid)          文件名:$d.filNm       打印日期：   $f.fmt($d.prntDat,'yyyy')年$f.fmt($d.prntDat,'MM')月$f.fmt($d.prntDat,'dd')日   
+ ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━  
+  账号类型   账号                  户名     证件类型    证件号码           签约类型       签约号码    姓名     业务种类                   
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━                                                                                                                  
+#end
+#td(1,$d.eles)
+#para($f.conv('acttyp',$ele.acttyp))
+#para($ele.actno)
+#para($ele.actnm)
+#para($f.conv('idtyp',$ele.idtyp))
+#para($ele.idno)
+#para($f.conv('tagttp',$ele.tagttp))
+#para($ele.tcusid)
+#para($ele.tcusnm)
+#para($ele.tbustp)
+  ?          ?                     ?        ?           ?                  ?        ?           ?        ?
+#end
+#rf(4)                        
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ 总计行数: $d.TotCnt
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ 制表人：$d.tlr                                                                       共  $totalPages 页   第$pageNumber 页
+#end
+#end
