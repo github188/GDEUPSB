@@ -16,8 +16,10 @@ import com.bocom.bbip.comp.CommonRequest;
 import com.bocom.bbip.comp.account.AccountService;
 import com.bocom.bbip.comp.account.support.CusActInfResult;
 import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
+import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
@@ -402,6 +404,16 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		context.setProcessId("gdeupsb.oprGasCusAgent1");
 
 		Map<String, Object> tradeMap1 = callThdTradeManager.trade(context);
+		CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
+		String responseCode = rspCdeAction.getThdRspCde(tradeMap1, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
+		if (BPState.isBPStateOvertime(context)) {
+			throw new CoreException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
+		} else if (!Constants.RESPONSE_CODE_SUCC.equals(responseCode)) {
+			if (StringUtils.isEmpty(responseCode)) {
+				throw new CoreException(GDErrorCodes.EUPS_ELE_GZ_UNKNOWN_ERROR);
+			}
+			throw new CoreException(responseCode);
+		}
 		context.setDataMap(tradeMap1);
 
 		context.setData("optDat", date);
@@ -466,6 +478,16 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		context.setProcessId("gdeupsb.oprGasCusAgent1");
 
 		Map<String, Object> tradeMap1 = callThdTradeManager.trade(context);
+		CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
+		String responseCode = rspCdeAction.getThdRspCde(tradeMap1, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
+		if (BPState.isBPStateOvertime(context)) {
+			throw new CoreException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
+		} else if (!Constants.RESPONSE_CODE_SUCC.equals(responseCode)) {
+			if (StringUtils.isEmpty(responseCode)) {
+				throw new CoreException(GDErrorCodes.EUPS_ELE_GZ_UNKNOWN_ERROR);
+			}
+			throw new CoreException(responseCode);
+		}
 		context.setDataMap(tradeMap1);
 
 		context.setData("optDat", date);
@@ -545,6 +567,16 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		context.setProcessId("gdeupsb.oprGasCusAgent1");
 
 		Map<String, Object> tradeMap1 = callThdTradeManager.trade(context);
+		CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
+		String responseCode = rspCdeAction.getThdRspCde(tradeMap1, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
+		if (BPState.isBPStateOvertime(context)) {
+			throw new CoreException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
+		} else if (!Constants.RESPONSE_CODE_SUCC.equals(responseCode)) {
+			if (StringUtils.isEmpty(responseCode)) {
+				throw new CoreException(GDErrorCodes.EUPS_ELE_GZ_UNKNOWN_ERROR);
+			}
+			throw new CoreException(responseCode);
+		}
 		context.setDataMap(tradeMap1);
 
 		context.setData("optDat", date);

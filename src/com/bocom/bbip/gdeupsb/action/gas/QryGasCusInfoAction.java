@@ -8,9 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
+import com.bocom.bbip.eups.common.Constants;
+import com.bocom.bbip.eups.common.ErrorCodes;
+import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -31,6 +36,19 @@ public class QryGasCusInfoAction extends BaseAction {
 		context.setData("TransCode", "QryUser");
 		context.setData("gasBk", "cnjt");
 		Map<String, Object> thdRspMsg = callThdTradeManager.trade(context);
+		
+		CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
+		String responseCode = rspCdeAction.getThdRspCde(thdRspMsg, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
+		if (BPState.isBPStateOvertime(context)) {
+			throw new CoreException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
+		} else if (!Constants.RESPONSE_CODE_SUCC.equals(responseCode)) {
+			if (StringUtils.isEmpty(responseCode)) {
+				throw new CoreException(GDErrorCodes.EUPS_ELE_GZ_UNKNOWN_ERROR);
+			}
+			throw new CoreException(responseCode);
+		}
+		
+		context.setData("responseCode", Constants.RESPONSE_CODE_SUCC); 
 		context.setDataMap(thdRspMsg);
 		logger.info("======================context after callThd qryUser========"
 				+ context);
