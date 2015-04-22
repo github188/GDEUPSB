@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="GBK"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	 encoding="GBK" trace="true">
+
+	<segment name="resp_head" encoding="GBK">
+		<fixString name="len" length="4"/>
+		<fixString name="category" length="2" /> 
+		<fixString name="sub_command" length="2" /><!--01：业务请求02：业务请求应答-->
+		<fixString name="opcode" length="4" referred="true"/><!-- 操作码 -->
+		<fixString name="command_status" length="4" /><!-- 此域表示一个命令的成功与失败-->
+		<fixString name="sou_addr" length="6" /><!-- 此域为消息源地址，表示消息发起的原始发起方地址描述字串。 -->
+		<fixString name="des_addr" length="6" /><!-- 此域为消息目的地址，表示消息希望到达的终端地址描述字串 -->
+		<fixInteger name="seq_no" length="10" /><!-- 此域表示一个序列号，使用在异步通信模式下，由消息发起者设定，应答者对应给回此序列号 -->
+	</segment>
+	<include keys="opcode" decodePrefix="p" />
+</message>

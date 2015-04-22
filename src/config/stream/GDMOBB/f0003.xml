@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="GBK"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="f0003" encoding="GBK">
+
+	<!-- 签约交易 -->
+	  <fixString name="tlogno"  length="31" />         				<!--业务流水号-->
+      <fixString name="bakcod"  length="2" />             			<!--银行代码-->
+      <fixString name="pacttyp"  length="2"/>                        <!--银行账号类型-->
+      <fixString name="actno"  length="28" />                        <!--银行账号-->
+      <fixString name="actnam"  length="32"/>                        <!--银行账号名称-->
+      <fixString name="pidtyp"  length="1"/>                         <!--证件类型-->
+      <fixString name="idno"  length="20"/>                          <!--证件号-->
+      <fixString name="cusnam"  length="32"/>                        <!--证件姓名-->
+      <fixString name="msttel"   length="20"/>                       <!-- 主手机号码 -->
+      <fixString name="sigtel"   length="20" />                      <!-- 签约手机号码 -->
+      <fixString name="sigflg"  length="1"  />                       <!-- 签约标记（主0/副1） -->
+      <fixString name="rsvval1"  length="20" />          		    <!--预留字段-->
+      <fixString name="rsvval2"  length="20" />           			<!--预留字段-->
+      <fixString name="maccode"  length="8" />          			<!--MAC校验值-->
+</segment>
+	 

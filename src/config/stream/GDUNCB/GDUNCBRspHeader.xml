@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="GBK"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	 encoding="GBK" trace="true">
+
+	<segment name="resp_head" encoding="GBK">
+		<fixString name="msg_sender" length="4" /> <!-- 消息发送方代码 -->
+		<fixString name="msg_receiver" length="4" /><!--消息直接接收方代码-->
+		<fixString name="trans_ido" length="30"/><!-- 服务调用方流水号 -->
+		<fixString name="process_time" length="14" /><!-- 服务处理时间-->
+		<fixString name="eparchy_code" length="6" /><!-- 地市编码 -->
+		<fixString name="channel_id" length="20" /><!--渠道编码 -->
+		<fixInteger name="oper_id" length="20" /><!--操作员工号 -->
+		<fixString  name="service_name" length="60"/><!-- 服务名称 -->
+		<fixString  name="operate_name" length="60" referred="true"/><!--  操作名称-->
+		<fixString  name="rsp_code" length="16"/><!--  应答/错误代码-->
+		<fixString  name="rsp_desc" length="500"/><!-- 应答/错误描述 -->
+	    <fixString  name="test_flag" length="1"/><!-- 测试标记 -->
+	</segment>
+	<include keys="operate_name" decodePrefix="p" />
+</message>

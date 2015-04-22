@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="GBK"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="f0001" encoding="GBK">
+
+	<!-- 签约交易 -->
+	  <fixString name="SVRTYP"  length="20" />         				<!--报文类型-->
+      <fixString name="QRYTYP"  length="4" />             			<!--请求类型-->
+      <fixString name="SERIAL_NUMBER"  length="20"/>                  <!--用户服务号码-->
+      <fixString name="SERVICE_CALSS_CODE"  length="1" />           <!--服务号码网别-->
+     
+</segment>
+	 

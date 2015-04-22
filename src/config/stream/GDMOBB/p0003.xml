@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="GBK"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="f0003" encoding="GBK">
+
+	<!-- 签约交易 -->
+	  <fixString name="tLogNo" length="31" />      <!--业务流水号-->
+      <fixString name="rspCod"  length="2"/>                        <!--交易结果返回-->
+      <fixString name="mstTel"   length="20"  />                    <!-- 主手机号码 -->
+      <fixString name="sigTel"   length="20"  />                    <!-- 签约手机号码 -->
+      <fixString name="sigFlg"  length="1"  />                     <!-- 签约号码主副标记（主0/副1） -->
+      <fixString name="reservedvalues1"  length="20" />             <!--预留字段-->
+      <fixString name="reservedvalues2"  length="20" />              <!--预留字段-->
+      <fixString name="mac_code"         length="8"  />               <!--MAC校验值-->
+</segment>
+	 
