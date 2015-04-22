@@ -11,6 +11,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
@@ -129,7 +130,7 @@ public class AgentFileToThdAction extends BaseAction{
 				context.setData(GDParamKeys.TRADE_PRIORITY, GDConstants.TRADE_PRIORITY);//交易优先
 				context.setData(GDParamKeys.REDUCE_SIGN, GDConstants.REDUCE_SIGN);//压缩标志
 				context.setData(GDParamKeys.TRADE_RETURN_CODE, GDConstants.TRADE_RETURN_CODE);//交易返回代码
-				String sqn=context.getData(ParamKeys.SEQUENCE);
+				String sqn=get(BBIPPublicService.class).getBBIPSequence();
 				context.setData("sqns", sqn);
 				context.setData("sqn", sqn);
 				
@@ -140,6 +141,7 @@ public class AgentFileToThdAction extends BaseAction{
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
 				context.setData("PKGCNT", "000001");	
+				context.setData("fleTyp", "04");	
 				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW08");				
 						try{
 							Map<String, Object> rspMap = callThdTradeManager.trade(context);
@@ -237,6 +239,7 @@ public class AgentFileToThdAction extends BaseAction{
 		        while((firstLine=bufferedReader.readLine())!=null){
 		        		rsvFld3=firstLine;
 		        }
+		        log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>fleMD5="+rsvFld3);
 		        if(StringUtils.isEmpty(rsvFld3)){
 		        		throw new CoreException("获取文件MD5失败");
 		        }
