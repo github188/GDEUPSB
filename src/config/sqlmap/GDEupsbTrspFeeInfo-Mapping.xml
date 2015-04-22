@@ -830,11 +830,11 @@
 
 	<select id="findInfo" resultMap="basicResultMap">
 		select * from gdeupsb.TRSP_FEE_INFO where
-		<if test="carNo != null">
-			CAR_NO = #{carNo,jdbcType=CHAR}
+		<if test="carNo != '粤C'">
+			CAR_NO = #{carNo,jdbcType=CHAR} AND
 		</if>
 		<if test="brNo != null">
-			AND BR_NO = #{brNo,jdbcType=CHAR}
+			 BR_NO = #{brNo,jdbcType=CHAR}
 		</if>
 		<if test="status != ''">
 			AND STATUS = #{status,jdbcType=CHAR}
