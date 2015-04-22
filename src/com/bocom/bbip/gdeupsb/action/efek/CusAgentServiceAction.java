@@ -52,15 +52,6 @@ public class CusAgentServiceAction extends BaseAction{
 		public void execute(Context context)throws CoreException,CoreRuntimeException{
 				logger.info("============Start  CusAgentServiceAction ");
 
-				if(context.getData(ParamKeys.THD_SQN)!=null){										
-						context.setData("sqns", context.getData("sqns"));
-						if(context.getData("oprTyp").toString().trim().equals("1")){
-								context.setData("callThd", "callThd");
-						}
-				}else{
-						context.setData("bankToThd", "bankToThd");	
-						context.setData("sqns", context.getData("sqn"));
-				}
 				String cusAc=context.getData("cusAc");
 				String comNo=context.getData("comNo").toString();
 				context.setData("comNos", comNo);
@@ -111,6 +102,16 @@ public class CusAgentServiceAction extends BaseAction{
 					logger.info("~~~~~~~~~~~~~~~~~Enter  eups.commDelCusAgentELEC00 ");
 					mothed="eups.commDelCusAgentELEC00";
 				}
+				if(context.getData(ParamKeys.THD_SQN)!=null){										
+					context.setData("sqns", context.getData("sqns"));
+						if(context.getData("oprTyp").toString().trim().equals("1")){
+								context.setData("callThd", "callThd");
+						}
+				}else{
+						context.setData("bankToThd", "bankToThd");	
+						context.setData("sqns", context.getData("sqn"));
+				}
+				
 				context.setData("cusAc", cusAc);
 				//添加 agentCollectAgreement
 				List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();
