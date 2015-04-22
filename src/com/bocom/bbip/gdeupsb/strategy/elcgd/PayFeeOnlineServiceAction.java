@@ -225,20 +225,14 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 		
 		//TODO:待考虑此处是否对后续有影响
 		String sqn = context.getData(ParamKeys.SEQUENCE);
-		String sqn2 = sqn.substring(sqn.length() - 4, sqn.length());
-		context.setData("transJournal", sqn.substring(0, 8) + sqn2); // 银行交易流水号
-		context.setData("rsvFld2", sqn.substring(0, 8) + sqn2); // 银行交易流水号,存在rsvFld2中，用于进行抹帐等交易
+		String sqn2 = sqn.substring(sqn.length() - 6, sqn.length());
+		context.setData("transJournal", sqn.substring(2, 8) + sqn2); // 银行交易流水号
+		context.setData("rsvFld2", sqn.substring(2, 8) + sqn2); // 银行交易流水号,存在rsvFld2中，用于进行抹帐等交易
 		
 		
-		Date nowTme = new Date();
-		Date bnkTxnDate = context.getData("acDte");
-		context.setData("bnkTxnTime", DateUtils.format(nowTme, DateUtils.STYLE_HHmmss));
-
-		if (null != bnkTxnDate) {
-			context.setData("bnkTxnDate", DateUtils.format(bnkTxnDate, DateUtils.STYLE_MMdd));
-		} else {
-			context.setData("bnkTxnDate", DateUtils.format(nowTme, DateUtils.STYLE_MMdd));
-		}
+		Date bnkTxnDate = new Date();
+		context.setData("bnkTxnTime", DateUtils.format(bnkTxnDate, DateUtils.STYLE_HHmmss));
+		
 		context.setData("pwrFee", NumberUtils.yuanToCent(context.getData(ParamKeys.FEE))); // 手续费
 		
 		//TODO:要确保终端号及柜员号不为空
