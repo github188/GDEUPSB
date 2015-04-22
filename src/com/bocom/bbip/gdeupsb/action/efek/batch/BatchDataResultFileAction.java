@@ -174,7 +174,6 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 						gdEupsEleTmp.setBankNo("301");
 						//TODO 
 						Date date=new Date();
-						System.out.println();
 						gdEupsEleTmp.setRsvFld1(DateUtils.format(date, DateUtils.STYLE_yyyyMMdd));
 						gdEupsEleTmp.setRsvFld2(DateUtils.formatAsHHmmss(date));
 						gdEupsEleTmp.setBakFld(eupsBatchInfoDetail.getRmk1());
@@ -194,11 +193,8 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			headMap.put("falTotCnt", gdEupsBatchConsoleInfoUpdate.getFalTotCnt());
 			headMap.put("falTotAmt", gdEupsBatchConsoleInfoUpdate.getFalTotAmt().scaleByPowerOfTen(2).intValue());
 			headMap.put("txnTlr", gdEupsBatchConsoleInfoUpdate.getTxnTlr());
-			System.out.println();
-			System.out.println(headMap);
 			Map<String, Object> resultMap=new HashMap<String, Object>(); 
 			resultMap.put(ParamKeys.EUPS_FILE_HEADER, headMap);
-			System.out.println(resultMap.get(ParamKeys.EUPS_FILE_HEADER));
 			resultMap.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(list));
 			logger.info("===============End  BatchDataResultFileAction  createFileMap");	
 			return resultMap;
