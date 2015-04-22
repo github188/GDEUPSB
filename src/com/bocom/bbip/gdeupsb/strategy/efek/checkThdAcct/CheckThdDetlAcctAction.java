@@ -152,7 +152,6 @@ public class CheckThdDetlAcctAction implements Executable {
 							Map<String, Object> mapCallThd=new HashMap<String, Object>();
 							mapCallThd.put("xH", i);
 							mapCallThd.put("fileName", fileName);
-							mapCallThd.put("fileMD5", "");
 							detailList.add(mapCallThd);
 					} catch (Exception e) {
 			            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
@@ -391,6 +390,7 @@ public class CheckThdDetlAcctAction implements Executable {
         while((firstLine=bufferedReader.readLine())!=null){
         		rsvFld3=firstLine;
         }
+        logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>fleMD5="+rsvFld3);
         if(StringUtils.isEmpty(rsvFld3)){
         		throw new CoreException("获取文件MD5失败");
         }
