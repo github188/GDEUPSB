@@ -200,7 +200,6 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 			String batNo=get(EupsBatchConsoleInfoRepository.class).find(eupsBatchConsoleInfo).get(0).getBatNo();
 			context.setData(ParamKeys.BAT_NO, batNo);
 			context.setData("PKGCNT", "000000");
-			context.setData("allLen", "180");
 			logger.info("==========End  BatchDataFileAction  userProcessToSubmit");
 
 		}
