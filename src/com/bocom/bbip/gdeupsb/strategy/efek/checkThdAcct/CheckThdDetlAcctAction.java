@@ -1,5 +1,8 @@
 package com.bocom.bbip.gdeupsb.strategy.efek.checkThdAcct;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -140,7 +143,10 @@ public class CheckThdDetlAcctAction implements Executable {
 							 
 							//向指定FTP路径放文件  上传
 				            operateFTPAction.putCheckFile(eupsThdFtpConfig);
+				            
+				            RecvEnCryptFile(eupsThdFtpConfig.getLocDir(), fileName, fileName,context);
 				            logger.info("=============对账文件上传成功==========");	
+				            
 				            context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
 							
 							Map<String, Object> mapCallThd=new HashMap<String, Object>();
@@ -340,6 +346,7 @@ public class CheckThdDetlAcctAction implements Executable {
 							                	context.setData(GDParamKeys.MSGTYP, "E");
 							                	context.setData(ParamKeys.RSP_CDE, "EFE999");
 							                	context.setData(ParamKeys.RSP_MSG, "交易失败，其他未知情况");
+							                	throw new CoreException(responseCode);
 							                }
 								}
 						}else{
@@ -358,7 +365,37 @@ public class CheckThdDetlAcctAction implements Executable {
 					context.setData(ParamKeys.TXN_STS, Constants.TXNSTS_REVERSE);
 					context.setData(ParamKeys.THD_TXN_STS, Constants.TXNSTS_FAIL);
 					context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
-				}
-				
+				}				
 	}
+    public  Process RecvEnCryptFile(String excPath, String srcFile, String objFile,Context context) throws IOException, InterruptedException, CoreRuntimeException, CoreException {
+    	logger.info("================Start BatchDataFileActiion  RecvEnCryptFile");	    	
+        String cmd="ssh icsadm@182.53.15.200 /app/ics/app/efek/bin/EfeFilSend.sh 182.53.201.46 bcm exchange dat/efek/send "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
+        logger.info("cmd=" + cmd);
+        Process proc = Runtime.getRuntime().exec(cmd);
+        logger.info("en-file success!");
+        logger.info("================End BatchDataFileActiion  RecvEnCryptFile");
+        
+        //获取MD5
+        logger.info("================Start Get  FileMD5");
+        EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("efekMD5");
+        eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/efek/");
+        eupsThdFtpConfig.setRmtWay("/app/ics/dat/efek/send");
+        eupsThdFtpConfig.setLocFleNme(srcFile+".MD5");
+        eupsThdFtpConfig.setRmtFleNme(srcFile+".MD5");
+        operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
+        FileReader fileReader=new FileReader(eupsThdFtpConfig.getLocDir()+eupsThdFtpConfig.getLocFleNme());
+        BufferedReader bufferedReader=new BufferedReader(fileReader);
+        String firstLine=null;
+        String rsvFld3="";
+        while((firstLine=bufferedReader.readLine())!=null){
+        		rsvFld3=firstLine;
+        }
+        if(StringUtils.isEmpty(rsvFld3)){
+        		throw new CoreException("获取文件MD5失败");
+        }
+        context.setData("fleMD5", rsvFld3);
+        logger.info("================End Get  FileMD5");
+        return proc;
+    }
+	
 }
