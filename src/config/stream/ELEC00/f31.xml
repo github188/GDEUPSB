@@ -9,6 +9,6 @@
 		<fixString name="traSendTime" length="6" /><!--  交易时间-->
 		<fixString name="fleNme" length="6" /><!-- 文件名称-->
 		<fixString name="fleTyp" length="6" /><!--  文件类型-->
-		<fixString name="fleMd5" length="6" /><!--  文件MD5-->
+		<fixString name="fleMD5" length="6" /><!--  文件MD5-->
 	
 	</segment>
