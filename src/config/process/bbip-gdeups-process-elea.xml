@@ -446,6 +446,22 @@
 	<!--签约一站通:查询客户信息 -->
 	<action class="com.bocom.bbip.gdeupsb.action.sign.AgtQryActInf"
 		id="eups.agtQryActInfByCrd" />
+		
+		
+		 <!-- 签约批量文件的导入  tandun add by-->
+   <process id="gdeups.agtBatchFileInputProcess" template="eups.simpleTran"
+		interceptors="bbip.defaultInterceptors">
+		<actions>
+			<action id="act" ref="gdeups.fileInputPreAction" />
+			<!-- <action id="act" ref="gdeups.agtFileSendImlServiceAction"  	operations="agtFleSndByGdsId" />
+			<action id="act" ref="gdeups.preSignDealCheckAction" /> -->
+		</actions>
+	</process> 
+	
+	<action class="com.bocom.bbip.gdeupsb.action.sign.BatchSignFileInputAction"
+		id="gdeups.fileInputPreAction" />
+		
+		
 	<!--福彩特色清算：清算轧差试算 -->
 	<process id="eups.agtQryActInfByCrdProcess" template="eups.simpleTran"
 		interceptors="bbip.defaultInterceptors">
