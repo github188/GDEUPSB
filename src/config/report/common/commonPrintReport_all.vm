@@ -6,26 +6,24 @@
 #para($f.fmt($d.prtDte, 'yyyy-MM-dd'))
                 日期:?          		共$totalPages 页            第 $pageNumber 页
 ┏━━┳━━━━┳━━━━━┳━━━━━━━━━━━┳━━━━━━━━━━━━┳━━━━━━━┳━━━━┳━━━━━┳━━━━━━━━━━┳━━━━━━━━┳━━━━━┳━━━━━━━━━━┳━━━━━━━━━┳━━━━┓
-┃序号┃交易类型┃单位编号  ┃      单位名称        ┃           账号         ┃     户名     ┃交易金额┃ 交易日期 ┃     交易时间       ┃   会计流水号   ┃会计日期  ┃      流水号        ┃第三方交易流水号  ┃交易状态┃
+┃序号┃交易类型┃               单位名称             ┃           账号         ┃     户名     ┃交易金额┃     交易时间       ┃   会计流水号   ┃会计日期  ┃      流水号        ┃第三方交易流水号  ┃交易状态┃
 ┣━━╋━━━━╋━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━━╋━━━━━━━╋━━━━╋━━━━━╋━━━━━━━━━━╋━━━━━━━━╋━━━━━╋━━━━━━━━━━╋━━━━━━━━━╋━━━━┫
 #end 
 #set($p.index=0)
 #td(1,$d.eles)#set($p.index=$p.index+1) 
 #para($p.index)
 #para($f.conv('txnTyp', $ele.TXN_TYP))
-#para($ele.COM_NO)
-#para($d.comNme)
+#para($f.conv('comNo', $ele.COM_NO))
 #para($ele.CUS_AC)
 #para($ele.CUS_NME)
 #para($ele.TXN_AMT)
-#para($f.fmt($ele.TXN_DTE, 'yyyy-MM-dd'))
 #para($f.fmt($ele.TXN_TME, 'yyyy-MM-dd hh:mm:ss'))
 #para($ele.MFM_VCH_NO)
 #para($f.fmt($ele.AC_DTE, 'yyyy-MM-dd'))
 #para($ele.SQN)
 #para($ele.THD_SQN)
 #para($f.conv('type', $ele.TXN_STS))
-┃?   ┃?     ┃?         ┃ ?                    ┃?                       ┃?             ┃?       ┃?        ┃?                   ┃?               ┃ ?        ┃?                   ┃?                 ┃?       ┃       
+┃?   ┃?     ┃?              ┃?                       ┃?             ┃?       ┃?                   ┃?               ┃ ?        ┃?                   ┃?                 ┃?       ┃       
 #end     
 #tf(9)   
 ┣━━┻━━━━┻━━━━━┻━━━━━━━━━━━┻━━━━━━━━━━━━┻━━━━━━━┻━━━━┻━━━━━┻━━━━━━━━━━┻━━━━━━━━┻━━━━━┻━━━━━━━━━━┻━━━━━━━━━┻━━━━┫
