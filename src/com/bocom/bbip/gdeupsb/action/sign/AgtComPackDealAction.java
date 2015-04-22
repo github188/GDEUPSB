@@ -1,5 +1,8 @@
 package com.bocom.bbip.gdeupsb.action.sign;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
@@ -14,7 +17,8 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
  * 
  */
 public class AgtComPackDealAction extends BaseAction {
-
+	@Autowired
+	BBIPPublicService bbipPublicService;
 	@Override
 	public void execute(Context context) throws CoreException, CoreRuntimeException {
 		log.info("AgtComPackDealAction start!..");
@@ -27,19 +31,13 @@ public class AgtComPackDealAction extends BaseAction {
 
 		String gdsBid = context.getData(GDParamKeys.SIGN_STATION_BID); // 业务标志
 		if ("44103".equals(gdsBid) || "44102".equals(gdsBid)) {
+			//tandun add by
 			String func = context.getData(GDParamKeys.SIGN_STATION_FUNC); // 功能码
-			if (GDConstants.SIGN_STATION_AGT_FUNC_UPDATE.equals(func)) {
-				// TODO:异步调用本地代理协议校验交易
-				// <Set>CcyCod=CNY</Set>
-				// <Set>PinTyp=2</Set>
-				// <Exec func="PUB:DeleteGroup" error="IGNORE">
-				// <Arg name="GroupName" value="InRec"/>
-				// </Exec>
-				// <Exec func="PUB:CallLocal" error="IGNORE">
-				// <Arg name="TxnCod" value="469911"/>
-				// <Arg name="ObjSvr" value="OFRTGDS1"/>
-				// </Exec>
-				// <Break/>
+			if (GDConstants.SIGN_STATION_AGT_FUNC_UPDATE.equals(func)||GDConstants.SIGN_STATION_AGT_FUNC_INSERT.equals(func)) {
+				context.setData(GDParamKeys.SIGN_STATION_BID, gdsBid);
+				context.setData(GDParamKeys.CCYCOD, "CNY");
+				context.setData("PinTyp", "2");
+				context=bbipPublicService.synExecute("gdeups.agtValidCheckProcess",context);
 			}
 
 		}
