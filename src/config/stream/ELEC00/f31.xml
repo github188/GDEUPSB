@@ -7,8 +7,8 @@
 		<fixString name="sqn" length="24" /><!-- 交易流水号 -->
 		<fixString name="traSendDate" length="8" /><!-- 交易日期 -->
 		<fixString name="traSendTime" length="6" /><!--  交易时间-->
-		<fixString name="fleNme" length="6" /><!-- 文件名称-->
-		<fixString name="fleTyp" length="6" /><!--  文件类型-->
+		<fixString name="fleNme" length="36" /><!-- 文件名称-->
+		<fixString name="fleTyp" length="2" /><!--  文件类型-->
 		<fixString name="fleMD5" length="32" /><!--  文件MD5-->
 	
 	</segment>
