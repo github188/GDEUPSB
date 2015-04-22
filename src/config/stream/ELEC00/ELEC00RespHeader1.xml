@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
 	encoding="GBK" trace="true"  filter="both,WEB-INF/classes/config/stream/translateDict.txt"> 
-	<segment name="head1">
+	<segment name="respHeader1">
 					<fixString name="allLen" length="10" />
 		<!-- 密钥索引	MYSY	Varchar2(3)  -->
 					<fixString name="seckeyIndex" length="3" />
