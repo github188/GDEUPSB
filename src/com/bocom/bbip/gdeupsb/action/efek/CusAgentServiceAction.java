@@ -104,6 +104,7 @@ public class CusAgentServiceAction extends BaseAction{
 				}
 				if(context.getData(ParamKeys.THD_SQN)!=null){										
 					context.setData("sqns", context.getData("sqns"));
+					context.setData("thdToBank", "thdToBank");
 						if(context.getData("oprTyp").toString().trim().equals("1")){
 								context.setData("callThd", "callThd");
 						}
