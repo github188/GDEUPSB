@@ -12,6 +12,7 @@ import com.bocom.bbip.comp.CommonRequest;
 import com.bocom.bbip.comp.account.AccountService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.eupsreport.ReportHelper;
+import com.bocom.bbip.eups.entity.EupsBatchInfoDetail;
 import com.bocom.bbip.eups.entity.MFTPConfigInfo;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
@@ -39,17 +40,18 @@ public class PrintTransJournalServiceActionWATR00 extends BaseAction {
 		String br = context.getData("br");
         logger.info("txnDat["+txnDat+"]br["+br+"]");
 
-        GdeupsWatBatInfTmp tmp = new GdeupsWatBatInfTmp();
-        tmp.setActDat(DateUtils.parse(txnDat));
-        tmp.setStatus("S");
+//        GdeupsWatBatInfTmp tmp = new GdeupsWatBatInfTmp();
+        EupsBatchInfoDetail tmp = new EupsBatchInfoDetail();
+        tmp.setTxnDte(DateUtils.parse(txnDat));
+        
         List<GdeupsWatBatInfTmp> ret=get(GdeupsWatBatInfTmpRepository.class).find(tmp);
         List<Map<String,Object>> retMap=(List<Map<String, Object>>) BeanUtils.toMaps(ret);
         double totAmt=0.0;
         for(Map map:retMap){
-        	map.put("cusAc", map.get("bcount"));
-        	map.put("thdCusNo", map.get("hno"));
-        	map.put("txnAmt", NumberUtils.centToYuanAsString(map.get("je").toString()));
-        	map.put("bakFld1", "S");
+        	
+        	map.put("thdCusNo", map.get("agtSrvCusId"));
+//        	map.put("txnAmt", NumberUtils.centToYuanAsString(map.get("je").toString()));
+//        	map.put("bakFld1", "S");
         	totAmt+=Double.parseDouble(map.get("txnAmt").toString());
         	
         }

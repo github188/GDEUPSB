@@ -128,7 +128,7 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 		logger.info("@@@@@@@@@@@@eupsThdFtpConfig=" + eupsThdFtpConfig);
 		OperateFTPActionExt operateFTP = new OperateFTPActionExt();
 		operateFTP.putCheckFile(eupsThdFtpConfig);
-		File watFile = new File(eupsThdFtpConfig.getLocDir());
+		File watFile = new File(eupsThdFtpConfig.getLocDir()+"/"+fileName);
 		String fileSize = watFile.length()+"";
 		logger.info("filesize=="+fileSize);
 		
@@ -151,10 +151,10 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 		context.setData("md5digest", " ");
 		
 		
-		context.setData("path", "");
+//		context.setData("path", "");
 		context.setData("filename", fileName);
 		context.setData("filesize", fileSize);
-		context.setData("reserved", "");
+//		context.setData("reserved", "");
 		callThdTradeManager.trade(context);
 		logger.info("AfterBatchAcpServiceImplWATR00 end ... ...");
 	}
