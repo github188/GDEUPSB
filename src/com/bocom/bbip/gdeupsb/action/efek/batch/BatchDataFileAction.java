@@ -141,9 +141,10 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 			headMap.put(GDParamKeys.TOT_COUNT, totCnt);
 			headMap.put(ParamKeys.TOT_AMT, totAmts);
 			//detail
+			String batNo=context.getData(ParamKeys.BAT_NO).toString();
 			GDEupsEleTmp gdEupsEleTmps=new GDEupsEleTmp();
 			gdEupsEleTmps.setComNo(comNo);
-			List<GDEupsEleTmp> gdEupsEleTmpList=gdEupsEleTmpRepository.findAllOrderBySqn();
+			List<GDEupsEleTmp> gdEupsEleTmpList=gdEupsEleTmpRepository.findAllOrderBySqn(batNo);
 			
 			List<AgtFileBatchDetail> detailList=new ArrayList<AgtFileBatchDetail>();
 			for (GDEupsEleTmp gdEupsEleTmp : gdEupsEleTmpList) {
