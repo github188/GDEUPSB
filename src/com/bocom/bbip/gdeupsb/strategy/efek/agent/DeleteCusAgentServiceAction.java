@@ -55,7 +55,10 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 			Result delResult = bgspServiceAccessObject.callServiceFlatting("deleteAgentCollectAgreement",context.getDataMap());
 			logger.info("==========delResult："+delResult);
 			if(delResult.isSuccess()){
-					if(context.getData("bankToThd")!=null){
+				if(context.getData("oprTypeBank") !=null){
+					logger.info("==========不通知第三方");
+				}else{
+					if(context.getData("bankToThd")!=null && context.getData("thdToBank")==null){
 							try{
 								constantOfSoapUI(context);
 								context.setData(ParamKeys.TXN_DTE, DateUtils.format(txnDte,DateUtils.STYLE_yyyyMMdd));
@@ -149,7 +152,7 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 								context.setData("PKGCNT", "000000");
 							}
 					}else{
-						 if(context.getData("callThd")==null){
+						 if(context.getData("bankToThd")==null && context.getData("thdToBank")!=null ){
 								  //保存到EupsCusAgentJournal表中
 								log.info("============insert   EupsCusAgentJournal");
 								EupsCusAgentJournal eupsCusAgentJournal=new EupsCusAgentJournal();
@@ -179,6 +182,7 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 						context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse((thdTxnDte+thdTxnTme),DateUtils.STYLE_yyyyMMddHHmmss));
 						context.setData("PKGCNT", "000000");
 					}
+				}
 			}else{
 					context.setData("thdRspCde", "83");
 					throw new CoreException("解约失败");
