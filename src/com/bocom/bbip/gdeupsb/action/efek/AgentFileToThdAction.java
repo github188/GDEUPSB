@@ -1,5 +1,8 @@
 package com.bocom.bbip.gdeupsb.action.efek;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -10,6 +13,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
+import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
@@ -40,6 +44,8 @@ public class AgentFileToThdAction extends BaseAction{
 	EupsCusAgentJournalRepository eupsCusAgentJournalRepository;
 	@Autowired
 	OperateFileAction operateFileAction;
+	@Autowired
+	OperateFTPAction operateFTPAction;
 	@Autowired
 	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
 		@Override
@@ -86,12 +92,22 @@ public class AgentFileToThdAction extends BaseAction{
 						String locName="HDXY0301"+comNo+DateUtils.format(txnDate, DateUtils.STYLE_yyyyMMdd)+string+".txt";
 						context.setData("fleNme", locName);
 						context.setData("fleTyp", "04");
-						context.setData("fleMd5", "");
 						EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("efekAgent");
 						eupsThdFtpConfig.setLocFleNme(locName);
 						eupsThdFtpConfig.setRmtFleNme(locName);
+						eupsThdFtpConfig.setRmtWay("/app/ics/dat/efek/send");
 						eupsThdFtpConfig.setFtpDir("1");
-						operateFileAction.createCheckFile(eupsThdFtpConfig, "efekAgent", locName, resultMap);
+						operateFileAction.createCheckFile(eupsThdFtpConfig, "efekAgent", locName, resultMap);						
+						try {
+							RecvEnCryptFile(eupsThdFtpConfig.getLocDir(), locName, locName,context);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
 						callThd(context);
 				}
 				log.info("==============End   AgentFileToThdAction");
@@ -195,4 +211,36 @@ public class AgentFileToThdAction extends BaseAction{
 						}	
 						
 			}
+
+		 public  Process RecvEnCryptFile(String excPath, String srcFile, String objFile,Context context) throws IOException, InterruptedException, CoreRuntimeException, CoreException {
+		    	log.info("================Start BatchDataFileActiion  RecvEnCryptFile");	    	
+		        String cmd="ssh icsadm@182.53.15.200 /app/ics/app/efek/bin/EfeFilSend.sh 182.53.201.46 bcm exchange dat/efek/send "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
+		        log.info("cmd=" + cmd);
+		        Process proc = Runtime.getRuntime().exec(cmd);
+		        log.info("en-file success!");
+		        log.info("================End BatchDataFileActiion  RecvEnCryptFile");
+		        
+		        //获取MD5
+		        log.info("================Start Get  FileMD5");
+		        EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("efekMD5");
+		        eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/efek/");
+		        eupsThdFtpConfig.setRmtWay("/app/ics/dat/efek/send");
+		        eupsThdFtpConfig.setLocFleNme(srcFile+".MD5");
+		        eupsThdFtpConfig.setRmtFleNme(srcFile+".MD5");
+		        operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
+		        
+		        FileReader fileReader=new FileReader(eupsThdFtpConfig.getLocDir()+eupsThdFtpConfig.getLocFleNme());
+		        BufferedReader bufferedReader=new BufferedReader(fileReader);
+		        String firstLine=null;
+		        String rsvFld3="";
+		        while((firstLine=bufferedReader.readLine())!=null){
+		        		rsvFld3=firstLine;
+		        }
+		        if(StringUtils.isEmpty(rsvFld3)){
+		        		throw new CoreException("获取文件MD5失败");
+		        }
+		        context.setData("fleMD5", rsvFld3);
+		        log.info("================End Get  FileMD5");
+		        return proc;
+		    }
 }
