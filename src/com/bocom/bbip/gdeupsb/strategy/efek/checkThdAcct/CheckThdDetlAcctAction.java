@@ -70,7 +70,7 @@ public class CheckThdDetlAcctAction implements Executable {
 	        context.setData(ParamKeys.CHL_TYP, "90");
 	        
 			//日期
-			Date txnDte=DateUtils.parse(DateUtils.formatAsSimpleDate(new Date()));
+			Date txnDte=DateUtils.calDate(DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())),-1);
 //			txnDte=DateUtils.parse("2015-04-10");
 			context.setData(ParamKeys.TXN_DTE, txnDte);
 			//一些常量
