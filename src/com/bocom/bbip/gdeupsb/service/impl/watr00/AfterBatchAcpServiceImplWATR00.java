@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.service.impl.watr00;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -127,7 +128,9 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 		logger.info("@@@@@@@@@@@@eupsThdFtpConfig=" + eupsThdFtpConfig);
 		OperateFTPActionExt operateFTP = new OperateFTPActionExt();
 		operateFTP.putCheckFile(eupsThdFtpConfig);
-		
+		File watFile = new File(eupsThdFtpConfig.getLocDir());
+		String fileSize = watFile.length()+"";
+		logger.info("filesize=="+fileSize);
 		
 		
 		context.setData("type", "Y004");
@@ -148,9 +151,9 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 		context.setData("md5digest", " ");
 		
 		
-		context.setData("path", eupsThdFtpConfig.getRmtWay());
+		context.setData("path", "");
 		context.setData("filename", fileName);
-		context.setData("filesize", "");
+		context.setData("filesize", fileSize);
 		callThdTradeManager.trade(context);
 		logger.info("AfterBatchAcpServiceImplWATR00 end ... ...");
 	}
