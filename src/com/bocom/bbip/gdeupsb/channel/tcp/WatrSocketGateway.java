@@ -157,32 +157,102 @@ public class WatrSocketGateway implements Gateway<Object, Object> {
 	public Object sendAndReceive(Object inputByte, String paramString) throws ConnectionException, SocketReadException, SocketWriteException,
 			SocketTimeOutException {
 
+//		if (this.streamResolver == null) {
+//			throw new IllegalArgumentException("no stream resolver defined");
+//		}
+//		byte[] arrayOfByte1 = (byte[]) inputByte;
+//		log.info("原始报文=" + Hex.toDumpString(arrayOfByte1));
+//		
+//		byte[] sendByte=new byte[arrayOfByte1.length];
+//		String sndStrPre;
+//		try {
+//			sndStrPre = new String(arrayOfByte1, "GBK");
+//			log.info("sndStrPre=" + sndStrPre);
+//			String detailDate = new String(sndStrPre.substring(129).getBytes("GBK"),"GBK");
+//
+//			log.info("detailDate,即拼接在后面的报文内容=" + detailDate);
+//			
+//			byte[] orgB=new byte[sndStrPre.length()-129];
+//			System.arraycopy(arrayOfByte1, 129, orgB, 0, orgB.length);
+//			
+//			log.info("加密的字段为:"+new String(orgB));
+//			String md5Date = CryptoUtils.md5(orgB); // 校验位
+//			log.info("md5Date=" + md5Date);
+//
+////			StringBuffer sb = new StringBuffer();
+////			log.info("初始报文头(不含校验位)=" + sndStrPre.substring(0, 97));
+////			sb.append(sndStrPre.substring(0, 97)); // 初始报文头(不含校验位)
+////			sb.append(md5Date);
+////			
+////			sb.append(detailDate);
+////			arrayOfByte1 = sb.toString().getBytes("GBK");
+//			
+//			System.arraycopy(arrayOfByte1, 0, sendByte, 0, 97);
+//			System.arraycopy(md5Date, 0, sendByte, 97, 32);
+//			System.arraycopy(arrayOfByte1, 97, sendByte, 97, arrayOfByte1.length-97);
+//		} catch (UnsupportedEncodingException e) {
+//			throw new SocketReadException(false, "socket write error", e);
+//		}
+//		int m = 0;
+//		if (this.booleanFalse) {
+//			m = this.k.getAndIncrement();
+//			a(arrayOfByte1, paramString, m, false);
+//		}
+//		log.info("send byte: \n" + Hex.toDumpString(sendByte));
+//
+//		Socket localSocket = newSocket();
+//		try {
+//			log.info("最后发送的byte="+Hex.toDumpString(sendByte));
+//			localSocket.getOutputStream().write(sendByte);
+//		} catch (IOException localIOException) {
+//			throw new SocketWriteException(false, "socket write error", localIOException);
+//		}
+//		byte[] arrayOfByte2 = null;
+//		try {
+//			arrayOfByte2 = this.streamResolver.resolve(localSocket.getInputStream());
+//			if (this.booleanFalse) {
+//				a(arrayOfByte2, paramString, m, true);
+//			}
+//		} catch (IOException localIOException) {
+//			throw new SocketReadException(false, "socket read error", localIOException);
+//		} catch (JumpRuntimeException localJumpRuntimeException) {
+//			Throwable localThrowable = localJumpRuntimeException.getCause();
+//			if ((localThrowable instanceof SocketTimeoutException))
+//				throw new SocketTimeOutException(true, "socket time out", localJumpRuntimeException);
+//		} finally {
+//			close(localSocket);
+//		}
+//		return arrayOfByte2;
+		
+		
+		
+		
+		
+//
 		if (this.streamResolver == null) {
 			throw new IllegalArgumentException("no stream resolver defined");
 		}
 		byte[] arrayOfByte1 = (byte[]) inputByte;
-		log.info("原始报文=" + arrayOfByte1);
+		log.info("鍘熷鎶ユ枃=" + arrayOfByte1);
 
 		String sndStrPre;
 		try {
 			sndStrPre = new String(arrayOfByte1, "GBK");
 			log.info("sndStrPre=" + sndStrPre);
-			String detailDate = new String(sndStrPre.substring(129).getBytes("GBK"),"GBK");
+			String detailDate = sndStrPre.substring(129); // 瀛愭姤鏂�
 
-			log.info("detailDate,即拼接在后面的报文内容=" + detailDate);
-			
-			byte[] orgB=new byte[129];
-			
-			String md5Date = CryptoUtils.md5(orgB); // 校验位
+			log.info("detailDate,鍗虫嫾鎺ュ湪鍚庨潰鐨勬姤鏂囧唴瀹�" + detailDate);
+			String md5Date = CryptoUtils.md5(detailDate.toString().getBytes("GBK")); // 鏍￠獙浣�
 			log.info("md5Date=" + md5Date);
 
 			StringBuffer sb = new StringBuffer();
-			log.info("初始报文头(不含校验位)=" + sndStrPre.substring(0, 97));
-			sb.append(sndStrPre.substring(0, 97)); // 初始报文头(不含校验位)
+			log.info("鍒濆鎶ユ枃澶�涓嶅惈鏍￠獙浣�=" + sndStrPre.substring(0, 97));
+			sb.append(sndStrPre.substring(0, 97)); // 鍒濆鎶ユ枃澶�涓嶅惈鏍￠獙浣�
 			sb.append(md5Date);
-			
 			sb.append(detailDate);
+
 			arrayOfByte1 = sb.toString().getBytes("GBK");
+
 		} catch (UnsupportedEncodingException e) {
 			throw new SocketReadException(false, "socket write error", e);
 		}
@@ -215,6 +285,8 @@ public class WatrSocketGateway implements Gateway<Object, Object> {
 			close(localSocket);
 		}
 		return arrayOfByte2;
+		
+		
 	}
 
 	protected void config(Socket paramSocket) throws SocketException {
