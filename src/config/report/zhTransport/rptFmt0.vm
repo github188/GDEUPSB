@@ -1,7 +1,7 @@
 #report(50)
 #rh(4)
 #para($d.txnDte)
-#para($d.txnTlr)
+#para($d.tlr)
 #para($d.startDate)
 #para($d.endDate)
                             代收路桥费清算报表

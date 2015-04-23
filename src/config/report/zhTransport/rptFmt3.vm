@@ -5,7 +5,7 @@
 #end
 #th(2)
 #para($d.txnDte)
-#para($d.txnTlr)
+#para($d.tlr)
 #para($d.startDate)
 #para($d.endDate)
 打印日期：?          报表柜员：?         日期范围：?        到 ?
