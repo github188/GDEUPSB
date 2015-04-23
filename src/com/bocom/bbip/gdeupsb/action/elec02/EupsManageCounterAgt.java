@@ -7,6 +7,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
@@ -41,6 +42,46 @@ public class EupsManageCounterAgt extends BaseAction {
 		logger.info("===============oprType: " + oprType);
 		
 		
+		
+		switch (oprType) {
+		case ADD:
+			buildContextAndCallThd(context);
+			addAgentDeal(context);
+			break;
+		case UPDATE:
+			checkOldBaseInfo(context);
+			buildContextAndCallThd(context);
+			updateAgentDeal(context);
+			break;
+		case QUERY:
+			buildContextAndCallThd(context);
+			queryAgentDeal(context);
+			break;
+		case DELETE:
+			buildContextAndCallThd(context);
+			deleteAgentDeal(context);
+			break;
+		}
+
+	}
+
+	private void checkOldBaseInfo(Context context)  throws CoreException {
+		String feeNum = context.getData("JFH");
+		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
+		agtElecTmp.setFeeNum(feeNum);
+		List<GdeupsAgtElecTmp> tmpList = get(GdeupsAgtElecTmpRepository.class).find(agtElecTmp);
+		if (null == tmpList || CollectionUtils.isEmpty(tmpList)) {
+			logger.info("There are no records for select check trans journal ");
+			throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
+		}
+		String OAC = tmpList.get(0).getActNo();
+		String OKH = tmpList.get(0).getRemark();
+		context.setData("OAC", OAC);
+		context.setData("OKH", OKH);
+		
+	}
+
+	private void buildContextAndCallThd(Context context) throws CoreException {
 		
 		Date date = new Date();
 		String YYYYMMDD = DateUtils.format(date, DateUtils.STYLE_yyyyMMdd);
@@ -117,25 +158,7 @@ public class EupsManageCounterAgt extends BaseAction {
 //		}
 		
 		context.setData("comCode", "0500");
-		context.setData("feeCode", "0000");
-		
-		
-		
-		switch (oprType) {
-		case ADD:
-			addAgentDeal(context);
-			break;
-		case UPDATE:
-			updateAgentDeal(context);
-			break;
-		case QUERY:
-			queryAgentDeal(context);
-			break;
-		case DELETE:
-			deleteAgentDeal(context);
-			break;
-		}
-
+		context.setData("feeCode", "0000");		
 	}
 
 	private void addAgentDeal(Context context) throws CoreException {
@@ -154,7 +177,15 @@ public class EupsManageCounterAgt extends BaseAction {
 
 	private void updateAgentDeal(Context context) throws CoreException {
 		GdeupsAgtElecTmp agtElecTmp = toGdeupsAgtElecTmp(context);
-		get(GdeupsAgtElecTmpRepository.class).updateByAc(agtElecTmp);
+		
+		String oldCardNo = context.getData("OAC");
+		String oldBankNum = context.getData("OKH");
+		
+		agtElecTmp.setOldBankNum(oldBankNum);
+		agtElecTmp.setOldCardNo(oldCardNo);
+//		get(GdeupsAgtElecTmpRepository.class).updateByAc(agtElecTmp);
+		
+		get(GdeupsAgtElecTmpRepository.class).updateByFeeNum(agtElecTmp);
 
 	}
 
@@ -206,7 +237,7 @@ public class EupsManageCounterAgt extends BaseAction {
 		agtElecTmp.setPhoneNum((String) context.getData("MOB"));
 		agtElecTmp.setTelNum((String) context.getData("TEL"));
 		agtElecTmp.setPrcessPassword((String) context.getData("Pin"));
-
+		agtElecTmp.setNewBankNum((String)context.getData(ParamKeys.BR));
 		return agtElecTmp;
 	}
 
