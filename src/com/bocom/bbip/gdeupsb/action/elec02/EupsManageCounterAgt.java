@@ -186,7 +186,7 @@ public class EupsManageCounterAgt extends BaseAction {
 		
 		String oldCardNo = context.getData("OAC");
 		String oldBankNum = context.getData("OKH");
-		
+		  
 		agtElecTmp.setOldBankNum(oldBankNum);
 		agtElecTmp.setOldCardNo(oldCardNo);
 //		get(GdeupsAgtElecTmpRepository.class).updateByAc(agtElecTmp);
