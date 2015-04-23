@@ -1,9 +1,9 @@
 #report(50)
 #rh(4)
-#para($d.txnDte)
-#para($d.tlr)
-#para($d.startDate)
-#para($d.endDate)
+#lpara($d.txnDte)
+#lpara($d.tlr)
+#lpara($d.startDate)
+#lpara($d.endDate)
                                  代收路桥费清算报表
         打印日期：?          报表柜员：?          日期范围：?        到 ?
    ------------------------------------------------------------------------------------------
@@ -11,22 +11,22 @@
 #end
 #set($p.index=0)
 #td(1,$d.eles)#set($p.index=$p.index+1) 
-#para($p.index)
-#para($ele.STS)
-#para($ele.TOT_CNT)
-#para($ele.TOT_AMT)
+#lpara($p.index)
+#lpara($ele.STS)
+#lpara($ele.TOT_CNT)
+#lpara($ele.TOT_AMT)
 
- 	      ?                    ?             ?                          ?
+ 	   ?                    ?          ?                          ?
  #end   
 #tf(2)
    ------------------------------------------------------------------------------------------
-#para($d.totCnt)
-#para($d.totAmt)
-#para($d.sucTotCnt)
-#para($d.sucTotAmt)
+#lpara($d.totCnt)
+#lpara($d.totAmt)
+#lpara($d.sucTotCnt)
+#lpara($d.sucTotAmt)
                 总笔数：           ?
                 总金额：           ?
-             划拨总记录数：           ?
-             划拨总金额：           ?
+         划拨总记录数：           ?
+            划拨总金额：           ?
 #end
 #end
