@@ -90,5 +90,6 @@ public interface GdsAgtWaterRepository extends PagingAndSortingRepository<GdsAgt
 	
 	/**广东联通 签约一站通-协议维护：新增协议子表协议信息 add by tandun*/
 	public void insertgduncbDetailAgtInf(Map<String, Object> inpara);
-	
+	/**验证是否已签约*/
+	public List<Map<String, Object>> findExist(Map<String, Object> inpara);
 }
