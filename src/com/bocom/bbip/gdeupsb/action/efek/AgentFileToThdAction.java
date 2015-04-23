@@ -98,8 +98,9 @@ public class AgentFileToThdAction extends BaseAction{
 						eupsThdFtpConfig.setLocFleNme(locName);
 						eupsThdFtpConfig.setRmtFleNme(locName);
 						eupsThdFtpConfig.setRmtWay("/app/ics/dat/efek/send");
-						eupsThdFtpConfig.setFtpDir("0");
-						operateFileAction.createCheckFile(eupsThdFtpConfig, "efekAgent", locName, resultMap);						
+						eupsThdFtpConfig.setFtpDir("1");
+						operateFileAction.createCheckFile(eupsThdFtpConfig, "efekAgent", locName, resultMap);	
+						
 						try {
 							RecvEnCryptFile(eupsThdFtpConfig.getLocDir(), locName, locName,context);
 						} catch (IOException e) {
@@ -109,7 +110,7 @@ public class AgentFileToThdAction extends BaseAction{
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						
+						operateFTPAction.putCheckFile(eupsThdFtpConfig);
 						callThd(context);
 				}
 				log.info("==============End   AgentFileToThdAction");
