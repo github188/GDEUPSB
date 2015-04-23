@@ -185,13 +185,16 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			headMap.put("comNo", gdEupsBatchConsoleInfoUpdate.getComNo());
 			headMap.put("rsvFld13", "301");
 			headMap.put("rsvFld12", "RMB");
+			headMap.put("rsvFld11", "070");
 			headMap.put("rsvFld3", gdEupsBatchConsoleInfoUpdate.getRsvFld3());
 			headMap.put("rsvFld4", gdEupsBatchConsoleInfoUpdate.getRsvFld4());
 			headMap.put("totCnt", gdEupsBatchConsoleInfoUpdate.getTotCnt());
-			headMap.put("totAmt",gdEupsBatchConsoleInfoUpdate.getTotAmt().scaleByPowerOfTen(2).intValue());
+			headMap.put("totAmt",gdEupsBatchConsoleInfoUpdate.getTotAmt().scaleByPowerOfTen(2).intValue());			
 			headMap.put("sucTotCnt", gdEupsBatchConsoleInfoUpdate.getSucTotCnt());
+			
 			headMap.put("sucTotAmt", gdEupsBatchConsoleInfoUpdate.getSucTotAmt().scaleByPowerOfTen(2).intValue());
 			headMap.put("falTotCnt", gdEupsBatchConsoleInfoUpdate.getFalTotCnt());
+			
 			headMap.put("falTotAmt", gdEupsBatchConsoleInfoUpdate.getFalTotAmt().scaleByPowerOfTen(2).intValue());
 			headMap.put("txnTlr", gdEupsBatchConsoleInfoUpdate.getTxnTlr());
 			Map<String, Object> resultMap=new HashMap<String, Object>(); 
