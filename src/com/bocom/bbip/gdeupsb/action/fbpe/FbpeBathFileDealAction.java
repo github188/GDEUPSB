@@ -81,6 +81,8 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
         eupsThdFtpConfig.setRmtFleNme(fileName);
         eupsThdFtpConfig.setLocFleNme(fileName);
         eupsThdFtpConfig.setFtpDir("1");
+        String path="./save/tfiles/" + context.getData(ParamKeys.BR)+ "/" + context.getData(ParamKeys.TELLER) + "/";
+		eupsThdFtpConfig.setRmtWay(path);
 		operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
 		
 		logger.info("===============获取文件成功");
