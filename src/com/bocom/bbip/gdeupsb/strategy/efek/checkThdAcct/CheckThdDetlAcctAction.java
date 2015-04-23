@@ -230,8 +230,12 @@ public class CheckThdDetlAcctAction implements Executable {
 			checkDetailAcct.setCusNme(eupsStreamNo.getCusNme());
 			checkDetailAcct.setTxnDte(DateUtils.format(eupsStreamNo.getTxnTme(),DateUtils.STYLE_FULL));
 			BigDecimal txnAmt=eupsStreamNo.getTxnAmt().scaleByPowerOfTen(2);
+			String txnAmts=txnAmt+"";
+			while(txnAmts.length()<16){
+					txnAmts="0"+txnAmts;
+			}
 			checkDetailAcct.setBankNo(eupsStreamNo.getThdObkCde());
-			checkDetailAcct.setTxnAmt(txnAmt);
+			checkDetailAcct.setTxnAmt(txnAmts);
 			String str="";
 				if("010".equals(busType)){
 					str="010   供电柜台现金";
