@@ -256,6 +256,7 @@ public class BatchSignFileInputAction extends BaseAction{
 		   }
 		   //==行证件号码不能为空
          String idno=(String)detailList.get(i).get("idno");
+         context.setData("idNo", idno);
 		 if(StringUtils.isEmpty(idno)){
 			 log.info("check filedetail idno error...... "+"文件明细第，"+i+"行证件号码不能为空");
 				throw new CoreException(GDErrorCodes.EUPS_FILE_DETAIL_ERROR,i+"行证件号码不能为空");	   
@@ -382,6 +383,7 @@ public class BatchSignFileInputAction extends BaseAction{
 		    context.setData("actNo", actno);
 		    context.setData("actTyp", acttyp);
 		    context.setData("actNm", actnm);
+		    context.setData("nodNo", context.getData(ParamKeys.BK));
 		    context.setData("vchNo", detailList.get(i).get("vchno"));
 		    context.setData("idType", idtyp);
 		    context.setData("telTyp", "3");
