@@ -2,12 +2,9 @@ package com.bocom.bbip.gdeupsb.interceptors;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 import com.bocom.bbip.gdeupsb.utils.MacEcbUtils;
 import com.bocom.bbip.gdeupsb.utils.UtilsCnlty;
@@ -72,28 +69,48 @@ public class GDMOBBEncodeTcpInterceptersTransfrom implements Transform {
 	                s1 = ((Map<String,Object>)obj).toString();
 	            else
 	                s1 = (String)obj;
-	        	Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]");
-				Matcher m = p.matcher(s1);
-				int count = 0;
-				while (m.find()) {
-					count++;
-				}
-	            s1 =UtilsCnlty.fillZero(String.valueOf((s1.length()+4+count)),4) + s1;
+	            
+	            
 	            try {
+					byte[] bs = s1.getBytes("GBK");
+					
 	            	String strCode = s1.substring(8,12);
 	            	if(!strCode.equals("0004")){
-	            		String macCode = MacEcbUtils.getGdmobbMac(s1, "GBK")[1];
+	            		String	macCode = MacEcbUtils.getGdmobbMac(s1.substring(0,s1.length()-8), "GBK")[1];
+	            		s1 =UtilsCnlty.fillZero(String.valueOf(bs.length+4),4) + s1;
 	            		s1 = s1.substring(0, s1.length()-8)+macCode;
+	            		obj = s1.getBytes("GBK");
+	            	}else{
+	            		s1 =UtilsCnlty.fillZero(String.valueOf(bs.length+4),4) + s1;
+		            	obj = s1.getBytes("GBK");
 	            	}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-	            try {
-					obj = s1.getBytes("GBK");
 				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					throw new JumpException(e.getMessage());
+				}catch(Exception e1){
+					throw new JumpException(e1.getMessage());
 				}
+	            
+//	        	Pattern p = Pattern.compile("[\\u4e00-\\u9fa5]");
+//				Matcher m = p.matcher(s1);
+//				int count = 0;
+//				while (m.find()) {
+//					count++;
+//				}
+//	            s1 =UtilsCnlty.fillZero(String.valueOf((s1.length()+4+count)),4) + s1;
+//	            try {
+//	            	String strCode = s1.substring(8,12);
+//	            	if(!strCode.equals("0004")){
+//	            		String macCode = MacEcbUtils.getGdmobbMac(s1, "GBK")[1];
+//	            		s1 = s1.substring(0, s1.length()-8)+macCode;
+//	            	}
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//	            try {
+//					obj = s1.getBytes("GBK");
+//				} catch (UnsupportedEncodingException e) {
+//					e.printStackTrace();
+//				}
 	          
 	            logger.debug((new StringBuilder(String.valueOf(b))).append(s1).toString());
 	        }

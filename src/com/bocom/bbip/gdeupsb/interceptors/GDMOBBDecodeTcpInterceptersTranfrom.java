@@ -17,7 +17,7 @@ public class GDMOBBDecodeTcpInterceptersTranfrom implements Transform{
 	 private static String b = "Response Message Data : ";
 	 public GDMOBBDecodeTcpInterceptersTranfrom()
 	    {
-	    	a = "UTF8";
+	    	a = "GBK";
 	    }
 
 	    public void setEncoding(String s)
@@ -81,9 +81,12 @@ public class GDMOBBDecodeTcpInterceptersTranfrom implements Transform{
 //						}else{
 //							log.info("mac校验已通过...");
 //						}
-					} catch (Exception e) {
+					} catch (UnsupportedEncodingException e) {
 						throw new JumpException(e.getMessage());
+					}catch(Exception e1){
+						throw new JumpException(e1.getMessage());
 					}
+		            
 	            }
 	            log.debug((new StringBuilder(String.valueOf(b))).append(s1).toString());
 	        }
