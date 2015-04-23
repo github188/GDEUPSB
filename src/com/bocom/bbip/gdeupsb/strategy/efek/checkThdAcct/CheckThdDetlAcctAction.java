@@ -120,7 +120,8 @@ public class CheckThdDetlAcctAction implements Executable {
 							
 							//设置本地对账文件名称
 		//					对账文件名称
-							String	comNo  =(String)maps.get("COM_NO");
+							String	comNo  =maps.get("COM_NO").toString().substring(0,6);
+							comNo=comNo+"00";
 							String  busType=(String)maps.get("RSV_FLD4");
 							String  payType=(String)maps.get("RSV_FLD5");
 							String xuhao=i+"";
