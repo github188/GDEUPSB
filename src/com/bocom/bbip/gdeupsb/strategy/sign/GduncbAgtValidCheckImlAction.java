@@ -145,11 +145,11 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 		gduncbHeaderVo.setEparchy_code("0020");//待确认
 		gduncbHeaderVo.setMsg_receiver("5100");
 		gduncbHeaderVo.setOper_id(UtilsCnlty.fillEmpty(Oper_id, 20));
-		gduncbHeaderVo.setOperate_name(UtilsCnlty.fillEmpty(Operate_name, 60));
+		gduncbHeaderVo.setOperate_name(Operate_name);
 		gduncbHeaderVo.setProcess_time(strTime);
 		gduncbHeaderVo.setRsp_code(UtilsCnlty.fillEmpty(Rsp_code, 16));
 		gduncbHeaderVo.setRsp_desc(UtilsCnlty.fillEmpty(Rsp_desc, 500));
-		gduncbHeaderVo.setService_name(UtilsCnlty.fillEmpty(Service_name, 60));
+		gduncbHeaderVo.setService_name(Service_name);
 		gduncbHeaderVo.setTest_flag("0");
 		gduncbHeaderVo.setTrans_ido(UtilsCnlty.fillEmpty(sqn, 30));
 		gduncbHeaderVo.setMsg_sender("5101");
@@ -164,8 +164,8 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 		if(gduncbResult.getStatus()==0){
 			 Operate_name="acctInfoChange";
 			 Service_name="AcctInfoService";
-			gduncbHeaderVo.setOperate_name(UtilsCnlty.fillEmpty(Operate_name, 60));
-			gduncbHeaderVo.setService_name(UtilsCnlty.fillEmpty(Service_name, 60));
+			gduncbHeaderVo.setOperate_name(Operate_name);
+			gduncbHeaderVo.setService_name(Service_name);
 		
 			//报文体
 			String super_bank_code="JT";
