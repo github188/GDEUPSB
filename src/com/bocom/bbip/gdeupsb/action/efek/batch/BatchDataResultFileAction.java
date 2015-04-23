@@ -127,13 +127,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			try {
-				//沉睡5秒
-				Thread.currentThread().sleep(30*1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
 			//TODO 通知第三方
 			callThd(context,gdeupsBatchConsoleInfo,fileName);
 			ret1 = get(BBIPPublicService.class).unlock(locked);
@@ -181,7 +175,6 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 						GDEupsEleTmp gdEupsEleTmp=gdEupsEleTmpRepository.findOne(eupsBatchInfoDetail.getRmk2());
 						//<!--客户账号|姓名|金额|代理服务客户标识|代理服务客户姓名|本行标志|开户银行|备注一|备注二|状态|描述  -->
 						gdEupsEleTmp.setRsvFld5(eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2).signum()+"");
-						gdEupsEleTmp.setPaymentResult(eupsBatchInfoDetail.getSts());
 						gdEupsEleTmp.setBankSqn(gdEupsEleTmp.getSqn());
 						gdEupsEleTmp.setBankNo("301");
 						//TODO 
@@ -189,6 +182,10 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 						gdEupsEleTmp.setRsvFld1(DateUtils.format(date, DateUtils.STYLE_yyyyMMdd));
 						gdEupsEleTmp.setRsvFld2(DateUtils.formatAsHHmmss(date));
 						gdEupsEleTmp.setBakFld(eupsBatchInfoDetail.getRmk1());
+						
+						if(eupsBatchInfoDetail.getSts().equals("S")){
+							gdEupsEleTmp.setPaymentResult("00");
+						}
 						list.add(gdEupsEleTmp);
 			}
 			Map<String, Object> headMap=new HashMap<String, Object>();
