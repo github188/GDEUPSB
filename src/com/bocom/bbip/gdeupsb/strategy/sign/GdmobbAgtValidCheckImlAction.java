@@ -177,7 +177,7 @@ public class GdmobbAgtValidCheckImlAction implements AgtValidCheckService {
 			String acttype=context.getData("actTyp");
 			String rsvval1=" ";
 			String 	actno=UtilsCnlty.fillEmpty((String)context.getData("actNo"),28);
-			String  actNam=UtilsCnlty.fillEmpty((String)context.getData("actNam"),32);
+			String  actNam=UtilsCnlty.fillEmpty((String)context.getData("actName"),32);
 			String  idTyp=((String)context.getData("idTyp")).trim();
 			String  idNo=UtilsCnlty.fillEmpty(((String)context.getData("idNo")).trim(),20);
 			String  cusNam=UtilsCnlty.fillEmpty(((String)context.getData("cusNam")).trim(),32);
@@ -223,7 +223,7 @@ public class GdmobbAgtValidCheckImlAction implements AgtValidCheckService {
 		   
 			requestData.put("tlogno", tlogno);
 			requestData.put("bakcod", "JT");
-			requestData.put("pacttyp", pacttyp);
+			requestData.put("pacttyp", acttype);
 			requestData.put("actno", actno);
 			requestData.put("actnam", actNam);
 			requestData.put("pidtyp", pidTyp);
