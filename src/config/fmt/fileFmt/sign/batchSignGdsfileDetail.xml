@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	encoding="GBK" trace="true" >
+	<segment name="detail" encoding="GBK">
+	    <varString name="acttyp"  type="D|" /> <!--账户性质-->        
+		<varString name="vchno"   type="D|" /> <!--凭证号码-->        
+		<varString name="actno"   type="D|" /> <!--缴款账号-->        
+		<varString name="actnm"   type="D|" /> <!--缴款账号户名-->    
+		<varString name="idtyp"   type="D|" /> <!--证件类型-->        
+		<varString name="idno"    type="D|" /> <!--证件号码-->        
+		<varString name="telno"   type="D|" /> <!--固定电话号码-->    
+		<varString name="mobtyp"  type="D|" /> <!--移动电话类型-->    
+		<varString name="mobtel"  type="D|" /> <!--移动电话号码-->    
+		<varString name="email"   type="D|" /> <!--电子邮箱-->        
+		<varString name="addr"    type="D|" /> <!--联系地址-->        
+		<varString name="orgcod"  type="D|" /> <!--企业编码-->        
+		<varString name="tbustp"  type="D|" /> <!--业务种类代码-->    
+		<varString name="tcusid"  type="D|" /> <!--用户编号-->        
+		<varString name="tcusnm"  type="D|" /> <!--用户名称-->        
+		<varString name="tagttp"  type="D|" /> <!--移动签约种类-->    
+		<varString name="mcusid"  type="D|" /> <!--移动主号号码-->    
+		<varString name="effdat"  type="D|" /> <!--生效日期-->
+	</segment>
+</message>
