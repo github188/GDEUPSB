@@ -224,7 +224,7 @@ public class EupsManageCounterAgt extends BaseAction {
 	// 删除交易
 	private void deleteAgentDeal(Context context) throws CoreException {
 		GdeupsAgtElecTmp agtElecTmp = toGdeupsAgtElecTmp(context);
-		get(GdeupsAgtElecTmpRepository.class).deleteByAc(agtElecTmp);
+		get(GdeupsAgtElecTmpRepository.class).deleteByFeeNum(agtElecTmp);
 
 	}
 

@@ -2,6 +2,7 @@ package com.bocom.bbip.gdeupsb.repository;
 
 import java.util.List;
 
+import com.bocom.bbip.data.annotation.Delete;
 import com.bocom.bbip.data.annotation.Find;
 import com.bocom.bbip.data.annotation.Update;
 import com.bocom.bbip.data.repository.PagingAndSortingRepository;
@@ -20,6 +21,8 @@ public interface GdeupsAgtElecTmpRepository
 
 	@Update
 	public void updateByFeeNum(GdeupsAgtElecTmp agtElecTmp);
+	@Delete
+	public void deleteByFeeNum(GdeupsAgtElecTmp agtElecTmp);
 
 //	@Find
 //	public void checkAgtExist(String actNo);
