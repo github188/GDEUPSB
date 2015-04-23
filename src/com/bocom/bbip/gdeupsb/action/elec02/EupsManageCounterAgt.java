@@ -10,17 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
-import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
-import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.entity.GdeupsAgtElecTmp;
 import com.bocom.bbip.gdeupsb.repository.GdeupsAgtElecTmpRepository;
 import com.bocom.bbip.utils.DateUtils;
-import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -43,20 +39,7 @@ public class EupsManageCounterAgt extends BaseAction {
 		
 		final int oprType = Integer.parseInt((String) context.getData("CHT"));
 		logger.info("===============oprType: " + oprType);
-		switch (oprType) {
-		case ADD:
-			context.setData("recordNum", "12");
-			break;
-		case UPDATE:
-			context.setData("recordNum", "");
-			break;
-		case QUERY:
-			context.setData("recordNum", "");
-			break;
-		case DELETE:
-			context.setData("recordNum", "");
-			break;
-		}
+		
 		
 		
 		Date date = new Date();
@@ -81,7 +64,21 @@ public class EupsManageCounterAgt extends BaseAction {
 //		recordNum	80	10	n	数据明细项数	　报文含有明细项数或者文件明细行数
 //		FileName	90	32	a	文件名	没有文件则为32个空格
 //		zipFlag	122	1	F	压缩标志	0：不压缩；1：压缩报文体；2：压缩文件
-		context.setData("recordNum", "");//TODO
+		//TODO
+		switch (oprType) {
+		case ADD:
+			context.setData("recordNum", "12");
+			break;
+		case UPDATE:
+			context.setData("recordNum", "");
+			break;
+		case QUERY:
+			context.setData("recordNum", "");
+			break;
+		case DELETE:
+			context.setData("recordNum", "");
+			break;
+		}
 		context.setData("FileName", "");//无文件，空字符串
 		context.setData("zipFlag", "0");//TODO
 
@@ -114,20 +111,20 @@ public class EupsManageCounterAgt extends BaseAction {
 		
 		
 		
-//		switch (oprType) {
-//		case ADD:
-//			addAgentDeal(context);
-//			break;
-//		case UPDATE:
-//			updateAgentDeal(context);
-//			break;
-//		case QUERY:
-//			queryAgentDeal(context);
-//			break;
-//		case DELETE:
-//			deleteAgentDeal(context);
-//			break;
-//		}
+		switch (oprType) {
+		case ADD:
+			addAgentDeal(context);
+			break;
+		case UPDATE:
+			updateAgentDeal(context);
+			break;
+		case QUERY:
+			queryAgentDeal(context);
+			break;
+		case DELETE:
+			deleteAgentDeal(context);
+			break;
+		}
 
 	}
 

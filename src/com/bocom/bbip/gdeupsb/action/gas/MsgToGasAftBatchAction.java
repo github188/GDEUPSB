@@ -260,6 +260,8 @@ public class MsgToGasAftBatchAction extends BaseAction implements AfterBatchAcpS
 				gdGashBatchTmp.setTxnAmt(String.valueOf(detail.getTxnAmt()));
 				gdGashBatchTmp.setTxnDte(listTmps.get(0).getTxnDte());
 				gdGashBatchTmp.setTmpFld2("cnjt");
+				
+				//TODO Update 临时表，为对账做准备
 				list.add(gdGashBatchTmp);
 			}
 			Map<String, Object> resultMap=new HashMap<String, Object>(); 
