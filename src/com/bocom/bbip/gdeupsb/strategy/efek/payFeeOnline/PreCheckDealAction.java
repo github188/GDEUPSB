@@ -32,6 +32,7 @@ public class PreCheckDealAction implements Executable{
 			context.setData(ParamKeys.RSV_FLD5, context.getData(GDParamKeys.PAY_TYPE));
 			context.setData(ParamKeys.RSV_FLD6, context.getData(GDParamKeys.ELECTRICITY_YEARMONTH));
 			context.setData(ParamKeys.BANK_NO, "301");
+			context.setData(ParamKeys.RSV_FLD1, context.getData("traPerIdenty"));
 			context.setData("thdObkCde", context.getData(ParamKeys.BANK_NO));
 				context.setData(GDParamKeys.TOTNUM, "1");
 				//日期时间格式修改
