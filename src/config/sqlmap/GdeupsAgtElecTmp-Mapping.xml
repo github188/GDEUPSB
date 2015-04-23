@@ -635,7 +635,7 @@
 			<if test="invoiceSnedMan != null">
 				INVOICE_SNED_MAN = #{invoiceSnedMan,jdbcType=CHAR},
 			</if>
-			<if test="invoiceinvoiceSendZipSnedMan != null">
+			<if test="invoiceSendZip != null">
 				INVOICE_SEND_ZIP = #{invoiceSendZip,jdbcType=CHAR},
 			</if>
 			<if test="invoiceSendAddr != null">

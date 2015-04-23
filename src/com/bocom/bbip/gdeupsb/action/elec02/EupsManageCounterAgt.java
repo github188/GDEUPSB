@@ -80,7 +80,7 @@ public class EupsManageCounterAgt extends BaseAction {
 			throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
 		}
 		String OAC = tmpList.get(0).getActNo();
-		String OKH = tmpList.get(0).getRemark();
+		String OKH = tmpList.get(0).getNewBankNum();
 		context.setData("OAC", OAC);
 		context.setData("OKH", OKH);
 		
