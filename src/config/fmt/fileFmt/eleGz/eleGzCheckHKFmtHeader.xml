@@ -4,9 +4,9 @@
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet spacket.xsd"
 	encoding="gbk" trace="true">
 	<segment name="header" encoding="gbk">
-		<varString name="CLRDAT" type="D|" />  <!-- 银行清算日期 -->
+		<varString name="clrDat" type="D|" />  <!-- 银行清算日期 -->
 		<varString name="TOTALDEAL" type="D|" />  <!-- 总记录数 -->
 		<varString name="TOTALFEE" type="D|" />  <!-- 总金额 -->
-		<varString name="BATNO" type="D|" />  <!-- 批号 -->
+		<varString name="batNo" type="D|" />  <!-- 批号 -->
 	</segment>
 </message>
