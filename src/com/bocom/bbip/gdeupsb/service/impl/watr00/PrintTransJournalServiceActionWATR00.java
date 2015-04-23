@@ -1,7 +1,6 @@
 package com.bocom.bbip.gdeupsb.service.impl.watr00;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,27 +9,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.bocom.bbip.comp.CommonRequest;
-import com.bocom.bbip.comp.account.AccountService;
 import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
-import com.bocom.bbip.eups.action.eupsreport.ReportHelper;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.entity.EupsBatchInfoDetail;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
-import com.bocom.bbip.eups.entity.MFTPConfigInfo;
 import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
 import com.bocom.bbip.eups.repository.EupsBatchInfoDetailRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
-import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
-import com.bocom.bbip.gdeupsb.entity.GdeupsWatBatInfTmp;
-import com.bocom.bbip.gdeupsb.repository.GdeupsWatBatInfTmpRepository;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
-import com.bocom.bbip.utils.NumberUtils;
-import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -102,6 +93,13 @@ public class PrintTransJournalServiceActionWATR00 extends BaseAction {
         String fileName = "wat"+txnDat;
         // 生成文件
      	operateFile.createCheckFile(eupsThdFtpConfig, "watTransJnl", fileName, resultMap);
+     	
+     // 将生成的文件上传至指定服务器
+     		eupsThdFtpConfig.setLocFleNme(fileName);
+     		eupsThdFtpConfig.setRmtFleNme(fileName);
+     		logger.info("@@@@@@@@@@@@eupsThdFtpConfig=" + eupsThdFtpConfig);
+     		OperateFTPAction operateFTP = new OperateFTPAction();
+     		operateFTP.putCheckFile(eupsThdFtpConfig);
 //        EupsThdFtpConfigRepository eupsThdFtpConfigRepository = get(EupsThdFtpConfigRepository.class);
 //		ReportHelper reportHelper = get(ReportHelper.class);
 //		//MFTPConfigInfo mftpConfigInfo = reportHelper.getMFTPConfigInfo(eupsThdFtpConfigRepository);
@@ -122,7 +120,7 @@ public class PrintTransJournalServiceActionWATR00 extends BaseAction {
 //		String date = DateUtils.format(new Date(), DateUtils.STYLE_HHmmss);
 //		StringBuffer fileName = new StringBuffer((new StringBuilder("WATR00"+br+txnDat).append(date).toString()));
 ////		reportHelper.createFileAndSendMFTP(context, result, fileName, mftpConfigInfo);
-//       context.setData("filName", fileName);
+       context.setData("filName", fileName);
 		logger.info("QueryAndPrintTransJournalServiceActionWATR00 execute end ... ...");
 	}
 	
