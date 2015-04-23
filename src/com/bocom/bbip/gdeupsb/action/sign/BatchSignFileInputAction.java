@@ -43,6 +43,7 @@ import com.bocom.bbip.gdeupsb.entity.GdsRunCtl;
 import com.bocom.bbip.gdeupsb.entity.Gdsagtmob;
 import com.bocom.bbip.gdeupsb.entity.Gdsbatagtinf;
 import com.bocom.bbip.gdeupsb.repository.GdsAgtInfRepository;
+import com.bocom.bbip.gdeupsb.repository.GdsAgtWaterRepository;
 import com.bocom.bbip.gdeupsb.repository.GdsRunCtlRepository;
 import com.bocom.bbip.gdeupsb.repository.GdsagtmobRepository;
 import com.bocom.bbip.gdeupsb.repository.GdsagtuncaRepository;
@@ -68,7 +69,8 @@ public class BatchSignFileInputAction extends BaseAction{
 	GdsRunCtlRepository gdsRunCtlRepository;
     @Autowired
     GdsbatagtinfRepository gdsbatagtinfRepository;
-   
+    @Autowired
+    GdsAgtWaterRepository gdsAgtWaterRepository;
     @Autowired
     OperateFTPAction operateFTPAction;
     @Autowired
@@ -161,6 +163,8 @@ public class BatchSignFileInputAction extends BaseAction{
 		}
 		/*agtmtb=gdsRunCtllist.get(0).getAgtMtb();
 		agtstb=gdsRunCtllist.get(0).getAgtStb();*/
+		String agtstb=gdsRunCtllist.get(0).getAgtStb();
+		context.setData("agtstb", agtstb);
 		//====检查该文件是否已经接收
 		gdsbatagtinf.setFilnm(filNm);
 	    List<Gdsbatagtinf>	gdsbatagtinflist =gdsbatagtinfRepository.find(gdsbatagtinf);
@@ -168,22 +172,22 @@ public class BatchSignFileInputAction extends BaseAction{
 	    	log.info("check filedown exist...... ");
 	    	throw new CoreException(ErrorCodes.EUPS_FTP_FILEDOWN_EXIST);
 	    }
-	    //=====检查文件名格式是否正确===44101_20140101_441049_001.txt 
-//	    if(filNm.length()!=29||!filNm.substring(5,6).equals("_")||!filNm.substring(14,15).equals("_")||!filNm.substring(21,22).equals("_")||!filNm.substring(filNm.length()-4,filNm.length()).equals(".TXT")){
-//	    	log.info("check fileName rule error...... ");
-//	    	throw new CoreException(GDErrorCodes.EUPS_FILE_RULE_ERROR);
-//	    }
+	    //=====检查文件名格式是否正确===44101_20140101_0441049999_001.txt 
+	 /*   if(filNm.length()!=29||!filNm.substring(5,6).equals("_")||!filNm.substring(14,15).equals("_")||!filNm.substring(21,22).equals("_")||!filNm.substring(filNm.length()-4,filNm.length()).equals(".TXT")){
+	    	log.info("check fileName rule error...... ");
+	    	throw new CoreException(GDErrorCodes.EUPS_FILE_RULE_ERROR);
+	    }*/
 	    //====检验文件名中的业务类型==
 	   if(!gdsBid.equals(strGdsBId)){
 		 log.info("check fileName rule error...... ");
 		 throw new CoreException(GDErrorCodes.EUPS_FILE_BUSTYPE_ERROR);	
 		}
 	  //===检查文件头中的网点号 ===
-//	   String Br=(String)context.getData(ParamKeys.BR);
-//	   if(!filNm.substring(15,26).equals(Br)){
-//		 log.info("check fileName BR error...... ");
-//	    throw new CoreException(GDErrorCodes.EUPS_FILE_HEADBR_ERROR);		 
-//	 }
+	 /*  String Br=(String)context.getData(ParamKeys.BR);
+	   if(!filNm.substring(15,26).equals(Br)){
+		 log.info("check fileName BR error...... ");
+	    throw new CoreException(GDErrorCodes.EUPS_FILE_HEADBR_ERROR);		 
+	 }*/
 	  //======登录FTP开始下载文件到本地======
 	  //取FTP信息
 	    EupsThdFtpConfig eupsThdFtpConfig= operateFTPAction.getFTPInfo(strGdsBId, eupsThdFtpConfigRepository);
@@ -316,7 +320,11 @@ public class BatchSignFileInputAction extends BaseAction{
 			  // detailList.set(detailList.indexOf(o), element)
 			   mcusid=(String)detailList.get(i).get("tcusid");
 		   }
-		 
+		   context.setData("actNo", actno); // 卡号
+		   context.setData("gdsBid", strGdsBId); // 业务类型
+		   context.setData("TCusId", tcusid);
+		   context.setData("tBusTp", tbustp); // 协议子表agtstb
+		   context.setData("agtSTb", agtstb);
 		   //===状态正常为N
 		   //status="N";
 		    Date appealTime = new Date();
@@ -360,7 +368,7 @@ public class BatchSignFileInputAction extends BaseAction{
 		    }
 		    //=============检查是否已经签约 根据账号ActNo、号码TCusId、TBusTp===========
 		    if(isContinue.equals("Y")){
-		    	context.setData("GdsBId", strGdsBId);
+		    	context.setData("gdsBId", strGdsBId);
 		    	context.setData("ActNo", actno);
 		    	context.setData("TBusTp", tbustp);
 		    	checkAgtInfo(context);
@@ -598,14 +606,17 @@ public class BatchSignFileInputAction extends BaseAction{
 	//检查是否已经签约
 	public void checkAgtInfo(Context context){
 		log.info("checkAgtInfo start!...............");
-		Gdsagtmob gdsagtmob=new Gdsagtmob();
+		//Gdsagtmob gdsagtmob=new Gdsagtmob();
 		context.setData("isContinue", "Y");
 		context.setData("status", "S");
-		gdsagtmob.setActno((String)context.getData("ActNo"));
-		gdsagtmob.setGdsbid((String)context.getData("GdsBid"));
-		gdsagtmob.setTbustp((String)context.getData("TBusTp"));
-		List<Gdsagtmob> gdsagtmobList=gdsagtmobRepository.find(gdsagtmob);
-		if(CollectionUtils.isNotEmpty(gdsagtmobList)){
+		Map<String, Object> inMap = new HashMap<String, Object>();
+		inMap.put("actNo", context.getData("actNo")); // 卡号
+		inMap.put("gdsBid", context.getData("gdsBid")); // 业务类型
+		inMap.put("TCusId", context.getData("TCusId"));
+		inMap.put("tBusTp", context.getData("tBusTp")); // 协议子表agtstb
+		inMap.put("agtSTb", context.getData("agtSTb"));
+		List<Map<String, Object>> qryResult=gdsAgtWaterRepository.findExist(inMap);
+		if(CollectionUtils.isNotEmpty(qryResult)){
 			context.setData("retcod", "E99999");
 			context.setData("retmsg", "卡协议已存在");
 			context.setData("status", "F");
