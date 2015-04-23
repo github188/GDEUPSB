@@ -169,7 +169,7 @@ public class CheckTrspFileAction extends BaseAction {
 				gdEupsbTrspFeeInfoNew.setPayTlr(gdEupsbTrspFeeInfo.getPayTlr()); // 操作柜员
 				gdEupsbTrspFeeInfoNew.setPayNod(gdEupsbTrspFeeInfo.getPayNod()); // 网点
 				gdEupsbTrspFeeInfoNew.setPayLog(gdEupsbTrspFeeInfo.getPayLog()); // 主机流水
-				gdEupsbTrspFeeInfoNew.setTlogNo(gdEupsbTrspFeeInfo.getTlogNo()); // 发票号
+				gdEupsbTrspFeeInfoNew.setTlogNo(gdEupsbTrspFeeInfo.getInvNo()); // 发票号
 				if(gdEupsbTrspFeeInfo.getStatus().toString().trim().equals("0")){
 					gdEupsbTrspFeeInfoNew.setStatus("已缴费");
 				}else if(gdEupsbTrspFeeInfo.getStatus().toString().trim().equals("1")){
