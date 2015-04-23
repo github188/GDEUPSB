@@ -127,7 +127,7 @@ public class CheckThdDetlAcctAction implements Executable {
 							while(xuhao.length()<3){
 								xuhao="0"+xuhao;
 							}
-							String bankNo=context.getData(ParamKeys.BANK_NO).toString();
+							String bankNo="0301";
 							String fileName = "DZ"+busType+payType+"_"+bankNo+comNo+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+xuhao+".txt";
 
 							context.setData("fileName", fileName);
