@@ -167,7 +167,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 				agtFileBatchDetail.setCUSNME(gdEupsEleTmp.getCusNme());
 				agtFileBatchDetail.setAGTSRVCUSID(gdEupsEleTmp.getThdCusNo());
 //				agtFileBatchDetail.setAGTSRVCUSNME(gdEupsEleTmp.getThdCusNme());
-				agtFileBatchDetail.setRMK2(gdEupsEleTmp.getThdCusNo());
+				agtFileBatchDetail.setRMK2(gdEupsEleTmp.getSqn());
 				//本行标志
 				if(string.trim().equals("50")){
 							agtFileBatchDetail.setOUROTHFLG("0");
