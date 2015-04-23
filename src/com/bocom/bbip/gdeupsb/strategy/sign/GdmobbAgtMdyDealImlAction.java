@@ -300,7 +300,8 @@ public class GdmobbAgtMdyDealImlAction implements AgtMdyDealImlService {
 			String cardValid = "Y";
 			
 			String cardVldFlg=CodeSwitchUtils.codeGenerator("cardValidTel", carBin);
-			if (!cardVldFlg.equals(cardValid)) {
+			
+			if (!cardValid.equals(cardVldFlg)) {
 				// TODO:根据GdsBId获得对应的BusNam（业务名称），使用我待测试的codeSwitch
 				String busNam = "广东移动";
 				context.setData("responseType", "E");
