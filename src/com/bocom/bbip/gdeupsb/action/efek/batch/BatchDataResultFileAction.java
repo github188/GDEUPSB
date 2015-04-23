@@ -184,6 +184,8 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 						gdEupsEleTmp.setBakFld(eupsBatchInfoDetail.getRmk1());
 						if(eupsBatchInfoDetail.getSts().equals("S")){
 							gdEupsEleTmp.setPaymentResult("00");
+						}else{
+							gdEupsEleTmp.setPaymentResult("99");
 						}
 						list.add(gdEupsEleTmp);
 			}
