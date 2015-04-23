@@ -105,7 +105,7 @@ public class GdmobbAgtValidCheckImlAction implements AgtValidCheckService {
             	context.setData("cusNam", agtDeatil.get("TCUS_NM"));
             	context.setData("mstTel", agtDeatil.get("MCUS_ID"));
             	context.setData("sigTel", agtDeatil.get("TCUS_ID"));
-            	context.setData("sigFlg", agtDeatil.get("TAgtTp"));
+            	context.setData("sigFlg", agtDeatil.get("TAGT_TP"));
             	preQueryThddeal(context);
             	tAgtSt=(String)context.getData("TAgtSt");
             	terMsg=(String)context.getData("TErMsg");
@@ -178,12 +178,12 @@ public class GdmobbAgtValidCheckImlAction implements AgtValidCheckService {
 			String rsvval1=" ";
 			String 	actno=UtilsCnlty.fillEmpty((String)context.getData("actNo"),28);
 			String  actNam=UtilsCnlty.fillEmpty((String)context.getData("actName"),32);
-			String  idTyp=((String)context.getData("idTyp")).trim();
-			String  idNo=UtilsCnlty.fillEmpty(((String)context.getData("idNo")).trim(),20);
-			String  cusNam=UtilsCnlty.fillEmpty(((String)context.getData("cusNam")).trim(),32);
-			String  mstTel=UtilsCnlty.fillEmpty(((String)context.getData("mstTel")).trim(),20);
-			String  sigFlg=((String)context.getData("sigFlg")).trim();
-			String  sigTel=UtilsCnlty.fillEmpty(((String)context.getData("sigTel")).trim(),20);
+			String  idTyp=((String)context.getData("idTyp"));
+			String  idNo=UtilsCnlty.fillEmpty(((String)context.getData("idNo")),20);
+			String  cusNam=UtilsCnlty.fillEmpty(((String)context.getData("cusNam")),32);
+			String  mstTel=UtilsCnlty.fillEmpty(((String)context.getData("mstTel")),20);
+			String  sigFlg=((String)context.getData("sigFlg"));
+			String  sigTel=UtilsCnlty.fillEmpty(((String)context.getData("sigTel")),20);
 			String  rsvval2=UtilsCnlty.fillEmpty(rsvval1,20);
 			String pacttyp="";
 			if(acttype.equals("9")){
