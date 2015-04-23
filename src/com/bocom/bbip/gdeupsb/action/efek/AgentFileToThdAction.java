@@ -98,7 +98,7 @@ public class AgentFileToThdAction extends BaseAction{
 						eupsThdFtpConfig.setLocFleNme(locName);
 						eupsThdFtpConfig.setRmtFleNme(locName);
 						eupsThdFtpConfig.setRmtWay("/app/ics/dat/efek/send");
-						eupsThdFtpConfig.setFtpDir("1");
+						eupsThdFtpConfig.setFtpDir("1"); 
 						operateFileAction.createCheckFile(eupsThdFtpConfig, "efekAgent", locName, resultMap);	
 						
 						try {
