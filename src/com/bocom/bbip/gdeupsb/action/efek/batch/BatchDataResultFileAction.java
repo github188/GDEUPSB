@@ -165,11 +165,9 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			EupsBatchInfoDetail eupsBatchInfoDetails=new EupsBatchInfoDetail();
 			eupsBatchInfoDetails.setBatNo(batNo);
 			List<EupsBatchInfoDetail> mapList=eupsBatchInfoDetailRepository.find(eupsBatchInfoDetails);
-//			List<GDEupsEleTmp> gdEupsEleTmpList = gdEupsEleTmpRepository.findAllOrderBySqn(batNo);
 			//内容主体
 			List<GDEupsEleTmp> list=new ArrayList<GDEupsEleTmp>();
-			for(int i=0;i<mapList.size();i++){
-					EupsBatchInfoDetail eupsBatchInfoDetail=mapList.get(i);
+			for(EupsBatchInfoDetail eupsBatchInfoDetail:mapList){
 						GDEupsEleTmp gdEupsEleTmp=gdEupsEleTmpRepository.findOne(eupsBatchInfoDetail.getRmk2());
 						//<!--客户账号|姓名|金额|代理服务客户标识|代理服务客户姓名|本行标志|开户银行|备注一|备注二|状态|描述  -->
 						gdEupsEleTmp.setRsvFld5(eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2).signum()+"");
