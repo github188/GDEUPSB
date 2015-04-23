@@ -24,7 +24,7 @@ public class EupsManageCounterAgt extends BaseAction {
 	private static Logger logger = LoggerFactory
 			.getLogger(EupsManageCounterAgt.class);
 	private static final int ADD = 0;
-	private static final int UPDATE = 3;
+	private static final int UPDATE = 3;  
 	private static final int QUERY = 5;
 	private static final int DELETE = 9;
 
@@ -65,20 +65,21 @@ public class EupsManageCounterAgt extends BaseAction {
 //		FileName	90	32	a	文件名	没有文件则为32个空格
 //		zipFlag	122	1	F	压缩标志	0：不压缩；1：压缩报文体；2：压缩文件
 		//TODO
-		switch (oprType) {
-		case ADD:
-			context.setData("recordNum", "12");
-			break;
-		case UPDATE:
-			context.setData("recordNum", "");
-			break;
-		case QUERY:
-			context.setData("recordNum", "");
-			break;
-		case DELETE:
-			context.setData("recordNum", "");
-			break;
-		}
+//		switch (oprType) {
+//		case ADD:
+//			context.setData("recordNum", "12");
+//			break;
+//		case UPDATE:
+//			context.setData("recordNum", "");
+//			break;
+//		case QUERY:
+//			context.setData("recordNum", "5");
+//			break;
+//		case DELETE:
+//			context.setData("recordNum", "");
+//			break;
+//		}
+		context.setData("recordNum", "12"); //不校验，但是要有值
 		context.setData("FileName", "");//无文件，空字符串
 		context.setData("zipFlag", "0");//TODO
 
@@ -89,9 +90,18 @@ public class EupsManageCounterAgt extends BaseAction {
 		//其他字段前端输入
 		context.setData("ECD", "0500");
 		context.setData("EDD", "000");
-		context.setData("SBN", br);
+		context.setData("SBN", "301");
+//		context.setData("SBN", br);
+//		context.setData("SBN", "");
 		context.setData("WDO", YYYYMMDD);
 		context.setData("TLogNo", ""); //TODO 供电局流水
+		context.setData("KKB", br);
+		context.setData("ZPF", "0");
+		context.setData("FPF", "0");
+		//TODO 根据银行卡获取开户信息 身份证号 
+		context.setData("IdTyp", "0");
+		context.setData("TIdNo", "123123");
+
 		
 		logger.info("=====外发电力========>>>>>>>>>>>>>>> context : " + context);
 		//外发thd
@@ -102,12 +112,9 @@ public class EupsManageCounterAgt extends BaseAction {
 		context.setDataMap(callThdRsp);
 
 		//TODO 处理第三方返回消息，错误则不签约
-		if(((String) context.getData("rspMsg")).contains("错误")){
-			throw new CoreException((String) context.getData("rspMsg"));
-		}
-		if(((String) context.getData("ReturnMessage")).equals("供电尚未开工")){
-			throw new CoreException((String) context.getData("ReturnMessage"));
-		}
+//		if(((String) context.getData("rspMsg")).contains("错误")){
+//			throw new CoreException((String) context.getData("rspMsg"));
+//		}
 		
 		context.setData("comCode", "0500");
 		context.setData("feeCode", "0000");

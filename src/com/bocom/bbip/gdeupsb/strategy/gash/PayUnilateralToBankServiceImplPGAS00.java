@@ -192,7 +192,7 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 			context.setData(ParamKeys.RSP_MSG, "扣款成功");
 			context.setData(ParamKeys.BAK_FLD5, "扣款成功");
 			context.setData("reMark1", "扣款成功 ");
-
+			
 			// 更新流水 BBIP有相应处理
 			logger.info("=========交易成功了啊！！！！！！！！！！！！！！！context=" + context);
 		} else {
@@ -216,7 +216,7 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 				logger.info("=========交易失败了啊！！！！！！！！context=" + context);
 			}
 		} 
-
+		context.setData(ParamKeys.RSV_FLD5, "cnjt");
 		return null;
 	}
 }
