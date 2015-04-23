@@ -125,11 +125,13 @@ private static Logger logger = LoggerFactory.getLogger(PreDelCusAgentAction.clas
 					throw new CoreException(ErrorCodes.EUPS_THD_SYS_ERROR);
 				}
 				logger.error(" callThd end!");
+				logger.info("@@@@@@@@@@context="+context);
 				
-				List<String> agdAgrNoList = context.getData("agdAgrNo");
-				context.setData("agdAgrNo", agdAgrNoList.get(0));
+				
+				List<Map<String, Object>> agdAgrNoList = context.getData("agentCollectAgreement");
+				
 				GdEupsWatAgtInf gdeups = new GdEupsWatAgtInf();
-				gdeups.setAgdAgrNo(agdAgrNoList.get(0));
+				gdeups.setAgdAgrNo((String)agdAgrNoList.get(0).get("agdAgrNo"));
 				gdEupsWatAgtInfRepository.delete(gdeups);
 	}
 }
