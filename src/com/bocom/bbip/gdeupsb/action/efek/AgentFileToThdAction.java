@@ -110,7 +110,6 @@ public class AgentFileToThdAction extends BaseAction{
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						operateFTPAction.putCheckFile(eupsThdFtpConfig);
 						callThd(context);
 				}
 				log.info("==============End   AgentFileToThdAction");
