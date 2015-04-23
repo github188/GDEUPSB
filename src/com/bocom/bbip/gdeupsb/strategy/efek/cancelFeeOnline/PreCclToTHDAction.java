@@ -44,5 +44,6 @@ public class PreCclToTHDAction implements Executable {
 			context.setData(ParamKeys.RSV_FLD5,context.getData(GDParamKeys.PAY_TYPE));
 			context.setData(ParamKeys.RSV_FLD6,context.getData(GDParamKeys.ELECTRICITY_YEARMONTH));
 			context.setData(ParamKeys.CUS_NME, context.getData(GDParamKeys.SETTLE_ACCOUNTS_NAME));
-		}
+			context.setData(ParamKeys.RSV_FLD1, context.getData("traPerIdenty"));
+	}
 }
