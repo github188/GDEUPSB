@@ -162,7 +162,9 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			logger.info("===============Start  BatchDataResultFileAction  createFileMap");	
 			//代收付文件内容
 			String batNo=context.getData(ParamKeys.BAT_NO).toString();
-			List<EupsBatchInfoDetail> mapList=context.getVariable("detailList");
+			EupsBatchInfoDetail eupsBatchInfoDetails=new EupsBatchInfoDetail();
+			eupsBatchInfoDetails.setBatNo(batNo);
+			List<EupsBatchInfoDetail> mapList=eupsBatchInfoDetailRepository.find(eupsBatchInfoDetails);
 			List<GDEupsEleTmp> gdEupsEleTmpList = gdEupsEleTmpRepository.findAllOrderBySqn(batNo);
 			//内容主体
 			List<GDEupsEleTmp> list=new ArrayList<GDEupsEleTmp>();
