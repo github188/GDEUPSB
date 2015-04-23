@@ -97,7 +97,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 	        						
 	        EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecBatch");		
 			try{
-					Map<String, Object> resultMap=createFileMap(context,gdEupsBatchConsoleInfoUpdate);
+					Map<String, Object> resultMap=createFileMap(context,gdEupsBatchConsoleInfoUpdate,batNo);
 					eupsThdFtpConfig.setFtpDir("0");
 					String name=context.getData(ParamKeys.BAT_NO)+".result";
 					eupsThdFtpConfig.setLocFleNme(name);
@@ -158,10 +158,9 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 	/**
 	 * 拼装map文件
 	 */
-	public Map<String, Object> createFileMap(Context context,GDEupsBatchConsoleInfo gdEupsBatchConsoleInfoUpdate){
+	public Map<String, Object> createFileMap(Context context,GDEupsBatchConsoleInfo gdEupsBatchConsoleInfoUpdate,String batNo){
 			logger.info("===============Start  BatchDataResultFileAction  createFileMap");	
 			//代收付文件内容
-			String batNo=context.getData(ParamKeys.BAT_NO).toString();
 			EupsBatchInfoDetail eupsBatchInfoDetails=new EupsBatchInfoDetail();
 			eupsBatchInfoDetails.setBatNo(batNo);
 			List<EupsBatchInfoDetail> mapList=eupsBatchInfoDetailRepository.find(eupsBatchInfoDetails);
