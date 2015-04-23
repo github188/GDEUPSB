@@ -105,6 +105,9 @@ public class EupsManageCounterAgt extends BaseAction {
 		if(((String) context.getData("rspMsg")).contains("错误")){
 			throw new CoreException((String) context.getData("rspMsg"));
 		}
+		if(((String) context.getData("ReturnMessage")).equals("供电尚未开工")){
+			throw new CoreException((String) context.getData("ReturnMessage"));
+		}
 		
 		context.setData("comCode", "0500");
 		context.setData("feeCode", "0000");
