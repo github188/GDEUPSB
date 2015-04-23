@@ -173,8 +173,8 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			List<GDEupsEleTmp> list=new ArrayList<GDEupsEleTmp>();
 			for(EupsBatchInfoDetail eupsBatchInfoDetail:mapList){
 						GDEupsEleTmp gdEupsEleTmp=gdEupsEleTmpRepository.findOne(eupsBatchInfoDetail.getRmk2());
-						//<!--客户账号|姓名|金额|代理服务客户标识|代理服务客户姓名|本行标志|开户银行|备注一|备注二|状态|描述  -->
-						gdEupsEleTmp.setRsvFld5(eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2).signum()+"");
+						
+						gdEupsEleTmp.setRsvFld5(eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2).intValue()+"");
 						gdEupsEleTmp.setBankSqn(gdEupsEleTmp.getSqn());
 						gdEupsEleTmp.setBankNo("301");
 						//TODO 
@@ -182,7 +182,6 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 						gdEupsEleTmp.setRsvFld1(DateUtils.format(date, DateUtils.STYLE_yyyyMMdd));
 						gdEupsEleTmp.setRsvFld2(DateUtils.formatAsHHmmss(date));
 						gdEupsEleTmp.setBakFld(eupsBatchInfoDetail.getRmk1());
-						
 						if(eupsBatchInfoDetail.getSts().equals("S")){
 							gdEupsEleTmp.setPaymentResult("00");
 						}
