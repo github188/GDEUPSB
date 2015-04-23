@@ -13,9 +13,8 @@
 	     <fixString name="checkDate" length="8" /><!--  达账日期-->
 	     <fixString name="checkTime" length="6" /><!--  达账时间-->
 		
-		<fixString name="WJS" length="1"  />
+		<fixString name="number" length="2"  /><!--  文件子包个数-->
 		<fixString name="checkTyp" length="2"  /><!--  文件类型-->
-		<fixString name="number" length="6"  /><!--  文件子包个数-->
 		<loop  name="detailList">
 				<segment name="List">
 							<fixString name="xH"  length="2"  /><!--  序号-->
