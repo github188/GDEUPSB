@@ -734,9 +734,8 @@
 		BATCH_ID=#{batchId,jdbcType=CHAR}
 	</update>
 		<!-- 签约一站通协议维护:检查签约是否已存在 -->
-	<select id="findExist" parameterType="java.util.Map">
-		select
-		<include refid="baseColumnList" />
+	<select id="findExist"  resultType="java.util.Map"  parameterType="java.util.Map">
+		select *
 		from
 		${agtSTb}
 		where TCUS_ID=#{TCusId} and gds_Bid=#{gdsBid} 
