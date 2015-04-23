@@ -16,8 +16,8 @@
 		 <fixString name="txnDte"  length="19"  /><!--日期	-->
 		 <fixString name="txnAmt"  length="16"  /><!--金额-->
 		 <fixString name="bakFld1"  length="128"  /><!--摘要		-->
-		 <fixString name="rsvFld1"  length="20"  /><!--收款人代码	-->
-		 <fixString name="rsvFld2"   length="32"  /> <!--  对账唯一标识码-->
+		 <fixString name="txnTlr"  length="20"  /><!--收款人代码	-->
+		 <fixString name="rsvFld1"   length="32"  /> <!--  对账唯一标识码-->
 	</segment>
 	
 </message>
