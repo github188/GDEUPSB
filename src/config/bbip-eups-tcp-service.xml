@@ -509,7 +509,7 @@
 	<property name="default" ref="tcpEndpoint_ELEC02" />
 </bean>
 <bean id="tcpChannel_ELEC02" class="com.bocom.jump.bp.channel.tcp.SocketServer">
-	<property name="host" value="127.0.0.1" />
+	<property name="host" value="0.0.0.0" />
 	<property name="port" value="30112" />
 	<property name="soTimeout" value="10000" />
 	<property name="mapping" ref="tcpMapping_ELEC02" />
