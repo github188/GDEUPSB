@@ -68,9 +68,10 @@ public class AgtMdyDealPreAction extends BaseAction {
 				String psw = context.getData("pin"); // 密码
 
 				// TODO:AND(INTCMP($TxnCnl,4,6),IS_EQUAL_STRING($TTxnCd,469901))
-				// 时需要验证密码
-				if ("6" != txnCnl) {
+				// 手机银行时需要验证密码
+				if ("6" == txnCnl) {
 					// 验密
+					log.info("当前为手机银行，进行密码校验！..");
 					Result auth = accountService.auth(CommonRequest.build(context), cardNo, psw);
 					log.info("check pwd end");
 					if (!auth.isSuccess()) {
