@@ -204,10 +204,9 @@ public class CheckTrspFileAction extends BaseAction {
 		gdEupsbTrspFeeInfoS.setTchkNo(tChkNo);
 
 		List<GDEupsbTrspFeeInfo> eupsbTrspFeeInfoList=gdEupsbTrspFeeInfoRepository.find(gdEupsbTrspFeeInfoS);
-		int totCnt=Integer.parseInt(context.getData("totCnt").toString());
+		int  totCnt=Integer.parseInt(context.getData("totCnt").toString());
 		BigDecimal totAmt=new BigDecimal(context.getData("totAmt").toString());
 		for (GDEupsbTrspFeeInfo gdEupsbTrspFeeInfos : eupsbTrspFeeInfoList) {
-				totCnt++;
 				totAmt=totAmt.add(gdEupsbTrspFeeInfos.getTxnAmt());
 				gdEupsbTrspFeeInfos.setTcusNm("银行多账"); // 银行
 				gdEupsbTrspFeeInfos.setCarDzs(DateUtils.format(gdEupsbTrspFeeInfos.getPayDat(),DateUtils.STYLE_yyyyMMdd)); // 缴费日期												
