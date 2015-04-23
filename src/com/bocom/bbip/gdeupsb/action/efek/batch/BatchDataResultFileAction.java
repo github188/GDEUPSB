@@ -40,6 +40,7 @@ import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.entity.GDEupsEleTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GDEupsEleTmpRepository;
+import com.bocom.bbip.service.Result;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
@@ -74,7 +75,9 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 	 */
 	public void afterBatchDeal(AfterBatchAcpDomain afterbatchacpdomain, Context context) throws CoreException {
 			logger.info("===============Start  BatchDataResultFileAction  afterBatchDeal");	
-
+			String locked="460421ELEC00";
+			Result ret1 = get(BBIPPublicService.class).tryLock( locked,60*1000L, 600L);
+			
 			//第三方 rsvFld9
 			String batNo=context.getData(ParamKeys.BAT_NO).toString();
 			EupsBatchConsoleInfo eupsBatchConsoleInfo=eupsBatchConsoleInfoRepository.findOne(batNo);
@@ -126,6 +129,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			}
 			//TODO 通知第三方
 			callThd(context,gdeupsBatchConsoleInfo,fileName);
+			ret1 = get(BBIPPublicService.class).unlock(locked);
 			logger.info("===============End  BatchDataResultFileAction  afterBatchDeal");	
 		}
 	/**
