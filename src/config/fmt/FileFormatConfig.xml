@@ -615,9 +615,9 @@
 	
 	<file name="batchSignGdsfile" id="batchSignGdsfile" encoding="GBK"
 		lineSeparator="\n">
-		<line name="header" ref="config/fmt/fileFmt/sign/batchSignGdsfileHeader.xml" />
+		<line name="header" ref="config/fmt/fileFmt/sign/batchSignGdsfileHeader.xml" encoding="GBK" />
 		<foreach name="detail"
-			ref="config/fmt/fileFmt/sign/batchSignGdsfileDetail.xml" />
+			ref="config/fmt/fileFmt/sign/batchSignGdsfileDetail.xml"  encoding="GBK" />
 	</file>
 	
 </files>
