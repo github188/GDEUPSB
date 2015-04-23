@@ -612,6 +612,17 @@
 			ref="config/fmt/fileFmt/watr00/BatchDataResultDetail.xml" />
 		<line name="header" ref="config/fmt/fileFmt/watr00/BatchDataResultHead.xml" />
 	</file>
+
+	<!-- 汕头水费 当日流水文件-->
+	<file name="watTransJnl" id="watTransJnl" encoding="GBK"
+		lineSeparator="\n">
+		<line name="floor" ref="config/fmt/fileFmt/watr00/WatTransJnlFloor.xml" />
+		<line name="head" ref="config/fmt/fileFmt/watr00/WatTransJnlHeader.xml" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/watr00/WatTransJnlDetail.xml" />
+		
+	</file>
+
 	
 	<file name="batchSignGdsfile" id="batchSignGdsfile" encoding="GBK"
 		lineSeparator="\n">
@@ -620,4 +631,5 @@
 			ref="config/fmt/fileFmt/sign/batchSignGdsfileDetail.xml"  encoding="GBK" />
 	</file>
 	
+
 </files>
