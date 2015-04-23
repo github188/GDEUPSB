@@ -129,7 +129,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			}
 			try {
 				//沉睡5秒
-				Thread.sleep(5*1000);
+				Thread.currentThread().sleep(30*1000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
