@@ -16,6 +16,6 @@
 		<varString name="OTLOGNO" type="D|" />  <!--原系统参考号-->
 		<varString name="DLDAT" type="D|" />  <!--供电公司交易日期-->
 		<varString name="DLTIM" type="D|" />  <!--供电公司交易时间-->
-		<varString name="LCHKTM" type="D|" />  <!--电费月份-->
+		<varString name="RMKTMP" type="D|" />  <!--电费月份-->
 	</segment>
 </message>
