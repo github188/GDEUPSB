@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	encoding="utf-8" trace="true">
+	
+	<segment name="total"  encoding="utf-8">
+			<fixString name="d1"    length="14" default="交易日期"/>
+			<varString name="deli0" type="D\t"/>  
+			<fixString name="d2"    length="18" default="用户号"/>
+			<varString name="deli1" type="D\t"/> 
+			<fixString name="d3"    length="26" default="账号"/>
+			<varString name="deli2" type="D\t"/> 
+			<fixString name="d4"    length="24" default="流水号"/>
+			<varString name="deli3" type="D\t"/> 
+			<fixString name="d5"    length="18" default="金额"/>
+			<varString name="deli4" type="D\t"/> 
+			<fixString name="d6"    length="12" default="交易状态"/>
+	</segment>
+	
+</message>

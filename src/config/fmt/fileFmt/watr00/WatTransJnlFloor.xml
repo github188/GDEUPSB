@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	encoding="utf-8" trace="true">
+	
+	<segment name="total"  encoding="utf-8">
+			<fixString name="d7"    length="18" default="成功总笔数："/>
+			<varString name="deli0" type="D\t"/>  
+			<fixString name="sumCnt"    length="11" />
+			<varString name="deli1" type="D\t"/> 
+			<fixString name="d8"    length="18" default="成功总金额"/>
+			<varString name="deli2" type="D\t"/> 
+			<fixString name="sumAmt"    length="11" />
+			
+	</segment>
+	
+</message>
