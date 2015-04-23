@@ -241,9 +241,9 @@ public class MsgToGasAftBatchAction extends BaseAction implements AfterBatchAcpS
 					gdGashBatchTmp.setBatSts("F");
 					
 				}
-//				gdGashBatchTmpRepository.update(gdGashBatchTmp);
+
 				
-				gdGashBatchTmp.setTmpFld1(thdSts);
+//				gdGashBatchTmp.setTmpFld1(thdSts);
 				
 				gdGashBatchTmp.setBk("cnjt");
 				
@@ -259,9 +259,11 @@ public class MsgToGasAftBatchAction extends BaseAction implements AfterBatchAcpS
 				gdGashBatchTmp.setPayMon(listTmps.get(0).getPayMon());
 				gdGashBatchTmp.setTxnAmt(String.valueOf(detail.getTxnAmt()));
 				gdGashBatchTmp.setTxnDte(listTmps.get(0).getTxnDte());
-				gdGashBatchTmp.setTmpFld2("cnjt");
+//				gdGashBatchTmp.setTmpFld2("cnjt");
+				gdGashBatchTmp.setTmpFld5(thdSts);
 				
 				//TODO Update 临时表，为对账做准备
+				gdGashBatchTmpRepository.update(gdGashBatchTmp);
 				list.add(gdGashBatchTmp);
 			}
 			Map<String, Object> resultMap=new HashMap<String, Object>(); 
