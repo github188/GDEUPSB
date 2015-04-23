@@ -11,9 +11,9 @@
 			<varString name="deli1" type="D\t"/> 
 			<fixString name="d3"    length="26" default="账号"/>
 			<varString name="deli2" type="D\t"/> 
-			<fixString name="d4"    length="24" default="流水号"/>
+			<fixString name="d4"    length="23" default="流水号"/>
 			<varString name="deli3" type="D\t"/> 
-			<fixString name="d5"    length="18" default="金额"/>
+			<fixString name="d5"    length="11" default="金额"/>
 			<varString name="deli4" type="D\t"/> 
 			<fixString name="d6"    length="12" default="交易状态"/>
 	</segment>
