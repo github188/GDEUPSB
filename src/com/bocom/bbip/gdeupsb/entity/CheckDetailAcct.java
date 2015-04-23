@@ -19,7 +19,7 @@ public class CheckDetailAcct {
 		public void setThdCusNme(String thdCusNme) {
 			this.thdCusNme = thdCusNme;
 		}
-		private BigDecimal txnAmt;
+		private String txnAmt;
 		private String bakFld1;
 		private String txnTlr;
 		private String onlySignCode;
@@ -72,10 +72,10 @@ public class CheckDetailAcct {
 		public void setTxnDte(String txnDte) {
 			this.txnDte = txnDte;
 		}
-		public BigDecimal getTxnAmt() {
+		public String getTxnAmt() {
 			return txnAmt;
 		}
-		public void setTxnAmt(BigDecimal txnAmt) {
+		public void setTxnAmt(String txnAmt) {
 			this.txnAmt = txnAmt;
 		}
 		public String getBakFld1() {
