@@ -102,6 +102,7 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 																	eupsCusAgentJournal.setIdTyp((String)context.getData("idTyp"));
 																	eupsCusAgentJournal.setIdNo((String)context.getData("idNo"));
 																	eupsCusAgentJournal.setTel((String)context.getData("cmuTel"));
+																	eupsCusAgentJournal.setAgrBr(context.getData("cusTyp").toString());
 																	eupsCusAgentJournal.setTxnDte(DateUtils.parse(DateUtils.format(new Date(), DateUtils.STYLE_SIMPLE_DATE),DateUtils.STYLE_SIMPLE_DATE));
 																	eupsCusAgentJournal.setRsvFld2("301");;
 																	eupsCusAgentJournalRepository.insert(eupsCusAgentJournal);										                										    				
@@ -162,6 +163,7 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 								eupsCusAgentJournal.setRsvFld3(rsvFld3);
 								String rsvFld1=context.getData("oprTyp").toString().trim()+context.getData("agtSts").toString().trim();
 								eupsCusAgentJournal.setRsvFld1(rsvFld1);
+								eupsCusAgentJournal.setAgrBr(context.getData("cusTyp").toString());
 								eupsCusAgentJournal.setComNo(context.getData("comNos").toString());
 								eupsCusAgentJournal.setThdCusNo((String)context.getData("cusNo"));
 								eupsCusAgentJournal.setCusAc(context.getData("cusAc").toString());
