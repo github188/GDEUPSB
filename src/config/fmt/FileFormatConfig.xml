@@ -612,4 +612,12 @@
 			ref="config/fmt/fileFmt/watr00/BatchDataResultDetail.xml" />
 		<line name="header" ref="config/fmt/fileFmt/watr00/BatchDataResultHead.xml" />
 	</file>
+	
+	<file name="batchSignGdsfile" id="batchSignGdsfile" encoding="GBK"
+		lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/sign/batchSignGdsfileDetail.xml" />
+		<line name="header" ref="config/fmt/fileFmt/sign/batchSignGdsfileHeader.xml" />
+	</file>
+	
 </files>
