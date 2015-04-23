@@ -16,6 +16,7 @@ import com.bocom.bbip.comp.BBIPPublicServiceImpl;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
+import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.adaptor.support.CallThdService;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
@@ -53,6 +54,8 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements AfterB
 	EupsBatchConsoleInfoRepository eupsBatchConsoleInfoRepository;
 	@Autowired
 	GDEupsBatchConsoleInfoRepository gdeupsBatchConsoleInfoRepository;
+	@Autowired
+	ThirdPartyAdaptor callThdTradeManager;
 	@Override
 	public void afterBatchDeal(AfterBatchAcpDomain arg0, Context context)throws CoreException {
 		logger.info("电力返盘文件处理开始");
@@ -226,7 +229,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements AfterB
 		 context.setData("TMN", tmn);
 		 context.setData("FileName", ""); //TODO
 		 context.setData("recordNum", context.getData("totCnt"));
-		 Map<String,Object>thdResult= get(CallThdService.class).callTHD(context);
+		 Map<String,Object>thdResult= callThdTradeManager.trade(context);
 		 logger.info("电力返盘文件处理结束");
 	}
   
