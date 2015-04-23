@@ -14,6 +14,7 @@
 			<fixString name="cusAc" length="32" />
 			<fixString name="cusNme" length="128" />
 			<fixString name="idTyp" length="2" />
+			<fixString name="agrBr" length="2" />
 			<fixString name="idNo" length="32" />
 			<fixString name="tel" length="20" />
 			<fixString name="rsvFld4" length="20" />
