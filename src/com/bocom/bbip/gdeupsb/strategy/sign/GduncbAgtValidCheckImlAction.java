@@ -21,6 +21,7 @@ import com.bocom.bbip.gdeupsb.repository.GdsRunCtlRepository;
 
 import com.bocom.bbip.gdeupsb.service.impl.gduncb.GduncbResult;
 import com.bocom.bbip.gdeupsb.service.impl.gduncb.GduncbThdTcpServiceAccessObject;
+import com.bocom.bbip.gdeupsb.utils.UtilsCnlty;
 import com.bocom.bbip.service.Result;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
@@ -132,43 +133,52 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 		//String gdsBId=context.getData("gdsBid").toString();
 		//报文头
 		//44102联通业务本地协议转发流程 
-
+        String Rsp_code=" ";
+        String Rsp_desc=" ";
+        String Oper_id="ITFJTYH1";
+        String Channel_id="A3B23";
+        String Operate_name="qryUserProInfo";
+        String Service_name="UserInfoService";
 		String strTime = DateUtils.format(new Date(),
 				DateUtils.STYLE_yyyyMMddHHmmss);
-		gduncbHeaderVo.setChannel_id("A3B23");
+		gduncbHeaderVo.setChannel_id(UtilsCnlty.fillEmpty(Channel_id, 20));
 		gduncbHeaderVo.setEparchy_code("0020");//待确认
 		gduncbHeaderVo.setMsg_receiver("5100");
-		gduncbHeaderVo.setOper_id("ITFJTYH1");
-		gduncbHeaderVo.setOperate_name("qryUserProInfo");
+		gduncbHeaderVo.setOper_id(UtilsCnlty.fillEmpty(Oper_id, 20));
+		gduncbHeaderVo.setOperate_name(UtilsCnlty.fillEmpty(Operate_name, 60));
 		gduncbHeaderVo.setProcess_time(strTime);
-		gduncbHeaderVo.setRsp_code(" ");
-		gduncbHeaderVo.setRsp_desc(" ");
-		gduncbHeaderVo.setService_name("UserInfoService");
+		gduncbHeaderVo.setRsp_code(UtilsCnlty.fillEmpty(Rsp_code, 16));
+		gduncbHeaderVo.setRsp_desc(UtilsCnlty.fillEmpty(Rsp_desc, 500));
+		gduncbHeaderVo.setService_name(UtilsCnlty.fillEmpty(Service_name, 500));
 		gduncbHeaderVo.setTest_flag("0");
-		gduncbHeaderVo.setTrans_ido(sqn);
+		gduncbHeaderVo.setTrans_ido(UtilsCnlty.fillEmpty(sqn, 30));
 		gduncbHeaderVo.setMsg_sender("5101");
 		
 		//报文体
-		requestData.put("svrtyp", "GDSUNICOM");
+		String svrtyp="GDSUNICOM";
+		requestData.put("svrtyp", UtilsCnlty.fillEmpty(svrtyp, 30));
 		requestData.put("qrytyp", "0001");
-		requestData.put("serial_number", context.getData("tcusid"));
+		requestData.put("serial_number", UtilsCnlty.fillEmpty((String)context.getData("tcusid"),20));
 		requestData.put("service_calss_code", "G");
 		GduncbResult gduncbResult =gduncbThdTcpServiceAccessObject.callThdTcpService(gduncbHeaderVo, requestData);
 		if(gduncbResult.getStatus()==0){
-			gduncbHeaderVo.setOperate_name("acctInfoChange");
-			gduncbHeaderVo.setService_name("AcctInfoService");
+			 Operate_name="acctInfoChange";
+			 Service_name="AcctInfoService";
+			gduncbHeaderVo.setOperate_name(UtilsCnlty.fillEmpty(Operate_name, 60));
+			gduncbHeaderVo.setService_name(UtilsCnlty.fillEmpty(Service_name, 60));
 		
 			//报文体
-			requestData.put("svrtyp", "GDSUNICOM");
+			String super_bank_code="JT";
+			requestData.put("svrtyp",  UtilsCnlty.fillEmpty(svrtyp, 30));
 			requestData.put("qrytyp", "0002");
-			requestData.put("serial_number", context.getData("tcusid"));
+			requestData.put("serial_number", UtilsCnlty.fillEmpty((String)context.getData("tcusid"),20));
 			requestData.put("service_calss_code", "G");
 			requestData.put("acct_type", context.getData("actTyp"));
 			requestData.put("pay_type", "8");
-			requestData.put("super_bank_code", "JT");
+			requestData.put("super_bank_code", UtilsCnlty.fillEmpty(super_bank_code,8));
 			requestData.put("bank_code", "JTYH001");
-			requestData.put("consign_no",  context.getData("actNo"));
-			requestData.put("consign_name",context.getData("actName"));
+			requestData.put("consign_no",  UtilsCnlty.fillEmpty((String)context.getData("actNo"),30));
+			requestData.put("consign_name",UtilsCnlty.fillEmpty((String)context.getData("actName"),30));
 			GduncbResult gduncbResult1 =gduncbThdTcpServiceAccessObject.callThdTcpService(gduncbHeaderVo, requestData);
 			if(gduncbResult1.getStatus()==0){
 				String rspCode=gduncbResult1.getResponseMap().get("rsp_code").toString().trim();

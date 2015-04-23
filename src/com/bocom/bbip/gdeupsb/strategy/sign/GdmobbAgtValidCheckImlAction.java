@@ -23,6 +23,7 @@ import com.bocom.bbip.gdeupsb.repository.GdsAgtWaterRepository;
 import com.bocom.bbip.gdeupsb.repository.GdsRunCtlRepository;
 import com.bocom.bbip.gdeupsb.service.impl.gdmobb.GdmobbResult;
 import com.bocom.bbip.gdeupsb.service.impl.gdmobb.GdmobbThdTcpServiceAccessObject;
+import com.bocom.bbip.gdeupsb.utils.UtilsCnlty;
 
 import com.bocom.bbip.service.Result;
 import com.bocom.bbip.utils.CollectionUtils;
@@ -163,7 +164,7 @@ public class GdmobbAgtValidCheckImlAction implements AgtValidCheckService {
 			gdmobbHeaderVo.setSub_command("01");
 			//账户类型
 			
-			String  acttype=context.getData("actTyp");
+	/*		String  acttype=context.getData("actTyp");
 			String 	actno=(String)context.getData("actNo");
 			String  actNam=(String)context.getData("actName");
 			String  idTyp=((String)context.getData("idTyp"));
@@ -172,33 +173,65 @@ public class GdmobbAgtValidCheckImlAction implements AgtValidCheckService {
 			String  mstTel=(String)context.getData("mstTel");
 			String  sigFlg=((String)context.getData("sigFlg"));
 			String  sigTel=(String)context.getData("sigTel");
-			String pidtyp="A";
-			if(idTyp.equals("15")){
-				pidtyp="A";
-			}else if(idTyp.equals("17")){
-				pidtyp="B";
-			}else if(idTyp.equals("23")){
-				pidtyp="F";
-			}else if(idTyp.equals("19")){
-				pidtyp="G";
-			}else if(idTyp.equals("20")){
-				pidtyp="I";
-			}else if(idTyp.equals("20")){
-				pidtyp="Z";
-			}else{
-				pidtyp="Z";
+			*/
+			String acttype=context.getData("actTyp");
+			String rsvval1=" ";
+			String 	actno=UtilsCnlty.fillEmpty((String)context.getData("actNo"),28);
+			String  actNam=UtilsCnlty.fillEmpty((String)context.getData("actNam"),32);
+			String  idTyp=((String)context.getData("idTyp")).trim();
+			String  idNo=UtilsCnlty.fillEmpty(((String)context.getData("idNo")).trim(),20);
+			String  cusNam=UtilsCnlty.fillEmpty(((String)context.getData("cusNam")).trim(),32);
+			String  mstTel=UtilsCnlty.fillEmpty(((String)context.getData("mstTel")).trim(),20);
+			String  sigFlg=((String)context.getData("sigFlg")).trim();
+			String  sigTel=UtilsCnlty.fillEmpty(((String)context.getData("sigTel")).trim(),20);
+			String  rsvval2=UtilsCnlty.fillEmpty(rsvval1,20);
+			String pacttyp="";
+			if(acttype.equals("9")){
+				pacttyp="29";
+			}else if(acttype.equals("5")){
+				pacttyp="25";
+			}else if(acttype.equals("6")){
+				pacttyp="26";		
+			}else if(acttype.equals("7")){
+				pacttyp="27";
+			}else if(acttype.equals("8")){
+				pacttyp="28";
+			}else if(acttype.equals("1")){
+				pacttyp="21";
+			}else if(acttype.equals("2")){
+				pacttyp="22";
+			}else if(acttype.equals("3")){
+				pacttyp="23";
+			}else if(acttype.equals("4")){
+				pacttyp="24";
 			}
+		        String pidTyp = "Z";// 其它
+		        if(idTyp.equals("15")){
+		            pidTyp = "A";//居民身份证
+		        }else if (idTyp.equals("17")) {
+		            pidTyp = "E";//解放军士兵证
+		        }else if (idTyp.equals("18")) {
+		            pidTyp = "L";//武警士兵证
+		        }else if (idTyp.equals("19")){
+		            pidTyp = "G";// (港澳)回乡证/通行证 
+		        }else if(idTyp.equals("20")){
+		            pidTyp = "I";//(外国)护照
+		        }else if(idTyp.equals("23")){
+		            pidTyp = "F";//户口簿
+		        } 
+		     
+		   
 			requestData.put("tlogno", tlogno);
 			requestData.put("bakcod", "JT");
-			requestData.put("pacttyp", acttype);
+			requestData.put("pacttyp", pacttyp);
 			requestData.put("actno", actno);
 			requestData.put("actnam", actNam);
-			requestData.put("pidtyp", pidtyp);
+			requestData.put("pidtyp", pidTyp);
 			requestData.put("idno", idNo);
 			requestData.put("cusnam", cusNam);
 			requestData.put("msttel", mstTel);
-			requestData.put("rsvval1", " ");
-			requestData.put("rsvval2", " ");
+			requestData.put("rsvval1", rsvval2);
+			requestData.put("rsvval2", rsvval2);
 			requestData.put("sigflg", sigFlg);
 			requestData.put("sigtel", sigTel);
 			//requestData.put("maccode", "00000000");//待定BBIPVNB0001
