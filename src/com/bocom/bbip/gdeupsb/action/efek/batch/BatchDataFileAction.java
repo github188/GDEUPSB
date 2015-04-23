@@ -29,12 +29,14 @@ import com.bocom.bbip.eups.spi.service.batch.BatchAcpService;
 import com.bocom.bbip.eups.spi.vo.PrepareBatchAcpDomain;
 import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
+import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.AgtFileBatchDetail;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.entity.GDEupsEleTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GDEupsEleTmpRepository;
+import com.bocom.bbip.service.Result;
 import com.bocom.bbip.thd.org.apache.commons.collections.CollectionUtils;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
@@ -44,7 +46,6 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
 
 public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 	private final static Log logger=LogFactory.getLog(BatchDataFileAction.class);
-	private Process proc = null;
 		/**
 		 * 批量代收付  数据准备  提交
 		 */
@@ -64,6 +65,10 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 	public void prepareBatchDeal(PrepareBatchAcpDomain preparebatchacpdomain,
 			Context context) throws CoreException {
 				logger.info("==========Start  BatchDataFileAction  prepareBatchDeal");
+				//上锁
+				String locked="460420ELEC00";
+				Result ret1 = bbipPublicService.tryLock( locked,60*1000L, 600L);
+				
 				String totAmt=context.getData("totAmt").toString();
 				String totCnt=context.getData("totCnt").toString();
 //				context.setData("comNo", "030613");
@@ -128,6 +133,12 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 						//提交代收付
 						logger.info("==========End  BatchDataFileAction  prepareBatchDeal");
 						userProcessToSubmit(context);
+						
+						ret1 = bbipPublicService.unlock(locked);
+						int status1 = ret1.getStatus();
+						if (status1 != 0) {
+							throw new CoreException(GDErrorCodes.EUPS_UNLOCK_FAIL, "交易解锁失败!!!");
+						}
 	}
 	/**
 	 * 文件map拼装
@@ -301,16 +312,14 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 	    	logger.info("================Start BatchDataFileActiion  RecvEnCryptFile");	    	
 	        String cmd="ssh icsadm@182.53.15.200 /app/ics/app/efek/bin/EfeFilRecv.sh 182.53.201.46 bcm exchange dat/efek/recv "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
 	        logger.info("cmd=" + cmd);
-	        synchronized(this.proc){
-		        this.proc = Runtime.getRuntime().exec(cmd);
-		        this.proc.waitFor();
-	        }
+	        Process proc = Runtime.getRuntime().exec(cmd);
+	        proc.waitFor();
 	        //TODO  proc.exitValue();返回是否有文件
 	       
 	        logger.info("en-file success!");
 	        logger.info("================End BatchDataFileActiion  RecvEnCryptFile");
 	        
-	        return proc;
+	        return null;
 	    }
 }
 
