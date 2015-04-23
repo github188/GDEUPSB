@@ -259,7 +259,7 @@ public class CheckThdDetlAcctAction implements Executable {
 				}
 			checkDetailAcct.setBakFld1(str);
 			checkDetailAcct.setRsvFld1(context.getData("checkOneCode").toString());
-			checkDetailAcct.setTxnTlr(eupsStreamNo.getTxnTlr());
+			checkDetailAcct.setTxnTlr(eupsStreamNo.getRsvFld1());
 			list.add(checkDetailAcct);
 		}
 		logger.info("~~~~~~~~~~~~list~~~~"+list);
