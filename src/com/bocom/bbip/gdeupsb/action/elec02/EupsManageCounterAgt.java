@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.comp.BBIPPublicService;
+import com.bocom.bbip.comp.CommonRequest;
+import com.bocom.bbip.comp.account.AccountService;
+import com.bocom.bbip.comp.account.support.CusActInfResult;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
@@ -31,6 +34,8 @@ public class EupsManageCounterAgt extends BaseAction {
 
 	@Autowired
 	BBIPPublicService bbipPublicService;
+	@Autowired
+	AccountService accountService;
 
 	@Autowired
 	ThirdPartyAdaptor callThdTradeManager;
@@ -83,6 +88,8 @@ public class EupsManageCounterAgt extends BaseAction {
 
 	private void buildContextAndCallThd(Context context) throws CoreException {
 		
+		checkCusInfoByCusAc(context);
+		
 		Date date = new Date();
 		String YYYYMMDD = DateUtils.format(date, DateUtils.STYLE_yyyyMMdd);
 		String YYYYMMDDHHMMSS = DateUtils.format(date, DateUtils.STYLE_yyyyMMddHHmmss);
@@ -102,24 +109,7 @@ public class EupsManageCounterAgt extends BaseAction {
 		context.setData("WorkDate", YYYYMMDD);
 		context.setData("SendTime", YYYYMMDDHHMMSS);
 		context.setData("mesgPRI", "9");
-//		recordNum	80	10	n	数据明细项数	　报文含有明细项数或者文件明细行数
-//		FileName	90	32	a	文件名	没有文件则为32个空格
-//		zipFlag	122	1	F	压缩标志	0：不压缩；1：压缩报文体；2：压缩文件
-		//TODO
-//		switch (oprType) {
-//		case ADD:
-//			context.setData("recordNum", "12");
-//			break;
-//		case UPDATE:
-//			context.setData("recordNum", "");
-//			break;
-//		case QUERY:
-//			context.setData("recordNum", "5");
-//			break;
-//		case DELETE:
-//			context.setData("recordNum", "");
-//			break;
-//		}
+
 		context.setData("recordNum", "12"); //不校验，但是要有值
 		context.setData("FileName", "");//无文件，空字符串
 		context.setData("zipFlag", "0");//TODO
@@ -132,8 +122,6 @@ public class EupsManageCounterAgt extends BaseAction {
 		context.setData("ECD", "0500");
 		context.setData("EDD", "000");
 		context.setData("SBN", "301");
-//		context.setData("SBN", br);
-//		context.setData("SBN", "");
 		context.setData("WDO", YYYYMMDD);
 		context.setData("TLogNo", ""); //TODO 供电局流水
 		context.setData("KKB", br);
@@ -159,6 +147,24 @@ public class EupsManageCounterAgt extends BaseAction {
 		
 		context.setData("comCode", "0500");
 		context.setData("feeCode", "0000");		
+	}
+
+	private void checkCusInfoByCusAc(Context context) throws CoreException {
+		String cusAc = context.getData("ActNo").toString().trim();
+	
+		CusActInfResult cusactinfresult = new CusActInfResult();
+		try {
+			cusactinfresult = accountService.getAcInf(
+					CommonRequest.build(context), cusAc);
+		} catch (CoreException e) {
+			e.printStackTrace();
+		}
+
+		if ("E".equals(cusactinfresult.getResponseType())) {
+			throw new CoreException(cusactinfresult.getResponseMessage());
+		}
+		String idNo = cusactinfresult.getIdNo();
+		context.setData("TIdNo", idNo);
 	}
 
 	private void addAgentDeal(Context context) throws CoreException {
@@ -238,6 +244,7 @@ public class EupsManageCounterAgt extends BaseAction {
 		agtElecTmp.setTelNum((String) context.getData("TEL"));
 		agtElecTmp.setPrcessPassword((String) context.getData("Pin"));
 		agtElecTmp.setNewBankNum((String)context.getData(ParamKeys.BR));
+		agtElecTmp.setIdNo((String)context.getData("TIdNo")); 
 		return agtElecTmp;
 	}
 
