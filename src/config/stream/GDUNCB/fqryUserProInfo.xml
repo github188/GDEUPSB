@@ -5,10 +5,10 @@
 	name="f0001" encoding="GBK">
 
 	<!-- 签约交易 -->
-	  <fixString name="SVRTYP"  length="20" />         				<!--报文类型-->
-      <fixString name="QRYTYP"  length="4" />             			<!--请求类型-->
-      <fixString name="SERIAL_NUMBER"  length="20"/>                  <!--用户服务号码-->
-      <fixString name="SERVICE_CALSS_CODE"  length="1" />           <!--服务号码网别-->
+	  <fixString name="svrtyp"  length="20" />         				<!--报文类型-->
+      <fixString name="qrytyp"  length="4" />             			<!--请求类型-->
+      <fixString name="serial_number"  length="20"/>                  <!--用户服务号码-->
+      <fixString name="service_calss_code"  length="1" />           <!--服务号码网别-->
      
 </segment>
 	 
