@@ -221,6 +221,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 			logger.info(">>>>>Down Result File Success<<<<<<");
 			String mothed="eups.commNotifyBatchStatus";
 			bbipPublicService.synExecute(mothed, context);
+			context.setData("PKGCNT", "000000");
 			logger.info("==========End  BatchDataFileAction  userProcessToGet");
 		}
 	/**
