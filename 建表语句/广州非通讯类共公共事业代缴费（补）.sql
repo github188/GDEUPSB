@@ -19,25 +19,25 @@ create table gdeupsb.GDS_AGT_TEL
 --银行类型
   Bnk_No    char(12)  default '',
 --银行行号
-  Bnk_Nam   char(60)  default '',
+  Bnk_Nam   char(90)  default '',
 --银行行名
   Org_Cod   char(12)  default '',
 --单位代码
-  Org_Nam   char(60)  default '',
+  Org_Nam   char(90)  default '',
 --单位名称
   TBus_Tp   char(5)   default '',
 --业务种类
-  TCus_Id   char(20)  not null,
+  TCus_Id   char(40)  not null,
 --客户标识
-  TCus_Nm   char(60)  default '',
+  TCus_Nm   char(90)  default '',
 --客户标识
   Eff_Dat   char(8)   default '',
 --生效日期
   Ivd_Dat   char(8)   default '',
 --失效日期
-  LEr_Msg   char(60)  default '',
+  LEr_Msg   char(90)  default '',
 --本地协议提示
-  TEr_Msg   char(60)  default '',
+  TEr_Msg   char(90)  default '',
 --第三方协议提示
   Area_Id  char(5),
 --所属区所
@@ -72,25 +72,25 @@ create table gdeupsb.GDS_AGT_DEG
 --银行类型
   Bnk_No    char(12)  default '',
 --银行行号
-  Bnk_Nam   char(60)  default '',
+  Bnk_Nam   char(90)  default '',
 --银行行名
   Org_Cod   char(12)  default '',
 --单位代码
-  Org_Nam   char(60)  default '',
+  Org_Nam   char(90)  default '',
 --单位名称
   TBus_Tp   char(5)   default '',
 --业务种类
-  TCus_Id   char(20)  not null,
+  TCus_Id   char(40)  not null,
 --客户标识
-  TCus_Nm   char(60)  default '',
+  TCus_Nm   char(90)  default '',
 --客户标识
   Eff_Dat   char(8)   default '',
 --生效日期
   Ivd_Dat   char(8)   default '',
 --失效日期
-  LEr_Msg   char(60)  default '',
+  LEr_Msg   char(90)  default '',
 --本地协议提示
-  TEr_Msg   char(60)  default '',
+  TEr_Msg   char(90)  default '',
 --第三方协议提示
   Area_Id  char(5),
 --所属区所
@@ -125,25 +125,25 @@ create table gdeupsb.GDS_AGT_GAS
 --银行类型
   Bnk_No    char(12)  default '',
 --银行行号
-  Bnk_Nam   char(60)  default '',
+  Bnk_Nam   char(90)  default '',
 --银行行名
   Org_Cod   char(12)  default '',
 --单位代码
-  Org_Nam   char(60)  default '',
+  Org_Nam   char(90)  default '',
 --单位名称
   TBus_Tp   char(5)   default '',
 --业务种类
-  TCus_Id   char(20)  not null,
+  TCus_Id   char(40)  not null,
 --客户标识
-  TCus_Nm   char(60)  default '',
+  TCus_Nm   char(90)  default '',
 --客户标识
   Eff_Dat   char(8)   default '',
 --生效日期
   Ivd_Dat   char(8)   default '',
 --失效日期
-  LEr_Msg   char(60)  default '',
+  LEr_Msg   char(90)  default '',
 --本地协议提示
-  TEr_Msg   char(60)  default '',
+  TEr_Msg   char(90)  default '',
 --第三方协议提示
   Area_Id  char(5),
 --所属区所
@@ -177,25 +177,25 @@ create table gdeupsb.GDS_AGT_ELC
 --银行类型
   Bnk_No    char(12)  default '',
 --银行行号
-  Bnk_Nam   char(60)  default '',
+  Bnk_Nam   char(90)  default '',
 --银行行名
   Org_Cod   char(12)  default '',
 --单位代码
-  Org_Nam   char(60)  default '',
+  Org_Nam   char(90)  default '',
 --单位名称
   TBus_Tp   char(5)   default '',
 --业务种类
-  TCus_Id   char(20)  not null,
+  TCus_Id   char(40)  not null,
 --客户标识
-  TCus_Nm   char(60)  default '',
+  TCus_Nm   char(90)  default '',
 --客户标识
   Eff_Dat   char(8)   default '',
 --生效日期
   Ivd_Dat   char(8)   default '',
 --失效日期
-  LEr_Msg   char(60)  default '',
+  LEr_Msg   char(90)  default '',
 --本地协议提示
-  TEr_Msg   char(60)  default '',
+  TEr_Msg   char(90)  default '',
 --第三方协议提示
   Area_Id  char(5),
 --所属区所
@@ -447,7 +447,7 @@ CREATE TABLE GDEUPSB.GDEUPS_GAS_CUS_ALL
 --用户编号
   CUS_AC    char(32) not null,  
 --账号
-  CUS_NME   char(32) not null,
+  CUS_NME   char(100) not null,
 --付款人名称
   CUS_TYP    char(32) not null,  
 --账号类型(0对公1对私活期一本通2对私普通折4对私卡)
@@ -459,7 +459,7 @@ CREATE TABLE GDEUPSB.GDEUPS_GAS_CUS_ALL
 --证件类型
   ID_NO     char(32),
 --证件号码
-  THD_CUS_NME     char(32),
+  THD_CUS_NME     char(100),
 --联系人名称
   CMU_TEL     char(50),
 --联系人手机号码
@@ -621,7 +621,8 @@ CREATE
         RSV_FLD9 VARCHAR(300),
         EUPS_BUS_TYP VARCHAR(20),
         CONSTRAINT P_BAT_CON_INFO_IDX PRIMARY KEY (BAT_NO)
-    );
+    )IN "BBIP_APP"
+INDEX IN  "BBIP_APP_INDEX";
 COMMENT ON TABLE GDEUPSB.GDEUPS_BATCH_CONSOLE_INFO
 IS
     '批量代收付控制信息表';
@@ -709,80 +710,110 @@ IS
 COMMENT ON COLUMN GDEUPSB.GDEUPS_BATCH_CONSOLE_INFO.RSV_FLD9
 IS
     '预留字段9'                                               
-                                                                         
-                                                                                                                                                                                                                    
-                                                                            
-                                                                                                                                                                                                                  
-                                                                            
-                                                                                                                                                                                                                     
-                                                                            
-                                                                                                                                                                                                                   
-                                                                            
-                                                                                                                                                                                                                
-                                                                            
-                                                                                                                                                                                                                  
-                                                                            
-                                                                                                                                                                                                                  
-                                                                            
-                                                                               
-                                                                            
-                                                                                                                                                                                                                     
-                                                                            
-                                                                                                                                                                                                                     
-                                                                            
-                                                                                                                                                                                                                                                                                                                        
-                                                               
-                                                                                                                                                                                             
-                                                               
-                                                                                                                                                                                             
-                                                               
-                                                                                                                                                                                             
-                                                               
-                                                                                                                                                                                              
-                                                               
-                                                                                                                
-                                                               
-                                                                                                                
-                                                               
-                                                                                                                
-                                                               
-                                                                                                                
-                                                               
-                                                                                                                
-                                                               
-                                                                                                                
-                                                               
-                                                                                                                
-                                                           
-                                                                                                            
-                                                           
-                                                                                                           
-                                                           
-                                                                                                            
-                                                           
-                                                                                                            
-                                                           
-                                                           
-                                                           
-                                                                                                            
-                                                           
-                                                                                                            
-                                                           
-                                                                                                            
-                                                           
-                                                                                                                                                                                                      
-                                                             
-                                                                                                                                                                                                      
-                                                             
-                                                                                                                                                                                                      
-                                                             
-                                                                                                                                                                                                     
-                                                             
-                                                                                                                                                                                                     
-                                                             
-                                                                                                                                                                                                      
-                                                             
-                                                                                                                                                                                                      
-                                                             
-                                                                                                                                                                                                      
-                                                             
+
+drop table  gdeupsb.GDEUPS_Agt_Elec_TMP; --汕头电力协议输入信息表
+create table gdeupsb.GDEUPS_Agt_Elec_TMP(
+
+   BR_NO       CHAR(6)         DEFAULT ' ',
+   AGT_NO      CHAR(13)        DEFAULT ' ',
+   COM_NO      CHAR(10)        DEFAULT ' ',
+   BANK_NO     CHAR(12)        DEFAULT ' ',
+   COM_CODE		char(12),
+   FEE_CODE		char(3),
+   FEE_NUM		char(32),
+   USER_NAME		char(96),
+   OLD_BANK_NUM		char(12),
+   OLD_CARD_NO		char(21),
+   NEW_BANK_NUM		char(12),
+   ACT_NO		char(21) not null,
+   ACOUNT_NAME		char(96),
+   ACT_TYPE		char(1),
+   PER_COM_FLAG		char(1),
+   ID_TYPE		char(2),
+   ID_NO		char(32),
+   CHECK_SEND_TYPE	char(1),
+   INVOICE_SNED_TYPE	char(1),
+   POINT_NUM		char(5),
+   INVOICE_SNED_MAN	char(60),
+   INVOICE_SEND_ZIP	char(6),
+   INVOICE_SEND_ADDR	char(60),
+   CHECK_SEND_MAN	char(40),
+   CHECK_SEND_ZIP	char(6),
+   CHECK_SEND_ADDR	char(60),
+   NOTIFY_TYPE		char(1),
+   EMAIL		char(64),
+   PHONE_NUM		char(30),
+   TEL_NUM		char(60),
+   REMARK		char(64),
+   PRCESS_PASSWORD	char(15)                                  
+)IN "BBIP_APP"
+INDEX IN  "BBIP_APP_INDEX"; 
+
+  comment on table gdeupsb.GDEUPS_Agt_Elec_TMP   is   '汕头电力协议信息表'; 
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.COM_CODE   is   '收付费企业代码'; 
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.FEE_CODE   is   '费项代码';
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.FEE_NUM   is   '缴费号';
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.USER_NAME   is   '用户名称'; 
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.OLD_BANK_NUM   is   '原开户行行号'; 
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.OLD_CARD_NO   is   '原账户/卡号';
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.NEW_BANK_NUM   is   '新开户行行号'; 
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.ACT_NO   is   '账号';
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.ACOUNT_NAME   is   '新客户名称'; 
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.ACT_TYPE   is   '帐号类型';
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.PER_COM_FLAG   is   '个人/集团标志'; 
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.ID_TYPE   is   '证件类型';
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.ID_NO   is   '证件号码'; 
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.CHECK_SEND_TYPE   is   '账单邮寄类型';
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.INVOICE_SNED_TYPE   is   '发票邮寄类型';
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.POINT_NUM   is   '计量点号';
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.INVOICE_SNED_MAN   is   '发票邮寄人'; 
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.INVOICE_SEND_ZIP   is   '发票邮寄邮编';
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.INVOICE_SEND_ADDR   is   '发票邮寄地址'; 
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.CHECK_SEND_MAN   is   '帐单邮寄人';
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.CHECK_SEND_ZIP   is   '帐单邮寄邮编'; 
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.INVOICE_SEND_ADDR   is   '帐单邮寄地址';
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.NOTIFY_TYPE   is   '余额不足通知方式'; 
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.EMAIL   is   'E-MAIL';
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.PHONE_NUM   is   '联系手机号'; 
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.TEL_NUM   is   '联系电话';
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.REMARK   is   '备注'; 
+  comment on column gdeupsb.GDEUPS_Agt_Elec_TMP.PRCESS_PASSWORD   is   '交易密码st';
+
+  
+--汕头电力临时表
+DROP table GDEUPSB.GDEUPS_ELEC_BATCH_TEMP;
+CREATE
+    TABLE GDEUPSB.GDEUPS_ELEC_BATCH_TEMP
+    (
+        SQN CHARACTER(50) NOT NULL ,
+        BAT_NO CHARACTER(21) NOT NULL,
+        COM_NO CHARACTER(15),
+        TXN_TLR CHARACTER(7),
+        SUB_DTE DATE,
+        CUS_AC VARCHAR(300),
+        CUS_NME VARCHAR(300),
+        TXN_AMT VARCHAR(300),
+        THD_CUS_NO VARCHAR(300),
+        THD_CUS_NME VARCHAR(300),
+        OBK_BR VARCHAR(300),
+        OUROTHFLG VARCHAR(300),
+        RSV_FLD1 VARCHAR(300),
+        RSV_FLD2 VARCHAR(300),
+        RSV_FLD3 VARCHAR(300),
+        RSV_FLD4 VARCHAR(300),
+        RSV_FLD5 VARCHAR(300),
+        RSV_FLD6 VARCHAR(300),
+        RSV_FLD7 VARCHAR(300),
+        RSV_FLD8 VARCHAR(300),
+        RSV_FLD9 VARCHAR(300),
+        RSV_FLD10 VARCHAR(300),
+        RSV_FLD11 VARCHAR(300),
+        RSV_FLD12 VARCHAR(300),
+        RSV_FLD13 VARCHAR(300),
+        RSV_FLD14 VARCHAR(300),
+        RSV_FLD15 VARCHAR(300),
+        RSV_FLD16 VARCHAR(300),
+        RSV_FLD17 VARCHAR(300),
+       PRIMARY KEY (SQN)
+    )IN "BBIP_APP"
+INDEX IN  "BBIP_APP_INDEX";

@@ -1098,25 +1098,21 @@ INDEX IN  "BBIP_APP_INDEX";
   comment on column GDEUPSB.TRSP_NP_MANAG.TLR_ID is             
 '柜员号';         
      
-  --------------------轧账管理表
-  drop table GDEUPSB.TRSP_ZZ_MANAG;
-  CREATE TABLE GDEUPSB.TRSP_ZZ_MANAG                     
-(
-   NOD_NO      CHAR(6)    not null,                                                       
-                                                       
+--------------------轧账管理表
+drop table GDEUPSB.TRSP_ZZ_MANAG;
+CREATE TABLE GDEUPSB.TRSP_ZZ_MANAG                     
+(                                                      
+   NOD_NO      CHAR(11)    not null,                                                       
    ZZ_DAT      CHAR(8)    not null,                               
-                                                        
    FLG         CHAR(1)    not null,                                   
    PRIMARY KEY (NOD_NO,ZZ_DAT)                                             
-) IN "BBIP_APP"
-INDEX IN  "BBIP_APP_INDEX";                                                                                                                                                   
-                                                           
+);                                                                                                                                                   
        comment on column GDEUPSB.TRSP_ZZ_MANAG.NOD_NO   is             
      '网点号';                               
        comment on column GDEUPSB.TRSP_ZZ_MANAG.ZZ_DAT   is             
      '轧账日期';                                                      
       comment on column GDEUPSB.TRSP_ZZ_MANAG.FLG       is             
-     '状态标识';                                                        
+     '状态标识'; 
                                                            
                                                                         
 drop table  gdeupsb.Gds_Agt_Water;   --水费协议明细表
@@ -1140,25 +1136,25 @@ create table gdeupsb.Gds_Agt_Water
 --银行类型
   Bnk_No    char(12)  default '',
 --银行行号
-  Bnk_Nam   char(60)  default '',
+  Bnk_Nam   char(90)  default '',
 --银行行名
   Org_Cod   char(12)  default '',
 --单位代码
-  Org_Nam   char(60)  default '',
+  Org_Nam   char(90)  default '',
 --单位名称
   TBus_Tp   char(5)   default '',
 --业务种类
-  TCus_Id   char(20)  not null,
+  TCus_Id   char(40)  not null,
 --客户标识
-  TCus_Nm   char(60)  default '',
+  TCus_Nm   char(90)  default '',
 --客户标识
   Eff_Dat   char(8)   default '',
 --生效日期
   Ivd_Dat   char(8)   default '',
 --失效日期
-  LEr_Msg   char(60)  default '',
+  LEr_Msg   char(90)  default '',
 --本地协议提示
-  TEr_Msg   char(60)  default '',
+  TEr_Msg   char(90)  default '',
 --第三方协议提示
   Area_Id  char(5),
 --所属区所
@@ -1232,7 +1228,7 @@ create table GDEUPSB.Gds_Agt_Inf
 --协议业务交易账号
   Act_Typ   char(1)   not null,
 --账户性质
-  Act_Nm    char(60)  default '', 
+  Act_Nm    char(90)  default '', 
 --协议业务账号户名
   Vch_Typ   char(3)   default '',
 --凭证种类
@@ -1331,7 +1327,7 @@ create table GDEUPSB.GDEUPS_GAS_CUS_DAY
 --指令(Add 为新增用户协议 Edit 为修改用户协议 Stop 为取消用户协议)
   CUS_AC    char(32) not null,  
 --银行账号
-  CUS_NME   char(32) not null,
+  CUS_NME   char(100) not null,
 --付款人名称
   ACC_TYP    char(32),  
 --账号类型(0对公1对私活期一本通2对私普通折4对私卡)
@@ -1343,61 +1339,44 @@ create table GDEUPSB.GDEUPS_GAS_CUS_DAY
 --证件类型
   ID_NO     char(32),
 --证件号码
-  THD_CUS_NAM     char(32),
+  THD_CUS_NAM     char(100),
 --联系人名称
   CMU_TEL     char(50),
 --联系人手机号码
-  THD_CUS_ADR     char(100),
+  THD_CUS_ADR     char(150),
 --联系人地址
 
 PRIMARY KEY(SEQUENCE)
 )IN "BBIP_APP"
 INDEX IN  "BBIP_APP_INDEX";
 
-
+--佛山文本批量代收付临时表
 drop table GDEUPSB.GDEUPS_FBPE_FILE_BATCH_TMP;
 create table GDEUPSB.GDEUPS_FBPE_FILE_BATCH_TMP
 (
-  SQN     char(20)    not null default ' ',
---交易流水号
-  Txn_NO    char(3)    not null default ' ',
---交易码
-  ORG_CDE    char(3)    default ' ',
---机构号
-  TLR_No    char(6)      default ' ',
---操作员号
-  Txn_Tim    char(14)    default ' ',
---交易时间
-  CUS_NO    char(20)     default ' ',
---客户号
-  Acc_No  char(10)      default ' ',
---账单号
-  Cus_Ac    char(20)     default ' ',
---客户卡号
-  Cus_Nam    char(20)    default ' ',
---客户名称
- Txn_Amt  char(10)     default ' ',
---交易金额
- Acc_Amt  char(10)     default ' ',
---扣账金额
-  Act_No  char(20)     default ' ',
---银行账号
-  bank_No  char(6)     default ' ',
---银行编号
-  bank_Nam  char(30)     default ' ',
---银行名称
-  Cos_Mon  char(6)     default ' ',
---话费月份
-
-   RSV_FLD1             VARCHAR(300) default ' ',
-   RSV_FLD2             VARCHAR(300) default ' ',
-   RSV_FLD3             VARCHAR(300) default ' ',
-   RSV_FLD4             VARCHAR(300) default ' ',
-   RSV_FLD5             VARCHAR(300) default ' ',
-   RSV_FLD6             VARCHAR(300) default ' ',
-   RSV_FLD7             VARCHAR(300) default ' ',
-   RSV_FLD8             VARCHAR(300) default ' ',
---预留字段
+  SQN     char(24)    not null ,
+  Txn_NO    char(10)    not null ,
+  ORG_CDE    char(10)    ,
+  TLR_No    char(10)      ,
+  Txn_Tim    char(64)    ,
+  CUS_NO    char(32)     ,
+  Acc_No  char(20)      ,
+  Cus_Ac    char(32)     ,
+  Cus_Nam    char(64)    ,
+ Txn_Amt  char(16)     ,
+ Acc_Amt  char(16)     ,
+  Act_No  char(32)     ,
+  bank_No  char(24)     ,
+  bank_Nam  char(64)     ,
+  Cos_Mon  char(6)     ,
+   RSV_FLD1             VARCHAR(300) ,
+   RSV_FLD2             VARCHAR(300) ,
+   RSV_FLD3             VARCHAR(300) ,
+   RSV_FLD4             VARCHAR(300) ,
+   RSV_FLD5             VARCHAR(300) ,
+   RSV_FLD6             VARCHAR(300) ,
+   RSV_FLD7             VARCHAR(300) ,
+   RSV_FLD8             VARCHAR(300) ,
 primary key (SQN)
 )
  IN "BBIP_APP"
@@ -1462,14 +1441,14 @@ FEE_TYP CHAR(3),
 --费项代码
 TOT_CNT CHAR(10),
 --总记录数
-TOT_AMT CHAR(14),
+TOT_AMT CHAR(18),
 --总金额
 SUB_DTE CHAR(8),
 --送银行日期/提交日期
 TXN_DTE CHAR(8),
 --应划款日期
 THD_SQN CHAR(16),
---流水号
+--THD流水号
 BK CHAR(12),
 --银行代码
 SER_NO CHAR(10),
@@ -1480,9 +1459,9 @@ BR CHAR(12),
 --客户开户行行号
 CUS_AC CHAR(32),
 --帐号
-CUS_NME CHAR(40),
+CUS_NME CHAR(128),
 --客户账号名称
-TXN_AMT CHAR(12),
+TXN_AMT CHAR(18),
 --金额
 TXN_TYP CHAR(1),
 --扣款方式
@@ -1515,6 +1494,7 @@ PRIMARY KEY (SQN)
 )
  IN "BBIP_APP"
 INDEX IN  "BBIP_APP_INDEX";
+
 
 drop table GDEUPSB.GDEUPS_FBPD_MPOS_BATCH_TMP;
 --中山文件批量系统-移动POS临时表
@@ -1560,6 +1540,7 @@ INDEX IN  "BBIP_APP_INDEX";
 
 
 
+
 drop table GDEUPSB.GDEUPS_FBPD_OBUS_BATCH_TMP;
 --中山文件批量系统-其他业务临时表
 CREATE TABLE GDEUPSB.GDEUPS_FBPD_OBUS_BATCH_TMP(
@@ -1570,13 +1551,13 @@ CUS_AC CHAR(26),
 --账号
 CUS_NO CHAR(32),
 --户号
-CUS_NME CHAR(30),
+CUS_NME CHAR(128),
 --户名
 THD_CUS_NO CHAR(20),
 --客户编号
 CCY CHAR(3),
 --币种
-TXN_AMT CHAR(13),
+TXN_AMT CHAR(18),
 --交易金额
 SUC_FLG CHAR(1),
 --标志 Y-成功  标识 1成功 2失败???
@@ -1594,7 +1575,6 @@ PRIMARY KEY (SQN)
 )
  IN "BBIP_APP"
 INDEX IN  "BBIP_APP_INDEX";
-
 
 drop table GDEUPSB.GDEUPS_GASH_BATCH_TMP;
 --惠州燃气批量托收临时表
@@ -1646,9 +1626,6 @@ CREATE TABLE GDEUPSB.GDEUPS_GASH_BATCH_TMP(
 ) IN "BBIP_APP"
 INDEX IN  "BBIP_APP_INDEX";
 
-
-
-drop table GDEUPSB.GDEUPS_ELE_TMP;
 CREATE
     TABLE GDEUPSB.GDEUPS_ELE_TMP
     (
@@ -1667,9 +1644,9 @@ CREATE
         PAY_TYPE CHARACTER(3),
         ACCOUNT_NO CHARACTER(27),
         ELECTRICITY_YEARMONTH CHARACTER(6),
-        PAYMENT_MONEY DECIMAL(16,2),
-        CAPITIAL DECIMAL(16,2),
-        DEDIT DECIMAL(16,2),
+        PAYMENT_MONEY CHARACTER(18),
+        CAPITIAL CHARACTER(18),
+        DEDIT CHARACTER(18),
         PAYMENT_RESULT CHARACTER(2),
         TXN_AMT DECIMAL(16,2),
         BANK_SQN CHARACTER(20),
@@ -1682,10 +1659,7 @@ CREATE
         RSV_FLD4 VARCHAR(1024),
         RSV_FLD5 VARCHAR(1024),
         PRIMARY KEY (SQN)
-    )
-     IN "BBIP_APP"
-INDEX IN  "BBIP_APP_INDEX";
-
+    );
 COMMENT ON TABLE GDEUPSB.GDEUPS_ELE_TMP
 IS
     '批量代收付临时表';
@@ -1783,7 +1757,7 @@ IS
     '预留字段4';
 COMMENT ON COLUMN GDEUPSB.GDEUPS_ELE_TMP.RSV_FLD5
 IS
-    '预留字段5';
+    '预留字段5'
 
 drop table GDEUPSB.TRSP_CHECK_TMP;
 CREATE
