@@ -221,10 +221,10 @@
 	<select id="findGzEleChkHKDetail" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
 		select THD_SQN tLogNo,THD_CUS_NO thdCusNo,THD_TXN_DTE
-		tActDt,TXN_DTE actDat, TXN_TME BkTim, MFM_VCH_NO bkLog,
+		tActDt,TXN_DTE actDat, TXN_TME BkTim, RSV_FLD2 bkLog,
 		CUS_AC actNo,
-		'0200' txnKnd,TXN_AMT txnAmt,' ' oTlogNo,THD_TXN_DTE dLDat,THD_TXN_TME
-		dLTim,BAK_FLD2 lChkTm
+		'0200' txnKnd,TXN_AMT txnAmt,'            ' oTlogNo,THD_TXN_DTE dLDat,THD_TXN_TME
+		dLTim,RSV_FLD1 rmkTmp,BAK_FLD2 lChkTm
 		from
 		eups.EUPS_TRANS_JOURNAL where
 		EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
@@ -248,10 +248,10 @@
 	<select id="findGzEleChkJFDetail" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
 		select THD_SQN tLogNo,THD_CUS_NO thdCusNo,THD_TXN_DTE
-		tActDt,TXN_DTE actDat, TXN_TME BkTim, MFM_VCH_NO bkLog,
+		tActDt,TXN_DTE actDat, TXN_TME BkTim, RSV_FLD2 bkLog,
 		CUS_AC actNo,
-		'0200' txnKnd,TXN_AMT txnAmt,' ' oTlogNo,THD_TXN_DTE dLDat,THD_TXN_TME
-		dLTim, BAK_FLD3 bakFld3, BV_NO bvNo,
+		'0200' txnKnd,TXN_AMT txnAmt,'            ' oTlogNo,THD_TXN_DTE dLDat,THD_TXN_TME
+		dLTim,RSV_FLD1 rmkTmp, BAK_FLD3 bakFld3, BV_NO bvNo,
 		BAK_FLD2 lChkTm
 		from
 		eups.EUPS_TRANS_JOURNAL where EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
