@@ -202,10 +202,13 @@ public class DigitAgtMdyDealImlAction implements AgtMdyDealImlService {
 		gdsAgtWaterRepository.updateOldAgtInfCnl(inparaSub);
 
 		List<Map<String, Object>> signDetailList = context.getData("prvDatReq");
-
+		
 		// 卡号限制判断
 		String actTyp = context.getData("actTyp"); // 账户性质
-		cardBinVerify(context, actTyp, actNo);
+		String chn = context.getData("chn");
+		if(!"00".equals(chn)){
+			cardBinVerify(context, actTyp, actNo);
+		}
 
 		for (int i = 0; i < signDetailList.size(); i++) {
 
