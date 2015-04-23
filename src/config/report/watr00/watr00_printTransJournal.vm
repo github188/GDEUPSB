@@ -15,9 +15,9 @@
 #para($str.trim($ele.thdCusNo))
 #para($str.trim($ele.cusAc))
 #para($str.trim($ele.sqn))
-#para($str.trim($ele.mfmVchNo))
+#para("")
 #para($ele.txnAmt)
-#para($str.trim($ele.bakFld1))
+#para($str.trim($ele.sts))
 ┃?           ┃?       ┃?           ┃?                     ┃?                     ┃?                 ┃?         ┃?           ┃   
 ┣━━━━━━╋━━━━╋━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━━━╋━━━━━━━━━╋━━━━━╋━━━━━━┫
 #end     
