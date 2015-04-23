@@ -84,6 +84,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			GDEupsBatchConsoleInfo  gdeupsBatchConsoleInfo = gdeupsBatchConsoleInfoRepository.find(Info).get(0);
 			//更改控制表
 			GDEupsBatchConsoleInfo gdEupsBatchConsoleInfoUpdate=updateInfo(context,gdeupsBatchConsoleInfo ,eupsBatchConsoleInfo);
+			context.setData(ParamKeys.BAT_NO,gdEupsBatchConsoleInfoUpdate.getBatNo());
 			//文件名
 			String fileName="PTFH"+gdEupsBatchConsoleInfoUpdate.getFleNme().substring(4);
 			//取文件s路径
