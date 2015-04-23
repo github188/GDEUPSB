@@ -299,7 +299,8 @@ public class CheckThdDetlAcctAction implements Executable {
 				context.setData(GDParamKeys.TRADE_RECEIVE, GDConstants.TRADE_RECEIVE);//交易接收方
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
-				context.setData("PKGCNT", "000001");
+				//TODO 
+				context.setData("PKGCNT", context.getData("number"));
 				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW18");
 				context.setData("sqns",context.getData(ParamKeys.SEQUENCE));
 				context.setData("WJS", "1");
