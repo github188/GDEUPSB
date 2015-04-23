@@ -16,7 +16,7 @@
 				<property name="soTimeout" value="30000" />
 				<property name="connectTimeout" value="30000" />
 				<property name="streamResolver">
-						<bean class="com.bocom.bbip.eups.adaptor.channel.NoFrontLengthStreamResolver"/>
+						<bean class="com.bocom.bbip.gdeupsb.interceptors.NoFrontLengthStreamResolver"/>
 				</property>
 			</bean>
 		</property>
