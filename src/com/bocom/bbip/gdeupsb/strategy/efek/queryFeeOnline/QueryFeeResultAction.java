@@ -94,6 +94,9 @@ public class QueryFeeResultAction implements Executable{
 								                	responseCode=ErrorCodes.EUPS_THD_SYS_ERROR;
 								                }
 								                context.setData(ParamKeys.RESPONSE_CODE, responseCode);
+								                System.out.println("~~~~~~~~~~~~~~~~~~");
+								                System.out.println(responseCode);
+								                System.out.println("~~~~~~~~~~~~~~~~~~");
 								             // 第三方交易成功
 									                if (GDConstants.SUCCESS_CODE.equals(responseCode)) {
 									                    logger.info("The third process response successful.");
