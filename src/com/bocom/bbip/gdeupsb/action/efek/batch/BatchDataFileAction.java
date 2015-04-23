@@ -44,7 +44,7 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
 
 public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 	private final static Log logger=LogFactory.getLog(BatchDataFileAction.class);
-
+	private Process proc = null;
 		/**
 		 * 批量代收付  数据准备  提交
 		 */
@@ -73,7 +73,8 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 				String fleNme=context.getData(ParamKeys.FLE_NME).toString();
 				//批量前检查和初始化批量控制表 生成批次号batNo
 				((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).BeforeBatchProcess(context);
-					//文件下载
+					
+				//文件下载
 					EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecBatch");
 					eupsThdFtpConfig.setRmtFleNme(fleNme);
 					eupsThdFtpConfig.setLocFleNme(fleNme);		
@@ -300,8 +301,10 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 	    	logger.info("================Start BatchDataFileActiion  RecvEnCryptFile");	    	
 	        String cmd="ssh icsadm@182.53.15.200 /app/ics/app/efek/bin/EfeFilRecv.sh 182.53.201.46 bcm exchange dat/efek/recv "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
 	        logger.info("cmd=" + cmd);
-	        Process proc = Runtime.getRuntime().exec(cmd);
-	        proc.waitFor();
+	        synchronized(this.proc){
+		        this.proc = Runtime.getRuntime().exec(cmd);
+		        this.proc.waitFor();
+	        }
 	        //TODO  proc.exitValue();返回是否有文件
 	       
 	        logger.info("en-file success!");
