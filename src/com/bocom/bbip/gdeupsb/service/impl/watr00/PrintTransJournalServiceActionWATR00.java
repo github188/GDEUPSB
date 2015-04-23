@@ -120,7 +120,7 @@ public class PrintTransJournalServiceActionWATR00 extends BaseAction {
 //		String date = DateUtils.format(new Date(), DateUtils.STYLE_HHmmss);
 //		StringBuffer fileName = new StringBuffer((new StringBuilder("WATR00"+br+txnDat).append(date).toString()));
 ////		reportHelper.createFileAndSendMFTP(context, result, fileName, mftpConfigInfo);
-       context.setData("filName", fileName);
+       context.setData("filNam", fileName);
 		logger.info("QueryAndPrintTransJournalServiceActionWATR00 execute end ... ...");
 	}
 	
