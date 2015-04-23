@@ -11,6 +11,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bocom.bbip.comp.BBIPPublicServiceImpl;
+import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.common.ParamKeys;
@@ -22,11 +24,14 @@ import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
 import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
 import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
+import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.entity.GdFbpeFileBatchTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GdFbpeFileBatchTmpRepository;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.FileUtils;
+import com.bocom.jump.bp.SystemConfig;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -36,7 +41,7 @@ import com.bocom.jump.bp.core.CoreException;
  * @author Guilin.Li
  * Date 2015-02-12
  */
-public class FbpeBatchResultDealAction implements AfterBatchAcpService {
+public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchAcpService {
 
 	@Autowired
 	EupsBatchInfoDetailRepository eupsBatchInfoDetailRepository;
@@ -101,10 +106,18 @@ public class FbpeBatchResultDealAction implements AfterBatchAcpService {
         } else if (comNo.equals("4460002194")) {
         	 i=2;
             //TODO 燃气  自己写
-        	 String pathName="E:\\home\\bbipadm\\common\\"+batNos+".txt";
+     		String tlr=(String)context.getData(ParamKeys.TELLER);
+    		final String br=(String)context.getData(ParamKeys.BR);
+    		context.setData(ParamKeys.BR, br);
+            final String AcDate=DateUtils.format(((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getAcDate(),DateUtils.STYLE_yyyyMMdd);
+            final String systemCode=((SystemConfig)get(SystemConfig.class)).getSystemCode();
+            final String dir="/home/bbipadm/data/mftp/BBIP/"+systemCode+"/"+br+"/"+tlr+"/"+AcDate+"/";
+            
+        	String pathName=dir+batNos+".txt";
+        	
          	File file=new File(pathName);
         	if(!file.exists()){
-        			file.mkdirs();
+        			throw  new CoreException("反盘文件获取错误");
         	}
         	 createGasFile(context,eupsBatchInfoDetailList,pathName,file);
         }  else if (comNo.equals("4460000010")) {
@@ -122,9 +135,7 @@ public class FbpeBatchResultDealAction implements AfterBatchAcpService {
         // 生成返回明细信息
         List<GdFbpeFileBatchTmp> batchDetailList = fileRepository.find(gdFbpeFileBatchTmp);
         for (GdFbpeFileBatchTmp batchDetail : batchDetailList) {
-        	System.out.println("~~~~~~~~~~~~~~~~~~~~>>>>>>>"+batchDetail);
-            Map<String, Object> detailMap = new HashMap<String, Object>();
-            
+            Map<String, Object> detailMap = new HashMap<String, Object>();            
             detailMap.put("txnNo", batchDetail.getTxnNo());
             detailMap.put("orgCde", batchDetail.getOrgCde());
             detailMap.put("smsSqn", batchDetail.getRsvFld6());
