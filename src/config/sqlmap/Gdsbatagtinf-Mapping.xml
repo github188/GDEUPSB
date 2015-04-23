@@ -1,0 +1,470 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.Gdsbatagtinf" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.Gdsbatagtinf" >
+    <id column="ID" property="id" jdbcType="CHAR" />
+    <result column="GDSBID" property="gdsbid" jdbcType="CHAR" />
+    <result column="ACTTYP" property="acttyp" jdbcType="CHAR" />
+    <result column="VCHNO" property="vchno" jdbcType="CHAR" />
+    <result column="ACTNO" property="actno" jdbcType="CHAR" />
+    <result column="ACTNM" property="actnm" jdbcType="CHAR" />
+    <result column="IDTYP" property="idtyp" jdbcType="CHAR" />
+    <result column="IDNO" property="idno" jdbcType="CHAR" />
+    <result column="TELNO" property="telno" jdbcType="CHAR" />
+    <result column="MOBTYP" property="mobtyp" jdbcType="CHAR" />
+    <result column="MOBTEL" property="mobtel" jdbcType="CHAR" />
+    <result column="EMAIL" property="email" jdbcType="CHAR" />
+    <result column="ADDR" property="addr" jdbcType="CHAR" />
+    <result column="ORGCOD" property="orgcod" jdbcType="CHAR" />
+    <result column="TBUSTP" property="tbustp" jdbcType="CHAR" />
+    <result column="TCUSID" property="tcusid" jdbcType="CHAR" />
+    <result column="TCUSNM" property="tcusnm" jdbcType="CHAR" />
+    <result column="EFFDAT" property="effdat" jdbcType="CHAR" />
+    <result column="TAGTTP" property="tagttp" jdbcType="CHAR" />
+    <result column="MCUSID" property="mcusid" jdbcType="CHAR" />
+    <result column="FILNM" property="filnm" jdbcType="CHAR" />
+    <result column="IMPTIM" property="imptim" jdbcType="CHAR" />
+    <result column="PRCTIM" property="prctim" jdbcType="CHAR" />
+    <result column="STATUS" property="status" jdbcType="CHAR" />
+    <result column="RETCOD" property="retcod" jdbcType="CHAR" />
+    <result column="RETMSG" property="retmsg" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    ID, GDSBID, ACTTYP, VCHNO, ACTNO, ACTNM, IDTYP, IDNO, TELNO, MOBTYP, MOBTEL, EMAIL, 
+    ADDR, ORGCOD, TBUSTP, TCUSID, TCUSNM, EFFDAT, TAGTTP, MCUSID, FILNM, IMPTIM, PRCTIM, 
+    STATUS, RETCOD, RETMSG
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSA_SCHEMA}.GDS_BATAGT_INF
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="id!=null" >
+        AND  ID=#{id,jdbcType=CHAR}
+      </if>
+      <if test="gdsbid!=null" >
+        AND  GDSBID=#{gdsbid,jdbcType=CHAR}
+      </if>
+      <if test="acttyp!=null" >
+        AND  ACTTYP=#{acttyp,jdbcType=CHAR}
+      </if>
+      <if test="vchno!=null" >
+        AND  VCHNO=#{vchno,jdbcType=CHAR}
+      </if>
+      <if test="actno!=null" >
+        AND  ACTNO=#{actno,jdbcType=CHAR}
+      </if>
+      <if test="actnm!=null" >
+        AND  ACTNM=#{actnm,jdbcType=CHAR}
+      </if>
+      <if test="idtyp!=null" >
+        AND  IDTYP=#{idtyp,jdbcType=CHAR}
+      </if>
+      <if test="idno!=null" >
+        AND  IDNO=#{idno,jdbcType=CHAR}
+      </if>
+      <if test="telno!=null" >
+        AND  TELNO=#{telno,jdbcType=CHAR}
+      </if>
+      <if test="mobtyp!=null" >
+        AND  MOBTYP=#{mobtyp,jdbcType=CHAR}
+      </if>
+      <if test="mobtel!=null" >
+        AND  MOBTEL=#{mobtel,jdbcType=CHAR}
+      </if>
+      <if test="email!=null" >
+        AND  EMAIL=#{email,jdbcType=CHAR}
+      </if>
+      <if test="addr!=null" >
+        AND  ADDR=#{addr,jdbcType=CHAR}
+      </if>
+      <if test="orgcod!=null" >
+        AND  ORGCOD=#{orgcod,jdbcType=CHAR}
+      </if>
+      <if test="tbustp!=null" >
+        AND  TBUSTP=#{tbustp,jdbcType=CHAR}
+      </if>
+      <if test="tcusid!=null" >
+        AND  TCUSID=#{tcusid,jdbcType=CHAR}
+      </if>
+      <if test="tcusnm!=null" >
+        AND  TCUSNM=#{tcusnm,jdbcType=CHAR}
+      </if>
+      <if test="effdat!=null" >
+        AND  EFFDAT=#{effdat,jdbcType=CHAR}
+      </if>
+      <if test="tagttp!=null" >
+        AND  TAGTTP=#{tagttp,jdbcType=CHAR}
+      </if>
+      <if test="mcusid!=null" >
+        AND  MCUSID=#{mcusid,jdbcType=CHAR}
+      </if>
+      <if test="filnm!=null" >
+        AND  FILNM=#{filnm,jdbcType=CHAR}
+      </if>
+      <if test="imptim!=null" >
+        AND  IMPTIM=#{imptim,jdbcType=CHAR}
+      </if>
+      <if test="prctim!=null" >
+        AND  PRCTIM=#{prctim,jdbcType=CHAR}
+      </if>
+      <if test="status!=null" >
+        AND  STATUS=#{status,jdbcType=CHAR}
+      </if>
+      <if test="retcod!=null" >
+        AND  RETCOD=#{retcod,jdbcType=CHAR}
+      </if>
+      <if test="retmsg!=null" >
+        AND  RETMSG=#{retmsg,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSA_SCHEMA}.GDS_BATAGT_INF
+    where ID = #{id,jdbcType=CHAR}
+  </select>
+  <delete id="delete" parameterType="java.lang.String" >
+    delete from ${GDEUPSA_SCHEMA}.GDS_BATAGT_INF
+    where ID = #{id,jdbcType=CHAR}
+  </delete>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.Gdsbatagtinf" >
+    insert into ${GDEUPSA_SCHEMA}.GDS_BATAGT_INF
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="gdsbid != null" >
+        GDSBID,
+      </if>
+      <if test="acttyp != null" >
+        ACTTYP,
+      </if>
+      <if test="vchno != null" >
+        VCHNO,
+      </if>
+      <if test="actno != null" >
+        ACTNO,
+      </if>
+      <if test="actnm != null" >
+        ACTNM,
+      </if>
+      <if test="idtyp != null" >
+        IDTYP,
+      </if>
+      <if test="idno != null" >
+        IDNO,
+      </if>
+      <if test="telno != null" >
+        TELNO,
+      </if>
+      <if test="mobtyp != null" >
+        MOBTYP,
+      </if>
+      <if test="mobtel != null" >
+        MOBTEL,
+      </if>
+      <if test="email != null" >
+        EMAIL,
+      </if>
+      <if test="addr != null" >
+        ADDR,
+      </if>
+      <if test="orgcod != null" >
+        ORGCOD,
+      </if>
+      <if test="tbustp != null" >
+        TBUSTP,
+      </if>
+      <if test="tcusid != null" >
+        TCUSID,
+      </if>
+      <if test="tcusnm != null" >
+        TCUSNM,
+      </if>
+      <if test="effdat != null" >
+        EFFDAT,
+      </if>
+      <if test="tagttp != null" >
+        TAGTTP,
+      </if>
+      <if test="mcusid != null" >
+        MCUSID,
+      </if>
+      <if test="filnm != null" >
+        FILNM,
+      </if>
+      <if test="imptim != null" >
+        IMPTIM,
+      </if>
+      <if test="prctim != null" >
+        PRCTIM,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="retcod != null" >
+        RETCOD,
+      </if>
+      <if test="retmsg != null" >
+        RETMSG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=CHAR},
+      </if>
+      <if test="gdsbid != null" >
+        #{gdsbid,jdbcType=CHAR},
+      </if>
+      <if test="acttyp != null" >
+        #{acttyp,jdbcType=CHAR},
+      </if>
+      <if test="vchno != null" >
+        #{vchno,jdbcType=CHAR},
+      </if>
+      <if test="actno != null" >
+        #{actno,jdbcType=CHAR},
+      </if>
+      <if test="actnm != null" >
+        #{actnm,jdbcType=CHAR},
+      </if>
+      <if test="idtyp != null" >
+        #{idtyp,jdbcType=CHAR},
+      </if>
+      <if test="idno != null" >
+        #{idno,jdbcType=CHAR},
+      </if>
+      <if test="telno != null" >
+        #{telno,jdbcType=CHAR},
+      </if>
+      <if test="mobtyp != null" >
+        #{mobtyp,jdbcType=CHAR},
+      </if>
+      <if test="mobtel != null" >
+        #{mobtel,jdbcType=CHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=CHAR},
+      </if>
+      <if test="addr != null" >
+        #{addr,jdbcType=CHAR},
+      </if>
+      <if test="orgcod != null" >
+        #{orgcod,jdbcType=CHAR},
+      </if>
+      <if test="tbustp != null" >
+        #{tbustp,jdbcType=CHAR},
+      </if>
+      <if test="tcusid != null" >
+        #{tcusid,jdbcType=CHAR},
+      </if>
+      <if test="tcusnm != null" >
+        #{tcusnm,jdbcType=CHAR},
+      </if>
+      <if test="effdat != null" >
+        #{effdat,jdbcType=CHAR},
+      </if>
+      <if test="tagttp != null" >
+        #{tagttp,jdbcType=CHAR},
+      </if>
+      <if test="mcusid != null" >
+        #{mcusid,jdbcType=CHAR},
+      </if>
+      <if test="filnm != null" >
+        #{filnm,jdbcType=CHAR},
+      </if>
+      <if test="imptim != null" >
+        #{imptim,jdbcType=CHAR},
+      </if>
+      <if test="prctim != null" >
+        #{prctim,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="retcod != null" >
+        #{retcod,jdbcType=CHAR},
+      </if>
+      <if test="retmsg != null" >
+        #{retmsg,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSA_SCHEMA}.GDS_BATAGT_INF
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="id!=null" >
+        AND  ID=#{id,jdbcType=CHAR}
+      </if>
+      <if test="gdsbid!=null" >
+        AND  GDSBID=#{gdsbid,jdbcType=CHAR}
+      </if>
+      <if test="acttyp!=null" >
+        AND  ACTTYP=#{acttyp,jdbcType=CHAR}
+      </if>
+      <if test="vchno!=null" >
+        AND  VCHNO=#{vchno,jdbcType=CHAR}
+      </if>
+      <if test="actno!=null" >
+        AND  ACTNO=#{actno,jdbcType=CHAR}
+      </if>
+      <if test="actnm!=null" >
+        AND  ACTNM=#{actnm,jdbcType=CHAR}
+      </if>
+      <if test="idtyp!=null" >
+        AND  IDTYP=#{idtyp,jdbcType=CHAR}
+      </if>
+      <if test="idno!=null" >
+        AND  IDNO=#{idno,jdbcType=CHAR}
+      </if>
+      <if test="telno!=null" >
+        AND  TELNO=#{telno,jdbcType=CHAR}
+      </if>
+      <if test="mobtyp!=null" >
+        AND  MOBTYP=#{mobtyp,jdbcType=CHAR}
+      </if>
+      <if test="mobtel!=null" >
+        AND  MOBTEL=#{mobtel,jdbcType=CHAR}
+      </if>
+      <if test="email!=null" >
+        AND  EMAIL=#{email,jdbcType=CHAR}
+      </if>
+      <if test="addr!=null" >
+        AND  ADDR=#{addr,jdbcType=CHAR}
+      </if>
+      <if test="orgcod!=null" >
+        AND  ORGCOD=#{orgcod,jdbcType=CHAR}
+      </if>
+      <if test="tbustp!=null" >
+        AND  TBUSTP=#{tbustp,jdbcType=CHAR}
+      </if>
+      <if test="tcusid!=null" >
+        AND  TCUSID=#{tcusid,jdbcType=CHAR}
+      </if>
+      <if test="tcusnm!=null" >
+        AND  TCUSNM=#{tcusnm,jdbcType=CHAR}
+      </if>
+      <if test="effdat!=null" >
+        AND  EFFDAT=#{effdat,jdbcType=CHAR}
+      </if>
+      <if test="tagttp!=null" >
+        AND  TAGTTP=#{tagttp,jdbcType=CHAR}
+      </if>
+      <if test="mcusid!=null" >
+        AND  MCUSID=#{mcusid,jdbcType=CHAR}
+      </if>
+      <if test="filnm!=null" >
+        AND  FILNM=#{filnm,jdbcType=CHAR}
+      </if>
+      <if test="imptim!=null" >
+        AND  IMPTIM=#{imptim,jdbcType=CHAR}
+      </if>
+      <if test="prctim!=null" >
+        AND  PRCTIM=#{prctim,jdbcType=CHAR}
+      </if>
+      <if test="status!=null" >
+        AND  STATUS=#{status,jdbcType=CHAR}
+      </if>
+      <if test="retcod!=null" >
+        AND  RETCOD=#{retcod,jdbcType=CHAR}
+      </if>
+      <if test="retmsg!=null" >
+        AND  RETMSG=#{retmsg,jdbcType=CHAR}
+      </if>
+    </trim>
+  </select>
+  <update id="update" parameterType="com.bocom.bbip.gdeupsb.entity.Gdsbatagtinf" >
+    update ${GDEUPSA_SCHEMA}.GDS_BATAGT_INF
+    <set >
+      <if test="gdsbid != null" >
+        GDSBID = #{gdsbid,jdbcType=CHAR},
+      </if>
+      <if test="acttyp != null" >
+        ACTTYP = #{acttyp,jdbcType=CHAR},
+      </if>
+      <if test="vchno != null" >
+        VCHNO = #{vchno,jdbcType=CHAR},
+      </if>
+      <if test="actno != null" >
+        ACTNO = #{actno,jdbcType=CHAR},
+      </if>
+      <if test="actnm != null" >
+        ACTNM = #{actnm,jdbcType=CHAR},
+      </if>
+      <if test="idtyp != null" >
+        IDTYP = #{idtyp,jdbcType=CHAR},
+      </if>
+      <if test="idno != null" >
+        IDNO = #{idno,jdbcType=CHAR},
+      </if>
+      <if test="telno != null" >
+        TELNO = #{telno,jdbcType=CHAR},
+      </if>
+      <if test="mobtyp != null" >
+        MOBTYP = #{mobtyp,jdbcType=CHAR},
+      </if>
+      <if test="mobtel != null" >
+        MOBTEL = #{mobtel,jdbcType=CHAR},
+      </if>
+      <if test="email != null" >
+        EMAIL = #{email,jdbcType=CHAR},
+      </if>
+      <if test="addr != null" >
+        ADDR = #{addr,jdbcType=CHAR},
+      </if>
+      <if test="orgcod != null" >
+        ORGCOD = #{orgcod,jdbcType=CHAR},
+      </if>
+      <if test="tbustp != null" >
+        TBUSTP = #{tbustp,jdbcType=CHAR},
+      </if>
+      <if test="tcusid != null" >
+        TCUSID = #{tcusid,jdbcType=CHAR},
+      </if>
+      <if test="tcusnm != null" >
+        TCUSNM = #{tcusnm,jdbcType=CHAR},
+      </if>
+      <if test="effdat != null" >
+        EFFDAT = #{effdat,jdbcType=CHAR},
+      </if>
+      <if test="tagttp != null" >
+        TAGTTP = #{tagttp,jdbcType=CHAR},
+      </if>
+      <if test="mcusid != null" >
+        MCUSID = #{mcusid,jdbcType=CHAR},
+      </if>
+      <if test="filnm != null" >
+        FILNM = #{filnm,jdbcType=CHAR},
+      </if>
+      <if test="imptim != null" >
+        IMPTIM = #{imptim,jdbcType=CHAR},
+      </if>
+      <if test="prctim != null" >
+        PRCTIM = #{prctim,jdbcType=CHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=CHAR},
+      </if>
+      <if test="retcod != null" >
+        RETCOD = #{retcod,jdbcType=CHAR},
+      </if>
+      <if test="retmsg != null" >
+        RETMSG = #{retmsg,jdbcType=CHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=CHAR}
+  </update>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSA_SCHEMA}.GDS_BATAGT_INF
+    <if test="_parameter" >
+      where ID in
+      <foreach item="item" index="index" collection="list" open="(" separator="," close=")" >
+        #{item}
+      </foreach>
+    </if>
+  </select>
+</mapper>
