@@ -393,6 +393,7 @@ public class BatchSignFileInputAction extends BaseAction{
 		    context.setData("mobTel",  detailList.get(i).get("mobTel"));
 		    context.setData("email",  detailList.get(i).get("email"));
 		    context.setData("addr",  detailList.get(i).get("addr"));
+		    context.setData("TAgtTp", tAgtTp);
 		    context.setData("bnkTyp", "16");
 		    context.setData("bnkNo", "301581000019");
 		    context.setData("inNum", "1");
