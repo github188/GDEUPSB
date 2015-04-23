@@ -90,6 +90,9 @@ public class InsertCusAgentServiceAction extends BaseAction {
 			context.setData("br", "01441131999");
 		}
 		
+		if(context.getData("oprTypeBank").toString().equals("1")){
+			context.setData("oprTyp", "1");
+		}
 		Result editCusAgtResult = bgspServiceAccessObject.callServiceFlatting("maintainAgentCollectAgreement",context.getDataMap());
 		logger.info("===========editCusAgtResult："+editCusAgtResult);
 		if(editCusAgtResult.isSuccess() && editCusAgtResult.getResponseType().toString().equals("N") ){
