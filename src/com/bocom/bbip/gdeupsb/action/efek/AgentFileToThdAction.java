@@ -58,8 +58,8 @@ public class AgentFileToThdAction extends BaseAction{
 				Date date=new Date();
 				Date txnDate=DateUtils.parse(DateUtils.format(date, DateUtils.STYLE_SIMPLE_DATE),DateUtils.STYLE_SIMPLE_DATE);
 				Map<String, Object> map=new HashMap<String, Object>();
+				txnDate=DateUtils.parse("2015-04-22");
 				map.put("txnDte", txnDate);
-//				List lists=gdEupsCusAgentJournalRepository.findAll();
 				List<Map<String, Object>> comNoList=gdEupsCusAgentJournalRepository.findAllGroupByComNo(map);
 				int i=0;
 				for(Map<String, Object> mapList:comNoList){
@@ -68,6 +68,11 @@ public class AgentFileToThdAction extends BaseAction{
 						String comNo="";
 						if(comNos.length()>6){
 								comNo=comNos.substring(0,6);
+						}else{
+								while(comNos.length()<6){
+									comNo=comNos;
+									comNos=comNos+"0";
+								}
 						}
 						//得到今日协议变更
 						EupsCusAgentJournal eupsCusAgentJournal=new EupsCusAgentJournal();
@@ -84,7 +89,7 @@ public class AgentFileToThdAction extends BaseAction{
 						//首行
 						Map<String, Object> headerMap=new HashMap<String, Object>();
 						headerMap.put("comNo", comNo);
-						headerMap.put("bankNo", "301");
+						headerMap.put("bankNo", "0301");
 						headerMap.put("count", list.size());
 						headerMap.put("totCnt", list.size());
 						Map<String, Object> resultMap=new HashMap<String, Object>();
