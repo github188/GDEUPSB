@@ -64,10 +64,14 @@ public class AgentFileToThdAction extends BaseAction{
 				int i=0;
 				for(Map<String, Object> mapList:comNoList){
 						i++;
-						String comNo=mapList.get("COM_NO").toString();
+						String comNos=mapList.get("COM_NO").toString().trim();
+						String comNo="";
+						if(comNos.length()>6){
+								comNo=comNos.substring(0,6);
+						}
 						//得到今日协议变更
 						EupsCusAgentJournal eupsCusAgentJournal=new EupsCusAgentJournal();
-						eupsCusAgentJournal.setComNo(mapList.get("COM_NO").toString());
+						eupsCusAgentJournal.setComNo(comNos);
 						eupsCusAgentJournal.setTxnDte(txnDate);
 						eupsCusAgentJournal.setEupsBusTyp("ELEC00");
 						List<EupsCusAgentJournal> list=eupsCusAgentJournalRepository.find(eupsCusAgentJournal);
