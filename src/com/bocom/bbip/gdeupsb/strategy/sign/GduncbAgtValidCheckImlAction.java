@@ -149,7 +149,7 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 		gduncbHeaderVo.setProcess_time(strTime);
 		gduncbHeaderVo.setRsp_code(UtilsCnlty.fillEmpty(Rsp_code, 16));
 		gduncbHeaderVo.setRsp_desc(UtilsCnlty.fillEmpty(Rsp_desc, 500));
-		gduncbHeaderVo.setService_name(UtilsCnlty.fillEmpty(Service_name, 500));
+		gduncbHeaderVo.setService_name(UtilsCnlty.fillEmpty(Service_name, 60));
 		gduncbHeaderVo.setTest_flag("0");
 		gduncbHeaderVo.setTrans_ido(UtilsCnlty.fillEmpty(sqn, 30));
 		gduncbHeaderVo.setMsg_sender("5101");
