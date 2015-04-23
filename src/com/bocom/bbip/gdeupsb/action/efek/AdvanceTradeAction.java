@@ -41,7 +41,7 @@ public class AdvanceTradeAction extends BaseAction {
 		context.setData(GDParamKeys.TOTNUM, "1");
 		// 第三方客户标识
 		context.setData(ParamKeys.THD_CUS_NO,context.getData(GDParamKeys.PAY_NO));
-		
+		context.setData(ParamKeys.RSV_FLD1, context.getData("traPerIdenty"));
 		// 预付费金额设定
 		context.setData(ParamKeys.TXN_AMT,context.getData(GDParamKeys.PAYMENTIN_ADVANCE_MONEY));
 		context.setData(ParamKeys.PAYFEE_TYPE, Constants.TXN_PAYFEE_TYPE_RECHARGE);

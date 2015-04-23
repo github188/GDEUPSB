@@ -61,8 +61,9 @@ public class AgentFileToThdAction extends BaseAction{
 				map.put("txnDte", txnDate);
 				List lists=gdEupsCusAgentJournalRepository.findAll();
 				List<Map<String, Object>> comNoList=gdEupsCusAgentJournalRepository.findAllGroupByComNo(map);
-				int i=1;
+				int i=0;
 				for(Map<String, Object> mapList:comNoList){
+						i++;
 						String comNo=mapList.get("COM_NO").toString();
 						//得到今日协议变更
 						EupsCusAgentJournal eupsCusAgentJournal=new EupsCusAgentJournal();
