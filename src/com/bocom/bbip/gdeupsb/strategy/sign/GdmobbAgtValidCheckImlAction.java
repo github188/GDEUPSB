@@ -105,7 +105,7 @@ public class GdmobbAgtValidCheckImlAction implements AgtValidCheckService {
             	context.setData("cusNam", agtDeatil.get("TCUS_NM"));
             	context.setData("mstTel", agtDeatil.get("MCUS_ID"));
             	context.setData("sigTel", agtDeatil.get("TCUS_ID"));
-            	context.setData("sigFlg", agtDeatil.get("TAGT_ST"));
+            	context.setData("sigFlg", agtDeatil.get("TAgtTp"));
             	preQueryThddeal(context);
             	tAgtSt=(String)context.getData("TAgtSt");
             	terMsg=(String)context.getData("TErMsg");
