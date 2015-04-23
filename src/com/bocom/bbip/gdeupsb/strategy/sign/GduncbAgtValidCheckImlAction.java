@@ -156,7 +156,7 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 		
 		//报文体
 		String svrtyp="GDSUNICOM";
-		requestData.put("svrtyp", UtilsCnlty.fillEmpty(svrtyp, 30));
+		requestData.put("svrtyp", UtilsCnlty.fillEmpty(svrtyp, 20));
 		requestData.put("qrytyp", "0001");
 		requestData.put("serial_number", UtilsCnlty.fillEmpty((String)context.getData("tcusid"),20));
 		requestData.put("service_calss_code", "G");
@@ -169,7 +169,7 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 		
 			//报文体
 			String super_bank_code="JT";
-			requestData.put("svrtyp",  UtilsCnlty.fillEmpty(svrtyp, 30));
+			requestData.put("svrtyp",  UtilsCnlty.fillEmpty(svrtyp, 20));
 			requestData.put("qrytyp", "0002");
 			requestData.put("serial_number", UtilsCnlty.fillEmpty((String)context.getData("tcusid"),20));
 			requestData.put("service_calss_code", "G");
