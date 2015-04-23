@@ -127,6 +127,13 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			try {
+				//沉睡5秒
+				Thread.sleep(5*1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			//TODO 通知第三方
 			callThd(context,gdeupsBatchConsoleInfo,fileName);
 			ret1 = get(BBIPPublicService.class).unlock(locked);
@@ -330,6 +337,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
         logger.info("cmd=" + cmd);
         Process proc = Runtime.getRuntime().exec(cmd);
         proc.waitFor();
+        
         logger.info("en-file success!");
         logger.info("================End BatchDataFileActiion  RecvEnCryptFile");
         
