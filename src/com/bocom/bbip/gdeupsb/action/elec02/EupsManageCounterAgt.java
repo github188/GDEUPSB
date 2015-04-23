@@ -39,7 +39,25 @@ public class EupsManageCounterAgt extends BaseAction {
 	ThirdPartyAdaptor callThdTradeManager;
 
 	public void process(Context context) throws CoreException {
-		logger.info("协议维护");
+		logger.info("协议维护（柜面）");
+		
+		final int oprType = Integer.parseInt((String) context.getData("CHT"));
+		logger.info("===============oprType: " + oprType);
+		switch (oprType) {
+		case ADD:
+			context.setData("recordNum", "12");
+			break;
+		case UPDATE:
+			context.setData("recordNum", "");
+			break;
+		case QUERY:
+			context.setData("recordNum", "");
+			break;
+		case DELETE:
+			context.setData("recordNum", "");
+			break;
+		}
+		
 		
 		Date date = new Date();
 		String YYYYMMDD = DateUtils.format(date, DateUtils.STYLE_yyyyMMdd);
@@ -72,34 +90,44 @@ public class EupsManageCounterAgt extends BaseAction {
 //		<fixString name="WDO" length="8 " />     <!--工作日期 -->
 //		<fixString name="TLogNo" length="16" />  <!--供电局流水 -->
 		//其他字段前端输入
-		
+		context.setData("ECD", "0500");
+		context.setData("EDD", "000");
 		context.setData("SBN", br);
 		context.setData("WDO", YYYYMMDD);
 		context.setData("TLogNo", ""); //TODO 供电局流水
 		
+		logger.info("=====外发电力========>>>>>>>>>>>>>>> context : " + context);
 		//外发thd
 		Map<String, Object> callThdRsp = callThdTradeManager.trade(context);
-		context.setDataMap(callThdRsp);
-		
 		if (BPState.isBPStateOvertime(context)) {
 			throw new CoreException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
 		} 
+		context.setDataMap(callThdRsp);
 
-		final int oprType = Integer.parseInt((String) context.getData("CHT"));
-		switch (oprType) {
-		case ADD:
-			addAgentDeal(context);
-			break;
-		case UPDATE:
-			updateAgentDeal(context);
-			break;
-		case QUERY:
-			queryAgentDeal(context);
-			break;
-		case DELETE:
-			deleteAgentDeal(context);
-			break;
+		//TODO 处理第三方返回消息，错误则不签约
+		if(((String) context.getData("rspMsg")).contains("错误")){
+			throw new CoreException((String) context.getData("rspMsg"));
 		}
+		
+		context.setData("comCode", "0500");
+		context.setData("feeCode", "0000");
+		
+		
+		
+//		switch (oprType) {
+//		case ADD:
+//			addAgentDeal(context);
+//			break;
+//		case UPDATE:
+//			updateAgentDeal(context);
+//			break;
+//		case QUERY:
+//			queryAgentDeal(context);
+//			break;
+//		case DELETE:
+//			deleteAgentDeal(context);
+//			break;
+//		}
 
 	}
 
@@ -160,6 +188,8 @@ public class EupsManageCounterAgt extends BaseAction {
 	private GdeupsAgtElecTmp toGdeupsAgtElecTmp(Context context) {
 
 		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
+		agtElecTmp.setComCode((String) context.getData("ECD"));
+		agtElecTmp.setFeeCode((String) context.getData("EDD"));
 		agtElecTmp.setFeeNum((String) context.getData("JFH")); //
 		agtElecTmp.setUserName((String) context.getData("UsrNam"));
 		agtElecTmp.setActNo((String) context.getData("ActNo")); // 账号
