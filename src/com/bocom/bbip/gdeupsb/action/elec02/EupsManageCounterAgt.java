@@ -28,7 +28,7 @@ public class EupsManageCounterAgt extends BaseAction {
 	private static Logger logger = LoggerFactory
 			.getLogger(EupsManageCounterAgt.class);
 	private static final int ADD = 0;
-	private static final int UPDATE = 3;  
+	private static final int UPDATE = 3;
 	private static final int QUERY = 5;
 	private static final int DELETE = 9;
 
@@ -42,12 +42,10 @@ public class EupsManageCounterAgt extends BaseAction {
 
 	public void process(Context context) throws CoreException {
 		logger.info("协议维护（柜面）");
-		
+
 		final int oprType = Integer.parseInt((String) context.getData("CHT"));
 		logger.info("===============oprType: " + oprType);
-		
-		
-		
+
 		switch (oprType) {
 		case ADD:
 			buildContextAndCallThd(context);
@@ -70,11 +68,12 @@ public class EupsManageCounterAgt extends BaseAction {
 
 	}
 
-	private void checkOldBaseInfo(Context context)  throws CoreException {
+	private void checkOldBaseInfo(Context context) throws CoreException {
 		String feeNum = context.getData("JFH");
 		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
 		agtElecTmp.setFeeNum(feeNum);
-		List<GdeupsAgtElecTmp> tmpList = get(GdeupsAgtElecTmpRepository.class).find(agtElecTmp);
+		List<GdeupsAgtElecTmp> tmpList = get(GdeupsAgtElecTmpRepository.class)
+				.find(agtElecTmp);
 		if (null == tmpList || CollectionUtils.isEmpty(tmpList)) {
 			logger.info("There are no records for select check trans journal ");
 			throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
@@ -83,75 +82,75 @@ public class EupsManageCounterAgt extends BaseAction {
 		String OKH = tmpList.get(0).getNewBankNum();
 		context.setData("OAC", OAC);
 		context.setData("OKH", OKH);
-		
+
 	}
 
 	private void buildContextAndCallThd(Context context) throws CoreException {
-		
+
 		checkCusInfoByCusAc(context);
-		
+
 		Date date = new Date();
 		String YYYYMMDD = DateUtils.format(date, DateUtils.STYLE_yyyyMMdd);
-		String YYYYMMDDHHMMSS = DateUtils.format(date, DateUtils.STYLE_yyyyMMddHHmmss);
-		
+		String YYYYMMDDHHMMSS = DateUtils.format(date,
+				DateUtils.STYLE_yyyyMMddHHmmss);
+
 		String br = context.getData(ParamKeys.BR);
 		String sqnTmp = bbipPublicService.getBBIPSequence();
 		sqnTmp = sqnTmp.substring(12);
 		String msgId = br + " " + sqnTmp;
-		
+
 		// TODO 外发汕头电力，通知电力签约
 		// 1.拼装外发报文头
 		context.setData("AppTradeCode", "30");
-		context.setData("StartAddr", "301");//TODO wangxianfen:301
-		context.setData("DestAddr", "0500");//TODO 供电局代码 wangxianfen:0500
-		context.setData("MesgID", msgId); 
-		
+		context.setData("StartAddr", "301");// TODO wangxianfen:301
+		context.setData("DestAddr", "0500");// TODO 供电局代码 wangxianfen:0500
+		context.setData("MesgID", msgId);
+
 		context.setData("WorkDate", YYYYMMDD);
 		context.setData("SendTime", YYYYMMDDHHMMSS);
 		context.setData("mesgPRI", "9");
 
-		context.setData("recordNum", "12"); //不校验，但是要有值
-		context.setData("FileName", "");//无文件，空字符串
-		context.setData("zipFlag", "0");//TODO
+		context.setData("recordNum", "12"); // 不校验，但是要有值
+		context.setData("FileName", "");// 无文件，空字符串
+		context.setData("zipFlag", "0");// TODO
 
 		// 2.拼装外发报文体
-//		<fixString name="SBN" length="12" />     <!--发起业务的节点代码 -->
-//		<fixString name="WDO" length="8 " />     <!--工作日期 -->
-//		<fixString name="TLogNo" length="16" />  <!--供电局流水 -->
-		//其他字段前端输入
+		// <fixString name="SBN" length="12" /> <!--发起业务的节点代码 -->
+		// <fixString name="WDO" length="8 " /> <!--工作日期 -->
+		// <fixString name="TLogNo" length="16" /> <!--供电局流水 -->
+		// 其他字段前端输入
 		context.setData("ECD", "0500");
 		context.setData("EDD", "000");
 		context.setData("SBN", "301");
 		context.setData("WDO", YYYYMMDD);
-		context.setData("TLogNo", ""); //TODO 供电局流水
+		context.setData("TLogNo", ""); // TODO 供电局流水
 		context.setData("KKB", br);
 		context.setData("ZPF", "0");
 		context.setData("FPF", "0");
-		//TODO 根据银行卡获取开户信息 身份证号 
+		// TODO 根据银行卡获取开户信息 身份证号
 		context.setData("IdTyp", "0");
 		context.setData("TIdNo", "123123");
 
-		
 		logger.info("=====外发电力========>>>>>>>>>>>>>>> context : " + context);
-		//外发thd
+		// 外发thd
 		Map<String, Object> callThdRsp = callThdTradeManager.trade(context);
 		if (BPState.isBPStateOvertime(context)) {
 			throw new CoreException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
-		} 
+		}
 		context.setDataMap(callThdRsp);
 
-		//TODO 处理第三方返回消息，错误则不签约
-//		if(((String) context.getData("rspMsg")).contains("错误")){
-//			throw new CoreException((String) context.getData("rspMsg"));
-//		}
-		
+		// TODO 处理第三方返回消息，错误则不签约
+		// if(((String) context.getData("rspMsg")).contains("错误")){
+		// throw new CoreException((String) context.getData("rspMsg"));
+		// }
+
 		context.setData("comCode", "0500");
-		context.setData("feeCode", "0000");		
+		context.setData("feeCode", "0000");
 	}
 
 	private void checkCusInfoByCusAc(Context context) throws CoreException {
 		String cusAc = context.getData("ActNo").toString().trim();
-	
+
 		CusActInfResult cusactinfresult = new CusActInfResult();
 		try {
 			cusactinfresult = accountService.getAcInf(
@@ -168,29 +167,30 @@ public class EupsManageCounterAgt extends BaseAction {
 	}
 
 	private void addAgentDeal(Context context) throws CoreException {
-		GdeupsAgtElecTmp agtElecTmp = toGdeupsAgtElecTmp(context);
+		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
+		agtElecTmp.setFeeNum((String) context.getData("JFH"));
 		List<GdeupsAgtElecTmp> list = get(GdeupsAgtElecTmpRepository.class)
-				.findBase(agtElecTmp);
+				.find(agtElecTmp);
 		if (list.size() > 0) {
 			log.info("协议已经存在");
 			throw new CoreException("协议已经存在");
-		} else {
-			get(GdeupsAgtElecTmpRepository.class).insert(agtElecTmp);
-			log.info("新增协议成功");
-
 		}
+		agtElecTmp = toGdeupsAgtElecTmp(context);
+		get(GdeupsAgtElecTmpRepository.class).insert(agtElecTmp);
+		log.info("新增协议成功");
+
 	}
 
 	private void updateAgentDeal(Context context) throws CoreException {
 		GdeupsAgtElecTmp agtElecTmp = toGdeupsAgtElecTmp(context);
-		
+
 		String oldCardNo = context.getData("OAC");
 		String oldBankNum = context.getData("OKH");
-		  
+
 		agtElecTmp.setOldBankNum(oldBankNum);
 		agtElecTmp.setOldCardNo(oldCardNo);
-//		get(GdeupsAgtElecTmpRepository.class).updateByAc(agtElecTmp);
-		
+		// get(GdeupsAgtElecTmpRepository.class).updateByAc(agtElecTmp);
+
 		get(GdeupsAgtElecTmpRepository.class).updateByFeeNum(agtElecTmp);
 
 	}
@@ -243,8 +243,8 @@ public class EupsManageCounterAgt extends BaseAction {
 		agtElecTmp.setPhoneNum((String) context.getData("MOB"));
 		agtElecTmp.setTelNum((String) context.getData("TEL"));
 		agtElecTmp.setPrcessPassword((String) context.getData("Pin"));
-		agtElecTmp.setNewBankNum((String)context.getData(ParamKeys.BR));
-		agtElecTmp.setIdNo((String)context.getData("TIdNo")); 
+		agtElecTmp.setNewBankNum((String) context.getData(ParamKeys.BR));
+		agtElecTmp.setIdNo((String) context.getData("TIdNo"));
 		return agtElecTmp;
 	}
 
