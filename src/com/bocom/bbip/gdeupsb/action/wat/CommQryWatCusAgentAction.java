@@ -33,6 +33,7 @@ public class CommQryWatCusAgentAction extends BaseAction {
 			throw new CoreException(ErrorCodes.EUPS_AGENT_CHK_ERROR);
 		} else {
 			context.setDataMap(BeanUtils.toMap(resultList.get(0)));
+			context.setData("cusAC", context.getData("cusAc"));
 		}
 		
 		log.info("最终的返回信息为:" + context.getDataMap());
