@@ -104,7 +104,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		Assert.isNotEmpty(result, ErrorCodes.EUPS_QUERY_NO_DATA);
 
 		logger.info("=====================got result!!");
-		
+
 		String tmpSqn = null;
 		String sts = null;
 		String errMsg = null;
@@ -112,7 +112,8 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 			tmpSqn = dtl.getRmk1();
 			GDEupsbElecstBatchTmp elec02batchTmp = new GDEupsbElecstBatchTmp();
 			elec02batchTmp.setSqn(tmpSqn);
-			List<GDEupsbElecstBatchTmp> findOneInfo = gdEupsbElecstBatchTmpRepository.findBySqn(elec02batchTmp);
+			List<GDEupsbElecstBatchTmp> findOneInfo = gdEupsbElecstBatchTmpRepository
+					.findBySqn(elec02batchTmp);
 			logger.info(".....................after findBySqn!!!");
 			elec02batchTmp = findOneInfo.get(0);
 			sts = dtl.getSts();
@@ -122,7 +123,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 					"yyyyMMddHHmmss"));
 			elec02batchTmp.setRsvFld15(sts);// TODO
 			elec02batchTmp.setRsvFld16(errMsg);
-			
+
 			/**
 			 * TODO if("S".equals(sts)){ elec02batchTmp.setRsvFld15("1"); }else{
 			 * errMsg = dtl.getErrMsg(); elec02batchTmp.setRsvFld16(errMsg);
@@ -133,6 +134,15 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 			 * 
 			 * }
 			 */
+			if ("S".equals(sts)) {
+				elec02batchTmp.setRsvFld15("1");
+			}
+			if ("F".equals(sts)) {
+				String errCde = dtl.getErrMsg().toString().substring(0, 6);
+				if ("TPM050".equals(errCde)) {
+					elec02batchTmp.setRsvFld15("2");
+				}
+			}
 
 			gdEupsbElecstBatchTmpRepository.update(elec02batchTmp);
 		}
@@ -174,48 +184,48 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		ret.put("header", batchConsoleInfo);
 		ret.put("detail", tempList);
 
-
 		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class)
-				.findOne("elec02BatchThdFile");
+				.findOne("elec02BatchThdFileTest");
 		String backFlieName = config.getLocFleNme();
-		backFlieName =backFlieName.subSequence(0, 10) + "fh";
+		backFlieName = backFlieName.subSequence(0, 10) + "fh";
 		String fliTme = DateUtils.format(new Date(), "yyyyMMdd_HHmmss");
-		String fileName = backFlieName + fliTme;
+		String fileName = backFlieName + fliTme + ".txt";
 		config.setLocFleNme(fileName);
-		config.setRmtFleNme(fileName);		
-		
-//		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class)
-//				.findOne("elec02BatchThdFileTest");
-//		config.setLocFleNme("BatchBack.txt");
-//		config.setRmtFleNme("BatchBack.txt");
-		
+		config.setRmtFleNme(fileName);
+
+		// EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class)
+		// .findOne("");
+		// config.setLocFleNme("BatchBack.txt");
+		// config.setRmtFleNme("BatchBack.txt");
+
 		Assert.isFalse(null == config, ErrorCodes.EUPS_THD_FTP_CONFIG_NOTEXIST);
-		
+
 		((OperateFileAction) get("opeFile")).createCheckFile(config,
 				"ELEC02BatchBack", config.getLocFleNme(), ret);
 
 		config.setFtpDir("0");// 0-外发
 		((OperateFTPAction) get("opeFTP")).putCheckFile(config);
 		/** 通知第三方 */
-		
+
 		context.setData("AppTradeCode", "23");
 		context.setData("StartAddr", "301");
 		context.setData("DestAddr", "0500");
-		
+
 		String br = context.getData(ParamKeys.BR);
 		String sqnTmp = bbipPublicService.getBBIPSequence();
 		sqnTmp = sqnTmp.substring(12);
 		String msgId = br + " " + sqnTmp;
-		
+
 		context.setData("MesgID", msgId);
 		context.setData("WorkDate", DateUtils.format(new Date(), "yyyyMmdd"));
-		context.setData("SendTime", DateUtils.format(new Date(), "yyyyMmddHHmmss"));
+		context.setData("SendTime",
+				DateUtils.format(new Date(), "yyyyMmddHHmmss"));
 
 		context.setData("mesgPRI", "9");
 		context.setData("recordNum", totCnt);
 		context.setData("FileName", config.getRmtFleNme());
 		context.setData("zipFlag", "0");
-		
+
 		context.setData("TransCode", "23");
 		context.setData("WD0",
 				DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
@@ -223,7 +233,8 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 				.getBBIPSequence();
 		context.setData("LogNo", StringUtils.substring(logNo, 4));
 		context.setData("TMN", context.getData(ParamKeys.BK));// 经办网点
-		context.setData("STO", context.getData(ParamKeys.TELLER).toString().substring(1));
+		context.setData("STO", context.getData(ParamKeys.TELLER).toString()
+				.substring(1));
 		context.setData("HAN", sucCnt);
 		context.setData("HAM", sucAmt);
 		context.setData("LSN", failCnt);

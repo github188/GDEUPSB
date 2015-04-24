@@ -75,14 +75,14 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 		logger.info("开始解析批量文件-------------with conetxt: " + context);
 
 		
-		String fileName = (String) context.getData("FilNam");
-		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne("elec02BatchThdFile");
-//		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne("elec02BatchThdFileTest");
+//		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne("elec02BatchThdFile");
+		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne("elec02BatchThdFileTest");
 		Assert.isFalse(null == config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST, "FTP配置不存在");
-		// TODO 获取远程文件名称  需要注意 目前在FTP中直接配置批扣文件名为batch.txt
-		config.setLocFleNme(fileName);
-		config.setRmtFleNme(fileName);
-		get(EupsThdFtpConfigRepository.class).update(config);
+//TODO 解放下面代码
+//		String fileName = (String) context.getData("FilNam");
+//		config.setLocFleNme(fileName);
+//		config.setRmtFleNme(fileName);
+//		get(EupsThdFtpConfigRepository.class).update(config);
 		
 		get(OperateFTPAction.class).getFileFromFtp(config);
 
@@ -99,17 +99,13 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 		String batchNo = context.getData(ParamKeys.THD_BAT_NO);
 		// context.setData(ParamKeys.BAT_NO, batchNo);
 		logger.info("=============>>>>>>>>>>>>>the batNo is : " + batchNo );
-		List<Map<String, Object>> agtFileDetail = new ArrayList<Map<String, Object>>(); // 代收付文件detail
+
 
 		/** 插入临时表中 */
-		
-		//TODO 将临时表中的sqn set进代收付文件中的RMK1或RMK2 即可解决代收付明细表与临时表数据匹配问题
 		List<GDEupsbElecstBatchTmp> listToBatchTmp = (List<GDEupsbElecstBatchTmp>) BeanUtils.toObjects(batchDetailLst, GDEupsbElecstBatchTmp.class);
 		int i = 0;
 		BigDecimal amtTot = new BigDecimal("0.00");
 		for (GDEupsbElecstBatchTmp tmp : listToBatchTmp) {
-			
-//			Map<String, Object> detailMap = new HashMap<String, Object>();
 			// 判断在本地是否存在协议,若存在，则本地批次表更新为0，否则更新为1
 			String cusAc = tmp.getCusAc();
 			String feeNum = tmp.getThdCusNo();
@@ -119,8 +115,8 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 			List<GdeupsAgtElecTmp> checkR = get(GdeupsAgtElecTmpRepository.class).find(agtElec);
 			if (CollectionUtils.isEmpty(checkR)) {
 				tmp.setRsvFld12("1"); // 不存在本地协议信息
-				//TODO 直接用某字段表示批扣状态，失败
-				tmp.setRsvFld15("X");
+				//直接用某字段表示批扣状态，失败
+				tmp.setRsvFld15("3");
 				tmp.setRsvFld16("不存在代扣协议");
 				
 			} else {
@@ -132,7 +128,7 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 			tmp.setRsvFld17(DateUtils.format(new Date(), "yyyyMMddHHmmss")); //实时
 			gdEupsbElecstBatchTmpRepository.insert(tmp);
 		}
-
+		List<Map<String, Object>> agtFileDetail = new ArrayList<Map<String, Object>>(); // 代收付文件detail
 		List<GDEupsbElecstBatchTmp> toAcpList = gdEupsbElecstBatchTmpRepository.findByBatNoAndSigned(batchNo);
 		if (null == toAcpList || CollectionUtils.isEmpty(toAcpList)) {
 			logger.info("There are no records for select check trans journal ");
@@ -150,6 +146,7 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 			batTmp.setTxnAmt(amtB.toString());
 			detailMap = BeanUtils.toMap(batTmp);
 			detailMap.put("OUROTHFLG", "0");
+			// 将临时表中的sqn set进代收付文件中的RMK1 即可解决代收付明细表与临时表数据匹配问题
 			detailMap.put("RMK1", batTmp.getSqn());
 			agtFileDetail.add(detailMap);
 		}
@@ -175,11 +172,14 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 		// 查找本地存在协议的批量信息，拼凑成代收付文件detail
 		temp.put(ParamKeys.EUPS_FILE_DETAIL, agtFileDetail);
 		context.setVariable("agtFileMap", temp);
-		GDEupsBatchConsoleInfo console = new GDEupsBatchConsoleInfo();
-		console.setBatNo((String) context.getData(ParamKeys.BAT_NO));
+		
 		/** 更新批次状态为待提交 */
-		console.setBatSts(GDConstants.BATCH_STATUS_WAIT);
-		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(console);
+//		sendBatchFileToACP方法已内含该处理
+//		GDEupsBatchConsoleInfo console = new GDEupsBatchConsoleInfo();
+//		console.setBatNo((String) context.getData(ParamKeys.BAT_NO));
+//		console.setBatSts(GDConstants.BATCH_STATUS_WAIT);
+//		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(console);
+		
 		((BatchFileCommon) get(GDConstants.BATCH_FILE_COMMON_UTILS)).sendBatchFileToACP(context);
 
 		((BatchFileCommon) get(GDConstants.BATCH_FILE_COMMON_UTILS)).unLock(comNo);
