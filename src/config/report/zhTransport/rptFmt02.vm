@@ -1,32 +1,32 @@
 #report(50)
 #rh(4)
 
-                            代收路桥费发票号码更换清单
+                                                             代收路桥费发票号码更换清单
 #end
-#th(3)
-#para($f.fmt($d.txnDte, 'yyyy年MM月dd日'))
-#para($d.txnTlr)
-#para($d.startDate)
-#para($d.endDate)
-打印日期：?          报表柜员：?         日期范围：?        到 ?
------------------------------------------------------------------------------------------------------------------
-             序号                  新发票号码                                 旧发票号码                           车牌号                    车类型        操作日期                操作柜员      网点号
+#th(2)
+#lpara($f.fmt($d.txnDte, 'yyyy年MM月dd日'))
+#lpara($d.txnTlr)
+#lpara($d.startDate)
+#lpara($d.endDate)
+                                     打印日期：?          报表柜员：?         日期范围：?        到 ?
+---------------------------------------------------------------------------------------------------------------------------------------
+序号          新发票号码           旧发票号码           车牌号          车类型            操作日期          操作柜员         网点号
 #end
 #set($p.index=0)
 #td(1,$d.eles)#set($p.index=$p.index+1) 
-#para($p.index)
-#para($ele.INV_NO)
-#para($ele.OINV_NO)
-#para($ele.CAR_NO)
-#para($ele.CAR_TYP)
-#para($ele.ACT_DAT)
-#para($ele.OTLRID)
-#para($ele.ONODNO)
-?                              ?                                        ?                                                     ?                  ?                  ?                     ?                       ?
+#lpara($p.index)
+#lpara($ele.INV_NO)
+#lpara($ele.OINV_NO)
+#lpara($ele.CAR_NO)
+#lpara($ele.CAR_TYP)
+#lpara($ele.ACT_DAT)
+#lpara($ele.OTLRID)
+#lpara($ele.ONODNO)
+?             ?                    ?                   ?                 ?               ?                  ?             ?
 #end   
 #tf(2)
------------------------------------------------------------------------------------------------------------------
-#para($d.totCnt)
+---------------------------------------------------------------------------------------------------------------------------------------
+#lpara($d.totCnt)
  总笔数：           ?
 #end
 #end
