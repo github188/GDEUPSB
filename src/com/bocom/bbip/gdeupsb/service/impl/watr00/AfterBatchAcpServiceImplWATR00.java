@@ -74,10 +74,11 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 		//头部
 		Map<String, Object> resultMapHead = BeanUtils.toMap(eupsBatchConsoleInfo);
 		resultMapHead.put("abc", "HDR2");
+		BigDecimal b = new BigDecimal(resultMapHead.get("totAmt").toString());
+//		Double b = Double.parseDouble(resultMapHead.get("totAmt").toString());
 		
-		Double b = Double.parseDouble(resultMapHead.get("totAmt").toString());
-		b = b*100;
-		int totAmt = b.intValue();
+//		b = b*100;
+		int totAmt = b.scaleByPowerOfTen(2).intValue();
 		resultMapHead.put("totAmt", totAmt);
 		resultMap.put(ParamKeys.EUPS_FILE_HEADER, resultMapHead);
 		Map<String, Object> hdr1 = new HashMap<String, Object>();
