@@ -248,12 +248,12 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 					 		}else if(errSeeason.equals("TPM050")){
 					 			sts="002";
 					 			errMsg="余额不足";
+					 		}else if(errSeeason.equals("CB1004")){
+					 			sts="006";
+					 			errMsg="账号不存在";
 					 		}else{
 					 			sts="003";
 					 			errMsg="账号挂失";
-					 			sts="006";
-					 			errMsg="账号不存在";
-
 					 		}
 				 	}
 				 	String errMsgLength=errMsg.length()+"";
