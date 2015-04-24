@@ -3,6 +3,7 @@ package com.bocom.bbip.gdeupsb.action.fbpe;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -113,7 +114,7 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
             final String systemCode=((SystemConfig)get(SystemConfig.class)).getSystemCode();
             final String dir="/home/bbipadm/data/mftp/BBIP/"+systemCode+"/"+br+"/"+tlr+"/"+AcDate+"/";
             
-        	String pathName=dir+batNos+".txt";
+        	String pathName=dir+batNos+".result";
         	
          	File file=new File(pathName);
         	if(!file.exists()){
@@ -143,7 +144,6 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
             detailMap.put("tlrNo", batchDetail.getTlrNo());
             detailMap.put("txnTim", batchDetail.getTxnTim());
             String sts=batchDetail.getRsvFld7();
-            System.out.println(">>>>>>>>>>>>>sts>>>>>>>>>"+sts+"<<<<<<<<<<<<<<<<<<<");
             if(i==1){
 	            	if(sts.equals("S")){
 	                		sts="00";
@@ -191,10 +191,9 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 
         EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("fbpeBathReturnFmt");
         //文件名
-        String fileName = context.getData("filNam")+"_"+batNo+"_"+ context.getData("bk");
+        String fileName = gdEupsBatchConsoleInfo.getComNo()+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".dec";
         eupsThdFtpConfig.setFtpDir("1");
-        eupsThdFtpConfig.setLocDir("dat/fbp/"+fileName);
-        eupsThdFtpConfig.setFtpDir("dat/term/send/"+fileName);
+        eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/batch/"+fileName);
         eupsThdFtpConfig.setLocFleNme(fileName);
 
         // 生成文件
