@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.action.common;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -176,7 +177,10 @@ public class BatchFileCommon extends BaseAction {
         final String systemCode=((SystemConfig)get(SystemConfig.class)).getSystemCode();
         final String dir="/home/bbipadm/data/mftp/BBIP/"+systemCode+"/"+br+"/"+tlr+"/"+AcDate+"/";
         context.setData("dir", dir);
-        
+        File file=new File(dir);
+        if(file.exists()){
+        		file.mkdir();
+        }
         EupsActSysPara eupsActSysPara = new EupsActSysPara();
         eupsActSysPara.setActSysTyp("0");
         eupsActSysPara.setComNo(comNo);
