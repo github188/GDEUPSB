@@ -1,6 +1,11 @@
 package com.bocom.bbip.gdeupsb.action.fbpe;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -106,21 +111,8 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
             i=1;
         } else if (comNo.equals("4460002194")) {
         	 i=2;
-            //TODO 燃气  自己写
-     		String tlr=(String)context.getData(ParamKeys.TELLER);
-    		final String br=(String)context.getData(ParamKeys.BR);
-    		context.setData(ParamKeys.BR, br);
-            final String AcDate=DateUtils.format(((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getAcDate(),DateUtils.STYLE_yyyyMMdd);
-            final String systemCode=((SystemConfig)get(SystemConfig.class)).getSystemCode();
-            final String dir="/home/bbipadm/data/mftp/BBIP/"+systemCode+"/"+br+"/"+tlr+"/"+AcDate+"/";
-            
-        	String pathName=dir+batNos+".result";
-        	
-         	File file=new File(pathName);
-        	if(!file.exists()){
-        			throw  new CoreException("反盘文件获取错误");
-        	}
-        	 createGasFile(context,eupsBatchInfoDetailList,pathName,file);
+         	createGasFile(context, eupsBatchInfoDetailList, comNo);
+         	return;
         }  else if (comNo.equals("4460000010")) {
         	 i=3;
             fmtFileName="mobFbpeBatResultFmt";
@@ -187,30 +179,37 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
           
             detailList.add(detailMap);
         }
-        resultMap.put("detail", detailList);
-
-        EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("fbpeBathReturnFmt");
-        //文件名
-        String fileName = gdEupsBatchConsoleInfo.getComNo()+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";
-        eupsThdFtpConfig.setFtpDir("0");
-        eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/batch/"+fileName);
-        eupsThdFtpConfig.setLocFleNme(fileName);
-
-        // 生成文件
-        operateFile.createCheckFile(eupsThdFtpConfig, fmtFileName, fileName, resultMap);
-
-        //TODO  将生成的文件上传至指定服务器
-//        eupsThdFtpConfig.setRmtWay("/home/bbipadm/data/GDEUPSB/batch/");
-//        eupsThdFtpConfig.setRmtFleNme(fileName);
-//        operateFTP.putCheckFile(eupsThdFtpConfig);
+	        resultMap.put("detail", detailList);
+	
+	        EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("fbpeBathReturnFmt");
+	        //文件名
+	        String fileName = gdEupsBatchConsoleInfo.getComNo()+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";
+	        eupsThdFtpConfig.setFtpDir("0");
+	        eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/batch/"+fileName);
+	        eupsThdFtpConfig.setLocFleNme(fileName);
+	
+	        // 生成文件
+	        operateFile.createCheckFile(eupsThdFtpConfig, fmtFileName, fileName, resultMap);
+	
+	        // 将生成的文件上传至指定服务器
+	        eupsThdFtpConfig.setRmtWay("/home/bbipadm/data/GDEUPSB/batch/");
+	        eupsThdFtpConfig.setRmtFleNme(fileName);
+	        operateFTP.putCheckFile(eupsThdFtpConfig);
     }
-    public void createGasFile(Context context,List<EupsBatchInfoDetail> eupsBatchInfoDetailList,String pathName,File file){
-    	List<String> list=new ArrayList<String>();
-    	for (EupsBatchInfoDetail eupsBatchInfoDetail : eupsBatchInfoDetailList) {
+    public void createGasFile(Context context,List<EupsBatchInfoDetail> eupsBatchInfoDetailList,String comNo){
+    	String fileName = comNo+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";   	 
+		try {
+			File file=new File("/home/bbipadm/data/GDEUPSB/batch/"+fileName);
+			if(!file.exists()){
+					file.createNewFile();
+			}
+			FileWriter fileWriter = new FileWriter(file);
+			BufferedWriter bufferedWriter=new BufferedWriter(fileWriter); 	
+			for (EupsBatchInfoDetail eupsBatchInfoDetail : eupsBatchInfoDetailList) {
 				 	String cusNo=eupsBatchInfoDetail.getAgtSrvCusId();
 				 	String cusAc=eupsBatchInfoDetail.getCusAc();
 				 	String cusNme=eupsBatchInfoDetail.getCusNme();
-				 	String txnAmt=eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2)+"";
+				 	String txnAmt=eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2).intValue()+"";
 				 	int length1=cusNo.length();
 				 	String cusNoLength=""+length1;
 				 	while(cusNoLength.length()<3){
@@ -231,23 +230,46 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 				 	while(txnAmtLength.length()<3){
 				 			txnAmtLength="0"+txnAmtLength;
 				 	}
-				 	String sts=eupsBatchInfoDetail.getSts();
-				 	String stsLength="001";
+				 	String sts=eupsBatchInfoDetail.getSts().trim();
 				 	String errMsg=eupsBatchInfoDetail.getErrMsg();
+				 	String stsLength="003";
+				 	
+				 	if(sts.equals("S")){
+				 			sts="101";
+				 			errMsg="扣款成功";
+				 	}else{
+					 		String errSeeason=errMsg.substring(0,6);
+					 		if(errSeeason.equals("PDM252")){
+					 				sts="006";
+					 				errMsg="账号不存在";
+					 		}else if(errSeeason.equals("TPM055")){
+					 			sts="007";
+					 			errMsg="账号与开户名不对应";
+					 		}else if(errSeeason.equals("TPM050")){
+					 			sts="002";
+					 			errMsg="余额不足";
+					 		}else{
+					 			sts="003";
+					 			errMsg="账号挂失";
+					 			sts="006";
+					 			errMsg="账号不存在";
+
+					 		}
+				 	}
 				 	String errMsgLength=errMsg.length()+"";
 				 	while(errMsgLength.length()<3){
 				 			errMsgLength="0"+errMsgLength;
 				 	}
 				 	//写文件
 				 	String line=cusNoLength+cusNo+cusAcLength+cusAc+cusNmeLength+cusNme+txnAmtLength+txnAmt+stsLength+sts+errMsgLength+errMsg;
-				 	list.add(line);
+				 	bufferedWriter.write(line);				
+				 	bufferedWriter.newLine();
 			}
-    	try {
-			FileUtils.writeLines(file, list);
+			bufferedWriter.close();
+			fileWriter.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-    	//放置文件
+		}   
     }
 }
