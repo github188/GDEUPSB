@@ -191,7 +191,6 @@ public class BatchFileCommon extends BaseAction {
 		//设置文件名 文件路径
 		config.setFtpDir("0");
 		config.setLocFleNme(fleNme);
-		config.setLocDir(dir);
 		config.setRmtFleNme(fleNme);
 		config.setRmtWay(dir);
 		/** 产生代收付格式文件 */
