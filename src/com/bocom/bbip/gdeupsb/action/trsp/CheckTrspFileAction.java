@@ -207,18 +207,18 @@ public class CheckTrspFileAction extends BaseAction {
 		int  totCnt=Integer.parseInt(context.getData("totCnt").toString());
 		BigDecimal totAmt=new BigDecimal(context.getData("totAmt").toString());
 		for (GDEupsbTrspFeeInfo gdEupsbTrspFeeInfos : eupsbTrspFeeInfoList) {
-				totAmt=totAmt.add(gdEupsbTrspFeeInfos.getTxnAmt());
-				gdEupsbTrspFeeInfos.setTcusNm("银行多账"); // 银行
+				totAmt=totAmt.add(gdEupsbTrspFeeInfos.getTxnAmt());				
 				gdEupsbTrspFeeInfos.setCarDzs(DateUtils.format(gdEupsbTrspFeeInfos.getPayDat(),DateUtils.STYLE_yyyyMMdd)); // 缴费日期												
 				if(gdEupsbTrspFeeInfos.getStatus().toString().trim().equals("0")){
-					gdEupsbTrspFeeInfos.setStatus("已缴费");
+					gdEupsbTrspFeeInfos.setStatus("银行多账");
 				}else if(gdEupsbTrspFeeInfos.getStatus().toString().trim().equals("1")){
 					gdEupsbTrspFeeInfos.setStatus("已打发票");
 				}else if(gdEupsbTrspFeeInfos.getStatus().toString().trim().equals("2")){
-					gdEupsbTrspFeeInfos.setStatus("退费");
+					gdEupsbTrspFeeInfos.setStatus("核对成功");
 				}else if(gdEupsbTrspFeeInfos.getStatus().toString().trim().equals("3")){
 					gdEupsbTrspFeeInfos.setStatus("发票作废");
 				}
+				gdEupsbTrspFeeInfos.setTcusNm(gdEupsbTrspFeeInfos.getStatus()); // 银行多账
 				detailList.add(gdEupsbTrspFeeInfos);
 		}
 		context.setData("totCnt", totCnt);
