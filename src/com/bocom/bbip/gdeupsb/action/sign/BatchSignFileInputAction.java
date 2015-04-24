@@ -418,13 +418,13 @@ public class BatchSignFileInputAction extends BaseAction{
 		    prvReq.put("TCUSNM",tcusnm);
 		    prvDatReq.add(prvReq);
 		    context.setData("prvDatReq", prvDatReq);
-		    //try{
+		    try{
 		    Context newContext= bbipPubService.synExecute("gdeups.agtMdyDealProcess",context);
 		    context.setDataMap(newContext.getDataMap());
 			context.setVariables(newContext.getVariables());
-		  //  }catch(Exception CoreException){
-		    //	  log.info("update table  gds_batagt_inf error...... "+"文件明细第，"+i+"签约报错");
-		   // }
+		    }catch(Exception CoreException){
+		    	  log.info("update table  gds_batagt_inf error...... "+"文件明细第，"+i+"签约报错");
+		    }
 	        
 		    }
 		    gdsbatagtinf1.setPrctim(strTime);
