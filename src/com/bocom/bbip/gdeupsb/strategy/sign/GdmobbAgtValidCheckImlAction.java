@@ -241,26 +241,42 @@ public class GdmobbAgtValidCheckImlAction implements AgtValidCheckService {
 			if(gdmobbResult.getStatus()==0){
 				if(gdmobbResult.getResponseMap().get("rspCod").equals("00")){
 			    context.setData("TAgtSt", "S");
+			    context.setData("status", "S");
+			    context.setData("retcod", "000000");
+			    context.setData("retmsg", "签约成功");
 			    context.setData("TErMsg", "签约成功");
+			    
 				}else{
 					 String responseCode=(String)gdmobbResult.getResponseMap().get("rspCod");
 					  CommThdRspCdeAction cRspCdeAction = new CommThdRspCdeAction();
 					  // 获取第三方返回码
-		              responseCode =(String)cRspCdeAction.getThdRspCde(responseCode,  (String) context.getData(ParamKeys.EUPS_BUSS_TYPE));
+		             String responseMess =(String)cRspCdeAction.getThdRspCde(responseCode,  "GDMOBB");
 					 //转换第三方错误吗
 					 // throw new CoreException(responseCode);
 		              context.setData("TAgtSt", "F");
 					  context.setData("TErMsg", responseCode);
+					  context.setData("status", "F");
+					  context.setData("retcod", responseCode);
+					  context.setData("retmsg", responseMess);
 				}
 			}else if(gdmobbResult.getStatus()==-2){
 				context.setData("TAgtSt", "U");
 				context.setData("TErMsg", "系统错误");
+				context.setData("status", "U");
+				context.setData("retcod", "E99999");
+				context.setData("retmsg", "系统错误");
 			}else if(gdmobbResult.getStatus()==3){
 				context.setData("TAgtSt", "F");
 				context.setData("TErMsg", "交易失败");
+				context.setData("status", "F");
+				context.setData("retcod", "E99999");
+				context.setData("retmsg", "交易失败");
 			}else{
 				context.setData("TAgtSt", "F");
 				context.setData("TErMsg", "未知错误");
+				context.setData("status", "F");
+				context.setData("retcod", "E99999");
+				context.setData("retmsg", "未知错误");
 			}
 			
 			

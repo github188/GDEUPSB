@@ -187,29 +187,53 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 				if(rspCode.equals("0000")||rspCode.equals("300377")){
 					context.setData("TAgtSt", "S");
 					context.setData("TErMsg", "签约成功");
+					context.setData("status", "S");
+					context.setData("retcod", "000000");
+					context.setData("retmsg", "签约成功");
 				}else{
 					context.setData("TAgtSt", "F");
 					context.setData("TErMsg", "签约失败"+"["+rspCode+"]");
+					context.setData("status", "F");
+					context.setData("retcod", "E99999");
+					context.setData("retmsg", "签约失败"+"["+rspCode+"]");
 				}
 			}else if(gduncbResult1.getStatus()==-2){
 				context.setData("TAgtSt", "U");
 				context.setData("TErMsg", "系统错误");
+				context.setData("status", "U");
+				context.setData("retcod", "E99999");
+				context.setData("retmsg", "系统错误");
 			}else if(gduncbResult1.getStatus()==3){
 				context.setData("TAgtSt", "F");
 				context.setData("TErMsg", "交易失败");
+				context.setData("status", "F");
+				context.setData("retcod", "E99999");
+				context.setData("retmsg", "交易失败");
 			}else{
 				context.setData("TAgtSt", "F");
 				context.setData("TErMsg", "未知错误");
+				context.setData("status", "F");
+				context.setData("retcod", "E99999");
+				context.setData("retmsg", "未知错误");
 			}
 		}else if(gduncbResult.getStatus()==3){
 		   context.setData("TAgtSt", "U");
 			context.setData("TErMsg", "系统错误");
+			context.setData("status", "U");
+			context.setData("retcod", "E99999");
+			context.setData("retmsg", "系统错误");
 		}else if(gduncbResult.getStatus()==3){
 			context.setData("TAgtSt", "F");
 			context.setData("TErMsg", "交易失败");
+			context.setData("status", "F");
+			context.setData("retcod", "E99999");
+			context.setData("retmsg", "交易失败");
 		}else{
 			context.setData("TAgtSt", "F");
 			context.setData("TErMsg", "未知错误");
+			context.setData("status", "F");
+			context.setData("retcod", "E99999");
+			context.setData("retmsg", "未知错误");
 		}
 		
 		return null;
