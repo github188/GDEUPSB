@@ -26,7 +26,7 @@
 					<constructor-arg value="packet://WEB-INF/classes/config/stream/GDUNCB/GDUNCBReqHeader.xml"/>
 					<property name="idName" value="TransCode"/>
 				</bean>
-				<bean class="com.bocom.bbip.gdeupsb.interceptors.GduncbTcpInterceptorsTransfrom"/>
+				<bean class="com.bocom.jump.bp.channel.interceptors.RequestTransform"/>
 			</array>
 		</property>
 		<property name="decodeTransforms">
