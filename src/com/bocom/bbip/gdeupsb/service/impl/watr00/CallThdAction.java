@@ -74,7 +74,7 @@ private static Logger logger = LoggerFactory.getLogger(PreDelCusAgentAction.clas
 				String byyno = ((String)context.getData(ParamKeys.BR)).substring(2, 8);
 				String byyman = ((String)context.getData(ParamKeys.TELLER)).substring(4, 7);
 				String wtdate = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
-				String wtman = (String)infoMap.get("cusNme");
+//				String wtman = (String)infoMap.get("cusNme");
 				String haddr = " ";
 				String hphone = context.getData("hphone");
 				String lphone = context.getData("lphone");
@@ -94,7 +94,7 @@ private static Logger logger = LoggerFactory.getLogger(PreDelCusAgentAction.clas
 				context.setData("byyno", byyno);
 				context.setData("byyman", byyman);
 				context.setData("wtdate", wtdate);
-				context.setData("wtman", wtman);
+//				context.setData("wtman", wtman);
 				context.setData("haddr", haddr);
 				context.setData("hphone", hphone);
 				context.setData("lphone", lphone);
