@@ -192,7 +192,7 @@ public class BatchFileCommon extends BaseAction {
 		config.setFtpDir("0");
 		config.setLocFleNme(fleNme);
 		config.setRmtFleNme(fleNme);
-		config.setLocDir("/home/bbipadm/data/GDEUPSB/batch/");
+		config.setLocDir("/home/bbipadm/data/GDEUPSB/efek/");
 		config.setRmtWay(dir);
 		/** 产生代收付格式文件 */
 		if(context.getData(ParamKeys.EUPS_BUSS_TYPE).equals("ELEC00") || context.getData(ParamKeys.EUPS_BUSS_TYPE).equals("GZAG00") || context.getData(ParamKeys.EUPS_BUSS_TYPE).toString().equals("FSAG00")){
@@ -201,7 +201,7 @@ public class BatchFileCommon extends BaseAction {
 			((OperateFileAction)get("opeFile")).createCheckFile(config, "BatchFmt", fleNme, fileMap);
 		}
 		logger.info("===============生成代收付文件");
-		operateFTPAction.putCheckFile(config);
+//		operateFTPAction.putCheckFile(config);
 		//为得到代收付文件 更改ftpDir
 		config.setFtpDir("1");
 		config.setRmtWay("/home/bbipadm/data/mftp/BBIP/");
