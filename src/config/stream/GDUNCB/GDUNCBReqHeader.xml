@@ -5,6 +5,8 @@
 	 encoding="GBK" trace="true">
 
 	<segment name="req_head" encoding="GBK">
+	    <fixString name="svrtyp"  length="20" />         				<!--报文类型-->
+        <fixString name="qrytyp"  length="4" />             			<!--请求类型-->
 		<fixString name="msg_sender" length="4" /> <!-- 消息发送方代码 -->
 		<fixString name="msg_receiver" length="4" /><!--消息直接接收方代码-->
 		<fixString name="trans_ido" length="30"/><!-- 服务调用方流水号 -->

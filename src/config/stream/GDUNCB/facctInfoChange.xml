@@ -5,8 +5,7 @@
 	name="f0002" encoding="GBK">
 
 	<!-- 签约交易 -->
-	  <fixString name="svrtyp"  length="20" />         				<!--报文类型-->
-      <fixString name="qrytyp"  length="4" />             			<!--请求类型-->
+	  
       <fixString name="serial_number"  length="20"/>                        <!--用户服务号码-->
       <fixString name="acct_type"  length="1" />                        <!--账户类型-->
       <fixString name="pay_type"  length="1"/>                        <!--付费方式-->
