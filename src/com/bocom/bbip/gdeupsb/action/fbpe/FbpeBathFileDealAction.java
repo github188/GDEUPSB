@@ -199,6 +199,7 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
 				agtFileBatchDetail.setAGTSRVCUSNME(gdeFbpeFileBatchTmp.getCusNam());
 				String cusAc=gdeFbpeFileBatchTmp.getCusAc();
 				agtFileBatchDetail.setCUSAC(cusAc);
+				agtFileBatchDetail.setCUSNME(gdeFbpeFileBatchTmp.getCusNam());
 				//本行标志
 				agtFileBatchDetail.setOUROTHFLG("0");
 				agtFileBatchDetail.setTXNAMT(new BigDecimal(gdeFbpeFileBatchTmp.getTxnAmt()).scaleByPowerOfTen(-2));
@@ -227,39 +228,40 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
 		for(String str:list){
 			map=new HashMap<String,Object>();
 			byte[]b=str.getBytes("GBK");
-			
-			logger.info("~~~~~~~~~~~~~~~~~~~~~~~b=="+b.length);
-			logger.info("~~~~~~~~~~~~~~~~~~~~~~~str=="+str);
-			logger.info("~~~~~~~~~~~~~~~~~~~~~~~str.length()=="+str.length());
-			
 			byte _1st[]=ArrayUtils.subarray(b, pos, LEN);
+			logger.info("~~~~~~~~~~~~~~~~~~~~~~~cusNo=length="+new String(_1st));
 			firstLen=calLen(_1st);
 			pos=LEN;
 			byte[]_1stVal=ArrayUtils.subarray(b, pos, firstLen+pos);
 			pos=pos+firstLen;
 			map.put("cusNo", new String(_1stVal));
+			logger.info("~~~~~~~~~~~~~~~~~~~~~~~cusNo=="+new String(_1stVal));
 			byte _2nd[]=ArrayUtils.subarray(b, pos, pos+LEN);
-			
+			logger.info("~~~~~~~~~~~~~~~~~~~~~~~cusAc=length="+new String(_2nd));
 			secondLen=calLen(_2nd);
 			pos=pos+LEN;
 			byte[]_2ndVal=ArrayUtils.subarray(b, pos, secondLen+pos);
+			logger.info("~~~~~~~~~~~~~~~~~~~~~~~cusAc=="+new String(_2ndVal));
 			
 			map.put("cusAc", new String(_2ndVal));
 			pos=pos+secondLen;
 			byte _3rd[]=ArrayUtils.subarray(b, pos, pos+LEN);
+			logger.info("~~~~~~~~~~~~~~~~~~~~~~~cusNam=length="+new String(_3rd));
 			thirdLen=calLen(_3rd);
 			pos=pos+LEN;
 			byte[]_3rdVal=ArrayUtils.subarray(b, pos, thirdLen+pos);
-			map.put("cusNam", new String(_3rdVal));
+			map.put("cusNam", new String(_3rdVal,"GBK"));
 			
-			logger.info("~~~~~~~~~~~~~~~~~~~~~~~cusNam=="+new String(_3rdVal));
+			logger.info("~~~~~~~~~~~~~~~~~~~~~~~cusNam=="+new String(_3rdVal,"GBK"));
 			
 			pos=pos+thirdLen;
 			byte _4th[]=ArrayUtils.subarray(b, pos, pos+LEN);
+			logger.info("~~~~~~~~~~~~~~~~~~~~~~~cusNam=txnAmt="+new String(_4th));
 			fourthLen=calLen(_4th);
 			pos=pos+LEN;
 			byte[]_4thVal=ArrayUtils.subarray(b, pos, fourthLen+pos);
 			map.put("txnAmt", new String(_4thVal));
+			logger.info("~~~~~~~~~~~~~~~~~~~~~~~txnAmt=="+new String(_4thVal));
 			ret.add(map);
 			  firstLen=0;
 			  secondLen=0;
