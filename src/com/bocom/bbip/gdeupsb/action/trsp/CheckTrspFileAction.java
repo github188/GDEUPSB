@@ -210,11 +210,11 @@ public class CheckTrspFileAction extends BaseAction {
 				totAmt=totAmt.add(gdEupsbTrspFeeInfos.getTxnAmt());				
 				gdEupsbTrspFeeInfos.setCarDzs(DateUtils.format(gdEupsbTrspFeeInfos.getPayDat(),DateUtils.STYLE_yyyyMMdd)); // 缴费日期												
 				if(gdEupsbTrspFeeInfos.getStatus().toString().trim().equals("0")){
-					gdEupsbTrspFeeInfos.setStatus("银行多账");
+					gdEupsbTrspFeeInfos.setStatus("已缴费");
 				}else if(gdEupsbTrspFeeInfos.getStatus().toString().trim().equals("1")){
 					gdEupsbTrspFeeInfos.setStatus("已打发票");
 				}else if(gdEupsbTrspFeeInfos.getStatus().toString().trim().equals("2")){
-					gdEupsbTrspFeeInfos.setStatus("核对成功");
+					gdEupsbTrspFeeInfos.setStatus("退费");
 				}else if(gdEupsbTrspFeeInfos.getStatus().toString().trim().equals("3")){
 					gdEupsbTrspFeeInfos.setStatus("发票作废");
 				}
