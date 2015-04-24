@@ -123,7 +123,7 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 		
 		// 生成文件
 		operateFile.createCheckFile(eupsThdFtpConfig, "watBatchResult", fileName, resultMap);
-		// 将生成的文件上传至指定服务器
+		// 将生成的文件上传至第三方服务器
 		eupsThdFtpConfig.setLocFleNme(fileName);
 		eupsThdFtpConfig.setRmtFleNme(fileName);
 		logger.info("@@@@@@@@@@@@eupsThdFtpConfig=" + eupsThdFtpConfig);
@@ -133,6 +133,11 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 		String fileSize = watFile.length()+"";
 		logger.info("filesize=="+fileSize);
 		
+		//将生成的文件上传至汕头分行指定服务器
+		EupsThdFtpConfig eupsThdFtpConfigA =eupsThdFtpConfigRepository.findOne("watr00BatchResulfA");
+		eupsThdFtpConfigA.setLocFleNme(fileName);
+		eupsThdFtpConfigA.setRmtFleNme(fileName);
+		operateFTP.putCheckFile(eupsThdFtpConfigA);
 		
 		context.setData("type", "Y004");
 		context.setData("accountdate", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
