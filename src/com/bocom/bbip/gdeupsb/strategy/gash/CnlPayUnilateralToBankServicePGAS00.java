@@ -79,7 +79,7 @@ public class CnlPayUnilateralToBankServicePGAS00 implements
 			CancelDomain canceldomain, Context context) throws CoreException {
 		logger.info("CnlPayUnilateralToBankServicePGAS00@preCclToBank start!");
 		logger.info("======context:" + context);
-
+		context.setData("extFields", "01491800999");
 		context.setData(GDParamKeys.GAS_APL_CLS, "207");
 		context.setData(ParamKeys.BUS_TYP, GDParamKeys.EUPS_BUS_TYP_GAS);
 		context.setData(GDParamKeys.GAS_RESULT, "NoPay");// 默认冲正未成功

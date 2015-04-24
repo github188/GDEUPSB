@@ -14,14 +14,11 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
 import com.bocom.bbip.comp.BBIPPublicService;
-import com.bocom.bbip.comp.btp.BTPService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
-import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.BatchAcpService;
 import com.bocom.bbip.eups.spi.vo.PrepareBatchAcpDomain;
@@ -34,14 +31,13 @@ import com.bocom.bbip.gdeupsb.entity.GDEupsbElecstBatchTmp;
 import com.bocom.bbip.gdeupsb.entity.GdeupsAgtElecTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbElecstBatchTmpRepository;
+import com.bocom.bbip.gdeupsb.repository.GdBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GdeupsAgtElecTmpRepository;
-import com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.ContextUtils;
 import com.bocom.bbip.utils.DateUtils;
-import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -52,6 +48,8 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 	BBIPPublicService bbipPublicService;
 	@Autowired
 	GDEupsbElecstBatchTmpRepository gdEupsbElecstBatchTmpRepository;
+	@Autowired
+	GdBatchConsoleInfoRepository gdBatchConsoleInfoRepository;
 
 	private static final Log logger = LogFactory.getLog(BatchAcpServiceImplELEC02.class);
 
@@ -59,11 +57,15 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 	@Override
 	public void prepareBatchDeal(PrepareBatchAcpDomain domain, Context context) throws CoreException {
 		final String comNo = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.COMPANY_NO, ErrorCodes.EUPS_FIELD_EMPTY);
+		Date tmpDate = new Date();
+		String eleTmpSqn = "301" + DateUtils.format(tmpDate, "yyMMdd");
+		String tmpSqn = null;
 
-		//TODO
-//		BK
-//		ETLR
-		
+		String bk = "01445999999";
+		context.setData("extFields", "01445012999");
+		context.setData(ParamKeys.BK, bk);
+		String trl = bbipPublicService.getETeller(bk);
+		context.setData(ParamKeys.TELLER, trl);
 		
 		/** 上锁 */
 		// ((BatchFileCommon)
@@ -72,10 +74,15 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 		((BatchFileCommon) get(GDConstants.BATCH_FILE_COMMON_UTILS)).BeforeBatchProcess(context);
 		logger.info("开始解析批量文件-------------with conetxt: " + context);
 
+		
+		String fileName = (String) context.getData("FilNam");
 		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne("elec02BatchThdFile");
+//		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne("elec02BatchThdFileTest");
 		Assert.isFalse(null == config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST, "FTP配置不存在");
 		// TODO 获取远程文件名称  需要注意 目前在FTP中直接配置批扣文件名为batch.txt
-//		config.setRmtFleNme(contex.getData("FilNam"));
+		config.setLocFleNme(fileName);
+		config.setRmtFleNme(fileName);
+		get(EupsThdFtpConfigRepository.class).update(config);
 		
 		get(OperateFTPAction.class).getFileFromFtp(config);
 
@@ -102,22 +109,13 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 		BigDecimal amtTot = new BigDecimal("0.00");
 		for (GDEupsbElecstBatchTmp tmp : listToBatchTmp) {
 			
-			//TODO logNo 返盘用！
-//			银行收费流水号	16x
-//			格式：
-//			BBB+YYMMDD+NNNNNNN
-//			其中：
-//			BBB银行代号，如中行为001
-//			YYMMDD年月日，如070808为07年8月8日
-//			NNNNNNN 每日流水号，每天从1开始（左补0），
-//			如0000001
-//			3011504210000001
-			
 //			Map<String, Object> detailMap = new HashMap<String, Object>();
 			// 判断在本地是否存在协议,若存在，则本地批次表更新为0，否则更新为1
 			String cusAc = tmp.getCusAc();
+			String feeNum = tmp.getThdCusNo();
 			GdeupsAgtElecTmp agtElec = new GdeupsAgtElecTmp();
 			agtElec.setActNo(cusAc);
+			agtElec.setFeeNum(feeNum);
 			List<GdeupsAgtElecTmp> checkR = get(GdeupsAgtElecTmpRepository.class).find(agtElec);
 			if (CollectionUtils.isEmpty(checkR)) {
 				tmp.setRsvFld12("1"); // 不存在本地协议信息
@@ -126,28 +124,15 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 				tmp.setRsvFld16("不存在代扣协议");
 				
 			} else {
-				// 存在协议信息,将信息添加到代收付文件detial里面去
-				// 计算总金额总笔数
 				tmp.setRsvFld12("0");
-//				BigDecimal amtB = new BigDecimal(tmp.getTxnAmt());
-//				amtB = amtB.divide(new BigDecimal("100"));
-//				amtTot = amtTot.add(amtB);
-//				amtTot = amtTot.setScale(2);
-//				i++;
-				
-				//金额转换
-//				tmp.setTxnAmt(amtB.toString());
-//				detailMap = BeanUtils.toMap(tmp);
-//				detailMap.put("RMK1", tmp.getSqn());
-//				agtFileDetail.add(detailMap);
 			}
-			tmp.setSqn(bbipPublicService.getBBIPSequence());
+			tmpSqn = eleTmpSqn + bbipPublicService.getBBIPSequence().toString().substring(13);
+			tmp.setSqn(tmpSqn);
 			tmp.setBatNo(batchNo);
+			tmp.setRsvFld17(DateUtils.format(new Date(), "yyyyMMddHHmmss")); //实时
 			gdEupsbElecstBatchTmpRepository.insert(tmp);
 		}
-//		GDEupsbElecstBatchTmp batchTmp = new GDEupsbElecstBatchTmp();
-//		batchTmp.setBatNo(batchNo);
-//		logger.info("========>>>>>>>>> the batNo in batchTmp is : " + batchTmp.getBatNo());
+
 		List<GDEupsbElecstBatchTmp> toAcpList = gdEupsbElecstBatchTmpRepository.findByBatNoAndSigned(batchNo);
 		if (null == toAcpList || CollectionUtils.isEmpty(toAcpList)) {
 			logger.info("There are no records for select check trans journal ");
@@ -169,7 +154,6 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 			agtFileDetail.add(detailMap);
 		}
 		
-
 		Map<String, Object> headAgt = new HashMap<String, Object>();
 		headAgt.put("totCnt", i);
 		headAgt.put("totAmt", amtTot.toString());

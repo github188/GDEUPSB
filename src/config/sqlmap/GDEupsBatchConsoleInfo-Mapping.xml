@@ -947,5 +947,107 @@
 		jdbcType=CHAR} AND EXE_DTE=#{txnDte, jdbcType=DATE} AND BAT_STS='S'
 		)) B
 	</select>
+	
+	
+	
+	<select id="findCountByBatInfo" resultType="java.util.Map"
+		parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo">
+		select COALESCE(sum(tot_Cnt),0) totsubCnt from ${GDEUPSB_SCHEMA}.GDEUPS_BATCH_CONSOLE_INFO
+		<trim prefix="WHERE" prefixOverrides="AND">
+			<if test="batNo!=null">
+				AND BAT_NO=#{batNo,jdbcType=CHAR}
+			</if>
+			<if test="txnMde!=null">
+				AND TXN_MDE=#{txnMde,jdbcType=CHAR}
+			</if>
+			<if test="rapTyp!=null">
+				AND RAP_TYP=#{rapTyp,jdbcType=CHAR}
+			</if>
+			<if test="comNo!=null">
+				AND COM_NO=#{comNo,jdbcType=CHAR}
+			</if>
+			<if test="comNme!=null">
+				AND COM_NME=#{comNme,jdbcType=VARCHAR}
+			</if>
+			<if test="busKnd!=null">
+				AND BUS_KND=#{busKnd,jdbcType=CHAR}
+			</if>
+			<if test="txnOrgCde!=null">
+				AND TXN_ORG_CDE=#{txnOrgCde,jdbcType=CHAR}
+			</if>
+			<if test="txnTlr!=null">
+				AND TXN_TLR=#{txnTlr,jdbcType=CHAR}
+			</if>
+			<if test="subDte!=null">
+				AND SUB_DTE=#{subDte,jdbcType=DATE}
+			</if>
+			<if test="exeDte!=null">
+				AND EXE_DTE=#{exeDte,jdbcType=DATE}
+			</if>
+			<if test="batSts!=null">
+				AND BAT_STS=#{batSts,jdbcType=CHAR}
+			</if>
+			<if test="fleNme!=null">
+				AND FLE_NME=#{fleNme,jdbcType=CHAR}
+			</if>
+			<if test="comNo!=null">
+				AND COM_NO=#{comNo,jdbcType=CHAR}
+			</if>
+			<if test="busKnd!=null">
+				AND BUS_KND=#{busKnd,jdbcType=CHAR}
+			</if>
+			<if test="totCnt!=null">
+				AND TOT_CNT=#{totCnt,jdbcType=INTEGER}
+			</if>
+			<if test="totAmt!=null">
+				AND TOT_AMT=#{totAmt,jdbcType=DECIMAL}
+			</if>
+			<if test="sucTotCnt!=null">
+				AND SUC_TOT_CNT=#{sucTotCnt,jdbcType=INTEGER}
+			</if>
+			<if test="sucTotAmt!=null">
+				AND SUC_TOT_AMT=#{sucTotAmt,jdbcType=DECIMAL}
+			</if>
+			<if test="falTotCnt!=null">
+				AND FAL_TOT_CNT=#{falTotCnt,jdbcType=INTEGER}
+			</if>
+			<if test="falTotAmt!=null">
+				AND FAL_TOT_AMT=#{falTotAmt,jdbcType=DECIMAL}
+			</if>
+			<if test="payCnt!=null">
+				AND PAY_CNT=#{payCnt,jdbcType=INTEGER}
+			</if>
+			<if test="rsvFld1!=null">
+				AND RSV_FLD1=#{rsvFld1,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld2!=null">
+				AND RSV_FLD2=#{rsvFld2,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld3!=null">
+				AND RSV_FLD3=#{rsvFld3,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld4!=null">
+				AND RSV_FLD4=#{rsvFld4,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld5!=null">
+				AND RSV_FLD5=#{rsvFld5,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld6!=null">
+				AND RSV_FLD6=#{rsvFld6,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld7!=null">
+				AND RSV_FLD7=#{rsvFld7,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld8!=null">
+				AND RSV_FLD8=#{rsvFld8,jdbcType=VARCHAR}
+			</if>
+			<if test="rsvFld9!=null">
+				AND RSV_FLD9=#{rsvFld9,jdbcType=VARCHAR}
+			</if>
+			<if test="eupsBusTyp!=null">
+				AND EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</select>
 
 </mapper>

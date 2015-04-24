@@ -62,7 +62,17 @@ public class GdBatchConsoleInfo {
 
     private String rsvFld8;
 
-    private String rsvFld9;
+    public String getEupsBusTyp() {
+		return eupsBusTyp;
+	}
+
+	public void setEupsBusTyp(String eupsBusTyp) {
+		this.eupsBusTyp = eupsBusTyp;
+	}
+
+	private String rsvFld9;
+    
+    private String eupsBusTyp;
 
     public String getBatNo() {
         return batNo;

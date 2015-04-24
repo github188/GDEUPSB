@@ -17,4 +17,8 @@ public interface GDEupsbElecstBatchTmpRepository extends PagingAndSortingReposit
 	public void update(GDEupsbElecstBatchTmp elec02batchTmp);
 	@Find
 	public List<GDEupsbElecstBatchTmp> findByBatNoAndSigned(String batchNo);
+	@Find
+	public List<GDEupsbElecstBatchTmp> findBySqn(
+			GDEupsbElecstBatchTmp elec02batchTmp);
+	
 }

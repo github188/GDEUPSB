@@ -14,8 +14,8 @@
 			<fixString name="recordNum"   length="10"/>		<!--信息明细项数-->
 			<fixString name="FilNam"      length="32" />	<!--文件名-->
 			<fixString name="zipFlag"     length="1"/>		<!--压缩标志-->
-			<addString name="br" expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse("0","0","01441131999","MMM")'/>
-			<addString name="bk" expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse("0","0","01441999999","MMM")'/>
+			<!-- <addString name="br" expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse("0","0","01441131999","MMM")'/> -->
+			<!-- <addString name="bk" expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse("0","0","01441999999","MMM")'/> -->
 			<addString name="ccy" expression='exp:@com.bocom.bbip.eups.utils.ExpCommonUtils@ifThenElse("0","0","CNY","MMM")'/>
 	</segment>
 	<select name="body" key="tccode" default="N">

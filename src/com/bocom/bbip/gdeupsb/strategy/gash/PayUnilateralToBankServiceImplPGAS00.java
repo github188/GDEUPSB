@@ -53,6 +53,8 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 		context.setData(ParamKeys.BK, bk);//分行号01491999999
 		String trl = bbipPublicService.getETeller(bk);
 		context.setData(ParamKeys.TELLER, trl);
+		context.setData("extFields", "01491800999");
+
 		
 //		context.setData(ParamKeys.TELLER, "ABIR148");
 //		context.setData(ParamKeys.BR, "01441131999");

@@ -139,7 +139,7 @@
 			</if>
 		</trim>
 	</select>
-	<select id="findOne" resultMap="basicResultMap" parameterType="java.lang.Integer">
+	<select id="findOne" resultMap="basicResultMap" parameterType="java.lang.String" >
 		select
 		<include refid="baseColumnList" />
 		from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
@@ -555,7 +555,7 @@
 	<select id="findByBatNo" resultMap="basicResultMap"
 		parameterType="java.lang.String">
 		select * from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
-		where BAT_NO=#{batNo}
+		where BAT_NO=#{batNo}  order by RSV_FLD1
 
 	</select>
 	<delete id="deleteByBatNo">
@@ -565,6 +565,12 @@
 		parameterType="java.lang.String">
 		select * from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
 		where BAT_NO=#{batNo} and RSV_FLD12='0'
-
+	</select>
+	
+	
+	<select id="findBySqn" resultMap="basicResultMap"
+		parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsbElecstBatchTmp">
+		select * from ${GDEUPSB_SCHEMA}.GDEUPS_ELEC_BATCH_TEMP
+		where sqn=#{sqn, jdbcType=CHAR}
 	</select>
 </mapper>

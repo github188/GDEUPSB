@@ -79,6 +79,7 @@ public class BatchGashDealServiceAction extends BaseAction implements
 		// context.setData(ParamKeys.BR, "01441131999");
 		// context.setData(ParamKeys.BK, "01441999999");
 
+		
 		context.setData("extFields", "01491800999");
 		
 		String bk = "01491999999";//分行号01441999999 ?
