@@ -1,34 +1,34 @@
 #report(50)
 #rh(4)
-  			代收路桥费清算报表(汇总)
+  	         代收路桥费清算报表(汇总)
 #end
 #th(4)
-#para($f.fmt($d.txnDte, 'yyyy年MM月dd日'))
-#para($d.txnTlr)
-#para($d.startDate)
-#para($d.endDate)
+#lpara($f.fmt($d.txnDte, 'yyyy年MM月dd日'))
+#lpara($d.txnTlr)
+#lpara($d.startDate)
+#lpara($d.endDate)
 打印日期：?          报表柜员：?         日期范围：?        到 ?
 ------------------------------------------------------------------------------------------
- 	序号               状态               笔数              合计金额 
+序号               状态               笔数              合计金额 
 ------------------------------------------------------------------------------------------
 #end
 #set($p.index=0)
 #td(1,$d.eles)#set($p.index=$p.index+1) 
-#para($p.index)
-#para( $f.conv('trspSts', $ele.STATUS))
-#para($ele.COUNT)
-#para($ele.AMT)
-	?                    ?                 ?                ?
+#lpara($p.index)
+#lpara( $f.conv('trspSts', $ele.STATUS))
+#lpara($ele.COUNT)
+#lpara($ele.AMT)
+?                  ?                   ?                  ?
 #end
 #tf(4)
 ------------------------------------------------------------------------------------------
-#para($d.ornCnt)
-#para($d.ornAmt)
-#para($d.sucCnt)
-#para($d.sucAmt)
- 总笔数：           ?
- 总金额：           ?
- 划拨总记录数：           ?
- 划拨总金额：           ?
+#lpara($d.ornCnt)
+#lpara($d.ornAmt)
+#lpara($d.sucCnt)
+#lpara($d.sucAmt)
+                总笔数：       ?
+                总金额：       ?
+          划拨总记录数：       ?
+            划拨总金额：       ?
 #end
 #end
