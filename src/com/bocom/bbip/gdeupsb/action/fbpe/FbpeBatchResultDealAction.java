@@ -192,17 +192,17 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
         EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("fbpeBathReturnFmt");
         //文件名
         String fileName = gdEupsBatchConsoleInfo.getComNo()+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";
-        eupsThdFtpConfig.setFtpDir("1");
+        eupsThdFtpConfig.setFtpDir("0");
         eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/batch/"+fileName);
         eupsThdFtpConfig.setLocFleNme(fileName);
 
         // 生成文件
         operateFile.createCheckFile(eupsThdFtpConfig, fmtFileName, fileName, resultMap);
 
-        // 将生成的文件上传至指定服务器
-        eupsThdFtpConfig.setLocFleNme(fileName);
-        eupsThdFtpConfig.setRmtFleNme(fileName);
-        operateFTP.putCheckFile(eupsThdFtpConfig);
+        //TODO  将生成的文件上传至指定服务器
+//        eupsThdFtpConfig.setRmtWay("/home/bbipadm/data/GDEUPSB/batch/");
+//        eupsThdFtpConfig.setRmtFleNme(fileName);
+//        operateFTP.putCheckFile(eupsThdFtpConfig);
     }
     public void createGasFile(Context context,List<EupsBatchInfoDetail> eupsBatchInfoDetailList,String pathName,File file){
     	List<String> list=new ArrayList<String>();
