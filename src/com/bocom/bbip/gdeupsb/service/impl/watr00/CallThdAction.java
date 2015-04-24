@@ -128,10 +128,10 @@ private static Logger logger = LoggerFactory.getLogger(PreDelCusAgentAction.clas
 				logger.info("@@@@@@@@@@context="+context);
 				
 				
-				List<Map<String, Object>> agdAgrNoList = context.getData("agentCollectAgreement");
+//				List<Map<String, Object>> agdAgrNoList = context.getData("agentCollectAgreement");
 				
 				GdEupsWatAgtInf gdeups = new GdEupsWatAgtInf();
-				gdeups.setAgdAgrNo((String)agdAgrNoList.get(0).get("agdAgrNo"));
+				gdeups.setAgdAgrNo((String)context.getData("agdAgrNo"));
 				gdEupsWatAgtInfRepository.delete(gdeups);
 	}
 }
