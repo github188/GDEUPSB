@@ -223,7 +223,7 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
 		List<Map<String,Object>> ret=new ArrayList<Map<String,Object>>();
 		Map<String,Object>map=null;
 		File file=new File(pathName);
-		List<String>list=FileUtils.readLines(file, "gbk");
+		List<String>list=FileUtils.readLines(file, "GBK");
 		for(String str:list){
 			map=new HashMap<String,Object>();
 			byte[]b=str.getBytes("gbk");
