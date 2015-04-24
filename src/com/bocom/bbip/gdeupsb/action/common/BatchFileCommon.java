@@ -201,7 +201,7 @@ public class BatchFileCommon extends BaseAction {
 			((OperateFileAction)get("opeFile")).createCheckFile(config, "BatchFmt", fleNme, fileMap);
 		}
 		logger.info("===============生成代收付文件");
-//		operateFTPAction.putCheckFile(config);
+		operateFTPAction.putCheckFile(config);
 		//为得到代收付文件 更改ftpDir
 		config.setFtpDir("1");
 		config.setRmtWay("/home/bbipadm/data/mftp/BBIP/");
