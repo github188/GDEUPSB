@@ -178,7 +178,7 @@ public class BatchFileCommon extends BaseAction {
         final String dir="/home/bbipadm/data/mftp/BBIP/"+systemCode+"/"+br+"/"+tlr+"/"+AcDate+"/";
         context.setData("dir", dir);
         File file=new File(dir);
-        if(file.exists()){
+        if(!file.exists()){
         		file.mkdir();
         }
         EupsActSysPara eupsActSysPara = new EupsActSysPara();
