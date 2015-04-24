@@ -89,7 +89,7 @@
 		class="com.bocom.bbip.gdeupsb.action.wat.CommQryWatCusAgentAction" />
 	
 	<!-- add by hefw 20150114 end -->
-		<!-- 协议新增修改 -->
+		<!-- 协议查询 -->
 	<process id="eups.commQryWatCusAgent" template="eups.simpleTran" interceptors="bbip.defaultInterceptors">	
 	   <actions>
 	        <action id="act" ref="eups.commQryWatCusAgentAction"/>
