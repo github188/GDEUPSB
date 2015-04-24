@@ -88,7 +88,7 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
         eupsBatchInfoDetails.setBatNo(batNos);
         List<EupsBatchInfoDetail> eupsBatchInfoDetailList=eupsBatchInfoDetailRepository.find(eupsBatchInfoDetails);
         for (EupsBatchInfoDetail eupsBatchInfoDetail : eupsBatchInfoDetailList) {
-				String sqn=eupsBatchInfoDetail.getSqn();
+				String sqn=eupsBatchInfoDetail.getRmk1();
 				GdFbpeFileBatchTmp gdFbpeFileBatchTmps=new GdFbpeFileBatchTmp();
 				gdFbpeFileBatchTmps.setSqn(sqn);
 				gdFbpeFileBatchTmps.setRsvFld7(eupsBatchInfoDetail.getSts());
@@ -191,7 +191,7 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 
         EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("fbpeBathReturnFmt");
         //文件名
-        String fileName = gdEupsBatchConsoleInfo.getComNo()+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".dec";
+        String fileName = gdEupsBatchConsoleInfo.getComNo()+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";
         eupsThdFtpConfig.setFtpDir("1");
         eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/batch/"+fileName);
         eupsThdFtpConfig.setLocFleNme(fileName);
