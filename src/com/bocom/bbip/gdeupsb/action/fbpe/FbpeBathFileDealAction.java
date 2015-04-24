@@ -226,7 +226,12 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
 		List<String>list=FileUtils.readLines(file, "GBK");
 		for(String str:list){
 			map=new HashMap<String,Object>();
-			byte[]b=str.getBytes("gbk");
+			byte[]b=str.getBytes("GBK");
+			
+			logger.info("~~~~~~~~~~~~~~~~~~~~~~~b=="+b.length);
+			logger.info("~~~~~~~~~~~~~~~~~~~~~~~str=="+str);
+			logger.info("~~~~~~~~~~~~~~~~~~~~~~~str.length()=="+str.length());
+			
 			byte _1st[]=ArrayUtils.subarray(b, pos, LEN);
 			firstLen=calLen(_1st);
 			pos=LEN;
@@ -246,6 +251,9 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
 			pos=pos+LEN;
 			byte[]_3rdVal=ArrayUtils.subarray(b, pos, thirdLen+pos);
 			map.put("cusNam", new String(_3rdVal));
+			
+			logger.info("~~~~~~~~~~~~~~~~~~~~~~~cusNam=="+new String(_3rdVal));
+			
 			pos=pos+thirdLen;
 			byte _4th[]=ArrayUtils.subarray(b, pos, pos+LEN);
 			fourthLen=calLen(_4th);
