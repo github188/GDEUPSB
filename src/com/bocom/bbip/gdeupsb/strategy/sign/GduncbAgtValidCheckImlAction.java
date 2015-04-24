@@ -139,12 +139,13 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
         String Channel_id="A3B23";
         String Operate_name="qryUserProInfo";
         String Service_name="UserInfoService";
+        String Eparchy_code="0020";
 		String strTime = DateUtils.format(new Date(),
 				DateUtils.STYLE_yyyyMMddHHmmss);
-		gduncbHeaderVo.setChannel_id(UtilsCnlty.fillEmpty(Channel_id, 20));
-		gduncbHeaderVo.setEparchy_code("0020");//待确认
+		gduncbHeaderVo.setChannel_id(UtilsCnlty.fillEmptyRt(Channel_id, 20));
+		gduncbHeaderVo.setEparchy_code(UtilsCnlty.fillEmptyRt(Eparchy_code, 6));//待确认
 		gduncbHeaderVo.setMsg_receiver("5100");
-		gduncbHeaderVo.setOper_id(UtilsCnlty.fillEmpty(Oper_id, 20));
+		gduncbHeaderVo.setOper_id(UtilsCnlty.fillEmptyRt(Oper_id, 20));
 		gduncbHeaderVo.setOperate_name(Operate_name);
 		gduncbHeaderVo.setProcess_time(strTime);
 		gduncbHeaderVo.setRsp_code(UtilsCnlty.fillEmpty(Rsp_code, 16));
@@ -156,9 +157,9 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 		
 		//报文体
 		String svrtyp="GDSUNICOM";
-		requestData.put("svrtyp", UtilsCnlty.fillEmpty(svrtyp, 20));
+		requestData.put("svrtyp", UtilsCnlty.fillEmptyRt(svrtyp, 20));
 		requestData.put("qrytyp", "0001");
-		requestData.put("serial_number", UtilsCnlty.fillEmpty((String)context.getData("tcusid"),20));
+		requestData.put("serial_number", UtilsCnlty.fillEmptyRt((String)context.getData("tcusid"),20));
 		requestData.put("service_calss_code", "G");
 		GduncbResult gduncbResult =gduncbThdTcpServiceAccessObject.callThdTcpService(gduncbHeaderVo, requestData);
 		if(gduncbResult.getStatus()==0){
@@ -169,16 +170,17 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 		
 			//报文体
 			String super_bank_code="JT";
-			requestData.put("svrtyp",  UtilsCnlty.fillEmpty(svrtyp, 20));
+			String bank_code="JTYH001";
+			requestData.put("svrtyp", UtilsCnlty.fillEmptyRt(svrtyp, 20));
 			requestData.put("qrytyp", "0002");
-			requestData.put("serial_number", UtilsCnlty.fillEmpty((String)context.getData("tcusid"),20));
+			requestData.put("serial_number", UtilsCnlty.fillEmptyRt((String)context.getData("tcusid"),20));
 			requestData.put("service_calss_code", "G");
 			requestData.put("acct_type", context.getData("actTyp"));
 			requestData.put("pay_type", "8");
-			requestData.put("super_bank_code", UtilsCnlty.fillEmpty(super_bank_code,8));
-			requestData.put("bank_code", "JTYH001");
-			requestData.put("consign_no",  UtilsCnlty.fillEmpty((String)context.getData("actNo"),30));
-			requestData.put("consign_name",UtilsCnlty.fillEmpty((String)context.getData("actName"),30));
+			requestData.put("super_bank_code", UtilsCnlty.fillEmptyRt(super_bank_code,8));
+			requestData.put("bank_code", UtilsCnlty.fillEmptyRt(bank_code,8));
+			requestData.put("consign_no",  UtilsCnlty.fillEmptyRt((String)context.getData("actNo"),30));
+			requestData.put("consign_name",context.getData("actName"));
 			GduncbResult gduncbResult1 =gduncbThdTcpServiceAccessObject.callThdTcpService(gduncbHeaderVo, requestData);
 			if(gduncbResult1.getStatus()==0){
 				String rspCode=gduncbResult1.getResponseMap().get("rsp_code").toString().trim();
