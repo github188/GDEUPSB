@@ -427,12 +427,30 @@ public class BatchSignFileInputAction extends BaseAction{
 		    }
 	        
 		    }
+		    if(strGdsBId.equals("44103")||strGdsBId.equals("44102")){
 		    gdsbatagtinf1.setPrctim(strTime);
 		    gdsbatagtinf1.setStatus((String)context.getData("status"));
 		    gdsbatagtinf1.setRetcod((String)context.getData("retcod"));
 		    gdsbatagtinf1.setRetmsg((String)context.getData("retmsg"));
-		    gdsbatagtinf1.setStatus(status);
+		    //gdsbatagtinf1.setStatus(status);
 		    gdsbatagtinf1.setId(id);
+		    }else{
+		    	      gdsbatagtinf1.setPrctim(strTime);
+		    	      try{
+				       if(context.getData("responseType").equals("E")){
+				    	gdsbatagtinf1.setStatus((String)context.getData("responseType"));
+					    gdsbatagtinf1.setRetcod((String)context.getData("E99999"));	
+					    gdsbatagtinf1.setRetmsg((String)context.getData("responseMessage"));
+				         }
+		    	    }catch(Exception CoreException){
+				        gdsbatagtinf1.setStatus((String)context.getData("status"));
+					    gdsbatagtinf1.setRetcod((String)context.getData("retcod"));
+					    gdsbatagtinf1.setRetmsg((String)context.getData("retmsg"));
+		    	      }
+			
+				   // gdsbatagtinf1.setStatus(status);
+				    gdsbatagtinf1.setId(id);	
+		    }
 		    try{
 		    gdsbatagtinfRepository.save(gdsbatagtinf1);
 		    }catch(Exception CoreException){
