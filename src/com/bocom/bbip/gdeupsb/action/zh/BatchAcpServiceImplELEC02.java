@@ -78,11 +78,11 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 //		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne("elec02BatchThdFile");
 		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne("elec02BatchThdFileTest");
 		Assert.isFalse(null == config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST, "FTP配置不存在");
-//TODO 解放下面代码
-//		String fileName = (String) context.getData("FilNam");
-//		config.setLocFleNme(fileName);
-//		config.setRmtFleNme(fileName);
-//		get(EupsThdFtpConfigRepository.class).update(config);
+//TODO 在服务器测试解放下面代码
+		String fileName = (String) context.getData("FilNam");
+		config.setLocFleNme(fileName);
+		config.setRmtFleNme(fileName);
+		get(EupsThdFtpConfigRepository.class).update(config);
 		
 		get(OperateFTPAction.class).getFileFromFtp(config);
 
