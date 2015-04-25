@@ -186,12 +186,14 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 
 		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class)
 				.findOne("elec02BatchThdFileTest");
+		
 		String backFlieName = config.getLocFleNme();
 		backFlieName = backFlieName.subSequence(0, 10) + "fh";
 		String fliTme = DateUtils.format(new Date(), "yyyyMMdd_HHmmss");
 		String fileName = backFlieName + fliTme + ".txt";
 		config.setLocFleNme(fileName);
 		config.setRmtFleNme(fileName);
+		log.info("上送给第三方的文件名为:"+config.getRmtFleNme());
 
 		// EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class)
 		// .findOne("");
@@ -217,9 +219,9 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		String msgId = br + " " + sqnTmp;
 
 		context.setData("MesgID", msgId);
-		context.setData("WorkDate", DateUtils.format(new Date(), "yyyyMmdd"));
+		context.setData("WorkDate", DateUtils.format(new Date(), "yyyyMMdd"));
 		context.setData("SendTime",
-				DateUtils.format(new Date(), "yyyyMmddHHmmss"));
+				DateUtils.format(new Date(), "yyyyMMddHHmmss"));
 
 		context.setData("mesgPRI", "9");
 		context.setData("recordNum", totCnt);
@@ -233,8 +235,10 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 				.getBBIPSequence();
 		context.setData("LogNo", StringUtils.substring(logNo, 4));
 		context.setData("TMN", context.getData(ParamKeys.BK));// 经办网点
-		context.setData("STO", context.getData(ParamKeys.TELLER).toString()
-				.substring(1));
+		
+		String tlr= context.getData(ParamKeys.TELLER);
+		
+		context.setData("STO",tlr.substring(tlr.length()-6));
 		context.setData("HAN", sucCnt);
 		context.setData("HAM", sucAmt);
 		context.setData("LSN", failCnt);
