@@ -57,7 +57,7 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 	@SuppressWarnings("unchecked")
 	@Override
 	public void prepareBatchDeal(PrepareBatchAcpDomain domain, Context context) throws CoreException {
-	
+	logger.info("start BatchAcpServiceImplELEC02 @ prepareBatchDeal with context " + context);
 		String fileNme = (String)context.getData("FilNam");
 		context.setData(ParamKeys.FLE_NME, fileNme);
 		final String comNo = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.COMPANY_NO, ErrorCodes.EUPS_FIELD_EMPTY);
@@ -194,7 +194,6 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 //		context.setData("totAmt", new BigDecimal(totAmt));
 		context.setData("totCnt", i);
 		context.setData("totAmt", amtTot);
-		
 		
 		// 提交
 		bbipPublicService.synExecute("eups.batchPaySubmitDataProcess", context);
