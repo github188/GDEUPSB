@@ -148,7 +148,6 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 			BigDecimal totAmts=(new BigDecimal(totAmt)).scaleByPowerOfTen(-2);
 			//header
 			Map<String, Object> headMap=new HashMap<String, Object>();
-			//TODO
 			headMap.put(ParamKeys.COMPANY_NO, context.getData("comNoAcps"));
 			headMap.put(GDParamKeys.TOT_COUNT, totCnt);
 			headMap.put(ParamKeys.TOT_AMT, totAmts);
