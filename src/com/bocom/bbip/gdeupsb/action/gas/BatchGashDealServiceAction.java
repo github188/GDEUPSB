@@ -115,6 +115,8 @@ public class BatchGashDealServiceAction extends BaseAction implements
 
 		config.setRmtFleNme(fleNme);
 		config.setLocFleNme(fleNme);
+		get(EupsThdFtpConfigRepository.class).update(config);
+		
 		get(OperateFTPAction.class).getFileFromFtp(config);
 
 		Map<String, Map<String, Object>> result = pareseFile(config,
@@ -230,12 +232,12 @@ public class BatchGashDealServiceAction extends BaseAction implements
 		context.setData("fleNmeBak", fleNme);
 		// 提交代收付
 		userProcessToSubmit(context);
-//		logger.info("===================开始休眠2min===================");
-//		try {
-//			Thread.sleep(120000);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
+		logger.info("===================开始休眠3min===================");
+		try {
+			Thread.sleep(180000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		// 得到反盘文件
 //		 userProcessToGet(context);
 		// 处理成第三方格式返回
