@@ -139,7 +139,7 @@ public class MsgToGasAftBatchAction extends BaseAction implements AfterBatchAcpS
 			operateFTPAction.putCheckFile(gasFtpCfg);
 			
 			//TODO 通知第三方
-//			callThd(context);
+			callThd(context);
 			logger.info("===============End  BatchDataResultFileAction  afterBatchDeal");	
 		}
 	private void callThd(Context context) throws CoreException {
@@ -156,8 +156,7 @@ public class MsgToGasAftBatchAction extends BaseAction implements AfterBatchAcpS
 		context.setData("fleNmeBak", fleNme);
 		context.setData("TransCode", "SMPCPAYTXT");
 		
-//		Map<String, Object> rspMap = 
-		callThdTradeManager.trade(context);
+		Map<String, Object> rspMap = callThdTradeManager.trade(context);
 		
 		context.setProcessId(oldProcessId);
 		logger.info("=================end MsgToGasAftBatchAction callThd with context=======" + context);
