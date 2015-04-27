@@ -95,8 +95,6 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 				.unLock(batNo);
 
 		Map<String, Object> ret = new HashMap<String, Object>();
-		// final List<EupsBatchInfoDetail>
-		// result=(List<EupsBatchInfoDetail>)context.getVariable("detailList");
 		EupsBatchInfoDetail eupsBatchInfoDetail = new EupsBatchInfoDetail();
 		eupsBatchInfoDetail.setBatNo(batNo);
 		final List<EupsBatchInfoDetail> result = get(
@@ -109,6 +107,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		String sts = null;
 		String errMsg = null;
 		for (EupsBatchInfoDetail dtl : result) {
+			log.info("");
 			tmpSqn = dtl.getRmk1();
 			GDEupsbElecstBatchTmp elec02batchTmp = new GDEupsbElecstBatchTmp();
 			elec02batchTmp.setSqn(tmpSqn);
@@ -180,7 +179,6 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		batchConsoleInfo.setRsvFld2("0000");
 		batchConsoleInfo.setRsvFld3("交易成功");
 
-		// ret.put("header", context.getDataMapDirectly());
 		ret.put("header", batchConsoleInfo);
 		ret.put("detail", tempList);
 
@@ -189,16 +187,15 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		
 		String backFlieName = config.getLocFleNme();
 		backFlieName = backFlieName.subSequence(0, 10) + "fh";
-		String fliTme = DateUtils.format(new Date(), "yyyyMMdd_HHmmss");
+		
+		//TODO:文件名错误
+//		05
+		
+		String fliTme = DateUtils.format(new Date(), "yyyyMMdd");
 		String fileName = backFlieName + fliTme + ".txt";
 		config.setLocFleNme(fileName);
 		config.setRmtFleNme(fileName);
 		log.info("上送给第三方的文件名为:"+config.getRmtFleNme());
-
-		// EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class)
-		// .findOne("");
-		// config.setLocFleNme("BatchBack.txt");
-		// config.setRmtFleNme("BatchBack.txt");
 
 		Assert.isFalse(null == config, ErrorCodes.EUPS_THD_FTP_CONFIG_NOTEXIST);
 
@@ -238,7 +235,8 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		
 		String tlr= context.getData(ParamKeys.TELLER);
 		
-		context.setData("STO",tlr.substring(tlr.length()-6));
+		//TODO:tlr截取后5位
+		context.setData("STO",tlr);
 		context.setData("HAN", sucCnt);
 		context.setData("HAM", sucAmt);
 		context.setData("LSN", failCnt);
