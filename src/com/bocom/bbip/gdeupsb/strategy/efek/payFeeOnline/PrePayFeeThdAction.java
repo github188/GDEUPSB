@@ -86,7 +86,7 @@ public class PrePayFeeThdAction extends BaseAction implements Executable{
 				String txnTime=DateUtils.formatAsHHmmss(txnTme);
 				context.setData(ParamKeys.TXN_DATE, txnDate);
 				context.setData(ParamKeys.TXN_TIME, txnTime);
-				//TODO 
+				
 				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW04");
 //				context.setData(ParamKeys.PAY_TYPE, "110");
 				

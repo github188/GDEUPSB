@@ -39,7 +39,7 @@ public class PreCheckDealAction implements Executable{
 				context.setData(ParamKeys.CCY, GDConstants.RENMINBI);
 				
 //				context.setData(ParamKeys.PAYFEE_TYPE, Constants.TXN_PAYFEE_TYPE_PAYMENT);
-				//TODO  试用
+				
 				context.setData("extFields", "01441800999");
 				if(context.getData("thdSqn")==null){
 						if((context.getData("traceSrc").toString().equals("WE441") || context.getData("traceSrc").toString().equals("MB441"))){

@@ -89,8 +89,8 @@ public class InsertCusAgentServiceAction extends BaseAction {
 			context.setData("bk", "01441999999");
 			context.setData("br", "01441131999");
 		}
-		
-		if(context.getData("oprTypeBank").toString().equals("1")){
+		String oprTypeBank=(String)context.getData("oprTypeBank");
+		if(!oprTypeBank.isEmpty()){
 			context.setData("oprTyp", "1");
 		}
 		Result editCusAgtResult = bgspServiceAccessObject.callServiceFlatting("maintainAgentCollectAgreement",context.getDataMap());

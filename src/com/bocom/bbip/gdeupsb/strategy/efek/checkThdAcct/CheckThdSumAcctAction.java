@@ -76,8 +76,8 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 		for(Map<String, Object> map:mapList){
 				String sqn=bbipPublicService.getBBIPSequence();
 				context.setData(ParamKeys.COMPANY_NO, map.get("COM_NO").toString().substring(0, 6));
-				//TODO 
-				context.setData(ParamKeys.COMPANY_NO, "030615");
+			
+//				context.setData(ParamKeys.COMPANY_NO, "030615");
 				
 				context.setData(ParamKeys.SEQUENCE, sqn);
 				long amount =Long.parseLong(map.get("TOT_COUNT").toString());
@@ -102,9 +102,9 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 			        Date thdTxnTme = DateUtils.parse(thdTxnDate+thdTxnTime,DateUtils.STYLE_yyyyMMddHHmmss);
 			        context.setData(ParamKeys.THD_TXN_DATE, thdTxnDte);
 			        context.setData(ParamKeys.THD_TXN_TIME, thdTxnTme);
-			        //TODO 
-			        context.setData(ParamKeys.TXN_TLR, "ABIR148");
-			        context.setData(ParamKeys.CHL_TYP, "90");
+			        
+//			        context.setData(ParamKeys.TXN_TLR, "ABIR148");
+//			        context.setData(ParamKeys.CHL_TYP, "90");
 				//把信息保存到第三方明细表中
 		        eupsThdTranCtlDetailRepository.insert(BeanUtils.toObject(context.getDataMap(), EupsThdTranCtlDetail.class));
 		}

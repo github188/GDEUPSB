@@ -65,9 +65,8 @@ public class CheckThdDetlAcctAction implements Executable {
 			CoreRuntimeException {
 			logger.info("=======Start CheckThdDetlAcctAction");
 			
-	        //TODO 
-	        context.setData(ParamKeys.TXN_TLR, "ABIR148");
-	        context.setData(ParamKeys.CHL_TYP, "90");
+//	        context.setData(ParamKeys.TXN_TLR, "ABIR148");
+//	        context.setData(ParamKeys.CHL_TYP, "90");
 	        
 			//日期
 			Date txnDte=DateUtils.calDate(DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())),-1);
@@ -138,7 +137,7 @@ public class CheckThdDetlAcctAction implements Executable {
 							
 							//生成对账文件到指定路径
 							eupsThdFtpConfig.setLocFleNme(fileName);
-							//TODO  sftp
+						
 							operateFileAction.createCheckFile(eupsThdFtpConfig, "elecCheckFile", fileName, map);
 							 logger.info("=============对账文件生成成功==========");
 							 
@@ -300,7 +299,7 @@ public class CheckThdDetlAcctAction implements Executable {
 				context.setData(GDParamKeys.TRADE_RECEIVE, GDConstants.TRADE_RECEIVE);//交易接收方
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
-				//TODO 
+				
 				context.setData("PKGCNT", "000001");
 				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW18");
 				context.setData("sqns",context.getData(ParamKeys.SEQUENCE));

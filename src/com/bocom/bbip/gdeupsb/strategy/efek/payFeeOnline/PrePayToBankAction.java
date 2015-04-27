@@ -35,19 +35,13 @@ public class PrePayToBankAction implements Executable{
 			context.setData(ParamKeys.COMPANY_NO, context.getData("comNos"));
 			context.setData(GDParamKeys.TOTNUM, "1");
 			
-			//TODO 
-			context.setData(ParamKeys.BR,"01441131999");
-			context.setData(ParamKeys.BK,"01441999999");
-			context.setData(ParamKeys.TELLER, "ABIR148");
-			context.setData(ParamKeys.BBIP_TERMINAL_NO, "ABIR148");
-			String traceNo=bbipPublicService.getTraceNo();
-			//TODO 要删
-			context.setData(ParamKeys.TRACE_NO, traceNo);
-			
-			//TODO 待定  
-			String ActFlg=(String)context.getData(ParamKeys.ACC_TYPE);
-			//TODO 
-			ActFlg="0";
+//			
+//			context.setData(ParamKeys.BR,"01441131999");
+//			context.setData(ParamKeys.BK,"01441999999");
+//			context.setData(ParamKeys.TELLER, "ABIR148");
+//			context.setData(ParamKeys.BBIP_TERMINAL_NO, "ABIR148");
+			  
+			String ActFlg=(String)context.getData(ParamKeys.PAY_TYPE);
 			if("0".equals(ActFlg)){              //对公
 				//GDContants定义常量
 				context.setData(ParamKeys.TXN_CODE,"451240");
@@ -60,11 +54,9 @@ public class PrePayToBankAction implements Executable{
 				context.setData(ParamKeys.CHL_TYP, "L");  //<Set>CnlTyp=L</Set>
 				context.setData(ParamKeys.CCY_NO,Constants.EUPS_PAYMENT_TO_ACPS_CCY_CDE);
 			}
-			//TODO txnAmt
-			double i=Double.parseDouble(context.getData(ParamKeys.TXN_AMT).toString());
-			double d=i/100;
-			DecimalFormat df=new DecimalFormat("#.00");
-			BigDecimal txnAmt=new BigDecimal(df.format(d));
+		
+			BigDecimal bigDecimal=new BigDecimal(context.getData(ParamKeys.TXN_AMT).toString());
+			BigDecimal txnAmt=bigDecimal.scaleByPowerOfTen(-2);
 			context.setData(ParamKeys.TXN_AMT,txnAmt );
 			context.setData(ParamKeys.BUS_TYP, "2");
 			context.setData("rsvFld3",context.getData("mfmVchNos"));
