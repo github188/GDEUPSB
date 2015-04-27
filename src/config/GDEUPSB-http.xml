@@ -1,0 +1,34 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:jump="http://www.bocom.com/schema/jump-core" xmlns:osgi="http://www.springframework.org/schema/osgi"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+						http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi-2.0-m1.xsd
+						http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd
+						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
+	
+	
+
+  <bean id="GDUNCBHttpTransport" class="com.bocom.bbip.gdeupsb.interceptors.GDUNCBHttpSoapTrasnport">
+		<property name="gateway">
+			<bean class="com.bocom.bbip.gdeupsb.interceptors.GDUNCBHttpSoapGateway">
+				<property name="url" value="${GDEUPSB.GDUNCB_WEBSERVICE_URL}" />
+				<property name="charSet" value="UTF-8" />
+				<property name="timeOut" value="60" />
+			</bean>
+		</property>
+		<property name="encodeTransforms">
+			<array>
+				<bean class="com.bocom.jump.bp.channel.interceptors.EncoderTransform">
+					<constructor-arg value="${gduncb_soap_out}" />
+				</bean>
+			</array>
+		</property>
+		<property name="decodeTransforms">
+			<array>
+				<bean class="com.bocom.jump.bp.channel.interceptors.DecoderTransform">
+					<constructor-arg value="${gduncb_soap_out}" />
+				</bean>
+			</array>
+		</property>
+	</bean>
+</beans>
