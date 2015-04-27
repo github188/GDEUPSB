@@ -59,7 +59,6 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 					logger.info("==========不通知第三方");
 				}else{
 					if(context.getData("bankToThd")!=null && context.getData("thdToBank")==null){
-							try{
 								constantOfSoapUI(context);
 								context.setData(ParamKeys.TXN_DTE, DateUtils.format(txnDte,DateUtils.STYLE_yyyyMMdd));
 								context.setData(ParamKeys.TXN_TME, DateUtils.format(txnTme,DateUtils.STYLE_HHmmss));
@@ -108,26 +107,17 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 																	eupsCusAgentJournalRepository.insert(eupsCusAgentJournal);										                										    				
 												    				log.info("============End  insert   EupsCusAgentJournal");
 										                    }
-										                }else if(BPState.isBPStateReversalFail(context)){
-										                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
-										                	context.setData(GDParamKeys.MSGTYP, "E");
-										                	context.setData(ParamKeys.RSP_CDE, "EFE999");
 										                }else if(BPState.isBPStateOvertime(context)){
 										                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
 										                	context.setData(GDParamKeys.MSGTYP, "E");
 										                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-										                }else if(BPState.isBPStateSystemError(context)){
-										                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
-										                	context.setData(GDParamKeys.MSGTYP, "E");
-										                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-										                }else if(BPState.isBPStateTransFail(context)){
-										                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
-										                	context.setData(GDParamKeys.MSGTYP, "E");
-										                	context.setData(ParamKeys.RSP_CDE, "EFE999");
+										                	context.setData(ParamKeys.RSP_MSG, "交易超时");
+										                	throw new CoreException("交易超时");
 										                }else{
 										                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
 										                	context.setData(GDParamKeys.MSGTYP, "E");
 										                	context.setData(ParamKeys.RSP_CDE, "EFE999");
+										                	context.setData(ParamKeys.RSP_MSG, "交易失败");
 										                	throw new CoreException(responseCode);
 										                }
 											}
@@ -142,16 +132,7 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 							                context.setData(ParamKeys.THD_RSP_MSG,Constants.RESPONSE_MSG_FAIL);
 							                throw new CoreException("发送失败");
 									}
-							}catch(CoreException e){
-								logger.info("Bypass call THIRD response failed or unknow error.");
-								context.setData(ParamKeys.TXN_STS, Constants.TXNSTS_REVERSE);
-								context.setData(ParamKeys.THD_TXN_STS, Constants.TXNSTS_FAIL);
-								context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
-							}finally{
-								context.setData(ParamKeys.TXN_DTE, txnDte);
-								context.setData(ParamKeys.TXN_TME, txnTme);
 								context.setData("PKGCNT", "000000");
-							}
 					}else{
 						 if(context.getData("bankToThd")==null && context.getData("thdToBank")!=null ){
 								  //保存到EupsCusAgentJournal表中

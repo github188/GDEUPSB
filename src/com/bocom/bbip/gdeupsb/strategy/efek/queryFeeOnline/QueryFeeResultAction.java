@@ -55,8 +55,9 @@ public class QueryFeeResultAction implements Executable{
 		}
 		/**
 		 *  报文常量 外发第三方 
+		 * @throws CoreException 
 		 */
-		public void callThd(Context context) {
+		public void callThd(Context context) throws CoreException {
 			logger.info("=============Start  QueryFeeResultAction callThd");
 				
 				//报文头常量
@@ -80,7 +81,7 @@ public class QueryFeeResultAction implements Executable{
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
 				//TODO 
 				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW04");		
-						try{
+                String responseCode =null;
 							Map<String, Object> rspMap = callThdTradeManager.trade(context);
 								if(BPState.isBPStateNormal(context)){
 										if(null !=rspMap){
@@ -88,47 +89,30 @@ public class QueryFeeResultAction implements Executable{
 								                context.setData(ParamKeys.THIRD_RETURN_MESSAGE, rspMap);
 								                //第三方返回码
 								                CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
-								                String responseCode = rspCdeAction.getThdRspCde(rspMap, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
+								                responseCode = rspCdeAction.getThdRspCde(rspMap, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
 								                logger.info("third response code="+responseCode);
 								                if(StringUtils.isEmpty(responseCode)){
 								                	responseCode=ErrorCodes.EUPS_THD_SYS_ERROR;
 								                }
 								                context.setData(ParamKeys.RESPONSE_CODE, responseCode);
-								                System.out.println("~~~~~~~~~~~~~~~~~~");
-								                System.out.println(responseCode);
-								                System.out.println("~~~~~~~~~~~~~~~~~~");
 								             // 第三方交易成功
 									                if (GDConstants.SUCCESS_CODE.equals(responseCode)) {
 									                    logger.info("The third process response successful.");
 									                    context.setData(ParamKeys.TXN_STS, Constants.TXNSTS_SUCCESS);
 									                    context.setData(ParamKeys.THD_TXN_STS, Constants.THD_TXNSTS_SUCCESS);
 									                    context.setData(ParamKeys.RSP_CDE, GDConstants.SUCCESS_CODE);
-									                    context.setData(ParamKeys.RSP_MSG, "交易成功");
-									                }else if(BPState.isBPStateReversalFail(context)){
-									                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
-									                	context.setData(GDParamKeys.MSGTYP, "E");
-									                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-									                	context.setData(ParamKeys.RSP_MSG, "交易失败");
+									                    context.setData(ParamKeys.RSP_MSG, "交易成功");									                
 									                }else if(BPState.isBPStateOvertime(context)){
 									                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
 									                	context.setData(GDParamKeys.MSGTYP, "E");
 									                	context.setData(ParamKeys.RSP_CDE, "EFE999");
 									                	context.setData(ParamKeys.RSP_MSG, "交易超时");
-									                }else if(BPState.isBPStateSystemError(context)){
-									                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
-									                	context.setData(GDParamKeys.MSGTYP, "E");
-									                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-									                	context.setData(ParamKeys.RSP_MSG, "系统错误");
-									                }else if(BPState.isBPStateTransFail(context)){
-									                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
-									                	context.setData(GDParamKeys.MSGTYP, "E");
-									                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-									                	context.setData(ParamKeys.RSP_MSG, "发送失败");
+									                	throw new CoreException("交易超时");
 									                }else{
-//									                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
-//									                	context.setData(GDParamKeys.MSGTYP, "E");
-//									                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-//									                	context.setData(ParamKeys.RSP_MSG, "交易失败，其他未知情况");
+									                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
+									                	context.setData(GDParamKeys.MSGTYP, "E");
+									                	context.setData(ParamKeys.RSP_CDE, "EFE999");
+									                	context.setData(ParamKeys.RSP_MSG, "交易失败");
 									                	throw new CoreException(responseCode);
 									                }
 									                List<Map<String, Object>> list=(List<Map<String, Object>>)rspMap.get("Information");
@@ -148,12 +132,6 @@ public class QueryFeeResultAction implements Executable{
 						                context.setData(ParamKeys.THD_RSP_MSG,Constants.RESPONSE_MSG_FAIL);
 						                throw new CoreException("发送失败");
 								}
-						}catch(CoreException e){
-							logger.info("Bypass call THIRD response failed or unknow error.");
-							context.setData(ParamKeys.TXN_STS, Constants.TXNSTS_REVERSE);
-							context.setData(ParamKeys.THD_TXN_STS, Constants.TXNSTS_FAIL);
-							context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
-						}
 			}
 		
 		/**

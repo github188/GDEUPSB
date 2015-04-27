@@ -69,7 +69,6 @@ public class PrePayToBankAction implements Executable{
 			context.setData(ParamKeys.BUS_TYP, "2");
 			context.setData("rsvFld3",context.getData("mfmVchNos"));
 			
-			context.setData("comNo","GDELEC00");
 			context.setData("thdTxnDate", DateUtils.format((Date)context.getData(ParamKeys.THD_TXN_DATE),DateUtils.STYLE_yyyyMMdd));
 			context.setData("thdTxnTime", DateUtils.format((Date)context.getData(ParamKeys.THD_TXN_TIME),DateUtils.STYLE_HHmmss));
 		}

@@ -99,7 +99,6 @@ public class InsertCusAgentServiceAction extends BaseAction {
 			if(context.getData("bankToThd")!=null){
 					Date txnDte=(Date)context.getData(ParamKeys.TXN_DTE);
 					Date txnTme=DateUtils.parse(context.getData("txnTme").toString());
-					try{
 						context.setData(ParamKeys.CUS_AC, cusAc);
 						context.setData(ParamKeys.THD_CUS_NO,  context.getData("cusNo"));
 						context.setData(ParamKeys.TXN_DTE, DateUtils.format(txnDte,DateUtils.STYLE_yyyyMMdd));
@@ -185,16 +184,7 @@ public class InsertCusAgentServiceAction extends BaseAction {
 					                context.setData(ParamKeys.RESPONSE_MESSAGE, Constants.RESPONSE_MSG_FAIL);
 					                context.setData(ParamKeys.THD_RSP_MSG,Constants.RESPONSE_MSG_FAIL);
 							}
-					}catch(CoreException e){
-						logger.info("Bypass call THIRD response failed or unknow error.");
-						context.setData(ParamKeys.TXN_STS, Constants.TXNSTS_REVERSE);
-						context.setData(ParamKeys.THD_TXN_STS, Constants.TXNSTS_FAIL);
-						context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
-					}finally{
-						context.setData(ParamKeys.TXN_DTE, txnDte);
-						context.setData(ParamKeys.TXN_TME, txnTme);
 						context.setData("PKGCNT", "000000");
-					}
 			}else{
 				//保存到EupsCusAgentJournal表中
 				log.info("============insert   EupsCusAgentJournal");
