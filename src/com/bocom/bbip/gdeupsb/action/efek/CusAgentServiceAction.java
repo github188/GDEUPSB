@@ -76,7 +76,7 @@ public class CusAgentServiceAction extends BaseAction{
 				String mothed="";
 				String agdAgrNo="";
 				int i=0;
-				
+				context.setData("oprTypeBank", "0");
 				if("0".equals(oprTyp)){
 					logger.info("~~~~~~~~~~~~~~~~~Enter  eups.commInsertCusAgenteELEC00 ");
 					mothed="eups.commInsertCusAgenteELEC00";
