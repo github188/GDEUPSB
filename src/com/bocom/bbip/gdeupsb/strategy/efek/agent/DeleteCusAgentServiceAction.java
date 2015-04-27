@@ -55,7 +55,27 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 			Result delResult = bgspServiceAccessObject.callServiceFlatting("deleteAgentCollectAgreement",context.getDataMap());
 			logger.info("==========delResult："+delResult);
 			if(delResult.isSuccess()){
-				if(context.getData("oprTypeBank") !=null){
+				if(!context.getData("oprTypeBank").equals("1")){
+					log.info("============insert   EupsCusAgentJournal");
+					EupsCusAgentJournal eupsCusAgentJournal=new EupsCusAgentJournal();
+					eupsCusAgentJournal.setSqn(context.getData("sqn").toString());
+					eupsCusAgentJournal.setEupsBusTyp("ELEC00");
+					String rsvFld3=DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMddHHmmss);
+					eupsCusAgentJournal.setRsvFld3(rsvFld3);
+					String rsvFld1=context.getData("oprTyp").toString().trim()+context.getData("agtSts").toString().trim();
+					eupsCusAgentJournal.setRsvFld1(rsvFld1);
+					eupsCusAgentJournal.setComNo(context.getData("comNos").toString());
+					eupsCusAgentJournal.setThdCusNo((String)context.getData("cusNo"));
+					eupsCusAgentJournal.setCusAc(context.getData("cusAc").toString());
+					eupsCusAgentJournal.setCusNme((String)context.getData("cusNme"));
+					eupsCusAgentJournal.setIdTyp((String)context.getData("idTyp"));
+					eupsCusAgentJournal.setIdNo((String)context.getData("idNo"));
+					eupsCusAgentJournal.setTel((String)context.getData("cmuTel"));
+					eupsCusAgentJournal.setAgrBr(context.getData("cusTyp").toString());
+					eupsCusAgentJournal.setTxnDte(DateUtils.parse(DateUtils.format(new Date(), DateUtils.STYLE_SIMPLE_DATE),DateUtils.STYLE_SIMPLE_DATE));
+					eupsCusAgentJournal.setRsvFld2("301");;
+					eupsCusAgentJournalRepository.insert(eupsCusAgentJournal);										                										    				
+    				log.info("============End  insert   EupsCusAgentJournal");
 					logger.info("==========不通知第三方");
 				}else{
 					if(context.getData("bankToThd")!=null && context.getData("thdToBank")==null){
@@ -85,7 +105,7 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 										                    context.setData(ParamKeys.THD_TXN_STS, Constants.THD_TXNSTS_SUCCESS);
 										                    context.setData(ParamKeys.RSP_CDE, GDConstants.SUCCESS_CODE);
 										                    //保存到EupsCusAgentJournal表中
-										                    if(context.getData("callThd")==null){
+										                    if(context.getData("callThd")==null && !context.getData("oprTypeBank").equals("1")){
 																	log.info("============insert   EupsCusAgentJournal");
 																	EupsCusAgentJournal eupsCusAgentJournal=new EupsCusAgentJournal();
 																	eupsCusAgentJournal.setSqn(context.getData("sqn").toString());
@@ -134,7 +154,7 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 									}
 								context.setData("PKGCNT", "000000");
 					}else{
-						 if(context.getData("bankToThd")==null && context.getData("thdToBank")!=null ){
+						 if(context.getData("bankToThd")==null && context.getData("thdToBank")!=null && !context.getData("oprTypeBank").equals("1")){
 								  //保存到EupsCusAgentJournal表中
 								log.info("============insert   EupsCusAgentJournal");
 								EupsCusAgentJournal eupsCusAgentJournal=new EupsCusAgentJournal();

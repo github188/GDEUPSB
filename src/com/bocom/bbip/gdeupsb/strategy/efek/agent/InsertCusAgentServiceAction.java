@@ -72,6 +72,7 @@ public class InsertCusAgentServiceAction extends BaseAction {
 		}
 		//调用代收付'
 		String cusAc=context.getData("cusAc").toString();		
+		String newCusAc=context.getData("newCusAc").toString();		
 		context.setData(ParamKeys.COMPANY_NO, context.getData("comNo"));
 		context.setData(ParamKeys.CUS_AC, context.getData(GDParamKeys.NEWCUSAC));
 		
@@ -89,10 +90,7 @@ public class InsertCusAgentServiceAction extends BaseAction {
 			context.setData("bk", "01441999999");
 			context.setData("br", "01441131999");
 		}
-		String oprTypeBank=(String)context.getData("oprTypeBank");
-		if(!oprTypeBank.isEmpty()){
-			context.setData("oprTyp", "1");
-		}
+		context.setData("oprTyp", "0");
 		Result editCusAgtResult = bgspServiceAccessObject.callServiceFlatting("maintainAgentCollectAgreement",context.getDataMap());
 		logger.info("===========editCusAgtResult："+editCusAgtResult);
 		if(editCusAgtResult.isSuccess() && editCusAgtResult.getResponseType().toString().equals("N") ){
@@ -132,10 +130,14 @@ public class InsertCusAgentServiceAction extends BaseAction {
 								    				eupsCusAgentJournal.setEupsBusTyp("ELEC00");
 								    				String rsvFld3=DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMddHHmmss);
 								    				eupsCusAgentJournal.setRsvFld3(rsvFld3);
+								    				String oprTypeBank=(String)context.getData("oprTypeBank");
+								    				if(oprTypeBank.equals("1")){
+								    					context.setData("oprTyp", "1");
+								    				}
 								    				String rsvFld1=context.getData("oprTyp").toString().trim()+context.getData("agtSts").toString().trim();
 								    				eupsCusAgentJournal.setRsvFld1(rsvFld1);
 								    				eupsCusAgentJournal.setThdCusNo((String)context.getData("cusNo"));
-								    				eupsCusAgentJournal.setCusAc(cusAc);
+								    				eupsCusAgentJournal.setCusAc(newCusAc);
 								    				eupsCusAgentJournal.setCusNme((String)context.getData("cusNme"));
 								    				eupsCusAgentJournal.setIdTyp((String)context.getData("idTyp"));
 								    				eupsCusAgentJournal.setIdNo((String)context.getData("idNo"));
@@ -193,10 +195,14 @@ public class InsertCusAgentServiceAction extends BaseAction {
 				eupsCusAgentJournal.setEupsBusTyp("ELEC00");
 				String rsvFld3=DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMddHHmmss);
 				eupsCusAgentJournal.setRsvFld3(rsvFld3);
+				String oprTypeBank=(String)context.getData("oprTypeBank");
+				if(oprTypeBank.equals("1")){
+					context.setData("oprTyp", "1");
+				}
 				String rsvFld1=context.getData("oprTyp").toString().trim()+context.getData("agtSts").toString().trim();
 				eupsCusAgentJournal.setRsvFld1(rsvFld1);
 				eupsCusAgentJournal.setThdCusNo((String)context.getData("cusNo"));
-				eupsCusAgentJournal.setCusAc(cusAc);
+				eupsCusAgentJournal.setCusAc(newCusAc);
 				eupsCusAgentJournal.setAgrBr(context.getData("cusTyp").toString());
 				eupsCusAgentJournal.setCusNme((String)context.getData("cusNme"));
 				eupsCusAgentJournal.setIdTyp((String)context.getData("idTyp"));
