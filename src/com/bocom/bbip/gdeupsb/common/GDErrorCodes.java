@@ -48,15 +48,15 @@ public final class GDErrorCodes {
 
 	/** 广东电力不允许自动清算 */
 	public static final String EUPS_ELE_GZ_AUTO_CLEAR_ERROR = "BBIP4400EU0107";
-	
+
 	/** 广东电力清算时间非法 */
 	public static final String EUPS_ELE_GZ_CLEAR_TIME_ERROR = "BBIP4400EU0108";
-	
+
 	/** 广东电力不存在清算信息 */
-	public static final String EUPS_ELE_GZ_CLEAR_INFO_NOT_EXIST= "BBIP4400EU0109";
-	
+	public static final String EUPS_ELE_GZ_CLEAR_INFO_NOT_EXIST = "BBIP4400EU0109";
+
 	/** 广东电力清算错误 */
-	public static final String EUPS_ELE_GZ_CLEAR_ERROR= "BBIP4400EU0110";
+	public static final String EUPS_ELE_GZ_CLEAR_ERROR = "BBIP4400EU0110";
 
 	/** 供电局系统:无效交易(数据格式) */
 	public static final String EUPS_ELE_GZ_DATE_FORMAT_ERROR = "BBIP4400EU0190";
@@ -467,7 +467,7 @@ public final class GDErrorCodes {
 	/** 供电账户锁定，无法进行缴费，请致电供电95598 */
 	public static final String EUPS_ELEC00_100_ERROR = "BBIP4400EU0002";
 
-	public static final String EUPS_ELEC00_101_ERROR ="BBIP4400EU0003";
+	public static final String EUPS_ELEC00_101_ERROR = "BBIP4400EU0003";
 	/** 批次状态为不可以撤销 */
 	public static final String EUPS_BATCH_STATUS_ERROR = "BBIP4400EU0352";
 	/** 批次已经存在 */
@@ -539,8 +539,11 @@ public final class GDErrorCodes {
 	public static final String TBC_COM_OTHER_ERROR = "BBIP4400EU0504";
 	/** 请求服务超时 */
 	public static final String TBC_OUT_TIME_ERROR = "BBIP4400EU0505";
-	
+
 	/** 汕头电力未知错误 */
 	public static final String EUPS_ELE_ST_UNKNOWN_ERROR = "BBIP4400EU0300";
+	/** 该笔流水已冲正 */
+	public static final String EUPS_JNL_IS_CNL = "BBIP4400EU0631";
 
 }
+
