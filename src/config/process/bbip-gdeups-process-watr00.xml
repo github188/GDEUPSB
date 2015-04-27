@@ -105,4 +105,12 @@
 			<action id="act" ref="eups.afterBatchAcpServiceAction" operations="afterBatchDeal" />
 		</actions>
 	</process>
+	
+	
+		<!-- 根据银行卡号查询协议 -->
+	<process id="gdeupsb.queryThdCusNo" template="eups.simpleTran" interceptors="bbip.defaultInterceptors">	
+	   <actions>
+	        <action id="act" class = "com.bocom.bbip.gdeupsb.action.wat.QueryThdCusNo"/>
+	   </actions>
+	</process>
 </x:beans>
