@@ -70,7 +70,7 @@ public class LogServiceAction extends BaseAction{
 			for(Map<String, Object> map:mapList){
 					String comNo=map.get("COM_NO").toString();
 					String bankNo=map.get("THD_OBK_CDE").toString();
-					//TODO  需修改文件名  单位编号+银行+日期+_类型+.txt
+					
 					String fileName=comNo+bankNo+DateUtils.format(txnDate, DateUtils.STYLE_yyyyMMdd)+"_05.txt";
 					context.setData(GDParamKeys.FILE_NAME,fileName);
 					

@@ -64,8 +64,6 @@ public class CusAgentServiceAction extends BaseAction{
 				
 				context.setData("obkBk", "301");
 				context.setData(ParamKeys.TRACE_NO, bbipPublicService.getTraceNo());
-				//TODO 
-				context.setData("idTyp", "01");
 				context.setData("ccy", "CNY");
 				context.setData("agrVldDte", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
 				context.setData("agrExpDte", "99991231");
@@ -197,7 +195,7 @@ public class CusAgentServiceAction extends BaseAction{
 			map.put("bvCde", "009");
 			map.put("idTyp", context.getData(ParamKeys.ID_TYPE));
 			map.put("idNo", context.getData(ParamKeys.ID_NO));
-			//TODO
+			
 			map.put("bvCde", "009");
 			
 			if (StringUtils.isNotBlank((String) context.getData("bvNo"))) {
@@ -228,7 +226,7 @@ public class CusAgentServiceAction extends BaseAction{
 			map.put("agrVldDte", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
 			map.put("agrExpDte", "99991231");
 			map.put("agrTlr",context.getData(ParamKeys.TXN_TLR));
-			//TODO 
+			
 			map.put("agtSrvCusPnm",context.getData("thdCusNme"));
 			map.put("agtSrvCusId",context.getData("cusNo"));
 			
@@ -238,10 +236,6 @@ public class CusAgentServiceAction extends BaseAction{
 			if (StringUtils.isNotBlank((String) context.getData(ParamKeys.COMPANY_NO))) {
 				baseInfo.setComNo((String) context.getData(ParamKeys.COMPANY_NO));
 			}
-			//TODO 调用代收付接口  获得单位名称
-//			String comNme=get(EupsThdBaseInfoRepository.class).findOne(context.getData("comNo").toString()).getComNme();
-//			map.put("comNum", comNme);
-//			context.setData("comNum", comNme);
 			
 			map.put(ParamKeys.CCY, "CNY");
 			// TODO 暂用0，待确认
