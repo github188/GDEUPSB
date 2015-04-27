@@ -51,6 +51,7 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 		logger.info("PayUnilateralToBankServiceImplPGAS00@prepareCheckDeal start!");
 		logger.info("======context:" + context);
 
+		context.setData(ParamKeys.THD_TXN_STS, "S");
 		String bk = "01491999999";
 		String br = "01491800999";
 		context.setData(ParamKeys.BR, br);
