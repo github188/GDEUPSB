@@ -166,12 +166,8 @@ public class BatchFileCommon extends BaseAction {
 	public void sendBatchFileToACP(final Context context) throws CoreException {
 		final String comNo=(String)context.getData(ParamKeys.COMPANY_NO);
 		Lock(comNo);
-		//TODO 
 		String tlr=(String)context.getData(ParamKeys.TELLER);
-//		tlr="4842884";
-//		context.setData("tlr", tlr);
 		final String br=(String)context.getData(ParamKeys.BR);
-//		String br="01441999999";
 		context.setData(ParamKeys.BR, br);
         final String AcDate=DateUtils.format(((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getAcDate(),DateUtils.STYLE_yyyyMMdd);
         final String systemCode=((SystemConfig)get(SystemConfig.class)).getSystemCode();
