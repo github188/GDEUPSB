@@ -227,11 +227,13 @@ public class MsgToGasAftBatchAction extends BaseAction implements AfterBatchAcpS
 					gdGashBatchTmp.setBatSts("S");
 					
 				}else{
-					if((!("S".equals(sts))) && "扣款金额不足".contains(detail.getErrMsg())){
+					String errCode = detail.getErrMsg().toString().substring(0, 6);
+					if(errCode.equals("TPM050")){
 						thdSts = "B1";
 					}
-					else if((!("S".equals(sts))) && "不存在代扣协议".contains(detail.getErrMsg())){
-					thdSts = "B2";
+					else if(errCode.equals("CB1004") || "不存在代扣协议".contains(detail.getErrMsg())){
+						
+						thdSts = "B2";
 				}
 					else{
 						thdSts = "B3";

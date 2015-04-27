@@ -139,6 +139,15 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 				if ("TPM050".equals(errCde)) {
 					elec02batchTmp.setRsvFld15("2");
 				}
+				if ("CB1004".equals(errCde)) {
+					elec02batchTmp.setRsvFld15("4");
+				}
+//				if ("PDM252".equals(errCde)) {
+//					elec02batchTmp.setRsvFld15("4");
+//				}
+				if ("SDM015".equals(errCde)) {//SDM015记账账号状态字为全部法律冻结、全部内部止付、冻结暂封、存款证明止付、质押或者保全冻结
+					elec02batchTmp.setRsvFld15("5");
+				}
 //TODO			if(){
 //					
 //				}
