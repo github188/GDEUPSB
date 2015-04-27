@@ -21,14 +21,14 @@ public class AgtVldChkUnlockAction extends BaseAction {
 	public void execute(Context context) throws CoreException, CoreRuntimeException {
 		log.info("AgtValidCheckAction start!..");
 
-		String gdsBId = context.getData(GDParamKeys.SIGN_STATION_BID); // 业务类型
+//		String gdsBId = context.getData(GDParamKeys.SIGN_STATION_BID); // 业务类型
 
 		// 交易解锁
-		Result ret1 = get(BBIPPublicService.class).unlock(gdsBId);
-		int status1 = ret1.getStatus();
-		if (status1 != 0) {
-			throw new CoreException(GDErrorCodes.EUPS_UNLOCK_FAIL, "交易解锁失败!!!");
-		}
+//		Result ret1 = get(BBIPPublicService.class).unlock(gdsBId);
+//		int status1 = ret1.getStatus();
+//		if (status1 != 0) {
+//			throw new CoreException(GDErrorCodes.EUPS_UNLOCK_FAIL, "交易解锁失败!!!");
+//		}
 	}
 
 }
