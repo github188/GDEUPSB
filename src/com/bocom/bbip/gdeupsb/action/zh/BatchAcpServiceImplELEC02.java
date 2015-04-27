@@ -70,9 +70,6 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 		String trl = bbipPublicService.getETeller(bk);
 		context.setData(ParamKeys.TELLER, trl);
 		
-		/** 上锁 */
-		// ((BatchFileCommon)
-		// get(GDConstants.BATCH_FILE_COMMON_UTILS)).Lock(comNo);
 		/** 批量前检查和初始化批量控制表 生成批次号batNo */
 		((BatchFileCommon) get(GDConstants.BATCH_FILE_COMMON_UTILS)).BeforeBatchProcess(context);
 		logger.info("开始解析批量文件-------------with conetxt: " + context);
