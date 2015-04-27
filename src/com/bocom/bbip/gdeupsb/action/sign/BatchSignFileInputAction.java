@@ -309,7 +309,7 @@ public class BatchSignFileInputAction extends BaseAction{
 				throw new CoreException(GDErrorCodes.EUPS_FILE_DETAIL_ERROR,i+"行移动签约种类不能为空");  
 		   }
 		   //===行移动主号号码不能为空
-		   if(strGdsBId.equals("44103")&&StringUtils.isEmpty((String)detailList.get(i).get("mcusid"))){
+		   if(tAgtTp.equals("1")&&strGdsBId.equals("44103")&&StringUtils.isEmpty((String)detailList.get(i).get("mcusid"))){
 			   log.info("check fileName mcusid error...... "+"文件明细第，"+i+"行移动主号号码不能为空");
 				throw new CoreException(GDErrorCodes.EUPS_FILE_DETAIL_ERROR,i+"行移动主号号码不能为空");
 		   }
@@ -398,6 +398,7 @@ public class BatchSignFileInputAction extends BaseAction{
 		    context.setData("bnkNo", "301581000019");
 		    context.setData("inNum", "1");
 		    context.setData("iExtFg",  "Y");
+		    context.setData("tlr", context.getData("tlr"));
 		    String SUBSTS="0";
 		    
 		    String GDSAID="015810"+(String)detailList.get(i).get("orgcod")+tbustp+"301"+actno;
@@ -420,6 +421,7 @@ public class BatchSignFileInputAction extends BaseAction{
 		    context.setData("prvDatReq", prvDatReq);
 		    try{
 		    Context newContext= bbipPubService.synExecute("gdeups.agtMdyDealProcess",context);
+		    log.info("newContext......... =="+newContext);
 		    context.setDataMap(newContext.getDataMap());
 			context.setVariables(newContext.getVariables());
 		    }catch(Exception CoreException){
