@@ -68,17 +68,16 @@ public class PrintBatchInfoAction extends BaseAction{
 				EupsBatchInfoDetail eupsBatchInfoDetail=new EupsBatchInfoDetail();
 				eupsBatchInfoDetail.setBatNo(eupsBatNo);
 				List<EupsBatchInfoDetail> list=eupsBatchInfoDetailRepository.find(eupsBatchInfoDetail);
-				for (EupsBatchInfoDetail eupsBatchInfoDetails : list) {
-						if(eupsBatchInfoDetails.getSts().equals("S")){
-								eupsBatchInfoDetails.setSts("成功");
-						}else{
-								eupsBatchInfoDetails.setSts("失败");
-						}
-						context.setDataMap(BeanUtils.toMap(eupsBatchInfoDetails));
-				}
+//				for (EupsBatchInfoDetail eupsBatchInfoDetails : list) {
+//						if(eupsBatchInfoDetails.getSts().equals("S")){
+//								eupsBatchInfoDetails.setSts("成功");
+//						}else{
+//								eupsBatchInfoDetails.setSts("失败");
+//						}
+//						context.setDataMap(BeanUtils.toMap(eupsBatchInfoDetails));
+//				}
 				context.setData("exeDte", DateUtils.formatAsSimpleDate(gdEupsBatchConsoleInfo.getExeDte()));
 				context.setData("comNo", eupsBatchConsoleInfo.getComNo());
-				context.setData("comNme", eupsBatchConsoleInfo.getComNme());
 				context.setData(ParamKeys.TOT_CNT, eupsBatchConsoleInfo.getTotCnt());
 				context.setData(ParamKeys.TOT_AMT, eupsBatchConsoleInfo.getTotAmt());
 				context.setData(GDParamKeys.SUC_TOT_CNT, eupsBatchConsoleInfo.getSucTotCnt());
