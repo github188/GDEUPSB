@@ -128,7 +128,6 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 				e.printStackTrace();
 			}
 
-			//TODO 通知第三方
 			callThd(context,gdeupsBatchConsoleInfo,fileName);
 			ret1 = get(BBIPPublicService.class).unlock(locked);
 			logger.info("===============End  BatchDataResultFileAction  afterBatchDeal");	
@@ -177,7 +176,6 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 						gdEupsEleTmp.setRsvFld5(eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2).intValue()+"");
 						gdEupsEleTmp.setBankSqn(gdEupsEleTmp.getSqn());
 						gdEupsEleTmp.setBankNo("301");
-						//TODO 
 						Date date=new Date();
 						gdEupsEleTmp.setRsvFld1(DateUtils.format(date, DateUtils.STYLE_yyyyMMdd));
 						gdEupsEleTmp.setRsvFld2(DateUtils.formatAsHHmmss(date));
