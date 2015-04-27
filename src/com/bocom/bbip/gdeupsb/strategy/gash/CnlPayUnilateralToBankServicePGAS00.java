@@ -66,6 +66,8 @@ public class CnlPayUnilateralToBankServicePGAS00 implements
 			CancelDomain canceldomain, Context context) throws CoreException {
 		logger.info("CnlPayUnilateralToBankServicePGAS00@preCclToBank start!");
 		logger.info("======context:" + context);
+		context.setData("TransCode", "NoPay");//预置冲正失败
+		
 		String bk = "01491999999";
 		String br = "01491800999";
 		context.setData(ParamKeys.BR, br);
