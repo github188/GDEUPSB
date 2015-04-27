@@ -65,8 +65,9 @@ public class QryCusBaseMsgAction extends BaseAction{
 		}
 	/**
 	 *报文信息  外发第三方
+	 * @throws CoreException 
 	 */
-	public void callThd(Context context){  
+	public void callThd(Context context) throws CoreException{  
 			
 		context.setData(GDParamKeys.TREATY_VERSION, GDConstants.TREATY_VERSION);//协议版本
 		context.setData(GDParamKeys.TRADE_PERSON_IDENTIFY, GDConstants.TRADE_PERSON_IDENTIFY);//交易人标识
@@ -88,7 +89,6 @@ public class QryCusBaseMsgAction extends BaseAction{
 			context.setData("PKGCNT", "000001");		
 			context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW19");		
 			context.setData("sqns", context.getData("sqn"));	
-					try{
 						Map<String, Object> rspMap = callThdTradeManager.trade(context);
 						
 							if(BPState.isBPStateNormal(context)){
@@ -106,38 +106,25 @@ public class QryCusBaseMsgAction extends BaseAction{
 							                context.setData(ParamKeys.RESPONSE_CODE, responseCode);
 							                
 							             // 第三方交易成功
-								                if (GDConstants.SUCCESS_CODE.equals(responseCode)) {
-								                    log.info("The third process response successful.");
-								                    context.setData(ParamKeys.TXN_STS, Constants.TXNSTS_SUCCESS);
-								                    context.setData(ParamKeys.THD_TXN_STS, Constants.THD_TXNSTS_SUCCESS);
-								                    context.setData(ParamKeys.RSP_CDE, GDConstants.SUCCESS_CODE);
-								                    context.setData(ParamKeys.RSP_MSG, "交易成功");
-								                }else if(BPState.isBPStateReversalFail(context)){
-								                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
-								                	context.setData(GDParamKeys.MSGTYP, "E");
-								                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-								                	context.setData(ParamKeys.RSP_MSG, "交易失败");
-								                }else if(BPState.isBPStateOvertime(context)){
-								                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
-								                	context.setData(GDParamKeys.MSGTYP, "E");
-								                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-								                	context.setData(ParamKeys.RSP_MSG, "交易超时");
-								                }else if(BPState.isBPStateSystemError(context)){
-								                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
-								                	context.setData(GDParamKeys.MSGTYP, "E");
-								                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-								                	context.setData(ParamKeys.RSP_MSG, "系统错误");
-								                }else if(BPState.isBPStateTransFail(context)){
-								                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
-								                	context.setData(GDParamKeys.MSGTYP, "E");
-								                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-								                	context.setData(ParamKeys.RSP_MSG, "发送失败");
-								                }else{
-								                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
-								                	context.setData(GDParamKeys.MSGTYP, "E");
-								                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-								                	throw new CoreException(responseCode);
-								                }
+							                if (GDConstants.SUCCESS_CODE.equals(responseCode)) {
+							                    log.info("The third process response successful.");
+							                    context.setData(ParamKeys.TXN_STS, Constants.TXNSTS_SUCCESS);
+							                    context.setData(ParamKeys.THD_TXN_STS, Constants.THD_TXNSTS_SUCCESS);
+							                    context.setData(ParamKeys.RSP_CDE, GDConstants.SUCCESS_CODE);
+							                    context.setData(ParamKeys.RSP_MSG, "交易成功");									                
+							                }else if(BPState.isBPStateOvertime(context)){
+							                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
+							                	context.setData(GDParamKeys.MSGTYP, "E");
+							                	context.setData(ParamKeys.RSP_CDE, "EFE999");
+							                	context.setData(ParamKeys.RSP_MSG, "交易超时");
+							                	throw new CoreException("交易超时");
+							                }else{
+							                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
+							                	context.setData(GDParamKeys.MSGTYP, "E");
+							                	context.setData(ParamKeys.RSP_CDE, "EFE999");
+							                	context.setData(ParamKeys.RSP_MSG, "交易失败");
+							                	throw new CoreException(responseCode);
+							                }
 									}
 							}else{
 									log.info("~~~~~~~~~~~发送失败");
@@ -150,12 +137,6 @@ public class QryCusBaseMsgAction extends BaseAction{
 					                context.setData(ParamKeys.THD_RSP_MSG,Constants.RESPONSE_MSG_FAIL);
 					                throw new CoreException("发送失败");
 							}
-					}catch(CoreException e){
-						log.info("Bypass call THIRD response failed or unknow error.");
-						context.setData(ParamKeys.TXN_STS, Constants.TXNSTS_REVERSE);
-						context.setData(ParamKeys.THD_TXN_STS, Constants.TXNSTS_FAIL);
-						context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
-					}	
 					
 		}
 }
