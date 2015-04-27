@@ -1,10 +1,7 @@
 package com.bocom.bbip.gdeupsb.action.fbpe;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,11 +14,11 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.bocom.bbip.comp.BBIPPublicServiceImpl;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.entity.EupsBatchInfoDetail;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
@@ -30,14 +27,11 @@ import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
 import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
 import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
-import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.entity.GdFbpeFileBatchTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GdFbpeFileBatchTmpRepository;
 import com.bocom.bbip.utils.DateUtils;
-import com.bocom.bbip.utils.FileUtils;
-import com.bocom.jump.bp.SystemConfig;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -111,7 +105,7 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
             i=1;
         } else if (comNo.equals("4460002194")) {
         	 i=2;
-         	createGasFile(context, eupsBatchInfoDetailList, comNo);
+         	createGasFile(context, eupsBatchInfoDetailList, comNo,batNos);
          	return;
         }  else if (comNo.equals("4460000010")) {
         	 i=3;
@@ -196,8 +190,13 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 	        eupsThdFtpConfig.setRmtFleNme(fileName);
 	        operateFTP.putCheckFile(eupsThdFtpConfig);
     }
-    public void createGasFile(Context context,List<EupsBatchInfoDetail> eupsBatchInfoDetailList,String comNo){
+    public void createGasFile(Context context,List<EupsBatchInfoDetail> eupsBatchInfoDetailList,String comNo,String batNos){
     	String fileName = comNo+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";   	 
+    	EupsBatchConsoleInfo eupsBatchConsoleInfo=eupsBatchConsoleInfoRepository.findOne(batNos);
+    	String batNo=eupsBatchConsoleInfo.getRsvFld1();
+    	GDEupsBatchConsoleInfo gdEupsBatchConsoleInfos=gdEupsBatchConsoleInfoRepository.findOne(batNo);
+    	gdEupsBatchConsoleInfos.setRsvFld1(fileName);
+    	gdEupsBatchConsoleInfoRepository.updateConsoleInfo(gdEupsBatchConsoleInfos);
 		try {
 			File file=new File("/home/bbipadm/data/GDEUPSB/batch/"+fileName);
 			if(!file.exists()){
