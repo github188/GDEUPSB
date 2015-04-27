@@ -63,9 +63,10 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 		String tmpSqn = null;
 
 		String bk = "01445999999";
-		context.setData("extFields", "01445012999");
+		String br = "01445012999";
+		context.setData("extFields", br);
 		context.setData(ParamKeys.BK, bk);
-		context.setData("br", "01445012999");
+		context.setData("br", br);
 		String trl = bbipPublicService.getETeller(bk);
 		context.setData(ParamKeys.TELLER, trl);
 		
@@ -119,7 +120,7 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 			if (CollectionUtils.isEmpty(checkR)) {
 				tmp.setRsvFld12("1"); // 不存在本地协议信息
 				//直接用某字段表示批扣状态，失败
-				tmp.setRsvFld15("3");
+				tmp.setRsvFld15("3");//
 				tmp.setRsvFld16("不存在代扣协议");
 				
 			} else {
@@ -159,7 +160,6 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 		headAgt.put("totAmt", amtTot.toString());
 		headAgt.put("comNo", context.getData("comNo"));
 		
-		headAgt.put("totAmt", amtTot.toString());
 		// 更新总笔数，总金额等信息,备用字段2，3分别表示其真正的笔数，金额
 		GDEupsBatchConsoleInfo info = ContextUtils.getDataAsObject(context, GDEupsBatchConsoleInfo.class);
 		info.setRsvFld2(info.getTotAmt().toString());
@@ -175,13 +175,6 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 		// 查找本地存在协议的批量信息，拼凑成代收付文件detail
 		temp.put(ParamKeys.EUPS_FILE_DETAIL, agtFileDetail);
 		context.setVariable("agtFileMap", temp);
-		
-		/** 更新批次状态为待提交 */
-//		sendBatchFileToACP方法已内含该处理
-//		GDEupsBatchConsoleInfo console = new GDEupsBatchConsoleInfo();
-//		console.setBatNo((String) context.getData(ParamKeys.BAT_NO));
-//		console.setBatSts(GDConstants.BATCH_STATUS_WAIT);
-//		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(console);
 		
 		((BatchFileCommon) get(GDConstants.BATCH_FILE_COMMON_UTILS)).sendBatchFileToACP(context);
 
