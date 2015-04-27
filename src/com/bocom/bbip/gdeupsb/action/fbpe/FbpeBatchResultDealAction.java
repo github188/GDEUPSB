@@ -259,8 +259,6 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 					 			sts=errSeeason;
 					 			stsLength=errSeeason.length()+"";
 					 			errMsg=eupsBatchInfoDetail.getErrMsg().substring(6);
-//					 			sts="003";
-//					 			errMsg="帐号挂失";
 					 		}
 				 	}
 				 	byte[] byErrMsg=errMsg.getBytes("GBK");
