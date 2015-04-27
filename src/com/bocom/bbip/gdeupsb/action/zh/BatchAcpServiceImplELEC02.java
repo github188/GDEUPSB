@@ -38,6 +38,7 @@ import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.ContextUtils;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -64,6 +65,7 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 		String bk = "01445999999";
 		context.setData("extFields", "01445012999");
 		context.setData(ParamKeys.BK, bk);
+		context.setData("br", "01445012999");
 		String trl = bbipPublicService.getETeller(bk);
 		context.setData(ParamKeys.TELLER, trl);
 		
@@ -78,7 +80,8 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 //		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne("elec02BatchThdFile");
 		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne("elec02BatchThdFileTest");
 		Assert.isFalse(null == config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST, "FTP配置不存在");
-//TODO 在服务器测试解放下面代码
+		
+		//ftp到第三方服务器获取文件
 		String fileName = (String) context.getData("FilNam");
 		config.setLocFleNme(fileName);
 		config.setRmtFleNme(fileName);
@@ -201,6 +204,12 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 		
 		// 提交
 		bbipPublicService.synExecute("eups.batchPaySubmitDataProcess", context);
+		
+		String rspMsg=context.getData("rspMsg");
+		if(StringUtils.isEmpty(rspMsg)){
+			context.setData("rspMsg", "交易成功");
+		}
+		
 	}
 
 	/**
