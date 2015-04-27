@@ -220,7 +220,8 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 				 	while(cusAcLength.length()<3){
 				 		cusAcLength="0"+cusAcLength;
 				 	}
-				 	int length3=cusNme.length();
+				 	byte[] byCusNme=cusNme.getBytes("GBK");
+				 	int length3=byCusNme.length;
 				 	String cusNmeLength=length3+"";
 				 	while(cusNmeLength.length()<3){
 				 			cusNmeLength="0"+cusNmeLength;
@@ -236,27 +237,31 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 				 	
 				 	if(sts.equals("S")){
 				 			sts="101";
-				 			errMsg="扣款成功";
+				 			errMsg="扣收成功";
 				 	}else{
 					 		String errSeeason=errMsg.substring(0,6);
 					 		if(errSeeason.equals("PDM252")){
 					 				sts="006";
-					 				errMsg="账号不存在";
+					 				errMsg="帐号不存在";
 					 		}else if(errSeeason.equals("TPM055")){
 					 			sts="007";
-					 			errMsg="账号与开户名不对应";
+					 			errMsg="帐号和开户名不对应";
 					 		}else if(errSeeason.equals("TPM050")){
 					 			sts="002";
 					 			errMsg="余额不足";
 					 		}else if(errSeeason.equals("CB1004")){
 					 			sts="006";
-					 			errMsg="账号不存在";
+					 			errMsg="帐号不存在";
 					 		}else{
-					 			sts="003";
-					 			errMsg="账号挂失";
+					 			sts=errSeeason;
+					 			stsLength=errSeeason.length()+"";
+					 			errMsg=eupsBatchInfoDetail.getErrMsg().substring(6);
+//					 			sts="003";
+//					 			errMsg="帐号挂失";
 					 		}
 				 	}
-				 	String errMsgLength=errMsg.length()+"";
+				 	byte[] byErrMsg=errMsg.getBytes("GBK");
+				 	String errMsgLength=byErrMsg.length+"";
 				 	while(errMsgLength.length()<3){
 				 			errMsgLength="0"+errMsgLength;
 				 	}
