@@ -39,27 +39,31 @@ public class CancelBatchCheckAction extends BaseAction {
 		GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo = get(GDEupsBatchConsoleInfoRepository.class).findOne(batNo);
 		String fleNme=gdEupsBatchConsoleInfo.getRsvFld8();
 		EupsBatchConsoleInfo eupsBatchConsoleInfos=new EupsBatchConsoleInfo();
-		eupsBatchConsoleInfos.setFleNme(fleNme);
+		eupsBatchConsoleInfos.setRsvFld1(batNo);
 		//EUPS
 		EupsBatchConsoleInfo eupsBatchConsoleInfo=get(EupsBatchConsoleInfoRepository.class).find(eupsBatchConsoleInfos).get(0);
-
-		Assert.isNotNull(eupsBatchConsoleInfo, ErrorCodes.EUPS_BAT_CTL_INFO_NOT_EXIST);
-		logger.info("批次信息:"+BeanUtils.toFlatMap(eupsBatchConsoleInfo));
-		/**只有状态为I或W，才可以撤销批次*/
-		if(eupsBatchConsoleInfo.getBatSts().equals("I") || eupsBatchConsoleInfo.getBatSts().equals("W")){
-					eupsBatchConsoleInfo.setBatSts("C");
-					get(EupsBatchConsoleInfoRepository.class).update(eupsBatchConsoleInfo);
-					gdEupsBatchConsoleInfo.setBatSts("C");
-					get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(gdEupsBatchConsoleInfo);
-					context.setData("cancelReslt", "批次撤销完成");
-		}else if(eupsBatchConsoleInfo.getBatSts().equals("S")){
-					context.setData("cancelReslt", "批次已完成，不能撤销");
-					context.setData("QSFlg", "3");
-		}else if(gdEupsBatchConsoleInfo.getBatSts().equals("C")){
-					context.setData("cancelReslt", "批次已撤销，不能再次撤销");
-					context.setData("QSFlg", "4");
+		
+		if(eupsBatchConsoleInfo==null){
+				gdEupsBatchConsoleInfo.setBatSts("C");
+				get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(gdEupsBatchConsoleInfo);
+				context.setData("cancelReslt", "批次撤销完成");
 		}else{
-				throw new CoreException("批次batNo获取状态错误");
+				/**只有状态为I或W，才可以撤销批次*/
+				if(eupsBatchConsoleInfo.getBatSts().equals("I") || eupsBatchConsoleInfo.getBatSts().equals("W")){
+							eupsBatchConsoleInfo.setBatSts("C");
+							get(EupsBatchConsoleInfoRepository.class).update(eupsBatchConsoleInfo);
+							gdEupsBatchConsoleInfo.setBatSts("C");
+							get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(gdEupsBatchConsoleInfo);
+							context.setData("cancelReslt", "批次撤销完成");
+				}else if(eupsBatchConsoleInfo.getBatSts().equals("S")){
+							context.setData("cancelReslt", "批次已完成，不能撤销");
+							context.setData("QSFlg", "3");
+				}else if(gdEupsBatchConsoleInfo.getBatSts().equals("C")){
+							context.setData("cancelReslt", "批次已撤销，不能再次撤销");
+							context.setData("QSFlg", "4");
+				}else{
+						throw new CoreException("批次batNo获取状态错误");
+				}
 		}
 		
 //		context.setData("BatchConsoleInfo", gdEupsBatchConsoleInfo);
