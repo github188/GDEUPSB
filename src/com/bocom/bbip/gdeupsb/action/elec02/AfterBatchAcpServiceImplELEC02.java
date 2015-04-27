@@ -237,7 +237,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		String tlr= context.getData(ParamKeys.TELLER);
 		
 		//TODO:tlr截取后5位
-		context.setData("STO",tlr);
+		context.setData("STO",tlr.substring(2));
 		context.setData("HAN", sucCnt);
 		context.setData("HAM", sucAmt);
 		context.setData("LSN", failCnt);
