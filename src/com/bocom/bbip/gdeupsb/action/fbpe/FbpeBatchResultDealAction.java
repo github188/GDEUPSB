@@ -258,6 +258,9 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 					 		}else{
 					 			sts=errSeeason;
 					 			stsLength=errSeeason.length()+"";
+					 			while(stsLength.length()<3){
+					 					stsLength="0"+stsLength;
+					 			}
 					 			errMsg=eupsBatchInfoDetail.getErrMsg().substring(6);
 					 		}
 				 	}
