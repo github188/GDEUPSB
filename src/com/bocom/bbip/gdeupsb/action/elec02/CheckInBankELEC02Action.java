@@ -62,7 +62,7 @@ public class CheckInBankELEC02Action extends BaseAction {
 		retMap.put("header", header);
 		retMap.put("detail", ret);
 		((OperateFileAction)get("opeFile")).
-		createCheckFile(config, "ELEC02Check", "wuy.txt", retMap);
+		createCheckFile(config, "ELEC02Check", "wuy.txt", retMap);//TODO
 		((OperateFTPAction)get("opeFTP")).putCheckFile(config);
 	}
 	private List<Map<String,String>>getData(Context context)throws CoreException {
