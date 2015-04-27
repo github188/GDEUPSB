@@ -8,6 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.comp.BBIPPublicService;
+import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
+import com.bocom.bbip.eups.common.BPState;
+import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.spi.service.single.PayUnilateralToBankService;
 import com.bocom.bbip.eups.spi.vo.CommHeadDomain;
@@ -16,7 +19,6 @@ import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdGasCusAll;
 import com.bocom.bbip.gdeupsb.repository.GdGasCusAllRepository;
-
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -31,6 +33,9 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 		PayUnilateralToBankService {
 	private Logger logger = LoggerFactory
 			.getLogger(PayUnilateralToBankServiceImplPGAS00.class);
+	
+	@Autowired
+	ThirdPartyAdaptor callThdTradeManager;
 
 	@Autowired
 	GdGasCusAllRepository gdGasCusAllRepository;
@@ -46,20 +51,13 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 		logger.info("PayUnilateralToBankServiceImplPGAS00@prepareCheckDeal start!");
 		logger.info("======context:" + context);
 
-		String bk = "01441999999";
+		String bk = "01491999999";
 		String br = "01491800999";
-		//TODO  get tlr
-		context.setData(ParamKeys.BR, br);//机构号 "01441131999"
+		context.setData(ParamKeys.BR, br);
 		context.setData(ParamKeys.BK, bk);//分行号01491999999
 		String trl = bbipPublicService.getETeller(bk);
 		context.setData(ParamKeys.TELLER, trl);
-		context.setData("extFields", "01491800999");
-
-		
-//		context.setData(ParamKeys.TELLER, "ABIR148");
-//		context.setData(ParamKeys.BR, "01441131999");
-//		context.setData(ParamKeys.BK, "01441999999");
-
+		context.setData("extFields", br);
 		
 		logger.info("=====context after set tlr :" + context);
 		
@@ -219,6 +217,18 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 			}
 		} 
 		context.setData(ParamKeys.RSV_FLD5, "cnjt");
+		
+		//callThd
+		Map<String, Object> thdResult = callThdTradeManager.trade(context);
+		context.setDataMap(thdResult);
+		if (BPState.isBPStateOvertime(context)) {
+			context.setData(ParamKeys.THD_TXN_STS, "T");
+//			throw new CoreException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
+		}
+		context.setData(ParamKeys.THD_TXN_STS, "S");
+		
+		context.setData("TransCode", "QryUser");
+		
 		return null;
 	}
 }
