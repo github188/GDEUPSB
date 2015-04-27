@@ -1,0 +1,35 @@
+<message xmlns="http://www.bocom.com/jump/transformer/xml"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/xml xml.xsd"
+	name="root" trace="true" encoding="UTF-8">
+	<record name="soapenv:Body"><!-- 公共 -->
+		<record name="acctInfoChange"><!-- 公共 -->
+			<record name="acctInfoChangeREQ"><!-- 公共 -->
+				<record name="GD_BSS_HEAD"> 
+					<string name="CHANNEL_ID" alias="CHANNEL_ID" />  
+					<string name="EPARCHY_CODE" alias="EPARCHY_CODE" />  		
+					<string name="MSG_RECEIVER" alias="MSG_RECEIVER" />  		
+					<string name="MSG_SENDER" alias="MSG_SENDER" />  		
+					<string name="OPERATE_NAME" alias="OPERATE_NAME" />  		
+					<string name="OPER_ID" alias="OPER_ID" />  		
+					<string name="PROCESS_TIME" alias="PROCESS_TIME" />  		
+					<string name="RSP_CODE" alias="RSP_CODE" />  		
+					<string name="RSP_DESC" alias="RSP_DESC" />  		
+					<string name="SERVICE_NAME" alias="SERVICE_NAME" />  		
+					<string name="TEST_FLAG" alias="TEST_FLAG" />  		
+					<string name="TRANS_IDO" alias="TRANS_IDO" />  
+				  </record>	
+					<string name="SERIAL_NUMBER" alias="SERIAL_NUMBER" />  		
+					<string name="ACCT_TYPE" alias="ACCT_TYPE" />  
+					<string name="PAY_TYPE" alias="PAY_TYPE" />  
+					<string name="SUPER_BANK_CODE" alias="SUPER_BANK_CODE" />  
+					<string name="BANK_CODE" alias="BANK_CODE" />  
+					<string name="CONSIGN_NO" alias="CONSIGN_NO" />  
+					<string name="CONSIGN_NAME" alias="CONSIGN_NAME" /> 
+					<string name="SERVICE_CALSS_CODE" alias="SERVICE_CALSS_CODE" />   
+		</record>
+	  </record>
+	</record>
+</message>
+
+

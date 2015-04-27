@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	encoding="UTF-8" trace="true"
+	filter="both,classpath:config/stream/GDUNCB/translateDict.txt">
+
+	<segment name="head">
+		<fixString name="TransCode" length="14" mapping="true"
+			referred="true" />
+	</segment>
+
+	<segment name="body">
+		<xml name="xml" type="X" format="none">
+			<include name="N" elementFactory="xml://WEB-INF/classes/config/stream/GDUNCB/"
+				keys="TransCode" encodePrefix="gduncb_out_" decodePrefix="gduncb_in_" />
+		</xml>
+	</segment>
+</message>
