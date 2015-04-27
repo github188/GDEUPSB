@@ -73,11 +73,11 @@ public class GdmobbAgtValidCheckImlAction implements AgtValidCheckService {
 		if (CollectionUtils.isEmpty(agtList)) {
 			log.info("未发现协议信息！开始解锁交易并退出..");
 			// 交易解锁
-			Result ret1 = bBIPPublicService.unlock(gdsBId);
-			int status1 = ret1.getStatus();
-			if (status1 != 0) {
-				throw new CoreException(GDErrorCodes.EUPS_UNLOCK_FAIL, "交易解锁失败!!!");
-			}
+//			Result ret1 = bBIPPublicService.unlock(gdsBId);
+//			int status1 = ret1.getStatus();
+//			if (status1 != 0) {
+//				throw new CoreException(GDErrorCodes.EUPS_UNLOCK_FAIL, "交易解锁失败!!!");
+//			}
 			throw new CoreException(GDErrorCodes.EUPS_SIGN_NO_RECORD_FOUND);
 		}
 		for (Map<String, Object> agtDeatil : agtList) {
