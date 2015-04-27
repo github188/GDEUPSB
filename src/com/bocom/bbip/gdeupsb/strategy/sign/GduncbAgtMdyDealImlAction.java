@@ -103,7 +103,7 @@ public class GduncbAgtMdyDealImlAction implements AgtMdyDealImlService {
 
 			context.setData(GDParamKeys.SIGN_STATION_OEXTFLG, GDConstants.SIGN_STATION_OEXTFLG_Y);
 
-		} else if (GDConstants.SIGN_STATION_AGT_FUNC_UPDATE.equals(func)||GDConstants.SIGN_STATION_AGT_FUNC_INSERT.equals(func)) {
+		} else if (GDConstants.SIGN_STATION_AGT_FUNC_UPDATE.equals(func) || GDConstants.SIGN_STATION_AGT_FUNC_INSERT.equals(func)) {
 			log.info("start update agent info!");
 
 			// 查询协议主表判断是否已存在协议信息
@@ -202,20 +202,20 @@ public class GduncbAgtMdyDealImlAction implements AgtMdyDealImlService {
 		inparaSub.put("actNo", actNo); // 帐号
 
 		// 协议子表处理 全部设计为无效 有无数据继续运行
-		try{
-		gdsAgtWaterRepository.updateOldAgtInfCnl(inparaSub);
-		}catch(Exception CoreException){
-			
+		try {
+			gdsAgtWaterRepository.updateOldAgtInfCnl(inparaSub);
+		} catch (Exception CoreException) {
+
 		}
 		List<Map<String, Object>> signDetailList = context.getData("prvDatReq");
 
 		// 卡号限制判断
 		String actTyp = context.getData("actTyp"); // 账户性质
 		String chn = context.getData("chn");
-		if(!"00".equals(chn)){
+		if (!"00".equals(chn)) {
 			cardBinVerify(context, actTyp, actNo);
 		}
-		
+
 		for (int i = 0; i < signDetailList.size(); i++) {
 
 			Map<String, Object> detailMap = signDetailList.get(i);
@@ -239,12 +239,12 @@ public class GduncbAgtMdyDealImlAction implements AgtMdyDealImlService {
 
 			// 获取原协议子表信息
 			List<Map<String, Object>> oldAgtList = gdsAgtWaterRepository.findOldAgtInf(oldAgtInMap);
-			
+
 			detailMap.put("BnkTyp", context.getData("bnkTyp"));
 			detailMap.put("BnkNo", context.getData("bnkNo"));
-			detailMap.put("OrgCod",(String) detailMap.get("ORGCOD"));
-			detailMap.put("TCusId",(String) detailMap.get("TCUSID"));
-			detailMap.put("TCusNm",(String) detailMap.get("TCUSNM"));
+			detailMap.put("OrgCod", (String) detailMap.get("ORGCOD"));
+			detailMap.put("TCusId", (String) detailMap.get("TCUSID"));
+			detailMap.put("TCusNm", (String) detailMap.get("TCUSNM"));
 			detailMap.put("EffDat", (String) detailMap.get("EFFDAT"));
 			detailMap.put("SUBSTS", detailMap.get("SUBSTS"));
 			detailMap.put("txnCnl", context.getData(GDParamKeys.SIGN_STATION_TXN_CNL));
