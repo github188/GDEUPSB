@@ -17,6 +17,7 @@ import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.eups.spi.service.single.CancelUnilateralToBankService;
 import com.bocom.bbip.eups.spi.vo.CancelDomain;
 import com.bocom.bbip.eups.spi.vo.CommHeadDomain;
+import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.repository.GdGasCusAllRepository;
 import com.bocom.bbip.utils.CollectionUtils;
@@ -66,8 +67,8 @@ public class CnlPayUnilateralToBankServicePGAS00 implements
 			CancelDomain canceldomain, Context context) throws CoreException {
 		logger.info("CnlPayUnilateralToBankServicePGAS00@preCclToBank start!");
 		logger.info("======context:" + context);
-		context.setData("TransCode", "NoPay");//预置冲正失败
-		
+		context.setData("TransCode", "NoPay");// 预置冲正失败
+
 		String bk = "01491999999";
 		String br = "01491800999";
 		context.setData(ParamKeys.BR, br);
@@ -75,32 +76,38 @@ public class CnlPayUnilateralToBankServicePGAS00 implements
 		String trl = bbipPublicService.getETeller(bk);
 		context.setData(ParamKeys.TELLER, trl);
 		context.setData("extFields", br);
-		
+
 		context.setData(GDParamKeys.GAS_APL_CLS, "207");
 		context.setData(ParamKeys.BUS_TYP, GDParamKeys.EUPS_BUS_TYP_GAS);
 		context.setData(GDParamKeys.GAS_RESULT, "NoPay");// 默认冲正未成功
 		BigDecimal txnAmt1 = new BigDecimal(0.0);
 		context.setData(ParamKeys.BAK_FLD4, String.valueOf(txnAmt1));
 
+		String thdSqn = context.getData(ParamKeys.THD_SQN).toString();
+
+		// TODO 同一条流水多次抹帐？必须杜绝
+		EupsTransJournal jnlIsCnl = new EupsTransJournal();
+		jnlIsCnl.setSvrNme("eups.cancelUnilateralToBank");
+		jnlIsCnl.setThdSqn(thdSqn);
+		List<EupsTransJournal> jnlIsCnlList = eupsTransJournalRepository
+				.find(jnlIsCnl);
+		if (CollectionUtils.isNotEmpty(jnlIsCnlList)) {
+			throw new CoreException(GDErrorCodes.GAS_JNL_IS_CNL);
+		}
+
 		/*
 		 * 根据第三方发送过来的燃气托收流水（冲正流水）查找eups流水表，得原交易流水号并将其设置为旧流水号
 		 */
 		EupsTransJournal qryJnl = new EupsTransJournal();
-		qryJnl.setThdSqn(context.getData(ParamKeys.THD_SQN).toString());
+		qryJnl.setThdSqn(thdSqn);
 		List<EupsTransJournal> upPayJnlList = eupsTransJournalRepository
 				.find(qryJnl);
 		if (CollectionUtils.isEmpty(upPayJnlList)) {
-			context.setData("TransCode", "NoPay");
 			throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
 		}
 
-		// TODO 验证对应的sqn是否已抹帐
-
-		// context.setData(ParamKeys.BUS_TYP, upPayJnlList.get(0).getRapTyp());
-		// //TODO
-		// logger.info("===============upPayJnlList.size()=" +
-		// upPayJnlList.size());
 		logger.info("===============sqn=" + upPayJnlList.get(0).getSqn());
+		context.setData(ParamKeys.RAP_TYPE, upPayJnlList.get(0).getRapTyp());
 		context.setData(ParamKeys.OLD_TXN_SQN, upPayJnlList.get(0).getSqn());
 		logger.info("===============context=" + context);
 		logger.info("CnlPayUnilateralToBankServicePGAS00@preCclToBank end!");

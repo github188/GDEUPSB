@@ -543,7 +543,7 @@ public final class GDErrorCodes {
 	/** 汕头电力未知错误 */
 	public static final String EUPS_ELE_ST_UNKNOWN_ERROR = "BBIP4400EU0300";
 	/** 该笔流水已冲正 */
-	public static final String EUPS_JNL_IS_CNL = "BBIP4400EU0631";
+	public static final String GAS_JNL_IS_CNL = "BBIP4400EU0631";
 
 }
 
