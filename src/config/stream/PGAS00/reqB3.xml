@@ -26,7 +26,7 @@ B0        ,20150114cnjt000002,15011400002830    ,000000081952,201412,19.4      ,
 	  <fixString name="thdSqn" length="18"  />
 	  <fixString  name="Deli9" length="1" default=","/>
 	  
-	  <fixString name="sqn" length="18"  expression='exp:str.substring(this.sqn,2,20)' />
+	  <fixString name="sqn" length="18"  expression='exp:str.substring(this.sqn,2)' />
 	  <fixString  name="Deli10" length="1" default=","/>
 	  
 	  <fixString name="thdCusNo" length="12"   />
