@@ -16,6 +16,7 @@ import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
+import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
@@ -189,10 +190,8 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		String backFlieName = config.getLocFleNme();
 		backFlieName = backFlieName.subSequence(0, 10) + "fh";
 		
-		//TODO:文件名错误
-//		05
-		
-		String fliTme = DateUtils.format(new Date(), "yyyyMMdd");
+		//TODO 文件名举例： 0011900ptfh20080808_173030.txt
+		String fliTme = DateUtils.format(new Date(), "yyyyMMdd_HHmmss");
 		String fileName = backFlieName + fliTme + ".txt";
 		config.setLocFleNme(fileName);
 		config.setRmtFleNme(fileName);
@@ -236,7 +235,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		
 		String tlr= context.getData(ParamKeys.TELLER);
 		
-		//TODO:tlr截取后5位
+		//tlr截取后5位
 		context.setData("STO",tlr.substring(2));
 		context.setData("HAN", sucCnt);
 		context.setData("HAM", sucAmt);
@@ -244,8 +243,10 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		context.setData("LSM", failAmt);
 
 		Map<String, Object> thdResult = callThdTradeManager.trade(context);
+		if (BPState.isBPStateOvertime(context)) {
+			throw new CoreException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
+		}
+		context.setDataMap(thdResult);
 		logger.info("电力返盘文件处理结束");
 	}
-	
-
 }
