@@ -85,7 +85,7 @@ public class CnlPayUnilateralToBankServicePGAS00 implements
 
 		String thdSqn = context.getData(ParamKeys.THD_SQN).toString();
 
-		// TODO 同一条流水多次抹帐？必须杜绝
+		// 同一条流水多次抹帐？必须杜绝
 		EupsTransJournal jnlIsCnl = new EupsTransJournal();
 		jnlIsCnl.setSvrNme("eups.cancelUnilateralToBank");
 		jnlIsCnl.setThdSqn(thdSqn);
@@ -112,6 +112,9 @@ public class CnlPayUnilateralToBankServicePGAS00 implements
 		logger.info("===============context=" + context);
 		logger.info("CnlPayUnilateralToBankServicePGAS00@preCclToBank end!");
 
+		
+		//TODO 20150427 RAP_TYPE 会变成PGAS00，然后sql -302 
+		
 		return null;
 	}
 }
