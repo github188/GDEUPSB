@@ -246,5 +246,6 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		Map<String, Object> thdResult = callThdTradeManager.trade(context);
 		logger.info("电力返盘文件处理结束");
 	}
+	
 
 }
