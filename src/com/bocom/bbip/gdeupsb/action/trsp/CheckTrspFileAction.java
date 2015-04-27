@@ -101,7 +101,7 @@ public class CheckTrspFileAction extends BaseAction {
 		BigDecimal sucTotAmt = new BigDecimal("0.00");
 		// 错误信息
 		String chkErr = "";
-		// TODO 文件名
+		
 		String fileName = context.getData("fileName").toString();
 		List<TrspCheckTmp> list = trspCheckTmpRepository.findByTChkNo(tChkNo);
 		int chkFlg = -1;
@@ -180,7 +180,7 @@ public class CheckTrspFileAction extends BaseAction {
 					gdEupsbTrspFeeInfoNew.setStatus("发票作废");
 				}
 					
-				// TODO
+				
 				if (1 != chkFlg) {
 					numErr = numErr + 1;
 					AmtErr = AmtErr.add(trspCheckTmp.getTxnAmt());
@@ -241,7 +241,7 @@ public class CheckTrspFileAction extends BaseAction {
 		// 判断是否全部对账
 
 		List<TrspCheckTmp> trspCheckTmpList = trspCheckTmpRepository.findNotCheck(tChkNo);
-		//TODO 
+		
 		if (CollectionUtils.isEmpty(trspCheckTmpList)) {
 			context.setData(ParamKeys.RSP_CDE, "329999");
 			context.setData(ParamKeys.RSP_MSG, "系统错误");
@@ -450,7 +450,7 @@ public class CheckTrspFileAction extends BaseAction {
 		}
 		String path = "config/report/zhTransport/" + rptFmt + ".vm";
 		context.setData(rptFmt, path);
-		// TODO 报表生成
+		
 		VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
 		try {
 			render.afterPropertiesSet();
@@ -505,11 +505,6 @@ public class CheckTrspFileAction extends BaseAction {
 			e.printStackTrace();
 		}
 
-		// TODO 没有确定下名字rptFil 还是 fileName
-		// String fileName=context.getData("fileName").toString();
-		System.out
-				.println("~~~~~~~~~~~~~sendFile~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		// sendFile(context,rptFmt);
 		
 		FTPTransfer tFTPTransfer = new FTPTransfer();
 		 // TODO FTP上传设置
