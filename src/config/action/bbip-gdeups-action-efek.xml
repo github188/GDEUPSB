@@ -23,9 +23,10 @@
 	<!--  交费记录查询-->
 	<action   class="com.bocom.bbip.gdeupsb.action.efek.QryCusPayRecordAction"
 		id="gdeupsb.qryCusPayRecordAction" />
-	<!--  供电方发起供电到银行变更代扣协议请求-->
+	<!--  供电方发起供电到银行变更代扣协议请求
 	<action   class="com.bocom.bbip.gdeupsb.action.efek.PowerChangeTreatyAction"
 		id="gesupsb.powerChangeTreatyAction" />	
+		-->
 	<!--  代收付日志服务记录-->
 	<action   class="com.bocom.bbip.gdeupsb.action.efek.LogServiceAction"
 		id="gdeupsb.logServiceAction" />	
@@ -50,9 +51,6 @@
 		<!--  异步调用 对明细-->
 	<action   class="com.bocom.bbip.gdeupsb.strategy.efek.checkThdAcct.GdcheckThdDetlAcctAction"
 		id="gdeupsb.checkThdDetlAcctAction" />
-	<!--  异步调用 批量返回  临时-->
-	<action   class="com.bocom.bbip.gdeupsb.action.efek.FileResultAction"
-		id="gdeupsb.fileResultAction" />					
 	<!--  嵌套 查询单位编号-->
 	<action   class="com.bocom.bbip.gdeupsb.action.efek.QryComNoByAreaAction"
 		id="gdeupsb.qryComNoByAreaAction" />		
