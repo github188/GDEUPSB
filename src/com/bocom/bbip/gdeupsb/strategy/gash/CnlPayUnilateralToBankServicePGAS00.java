@@ -47,18 +47,24 @@ public class CnlPayUnilateralToBankServicePGAS00 implements
 	@Override
 	public Map<String, Object> aftCclToBank(CommHeadDomain commheaddomain,
 			CancelDomain canceldomain, Context context) throws CoreException {
-		logger.info("CnlPayUnilateralToBankServicePGAS00@aftPayToBank started....");
+		logger.info("CnlPayUnilateralToBankServicePGAS00@aftPayToBank started with context : "
+				+ context);
 
-		// TODO 区分冲正结果，确定返回燃气的result字段
-		if (context.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL)) { // 冲正成功
+		String ctxState = context.getState();
+		logger.info("============ctxState:" + ctxState);
+		// 区分冲正结果
+		if (BPState.BUSINESS_PROCESSNIG_STATE_SUCCESS.equals(ctxState) || BPState.BUSINESS_PROCESSNIG_STATE_NORMAL.equals(ctxState)) { // 冲正成功
 			context.setData("TransCode", "UPay");
+			context.setData(ParamKeys.THD_TXN_STS, "R");
 			context.setData(ParamKeys.BAK_FLD5, "冲正成功");
 		} else {
 			context.setData("TransCode", "NoPay");
+			context.setData(ParamKeys.THD_TXN_STS, "F");
 			context.setData(ParamKeys.BAK_FLD5, "冲正失败");
 		}
 
-		logger.info("CnlPayUnilateralToBankServicePGAS00@aftPayToBank end....");
+		logger.info("CnlPayUnilateralToBankServicePGAS00@aftPayToBank with context : "
+				+ context);
 		return null;
 	}
 
@@ -73,27 +79,26 @@ public class CnlPayUnilateralToBankServicePGAS00 implements
 		String br = "01491800999";
 		context.setData(ParamKeys.BR, br);
 		context.setData(ParamKeys.BK, bk);// 分行号01491999999
-		String trl = bbipPublicService.getETeller(bk);
-		context.setData(ParamKeys.TELLER, trl);
+		String tlr = bbipPublicService.getETeller(bk);
+		context.setData(ParamKeys.TELLER, tlr);
 		context.setData("extFields", br);
-
+		
 		context.setData(GDParamKeys.GAS_APL_CLS, "207");
-		context.setData(ParamKeys.BUS_TYP, GDParamKeys.EUPS_BUS_TYP_GAS);
-		context.setData(GDParamKeys.GAS_RESULT, "NoPay");// 默认冲正未成功
+
 		BigDecimal txnAmt1 = new BigDecimal(0.0);
 		context.setData(ParamKeys.BAK_FLD4, String.valueOf(txnAmt1));
 
 		String thdSqn = context.getData(ParamKeys.THD_SQN).toString();
 
 		// 同一条流水多次抹帐？必须杜绝
-		EupsTransJournal jnlIsCnl = new EupsTransJournal();
-		jnlIsCnl.setSvrNme("eups.cancelUnilateralToBank");
-		jnlIsCnl.setThdSqn(thdSqn);
-		List<EupsTransJournal> jnlIsCnlList = eupsTransJournalRepository
-				.find(jnlIsCnl);
-		if (CollectionUtils.isNotEmpty(jnlIsCnlList)) {
-			throw new CoreException(GDErrorCodes.GAS_JNL_IS_CNL);
-		}
+		// EupsTransJournal jnlIsCnl = new EupsTransJournal();
+		// jnlIsCnl.setSvrNme("eups.cancelUnilateralToBank");
+		// jnlIsCnl.setThdSqn(thdSqn);
+		// List<EupsTransJournal> jnlIsCnlList = eupsTransJournalRepository
+		// .find(jnlIsCnl);
+		// if (CollectionUtils.isNotEmpty(jnlIsCnlList)) {
+		// throw new CoreException(GDErrorCodes.GAS_JNL_IS_CNL);
+		// }
 
 		/*
 		 * 根据第三方发送过来的燃气托收流水（冲正流水）查找eups流水表，得原交易流水号并将其设置为旧流水号
@@ -105,16 +110,16 @@ public class CnlPayUnilateralToBankServicePGAS00 implements
 		if (CollectionUtils.isEmpty(upPayJnlList)) {
 			throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
 		}
+		System.out.println("upPayJnlList.get(0).getRapTyp() "
+				+ upPayJnlList.get(0).getRapTyp());
+		context.setData(ParamKeys.RAP_TYPE, upPayJnlList.get(0).getRapTyp());
+		System.out.println("RAP_TYP:" + context.getData(ParamKeys.RAP_TYPE));
 
 		logger.info("===============sqn=" + upPayJnlList.get(0).getSqn());
-		context.setData(ParamKeys.RAP_TYPE, upPayJnlList.get(0).getRapTyp());
 		context.setData(ParamKeys.OLD_TXN_SQN, upPayJnlList.get(0).getSqn());
 		logger.info("===============context=" + context);
 		logger.info("CnlPayUnilateralToBankServicePGAS00@preCclToBank end!");
 
-		
-		//TODO 20150427 RAP_TYPE 会变成PGAS00，然后sql -302 
-		
 		return null;
 	}
 }
