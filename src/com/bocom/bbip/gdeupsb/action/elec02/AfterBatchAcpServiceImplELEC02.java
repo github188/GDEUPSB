@@ -105,7 +105,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 
 		String tmpSqn = null;
 		String sts = null;
-		String errMsg = null;
+		String errCde = null;
 		for (EupsBatchInfoDetail dtl : result) {
 			log.info("");
 			tmpSqn = dtl.getRmk1();
@@ -116,12 +116,9 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 			logger.info(".....................after findBySqn!!!");
 			elec02batchTmp = findOneInfo.get(0);
 			sts = dtl.getSts();
-			errMsg = dtl.getErrMsg();
-
+			
 			elec02batchTmp.setRsvFld17(DateUtils.format(new Date(),
 					"yyyyMMddHHmmss"));
-			elec02batchTmp.setRsvFld15(sts);// TODO
-			elec02batchTmp.setRsvFld16(errMsg);
 
 			/**
 			 * TODO if("S".equals(sts)){ elec02batchTmp.setRsvFld15("1"); }else{
@@ -137,10 +134,14 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 				elec02batchTmp.setRsvFld15("1");
 			}
 			if ("F".equals(sts)) {
-				String errCde = dtl.getErrMsg().toString().substring(0, 6);
+				errCde = dtl.getErrMsg().toString().substring(0, 6);
 				if ("TPM050".equals(errCde)) {
 					elec02batchTmp.setRsvFld15("2");
 				}
+//TODO			if(){
+//					
+//				}
+				elec02batchTmp.setRsvFld16(dtl.getErrMsg());
 			}
 
 			gdEupsbElecstBatchTmpRepository.update(elec02batchTmp);
@@ -175,9 +176,9 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(
 				batchConsoleInfo);
 
-		batchConsoleInfo.setRsvFld8("1");
-		batchConsoleInfo.setRsvFld2("0000");
-		batchConsoleInfo.setRsvFld3("交易成功");
+		batchConsoleInfo.setRsvFld8("1");//收付标志,固定为收1
+		batchConsoleInfo.setRsvFld2("0000");//retCode
+		batchConsoleInfo.setRsvFld3("交易成功");//retMsg
 
 		ret.put("header", batchConsoleInfo);
 		ret.put("detail", tempList);
