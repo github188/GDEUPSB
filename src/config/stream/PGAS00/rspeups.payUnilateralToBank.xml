@@ -20,7 +20,7 @@
 	<fixString name="thdSqn" length="18"    />
 	<fixString  name="Deli3" length="1" default=","/>
 	
-	<fixString name="bk" length="4"   />
+	<fixString name="rsvFld5" length="4"   />
 	<fixString  name="Deli4" length="1" default=","/>
 	
 	<fixString name="thdCusNo" length="12"   /> 
