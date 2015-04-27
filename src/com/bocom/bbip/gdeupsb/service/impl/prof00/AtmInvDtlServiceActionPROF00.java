@@ -1,5 +1,10 @@
 package com.bocom.bbip.gdeupsb.service.impl.prof00;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -7,12 +12,18 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bocom.bbip.comp.BBIPPublicServiceImpl;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.eupsreport.ReportHelper;
+import com.bocom.bbip.eups.common.ErrorCodes;
+import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.MFTPConfigInfo;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
+import com.bocom.bbip.gdeupsb.common.GDConstants;
+import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.thd.org.apache.commons.collections.CollectionUtils;
 import com.bocom.bbip.thd.org.apache.commons.lang.math.NumberUtils;
 import com.bocom.bbip.thd.org.apache.velocity.util.StringUtils;
@@ -31,6 +42,9 @@ import com.bocom.jump.bp.service.sqlmap.impl.SqlMapImpl;
 public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 	
 	private static Logger logger = LoggerFactory.getLogger(AtmInvDtlServiceActionPROF00.class);
+	
+	@Autowired
+	BBIPPublicServiceImpl bbipPublicService;
 	
 	@Override
 	public void execute(Context context) throws CoreException,	CoreRuntimeException {
@@ -87,20 +101,71 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 			context.setData("slodNum", sum==null?"0":sum.get("LOD_NUM"));
 			context.setData("suseNum", sum==null?"0":sum.get("USE_NUM"));
 			context.setData("sclrNum", sum==null?"0":sum.get("CLR_NUM"));
+//			------------------------------------------------------------------
+//			VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
+//			try {
+//				render.afterPropertiesSet();
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//			Map<String,String> map = new HashMap<String,String>();
+//			map.put("sample", "config/report/prof00/prof00_printInvDtl.vm");
+//			render.setReportNameTemplateLocationMapping(map);
+//			String result = render.renderAsString("sample", context);
+//			logger.info(result);
+//			String date = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
+//			StringBuffer fileName = new StringBuffer((new StringBuilder("").append(date).toString()));
+//			reportHelper.createFileAndSendMFTP(context, result, fileName, mftpConfigInfo);
+//			------------------------------------------------------------------------
 			VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
+			String sampleFile="config/report/prof00/prof00_printInvDtl.vm";
+			
+			Map<String,String> mapping = new HashMap<String,String>();
+	
+			mapping.put("sample", sampleFile);
 			try {
 				render.afterPropertiesSet();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			Map<String,String> map = new HashMap<String,String>();
-			map.put("sample", "config/report/prof00/prof00_printInvDtl.vm");
-			render.setReportNameTemplateLocationMapping(map);
+	
+			
+			
+			render.setReportNameTemplateLocationMapping(mapping);
 			String result = render.renderAsString("sample", context);
-			logger.info(result);
+			try {
+				log.info("generate report content:****"+new String(result.getBytes(GDConstants.CHARSET_ENCODING_GBK)));
+			} catch (UnsupportedEncodingException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			String date = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
 			StringBuffer fileName = new StringBuffer((new StringBuilder("").append(date).toString()));
-			reportHelper.createFileAndSendMFTP(context, result, fileName, mftpConfigInfo);
+			BufferedOutputStream outStream = null;
+			try {
+	
+				outStream = new BufferedOutputStream(new FileOutputStream(
+						"/home/bbipadm/data/mftp/BBIP/GDEUPSB/prof/"+fileName));
+				outStream.write(result.getBytes(GDConstants.CHARSET_ENCODING_GBK));
+				outStream.close();
+			} catch (IOException e) {
+				throw new CoreException("BBIP0004EU0128");
+			}
+			
+			String path = "/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/";
+			
+			String FilNam = "/home/bbipadm/data/mftp/" +fileName;
+			try {
+				
+				log.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+				log.info("FilNam=" + FilNam);
+				log.info("path + filname=" + path + fileName);
+				bbipPublicService.sendFileToBBOS(new File(FilNam), path + fileName, "p");
+				
+			}catch (Exception e) {
+				throw new CoreException(ErrorCodes.EUPS_FAIL);
+			}
+	         
 		}else{//查询
 			List<Map<String,Object>> list = ((SqlMap)get("sqlMap")).queryForList("prof00.atmInvDtl", context.getDataMap());
 			if(CollectionUtils.isEmpty(list)){
