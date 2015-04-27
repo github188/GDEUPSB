@@ -1,5 +1,7 @@
 package com.bocom.bbip.gdeupsb.action.common;
 
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -16,6 +18,7 @@ import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.service.Result;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
+import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.ContextUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -37,18 +40,17 @@ public class CancelBatchCheckAction extends BaseAction {
 //		Result result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).tryLock(batNo, 60*1000L, 60*1000L);
 		//GDEUPSB
 		GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo = get(GDEupsBatchConsoleInfoRepository.class).findOne(batNo);
-		String fleNme=gdEupsBatchConsoleInfo.getRsvFld8();
 		EupsBatchConsoleInfo eupsBatchConsoleInfos=new EupsBatchConsoleInfo();
 		eupsBatchConsoleInfos.setRsvFld1(batNo);
 		//EUPS
-		EupsBatchConsoleInfo eupsBatchConsoleInfo=get(EupsBatchConsoleInfoRepository.class).find(eupsBatchConsoleInfos).get(0);
-		
-		if(eupsBatchConsoleInfo==null){
+		List<EupsBatchConsoleInfo> list=get(EupsBatchConsoleInfoRepository.class).find(eupsBatchConsoleInfos);
+		if(CollectionUtils.isEmpty(list)){
 				gdEupsBatchConsoleInfo.setBatSts("C");
 				get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(gdEupsBatchConsoleInfo);
 				context.setData("cancelReslt", "批次撤销完成");
 		}else{
 				/**只有状态为I或W，才可以撤销批次*/
+				EupsBatchConsoleInfo eupsBatchConsoleInfo=list.get(0);
 				if(eupsBatchConsoleInfo.getBatSts().equals("I") || eupsBatchConsoleInfo.getBatSts().equals("W")){
 							eupsBatchConsoleInfo.setBatSts("C");
 							get(EupsBatchConsoleInfoRepository.class).update(eupsBatchConsoleInfo);
