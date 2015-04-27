@@ -57,6 +57,9 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 	@SuppressWarnings("unchecked")
 	@Override
 	public void prepareBatchDeal(PrepareBatchAcpDomain domain, Context context) throws CoreException {
+	
+		String fileNme = (String)context.getData("FilNam");
+		context.setData(ParamKeys.FLE_NME, fileNme);
 		final String comNo = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.COMPANY_NO, ErrorCodes.EUPS_FIELD_EMPTY);
 		Date tmpDate = new Date();
 		String eleTmpSqn = "301" + DateUtils.format(tmpDate, "yyMMdd");
@@ -67,8 +70,10 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 		context.setData("extFields", br);
 		context.setData(ParamKeys.BK, bk);
 		context.setData("br", br);
-		String trl = bbipPublicService.getETeller(bk);
-		context.setData(ParamKeys.TELLER, trl);
+		String tlr = bbipPublicService.getETeller(bk);
+		context.setData(ParamKeys.TELLER, tlr);
+		logger.info("=========>>>>>>>>>>context after get tlr: " + context);
+		
 		
 		/** 批量前检查和初始化批量控制表 生成批次号batNo */
 		((BatchFileCommon) get(GDConstants.BATCH_FILE_COMMON_UTILS)).BeforeBatchProcess(context);
@@ -80,9 +85,8 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 		Assert.isFalse(null == config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST, "FTP配置不存在");
 		
 		//ftp到第三方服务器获取文件
-		String fileName = (String) context.getData("FilNam");
-		config.setLocFleNme(fileName);
-		config.setRmtFleNme(fileName);
+		config.setLocFleNme(fileNme);
+		config.setRmtFleNme(fileNme);
 		get(EupsThdFtpConfigRepository.class).update(config);
 		
 		get(OperateFTPAction.class).getFileFromFtp(config);
