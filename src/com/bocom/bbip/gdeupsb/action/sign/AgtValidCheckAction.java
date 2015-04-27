@@ -30,14 +30,14 @@ public class AgtValidCheckAction extends BaseAction {
 	public void execute(Context context) throws CoreException, CoreRuntimeException {
 		log.info("AgtValidCheckAction start!..");
 
-		String gdsBId = context.getData(GDParamKeys.SIGN_STATION_BID); // 业务类型
+//		String gdsBId = context.getData(GDParamKeys.SIGN_STATION_BID); // 业务类型
 
 		// 交易上锁
-		Result ret = get(BBIPPublicService.class).tryLock(gdsBId, (long) 0, (long) 1000 * 60 * 20);
-		int status = ret.getStatus();
-		if (status != 0) {
-			throw new CoreException(GDErrorCodes.EUPS_LOCK_FAIL, "交易加锁失败!!!");
-		}
+//		Result ret = get(BBIPPublicService.class).tryLock(gdsBId, (long) 0, (long) 1000 * 60 * 20);
+//		int status = ret.getStatus();
+//		if (status != 0) {
+//			throw new CoreException(GDErrorCodes.EUPS_LOCK_FAIL, "交易加锁失败!!!");
+//		}
 
 	}
 
