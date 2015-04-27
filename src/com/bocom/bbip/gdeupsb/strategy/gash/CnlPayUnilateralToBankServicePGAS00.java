@@ -90,7 +90,7 @@ public class CnlPayUnilateralToBankServicePGAS00 implements
 
 		String thdSqn = context.getData(ParamKeys.THD_SQN).toString();
 
-		// 同一条流水多次抹帐？必须杜绝
+		// 同一条流水多次抹帐？
 		// EupsTransJournal jnlIsCnl = new EupsTransJournal();
 		// jnlIsCnl.setSvrNme("eups.cancelUnilateralToBank");
 		// jnlIsCnl.setThdSqn(thdSqn);
