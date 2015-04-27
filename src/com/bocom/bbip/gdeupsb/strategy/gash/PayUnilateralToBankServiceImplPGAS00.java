@@ -219,15 +219,14 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 		context.setData(ParamKeys.RSV_FLD5, "cnjt");
 		
 		//callThd
-		Map<String, Object> thdResult = callThdTradeManager.trade(context);
-		context.setDataMap(thdResult);
-		if (BPState.isBPStateOvertime(context)) {
-			context.setData(ParamKeys.THD_TXN_STS, "T");
-//			throw new CoreException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
-		}
-		context.setData(ParamKeys.THD_TXN_STS, "S");
-		
-		context.setData("TransCode", "QryUser");
+//		Map<String, Object> thdResult = callThdTradeManager.trade(context);
+//		context.setDataMap(thdResult);
+//		if (BPState.isBPStateOvertime(context)) {
+//			context.setData(ParamKeys.THD_TXN_STS, "T");
+//		}
+//		context.setData(ParamKeys.THD_TXN_STS, "S");
+//		
+//		context.setData("TransCode", "QryUser");
 		
 		return null;
 	}
