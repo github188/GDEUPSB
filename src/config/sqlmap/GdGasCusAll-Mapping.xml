@@ -242,8 +242,7 @@
 		&lt;=#{optDat,jdbcType=CHAR}
 	</select>
 
-	<select id="findDataByOptDate" parameterType="java.util.Map"
-		resultType="java.util.Map">
+	<select id="findDataByOptDate" resultMap="basicResultMap">
 		SELECT
 		<include refid="baseColumnList" />
 		FROM ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_ALL
@@ -263,11 +262,33 @@
 			</if>
 		</trim>
 	</select>
+	<select id="findDataByOptDateCount" resultType="java.lang.Integer">
+		SELECT
+		 count(*)
+		FROM ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_ALL
+		<trim prefix="WHERE" prefixOverrides="AND">
+			OPT_DAT &gt;=#{beginDate} AND OPT_DAT &lt;=#{endDate}
+			<if test="cusNo!=null">
+				AND CUS_NO=#{cusNo}
+			</if>
+			<if test="cusAc!=null">
+				AND CUS_AC=#{cusAc}
+			</if>
+			<if test="cusNme!=null">
+				AND CUS_NME=#{cusNme}
+			</if>
+			<if test="idNo!=null">
+				AND ID_NO=#{idNo}
+			</if>
+		</trim>
+	</select>
 
-<select id="findCusInfo" resultType="java.util.Map"
+	<select id="findCusInfo" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdGasCusAll">
-		select CUS_NO cusNo, CUS_AC cusAc, CUS_NME cusNme, CUS_TYP cusTyp, OPT_DAT optDat, OPT_NOD optNod, 
-		ID_TYP idTyp, ID_NO idNo, THD_CUS_NME thdCusNme, CMU_TEL cmuTel, THD_CUS_ADR thdCusAdr
+		select CUS_NO cusNo, CUS_AC cusAc, CUS_NME cusNme, CUS_TYP cusTyp,
+		OPT_DAT optDat, OPT_NOD optNod,
+		ID_TYP idTyp, ID_NO idNo, THD_CUS_NME thdCusNme, CMU_TEL cmuTel, THD_CUS_ADR
+		thdCusAdr
 		from ${GDEUPSB_SCHEMA}.GDEUPS_GAS_CUS_ALL
 		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="cusNo!=null">
@@ -304,6 +325,6 @@
 				AND THD_CUS_ADR=#{thdCusAdr,jdbcType=CHAR}
 			</if>
 		</trim>
-</select>
+	</select>
 
 </mapper>
