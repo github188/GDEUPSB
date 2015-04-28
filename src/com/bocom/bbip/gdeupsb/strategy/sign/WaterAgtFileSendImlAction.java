@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.comp.btp.BTPService;
+import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
+import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
@@ -41,6 +43,9 @@ public class WaterAgtFileSendImlAction implements AgtFileSendImlService {
 
 	@Autowired
 	OperateFileAction operateFileAction;
+	
+	@Autowired
+	OperateFTPAction operateFTPAction;
 
 	@Override
 	public Map<String, Object> agtFleSndDelService(Context context) throws CoreException {
@@ -106,9 +111,19 @@ public class WaterAgtFileSendImlAction implements AgtFileSendImlService {
 		operateFileAction.createCheckFile(eupsThdFtpConfig, "datFleSndWat", fileName, resultMap);
 		
 		// TODO:ftp文件
-		while (true) {
-			break;
-		}
+		String br=context.getData(ParamKeys.BR);//机构号
+		String tlr=context.getData(ParamKeys.TELLER);  //柜员号
+		
+		//设置ftp参数
+		EupsThdFtpConfig ftpConf = eupsThdFtpConfigRepository.findOne("frtUsbWrtSgnFilSnd");
+		
+		String rmtWay="/home/weblogic/JumpServer/WEB-INF/save/tfiles/"+br+"/"+tlr+"/";
+		ftpConf.setRmtWay(rmtWay);
+		ftpConf.setLocFleNme(fileName);
+		ftpConf.setRmtFleNme(fileName);
+		operateFTPAction.putCheckFile(ftpConf);
+		log.info("将文件存放到服务器上，服务器上的文件目录为:["+rmtWay+"],文件名为:["+fileName+"]");
+		
 
 		if ("N".equals(isExport)) {
 			// 更新协议的批次号与制盘标志：UpdAgtBatchId
