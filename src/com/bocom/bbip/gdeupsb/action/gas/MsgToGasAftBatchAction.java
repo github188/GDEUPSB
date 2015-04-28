@@ -250,6 +250,7 @@ public class MsgToGasAftBatchAction extends BaseAction implements AfterBatchAcpS
 				
 				cusAc = detail.getCusAc();
 				cusNo = detail.getAgtSrvCusId();
+				findInfo.setThdSqn((String)detail.getRmk1());
 				findInfo.setCusAc(cusAc);
 				findInfo.setCusNo(cusNo);
 				findInfo.setBatNo(gdBatNo);
