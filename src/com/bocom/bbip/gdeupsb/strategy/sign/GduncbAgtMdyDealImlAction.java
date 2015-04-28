@@ -121,7 +121,7 @@ public class GduncbAgtMdyDealImlAction implements AgtMdyDealImlService {
 				// gdsAgtInf.setGdsBid(gdsBId); //业务类型
 				gdsAgtInf.setEffDat(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
 				gdsAgtInf.setIvdDat("99991231");
-				gdsAgtInf.setBrno((String) context.getData(ParamKeys.BR));
+				gdsAgtInf.setBrno((String) context.getData("brno"));
 				gdsAgtInfRepository.insert(gdsAgtInf);
 			}
 			// 若存在原协议信息则更新
@@ -147,7 +147,7 @@ public class GduncbAgtMdyDealImlAction implements AgtMdyDealImlService {
 						gdsAgtInf.setIvdDat(ivdDat);
 					}
 				}
-
+				gdsAgtInf.setBrno((String)context.getData("brno"));
 				// gdsAgtInf.setIvdDat("99991231");
 				gdsAgtInf = gdsAgtInfRepository.save(gdsAgtInf);
 			}
