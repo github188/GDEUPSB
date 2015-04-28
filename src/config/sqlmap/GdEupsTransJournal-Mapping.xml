@@ -223,7 +223,7 @@
 		select THD_SQN tLogNo,THD_CUS_NO thdCusNo,THD_TXN_DTE
 		tActDt,TXN_DTE actDat, TXN_TME BkTim, RSV_FLD2 bkLog,
 		CUS_AC actNo,
-		'0200' txnKnd,TXN_AMT txnAmt,'            ' oTlogNo,THD_TXN_DTE dLDat,THD_TXN_TME
+		'0200' txnKnd,TXN_AMT txnAmt,' ' oTlogNo,THD_TXN_DTE dLDat,THD_TXN_TME
 		dLTim,RSV_FLD1 rmkTmp,BAK_FLD2 lChkTm
 		from
 		eups.EUPS_TRANS_JOURNAL where
@@ -250,11 +250,12 @@
 		select THD_SQN tLogNo,THD_CUS_NO thdCusNo,THD_TXN_DTE
 		tActDt,TXN_DTE actDat, TXN_TME BkTim, RSV_FLD2 bkLog,
 		CUS_AC actNo,
-		'0200' txnKnd,TXN_AMT txnAmt,'            ' oTlogNo,THD_TXN_DTE dLDat,THD_TXN_TME
+		'0200' txnKnd,TXN_AMT txnAmt,' ' oTlogNo,THD_TXN_DTE dLDat,THD_TXN_TME
 		dLTim,RSV_FLD1 rmkTmp, BAK_FLD3 bakFld3, BV_NO bvNo,
 		BAK_FLD2 lChkTm
 		from
-		eups.EUPS_TRANS_JOURNAL where EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
+		eups.EUPS_TRANS_JOURNAL where
+		EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
 		and
 		BAK_FLD1=#{bakFld1,jdbcType=CHAR} and MFM_TXN_STS='S' and
 		THD_TXN_CDE='JF' and TXN_TYP!='C' and TXN_STS!='C'
@@ -1377,7 +1378,8 @@
 	<select id="findRptJnlInfo" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
 		select * FROM
-		(select count(*) totCnt, COALESCE(sum(TXN_AMT), 0) totAmt from
+		(select count(*) totCnt, COALESCE(sum(TXN_AMT), 0) totAmt
+		from
 		eups.EUPS_TRANS_JOURNAL
 		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="comNo!=null">
@@ -1391,7 +1393,8 @@
 			</if>
 		</trim>
 		) b,
-		(select count(*) succCnt, COALESCE(sum(TXN_AMT), 0) totSuccAmt from
+		(select count(*) succCnt, COALESCE(sum(TXN_AMT), 0) totSuccAmt
+		from
 		eups.EUPS_TRANS_JOURNAL d
 		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="comNo!=null">
@@ -1407,7 +1410,8 @@
 			</if>
 		</trim>
 		) c,
-		(select count(*) failCnt, COALESCE(sum(TXN_AMT), 0) totFailAmt from
+		(select count(*) failCnt, COALESCE(sum(TXN_AMT), 0) totFailAmt
+		from
 		eups.EUPS_TRANS_JOURNAL
 		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="comNo!=null">
@@ -1423,7 +1427,8 @@
 			</if>
 		</trim>
 		) e,
-		(select count(*) doubtCnt, COALESCE(sum(TXN_AMT), 0) totDoubtAmt from
+		(select count(*) doubtCnt, COALESCE(sum(TXN_AMT), 0) totDoubtAmt
+		from
 		eups.EUPS_TRANS_JOURNAL c
 		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="comNo!=null">
@@ -1439,7 +1444,8 @@
 			</if>
 		</trim>
 		) d,
-		(select count(*) othertCnt, COALESCE(sum(TXN_AMT), 0) totOtherAmt from
+		(select count(*) othertCnt, COALESCE(sum(TXN_AMT), 0) totOtherAmt
+		from
 		eups.EUPS_TRANS_JOURNAL c
 		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="comNo!=null">
@@ -1450,7 +1456,8 @@
 			</if>
 			<if test="txnDte!=null">
 				AND c.TXN_DTE=#{txnDte,jdbcType=DATE} and
-				sqn not in(select a.sqn from (select distinct a.sqn as sqn from
+				sqn not in(select a.sqn
+				from (select distinct a.sqn as sqn from
 				eups.EUPS_TRANS_JOURNAL a
 				<trim prefix="WHERE" prefixOverrides="AND">
 					<if test="comNo!=null">
@@ -1460,8 +1467,10 @@
 						AND a.EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
 					</if>
 					<if test="txnDte!=null">
-						AND a.TXN_DTE=#{txnDte,jdbcType=DATE} and a.TXN_STS='F' AND
-						(a.MFM_TXN_STS='F' or (a.MFM_TXN_STS='S' and a.THD_TXN_STS='F'))
+						AND a.TXN_DTE=#{txnDte,jdbcType=DATE} and a.TXN_STS='F'
+						AND
+						(a.MFM_TXN_STS='F' or (a.MFM_TXN_STS='S' and
+						a.THD_TXN_STS='F'))
 						and a.TXN_TYP!='C' )
 					</if>
 				</trim>
@@ -1476,8 +1485,10 @@
 						AND b.EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
 					</if>
 					<if test="txnDte!=null">
-						AND b.TXN_DTE=#{txnDte,jdbcType=DATE} and b.MFM_TXN_STS='S' and
-						b.THD_TXN_STS!='S' and b.THD_TXN_STS!='F' and b.MFM_TXN_STS!='C'
+						AND b.TXN_DTE=#{txnDte,jdbcType=DATE} and
+						b.MFM_TXN_STS='S' and
+						b.THD_TXN_STS!='S' and b.THD_TXN_STS!='F' and
+						b.MFM_TXN_STS!='C'
 						and b.TXN_TYP!='C' )
 					</if>
 				</trim>
@@ -1492,7 +1503,8 @@
 						AND c.EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
 					</if>
 					<if test="txnDte!=null">
-						AND c.TXN_DTE=#{txnDte,jdbcType=DATE} and c.TXN_STS='S' AND
+						AND c.TXN_DTE=#{txnDte,jdbcType=DATE} and c.TXN_STS='S'
+						AND
 						c.MFM_TXN_STS='S' and c.THD_TXN_STS!='U' and c.THD_TXN_STS!='F'
 						and c.THD_TXN_STS!='T' and c.TXN_TYP!='C')
 					</if>
@@ -1501,6 +1513,15 @@
 			</if>
 		</trim>
 		) y
+	</select>
+
+
+	<select id="findGasCheckRec" resultType="java.util.Map"
+		parameterType="java.util.Map">
+		SELECT SQN, BAK_FLD2 THDSTS, RSV_FLD5 BKC, THD_SQN THDSQN,
+		THD_CUS_NO THDCUSNOC, RSV_FLD6 PAYYEA, TXN_AMT TXNAMT, TXN_DTE TXNDTE
+		FROM EUPS.EUPS_TRANS_JOURNAL WHERE TXN_TYP!='C' AND
+		EUPS_BUS_TYP='PGAS00' AND TXN_DTE=#{txnDte, jdbcType=DATE} ORDER BY SQN
 	</select>
 
 </mapper>

@@ -162,7 +162,7 @@
 	<server-side-ws-def wsdl="GDEUPSBGasCoreService.wsdl"
 		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSBGasCoreService/Schema">
 		<qname-mappings>
-			<qname-mapping operation="uploadDKchkFle"  process-id="eups.checkBankFileToThird" />
+			<qname-mapping operation="uploadDKchkFle"  process-id="gdeupsb.checkBkFileToThird" />
 		</qname-mappings>
 	</server-side-ws-def>
 	

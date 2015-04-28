@@ -25,6 +25,8 @@
 	<action id="prtGasJnlReport"
 		class="com.bocom.bbip.gdeupsb.action.gas.PrintReportServiceActionPGAS00" />
 
+<action id="checkBkFileToThirdStrategyAction"
+		class="com.bocom.bbip.gdeupsb.strategy.gash.CheckBkFileToThirdStrategyAction" />
 
 
 
