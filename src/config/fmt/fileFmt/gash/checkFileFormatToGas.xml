@@ -10,26 +10,26 @@
 		<!-- 起始位置 说明 长度 备注 1 指令 10 B0或B1或B2或B3 B0为扣费成功 B1为金额不足扣费失败 B2为无此帐号或账号与用户编号匹配错误扣费失败 
 			B3其它原因扣费失败 12 银行标志 4 CNJT 17 燃气托收流水号 18 年月日（8位）+银行标志（4位）+6位流水号 示例：20130927CNJT000001 
 			36 用户编码 12 49 费用年月 6 YYYYMM 示例：201309 56 已扣费用 10 67 交易日期 10 YYYY-MM-DD -->
-		<varString name="bakFld2" type="D," referred="true"
-			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.bakFld2, 10, ' ','0')" />
+		<varString name="THDSTS" type="D," referred="true"
+			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.THDSTS, 10, ' ','0')" />
 
-		<varString name="bk" type="D," referred="true"
-			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.bk, 4, ' ','0')" />
+		<varString name="BKC" type="D," referred="true"
+			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.BKC, 4, ' ','0')" />
 
-		<varString name="thdSqn" type="D," referred="true"
-			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.thdSqn, 18, ' ','0')" />
+		<varString name="THDSQN" type="D," referred="true"
+			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.THDSQN, 18, ' ','0')" />
 
-		<varString name="thdCusNo" type="D," referred="true"
-			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.thdCusNo, 12, ' ','0')" />
+		<varString name="THDCUSNOC" type="D," referred="true"
+			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.THDCUSNOC, 12, ' ','0')" />
 
-		<varString name="rsvFld6" type="D," referred="true"
-			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.rsvFld6, 6, ' ','0')" />
+		<varString name="PAYYEA" type="D," referred="true"
+			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.PAYYEA, 6, ' ','0')" />
 
-		<varString name="txnAmt" type="D," referred="true"
-			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.txnAmt, 10, ' ','0')" />
+		<varString name="TXNAMT" type="D," referred="true"
+			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.TXNAMT, 10, ' ','0')" />
 
-		<fixString name="txnDte" length="10" referred="true"
-			expression='exp:@com.bocom.bbip.utils.DateUtils@format(this.txnDte,"yyyy-MM-dd")' />
+		<fixString name="TXNDTE" length="10" referred="true"
+			expression='exp:@com.bocom.bbip.utils.DateUtils@format(this.TXNDTE,"yyyy-MM-dd")' />
 
 	</segment>
 </message>
