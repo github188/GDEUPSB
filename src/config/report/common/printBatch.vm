@@ -1,6 +1,6 @@
 #report(50)
 #rh(4)
-												录入批次清单
+												批次清单
 #end
 #th(2)
 #para($d.batNo)
