@@ -7,15 +7,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
@@ -27,11 +24,9 @@ import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
 import com.bocom.bbip.eups.repository.EupsBatchInfoDetailRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
-import com.bocom.bbip.file.transfer.ftp.FTPTransfer;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
-import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -56,8 +51,8 @@ public class PrintBatchInfoAction extends BaseAction{
 				String batNo=context.getData(ParamKeys.BAT_NO).toString();
 				GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=gdEupsBatchConsoleInfoRepository.findOne(batNo);
 //				context.setData("batNo", batNo);
-//				context.setData("eupsBusTyp", gdEupsBatchConsoleInfo.getEupsBusTyp());
 //				String fleNme=gdEupsBatchConsoleInfo.getRsvFld8();
+				context.setData("eupsBusTyp", gdEupsBatchConsoleInfo.getEupsBusTyp());
 				String fileName=gdEupsBatchConsoleInfo.getRsvFld1();
 				//eupsBatchConsoleInfo批次号
 				EupsBatchConsoleInfo eupsBatchConsoleInfos=new EupsBatchConsoleInfo();
@@ -136,6 +131,7 @@ public class PrintBatchInfoAction extends BaseAction{
 			        eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/report/"+fileName);
 			        eupsThdFtpConfig.setRmtWay("/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/"+ fileName);
 			        operateFTPAction.putCheckFile(eupsThdFtpConfig);
+					
 			        //反盘文件
 					eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/batch/"+fileName);
 					String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + context.getData(ParamKeys.BR)+ "/" ;
