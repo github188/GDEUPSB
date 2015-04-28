@@ -104,6 +104,7 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 			context.setData("slodNum", sum==null?"0":sum.get("LOD_NUM"));
 			context.setData("suseNum", sum==null?"0":sum.get("USE_NUM"));
 			context.setData("sclrNum", sum==null?"0":sum.get("CLR_NUM"));
+			context.setData("tol", dtls.size());
 //			------------------------------------------------------------------
 //			VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
 //			try {
@@ -158,17 +159,8 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 			
 			String path = "/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/";
 			
-			String FilNam = "/home/bbipadm/data/mftp/" +fileName;
-//			try {
-//				
-//				log.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-//				log.info("FilNam=" + FilNam);
-//				log.info("path + filname=" + path + fileName);
-//				bbipPublicService.sendFileToBBOS(new File(FilNam), path + fileName, "p");
-//				
-//			}catch (Exception e) {
-//				throw new CoreException(ErrorCodes.EUPS_FAIL);
-//			}
+			String FilNam = "/home/bbipadm/data/mftp/BBIP/GDEUPSB/prof/" +fileName;
+
 			
 			// 上传FTP
 			FTPTransfer tFTPTransfer = new FTPTransfer();
@@ -252,24 +244,92 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 				String clrNum = map.get("clrNum")==null?"0":map.get("clrNum").toString();
 				map.put("invNum", NumberUtils.createInteger(lodNum)-NumberUtils.createInteger(useNum)-NumberUtils.createInteger(clrNum));
 			}
+			
+			context.setData("eles", list);
+			context.setData("slodNum", sum==null?"0":sum.get("LOD_NUM"));
+			context.setData("suseNum", sum==null?"0":sum.get("USE_NUM"));
+			context.setData("sclrNum", sum==null?"0":sum.get("CLR_NUM"));
+			context.setData("tol", list.size());
+//			---------------------------------------------------------------------------------------------
+//			VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
+//			try {
+//				render.afterPropertiesSet();
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//			Map<String,String> map = new HashMap<String,String>();
+//			map.put("sample", "config/report/prof00/prof00_printInvSum.vm");
+//			render.setReportNameTemplateLocationMapping(map);
+//			String result = render.renderAsString("sample", context);
+//			logger.info(result);
+//			String date = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
+//			StringBuffer fileName = new StringBuffer((new StringBuilder("").append(date).toString()));
+//			reportHelper.createFileAndSendMFTP(context, result, fileName, mftpConfigInfo);
+//			------------------------------------------------------------------------------------------------
 			VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
+			String sampleFile="config/report/prof00/prof00_printInvSum.vm";
+			
+			Map<String,String> mapping = new HashMap<String,String>();
+	
+			mapping.put("sample", sampleFile);
 			try {
 				render.afterPropertiesSet();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			context.setData("eles", list);
-			context.setData("slodNum", sum==null?"0":sum.get("LOD_NUM"));
-			context.setData("suseNum", sum==null?"0":sum.get("USE_NUM"));
-			context.setData("sclrNum", sum==null?"0":sum.get("CLR_NUM"));
-			Map<String,String> map = new HashMap<String,String>();
-			map.put("sample", "config/report/prof00/prof00_printInvSum.vm");
-			render.setReportNameTemplateLocationMapping(map);
+	
+			
+			
+			render.setReportNameTemplateLocationMapping(mapping);
 			String result = render.renderAsString("sample", context);
-			logger.info(result);
+			try {
+				log.info("generate report content:****"+new String(result.getBytes(GDConstants.CHARSET_ENCODING_GBK)));
+			} catch (UnsupportedEncodingException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			String date = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
-			StringBuffer fileName = new StringBuffer((new StringBuilder("").append(date).toString()));
-			reportHelper.createFileAndSendMFTP(context, result, fileName, mftpConfigInfo);
+//			StringBuffer fileName = new StringBuffer((new StringBuilder("").append(date).toString()));
+			String fileName = date;
+			BufferedOutputStream outStream = null;
+			try {
+	
+				outStream = new BufferedOutputStream(new FileOutputStream(
+						"/home/bbipadm/data/mftp/BBIP/GDEUPSB/prof/"+fileName));
+				outStream.write(result.getBytes(GDConstants.CHARSET_ENCODING_GBK));
+				outStream.close();
+			} catch (IOException e) {
+				throw new CoreException("BBIP0004EU0128");
+			}
+			
+			String path = "/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/";
+			
+			String FilNam = "/home/bbipadm/data/mftp/BBIP/GDEUPSB/prof/" +fileName;
+
+			
+			// 上传FTP
+			FTPTransfer tFTPTransfer = new FTPTransfer();
+			// FTP上传设置
+			tFTPTransfer.setHost("182.53.15.187");
+			tFTPTransfer.setPort(21);
+			tFTPTransfer.setUserName("weblogic");
+			tFTPTransfer.setPassword("123456");
+
+			try {
+				tFTPTransfer.logon();
+				Resource tResource = new FileSystemResource(FilNam);
+				tFTPTransfer.putResource(tResource,
+						"/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/",
+						fileName);
+
+			} catch (Exception e) {
+				throw new CoreException("文件上传失败");
+			} finally {
+				tFTPTransfer.logout();
+			}
+
+			context.setData("fleNme", fileName);
+			logger.info("文件上传完成，等待打印！" + context);
 		}else{//查询
 			List<Map<String,Object>> list = ((SqlMap)get("sqlMap")).queryForList("prof00.atmInvSum", context.getDataMap());
 //			List<Map<String,Object>> list = get(SqlMapImpl.class).queryForList("prof00.atmInvSum", context.getDataMap());
@@ -329,22 +389,91 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 				map.put("qyNo", map.get("QY_NO"));
 				map.put("useNum", map.get("USE_NUM"));
 			}
+			
+			context.setData("eles", list);
+			context.setData("suseNum", sum==null?"0":sum.get("USE_NUM"));
+			context.setData("tol", list.size());
+//			------------------------------------------------------------------------------
+//			VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
+//			try {
+//				render.afterPropertiesSet();
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//			Map<String,String> map = new HashMap<String,String>();
+//			map.put("sample", "config/report/prof00/prof00_qyInvSum.vm");
+//			render.setReportNameTemplateLocationMapping(map);
+//			String result = render.renderAsString("sample", context);
+//			logger.info(result);
+//			String date = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
+//			StringBuffer fileName = new StringBuffer((new StringBuilder("").append(date).toString()));
+//			reportHelper.createFileAndSendMFTP(context, result, fileName, mftpConfigInfo);
+//			-------------------------------------------------------------------------------------------
+			
 			VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
+			String sampleFile="config/report/prof00/prof00_qyInvSum.vm";
+			
+			Map<String,String> mapping = new HashMap<String,String>();
+	
+			mapping.put("sample", sampleFile);
 			try {
 				render.afterPropertiesSet();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			context.setData("eles", list);
-			context.setData("suseNum", sum==null?"0":sum.get("USE_NUM"));
-			Map<String,String> map = new HashMap<String,String>();
-			map.put("sample", "config/report/prof00/prof00_qyInvSum.vm");
-			render.setReportNameTemplateLocationMapping(map);
+	
+			
+			
+			render.setReportNameTemplateLocationMapping(mapping);
 			String result = render.renderAsString("sample", context);
-			logger.info(result);
+			try {
+				log.info("generate report content:****"+new String(result.getBytes(GDConstants.CHARSET_ENCODING_GBK)));
+			} catch (UnsupportedEncodingException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			String date = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
-			StringBuffer fileName = new StringBuffer((new StringBuilder("").append(date).toString()));
-			reportHelper.createFileAndSendMFTP(context, result, fileName, mftpConfigInfo);
+//			StringBuffer fileName = new StringBuffer((new StringBuilder("").append(date).toString()));
+			String fileName = date;
+			BufferedOutputStream outStream = null;
+			try {
+	
+				outStream = new BufferedOutputStream(new FileOutputStream(
+						"/home/bbipadm/data/mftp/BBIP/GDEUPSB/prof/"+fileName));
+				outStream.write(result.getBytes(GDConstants.CHARSET_ENCODING_GBK));
+				outStream.close();
+			} catch (IOException e) {
+				throw new CoreException("BBIP0004EU0128");
+			}
+			
+			String path = "/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/";
+			
+			String FilNam = "/home/bbipadm/data/mftp/BBIP/GDEUPSB/prof/" +fileName;
+
+			
+			// 上传FTP
+			FTPTransfer tFTPTransfer = new FTPTransfer();
+			// FTP上传设置
+			tFTPTransfer.setHost("182.53.15.187");
+			tFTPTransfer.setPort(21);
+			tFTPTransfer.setUserName("weblogic");
+			tFTPTransfer.setPassword("123456");
+
+			try {
+				tFTPTransfer.logon();
+				Resource tResource = new FileSystemResource(FilNam);
+				tFTPTransfer.putResource(tResource,
+						"/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/",
+						fileName);
+
+			} catch (Exception e) {
+				throw new CoreException("文件上传失败");
+			} finally {
+				tFTPTransfer.logout();
+			}
+
+			context.setData("fleNme", fileName);
+			logger.info("文件上传完成，等待打印！" + context);
 		}else{//查询
 			List<Map<String,Object>> list = ((SqlMap)get("sqlMap")).queryForList("prof00.qyInvSum", context.getDataMap());
 			if(CollectionUtils.isEmpty(list)){
