@@ -183,8 +183,17 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 						if(eupsBatchInfoDetail.getSts().equals("S")){
 							gdEupsEleTmp.setPaymentResult("00");
 						}else{
-							//TODO
-							gdEupsEleTmp.setPaymentResult("99");
+							String errMsg=eupsBatchInfoDetail.getErrMsg();
+							String errSeeason=errMsg.substring(0,6);
+							if(errSeeason.equals("TPM050")){
+									gdEupsEleTmp.setPaymentResult("02");
+							}else if(errSeeason.equals("TPM055")){
+									gdEupsEleTmp.setPaymentResult("03");
+							}else if(errSeeason.equals("PDM252")){
+									gdEupsEleTmp.setPaymentResult("04");
+							}else{
+									gdEupsEleTmp.setPaymentResult("99");
+							}
 						}
 						list.add(gdEupsEleTmp);
 			}
