@@ -86,7 +86,7 @@ public class FeeInfoQryAction extends BaseAction{
 //				List<Map<String,Object>> resultList=(List<Map<String, Object>>) BeanUtils.toMaps(feeInfoList);
 //				ctx.setData("resultList", resultList);
 			setResponseFromPage(ctx, "resultList", TrspFeeInfoPage);
-			
+			log.info("@@@@@@@context end="+ctx);
 	}
 	
 	
