@@ -523,8 +523,6 @@
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
       <xs:element ref="tns:pageableResponse" minOccurs="0"/>
       <xs:element name="resultList" type="tns:resultList_CType" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="ttl" type="tns:ttl_SType" minOccurs="0"/>
-      <xs:element name="subTtl" type="tns:subTtl_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="status_SType">
@@ -573,6 +571,7 @@
   </xs:simpleType>
   <xs:complexType name="resultList_CType">
     <xs:sequence>
+      <xs:element name="carNo" type="tns:carNo_SType" minOccurs="0"/>
       <xs:element name="payLog" type="tns:payLog_SType" minOccurs="0"/>
       <xs:element name="actNo" type="tns:actNo_SType" minOccurs="0"/>
       <xs:element name="payDat" type="tns:payDat_SType" minOccurs="0"/>
@@ -581,22 +580,6 @@
       <xs:element name="status" type="tns:status_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="ttl_SType">
-    <xs:annotation>
-      <xs:documentation>社保卡申请数据查询</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="30"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="subTtl_SType">
-    <xs:annotation>
-      <xs:documentation>查询内容</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="20"/>
-    </xs:restriction>
-  </xs:simpleType>
   <xs:complexType name="transportFeeQueryRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader" minOccurs="0"/>
@@ -1244,4 +1227,20 @@
       <xs:element name="tlrId" type="tns:tlrId_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:simpleType name="ttl_SType">
+    <xs:annotation>
+      <xs:documentation>社保卡申请数据查询</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="30"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="subTtl_SType">
+    <xs:annotation>
+      <xs:documentation>查询内容</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
 </xs:schema>
