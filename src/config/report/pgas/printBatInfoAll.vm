@@ -22,7 +22,7 @@
 #para($ele.RMK1)
 #para($ele.CUS_AC)
 #para($ele.CUS_NME)
-#para($ele.RMK2)
+#para($ele.AGT_SRV_CUS_ID)
 #para($ele.AGT_SRV_CUS_NME)
 #para($ele.TXN_AMT)
 #para($ele.TXN_DTE)
