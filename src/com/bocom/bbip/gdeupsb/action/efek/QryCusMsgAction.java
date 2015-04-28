@@ -47,14 +47,13 @@ public class QryCusMsgAction extends BaseAction{
 		log.info("===========payNo="+context.getData("payNo"));
 		callThd(context);
 		String comNo=context.getData("comNo").toString();
+		String comNos=comNo.substring(0,4);
 		String bakFld1="";
-//		if(comNo.equals("03060306")){
-				bakFld1="佛山";
-//		}else if(comNo.equals("032015")){
-//				bakFld1="清远";
-//		}else if(comNo.equals("032015")){
-				bakFld1="中山";
-//		}
+		if(comNos.equals("0318")){
+				bakFld1="清远";
+		}else{
+			
+		}
 		context.setData(ParamKeys.BAK_FLD1, bakFld1);
 		context.setData("payNo", context.getData("payNo"));
 		System.out.println();
