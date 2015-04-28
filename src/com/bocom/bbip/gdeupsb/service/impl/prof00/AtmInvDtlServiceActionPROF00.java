@@ -13,6 +13,8 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 
 import com.bocom.bbip.comp.BBIPPublicServiceImpl;
 import com.bocom.bbip.eups.action.BaseAction;
@@ -22,6 +24,7 @@ import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.MFTPConfigInfo;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
+import com.bocom.bbip.file.transfer.ftp.FTPTransfer;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.thd.org.apache.commons.collections.CollectionUtils;
@@ -140,7 +143,8 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 				e1.printStackTrace();
 			}
 			String date = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
-			StringBuffer fileName = new StringBuffer((new StringBuilder("").append(date).toString()));
+//			StringBuffer fileName = new StringBuffer((new StringBuilder("").append(date).toString()));
+			String fileName = date;
 			BufferedOutputStream outStream = null;
 			try {
 	
@@ -155,16 +159,40 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 			String path = "/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/";
 			
 			String FilNam = "/home/bbipadm/data/mftp/" +fileName;
+//			try {
+//				
+//				log.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+//				log.info("FilNam=" + FilNam);
+//				log.info("path + filname=" + path + fileName);
+//				bbipPublicService.sendFileToBBOS(new File(FilNam), path + fileName, "p");
+//				
+//			}catch (Exception e) {
+//				throw new CoreException(ErrorCodes.EUPS_FAIL);
+//			}
+			
+			// 上传FTP
+			FTPTransfer tFTPTransfer = new FTPTransfer();
+			// FTP上传设置
+			tFTPTransfer.setHost("182.53.15.187");
+			tFTPTransfer.setPort(21);
+			tFTPTransfer.setUserName("weblogic");
+			tFTPTransfer.setPassword("123456");
+
 			try {
-				
-				log.info("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-				log.info("FilNam=" + FilNam);
-				log.info("path + filname=" + path + fileName);
-				bbipPublicService.sendFileToBBOS(new File(FilNam), path + fileName, "p");
-				
-			}catch (Exception e) {
-				throw new CoreException(ErrorCodes.EUPS_FAIL);
+				tFTPTransfer.logon();
+				Resource tResource = new FileSystemResource(FilNam);
+				tFTPTransfer.putResource(tResource,
+						"/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/",
+						fileName);
+
+			} catch (Exception e) {
+				throw new CoreException("文件上传失败");
+			} finally {
+				tFTPTransfer.logout();
 			}
+
+			context.setData("fleNme", fileName);
+			logger.info("文件上传完成，等待打印！" + context);
 	         
 		}else{//查询
 			List<Map<String,Object>> list = ((SqlMap)get("sqlMap")).queryForList("prof00.atmInvDtl", context.getDataMap());
