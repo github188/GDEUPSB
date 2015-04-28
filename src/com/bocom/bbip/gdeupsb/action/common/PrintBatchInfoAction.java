@@ -55,27 +55,24 @@ public class PrintBatchInfoAction extends BaseAction{
 				CoreRuntimeException {
 				String batNo=context.getData(ParamKeys.BAT_NO).toString();
 				GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=gdEupsBatchConsoleInfoRepository.findOne(batNo);
-				context.setData("batNo", batNo);
-				context.setData("eupsBusTyp", gdEupsBatchConsoleInfo.getEupsBusTyp());
-				String fleNme=gdEupsBatchConsoleInfo.getRsvFld8();
+//				context.setData("batNo", batNo);
+//				context.setData("eupsBusTyp", gdEupsBatchConsoleInfo.getEupsBusTyp());
+//				String fleNme=gdEupsBatchConsoleInfo.getRsvFld8();
 				String fileName=gdEupsBatchConsoleInfo.getRsvFld1();
 				//eupsBatchConsoleInfo批次号
 				EupsBatchConsoleInfo eupsBatchConsoleInfos=new EupsBatchConsoleInfo();
-				eupsBatchConsoleInfos.setFleNme(fleNme);
+				eupsBatchConsoleInfos.setRsvFld1(batNo);
 				EupsBatchConsoleInfo eupsBatchConsoleInfo=eupsBatchConsoleInfoRepository.find(eupsBatchConsoleInfos).get(0);
 				String eupsBatNo=eupsBatchConsoleInfo.getBatNo();
 				//入库信息
 				EupsBatchInfoDetail eupsBatchInfoDetail=new EupsBatchInfoDetail();
 				eupsBatchInfoDetail.setBatNo(eupsBatNo);
-				List<EupsBatchInfoDetail> list=eupsBatchInfoDetailRepository.find(eupsBatchInfoDetail);
-//				for (EupsBatchInfoDetail eupsBatchInfoDetails : list) {
-//						if(eupsBatchInfoDetails.getSts().equals("S")){
-//								eupsBatchInfoDetails.setSts("成功");
-//						}else{
-//								eupsBatchInfoDetails.setSts("失败");
-//						}
-//						context.setDataMap(BeanUtils.toMap(eupsBatchInfoDetails));
-//				}
+				List<EupsBatchInfoDetail> list=eupsBatchInfoDetailRepository.find(eupsBatchInfoDetail);				
+				for (EupsBatchInfoDetail eupsBatchInfoDetails : list) {
+						if(eupsBatchInfoDetails.getSts().equals("S")){
+								eupsBatchInfoDetails.setErrMsg("扣款成功");
+						}
+				}
 				context.setData("exeDte", DateUtils.formatAsSimpleDate(gdEupsBatchConsoleInfo.getExeDte()));
 				context.setData("comNo", eupsBatchConsoleInfo.getComNo());
 				context.setData(ParamKeys.TOT_CNT, eupsBatchConsoleInfo.getTotCnt());
@@ -104,53 +101,48 @@ public class PrintBatchInfoAction extends BaseAction{
 				log.info("~~~~~~~~~~~~~~~~~~~~~"+result);
 				
 				//文件路径
+				EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("FSAG00");
+				eupsThdFtpConfig.setFtpDir("0");
+				eupsThdFtpConfig.setLocFleNme(fileName);
+				eupsThdFtpConfig.setRmtFleNme(fileName);
+				
 				StringBuffer batNoFile=new StringBuffer();
 				batNoFile.append("/home/bbipadm/data/GDEUPSB/report/");
 				File file =new File(batNoFile.toString());
 				if(!file.exists()){
 						file.mkdirs();
 				}
-				try {
-					FileOutputStream fileOutputStream = new FileOutputStream(batNoFile.append(fileName).toString());
-					OutputStreamWriter outputStreamWriter=new OutputStreamWriter(fileOutputStream,"GBK");
-					BufferedWriter bufferedWriter =new BufferedWriter(outputStreamWriter);
-					PrintWriter printWriter = new PrintWriter(bufferedWriter);
-					printWriter.write(result);
-					//关闭
-					printWriter.close();
-					bufferedWriter.close();
-					outputStreamWriter.close();
-					fileOutputStream.close();
-					
-					FTPTransfer tFTPTransfer = new FTPTransfer();
-			        tFTPTransfer.setHost("182.53.15.187");
-					tFTPTransfer.setPort(21);
-					tFTPTransfer.setUserName("weblogic");
-					tFTPTransfer.setPassword("123456");
-					tFTPTransfer.logon();
-			        Resource tResource = new FileSystemResource("/home/bbipadm/data/GDEUPSB/report/"+fileName);
-			        tFTPTransfer.putResource(tResource, "/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/", fileName);
-		           
-				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (UnsupportedEncodingException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}finally{
-					EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("FSAG00");
-					eupsThdFtpConfig.setFtpDir("0");
-					eupsThdFtpConfig.setLocFleNme(fileName);
+				
+					 
+					try {
+						FileOutputStream	fileOutputStream = new FileOutputStream(batNoFile.append(fileName).toString());
+						OutputStreamWriter outputStreamWriter=new OutputStreamWriter(fileOutputStream,"GBK");
+						BufferedWriter bufferedWriter =new BufferedWriter(outputStreamWriter);
+						PrintWriter printWriter = new PrintWriter(bufferedWriter);
+						printWriter.write(result);
+						//关闭
+						printWriter.close();
+						bufferedWriter.close();
+						outputStreamWriter.close();
+						fileOutputStream.close();
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					//报表		
+			        eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/report/"+fileName);
+			        eupsThdFtpConfig.setRmtWay("/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/"+ fileName);
+			        operateFTPAction.putCheckFile(eupsThdFtpConfig);
+			        //反盘文件
 					eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/batch/"+fileName);
-					eupsThdFtpConfig.setRmtFleNme(fileName);
 					String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + context.getData(ParamKeys.BR)+ "/" + context.getData(ParamKeys.TELLER) + "/";
 					eupsThdFtpConfig.setRmtWay(path);
 					operateFTPAction.putCheckFile(eupsThdFtpConfig);
 					context.setData("printResult", fileName);
-				}
+				
 				
 		}
 }
