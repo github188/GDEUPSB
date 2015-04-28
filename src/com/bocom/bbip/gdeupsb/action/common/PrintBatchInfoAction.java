@@ -138,7 +138,7 @@ public class PrintBatchInfoAction extends BaseAction{
 			        operateFTPAction.putCheckFile(eupsThdFtpConfig);
 			        //反盘文件
 					eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/batch/"+fileName);
-					String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + context.getData(ParamKeys.BR)+ "/" + context.getData(ParamKeys.TELLER) + "/";
+					String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + context.getData(ParamKeys.BR)+ "/" ;
 					eupsThdFtpConfig.setRmtWay(path);
 					operateFTPAction.putCheckFile(eupsThdFtpConfig);
 					context.setData("printResult", fileName);
