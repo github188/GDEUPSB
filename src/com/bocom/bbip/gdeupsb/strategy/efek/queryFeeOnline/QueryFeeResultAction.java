@@ -1,7 +1,6 @@
 package com.bocom.bbip.gdeupsb.strategy.efek.queryFeeOnline;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -183,26 +182,19 @@ public class QueryFeeResultAction implements Executable{
             BigDecimal oweFeeAmt=new BigDecimal("0.00");
             BigDecimal pbd=new BigDecimal("0.00");
             BigDecimal capitial=new BigDecimal("0.00");
-            DecimalFormat df=new DecimalFormat("#.00");
             List<Map<String, Object>> InformationList=new ArrayList<Map<String,Object>>();
             
             List<Map<String, Object>> shpList=new ArrayList<Map<String,Object>>();
             for (Map<String, Object> map : list) {
-            		double  amt=Double.parseDouble(map.get(ParamKeys.OWE_FEE_AMT).toString());
-            		amt=amt/100;
-            		BigDecimal amtAdd=new BigDecimal(df.format(amt));
+            		BigDecimal amtAdd=new BigDecimal(map.get(ParamKeys.OWE_FEE_AMT).toString()).scaleByPowerOfTen(-2);
             		BigDecimal detitAdd=new BigDecimal("0.00");
             		if(StringUtils.isNotEmpty((String)map.get(GDParamKeys.DEDIT))){
-	                		double  detit=Double.parseDouble(map.get(GDParamKeys.DEDIT).toString());
-	                		detit=detit/100;
-	                		detitAdd=new BigDecimal(df.format(detit));
+            				detitAdd=new BigDecimal(map.get(GDParamKeys.DEDIT).toString()).scaleByPowerOfTen(-2);
 	                		pbd=pbd.add(detitAdd);
             		}
             		BigDecimal capitialAdd=new BigDecimal("0.00");
             		if(StringUtils.isNotEmpty((String)map.get(GDParamKeys.CAPITIAL))){
-	                		double  capitials=Double.parseDouble(map.get(GDParamKeys.CAPITIAL).toString());
-	                		capitials=capitials/100;
-	                		capitialAdd=new BigDecimal(df.format(capitials));
+            				capitialAdd=new BigDecimal(map.get(GDParamKeys.CAPITIAL).toString()).scaleByPowerOfTen(-2);
 	                		capitial=capitial.add(capitialAdd);
             		}
             		//行的list赋值 
