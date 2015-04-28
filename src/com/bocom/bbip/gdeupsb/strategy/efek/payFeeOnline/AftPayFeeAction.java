@@ -24,10 +24,7 @@ public class AftPayFeeAction implements Executable{
 			CoreRuntimeException {
 		// TODO Auto-generated method stub
 		logger.info("============Start AftPayFeeAction");
-		double i=Double.parseDouble(context.getData(ParamKeys.TXN_AMT).toString());
-		double d=i/100;
-		DecimalFormat df=new DecimalFormat("#.00");
-		BigDecimal txnAmt=new BigDecimal(df.format(d));
+		BigDecimal txnAmt=new BigDecimal(context.getData(ParamKeys.TXN_AMT).toString()).scaleByPowerOfTen(-2);
 		context.setData(ParamKeys.TXN_AMT,txnAmt );
 		
 		String rspCod=context.getData(ParamKeys.RSP_CDE).toString().trim();
