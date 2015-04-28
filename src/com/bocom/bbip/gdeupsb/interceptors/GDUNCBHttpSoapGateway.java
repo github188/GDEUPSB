@@ -82,31 +82,35 @@ public class GDUNCBHttpSoapGateway implements Gateway{
 		log.info("url : " + url);
 
 		log.info("come in ws sendAndReceive, url = " + url);
+		String strUrl="";
 		StringBuffer newMess = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-		/*newMess =newMess.append
-				("<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope\"xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">");*/
+		newMess =newMess.append
+				("<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope\"xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">");
 		String msg = null;
 		if (arg0 instanceof byte[]) {
 			try {
 				msg = new String((byte[]) arg0, charSet);
-				/*msg = msg.substring(msg.indexOf("<soapenv:Body>"),
-						msg.indexOf("</root>"));*/
+				msg = msg.substring(msg.indexOf("<soapenv:Body>"),
+						msg.indexOf("</root>"));
 				if(msg.indexOf("<qryUserProInfoREQ>")>0){
-					url=url+"gdip/cxf/UserInfoService:qryUserProInfo";
-					msg = msg.substring(msg.indexOf("<qryUserProInfoREQ>"),
-							msg.indexOf("</qryUserProInfo>"));
+					strUrl="";
+					strUrl=url+"gdip/cxf/UserInfoService";//?wsdl=UserInfoService.wsdl
+					/*msg = msg.substring(msg.indexOf("<qryUserProInfoREQ>"),
+							msg.indexOf("</qryUserProInfo>"));*/
 					log.info("old msg：" + msg);
-					//msg= msg.replace("<qryUserProInfo>","<qryUserProInfo xmlns=\"http://userInfoService.service.protocol.cxf.linkage.com/\">");
-					msg = msg.replace("<qryUserProInfoREQ>", "<com.bankcomm.bcm.modules.unicom.model.QryUserProInfoREQ>");
-					msg= msg.replace("</qryUserProInfoREQ>","</com.bankcomm.bcm.modules.unicom.model.QryUserProInfoREQ>");
+					msg= msg.replace("<qryUserProInfo>","<qryUserProInfo xmlns=\"http://userInfoService.service.protocol.cxf.linkage.com/\">");
+					//msg = msg.replace("<qryUserProInfoREQ>", "<com.bankcomm.bcm.modules.unicom.model.QryUserProInfoREQ>");
+					msg= msg.replace("<qryUserProInfoREQ>","<qryUserProInfoREQ xmlns=\"\">");
 				}else{
-					url=url+"gdip/cxf/AcctInfoService:acctInfoChange";
-					msg = msg.substring(msg.indexOf("<acctInfoChangeREQ>"),
-							msg.indexOf("</acctInfoChange>"));
+					strUrl="";
+					strUrl=url+"gdip/cxf/AcctInfoService";//?wsdl=AcctInfoService.wsdl
+					/*msg = msg.substring(msg.indexOf("<acctInfoChangeREQ>"),
+							msg.indexOf("</acctInfoChange>"));*/
 					log.info("old msg：" + msg);
-					//msg= msg.replace("<acctInfoChange>","<acctInfoChange xmlns=\"http://acctInfoService.service.protocol.cxf.linkage.com/\">");
-					msg = msg.replace("<acctInfoChangeREQ>", "<com.bankcomm.bcm.modules.unicom.model.AcctInfoChangeREQ>");	
-					msg = msg.replace("</acctInfoChangeREQ>", "</com.bankcomm.bcm.modules.unicom.model.AcctInfoChangeREQ>");	
+					msg= msg.replace("<acctInfoChange>","<acctInfoChange xmlns=\"http://acctInfoService.service.protocol.cxf.linkage.com/\">");
+					msg = msg.replace("<acctInfoChangeREQ>", "<acctInfoChangeREQ xmlns=\"\">");
+					msg = msg.replace("<GD_BSS_HEAD>", "<GD_BSS_HEAD xsi:type=\"ns1:gdBSSHEAD\" xmlns:ns1=\"http://acctInfoService.service.protocol.cxf.linkage.com/\">");	
+					//msg = msg.replace("</acctInfoChangeREQ>", "</com.bankcomm.bcm.modules.unicom.model.AcctInfoChangeREQ>");	
 				}
 			
 				newMess.append(msg);
@@ -118,18 +122,18 @@ public class GDUNCBHttpSoapGateway implements Gateway{
 			log.error("报文类型错误");
 			return null;
 		}
-		//newMess.append("</soapenv:Envelope>");
+		newMess.append("</soapenv:Envelope>");
 		msg = newMess.toString();
 		log.info("req msg : " + msg);
 
 		String response = "";
 		try {
-			URL _url = new URL(url);
+			URL _url = new URL(strUrl);
 			HttpURLConnection conn = (HttpURLConnection) _url.openConnection();
 			conn.setRequestMethod("POST");
 			conn.setRequestProperty("User-Agent", "IBS");
 			conn.setRequestProperty("Content-Type",
-					"application/soap+xml;charset=UTF-8;action=LSSB");
+					"application/soap+xml;charset=UTF-8");//;action=LSSB
 			conn.setRequestProperty("Content-Length",
 					String.valueOf(msg.getBytes(charSet).length));
 			conn.setConnectTimeout(timeOut * 1000);
