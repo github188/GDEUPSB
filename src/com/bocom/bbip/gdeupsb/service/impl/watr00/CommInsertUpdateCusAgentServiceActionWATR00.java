@@ -105,6 +105,12 @@ public class CommInsertUpdateCusAgentServiceActionWATR00 extends BaseAction{
 			context.setData("bvCde", "008");
 			context.setData("cusNo", context.getData("thdCusNo"));
 			get(BBIPPublicService.class).synExecute("gdeupsb.commInsertCusAgent", context);
+			logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@context="+context);
+			GdEupsWatAgtInf gdEupsWatAgtInf = new GdEupsWatAgtInf();
+			gdEupsWatAgtInf.setThdCusNo((String)context.getData(ParamKeys.THD_CUS_NO));
+			List<GdEupsWatAgtInf> infoList = gdEupsWatAgtInfRepository.find(gdEupsWatAgtInf);
+			context.setData("agdAgrNo", infoList.get(0).getAgdAgrNo());
+			logger.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@contextend="+context);
 		}else if("1".equals(oprTyp)){
 			
 			
