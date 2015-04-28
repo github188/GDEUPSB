@@ -352,8 +352,8 @@
       <xs:element ref="tns:requestHeader" minOccurs="0"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="oprTyp" type="tns:oprTyp_SType"/>
-      <xs:element name="area" type="tns:area_SType"/>
-      <xs:element name="comNo" type="tns:comNo_SType"/>
+      <xs:element name="area" type="tns:area_SType" minOccurs="0"/>
+      <xs:element name="comNos" type="tns:comNos_SType"/>
       <xs:element name="cusNo" type="tns:cusNo_SType"/>
       <xs:element name="settleAccountsName" type="tns:settleAccountsName_SType" minOccurs="0"/>
       <xs:element name="bankNo" type="tns:bankNo_SType" minOccurs="0"/>
@@ -364,8 +364,8 @@
       <xs:element name="newCusName" type="tns:newCusName_SType" minOccurs="0"/>
       <xs:element name="pwd" type="tns:pwd_SType" minOccurs="0"/>
       <xs:element name="cusTyp" type="tns:cusTyp_SType"/>
-      <xs:element name="idTyp" type="tns:idTyp_SType"/>
-      <xs:element name="idNo" type="tns:idNo_SType"/>
+      <xs:element name="idTyp" type="tns:idTyp_SType" minOccurs="0"/>
+      <xs:element name="idNo" type="tns:idNo_SType" minOccurs="0"/>
       <xs:element name="cmuTel" type="tns:cmuTel_SType" minOccurs="0"/>
       <xs:element name="agtSts" type="tns:agtSts_SType" minOccurs="0"/>
       <xs:element name="signDate" type="tns:signDate_SType" minOccurs="0"/>
@@ -391,6 +391,14 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="64"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="comNos_SType">
+    <xs:annotation>
+      <xs:documentation>单位编码</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="8"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="cusNo_SType">
@@ -609,8 +617,8 @@
       <xs:element name="busType" type="tns:busType_SType"/>
       <xs:element name="comNo" type="tns:comNo_SType"/>
       <xs:element name="payNo" type="tns:payNo_SType"/>
-      <xs:element name="thdCusNme" type="tns:thdCusNme_SType"/>
-      <xs:element name="fulDedFlg" type="tns:fulDedFlg_SType"/>
+      <xs:element name="thdCusNme" type="tns:thdCusNme_SType" minOccurs="0"/>
+      <xs:element name="fulDedFlg" type="tns:fulDedFlg_SType" minOccurs="0"/>
       <xs:element name="electricityYearMonth" type="tns:electricityYearMonth_SType" minOccurs="0"/>
       <xs:element name="oweFeeAmt" type="tns:oweFeeAmt_SType"/>
       <xs:element name="capital" type="tns:capital_SType" minOccurs="0"/>
@@ -1247,14 +1255,6 @@
       <xs:element name="rspMsg" type="tns:rspMsg_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="comNos_SType">
-    <xs:annotation>
-      <xs:documentation>单位编码</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="8"/>
-    </xs:restriction>
-  </xs:simpleType>
   <xs:simpleType name="payInAdvMoney_SType">
     <xs:annotation>
       <xs:documentation>存入预付款</xs:documentation>
