@@ -235,7 +235,6 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 					@SuppressWarnings("unchecked")
 					List<Map<String, Object>> agentCollectAgreementMaps = (List<Map<String, Object>>) context
 							.getData("agentCollectAgreement");
-					// TODO
 					agentCollectAgreementMaps.get(0).put("agrVldDte", AC_DTE);
 					// agentCollectAgreementMaps.get(0).put("agrVldDte",
 					// "20150101");

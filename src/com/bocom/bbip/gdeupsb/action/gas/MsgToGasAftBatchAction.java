@@ -118,23 +118,6 @@ public class MsgToGasAftBatchAction extends BaseAction implements AfterBatchAcpS
 				logger.info("~~~~~~~~~~~Error  Message",e);
 		}
 			
-			
-			
-			
-//			try{
-//					Map<String, Object> resultMap=createFileMap(context,gdEupsBatchConsoleInfoUpdate);
-//					ftpCfg.setFtpDir("0");
-//					ftpCfg.setLocDir(context.getData("dir").toString());
-//					ftpCfg.setRmtWay(context.getData("dir").toString());
-//					operateFileAction.createCheckFile(ftpCfg, "msgToGasFileFmt", fileName, resultMap);
-//			}catch(CoreException e){
-//					logger.info("~~~~~~~~~~~Error  Message",e);
-//			}
-			// 将生成的文件上传至指定服务器
-//			gasFtpCfg.setLocFleNme(fileName);
-//			ftpCfg.setLocDir(context.getData("dir").toString());
-//			gasFtpCfg.setRmtFleNme(fileName);
-//			ftpCfg.setRmtWay(context.getData("dir").toString());
 			gasFtpCfg.setFtpDir("0");
 			operateFTPAction.putCheckFile(gasFtpCfg);
 			
@@ -219,11 +202,10 @@ public class MsgToGasAftBatchAction extends BaseAction implements AfterBatchAcpS
 //				
 //				get(EupsBatchInfoDetailRepository.class).update(detail);
 				
-				// TODO B0,B1,B2,B3   根据detail.getSts()/detail.getErrMsg()设定状态thdSts
+				// B0,B1,B2,B3   根据detail.getSts()/detail.getErrMsg()设定状态thdSts
 				sts = detail.getSts();
 				if("S".equals(sts)){
 					thdSts = "B0";
-					//TODO 更新临时表BAT_STS为S
 					gdGashBatchTmp.setBatSts("S");
 					
 				}else{
@@ -232,19 +214,13 @@ public class MsgToGasAftBatchAction extends BaseAction implements AfterBatchAcpS
 						thdSts = "B1";
 					}
 					else if(errCode.equals("CB1004") || "不存在代扣协议".contains(detail.getErrMsg())){
-						
 						thdSts = "B2";
 				}
 					else{
 						thdSts = "B3";
 					}
-					//TODO 更新临时表BAT_STS为F
 					gdGashBatchTmp.setBatSts("F");
-					
 				}
-
-				
-//				gdGashBatchTmp.setTmpFld1(thdSts);
 				
 				gdGashBatchTmp.setBk("cnjt");
 				
@@ -256,15 +232,15 @@ public class MsgToGasAftBatchAction extends BaseAction implements AfterBatchAcpS
 				findInfo.setBatNo(gdBatNo);
 				listTmps = gdGashBatchTmpRepository.find(findInfo);
 				
+				gdGashBatchTmp.setSqn(listTmps.get(0).getSqn());
 				gdGashBatchTmp.setThdSqn(listTmps.get(0).getThdSqn());
 				gdGashBatchTmp.setCusNo(cusNo);
 				gdGashBatchTmp.setPayMon(listTmps.get(0).getPayMon());
 				gdGashBatchTmp.setTxnAmt(String.valueOf(detail.getTxnAmt()));
 				gdGashBatchTmp.setTxnDte(listTmps.get(0).getTxnDte());
-//				gdGashBatchTmp.setTmpFld2("cnjt");
 				gdGashBatchTmp.setTmpFld5(thdSts);
 				
-				//TODO Update 临时表，为对账做准备
+				//Update 临时表，为对账做准备
 				gdGashBatchTmpRepository.update(gdGashBatchTmp);
 				list.add(gdGashBatchTmp);
 			}
