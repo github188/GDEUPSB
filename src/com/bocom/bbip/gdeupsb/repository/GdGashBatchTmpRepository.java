@@ -8,12 +8,15 @@ import com.bocom.bbip.data.annotation.Update;
 import com.bocom.bbip.data.repository.PagingAndSortingRepository;
 import com.bocom.bbip.gdeupsb.entity.GdGashBatchTmp;
 
-public interface GdGashBatchTmpRepository extends PagingAndSortingRepository<GdGashBatchTmp, String> {
-	
+public interface GdGashBatchTmpRepository extends
+		PagingAndSortingRepository<GdGashBatchTmp, String> {
+
 	@Find
 	public List<GdGashBatchTmp> findByBatNo(final String data);
-@Update
+
+	@Update
 	public void update(GdGashBatchTmp gdGashBatchTmp);
-@Find
+
+	@Find
 	public List<Map<String, Object>> findGasCheckRec(Map<String, Object> baseMap);
 }
