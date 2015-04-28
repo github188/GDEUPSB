@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.service.impl.watr00;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -16,8 +17,11 @@ import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.utils.BeanFactoryUtils;
 import com.bocom.bbip.gdeupsb.entity.GdEupsWatAgtInf;
 import com.bocom.bbip.gdeupsb.repository.GdEupsWatAgtInfRepository;
+import com.bocom.bbip.service.BGSPServiceAccessObject;
+import com.bocom.bbip.service.Result;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.euif.component.util.StringUtil;
@@ -129,6 +133,13 @@ public class CommInsertCusAgentAction extends BaseAction{
 			}
 		} else {
 			logger.error("CommInsertCusAgentServiceActionWATR00 callThd return has error!");
+			logger.info("delete context = "+context);
+			List<String> agrNo = new ArrayList<String>();
+            agrNo.add((String) context.getData("agdAgrNo"));
+            context.setData("agdAgrNo", agrNo);
+
+            Result respData = BeanFactoryUtils.get(BGSPServiceAccessObject.class).callServiceFlatting("deleteAgentCollectAgreement",
+                context.getDataMap());
 			throw new CoreException(ErrorCodes.EUPS_THD_SYS_ERROR);
 		}
 		logger.info("CommInsertCusAgentServiceActionWATR00 callThd end ... ...");
