@@ -1,7 +1,6 @@
 package com.bocom.bbip.gdeupsb.strategy.efek.payFeeOnline;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
