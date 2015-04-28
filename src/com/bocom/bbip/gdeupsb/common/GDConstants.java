@@ -99,6 +99,9 @@ public final class GDConstants {
 	/** 广州电力，广州分行行号标志441999*/
 	public static final String GZ_ELE_BK_GZ = "441999";
 	
+	/** 广州电力，广州电力日切标志*/
+	public static final String GZ_ELE_THD_ACCHANGE= "0";
+	
 
 	/********************* 广州电力end **********************/
 
