@@ -1518,8 +1518,8 @@
 
 	<select id="findGasCheckRec" resultType="java.util.Map"
 		parameterType="java.util.Map">
-		SELECT SQN, BAK_FLD2 THDSTS, RSV_FLD5 BKC, THD_SQN THDSQN,
-		THD_CUS_NO THDCUSNOC, RSV_FLD6 PAYYEA, TXN_AMT TXNAMT, TXN_DTE TXNDTE
+		SELECT SQN, strip(bak_fld2, b) THDSTS, strip(RSV_FLD5, b) BKC, strip(THD_SQN, b) THDSQN,
+		strip(THD_CUS_NO, b) THDCUSNOC, strip(RSV_FLD6, b) PAYYEA, TXN_AMT TXNAMT, TXN_DTE TXNDTE
 		FROM EUPS.EUPS_TRANS_JOURNAL WHERE TXN_TYP!='C' AND
 		EUPS_BUS_TYP='PGAS00' AND TXN_DTE=#{txnDte, jdbcType=DATE} ORDER BY SQN
 	</select>
