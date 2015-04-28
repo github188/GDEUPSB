@@ -85,7 +85,7 @@ public class GDUNCBHttpSoapGateway implements Gateway{
 		String strUrl="";
 		StringBuffer newMess = new StringBuffer("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 		newMess =newMess.append
-				("<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope\"xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">");
+				("<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">");
 		String msg = null;
 		if (arg0 instanceof byte[]) {
 			try {
