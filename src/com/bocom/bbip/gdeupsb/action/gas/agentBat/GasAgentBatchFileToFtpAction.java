@@ -149,19 +149,8 @@ public class GasAgentBatchFileToFtpAction extends BaseAction{
 	 */
 	private Map<String, Object> encodeAgtHdFileMap(String optDat) throws CoreException, CoreRuntimeException {
     	Map<String, Object> map = new HashMap<String, Object>();
-//        Map<String, Object> agtMap = new HashMap<String, Object>();
-//        //TODO：不对，查询个人协议怎么会输入分行号跟单位编号？ 经与顾老师确认，不调代收付接口查询（20150304）。
-//        agtMap.put(ParamKeys.BK, bk);
-//        agtMap.put(ParamKeys.COMPANY_NO, comNo);
-//        Result accessObject = bgspServiceAccessObject.callServiceFlatting("queryDetailAgentCollectAgreement",agtMap);
-//        if (CollectionUtils.isEmpty(accessObject.getPayload())) {
-//            logger.info("There are no records for select check trans journal ");
-//            throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
-//        }
-//    	map.put(ParamKeys.EUPS_FILE_DETAIL, accessObject.getPayload());
-//    	logger.info("燃气用户协议拼装待生成文件map完成>>>>>>>>>" + map.toString());
-        
-        GdGasCusAll cusAllAgt = new GdGasCusAll();
+
+    	GdGasCusAll cusAllAgt = new GdGasCusAll();
         cusAllAgt.setOptDat(optDat);
     	List<GdGasCusAll> cusAllList = get(GdGasCusAllRepository.class).findDataBeforeOptDat(cusAllAgt);
     	if (CollectionUtils.isEmpty(cusAllList)) {
