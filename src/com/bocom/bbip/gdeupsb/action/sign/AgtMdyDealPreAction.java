@@ -30,26 +30,33 @@ public class AgtMdyDealPreAction extends BaseAction {
 	public void execute(Context context) throws CoreException, CoreRuntimeException {
 		log.info("AgtMdyDealPreAction start!..");
 
+		// br,bk转换
+		String oldBr = context.getData("br");
+		String oldBk = context.getData("bk");
+		context.setData("nodNo", oldBr);
+		context.setData("brno", oldBk);
+
+		System.out.println("当前设值之后的context=" + context.getDataMap());
+
 		GdsRunCtlRepository gdsRunCtlRepository = get(GdsRunCtlRepository.class);
 		AccountService accountService = get(AccountService.class);
 
 		String func = context.getData(GDParamKeys.SIGN_STATION_FUNC); // 功能码
 		String gdsBid = context.getData(GDParamKeys.SIGN_STATION_BID); // 业务类型
 		String actTyp = context.getData("actTyp"); // 账户性质
-		context.setData("gdsBid", gdsBid);  //字段转换
-		context.setData("brno", (String)context.getData(ParamKeys.BR));
+		context.setData("gdsBid", gdsBid); // 字段转换
 		String txnCnl = null;
 
 		String chl = context.getData(ParamKeys.CHANNEL); // 渠道标志
-		txnCnl=CodeSwitchUtils.codeGenerator("TxnSrcToTxnCnl",chl);
-		if(null==txnCnl){
-			txnCnl="0";
+		txnCnl = CodeSwitchUtils.codeGenerator("TxnSrcToTxnCnl", chl);
+		if (null == txnCnl) {
+			txnCnl = "0";
 		}
 		GdsRunCtl gdsRunCtl = gdsRunCtlRepository.findOne(gdsBid);
 		if (null == gdsRunCtl) {
 			throw new CoreException(GDErrorCodes.EUPS_SIGN_GDSBID_NOT_EXIST);
 		}
-		context.setVariable(GDParamKeys.SIGN_STATION_RUN_CTL_INFO, gdsRunCtl);  //将签约控制信息表信息放到context中，便于后续取值
+		context.setVariable(GDParamKeys.SIGN_STATION_RUN_CTL_INFO, gdsRunCtl); // 将签约控制信息表信息放到context中，便于后续取值
 
 		// TODO:UnPackPrvData -目测是解包
 
@@ -82,10 +89,10 @@ public class AgtMdyDealPreAction extends BaseAction {
 			}
 		}
 		context.setData(GDParamKeys.SIGN_STATION_TXN_CNL, txnCnl);
-		
-		//请求字段设置
+
+		// 请求字段设置
 		context.setVariable("BnkTyp", "16");
-		
+
 		log.info("all common check end!start impl deal!");
 	}
 
