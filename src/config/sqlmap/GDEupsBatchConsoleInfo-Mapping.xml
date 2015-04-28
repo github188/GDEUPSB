@@ -890,7 +890,7 @@
 		EUPS.EUPS_BATCH_CONSOLE_INFO
 		WHERE COM_NO=#{comNo} AND SUB_DTE
 		&gt;=#{beginDte} AND
-		SUB_DTE &lt;=#{endDte}) AND STS='F'
+		SUB_DTE &lt;=#{endDte}) AND STS!='S'
 	</select>
 
 
