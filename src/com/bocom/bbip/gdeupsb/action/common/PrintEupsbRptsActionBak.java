@@ -231,7 +231,7 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			sampleFile = "config/report/common/commonPrintReport_doubt.vm";
 		} else if ("4".equals(prtTyp)) {// 单笔其他
 			sampleFile = "config/report/common/commonPrintReport_oth.vm";
-		} else if ("5".equals(prtTyp)) { // TODO 批量报表 VM
+		} else if ("5".equals(prtTyp)) {//批量报表 VM
 			sampleFile = "config/report/common/commonPrintReport_batch.vm";
 		}
 
@@ -242,7 +242,7 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 		try {
 			render.afterPropertiesSet();
 		} catch (Exception e) {
-			// TODO
+			
 		}
 		context.setData("eles", prtList);
 		render.setReportNameTemplateLocationMapping(map);

@@ -78,12 +78,12 @@ public class QryReportInfoAction extends BaseAction {
 		context.setData("totFailAmt", prtList.get(0).get("TOTFAILAMT") + "");
 		context.setData("doubtCnt", prtList.get(0).get("DOUBTCNT") + "");
 		context.setData("totDoubtAmt", prtList.get(0).get("TOTDOUBTAMT") + "");
-		context.setData("otherCnt", prtList.get(0).get("OTHERCNT") + "");
+		context.setData("otherCnt", prtList.get(0).get("OTHERTCNT") + "");
 		context.setData("totOtherAmt", prtList.get(0).get("TOTOTHERAMT") + "");
-
+		logger.info("======== jnl rpt info =====context:" + context);
 		}
 		else{
-		// TODO 统计批量交易信息 批量交易不是一天只有一个批次的！！！
+		//统计批量交易信息 批量交易不是一天只有一个批次的！！！
 		EupsBatchConsoleInfo eupsBatchConsoleInfo = new EupsBatchConsoleInfo();
 		// eupsBatchConsoleInfo.setSubDte(printDate);//TODO
 		eupsBatchConsoleInfo.setExeDte(printDate);
@@ -118,7 +118,7 @@ public class QryReportInfoAction extends BaseAction {
 		context.setData("batSucAmt", batSucAmt + "");
 		context.setData("batFalCnt", batFalCnt + "");
 		context.setData("batFalAmt", batFalAmt + "");
-		
+		logger.info("======== bat rpt info =====context:" + context);
 		}
 
 	}
