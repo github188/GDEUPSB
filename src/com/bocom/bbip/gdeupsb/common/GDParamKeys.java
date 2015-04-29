@@ -92,6 +92,10 @@ public class GDParamKeys {
 	/** 电费抹帐原交易流水 */
 	public static final String GZ_ELE_CANCLE_OLD_JNL = "cancleOldJnl";
 	
+	/** 电费清算信息查询-明细处理标志 */
+	public static final String GZ_ELE_DETAIL_FLAG = "detailFlg";
+	
+	
 
 	/********************* 广州电力end **********************/
 

@@ -102,6 +102,12 @@ public final class GDConstants {
 	/** 广州电力，广州电力日切标志*/
 	public static final String GZ_ELE_THD_ACCHANGE= "0";
 	
+	/** 广州电力打印标志:汇总*/
+	public static final String GZ_ELE_PRINT_FLAG_ALL= "0";
+	
+	/** 广州电力打印标志:明细*/
+	public static final String GZ_ELE_PRINT_FLAG_DETAIL= "1";
+	
 
 	/********************* 广州电力end **********************/
 
