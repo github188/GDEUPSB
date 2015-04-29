@@ -437,6 +437,22 @@
 		</step>
 	</flow-template>
 	
-	
+	 <!-- 个人代扣协议修改 -->
+	<flow-template id="gdeupsb.changeWatAgent">
+		<!-- 发第三方-->
+		<step id="callThd" useCtxState="true" transactional="txTemplate">
+			<action id="callThdAction" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="callACPS" />
+			<end on="*"/>
+		</step>
+		<!-- 发代收付 -->
+		<step id="callACPS" useCtxState="true"  transactional="txTemplate">
+			<action id="callACPSAction" place-holder="true" />
+			
+			<end on="*"/>
+		</step>
+		
+		
+	</flow-template>
 
 </x:beans>
