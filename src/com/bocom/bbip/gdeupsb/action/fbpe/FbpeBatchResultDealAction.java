@@ -192,12 +192,12 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
     }
     public void createGasFile(Context context,List<EupsBatchInfoDetail> eupsBatchInfoDetailList,String comNo,String batNos){
     	String fileName = comNo+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";   	 
+    	context.setData("printResult", fileName);
     	EupsBatchConsoleInfo eupsBatchConsoleInfo=eupsBatchConsoleInfoRepository.findOne(batNos);
     	String batNo=eupsBatchConsoleInfo.getRsvFld1();
     	GDEupsBatchConsoleInfo gdEupsBatchConsoleInfos=gdEupsBatchConsoleInfoRepository.findOne(batNo);
     	gdEupsBatchConsoleInfos.setRsvFld1(fileName);
     	gdEupsBatchConsoleInfoRepository.updateConsoleInfo(gdEupsBatchConsoleInfos);
-    	context.setData("printResult", fileName);
 		try {
 			File file=new File("/home/bbipadm/data/GDEUPSB/batch/"+fileName);
 			if(!file.exists()){
