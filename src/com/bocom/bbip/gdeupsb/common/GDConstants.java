@@ -108,6 +108,9 @@ public final class GDConstants {
 	/** 广州电力打印标志:明细*/
 	public static final String GZ_ELE_PRINT_FLAG_DETAIL= "1";
 	
+	/** 广州电力打印标志:打印清单*/
+	public static final String GZ_ELE_PRINT_FLAG_PRINT= "2";
+	
 
 	/********************* 广州电力end **********************/
 
