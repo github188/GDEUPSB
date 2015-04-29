@@ -10,6 +10,8 @@ import java.util.Properties;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
@@ -21,8 +23,10 @@ import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
 import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
+import com.bocom.bbip.file.transfer.ftp.FTPTransfer;
 import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
+import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.entity.GDEupsZhAGBatchTemp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsZHAGBatchTempRepository;
 import com.bocom.bbip.utils.Assert;
@@ -37,12 +41,14 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
 	public void afterBatchDeal(AfterBatchAcpDomain arg0, Context context)
 			throws CoreException {
 		logger.info("返盘文件处理开始");
-		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).eupsBatchConSoleInfoAndgdEupsBatchConSoleInfo(context);
+		GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).eupsBatchConSoleInfoAndgdEupsBatchConSoleInfo(context);
 		Map<String,Object>ret=new HashMap<String,Object>();
         final List result=(List<EupsBatchInfoDetail>)context.getVariable("detailList");
         Assert.isNotEmpty(result, ErrorCodes.EUPS_QUERY_NO_DATA);
-        EupsThdFtpConfig config=get(EupsThdFtpConfigRepository.class).findOne((String)context.getData(ParamKeys.FTP_ID));
-		Assert.isFalse(null == config, ErrorCodes.EUPS_THD_FTP_CONFIG_NOTEXIST);
+        
+		
+        EupsThdFtpConfig config=get(EupsThdFtpConfigRepository.class).findOne("zhag00");
+        Assert.isFalse(null == config, ErrorCodes.EUPS_THD_FTP_CONFIG_NOTEXIST);
         List<Map<String,String>>resultMap=(List<Map<String, String>>) BeanUtils.toMaps(result);
 		List <GDEupsZhAGBatchTemp>lt=get(GDEupsZHAGBatchTempRepository.class)
 		.findByBatNo((String)context.getData(ParamKeys.BAT_NO));
@@ -53,11 +59,30 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
 		}
 		ret.put("header", context.getDataMapDirectly());
 		ret.put("detail", tempMap);
-		String formatOut=findFormat((String)context.getData("comNo"));
-        ((OperateFileAction)get("opeFile")).createCheckFile(config, formatOut, null, ret);
-
-		((OperateFTPAction)get("opeFTP")).putCheckFile(config);
-	
+		String formatOut=gdEupsBatchConsoleInfo.getComNo();
+		String fileName=gdEupsBatchConsoleInfo.getComNo()+".txt";
+		config.setLocFleNme(fileName);
+		config.setLocDir("/home/bbipadm/data/GDEUPSB/batch/");
+		config.setRmtFleNme(fileName);
+        ((OperateFileAction)get("opeFile")).createCheckFile(config, formatOut, fileName, ret);
+        
+        
+        // TODO FTP上传设置
+        FTPTransfer tFTPTransfer = new FTPTransfer();
+        tFTPTransfer.setHost("182.53.15.187");
+		tFTPTransfer.setPort(21);
+		tFTPTransfer.setUserName("weblogic");
+		tFTPTransfer.setPassword("123456");
+		String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + context.getData(ParamKeys.BR)+ "/" ;
+		 try {
+		       	tFTPTransfer.logon();
+		        Resource tResource = new FileSystemResource("/home/bbipadm/data/GDEUPSB/batch/"+fileName);
+		        tFTPTransfer.putResource(tResource, path, fileName);
+		 } catch (Exception e) {
+		       	throw new CoreException("文件上传失败");
+		 } finally {
+		       	tFTPTransfer.logout();
+		 }
 		 logger.info("返盘文件处理结束");
 
 	}
