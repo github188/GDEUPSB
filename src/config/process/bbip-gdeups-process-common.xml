@@ -90,5 +90,14 @@
 		
 	   </actions>
 	</process>
+	
+	
+	<!-- 查询批次信息-->
+	<process id="gdeupsb.qryBatchInformation" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
+		<actions>
+			  <action id="act" ref="qryBatchInformation"   />
+		</actions>
+	</process>
+	
 </x:beans>
 
