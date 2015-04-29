@@ -443,6 +443,7 @@ public final class GDErrorCodes {
 	public static final String EUPS_INVOIC_NO_ERROR = "BBIP4400EU0710";
 	/** 交易检查错误 */
 	public static final String EUPS_TXN_CHECK_ERROR = "BBIP4400EU0711";
+	
 
 	/** 该账户未签约 */
 	public static final String EUPS_CUSNAME_NEVR_SIGN = "BBIP4400EU0601";
