@@ -18,6 +18,12 @@
   <wsdl:message name="prtRptServiceResponseMessage">
     <wsdl:part name="prtRptServiceResponse" element="gdeupsb:prtRptServiceResponse"/>
   </wsdl:message>
+  <wsdl:message name="qryBatchInformationRequestMessage">
+    <wsdl:part name="qryBatchInformationRequest" element="gdeupsb:qryBatchInformation"/>
+  </wsdl:message>
+  <wsdl:message name="qryBatchInformationResponseMessage">
+    <wsdl:part name="qryBatchInformationResponse" element="gdeupsb:qryBatchInformationResponse"/>
+  </wsdl:message>
   <wsdl:portType name="GDEUPBCommServicePortType">
     <wsdl:operation name="qryRptInfo">
       <wsdl:documentation/>
@@ -28,6 +34,11 @@
       <wsdl:documentation/>
       <wsdl:input message="tns:prtRptServiceRequestMessage"/>
       <wsdl:output message="tns:prtRptServiceResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="qryBatchInformation">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:qryBatchInformationRequestMessage"/>
+      <wsdl:output message="tns:qryBatchInformationResponseMessage"/>
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="GDEUPBCommServiceSoapBinding" type="tns:GDEUPBCommServicePortType">
@@ -43,6 +54,15 @@
     </wsdl:operation>
     <wsdl:operation name="prtRptService">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPBCommService/prtRptService"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="qryBatchInformation">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPBCommService/qryBatchInformation"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>

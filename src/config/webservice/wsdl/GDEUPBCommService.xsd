@@ -31,6 +31,20 @@
       <xs:element name="response" type="tns:prtRptServiceResponse_CType"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:element name="qryBatchInformation" type="tns:qryBatchInformationReq_CType"/>
+  <xs:element name="qryBatchInformationResponse" type="tns:qryBatchInformationRsp_CType"/>
+  <xs:complexType name="qryBatchInformationReq_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:requestInformation"/>
+      <xs:element name="request" type="tns:qryBatchInformationRequest_CType"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="qryBatchInformationRsp_CType">
+    <xs:sequence>
+      <xs:element ref="gsp:replyInformation"/>
+      <xs:element name="response" type="tns:qryBatchInformationResponse_CType"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:element name="requestHeader" type="tns:requestHeader_CType"/>
   <xs:element name="responseHeader" type="tns:responseHeader_CType"/>
   <xs:element name="sortingInfo" type="tns:sortingInfo_CType"/>
@@ -790,4 +804,158 @@
       <xs:maxLength value="256"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:complexType name="qryBatchInformationRequest_CType">
+    <xs:sequence>
+      <xs:element ref="tns:requestHeader"/>
+      <xs:element ref="tns:pageableRequest" minOccurs="0"/>
+      <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
+      <xs:element name="beginDte" type="tns:beginDte_SType" minOccurs="0"/>
+      <xs:element name="endDte" type="tns:endDte_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="qryBatchInformationResponse_CType">
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader"/>
+      <xs:element ref="tns:pageableResponse" minOccurs="0"/>
+      <xs:element name="batchDtl" type="tns:batchDtl_CType" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="beginDte_SType">
+    <xs:annotation>
+      <xs:documentation>开始日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:simpleType name="endDte_SType">
+    <xs:annotation>
+      <xs:documentation>结束日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:simpleType name="SQN_SType">
+    <xs:annotation>
+      <xs:documentation>批扣流水号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="BAT_NO_SType">
+    <xs:annotation>
+      <xs:documentation>批扣批次号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="21"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CUS_AC_SType">
+    <xs:annotation>
+      <xs:documentation>批扣客户账号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="40"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CUS_NME_SType">
+    <xs:annotation>
+      <xs:documentation>批扣客户姓名</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="300"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TXN_AMT_SType">
+    <xs:annotation>
+      <xs:documentation>批扣交易金额</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:decimal"/>
+  </xs:simpleType>
+  <xs:simpleType name="AGT_SRV_CUS_ID_SType">
+    <xs:annotation>
+      <xs:documentation>批扣第三方客户标识</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="AGT_SRV_CUS_NME_SType">
+    <xs:annotation>
+      <xs:documentation>批扣第三方客户姓名</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="300"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OUR_OTH_FLG_SType">
+    <xs:annotation>
+      <xs:documentation>批扣我行他行标识</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="OBK_BK_SType">
+    <xs:annotation>
+      <xs:documentation>批扣签约网点号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="60"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RMK1_SType">
+    <xs:annotation>
+      <xs:documentation>批扣备注1</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1024"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="RMK2_SType">
+    <xs:annotation>
+      <xs:documentation>批扣备注2</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1024"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="STS_SType">
+    <xs:annotation>
+      <xs:documentation>批扣交易状态</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="ERR_MSG_SType">
+    <xs:annotation>
+      <xs:documentation>批扣错误信息</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="300"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="TXN_DTE_SType">
+    <xs:annotation>
+      <xs:documentation>批扣交易日期</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:date"/>
+  </xs:simpleType>
+  <xs:complexType name="batchDtl_CType">
+    <xs:sequence>
+      <xs:element name="SQN" type="tns:SQN_SType" minOccurs="0"/>
+      <xs:element name="BAT_NO" type="tns:BAT_NO_SType" minOccurs="0"/>
+      <xs:element name="CUS_AC" type="tns:CUS_AC_SType" minOccurs="0"/>
+      <xs:element name="CUS_NME" type="tns:CUS_NME_SType" minOccurs="0"/>
+      <xs:element name="TXN_AMT" type="tns:TXN_AMT_SType" minOccurs="0"/>
+      <xs:element name="AGT_SRV_CUS_ID" type="tns:AGT_SRV_CUS_ID_SType" minOccurs="0"/>
+      <xs:element name="AGT_SRV_CUS_NME" type="tns:AGT_SRV_CUS_NME_SType" minOccurs="0"/>
+      <xs:element name="OUR_OTH_FLG" type="tns:OUR_OTH_FLG_SType" minOccurs="0"/>
+      <xs:element name="OBK_BK" type="tns:OBK_BK_SType" minOccurs="0"/>
+      <xs:element name="RMK1" type="tns:RMK1_SType" minOccurs="0"/>
+      <xs:element name="RMK2" type="tns:RMK2_SType" minOccurs="0"/>
+      <xs:element name="STS" type="tns:STS_SType" minOccurs="0"/>
+      <xs:element name="ERR_MSG" type="tns:ERR_MSG_SType" minOccurs="0"/>
+      <xs:element name="TXN_DTE" type="tns:TXN_DTE_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
 </xs:schema>
