@@ -63,14 +63,14 @@ public class EupsManageCounterAgt extends BaseAction {
 			context.setData("ACN", context.getData("ActNo"));
 			break;
 		case QUERY:
-//			buildContextAndCallThd(context);
+			// buildContextAndCallThd(context);
 			queryAgentDeal(context);
 			break;
 		case DELETE:
 			deleteAgentDeal(context);
 			break;
 		}
-logger.info("======== ending context :" + context);
+		logger.info("======== ending context :" + context);
 	}
 
 	private void checkOldBaseInfo(Context context) throws CoreException {
@@ -131,7 +131,7 @@ logger.info("======== ending context :" + context);
 		context.setData("FPF", "0");
 		// TODO 根据银行卡获取开户信息 身份证号
 		context.setData("IdTyp", "0");
-//		context.setData("TIdNo", "123123");
+		// context.setData("TIdNo", "123123");
 
 		logger.info("=====外发电力========>>>>>>>>>>>>>>> context : " + context);
 		// 外发thd
@@ -164,6 +164,28 @@ logger.info("======== ending context :" + context);
 		if ("E".equals(cusactinfresult.getResponseType())) {
 			throw new CoreException(cusactinfresult.getResponseMessage());
 		}
+		String cusAcSts = cusactinfresult.getCusAcSts();
+		context.setData("cusAcSts", cusAcSts);
+		logger.info("===========cusAcSts : " + cusAcSts);
+		//TODO
+//		if ("00".equals(cusAcSts)) {
+//			throw new CoreException("该帐号处于不正常状态，不可进行交易");
+//		}
+//		if ("01".equals(cusAcSts)) {
+//			throw new CoreException("该账号为预开户，不可进行交易");
+//		}
+		if ("02".equals(cusAcSts)) {
+			throw new CoreException("该账号待激活或已销户，不可进行交易");
+		}
+//		if ("04".equals(cusAcSts)) {
+//			throw new CoreException("该账号处于抹帐状态，不可进行交易");
+//		}
+//		if ("05".equals(cusAcSts)) {
+//			throw new CoreException("该账号已销户，不可进行交易");
+//		}
+//		if ("06".equals(cusAcSts)) {
+//			throw new CoreException("该账号已销卡，不可进行交易");
+//		}
 		String idNo = cusactinfresult.getIdNo();
 		context.setData("TIdNo", idNo);
 	}
@@ -177,7 +199,7 @@ logger.info("======== ending context :" + context);
 			log.info("协议已经存在");
 			throw new CoreException("协议已经存在");
 		}
-		
+
 		GdeupsAgtElecTmp checkCusAc = new GdeupsAgtElecTmp();
 		checkCusAc.setActNo((String) context.getData("ActNo"));
 		List<GdeupsAgtElecTmp> acList = get(GdeupsAgtElecTmpRepository.class)
@@ -229,7 +251,7 @@ logger.info("======== ending context :" + context);
 			log.info("没有查询到协议信息！");
 			throw new CoreException("没有查询到协议信息！");
 		}
-		
+
 		context.setData("ACN", list.get(0).getActNo());
 		context.setData("ActNo", list.get(0).getActNo());
 		context.setData("TXT", list.get(0).getUserName());
@@ -259,12 +281,12 @@ logger.info("======== ending context :" + context);
 			log.info("没有查询到协议信息！");
 			throw new CoreException("没有查询到协议信息！");
 		}
-		
+
 		GdeupsAgtElecTmp delElecTmp = toGdeupsAgtElecTmp(context);
 		get(GdeupsAgtElecTmpRepository.class).deleteByFeeNum(delElecTmp);
-		
+
 		buildContextAndCallThd(context);
-		
+
 		context.setData("ACN", list.get(0).getActNo());
 		context.setData("ActNo", list.get(0).getActNo());
 		context.setData("TXT", list.get(0).getUserName());
