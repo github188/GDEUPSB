@@ -51,6 +51,8 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 			Date txnTme=DateUtils.parse(context.getData("txnTme").toString());
 			Map<String, Object> map=createMap(context);
 			logger.info("~~~~~~~~~~~~~~map~~~~~ "+map);
+			context.setData("ageBr", context.getData(ParamKeys.BK));
+			context.setData("agrBr", context.getData(ParamKeys.BR));
 			
 			Result delResult = bgspServiceAccessObject.callServiceFlatting("deleteAgentCollectAgreement",context.getDataMap());
 			logger.info("==========delResult："+delResult);
