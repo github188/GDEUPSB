@@ -48,17 +48,17 @@ public class EupsManageCounterAgt extends BaseAction {
 
 		switch (oprType) {
 		case ADD:
-//			context.setData("TXT", context.getData("UsrNam"));
 			checkCusInfoByCusAc(context);
 			buildContextAndCallThd(context);
 			addAgentDeal(context);
+//			context.setData("TXT", context.getData("UsrNam"));
 			break;
 		case UPDATE:
-//			context.setData("TXT", context.getData("UsrNam"));
 			checkCusInfoByCusAc(context);
 			checkOldBaseInfo(context);
 			buildContextAndCallThd(context);
 			updateAgentDeal(context);
+//			context.setData("TXT", context.getData("UsrNam"));
 			break;
 		case QUERY:
 //			buildContextAndCallThd(context);
