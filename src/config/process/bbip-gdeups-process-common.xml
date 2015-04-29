@@ -82,11 +82,11 @@
 	</process>
 	
 	<!--代扣协议修改-->
-	<process id="gdeupsb.commUpdateCusAgent" template="eups.simpleTran" interceptors="eups.transMessageInterceptor">	
+	<process id="gdeupsb.commUpdateCusAgent" template="gdeupsb.changeWatAgent" interceptors="eups.transMessageInterceptor">	
 	   <actions>
+		<action id="callThdAction" class="com.bocom.bbip.gdeupsb.service.impl.watr00.UpdateCusAgentThdAction" /> <!-- 发第三方 -->
+		<action id="callACPSAction" ref="eups.commUpdateCusAgentAction" /> <!-- 发代收付 -->
 		
-		<action id="act" ref="eups.commUpdateCusAgentAction" /> <!-- 发代收付 -->
-		<action id="act" class="com.bocom.bbip.gdeupsb.service.impl.watr00.UpdateCusAgentThdAction" /> <!-- 发第三方 -->
 		
 	   </actions>
 	</process>
