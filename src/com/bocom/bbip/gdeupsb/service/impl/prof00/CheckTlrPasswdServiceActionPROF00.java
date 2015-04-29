@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.gdeupsb.entity.GdeupsTlNoManager;
 import com.bocom.bbip.gdeupsb.repository.GdeupsTlNoManagerRepository;
 import com.bocom.bbip.thd.org.apache.commons.collections.CollectionUtils;
@@ -32,12 +33,12 @@ public class CheckTlrPasswdServiceActionPROF00 extends BaseAction {
 		List<GdeupsTlNoManager> gdeupsTlNoManagers = get(GdeupsTlNoManagerRepository.class).find(gdeupsTlNoManager);
 		if(CollectionUtils.isEmpty(gdeupsTlNoManagers)){
 			logger.error("柜员不存在");
-			throw new CoreException("");
+			throw new CoreException("BBIP4400EU1211");
 		}
 		gdeupsTlNoManager = gdeupsTlNoManagers.get(0);
 		if(!gdeupsTlNoManager.getPasswd().equals(passwd)){
 			logger.error("密码错误");
-			throw new CoreException("");
+			throw new CoreException("BBIP4400EU1212");
 		}
 		logger.info("CheckTlrPasswdServiceActionPROF00 end ... ...");
 	}
