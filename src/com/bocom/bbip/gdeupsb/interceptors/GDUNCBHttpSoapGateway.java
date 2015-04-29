@@ -159,23 +159,33 @@ public class GDUNCBHttpSoapGateway implements Gateway{
 					response = response + readLine;
 				}
 				log.info("rsp msg ：" + response);
-				response = response.substring(
-						response.indexOf("<soapenv:Body>"),
-						response.indexOf("</soapenv:Envelope>"));
-				String func = response.substring(
-						response.indexOf("soap-rpc\">") + 10,
-						response.indexOf("</ns2:result>"));
+			/*	response = response.substring(
+						response.indexOf("<soap:Body>"),
+						response.indexOf("</soap:Envelope>"));*/
+				log.info("response:=======123456789"+response);
+				if(response.indexOf("acctInfoChangeResponse")>1){
+					response = response.replace("<ns0:acctInfoChangeResponse xmlns:ns0=\"http://acctInfoService.service.protocol.cxf.linkage.com/\">","<acctInfoChange>");
+			     	response=response.replace("</ns0:acctInfoChangeResponse>","</acctInfoChange>");
+			     	response=response.substring(response.indexOf("<acctInfoChangeRSP>"),response.indexOf("</acctInfoChange>"));
+				}else{
+					response = response.replace("<ns0:qryUserProInfoResponse xmlns:ns0=\"http://userInfoService.service.protocol.cxf.linkage.com/\">","<qryUserProInfo>");
+			     	response=response.replace("</ns0:qryUserProInfoResponse>","</qryUserProInfo>");
+			     	response=response.substring(response.indexOf("<qryUserProInfoRSP>"),response.indexOf("</qryUserProInfo>"));
+				}
+				/*String func = response.substring(
+						response.indexOf("<ns0:>"),
+						response.indexOf("</soap:Body>"));
 				String encStr = response.substring(
 						response.indexOf("xsd:string\">") + 12,
 						response.indexOf("</" + func));
 				String resStr = new String(Base64.decode(encStr), desCharSet);
-				resStr = resStr.substring(resStr.indexOf("<XML>"));
-				String ret = "0";
-				if (resStr.contains("errorInfo")) {
+				resStr = resStr.substring(resStr.indexOf("<XML>"));*/
+				//String ret = "0";
+				/*if (resStr.contains("errorInfo")) {
 					// 返回错误
 					ret = "-1";
 					transCode = errTranCde;
-				} /*else if ("0".equals(HiXmlUtil.getXmlNodValue(resStr,
+				} else if ("0".equals(HiXmlUtil.getXmlNodValue(resStr,
 						"totalCount"))) {
 					// 数据为空
 					ret = "2";
@@ -183,15 +193,15 @@ public class GDUNCBHttpSoapGateway implements Gateway{
 				resStr = HiXmlUtil.setXmlNodVal(resStr, "errCde", ret);*/
 				StringBuffer resMess = new StringBuffer(transCode);
 				resMess.append("<root>");
-				resMess.append(resStr);
+				resMess.append(response);
 				resMess.append("</root>");
 				response = resMess.toString();
 				log.info("==============response:" + response);
 			} else {
 				log.error("ws return code = " + conn.getResponseCode()
 						+ "  err msg：" + conn.getResponseMessage());
-				throw new CommunicationException(false,
-						conn.getResponseMessage());
+			/*	throw new CommunicationException(false,
+						conn.getResponseMessage());*/
 			}
 
 			if (os != null) {
@@ -204,13 +214,14 @@ public class GDUNCBHttpSoapGateway implements Gateway{
 			log.info("conn closed");
 		} catch (Exception e) {
 			log.error("ws err：", e);
-			throw new CommunicationException(false, e.getMessage());
+			//throw new CommunicationException(false, e.getMessage());
 		}
 
 		try {
 			return response.getBytes(charSet);
 		} catch (UnsupportedEncodingException e) {
-			throw new CommunicationException(false, e.getMessage());
+			//throw new CommunicationException(false, e.getMessage());
 		}
+		return null;
 	}
 }

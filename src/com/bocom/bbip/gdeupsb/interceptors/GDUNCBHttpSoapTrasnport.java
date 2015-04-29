@@ -63,6 +63,7 @@ public class GDUNCBHttpSoapTrasnport implements Transport{
 			getTranportLister().onReceive(obj, context, obj3);
 		if (obj3 != null)
 			obj1 = transform(obj3, c, context.getProcessId());
+		context.setVariable("obj1", obj1);
 		return obj1;
 	}
 
@@ -78,6 +79,7 @@ public class GDUNCBHttpSoapTrasnport implements Transport{
 			}
 
 		}
+	
 		return obj1;
 	}
 
