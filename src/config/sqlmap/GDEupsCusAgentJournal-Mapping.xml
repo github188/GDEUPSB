@@ -793,12 +793,12 @@
   <!-- 协议 根据单位编号分组 -->
   <select id="findAllGroupByComNo"  resultType="java.util.Map"  parameterType="java.util.Map">
  	select 
-				COM_NO ,count(*) as totCnt
+				SUBSTR(COM_NO,1,6) ,count(*) as totCnt
      from 
 				eups.EUPS_CUS_AGENT_JOURNAL
 	where 
 				EUPS_BUS_TYP='ELEC00'  and  TXN_DTE=#{txnDte,jdbcType=CHAR}  
 	group by 
-				 COM_NO
+				SUBSTR(COM_NO,1,6)
 	</select>
 </mapper>
