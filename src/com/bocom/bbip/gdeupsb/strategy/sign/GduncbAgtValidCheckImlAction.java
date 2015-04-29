@@ -169,7 +169,8 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 		 
 		 log.info("context========11232334"+context.getDataMap());
 		 log.info("obj========11232334"+infoMap);
-		if(infoMap.get("RSP_CODE").equals("000000")||infoMap.get("RSP_CODE").equals("0000")){
+		 String RSP_CODE=(String)infoMap.get("RSP_CODE");
+	if(RSP_CODE.equals("000000")||RSP_CODE.equals("0000")||RSP_CODE.equals("00")){
         requestData.put("MSG_SENDER", "5101");
 		requestData.put("MSG_RECEIVER", "5100");
 		requestData.put("TRANS_IDO", sqn);
@@ -206,13 +207,14 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 		 }
 	   log.info("context========333333"+context.getDataMap());
 		 log.info("obj========444444"+map);
-      if(map.get("RSP_DESC").equals("000000")||map.get("RSP_DESC").equals("0000")){
+		String rspCode=(String)map.get("RSP_CODE");
+      if(rspCode.equals("000000")||rspCode.equals("0000")||rspCode.equals("00")){
     		context.setData("TAgtSt", "S");
 			context.setData("TErMsg", "签约成功");
 			context.setData("status", "S");
 			context.setData("retcod", "000000");
 			context.setData("retmsg", "签约成功");
-      }else{
+      }else if(!rspCode.equals("000000")&&!rspCode.equals("0000")&&!rspCode.equals("00")){
     	    context.setData("TAgtSt", "F");
 			context.setData("TErMsg", "签约失败"+"["+map.get("RSP_DESC")+"]");
 			context.setData("status", "F");
@@ -224,7 +226,7 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 			//throw new CoreException( "签约失败"+"["+map.get("RSP_DESC")+"]");	   
       }
 	
-		}else{
+		}else if(!RSP_CODE.equals("000000")&&!RSP_CODE.equals("0000")&&!RSP_CODE.equals("00")){
 			    context.setData("TAgtSt", "F");
 				context.setData("TErMsg", "签约失败"+"["+infoMap.get("RSP_DESC")+"]");
 				context.setData("status", "F");
