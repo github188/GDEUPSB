@@ -197,6 +197,7 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
     	GDEupsBatchConsoleInfo gdEupsBatchConsoleInfos=gdEupsBatchConsoleInfoRepository.findOne(batNo);
     	gdEupsBatchConsoleInfos.setRsvFld1(fileName);
     	gdEupsBatchConsoleInfoRepository.updateConsoleInfo(gdEupsBatchConsoleInfos);
+    	context.setData("printResult", fileName);
 		try {
 			File file=new File("/home/bbipadm/data/GDEUPSB/batch/"+fileName);
 			if(!file.exists()){
