@@ -55,9 +55,10 @@ public class CusAgentServiceAction extends BaseAction{
 				String cusAc=context.getData("cusAc");
 				String comNo=context.getData("comNos").toString();
 				context.setData("comNo", comNo);
+				String comNoSub=comNo.substring(0,4);
 				//代收付单位编号
 				EupsActSysPara eupsActSysPara=new EupsActSysPara();
-				eupsActSysPara.setComNo(comNo);
+				eupsActSysPara.setComNo(comNoSub);
 				String sqlNo=eupsActSysParaRepository.find(eupsActSysPara).get(0).getSplNo();
 				context.setData("comNo", sqlNo);
 				logger.info("~~~~~~~~~comNo="+context.getData(ParamKeys.COMPANY_NO));
