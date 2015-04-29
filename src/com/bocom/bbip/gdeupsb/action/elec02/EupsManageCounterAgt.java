@@ -48,16 +48,18 @@ public class EupsManageCounterAgt extends BaseAction {
 
 		switch (oprType) {
 		case ADD:
+			checkCusInfoByCusAc(context);
 			buildContextAndCallThd(context);
 			addAgentDeal(context);
 			break;
 		case UPDATE:
+			checkCusInfoByCusAc(context);
 			checkOldBaseInfo(context);
 			buildContextAndCallThd(context);
 			updateAgentDeal(context);
 			break;
 		case QUERY:
-			buildContextAndCallThd(context);
+//			buildContextAndCallThd(context);
 			queryAgentDeal(context);
 			break;
 		case DELETE:
@@ -87,8 +89,6 @@ public class EupsManageCounterAgt extends BaseAction {
 
 	private void buildContextAndCallThd(Context context) throws CoreException {
 
-		checkCusInfoByCusAc(context);
-
 		Date date = new Date();
 		String YYYYMMDD = DateUtils.format(date, DateUtils.STYLE_yyyyMMdd);
 		String YYYYMMDDHHMMSS = DateUtils.format(date,
@@ -99,7 +99,6 @@ public class EupsManageCounterAgt extends BaseAction {
 		sqnTmp = sqnTmp.substring(12);
 		String msgId = br + " " + sqnTmp;
 
-		// TODO 外发汕头电力，通知电力签约
 		// 1.拼装外发报文头
 		context.setData("AppTradeCode", "30");
 		context.setData("StartAddr", "301");// TODO wangxianfen:301
