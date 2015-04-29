@@ -243,6 +243,12 @@
 			<qname-mapping operation="qryRptInfo"  process-id="gdeupsb.qryReportInfo" />
 		</qname-mappings>
 	</server-side-ws-def>
-		
+	
+	<server-side-ws-def wsdl="GDEUPBCommService.wsdl"
+		namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPBCommService/Schema">
+		<qname-mappings>
+			<qname-mapping operation="qryBatchInformation"  process-id="gdeupsb.qryBatchInformation" />
+		</qname-mappings>
+	</server-side-ws-def>	
 		
 </x:beans>
