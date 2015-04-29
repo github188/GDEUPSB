@@ -25,7 +25,7 @@ public class EfekEndAction extends BaseAction{
 	        if(txnCtlSts.equals(txnTyp)){
 	        		throw new CoreException("供电已签退");
 	        }else{
-	        		euspThdTranCtlInfo.setTxnCtlSts("0");
+	        		euspThdTranCtlInfo.setTxnCtlSts("1");
 	        		eupsThdTranCtlInfoRepository.update(euspThdTranCtlInfo);
 	        }
 	        logger.info("===========End  EfekEndAction");
