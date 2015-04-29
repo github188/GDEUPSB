@@ -74,55 +74,6 @@ public class QryHzThdCusInfoAction extends BaseAction {
 		setResponseFromPage(context, "loopDtl", page);
 		logger.info("========== context after set loopDtl =" + context);
 		
-//		logger.info("gasCusAllList.size()=" + gasCusAllList.size());
-//		logger.info("==========context=" + context);
-//
-//		List<Map<String, Object>> gasCusAllListDtl = new ArrayList<Map<String, Object>>();
-//		for (Map<String, Object> maps : gasCusAllList) {
-//			Map<String, Object> cusAllDtlTemp = new HashMap<String, Object>();
-//			cusAllDtlTemp.put("cusNo", maps.get("CUS_NO"));
-//			cusAllDtlTemp.put("cusAc", maps.get("CUS_AC"));
-//			cusAllDtlTemp.put("cusNme", maps.get("CUS_NME"));
-//			cusAllDtlTemp.put("acTyp", maps.get("CUS_TYP"));
-//			cusAllDtlTemp.put("creDte", (String) maps.get("OPT_DAT"));
-//			cusAllDtlTemp.put("agrTme", maps.get("OPT_NOD"));
-//			cusAllDtlTemp.put("idTyp", maps.get("ID_TYP"));
-//			cusAllDtlTemp.put("idNo", maps.get("ID_NO"));
-//			cusAllDtlTemp.put("thdCusNme", maps.get("THD_CUS_NME"));
-//			cusAllDtlTemp.put("cmuTel", maps.get("CMU_TEL"));
-//			gasCusAllListDtl.add(cusAllDtlTemp);
-//		}
-//
-//		context.setData("loopDtl", gasCusAllListDtl);
-
-
-//		List<Map<String, Object>> pageableRequest = context
-//				.getData("pageableRequest");
-//		int pageNum = (Integer) pageableRequest.get(0).get("pageNum");
-//		int pageSize = (Integer) pageableRequest.get(0).get("pageSize");
-		
-//		int pageNum = (Integer) context.getData("pageNum");
-//		int pageSize = (Integer) context.getData("pageSize");
-//
-//		int totalElements = gasCusAllListDtl.size();
-//		int totalPages = 0;
-//		if (totalElements % pageSize == 0) {
-//			totalPages = totalElements / pageSize;
-//		} else {
-//			totalPages = totalElements / pageSize + 1;
-//		}
-//
-//		List<Map<String, Object>> pageableResponse = new ArrayList<Map<String, Object>>();
-//		Map<String, Object> pageMap = new HashMap<String, Object>();
-//		pageMap.put("totalElements", totalElements);
-//		pageMap.put("totalPages", totalPages);
-//		pageableResponse.add(pageMap);
-//		context.setData("pageableResponse", pageableResponse);
-//		
-//		context.setData("totalElements", totalElements);
-//		context.setData("totalPages", totalPages);
-		
-
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
 	}
 }
