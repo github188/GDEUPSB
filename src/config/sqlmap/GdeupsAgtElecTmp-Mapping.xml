@@ -673,10 +673,13 @@
 	</update>
 
 	<delete id="deleteByFeeNum" parameterType="java.lang.String">
-		delete from ${GDEUPSB_SCHEMA}.GDEUPS_AGT_ELEC_TMP
+		delete from GDEUPSB.GDEUPS_AGT_ELEC_TMP
 		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="feeNum!=null">
 				AND FEE_NUM=#{feeNum,jdbcType=CHAR}
+			</if>
+			<if test="actNo!=null">
+				AND ACT_NO=#{actNo,jdbcType=CHAR}
 			</if>
 		</trim>
 	</delete>
