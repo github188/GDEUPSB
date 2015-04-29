@@ -31,13 +31,13 @@ public class QueryFeeInfoAction extends BaseAction{
 		gdEupsbTrspFeeInfo.setPayLog(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
 		List<GDEupsbTrspFeeInfo> feeInfoList = gdEupsbTrspFeeInfoRepository.find(gdEupsbTrspFeeInfo);
 		if(CollectionUtils.isEmpty(feeInfoList)){
-			ctx.setData(ParamKeys.RSP_CDE, GDErrorCodes.FEE_INFO_EMPTY);
-			ctx.setData(ParamKeys.RSP_MSG, "缴费记录不存在或者已作废");
-			throw new CoreException(GDErrorCodes.FEE_INFO_EMPTY);
+//			ctx.setData(ParamKeys.RSP_CDE, GDErrorCodes.FEE_INFO_EMPTY);
+//			ctx.setData(ParamKeys.RSP_MSG, "缴费记录不存在或者已作废");
+			throw new CoreException("BBIP4400EU0730");
 		}else if(!"0".equals(feeInfoList.get(0).getStatus())){
-			ctx.setData(ParamKeys.RSP_CDE, GDErrorCodes.FEE_STATUS_ERROR);
-			ctx.setData(ParamKeys.RSP_MSG, "状态信息错,此笔费用状态非缴费");
-			throw new CoreException(ErrorCodes.EUPS_CHECK_FAIL);
+//			ctx.setData(ParamKeys.RSP_CDE, GDErrorCodes.FEE_STATUS_ERROR);
+//			ctx.setData(ParamKeys.RSP_MSG, "状态信息错,此笔费用状态非缴费");
+			throw new CoreException("BBIP4400EU0731");
 		}
 		GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo1 = feeInfoList.get(0);
 		ctx.setData(GDParamKeys.CAR_NO, gdEupsbTrspFeeInfo1.getCarNo());
