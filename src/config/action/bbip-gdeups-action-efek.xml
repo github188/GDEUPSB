@@ -64,4 +64,11 @@
 	<!--  协议删除-->
 	<action   class="com.bocom.bbip.gdeupsb.strategy.efek.agent.DeleteCusAgentServiceAction"
 		id="eups.commDelCusAgentActionELEC00" />		
+
+	<!-- 签到-->		
+	<action   class="com.bocom.bbip.gdeupsb.action.efek.EfekStartAction"
+		id="eups.efekStartAction" />		
+	<!--  签退-->	
+	<action   class="com.bocom.bbip.gdeupsb.action.efek.EfekEndAction"
+		id="eups.efekEndAction" />		
 </x:beans>
