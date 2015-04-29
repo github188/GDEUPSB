@@ -80,6 +80,28 @@ public interface GdEupsTransJournalRepository extends PagingAndSortingRepository
 	  
     /** 财务对账:查询广州电力主机成功流水*/
 	public List<Map<String, Object>> findGzEleHstSucJnl(Map<String, Object> para);
+	
+	
+	/** 查找广州电力缴费明确成功的汇总信息 */
+	public List<Map<String, Object>> findGzSucJnlJF(GdEupsTransJournal para);
+	
+	/** 查找广州电力划扣明确成功的汇总信息 */
+	public List<Map<String, Object>> findGzSucJnlHK(GdEupsTransJournal para);
+	
+	/** 查找广州电力明确失败的汇总信息 */
+	public List<Map<String, Object>> findGzFalJnl(GdEupsTransJournal para);
+	
+	/** 查找广州电力存疑的汇总信息*/
+	public List<Map<String, Object>> findGzUnsJnl(GdEupsTransJournal para);
+	
+	/** 查找广州电力所有的明细 */
+	public List<Map<String, Object>> findGdJnlDetail(GdEupsTransJournal para);
+	
+	/** 查找广州电力成功的明细 */
+	public List<Map<String, Object>> findGdJnlSucDetail(GdEupsTransJournal para);
+	
+	/** 查找广州电力存疑的明细 */
+	public List<Map<String, Object>> findGdJnlUnsDetail(GdEupsTransJournal para);
 
 	/** 燃气单笔代扣成功流水 */
 	@Find
@@ -95,6 +117,7 @@ public interface GdEupsTransJournalRepository extends PagingAndSortingRepository
 	public List<Map<String, Object>> findRptJnlInfo(GdEupsTransJournal eupsJnl);
 	@Find
 	public List<Map<String, Object>> findGasCheckRec(Map<String, Object> baseMap);
+	
 	
 
 }
