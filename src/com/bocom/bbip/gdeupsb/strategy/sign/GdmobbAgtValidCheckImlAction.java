@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
-import com.bocom.bbip.eups.common.ParamKeys;
 
 import com.bocom.bbip.gdeupsb.action.vo.gdmobb.GdmobbHeaderVo;
 
@@ -24,10 +23,9 @@ import com.bocom.bbip.gdeupsb.repository.GdsRunCtlRepository;
 import com.bocom.bbip.gdeupsb.service.impl.gdmobb.GdmobbResult;
 import com.bocom.bbip.gdeupsb.service.impl.gdmobb.GdmobbThdTcpServiceAccessObject;
 import com.bocom.bbip.gdeupsb.utils.UtilsCnlty;
-
-import com.bocom.bbip.service.Result;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -73,11 +71,11 @@ public class GdmobbAgtValidCheckImlAction implements AgtValidCheckService {
 		if (CollectionUtils.isEmpty(agtList)) {
 			log.info("未发现协议信息！开始解锁交易并退出..");
 			// 交易解锁
-//			Result ret1 = bBIPPublicService.unlock(gdsBId);
-//			int status1 = ret1.getStatus();
-//			if (status1 != 0) {
-//				throw new CoreException(GDErrorCodes.EUPS_UNLOCK_FAIL, "交易解锁失败!!!");
-//			}
+			/*Result ret1 = bBIPPublicService.unlock(gdsBId);
+			int status1 = ret1.getStatus();
+			if (status1 != 0) {
+				throw new CoreException(GDErrorCodes.EUPS_UNLOCK_FAIL, "交易解锁失败!!!");
+			}*/
 			throw new CoreException(GDErrorCodes.EUPS_SIGN_NO_RECORD_FOUND);
 		}
 		for (Map<String, Object> agtDeatil : agtList) {
@@ -164,16 +162,10 @@ public class GdmobbAgtValidCheckImlAction implements AgtValidCheckService {
 			gdmobbHeaderVo.setSub_command("01");
 			//账户类型
 			
-	/*		String  acttype=context.getData("actTyp");
-			String 	actno=(String)context.getData("actNo");
-			String  actNam=(String)context.getData("actName");
-			String  idTyp=((String)context.getData("idTyp"));
-			String  idNo=(String)context.getData("idNo");
-			String  cusNam=(String)context.getData("cusNam");
-			String  mstTel=(String)context.getData("mstTel");
-			String  sigFlg=((String)context.getData("sigFlg"));
-			String  sigTel=(String)context.getData("sigTel");
-			*/
+			if(StringUtils.isEmpty(((String)context.getData("sigFlg")))){
+				context.setData("sigFlg", "1");
+				context.setData("sigTel", context.getData("sigTel"));
+			}
 			String acttype=context.getData("actTyp");
 			String rsvval1=" ";
 			String 	actno=UtilsCnlty.fillEmpty((String)context.getData("actNo"),28);
@@ -254,10 +246,13 @@ public class GdmobbAgtValidCheckImlAction implements AgtValidCheckService {
 					 //转换第三方错误吗
 					 // throw new CoreException(responseCode);
 		              context.setData("TAgtSt", "F");
-					  context.setData("TErMsg", responseCode);
+					  context.setData("TErMsg", responseMess);
 					  context.setData("status", "F");
 					  context.setData("retcod", responseCode);
 					  context.setData("retmsg", responseMess);
+					  if(context.getDataMap().containsKey("funcTyp")==false){
+							throw new CoreException( responseMess);	
+						}
 				}
 			}else if(gdmobbResult.getStatus()==-2){
 				context.setData("TAgtSt", "U");
@@ -265,18 +260,27 @@ public class GdmobbAgtValidCheckImlAction implements AgtValidCheckService {
 				context.setData("status", "U");
 				context.setData("retcod", "E99999");
 				context.setData("retmsg", "系统错误");
+				if(context.getDataMap().containsKey("funcTyp")==false){
+					throw new CoreException( "签约失败系统错误");	
+				}
 			}else if(gdmobbResult.getStatus()==3){
 				context.setData("TAgtSt", "F");
 				context.setData("TErMsg", "交易失败");
 				context.setData("status", "F");
 				context.setData("retcod", "E99999");
 				context.setData("retmsg", "交易失败");
+				if(context.getDataMap().containsKey("funcTyp")==false){
+					throw new CoreException( "交易失败");	
+				}
 			}else{
 				context.setData("TAgtSt", "F");
 				context.setData("TErMsg", "未知错误");
 				context.setData("status", "F");
 				context.setData("retcod", "E99999");
 				context.setData("retmsg", "未知错误");
+				if(context.getDataMap().containsKey("funcTyp")==false){
+					throw new CoreException( "未知错误");	
+				}
 			}
 			
 			
