@@ -238,6 +238,7 @@ public class BatchFileCommon extends BaseAction {
 			gdEupsBatchConSoleInfo.setSucTotCnt(eupsBatchConSoleInfo.getSucTotCnt());
 			gdEupsBatchConSoleInfo.setFalTotAmt(eupsBatchConSoleInfo.getFalTotAmt());
 			gdEupsBatchConSoleInfo.setFalTotCnt(eupsBatchConSoleInfo.getFalTotCnt());
+			gdEupsBatchConSoleInfo.setExeDte(eupsBatchConSoleInfo.getExeDte());
 			gdEupsBatchConSoleInfo.setBatSts("S");
 			get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(gdEupsBatchConSoleInfo);
 			unLock(batNo);
