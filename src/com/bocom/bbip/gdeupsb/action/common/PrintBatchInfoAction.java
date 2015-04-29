@@ -13,17 +13,19 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.entity.EupsBatchInfoDetail;
-import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
 import com.bocom.bbip.eups.repository.EupsBatchInfoDetailRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
+import com.bocom.bbip.file.transfer.ftp.FTPTransfer;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
@@ -130,21 +132,45 @@ public class PrintBatchInfoAction extends BaseAction{
 					}
 					//报表		
 					log.info("=============Start   Send   File==========");
-					EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("FSAG00");
-					eupsThdFtpConfig.setFtpDir("0");
-					eupsThdFtpConfig.setLocFleNme(fileName);
-					eupsThdFtpConfig.setRmtFleNme(fileName);
-					
-			        eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/report/"+fileName);
-			        eupsThdFtpConfig.setRmtWay("/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/"+ fileName);
-			        operateFTPAction.putCheckFile(eupsThdFtpConfig);
+//					EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("FSAG00");
+//					eupsThdFtpConfig.setFtpDir("0");
+//					eupsThdFtpConfig.setLocFleNme(fileName);
+//					eupsThdFtpConfig.setRmtFleNme(fileName);
+//					
+//			        eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/report/"+fileName);
+//			        eupsThdFtpConfig.setRmtWay("/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/"+ fileName);
+//			        operateFTPAction.putCheckFile(eupsThdFtpConfig);
+					FTPTransfer tFTPTransfer = new FTPTransfer();
+					 // TODO FTP上传设置
+			        tFTPTransfer.setHost("182.53.15.187");
+					tFTPTransfer.setPort(21);
+					tFTPTransfer.setUserName("weblogic");
+					tFTPTransfer.setPassword("123456");
+					 try {
+					       	tFTPTransfer.logon();
+					        Resource tResource = new FileSystemResource("/home/bbipadm/data/GDEUPSB/report/"+fileName);
+					        tFTPTransfer.putResource(tResource, "/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/", fileName);
+					} catch (Exception e) {
+					       	throw new CoreException("文件上传失败");
+					} finally {
+					       	tFTPTransfer.logout();
+					}
 					log.info("=============放置报表文件");
 			        //反盘文件
-					eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/batch/"+fileName);
+//					eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/batch/"+fileName);
 					String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + context.getData(ParamKeys.BR)+ "/" ;
-					eupsThdFtpConfig.setRmtWay(path);
-					operateFTPAction.putCheckFile(eupsThdFtpConfig);
-					context.setData("printResult", fileName);
+//					eupsThdFtpConfig.setRmtWay(path);
+//					operateFTPAction.putCheckFile(eupsThdFtpConfig);
+//					context.setData("printResult", fileName);
+					 try {
+					       	tFTPTransfer.logon();
+					        Resource tResource = new FileSystemResource("/home/bbipadm/data/GDEUPSB/batch/"+fileName);
+					        tFTPTransfer.putResource(tResource, path, fileName);
+					 } catch (Exception e) {
+					       	throw new CoreException("文件上传失败");
+					 } finally {
+					       	tFTPTransfer.logout();
+					 }
 					log.info("=============放置反盘文件");
 				
 		}
