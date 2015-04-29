@@ -11,7 +11,8 @@
 
 
 ##南方电网  签到签退
-TransCode.eups.manageChlSignInOut=91
+TransCode.eups.efekStart=91
+TransCode.eups.efekEnd=92
 
 ##南方电网 单边记账
 TransCode.eups.payUnilateralToBankELEC00=22
