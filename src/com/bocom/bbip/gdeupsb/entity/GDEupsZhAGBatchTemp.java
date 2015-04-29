@@ -6,7 +6,7 @@ import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.bbip.utils.StringUtils;
 
 public class GDEupsZhAGBatchTemp {
-	private Integer sqn;
+	private String sqn;
 
 	private String batNo;
 
@@ -33,11 +33,11 @@ public class GDEupsZhAGBatchTemp {
 	private String rsvFld3;
 	private String rsvFld4;
 
-	public Integer getSqn() {
+	public String getSqn() {
 		return sqn;
 	}
 
-	public void setSqn(Integer sqn) {
+	public void setSqn(String sqn) {
 		this.sqn = sqn;
 	}
 
