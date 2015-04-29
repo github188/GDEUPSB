@@ -130,7 +130,7 @@ logger.info("======== ending context :" + context);
 		context.setData("FPF", "0");
 		// TODO 根据银行卡获取开户信息 身份证号
 		context.setData("IdTyp", "0");
-		context.setData("TIdNo", "123123");
+//		context.setData("TIdNo", "123123");
 
 		logger.info("=====外发电力========>>>>>>>>>>>>>>> context : " + context);
 		// 外发thd
