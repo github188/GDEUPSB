@@ -40,7 +40,6 @@ import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.common.OperateFileService;
 import com.bocom.bbip.gdeupsb.entity.GdsRunCtl;
-import com.bocom.bbip.gdeupsb.entity.Gdsagtmob;
 import com.bocom.bbip.gdeupsb.entity.Gdsbatagtinf;
 import com.bocom.bbip.gdeupsb.repository.GdsAgtInfRepository;
 import com.bocom.bbip.gdeupsb.repository.GdsAgtWaterRepository;
@@ -398,8 +397,9 @@ public class BatchSignFileInputAction extends BaseAction{
 		    context.setData("bnkNo", "301581000019");
 		    context.setData("inNum", "1");
 		    context.setData("iExtFg",  "Y");
-		    context.setData("tlr", context.getData("tlr"));
+		    context.setData("tlr", context.getData(ParamKeys.TELLER));
 		    String SUBSTS="0";
+		    context.setData("funcTyp", context.getData("funcTyp"));
 		    
 		    String GDSAID="015810"+(String)detailList.get(i).get("orgcod")+tbustp+"301"+actno;
 		    String EFFDAT=(String)detailList.get(i).get("effdat");
