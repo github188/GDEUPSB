@@ -126,6 +126,9 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 																	eupsCusAgentJournal.setRsvFld2("301");;
 																	eupsCusAgentJournalRepository.insert(eupsCusAgentJournal);										                										    				
 												    				log.info("============End  insert   EupsCusAgentJournal");
+												    				//Date  String
+												    				context.setData(ParamKeys.TXN_DTE,txnDte);
+												    				context.setData(ParamKeys.TXN_TME,DateUtils.parse(context.getData(ParamKeys.TXN_TME).toString()));
 										                    }
 										                }else if(BPState.isBPStateOvertime(context)){
 										                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);

@@ -86,6 +86,9 @@ public class InsertCusAgentServiceAction extends BaseAction {
 		context.setData("chn", context.getData(ParamKeys.CHANNEL));
 		context.setData("bk", context.getData(ParamKeys.BK));
 		context.setData("br", context.getData(ParamKeys.BR));
+		
+		context.setData("ageBr", context.getData(ParamKeys.BK));
+		context.setData("agrBr", context.getData(ParamKeys.BR));
 		if(context.getData(ParamKeys.THD_SQN)!=null){
 			context.setData("bk", "01441999999");
 			context.setData("br", "01441131999");
@@ -149,7 +152,9 @@ public class InsertCusAgentServiceAction extends BaseAction {
 								    				eupsCusAgentJournalRepository.insert(eupsCusAgentJournal);
 								    				
 								    				log.info("============End  insert   EupsCusAgentJournal");
-								    				
+								    				//Date  String
+								    				context.setData(ParamKeys.TXN_DTE,txnDte);
+								    				context.setData(ParamKeys.TXN_TME,DateUtils.parse(context.getData(ParamKeys.TXN_TME).toString()));
 								                }else{
 								                	
 								                	//第三方失败  协议删除
@@ -230,7 +235,7 @@ public class InsertCusAgentServiceAction extends BaseAction {
 				}
 				context.setData("PKGCNT", "000000");
 		}
-//		context.setData(ParamKeys.TXN_TME,DateUtils.parse(context.getData(ParamKeys.TXN_TME).toString()));
+		
 		logger.info("=============End    InsertCusAgentServiceAction  ");
 	}
 	public String  selectAgent(Context context,String cusAc){
