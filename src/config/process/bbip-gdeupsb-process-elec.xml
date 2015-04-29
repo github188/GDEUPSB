@@ -224,35 +224,34 @@
 	   </actions>
 	</process>
 		<!-- 协议修改 -->
-	<process id="eups.commUpdateCusAgentELEC00" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	<process id="eups.commUpdateCusAgentELEC00"  template="eups.simpleTran"  interceptors="eups.thdTransInterceptor">	
 	   <actions>
 	        <action id="act" ref="eups.commUpdateCusAgentActionELEC00"  />
 	   </actions>
 	</process>
 		<!-- 协议删除 -->
-	<process id="eups.commDelCusAgentELEC00" template="eups.simpleTran" interceptors="eups.thdTransInterceptor">	
+	<process id="eups.commDelCusAgentELEC00"  template="eups.simpleTran"  interceptors="eups.thdTransInterceptor">	
 	   <actions>
 	        <action id="act" ref="eups.commDelCusAgentActionELEC00" />
 	   </actions>
 	</process>
+
+
+	<!--向第三方签到签退 -->
+		<process id="gdeupsb.efekStart"  template="eups.simpleTran" interceptors="eups.transMessageInterceptor" >
+				<actions>
+						<action id="act" ref="gdeupsb.efekStartAction" />
+						<action id="act" ref="eups.eupsManageThdTranCtlDetailAction" />
+						<action id="act" ref="eups.chlSignInOutServiceAction" operations="signInOutDeal" />
+				</actions>
+	</process>
+	<!--向第三方签到签退 -->
+	<process id="gdeupsb.efekEnd"  template="eups.simpleTran" interceptors="eups.transMessageInterceptor" >
+				<actions>
+							<action id="act" ref="gdeupsb.efekEndAction" />
+							<action id="act" ref="eups.eupsManageThdTranCtlDetailAction" />
+							<action id="act" ref="eups.chlSignInOutServiceAction" operations="signInOutDeal" />
+				</actions>
+	</process>
+
 </x:beans>
-
-	<!--向第三方签到签退 -->
-		<process id="eups.efekStart" template="eups.simpleTran"
-		interceptors="eups.transMessageInterceptor">
-		<actions>
-			<action id="act" ref="eups.efekStartAction" />
-			<action id="act" ref="eups.eupsManageThdTranCtlDetailAction" />
-			<action id="act" ref="eups.chlSignInOutServiceAction" operations="signInOutDeal" />
-		</actions>
-	</process>
-	<!--向第三方签到签退 -->
-		<process id="eups.efekEnd" template="eups.simpleTran"
-		interceptors="eups.transMessageInterceptor">
-		<actions>
-			<action id="act" ref="eups.efekEndAction" />
-			<action id="act" ref="eups.eupsManageThdTranCtlDetailAction" />
-			<action id="act" ref="eups.chlSignInOutServiceAction" operations="signInOutDeal" />
-		</actions>
-	</process>
-
