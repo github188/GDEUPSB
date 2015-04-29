@@ -931,28 +931,37 @@
 	<select id="findBatchRptInfo" resultType="java.util.Map"
 		parameterType="java.util.Map">
 		SELECT * FROM
-		(SELECT * FROM EUPS.EUPS_BATCH_INFO_DETAIL C WHERE C.BAT_NO IN
+		(SELECT * FROM EUPS.EUPS_BATCH_INFO_DETAIL
+		C WHERE C.BAT_NO IN
 		(
-		select BAT_NO from eups.EUPS_BATCH_CONSOLE_INFO WHERE COM_NO=#{comNo,
-		jdbcType=CHAR} AND EXE_DTE=#{txnDte, jdbcType=DATE} AND BAT_STS='S'
+		select BAT_NO from eups.EUPS_BATCH_CONSOLE_INFO
+		WHERE COM_NO=#{comNo,
+		jdbcType=CHAR} AND EXE_DTE=#{txnDte,
+		jdbcType=DATE} AND BAT_STS='S'
 		)) A,
 		(SELECT
-		COALESCE(SUM(TOT_CNT), 0) TOTCNT, COALESCE(SUM(TOT_AMT), 0) TOTAMT,
-		COALESCE(SUM(SUC_TOT_CNT), 0) SUCTOTCNT, COALESCE(SUM(SUC_TOT_AMT), 0)
+		COALESCE(SUM(TOT_CNT), 0)
+		TOTCNT, COALESCE(SUM(TOT_AMT), 0) TOTAMT,
+		COALESCE(SUM(SUC_TOT_CNT), 0)
+		SUCTOTCNT, COALESCE(SUM(SUC_TOT_AMT), 0)
 		SUCTOTAMT,
-		COALESCE(SUM(FAL_TOT_CNT), 0) FALTOTCNT, COALESCE(SUM(FAL_TOT_AMT), 0) FALTOTAMT
+		COALESCE(SUM(FAL_TOT_CNT), 0) FALTOTCNT, COALESCE(SUM(FAL_TOT_AMT), 0)
+		FALTOTAMT
 		FROM EUPS.EUPS_BATCH_CONSOLE_INFO WHERE BAT_NO IN
 		(
-		select BAT_NO from eups.EUPS_BATCH_CONSOLE_INFO WHERE COM_NO=#{comNo,
+		select
+		BAT_NO from eups.EUPS_BATCH_CONSOLE_INFO WHERE COM_NO=#{comNo,
 		jdbcType=CHAR} AND EXE_DTE=#{txnDte, jdbcType=DATE} AND BAT_STS='S'
-		)) B
+		))
+		B
 	</select>
-	
-	
-	
+
+
+
 	<select id="findCountByBatInfo" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo">
-		select COALESCE(sum(tot_Cnt),0) totsubCnt from ${GDEUPSB_SCHEMA}.GDEUPS_BATCH_CONSOLE_INFO
+		select COALESCE(sum(tot_Cnt),0) totsubCnt from
+		${GDEUPSB_SCHEMA}.GDEUPS_BATCH_CONSOLE_INFO
 		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="batNo!=null">
 				AND BAT_NO=#{batNo,jdbcType=CHAR}
@@ -1048,6 +1057,22 @@
 				AND EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=VARCHAR}
 			</if>
 		</trim>
+	</select>
+
+	<select id="findBatInformation" resultType="java.util.Map"
+		parameterType="java.util.Map">
+		SELECT * FROM EUPS.EUPS_BATCH_INFO_DETAIL WHERE BAT_NO IN
+		(SELECT BAT_NO FROM EUPS.EUPS_BATCH_CONSOLE_INFO WHERE RSV_FLD2 IN
+		(SELECT RSV_FLD7 FROM GDEUPSB.GDEUPS_BATCH_CONSOLE_INFO WHERE
+		EUPS_BUS_TYP=#{eupsBusTyp, jdbcType=CHAR} AND SUB_DTE &gt;=#{beginDate, jdbcType=DATE} AND SUB_DTE
+		&lt;=#{endDate, jdbcType=DATE}))
+	</select>
+	<select id="findBatInformationCount" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM EUPS.EUPS_BATCH_INFO_DETAIL WHERE BAT_NO IN
+		(SELECT BAT_NO FROM EUPS.EUPS_BATCH_CONSOLE_INFO WHERE RSV_FLD2 IN
+		(SELECT RSV_FLD7 FROM GDEUPSB.GDEUPS_BATCH_CONSOLE_INFO WHERE
+		EUPS_BUS_TYP=#{eupsBusTyp, jdbcType=CHAR} and sub_dte &gt;=#{beginDate, jdbcType=DATE} AND SUB_DTE
+		&lt;=#{endDate, jdbcType=DATE}))
 	</select>
 
 </mapper>
