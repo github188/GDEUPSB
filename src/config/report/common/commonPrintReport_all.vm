@@ -1,6 +1,6 @@
 #report(50)
 #rh(2)
- 			                $d.prtTtl
+ 			            $d.prtTtl
 #end
 #th(4)
 #para($f.fmt($d.prtDte, 'yyyy-MM-dd'))
