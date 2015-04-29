@@ -141,9 +141,9 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 			requestData.put("MSG_RECEIVER", "5100");
 			requestData.put("TRANS_IDO", sqn);
 			requestData.put("PROCESS_TIME", strTime);
-			requestData.put("EPARCHY_CODE", "0020");
-			requestData.put("CHANNEL_ID", "FSWSCD03");
-			requestData.put("OPER_ID", context.getData("tlr"));
+			requestData.put("EPARCHY_CODE", "0755");
+			requestData.put("CHANNEL_ID", "7BB73");
+			requestData.put("OPER_ID", "SZDQWSC1");//context.getData("tlr"));
 			requestData.put("SERVICE_NAME", "UserInfoService");
 			requestData.put("OPERATE_NAME", "qryUserProInfo");
 			requestData.put("RSP_CODE", "");
@@ -174,9 +174,9 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 		requestData.put("MSG_RECEIVER", "5100");
 		requestData.put("TRANS_IDO", sqn);
 		requestData.put("PROCESS_TIME", strTime);
-		requestData.put("EPARCHY_CODE", "0020");
-		requestData.put("CHANNEL_ID", "FSWSCD03");
-		requestData.put("OPER_ID", context.getData("tlr"));
+		requestData.put("EPARCHY_CODE", "0755");
+		requestData.put("CHANNEL_ID", "7BB73");
+		requestData.put("OPER_ID","SZDQWSC1" );//context.getData("tlr"));
 		requestData.put("SERVICE_NAME", "AcctInfoService");
 		 requestData.put("OPERATE_NAME", "acctInfoChange");
 		 requestData.put("RSP_CODE", "");
