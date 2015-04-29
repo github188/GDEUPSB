@@ -2,6 +2,6 @@
 <segment xmlns="http://www.bocom.com/jump/transformer/packet"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
-	name="460491Resp">
+	name="460492Resp">
 		<!-- 返回数据包为空 -->
 </segment>
