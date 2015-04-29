@@ -48,11 +48,13 @@ public class EupsManageCounterAgt extends BaseAction {
 
 		switch (oprType) {
 		case ADD:
+//			context.setData("TXT", context.getData("UsrNam"));
 			checkCusInfoByCusAc(context);
 			buildContextAndCallThd(context);
 			addAgentDeal(context);
 			break;
 		case UPDATE:
+//			context.setData("TXT", context.getData("UsrNam"));
 			checkCusInfoByCusAc(context);
 			checkOldBaseInfo(context);
 			buildContextAndCallThd(context);
@@ -67,7 +69,7 @@ public class EupsManageCounterAgt extends BaseAction {
 			deleteAgentDeal(context);
 			break;
 		}
-
+logger.info("======== ending context :" + context);
 	}
 
 	private void checkOldBaseInfo(Context context) throws CoreException {
@@ -217,13 +219,43 @@ public class EupsManageCounterAgt extends BaseAction {
 			log.info("没有查询到协议信息！");
 			throw new CoreException("没有查询到协议信息！");
 		}
-
+		
+		context.setData("ACN", list.get(0).getActNo());
+		context.setData("ActNo", list.get(0).getActNo());
+		context.setData("TXT", list.get(0).getUserName());
 	}
 
 	// 删除交易
 	private void deleteAgentDeal(Context context) throws CoreException {
-		GdeupsAgtElecTmp agtElecTmp = toGdeupsAgtElecTmp(context);
-		get(GdeupsAgtElecTmpRepository.class).deleteByFeeNum(agtElecTmp);
+		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
+
+		String feeNum = (String) context.getData("JFH");
+		String actNo = (String) context.getData("ActNo");
+		if (feeNum != null && !"".equals(feeNum.trim())) {
+			agtElecTmp.setFeeNum(feeNum); //
+		}
+
+		if (actNo != null && !"".equals(actNo.trim())) {
+			agtElecTmp.setActNo(actNo); //
+		}
+
+		List<GdeupsAgtElecTmp> list = get(GdeupsAgtElecTmpRepository.class)
+				.findBase(agtElecTmp);
+		if (list.size() > 0) {
+			agtElecTmp = list.get(0);
+			// 查询结果数据处理
+			setResponseResultFromAgts(context, agtElecTmp);
+		} else {
+			log.info("没有查询到协议信息！");
+			throw new CoreException("没有查询到协议信息！");
+		}
+		
+		context.setData("ACN", list.get(0).getActNo());
+		context.setData("ActNo", list.get(0).getActNo());
+		context.setData("TXT", list.get(0).getUserName());
+		
+		GdeupsAgtElecTmp delElecTmp = toGdeupsAgtElecTmp(context);
+		get(GdeupsAgtElecTmpRepository.class).deleteByFeeNum(delElecTmp);
 
 	}
 
