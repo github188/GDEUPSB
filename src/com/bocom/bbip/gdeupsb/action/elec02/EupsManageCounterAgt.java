@@ -68,7 +68,6 @@ public class EupsManageCounterAgt extends BaseAction {
 			break;
 		case DELETE:
 			deleteAgentDeal(context);
-			buildContextAndCallThd(context);
 			break;
 		}
 logger.info("======== ending context :" + context);
@@ -178,6 +177,15 @@ logger.info("======== ending context :" + context);
 			log.info("协议已经存在");
 			throw new CoreException("协议已经存在");
 		}
+		
+		GdeupsAgtElecTmp checkCusAc = new GdeupsAgtElecTmp();
+		checkCusAc.setActNo((String) context.getData("ActNo"));
+		List<GdeupsAgtElecTmp> acList = get(GdeupsAgtElecTmpRepository.class)
+				.find(agtElecTmp);
+		if (acList.size() > 0) {
+			log.info("该卡号已签约");
+			throw new CoreException("该卡号已签约");
+		}
 		agtElecTmp = toGdeupsAgtElecTmp(context);
 		get(GdeupsAgtElecTmpRepository.class).insert(agtElecTmp);
 		log.info("新增协议成功");
@@ -252,12 +260,14 @@ logger.info("======== ending context :" + context);
 			throw new CoreException("没有查询到协议信息！");
 		}
 		
+		GdeupsAgtElecTmp delElecTmp = toGdeupsAgtElecTmp(context);
+		get(GdeupsAgtElecTmpRepository.class).deleteByFeeNum(delElecTmp);
+		
+		buildContextAndCallThd(context);
+		
 		context.setData("ACN", list.get(0).getActNo());
 		context.setData("ActNo", list.get(0).getActNo());
 		context.setData("TXT", list.get(0).getUserName());
-		
-		GdeupsAgtElecTmp delElecTmp = toGdeupsAgtElecTmp(context);
-		get(GdeupsAgtElecTmpRepository.class).deleteByFeeNum(delElecTmp);
 
 	}
 
