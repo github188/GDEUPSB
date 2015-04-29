@@ -230,7 +230,8 @@ public class CusAgentServiceAction extends BaseAction{
 			
 			map.put("agtSrvCusPnm",context.getData("thdCusNme"));
 			map.put("agtSrvCusId",context.getData("cusNo"));
-			
+			map.put("ageBr", context.getData(ParamKeys.BK));
+			map.put("agrBr", context.getData(ParamKeys.BR));
 			map.put("comNo", context.getData(ParamKeys.COMPANY_NO));
 			EupsThdBaseInfo baseInfo = new EupsThdBaseInfo();
 			baseInfo.setEupsBusTyp((String) context.getData(ParamKeys.EUPS_BUSS_TYPE));
