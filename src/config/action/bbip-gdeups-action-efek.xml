@@ -67,8 +67,8 @@
 
 	<!-- 签到-->		
 	<action   class="com.bocom.bbip.gdeupsb.action.efek.EfekStartAction"
-		id="eups.efekStartAction" />		
+		id="gdeupsb.efekStartAction" />		
 	<!--  签退-->	
 	<action   class="com.bocom.bbip.gdeupsb.action.efek.EfekEndAction"
-		id="eups.efekEndAction" />		
+		id="gdeupsb.efekEndAction" />		
 </x:beans>
