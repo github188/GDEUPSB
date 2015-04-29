@@ -236,3 +236,23 @@
 	   </actions>
 	</process>
 </x:beans>
+
+	<!--向第三方签到签退 -->
+		<process id="eups.efekStart" template="eups.simpleTran"
+		interceptors="eups.transMessageInterceptor">
+		<actions>
+			<action id="act" ref="eups.efekStartAction" />
+			<action id="act" ref="eups.eupsManageThdTranCtlDetailAction" />
+			<action id="act" ref="eups.chlSignInOutServiceAction" operations="signInOutDeal" />
+		</actions>
+	</process>
+	<!--向第三方签到签退 -->
+		<process id="eups.efekEnd" template="eups.simpleTran"
+		interceptors="eups.transMessageInterceptor">
+		<actions>
+			<action id="act" ref="eups.efekEndAction" />
+			<action id="act" ref="eups.eupsManageThdTranCtlDetailAction" />
+			<action id="act" ref="eups.chlSignInOutServiceAction" operations="signInOutDeal" />
+		</actions>
+	</process>
+
