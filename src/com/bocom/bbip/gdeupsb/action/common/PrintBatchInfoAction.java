@@ -68,7 +68,13 @@ public class PrintBatchInfoAction extends BaseAction{
 								eupsBatchInfoDetails.setErrMsg("扣款成功");
 						}
 				}
-				context.setData("exeDte", DateUtils.formatAsSimpleDate(gdEupsBatchConsoleInfo.getExeDte()));
+				Date date=null;
+				if(gdEupsBatchConsoleInfo.getExeDte()!=null){
+						date=gdEupsBatchConsoleInfo.getExeDte();
+				}else{
+						date=new Date();
+				}
+				context.setData("exeDte", DateUtils.formatAsSimpleDate(date));
 				context.setData("comNo", eupsBatchConsoleInfo.getComNo());
 				context.setData(ParamKeys.TOT_CNT, eupsBatchConsoleInfo.getTotCnt());
 				context.setData(ParamKeys.TOT_AMT, eupsBatchConsoleInfo.getTotAmt());
@@ -95,11 +101,6 @@ public class PrintBatchInfoAction extends BaseAction{
 				String result = render.renderAsString("printBatch", context);
 				log.info("~~~~~~~~~~~~~~~~~~~~~"+result);
 				
-				//文件路径
-				EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("FSAG00");
-				eupsThdFtpConfig.setFtpDir("0");
-				eupsThdFtpConfig.setLocFleNme(fileName);
-				eupsThdFtpConfig.setRmtFleNme(fileName);
 				
 				StringBuffer batNoFile=new StringBuffer();
 				batNoFile.append("/home/bbipadm/data/GDEUPSB/report/");
@@ -128,17 +129,23 @@ public class PrintBatchInfoAction extends BaseAction{
 						e.printStackTrace();
 					}
 					//报表		
+					log.info("=============Start   Send   File==========");
+					EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("FSAG00");
+					eupsThdFtpConfig.setFtpDir("0");
+					eupsThdFtpConfig.setLocFleNme(fileName);
+					eupsThdFtpConfig.setRmtFleNme(fileName);
+					
 			        eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/report/"+fileName);
 			        eupsThdFtpConfig.setRmtWay("/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/"+ fileName);
 			        operateFTPAction.putCheckFile(eupsThdFtpConfig);
-					
+					log.info("=============放置报表文件");
 			        //反盘文件
 					eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/batch/"+fileName);
 					String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + context.getData(ParamKeys.BR)+ "/" ;
 					eupsThdFtpConfig.setRmtWay(path);
 					operateFTPAction.putCheckFile(eupsThdFtpConfig);
 					context.setData("printResult", fileName);
-				
+					log.info("=============放置反盘文件");
 				
 		}
 }
