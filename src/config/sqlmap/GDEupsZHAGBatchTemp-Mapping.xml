@@ -18,7 +18,7 @@
 		<result column="RSV_FLD4" property="rsvFld4" jdbcType="VARCHAR" />
 	</resultMap>
 <resultMap id="BaseResultMap2" type="java.util.Map">
-		<id column="SQN" property="sqn" jdbcType="INTEGER" />
+		<id column="SQN" property="sqn" jdbcType="CHAR" />
 		<result column="BAT_NO" property="batNo" jdbcType="CHAR" />
 		<result column="COM_NO" property="comNo" jdbcType="CHAR" />
 		<result column="TXN_TLR" property="txnTlr" jdbcType="CHAR" />
