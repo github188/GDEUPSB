@@ -2,9 +2,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/xml xml.xsd"
 	name="root" trace="true" encoding="UTF-8">
- <record name="soapenv:Body"><!-- 公共 -->
-      <record name="qryUserProInfo"><!-- 公共 -->
-			<record name="qryUserProInfoREQ"><!-- 公共 -->
+			<record name="qryUserProInfoRSP"><!-- 公共 -->
 				<record name="GD_BSS_HEAD"> 
 					<string name="CHANNEL_ID" alias="CHANNEL_ID" />  
 					<string name="EPARCHY_CODE" alias="EPARCHY_CODE" />  		
@@ -17,6 +15,7 @@
 					<string name="RSP_DESC" alias="RSP_DESC" />  		
 					<string name="SERVICE_NAME" alias="SERVICE_NAME" />  		
 					<string name="TEST_FLAG" alias="TEST_FLAG" />  		
+					<string name="TRANS_IDO" alias="TRANS_IDO" />  	
 				 </record>
 					<string name="END_DATE" alias="END_DATE" />  		
 					<string name="NEXT_END_DATE" alias="NEXT_END_DATE" />  
@@ -28,7 +27,5 @@
 					<string name="SERVICE_CLASS_CODE" alias="SERVICE_CLASS_CODE" />  
 					<string name="START_DATE" alias="START_DATE" />   
 			</record>
-		</record>
-	</record>
 </message>
 
