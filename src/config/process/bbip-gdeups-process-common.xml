@@ -95,7 +95,7 @@
 	<!-- 查询批次信息-->
 	<process id="gdeupsb.qryBatchInformation" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
 		<actions>
-			  <action id="act" ref="qryBatchInformation"   />
+			  <action id="act" ref="qryBatchInformationAction"   />
 		</actions>
 	</process>
 	
