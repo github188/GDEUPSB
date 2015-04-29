@@ -3,30 +3,43 @@
 	xmlns="http://www.bocom.com/schema/jump-core" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd       http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
 	<!-- 批量处理公共类 -->
-	<action id="eups.batchFileCommon" class="com.bocom.bbip.gdeupsb.action.common.BatchFileCommon"/>
-<!-- 批量查询批次信息 -->
-<action id="queryBatchInfo" class="com.bocom.bbip.gdeupsb.action.common.EupsQueryBatchStatusAction"/>
+	<action id="eups.batchFileCommon"
+		class="com.bocom.bbip.gdeupsb.action.common.BatchFileCommon" />
+	<!-- 批量查询批次信息 -->
+	<action id="queryBatchInfo"
+		class="com.bocom.bbip.gdeupsb.action.common.EupsQueryBatchStatusAction" />
 
-<action id="beforeCancelCheck" class="com.bocom.bbip.gdeupsb.action.common.CancelBatchCheckAction" />
-<!-- 批量处理公共撤销 -->
-<action id="cancelBatchProcess" class="com.bocom.bbip.comp.action.strategy.StrategyDelegatorAction">
-			<x:property name="executableBeanResolver"> 
-		 <x:bean class="com.bocom.bbip.comp.action.strategy.support.DefaultExecutableBeanResolver">
-		 <x:property name="strategyKey" value="eupsBusTyp" />
-		 </x:bean>
+	<action id="beforeCancelCheck"
+		class="com.bocom.bbip.gdeupsb.action.common.CancelBatchCheckAction" />
+	<!-- 批量处理公共撤销 -->
+	<action id="cancelBatchProcess"
+		class="com.bocom.bbip.comp.action.strategy.StrategyDelegatorAction">
+		<x:property name="executableBeanResolver">
+			<x:bean
+				class="com.bocom.bbip.comp.action.strategy.support.DefaultExecutableBeanResolver">
+				<x:property name="strategyKey" value="eupsBusTyp" />
+			</x:bean>
 		</x:property>
 	</action>
 	<!-- 批次详单查询 -->
-	<action id="BatchDetails" class="com.bocom.bbip.gdeupsb.action.common.BatchDetailsAction"/>
-	
+	<action id="BatchDetails"
+		class="com.bocom.bbip.gdeupsb.action.common.BatchDetailsAction" />
+
 	<!-- 打印批次信息 -->
-	<action id="gdeupsb.printBatchInfoAction" class="com.bocom.bbip.gdeupsb.action.common.PrintBatchInfoAction"/>
-	
+	<action id="gdeupsb.printBatchInfoAction"
+		class="com.bocom.bbip.gdeupsb.action.common.PrintBatchInfoAction" />
+
 	<!-- 报表打印 -->
-	<action id="gdeupsb.printEupsbRptsAction" class="com.bocom.bbip.gdeupsb.action.common.PrintEupsbRptsActionBak" />
-	
-	<action id="gdeupsb.gdPrintReportAction" class="com.bocom.bbip.gdeupsb.action.common.GdPrintReportAction" />
+	<action id="gdeupsb.printEupsbRptsAction"
+		class="com.bocom.bbip.gdeupsb.action.common.PrintEupsbRptsActionBak" />
+
+	<action id="gdeupsb.gdPrintReportAction"
+		class="com.bocom.bbip.gdeupsb.action.common.GdPrintReportAction" />
 	<!-- 查询报表信息 -->
-	<action id="qryReportInfo" class="com.bocom.bbip.gdeupsb.action.common.QryReportInfoAction" />
-		
+	<action id="qryReportInfo"
+		class="com.bocom.bbip.gdeupsb.action.common.QryReportInfoAction" />
+	<!-- 查询批扣信息 -->
+	<action id="qryBatchInformation"
+		class="com.bocom.bbip.gdeupsb.action.common.QryBatchInformationAction" />
+
 </x:beans>
