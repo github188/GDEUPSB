@@ -56,6 +56,9 @@ public class QryCusBaseMsgAction extends BaseAction{
 			context.setData(GDParamKeys.SVRCOD, "44");
 			context.setData(GDParamKeys.TOTNUM, "1");
 			callThd(context);
+			if(!context.getData(ParamKeys.OWE_FEE_AMT).toString().trim().equals("0")){
+					throw new CoreException("用户有欠费,需先缴费才能充值");
+			}
 			BigDecimal bigDecimal=new BigDecimal(context.getData(ParamKeys.OWE_FEE_AMT).toString()).scaleByPowerOfTen(-2);
 			BigDecimal oweFeeAmt=bigDecimal;
 			context.setData(ParamKeys.OWE_FEE_AMT, oweFeeAmt);
