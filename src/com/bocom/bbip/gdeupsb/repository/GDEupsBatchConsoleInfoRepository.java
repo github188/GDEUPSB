@@ -8,6 +8,8 @@ import com.bocom.bbip.data.annotation.Find;
 import com.bocom.bbip.data.annotation.FindOne;
 import com.bocom.bbip.data.annotation.Insert;
 import com.bocom.bbip.data.annotation.Update;
+import com.bocom.bbip.data.domain.Page;
+import com.bocom.bbip.data.domain.Pageable;
 import com.bocom.bbip.data.repository.PagingAndSortingRepository;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 
@@ -36,6 +38,12 @@ public interface GDEupsBatchConsoleInfoRepository extends PagingAndSortingReposi
 			Map<String, Object> detailMap);
 	@Find
 	public List<Map<String, Object>> findBatchRptInfo(
+			Map<String, Object> baseMap);
+	@Find
+	public List<Map<String, Object>> findBatInformation(
+			Map<String, Object> baseMap);
+
+	public Page<Map<String, Object>> findBatInformation(Pageable pageable,
 			Map<String, Object> baseMap);
 	
 }
