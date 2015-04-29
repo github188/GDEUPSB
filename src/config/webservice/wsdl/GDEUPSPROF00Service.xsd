@@ -256,7 +256,7 @@
   </xs:complexType>
   <xs:complexType name="queryPrintInvoiceRequest_CType">
     <xs:sequence>
-      <xs:element ref="tns:requestHeader"/>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="carNo" type="tns:carNo_SType" minOccurs="0"/>
       <xs:element name="carType" type="tns:carType_SType" minOccurs="0"/>
@@ -265,7 +265,7 @@
   </xs:complexType>
   <xs:complexType name="queryPrintInvoiceResponse_CType">
     <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
       <xs:element name="trDate" type="tns:trDate_SType" minOccurs="0"/>
       <xs:element name="thdKey" type="tns:thdKey_SType" minOccurs="0"/>
       <xs:element name="carNo" type="tns:carNo_SType" minOccurs="0"/>
@@ -331,7 +331,7 @@
   </xs:simpleType>
   <xs:complexType name="invoiceCancelGrantManagerRequest_CType">
     <xs:sequence>
-      <xs:element ref="tns:requestHeader"/>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="func" type="tns:func_SType"/>
       <xs:element name="tckNo" type="tns:tckNo_SType"/>
@@ -339,7 +339,7 @@
   </xs:complexType>
   <xs:complexType name="invoiceCancelGrantManagerResponse_CType">
     <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
       <xs:element name="invTyp" type="tns:invTyp_SType" minOccurs="0"/>
       <xs:element name="oprTlr" type="tns:oprTlr_SType" minOccurs="0"/>
       <xs:element name="ivBegNo" type="tns:ivBegNo_SType" minOccurs="0"/>
@@ -406,7 +406,7 @@
   </xs:simpleType>
   <xs:complexType name="invoiceReceiveManagerRequest_CType">
     <xs:sequence>
-      <xs:element ref="tns:requestHeader"/>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="invTyp" type="tns:invTyp_SType"/>
       <xs:element name="ivBegNo" type="tns:ivBegNo_SType"/>
@@ -414,7 +414,7 @@
   </xs:complexType>
   <xs:complexType name="invoiceReceiveManagerResponse_CType">
     <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
       <xs:element name="actDat" type="tns:actDat_SType" minOccurs="0"/>
       <xs:element name="seqNo" type="tns:seqNo_SType" minOccurs="0"/>
     </xs:sequence>
@@ -437,7 +437,7 @@
   </xs:simpleType>
   <xs:complexType name="invoiceInvalidManagerRequest_CType">
     <xs:sequence>
-      <xs:element ref="tns:requestHeader"/>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="invTyp" type="tns:invTyp_SType"/>
       <xs:element name="doType" type="tns:doType_SType"/>
@@ -446,7 +446,7 @@
   </xs:complexType>
   <xs:complexType name="invoiceInvalidManagerResponse_CType">
     <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
       <xs:element name="actDat" type="tns:actDat_SType" minOccurs="0"/>
       <xs:element name="ivBegNo" type="tns:ivBegNo_SType" minOccurs="0"/>
     </xs:sequence>
@@ -469,7 +469,7 @@
   </xs:simpleType>
   <xs:complexType name="invoiceUseManagerRequest_CType">
     <xs:sequence>
-      <xs:element ref="tns:requestHeader"/>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="invTyp" type="tns:invTyp_SType"/>
       <xs:element name="qyNo" type="tns:qyNo_SType"/>
@@ -479,7 +479,7 @@
   </xs:complexType>
   <xs:complexType name="invoiceUseManagerResponse_CType">
     <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
       <xs:element name="seqNo" type="tns:seqNo_SType" minOccurs="0"/>
       <xs:element name="actDat" type="tns:actDat_SType" minOccurs="0"/>
     </xs:sequence>
@@ -510,7 +510,7 @@
   </xs:simpleType>
   <xs:complexType name="invoiceGrantManagerRequest_CType">
     <xs:sequence>
-      <xs:element ref="tns:requestHeader"/>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="invTyp" type="tns:invTyp_SType"/>
       <xs:element name="oprTlr" type="tns:oprTlr_SType"/>
@@ -522,7 +522,7 @@
   </xs:complexType>
   <xs:complexType name="invoiceGrantManagerResponse_CType">
     <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
       <xs:element name="tckNo" type="tns:tckNo_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
@@ -536,13 +536,15 @@
   </xs:simpleType>
   <xs:complexType name="checkTlrPasswdRequest_CType">
     <xs:sequence>
-      <xs:element ref="tns:requestHeader"/>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="passwd" type="tns:passwd_SType"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="checkTlrPasswdResponse_CType">
-    <xs:sequence/>
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+    </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="passwd_SType">
     <xs:annotation>
@@ -554,14 +556,14 @@
   </xs:simpleType>
   <xs:complexType name="invoiceCheckManagerRequest_CType">
     <xs:sequence>
-      <xs:element ref="tns:requestHeader"/>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="invTyp" type="tns:invTyp_SType"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="invoiceCheckManagerResponse_CType">
     <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
       <xs:element name="useDat" type="tns:useDat_SType" minOccurs="0"/>
       <xs:element name="useNum" type="tns:useNum_SType" minOccurs="0"/>
       <xs:element name="clrNum" type="tns:clrNum_SType" minOccurs="0"/>
@@ -604,19 +606,19 @@
   </xs:simpleType>
   <xs:complexType name="atmInvDtlRequest_CType">
     <xs:sequence>
-      <xs:element ref="tns:requestHeader"/>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="func" type="tns:func_SType"/>
-      <xs:element name="invTyp" type="tns:invTyp_SType"/>
-      <xs:element name="begDat" type="tns:begDat_SType"/>
-      <xs:element name="endDat" type="tns:endDat_SType"/>
-      <xs:element name="qryNod" type="tns:qryNod_SType"/>
-      <xs:element name="prtFlg" type="tns:prtFlg_SType"/>
+      <xs:element name="invTyp" type="tns:invTyp_SType" minOccurs="0"/>
+      <xs:element name="begDat" type="tns:begDat_SType" minOccurs="0"/>
+      <xs:element name="endDat" type="tns:endDat_SType" minOccurs="0"/>
+      <xs:element name="qryNod" type="tns:qryNod_SType" minOccurs="0"/>
+      <xs:element name="prtFlg" type="tns:prtFlg_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="atmInvDtlResponse_CType">
     <xs:sequence>
-      <xs:element ref="tns:responseHeader"/>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
       <xs:element name="tol" type="tns:tol_SType" minOccurs="0"/>
       <xs:element name="rec1" type="tns:rec1_CType" minOccurs="0" maxOccurs="unbounded"/>
       <xs:element name="rec2" type="tns:rec2_CType" minOccurs="0" maxOccurs="unbounded"/>
@@ -636,7 +638,7 @@
       <xs:documentation>结束日期</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:maxLength value="3"/>
+      <xs:maxLength value="8"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="qryNod_SType">
@@ -644,7 +646,7 @@
       <xs:documentation>网点号</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:maxLength value="6"/>
+      <xs:maxLength value="11"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="prtFlg_SType">
@@ -728,13 +730,15 @@
   </xs:complexType>
   <xs:complexType name="updateTlrPasswdRequest_CType">
     <xs:sequence>
-      <xs:element ref="tns:requestHeader"/>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="newPwd" type="tns:newPwd_SType"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="updateTlrPasswdResponse_CType">
-    <xs:sequence/>
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+    </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="newPwd_SType">
     <xs:annotation>
@@ -746,12 +750,14 @@
   </xs:simpleType>
   <xs:complexType name="checkTlrInfRequest_CType">
     <xs:sequence>
-      <xs:element ref="tns:requestHeader"/>
+      <xs:element ref="tns:requestHeader" minOccurs="0"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
       <xs:element name="oprTlr" type="tns:oprTlr_SType"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="checkTlrInfResponse_CType">
-    <xs:sequence/>
+    <xs:sequence>
+      <xs:element ref="tns:responseHeader" minOccurs="0"/>
+    </xs:sequence>
   </xs:complexType>
 </xs:schema>

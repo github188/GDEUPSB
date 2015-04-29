@@ -45,6 +45,9 @@
   <wsdl:message name="checkTlrPasswdRequestMessage">
     <wsdl:part name="checkTlrPasswdRequest" element="gdeupsb:checkTlrPasswd"/>
   </wsdl:message>
+  <wsdl:message name="checkTlrPasswdResponseMessage">
+    <wsdl:part name="checkTlrPasswdResponse" element="gdeupsb:checkTlrPasswdResponse"/>
+  </wsdl:message>
   <wsdl:message name="invoiceCheckManagerRequestMessage">
     <wsdl:part name="invoiceCheckManagerRequest" element="gdeupsb:invoiceCheckManager"/>
   </wsdl:message>
@@ -60,8 +63,14 @@
   <wsdl:message name="updateTlrPasswdRequestMessage">
     <wsdl:part name="updateTlrPasswdRequest" element="gdeupsb:updateTlrPasswd"/>
   </wsdl:message>
+  <wsdl:message name="updateTlrPasswdResponseMessage">
+    <wsdl:part name="updateTlrPasswdResponse" element="gdeupsb:updateTlrPasswdResponse"/>
+  </wsdl:message>
   <wsdl:message name="checkTlrInfRequestMessage">
     <wsdl:part name="checkTlrInfRequest" element="gdeupsb:checkTlrInf"/>
+  </wsdl:message>
+  <wsdl:message name="checkTlrInfResponseMessage">
+    <wsdl:part name="checkTlrInfResponse" element="gdeupsb:checkTlrInfResponse"/>
   </wsdl:message>
   <wsdl:portType name="GDEUPSPROF00ServicePortType">
     <wsdl:operation name="queryPrintInvoice">
@@ -95,7 +104,9 @@
       <wsdl:output message="tns:invoiceGrantManagerResponseMessage"/>
     </wsdl:operation>
     <wsdl:operation name="checkTlrPasswd">
+      <wsdl:documentation/>
       <wsdl:input message="tns:checkTlrPasswdRequestMessage"/>
+      <wsdl:output message="tns:checkTlrPasswdResponseMessage"/>
     </wsdl:operation>
     <wsdl:operation name="invoiceCheckManager">
       <wsdl:documentation/>
@@ -108,10 +119,14 @@
       <wsdl:output message="tns:atmInvDtlResponseMessage"/>
     </wsdl:operation>
     <wsdl:operation name="updateTlrPasswd">
+      <wsdl:documentation/>
       <wsdl:input message="tns:updateTlrPasswdRequestMessage"/>
+      <wsdl:output message="tns:updateTlrPasswdResponseMessage"/>
     </wsdl:operation>
     <wsdl:operation name="checkTlrInf">
+      <wsdl:documentation/>
       <wsdl:input message="tns:checkTlrInfRequestMessage"/>
+      <wsdl:output message="tns:checkTlrInfResponseMessage"/>
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="GDEUPSPROF00ServiceSoapBinding" type="tns:GDEUPSPROF00ServicePortType">
@@ -175,6 +190,9 @@
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="invoiceCheckManager">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/invoiceCheckManager"/>
@@ -199,12 +217,18 @@
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="checkTlrInf">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSPROF00Service/checkTlrInf"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="GDEUPSPROF00Service">
