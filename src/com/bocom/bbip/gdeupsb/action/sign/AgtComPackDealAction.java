@@ -37,7 +37,9 @@ public class AgtComPackDealAction extends BaseAction {
 				context.setData(GDParamKeys.SIGN_STATION_BID, gdsBid);
 				context.setData(GDParamKeys.CCYCOD, "CNY");
 				context.setData("PinTyp", "2");
-				context=bbipPublicService.synExecute("gdeups.agtValidCheckProcess",context);
+				Context newContext=bbipPublicService.synExecute("gdeups.agtValidCheckProcess",context);
+				context.setDataMap(newContext.getDataMap());
+			    context.setVariables(newContext.getVariables());
 			}
 
 		}
