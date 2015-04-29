@@ -99,6 +99,8 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
         //根据单位编号寻找返盘格式文件解析
         String fmtFileName =null;
         String comNo=gdEupsBatchConsoleInfo.getComNo();
+        String fileName = comNo+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";   	
+        context.setData("printResult", fileName);
         int i=0;
         if(comNo.equals("4460000011")) { 
             fmtFileName="tvFbpeBatResultFmt";
@@ -177,7 +179,7 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 	
 	        EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("fbpeBathReturnFmt");
 	        //文件名
-	        String fileName = gdEupsBatchConsoleInfo.getComNo()+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";
+	        fileName = gdEupsBatchConsoleInfo.getComNo()+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";
 	        eupsThdFtpConfig.setFtpDir("0");
 	        eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/batch/"+fileName);
 	        eupsThdFtpConfig.setLocFleNme(fileName);
@@ -192,7 +194,6 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
     }
     public void createGasFile(Context context,List<EupsBatchInfoDetail> eupsBatchInfoDetailList,String comNo,String batNos){
     	String fileName = comNo+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";   	 
-    	context.setData("printResult", fileName);
     	EupsBatchConsoleInfo eupsBatchConsoleInfo=eupsBatchConsoleInfoRepository.findOne(batNos);
     	String batNo=eupsBatchConsoleInfo.getRsvFld1();
     	GDEupsBatchConsoleInfo gdEupsBatchConsoleInfos=gdEupsBatchConsoleInfoRepository.findOne(batNo);
