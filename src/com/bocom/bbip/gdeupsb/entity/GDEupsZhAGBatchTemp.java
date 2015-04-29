@@ -2,9 +2,6 @@ package com.bocom.bbip.gdeupsb.entity;
 
 import java.util.Date;
 
-import com.bocom.bbip.utils.NumberUtils;
-import com.bocom.bbip.utils.StringUtils;
-
 public class GDEupsZhAGBatchTemp {
 	private String sqn;
 
