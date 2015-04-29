@@ -75,13 +75,13 @@ public class PrePayToBankStrategyAction implements Executable{
 		gdEupsbTrspFeeInfo.setStatus(GDConstants.JF);
 		List<GDEupsbTrspFeeInfo> feeInfoList = gdEupsbTrspFeeInfoRepository.find(gdEupsbTrspFeeInfo);
 		if(!CollectionUtils.isEmpty(feeInfoList)){
-			ctx.setData(ParamKeys.RSP_CDE, GDErrorCodes.TRSP_INVOIC_NOT_EMPTY);
-			ctx.setData(ParamKeys.RSP_MSG, "用户存在已自助缴费但未打发票的记录，请先处理");
-//			TODO:<Set>MsgTyp=E</Set>
-//            <Set>RspCod=RBF999</Set>
-//            <Set>RspMsg=用户存在已自助缴费但未打发票的记录，请先处理</Set>
+//			ctx.setData(ParamKeys.RSP_CDE, GDErrorCodes.TRSP_INVOIC_NOT_EMPTY);
+//			ctx.setData(ParamKeys.RSP_MSG, "用户存在已自助缴费但未打发票的记录，请先处理");
+////			
+////            <Set>RspCod=RBF999</Set>
+////            <Set>RspMsg=用户存在已自助缴费但未打发票的记录，请先处理</Set>
 			ctx.setState("BUSINESS_PROCESSNIG_STATE_TRANS_FAIL");
-			throw new CoreException(ErrorCodes.EUPS_CHECK_FAIL);
+			throw new CoreException("BBIP4400EU0727");
 		}
 		
 //		TODO:
@@ -107,11 +107,11 @@ public class PrePayToBankStrategyAction implements Executable{
 		
 		List<GDEupsbTrspPayInfo> payInfoList = gdEupsTrspPayInfoRepository.find(gdEupsbTrspPayInfo);
 		if(CollectionUtils.isEmpty(payInfoList)){
-			ctx.setData(ParamKeys.RSP_CDE, "478613");
-			ctx.setData(ParamKeys.RSP_MSG, "无待缴费数据");
-			
+//			ctx.setData(ParamKeys.RSP_CDE, "478613");
+//			ctx.setData(ParamKeys.RSP_MSG, "无待缴费数据");
+//			
 			ctx.setState("BUSINESS_PROCESSNIG_STATE_TRANS_FAIL");
-			throw new CoreException(ErrorCodes.EUPS_CHECK_FAIL);
+			throw new CoreException("BBIP4400EU0728");
 		}else{
 		
 			ctx.setDataMap(BeanUtils.toMap(payInfoList.get(0)));
@@ -125,10 +125,10 @@ public class PrePayToBankStrategyAction implements Executable{
 		gdEupsbTrspTxnJnl.setThdKey(ctx.getData(GDParamKeys.THD_KEY).toString());
 		List<GDEupsbTrspTxnJnl> txnJnlList = gdEupsbTrspTxnJnlRepository.find(gdEupsbTrspTxnJnl);
 		if(!CollectionUtils.isEmpty(txnJnlList)){
-			ctx.setData(ParamKeys.RSP_CDE, "478608");
-			ctx.setData(ParamKeys.RSP_MSG, "交易重复");
+//			ctx.setData(ParamKeys.RSP_CDE, "478608");
+//			ctx.setData(ParamKeys.RSP_MSG, "交易重复");
 			ctx.setState("BUSINESS_PROCESSNIG_STATE_TRANS_FAIL");
-			throw new CoreException(ErrorCodes.EUPS_CHECK_FAIL);
+			throw new CoreException("BBIP4400EU0729");
 		}
 		
 		
