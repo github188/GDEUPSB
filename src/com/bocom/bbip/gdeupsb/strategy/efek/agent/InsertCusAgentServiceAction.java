@@ -154,7 +154,7 @@ public class InsertCusAgentServiceAction extends BaseAction {
 								    				log.info("============End  insert   EupsCusAgentJournal");
 								    				//Date  String
 								    				context.setData(ParamKeys.TXN_DTE,txnDte);
-								    				context.setData(ParamKeys.TXN_TME,DateUtils.parse(context.getData(ParamKeys.TXN_TME).toString()));
+								    				context.setData(ParamKeys.TXN_TME,DateUtils.parse(DateUtils.format(txnDte, DateUtils.STYLE_yyyyMMdd)+context.getData(ParamKeys.TXN_TME).toString()));
 								                }else{
 								                	
 								                	//第三方失败  协议删除

@@ -130,7 +130,7 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 												    				log.info("============End  insert   EupsCusAgentJournal");
 												    				//Date  String
 												    				context.setData(ParamKeys.TXN_DTE,txnDte);
-												    				context.setData(ParamKeys.TXN_TME,DateUtils.parse(context.getData(ParamKeys.TXN_TME).toString()));
+												    				context.setData(ParamKeys.TXN_TME,DateUtils.parse(DateUtils.format(txnDte, DateUtils.STYLE_yyyyMMdd)+context.getData(ParamKeys.TXN_TME).toString()));
 										                    }
 										                }else if(BPState.isBPStateOvertime(context)){
 										                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
@@ -178,7 +178,7 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 								eupsCusAgentJournal.setIdNo((String)context.getData("idNo"));
 								eupsCusAgentJournal.setTel((String)context.getData("cmuTel"));
 								eupsCusAgentJournal.setTxnDte(DateUtils.parse(DateUtils.format(new Date(), DateUtils.STYLE_SIMPLE_DATE),DateUtils.STYLE_SIMPLE_DATE));
-								eupsCusAgentJournal.setRsvFld2("301");;
+								eupsCusAgentJournal.setRsvFld2("301");
 								eupsCusAgentJournalRepository.insert(eupsCusAgentJournal);
 								log.info("============End  insert   EupsCusAgentJournal");
 						 }
