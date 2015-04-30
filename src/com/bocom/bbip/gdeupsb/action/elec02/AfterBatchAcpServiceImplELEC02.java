@@ -125,7 +125,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 			logger.info(".....................after findBySqn!!!");
 			elec02batchTmp = findOneInfo.get(0);
 			sts = dtl.getSts();
-			
+
 			elec02batchTmp.setRsvFld17(DateUtils.format(new Date(),
 					"yyyyMMddHHmmss"));
 
@@ -150,15 +150,15 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 				if ("CB1004".equals(errCde)) {
 					elec02batchTmp.setRsvFld15("4");
 				}
-//				if ("PDM252".equals(errCde)) {
-//					elec02batchTmp.setRsvFld15("4");
-//				}
-				if ("SDM015".equals(errCde)) {//SDM015记账账号状态字为全部法律冻结、全部内部止付、冻结暂封、存款证明止付、质押或者保全冻结
+				// if ("PDM252".equals(errCde)) {
+				// elec02batchTmp.setRsvFld15("4");
+				// }
+				if ("SDM015".equals(errCde)) {// SDM015记账账号状态字为全部法律冻结、全部内部止付、冻结暂封、存款证明止付、质押或者保全冻结
 					elec02batchTmp.setRsvFld15("5");
 				}
-//TODO			if(){
-//					
-//				}
+				// TODO if(){
+				//
+				// }
 				elec02batchTmp.setRsvFld16(dtl.getErrMsg());
 			}
 
@@ -194,43 +194,47 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(
 				batchConsoleInfo);
 
-		batchConsoleInfo.setRsvFld8("1");//收付标志,固定为收1
-		batchConsoleInfo.setRsvFld2("0000");//retCode
-		batchConsoleInfo.setRsvFld3("交易成功");//retMsg
+		batchConsoleInfo.setRsvFld8("1");// 收付标志,固定为收1
+		batchConsoleInfo.setRsvFld2("0000");// retCode
+		batchConsoleInfo.setRsvFld3("交易成功");// retMsg
 
 		ret.put("header", batchConsoleInfo);
 		ret.put("detail", tempList);
 
 		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class)
 				.findOne("elec02BatchThdFileTest");
-		
+
 		String backFlieName = config.getLocFleNme();
-		backFlieName = backFlieName.subSequence(0, 10) + "fh";
-		
-		//TODO 文件名举例： 0011900ptfh20080808_173030.txt
-		String fliTme = DateUtils.format(new Date(), "yyyyMMdd_HHmmss");
-		String fileName = backFlieName + fliTme + ".txt";
-		config.setLocFleNme(fileName);
-		config.setRmtFleNme(fileName);
-		log.info("上送给第三方的文件名为:"+config.getRmtFleNme());
+		backFlieName = backFlieName.replace('s', 'h');
+		config.setLocFleNme(backFlieName);
+		config.setRmtFleNme(backFlieName);
+
+		// backFlieName = backFlieName.substring(0, 9) + "fh";
+		// //TODO 文件名举例： 0011900ptfh20080808_173030.txt
+		// String fliTme = DateUtils.format(new Date(), "yyyyMMdd_HHmmss");
+		// String fileName = backFlieName + fliTme + ".txt";
+		// config.setLocFleNme(fileName);
+		// config.setRmtFleNme(fileName);
+		log.info("上送给第三方的文件名为:" + config.getRmtFleNme());
 
 		Assert.isFalse(null == config, ErrorCodes.EUPS_THD_FTP_CONFIG_NOTEXIST);
 
 		((OperateFileAction) get("opeFile")).createCheckFile(config,
 				"ELEC02BatchBack", config.getLocFleNme(), ret);
-
+		logger.info("=========== createCheckFile successfully ======== ");
+		
 		config.setFtpDir("0");// 0-外发
 		((OperateFTPAction) get("opeFTP")).putCheckFile(config);
-		
+
 		logger.info("======= context after put file to thd ftp:" + context);
-		
+
 		/** 通知第三方 */
-		
+
 		context.setData("AppTradeCode", "23");
 		context.setData("StartAddr", "301");
 		context.setData("DestAddr", "0500");
 
-//		String br = context.getData(ParamKeys.BR);
+		// String br = context.getData(ParamKeys.BR);
 		String sqnTmp = bbipPublicService.getBBIPSequence();
 		sqnTmp = sqnTmp.substring(12);
 		String msgId = br + " " + sqnTmp;
@@ -252,11 +256,11 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 				.getBBIPSequence();
 		context.setData("LogNo", StringUtils.substring(logNo, 4));
 		context.setData("TMN", context.getData(ParamKeys.BK));// 经办网点
-		
-//		String tlr= context.getData(ParamKeys.TELLER);
-		
-		//tlr截取后5位
-		context.setData("STO",tlr.substring(2));
+
+		// String tlr= context.getData(ParamKeys.TELLER);
+
+		// tlr截取后5位
+		context.setData("STO", tlr.substring(2));
 		context.setData("HAN", sucCnt);
 		context.setData("HAM", sucAmt);
 		context.setData("LSN", failCnt);
