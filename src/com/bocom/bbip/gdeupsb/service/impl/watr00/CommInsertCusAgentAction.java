@@ -43,7 +43,7 @@ public class CommInsertCusAgentAction extends BaseAction{
 	
 	public void execute(Context context) throws CoreRuntimeException,CoreException{
 		logger.info("CommInsertCusAgentServiceActionWATR00 callThd start ... ...");
-		// TODO:为第三方接口报文字段赋值，发送请求至第三方
+		
 		context.setData("type", "Y007");
 		context.setData("accountdate", DateUtils.format(
 				(Date) context.getData(ParamKeys.AC_DATE),
