@@ -111,11 +111,7 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 			temp.setCusAc(StringUtils.isBlank(temp.getCusAc())?temp.getThdCusNo():temp.getCusAc());
 			temp.setCusNme(StringUtils.isBlank(temp.getCusNme())?temp.getThdCusNme():temp.getCusNme());
 			temp.setThdCusNo(StringUtils.isBlank(temp.getCusAc())?temp.getThdCusNo():temp.getCusAc());
-			if(get(AccountService.class).isOurBankCard(temp.getCusAc())){
-					temp.setRsvFld4("0");
-			}else{
-					temp.setRsvFld4("1");
-			}
+			temp.setRsvFld4("0");
 			temp.setThdCusNme(StringUtils.isBlank(temp.getCusNme())?temp.getThdCusNme():temp.getCusNme());
 		}
 		List<Map<String,Object>> detail=(List<Map<String, Object>>) BeanUtils.toMaps(lt);
