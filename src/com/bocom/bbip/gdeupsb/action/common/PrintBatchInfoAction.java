@@ -99,6 +99,9 @@ public class PrintBatchInfoAction extends BaseAction{
 				//拼装文件
 				Map<String, String> map = new HashMap<String, String>();
 				map.put("printBatch", "config/report/common/printBatch.vm");
+				if(context.getData("eupsBusTyp").toString().trim().equals("ZHAG00")){
+					map.put("printBatch", "config/report/common/printBatchZHAG.vm");
+				}
 				render.setReportNameTemplateLocationMapping(map);
 				context.setData("eles", list);
 				String result = render.renderAsString("printBatch", context);
