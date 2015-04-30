@@ -131,17 +131,6 @@ public class PrePayToBankStrategyAction implements Executable{
 			throw new CoreException("BBIP4400EU0729");
 		}
 		
-		
-//		TODO:
-//			 <Set>Mask=STRCAT(9,$BBusTyp)</Set>
-
-		
-//		ctx.setData(ParamKeys.CCY, "0");
-//		ctx.setData(GDParamKeys.TXN_MOD, "4");
-//		
-//        ctx.setData("brNo", "443999");
-		
-		
 	
 		gdEupsbTrspTxnJnl = BeanUtils.toObject(ctx.getDataMap(),GDEupsbTrspTxnJnl.class);
 		
