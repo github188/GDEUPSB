@@ -108,6 +108,7 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
         } else if (comNo.equals("4460002194")) {
         	 i=2;
          	createGasFile(context, eupsBatchInfoDetailList, comNo,batNos);
+         	log.info("=================="+context.getData("printResult"));
          	return;
         }  else if (comNo.equals("4460000010")) {
         	 i=3;
