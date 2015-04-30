@@ -10,16 +10,17 @@ import java.util.Properties;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
 import com.bocom.bbip.eups.action.BaseAction;
-import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsBatchInfoDetail;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
+import com.bocom.bbip.eups.repository.EupsBatchInfoDetailRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
 import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
@@ -36,53 +37,35 @@ import com.bocom.jump.bp.core.CoreException;
 
 public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterBatchAcpService {
 	private static final Log logger = LogFactory.getLog(AfterBatchAcpServiceImplZHAG00.class);
-
+	@Autowired
+	EupsBatchInfoDetailRepository eupsBatchInfoDetailRepository;
+	@Autowired
+	GDEupsZHAGBatchTempRepository gdEupsZHAGBatchTempRepository;
 	@Override
 	public void afterBatchDeal(AfterBatchAcpDomain arg0, Context context)
 			throws CoreException {
 		logger.info("返盘文件处理开始");
+		String batNos=context.getData("batNo").toString();
 		GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).eupsBatchConSoleInfoAndgdEupsBatchConSoleInfo(context);
-		Map<String,Object>ret=new HashMap<String,Object>();
-        final List result=(List<EupsBatchInfoDetail>)context.getVariable("detailList");
-        Assert.isNotEmpty(result, ErrorCodes.EUPS_QUERY_NO_DATA);
-        
-		
+		String batNo=gdEupsBatchConsoleInfo.getBatNo();
+		//返回结果集合
+		EupsBatchInfoDetail eupsBatchInfoDetails=new EupsBatchInfoDetail();
+		eupsBatchInfoDetails.setBatNo(batNos);
+        List<EupsBatchInfoDetail>list= eupsBatchInfoDetailRepository.find(eupsBatchInfoDetails);
+        Assert.isNotEmpty(list, ErrorCodes.EUPS_QUERY_NO_DATA);
+        		
         EupsThdFtpConfig config=get(EupsThdFtpConfigRepository.class).findOne("zhag00");
-        Assert.isFalse(null == config, ErrorCodes.EUPS_THD_FTP_CONFIG_NOTEXIST);
-        List<Map<String,String>>resultMap=(List<Map<String, String>>) BeanUtils.toMaps(result);
-		List <GDEupsZhAGBatchTemp>lt=get(GDEupsZHAGBatchTempRepository.class)
-		.findByBatNo((String)context.getData(ParamKeys.BAT_NO));
-		List<Map<String,Object>>tempMap=(List<Map<String, Object>>) BeanUtils.toMaps(lt);
+        
+      //拼装Map文件
+		Map<String, Object> resultMap = createFileMap(context,gdEupsBatchConsoleInfo);
 		
-		for(int i=0;i<tempMap.size();i++){
-			tempMap.get(i).putAll(resultMap.get(i));
-		}
-		ret.put("header", context.getDataMapDirectly());
-		ret.put("detail", tempMap);
-		String formatOut=gdEupsBatchConsoleInfo.getComNo();
+		String formatOut=findFormat(gdEupsBatchConsoleInfo.getComNo());
 		String fileName=gdEupsBatchConsoleInfo.getComNo()+".txt";
 		config.setLocFleNme(fileName);
 		config.setLocDir("/home/bbipadm/data/GDEUPSB/batch/");
 		config.setRmtFleNme(fileName);
-        ((OperateFileAction)get("opeFile")).createCheckFile(config, formatOut, fileName, ret);
-        
-        
-        // TODO FTP上传设置
-        FTPTransfer tFTPTransfer = new FTPTransfer();
-        tFTPTransfer.setHost("182.53.15.187");
-		tFTPTransfer.setPort(21);
-		tFTPTransfer.setUserName("weblogic");
-		tFTPTransfer.setPassword("123456");
-		String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + context.getData(ParamKeys.BR)+ "/" ;
-		 try {
-		       	tFTPTransfer.logon();
-		        Resource tResource = new FileSystemResource("/home/bbipadm/data/GDEUPSB/batch/"+fileName);
-		        tFTPTransfer.putResource(tResource, path, fileName);
-		 } catch (Exception e) {
-		       	throw new CoreException("文件上传失败");
-		 } finally {
-		       	tFTPTransfer.logout();
-		 }
+        ((OperateFileAction)get("opeFile")).createCheckFile(config, formatOut, fileName, resultMap);
+               
 		 logger.info("返盘文件处理结束");
 
 	}
@@ -109,4 +92,22 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
 		  
 		  return propMap.get(comNo);
 	  }
+		/**
+		 * 拼装Map返回文件
+		 */
+		public Map<String, Object> createFileMap(Context context,GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo){
+				logger.info("===============Start  BatchDataResultFileAction  createFileMap");	
+				Map<String, Object> resultMap=new HashMap<String, Object>();
+				Map<String, Object> resultMapHead = BeanUtils.toMap(gdEupsBatchConsoleInfo);
+				
+				resultMap.put(ParamKeys.EUPS_FILE_HEADER, resultMapHead);
+				//文件内容 
+				GDEupsZhAGBatchTemp gdEupsZHAGBatchTemp =new  GDEupsZhAGBatchTemp();
+				gdEupsZHAGBatchTemp.setBatNo(gdEupsBatchConsoleInfo.getBatNo());
+				List<GDEupsZhAGBatchTemp> detailList=gdEupsZHAGBatchTempRepository.find(gdEupsZHAGBatchTemp);
+				resultMap.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(detailList));
+				logger.info("===============End   BatchDataResultFileAction  createFileMap");	
+				return resultMap;
+		}
+		
 }
