@@ -65,6 +65,7 @@
   </delete>
 	<select id="batchInsert" parameterType="java.util.List">
 		insert into ${GDEUPSB_SCHEMA}.GDEUPS_ZHAG_BATCH_TEMP ( 
+		SQN,
 		BAT_NO,
 		 
 		COM_NO,
@@ -82,7 +83,8 @@
 		RSV_FLD4)
 		values
 		<foreach collection="list" item="item" index="index" separator=",">
-			( #{item.batNo},
+			( #{item.sqn},
+			#{item.batNo},
 			#{item.comNo},
 			#{item.txnTlr},
 			#{item.subDte},
