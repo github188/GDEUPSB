@@ -16,6 +16,7 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
 import com.bocom.bbip.comp.BBIPPublicService;
+import com.bocom.bbip.comp.account.AccountService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
@@ -110,6 +111,11 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 			temp.setCusAc(StringUtils.isBlank(temp.getCusAc())?temp.getThdCusNo():temp.getCusAc());
 			temp.setCusNme(StringUtils.isBlank(temp.getCusNme())?temp.getThdCusNme():temp.getCusNme());
 			temp.setThdCusNo(StringUtils.isBlank(temp.getCusAc())?temp.getThdCusNo():temp.getCusAc());
+			if(get(AccountService.class).isOurBankCard(temp.getCusAc())){
+					temp.setRsvFld4("0");
+			}else{
+					temp.setRsvFld4("1");
+			}
 			temp.setThdCusNme(StringUtils.isBlank(temp.getCusNme())?temp.getThdCusNme():temp.getCusNme());
 		}
 		List<Map<String,Object>> detail=(List<Map<String, Object>>) BeanUtils.toMaps(lt);
