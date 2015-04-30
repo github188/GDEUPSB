@@ -110,14 +110,14 @@ public class BatchGashDealServiceAction extends BaseAction implements
 		String batNo1 = context.getData(ParamKeys.BAT_NO);
 		context.setData("batNo1", batNo1);
 		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class)
-				.findOne((String) context.getData(ParamKeys.FTP_ID));
+				.findOne((String) context.getData(ParamKeys.FTP_ID));//PGAS00Bat
 		Assert.isFalse(null == config, ErrorCodes.EUPS_THD_FTP_CONFIG_NOTEXIST);
 
 		config.setRmtFleNme(fleNme);
 		config.setLocFleNme(fleNme);
-		get(EupsThdFtpConfigRepository.class).update(config);
-		
+		logger.info("======>> context before get file from ftp : " + context);
 		get(OperateFTPAction.class).getFileFromFtp(config);
+		get(EupsThdFtpConfigRepository.class).update(config);
 
 		Map<String, Map<String, Object>> result = pareseFile(config,
 				"PGAS00BatFmt");
