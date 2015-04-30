@@ -105,4 +105,9 @@
 
 </select>
 
+	<update id="update"  resultType="java.util.Map"  parameterType="java.util.Map">
+			update ${EUPS_SCHEMA}.GDEUPSB.GDEUPS_ZHAG_BATCH_TEMP 
+			set RSV_FLD2= #{rsvFld2,jdbcType=CHAR} where SQN = #{sqn,jdbcType=CHAR}
+	</update>
+
 </mapper>
