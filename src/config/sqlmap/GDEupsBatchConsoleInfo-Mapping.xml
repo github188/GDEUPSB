@@ -1064,14 +1064,14 @@
 		SELECT * FROM EUPS.EUPS_BATCH_INFO_DETAIL WHERE BAT_NO IN
 		(SELECT BAT_NO FROM EUPS.EUPS_BATCH_CONSOLE_INFO WHERE RSV_FLD2 IN
 		(SELECT RSV_FLD7 FROM GDEUPSB.GDEUPS_BATCH_CONSOLE_INFO WHERE
-		EUPS_BUS_TYP=#{eupsBusTyp, jdbcType=CHAR} AND SUB_DTE &gt;=#{beginDate, jdbcType=DATE} AND SUB_DTE
+		EUPS_BUS_TYP=#{eupsBusTyp, jdbcType=CHAR} AND EXE_DTE &gt;=#{beginDate, jdbcType=DATE} AND EXE_DTE
 		&lt;=#{endDate, jdbcType=DATE}))
 	</select>
 	<select id="findBatInformationCount" resultType="java.lang.Integer">
 		SELECT COUNT(*) FROM EUPS.EUPS_BATCH_INFO_DETAIL WHERE BAT_NO IN
 		(SELECT BAT_NO FROM EUPS.EUPS_BATCH_CONSOLE_INFO WHERE RSV_FLD2 IN
 		(SELECT RSV_FLD7 FROM GDEUPSB.GDEUPS_BATCH_CONSOLE_INFO WHERE
-		EUPS_BUS_TYP=#{eupsBusTyp, jdbcType=CHAR} and sub_dte &gt;=#{beginDate, jdbcType=DATE} AND SUB_DTE
+		EUPS_BUS_TYP=#{eupsBusTyp, jdbcType=CHAR} and EXE_DTE &gt;=#{beginDate, jdbcType=DATE} AND EXE_DTE
 		&lt;=#{endDate, jdbcType=DATE}))
 	</select>
 
