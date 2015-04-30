@@ -222,7 +222,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		((OperateFileAction) get("opeFile")).createCheckFile(config,
 				"ELEC02BatchBack", config.getLocFleNme(), ret);
 		logger.info("=========== createCheckFile successfully ======== ");
-		
+
 		config.setFtpDir("0");// 0-外发
 		((OperateFTPAction) get("opeFTP")).putCheckFile(config);
 
@@ -265,6 +265,8 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		context.setData("HAM", sucAmt);
 		context.setData("LSN", failCnt);
 		context.setData("LSM", failAmt);
+		// 执行到此，表示批扣返盘完成，返回第三方00表示22报文成功
+		context.setData("responseCodeTHD", "00");
 
 		Map<String, Object> thdResult = callThdTradeManager.trade(context);
 		if (BPState.isBPStateOvertime(context)) {
