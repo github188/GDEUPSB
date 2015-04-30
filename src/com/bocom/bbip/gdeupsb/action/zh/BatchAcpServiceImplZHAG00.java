@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
@@ -49,6 +50,8 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 	private static final Log logger=LogFactory.getLog(BatchAcpServiceImplZHAG00.class);
 	@Autowired
 	GDEupsZHAGBatchTempRepository gdEupsZHAGBatchTempRepository;
+	@Autowired
+	BBIPPublicService bbipPublicService;
 	/**
 	 * 珠海文本  数据准备
 	 */
@@ -92,6 +95,7 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(info);
 		List <GDEupsZhAGBatchTemp>list=(List<GDEupsZhAGBatchTemp>) BeanUtils.toObjects(lst, GDEupsZhAGBatchTemp.class);
         for(GDEupsZhAGBatchTemp tmp:list){
+        	tmp.setSqn(bbipPublicService.getBBIPSequence());
         	tmp.setBatNo((String)context.getData(ParamKeys.BAT_NO));
         }
 		/**插入临时表中*/
