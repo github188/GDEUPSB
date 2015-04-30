@@ -128,6 +128,7 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 				tmp.setRsvFld12("0");
 			}
 			tmpSqn = eleTmpSqn + bbipPublicService.getBBIPSequence().toString().substring(13);
+			tmp.setTxnTlr(tlr);
 			tmp.setSqn(tmpSqn);
 			tmp.setBatNo(batchNo);
 			tmp.setRsvFld17(DateUtils.format(new Date(), "yyyyMMddHHmmss")); //实时
