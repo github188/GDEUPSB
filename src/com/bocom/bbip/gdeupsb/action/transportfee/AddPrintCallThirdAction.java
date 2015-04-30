@@ -8,8 +8,10 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
+import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
@@ -17,6 +19,7 @@ import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspFeeInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspInvChgInfoRepository;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.euif.component.util.StringUtil;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -51,7 +54,10 @@ public class AddPrintCallThirdAction extends BaseAction {
 		Map<String, Object> thdReturnMessage = callThdTradeManager.trade(ctx);
 		log.info("callThdTradeManager start......");
 		if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL)){
-			if ("000".equals(thdReturnMessage.get("trspCd"))) {
+			CommThdRspCdeAction cRspCdeAction = new CommThdRspCdeAction();
+			String responseCode = cRspCdeAction.getThdRspCde(thdReturnMessage, 	ctx.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
+			log.info("responseCode:["+responseCode+"]");
+			if (Constants.RESPONSE_CODE_SUCC.equals(responseCode)) {
 				ctx.setData(ParamKeys.RSP_CDE, "000");
 
 				GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
@@ -69,36 +75,26 @@ public class AddPrintCallThirdAction extends BaseAction {
 				ctx.setState("complete");
 
 			} else {
-				ctx.setData(ParamKeys.RSP_MSG,
-						"路桥方返回：" + thdReturnMessage.get("trspCd"));
-				// throw new CoreRuntimeException(
-				// ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
-				System.out.println("路桥方返回：" + thdReturnMessage.get("trspCd"));
-				throw new CoreRuntimeException(
-						ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
+//				ctx.setData(ParamKeys.RSP_MSG,
+//						"路桥方返回：" + thdReturnMessage.get("thdRspCde"));
+//				// throw new CoreRuntimeException(
+//				// ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
+//				System.out.println("路桥方返回：" + thdReturnMessage.get("trspCd"));
+				if(StringUtil.isEmpty(responseCode)){
+					responseCode = ErrorCodes.EUPS_THD_RSP_CODE_ERROR;
+				}
+				throw new CoreException(responseCode);
 				// ctx.setState("error");
 			}
 		}else if (ctx.getState().equals(
 				BPState.BUSINESS_PROCESSNIG_STATE_TRANS_FAIL)) {
 			ctx.setData(ParamKeys.RSP_MSG, "路桥方交易失败");
-			throw new CoreRuntimeException(
-					ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
+			throw new CoreException(ErrorCodes.EUPS_THD_SYS_ERROR);
 		} else {
 			ctx.setData(ParamKeys.RSP_MSG, "路桥方交易超时");
-			throw new CoreRuntimeException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
+			throw new CoreException(ErrorCodes.EUPS_THD_SYS_ERROR);
 
 		} 
-		
-
-		// <Set>OLogNo=$PayLog</Set>
-		// <Set>FilNam=STRCAT(INVO,$TlrId,00)</Set>
-
-		// <Exec func="PUB:GenerateReport">
-		// <Arg name="ObjFil" value="STRCAT($TSDir,$FilNam)"/>
-		// <Arg name="FmtFil" value="etc/BRBFINV_RPT.XML"/>
-		// <Arg name="OLogNo" value="$OLogNo"/>
-		// <Arg name="NodNo" value="$NodNo"/>
-		// </Exec>
 	}
 
 }
