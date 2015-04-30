@@ -4,6 +4,7 @@
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
 	 encoding="GBK" trace="true" filter="both,WEB-INF/classes/config/stream/ELEC02/translateDict.txt">
 	<segment name="responseHead">
+		<!-- 第三方发起交易，交易返回头 -->
 		<fixString name="TransCode"   length="3" mapping="true" /> <!-- 业务交易码 -->
 			<fixString name="responseCodeTHD"   length="2" default="79"/>		<!--交易返回码-->
 			<fixString name="rspMsg"      length="60" default="其他错误信息"/>		<!--交易返回错误信息-->

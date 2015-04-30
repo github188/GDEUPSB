@@ -4,6 +4,8 @@
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
 	type="LLLLLLLLLL" encoding="GBK" trace="true"> 
 	<segment name="requestHead">
+	
+	<!-- 第三方发起交易  交易请求头 -->
 		<fixString name="AppTradeCode" length="3"/> <!-- 业务交易码 -->
 		<fixString name="StartAddr"       length="12" /><!-- 银行电网/供电企业代码 -->
 		<fixString name="DestAddr"        length="12" /><!-- 银行电网/供电企业代码 -->

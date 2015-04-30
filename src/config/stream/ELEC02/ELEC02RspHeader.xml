@@ -4,6 +4,8 @@
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
 	type="LLLLLLLLLL"  encoding="GBK" trace="true">
 	<segment name="responseHead">
+	
+	<!-- 银行发起交易，第三方返回头 -->
 		<fixString name="AppTradeCode"   length="3"/> <!-- 业务交易码 -->
 		<fixString name="thdRspCde"        length="2" /><!-- 正确交易返回”00” -->
 		<fixString name="ReturnMessage"  length="60" /><!-- 交易发生错误时返回的错误信息 -->

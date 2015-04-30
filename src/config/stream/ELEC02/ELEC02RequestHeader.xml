@@ -4,6 +4,8 @@
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
 	 encoding="GBK" trace="true" filter="both,WEB-INF/classes/config/stream/ELEC02/translateDict.txt"> 
 	<segment name="requestHead">
+	
+	<!-- 貌似没用 -->
 		<fixString name="TransCode" length="3" referred="true" mapping="true" /> <!-- 业务交易码 -->
 		    <fixString name="StartAddr"   length="12" />	<!--源地址-->
 			<fixString name="DestAddr"    length="12" />		<!--目标地址-->
