@@ -121,6 +121,7 @@ public class MsgToGasAftBatchAction extends BaseAction implements
 		}
 
 		gasFtpCfg.setFtpDir("0");
+		gasFtpCfg.setRmtWay("/BANK/CNJT/reckoning");
 		operateFTPAction.putCheckFile(gasFtpCfg);
 
 		// TODO 通知第三方
