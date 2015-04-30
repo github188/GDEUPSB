@@ -20,5 +20,4 @@
 			<fixString name="dedit" length="17" /><!--  违约金	WYJ	Number(14,2)-->
 			<!--<fixString name="payType"  length="3"/> 费用类型 -->
 	</segment>
-	FULL_DED_FLAG
 </message>
