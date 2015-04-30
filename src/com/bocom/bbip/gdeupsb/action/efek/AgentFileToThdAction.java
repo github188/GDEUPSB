@@ -207,7 +207,7 @@ public class AgentFileToThdAction extends BaseAction{
 
 		 public  Process RecvEnCryptFile(String excPath, String srcFile, String objFile,Context context) throws IOException, InterruptedException, CoreRuntimeException, CoreException {
 		    	log.info("================Start BatchDataFileActiion  RecvEnCryptFile");	    	
-		        String cmd="ssh icsadm@182.53.15.200 /app/ics/app/efek/bin/EfeFilSend.sh 182.53.201.46 bcm exchange dat/efek/send "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
+		        String cmd="ssh icsadm@182.53.15.200 /app/ics/app/efek/bin/EfeFilSend.sh 182.53.201.45 bcm exchange dat/efek/send "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
 		        log.info("cmd=" + cmd);
 		        Process proc = Runtime.getRuntime().exec(cmd);
 		        proc.waitFor();
