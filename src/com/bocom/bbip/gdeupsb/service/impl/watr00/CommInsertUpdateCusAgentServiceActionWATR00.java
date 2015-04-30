@@ -166,7 +166,7 @@ public class CommInsertUpdateCusAgentServiceActionWATR00 extends BaseAction{
 			context.setData("cusNo", context.getData("thdCusNo"));
 			get(BBIPPublicService.class).synExecute("gdeupsb.commUpdateCusAgent", context);
 		}else{
-			throw new CoreException("操作类型有误!");
+			throw new CoreException("BBIP4400EU0429");
 		}
 	}
 	
