@@ -159,7 +159,7 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 		Map<String, Object> headAgt = new HashMap<String, Object>();
 		headAgt.put("totCnt", i);
 		headAgt.put("totAmt", amtTot.toString());
-		headAgt.put("comNo", context.getData("comNo"));
+		headAgt.put("comNo", context.getData("comNoAcps"));
 		
 		// 更新总笔数，总金额等信息,备用字段2，3分别表示其真正的笔数，金额
 		GDEupsBatchConsoleInfo info = ContextUtils.getDataAsObject(context, GDEupsBatchConsoleInfo.class);
@@ -202,6 +202,9 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 		if(StringUtils.isEmpty(rspMsg)){
 			context.setData("rspMsg", "交易成功");
 		}
+		
+		//执行到此，表示批扣准备完成，返回第三方00表示22报文成功
+		context.setData("responseCodeTHD", "00");
 		
 	}
 
