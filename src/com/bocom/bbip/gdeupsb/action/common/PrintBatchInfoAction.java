@@ -56,6 +56,7 @@ public class PrintBatchInfoAction extends BaseAction{
 //				String fleNme=gdEupsBatchConsoleInfo.getRsvFld8();
 				context.setData("eupsBusTyp", gdEupsBatchConsoleInfo.getEupsBusTyp());
 				String fileName=gdEupsBatchConsoleInfo.getRsvFld1();
+				context.setData("printResult", fileName);
 				//eupsBatchConsoleInfo批次号
 				EupsBatchConsoleInfo eupsBatchConsoleInfos=new EupsBatchConsoleInfo();
 				eupsBatchConsoleInfos.setRsvFld1(batNo);
@@ -161,7 +162,6 @@ public class PrintBatchInfoAction extends BaseAction{
 					String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + context.getData(ParamKeys.BR)+ "/" ;
 //					eupsThdFtpConfig.setRmtWay(path);
 //					operateFTPAction.putCheckFile(eupsThdFtpConfig);
-//					context.setData("printResult", fileName);
 					 try {
 					       	tFTPTransfer.logon();
 					        Resource tResource = new FileSystemResource("/home/bbipadm/data/GDEUPSB/batch/"+fileName);
@@ -172,6 +172,6 @@ public class PrintBatchInfoAction extends BaseAction{
 					       	tFTPTransfer.logout();
 					 }
 					log.info("=============放置反盘文件");
-				
+				log.info("======================printResult"+context.getData("printResult"));
 		}
 }
