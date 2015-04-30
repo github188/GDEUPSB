@@ -16,7 +16,6 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
 import com.bocom.bbip.comp.BBIPPublicService;
-import com.bocom.bbip.comp.account.AccountService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
@@ -38,7 +37,6 @@ import com.bocom.bbip.gdeupsb.repository.GDEupsZHAGBatchTempRepository;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.ContextUtils;
-import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -100,6 +98,8 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
         for(GDEupsZhAGBatchTemp tmp:list){
         	tmp.setSqn(bbipPublicService.getBBIPSequence());
         	tmp.setBatNo((String)context.getData(ParamKeys.BAT_NO));
+        	tmp.setRsvFld4("0");
+        	tmp.setCusNme(tmp.getThdCusNme());
         }
 		/**插入临时表中*/
         logger.info("~~~~~~~Start ~~~~将数据插入临时表");
@@ -107,9 +107,8 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
        ((SqlMap)get("sqlMap")).insert("com.bocom.bbip.gdeupsb.entity.GDEupsZhAGBatchTemp.batchInsert", list); 
         logger.info("~~~~~~~End  ~~~~将数据插入临时表");
 		List <GDEupsZhAGBatchTemp>lt=get(GDEupsZHAGBatchTempRepository.class).findByBatNo((String)context.getData(ParamKeys.BAT_NO));
-		for(GDEupsZhAGBatchTemp temp:lt){
-			temp.setRsvFld4("0");
-			temp.setCusNme(temp.getThdCusNme());
+		for (GDEupsZhAGBatchTemp gdEupsZhAGBatchTemp : lt) {
+				gdEupsZhAGBatchTemp.setThdCusNme("0");
 		}
 		List<Map<String,Object>> detail=(List<Map<String, Object>>) BeanUtils.toMaps(lt);
 		EupsActSysPara eupsActSysPara = new EupsActSysPara();
