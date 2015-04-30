@@ -30,8 +30,8 @@ public class CheckThdCusNo extends BaseAction{
 		gdEupsWatAgtInf.setThdCusNo(ctx.getData(ParamKeys.THD_CUS_NO).toString());
 		List<GdEupsWatAgtInf> list = gdEupsWatAgtInfRepository.find(gdEupsWatAgtInf);
 		if(!CollectionUtils.isEmpty(list)){
-			ctx.setData(ParamKeys.RSP_MSG, "协议已存在");
-			throw new CoreException(ErrorCodes.EUPS_AGENT_CHK_ERROR);
+//			ctx.setData(ParamKeys.RSP_MSG, "协议已存在");
+			throw new CoreException("BBIP0004EU0132");
 		}
 		ctx.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
 	}
