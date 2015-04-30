@@ -123,7 +123,6 @@ public class WaterAgtFileSendImlAction implements AgtFileSendImlService {
 		ftpConf.setRmtFleNme(fileName);
 		operateFTPAction.putCheckFile(ftpConf);
 		log.info("将文件存放到服务器上，服务器上的文件目录为:["+rmtWay+"],文件名为:["+fileName+"]");
-		
 
 		if ("N".equals(isExport)) {
 			// 更新协议的批次号与制盘标志：UpdAgtBatchId
@@ -135,6 +134,10 @@ public class WaterAgtFileSendImlAction implements AgtFileSendImlService {
 		if (0 == fleSndList.size()) {
 			throw new CoreException(GDErrorCodes.EUPS_SIGN_NO_RECORD_FOUND);
 		}
+		
+		//TODO:0430做了接口变更，增加了文件名，原本只返回批次号，待验证！！！！
+		
+		
 		log.info("WaterAgtFileSendImlAction end!..");
 		return null;
 	}
