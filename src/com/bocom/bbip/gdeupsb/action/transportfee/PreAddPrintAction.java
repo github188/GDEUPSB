@@ -64,10 +64,10 @@ public class PreAddPrintAction extends BaseAction{
 		List<GDEupsbTrspFeeInfo> feeInfoList = gdeupsbtrspfFeeInfoRepository.find(gdEupsbTrspFeeInfo);
 //		TLOG_NO, OINVNO, STATUS, THD_KEY, PAY_LOG, PRT_NOD
 		if(CollectionUtils.isEmpty(feeInfoList)){
-			ctx.setData(ParamKeys.RSP_MSG, "无该车主的当日缴费打发票记录");
-			throw new  CoreRuntimeException(ErrorCodes.EUPS_FIND_ISEMPTY);
-		}
+		
+			throw new  CoreRuntimeException("BBIP4400EU0732");
 //		ctx.setDataMap(BeanUtils.toMap(feeInfoList.get(0)));
+		}
 		GDEupsbTrspFeeInfo a=feeInfoList.get(0);
 		ctx.setData(GDParamKeys.TLOG_NO, a.getTlogNo());
 		ctx.setData(oinvNo, a.getInvNo());
@@ -92,11 +92,11 @@ public class PreAddPrintAction extends BaseAction{
 		
 
 		 if(!GDConstants.DP.equals(ctx.getData(GDParamKeys.STATUS))){
-			ctx.setData(ParamKeys.RSP_MSG, "状态信息错,此笔费用状态非打票");
-			throw new CoreRuntimeException(ErrorCodes.EUPS_CHECK_TXN_STS_FAIL);
+//			ctx.setData(ParamKeys.RSP_MSG, "状态信息错,此笔费用状态非打票");
+			throw new CoreRuntimeException("BBIP4400EU0733");
 		}else if(!ctx.getData(GDParamKeys.PRT_NOD).equals(ctx.getData(GDParamKeys.NOD_NO))){
-			ctx.setData(ParamKeys.RSP_MSG, "交易检查错，非原发票打印网点");
-			throw new CoreRuntimeException(GDErrorCodes.EUPS_TXN_CHECK_ERROR);
+//			ctx.setData(ParamKeys.RSP_MSG, "交易检查错，非原发票打印网点");
+			throw new CoreRuntimeException("BBIP4400EU0734");
 		}
 		String invNoValue = ctx.getData(GDParamKeys.INV_NO).toString().trim();
 
