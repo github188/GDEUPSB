@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
 	name="ChgIPCResponse" >
-	<varString type="D|"  name="trspCd"  /> <!-- 返回码-->
+	<varString type="D|"  name="thdRspCde"  /> <!-- 返回码-->
 	<varString type="D|"  name="tactDt"  /> <!-- 企业日期-->
 	<varString type="D|"  name="carNo"  /> <!-- 车牌号码-->
 	<varString type="D|"  name="carTyp"  /> <!-- 车牌类别-->
