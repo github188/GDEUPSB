@@ -18,7 +18,7 @@
 			<fixString name="accountNo" length="16" /><!--   账务流水号	ZWLSH	Varchar2(16)-->
 			<fixString name="electricityYearmonth" length="6" /><!--  电费年月	DFNY	Varchar2(6)-->
 			<fixString name="paymentMoney" length="16" /><!--  应扣金额	YKJE	Number(14,2)-->
-			<fixString name="capital" length="16" /><!--  本金	BJ	Number(14,2)-->
+			<fixString name="capitial" length="16" /><!--  本金	BJ	Number(14,2)-->
 			<fixString name="dedit" length="16" /><!--  违约金	WYJ	Number(14,2)-->
 			<fixString name="paymentResult" length="2" /><!--  扣款结果代码	KKJGDM	Varchar2 (2)	2-->
 			<fixString name="rsvFld5" length="16" /><!--  实扣金额	SKJE	Number(14,2)	16-->
