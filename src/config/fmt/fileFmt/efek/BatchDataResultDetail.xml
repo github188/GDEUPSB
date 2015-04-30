@@ -14,9 +14,9 @@
 			
 			<fixString name="cusAc" length="32" /><!--  扣款账户	KKZH	Varchar2(32)-->
 			<fixString name="cusNme" length="128" /><!--  扣款账户名称	KKZHMC	Varchar2(128)-->			
-			<fixString name="fulDedFlg" length="1" /><!--  部分缴费标志	BFJFBZ	Varchar2(1)-->
+			<fixString name="fullDedFlag" length="1" /><!--  部分缴费标志	BFJFBZ	Varchar2(1)-->
 			<fixString name="accountNo" length="16" /><!--   账务流水号	ZWLSH	Varchar2(16)-->
-			<fixString name="electricityYearMonth" length="6" /><!--  电费年月	DFNY	Varchar2(6)-->
+			<fixString name="electricityYearmonth" length="6" /><!--  电费年月	DFNY	Varchar2(6)-->
 			<fixString name="paymentMoney" length="16" /><!--  应扣金额	YKJE	Number(14,2)-->
 			<fixString name="capital" length="16" /><!--  本金	BJ	Number(14,2)-->
 			<fixString name="dedit" length="16" /><!--  违约金	WYJ	Number(14,2)-->
