@@ -63,7 +63,15 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 	@Override
 	public void afterBatchDeal(AfterBatchAcpDomain arg0, Context context)
 			throws CoreException {
-		logger.info("电力返盘文件处理开始");
+		logger.info("电力返盘文件处理开始 with context : " + context);
+		String bk = "01445999999";
+		String br = "01445012999";
+		context.setData("extFields", br);
+		context.setData(ParamKeys.BK, bk);
+		context.setData("br", br);
+		String tlr = bbipPublicService.getETeller(bk);
+		context.setData(ParamKeys.TELLER, tlr);
+		logger.info("=========>>>>>>>>>>context after get tlr: " + context);
 
 		String batNo = context.getData("batNo").toString();
 		((BatchFileCommon) get(GDConstants.BATCH_FILE_COMMON_UTILS))
@@ -213,13 +221,16 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 
 		config.setFtpDir("0");// 0-外发
 		((OperateFTPAction) get("opeFTP")).putCheckFile(config);
+		
+		logger.info("======= context after put file to thd ftp:" + context);
+		
 		/** 通知第三方 */
-
+		
 		context.setData("AppTradeCode", "23");
 		context.setData("StartAddr", "301");
 		context.setData("DestAddr", "0500");
 
-		String br = context.getData(ParamKeys.BR);
+//		String br = context.getData(ParamKeys.BR);
 		String sqnTmp = bbipPublicService.getBBIPSequence();
 		sqnTmp = sqnTmp.substring(12);
 		String msgId = br + " " + sqnTmp;
@@ -242,7 +253,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		context.setData("LogNo", StringUtils.substring(logNo, 4));
 		context.setData("TMN", context.getData(ParamKeys.BK));// 经办网点
 		
-		String tlr= context.getData(ParamKeys.TELLER);
+//		String tlr= context.getData(ParamKeys.TELLER);
 		
 		//tlr截取后5位
 		context.setData("STO",tlr.substring(2));
@@ -256,6 +267,6 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 			throw new CoreException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
 		}
 		context.setDataMap(thdResult);
-		logger.info("电力返盘文件处理结束");
+		logger.info("电力返盘文件处理结束 with conetxt : " + context);
 	}
 }
