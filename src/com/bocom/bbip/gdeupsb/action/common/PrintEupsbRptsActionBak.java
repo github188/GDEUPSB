@@ -187,7 +187,6 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			context.setData("OTHERCNT", prtList.get(0).get("OTHERCNT"));
 			context.setData("TOTOTHERAMT", prtList.get(0).get("TOTOTHERAMT"));
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
-					.toString().trim()
 					+ "_其他情况清单报表";
 			fileName = context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_" + comNo
 					+ "_Other.txt";
