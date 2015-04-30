@@ -51,15 +51,7 @@ public class PrintCallThirdAction extends BaseAction{
 	@Autowired
 	ThirdPartyAdaptor callThdTradeManager;
 	
-//	@Autowired
-//	@Qualifier("TRSP00Transport")
-//	DefaultTransport trspTransport;
-//	
-//	@Autowired
-//	@Qualifier("trspGateWay")
-//	SocketGateway gateway;
-//	
-//	@SuppressWarnings({ "unused", "unchecked" })
+
 	public void execute(Context ctx) throws CoreException,CoreRuntimeException{
 		log.info("PrintCallThirdAction start.......");
 		ctx.setState("fail");

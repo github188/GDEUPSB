@@ -41,7 +41,6 @@ public class PreCancelAction extends BaseAction{
 		ctx.setData(GDParamKeys.ACT_DAT, actDt);
 		ctx.setData(GDParamKeys.NOD_NO, ctx.getData(ParamKeys.BR));
 		ctx.setData(GDParamKeys.TLR_ID, ctx.getData(ParamKeys.TELLER));
-//		ctx.setData(GDParamKeys.TCK_NO, "123456789");
 		Date payDat = DateUtils.parse(ctx.getData(GDParamKeys.PAY_DAT).toString(), "yyyy-MM-dd");
 		ctx.setData(GDParamKeys.PAY_DAT, payDat);
 		GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
@@ -51,8 +50,8 @@ public class PreCancelAction extends BaseAction{
 		gdEupsbTrspFeeInfo.setPayLog(ctx.getData(GDParamKeys.PAY_LOG).toString());
 		List<GDEupsbTrspFeeInfo> feeInfoList = gdEupsbTrspFeeInfoRepository.findForCancel(gdEupsbTrspFeeInfo);
 		if(CollectionUtils.isEmpty(feeInfoList)){
-			ctx.setData(ParamKeys.RSP_MSG, "无该车主的对应的缴费记录");
-			throw new CoreRuntimeException(ErrorCodes.EUPS_FIND_ISEMPTY);
+//			ctx.setData(ParamKeys.RSP_MSG, "无该车主的对应的缴费记录");
+			throw new CoreRuntimeException("BBIP4400EU0730");
 		}else{
 			GDEupsbTrspFeeInfo gdeupsb = feeInfoList.get(0);
 			ctx.setData(GDParamKeys.STATUS,gdeupsb.getStatus() );
@@ -64,25 +63,20 @@ public class PreCancelAction extends BaseAction{
 			ctx.setData(GDParamKeys.CAR_TYP,gdeupsb.getCarTyp() );
 			ctx.setData(GDParamKeys.PAY_MON,gdeupsb.getPayMon() );
 			ctx.setData(ParamKeys.OLD_TXN_SQN, gdeupsb.getPayLog());
-//			TODO:ACTflg此字段表中没有		
+	
 		}
 		
 		if(!GDConstants.JF.equals(ctx.getData(GDParamKeys.STATUS))){
-			ctx.setData(ParamKeys.RSP_MSG, "状态信息错,此笔费用状态非缴费");
-			throw new CoreRuntimeException(GDErrorCodes.FEE_STATUS_ERROR);
+//			ctx.setData(ParamKeys.RSP_MSG, "状态信息错,此笔费用状态非缴费");
+			throw new CoreRuntimeException("BBIP4400EU0731");
 		}
 		
-//		TODO:<Set>PActNo=$TActNo</Set>
-//        <Set>Mask=STRCAT(9,$BBusTyp)</Set>
-//        <Set>CcyTyp=0</Set>
-//        <Set>CashNo=121</Set>
-//        <Set>VchChk=0</Set>
-//        <Set>HTxnCd=@PARA.HTxnCd_C2P</Set>
+
 		GDEupsbTrspTxnJnl gdeupsb = new GDEupsbTrspTxnJnl();
 
 		gdeupsb = BeanUtils.toObject(ctx.getDataMap(), GDEupsbTrspTxnJnl.class);
 		gdEupsbTrspTxnJnlRepository.insert(gdeupsb);
-		System.out.println("@@@@@@@@@@@context="+ctx);
+		log.info("@@@@@@@@@@@context="+ctx);
 	}
 	
 }

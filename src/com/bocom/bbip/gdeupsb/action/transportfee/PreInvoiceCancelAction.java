@@ -56,8 +56,8 @@ public class PreInvoiceCancelAction extends BaseAction{
 		gdEupsbTrspNpManag.setStatus("0");
 		List<GDEupsbTrspNpManag> npManagList = gdEupsbTrspNpManagRepository.find(gdEupsbTrspNpManag);
 		if(!CollectionUtils.isEmpty(npManagList)){
-			ctx.setData(ParamKeys.RSP_MSG, "已打印年票，不能退款");
-			throw new CoreRuntimeException(ErrorCodes.EUPS_FAIL);
+//			ctx.setData(ParamKeys.RSP_MSG, "已打印年票，不能退款");
+			throw new CoreRuntimeException("BBIP4400EU0739");
 		}
 		
 		//检查缴费记录
@@ -68,14 +68,14 @@ public class PreInvoiceCancelAction extends BaseAction{
 		gdEupsbTrspFeeInfo.setInvNo(ctx.getData(GDParamKeys.INV_NO).toString());
 		List<GDEupsbTrspFeeInfo> feeInfoList = gdEupsbTrspFeeInfoRepository.findOrder(gdEupsbTrspFeeInfo);
 		if(CollectionUtils.isEmpty(feeInfoList)){
-			ctx.setData(ParamKeys.RSP_MSG, "无该车主的对应的缴费记录");
-			throw new CoreRuntimeException(ErrorCodes.EUPS_FIND_ISEMPTY);
+//			ctx.setData(ParamKeys.RSP_MSG, "无该车主的对应的缴费记录");
+			throw new CoreRuntimeException("BBIP4400EU0730");
 		}else if(!GDConstants.DP.equals(feeInfoList.get(0).getStatus())){
 			ctx.setData(ParamKeys.RSP_MSG, "状态信息错,此笔费用状态非打票");
-			throw new CoreRuntimeException(ErrorCodes.EUPS_CUS_AC_STATUS_CHECK_FAIL);
+			throw new CoreRuntimeException("BBIP4400EU0733");
 		}else if(!DateUtils.isSameDate(today, feeInfoList.get(0).getTactDt())){
 			ctx.setData(ParamKeys.RSP_MSG, "只允许打票当天作废");
-			throw new CoreRuntimeException(ErrorCodes.EUPS_DATE_ERROR);
+			throw new CoreRuntimeException("BBIP4400EU0740");
 		}else{
 			ctx.setData(GDParamKeys.STATUS, feeInfoList.get(0).getStatus());  //缴费状态
 			ctx.setData(ParamKeys.TXN_AMT, feeInfoList.get(0).getTxnAmt());   //交易金额

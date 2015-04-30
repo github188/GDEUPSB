@@ -7,21 +7,14 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.bocom.bbip.eups.action.BaseAction;
-import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
-import com.bocom.bbip.eups.common.BPState;
-import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
-import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspTxnJnl;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspFeeInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspTxnJnlRepository;
-import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
@@ -43,10 +36,6 @@ public class PrePrintAction extends BaseAction{
 	public void execute(Context ctx) throws CoreException,CoreRuntimeException{
 		log.info("PrePrintAction start.......");
 		ctx.setState("fail");
-
-//		ctx.setData("transCode", "484004");
-//		ctx.setData(GDParamKeys.NOD_NO, "123");
-//		ctx.setData(GDParamKeys.TLR_ID, "123");
 		
         //查询缴费记录
 		
@@ -63,10 +52,13 @@ public class PrePrintAction extends BaseAction{
 //	           FROM   gdeupsb.TRSP_TXN_JNL as a ,gdeupsb.TRSP_FEE_INFO as b
 //	           WHERE  a.SQN=b.PAY_LOG AND a.BR_NO = #{brNo,jdbcType=CHAR} 
 //	           AND b.STATUS='0' AND a.CAR_NO = #{carNo,jdbcType=CHAR} AND a.SQN = #{sqn,jdbcType=CHAR}
-		
+		if(CollectionUtils.isEmpty(txnJnlList)){
+			ctx.setData(ParamKeys.RSP_MSG, "缴费记录不存在");
+			throw new CoreRuntimeException(GDErrorCodes.FEE_INFO_EMPTY);
+		}
 		//TODO:
 		Map<String, Object> txnJnlMap = txnJnlList.get(0);
-		System.out.println("!!!!!!!!!!!!!!!!"+txnJnlList.get(0));
+		log.info("!!!!!!!!!!!!!!!!"+txnJnlList.get(0));
 		ctx.setData(GDParamKeys.TCUS_NM, txnJnlMap.get("TCUS_NM"));
 		ctx.setData(GDParamKeys.TXN_AMT, txnJnlMap.get("TXN_AMT"));
 		ctx.setData(GDParamKeys.CAR_TYP, txnJnlMap.get("CAR_TYP"));
@@ -84,10 +76,7 @@ public class PrePrintAction extends BaseAction{
 		ctx.setData(GDParamKeys.CLGS, txnJnlMap.get("CLGS"));
 		ctx.setData(GDParamKeys.YYBZ, txnJnlMap.get("YYBZ"));
 		
-		if(CollectionUtils.isEmpty(txnJnlList)){
-			ctx.setData(ParamKeys.RSP_MSG, "缴费记录不存在");
-			throw new CoreRuntimeException(GDErrorCodes.FEE_INFO_EMPTY);
-		}else if(!"S".equals(txnJnlList.get(0).get(GDParamKeys.TTXN_ST))){
+		 if(!"S".equals(txnJnlList.get(0).get(GDParamKeys.TTXN_ST))){
 //			 <Set>TLogNo=$LogNo</Set>
 			ctx.setDataMap(txnJnlList.get(0));
 			Date tactDt = new Date();
@@ -99,7 +88,7 @@ public class PrePrintAction extends BaseAction{
 			gdEupsbTrspTxnJnl.setTactDt(tactDt);
 			gdEupsbTrspTxnJnlRepository.update1(gdEupsbTrspTxnJnl);
 			
-			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+ctx.getDataMap());
+			log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+ctx.getDataMap());
 			ctx.setState("callThd");
 			
 			

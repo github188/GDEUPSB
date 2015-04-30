@@ -8,7 +8,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.eups.action.BaseAction;
-import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
@@ -52,8 +51,8 @@ public class PrintNpAction extends BaseAction{
 		gdEupsbTrspZzManag.setNodNo(ctx.getData(GDParamKeys.NOD_NO).toString());
 		List< GDEupsbTrspZzManag> zzManagList = gdEupsbTrspZzManagRepository.find(gdEupsbTrspZzManag);
 		if(!CollectionUtils.isEmpty(zzManagList)){
-			ctx.setData(ParamKeys.RSP_MSG, "当日已扎帐，不允许打印");
-			throw new CoreRuntimeException(ErrorCodes.EUPS_CHECK_FAIL);
+//			ctx.setData(ParamKeys.RSP_MSG, "当日已轧帐，不允许打印");
+			throw new CoreRuntimeException("BBIP4400EU0735");
 		}
 
 		//检查是否已经打了发票
@@ -62,11 +61,11 @@ public class PrintNpAction extends BaseAction{
 		List<GDEupsbTrspFeeInfo> feeInfoList = gdEupsbTrspFeeInfoRepository.find(gdeupsbrspfFeeInfo);
 
 		if(CollectionUtils.isEmpty(feeInfoList)){
-			ctx.setData(ParamKeys.RSP_MSG, "缴费记录不存在");
-			throw new CoreRuntimeException(ErrorCodes.EUPS_QUERY_NO_DATA);
+//			ctx.setData(ParamKeys.RSP_MSG, "缴费记录不存在");
+			throw new CoreRuntimeException("BBIP4400EU0730");
 		}else if(!GDConstants.DP.equals(feeInfoList.get(0).getStatus())){
-			ctx.setData(ParamKeys.RSP_MSG, "该缴费流水号未打印路桥发票");
-			throw new CoreRuntimeException(ErrorCodes.EUPS_CHECK_FAIL);	
+//			ctx.setData(ParamKeys.RSP_MSG, "该缴费流水号未打印路桥发票");
+			throw new CoreRuntimeException("BBIP4400EU0733");	
 		}else{
 			ctx.setData("statusT", feeInfoList.get(0).getStatus());
 			ctx.setData(GDParamKeys.INV_NO, feeInfoList.get(0).getInvNo());
@@ -80,8 +79,8 @@ public class PrintNpAction extends BaseAction{
 		gdEupsbTrspTxnJnl.setPayMon("12");
 		List<GDEupsbTrspTxnJnl> txnJnlList = gdEupsbTrspTxnJnlRepository.find(gdEupsbTrspTxnJnl);
 		if(CollectionUtils.isEmpty(txnJnlList)){
-			ctx.setData(ParamKeys.RSP_MSG, "该缴费流水号未缴纳全年路桥费");
-			throw new CoreRuntimeException(ErrorCodes.EUPS_QUERY_NO_DATA);
+//			ctx.setData(ParamKeys.RSP_MSG, "该缴费流水号未缴纳全年路桥费");
+			throw new CoreRuntimeException("BBIP4400EU0736");
 		}
 		
 		//查询打印情况
@@ -95,8 +94,8 @@ public class PrintNpAction extends BaseAction{
 			List<GDEupsbTrspNpManag> npManagListA=gdEupsbTrspNpManagRepository.find(gdEupsbTrspNpManagA);
 			if(!CollectionUtils.isEmpty(npManagListA)){
 				if("0".equals(npManagListA.get(0).getStatus())){
-					ctx.setData(ParamKeys.RSP_MSG, "该缴费流水号已打印");
-					throw new CoreRuntimeException(ErrorCodes.EUPS_CHECK_FAIL);
+//					ctx.setData(ParamKeys.RSP_MSG, "该缴费流水号已打印");
+					throw new CoreRuntimeException("BBIP4400EU0737");
 				}
 			}
 			
@@ -114,13 +113,13 @@ public class PrintNpAction extends BaseAction{
 		}else{
 			ctx.setData("statusR", npManagList.get(0).getStatus());
 			if("0".equals(ctx.getData("statusR"))){
-				ctx.setData(ParamKeys.RSP_MSG, "该缴费流水号已打印");
-				throw new CoreRuntimeException(ErrorCodes.EUPS_CHECK_FAIL);
+//				ctx.setData(ParamKeys.RSP_MSG, "该缴费流水号已打印");
+				throw new CoreRuntimeException("BBIP4400EU0737");
 			}
 			
 			if("1".equals(ctx.getData("statusR"))){
-				ctx.setData(ParamKeys.RSP_MSG, "该缴费流水号已作废");
-				throw new CoreRuntimeException(ErrorCodes.EUPS_CHECK_FAIL);
+//				ctx.setData(ParamKeys.RSP_MSG, "该缴费流水号已作废");
+				throw new CoreRuntimeException("BBIP4400EU0738");
 			}
 		}
 		//更新年票管理表状态
@@ -130,7 +129,7 @@ public class PrintNpAction extends BaseAction{
 		gdEupsbTrspNpManagC.setSqn(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
 		gdEupsbTrspNpManagC.setIdNo(ctx.getData(GDParamKeys.ID_NO).toString());
 		gdEupsbTrspNpManagRepository.updateSt(gdEupsbTrspNpManagC);
-		System.out.println("@@@@@@@@@@@+"+ctx);
+		log.info("@@@@@@@@@@@+"+ctx);
 	}
 
 }

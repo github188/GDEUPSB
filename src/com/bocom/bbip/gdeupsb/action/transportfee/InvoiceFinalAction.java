@@ -8,8 +8,10 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
+import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
@@ -20,6 +22,7 @@ import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspTxnJnlRepository;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
+import com.bocom.euif.component.util.StringUtil;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -46,7 +49,10 @@ public class InvoiceFinalAction extends BaseAction{
 			Map<String, Object> thdReturnMessage = callThdReturnMessage.trade(ctx);
 			GDEupsbTrspTxnJnl gDEupsbTrspTxnJnl=BeanUtils.toObject(ctx.getDataMap(), GDEupsbTrspTxnJnl.class);
 			if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL)){
-				if("000".equals(thdReturnMessage.get(GDParamKeys.TRSP_CD))){
+				CommThdRspCdeAction cRspCdeAction = new CommThdRspCdeAction();
+				String responseCode = cRspCdeAction.getThdRspCde(thdReturnMessage, 	ctx.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
+				log.info("responseCode:["+responseCode+"]");
+				if(Constants.RESPONSE_CODE_SUCC.equals(responseCode)){	
 					ctx.setData(GDParamKeys.TACT_DT, DateUtils.parse((String)ctx.getData(GDParamKeys.TACT_DT)));
 					ctx.setData(GDParamKeys.TTXN_ST, "S");  //主机交易状态设为成功
 					ctx.setData(GDParamKeys.TXN_ST, "S");   //交易状态设为成功
@@ -74,7 +80,10 @@ public class InvoiceFinalAction extends BaseAction{
 					gDEupsbTrspTxnJnl.setTtxnSt("F");
 					gDEupsbTrspTxnJnl.setTxnSt("F");
 					gdEupsbTrspTxnJnlRepository.update(gDEupsbTrspTxnJnl);
-					throw new CoreRuntimeException(ErrorCodes.TRANSACTION_ERROR_OTHER);
+					if(StringUtil.isEmpty(responseCode)){
+						responseCode = ErrorCodes.EUPS_THD_RSP_CODE_ERROR;
+					}
+					throw new CoreException(responseCode);
 				}
 			}else if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_FAIL)){
 				ctx.setData(GDParamKeys.TTXN_ST, "X");  //主机交易状态设为未发送
@@ -83,7 +92,7 @@ public class InvoiceFinalAction extends BaseAction{
 				gDEupsbTrspTxnJnl.setTxnSt("X");
 				gdEupsbTrspTxnJnlRepository.update(gDEupsbTrspTxnJnl);
 				ctx.setData(ParamKeys.RSP_MSG, "路桥方交易失败");
-				throw new CoreRuntimeException(ErrorCodes.TRANSACTION_ERROR_OTHER);
+				throw new CoreException(ErrorCodes.EUPS_THD_SYS_ERROR);
 			}else {
 				ctx.setData(GDParamKeys.TTXN_ST, "T");  //主机交易状态设为超时
 				ctx.setData(GDParamKeys.TXN_ST, "U");   //交易状态设为初始状态
@@ -91,41 +100,10 @@ public class InvoiceFinalAction extends BaseAction{
 				gDEupsbTrspTxnJnl.setTxnSt("U");
 				gdEupsbTrspTxnJnlRepository.update(gDEupsbTrspTxnJnl);
 				ctx.setData(ParamKeys.RSP_MSG, "路桥方交易超时");
-				throw new CoreRuntimeException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
+				throw new CoreException(ErrorCodes.EUPS_THD_SYS_ERROR);
 			}
 			
-			
 		}
-//		TODO:
-//			 <Set>FilNam=STRCAT(INVO,$TlrId,00)</Set>
-//        <Exec func="PUB:GenerateReport" error="IGNORE">
-//           <Arg name="ObjFil"  value="STRCAT($TSDir,$FilNam)"/>
-//           <Arg name="FmtFil"  value="etc/BRBF_RPT001.XML"/>
-//           <Arg name="LogNo"   value="$LogNo"/>
-//           <Arg name="PrtDat"  value="GETDATE()"/>
-//        </Exec>
-//        <If condition="~RetCod=-1">
-//           <Set>MsgTyp=E</Set>
-//           <Set>RspCod=329999</Set>
-//           <Set>RspMsg=报表文件生成错误</Set>
-//           <Return/>
-//        </If>
-//        
-//        <Exec func="PUB:SendFileMessage2" error="IGNORE"><!--发出文件指令-->
-//           <Arg name="MsgTyp" value="3"/><!--3不打印 4打印-->
-//           <Arg name="ObjNod" value="$NodNo"/><!-- 目标网点-->
-//           <Arg name="BusTyp" value="SUBSTR($TxnCod,1,2)"/><!--业务类型-->
-//           <Arg name="AplCod" value="SUBSTR($TxnCod,3,4)"/><!-- 应用码-->
-//           <Arg name="FilNam" value="$FilNam"/><!-- 文件名-->
-//           <Arg name="Summary" value="路桥退费凭证"/><!-- 消息内容-->
-//           <Arg name="ObjTlr" value="$TlrId"/><!-- 目标柜员-->
-//        </Exec>
-//        <If condition="~RetCod!=0">
-//           <Set>MsgTyp=E</Set>
-//           <Set>RspCod=329999</Set>
-//           <Set>RspMsg=发送文件失败</Set>
-//           <Return/>
-//        </If>
 	}
 
 }
