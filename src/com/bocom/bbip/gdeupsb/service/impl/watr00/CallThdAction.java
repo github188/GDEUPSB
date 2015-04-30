@@ -37,6 +37,9 @@ private static Logger logger = LoggerFactory.getLogger(PreDelCusAgentAction.clas
 	@Override
 	public void execute(Context context) throws CoreException,	CoreRuntimeException {
 		logger.info("CallThdAction start......");
+		GdEupsWatAgtInf gdeups = new GdEupsWatAgtInf();
+		gdeups.setAgdAgrNo((String)context.getData("agdAgrNo"));
+		gdEupsWatAgtInfRepository.delete(gdeups);
 		// TODO:为第三方接口报文字段赋值，发送请求至第三方
 				context.setData("type", "Y007");
 				context.setData("accountdate", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
@@ -122,7 +125,7 @@ private static Logger logger = LoggerFactory.getLogger(PreDelCusAgentAction.clas
 					}
 				}else{
 					logger.error(" callThd return has error!");
-					throw new CoreException(ErrorCodes.EUPS_THD_SYS_ERROR);
+					throw new CoreException("BBIP4400EU0430");
 				}
 				logger.error(" callThd end!");
 				logger.info("@@@@@@@@@@context="+context);
@@ -130,8 +133,6 @@ private static Logger logger = LoggerFactory.getLogger(PreDelCusAgentAction.clas
 				
 //				List<Map<String, Object>> agdAgrNoList = context.getData("agentCollectAgreement");
 				
-				GdEupsWatAgtInf gdeups = new GdEupsWatAgtInf();
-				gdeups.setAgdAgrNo((String)context.getData("agdAgrNo"));
-				gdEupsWatAgtInfRepository.delete(gdeups);
+				
 	}
 }
