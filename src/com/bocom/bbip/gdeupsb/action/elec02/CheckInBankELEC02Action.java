@@ -11,6 +11,8 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import weblogic.utils.io.FilenameEncoder;
+
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
@@ -51,6 +53,7 @@ public class CheckInBankELEC02Action extends BaseAction {
 	}
 	private void sendCheckFile(Context context,BigDecimal decimal,
 	    List<Map<String,String>> ret)throws CoreException {
+		String fileDate = DateUtils.format(new Date(), "yyyyMMdd");
 		Map<String,String>header=new HashMap<String, String>();
 		Map<String,Object>retMap=new HashMap<String, Object>();
 		EupsThdFtpConfig config=get(EupsThdFtpConfigRepository.class).findOne((String)context.getData(ParamKeys.FTP_ID));
@@ -61,8 +64,10 @@ public class CheckInBankELEC02Action extends BaseAction {
 		header.put("WDO", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
 		retMap.put("header", header);
 		retMap.put("detail", ret);
+		String FileName = "301190003dz" + fileDate + ".txt"; // 301190003dz20080101.txt
+		context.setData("FileName", FileName);
 		((OperateFileAction)get("opeFile")).
-		createCheckFile(config, "ELEC02Check", "wuy.txt", retMap);//TODO
+		createCheckFile(config, "ELEC02Check", FileName, retMap);
 		((OperateFTPAction)get("opeFTP")).putCheckFile(config);
 	}
 	private List<Map<String,String>>getData(Context context)throws CoreException {
