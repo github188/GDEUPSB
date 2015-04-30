@@ -208,6 +208,8 @@ public class PrintEupsbRptsAction extends BaseAction {
 //		// 拼装本地路径 本地测试
 		PrintWriter printWriter = null;
 		StringBuffer sbLocDir = new StringBuffer();
+		
+		//TODO:待修改！。。
 		sbLocDir.append("D:/testGash/checkFilTest/").append(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)).append("/");
 //		sbLocDir.append(ftpCfg.getLocDir()).append("/").append(context.getData(ParamKeys.TELLER)).append("/").append(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)).append("/");
         
