@@ -24,7 +24,6 @@ import com.bocom.bbip.eups.repository.EupsBatchInfoDetailRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
 import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
-import com.bocom.bbip.file.transfer.ftp.FTPTransfer;
 import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
@@ -47,13 +46,32 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
 		logger.info("返盘文件处理开始");
 		String batNos=context.getData("batNo").toString();
 		GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).eupsBatchConSoleInfoAndgdEupsBatchConSoleInfo(context);
-		String batNo=gdEupsBatchConsoleInfo.getBatNo();
 		//返回结果集合
 		EupsBatchInfoDetail eupsBatchInfoDetails=new EupsBatchInfoDetail();
 		eupsBatchInfoDetails.setBatNo(batNos);
         List<EupsBatchInfoDetail>list= eupsBatchInfoDetailRepository.find(eupsBatchInfoDetails);
         Assert.isNotEmpty(list, ErrorCodes.EUPS_QUERY_NO_DATA);
-        		
+        for (EupsBatchInfoDetail eupsBatchInfoDetail : list) {
+        	Map<String , Object > map=new HashMap<String, Object>();
+        	String sqn=eupsBatchInfoDetail.getRmk1();
+        	map.put("sqn", sqn);
+			 String sts=eupsBatchInfoDetail.getSts();
+			 if(sts.equals("S")){
+				 map.put("rsvFld2","Y");
+			 }else{
+				 	String errMsg=eupsBatchInfoDetail.getErrMsg().substring(0,6);
+				 	if(errMsg.equals("TPM050")){
+				 			map.put("rsvFld2","E");
+				 	}else if(errMsg.equals("SDM015")){
+				 			map.put("rsvFld2","B");
+				 	}else if(errMsg.equals("CB1004") || errMsg.equals("PDM252")){
+				 			map.put("rsvFld2","A");
+				 	}else{
+				 			map.put("rsvFld2","O");
+				 	}
+			 }
+			 gdEupsZHAGBatchTempRepository.updateRsvFld2(map);
+		}
         EupsThdFtpConfig config=get(EupsThdFtpConfigRepository.class).findOne("zhag00");
         
       //拼装Map文件
@@ -97,10 +115,8 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
 		 */
 		public Map<String, Object> createFileMap(Context context,GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo){
 				logger.info("===============Start  BatchDataResultFileAction  createFileMap");	
-				Map<String, Object> resultMap=new HashMap<String, Object>();
-				Map<String, Object> resultMapHead = BeanUtils.toMap(gdEupsBatchConsoleInfo);
-				
-				resultMap.put(ParamKeys.EUPS_FILE_HEADER, resultMapHead);
+				Map<String, Object> resultMap=new HashMap<String, Object>();		
+				resultMap.put(ParamKeys.EUPS_FILE_HEADER, BeanUtils.toMap(gdEupsBatchConsoleInfo));
 				//文件内容 
 				GDEupsZhAGBatchTemp gdEupsZHAGBatchTemp =new  GDEupsZhAGBatchTemp();
 				gdEupsZHAGBatchTemp.setBatNo(gdEupsBatchConsoleInfo.getBatNo());

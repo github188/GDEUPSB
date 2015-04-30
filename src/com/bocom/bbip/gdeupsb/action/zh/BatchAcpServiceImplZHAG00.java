@@ -20,7 +20,9 @@ import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsActSysPara;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
+import com.bocom.bbip.eups.repository.EupsActSysParaRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.BatchAcpService;
 import com.bocom.bbip.eups.spi.vo.PrepareBatchAcpDomain;
@@ -111,7 +113,10 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 			temp.setThdCusNme(StringUtils.isBlank(temp.getCusNme())?temp.getThdCusNme():temp.getCusNme());
 		}
 		List<Map<String,Object>> detail=(List<Map<String, Object>>) BeanUtils.toMaps(lt);
-		String comNoAcps=context.getData("comNoAcps").toString();
+		EupsActSysPara eupsActSysPara = new EupsActSysPara();
+	    eupsActSysPara.setActSysTyp("0");
+	    eupsActSysPara.setComNo(comNo);	    
+		String comNoAcps=((EupsActSysParaRepository)get(EupsActSysParaRepository.class)).find(eupsActSysPara).get(0).getSplNo();
 		logger.info("~~~~~~~~~~~comNoAcps："+comNoAcps);
 		String batNo=(String)context.getData(ParamKeys.BAT_NO);
 		Map<String, Object> selectMap=new HashMap<String, Object>();
