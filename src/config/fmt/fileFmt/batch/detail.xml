@@ -8,11 +8,11 @@
 		<varString name="cusAc" type="D|" />
 		<varString name="cusNme" type="D|" />
 		<varString name="txnAmt" type="D|" />
-		<varString name="agtSrvCusId" type="D|" />
-		<varString name="agtSrvCusNme" type="D|" />
-		<varString name="ourOthFlg" type="D|" />
-		<varString name="obkBk" type="D|" />
-		<varString name="rmk1" type="D|" />
-		<varString name="rmk2" type="D|" />
+		<varString name="thdCusNo" type="D|" />
+		<varString name="thdCusNme" type="D|" />
+		<varString name="rsvFld4" type="D|" />
+		<varString name="OBKBK" type="D|" />
+		<varString name="sqn" type="D|" />
+		<varString name="RMK2" type="D|" />
 	</segment>
 </message>
