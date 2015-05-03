@@ -12,7 +12,7 @@
 		<varString name="thdCusNme" type="D|" />
 		<varString name="rsvFld4" type="D|" />
 		<varString name="OBKBK" type="D|" />
-		<varString name="sqn" type="D|" />
+		<varString name="RMK1" type="D|" />
 		<varString name="RMK2" type="D|" />
 	
 	</segment>
