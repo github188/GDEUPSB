@@ -243,8 +243,8 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 				 	}else{
 					 		String errSeeason=errMsg.substring(0,6);
 					 		if(errSeeason.equals("PDM252")){
-					 				sts="006";
-					 				errMsg="帐号不存在";
+					 			sts="004";
+					 			errMsg="帐号已取消";
 					 		}else if(errSeeason.equals("TPM055")){
 					 			sts="007";
 					 			errMsg="帐号和开户名不对应";
@@ -254,9 +254,6 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 					 		}else if(errSeeason.equals("CB1004")){
 					 			sts="006";
 					 			errMsg="帐号不存在";
-					 		}else if(errSeeason.equals("PDM252")){
-					 			sts="004";
-					 			errMsg="帐号已取消";
 					 		}else{
 					 			sts=errSeeason;
 					 			stsLength=errSeeason.length()+"";
