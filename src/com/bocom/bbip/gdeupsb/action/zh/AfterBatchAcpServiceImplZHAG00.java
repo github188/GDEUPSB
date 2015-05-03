@@ -2,6 +2,7 @@ package com.bocom.bbip.gdeupsb.action.zh;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -31,6 +32,7 @@ import com.bocom.bbip.gdeupsb.entity.GDEupsZhAGBatchTemp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsZHAGBatchTempRepository;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -43,7 +45,7 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
 	@Override
 	public void afterBatchDeal(AfterBatchAcpDomain arg0, Context context)
 			throws CoreException {
-		logger.info("返盘文件处理开始");
+		logger.info("================返盘文件处理开始");
 		String batNos=context.getData("batNo").toString();
 		GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).eupsBatchConSoleInfoAndgdEupsBatchConSoleInfo(context);
 		//返回结果集合
@@ -78,13 +80,13 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
 		Map<String, Object> resultMap = createFileMap(context,gdEupsBatchConsoleInfo);
 		
 		String formatOut=findFormat(gdEupsBatchConsoleInfo.getComNo());
-		String fileName=gdEupsBatchConsoleInfo.getComNo()+".txt";
+		String fileName=gdEupsBatchConsoleInfo.getComNo()+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";
 		config.setLocFleNme(fileName);
 		config.setLocDir("/home/bbipadm/data/GDEUPSB/batch/");
 		config.setRmtFleNme(fileName);
         ((OperateFileAction)get("opeFile")).createCheckFile(config, formatOut, fileName, resultMap);
                
-		 logger.info("返盘文件处理结束");
+		 logger.info("================返盘文件处理结束");
 
 	}
 	  private String findFormat(final String comNo) {
