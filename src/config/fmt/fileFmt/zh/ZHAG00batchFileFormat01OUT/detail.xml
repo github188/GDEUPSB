@@ -7,7 +7,7 @@
       <fixString name="thdCusNo"   length="16" />    <!-- 合同号 -->
       <fixString name="rsvFld1"       length="2" />     <!-- 行别 -->
       <fixString name="cusAc"   length="23" />    <!-- 银行帐号 -->
-      <fixString name="txnAmt"   length="12" expression='exp:num.yuanToCentString(this.txnAmt)'/>    <!-- 来盘金额分为单位，无小数点 -->
+      <fixString name="txnAmt"   length="12" />    <!-- 来盘金额分为单位，无小数点 -->
       <fixString name="rsvFld2"   length="1" />    <!-- 标识，Y成功 E帐号金额不足 B帐号冻结 A帐号不存在 O其他 -->
       <fixString name="thdCusNme"   length="82" />    <!-- 托手户名 -->
 			
