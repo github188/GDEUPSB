@@ -100,6 +100,10 @@ public class WaterAgtFileSendImlAction implements AgtFileSendImlService {
 			fileMap.put("tmpDat", tmpDat);
 			fileList.add(fileMap);
 		}
+		if (0 == fleSndList.size()) {
+			throw new CoreException(GDErrorCodes.EUPS_SIGN_NO_RECORD_FOUND);
+		}
+		
 		log.info("经过处理过后，fileList="+fileList);
 		Map<String, Object> resultMap = new HashMap<String, Object>();
 		resultMap.put("detail", fileList);
@@ -131,12 +135,10 @@ public class WaterAgtFileSendImlAction implements AgtFileSendImlService {
 
 			gdsAgtWaterRepository.updateBchUsbFlg(inpara);
 		}
-		if (0 == fleSndList.size()) {
-			throw new CoreException(GDErrorCodes.EUPS_SIGN_NO_RECORD_FOUND);
-		}
 		
-		//TODO:0430做了接口变更，增加了文件名，原本只返回批次号，待验证！！！！
-		
+		//设置返回的批次号，文件名：
+		context.setData("filNam", fileName);
+		context.setData("batchId", batNo);
 		
 		log.info("WaterAgtFileSendImlAction end!..");
 		return null;
