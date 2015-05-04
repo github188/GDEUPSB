@@ -60,6 +60,7 @@ public class PrePayToBankStrategyAction implements Executable{
 		ctx.setData("pswCekFlg", "1");
 		log.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!actNo="+ctx.getData(GDParamKeys.ACT_NO));
 	//TODO:待验证卡号是否属于珠海分行
+		
 //		try {
 //			CusActInfResult cusAcInf=accountService.getAcInf(comReq.build(ctx), ctx.getData(GDParamKeys.ACT_NO).toString());
 //			log.info("cusAcInf="+cusAcInf);
