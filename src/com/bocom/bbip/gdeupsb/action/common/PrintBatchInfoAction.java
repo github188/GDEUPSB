@@ -68,6 +68,7 @@ public class PrintBatchInfoAction extends BaseAction{
 								eupsBatchInfoDetails.setErrMsg("扣款成功");
 						}
 				}
+				//获取日期 
 				Date date=null;
 				if(gdEupsBatchConsoleInfo.getExeDte()!=null){
 						date=gdEupsBatchConsoleInfo.getExeDte();
@@ -104,7 +105,7 @@ public class PrintBatchInfoAction extends BaseAction{
 				String result = render.renderAsString("printBatch", context);
 				log.info("~~~~~~~~~~~~~~~~~~~~~"+result);
 				
-				
+				//生成文件路径
 				StringBuffer batNoFile=new StringBuffer();
 				batNoFile.append("/home/bbipadm/data/GDEUPSB/report/");
 				File file =new File(batNoFile.toString());
@@ -112,7 +113,7 @@ public class PrintBatchInfoAction extends BaseAction{
 						file.mkdirs();
 				}
 				
-					 
+				//生成文件
 					try {
 						FileOutputStream	fileOutputStream = new FileOutputStream(batNoFile.append(fileName).toString());
 						OutputStreamWriter outputStreamWriter=new OutputStreamWriter(fileOutputStream,"GBK");
