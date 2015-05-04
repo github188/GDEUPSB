@@ -495,19 +495,15 @@ public class CheckTrspFileAction extends BaseAction {
 			outputStreamWriter.close();
 			fileOutputStream.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.info("===========ErrMsg=",e);
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.info("===========ErrMsg=",e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.info("===========ErrMsg=",e);
 		}
 
 		
 		FTPTransfer tFTPTransfer = new FTPTransfer();
-		 // TODO FTP上传设置
        tFTPTransfer.setHost("182.53.15.187");
 		tFTPTransfer.setPort(21);
 		tFTPTransfer.setUserName("weblogic");
