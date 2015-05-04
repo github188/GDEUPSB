@@ -17,9 +17,9 @@ public class EfekEndAction extends BaseAction{
 	EupsThdTranCtlInfoRepository eupsThdTranCtlInfoRepository;
 	public void execute(Context context)throws CoreException, CoreRuntimeException{
 		logger.info("===========Start  EfekEndAction");
+			//状态
 	        String txnTyp = (String)context.getData("txnTyp");
 	        String comNo=context.getData("comNo").toString().trim();
-	        
 	        EupsThdTranCtlInfo euspThdTranCtlInfo=eupsThdTranCtlInfoRepository.findOne(comNo);
 	        String txnCtlSts=euspThdTranCtlInfo.getTxnCtlSts();
 	        if(txnCtlSts.equals(txnTyp)){

@@ -17,6 +17,7 @@ public class EfekStartAction extends BaseAction{
 	EupsThdTranCtlInfoRepository eupsThdTranCtlInfoRepository;
 	public void execute(Context context)throws CoreException, CoreRuntimeException{
 		logger.info("===========Start  EfekStartAction");
+			//状态
 	        String txnTyp = (String)context.getData("txnTyp");
 	        String comNo=context.getData("comNo").toString().trim();
 	        
