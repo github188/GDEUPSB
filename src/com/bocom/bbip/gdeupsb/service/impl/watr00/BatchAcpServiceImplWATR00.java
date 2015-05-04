@@ -234,9 +234,8 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		logger.info("srcFile detail=["+srcFile.get(ParamKeys.EUPS_FILE_DETAIL)+"]");
 		Map<String,Object> srcHeader = (Map<String,Object>)srcFile.get(ParamKeys.EUPS_FILE_HEADER);
 		
-		System.out.println();
-		System.out.println();
-		System.out.println("~~~~~~~~~~~~"+srcHeader);
+		
+		logger.info("~~~~~~~~~~~~"+srcHeader);
 		
 		//生成代扣文件头信息
 		header.put(ParamKeys.COMPANY_NO, eupsThdFtpConfig.getComNo());
@@ -275,7 +274,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 			temp.put("TXNAMT", new BigDecimal(map.get("je").toString().trim()).scaleByPowerOfTen(-2));
 			temp.put("AGTSRVCUSID", map.get("hno"));
 			temp.put("AGTSRVCUSNME", "");
-			//TODO:本行标志暂全定0，还要改。
+			//本行标志全定0。
 			temp.put("OUROTHFLG", "0");
 //			temp.put("OUROTHFLG", true==accountService.isOurBankCard((String) map.get("bcount"))?"0":"1");
 			String kkh = accountService.getAcInf(CommonRequest.build(context), map.get("bcount").toString()).getOpnBr();
