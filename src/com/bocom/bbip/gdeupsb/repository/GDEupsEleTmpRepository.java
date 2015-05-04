@@ -19,4 +19,7 @@ public interface GDEupsEleTmpRepository extends PagingAndSortingRepository<GDEup
 		public void updateOne(GDEupsEleTmp gdEupsEleTmp);
 		
 		public List<Map<String, Object>> findAllGroupByComNo(Map<String, Object> map);
+		
+		public List<GDEupsEleTmp> findByComNo(GDEupsEleTmp gdEupsEleTmp);
+		
 }
