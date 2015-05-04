@@ -52,12 +52,9 @@ public class PrintBatchInfoAction extends BaseAction{
 				CoreRuntimeException {
 				String batNo=context.getData(ParamKeys.BAT_NO).toString();
 				GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=gdEupsBatchConsoleInfoRepository.findOne(batNo);
-//				context.setData("batNo", batNo);
-//				String fleNme=gdEupsBatchConsoleInfo.getRsvFld8();
 				context.setData("eupsBusTyp", gdEupsBatchConsoleInfo.getEupsBusTyp());
 				String fileName=gdEupsBatchConsoleInfo.getRsvFld1();
 				context.setData("printResult", fileName);
-				//eupsBatchConsoleInfo批次号
 				EupsBatchConsoleInfo eupsBatchConsoleInfos=new EupsBatchConsoleInfo();
 				eupsBatchConsoleInfos.setRsvFld1(batNo);
 				EupsBatchConsoleInfo eupsBatchConsoleInfo=eupsBatchConsoleInfoRepository.find(eupsBatchConsoleInfos).get(0);
@@ -77,6 +74,7 @@ public class PrintBatchInfoAction extends BaseAction{
 				}else{
 						date=new Date();
 				}
+				//清单首尾信息
 				context.setData("exeDte", DateUtils.formatAsSimpleDate(date));
 				context.setData("comNo", eupsBatchConsoleInfo.getComNo());
 				context.setData(ParamKeys.TOT_CNT, eupsBatchConsoleInfo.getTotCnt());

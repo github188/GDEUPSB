@@ -171,6 +171,7 @@ public class BatchFileCommon extends BaseAction {
 		context.setData(ParamKeys.BR, br);
         final String AcDate=DateUtils.format(((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getAcDate(),DateUtils.STYLE_yyyyMMdd);
         final String systemCode=((SystemConfig)get(SystemConfig.class)).getSystemCode();
+        //路径
         final String dir="/home/bbipadm/data/mftp/BBIP/"+systemCode+"/"+br+"/"+tlr+"/"+AcDate+"/";
         context.setData("dir", dir);
         File file=new File(dir);
@@ -182,6 +183,7 @@ public class BatchFileCommon extends BaseAction {
         eupsActSysPara.setComNo(comNo);
         List resultList = ((EupsActSysParaRepository)get(EupsActSysParaRepository.class)).find(eupsActSysPara);
         Assert.isNotEmpty(resultList, ErrorCodes.EUPS_QUERY_NO_DATA);
+        //代收付单位编号
         final String comNoAcps =((EupsActSysPara)resultList.get(0)).getSplNo();
         final String fleNme="BATC"+comNoAcps+"0.txt";
         context.setData("fleNme", fleNme);
