@@ -23,10 +23,6 @@
 	<!--  交费记录查询-->
 	<action   class="com.bocom.bbip.gdeupsb.action.efek.QryCusPayRecordAction"
 		id="gdeupsb.qryCusPayRecordAction" />
-	<!--  供电方发起供电到银行变更代扣协议请求
-	<action   class="com.bocom.bbip.gdeupsb.action.efek.PowerChangeTreatyAction"
-		id="gesupsb.powerChangeTreatyAction" />	
-		-->
 	<!--  代收付日志服务记录-->
 	<action   class="com.bocom.bbip.gdeupsb.action.efek.LogServiceAction"
 		id="gdeupsb.logServiceAction" />	
@@ -71,6 +67,7 @@
 	<!--  签退-->	
 	<action   class="com.bocom.bbip.gdeupsb.action.efek.EfekEndAction"
 		id="gdeupsb.efekEndAction" />		
+		<!-- 电网清单报表 -->
 	<action   class="com.bocom.bbip.gdeupsb.action.efek.batch.PrintEfekBatchAction"
 		id="gdeupsb.printEfekBatchAction" />					
 </x:beans>
