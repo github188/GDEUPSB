@@ -151,7 +151,7 @@
 		<actions>
 		    <action id="chkBeforeCancelAct" class="com.bocom.bbip.gdeupsb.action.common.CheckComTxnCtlAction" operations="checkThdTxnCtlNormal" />
 		    <action id="chkBeforeCancelAct" class="com.bocom.bbip.gdeupsb.action.transportfee.PreCancelAction"/>
-		    <action id="simpleCancelAccBankAct" class="com.bocom.bbip.gdeupsb.action.BuaPaymentCancelUsingReversalExtTr"/>
+		    <action id="simpleCancelAccBankAct" class="com.bocom.bbip.gdeupsb.action.transportfee.BuaPaymentCancelUsingReversalTr"/>
 		    <action id="aftCancelAction" class="com.bocom.bbip.gdeupsb.action.transportfee.AftCancelAction"/>
 		    
 		    <action id="preRegTransRollBackAct" class="com.bocom.bbip.gdeupsb.action.transportfee.PreRegTransRollBackAction"/>
