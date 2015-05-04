@@ -56,10 +56,12 @@ public class AgentFileToThdAction extends BaseAction{
 				context.setData(ParamKeys.EUPS_BUSS_TYPE, "ELEC00");
 				context.setData("TransCode", "31");
 				Date date=new Date();
+				//日期
 				Date txnDate=DateUtils.parse(DateUtils.format(date, DateUtils.STYLE_SIMPLE_DATE),DateUtils.STYLE_SIMPLE_DATE);
 				Map<String, Object> map=new HashMap<String, Object>();
 //				txnDate=DateUtils.parse("2015-04-22");
 				map.put("txnDte", txnDate);
+				//分组
 				List<Map<String, Object>> comNoList=gdEupsCusAgentJournalRepository.findAllGroupByComNo(map);
 				int i=0;
 				for(Map<String, Object> mapList:comNoList){
@@ -110,6 +112,7 @@ public class AgentFileToThdAction extends BaseAction{
 						eupsThdFtpConfig.setFtpDir("0"); 
 						operateFileAction.createCheckFile(eupsThdFtpConfig, "efekAgent", locName, resultMap);	
 						operateFTPAction.putCheckFile(eupsThdFtpConfig);
+						//sftp
 						try {
 							RecvEnCryptFile(eupsThdFtpConfig.getLocDir(), locName, locName,context);
 						} catch (IOException e) {
