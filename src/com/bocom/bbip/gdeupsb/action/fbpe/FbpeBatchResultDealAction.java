@@ -138,7 +138,6 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 	                		sts="00";
 	            	}
             }else if(i==2){
-            	//TODO 
 	            	if(sts.equals("S")){
 	                		sts="1";
 	            	}else{
@@ -276,8 +275,7 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 			bufferedWriter.close();
 			fileWriter.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.info("===============ErrMsg=",e);
 		}   
     }
 }

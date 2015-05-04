@@ -107,8 +107,7 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
         		try {
 					map=resourceFile(pathName);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.info("===============ErrMsg=",e);
 				}
         }  else if (comNo.equals("4460000010")) {
             try {
