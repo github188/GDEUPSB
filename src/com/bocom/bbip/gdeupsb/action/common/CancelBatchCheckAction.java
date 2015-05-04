@@ -17,7 +17,6 @@ import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.service.Result;
 import com.bocom.bbip.utils.Assert;
-import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.ContextUtils;
 import com.bocom.jump.bp.core.Context;
@@ -34,20 +33,18 @@ public class CancelBatchCheckAction extends BaseAction {
  * 批次撤销
  */
     public void check(Context context)throws Exception{
-    	log.info("==============Start  CancelBatchCheckAction");
+    	logger.info("==============Start  CancelBatchCheckAction");
 		final String batNo=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.BAT_NO, ErrorCodes.EUPS_FIELD_EMPTY,"batNo");
 		//上锁
-//		Result result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).tryLock(batNo, 60*1000L, 60*1000L);
-		//GDEUPSB
+		Result result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).tryLock(batNo, 60*1000L, 60*1000L);
+		//GDEUPSB批次
 		GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo = get(GDEupsBatchConsoleInfoRepository.class).findOne(batNo);
+		//EUPS 批次
 		EupsBatchConsoleInfo eupsBatchConsoleInfos=new EupsBatchConsoleInfo();
 		eupsBatchConsoleInfos.setRsvFld1(batNo);
-		//EUPS
 		List<EupsBatchConsoleInfo> list=get(EupsBatchConsoleInfoRepository.class).find(eupsBatchConsoleInfos);
 		if(CollectionUtils.isEmpty(list)){
-				gdEupsBatchConsoleInfo.setBatSts("C");
-				get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(gdEupsBatchConsoleInfo);
-				context.setData("cancelReslt", "批次撤销完成");
+				throw new CoreException("没有"+batNo+"批次信息");
 		}else{
 				/**只有状态为I或W，才可以撤销批次*/
 				EupsBatchConsoleInfo eupsBatchConsoleInfo=list.get(0);
@@ -61,23 +58,19 @@ public class CancelBatchCheckAction extends BaseAction {
 							context.setData("cancelReslt", "批次已完成，不能撤销");
 							context.setData("QSFlg", "3");
 				}else if(gdEupsBatchConsoleInfo.getBatSts().equals("C")){
-							context.setData("cancelReslt", "批次已撤销，不能再次撤销");
-							context.setData("QSFlg", "4");
+							throw new CoreException("批次已撤销，不能再次撤销");
 				}else{
 						throw new CoreException("批次batNo获取状态错误");
 				}
 		}
 		
-//		context.setData("BatchConsoleInfo", gdEupsBatchConsoleInfo);
-		
-//		unLock(context);
-		log.info("==============End  CancelBatchCheckAction");
+		unLock(batNo);
+		logger.info("==============End  CancelBatchCheckAction");
     }
     /**
      * 解锁
      */
-    public void unLock(Context context)throws CoreException{
-    	final String batNo=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.BAT_NO, ErrorCodes.EUPS_FIELD_EMPTY);
+    public void unLock(String batNo)throws CoreException{
     	Result result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).unlock(batNo);
 		Assert.isTrue(result.isSuccess(), GDErrorCodes.EUPS_UNLOCK_FAIL);
     }
