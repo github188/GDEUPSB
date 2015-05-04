@@ -173,14 +173,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			List<GDEupsEleTmp> list=new ArrayList<GDEupsEleTmp>();
 			for(EupsBatchInfoDetail eupsBatchInfoDetail:mapList){
 						GDEupsEleTmp gdEupsEleTmp=gdEupsEleTmpRepository.findOne(eupsBatchInfoDetail.getRmk2());
-						gdEupsEleTmp.setTxnDte(gdEupsBatchConsoleInfoUpdate.getExeDte());
-						gdEupsEleTmp.setRsvFld5(eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2).intValue()+"");
-						gdEupsEleTmp.setBankSqn(gdEupsEleTmp.getSqn());
-						gdEupsEleTmp.setBankNo("301");
-						Date date=new Date();
-						gdEupsEleTmp.setRsvFld1(DateUtils.format(date, DateUtils.STYLE_yyyyMMdd));
-						gdEupsEleTmp.setRsvFld2(DateUtils.formatAsHHmmss(date));
-						gdEupsEleTmp.setBakFld(eupsBatchInfoDetail.getRmk1());
+						gdEupsEleTmp.setRsvFld4(eupsBatchInfoDetail.getErrMsg());
 						if(eupsBatchInfoDetail.getSts().equals("S")){
 							gdEupsEleTmp.setPaymentResult("00");
 						}else{
@@ -197,6 +190,14 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 							}
 						}
 						gdEupsEleTmpRepository.updateOne(gdEupsEleTmp);
+						gdEupsEleTmp.setTxnDte(gdEupsBatchConsoleInfoUpdate.getExeDte());
+						gdEupsEleTmp.setRsvFld5(eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2).intValue()+"");
+						gdEupsEleTmp.setBankSqn(gdEupsEleTmp.getSqn());
+						gdEupsEleTmp.setBankNo("301");
+						Date date=new Date();
+						gdEupsEleTmp.setRsvFld1(DateUtils.format(date, DateUtils.STYLE_yyyyMMdd));
+						gdEupsEleTmp.setRsvFld2(DateUtils.formatAsHHmmss(date));
+						gdEupsEleTmp.setBakFld(eupsBatchInfoDetail.getRmk1());
 						list.add(gdEupsEleTmp);
 			}
 			Map<String, Object> headMap=new HashMap<String, Object>();
