@@ -718,7 +718,7 @@
      from 
 				GDEUPSB.GDEUPS_ELE_TMP
 	where 
-				  and  TXN_DTE=#{txnDte,jdbcType=CHAR}  
+				    TXN_DTE=#{txnDte,jdbcType=CHAR}  
 	group by 
 				SUBSTR(COM_NO,1,4)
 	</select>
