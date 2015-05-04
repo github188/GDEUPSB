@@ -130,6 +130,7 @@ public class GzagBatchDataFileAction extends BaseAction implements BatchAcpServi
 						gdEupsGzagBatchTmp.setRsvFld1(batNo);
 						//插入临时表
 						gdEupsGzagBatchTmpRepository.insert(gdEupsGzagBatchTmp);
+						//金额累加 
 						listTotAmt=listTotAmt.add(txnAmt);
 			}
 			logger.info("~~~~~~~~~~~~~End  insert  (获取文件并解析入库)"+listTotAmt);
