@@ -76,7 +76,7 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
     	//保存到控制表 
         GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=batchFileCommon.eupsBatchConSoleInfoAndgdEupsBatchConSoleInfo(context);
         Map<String, Object> resultMap = new HashMap<String, Object>();
-         //返回头  只有移动有
+         
         Map<String, Object> resultMapHead = new HashMap<String, Object>();
         resultMapHead.put("rsvFld1", gdEupsBatchConsoleInfo.getSucTotCnt());
         resultMapHead.put("rsvFld2", gdEupsBatchConsoleInfo.getSucTotAmt());
@@ -100,109 +100,30 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
         String comNo=gdEupsBatchConsoleInfo.getComNo();
         String fileName = comNo+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";   	
         context.setData("printResult", fileName);
-        int i=0;
-        if(comNo.equals("4460000011")) { 
-            fmtFileName="tvFbpeBatResultFmt";
-            i=1;
-        } else if (comNo.equals("4460002194")) {
-        	 i=2;
+        //仅有44460002194
          	createGasFile(context, eupsBatchInfoDetailList, comNo,batNos);
          	log.info("=================="+context.getData("printResult"));
          	return;
-        }  else if (comNo.equals("4460000010")) {
-        	 i=3;
-            fmtFileName="mobFbpeBatResultFmt";
-        } else if (comNo.equals("4460000014")) {
-        	 i=4;
-            fmtFileName="telFbpeBatResultFmt";
-        }
-
-        List<Map<String, Object>> detailList = new ArrayList<Map<String, Object>>();
-        String batNo=gdEupsBatchConsoleInfo.getBatNo();
-        GdFbpeFileBatchTmp gdFbpeFileBatchTmp=new GdFbpeFileBatchTmp();
-        gdFbpeFileBatchTmp.setRsvFld5(batNo);
-        // 生成返回明细信息
-        List<GdFbpeFileBatchTmp> batchDetailList = fileRepository.find(gdFbpeFileBatchTmp);
-        for (GdFbpeFileBatchTmp batchDetail : batchDetailList) {
-            Map<String, Object> detailMap = new HashMap<String, Object>();            
-            detailMap.put("txnNo", batchDetail.getTxnNo());
-            detailMap.put("orgCde", batchDetail.getOrgCde());
-            detailMap.put("smsSqn", batchDetail.getRsvFld6());
-            detailMap.put("sqn", batchDetail.getSqn());
-            detailMap.put("tlrNo", batchDetail.getTlrNo());
-            detailMap.put("txnTim", batchDetail.getTxnTim());
-            String sts=batchDetail.getRsvFld7();
-            if(i==1){
-	            	if(sts.equals("S")){
-	                		sts="00";
-	            	}
-            }else if(i==2){
-	            	if(sts.equals("S")){
-	                		sts="1";
-	            	}else{
-	            			sts="0";
-	            	}
-            }else if(i==3){
-	            	if(sts.equals("S")){
-	                		sts="1";
-	            	}else{
-	            			sts="0";
-	            	}
-            }else if(i==4){
-	            	if(sts.equals("S")){
-	                		sts="1";
-	            	}else{
-	            			sts="0";
-	            	}
-            }
-            detailMap.put("rsvFld7", sts);     //状态
-            detailMap.put("rsvFld8",batchDetail.getRsvFld2());     // 失败原因
-            
-            detailMap.put("accNo", batchDetail.getAccNo());
-            detailMap.put("cusNo", batchDetail.getCusNo());
-            detailMap.put("cusAc", batchDetail.getCusAc());
-            detailMap.put("cusNam", batchDetail.getCusNam());
-            detailMap.put("txnAmt", batchDetail.getTxnAmt());
-            detailMap.put("actNo", batchDetail.getActNo());
-            detailMap.put("rsvFld1", batchDetail.getRsvFld1());//备用字段1 代表手机号码
-            detailMap.put("rsvFld2",batchDetail.getRsvFld2());
-            detailMap.put("months", batchDetail.getCosMon());
-            detailMap.put("bankNam", batchDetail.getBankNam());
-            detailMap.put("mobComNam", "广东移动通信有限责任公司佛山分公司");
-            detailMap.put("mobComAc", "4267000012014017715");
-            detailMap.put("AAC", "交通银行佛山分行");
-          
-            detailList.add(detailMap);
-        }
-	        resultMap.put("detail", detailList);
-	
-	        EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("fbpeBathReturnFmt");
-	        //文件名
-	        fileName = gdEupsBatchConsoleInfo.getComNo()+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";
-	        eupsThdFtpConfig.setFtpDir("0");
-	        eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/batch/"+fileName);
-	        eupsThdFtpConfig.setLocFleNme(fileName);
-	
-	        // 生成文件
-	        operateFile.createCheckFile(eupsThdFtpConfig, fmtFileName, fileName, resultMap);
-	
-	        // 将生成的文件上传至指定服务器
-	        eupsThdFtpConfig.setRmtWay("/home/bbipadm/data/GDEUPSB/batch/");
-	        eupsThdFtpConfig.setRmtFleNme(fileName);
-	        operateFTP.putCheckFile(eupsThdFtpConfig);
     }
+    /**
+     *生成佛山批扣返回文件 
+     */
     public void createGasFile(Context context,List<EupsBatchInfoDetail> eupsBatchInfoDetailList,String comNo,String batNos){
+    	//文件名
     	String fileName = comNo+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";   	 
     	EupsBatchConsoleInfo eupsBatchConsoleInfo=eupsBatchConsoleInfoRepository.findOne(batNos);
     	String batNo=eupsBatchConsoleInfo.getRsvFld1();
     	GDEupsBatchConsoleInfo gdEupsBatchConsoleInfos=gdEupsBatchConsoleInfoRepository.findOne(batNo);
     	gdEupsBatchConsoleInfos.setRsvFld1(fileName);
+    	//更改表信息
     	gdEupsBatchConsoleInfoRepository.updateConsoleInfo(gdEupsBatchConsoleInfos);
 		try {
+			//生成文件
 			File file=new File("/home/bbipadm/data/GDEUPSB/batch/"+fileName);
 			if(!file.exists()){
 					file.createNewFile();
 			}
+			//添加文件内容
 			FileWriter fileWriter = new FileWriter(file);
 			BufferedWriter bufferedWriter=new BufferedWriter(fileWriter); 	
 			for (EupsBatchInfoDetail eupsBatchInfoDetail : eupsBatchInfoDetailList) {

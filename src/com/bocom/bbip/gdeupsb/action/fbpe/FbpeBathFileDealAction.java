@@ -77,6 +77,7 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
         /**  第三方文件名*/
         String fileName = context.getData("fleNme").toString();
        
+        //u盘文件获取
         EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne("FSAG00");
         eupsThdFtpConfig.setFtpDir("1");
         eupsThdFtpConfig.setRmtFleNme(fileName);
@@ -103,7 +104,7 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
                 e.printStackTrace();
             }
         } else if (comNo.equals("4460002194")) {
-        		//解析文件
+        		//解析文件   
         		try {
 					map=resourceFile(pathName);
 				} catch (IOException e) {
@@ -211,7 +212,9 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
 		logger.info("=================End  FbpeBathFileDealAction  createMap ");
 		return detailList;
     }
- 
+ /**
+  *解析佛山燃气批扣文件 
+  */
     public Map<String, List<Map<String, Object>>> resourceFile(String pathName) throws IOException{
     	 logger.info("===============Start  FbpeBathFileDealAction resourceFile");
     	 Map<String, List<Map<String, Object>>> mapList=new HashMap<String, List<Map<String,Object>>>();
@@ -223,10 +226,13 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
 		 int fourthLen=0;
 		List<Map<String,Object>> ret=new ArrayList<Map<String,Object>>();
 		Map<String,Object>map=null;
+		//获取文件
 		File file=new File(pathName);
+		//设置文件读取格式
 		List<String>list=FileUtils.readLines(file, "GBK");
 		for(String str:list){
 			map=new HashMap<String,Object>();
+			//用GBK读取字符串，然后变为字节
 			byte[]b=str.getBytes("GBK");
 			byte _1st[]=ArrayUtils.subarray(b, pos, LEN);
 			firstLen=calLen(_1st);
@@ -245,6 +251,7 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
 			thirdLen=calLen(_3rd);
 			pos=pos+LEN;
 			byte[]_3rdVal=ArrayUtils.subarray(b, pos, thirdLen+pos);
+			//汉字用GBK写入
 			map.put("cusNam", new String(_3rdVal,"GBK"));
 			
 			pos=pos+thirdLen;
