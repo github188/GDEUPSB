@@ -67,12 +67,12 @@ public class QueryTransportFeeAction extends BaseAction{
 		logger.info("call third start....[the state is" + ctx.getState() + "]");
 		if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_OVERTIME)){
 			ctx.setData(ParamKeys.RSP_MSG, "查询路桥方交易超时");
-			//TODO: <Set>RspCod=RBF999</Set>
-			throw new CoreRuntimeException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
+			
+			throw new CoreException(ErrorCodes.EUPS_THD_SYS_ERROR);
 		}else if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_FAIL)){
 			ctx.setData(ParamKeys.RSP_MSG, "查询路桥方交易失败");
-			//TODO: <Set>RspCod=RBF999</Set>
-			throw new CoreRuntimeException(ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
+		
+			throw new CoreException(ErrorCodes.EUPS_THD_SYS_ERROR);
 		}else if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL)){
 			CommThdRspCdeAction cRspCdeAction = new CommThdRspCdeAction();
 			String responseCode = cRspCdeAction.getThdRspCde(thdReturnMessage, 	ctx.getData(ParamKeys.EUPS_BUSS_TYPE).toString());

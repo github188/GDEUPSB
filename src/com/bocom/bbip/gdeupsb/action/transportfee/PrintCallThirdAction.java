@@ -101,13 +101,7 @@ public class PrintCallThirdAction extends BaseAction{
 				gdEupsbTrspTxnJnl.setSqn(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
 				gdEupsbTrspTxnJnlRepository.updateSt(gdEupsbTrspTxnJnl);
 				
-//				TODO: <If condition="IS_NOEQUAL_STRING($TxnCnl,TRM)">
-//	          <Exec func="PUB:SetNoResponse"/>
-//	       </If>
-//	       <Exec func="PUB:DefaultErrorProc"/>
 
-//				ctx.setData(ParamKeys.RSP_CDE, ErrorCodes.TRANSACTION_ERROR_OTHER_ERROR);
-//				ctx.setData(ParamKeys.RSP_MSG, "路桥方返回：" + thdReturnMessage.get(GDParamKeys.TRSP_CD));
 				ctx.setState("fail");
 				if(StringUtil.isEmpty(responseCode)){
 					responseCode = ErrorCodes.EUPS_THD_RSP_CODE_ERROR;
@@ -139,12 +133,7 @@ public class PrintCallThirdAction extends BaseAction{
 			gdEupsbTrspTxnJnl.setInvNo(ctx.getData(GDParamKeys.INV_NO).toString());
 			gdEupsbTrspTxnJnl.setSqn(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
 			gdEupsbTrspTxnJnlRepository.updateSt(gdEupsbTrspTxnJnl);
-			
-//			TODO: <If condition="IS_NOEQUAL_STRING($TxnCnl,TRM)">
-//          <Exec func="PUB:SetNoResponse"/>
-//       </If>
-//       <Exec func="PUB:DefaultErrorProc"/>
-
+	
 			ctx.setData(ParamKeys.RSP_CDE, ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
 			ctx.setData(ParamKeys.RSP_MSG, "路桥方交易超时");
 			//TODO:此处throw待考虑是否放开

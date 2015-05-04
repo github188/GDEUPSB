@@ -1,41 +1,22 @@
 package com.bocom.bbip.gdeupsb.action.transportfee;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.config.TxNamespaceHandler;
 
-import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.comp.BBIPPublicServiceImpl;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
-import com.bocom.bbip.gdeupsb.common.GDConstants;
-import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
-import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo;
-import com.bocom.bbip.gdeupsb.entity.GdLotTxnJnl;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspFeeInfoRepository;
-import com.bocom.bbip.gdeupsb.repository.GdLotTxnJnlRepository;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
-import com.bocom.bbip.utils.DateUtils;
-import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
-import com.bocom.jump.bp.support.CollectionUtils;
 
 public class PrintAction extends BaseAction{
 	private final static Log log = LogFactory.getLog(PrintAction.class);
@@ -48,7 +29,7 @@ public class PrintAction extends BaseAction{
 	public void execute(Context ctx) throws CoreRuntimeException,CoreException{
 		log.info("PrintAction start.......");
 //		ctx.setData(GDParamKeys.OINV_NO, ctx.getData(GDParamKeys.INV_NO));
-//		//TODO:待考虑！！！！
+
 //		if(!ctx.getData(GDParamKeys.OINV_NO).toString().trim().equals(ctx.getData(GDParamKeys.INV_NO).toString().trim())){
 //			ctx.setData(ParamKeys.RSP_MSG, "发票号码改变，请补打");
 //			throw new CoreRuntimeException(GDErrorCodes.EUPS_INVOIC_NO_ERROR);
@@ -90,7 +71,7 @@ public class PrintAction extends BaseAction{
 //		try {
 //			log.info("generate report content:****"+new String(result.getBytes(GDConstants.CHARSET_ENCODING_GBK)));
 //		} catch (UnsupportedEncodingException e1) {
-//			// TODO Auto-generated catch block
+
 //			e1.printStackTrace();
 //		}
 //		String fileName = ctx.getData(GDParamKeys.INV_NO).toString()+ctx.getData(ParamKeys.TELLER)+"00";
