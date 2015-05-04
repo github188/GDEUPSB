@@ -101,7 +101,7 @@ public class GzagBatchDataResultFileAction extends BaseAction implements AfterBa
 			String fileIDResult=fileId+"Result";
 			EupsThdFtpConfig eupsThdFtpConfig =eupsThdFtpConfigRepository.findOne(fileId);
 			// 生成文件
-			//TODO 生成文件名
+			
 			operateFile.createCheckFile(eupsThdFtpConfig, fileIDResult, locName, resultMap);
 			logger.info("===============生成反盘文件成功");
 			// 将生成的文件上传至指定服务器

@@ -132,7 +132,6 @@ public class GzagBatchDataFileAction extends BaseAction implements BatchAcpServi
 						listTotAmt=listTotAmt.add(txnAmt);
 			}
 			logger.info("~~~~~~~~~~~~~End  insert  (获取文件并解析入库)"+listTotAmt);
-			//TODO 判断 总金额 总笔数是否相等
 			context.setData("listTotAmt", listTotAmt);
 
 			//文件内容
@@ -225,11 +224,9 @@ public class GzagBatchDataFileAction extends BaseAction implements BatchAcpServi
 					bufferedReader.close();
 					fileReader.close();
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.info("===============ErrMsg=",e);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.info("===============ErrMsg=",e);
 				}
 				logger.info("=================End  BatchDataFileAction  updateInfoAboutLott");
 		}
