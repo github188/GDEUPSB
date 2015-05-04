@@ -49,7 +49,7 @@ public class AgtScanPrintAction extends BaseAction {
 		// 44101时，拼装动态sql
 		String extSql = new String();
 		if ("44101".equals(gdsBId)) {
-			extSql = ",AreaId AreaId,BatchId batchId,usbflg UsbFlg ";
+			extSql = ",Area_Id AreaId,Batch_Id batchId,usb_flg UsbFlg ";
 		}
 
 		// 不同的功能选择
