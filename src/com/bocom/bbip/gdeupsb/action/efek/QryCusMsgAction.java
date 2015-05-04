@@ -60,8 +60,6 @@ public class QryCusMsgAction extends BaseAction{
 		}
 		context.setData(ParamKeys.BAK_FLD1, bakFld1);
 		context.setData("payNo", context.getData("payNo"));
-		System.out.println();
-		System.out.println("===========payNo="+context.getData("payNo"));
 	}
 	/**
 	 *报文信息  外发第三方
