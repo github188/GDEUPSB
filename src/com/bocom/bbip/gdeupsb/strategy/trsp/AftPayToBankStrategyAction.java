@@ -8,6 +8,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
@@ -39,7 +40,9 @@ public class AftPayToBankStrategyAction implements Executable{
 	private final static Log log = LogFactory.getLog(AftPayToBankStrategyAction.class); 
 	public void execute(Context ctx) throws CoreException,CoreRuntimeException{
 		log.info("AftPayToBankStrategyAction start......");
-		
+		if(!ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL)){
+			throw new CoreException("BBIP4400EU0744");
+		}
 //        更新缴费标志
 		GDEupsbTrspPayInfo gdEupsbTrspPayInfo = new GDEupsbTrspPayInfo();
 		gdEupsbTrspPayInfo.setThdKey(ctx.getData(GDParamKeys.THD_KEY).toString());
@@ -47,9 +50,7 @@ public class AftPayToBankStrategyAction implements Executable{
 		gdEupsbTrspPayInfoRepository.update(gdEupsbTrspPayInfo);
 		
 		
-//		TODO: 
 
-//        <Set>mxcount=$PayMon</Set>！！！！！！！！！！！！！！！！！！！！！！！
 
 
         String otCusNm = (String)ctx.getData(GDParamKeys.TCUS_NM);
