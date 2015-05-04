@@ -1,0 +1,39 @@
+#report(50)
+#rh(4)
+#lpara($d.printType)
+#lpara($d.comNo)
+#lpara($d.eupsBusTyp)
+#lpara($d.txnDate)																
+        （?）       单位编号: ?     业务类型: ?       打印日期:?
+------------------------------------------------------------------------------------------------------------------------------------------------------
+序号                 流水号                      银行账号                  银行客户姓名           缴费号        客户姓名      部分缴费标志     第三方账务流水      电费年月    金额      结果说明
+------------------------------------------------------------------------------------------------------------------------------------------------------
+#end
+#set($p.index=0)
+#td(1,$d.eles)#set($p.index=$p.index+1) 
+#lpara($p.index)
+#lpara($ele.sqn)
+#lpara($ele.cusAc)
+#lpara($ele.cusNme)
+#lpara($ele.thdCusNo)
+#lpara($ele.thdCusNme)
+#lpara($ele.fullDedFlag)
+#lpara($ele.accountNo)
+#lpara($ele.electricityYearMonth)
+#lpara($ele.txnAmt)
+#lpara($ele.rsvFld4)
+?          ?                               ?                                ?                ?               ?          ?
+#end
+#tf(2)
+#lpara($d.Tlr)
+#lpara($d.exeDte)
+#lpara($d.totCnt)
+#lpara($d.totAmt)
+#lpara($d.sucTotCnt)
+#lpara($d.sucTotAmt)
+#lpara($d.falTotCnt)
+#lpara($d.falTotAmt)
+------------------------------------------------------------------------------------------------------------------------------------------------------
+  操作柜员: ?操作日期:?总笔数: ? 总金额: ￥? 成功总笔数:?成功总金额:￥?  失败总笔数:? 失败总金额:￥? 
+#end
+#end
