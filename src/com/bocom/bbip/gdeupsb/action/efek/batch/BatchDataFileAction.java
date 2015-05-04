@@ -122,6 +122,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 									 BigDecimal txnAmt=new BigDecimal(gdEupsEleTmp.getPaymentMoney()).scaleByPowerOfTen(-2);
 									 gdEupsEleTmp.setTxnAmt(txnAmt);
 									 gdEupsEleTmp.setRsvFld5(batNo);
+									 gdEupsEleTmp.setComNo(comNo);
 									 gdEupsEleTmpRepository.insert(gdEupsEleTmp);
 						}
 						logger.info("==========success  insert  gdEupsEleTmp");
