@@ -53,14 +53,6 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 
 		String prtFlg = context.getData(ParamKeys.PRT_FLG);
 
-		// //////////////////FOR TEST //////////////
-		context.setData("pNodNo1", "CNJT");
-		context.setData("pTlrId1", "CNJT0001");
-		context.setData("txnDte1", DateUtils.format(
-				(Date) context.getData(ParamKeys.TXN_DTE),
-				DateUtils.STYLE_SIMPLE_DATE));
-		// ////////////////////////////////////////////////
-
 		// 配VM文件
 		StringBuffer fileName = null;
 		String br = context.getData(ParamKeys.BR);
@@ -245,7 +237,7 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 
 		// 上传FTP
 		FTPTransfer tFTPTransfer = new FTPTransfer();
-		// TODO FTP上传设置
+		//FTP上传设置
 		tFTPTransfer.setHost("182.53.15.187");
 		tFTPTransfer.setPort(21);
 		tFTPTransfer.setUserName("weblogic");

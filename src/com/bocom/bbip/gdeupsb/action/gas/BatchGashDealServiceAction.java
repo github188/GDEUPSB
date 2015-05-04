@@ -74,18 +74,12 @@ public class BatchGashDealServiceAction extends BaseAction implements
 			throws CoreException {
 		logger.info("批次前准备数据");
 
-		// TODO: for test, 此处为了测试写死，后续需要修改
-		// context.setData(ParamKeys.TELLER, "ABIR148");
-		// context.setData(ParamKeys.BR, "01441131999");
-		// context.setData(ParamKeys.BK, "01441999999");
-
-		
 		context.setData("extFields", "01491800999");
 		
 		String bk = "01491999999";//分行号01441999999 ?
 		String br = "01491800999";//网点号、机构号01491800999?
 		String tlr = null;//"4910153"
-		// TODO get tlr
+		//  get tlr
 		context.setData(ParamKeys.BK, bk);// 分行号01491999999
 		context.setData(ParamKeys.BR, br);// 机构号 "01441131999"
 		tlr = bbipPublicService.getETeller(bk);
@@ -192,7 +186,6 @@ public class BatchGashDealServiceAction extends BaseAction implements
 			tmpMap.put("cusNme", tmp.getTmpFld4());
 			tmpMap.put("txnAmt", tmp.getTxnAmt());
 			tmpMap.put("thdCusNo", tmp.getCusNo());
-//TODO			tmpMap.put("OUROTHFLG", isOurBnk);
 			tmpMap.put("OUROTHFLG", "0");
 			tmpMap.put("thdCusNme", tmp.getTmpFld3());
 			// tmpMap.put("OBKBK", value);

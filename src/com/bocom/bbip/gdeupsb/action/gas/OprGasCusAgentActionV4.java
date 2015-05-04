@@ -713,8 +713,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		context.setData(ParamKeys.COMPANY_NAME, comNme);
 		map.put("comNum", comNme);
 
-		map.put(ParamKeys.BUS_TYP, "0"); // TODO 0-代收； 暂用0，待确认0-代收,1-代付,2-代缴
-											// 0-批量代收；1-批量代付；2-联机缴费；
+		map.put(ParamKeys.BUS_TYP, "0"); 
 		map.put(ParamKeys.BUSS_KIND, context.getData(ParamKeys.BUSS_KIND));
 		map.put(ParamKeys.CCY, "CNY");
 		map.put("cusFeeDerFlg", "0"); // TODO 暂用0，待确认
@@ -726,7 +725,6 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		map.put(ParamKeys.CMU_TEL, context.getData(ParamKeys.CMU_TEL));
 		map.put(ParamKeys.THD_CUS_NO, context.getData(ParamKeys.THD_CUS_NO));
 
-		// TODO
 		map.put("pedAgrSts", "0");
 		map.put("cnlSts", "10000000000000000010");
 
