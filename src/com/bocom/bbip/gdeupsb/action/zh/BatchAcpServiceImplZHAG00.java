@@ -109,6 +109,7 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 		List <GDEupsZhAGBatchTemp>lt=get(GDEupsZHAGBatchTempRepository.class).findByBatNo((String)context.getData(ParamKeys.BAT_NO));
 		for (GDEupsZhAGBatchTemp gdEupsZhAGBatchTemp : lt) {
 				gdEupsZhAGBatchTemp.setThdCusNme("0");
+				gdEupsZhAGBatchTemp.setThdCusNo(gdEupsZhAGBatchTemp.getSqn());
 		}
 		List<Map<String,Object>> detail=(List<Map<String, Object>>) BeanUtils.toMaps(lt);
 		EupsActSysPara eupsActSysPara = new EupsActSysPara();

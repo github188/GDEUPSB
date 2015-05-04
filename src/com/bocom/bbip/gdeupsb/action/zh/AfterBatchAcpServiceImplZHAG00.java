@@ -12,8 +12,6 @@ import java.util.Properties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
@@ -55,13 +53,16 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
         Assert.isNotEmpty(list, ErrorCodes.EUPS_QUERY_NO_DATA);
         for (EupsBatchInfoDetail eupsBatchInfoDetail : list) {
         	Map<String , Object > map=new HashMap<String, Object>();
-        	String sqn=eupsBatchInfoDetail.getRmk1();
+        	String sqn=eupsBatchInfoDetail.getAgtSrvCusId();
         	map.put("sqn", sqn);
 			 String sts=eupsBatchInfoDetail.getSts();
 			 if(sts.equals("S")){
 				 map.put("rsvFld2","Y");
 			 }else{
-				 	String errMsg=eupsBatchInfoDetail.getErrMsg().substring(0,6);
+				 	String errMsg=eupsBatchInfoDetail.getErrMsg();
+				 	if(errMsg.length()>6){
+				 		errMsg=eupsBatchInfoDetail.getErrMsg().substring(0,6);
+				 	}
 				 	if(errMsg.equals("TPM050")){
 				 			map.put("rsvFld2","E");
 				 	}else if(errMsg.equals("SDM015")){
@@ -119,10 +120,10 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
 				logger.info("===============Start  BatchDataResultFileAction  createFileMap");	
 				Map<String, Object> resultMap=new HashMap<String, Object>();		
 				resultMap.put(ParamKeys.EUPS_FILE_HEADER, BeanUtils.toMap(gdEupsBatchConsoleInfo));
+				logger.info("===============resultMap header "+resultMap);	
 				//文件内容 
-				GDEupsZhAGBatchTemp gdEupsZHAGBatchTemp =new  GDEupsZhAGBatchTemp();
-				gdEupsZHAGBatchTemp.setBatNo(gdEupsBatchConsoleInfo.getBatNo());
-				List<GDEupsZhAGBatchTemp> detailList=gdEupsZHAGBatchTempRepository.find(gdEupsZHAGBatchTemp);
+				List<GDEupsZhAGBatchTemp> detailList=gdEupsZHAGBatchTempRepository.findByBatNo(gdEupsBatchConsoleInfo.getBatNo());
+				logger.info("===============detailList "+detailList);	
 				resultMap.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(detailList));
 				logger.info("===============End   BatchDataResultFileAction  createFileMap");	
 				return resultMap;
