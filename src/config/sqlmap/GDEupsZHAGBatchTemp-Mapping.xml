@@ -109,7 +109,7 @@
 
 	<update id="updateRsvFld2"  parameterType="java.util.Map">
 			update GDEUPSB.GDEUPS_ZHAG_BATCH_TEMP 
-			set RSV_FLD2= #{rsvFld2,jdbcType=CHAR} where SQN = #{sqn,jdbcType=CHAR}
+			set RSV_FLD2= #{rsvFld2,jdbcType=CHAR},TXN_AMT=#{txnAmt,jdbcType=CHAR}  where SQN = #{sqn,jdbcType=CHAR}
 	</update>
 
 </mapper>
