@@ -92,7 +92,6 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 				gdFbpeFileBatchTmps.setSqn(sqn);
 				gdFbpeFileBatchTmps.setRsvFld7(eupsBatchInfoDetail.getSts());
 				gdFbpeFileBatchTmps.setRsvFld8(eupsBatchInfoDetail.getErrMsg());
-				System.out.println(">>>>>>>>>>>>>>>>>rsvFld7"+gdFbpeFileBatchTmps.getRsvFld7()+"<<<<<<<<<<<");
 				gdFbpeFileBatchTmpRepository.updateFbpe(gdFbpeFileBatchTmps);
 		}
         
