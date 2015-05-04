@@ -711,4 +711,16 @@
     </set>
     where SQN = #{sqn,jdbcType=CHAR}
   </update>
+
+	  <select id="findAllGroupByComNo"  resultType="java.util.Map"  parameterType="java.util.Map">
+ 	select 
+				SUBSTR(COM_NO,1,4) ,count(*) as totCnt, sum(TXN_AMT) as totAmt
+     from 
+				GDEUPSB.GDEUPS_ELE_TMP
+	where 
+				  and  TXN_DTE=#{txnDte,jdbcType=CHAR}  
+	group by 
+				SUBSTR(COM_NO,1,4)
+	</select>
+	
 </mapper>
