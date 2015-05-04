@@ -619,4 +619,96 @@
        PAYMENT_RESULT!='00'
         AND  TXN_DTE=#{txnDte,jdbcType=DATE}
   </select>
+  
+  
+   <update id="updateOne" parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsEleTmp" >
+    update ${GDEUPSB_SCHEMA}.GDEUPS_ELE_TMP
+    <set >
+      <if test="bankNo != null" >
+        BANK_NO = #{bankNo,jdbcType=CHAR},
+      </if>
+      <if test="comNo != null" >
+        COM_NO = #{comNo,jdbcType=CHAR},
+      </if>
+      <if test="fileDte != null" >
+        FILE_DTE = #{fileDte,jdbcType=CHAR},
+      </if>
+      <if test="ccy != null" >
+        CCY = #{ccy,jdbcType=CHAR},
+      </if>
+      <if test="busKnd != null" >
+        BUS_KND = #{busKnd,jdbcType=CHAR},
+      </if>
+      <if test="number != null" >
+        NUMBER = #{number,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNo != null" >
+        THD_CUS_NO = #{thdCusNo,jdbcType=CHAR},
+      </if>
+      <if test="thdCusNme != null" >
+        THD_CUS_NME = #{thdCusNme,jdbcType=CHAR},
+      </if>
+      <if test="cusAc != null" >
+        CUS_AC = #{cusAc,jdbcType=CHAR},
+      </if>
+      <if test="cusNme != null" >
+        CUS_NME = #{cusNme,jdbcType=CHAR},
+      </if>
+      <if test="fullDedFlag != null" >
+        FULL_DED_FLAG = #{fullDedFlag,jdbcType=CHAR},
+      </if>
+      <if test="payType != null" >
+        PAY_TYPE = #{payType,jdbcType=CHAR},
+      </if>
+      <if test="accountNo != null" >
+        ACCOUNT_NO = #{accountNo,jdbcType=CHAR},
+      </if>
+      <if test="electricityYearmonth != null" >
+        ELECTRICITY_YEARMONTH = #{electricityYearmonth,jdbcType=CHAR},
+      </if>
+      <if test="paymentMoney != null" >
+        PAYMENT_MONEY = #{paymentMoney,jdbcType=CHAR},
+      </if>
+      <if test="capitial != null" >
+        CAPITIAL = #{capitial,jdbcType=CHAR},
+      </if>
+      <if test="dedit != null" >
+        DEDIT = #{dedit,jdbcType=CHAR},
+      </if>
+      <if test="paymentResult != null" >
+        PAYMENT_RESULT = #{paymentResult,jdbcType=CHAR},
+      </if>
+      <if test="txnAmt != null" >
+        TXN_AMT = #{txnAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="bankSqn != null" >
+        BANK_SQN = #{bankSqn,jdbcType=CHAR},
+      </if>
+      <if test="txnDte != null" >
+        TXN_DTE = #{txnDte,jdbcType=DATE},
+      </if>
+      <if test="txnTme != null" >
+        TXN_TME = #{txnTme,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bakFld != null" >
+        BAK_FLD = #{bakFld,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld1 != null" >
+        RSV_FLD1 = #{rsvFld1,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld2 != null" >
+        RSV_FLD2 = #{rsvFld2,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld3 != null" >
+        RSV_FLD3 = #{rsvFld3,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld4 != null" >
+        RSV_FLD4 = #{rsvFld4,jdbcType=VARCHAR},
+      </if>
+      <if test="rsvFld5 != null" >
+        RSV_FLD5 = #{rsvFld5,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SQN = #{sqn,jdbcType=CHAR}
+  </update>
 </mapper>
