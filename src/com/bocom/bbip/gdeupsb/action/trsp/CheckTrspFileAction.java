@@ -80,7 +80,7 @@ public class CheckTrspFileAction extends BaseAction {
 			context.setData(ParamKeys.RSP_MSG, "交易并发，请稍后在做 !!");
 			throw new CoreException("交易并发，请稍后在做 ");
 		}
-
+		//结束日期为空时，设为当天
 		if (null == context.getData(GDParamKeys.END_DATE)) {
 			context.setData(GDParamKeys.END_DATE,DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
 		}
