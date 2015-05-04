@@ -618,6 +618,7 @@
     	where 
        PAYMENT_RESULT!='00'
         AND  TXN_DTE=#{txnDte,jdbcType=DATE}
+        AND  SUBSTR(COM_NO,1,4)=#{comNo,jdbcType=CHAR} 
   </select>
   
   
@@ -723,4 +724,99 @@
 				SUBSTR(COM_NO,1,4)
 	</select>
 	
+	<select id="findByComNo" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_ELE_TMP
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="bankNo!=null" >
+        AND  BANK_NO=#{bankNo,jdbcType=CHAR}
+      </if>
+      <if test="comNo!=null" >
+        AND  SUBSTR(COM_NO,1,4)=#{comNo,jdbcType=CHAR}
+      </if>
+      <if test="fileDte!=null" >
+        AND  FILE_DTE=#{fileDte,jdbcType=CHAR}
+      </if>
+      <if test="ccy!=null" >
+        AND  CCY=#{ccy,jdbcType=CHAR}
+      </if>
+      <if test="busKnd!=null" >
+        AND  BUS_KND=#{busKnd,jdbcType=CHAR}
+      </if>
+      <if test="number!=null" >
+        AND  NUMBER=#{number,jdbcType=CHAR}
+      </if>
+      <if test="thdCusNo!=null" >
+        AND  THD_CUS_NO=#{thdCusNo,jdbcType=CHAR}
+      </if>
+      <if test="thdCusNme!=null" >
+        AND  THD_CUS_NME=#{thdCusNme,jdbcType=CHAR}
+      </if>
+      <if test="cusAc!=null" >
+        AND  CUS_AC=#{cusAc,jdbcType=CHAR}
+      </if>
+      <if test="cusNme!=null" >
+        AND  CUS_NME=#{cusNme,jdbcType=CHAR}
+      </if>
+      <if test="fullDedFlag!=null" >
+        AND  FULL_DED_FLAG=#{fullDedFlag,jdbcType=CHAR}
+      </if>
+      <if test="payType!=null" >
+        AND  PAY_TYPE=#{payType,jdbcType=CHAR}
+      </if>
+      <if test="accountNo!=null" >
+        AND  ACCOUNT_NO=#{accountNo,jdbcType=CHAR}
+      </if>
+      <if test="electricityYearmonth!=null" >
+        AND  ELECTRICITY_YEARMONTH=#{electricityYearmonth,jdbcType=CHAR}
+      </if>
+      <if test="paymentMoney!=null" >
+        AND  PAYMENT_MONEY=#{paymentMoney,jdbcType=CHAR}
+      </if>
+      <if test="capitial!=null" >
+        AND  CAPITIAL=#{capitial,jdbcType=CHAR}
+      </if>
+      <if test="dedit!=null" >
+        AND  DEDIT=#{dedit,jdbcType=CHAR}
+      </if>
+      <if test="paymentResult!=null" >
+        AND  PAYMENT_RESULT=#{paymentResult,jdbcType=CHAR}
+      </if>
+      <if test="txnAmt!=null" >
+        AND  TXN_AMT=#{txnAmt,jdbcType=DECIMAL}
+      </if>
+      <if test="bankSqn!=null" >
+        AND  BANK_SQN=#{bankSqn,jdbcType=CHAR}
+      </if>
+      <if test="txnDte!=null" >
+        AND  TXN_DTE=#{txnDte,jdbcType=DATE}
+      </if>
+      <if test="txnTme!=null" >
+        AND  TXN_TME=#{txnTme,jdbcType=TIMESTAMP}
+      </if>
+      <if test="bakFld!=null" >
+        AND  BAK_FLD=#{bakFld,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld1!=null" >
+        AND  RSV_FLD1=#{rsvFld1,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld2!=null" >
+        AND  RSV_FLD2=#{rsvFld2,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld3!=null" >
+        AND  RSV_FLD3=#{rsvFld3,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld4!=null" >
+        AND  RSV_FLD4=#{rsvFld4,jdbcType=VARCHAR}
+      </if>
+      <if test="rsvFld5!=null" >
+        AND  RSV_FLD5=#{rsvFld5,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+  
 </mapper>
