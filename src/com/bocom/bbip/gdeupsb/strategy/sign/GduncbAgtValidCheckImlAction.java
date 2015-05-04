@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.comp.BBIPPublicService;
-
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdsRunCtl;
@@ -19,7 +18,6 @@ import com.bocom.bbip.gdeupsb.expand.AgtValidCheckService;
 import com.bocom.bbip.gdeupsb.interceptors.GDUNCBHttpSoapTrasnport;
 import com.bocom.bbip.gdeupsb.repository.GdsAgtWaterRepository;
 import com.bocom.bbip.gdeupsb.repository.GdsRunCtlRepository;
-
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.JumpException;
@@ -49,6 +47,8 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
     private GduncbThdTcpServiceAccessObject gduncbThdTcpServiceAccessObject;*/
 	@Autowired
 	GDUNCBHttpSoapTrasnport GDUNCBHttpTransport;
+/*	@Autowired
+	TelNumSegmentRepository  telNumSegmentRepository;*/
 	@Override
 	public Map<String, Object> agtValidCheckService(Context context) throws CoreException {
 		log.info("agtValidCheckService start!..");
@@ -69,12 +69,7 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 		List<Map<String, Object>> agtList = gdsAgtWaterRepository.findAgtCheckInf(inpara);
 		if (CollectionUtils.isEmpty(agtList)) {
 			log.info("未发现协议信息！开始解锁交易并退出..");
-			// 交易解锁
-			/*Result ret1 = bBIPPublicService.unlock(gdsBId);
-			int status1 = ret1.getStatus();
-			if (status1 != 0) {
-				throw new CoreException(GDErrorCodes.EUPS_UNLOCK_FAIL, "交易解锁失败!!!");
-			}*/
+	
 			throw new CoreException(GDErrorCodes.EUPS_SIGN_NO_RECORD_FOUND);
 		}
 		for (Map<String, Object> agtDeatil : agtList) {
@@ -133,7 +128,19 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 		Map<String,Object> infoMap = new HashMap<String,Object>();
 		Map<String,Object> map = new HashMap<String,Object>();
 		String sqn=bBIPPublicService.getBBIPSequence();
-		//String gdsBId=context.getData("gdsBid").toString();
+	   //===根据电话号码查询得到该号码归属地区
+		String tcusid=(String)context.getData("tcusid");
+		/*TelNumSegment telNumSegment=new TelNumSegment();
+		
+		telNumSegment.setBegnum(tcusid);
+		telNumSegment.setEndnum(tcusid);
+		List<TelNumSegment> telNumSegmentList=telNumSegmentRepository.findAreaid(telNumSegment);*/
+	/*	String areaid="0020";
+	    if(CollectionUtils.isNotEmpty(telNumSegmentList)){
+	    	areaid=telNumSegmentList.get(0).getAreaid();
+	    }
+	    */
+		String tcusName=context.getData("cusNam");
 		String strTime = DateUtils.format(new Date(),
 				DateUtils.STYLE_yyyyMMddHHmmss);
 
@@ -149,7 +156,7 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 			requestData.put("RSP_CODE", "");
 			requestData.put("RSP_DESC", "");
 			requestData.put("TEST_FLAG", "0");
-			requestData.put("SERIAL_NUMBER", context.getData("tcusid"));
+			requestData.put("SERIAL_NUMBER", tcusid);
 			requestData.put("SERVICE_CALSS_CODE", "G");
 			requestData.put("TransCode", "qryUserProInfo");
 			
@@ -159,10 +166,16 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 			 infoMap=(Map<String, Object>) GDUNCBHttpTransport.submit(requestData, context);
 		 } catch (CommunicationException e) {
 			 if(context.getDataMap().containsKey("funcTyp")==false){
+				 context.setData("responseType", "E");
+				 context.setData("responseCode", "000001");
+				 context.setData("responseMessage", "签约失败连接第三方失败");
 				throw new CoreException( "签约失败连接第三方失败");	
 				}
 		 } catch (JumpException e) {
 			 if(context.getDataMap().containsKey("funcTyp")==false){
+				 context.setData("responseCode", "000001");
+				 context.setData("responseType", "E");
+				 context.setData("responseMessage", "签约失败连接第三方失败");
 				throw new CoreException( "签约失败连接第三方失败");	
 				}
 		 }
@@ -170,7 +183,7 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 		 log.info("context========11232334"+context.getDataMap());
 		 log.info("obj========11232334"+infoMap);
 		 String RSP_CODE=(String)infoMap.get("RSP_CODE");
-	if(RSP_CODE.equals("000000")||RSP_CODE.equals("0000")||RSP_CODE.equals("00")){
+	if(RSP_CODE.equals("000000")||RSP_CODE.equals("0000")){
         requestData.put("MSG_SENDER", "5101");
 		requestData.put("MSG_RECEIVER", "5100");
 		requestData.put("TRANS_IDO", sqn);
@@ -187,9 +200,9 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 		 requestData.put("ACCT_TYPE", context.getData("actTyp"));
 		 requestData.put("PAY_TYPE", "8");
 		 requestData.put("SUPER_BANK_CODE", "JT");
-		 requestData.put("BANK_CODE", "JTYH001");
+		 requestData.put("BANK_CODE", "JT0SZ0");//JTYH001
 		 requestData.put("CONSIGN_NO", (String)context.getData("actNo"));
-		 requestData.put("CONSIGN_NAME", context.getData("actName"));
+		 requestData.put("CONSIGN_NAME", tcusName);//"钟锡麟"
 		 requestData.put("SERVICE_CALSS_CODE", "G");
 	     requestData.put("TransCode", "acctInfoChange");
 			
@@ -198,29 +211,43 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 		   map= (Map<String, Object>) GDUNCBHttpTransport.submit(requestData, context);
 		 } catch (CommunicationException e) {
 			 if(context.getDataMap().containsKey("funcTyp")==false){
+				    context.setData("responseCode", "000001");
+				    context.setData("responseType", "E");
+					context.setData("responseMessage", "签约失败连接第三方失败");
 					throw new CoreException( "签约失败连接第三方失败");	
 				}
 		 } catch (JumpException e) {
 			 if(context.getDataMap().containsKey("funcTyp")==false){
+				    context.setData("responseCode", "000001");
+				    context.setData("responseType", "E");
+					context.setData("responseMessage", "签约失败连接第三方失败");
 					throw new CoreException( "签约失败连接第三方失败");	
 				}
 		 }
 	   log.info("context========333333"+context.getDataMap());
 		 log.info("obj========444444"+map);
 		String rspCode=(String)map.get("RSP_CODE");
-      if(rspCode.equals("000000")||rspCode.equals("0000")||rspCode.equals("00")){
+      if(rspCode.equals("000000")||rspCode.equals("0000")){
     		context.setData("TAgtSt", "S");
 			context.setData("TErMsg", "签约成功");
 			context.setData("status", "S");
 			context.setData("retcod", "000000");
 			context.setData("retmsg", "签约成功");
+			context.setData("responseType", "N");
+			context.setData("responseCode","000000");
+			context.setData("responseMessage", "签约成功");
       }else if(!rspCode.equals("000000")&&!rspCode.equals("0000")&&!rspCode.equals("00")){
     	    context.setData("TAgtSt", "F");
 			context.setData("TErMsg", "签约失败"+"["+map.get("RSP_DESC")+"]");
 			context.setData("status", "F");
 			context.setData("retcod", map.get("RSP_CODE"));
 			context.setData("retmsg", "签约失败"+"["+map.get("RSP_DESC")+"]");  
+			context.setData("responseType", "E");
+			context.setData("responseCode", map.get("RSP_CODE"));
+			context.setData("responseMessage", "签约失败");
 			if(context.getDataMap().containsKey("funcTyp")==false){
+				context.setData("responseType", "E");
+				context.setData("responseCode", map.get("RSP_CODE"));
 				throw new CoreException( "签约失败"+"["+map.get("RSP_DESC")+"]");	
 			}
 			//throw new CoreException( "签约失败"+"["+map.get("RSP_DESC")+"]");	   
@@ -232,7 +259,12 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 				context.setData("status", "F");
 				context.setData("retcod", infoMap.get("RSP_CODE"));
 				context.setData("retmsg", "签约失败"+"["+infoMap.get("RSP_DESC")+"]");
+				context.setData("responseType", "E");
+				context.setData("responseMessage", "签约失败");
+				context.setData("responseCode", infoMap.get("RSP_CODE"));
 				if(context.getDataMap().containsKey("funcTyp")==false){
+					context.setData("responseType", "E");
+					context.setData("responseCode", infoMap.get("RSP_CODE"));
 					throw new CoreException( "签约失败"+"["+infoMap.get("RSP_DESC")+"]");	
 				}
 				//throw new CoreException( "签约失败"+"["+infoMap.get("RSP_DESC")+"]");	  	
