@@ -94,14 +94,26 @@ public interface GdEupsTransJournalRepository extends PagingAndSortingRepository
 	/** 查找广州电力存疑的汇总信息*/
 	public List<Map<String, Object>> findGzUnsJnl(GdEupsTransJournal para);
 	
+	/** 查找广州电力汇总消息 */
+	public List<Map<String, Object>> findGdJnlDtlTot(GdEupsTransJournal para);
+	
 	/** 查找广州电力所有的明细 */
 	public List<Map<String, Object>> findGdJnlDetail(GdEupsTransJournal para);
 	
 	/** 查找广州电力成功的明细 */
 	public List<Map<String, Object>> findGdJnlSucDetail(GdEupsTransJournal para);
 	
+	/** 查找广州电力失败的明细 */
+	public List<Map<String, Object>> findGdJnlFalDetail(GdEupsTransJournal para);
+	
 	/** 查找广州电力存疑的明细 */
 	public List<Map<String, Object>> findGdJnlUnsDetail(GdEupsTransJournal para);
+	
+	/** 查找广州电力其他的明细 */
+	public List<Map<String, Object>> findGdJnlOthDetail(GdEupsTransJournal para);
+	
+	/** 查找广州电力明细统计 */
+	public List<Map<String, Object>> findGdJnlDetailAll(GdEupsTransJournal para);
 
 	/** 燃气单笔代扣成功流水 */
 	@Find
