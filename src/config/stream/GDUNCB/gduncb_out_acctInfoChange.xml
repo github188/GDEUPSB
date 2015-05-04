@@ -1,7 +1,7 @@
 <message xmlns="http://www.bocom.com/jump/transformer/xml"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/xml xml.xsd"
-	name="root" trace="true" encoding="UTF-8">
+	name="root" trace="true" encoding="GBK">
 	<record name="soapenv:Body"><!-- 公共 -->
 		<record name="acctInfoChange"><!-- 公共 -->
 			<record name="acctInfoChangeREQ"><!-- 公共 -->
