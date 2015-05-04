@@ -196,7 +196,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 									gdEupsEleTmp.setPaymentResult("99");
 							}
 						}
-						
+						gdEupsEleTmpRepository.updateOne(gdEupsEleTmp);
 						list.add(gdEupsEleTmp);
 			}
 			Map<String, Object> headMap=new HashMap<String, Object>();
