@@ -13,8 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.JSpinner.DateEditor;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -46,17 +44,18 @@ public class PrintEfekBatchAction extends BaseAction{
 				for (Map<String, Object> map : mapList) {
 						String comNo=map.get("COM_NO").toString();
 						context.setData("comNo", comNo);
+						maps.put("comNo", comNo);
 						context.setData("totCnt", map.get("TOTCNT"));
 						context.setData("totAmt", map.get("TOTAMT"));
 						GDEupsEleTmp gdEupsEleTmp=new GDEupsEleTmp();
 						gdEupsEleTmp.setTxnDte(txnDte);
 						List<GDEupsEleTmp> list=new ArrayList<GDEupsEleTmp>();
 						if(mothed.equals("0")){
-								list=gdEupsEleTmpRepository.find(gdEupsEleTmp);
+								list=gdEupsEleTmpRepository.findByComNo(gdEupsEleTmp);
 								context.setData("printType", "全部清单");
 						}else if(mothed.equals("1")){
 								gdEupsEleTmp.setPaymentResult("00");
-								list=gdEupsEleTmpRepository.find(gdEupsEleTmp);
+								list=gdEupsEleTmpRepository.findByComNo(gdEupsEleTmp);
 								context.setData("printType", "成功清单");
 						}else{
 								list=gdEupsEleTmpRepository.findFail(maps);
