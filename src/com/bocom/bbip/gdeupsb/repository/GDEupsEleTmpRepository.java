@@ -15,4 +15,6 @@ public interface GDEupsEleTmpRepository extends PagingAndSortingRepository<GDEup
 		public List<GDEupsEleTmp> findAllOrderBySqn(String batNo);
 		
 		public List<GDEupsEleTmp> findFail(Map<String, Object> map);
+		
+		public void updateOne(GDEupsEleTmp gdEupsEleTmp);
 }
