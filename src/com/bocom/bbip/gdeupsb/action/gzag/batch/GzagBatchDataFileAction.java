@@ -70,7 +70,6 @@ public class GzagBatchDataFileAction extends BaseAction implements BatchAcpServi
 			context.setData(ParamKeys.WS_TRANS_CODE, "99");
 			//文件名称
 			String fileId="";
-			System.out.println("@@@@@@@@@@@@@@@@@@@@@@@"+comNo);
 			if(comNo.equals("4410000578")){
 					fileId="lottBatchFile";   		//彩票返奖
 			}else if(comNo.equals("4410000560")){
