@@ -101,7 +101,7 @@ public class GzagBatchDataFileAction extends BaseAction implements BatchAcpServi
 				eupsThdFtpConfig.setFtpDir("182.53.15.187");
 				eupsThdFtpConfig.setOppNme("weblogic");
 				eupsThdFtpConfig.setOppUsrPsw("123456");
-				String path="./save/tfiles/" + context.getData(ParamKeys.BR)+ "/" + context.getData(ParamKeys.TELLER) + "/";
+				String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + context.getData(ParamKeys.BR)+ "/" + context.getData(ParamKeys.TELLER) + "/";
 				eupsThdFtpConfig.setRmtWay(path);
 //				eupsThdFtpConfig.setLocDir(path);
 			}
@@ -119,6 +119,7 @@ public class GzagBatchDataFileAction extends BaseAction implements BatchAcpServi
 				
 			}
 			context.setData("listTotCnt", mapList.size());
+			//总金额
 			BigDecimal listTotAmt=new BigDecimal("0.00");
 			for (Map<String, Object> map : mapList) {
 						map.put(ParamKeys.SEQUENCE, bbipPublicService.getBBIPSequence());
@@ -127,6 +128,7 @@ public class GzagBatchDataFileAction extends BaseAction implements BatchAcpServi
 						gdEupsGzagBatchTmp.setTxnAmt(txnAmt);
 						gdEupsGzagBatchTmp.setBakFld(comNo);
 						gdEupsGzagBatchTmp.setRsvFld1(batNo);
+						//插入临时表
 						gdEupsGzagBatchTmpRepository.insert(gdEupsGzagBatchTmp);
 						listTotAmt=listTotAmt.add(txnAmt);
 			}
