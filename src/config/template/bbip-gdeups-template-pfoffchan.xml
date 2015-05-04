@@ -249,6 +249,7 @@
 		</step>
 		<step id="regTransRollBackAct" useCtxState="true" transactional="txTemplate">
 			
+			<action id="checkRollBackAct"/>
 			<action id="regTransRollBackAct"/>
 			
 			<end on="*"/>
