@@ -716,7 +716,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 		map.put(ParamKeys.BUS_TYP, "0"); 
 		map.put(ParamKeys.BUSS_KIND, context.getData(ParamKeys.BUSS_KIND));
 		map.put(ParamKeys.CCY, "CNY");
-		map.put("cusFeeDerFlg", "0"); // TODO 暂用0，待确认
+		map.put("cusFeeDerFlg", "0"); //TODO 暂用0，待确认
 		map.put("agtSrvCusId", context.getData("agtSrvCusId"));
 		map.put("agtSrvCusPnm", context.getData(ParamKeys.THD_CUS_NME));
 		map.put("agrVldDte", context.getData("STR_AC_DTE"));
