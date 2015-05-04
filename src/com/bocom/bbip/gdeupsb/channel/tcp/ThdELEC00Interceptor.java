@@ -38,10 +38,6 @@ import com.bocom.jump.bp.core.Interceptor;
 
 /**
  * 自定义第三方拦截器（含生活馆渠道）
- * 
- * @version 1.0.0,2014-5-6
- * @author qianc.sdc
- * @since 1.0.0
  */
 public class ThdELEC00Interceptor implements Interceptor {
 
