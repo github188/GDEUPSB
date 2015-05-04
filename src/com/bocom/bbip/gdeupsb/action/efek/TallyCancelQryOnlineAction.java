@@ -31,6 +31,7 @@ public class TallyCancelQryOnlineAction extends BaseAction{
 				eupsTransJournals.setMfmVchNo(mfmVchNo);
 				eupsTransJournals.setEupsBusTyp("ELEC00");
 				eupsTransJournals.setTxnDte(DateUtils.parse(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd),DateUtils.STYLE_yyyyMMdd));
+				//获取该次交易
 				List<EupsTransJournal> list=eupsTransJournalRepository.find(eupsTransJournals);
 				if(CollectionUtils.isEmpty(list)){
 						throw new CoreException("该交易不是当日交易，或交易不存在");
@@ -38,14 +39,14 @@ public class TallyCancelQryOnlineAction extends BaseAction{
 				EupsTransJournal eupsTransJournal=list.get(0);
 				if(null != eupsTransJournal){
 						if(eupsTransJournal.getTxnSts().equals("C")){
-								throw new CoreException("该交易以抹账");
+								throw new CoreException("该交易已抹账");
 						}
 						context.setData(ParamKeys.TRADE_TXN_DIR, "C");//交易方向
 						//本次交易日期时间
 						Date date=new Date();
 						context.setData(ParamKeys.TXN_DTE, DateUtils.format(date,DateUtils.STYLE_yyyyMMdd));
 						context.setData(ParamKeys.TXN_TME, DateUtils.format(date,DateUtils.STYLE_HHmmss));
-						//原交易流水日期时间
+						//抹账交易返回信息 查看确认
 						context.setData(ParamKeys.OLD_TXN_SQN, eupsTransJournal.getSqn());
 						Date thdTxnDate=eupsTransJournal.getTxnDte();
 						context.setData(ParamKeys.THD_TXN_DATE, DateUtils.format(thdTxnDate,DateUtils.STYLE_yyyyMMdd));

@@ -49,6 +49,7 @@ public class QryCusMsgAction extends BaseAction{
 		String comNo=context.getData("comNo").toString();
 		String comNos=comNo.substring(0,4);
 		String bakFld1="";
+		//签约时，需要地区确认
 		if(comNos.equals("0318")){
 				bakFld1="清远";
 		}else if(comNos.equals("0320")){
@@ -59,6 +60,7 @@ public class QryCusMsgAction extends BaseAction{
 				bakFld1="   ";
 		}
 		context.setData(ParamKeys.BAK_FLD1, bakFld1);
+		//缴费号返回可能不同，需返回时替换
 		context.setData("payNo", context.getData("payNo"));
 	}
 	/**
