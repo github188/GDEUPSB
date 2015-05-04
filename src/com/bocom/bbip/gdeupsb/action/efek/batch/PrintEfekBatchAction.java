@@ -41,6 +41,7 @@ public class PrintEfekBatchAction extends BaseAction{
 				
 				Map<String, Object> maps=new HashMap<String, Object>();
 				maps.put("txnDte", txnDte);
+				//地区分组
 				List<Map<String, Object>> mapList=gdEupsEleTmpRepository.findAllGroupByComNo(maps);
 				for (Map<String, Object> map : mapList) {
 						String comNo=map.get("COM_NO").toString();
@@ -76,7 +77,7 @@ public class PrintEfekBatchAction extends BaseAction{
 						context.setData("eles", list);
 						String result = render.renderAsString("printEfekBatch", context);
 						log.info("~~~~~~~~~~~~~~~~~~~~~"+result);
-						
+						//文件名
 						String fileName=comNo+"_"+DateUtils.format(txnDte, DateUtils.STYLE_yyyyMMdd);
 						StringBuffer batNoFile=new StringBuffer();
 						batNoFile.append("/home/bbipadm/data/GDEUPSB/report/");
@@ -85,7 +86,7 @@ public class PrintEfekBatchAction extends BaseAction{
 								file.mkdirs();
 						}
 						
-							 
+							 //生成报表文件
 							try {
 								FileOutputStream	fileOutputStream = new FileOutputStream(batNoFile.append(fileName).toString());
 								OutputStreamWriter outputStreamWriter=new OutputStreamWriter(fileOutputStream,"GBK");
