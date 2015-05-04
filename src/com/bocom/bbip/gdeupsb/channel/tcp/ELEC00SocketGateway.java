@@ -121,8 +121,7 @@ public class ELEC00SocketGateway extends SocketGateway{
                 try {
 					throw new CommunicationException(false, "socket read error", jump);
 				} catch (CommunicationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.info("===============ErrMsg=",e);
 				}
             }
         } finally {
