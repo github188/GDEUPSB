@@ -1,6 +1,5 @@
 package com.bocom.bbip.gdeupsb.strategy.trsp;
 
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -13,12 +12,9 @@ import org.springframework.util.CollectionUtils;
 import com.bocom.bbip.comp.CommonRequest;
 import com.bocom.bbip.comp.account.AccountService;
 import com.bocom.bbip.comp.account.support.CusActInfResult;
-import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
-import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
-import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspPayInfo;
@@ -26,8 +22,9 @@ import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspTxnJnl;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspFeeInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspPayInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspTxnJnlRepository;
+import com.bocom.bbip.service.BGSPServiceAccessObject;
+import com.bocom.bbip.service.Result;
 import com.bocom.bbip.utils.BeanUtils;
-import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -41,6 +38,9 @@ public class PrePayToBankStrategyAction implements Executable{
 	GDEupsbTrspPayInfoRepository gdEupsTrspPayInfoRepository;
 	
 	@Autowired
+	BGSPServiceAccessObject bgspServiceAccessObject;
+	
+	@Autowired
 	GDEupsbTrspTxnJnlRepository gdEupsbTrspTxnJnlRepository;
 	
 	@Autowired
@@ -49,24 +49,33 @@ public class PrePayToBankStrategyAction implements Executable{
 	@Autowired
 	AccountService accountService;
 
-	@SuppressWarnings("unchecked")
+	
 	public void execute(Context ctx) throws CoreException,CoreRuntimeException{
 		log.info("PrePayToBankStrategyAction start.....");
-//		TODO: <Call package="BRBFJUD" function="JudAreNo">    <!--检查是否珠海借记卡-->
-//        <Input name="ActNo|"/>
-//      </Call>
+
 		ctx.setData("extFields", "01444001999");
 		CommonRequest comReq = new CommonRequest();
 		ctx.setData(ParamKeys.BUS_TYP, Constants.BUS_TYP_2); //待缴
 		//TODO:此处把密码校验标志设为1，以后还要改为0
 		ctx.setData("pswCekFlg", "1");
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!actNo="+ctx.getData(GDParamKeys.ACT_NO));
+		log.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!actNo="+ctx.getData(GDParamKeys.ACT_NO));
 	//TODO:待验证卡号是否属于珠海分行
 //		try {
-//			CusActInfResult cusAcInf=accountService.getAcInf(comReq, ctx.getData(GDParamKeys.ACT_NO).toString());
+//			CusActInfResult cusAcInf=accountService.getAcInf(comReq.build(ctx), ctx.getData(GDParamKeys.ACT_NO).toString());
+//			log.info("cusAcInf="+cusAcInf);
+//			if(!ctx.getData(ParamKeys.BR).equals(cusAcInf.getOpnBr())){
+//				ctx.setState("BUSINESS_PROCESSNIG_STATE_TRANS_FAIL");
+//				throw new CoreException("BBIP4400EU0743");
+//			}
 //		} catch (Exception e) {
 //		}
-
+		
+//		String kkh = (true==accountService.isOurBankCard((String) ctx.getData(GDParamKeys.ACT_NO))?"0":"1");
+//		if("1".equals(kkh)){
+//			ctx.setState("BUSINESS_PROCESSNIG_STATE_TRANS_FAIL");
+//			throw new CoreException("BBIP4400EU0743");
+//		}
+		
 //		查询该用户是否存在已缴费未打发票的记录
 		GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
 		gdEupsbTrspFeeInfo.setBrNo(ctx.getData(ParamKeys.BK).toString());
@@ -84,11 +93,7 @@ public class PrePayToBankStrategyAction implements Executable{
 			throw new CoreException("BBIP4400EU0727");
 		}
 		
-//		TODO:
 
-//	         <Set>VchChk=1</Set><!--监督标志由业务上确定-->
-//	       
-//		<Set>HTxnCd=@PARA.HTxnCd_C2P</Set>
 		String card = "4";
 		ctx.setData(GDParamKeys.ACT_TYP, card);
 		ctx.setData(GDParamKeys.PAY_MOD, "1");
@@ -137,4 +142,19 @@ public class PrePayToBankStrategyAction implements Executable{
 		gdEupsbTrspTxnJnlRepository.insert(gdEupsbTrspTxnJnl);
 
 	}
+//	public CusActInfResult getAcInf(CommonRequest commonRequest, String cusAc,Context ctx)
+//	  {
+//	    Map requestData = CommonRequest.build(ctx);
+//	    requestData.put("cusAc", cusAc);
+//	    Result result = bgspServiceAccessObject.callServiceFlatting("queryCusActInfoProcess",requestData);
+//	    if (!result.isSuccess()) {
+//	      CusActInfResult cusActInfResult = new CusActInfResult();
+//	      cusActInfResult.setStatus(result.getStatus());
+//	      cusActInfResult.setException(result.getException());
+//	      cusActInfResult.setPayload(result.getPayload());
+//	      return cusActInfResult;
+//	    }
+//	    CusActInfResult cusActInfResult = (CusActInfResult)BeanUtils.toObject(result.getPayload(), CusActInfResult.class);
+//	    return cusActInfResult;
+//	  }
 }
