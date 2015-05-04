@@ -56,7 +56,7 @@ public class PrePrintAction extends BaseAction{
 			ctx.setData(ParamKeys.RSP_MSG, "缴费记录不存在");
 			throw new CoreRuntimeException(GDErrorCodes.FEE_INFO_EMPTY);
 		}
-		//TODO:
+	
 		Map<String, Object> txnJnlMap = txnJnlList.get(0);
 		log.info("!!!!!!!!!!!!!!!!"+txnJnlList.get(0));
 		ctx.setData(GDParamKeys.TCUS_NM, txnJnlMap.get("TCUS_NM"));
@@ -90,13 +90,9 @@ public class PrePrintAction extends BaseAction{
 			
 			log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+ctx.getDataMap());
 			ctx.setState("callThd");
-			
-			
 		}else{
 			ctx.setState("complete");
 			ctx.setDataMap(txnJnlList.get(0));
 		}
-		
-	
 	}
 }

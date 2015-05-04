@@ -35,16 +35,6 @@ public class PrintInvCancelAction extends BaseAction{
 	public void execute(Context ctx) throws CoreException,CoreRuntimeException{
 		log.info("PrintInvCancelAction start......");
 		
-//		TODO:<Set>LckKey=STRCAT(@PARA.JnlTbl,:,$LogNo)</Set>
-//      <Exec func="PUB:Lock" error="IGNORE"><!-- 通过加锁控制批次状态 -->
-//         <Arg name="RecKey" value="$LckKey"/>
-//         <Arg name="TimOut" value="60"/>
-//         <Arg name="AutoUnlock" value="yes"/>
-//      </Exec>
-//      <If condition="INTCMP(~RetCod,4,0)"><!--加锁失败-->
-//         <Set>RspCod=478004</Set>
-//         <Return/>
-//      </If>
 
 //		<Delete>TRspCd</Delete>
 		GDEupsbTrspTxnJnl gdEupsbTrspTxnJnl = new GDEupsbTrspTxnJnl();
@@ -59,44 +49,44 @@ public class PrintInvCancelAction extends BaseAction{
 			ctx.setData("otTxnSt", ctx.getData(GDParamKeys.TTXN_ST));
 			ctx.setData("transcode", "484009");
 			Map<String, Object> thdReturnMessage = callThdReturnMessage.trade(ctx);
-//			if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL)){
-//				ctx.setData(GDParamKeys.TTXN_ST, "C");
-//				gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
-//				gdEupsbTrspTxnJnlRepository.update(gdEupsbTrspTxnJnl);
-//			}else if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_FAIL)){
-////				if(!"000000".equals(thdReturnMessage.get(GDParamKeys.TRSP_CD))){
-////					ctx.setData(GDParamKeys.TTXN_ST, ctx.getData("otTxnSt"));
-////					ctx.setData(ParamKeys.RSP_MSG, "路桥方返回："+ thdReturnMessage.get(GDParamKeys.TRSP_CD));
-////					gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
-////					gdEupsbTrspTxnJnlRepository.update(gdEupsbTrspTxnJnl);
-////					throw new CoreRuntimeException(ErrorCodes.EUPS_THD_RSP_CODE_ERROR);
-////				}else{
-////					ctx.setData(GDParamKeys.TTXN_ST, "C");
-////					gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
-////					gdEupsbTrspTxnJnlRepository.update(gdEupsbTrspTxnJnl);
-////				}
-////				<If condition="INTCMP(GETSTRPOS(@PARA.TRsp_Suc,$inTRspCd),1,0)">
-////                <Set>RspCod=478614</Set><!--抹账失败-->
-////                <Set>RspMsg=STRCAT(路桥方方返回: [,$TRspCd,],$TRspMsg)</Set>
-////                <Set>TTxnSt=$OTTxnSt</Set>
-////                <Exec func="PUB:ExecSql">
-////                   <Arg name="SqlCmd" value="SetTTxnSt"/>
-////                </Exec>
-////                <Return/>
-////             </If>
-////             <Else>
-////                <Set>RspCod=000000</Set>
-////                <Set>TTxnSt=C</Set>
-////                <Exec func="PUB:ExecSql">
-////                   <Arg name="SqlCmd" value="SetTTxnSt"/>
-////                </Exec>
-////             </Else>
-//			}else{
-//				ctx.setData(GDParamKeys.TTXN_ST, ctx.getData("otTxnSt"));
-//				gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
-//				gdEupsbTrspTxnJnlRepository.update(gdEupsbTrspTxnJnl);
-//				throw new CoreRuntimeException(ErrorCodes.EUPS_THD_RSP_CODE_ERROR);
-//			}
+			if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL)){
+				ctx.setData(GDParamKeys.TTXN_ST, "C");
+				gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
+				gdEupsbTrspTxnJnlRepository.update(gdEupsbTrspTxnJnl);
+			}else if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_FAIL)){
+//				if(!"000000".equals(thdReturnMessage.get(GDParamKeys.TRSP_CD))){
+//					ctx.setData(GDParamKeys.TTXN_ST, ctx.getData("otTxnSt"));
+//					ctx.setData(ParamKeys.RSP_MSG, "路桥方返回："+ thdReturnMessage.get(GDParamKeys.TRSP_CD));
+//					gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
+//					gdEupsbTrspTxnJnlRepository.update(gdEupsbTrspTxnJnl);
+//					throw new CoreRuntimeException(ErrorCodes.EUPS_THD_RSP_CODE_ERROR);
+//				}else{
+//					ctx.setData(GDParamKeys.TTXN_ST, "C");
+//					gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
+//					gdEupsbTrspTxnJnlRepository.update(gdEupsbTrspTxnJnl);
+//				}
+//				<If condition="INTCMP(GETSTRPOS(@PARA.TRsp_Suc,$inTRspCd),1,0)">
+//                <Set>RspCod=478614</Set><!--抹账失败-->
+//                <Set>RspMsg=STRCAT(路桥方方返回: [,$TRspCd,],$TRspMsg)</Set>
+//                <Set>TTxnSt=$OTTxnSt</Set>
+//                <Exec func="PUB:ExecSql">
+//                   <Arg name="SqlCmd" value="SetTTxnSt"/>
+//                </Exec>
+//                <Return/>
+//             </If>
+//             <Else>
+//                <Set>RspCod=000000</Set>
+//                <Set>TTxnSt=C</Set>
+//                <Exec func="PUB:ExecSql">
+//                   <Arg name="SqlCmd" value="SetTTxnSt"/>
+//                </Exec>
+//             </Else>
+			}else{
+				ctx.setData(GDParamKeys.TTXN_ST, ctx.getData("otTxnSt"));
+				gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
+				gdEupsbTrspTxnJnlRepository.update(gdEupsbTrspTxnJnl);
+				throw new CoreRuntimeException(ErrorCodes.EUPS_THD_RSP_CODE_ERROR);
+			}
 			if("000000".equals(thdReturnMessage.get(GDParamKeys.TRSP_CD))){
 				
 			}
