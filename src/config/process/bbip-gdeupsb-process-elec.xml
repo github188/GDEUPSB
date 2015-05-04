@@ -4,15 +4,6 @@
 						http://www.bocom.com/schema/jump-core http://www.bocom.com/schema/jump-core-1.0.xsd">
 
 		
-	<!-- 南方电网 缴费结果查询
-			<process id="eupsNotifyBatchStatus" template="eups.simpleTran"  interceptors="eups.transMessageInterceptor">
-			  <actions>
-			   			<action id="act" ref="gdeupsb.preQryResultAction"/>
-			   </actions>
-			</process>
-		-->	
-
-		
 	<!-- 南方电网  银行发起存入预付款-->
 	 		<process id="gdeupsb.advanceTrade"  template="eups.payOnlineTemplate"  interceptors="eups.thdTransInterceptor">
 			  <actions>
@@ -38,13 +29,6 @@
 			   </actions>
 		</process>			
 
-	<!-- 南方电网  供电到银行变更代扣协议请求
-		<process id="gdeupsb.powerChangeTreaty"  template="eups.simpleTran"  interceptors="eups.transMessageInterceptor">
-			  <actions>
-			   			  <action id="act"  ref="gesupsb.powerChangeTreatyAction"/>
-			   </actions>
-		</process>
-		-->
 	<!-- 南方电网  查询客户基本信息-->
 		<process id="gdeupsb.qryCusBaseMsg"  template="eups.simpleTran"  interceptors="eups.transMessageInterceptor">
 			  <actions>
