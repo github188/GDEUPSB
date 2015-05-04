@@ -3,13 +3,16 @@ package com.bocom.bbip.gdeupsb.channel.tcp;
 import java.io.IOException;
 import java.io.InputStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.channel.tcp.StreamResolver;
 import com.bocom.jump.bp.util.Hex;
 
 public class ElecFrontStreamResolver implements StreamResolver
 {
-
+	 private Logger log = LoggerFactory.getLogger(ElecFrontStreamResolver.class);
 	public ElecFrontStreamResolver()
 	{
 	}
@@ -37,7 +40,7 @@ public class ElecFrontStreamResolver implements StreamResolver
 		        int len=sendBuffer.length-10;
 		        String lenS=StringUtils.leftPad(String.valueOf(len), 10, "0");
 		        System.arraycopy(lenS.getBytes(), 0, sendBuffer, 0, 10);
-		        System.out.println("接收消息，处理后的byte=\n"+Hex.toDumpString(sendBuffer));
+		        log.info("接收消息，处理后的byte=\n"+Hex.toDumpString(sendBuffer));
 			
 			return sendBuffer;
 		} catch (IOException e) {

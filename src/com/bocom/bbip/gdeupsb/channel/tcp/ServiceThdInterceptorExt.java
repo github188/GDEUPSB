@@ -143,8 +143,6 @@ public class ServiceThdInterceptorExt extends BaseAction implements ChannelInter
      */
     @Override
     public void onResponse(ChannelContext channelcontext, ContextEx contextex, Throwable throwable) {
-    	System.out.println("~~~~channelcontext~~~~~~"+channelcontext);
-    	System.out.println("~~~~~~contextex~~~~~"+contextex);
         //第三方返回码处理
     	//TODO throwable
 

@@ -3,6 +3,9 @@ package com.bocom.bbip.gdeupsb.channel.tcp;
 import java.io.IOException;
 import java.net.Socket;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.channel.ChannelContext;
@@ -13,7 +16,7 @@ import com.bocom.jump.bp.util.Hex;
 public class NoFrontPayloadChannelInterceptorEb extends NoFrontLengthStreamResolverEb
 		implements SocketChannelInterceptor
 {
-
+	 private Logger log = LoggerFactory.getLogger(ThdELEC00Interceptor.class);
 	public NoFrontPayloadChannelInterceptorEb()
 	{
 	}
@@ -43,7 +46,7 @@ public class NoFrontPayloadChannelInterceptorEb extends NoFrontLengthStreamResol
         int len=arrayOfByte.length-10;
         String lenS=StringUtils.rightPad(String.valueOf(len), 10, " ");
         System.arraycopy(lenS.getBytes(), 0, arrayOfByte, 0, 10);
-        System.out.println("处理后，byte=\n"+Hex.toDumpString(arrayOfByte)+",发送的报文转化为明文为:"+new String(arrayOfByte));
+        log.info("处理后，byte=\n"+Hex.toDumpString(arrayOfByte)+",发送的报文转化为明文为:"+new String(arrayOfByte));
 		try
 		{
 			((Socket) channelContext.getResponse()).getOutputStream().write(arrayOfByte);

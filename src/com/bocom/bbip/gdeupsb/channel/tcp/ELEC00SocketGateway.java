@@ -96,7 +96,7 @@ public class ELEC00SocketGateway extends SocketGateway{
         int len=sendBuffer.length-10;
         String lenS=StringUtils.rightPad(String.valueOf(len), 10, " ");
         System.arraycopy(lenS.getBytes(), 0, sendBuffer, 0, 10);
-        System.out.println("处理后，byte=\n"+Hex.toDumpString(sendBuffer)+",发送的报文转化为明文为:"+new String(sendBuffer));
+        logger.info("处理后，byte=\n"+Hex.toDumpString(sendBuffer)+",发送的报文转化为明文为:"+new String(sendBuffer));
 
         Socket socket = createSocket();
 //        try {
