@@ -182,7 +182,9 @@ public class CusAgentServiceAction extends BaseAction{
 				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW07");		
 				context.setData("sqns", context.getData(ParamKeys.SEQUENCE));
 			}
-
+/**
+ * 客户信息
+ */
 		private Map<String, Object> setCustomerInfoMap(Context context) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("agtCllCusId", context.getData("cusNo"));
@@ -205,7 +207,9 @@ public class CusAgentServiceAction extends BaseAction{
 			map.put("ourOthFlg", "0");
 			return map;
 		}
-
+		/**
+		 * 协议信息	
+		 */
 		private Map<String, Object> setAgentCollectAgreementMap(Context context) {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put(ParamKeys.BUS_TYP, "0");
