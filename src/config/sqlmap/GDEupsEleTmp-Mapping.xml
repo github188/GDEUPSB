@@ -610,4 +610,13 @@
     <include refid="baseColumnList" />
     from ${GDEUPSB_SCHEMA}.GDEUPS_ELE_TMP where RSV_FLD5 = #{batNo,jdbcType=CHAR} ORDER BY SQN
   </select>
+
+ <select id="findFail" resultMap="basicResultMap"  parameterType="java.util.Map">
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_ELE_TMP
+    	where 
+       PAYMENT_RESULT!='00'
+        AND  TXN_DTE=#{txnDte,jdbcType=DATE}
+  </select>
 </mapper>
