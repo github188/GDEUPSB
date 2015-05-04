@@ -17,4 +17,6 @@ public interface GDEupsEleTmpRepository extends PagingAndSortingRepository<GDEup
 		public List<GDEupsEleTmp> findFail(Map<String, Object> map);
 		
 		public void updateOne(GDEupsEleTmp gdEupsEleTmp);
+		
+		public List<Map<String, Object>> findAllGroupByComNo(Map<String, Object> map);
 }
