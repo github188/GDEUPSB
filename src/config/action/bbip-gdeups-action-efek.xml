@@ -71,4 +71,6 @@
 	<!--  签退-->	
 	<action   class="com.bocom.bbip.gdeupsb.action.efek.EfekEndAction"
 		id="gdeupsb.efekEndAction" />		
+	<action   class="com.bocom.bbip.gdeupsb.action.efek.batch.PrintEfekBatchAction"
+		id="gdeupsb.printEfekBatchAction" />					
 </x:beans>
