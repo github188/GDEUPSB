@@ -88,7 +88,7 @@
 		    <action id="chkBeforeAct" class="com.bocom.bbip.gdeupsb.action.common.CheckComTxnCtlAction" operations="checkThdTxnCtlNormal" />
 		    <action id="preAddPrintInvoicAct" class="com.bocom.bbip.gdeupsb.action.transportfee.PrePrintAction"/>
 		    <action id="callThirdAction" class="com.bocom.bbip.gdeupsb.action.transportfee.PrintCallThirdAction"/>
-		    <action id="regTransRollBackAct" class="com.bocom.bbip.gdeupsb.action.transportfee.PrePrintInvCancelAction"/>
+		    <action id="checkRollBackAct" class="com.bocom.bbip.gdeupsb.action.transportfee.PrePrintInvCancelAction"/>
 			<action id="regTransRollBackAct" class="com.bocom.bbip.gdeupsb.action.transportfee.PrintInvCancelAction"/>
 			<!-- <action id="aftRegTransRollBackAct" class="com.bocom.bbip.gdeupsb.action.transportfee.AftPrintInvCancelAction"/> --> 
 		    <action id="finalizeAction" class="com.bocom.bbip.gdeupsb.action.transportfee.PrintAction"/>
