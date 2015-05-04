@@ -154,6 +154,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			gdeupsBatchConsoleInfo.setFalTotAmt(falTotAmt);
 			//更改状态
 			gdeupsBatchConsoleInfo.setBatSts("S");
+			gdeupsBatchConsoleInfo.setExeDte(new Date());
 			//更新批次表
 			gdeupsBatchConsoleInfoRepository.updateConsoleInfo(gdeupsBatchConsoleInfo);
 			logger.info("===============End  BatchDataResultFileAction  updateInfo");	
@@ -172,7 +173,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			List<GDEupsEleTmp> list=new ArrayList<GDEupsEleTmp>();
 			for(EupsBatchInfoDetail eupsBatchInfoDetail:mapList){
 						GDEupsEleTmp gdEupsEleTmp=gdEupsEleTmpRepository.findOne(eupsBatchInfoDetail.getRmk2());
-						
+						gdEupsEleTmp.setTxnDte(gdEupsBatchConsoleInfoUpdate.getExeDte());
 						gdEupsEleTmp.setRsvFld5(eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2).intValue()+"");
 						gdEupsEleTmp.setBankSqn(gdEupsEleTmp.getSqn());
 						gdEupsEleTmp.setBankNo("301");
@@ -195,6 +196,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 									gdEupsEleTmp.setPaymentResult("99");
 							}
 						}
+						
 						list.add(gdEupsEleTmp);
 			}
 			Map<String, Object> headMap=new HashMap<String, Object>();
