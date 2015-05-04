@@ -20,6 +20,7 @@ public class QryComInfoAction extends BaseAction{
 	public void execute(Context context) throws CoreException,CoreRuntimeException{
 		logger.info("===============Start   QryComInfoAction");
 		 context.setData("inqBusLstFlg","N");
+		 //代收付搜索单位信息
 		 Result comResult= bgspServiceAccessObject.callServiceFlatting("queryCorporInfo",context.getDataMap());
 		 log.info("==========="+comResult);
 		 if(!comResult.isSuccess()){

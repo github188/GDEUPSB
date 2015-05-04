@@ -28,6 +28,7 @@ public class QryBatchStatueAction extends BaseAction{
 			String fleNme=gdEupsBatchConsoleInfo.getRsvFld8();
 			EupsBatchConsoleInfo eupsBatchConsoleInfos=new EupsBatchConsoleInfo();
 			eupsBatchConsoleInfos.setFleNme(fleNme);
+			//批次信息
 			EupsBatchConsoleInfo eupsBatchConsoleInfo=eupsBatchConsoleInfoRepository.find(eupsBatchConsoleInfos).get(0);
 			context.setData(ParamKeys.COMPANY_NO, eupsBatchConsoleInfo.getComNo());
 			context.setData(ParamKeys.COMPANY_NAME, eupsBatchConsoleInfo.getComNme());
