@@ -471,8 +471,6 @@ public class CheckTrspFileAction extends BaseAction {
 				context.setData("eles", gdEupsbTrspInvChgInfoList);
 		}
 		String result = render.renderAsString(rptFil, context);
-		System.out.println("~~~~~~~~~~~~~result~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		System.out.println(result);
 		// 文件路径
 		StringBuffer rpFmts = new StringBuffer();
 		rpFmts.append("/home/bbipadm/data/GDEUPSB/report/");
