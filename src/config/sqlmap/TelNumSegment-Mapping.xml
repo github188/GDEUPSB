@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.bocom.bbip.gdeupsb.entity.TelNumSegment" >
+  <resultMap id="basicResultMap" type="com.bocom.bbip.gdeupsb.entity.TelNumSegment" >
+    <result column="BEGNUM" property="begnum" jdbcType="VARCHAR" />
+    <result column="ENDNUM" property="endnum" jdbcType="VARCHAR" />
+    <result column="AREAID" property="areaid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="baseColumnList" >
+    BEGNUM, ENDNUM, AREAID
+  </sql>
+  <select id="find" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSA_SCHEMA}.TEL_NUM_SEGMENT
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="begnum!=null" >
+        AND  BEGNUM=#{begnum,jdbcType=VARCHAR}
+      </if>
+      <if test="endnum!=null" >
+        AND  ENDNUM=#{endnum,jdbcType=VARCHAR}
+      </if>
+      <if test="areaid!=null" >
+        AND  AREAID=#{areaid,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+  <insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.TelNumSegment" >
+    insert into ${GDEUPSA_SCHEMA}.TEL_NUM_SEGMENT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="begnum != null" >
+        BEGNUM,
+      </if>
+      <if test="endnum != null" >
+        ENDNUM,
+      </if>
+      <if test="areaid != null" >
+        AREAID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="begnum != null" >
+        #{begnum,jdbcType=VARCHAR},
+      </if>
+      <if test="endnum != null" >
+        #{endnum,jdbcType=VARCHAR},
+      </if>
+      <if test="areaid != null" >
+        #{areaid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="findCount" resultType="java.lang.Integer" >
+    select count(*) from ${GDEUPSA_SCHEMA}.TEL_NUM_SEGMENT
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="begnum!=null" >
+        AND  BEGNUM=#{begnum,jdbcType=VARCHAR}
+      </if>
+      <if test="endnum!=null" >
+        AND  ENDNUM=#{endnum,jdbcType=VARCHAR}
+      </if>
+      <if test="areaid!=null" >
+        AND  AREAID=#{areaid,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+  <select id="findAll" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSA_SCHEMA}.TEL_NUM_SEGMENT
+  </select>
+  
+    <select id="findAreaid" resultMap="basicResultMap" >
+    select 
+    <include refid="baseColumnList" />
+    from ${GDEUPSA_SCHEMA}.TEL_NUM_SEGMENT
+    WHERE  <![CDATA[ BEGNUM <= #{begnum,jdbcType=CHAR} ]]> 
+       AND <![CDATA[ ENDNUM >= #{endnum,jdbcType=CHAR} ]]> 
+  </select>
+  
+  
+</mapper>
