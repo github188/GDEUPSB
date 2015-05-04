@@ -84,18 +84,18 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 					eupsThdFtpConfig.setRmtFleNme(fleNme);
 					eupsThdFtpConfig.setLocFleNme(fleNme);		
 					eupsThdFtpConfig.setFtpDir("1");
-//						try {
-//							RecvEnCryptFile(eupsThdFtpConfig.getLocDir(), fleNme, fleNme,context);
-//						} catch (CoreRuntimeException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						} catch (IOException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						} catch (InterruptedException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						}
+						try {
+							RecvEnCryptFile(eupsThdFtpConfig.getLocDir(), fleNme, fleNme,context);
+						} catch (CoreRuntimeException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					
 					eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/efek/");
 					operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
