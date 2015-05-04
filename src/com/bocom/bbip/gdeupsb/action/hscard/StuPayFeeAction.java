@@ -38,26 +38,20 @@ public class StuPayFeeAction extends BaseAction{
 		gdEupsbStuFeeInfo.setPayYea((String)ctx.getData(GDParamKeys.PAY_YEA));
 		List<GDEupsbStuFeeInfo> feeInfoList = gdEupsbStuFeeInfoRepository.find(gdEupsbStuFeeInfo);
 		if(CollectionUtils.isEmpty(feeInfoList)){
-			//TODO:
-//			<Set>MsgTyp=E</Set>
-//			<Set>RspCod=478399</Set>
+			
 //			<Set>RspMsg=学籍编码不存在</Set>
 			throw new CoreException(ErrorCodes.EUPS_FIND_ISEMPTY);
 		
 		}
 		//判断收费标志
 		if("1".equals(feeInfoList.get(0).getFlag())){
-			//TODO:
-//			<Set>MsgTyp=E</Set>
-//			<Set>RspCod=478399</Set>
+			
 			throw new CoreException(ErrorCodes.EUPS_CHECK_FAIL);
 		}
-//		TODO:<Set>StuNam=$FeeNam</Set>
+
 		
 		if("1".equals(feeInfoList.get(0).getStatus())){
-			//TODO:
-//			<Set>MsgTyp=E</Set>
-//			<Set>RspCod=478399</Set>
+			
 //			<Set>RspMsg=正在缴费,不能重复缴费!</Set>
 			throw new CoreException(ErrorCodes.EUPS_CHECK_FAIL);
 		}
