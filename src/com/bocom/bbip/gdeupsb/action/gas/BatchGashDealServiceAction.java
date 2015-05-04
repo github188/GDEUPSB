@@ -229,7 +229,7 @@ public class BatchGashDealServiceAction extends BaseAction implements
 		try {
 			Thread.sleep(180000);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			logger.info("sleep fail:" , e);
 		}
 		// 得到反盘文件
 //		 userProcessToGet(context);
@@ -253,8 +253,8 @@ public class BatchGashDealServiceAction extends BaseAction implements
 			map = (Map) ((Marshaller) get(Marshaller.class)).unmarshal(fileId,
 					resource, Map.class);
 		} catch (JumpException e) {
-			logger.error("文件解析错误");
-			throw new CoreException("BBIP0004EU0015");
+			logger.error("文件解析错误", e);
+//			throw new CoreException("BBIP0004EU0015");
 		}
 		return map;
 	}

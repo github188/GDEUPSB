@@ -47,16 +47,22 @@
 		<result column="REMARK" property="remark" jdbcType="CHAR" />
 		<result column="PRCESS_PASSWORD" property="prcessPassword"
 			jdbcType="CHAR" />
+		<result column="STATUS" property="status"
+			jdbcType="CHAR" />
 	</resultMap>
 	<sql id="baseColumnList">
-		BR_NO , AGT_NO ,COM_NO , BANK_NO, COM_CODE, FEE_CODE, FEE_NUM, USER_NAME,
+		BR_NO , AGT_NO ,COM_NO , BANK_NO, COM_CODE, FEE_CODE,
+		FEE_NUM, USER_NAME,
 		OLD_BANK_NUM, OLD_CARD_NO, NEW_BANK_NUM,
-		ACT_NO, ACOUNT_NAME, ACT_TYPE, PER_COM_FLAG, ID_TYPE, ID_NO, CHECK_SEND_TYPE,
+		ACT_NO,
+		ACOUNT_NAME, ACT_TYPE, PER_COM_FLAG, ID_TYPE, ID_NO, CHECK_SEND_TYPE,
 		INVOICE_SNED_TYPE,
-		POINT_NUM, INVOICE_SNED_MAN, INVOICE_SEND_ZIP, INVOICE_SEND_ADDR,
+		POINT_NUM, INVOICE_SNED_MAN, INVOICE_SEND_ZIP,
+		INVOICE_SEND_ADDR,
 		CHECK_SEND_MAN,
-		CHECK_SEND_ZIP, CHECK_SEND_ADDR, NOTIFY_TYPE, EMAIL, PHONE_NUM, TEL_NUM, REMARK,
-		PRCESS_PASSWORD
+		CHECK_SEND_ZIP, CHECK_SEND_ADDR,
+		NOTIFY_TYPE, EMAIL, PHONE_NUM, TEL_NUM, REMARK,
+		PRCESS_PASSWORD, STATUS
 	</sql>
 	<select id="find" resultMap="basicResultMap">
 		select
@@ -159,6 +165,9 @@
 			<if test="prcessPassword!=null">
 				AND PRCESS_PASSWORD=#{prcessPassword,jdbcType=CHAR}
 			</if>
+			<if test="status!=null">
+				AND STATUS=#{status,jdbcType=CHAR}
+			</if>
 		</trim>
 	</select>
 	<insert id="insert" parameterType="com.bocom.bbip.gdeupsb.entity.GdeupsAgtElecTmp">
@@ -260,6 +269,9 @@
 			<if test="prcessPassword != null">
 				PRCESS_PASSWORD,
 			</if>
+			<if test="status != null">
+				STATUS,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="brNo != null">
@@ -357,6 +369,9 @@
 			</if>
 			<if test="prcessPassword != null">
 				#{prcessPassword,jdbcType=CHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=CHAR},
 			</if>
 		</trim>
 	</insert>
@@ -459,6 +474,9 @@
 			<if test="prcessPassword!=null">
 				AND PRCESS_PASSWORD=#{prcessPassword,jdbcType=CHAR}
 			</if>
+			<if test="status != null">
+				AND STATUS=#{status,jdbcType=CHAR},
+			</if>
 		</trim>
 	</select>
 	<select id="findAll" resultMap="basicResultMap">
@@ -485,13 +503,18 @@
 			<if test="feeNum!=null">
 				AND FEE_NUM=#{feeNum,jdbcType=CHAR}
 			</if>
+			<if test="status!=null">
+				AND STATUS=#{status,jdbcType=CHAR}
+			</if>
 
 		</trim>
 	</select>
 
 	<delete id="deleteByAc" parameterType="com.bocom.bbip.gdeupsb.entity.GdeupsAgtElecTmp">
-		delete from ${GDEUPSB_SCHEMA}.GDEUPS_AGT_ELEC_TMP
-		where ACT_NO = #{actNo,jdbcType=CHAR}
+		delete from
+		${GDEUPSB_SCHEMA}.GDEUPS_AGT_ELEC_TMP
+		where ACT_NO =
+		#{actNo,jdbcType=CHAR}
 	</delete>
 
 	<delete id="delete" parameterType="java.lang.String">
@@ -563,7 +586,9 @@
 			<if test="prcessPassword != null">
 				PRCESS_PASSWORD = #{prcessPassword,jdbcType=CHAR},
 			</if>
-
+			<if test="status != null">
+				STATUS = #{status,jdbcType=CHAR},
+			</if>
 		</set>
 		where ACT_NO = #{actNo,jdbcType=CHAR}
 	</update>
@@ -668,6 +693,9 @@
 			<if test="prcessPassword != null">
 				PRCESS_PASSWORD = #{prcessPassword,jdbcType=CHAR},
 			</if>
+			<if test="status != null">
+				STATUS = #{status,jdbcType=CHAR},
+			</if>
 		</set>
 		where FEE_NUM = #{feeNum,jdbcType=CHAR}
 	</update>
@@ -680,6 +708,9 @@
 			</if>
 			<if test="actNo!=null">
 				AND ACT_NO=#{actNo,jdbcType=CHAR}
+			</if>
+			<if test="status!=null">
+				AND STATUS=#{status,jdbcType=CHAR}
 			</if>
 		</trim>
 	</delete>

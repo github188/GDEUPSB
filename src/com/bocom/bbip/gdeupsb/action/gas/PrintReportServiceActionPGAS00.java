@@ -198,6 +198,7 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 		try {
 			render.afterPropertiesSet();
 		} catch (Exception e) {
+			logger.info("");
 		}
 		context.setData("eles", prtList);
 		render.setReportNameTemplateLocationMapping(map);

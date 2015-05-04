@@ -365,6 +365,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 					CommonRequest.build(context), cusAc);
 		} catch (CoreException e) {
 			e.printStackTrace();
+			logger.info("check cusAcInfo error :" , e);
 		}
 
 		if ("E".equals(cusactinfresult.getResponseType())) {

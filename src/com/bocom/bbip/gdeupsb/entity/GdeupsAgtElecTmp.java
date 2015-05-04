@@ -9,6 +9,15 @@ public class GdeupsAgtElecTmp {
    private String comNo ;
    private String bankNo ;
     private String comCode;
+    public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	private String status ;
 
     public String getBrNo() {
 		return brNo;

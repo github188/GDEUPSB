@@ -82,6 +82,7 @@ public class EupsManageAgt extends BaseAction {
 			log.info("协议已经存在");
 			throw new CoreException("协议已经存在");
 		}else{
+			agtElecTmp.setStatus("0");
 			get(GdeupsAgtElecTmpRepository.class).insert(agtElecTmp);
 			log.info("新增协议成功");
 
@@ -103,6 +104,7 @@ public class EupsManageAgt extends BaseAction {
 			agtElecTmp.setFeeNum(feeNum); //
 		}
 		agtElecTmp.setActNo((String) context.getData("TActNo")); // 账号
+		agtElecTmp.setStatus("0");
 		List<GdeupsAgtElecTmp> list = get(GdeupsAgtElecTmpRepository.class).findBase(agtElecTmp);
 		if(list.size()>0){
 			agtElecTmp = list.get(0);
@@ -120,7 +122,8 @@ public class EupsManageAgt extends BaseAction {
 		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
 		agtElecTmp.setActNo((String) context.getData("TActNo"));
 		agtElecTmp.setFeeNum((String) context.getData("JFH"));
-		get(GdeupsAgtElecTmpRepository.class).delete(agtElecTmp);
+		agtElecTmp.setStatus("1");
+		get(GdeupsAgtElecTmpRepository.class).updateByFeeNum(agtElecTmp);
 	}
 
 	//为查询返回报文赋值
