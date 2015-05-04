@@ -121,11 +121,9 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			try {
 				RecvEnCryptFile(eupsThdFtpConfig.getLocDir(), fileName, fileName,context);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.info("===========ErrMsg=",e);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.info("===========ErrMsg=",e);
 			}
 
 			callThd(context,gdeupsBatchConsoleInfo,fileName);

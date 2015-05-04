@@ -113,11 +113,9 @@ public class AgentFileToThdAction extends BaseAction{
 						try {
 							RecvEnCryptFile(eupsThdFtpConfig.getLocDir(), locName, locName,context);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							log.info("===========ErrMsg=",e);
 						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							log.info("===========ErrMsg=",e);
 						}
 						callThd(context);
 				}

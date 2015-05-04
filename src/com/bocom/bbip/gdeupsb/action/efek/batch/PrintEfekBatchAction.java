@@ -67,8 +67,7 @@ public class PrintEfekBatchAction extends BaseAction{
 						try {
 							render.afterPropertiesSet();
 						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							log.info("===========ErrMsg=",e);
 						}
 						//拼装文件
 						Map<String, String> mapFile = new HashMap<String, String>();
@@ -99,11 +98,9 @@ public class PrintEfekBatchAction extends BaseAction{
 								outputStreamWriter.close();
 								fileOutputStream.close();
 							} catch (FileNotFoundException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								log.info("===========ErrMsg=",e);
 							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								log.info("===========ErrMsg=",e);
 							}
 							//报表		
 							log.info("=============Start   Send   File==========");

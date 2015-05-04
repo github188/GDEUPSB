@@ -87,14 +87,11 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 						try {
 							RecvEnCryptFile(eupsThdFtpConfig.getLocDir(), fleNme, fleNme,context);
 						} catch (CoreRuntimeException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							logger.info("===========ErrMsg=",e);
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							logger.info("===========ErrMsg=",e);
 						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							logger.info("===========ErrMsg=",e);
 						}
 					
 					eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/efek/");
@@ -295,11 +292,9 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 						bufferedReader.close();
 						fileReader.close();
 				} catch (FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.info("===========ErrMsg=",e);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					logger.info("===========ErrMsg=",e);
 				}
 				context.setData(ParamKeys.TOT_CNT, Integer.parseInt(totCnt));
 				logger.info("==========End  BatchDataFileAction  updateInfo");
