@@ -84,18 +84,18 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 					eupsThdFtpConfig.setRmtFleNme(fleNme);
 					eupsThdFtpConfig.setLocFleNme(fleNme);		
 					eupsThdFtpConfig.setFtpDir("1");
-						try {
-							RecvEnCryptFile(eupsThdFtpConfig.getLocDir(), fleNme, fleNme,context);
-						} catch (CoreRuntimeException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
+//						try {
+//							RecvEnCryptFile(eupsThdFtpConfig.getLocDir(), fleNme, fleNme,context);
+//						} catch (CoreRuntimeException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						} catch (IOException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						} catch (InterruptedException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						}
 					
 					eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/efek/");
 					operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
@@ -112,14 +112,13 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 						for (int i=0;i<mapList.size();i++) {
 							Map<String, Object> map=mapList.get(i);
 									 map.put(ParamKeys.SEQUENCE, bbipPublicService.getBBIPSequence());
-									 GDEupsEleTmp gdEupsEleTmp=BeanUtils.toObject(map, GDEupsEleTmp.class);
-									 if(!map.get("capital").equals("") && !map.get("capital").equals(null)){
-										 	map.put("capitial", (new BigDecimal(map.get("capital").toString())));
+									 if(!map.get("capitial").equals("") && !map.get("capitial").equals(null)){
+										 	map.put("capitial", (new BigDecimal(map.get("capitial").toString())));
 									 }
 									 if(!map.get("dedit").equals("")  && !map.get("dedit").equals(null) ){
-										 	map.put("dedit", (new BigDecimal(map.get("capital").toString())));
+										 	map.put("dedit", (new BigDecimal(map.get("dedit").toString())));
 									 }
-									 
+									 GDEupsEleTmp gdEupsEleTmp=BeanUtils.toObject(map, GDEupsEleTmp.class);
 									 BigDecimal txnAmt=new BigDecimal(gdEupsEleTmp.getPaymentMoney()).scaleByPowerOfTen(-2);
 									 gdEupsEleTmp.setTxnAmt(txnAmt);
 									 gdEupsEleTmp.setRsvFld5(batNo);
