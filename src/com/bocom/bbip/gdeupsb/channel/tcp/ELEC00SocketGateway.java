@@ -99,6 +99,11 @@ public class ELEC00SocketGateway extends SocketGateway{
         System.out.println("处理后，byte=\n"+Hex.toDumpString(sendBuffer)+",发送的报文转化为明文为:"+new String(sendBuffer));
 
         Socket socket = createSocket();
+//        try {
+//			socket.setSoTimeout(1);
+//		} catch (SocketException e1) {
+//			e1.printStackTrace();
+//		}
         try {
             socket.getOutputStream().write(sendBuffer);
             socket.getOutputStream().flush();
