@@ -48,8 +48,6 @@ public class PayFeeOnlineServiceActionVECH00 implements PayFeeOnlineService{
 					PayFeeOnlineDomain payfeeonlinedomain, Context context)
 					throws CoreException {
 				log.info("===========Start   PayFeeOnlineServiceActionVECH00  preHostDeal");
-				System.out.println("~~~~~~~~~~txnDte~~~~~~~~~~~~~"+context.getData(ParamKeys.TXN_DTE));
-				System.out.println("~~~~~~~~~~~txnTme~~~~~~~~~~"+context.getData(ParamKeys.TXN_TME));
 				Date txnDte=DateUtils.parse(DateUtils.formatAsSimpleDate(new Date()));
 				Date txnTme=DateUtils.parse(DateUtils.formatAsTranstime(new Date()));
 				
