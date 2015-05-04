@@ -6,11 +6,11 @@
       <xsd:import namespace="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/Schema" schemaLocation="GDEUPSEfekService.xsd"/>
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="checkFileSumAcctRequestMessage">
-    <wsdl:part name="checkFileSumAcctRequest" element="gdeupsb:checkFileSumAcct"/>
+  <wsdl:message name="checkFileDetailRequestMessage">
+    <wsdl:part name="checkFileDetailRequest" element="gdeupsb:checkFileDetail"/>
   </wsdl:message>
-  <wsdl:message name="checkFileSumAcctResponseMessage">
-    <wsdl:part name="checkFileSumAcctResponse" element="gdeupsb:checkFileSumAcctResponse"/>
+  <wsdl:message name="checkFileDetailResponseMessage">
+    <wsdl:part name="checkFileDetailResponse" element="gdeupsb:checkFileDetailResponse"/>
   </wsdl:message>
   <wsdl:message name="agentChangeRequestMessage">
     <wsdl:part name="agentChangeRequest" element="gdeupsb:agentChange"/>
@@ -18,29 +18,17 @@
   <wsdl:message name="agentChangeResponseMessage">
     <wsdl:part name="agentChangeResponse" element="gdeupsb:agentChangeResponse"/>
   </wsdl:message>
-  <wsdl:message name="checkFileDetailRequestMessage">
-    <wsdl:part name="checkFileDetailRequest" element="gdeupsb:checkFileDetail"/>
+  <wsdl:message name="queryFeeRequestMessage">
+    <wsdl:part name="queryFeeRequest" element="gdeupsb:queryFee"/>
   </wsdl:message>
-  <wsdl:message name="checkFileDetailResponseMessage">
-    <wsdl:part name="checkFileDetailResponse" element="gdeupsb:checkFileDetailResponse"/>
-  </wsdl:message>
-  <wsdl:message name="tallyOneOnlineRequestMessage">
-    <wsdl:part name="tallyOneOnlineRequest" element="gdeupsb:tallyOneOnline"/>
-  </wsdl:message>
-  <wsdl:message name="tallyOneOnlineResponseMessage">
-    <wsdl:part name="tallyOneOnlineResponse" element="gdeupsb:tallyOneOnlineResponse"/>
+  <wsdl:message name="queryFeeResponseMessage">
+    <wsdl:part name="queryFeeResponse" element="gdeupsb:queryFeeResponse"/>
   </wsdl:message>
   <wsdl:message name="qryCusMsgRequestMessage">
     <wsdl:part name="qryCusMsgRequest" element="gdeupsb:qryCusMsg"/>
   </wsdl:message>
   <wsdl:message name="qryCusMsgResponseMessage">
     <wsdl:part name="qryCusMsgResponse" element="gdeupsb:qryCusMsgResponse"/>
-  </wsdl:message>
-  <wsdl:message name="queryFeeRequestMessage">
-    <wsdl:part name="queryFeeRequest" element="gdeupsb:queryFee"/>
-  </wsdl:message>
-  <wsdl:message name="queryFeeResponseMessage">
-    <wsdl:part name="queryFeeResponse" element="gdeupsb:queryFeeResponse"/>
   </wsdl:message>
   <wsdl:message name="qryCusBaseMsgRequestMessage">
     <wsdl:part name="qryCusBaseMsgRequest" element="gdeupsb:qryCusBaseMsg"/>
@@ -60,11 +48,11 @@
   <wsdl:message name="qryComNoByAreaResponseMessage">
     <wsdl:part name="qryComNoByAreaResponse" element="gdeupsb:qryComNoByAreaResponse"/>
   </wsdl:message>
-  <wsdl:message name="tallyCancelQryOnlineRequestMessage">
-    <wsdl:part name="tallyCancelQryOnlineRequest" element="gdeupsb:tallyCancelQryOnline"/>
+  <wsdl:message name="tallyCancelOnlineRequestMessage">
+    <wsdl:part name="tallyCancelOnlineRequest" element="gdeupsb:tallyCancelOnline"/>
   </wsdl:message>
-  <wsdl:message name="tallyCancelQryOnlineResponseMessage">
-    <wsdl:part name="tallyCancelQryOnlineResponse" element="gdeupsb:tallyCancelQryOnlineResponse"/>
+  <wsdl:message name="tallyCancelOnlineResponseMessage">
+    <wsdl:part name="tallyCancelOnlineResponse" element="gdeupsb:tallyCancelOnlineResponse"/>
   </wsdl:message>
   <wsdl:message name="advanceTradeRequestMessage">
     <wsdl:part name="advanceTradeRequest" element="gdeupsb:advanceTrade"/>
@@ -72,42 +60,50 @@
   <wsdl:message name="advanceTradeResponseMessage">
     <wsdl:part name="advanceTradeResponse" element="gdeupsb:advanceTradeResponse"/>
   </wsdl:message>
-  <wsdl:message name="tallyCancelOnlineRequestMessage">
-    <wsdl:part name="tallyCancelOnlineRequest" element="gdeupsb:tallyCancelOnline"/>
+  <wsdl:message name="checkFileSumAcctRequestMessage">
+    <wsdl:part name="checkFileSumAcctRequest" element="gdeupsb:checkFileSumAcct"/>
   </wsdl:message>
-  <wsdl:message name="tallyCancelOnlineResponseMessage">
-    <wsdl:part name="tallyCancelOnlineResponse" element="gdeupsb:tallyCancelOnlineResponse"/>
+  <wsdl:message name="checkFileSumAcctResponseMessage">
+    <wsdl:part name="checkFileSumAcctResponse" element="gdeupsb:checkFileSumAcctResponse"/>
+  </wsdl:message>
+  <wsdl:message name="tallyOneOnlineRequestMessage">
+    <wsdl:part name="tallyOneOnlineRequest" element="gdeupsb:tallyOneOnline"/>
+  </wsdl:message>
+  <wsdl:message name="tallyOneOnlineResponseMessage">
+    <wsdl:part name="tallyOneOnlineResponse" element="gdeupsb:tallyOneOnlineResponse"/>
+  </wsdl:message>
+  <wsdl:message name="printEfekBatchRequestMessage">
+    <wsdl:part name="printEfekBatchRequest" element="gdeupsb:printEfekBatch"/>
+  </wsdl:message>
+  <wsdl:message name="printEfekBatchResponseMessage">
+    <wsdl:part name="printEfekBatchResponse" element="gdeupsb:printEfekBatchResponse"/>
+  </wsdl:message>
+  <wsdl:message name="tallyCancelQryOnlineRequestMessage">
+    <wsdl:part name="tallyCancelQryOnlineRequest" element="gdeupsb:tallyCancelQryOnline"/>
+  </wsdl:message>
+  <wsdl:message name="tallyCancelQryOnlineResponseMessage">
+    <wsdl:part name="tallyCancelQryOnlineResponse" element="gdeupsb:tallyCancelQryOnlineResponse"/>
   </wsdl:message>
   <wsdl:portType name="GDEUPSEfekServicePortType">
-    <wsdl:operation name="checkFileSumAcct">
+    <wsdl:operation name="checkFileDetail">
       <wsdl:documentation/>
-      <wsdl:input message="tns:checkFileSumAcctRequestMessage"/>
-      <wsdl:output message="tns:checkFileSumAcctResponseMessage"/>
+      <wsdl:input message="tns:checkFileDetailRequestMessage"/>
+      <wsdl:output message="tns:checkFileDetailResponseMessage"/>
     </wsdl:operation>
     <wsdl:operation name="agentChange">
       <wsdl:documentation/>
       <wsdl:input message="tns:agentChangeRequestMessage"/>
       <wsdl:output message="tns:agentChangeResponseMessage"/>
     </wsdl:operation>
-    <wsdl:operation name="checkFileDetail">
+    <wsdl:operation name="queryFee">
       <wsdl:documentation/>
-      <wsdl:input message="tns:checkFileDetailRequestMessage"/>
-      <wsdl:output message="tns:checkFileDetailResponseMessage"/>
-    </wsdl:operation>
-    <wsdl:operation name="tallyOneOnline">
-      <wsdl:documentation/>
-      <wsdl:input message="tns:tallyOneOnlineRequestMessage"/>
-      <wsdl:output message="tns:tallyOneOnlineResponseMessage"/>
+      <wsdl:input message="tns:queryFeeRequestMessage"/>
+      <wsdl:output message="tns:queryFeeResponseMessage"/>
     </wsdl:operation>
     <wsdl:operation name="qryCusMsg">
       <wsdl:documentation/>
       <wsdl:input message="tns:qryCusMsgRequestMessage"/>
       <wsdl:output message="tns:qryCusMsgResponseMessage"/>
-    </wsdl:operation>
-    <wsdl:operation name="queryFee">
-      <wsdl:documentation/>
-      <wsdl:input message="tns:queryFeeRequestMessage"/>
-      <wsdl:output message="tns:queryFeeResponseMessage"/>
     </wsdl:operation>
     <wsdl:operation name="qryCusBaseMsg">
       <wsdl:documentation/>
@@ -124,26 +120,41 @@
       <wsdl:input message="tns:qryComNoByAreaRequestMessage"/>
       <wsdl:output message="tns:qryComNoByAreaResponseMessage"/>
     </wsdl:operation>
-    <wsdl:operation name="tallyCancelQryOnline">
+    <wsdl:operation name="tallyCancelOnline">
       <wsdl:documentation/>
-      <wsdl:input message="tns:tallyCancelQryOnlineRequestMessage"/>
-      <wsdl:output message="tns:tallyCancelQryOnlineResponseMessage"/>
+      <wsdl:input message="tns:tallyCancelOnlineRequestMessage"/>
+      <wsdl:output message="tns:tallyCancelOnlineResponseMessage"/>
     </wsdl:operation>
     <wsdl:operation name="advanceTrade">
       <wsdl:documentation/>
       <wsdl:input message="tns:advanceTradeRequestMessage"/>
       <wsdl:output message="tns:advanceTradeResponseMessage"/>
     </wsdl:operation>
-    <wsdl:operation name="tallyCancelOnline">
+    <wsdl:operation name="checkFileSumAcct">
       <wsdl:documentation/>
-      <wsdl:input message="tns:tallyCancelOnlineRequestMessage"/>
-      <wsdl:output message="tns:tallyCancelOnlineResponseMessage"/>
+      <wsdl:input message="tns:checkFileSumAcctRequestMessage"/>
+      <wsdl:output message="tns:checkFileSumAcctResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="tallyOneOnline">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:tallyOneOnlineRequestMessage"/>
+      <wsdl:output message="tns:tallyOneOnlineResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="printEfekBatch">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:printEfekBatchRequestMessage"/>
+      <wsdl:output message="tns:printEfekBatchResponseMessage"/>
+    </wsdl:operation>
+    <wsdl:operation name="tallyCancelQryOnline">
+      <wsdl:documentation/>
+      <wsdl:input message="tns:tallyCancelQryOnlineRequestMessage"/>
+      <wsdl:output message="tns:tallyCancelQryOnlineResponseMessage"/>
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="GDEUPSEfekServiceSoapBinding" type="tns:GDEUPSEfekServicePortType">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <wsdl:operation name="checkFileSumAcct">
-      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/checkFileSumAcct"/>
+    <wsdl:operation name="checkFileDetail">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/checkFileDetail"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -160,17 +171,8 @@
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="checkFileDetail">
-      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/checkFileDetail"/>
-      <wsdl:input>
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal"/>
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="tallyOneOnline">
-      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/tallyOneOnline"/>
+    <wsdl:operation name="queryFee">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/queryFee"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -180,15 +182,6 @@
     </wsdl:operation>
     <wsdl:operation name="qryCusMsg">
       <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/qryCusMsg"/>
-      <wsdl:input>
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal"/>
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="queryFee">
-      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/queryFee"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -223,8 +216,8 @@
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="tallyCancelQryOnline">
-      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/tallyCancelQryOnline"/>
+    <wsdl:operation name="tallyCancelOnline">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/tallyCancelOnline"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
@@ -241,8 +234,35 @@
         <soap:body use="literal"/>
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="tallyCancelOnline">
-      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/tallyCancelOnline"/>
+    <wsdl:operation name="checkFileSumAcct">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/checkFileSumAcct"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="tallyOneOnline">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/tallyOneOnline"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="printEfekBatch">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/printEfekBatch"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="tallyCancelQryOnline">
+      <soap:operation soapAction="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSEfekService/tallyCancelQryOnline"/>
       <wsdl:input>
         <soap:body use="literal"/>
       </wsdl:input>
