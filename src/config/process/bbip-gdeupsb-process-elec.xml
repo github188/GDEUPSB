@@ -254,4 +254,9 @@
 				</actions>
 	</process>
 
+	<process id="gdeupsb.printEfekBatch"  template="eups.simpleTran" interceptors="eups.transMessageInterceptor" >
+				<actions>
+							<action id="act" ref="gdeupsb.printEfekBatchAction" />
+				</actions>
+	</process>
 </x:beans>
