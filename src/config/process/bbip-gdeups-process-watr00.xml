@@ -96,15 +96,15 @@
 	   </actions>
 	</process>
 	
-	<!-- 测试用：文件批量代收付：公共版回调process名字是“eups.commNotifyBatchStatus”;分行自定义process名字必须为“eupsNotifyBatchStatus” -->
-	<process id="eups.commNotifyBatchStatusExt" template="eups.simpleTran" interceptors="bbip.defaultInterceptors">
+	 <!-- 测试用：文件批量代收付：公共版回调process名字是“eups.commNotifyBatchStatus”;分行自定义process名字必须为“eupsNotifyBatchStatus” -->
+	<!--<process id="eups.commNotifyBatchStatusExt" template="eups.simpleTran" interceptors="bbip.defaultInterceptors">
 		<actions>
-			<!-- 去指定路径取文件并进行解析处理 -->
+			去指定路径取文件并进行解析处理
 			<action id="act" class = "com.bocom.bbip.gdeupsb.action.FileBatchAcpsCallBackActionExt" operations="callBackFunction" />
-			<!-- 发代收付后服务：需自己实现 -->
+			发代收付后服务：需自己实现
 			<action id="act" ref="eups.afterBatchAcpServiceAction" operations="afterBatchDeal" />
 		</actions>
-	</process>
+	</process> -->
 	
 	
 		<!-- 根据银行卡号查询协议 -->
