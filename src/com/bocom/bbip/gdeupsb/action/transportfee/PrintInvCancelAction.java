@@ -12,6 +12,7 @@ import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspFeeInfo;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspTxnJnl;
@@ -47,7 +48,8 @@ public class PrintInvCancelAction extends BaseAction{
 		if("U".equals(ctx.getData(GDParamKeys.TTXN_ST)) | "S".equals(ctx.getData(GDParamKeys.TTXN_ST)) | "T".equals(ctx.getData(GDParamKeys.TTXN_ST))){
 
 			ctx.setData("otTxnSt", ctx.getData(GDParamKeys.TTXN_ST));
-			ctx.setData("transcode", "484009");
+//			ctx.setData("transcode", "484009");
+			ctx.setData(ParamKeys.THD_TXN_CDE, "RVSPPC");
 			Map<String, Object> thdReturnMessage = callThdReturnMessage.trade(ctx);
 			if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL)){
 				ctx.setData(GDParamKeys.TTXN_ST, "C");

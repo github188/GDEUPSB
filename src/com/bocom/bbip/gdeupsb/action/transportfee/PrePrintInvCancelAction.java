@@ -36,16 +36,16 @@ public class PrePrintInvCancelAction extends BaseAction{
 		log.info("PrePrintInvCancelAction start......");
 		
 		ctx.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
-		Date today = ctx.getData(GDParamKeys.ACT_DAT);
-		GDEupsbTrspTxnJnl gdEupsbTrspTxnJnl = new GDEupsbTrspTxnJnl();
-		gdEupsbTrspTxnJnl.setTlogNo(ctx.getData(GDParamKeys.SQN).toString());
-		List<GDEupsbTrspTxnJnl> txnJnlList = gdEupsbTrspTxnJnlRepository.find(gdEupsbTrspTxnJnl);
-		ctx.setDataMap(BeanUtils.toMap(txnJnlList.get(0)));
-
-		if(!DateUtils.isSameDate((Date)ctx.getData(GDParamKeys.ACT_DAT),today)){
-//			ctx.setData(ParamKeys.RSP_MSG, "该笔交易帐务日期与此时帐务日期不等，不能交易");
-			throw new CoreRuntimeException("BBIP4400EU0741");
-		}
+//		Date today = ctx.getData(GDParamKeys.ACT_DAT);
+//		GDEupsbTrspTxnJnl gdEupsbTrspTxnJnl = new GDEupsbTrspTxnJnl();
+//		gdEupsbTrspTxnJnl.setTlogNo(ctx.getData(GDParamKeys.SQN).toString());
+//		List<GDEupsbTrspTxnJnl> txnJnlList = gdEupsbTrspTxnJnlRepository.find(gdEupsbTrspTxnJnl);
+//		ctx.setDataMap(BeanUtils.toMap(txnJnlList.get(0)));
+//
+//		if(!DateUtils.isSameDate((Date)ctx.getData(GDParamKeys.ACT_DAT),today)){
+////			ctx.setData(ParamKeys.RSP_MSG, "该笔交易帐务日期与此时帐务日期不等，不能交易");
+//			throw new CoreRuntimeException("BBIP4400EU0741");
+//		}
 //         <!--检查是否已对账-->
 		GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
 		gdEupsbTrspFeeInfo.setTlogNo(ctx.getData("oldTxnSqn").toString());

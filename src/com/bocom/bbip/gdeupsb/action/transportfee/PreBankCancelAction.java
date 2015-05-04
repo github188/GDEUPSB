@@ -69,18 +69,7 @@ private final static Log log = LogFactory.getLog(PreBankCancelAction.class);
 			ctx.setData(exiFlg, "0");
 		}
 		
-//		TODO:<Set>LckKey=STRCAT(@PARA.JnlTbl,:,$LogNo)</Set>   LOGNO:oldTxnSqn
-		
-//		TODO:
-//		<Exec func="PUB:Lock" error="IGNORE"><!-- 通过加锁控制批次状态 -->
-//        <Arg name="RecKey" value="$LckKey"/>
-//        <Arg name="TimOut" value="60"/>
-//        <Arg name="AutoUnlock" value="yes"/>
-//     </Exec>
-//     <If condition="INTCMP(~RetCod,4,0)"><!--加锁失败-->
-//        <Set>RspCod=478004</Set>
-//        <Return/>
-//     </If>
+
 		ctx.setData(GDParamKeys.TRSP_CD, null);
 
 		if(!ctx.getData(GDParamKeys.HTXN_ST).toString().equals("U") && !ctx.getData(GDParamKeys.HTXN_ST).toString().equals("S")&&
@@ -90,9 +79,7 @@ private final static Log log = LogFactory.getLog(PreBankCancelAction.class);
 		}
 			
 			
-//			TODO:
-//	        <Set>TIATyp=C</Set>
-//	        <Set>HTxnCd=@PARA.HTxnCd_DSCal</Set>
+
 		String ohTxnSt = "ohTxnSt";
 		String oTxnSt = "oTxnSt";
 		ctx.setData(ohTxnSt, ctx.getData(GDParamKeys.HTXN_ST).toString());
