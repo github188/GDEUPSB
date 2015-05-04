@@ -147,7 +147,7 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 			amtTot = amtTot.add(amtB);
 			amtTot = amtTot.setScale(2);
 			i++;
-			
+		
 			//金额转换
 			batTmp.setTxnAmt(amtB.toString());
 			detailMap = BeanUtils.toMap(batTmp);
