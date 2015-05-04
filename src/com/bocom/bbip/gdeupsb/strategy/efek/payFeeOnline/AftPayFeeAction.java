@@ -21,7 +21,6 @@ public class AftPayFeeAction implements Executable{
 	@Override
 	public void execute(Context context) throws CoreException,
 			CoreRuntimeException {
-		// TODO Auto-generated method stub
 		logger.info("============Start AftPayFeeAction");
 		BigDecimal txnAmt=new BigDecimal(context.getData(ParamKeys.TXN_AMT).toString()).scaleByPowerOfTen(-2);
 		context.setData(ParamKeys.TXN_AMT,txnAmt );
