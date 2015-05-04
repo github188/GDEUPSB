@@ -108,14 +108,15 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 								throw new CoreException("处理状态异常或获取数据异常");
 					}
 						context.setData(ParamKeys.COMPANY_NO, comNo);
+						logger.info("============Start  insert  gdEupsEleTmp");
 						for (int i=0;i<mapList.size();i++) {
 							Map<String, Object> map=mapList.get(i);
 									 map.put(ParamKeys.SEQUENCE, bbipPublicService.getBBIPSequence());
 									 GDEupsEleTmp gdEupsEleTmp=BeanUtils.toObject(map, GDEupsEleTmp.class);
-									 if(!map.get("capital").toString().equals("")){
+									 if(!map.get("capital").equals("") && !map.get("capital").equals(null)){
 										 	map.put("capitial", (new BigDecimal(map.get("capital").toString())));
 									 }
-									 if(!map.get("dedit").toString().equals("")){
+									 if(!map.get("dedit").equals("")  && !map.get("dedit").equals(null) ){
 										 	map.put("dedit", (new BigDecimal(map.get("capital").toString())));
 									 }
 									 
