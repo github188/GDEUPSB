@@ -45,5 +45,8 @@ public interface GDEupsBatchConsoleInfoRepository extends PagingAndSortingReposi
 
 	public Page<Map<String, Object>> findBatInformation(Pageable pageable,
 			Map<String, Object> baseMap);
+	@Find
+	public List<Map<String, Object>> findElec02BatchRptInfo(
+			Map<String, Object> baseMap);
 	
 }
