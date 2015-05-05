@@ -72,16 +72,6 @@ public class EupsManageCounterAgt extends BaseAction {
 			deleteAgentDeal(context);
 			break;
 		}
-//		<infoList>
-//		JFH
-//		UsrNam
-//		ActNo
-//		ActNm
-//		ACT
-//		GPF
-//		MOB
-//		TEL
-//		</infoList>
 
 		
 		logger.info("======== ending context :" + context);
