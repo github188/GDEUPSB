@@ -72,8 +72,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 				String totAmt=context.getData("totAmt").toString();
 				String totCnt=context.getData("totCnt").toString();
 //				context.setData("comNo", "030613");
-				String comNo=context.getData("comNos").toString();
-				context.setData("comNo", comNo);
+				String comNo=context.getData("comNos").toString();				
 				context.setData(ParamKeys.WS_TRANS_CODE, "20");
 				//文件名
 				String fleNme=context.getData(ParamKeys.FLE_NME).toString();
@@ -131,6 +130,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 						context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_MAP, resultMap);
 						//提交代收付
 						logger.info("==========End  BatchDataFileAction  prepareBatchDeal");
+						context.setData("comNo", comNo.substring(0,4));
 						userProcessToSubmit(context);
 						
 						ret1 = bbipPublicService.unlock(locked);
