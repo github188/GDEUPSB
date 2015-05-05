@@ -20,6 +20,8 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
 import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
+import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
 import com.bocom.bbip.file.transfer.ftp.FTPTransfer;
 import com.bocom.bbip.gdeupsb.entity.GDEupsEleTmp;
@@ -130,11 +132,13 @@ public class PrintEfekBatchAction extends BaseAction{
 									//报表		
 									log.info("=============Start   Send   File==========");
 									
+									EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
+									// FTP上传设置
 									FTPTransfer tFTPTransfer = new FTPTransfer();
-							        tFTPTransfer.setHost("182.53.15.187");
-									tFTPTransfer.setPort(21);
-									tFTPTransfer.setUserName("weblogic");
-									tFTPTransfer.setPassword("123456");
+									tFTPTransfer.setHost(sendFileToBBOSConfig.getThdIpAdr());
+									tFTPTransfer.setPort(Integer.parseInt(sendFileToBBOSConfig.getBidPot()));
+									tFTPTransfer.setUserName(sendFileToBBOSConfig.getOppNme());
+									tFTPTransfer.setPassword(sendFileToBBOSConfig.getOppUsrPsw());
 									 try {
 									       	tFTPTransfer.logon();
 									        Resource tResource = new FileSystemResource("/home/bbipadm/data/GDEUPSB/report/"+fileName);
