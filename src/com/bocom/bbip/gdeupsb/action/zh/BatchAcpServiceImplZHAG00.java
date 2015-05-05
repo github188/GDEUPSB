@@ -71,11 +71,13 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 		config.setRmtFleNme(fleNme);
 		config.setLocFleNme(fleNme);
 		config.setFtpDir("1");
+		EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
+
 		if(context.getData("mothed").toString().trim().equals("1")){
-			config.setThdIpAdr("182.53.15.187");
+			config.setThdIpAdr(sendFileToBBOSConfig.getThdIpAdr());
 			config.setFtpDir("1");
-			config.setOppNme("weblogic");
-			config.setOppUsrPsw("123456");
+			config.setOppNme(sendFileToBBOSConfig.getOppNme());
+			config.setOppUsrPsw(sendFileToBBOSConfig.getOppUsrPsw());
 			String path = "/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + context.getData(ParamKeys.BR)+ "/" + context.getData(ParamKeys.TELLER) + "/";
 			config.setRmtWay(path);
 		}
