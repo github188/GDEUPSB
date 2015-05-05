@@ -104,7 +104,6 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 					if(CollectionUtils.isEmpty(mapList)){
 								throw new CoreException("处理状态异常或获取数据异常");
 					}
-						context.setData(ParamKeys.COMPANY_NO, comNo);
 						logger.info("============Start  insert  gdEupsEleTmp");
 						for (int i=0;i<mapList.size();i++) {
 							Map<String, Object> map=mapList.get(i);
@@ -130,7 +129,6 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 						context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_MAP, resultMap);
 						//提交代收付
 						logger.info("==========End  BatchDataFileAction  prepareBatchDeal");
-						context.setData("comNo", comNo.substring(0,4));
 						userProcessToSubmit(context);
 						
 						ret1 = bbipPublicService.unlock(locked);
