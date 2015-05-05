@@ -212,9 +212,7 @@ public class AgentFileToThdAction extends BaseAction{
 		        log.info("cmd=" + cmd);
 		        Process proc = Runtime.getRuntime().exec(cmd);
 		        proc.waitFor();
-		        if(proc.exitValue()!=0){
-		    	   	throw new CoreException("返回文件错误或获取错误");
-		       }
+
 		        log.info("en-file success!");
 		        log.info("================End BatchDataFileActiion  RecvEnCryptFile");
 		        
