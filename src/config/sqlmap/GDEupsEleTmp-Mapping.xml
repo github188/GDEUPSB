@@ -819,4 +819,26 @@
     </trim>
   </select>
   
+  <select id="findByComNoFailTot" resultType="java.util.Map"  parameterType="java.util.Map">
+   		 select
+    				count(*) as comNoTotCnt, sum(TXN_AMT) as comNoTotAmt
+    	from
+    			 ${GDEUPSB_SCHEMA}.GDEUPS_ELE_TMP
+  		 where 
+  		 		PAYMENT_RESULT!='00'
+        		AND		SUBSTR(COM_NO,1,4)=#{comNo,jdbcType=CHAR}
+       			 AND  TXN_DTE=#{txnDte,jdbcType=DATE}
+  </select>
+  
+    <select id="findByComNoSucTot" resultType="java.util.Map"  parameterType="java.util.Map">
+   		 select
+    				count(*) as comNoTotCnt, sum(TXN_AMT) as comNoTotAmt
+    	from
+    			 ${GDEUPSB_SCHEMA}.GDEUPS_ELE_TMP
+  		 where 
+  		 		PAYMENT_RESULT='00'
+        		AND   SUBSTR(COM_NO,1,4)=#{comNo,jdbcType=CHAR}
+       			 AND  TXN_DTE=#{txnDte,jdbcType=DATE}
+  </select>
+  
 </mapper>
