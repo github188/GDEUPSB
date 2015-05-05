@@ -21,6 +21,7 @@ import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.entity.EupsBatchInfoDetail;
+import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
 import com.bocom.bbip.eups.repository.EupsBatchInfoDetailRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
@@ -132,11 +133,13 @@ public class PrintBatchInfoAction extends BaseAction{
 					}
 					//报表		
 					log.info("=============Start   Send   File==========");
+					EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
+					// FTP上传设置
 					FTPTransfer tFTPTransfer = new FTPTransfer();
-			        tFTPTransfer.setHost("182.53.15.187");
-					tFTPTransfer.setPort(21);
-					tFTPTransfer.setUserName("weblogic");
-					tFTPTransfer.setPassword("123456");
+					tFTPTransfer.setHost(sendFileToBBOSConfig.getThdIpAdr());
+					tFTPTransfer.setPort(Integer.parseInt(sendFileToBBOSConfig.getBidPot()));
+					tFTPTransfer.setUserName(sendFileToBBOSConfig.getOppNme());
+					tFTPTransfer.setPassword(sendFileToBBOSConfig.getOppUsrPsw());
 					 try {
 					       	tFTPTransfer.logon();
 					        Resource tResource = new FileSystemResource("/home/bbipadm/data/GDEUPSB/report/"+fileName);
