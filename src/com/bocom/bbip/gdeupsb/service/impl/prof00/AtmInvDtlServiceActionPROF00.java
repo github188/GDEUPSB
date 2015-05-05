@@ -78,7 +78,7 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 		logger.info("invTyp["+invTyp+"]begDat["+begDat+"]endDat["+endDat+"]qryNod["+qryNod+"]prtFlg["+prtFlg+"]");
 		if("1".equals(prtFlg)){//打印
 			//TODO:根据分行号和网点号查询网点名称，待实现
-			context.setData("nodNam", "珠海分行");//测试代码
+//			context.setData("nodNam", context.getData("filler"));//测试代码
 			
 			EupsThdFtpConfigRepository eupsThdFtpConfigRepository = get(EupsThdFtpConfigRepository.class);
 			ReportHelper reportHelper = get(ReportHelper.class);
