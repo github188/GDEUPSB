@@ -72,7 +72,8 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 				String totAmt=context.getData("totAmt").toString();
 				String totCnt=context.getData("totCnt").toString();
 //				context.setData("comNo", "030613");
-				String comNo=context.getData("comNo").toString();
+				String comNo=context.getData("comNos").toString();
+				context.setData("comNo", comNo);
 				context.setData(ParamKeys.WS_TRANS_CODE, "20");
 				//文件名
 				String fleNme=context.getData(ParamKeys.FLE_NME).toString();
