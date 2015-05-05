@@ -102,7 +102,7 @@ public class AftPayToBankStrategyAction implements Executable{
 		gdEupsbTrspFeeInfo.setPayLog((String)ctx.getData(ParamKeys.SEQUENCE));
 		gdEupsbTrspFeeInfo.setTxnAmt((BigDecimal)ctx.getData(GDParamKeys.TXN_AMT));
 		gdEupsbTrspFeeInfo.setTxnCnl((String)ctx.getData(ParamKeys.CHANNEL)); //交易渠道
-		gdEupsbTrspFeeInfo.setActTyp((String)ctx.getData(GDParamKeys.ACT_TYP));//1111111111
+		gdEupsbTrspFeeInfo.setActTyp((String)ctx.getData(GDParamKeys.ACT_TYP));//
 		gdEupsbTrspFeeInfo.setActNo((String)ctx.getData(GDParamKeys.ACT_NO));
 		gdEupsbTrspFeeInfo.setPayNod((String)ctx.getData(ParamKeys.BR)); //网点号
 		gdEupsbTrspFeeInfo.setPayTlr((String)ctx.getData(ParamKeys.TELLER));  //银行柜员号
