@@ -373,7 +373,7 @@
       <xs:element name="OKH" type="tns:OKH_SType" minOccurs="0"/>
       <xs:element name="OAC" type="tns:OAC_SType" minOccurs="0"/>
       <xs:element name="KKB" type="tns:KKB_SType" minOccurs="0"/>
-      <xs:element name="ActNo" type="tns:ActNo_SType"/>
+      <xs:element name="ActNo" type="tns:ActNo_SType" minOccurs="0"/>
       <xs:element name="ActNm" type="tns:ActNm_SType" minOccurs="0"/>
       <xs:element name="ACT" type="tns:ACT_SType" minOccurs="0"/>
       <xs:element name="GPF" type="tns:GPF_SType" minOccurs="0"/>
@@ -399,33 +399,7 @@
   <xs:complexType name="agentChangeResponse_CType">
     <xs:sequence>
       <xs:element ref="tns:responseHeader"/>
-      <xs:element name="PAgtNo" type="tns:PAgtNo_SType" minOccurs="0"/>
-      <xs:element name="comNo" type="tns:comNo_SType" minOccurs="0"/>
-      <xs:element name="CLM" type="tns:CLM_SType" minOccurs="0"/>
-      <xs:element name="ECD" type="tns:ECD_SType" minOccurs="0"/>
-      <xs:element name="EDD" type="tns:EDD_SType" minOccurs="0"/>
-      <xs:element name="JFH" type="tns:JFH_SType" minOccurs="0"/>
-      <xs:element name="ACN" type="tns:ACN_SType" minOccurs="0"/>
-      <xs:element name="ActNm" type="tns:ActNm_SType" minOccurs="0"/>
-      <xs:element name="KKH" type="tns:KKH_SType" minOccurs="0"/>
-      <xs:element name="ACT" type="tns:ACT_SType" minOccurs="0"/>
-      <xs:element name="GPF" type="tns:GPF_SType" minOccurs="0"/>
-      <xs:element name="IdTyp" type="tns:IdTyp_SType" minOccurs="0"/>
-      <xs:element name="TIdNo" type="tns:TIdNo_SType" minOccurs="0"/>
-      <xs:element name="ZPF" type="tns:ZPF_SType" minOccurs="0"/>
-      <xs:element name="FPF" type="tns:FPF_SType" minOccurs="0"/>
-      <xs:element name="JLD" type="tns:JLD_SType" minOccurs="0"/>
-      <xs:element name="FPM" type="tns:FPM_SType" minOccurs="0"/>
-      <xs:element name="FPC" type="tns:FPC_SType" minOccurs="0"/>
-      <xs:element name="FPA" type="tns:FPA_SType" minOccurs="0"/>
-      <xs:element name="ZPM" type="tns:ZPM_SType" minOccurs="0"/>
-      <xs:element name="ZPC" type="tns:ZPC_SType" minOccurs="0"/>
-      <xs:element name="ZPA" type="tns:ZPA_SType" minOccurs="0"/>
-      <xs:element name="YBZ" type="tns:YBZ_SType" minOccurs="0"/>
-      <xs:element name="EML" type="tns:EML_SType" minOccurs="0"/>
-      <xs:element name="MOB" type="tns:MOB_SType" minOccurs="0"/>
-      <xs:element name="TEL" type="tns:TEL_SType" minOccurs="0"/>
-      <xs:element name="TXT" type="tns:TXT_SType" minOccurs="0"/>
+      <xs:element name="infoList" type="tns:infoList_CType" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="CHT_SType">
@@ -660,38 +634,18 @@
       <xs:maxLength value="20"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType name="PAgtNo_SType">
-    <xs:annotation>
-      <xs:documentation>客户协议编号</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="13"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="CLM_SType">
-    <xs:annotation>
-      <xs:documentation>第三方客户名称</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="64"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="ACN_SType">
-    <xs:annotation>
-      <xs:documentation>帐号/卡号</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="32"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:simpleType name="KKH_SType">
-    <xs:annotation>
-      <xs:documentation>开户行行号</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="12"/>
-    </xs:restriction>
-  </xs:simpleType>
+  <xs:complexType name="infoList_CType">
+    <xs:sequence>
+      <xs:element name="JFH" type="tns:JFH_SType" minOccurs="0"/>
+      <xs:element name="UsrNam" type="tns:UsrNam_SType" minOccurs="0"/>
+      <xs:element name="ActNo" type="tns:ActNo_SType" minOccurs="0"/>
+      <xs:element name="ActNm" type="tns:ActNm_SType" minOccurs="0"/>
+      <xs:element name="ACT" type="tns:ACT_SType" minOccurs="0"/>
+      <xs:element name="GPF" type="tns:GPF_SType" minOccurs="0"/>
+      <xs:element name="MOB" type="tns:MOB_SType" minOccurs="0"/>
+      <xs:element name="TEL" type="tns:TEL_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="queryAgtInfoRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
@@ -1248,6 +1202,14 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="16"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="CLM_SType">
+    <xs:annotation>
+      <xs:documentation>第三方客户名称</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="64"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="QFI_SType">
