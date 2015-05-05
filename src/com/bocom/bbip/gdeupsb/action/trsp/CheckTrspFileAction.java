@@ -500,12 +500,13 @@ public class CheckTrspFileAction extends BaseAction {
 			log.info("===========ErrMsg=",e);
 		}
 
-		
+		EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
+		// FTP上传设置
 		FTPTransfer tFTPTransfer = new FTPTransfer();
-       tFTPTransfer.setHost("182.53.15.187");
-		tFTPTransfer.setPort(21);
-		tFTPTransfer.setUserName("weblogic");
-		tFTPTransfer.setPassword("123456");
+		tFTPTransfer.setHost(sendFileToBBOSConfig.getThdIpAdr());
+		tFTPTransfer.setPort(Integer.parseInt(sendFileToBBOSConfig.getBidPot()));
+		tFTPTransfer.setUserName(sendFileToBBOSConfig.getOppNme());
+		tFTPTransfer.setPassword(sendFileToBBOSConfig.getOppUsrPsw());
 		
        try {
        	tFTPTransfer.logon();
