@@ -23,7 +23,9 @@ import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdBaseInfoRepository;
+import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
 import com.bocom.bbip.file.transfer.ftp.FTPTransfer;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
@@ -176,7 +178,10 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 
 		logger.info("================prtList.size:" + prtList.size());
 
-		String filPath = "/home/bbipadm/data/GDEUPSB/report/";
+		
+//		sendFileToBBOS
+		EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
+		String filPath = sendFileToBBOSConfig.getLocDir().trim();
 		String sampleFile = null;
 		String result = null;
 		Map<String, String> map = new HashMap<String, String>();
@@ -236,19 +241,20 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 		}
 		logger.info("报表文件生成！！NEXT 上传FTP");
 
+
 		// 上传FTP
+		// FTP上传设置
 		FTPTransfer tFTPTransfer = new FTPTransfer();
-		//FTP上传设置
-		tFTPTransfer.setHost("182.53.15.187");
-		tFTPTransfer.setPort(21);
-		tFTPTransfer.setUserName("weblogic");
-		tFTPTransfer.setPassword("123456");
+		tFTPTransfer.setHost(sendFileToBBOSConfig.getThdIpAdr());
+		tFTPTransfer.setPort(Integer.parseInt(sendFileToBBOSConfig.getBidPot()));
+		tFTPTransfer.setUserName(sendFileToBBOSConfig.getOppNme());
+		tFTPTransfer.setPassword(sendFileToBBOSConfig.getOppUsrPsw());
 
 		try {
 			tFTPTransfer.logon();
 			Resource tResource = new FileSystemResource(JYPath);
 			tFTPTransfer.putResource(tResource,
-					"/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/",
+					sendFileToBBOSConfig.getRmtWay().trim(),
 					fileName.toString());
 
 		} catch (Exception e) {
