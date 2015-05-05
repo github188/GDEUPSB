@@ -91,7 +91,7 @@ public class QryReportInfoAction extends BaseAction {
 			baseMap.put(ParamKeys.EUPS_BUSS_TYPE, (String) context
 					.getData(ParamKeys.EUPS_BUSS_TYPE));
 			baseMap.put(ParamKeys.TXN_DTE, printDate);
-			List<Map<String, Object>> elec02BatInfoList = get(GDEupsBatchConsoleInfoRepository.class).findElec02BatchRptInfo(baseMap);
+			List<Map<String, Object>> elec02BatInfoList = get(GDEupsBatchConsoleInfoRepository.class).findElec02BatchRptInformation(baseMap);
 			if (null == elec02BatInfoList || CollectionUtils.isEmpty(elec02BatInfoList)) {
 				logger.info("There are no records for select elec02BatInfoList ");
 				throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
