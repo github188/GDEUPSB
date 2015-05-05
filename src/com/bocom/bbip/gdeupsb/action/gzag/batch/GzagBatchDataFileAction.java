@@ -97,10 +97,11 @@ public class GzagBatchDataFileAction extends BaseAction implements BatchAcpServi
 			eupsThdFtpConfig.setFtpDir("1");
 			eupsThdFtpConfig.setLocFleNme(fileName);
 			eupsThdFtpConfig.setRmtFleNme(fileName);
+			EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
 			if(context.getData("mothed").toString().trim().equals("1")){
-				eupsThdFtpConfig.setFtpDir("182.53.15.187");
-				eupsThdFtpConfig.setOppNme("weblogic");
-				eupsThdFtpConfig.setOppUsrPsw("123456");
+				eupsThdFtpConfig.setFtpDir(sendFileToBBOSConfig.getThdIpAdr());
+				eupsThdFtpConfig.setOppNme(sendFileToBBOSConfig.getOppNme());
+				eupsThdFtpConfig.setOppUsrPsw(sendFileToBBOSConfig.getOppUsrPsw());
 				String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + context.getData(ParamKeys.BR)+ "/" + context.getData(ParamKeys.TELLER) + "/";
 				eupsThdFtpConfig.setRmtWay(path);
 //				eupsThdFtpConfig.setLocDir(path);
