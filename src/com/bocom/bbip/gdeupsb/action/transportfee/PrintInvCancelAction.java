@@ -55,6 +55,12 @@ public class PrintInvCancelAction extends BaseAction{
 				ctx.setData(GDParamKeys.TTXN_ST, "C");
 				gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
 				gdEupsbTrspTxnJnlRepository.update(gdEupsbTrspTxnJnl);
+				
+				//更新缴费状态
+				GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
+				gdEupsbTrspFeeInfo.setStatus("0");
+				gdEupsbTrspFeeInfo.setTlogNo(ctx.getData("oldTxnSqn").toString());
+				gdEupsbTrspFeeInfoRepository.updateSt(gdEupsbTrspFeeInfo);
 			}else if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_FAIL)){
 //				if(!"000000".equals(thdReturnMessage.get(GDParamKeys.TRSP_CD))){
 //					ctx.setData(GDParamKeys.TTXN_ST, ctx.getData("otTxnSt"));
@@ -93,11 +99,7 @@ public class PrintInvCancelAction extends BaseAction{
 				
 			}
 		
-			//更新缴费状态
-			GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
-			gdEupsbTrspFeeInfo.setStatus("0");
-			gdEupsbTrspFeeInfo.setTlogNo(ctx.getData("oldTxnSqn").toString());
-			gdEupsbTrspFeeInfoRepository.updateSt(gdEupsbTrspFeeInfo);
+			
 			
 			
 		}
