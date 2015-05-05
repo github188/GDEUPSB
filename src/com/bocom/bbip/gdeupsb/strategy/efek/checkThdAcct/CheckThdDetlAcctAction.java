@@ -358,9 +358,7 @@ public class CheckThdDetlAcctAction implements Executable {
         logger.info("cmd=" + cmd);
         Process proc = Runtime.getRuntime().exec(cmd);
         proc.waitFor();
-        if(proc.exitValue()!=0){
-    	   	throw new CoreException("返回文件错误或获取错误");
-       }
+        
         logger.info("en-file success!");
         logger.info("================End BatchDataFileActiion  RecvEnCryptFile");
         
