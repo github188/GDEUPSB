@@ -22,4 +22,7 @@ public interface GDEupsEleTmpRepository extends PagingAndSortingRepository<GDEup
 		
 		public List<GDEupsEleTmp> findByComNo(GDEupsEleTmp gdEupsEleTmp);
 		
+		public List<Map<String, Object>>  findByComNoFailTot(Map<String, Object> map);
+		
+		public List<Map<String, Object>>  findByComNoSucTot(Map<String, Object> map);
 }
