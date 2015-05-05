@@ -1339,9 +1339,7 @@
   <xs:complexType name="printEfekBatchResponse_CType">
     <xs:sequence>
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
-      <xs:element name="fileNameList" type="tns:fileNameList_SType" minOccurs="0"/>
-      <xs:element name="printFile" type="tns:printFile_SType" minOccurs="0"/>
-      <xs:element name="fileNameList" type="tns:fileNameList_SType" minOccurs="0"/>
+      <xs:element name="fileNameList" type="tns:fileNameList_CType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="printDate_SType">
@@ -1358,7 +1356,6 @@
       <xs:maxLength value="1"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType/>
   <xs:simpleType name="printFile_SType">
     <xs:annotation>
       <xs:documentation>清算返回文件</xs:documentation>
@@ -1367,7 +1364,11 @@
       <xs:maxLength value="128"/>
     </xs:restriction>
   </xs:simpleType>
-  <xs:simpleType/>
+  <xs:complexType name="fileNameList_CType">
+    <xs:sequence>
+      <xs:element name="printFile" type="tns:printFile_SType" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
   <xs:complexType name="tallyCancelQryOnlineRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader" minOccurs="0"/>
