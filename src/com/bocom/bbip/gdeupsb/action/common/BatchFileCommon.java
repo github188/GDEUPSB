@@ -194,8 +194,7 @@ public class BatchFileCommon extends BaseAction {
 		config.setFtpDir("0");
 		config.setLocFleNme(fleNme);
 		config.setRmtFleNme(fleNme);
-//		config.setLocDir("/home/bbipadm/data/GDEUPSB/efek/");
-		config.setLocDir(dir);
+		config.setLocDir("/home/bbipadm/data/GDEUPSB/batch/");
 		config.setRmtWay(dir);
 		/** 产生代收付格式文件 */
 		if(context.getData(ParamKeys.EUPS_BUSS_TYPE).equals("ELEC00") || context.getData(ParamKeys.EUPS_BUSS_TYPE).equals("GZAG00") || context.getData(ParamKeys.EUPS_BUSS_TYPE).toString().equals("FSAG00")){
