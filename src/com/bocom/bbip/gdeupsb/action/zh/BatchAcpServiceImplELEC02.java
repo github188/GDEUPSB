@@ -180,7 +180,7 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 		
 		((BatchFileCommon) get(GDConstants.BATCH_FILE_COMMON_UTILS)).sendBatchFileToACP(context);
 
-		((BatchFileCommon) get(GDConstants.BATCH_FILE_COMMON_UTILS)).unLock(comNo);
+//		((BatchFileCommon) get(GDConstants.BATCH_FILE_COMMON_UTILS)).unLock(comNo);
 
 		logger.info("批量文件数据准备结束-------------");
 
