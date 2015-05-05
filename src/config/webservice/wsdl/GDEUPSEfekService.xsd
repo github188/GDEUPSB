@@ -1339,7 +1339,7 @@
   <xs:complexType name="printEfekBatchResponse_CType">
     <xs:sequence>
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
-      <xs:element name="fileNameList" type="tns:fileNameList_CType" minOccurs="0"/>
+      <xs:element name="fileNameList" type="tns:fileNameList_CType" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
   <xs:simpleType name="printDate_SType">
