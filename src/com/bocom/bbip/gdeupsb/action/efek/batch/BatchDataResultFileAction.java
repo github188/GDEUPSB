@@ -187,8 +187,8 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 									gdEupsEleTmp.setPaymentResult("99");
 							}
 						}
-						gdEupsEleTmpRepository.updateOne(gdEupsEleTmp);
 						gdEupsEleTmp.setTxnDte(gdEupsBatchConsoleInfoUpdate.getExeDte());
+						gdEupsEleTmpRepository.updateOne(gdEupsEleTmp);
 						gdEupsEleTmp.setRsvFld5(eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2).intValue()+"");
 						gdEupsEleTmp.setBankSqn(gdEupsEleTmp.getSqn());
 						gdEupsEleTmp.setBankNo("301");
