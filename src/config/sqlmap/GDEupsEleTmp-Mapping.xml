@@ -715,7 +715,7 @@
 
 	  <select id="findAllGroupByComNo"  resultType="java.util.Map"  parameterType="java.util.Map">
  	select 
-				SUBSTR(COM_NO,1,4) ,count(*) as totCnt, sum(TXN_AMT) as totAmt
+				SUBSTR(COM_NO,1,4) as COM_NO,count(*) as totCnt, sum(TXN_AMT) as totAmt
      from 
 				GDEUPSB.GDEUPS_ELE_TMP
 	where 
