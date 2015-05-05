@@ -33,8 +33,6 @@
 	<action id="gdeupsb.printEupsbRptsAction"
 		class="com.bocom.bbip.gdeupsb.action.common.PrintEupsbRptsActionBak" />
 
-	<action id="gdeupsb.gdPrintReportAction"
-		class="com.bocom.bbip.gdeupsb.action.common.GdPrintReportAction" />
 	<!-- 查询报表信息 -->
 	<action id="qryReportInfo"
 		class="com.bocom.bbip.gdeupsb.action.common.QryReportInfoAction" />
