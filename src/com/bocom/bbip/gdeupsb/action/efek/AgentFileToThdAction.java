@@ -57,7 +57,7 @@ public class AgentFileToThdAction extends BaseAction{
 				context.setData("TransCode", "31");
 				Date date=new Date();
 				//日期
-				Date txnDate=DateUtils.parse(DateUtils.format(date, DateUtils.STYLE_SIMPLE_DATE),DateUtils.STYLE_SIMPLE_DATE);
+				Date txnDate=DateUtils.calDate(DateUtils.parse(DateUtils.formatAsSimpleDate(date)),-1);
 				Map<String, Object> map=new HashMap<String, Object>();
 //				txnDate=DateUtils.parse("2015-04-22");
 				map.put("txnDte", txnDate);
