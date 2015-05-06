@@ -46,7 +46,7 @@ public class QryReportInfoAction extends BaseAction {
 		String comNme = infoList.get(0).getComNme();
 		String comNo = infoList.get(0).getComNo();
 		context.setData(ParamKeys.COMPANY_NAME, comNme);
-		context.setData(ParamKeys.COMPANY_NO, comNo);
+//		context.setData(ParamKeys.COMPANY_NO, comNo);
 
 		logger.info("=============context:" + context);
 		GdEupsTransJournal eupsJnl = new GdEupsTransJournal();
