@@ -80,8 +80,10 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 //		String br = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.BR, ErrorCodes.EUPS_FIELD_EMPTY);//机构号
 //		String tlr = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.TELLER, ErrorCodes.EUPS_FIELD_EMPTY);//柜员号
 		//TODO:	先把虚拟柜员赋定值，以后需要改。
-		context.setData("br", "01445007999");
-		context.setData("tlr", "AFBM013");
+		context.setData("br", "01441800999");
+		
+		
+		context.setData("tlr", service.getETeller("01445999999"));
 		context.setData("extFields", "01441800999");
 
 		String br = context.getData("br");
@@ -100,7 +102,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		List<EupsActSysPara> eupsActSysParas = get(EupsActSysParaRepository.class).find(eupsActSysPara);
 		if(CollectionUtils.isEmpty(eupsActSysParas)){
 			
-			throw new CoreException("");
+			throw new CoreException(ErrorCodes.EUPS_BUS_TYP_NOEXIST);
 		}
 		eupsActSysPara = eupsActSysParas.get(0);
 		String splNo = eupsActSysPara.getSplNo();
