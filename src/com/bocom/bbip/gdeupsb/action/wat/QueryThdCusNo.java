@@ -17,6 +17,12 @@ import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
 
+
+/**
+ * 
+ * @author lihaoxun
+ *
+ */
 public class QueryThdCusNo extends BaseAction{
 	
 	private final static Log log = LogFactory.getLog(QueryThdCusNo.class);
