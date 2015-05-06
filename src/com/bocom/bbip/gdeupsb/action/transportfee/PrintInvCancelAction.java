@@ -24,6 +24,12 @@ import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
 
+
+/**
+ * 
+ * @author li haoxun  
+ *
+ */
 public class PrintInvCancelAction extends BaseAction{
 	private final static Log log = LogFactory.getLog(PrintInvCancelAction.class);
 	@Autowired
@@ -48,7 +54,7 @@ public class PrintInvCancelAction extends BaseAction{
 		if("U".equals(ctx.getData(GDParamKeys.TTXN_ST)) | "S".equals(ctx.getData(GDParamKeys.TTXN_ST)) | "T".equals(ctx.getData(GDParamKeys.TTXN_ST))){
 
 			ctx.setData("otTxnSt", ctx.getData(GDParamKeys.TTXN_ST));
-//			ctx.setData("transcode", "484009");
+
 			ctx.setData(ParamKeys.THD_TXN_CDE, "RVSPPC");
 			Map<String, Object> thdReturnMessage = callThdReturnMessage.trade(ctx);
 			if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL)){
