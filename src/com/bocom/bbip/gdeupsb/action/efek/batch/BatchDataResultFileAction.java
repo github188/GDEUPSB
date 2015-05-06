@@ -170,12 +170,13 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			//内容主体
 			List<GDEupsEleTmp> list=new ArrayList<GDEupsEleTmp>();
 			for(EupsBatchInfoDetail eupsBatchInfoDetail:mapList){
+						String errMsg="";
 						GDEupsEleTmp gdEupsEleTmp=gdEupsEleTmpRepository.findOne(eupsBatchInfoDetail.getRmk2());
 						gdEupsEleTmp.setRsvFld4(eupsBatchInfoDetail.getErrMsg());
 						if(eupsBatchInfoDetail.getSts().equals("S")){
 							gdEupsEleTmp.setPaymentResult("00");
 						}else{
-							String errMsg=eupsBatchInfoDetail.getErrMsg();
+							errMsg=eupsBatchInfoDetail.getErrMsg();
 							String errSeeason=errMsg.substring(0,6);
 							if(errSeeason.equals("TPM050")){
 									gdEupsEleTmp.setPaymentResult("02");
@@ -187,6 +188,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 									gdEupsEleTmp.setPaymentResult("99");
 							}
 						}
+						gdEupsEleTmp.setBakFld(errMsg);
 						gdEupsEleTmp.setTxnDte(gdEupsBatchConsoleInfoUpdate.getExeDte());
 						gdEupsEleTmpRepository.updateOne(gdEupsEleTmp);
 						gdEupsEleTmp.setRsvFld5(eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2).intValue()+"");
