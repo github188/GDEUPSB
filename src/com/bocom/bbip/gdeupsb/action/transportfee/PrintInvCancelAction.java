@@ -8,8 +8,10 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
+import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
@@ -20,6 +22,7 @@ import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspFeeInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GDEupsbTrspTxnJnlRepository;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.CollectionUtils;
+import com.bocom.euif.component.util.StringUtil;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -58,15 +61,27 @@ public class PrintInvCancelAction extends BaseAction{
 			ctx.setData(ParamKeys.THD_TXN_CDE, "RVSPPC");
 			Map<String, Object> thdReturnMessage = callThdReturnMessage.trade(ctx);
 			if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL)){
-				ctx.setData(GDParamKeys.TTXN_ST, "C");
-				gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
-				gdEupsbTrspTxnJnlRepository.update(gdEupsbTrspTxnJnl);
+				CommThdRspCdeAction cRspCdeAction = new CommThdRspCdeAction();
+				String responseCode = cRspCdeAction.getThdRspCde(thdReturnMessage, 	ctx.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
+				log.info("responseCode:["+responseCode+"]");
+				if(Constants.RESPONSE_CODE_SUCC.equals(responseCode)){	
+					ctx.setData(GDParamKeys.TTXN_ST, "C");
+					gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
+					gdEupsbTrspTxnJnlRepository.update(gdEupsbTrspTxnJnl);
+					
+					//更新缴费状态
+					GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
+					gdEupsbTrspFeeInfo.setStatus("0");
+					gdEupsbTrspFeeInfo.setTlogNo(ctx.getData("oldTxnSqn").toString());
+					gdEupsbTrspFeeInfoRepository.updateSt(gdEupsbTrspFeeInfo);
+					
+				}else{
+					if(StringUtil.isEmpty(responseCode)){
+						responseCode = ErrorCodes.EUPS_THD_RSP_CODE_ERROR;
+					}
+					throw new CoreException(responseCode);
+				}
 				
-				//更新缴费状态
-				GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
-				gdEupsbTrspFeeInfo.setStatus("0");
-				gdEupsbTrspFeeInfo.setTlogNo(ctx.getData("oldTxnSqn").toString());
-				gdEupsbTrspFeeInfoRepository.updateSt(gdEupsbTrspFeeInfo);
 			}else if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_FAIL)){
 //				if(!"000000".equals(thdReturnMessage.get(GDParamKeys.TRSP_CD))){
 //					ctx.setData(GDParamKeys.TTXN_ST, ctx.getData("otTxnSt"));
@@ -101,11 +116,6 @@ public class PrintInvCancelAction extends BaseAction{
 				gdEupsbTrspTxnJnlRepository.update(gdEupsbTrspTxnJnl);
 				throw new CoreRuntimeException(ErrorCodes.EUPS_THD_RSP_CODE_ERROR);
 			}
-			if("000000".equals(thdReturnMessage.get(GDParamKeys.TRSP_CD))){
-				
-			}
-		
-			
 			
 			
 		}
