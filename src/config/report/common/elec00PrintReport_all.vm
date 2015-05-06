@@ -1,0 +1,74 @@
+#report(50)
+#rh(2)
+ 			         $d.prtTtl
+ 		======================================
+#end
+#th(2)
+#para($f.fmt($d.prtDte, 'yyyy年MM月dd日'))
+     日期:?          	共$totalPages 页            第 $pageNumber 页
+=============================================================================================
+#end 
+#set($p.index=0)
+#td(23) 
+#para($ele.TOTCNT)
+#para($ele.TOTAMT)
+#para($ele.QYTOTCNT)
+#para($ele.QYTOTAMT)
+#para($ele.QYSUCCCNT)
+#para($ele.QYTOTSUCCAMT)
+#para($ele.QYFAILCNT)
+#para($ele.QYTOTFAILAMT)
+#para($ele.QYDOUBTCNT)
+#para($ele.QYTOTDOUBTAMT)
+#para($ele.QYOTHERTCNT)
+#para($ele.QYTOTOTHERAMT)
+#para($ele.ZSTOTCNT)
+#para($ele.ZSTOTAMT)
+#para($ele.ZSSUCCCNT)
+#para($ele.ZSTOTSUCCAMT)
+#para($ele.ZSFAILCNT)
+#para($ele.ZSTOTFAILAMT)
+#para($ele.ZSDOUBTCNT)
+#para($ele.ZSTOTDOUBTAMT)
+#para($ele.ZSOTHERTCNT)
+#para($ele.ZSTOTOTHERAMT)
+#para($ele.FSTOTCNT)
+#para($ele.FSTOTAMT)
+#para($ele.FSSUCCCNT)
+#para($ele.FSTOTSUCCAMT)
+#para($ele.FSFAILCNT)
+#para($ele.FSTOTFAILAMT)
+#para($ele.FSDOUBTCNT)
+#para($ele.FSTOTDOUBTAMT)
+#para($ele.FSOTHERTCNT)
+#para($ele.FSTOTOTHERAMT)
+	合计：
+	总笔数：?			总金额(元)：?
+=============================================================================================
+		清远供电局：
+		总笔数：?			总金额(元):?
+		成功笔数：?			成功总金额(元)：?
+		失败笔数：?			失败总金额(元)：?
+		存疑笔数：?			存疑总金额(元)：?
+		其他情况：?			其他情况总金额(元)：?
+=============================================================================================		
+       	中山供电局：
+		总笔数：?			总金额(元):?
+		成功笔数：?			成功总金额(元)：?
+		失败笔数：?			失败总金额(元)：?
+		存疑笔数：?			存疑总金额(元)：?
+		其他情况：?			其他情况总金额(元)：?
+=============================================================================================		
+		佛山供电局：
+		总笔数：?			总金额(元):?
+		成功笔数：?			成功总金额(元)：?
+		失败笔数：?			失败总金额(元)：?
+		存疑笔数：?			存疑总金额(元)：?
+		其他情况：?			其他情况总金额(元)：?
+#end     
+#tf(3)
+=============================================================================================   
+	 打印部门：$d.br           打印柜员：$d.tlr          打印日期：$f.fmt($d.txnDte, 'yyyy-MM-dd')
+=============================================================================================
+#end
+#end
