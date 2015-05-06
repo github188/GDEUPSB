@@ -208,7 +208,8 @@ public class EupsManageCounterAgt extends BaseAction {
 		agtElecTmp = toGdeupsAgtElecTmp(context);
 		agtElecTmp.setBrNo((String) context.getData(ParamKeys.BK));
 		agtElecTmp.setComNo("4450000002");
-		//TODO 协议编号			agtElecTmp.setAgtNo(agtNo);
+		//TODO 协议编号			
+//		agtElecTmp.setAgtNo(agtNo);
 		agtElecTmp.setBankNo("301");
 		agtElecTmp.setStatus("0");
 		agtElecTmp.setRemark("签约日期:" + MGR_DATE);

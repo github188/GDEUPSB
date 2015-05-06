@@ -19,13 +19,13 @@ import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
 public class EupsManageAgt extends BaseAction {
-	private static Logger logger = LoggerFactory
-			.getLogger(EupsManageAgt.class);
+	private static Logger logger = LoggerFactory.getLogger(EupsManageAgt.class);
 	private static final int ADD = 0;
 	private static final int UPDATE = 3;
 	private static final int QUERY = 5;
 	private static final int DELETE = 9;
-	private static final String MGR_DATE = DateUtils.format(new Date(), DateUtils.STYLE_SIMPLE_DATE);
+	private static final String MGR_DATE = DateUtils.format(new Date(),
+			DateUtils.STYLE_SIMPLE_DATE);
 	@Autowired
 	BBIPPublicService bbipPublicService;
 
@@ -40,11 +40,11 @@ public class EupsManageAgt extends BaseAction {
 		final int oprType = Integer.parseInt((String) context.getData("CHT"));
 		switch (oprType) {
 		case ADD:
-//			get(EupsManageCounterAgt.class).checkCusInfoByCusAc(context);
+			// get(EupsManageCounterAgt.class).checkCusInfoByCusAc(context);
 			addAgentDeal(context);
 			break;
 		case UPDATE:
-//			get(EupsManageCounterAgt.class).checkCusInfoByCusAc(context);
+			// get(EupsManageCounterAgt.class).checkCusInfoByCusAc(context);
 			updateAgentDeal(context);
 			break;
 		case QUERY:
@@ -56,39 +56,40 @@ public class EupsManageAgt extends BaseAction {
 		}
 	}
 
-	//TODO catch exceptions
-	
+	// TODO catch exceptions
+
 	private void addAgentDeal(Context context) throws CoreException {
-		
+
 		String gpf = (String) context.getData("GPF");
-		if(null!=gpf){
-			if("G".equals(gpf.trim())){
+		if (null != gpf) {
+			if ("G".equals(gpf.trim())) {
 				log.info("第三方发起不能签对公协议");
 				throw new CoreException("第三方发起不能签对公协议！");
-			}else{
-				String act=context.getData("ACT");
-				if(null!=act){
-					if("0".equals(act.trim())){
+			} else {
+				String act = context.getData("ACT");
+				if (null != act) {
+					if ("0".equals(act.trim())) {
 						log.info("第三方发起不能签对公协议");
 						throw new CoreException("第三方发起不能签对公协议！");
 					}
 				}
 			}
 		}
-		
-		
+
 		// 新增，入库本地
 		GdeupsAgtElecTmp agtElecTmp = toGdeupsAgtElecTmp(context);
-		
-		List<GdeupsAgtElecTmp> list = get(GdeupsAgtElecTmpRepository.class).findBase(agtElecTmp);
-		if(list.size()>0){
+
+		List<GdeupsAgtElecTmp> list = get(GdeupsAgtElecTmpRepository.class)
+				.findBase(agtElecTmp);
+		if (list.size() > 0) {
 			log.info("协议已经存在");
 			throw new CoreException("协议已经存在");
-		}else{
+		} else {
 			agtElecTmp.setStatus("0");
 			agtElecTmp.setBrNo("01445999999");
 			agtElecTmp.setComNo("4450000002");
-//TODO 协议编号			agtElecTmp.setAgtNo(agtNo);
+			// TODO 协议编号 
+//			agtElecTmp.setAgtNo(agtNo);
 			agtElecTmp.setBankNo("0500");
 			agtElecTmp.setStatus("0");
 			agtElecTmp.setRemark("签约日期:" + MGR_DATE);
@@ -106,7 +107,7 @@ public class EupsManageAgt extends BaseAction {
 	}
 
 	private void queryAgentDeal(Context context) throws CoreException {
-		//查询本地协议表
+		// 查询本地协议表
 		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
 
 		String feeNum = (String) context.getData("JFH");
@@ -115,14 +116,15 @@ public class EupsManageAgt extends BaseAction {
 		}
 		agtElecTmp.setActNo((String) context.getData("TActNo")); // 账号
 		agtElecTmp.setStatus("0");
-		List<GdeupsAgtElecTmp> list = get(GdeupsAgtElecTmpRepository.class).findBase(agtElecTmp);
-		if(list.size()>0){
+		List<GdeupsAgtElecTmp> list = get(GdeupsAgtElecTmpRepository.class)
+				.findBase(agtElecTmp);
+		if (list.size() > 0) {
 			agtElecTmp = list.get(0);
-			//查询结果数据处理
-			setResponseResultFromAgts(context,agtElecTmp);
-		}else{
+			// 查询结果数据处理
+			setResponseResultFromAgts(context, agtElecTmp);
+		} else {
 			log.info("没有查询到协议信息！");
-			 throw new CoreException("没有查询到协议信息！");
+			throw new CoreException("没有查询到协议信息！");
 		}
 	}
 
@@ -137,7 +139,7 @@ public class EupsManageAgt extends BaseAction {
 		get(GdeupsAgtElecTmpRepository.class).updateByFeeNum(agtElecTmp);
 	}
 
-	//为查询返回报文赋值
+	// 为查询返回报文赋值
 	private void setResponseResultFromAgts(Context context,
 			GdeupsAgtElecTmp agtElecTmp) {
 
