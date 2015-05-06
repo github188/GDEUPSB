@@ -108,27 +108,33 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 
 		String prtTtl = null;
 		if ("0".equals(prtTyp)) {
-			prtList = get(GdEupsTransJournalRepository.class).findAllTxnList(
-					eupsJnl);
-			if (null == prtList || CollectionUtils.isEmpty(prtList)) {
-				logger.info("There are no records for select check trans journal ");
-				throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
-			}
+			if("ELEC00".equals(eupsBusTyp)){
+				prtList = get(GdEupsTransJournalRepository.class).findElec00AllTxnList(
+						eupsJnl);
+			}else{
+				prtList = get(GdEupsTransJournalRepository.class).findAllTxnList(
+						eupsJnl);
+				if (null == prtList || CollectionUtils.isEmpty(prtList)) {
+					logger.info("There are no records for select check trans journal ");
+					throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
+				}
 
-			context.setData("TOTCNT", prtList.get(0).get("TOTCNT"));
-			context.setData("TOTAMT", prtList.get(0).get("TOTAMT"));
-			context.setData("SUCCCNT", prtList.get(0).get("SUCCCNT"));
-			context.setData("TOTSUCCAMT", prtList.get(0).get("TOTSUCCAMT"));
-			context.setData("FAILCNT", prtList.get(0).get("FAILCNT"));
-			context.setData("TOTFAILAMT", prtList.get(0).get("TOTFAILAMT"));
-			context.setData("DOUBTCNT", prtList.get(0).get("DOUBTCNT"));
-			context.setData("TOTDOUBTAMT", prtList.get(0).get("TOTDOUBTAMT"));
-			context.setData("OTHERCNT", prtList.get(0).get("OTHERCNT"));
-			context.setData("TOTOTHERAMT", prtList.get(0).get("TOTOTHERAMT"));
+				context.setData("TOTCNT", prtList.get(0).get("TOTCNT"));
+				context.setData("TOTAMT", prtList.get(0).get("TOTAMT"));
+				context.setData("SUCCCNT", prtList.get(0).get("SUCCCNT"));
+				context.setData("TOTSUCCAMT", prtList.get(0).get("TOTSUCCAMT"));
+				context.setData("FAILCNT", prtList.get(0).get("FAILCNT"));
+				context.setData("TOTFAILAMT", prtList.get(0).get("TOTFAILAMT"));
+				context.setData("DOUBTCNT", prtList.get(0).get("DOUBTCNT"));
+				context.setData("TOTDOUBTAMT", prtList.get(0).get("TOTDOUBTAMT"));
+				context.setData("OTHERCNT", prtList.get(0).get("OTHERCNT"));
+				context.setData("TOTOTHERAMT", prtList.get(0).get("TOTOTHERAMT"));
+			}
+			
 
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
 					.toString().trim()
-					+ "_全部交易清单报表";
+					+ "_汇总报表";
 
 			fileName = ttlDate + "_" + context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_" + comNo
 					+ "_JnlAll.txt";
@@ -234,7 +240,11 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 		Map<String, String> map = new HashMap<String, String>();
 
 		if ("0".equals(prtTyp)) {// 单笔全部
-			sampleFile = "config/report/common/commonPrintReport_all.vm";
+			if("ELEC00".equals(eupsBusTyp)){
+				sampleFile = "config/report/common/elec00PrintReport_all.vm";
+			}else{
+				sampleFile = "config/report/common/commonPrintReport_all.vm";
+			}
 		} else if ("1".equals(prtTyp)) {// 单笔成功
 			sampleFile = "config/report/common/commonPrintReport_succ.vm";
 		} else if ("2".equals(prtTyp)) {// 单笔失败
