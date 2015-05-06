@@ -65,12 +65,12 @@ public class CheckThdDetlAcctAction implements Executable {
 			CoreRuntimeException {
 			logger.info("=======Start CheckThdDetlAcctAction");
 			
-//	        context.setData(ParamKeys.TXN_TLR, "ABIR148");
-//	        context.setData(ParamKeys.CHL_TYP, "90");
+	        context.setData(ParamKeys.TXN_TLR, "ABIR148");
+	        context.setData(ParamKeys.CHL_TYP, "90");
 	        
 			//日期
 			Date txnDte=DateUtils.calDate(DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())),-1);
-//			txnDte=DateUtils.parse("2015-04-22");
+			txnDte=DateUtils.parse("2015-05-06");
 			context.setData(ParamKeys.TXN_DTE, txnDte);
 			//一些常量
 			context.setData(GDParamKeys.TOTNUM, "1");
