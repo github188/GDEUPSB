@@ -46,33 +46,16 @@ public class PrePayToBankStrategyAction implements Executable{
 
 
 	      context.setData(ParamKeys.MFM_VCH_NO, bbipPublicService.getBBIPSequence());
-//			TODO:<Set>BnkId=STRCAT(SUBSTR($BrNo,1,3),$ActDat,$SelVal)</Set>
+
 	      
 	      
-//	     TODO:
+
 //	      context.setData(ParamKeys.TXN_CHL,"CPL" );
 	      context.setData(ParamKeys.CCY,Constants.CCY_CDE_CNY );
 //	      context.setData(ParamKeys.AC_TYP,"4" );   //ICS中是ACT_TYP,paramkeys里还有acc_typ,还不确定用哪个
 	      
 	      context.setData(ParamKeys.ACT_NO, context.getData(ParamKeys.CUS_AC));  
-//	      TODO:
-//	      <Set>BusTyp=PCL52</Set>
-//	      <Set>CnlTyp=L</Set>
-//	      <Set>Mask=9199</Set>
-//	      <Set>ActFlg=4</Set>
-//	      <Set>ActNo=$CardNo</Set>
-//	      <Set>PayMod=0</Set>
-//	      <Set>TActNo=$CrpAct</Set>
-//	      <Set>CcyTyp=1</Set>
-//	      <Set>VchChk=0</Set>
-//	      <Set>CAgtNo=9999999999</Set>
-//	      <Set>GthFlg=N</Set>
-//	      <Set>TckNo=ZZZZZZZZZZZ</Set>
-//	      <Set>TxnSts=U</Set>
-//	      <Set>VchCod=00000000</Set>
-//	      <Delete>CTRL_A</Delete>
-//	      <Delete>CashNo</Delete>
-//	      <Delete>HLogNo</Delete>
+
 	     
 	      //卡协议验证
 	      context.setData(ParamKeys.TELLER, "ABIR148");
