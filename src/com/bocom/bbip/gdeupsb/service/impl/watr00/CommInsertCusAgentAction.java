@@ -126,9 +126,12 @@ public class CommInsertCusAgentAction extends BaseAction{
 				logger.info("CommInsertCusAgentServiceActionWATR00 callThd success!");
 				context.setDataMap(thdReturnMessage);
 			} else {
+				Result respData = BeanFactoryUtils.get(BGSPServiceAccessObject.class).callServiceFlatting("deleteAgentCollectAgreement",
+		                context.getDataMap());
 				if (StringUtil.isEmpty(responseCode)) {
 					responseCode = ErrorCodes.EUPS_THD_RSP_CODE_ERROR;
 				}
+				
 				throw new CoreException(responseCode);
 			}
 		} else {
