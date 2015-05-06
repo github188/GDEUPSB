@@ -75,7 +75,7 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 		List<Map<String, Object>> mapList=eupsStreamNoRepository.findMsgToChkTot(maps);
 		for(Map<String, Object> map:mapList){
 				String sqn=bbipPublicService.getBBIPSequence();
-				context.setData(ParamKeys.COMPANY_NO, map.get("COM_NO").toString().substring(0, 6));
+				context.setData(ParamKeys.COMPANY_NO, map.get("COM_NO").toString());
 			
 //				context.setData(ParamKeys.COMPANY_NO, "030615");
 				
