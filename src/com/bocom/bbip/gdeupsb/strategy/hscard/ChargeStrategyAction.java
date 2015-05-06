@@ -38,19 +38,13 @@ public class ChargeStrategyAction implements Executable{
 	public void execute(Context context) throws CoreException,CoreRuntimeException{
 		logger.info("charge strategy start......");
 		
-//		 TODO:
-//		      <Set>NodNo=441800</Set>
-//		      <Delete>TRspCd</Delete>
-//		      Set>RspCod=CPL999</Set>
-//		      <Set>TTxnCd=$TxnCod</Set>
-//		      <Set>TxnTim=GETDATETIME(YYYYMMDDHHMISS)</Set>
+
 		
 		Date tTxnDte=DateUtils.parse(context.getData("tTxnDte").toString(), DateUtils.STYLE_yyyyMMdd);//第三方交易日期
 		
 		context.setData(ParamKeys.THD_TXN_DATE, tTxnDte);
-//		TODO:现在先设置一个柜员号，以后需要删除。
-		context.setData(ParamKeys.TELLER, "0007");
-		context.setData(ParamKeys.TXN_TLR, "0007");
+
+		bbipPublicService.getETeller("");
 		context.setData(ParamKeys.BUS_TYP, Constants.BUS_TYP_2); //待缴
 //		检查报文是否重复
 		EupsTransJournal eups = new EupsTransJournal();
