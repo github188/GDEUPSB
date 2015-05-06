@@ -1751,14 +1751,14 @@
 	<!-- 南方电网 对总账 分组 -->
 	<select id="findMsgToChkTot" resultType="java.util.Map"  parameterType="java.util.Map">
 			select 
-						COM_NO,THD_OBK_CDE,RSV_FLD4,RSV_FLD5,TXN_DTE,count(*) as TOT_COUNT,sum(TXN_AMT) as ALL_MONEY
+						SUBSTR(COM_NO,1,6) as COM_NO,THD_OBK_CDE,RSV_FLD4,RSV_FLD5,TXN_DTE,count(*) as TOT_COUNT,sum(TXN_AMT) as ALL_MONEY
 			 from 
 			 			${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL
 			 where  
 			 			EUPS_BUS_TYP='ELEC00' AND TXN_STS='S' AND TXN_TYP='N'  AND THD_TXN_STS='S'  AND  MFM_TXN_STS='S'
 			 			AND TXN_DTE=#{txnDte,jdbcType=CHAR}  
 			  group by
-			 			COM_NO,THD_OBK_CDE,RSV_FLD4,RSV_FLD5,TXN_DTE
+			 			SUBSTR(COM_NO,1,6),THD_OBK_CDE,RSV_FLD4,RSV_FLD5,TXN_DTE
 	 </select>	
 	 	<!-- 南方电网 日志服务 分组 -->
 	<select id="findComNoGroup" resultType="java.util.Map"  parameterType="java.util.Map">
