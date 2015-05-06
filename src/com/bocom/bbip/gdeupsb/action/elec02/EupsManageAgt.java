@@ -25,6 +25,7 @@ public class EupsManageAgt extends BaseAction {
 	private static final int UPDATE = 3;
 	private static final int QUERY = 5;
 	private static final int DELETE = 9;
+	private static final String MGR_DATE = DateUtils.format(new Date(), DateUtils.STYLE_SIMPLE_DATE);
 	@Autowired
 	BBIPPublicService bbipPublicService;
 
@@ -39,9 +40,11 @@ public class EupsManageAgt extends BaseAction {
 		final int oprType = Integer.parseInt((String) context.getData("CHT"));
 		switch (oprType) {
 		case ADD:
+//			get(EupsManageCounterAgt.class).checkCusInfoByCusAc(context);
 			addAgentDeal(context);
 			break;
 		case UPDATE:
+//			get(EupsManageCounterAgt.class).checkCusInfoByCusAc(context);
 			updateAgentDeal(context);
 			break;
 		case QUERY:
@@ -83,6 +86,12 @@ public class EupsManageAgt extends BaseAction {
 			throw new CoreException("协议已经存在");
 		}else{
 			agtElecTmp.setStatus("0");
+			agtElecTmp.setBrNo("01445999999");
+			agtElecTmp.setComNo("4450000002");
+//TODO 协议编号			agtElecTmp.setAgtNo(agtNo);
+			agtElecTmp.setBankNo("0500");
+			agtElecTmp.setStatus("0");
+			agtElecTmp.setRemark("签约日期:" + MGR_DATE);
 			get(GdeupsAgtElecTmpRepository.class).insert(agtElecTmp);
 			log.info("新增协议成功");
 
@@ -92,6 +101,7 @@ public class EupsManageAgt extends BaseAction {
 	private void updateAgentDeal(Context context) throws CoreException {
 		// 修改本地协议
 		GdeupsAgtElecTmp agtElecTmp = toGdeupsAgtElecTmp(context);
+		agtElecTmp.setRemark("修改日期:" + MGR_DATE);
 		get(GdeupsAgtElecTmpRepository.class).save(agtElecTmp);
 	}
 
@@ -123,6 +133,7 @@ public class EupsManageAgt extends BaseAction {
 		agtElecTmp.setActNo((String) context.getData("TActNo"));
 		agtElecTmp.setFeeNum((String) context.getData("JFH"));
 		agtElecTmp.setStatus("1");
+		agtElecTmp.setRemark("删除日期:" + MGR_DATE);
 		get(GdeupsAgtElecTmpRepository.class).updateByFeeNum(agtElecTmp);
 	}
 

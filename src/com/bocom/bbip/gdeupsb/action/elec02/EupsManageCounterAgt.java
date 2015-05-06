@@ -33,7 +33,9 @@ public class EupsManageCounterAgt extends BaseAction {
 	private static final int UPDATE = 3;
 	private static final int QUERY = 5;
 	private static final int DELETE = 9;
-
+	private static final String MGR_DATE = DateUtils.format(new Date(), DateUtils.STYLE_SIMPLE_DATE);
+	
+	
 	@Autowired
 	BBIPPublicService bbipPublicService;
 	@Autowired
@@ -53,16 +55,16 @@ public class EupsManageCounterAgt extends BaseAction {
 //			checkCusInfoByCusAc(context);
 			buildContextAndCallThd(context);
 			addAgentDeal(context);
-			context.setData("TXT", context.getData("UsrNam"));
-			context.setData("ACN", context.getData("ActNo"));
+//			context.setData("TXT", context.getData("UsrNam"));
+//			context.setData("ACN", context.getData("ActNo"));
 			break;
 		case UPDATE:
 //			checkCusInfoByCusAc(context);
 			checkOldBaseInfo(context);
 			buildContextAndCallThd(context);
 			updateAgentDeal(context);
-			context.setData("TXT", context.getData("UsrNam"));
-			context.setData("ACN", context.getData("ActNo"));
+//			context.setData("TXT", context.getData("UsrNam"));
+//			context.setData("ACN", context.getData("ActNo"));
 			break;
 		case QUERY:
 			// buildContextAndCallThd(context);
@@ -118,7 +120,7 @@ public class EupsManageCounterAgt extends BaseAction {
 
 		context.setData("recordNum", "12"); // 不校验，但是要有值
 		context.setData("FileName", "");// 无文件，空字符串
-		context.setData("zipFlag", "0");// TODO
+		context.setData("zipFlag", "0");//
 
 		// 2.拼装外发报文体
 		// <fixString name="SBN" length="12" /> <!--发起业务的节点代码 -->
@@ -129,12 +131,12 @@ public class EupsManageCounterAgt extends BaseAction {
 		context.setData("EDD", "000");
 		context.setData("SBN", "301");
 		context.setData("WDO", YYYYMMDD);
-		context.setData("TLogNo", ""); // TODO 供电局流水
+		context.setData("TLogNo", ""); //供电局流水
 		context.setData("KKB", br);
 		context.setData("ZPF", "0");
 		context.setData("FPF", "0");
-		// TODO 根据银行卡获取开户信息 身份证号
 		context.setData("IdTyp", "0");
+		// 根据银行卡获取开户信息 身份证号
 		// context.setData("TIdNo", "123123");
 
 		logger.info("=====外发电力========>>>>>>>>>>>>>>> context : " + context);
@@ -149,7 +151,7 @@ public class EupsManageCounterAgt extends BaseAction {
 		context.setData("feeCode", "0000");
 	}
 
-	private void checkCusInfoByCusAc(Context context) throws CoreException {
+	public void checkCusInfoByCusAc(Context context) throws CoreException {
 		String cusAc = context.getData("ActNo").toString().trim();
 
 		CusActInfResult cusactinfresult = new CusActInfResult();
@@ -209,7 +211,12 @@ public class EupsManageCounterAgt extends BaseAction {
 //		}
 		
 		agtElecTmp = toGdeupsAgtElecTmp(context);
+		agtElecTmp.setBrNo((String) context.getData(ParamKeys.BK));
+		agtElecTmp.setComNo("4450000002");
+		//TODO 协议编号			agtElecTmp.setAgtNo(agtNo);
+		agtElecTmp.setBankNo("301");
 		agtElecTmp.setStatus("0");
+		agtElecTmp.setRemark("签约日期:" + MGR_DATE);
 		get(GdeupsAgtElecTmpRepository.class).insert(agtElecTmp);
 		
 		//为返回的list 赋值
@@ -239,7 +246,7 @@ public class EupsManageCounterAgt extends BaseAction {
 		agtElecTmp.setOldBankNum(oldBankNum);
 		agtElecTmp.setOldCardNo(oldCardNo);
 		// get(GdeupsAgtElecTmpRepository.class).updateByAc(agtElecTmp);
-
+		agtElecTmp.setRemark("修改日期:" + MGR_DATE);
 		get(GdeupsAgtElecTmpRepository.class).updateByFeeNum(agtElecTmp);
 		
 		List<GdeupsAgtElecTmp> tmpList = get(GdeupsAgtElecTmpRepository.class).find(agtElecTmp);
@@ -351,6 +358,7 @@ public class EupsManageCounterAgt extends BaseAction {
 
 		GdeupsAgtElecTmp delElecTmp = toGdeupsAgtElecTmp(context);
 		delElecTmp.setStatus("1");
+		delElecTmp.setRemark("删除日期:" + MGR_DATE);
 		get(GdeupsAgtElecTmpRepository.class).updateByFeeNum(delElecTmp);
 
 		buildContextAndCallThd(context);
@@ -395,5 +403,6 @@ public class EupsManageCounterAgt extends BaseAction {
 		context.setData("TEL", agtElecTmp.getTelNum()); // 证件号码
 
 	}
+	
 
 }
