@@ -35,7 +35,6 @@ public class EupsManageCounterAgt extends BaseAction {
 	private static final int DELETE = 9;
 	private static final String MGR_DATE = DateUtils.format(new Date(), DateUtils.STYLE_SIMPLE_DATE);
 	
-	
 	@Autowired
 	BBIPPublicService bbipPublicService;
 	@Autowired
