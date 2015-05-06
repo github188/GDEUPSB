@@ -195,15 +195,6 @@ public class EupsManageCounterAgt extends BaseAction {
 			log.info("协议已经存在");
 			throw new CoreException("协议已经存在");
 		}
-// 已确认一个账号可以签约多个缴费号，以下代码暂时作废
-//		GdeupsAgtElecTmp checkCusAc = new GdeupsAgtElecTmp();
-//		checkCusAc.setActNo((String) context.getData("ActNo"));
-//		List<GdeupsAgtElecTmp> acList = get(GdeupsAgtElecTmpRepository.class)
-//				.find(agtElecTmp);
-//		if (acList.size() > 0) {
-//			log.info("该卡号已签约");
-//			throw new CoreException("该卡号已签约");
-//		}
 		
 		agtElecTmp = toGdeupsAgtElecTmp(context);
 		agtElecTmp.setBrNo((String) context.getData(ParamKeys.BK));
