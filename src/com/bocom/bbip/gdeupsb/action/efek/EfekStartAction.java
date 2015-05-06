@@ -29,6 +29,7 @@ public class EfekStartAction extends BaseAction{
 	        		euspThdTranCtlInfo.setTxnCtlSts("0");
 	        		eupsThdTranCtlInfoRepository.update(euspThdTranCtlInfo);
 	        }
+	        context.setData("PKGCNT", "000000");
 	        logger.info("===========End  EfekStartAction");
 	  }
 }
