@@ -25,7 +25,7 @@
 			<fixString name="bankSqn" length="27" /><!-- 银行收费流水号	YHSFLSH	Varchar2(20)	20-->
 			<fixString name="rsvFld1" length="8" /><!-- 扣款日期	KKRQ	Varchar2(8)	8-->
 			<fixString name="rsvFld2" length="6" /><!--  扣款时间	KKSJ	Varchar2(6)	6-->
-			<fixString name="bakFld" length="128" /><!-- 备注	BZ	Varchar2(128)	128-->
+			<fixString name="rsvFld4" length="128" /><!-- 备注	BZ	Varchar2(128)	128-->
 	</segment>
 	
 </message>
