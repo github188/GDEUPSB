@@ -93,7 +93,7 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 				context.setData(GDParamKeys.PAY_TYPE, map.get("RSV_FLD5"));
 				context.setData("PKGCNT", "000001");
 			        //外发第三方 
-			       callThd(context);
+			       callThd(context,sqn);
 			       
 			        //修改时间格式s
 			        String thdTxnDate=context.getData(GDParamKeys.TRADE_SEND_DATE).toString();
@@ -105,6 +105,7 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 			        
 			        context.setData(ParamKeys.TXN_TLR, "ABIR148");
 			        context.setData(ParamKeys.CHL_TYP, "90");
+			        context.setData("rcnBat", sqn);
 				//把信息保存到第三方明细表中
 		        eupsThdTranCtlDetailRepository.insert(BeanUtils.toObject(context.getDataMap(), EupsThdTranCtlDetail.class));
 		}
@@ -116,7 +117,7 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 	/**
 	 *报文信息 外发第三方
 	 */
-	public void callThd(Context context) throws CoreException{  
+	public void callThd(Context context,String sqn) throws CoreException{  
 		
 		context.setData(GDParamKeys.TREATY_VERSION, GDConstants.TREATY_VERSION);//协议版本
 		context.setData(GDParamKeys.TRADE_PERSON_IDENTIFY, GDConstants.TRADE_PERSON_IDENTIFY);//交易人标识
@@ -141,7 +142,7 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 				context.setData(ParamKeys.BAT_NO, context.getData(ParamKeys.SEQUENCE));
 				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW17");
 				context.setData(ParamKeys.THD_CUS_NO, "");
-				context.setData("sqns",bbipPublicService.getBBIPSequence());
+				context.setData("sqns",sqn);
 					Map<String, Object> rspMap = callThdTradeManager.trade(context);
 					
 						if(BPState.isBPStateNormal(context)){
