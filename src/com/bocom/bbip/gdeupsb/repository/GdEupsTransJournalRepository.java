@@ -129,6 +129,9 @@ public interface GdEupsTransJournalRepository extends PagingAndSortingRepository
 	public List<Map<String, Object>> findRptJnlInfo(GdEupsTransJournal eupsJnl);
 	@Find
 	public List<Map<String, Object>> findGasCheckRec(Map<String, Object> baseMap);
+	@Find
+	public List<Map<String, Object>> findElec00AllTxnList(
+			GdEupsTransJournal eupsJnl);
 	
 	
 
