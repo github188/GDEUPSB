@@ -78,7 +78,7 @@ public class EupsManageAgt extends BaseAction {
 
 		// 新增，入库本地
 		GdeupsAgtElecTmp agtElecTmp = toGdeupsAgtElecTmp(context);
-
+		agtElecTmp.setStatus("0");
 		List<GdeupsAgtElecTmp> list = get(GdeupsAgtElecTmpRepository.class)
 				.findBase(agtElecTmp);
 		if (list.size() > 0) {

@@ -117,6 +117,7 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 			GdeupsAgtElecTmp agtElec = new GdeupsAgtElecTmp();
 			agtElec.setActNo(cusAc);
 			agtElec.setFeeNum(feeNum);
+			agtElec.setStatus("0");
 			List<GdeupsAgtElecTmp> checkR = get(GdeupsAgtElecTmpRepository.class).find(agtElec);
 			if (CollectionUtils.isEmpty(checkR)) {
 				tmp.setRsvFld12("1"); // 不存在本地协议信息
