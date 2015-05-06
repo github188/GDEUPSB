@@ -25,7 +25,9 @@ import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
+import com.bocom.bbip.eups.entity.EupsThdTranCtlDetail;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
+import com.bocom.bbip.eups.repository.EupsThdTranCtlDetailRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.CheckDetailAcct;
@@ -54,6 +56,8 @@ public class CheckThdDetlAcctAction implements Executable {
 	@Autowired
 	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
 	@Autowired
+	EupsThdTranCtlDetailRepository eupsThdTranCtlDetailRepository;
+	@Autowired
 	@Qualifier("callThdTradeManager")
 	ThirdPartyAdaptor callThdTradeManager;
 	private final static Log logger=LogFactory.getLog(CheckThdDetlAcctAction.class);
@@ -79,7 +83,6 @@ public class CheckThdDetlAcctAction implements Executable {
 			context.setData("allCheckNumber", "1");
 			//对账类型  明细
 			context.setData("checkTyp", "03");
-			
 			Map<String, Object> listMap=new HashMap<String, Object>();
 			listMap.put("txnDte", txnDte);
 			
@@ -111,7 +114,7 @@ public class CheckThdDetlAcctAction implements Executable {
 					context.setData(ParamKeys.TXN_CTL_TYP, Constants.TXN_CTL_TYP_CHKBANKFILE_THD);  
 					try{
 							//生成对账文件
-							Map<String, Object> map= encodeFileMap(context,maps);
+							Map<String, Object> map= encodeFileMap(context,maps,txnDte);
 							//获取FTP信息
 		//					String ftpId=context.getData()
 							String ftpId="elecCheckFile";
@@ -175,7 +178,7 @@ public class CheckThdDetlAcctAction implements Executable {
 	/**
 	 * 生成对账文件
 	 */
-	public Map<String, Object> encodeFileMap(Context context,Map<String, Object> maps) throws CoreException,CoreRuntimeException{
+	public Map<String, Object> encodeFileMap(Context context,Map<String, Object> maps,Date txnDte) throws CoreException,CoreRuntimeException{
 		logger.info("=======Start CheckThdDetlAcctAction encodeFileMap");
 		String	comNo  =(String)maps.get("COM_NO");
 		String  busType=(String)maps.get("RSV_FLD4");
@@ -183,6 +186,13 @@ public class CheckThdDetlAcctAction implements Executable {
 		
 		context.setData("busType", busType);
 		context.setData("payType", payType);
+		EupsThdTranCtlDetail eupsThdTranCtlDetail=new EupsThdTranCtlDetail();
+		eupsThdTranCtlDetail.setBakFld1(busType);
+		eupsThdTranCtlDetail.setBakFld2(payType);
+		eupsThdTranCtlDetail.setEupsBusTyp("ELEC00");
+		eupsThdTranCtlDetail.setComNo(comNo);
+		eupsThdTranCtlDetail.setTxnDte(txnDte);
+		EupsThdTranCtlDetail eupsThdTranCtlDetails=eupsThdTranCtlDetailRepository.find(eupsThdTranCtlDetail).get(0);		
 		//总笔数 总金额
 		long acount=0;
 		if(null != maps.get("TOT_COUNT")){
@@ -195,7 +205,7 @@ public class CheckThdDetlAcctAction implements Executable {
 		allMoney=allMoney.scaleByPowerOfTen(2);
 		//header  部分
 		Map<String, Object> headerMap=new HashMap<String, Object>();
-		headerMap.put(ParamKeys.SEQUENCE, context.getData(ParamKeys.SEQUENCE));
+		headerMap.put(ParamKeys.SEQUENCE, eupsThdTranCtlDetails.getSqn());
 		headerMap.put(ParamKeys.BANK_NO,context.getData(ParamKeys.BANK_NO));
         headerMap.put(ParamKeys.COMPANY_NO, comNo.substring(0, 6));
         headerMap.put(GDParamKeys.BUS_TYPE, busType);
