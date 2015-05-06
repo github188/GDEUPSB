@@ -96,6 +96,10 @@ public class InsertCusAgentServiceAction extends BaseAction {
 		context.setData("oprTyp", "0");
 		Result editCusAgtResult = bgspServiceAccessObject.callServiceFlatting("maintainAgentCollectAgreement",context.getDataMap());
 		logger.info("===========editCusAgtResult："+editCusAgtResult);
+		if(context.getData("oprTypeBank").toString().equals("1")){
+			context.setData("oprTyp", "1");			
+			System.out.println(context.getData("oprTyp"));
+		}
 		if(editCusAgtResult.isSuccess() && editCusAgtResult.getResponseType().toString().equals("N") ){
 			if(context.getData("bankToThd")!=null){
 					Date txnDte=(Date)context.getData(ParamKeys.TXN_DTE);
@@ -152,9 +156,10 @@ public class InsertCusAgentServiceAction extends BaseAction {
 								    				eupsCusAgentJournalRepository.insert(eupsCusAgentJournal);
 								    				
 								    				log.info("============End  insert   EupsCusAgentJournal");
-								    				//Date  String
+								    				//Date  String 
 								    				context.setData(ParamKeys.TXN_DTE,txnDte);
-								    				context.setData(ParamKeys.TXN_TME,DateUtils.parse(DateUtils.format(txnDte, DateUtils.STYLE_yyyyMMdd)+context.getData(ParamKeys.TXN_TME).toString()));
+								    				context.setData(ParamKeys.TXN_TME,txnTme);
+
 								                }else{
 								                	
 								                	//第三方失败  协议删除
