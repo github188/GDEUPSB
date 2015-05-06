@@ -182,7 +182,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		if(CollectionUtils.isNotEmpty(infos)){
 			//已存在，报错
 			logger.error("批次信息已存在");
-			throw new CoreException("");
+			throw new CoreException("BBIP4400EU0431");
 		}
 		/** 插入批次控制表 */
 		String batNo =((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);//申请代收批次号
