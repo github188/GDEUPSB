@@ -107,9 +107,8 @@ public class CheckThdDetlAcctAction implements Executable {
 					
 					//对账唯一标识码
 					context.setData(ParamKeys.COMPANY_NO, maps.get("COM_NO").toString());
-					String checkOneCode=maps.get("COM_NO").toString().substring(0,6)+DateUtils.format(txnDte, DateUtils.STYLE_yyyyMMdd)+maps.get("RSV_FLD4".toString());
-					context.setData("checkOneCode", checkOneCode);
-					
+					String checkOneCode="0301"+maps.get("COM_NO").toString().substring(0,6)+DateUtils.format(txnDte, DateUtils.STYLE_yyyyMMdd)+maps.get("RSV_FLD4".toString());
+					context.setData("checkOneCode", checkOneCode);					
 					//初始化对账控制类型
 					context.setData(ParamKeys.TXN_CTL_TYP, Constants.TXN_CTL_TYP_CHKBANKFILE_THD);  
 					try{
@@ -212,8 +211,8 @@ public class CheckThdDetlAcctAction implements Executable {
         headerMap.put(GDParamKeys.PAY_TYPE, payType);
         headerMap.put(GDParamKeys.TOT_COUNT, acount);
         headerMap.put(GDParamKeys.ALL_MONEY, allMoney);
-        headerMap.put(GDParamKeys.CHECKDATE, DateUtils.format((Date)context.getData(ParamKeys.TXN_DTE),DateUtils.STYLE_yyyyMMdd));
-        headerMap.put(GDParamKeys.CHECKTIME,DateUtils.formatAsHHmmss((Date)context.getData(ParamKeys.TXN_TME)));
+        headerMap.put(GDParamKeys.CHECKDATE, DateUtils.format(bbipPublicService.getAcDate(),DateUtils.STYLE_yyyyMMdd));
+        headerMap.put(GDParamKeys.CHECKTIME , "160000");
 		
 		//查找对应数据
 		EupsStreamNo eupsStreamNos=new EupsStreamNo();
@@ -227,6 +226,7 @@ public class CheckThdDetlAcctAction implements Executable {
 		List<EupsStreamNo> eupsStreamNoList=eupsStreamNoRepository.find(eupsStreamNos);
 		List<CheckDetailAcct> list=new ArrayList<CheckDetailAcct>();
 		//内容
+		int i=0;
 		for (EupsStreamNo eupsStreamNo : eupsStreamNoList) {
 			CheckDetailAcct checkDetailAcct =new CheckDetailAcct();
 			checkDetailAcct.setSqn(eupsStreamNo.getSqn());
@@ -271,8 +271,15 @@ public class CheckThdDetlAcctAction implements Executable {
 				}else{
 					str="费用类型 Error";
 				}
+			String 	checkOneCode=context.getData("checkOneCode").toString();
+			i++;
+			String xh=i+"";
+			while(xh.length()<9){
+					xh="0"+i;
+			}
+			checkOneCode=checkOneCode+xh;
 			checkDetailAcct.setBakFld1(str);
-			checkDetailAcct.setRsvFld1(context.getData("checkOneCode").toString());
+			checkDetailAcct.setRsvFld1(checkOneCode);
 			checkDetailAcct.setTxnTlr(eupsStreamNo.getRsvFld1());
 			list.add(checkDetailAcct);
 		}
