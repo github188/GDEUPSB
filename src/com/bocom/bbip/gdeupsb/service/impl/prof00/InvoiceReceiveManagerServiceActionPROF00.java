@@ -43,7 +43,7 @@ public class InvoiceReceiveManagerServiceActionPROF00 extends BaseAction  {
 		gdeupsInvDtlBok.setStatus("0");
 		List<GdeupsInvDtlBok> eupsInvDtlBoks = get(GdeupsInvDtlBokRepository.class).find(gdeupsInvDtlBok);
 		if(eupsInvDtlBoks==null||eupsInvDtlBoks.size()==0){
-			//TODO:无对应的下发发票记录
+			//无对应的下发发票记录
 			throw new CoreException(GDErrorCodes.EUPS_PROF00_04_ERROR);
 		}
 		gdeupsInvDtlBok = eupsInvDtlBoks.get(0);
@@ -52,11 +52,11 @@ public class InvoiceReceiveManagerServiceActionPROF00 extends BaseAction  {
 		gdeupsInvTermInf.setNodno(context.getData("br").toString());
 		List<GdeupsInvTermInf> eupsInvTermInfs = get(GdeupsInvTermInfRepository.class).find(gdeupsInvTermInf);
 		if(eupsInvTermInfs!=null&&eupsInvTermInfs.size()!=0){
-			//TODO:终端未结账
+			//终端未结账
 			throw new CoreException(GDErrorCodes.EUPS_PROF00_06_ERROR);
 		}
 		
-		//TODO:取流水号
+		//取流水号
 		StepSequenceFactory s = context.getService("logNoService");
 		String seqNo = s.create().toString();
 		seqNo = DateUtils.format(new Date(),DateUtils.STYLE_MMdd)+seqNo.substring(14);

@@ -33,19 +33,19 @@ public class InvoiceInvalidManagerServiceActionPROF00 extends BaseAction  {
 		String stlNum = context.getData("stlNum").toString().trim();
 		logger.info("invTyp["+invTyp+"]doType["+doType+"]stlNum["+stlNum+"]");
 		if(Integer.parseInt(stlNum)<1){
-			//TODO:凭证数量为0
+			//凭证数量为0
 			throw new CoreException(GDErrorCodes.EUPS_PROF00_07_ERROR);
 		}
 		GdeupsInvTermInf gdeupsInvTermInf = new GdeupsInvTermInf();
 		gdeupsInvTermInf.setTlrId(context.getData("tlr").toString());
 		List<GdeupsInvTermInf> eupsInvTermInfs = get(GdeupsInvTermInfRepository.class).find(gdeupsInvTermInf);
 		if(eupsInvTermInfs==null||eupsInvTermInfs.size()==0){
-			//TODO:当前终端没有凭证
+			//当前终端没有凭证
 			throw new CoreException(GDErrorCodes.EUPS_PROF00_04_ERROR);
 		}
 		gdeupsInvTermInf = eupsInvTermInfs.get(0);
 		if(Integer.parseInt(stlNum)>Integer.parseInt(gdeupsInvTermInf.getInvNum())){
-			//TODO:作废发票数大于剩余发票数
+			//作废发票数大于剩余发票数
 			throw new CoreException(GDErrorCodes.EUPS_PROF00_08_ERROR);
 		}
 		

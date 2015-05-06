@@ -39,12 +39,12 @@ public class InvoiceCheckManagerServiceActionPROF00 extends BaseAction {
 		gdeupsInvTermInf.setNodno(nodno);
 		List<GdeupsInvTermInf> gdeupsInvTermInfs = get(GdeupsInvTermInfRepository.class).find(gdeupsInvTermInf);
 		if(CollectionUtils.isEmpty(gdeupsInvTermInfs)){
-			//TODO:当前终端无凭证
+			//当前终端无凭证
 			throw new CoreException(GDErrorCodes.EUPS_PROF00_04_ERROR);
 		}
 		gdeupsInvTermInf = gdeupsInvTermInfs.get(0);
 		if(Integer.parseInt(gdeupsInvTermInf.getInvNum())!=0){
-			//TODO:剩余发票，不能结算
+			//剩余发票，不能结算
 			throw new CoreException(GDErrorCodes.EUPS_PROF00_10_ERROR);
 		}
 		GdeupsInvDtlBok gdeupsInvDtlBok = new GdeupsInvDtlBok();
@@ -67,5 +67,6 @@ public class InvoiceCheckManagerServiceActionPROF00 extends BaseAction {
 		context.setData("ivBegNo", gdeupsInvTermInf.getIvBegNo());
 		logger.info("InvoiceCheckManagerServiceActionPROF00 end ... ...");
 	}
+	
 
 }
