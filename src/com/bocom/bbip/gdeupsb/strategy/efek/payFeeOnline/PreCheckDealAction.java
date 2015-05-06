@@ -50,6 +50,5 @@ public class PreCheckDealAction implements Executable{
 						}
 				}
 				logger.info("~~~~~~~~~~~交易日期："+context.getData(ParamKeys.TXN_DATE)+"~~~~~~~~~~~交易时间："+context.getData(ParamKeys.TXN_TIME));
-				
 	}
 }
