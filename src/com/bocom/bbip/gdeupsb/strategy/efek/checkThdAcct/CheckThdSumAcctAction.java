@@ -55,7 +55,7 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 		
 		//流水日期时间
 		Date txnDte=DateUtils.calDate(DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())),-1);
-//		txnDte=DateUtils.parse("2015-04-22");
+//		txnDte=DateUtils.parse("2015-05-06");
 		Date txnTme=DateUtils.parse(DateUtils.formatAsTranstime(new Date()));
 		context.setData(ParamKeys.TXN_DTE, txnDte);
 		context.setData(ParamKeys.TXN_TME, txnTme);
@@ -108,6 +108,7 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 				//把信息保存到第三方明细表中
 		        eupsThdTranCtlDetailRepository.insert(BeanUtils.toObject(context.getDataMap(), EupsThdTranCtlDetail.class));
 		}
+		logger.info("=========End  CheckThdSumAcctAction");
         return null;
 	}
 			
