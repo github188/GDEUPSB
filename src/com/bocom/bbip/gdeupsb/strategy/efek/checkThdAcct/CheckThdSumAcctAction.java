@@ -106,6 +106,8 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 			        context.setData(ParamKeys.TXN_TLR, "ABIR148");
 			        context.setData(ParamKeys.CHL_TYP, "90");
 			        context.setData("rcnBat", sqn);
+			        context.setData("bakFld1", map.get("RSV_FLD4"));
+			        context.setData("bakFld2", map.get("RSV_FLD5"));
 				//把信息保存到第三方明细表中
 		        eupsThdTranCtlDetailRepository.insert(BeanUtils.toObject(context.getDataMap(), EupsThdTranCtlDetail.class));
 		}
@@ -137,8 +139,6 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 				context.setData(GDParamKeys.TRADE_RECEIVE, GDConstants.TRADE_RECEIVE);//交易接收方
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
-				//申请批次号
-//				String batNo=((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
 				context.setData(ParamKeys.BAT_NO, context.getData(ParamKeys.SEQUENCE));
 				context.setData(GDParamKeys.BUS_IDENTIFY, "YDLW17");
 				context.setData(ParamKeys.THD_CUS_NO, "");
