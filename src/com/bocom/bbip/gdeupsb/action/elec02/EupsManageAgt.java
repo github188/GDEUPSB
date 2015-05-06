@@ -112,7 +112,7 @@ public class EupsManageAgt extends BaseAction {
 
 		String feeNum = (String) context.getData("JFH");
 		if (feeNum != null || feeNum.trim() != "") {
-			agtElecTmp.setFeeNum(feeNum); //
+			agtElecTmp.setFeeNum(feeNum); 
 		}
 		agtElecTmp.setActNo((String) context.getData("TActNo")); // 账号
 		agtElecTmp.setStatus("0");
