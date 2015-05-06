@@ -27,7 +27,7 @@ public class CommQryWatCusAgentAction extends BaseAction {
 		List<GdEupsWatAgtInf> resultList = get(GdEupsWatAgtInfRepository.class).find(para);
 		log.info("查询的返回信息为:" + resultList);
 		if (CollectionUtils.isEmpty(resultList)) {
-			throw new CoreException(ErrorCodes.EUPS_AGE_AGR_INFO_NOT_EXIST);
+			throw new CoreException("BBIP0004EU0130");
 		}
 		else if (resultList.size() > 1) {
 			throw new CoreException(ErrorCodes.EUPS_AGENT_CHK_ERROR);
