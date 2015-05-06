@@ -110,6 +110,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		//代扣文件放置目录
 		// /home/bbipadm/data/mftp/BBIP/请求系统/机构号/柜员号/会计日期
 		String dir = "/home/bbipadm/data/mftp/BBIP/GDEUPSB"+"/"+br+"/"+tlr+"/"+acDate+"/";
+		String dir1 = "/home/bbipadm/data/mftp/BBIP/GDEUPSB/wat";
 		logger.info("dir_filNam["+dir+filNam+"]");
 		
 		
@@ -130,8 +131,15 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		config.setRmtFleNme(fileName);
 		config.setRmtWay(dir);
 		config.setLocDir(dir);
+		
+		EupsThdFtpConfig configB = get(EupsThdFtpConfigRepository.class).findOne("BatchFileFtpNo");
+		Assert.isNotNull(config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST,"第三方配置信息不存在");
+		configB.setLocFleNme(fileName);
+		configB.setRmtFleNme(fileName);
+		configB.setRmtWay(dir);
+		configB.setLocDir(dir1);
 		/** 产生代收付格式文件 */
-		((OperateFileAction)get("opeFile")).createCheckFile(config, GDConstants.BATCH_FILE_FORMAT, fileName, fileMap);
+		((OperateFileAction)get("opeFile")).createCheckFile(configB, GDConstants.BATCH_FILE_FORMAT, fileName, fileMap);
 		/** 发送到指定路径 */
 		((OperateFTPAction)get("opeFTP")).putCheckFile(config);
 		
