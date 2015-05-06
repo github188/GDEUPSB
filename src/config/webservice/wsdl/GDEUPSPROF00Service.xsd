@@ -614,6 +614,7 @@
       <xs:element name="endDat" type="tns:endDat_SType" minOccurs="0"/>
       <xs:element name="qryNod" type="tns:qryNod_SType" minOccurs="0"/>
       <xs:element name="prtFlg" type="tns:prtFlg_SType" minOccurs="0"/>
+      <xs:element name="nodNam" type="tns:nodNam_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="atmInvDtlResponse_CType">
@@ -655,6 +656,14 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="nodNam_SType">
+    <xs:annotation>
+      <xs:documentation>机构名称</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="80"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="tol_SType">
