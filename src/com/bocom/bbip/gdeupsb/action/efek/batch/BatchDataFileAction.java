@@ -308,7 +308,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 		 */
 	    public  Process RecvEnCryptFile(String excPath, String srcFile, String objFile,Context context) throws IOException, InterruptedException, CoreRuntimeException, CoreException {
 	    	logger.info("================Start BatchDataFileActiion  RecvEnCryptFile");	    	
-	        String cmd="ssh icsadm@182.53.15.200 /app/ics/app/efek/bin/EfeFilRecv.sh 182.53.201.45 bcm exchange dat/efek/recv "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
+	    	String cmd=get(BBIPPublicService.class).getParam("efekMD5")+" "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
 	        logger.info("cmd=" + cmd);
 	        Process proc = Runtime.getRuntime().exec(cmd);
 	        proc.waitFor();
