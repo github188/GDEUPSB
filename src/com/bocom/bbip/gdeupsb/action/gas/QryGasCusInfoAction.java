@@ -36,21 +36,11 @@ public class QryGasCusInfoAction extends BaseAction {
 		context.setData("TransCode", "QryUser");
 		context.setData("gasBk", "cnjt");
 		Map<String, Object> thdRspMsg = callThdTradeManager.trade(context);
-		context.setDataMap(thdRspMsg);
 		
-//		CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
-//		String responseCode = rspCdeAction.getThdRspCde(thdRspMsg, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
 		if (BPState.isBPStateOvertime(context)) {
 			throw new CoreException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
 		} 
-//		else if (!Constants.RESPONSE_CODE_SUCC.equals(responseCode)) {
-//			if (StringUtils.isEmpty(responseCode)) {
-//				throw new CoreException(GDErrorCodes.EUPS_ELE_GZ_UNKNOWN_ERROR);
-//			}
-//			throw new CoreException(responseCode);
-//		}
-		
-//		context.setData("responseCode", Constants.RESPONSE_CODE_SUCC); 
+		context.setDataMap(thdRspMsg);
 		
 		logger.info("======================context after callThd qryUser========"
 				+ context);
