@@ -21,12 +21,12 @@ import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.eups.entity.EupsCusAgentJournal;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsCusAgentJournalRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
+import com.bocom.bbip.gdeupsb.entity.GDEupsCusAgentJournal;
 import com.bocom.bbip.gdeupsb.repository.GDEupsCusAgentJournalRepository;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
@@ -66,23 +66,23 @@ public class AgentFileToThdAction extends BaseAction{
 				int i=0;
 				for(Map<String, Object> mapList:comNoList){
 						i++;
-						String comNos=mapList.get("COM_NO").toString().trim();
-						String comNo="";
-						if(comNos.length()>6){
-								comNo=comNos.substring(0,6);
-						}else{
-								while(comNos.length()<6){
-									comNo=comNos;
-									comNos=comNos+"0";
-								}
-						}
+						String comNo=mapList.get("COM_NO").toString().trim();
+//						String comNo="";
+//						if(comNos.length()>6){
+//								comNo=comNos.substring(0,6);
+//						}else{
+//								while(comNos.length()<6){
+//									comNo=comNos;
+//									comNos=comNos+"0";
+//								}
+//						}
 						//得到今日协议变更
-						EupsCusAgentJournal eupsCusAgentJournal=new EupsCusAgentJournal();
-						eupsCusAgentJournal.setComNo(comNos);
+						GDEupsCusAgentJournal eupsCusAgentJournal=new GDEupsCusAgentJournal();
+						eupsCusAgentJournal.setComNo(comNo);
 						eupsCusAgentJournal.setTxnDte(txnDate);
 						eupsCusAgentJournal.setEupsBusTyp("ELEC00");
-						List<EupsCusAgentJournal> list=eupsCusAgentJournalRepository.find(eupsCusAgentJournal);
-						for (EupsCusAgentJournal eupsCusAgentJournals : list) {
+						List<GDEupsCusAgentJournal> list=gdEupsCusAgentJournalRepository.findBySubComNo(eupsCusAgentJournal);
+						for (GDEupsCusAgentJournal eupsCusAgentJournals : list) {
 							eupsCusAgentJournals.setIdNo(eupsCusAgentJournals.getIdNo().trim());
 							if(eupsCusAgentJournals.getTel()!=null){
 									eupsCusAgentJournals.setTel(eupsCusAgentJournals.getTel().toString().trim());
