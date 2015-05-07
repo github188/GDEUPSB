@@ -89,12 +89,7 @@ public class QryTxnJnlInfoAction extends BaseAction{
 				
 				tmp.put("txnSts", tmpMap.get("TXN_STS"));
 				tempList.add(tmp);
-				System.out.println();
-				System.out.println(tmp);
-				
 			}
-			System.out.println();
-			System.out.println("temp.size():" + tempList.size());
 			context.setData("loop", tempList);
 			logger.info("==============context after set loop to context:" + context);
 			
