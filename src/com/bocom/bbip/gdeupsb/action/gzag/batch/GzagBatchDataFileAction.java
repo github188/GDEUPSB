@@ -83,7 +83,7 @@ public class GzagBatchDataFileAction extends BaseAction implements BatchAcpServi
 			}else if(comNo.equals("4410001882")){
 					fileId="sptltBatchFile";		//体育彩票
 			}else{
-					throw new CoreException("没有该单位");
+					throw new CoreException("单位编号："+comNo+"不支持广州文本代收付");
 			}
 			//传入控制表 选择翻盘文件是使用
 			context.setData("fileId", fileId);
