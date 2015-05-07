@@ -65,6 +65,9 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 	public void prepareBatchDeal(PrepareBatchAcpDomain preparebatchacpdomain,
 			Context context) throws CoreException {
 				logger.info("==========Start  BatchDataFileAction  prepareBatchDeal");
+				if(context.getData("txnTlr")==null){
+					context.setData("txnTlr", "ABIR148");
+				}
 				//上锁
 				String locked="460420ELEC00";
 				Result ret1 = bbipPublicService.tryLock( locked,60*1000L, 600L);
@@ -108,13 +111,15 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 						for (int i=0;i<mapList.size();i++) {
 							Map<String, Object> map=mapList.get(i);
 									 map.put(ParamKeys.SEQUENCE, bbipPublicService.getBBIPSequence());
+									 GDEupsEleTmp gdEupsEleTmp=BeanUtils.toObject(map, GDEupsEleTmp.class);
 									 if(!map.get("capitial").equals("") && !map.get("capitial").equals(null)){
+										 	gdEupsEleTmp.setCapitial(map.get("capitial").toString());
 										 	map.put("capitial", (new BigDecimal(map.get("capitial").toString())));
 									 }
 									 if(!map.get("dedit").equals("")  && !map.get("dedit").equals(null) ){
+										 	gdEupsEleTmp.setCapitial(map.get("dedit").toString());
 										 	map.put("dedit", (new BigDecimal(map.get("dedit").toString())));
 									 }
-									 GDEupsEleTmp gdEupsEleTmp=BeanUtils.toObject(map, GDEupsEleTmp.class);
 									 BigDecimal txnAmt=new BigDecimal(gdEupsEleTmp.getPaymentMoney()).scaleByPowerOfTen(-2);
 									 gdEupsEleTmp.setTxnAmt(txnAmt);
 									 gdEupsEleTmp.setRsvFld5(batNo);
