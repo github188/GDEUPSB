@@ -43,8 +43,10 @@ public class ChargeStrategyAction implements Executable{
 		Date tTxnDte=DateUtils.parse(context.getData("tTxnDte").toString(), DateUtils.STYLE_yyyyMMdd);//第三方交易日期
 		
 		context.setData(ParamKeys.THD_TXN_DATE, tTxnDte);
-
-		bbipPublicService.getETeller("");
+		context.setData(ParamKeys.BK, "01441999999"); // 分行号
+		context.setData(ParamKeys.BR, "01444800999"); // 机构号
+		String teller = bbipPublicService.getETeller(context.getData(ParamKeys.BK).toString());
+		context.setData(ParamKeys.TELLER, teller);
 		context.setData(ParamKeys.BUS_TYP, Constants.BUS_TYP_2); //待缴
 //		检查报文是否重复
 		EupsTransJournal eups = new EupsTransJournal();
@@ -55,7 +57,7 @@ public class ChargeStrategyAction implements Executable{
 		if(!CollectionUtils.isEmpty(journal)){
 			
 			context.setData(ParamKeys.RSP_CDE, ErrorCodes.EUPS_SQN_IS_EXIST);
-			context.setData(ParamKeys.RSP_MSG, "报文重复");
+			context.setData("responseMessage", "交易流水已存在");
 			throw new CoreException(ErrorCodes.EUPS_SQN_IS_EXIST);
 		}
 		 //金额控制，不能超过400.但标准版交易流水表中有交易金额和请求交易金额两个字段，应该用交易金额。
