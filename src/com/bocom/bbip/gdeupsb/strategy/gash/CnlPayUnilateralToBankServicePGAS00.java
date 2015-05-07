@@ -110,10 +110,7 @@ public class CnlPayUnilateralToBankServicePGAS00 implements
 		if (CollectionUtils.isEmpty(upPayJnlList)) {
 			throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
 		}
-		System.out.println("upPayJnlList.get(0).getRapTyp() "
-				+ upPayJnlList.get(0).getRapTyp());
 		context.setData(ParamKeys.RAP_TYPE, upPayJnlList.get(0).getRapTyp());
-		System.out.println("RAP_TYP:" + context.getData(ParamKeys.RAP_TYPE));
 
 		logger.info("===============sqn=" + upPayJnlList.get(0).getSqn());
 		context.setData(ParamKeys.OLD_TXN_SQN, upPayJnlList.get(0).getSqn());
