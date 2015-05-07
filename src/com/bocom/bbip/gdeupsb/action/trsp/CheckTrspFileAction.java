@@ -319,7 +319,6 @@ public class CheckTrspFileAction extends BaseAction {
 		String fileName = context.getData("fileName").toString().trim();
 		eupsThdFtpConfig.setLocFleNme(fileName);
 		eupsThdFtpConfig.setRmtFleNme(fileName);
-		eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/trsp/");
 		
 		// 文件解析入库
 		List<Map<String, Object>> mapList = operateFileAction.pareseFile(eupsThdFtpConfig, "trspCheckFile");
