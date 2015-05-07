@@ -83,7 +83,7 @@ public class EupsManageCounterAgt extends BaseAction {
 				.find(agtElecTmp);
 		if (null == tmpList || CollectionUtils.isEmpty(tmpList)) {
 			logger.info("There are no records for select check elec agt tmp ");
-			throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
+			throw new CoreException("协议不存在或已被删除");
 		}
 		String OAC = tmpList.get(0).getActNo();
 		String OKH = tmpList.get(0).getNewBankNum();
@@ -248,6 +248,10 @@ public class EupsManageCounterAgt extends BaseAction {
 		// 旧协议信息，返显
 		List<GdeupsAgtElecTmp> oldAgtElecTmps = get(
 				GdeupsAgtElecTmpRepository.class).findBase(agtElecTmp);
+		if (null == oldAgtElecTmps || CollectionUtils.isEmpty(oldAgtElecTmps)) {
+			logger.info("There are no records for select check elec agt tmp ");
+			throw new CoreException("协议不存在或已被删除");
+		}
 		for (GdeupsAgtElecTmp perTmp : oldAgtElecTmps) {
 			Map<String, Object> infoMap = new HashMap<String, Object>();
 			infoMap.put("JFH", perTmp.getFeeNum());
