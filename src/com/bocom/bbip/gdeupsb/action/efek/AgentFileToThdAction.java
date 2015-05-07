@@ -59,7 +59,7 @@ public class AgentFileToThdAction extends BaseAction{
 				//日期
 				Date txnDate=DateUtils.calDate(DateUtils.parse(DateUtils.formatAsSimpleDate(date)),-1);
 				Map<String, Object> map=new HashMap<String, Object>();
-//				txnDate=DateUtils.parse("2015-04-22");
+				txnDate=DateUtils.parse("2015-05-07");
 				map.put("txnDte", txnDate);
 				//分组
 				List<Map<String, Object>> comNoList=gdEupsCusAgentJournalRepository.findAllGroupByComNo(map);
@@ -82,11 +82,13 @@ public class AgentFileToThdAction extends BaseAction{
 						eupsCusAgentJournal.setTxnDte(txnDate);
 						eupsCusAgentJournal.setEupsBusTyp("ELEC00");
 						List<GDEupsCusAgentJournal> list=gdEupsCusAgentJournalRepository.findBySubComNo(eupsCusAgentJournal);
+						
 						for (GDEupsCusAgentJournal eupsCusAgentJournals : list) {
 							eupsCusAgentJournals.setIdNo(eupsCusAgentJournals.getIdNo().trim());
 							if(eupsCusAgentJournals.getTel()!=null){
-									eupsCusAgentJournals.setTel(eupsCusAgentJournals.getTel().toString().trim());
+									eupsCusAgentJournals.setTel(eupsCusAgentJournals.getTel().trim());
 							}
+							System.out.println(eupsCusAgentJournals.getCusNme());
 						}
 						//首行
 						Map<String, Object> headerMap=new HashMap<String, Object>();
@@ -107,10 +109,10 @@ public class AgentFileToThdAction extends BaseAction{
 						context.setData("fleTyp", "04");
 						EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("efekAgent");
 						eupsThdFtpConfig.setLocFleNme(locName);
+						operateFileAction.createCheckFile(eupsThdFtpConfig, "efekAgent", locName, resultMap);	
+						eupsThdFtpConfig.setFtpDir("0"); 
 						eupsThdFtpConfig.setRmtFleNme(locName);
 						eupsThdFtpConfig.setRmtWay("/app/ics/dat/efek/send");
-						eupsThdFtpConfig.setFtpDir("0"); 
-						operateFileAction.createCheckFile(eupsThdFtpConfig, "efekAgent", locName, resultMap);	
 						operateFTPAction.putCheckFile(eupsThdFtpConfig);
 						//sftp
 						try {

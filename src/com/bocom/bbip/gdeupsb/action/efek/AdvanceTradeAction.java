@@ -37,6 +37,9 @@ public class AdvanceTradeAction extends BaseAction {
 			CoreRuntimeException {
 		logger.info("===========Start  AdvanceTradeAction");
 		
+		//TODO  要删除
+		context.setData("txnTlr", "ABIR148");
+		
 		context.setData("extFields", "01441800999");
 		context.setData(GDParamKeys.TOTNUM, "1");
 		// 第三方客户标识

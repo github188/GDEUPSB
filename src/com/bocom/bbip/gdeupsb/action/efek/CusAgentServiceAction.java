@@ -51,9 +51,9 @@ public class CusAgentServiceAction extends BaseAction{
 		 */
 		public void execute(Context context)throws CoreException,CoreRuntimeException{
 				logger.info("============Start  CusAgentServiceAction ");
-				if(context.getData("txnTlr")==null  && context.getData(ParamKeys.THD_SQN)!=null){
-					context.setData("txnTlr", "ABIR148");
-				}
+				//TODO  要删除
+				context.setData("txnTlr", "ABIR148");
+				
 				String cusAc=context.getData("cusAc");
 				String comNo=context.getData("comNos").toString();
 				context.setData("comNo", comNo);
