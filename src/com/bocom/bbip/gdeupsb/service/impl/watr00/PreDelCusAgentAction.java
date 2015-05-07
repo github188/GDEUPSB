@@ -71,7 +71,7 @@ private static Logger logger = LoggerFactory.getLogger(PreDelCusAgentAction.clas
 //		
 //		Map<String, Object> infoMap = new HashMap<String, Object>();
 //		List<Map<String,Object>> customerInfo = new ArrayList<Map<String,Object>>();
-////		infoMap.put("agtCllCusId", "");//TODO:修改协议时必输
+////		infoMap.put("agtCllCusId", "");
 //		infoMap.put("cusTyp", (String)context.getData("cusTyp"));
 ////		infoMap.put("cusAc", "");
 //		infoMap.put("ccy", "CNY");
