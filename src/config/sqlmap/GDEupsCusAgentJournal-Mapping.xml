@@ -801,4 +801,109 @@
 	group by 
 				SUBSTR(COM_NO,1,6)
 	</select>
+	
+	<select id="findBySubComNo" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${EUPS_SCHEMA}.EUPS_CUS_AGENT_JOURNAL
+    <trim prefix="WHERE" prefixOverrides="AND" >
+      <if test="sqn!=null" >
+        AND  SQN=#{sqn,jdbcType=CHAR}
+      </if>
+      <if test="eupsBusTyp!=null" >
+        AND  EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
+      </if>
+      <if test="agdAgrNo!=null" >
+        AND  AGD_AGR_NO=#{agdAgrNo,jdbcType=CHAR}
+      </if>
+      <if test="agrOprTyp!=null" >
+        AND  AGR_OPR_TYP=#{agrOprTyp,jdbcType=CHAR}
+      </if>
+      <if test="comNo!=null" >
+        AND  SUBSTR(COM_NO,1,6)=#{comNo,jdbcType=CHAR}
+      </if>
+      <if test="comNme!=null" >
+        AND  COM_NME=#{comNme,jdbcType=VARCHAR}
+      </if>
+      <if test="cusAc!=null" >
+        AND  CUS_AC=#{cusAc,jdbcType=CHAR}
+      </if>
+      <if test="cusNme!=null" >
+        AND  CUS_NME=#{cusNme,jdbcType=VARCHAR}
+      </if>
+      <if test="acoAc!=null" >
+        AND  ACO_AC=#{acoAc,jdbcType=CHAR}
+      </if>
+      <if test="batNo!=null" >
+        AND  BAT_NO=#{batNo,jdbcType=CHAR}
+      </if>
+      <if test="batSeq!=null" >
+        AND  BAT_SEQ=#{batSeq,jdbcType=CHAR}
+      </if>
+      <if test="busTyp!=null" >
+        AND  BUS_TYP=#{busTyp,jdbcType=CHAR}
+      </if>
+      <if test="busKnd!=null" >
+        AND  BUS_KND=#{busKnd,jdbcType=CHAR}
+      </if>
+      <if test="tpsSts!=null" >
+        AND  TPS_STS=#{tpsSts,jdbcType=CHAR}
+      </if>
+      <if test="thdCusNo!=null" >
+        AND  THD_CUS_NO=#{thdCusNo,jdbcType=CHAR}
+      </if>
+      <if test="thdCusNme!=null" >
+        AND  THD_CUS_NME=#{thdCusNme,jdbcType=VARCHAR}
+      </if>
+      <if test="thdSts!=null" >
+        AND  THD_STS=#{thdSts,jdbcType=CHAR}
+      </if>
+      <if test="idTyp!=null" >
+        AND  ID_TYP=#{idTyp,jdbcType=CHAR}
+      </if>
+      <if test="idNo!=null" >
+        AND  ID_NO=#{idNo,jdbcType=VARCHAR}
+      </if>
+      <if test="tel!=null" >
+        AND  TEL=#{tel,jdbcType=VARCHAR}
+      </if>
+      <if test="agrBr!=null" >
+        AND  AGR_BR=#{agrBr,jdbcType=CHAR}
+      </if>
+      <if test="agrTlr!=null" >
+        AND  AGR_TLR=#{agrTlr,jdbcType=CHAR}
+      </if>
+      <if test="athTlr!=null" >
+        AND  ATH_TLR=#{athTlr,jdbcType=CHAR}
+      </if>
+      <if test="creDte!=null" >
+        AND  CRE_DTE=#{creDte,jdbcType=DATE}
+      </if>
+      <if test="agrVldDte!=null" >
+        AND  AGR_VLD_DTE=#{agrVldDte,jdbcType=DATE}
+      </if>
+      <if test="agrExpDte!=null" >
+        AND  AGR_EXP_DTE=#{agrExpDte,jdbcType=DATE}
+      </if>
+      <if test="agrSts!=null" >
+        AND  AGR_STS=#{agrSts,jdbcType=CHAR}
+      </if>
+      <if test="txnDte!=null" >
+        AND  TXN_DTE=#{txnDte,jdbcType=DATE}
+      </if>
+      <if test="txnTme!=null" >
+        AND  TXN_TME=#{txnTme,jdbcType=TIMESTAMP}
+      </if>
+      <if test="rsvFld1!=null" >
+        AND  RSV_FLD1=#{rsvFld1,jdbcType=CHAR}
+      </if>
+      <if test="rsvFld2!=null" >
+        AND  RSV_FLD2=#{rsvFld2,jdbcType=CHAR}
+      </if>
+      <if test="rsvFld3!=null" >
+        AND  RSV_FLD3=#{rsvFld3,jdbcType=VARCHAR}
+      </if>
+    </trim>
+  </select>
+  
 </mapper>
