@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.taglibs.standard.tag.el.sql.SetDataSourceTag;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.comp.BBIPPublicService;
@@ -80,22 +81,22 @@ public class PreIntCnlDealAction extends BaseAction {
 			clrDatStr = gdElecClrInf.getClrDat();
 			context.setData(ParamKeys.BAK_FLD1, clrDatStr);
 		}
-		
-		//若当前日期与第三方清算日期不一致，表示已进行清算，不允许发起交易
-		if(!DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd).equals(clrDatStr)){
+
+		// 若当前日期与第三方清算日期不一致，表示已进行清算，不允许发起交易
+		if (!DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd).equals(clrDatStr)) {
 			throw new CoreException(GDErrorCodes.EUPS_ELE_GZ_ALREADY_CLEAR_ERROR);
 		}
-		
+
 		String bk = context.getData(ParamKeys.BK);
 
 		// TODO:为了测试，先注释，授权原因码并校验是否已授权
-//		String authTlr = context.getData(ParamKeys.AUTHOR_LEVEL);
-//		if (StringUtils.isEmpty(authTlr)) {
-//			throw new CoreException(ErrorCodes.EUPS_CANCEL_CHECK_AUTH_FAIL);
-//		}
+		// String authTlr = context.getData(ParamKeys.AUTHOR_LEVEL);
+		// if (StringUtils.isEmpty(authTlr)) {
+		// throw new CoreException(ErrorCodes.EUPS_CANCEL_CHECK_AUTH_FAIL);
+		// }
 		// 授权原因码 EFE000
 		context.setData(GDConstants.AUTH_REASON, "EFE000");
-		
+
 		String authTlr = "4413913";
 		context.setData("athTlrNo", authTlr);
 		context.setData("athTlr", authTlr);
@@ -132,7 +133,7 @@ public class PreIntCnlDealAction extends BaseAction {
 				throw new CoreException(GDErrorCodes.EUPS_ELE_GZ_CANCLE_INFO_ERROR);
 			}
 		}
-		
+
 		BigDecimal fTxnAmt = (BigDecimal) context.getData(ParamKeys.TXN_AMT);
 		if (null != fTxnAmt) {
 			if (0 != eupsTransJournal.getTxnAmt().compareTo(fTxnAmt)) {
@@ -141,8 +142,9 @@ public class PreIntCnlDealAction extends BaseAction {
 		}
 		context.setVariable(GDParamKeys.GZ_ELE_CANCLE_OLD_JNL, eupsTransJournal);
 
-//		context.setData(GDParamKeys.GZ_ELE_THD_DPT_TYP, comNo);
-
+		// context.setData(GDParamKeys.GZ_ELE_THD_DPT_TYP, comNo);
+		// tradeTxnDir
+		context.setData("tradeTxnDir", "OL");
 	}
 
 }
