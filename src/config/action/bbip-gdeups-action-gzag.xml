@@ -6,8 +6,5 @@
 	<!-- 查询单位信息 -->
 	<action   class="com.bocom.bbip.gdeupsb.action.common.QryComInfoAction"
 		id="gdeupsb.QryComInformationAction" />
-	<!--  批次号查询批次信息-->
-	<action   class="com.bocom.bbip.gdeupsb.action.gzag.batch.QryBatchStatueAction"
-		id="gdeupsb.qryBatchStatueAction" />
 		
 </x:beans>
