@@ -277,7 +277,6 @@ public class CheckThdDetlAcctAction implements Executable {
 			while(xh.length()<9){
 					xh="0"+xh;
 			}
-			System.out.println("AAAAAAAAAAAAAAAAAAAAAAAA");
 			checkOneCode=checkOneCode+xh;
 			checkDetailAcct.setBakFld1(str);
 			checkDetailAcct.setRsvFld1(checkOneCode);
