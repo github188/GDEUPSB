@@ -327,19 +327,6 @@
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.PayUnilateralToBankServiceAction"
 		id="eups.payUnilateralToBankServiceActionELEC01" />
 
-
-	<!-- PGAS00新增协议 -->																			
-	<bean class="com.bocom.bbip.gdeupsb.strategy.gash.CommInsertCusAgentServiceActionPGAS00" id="eups.commInsertCusAgentServiceActionPGAS00" />
-	
-	<!-- PGAS00修改协议 -->
-	<bean class="com.bocom.bbip.gdeupsb.strategy.gash.CommUpdateCusAgentServiceActionPGAS00" id="eups.commUpdateCusAgentServiceActionPGAS00" />
-	
-	<!-- PGAS00删除协议 -->
-	<bean class="com.bocom.bbip.gdeupsb.strategy.gash.CommDelCusAgentServiceActionPGAS00" id="eups.commDelCusAgentServiceActionPGAS00" />
-	
-	<!-- PGAS00查询协议 -->
-	<!-- <bean class="" id="" /> --> 
-
 	<!-- 惠州燃气单边划扣 -->
 	<bean
 		class="com.bocom.bbip.gdeupsb.strategy.gash.PayUnilateralToBankServiceImplPGAS00"
@@ -348,10 +335,6 @@
 	<bean
 		class="com.bocom.bbip.gdeupsb.strategy.gash.CnlPayUnilateralToBankServicePGAS00"
 		id="eups.cancelUnilateralToBankServiceActionPGAS00" />
-	<!-- 惠州燃气对账文件上传 -->
-	<!-- <bean id="eups.checkBkFileToThirdStrategyActionPGAS00"
-		class="com.bocom.bbip.gdeupsb.strategy.gash.CheckBkFileToThirdStrategyAction">
-	</bean> -->
 
 	<!-- HZ燃气： 文件批扣数据准备 -->
 	<bean id="eups.fileBatchPayCreateDataServiceActionPGAS00"
@@ -361,13 +344,13 @@
 	<bean id="eups.afterBatchAcpServiceActionPGAS00"
 		class="com.bocom.bbip.gdeupsb.action.gas.MsgToGasAftBatchAction" />
 		
-	<!-- 中山文件批量:文件录入及检查 -->
+<!-- 	 中山文件批量:文件录入及检查 
 	<bean id="eups.fileBatchPayCreateDataServiceActionZSAG00"
 		class="com.bocom.bbip.gdeupsb.action.fbpd.BatchAcpServiceImplZSAG00" />
 
-	<!-- 中山文件批量:文件批量完成通知前端 -->
+	中山文件批量:文件批量完成通知前端
 	<bean id="eups.afterBatchAcpServiceActionZSAG00"
-		class="com.bocom.bbip.gdeupsb.action.fbpd.AfterBatchAcpServiceImplZSAG00" />
+		class="com.bocom.bbip.gdeupsb.action.fbpd.AfterBatchAcpServiceImplZSAG00" /> -->
 
 	<!--汕头电力单边划扣 -->
 <!-- 	<bean
