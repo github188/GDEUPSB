@@ -1,6 +1,7 @@
 package com.bocom.bbip.gdeupsb.repository;
 
 import java.util.List;
+import java.util.Map;
 
 import com.bocom.bbip.data.annotation.Delete;
 import com.bocom.bbip.data.annotation.Find;
@@ -23,6 +24,8 @@ public interface GdeupsAgtElecTmpRepository
 	public void updateByFeeNum(GdeupsAgtElecTmp agtElecTmp);
 	@Delete
 	public void deleteByFeeNum(GdeupsAgtElecTmp agtElecTmp);
+	@Find
+	public List<Map<String, Object>> findAgtNo();
 
 //	@Find
 //	public void checkAgtExist(String actNo);
