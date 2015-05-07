@@ -214,7 +214,7 @@ public class EupsManageCounterAgt extends BaseAction {
 		infoMap.put("GPF", context.getData("GPF"));
 		infoMap.put("MOB", context.getData("MOB"));
 		infoMap.put("TEL", context.getData("TEL"));
-		infoMap.put("TXT", agtElecTmp.getRemark());
+		//TODO		infoMap.put("TXT", agtElecTmp.getRemark());
 		infoList.add(infoMap);
 		context.setData("infoList", infoList);
 		logger.info(" context after set infoList : ", context);
@@ -239,7 +239,7 @@ public class EupsManageCounterAgt extends BaseAction {
 			infoMap.put("GPF", perTmp.getPerComFlag());
 			infoMap.put("MOB", perTmp.getPhoneNum());
 			infoMap.put("TEL", perTmp.getTelNum());
-			infoMap.put("TXT", agtElecTmp.getRemark());
+			//TODO			infoMap.put("TXT", agtElecTmp.getRemark());
 			infoList.add(infoMap);
 		}
 		String oldCardNo = context.getData("OAC");
@@ -267,7 +267,7 @@ public class EupsManageCounterAgt extends BaseAction {
 			infoMap.put("GPF", perTmp.getPerComFlag());
 			infoMap.put("MOB", perTmp.getPhoneNum());
 			infoMap.put("TEL", perTmp.getTelNum());
-			infoMap.put("TXT", agtElecTmp.getRemark());
+			//TODO			infoMap.put("TXT", agtElecTmp.getRemark());
 			infoList.add(infoMap);
 		}
 		context.setData("infoList", infoList);
@@ -289,7 +289,7 @@ public class EupsManageCounterAgt extends BaseAction {
 			agtElecTmp.setActNo(actNo); //
 		}
 		
-		agtElecTmp.setStatus("0");
+//		agtElecTmp.setStatus("0");
 		List<GdeupsAgtElecTmp> tmpList = get(GdeupsAgtElecTmpRepository.class)
 				.findBase(agtElecTmp);
 		if (tmpList.size() > 0) {
@@ -312,7 +312,7 @@ public class EupsManageCounterAgt extends BaseAction {
 			infoMap.put("GPF", perTmp.getPerComFlag());
 			infoMap.put("MOB", perTmp.getPhoneNum());
 			infoMap.put("TEL", perTmp.getTelNum());
-			infoMap.put("TXT", perTmp.getRemark());
+//TODO			infoMap.put("TXT", perTmp.getRemark());
 			infoList.add(infoMap);
 		}
 		context.setData("infoList", infoList);
@@ -359,7 +359,7 @@ public class EupsManageCounterAgt extends BaseAction {
 			infoMap.put("GPF", perTmp.getPerComFlag());
 			infoMap.put("MOB", perTmp.getPhoneNum());
 			infoMap.put("TEL", perTmp.getTelNum());
-			infoMap.put("TXT", perTmp.getRemark());
+			//TODO	infoMap.put("TXT", perTmp.getRemark());
 			infoList.add(infoMap);
 		}
 		context.setData("infoList", infoList);
