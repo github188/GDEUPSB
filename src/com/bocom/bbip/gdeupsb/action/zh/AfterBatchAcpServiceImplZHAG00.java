@@ -2,6 +2,7 @@ package com.bocom.bbip.gdeupsb.action.zh;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -91,7 +92,18 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
 		config.setLocDir("/home/bbipadm/data/GDEUPSB/batch/");
 		config.setRmtFleNme(fileName);
         ((OperateFileAction)get("opeFile")).createCheckFile(config, formatOut, fileName, resultMap);
-               
+        
+        context.setData("ApFmt",  "48211");
+        context.setData("batNo",  gdEupsBatchConsoleInfo.getBatNo());
+        context.setData("comNo",  gdEupsBatchConsoleInfo.getComNo());
+        context.setData("subDte",  gdEupsBatchConsoleInfo.getSubDte());
+        context.setData("comNme", fileName );
+       context.setData("batSts",  gdEupsBatchConsoleInfo.getBatSts());
+        context.setData("totCnt",  gdEupsBatchConsoleInfo.getTotCnt());
+        context.setData("totAmt",  gdEupsBatchConsoleInfo.getTotAmt());
+        context.setData("sucTotCnt"  ,gdEupsBatchConsoleInfo.getSucTotCnt());
+        context.setData("sucTotAmt", gdEupsBatchConsoleInfo.getSucTotAmt());
+       
 		 logger.info("================返盘文件处理结束");
 
 	}
