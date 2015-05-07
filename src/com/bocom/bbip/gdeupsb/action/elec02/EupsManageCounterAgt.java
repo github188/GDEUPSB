@@ -410,7 +410,6 @@ public class EupsManageCounterAgt extends BaseAction {
 		context.setData("GPF", agtElecTmp.getPerComFlag()); // 名称
 		context.setData("MOB", agtElecTmp.getPhoneNum()); // 证件类型
 		context.setData("TEL", agtElecTmp.getTelNum()); // 证件号码
-
 	}
 	
 
