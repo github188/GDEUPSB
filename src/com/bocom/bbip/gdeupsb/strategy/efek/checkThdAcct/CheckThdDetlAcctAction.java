@@ -271,6 +271,7 @@ public class CheckThdDetlAcctAction implements Executable {
 				}else{
 					str="费用类型 Error";
 				}
+				
 			String 	checkOneCode=context.getData("checkOneCode").toString();
 			i++;
 			String xh=i+"";
@@ -280,7 +281,7 @@ public class CheckThdDetlAcctAction implements Executable {
 			checkOneCode=checkOneCode+xh;
 			checkDetailAcct.setBakFld1(str);
 			checkDetailAcct.setRsvFld1(checkOneCode);
-			checkDetailAcct.setTxnTlr(eupsStreamNo.getRsvFld1());
+			checkDetailAcct.setTxnTlr("301_030600");
 			list.add(checkDetailAcct);
 		}
 		logger.info("~~~~~~~~~~~~list~~~~"+list);
