@@ -492,7 +492,7 @@
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
-      <xs:element name="ftpNo" type="tns:ftpNo_SType"/>
+      <xs:element name="ftpNo" type="tns:ftpNo_SType" minOccurs="0"/>
       <xs:element name="fileDte" type="tns:fileDte_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
@@ -671,7 +671,7 @@
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
       <xs:element name="eupsBusTyp" type="tns:eupsBusTyp_SType"/>
-      <xs:element name="ftpNo" type="tns:ftpNo_SType"/>
+      <xs:element name="ftpNo" type="tns:ftpNo_SType" minOccurs="0"/>
       <xs:element name="fileDte" type="tns:fileDte_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
