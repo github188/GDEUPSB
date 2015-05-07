@@ -99,7 +99,7 @@
 	<process id="gdeupsb.checkBkFileToThird" template="eups.simpleTran"
 		interceptors="eups.transMessageInterceptor">
 		<actions>
-			<action id="act" ref="checkBkFileToThirdStrategyAction" />
+			<action id="act" ref="checkBkFileToThirdStrategyActionPGAS" />
 		</actions>
 	</process>
 	
