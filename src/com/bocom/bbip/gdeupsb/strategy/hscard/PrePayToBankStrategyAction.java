@@ -58,9 +58,8 @@ public class PrePayToBankStrategyAction implements Executable{
 
 	     
 	      //卡协议验证
-	      context.setData(ParamKeys.TELLER, "ABIR148");
-	      context.setData(ParamKeys.BR, "01441131999");
-	      context.setData(ParamKeys.BK, "01441999999");
+	    
+	      
 	      context.setData(ParamKeys.CHANNEL, "00");
 //	      Map<String, Object> agtMap = new HashMap<String, Object>();
 //	      agtMap.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
