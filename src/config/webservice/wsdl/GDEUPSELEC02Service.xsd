@@ -623,7 +623,7 @@
       <xs:documentation>备注</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:maxLength value="64"/>
+      <xs:maxLength value="150"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="Pin_SType">
@@ -644,6 +644,7 @@
       <xs:element name="GPF" type="tns:GPF_SType" minOccurs="0"/>
       <xs:element name="MOB" type="tns:MOB_SType" minOccurs="0"/>
       <xs:element name="TEL" type="tns:TEL_SType" minOccurs="0"/>
+      <xs:element name="TXT" type="tns:TXT_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="queryAgtInfoRequest_CType">
