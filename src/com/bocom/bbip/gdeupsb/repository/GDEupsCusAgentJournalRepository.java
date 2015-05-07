@@ -9,4 +9,7 @@ import com.bocom.bbip.gdeupsb.entity.GDEupsCusAgentJournal;
 public interface GDEupsCusAgentJournalRepository extends PagingAndSortingRepository<GDEupsCusAgentJournal, String> {
     
     public List<Map<String, Object>> findAllGroupByComNo(Map<String, Object> map);
+    
+    public List<GDEupsCusAgentJournal> findBySubComNo(GDEupsCusAgentJournal gdEupsCusAgentJournal);
+    
 }
