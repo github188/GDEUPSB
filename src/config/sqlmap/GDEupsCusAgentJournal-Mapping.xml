@@ -793,7 +793,7 @@
   <!-- 协议 根据单位编号分组 -->
   <select id="findAllGroupByComNo"  resultType="java.util.Map"  parameterType="java.util.Map">
  	select 
-				SUBSTR(COM_NO,1,6) ,count(*) as totCnt
+				SUBSTR(COM_NO,1,6) as COM_NO,count(*) as totCnt
      from 
 				eups.EUPS_CUS_AGENT_JOURNAL
 	where 
