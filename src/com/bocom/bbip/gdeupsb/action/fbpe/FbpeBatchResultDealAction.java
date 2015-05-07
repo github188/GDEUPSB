@@ -4,7 +4,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +19,6 @@ import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.entity.EupsBatchInfoDetail;
-import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
 import com.bocom.bbip.eups.repository.EupsBatchInfoDetailRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
@@ -96,13 +94,23 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 		}
         
         //根据单位编号寻找返盘格式文件解析
-        String fmtFileName =null;
         String comNo=gdEupsBatchConsoleInfo.getComNo();
         String fileName = comNo+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";   	
         context.setData("printResult", fileName);
         //仅有44460002194
          	createGasFile(context, eupsBatchInfoDetailList, comNo,batNos);
-         	log.info("=================="+context.getData("printResult"));
+            context.setData("ApFmt",  "48211");
+            context.setData("batNo",  gdEupsBatchConsoleInfo.getBatNo());
+            context.setData("comNo",  gdEupsBatchConsoleInfo.getComNo());
+            context.setData("subDte",  gdEupsBatchConsoleInfo.getSubDte());
+            context.setData("comNme", fileName );
+           context.setData("batSts",  gdEupsBatchConsoleInfo.getBatSts());
+            context.setData("totCnt",  gdEupsBatchConsoleInfo.getTotCnt());
+            context.setData("totAmt",  gdEupsBatchConsoleInfo.getTotAmt());
+            context.setData("sucTotCnt"  ,gdEupsBatchConsoleInfo.getSucTotCnt());
+            context.setData("sucTotAmt", gdEupsBatchConsoleInfo.getSucTotAmt());
+            
+            logger.info("==================End BatchFbpeResultDealAction");
          	return;
     }
     /**
