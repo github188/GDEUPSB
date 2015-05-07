@@ -554,6 +554,7 @@
   <xs:complexType name="agentFileSendResponse_CType">
     <xs:sequence>
       <xs:element ref="tns:responseHeader" minOccurs="0"/>
+      <xs:element name="batchId" type="tns:batchId_SType" minOccurs="0"/>
       <xs:element name="filNam" type="tns:filNam_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
@@ -573,6 +574,14 @@
       <xs:maxLength value="8"/>
     </xs:restriction>
   </xs:simpleType>
+  <xs:simpleType name="batchId_SType">
+    <xs:annotation>
+      <xs:documentation>批次号</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="20"/>
+    </xs:restriction>
+  </xs:simpleType>
   <xs:complexType name="agentScanPrintRequest_CType">
     <xs:sequence>
       <xs:element ref="tns:requestHeader"/>
@@ -581,6 +590,8 @@
       <xs:element name="gdsBId" type="tns:gdsBId_SType" minOccurs="0"/>
       <xs:element name="actNo" type="tns:actNo_SType" minOccurs="0"/>
       <xs:element name="agtDat" type="tns:agtDat_SType" minOccurs="0"/>
+      <xs:element name="lagtSt" type="tns:lagtSt_SType" minOccurs="0"/>
+      <xs:element name="tagtSt" type="tns:tagtSt_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="agentScanPrintResponse_CType">
@@ -602,6 +613,22 @@
     </xs:annotation>
     <xs:restriction base="xs:string">
       <xs:maxLength value="8"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="lagtSt_SType">
+    <xs:annotation>
+      <xs:documentation>本地协议状态</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="tagtSt_SType">
+    <xs:annotation>
+      <xs:documentation>第三方协议状态</xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:maxLength value="1"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="GDSBID_SType">
@@ -691,6 +718,8 @@
       <xs:element name="LAGTST" type="tns:LAGTST_SType" minOccurs="0"/>
       <xs:element name="TAGTST" type="tns:TAGTST_SType" minOccurs="0"/>
       <xs:element name="TCUSID" type="tns:TCUSID_SType" minOccurs="0"/>
+      <xs:element name="TCUSNM" type="tns:TCUSNM_SType" minOccurs="0"/>
+      <xs:element name="ACTNO" type="tns:ACTNO_SType" minOccurs="0"/>
       <xs:element name="EFFDAT" type="tns:EFFDAT_SType" minOccurs="0"/>
       <xs:element name="IVDDAT" type="tns:IVDDAT_SType" minOccurs="0"/>
       <xs:element name="ERRMSG" type="tns:ERRMSG_SType" minOccurs="0"/>
@@ -729,14 +758,6 @@
       <xs:element name="rspCod" type="tns:rspCod_SType" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
-  <xs:simpleType name="batchId_SType">
-    <xs:annotation>
-      <xs:documentation>批次号</xs:documentation>
-    </xs:annotation>
-    <xs:restriction base="xs:string">
-      <xs:maxLength value="20"/>
-    </xs:restriction>
-  </xs:simpleType>
   <xs:simpleType name="rspCod_SType">
     <xs:annotation>
       <xs:documentation>返回码</xs:documentation>
