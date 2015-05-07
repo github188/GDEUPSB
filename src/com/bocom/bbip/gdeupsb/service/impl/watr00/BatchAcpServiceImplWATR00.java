@@ -1,6 +1,7 @@
 
 package com.bocom.bbip.gdeupsb.service.impl.watr00;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -79,7 +80,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		service.tryLock(lockKey, 60*1000L, 600L);//加锁
 //		String br = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.BR, ErrorCodes.EUPS_FIELD_EMPTY);//机构号
 //		String tlr = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.TELLER, ErrorCodes.EUPS_FIELD_EMPTY);//柜员号
-		//TODO:	先把虚拟柜员赋定值，以后需要改。
+		//虚拟柜员
 		context.setData("br", "01441800999");
 		
 		
@@ -111,9 +112,10 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		context.setVariable(ParamKeys.FLE_NME, filNam);
 		//代扣文件放置目录
 		// /home/bbipadm/data/mftp/BBIP/请求系统/机构号/柜员号/会计日期
-		String dir = "/home/bbipadm/data/mftp/BBIP/GDEUPSB"+"/"+br+"/"+tlr+"/"+acDate+"/";
-		String dir1 = "/home/bbipadm/data/mftp/BBIP/GDEUPSB/wat";
-		logger.info("dir_filNam["+dir+filNam+"]");
+//		String dir = "/home/bbipadm/data/mftp/BBIP/GDEUPSB"+"/"+br+"/"+tlr+"/"+acDate+"/";
+//		String dir1 = "/home/bbipadm/data/mftp/BBIP/GDEUPSB/wat";
+		
+		
 		
 		
 		
@@ -131,14 +133,25 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		Assert.isNotNull(config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST,"第三方配置信息不存在");
 		config.setLocFleNme(fileName);
 		config.setRmtFleNme(fileName);
+		String dir = config.getRmtWay().toString();
+		dir = dir+br+"/"+tlr+"/"+acDate+"/";
 		config.setRmtWay(dir);
 		config.setLocDir(dir);
+		File file = new File(dir);
+	     if (!file.exists()) {
+	         file.mkdirs();
+	     }
+		logger.info("dir_filNam["+dir+filNam+"]");
+		
 		
 		EupsThdFtpConfig configB = get(EupsThdFtpConfigRepository.class).findOne("BatchFileFtpNo");
 		Assert.isNotNull(config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST,"第三方配置信息不存在");
 		configB.setLocFleNme(fileName);
 		configB.setRmtFleNme(fileName);
-		configB.setRmtWay(dir);
+//		configB.setRmtWay(dir);
+		String dir1 = configB.getLocDir().toString();
+		dir1 = dir1+"wat/";
+		
 		configB.setLocDir(dir1);
 		/** 产生代收付格式文件 */
 		((OperateFileAction)get("opeFile")).createCheckFile(configB, GDConstants.BATCH_FILE_FORMAT, fileName, fileMap);
