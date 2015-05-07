@@ -39,6 +39,9 @@ public class PrePayFeeThdAction extends BaseAction implements Executable{
 		
 			context.setData(GDParamKeys.BAG_TYPE, "1");
 			constantOfSoapUI(context);
+			//TODO  要删除
+			context.setData("txnTlr", "ABIR148");
+			context.setData("tlr", "ABIR148");
 			
 			BigDecimal txnAmt=new BigDecimal(context.getData(ParamKeys.TXN_AMT).toString());
 			context.setData(ParamKeys.TXN_AMT, txnAmt.scaleByPowerOfTen(2));
@@ -54,8 +57,6 @@ public class PrePayFeeThdAction extends BaseAction implements Executable{
 			context.setData("comNo", context.getData("company"));
 			context.setData("rsvFld3", context.getData("accountsSerialNos"));
 			
-			//关键字段，设置第三方超时时不进行任何冲正处理，否则会默认冲主机
-			context.setData("isAutoReversalThirdAndCB", "N");   
 	}
 	/**
 	 *报文信息 
