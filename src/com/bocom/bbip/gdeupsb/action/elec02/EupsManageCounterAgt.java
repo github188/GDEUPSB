@@ -217,7 +217,7 @@ public class EupsManageCounterAgt extends BaseAction {
 		infoMap.put("GPF", context.getData("GPF"));
 		infoMap.put("MOB", context.getData("MOB"));
 		infoMap.put("TEL", context.getData("TEL"));
-		// TODO infoMap.put("TXT", agtElecTmp.getRemark());
+		infoMap.put("TXT", agtElecTmp.getRemark());
 		infoList.add(infoMap);
 		context.setData("infoList", infoList);
 		logger.info(" context after set infoList : ", context);
@@ -256,7 +256,7 @@ public class EupsManageCounterAgt extends BaseAction {
 			infoMap.put("GPF", perTmp.getPerComFlag());
 			infoMap.put("MOB", perTmp.getPhoneNum());
 			infoMap.put("TEL", perTmp.getTelNum());
-			// TODO infoMap.put("TXT", agtElecTmp.getRemark());
+			infoMap.put("TXT", agtElecTmp.getRemark());
 			infoList.add(infoMap);
 		}
 		String oldCardNo = context.getData("OAC");
@@ -282,7 +282,7 @@ public class EupsManageCounterAgt extends BaseAction {
 			infoMap.put("GPF", perTmp.getPerComFlag());
 			infoMap.put("MOB", perTmp.getPhoneNum());
 			infoMap.put("TEL", perTmp.getTelNum());
-			// TODO infoMap.put("TXT", agtElecTmp.getRemark());
+			infoMap.put("TXT", agtElecTmp.getRemark());
 			infoList.add(infoMap);
 		}
 		context.setData("infoList", infoList);
@@ -328,7 +328,7 @@ public class EupsManageCounterAgt extends BaseAction {
 			infoMap.put("GPF", perTmp.getPerComFlag());
 			infoMap.put("MOB", perTmp.getPhoneNum());
 			infoMap.put("TEL", perTmp.getTelNum());
-			// TODO infoMap.put("TXT", perTmp.getRemark());
+			infoMap.put("TXT", perTmp.getRemark());
 			infoList.add(infoMap);
 		}
 		context.setData("infoList", infoList);
@@ -375,7 +375,7 @@ public class EupsManageCounterAgt extends BaseAction {
 			infoMap.put("GPF", perTmp.getPerComFlag());
 			infoMap.put("MOB", perTmp.getPhoneNum());
 			infoMap.put("TEL", perTmp.getTelNum());
-			// TODO infoMap.put("TXT", perTmp.getRemark());
+			infoMap.put("TXT", perTmp.getRemark());
 			infoList.add(infoMap);
 		}
 		context.setData("infoList", infoList);
