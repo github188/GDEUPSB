@@ -85,7 +85,7 @@ public class EupsManageCounterAgt extends BaseAction {
 				.find(agtElecTmp);
 		if (null == tmpList || CollectionUtils.isEmpty(tmpList)) {
 			logger.info("There are no records for select check elec agt tmp ");
-			throw new CoreException("协议不存在或缴费号账号不对应或已被删除");
+			throw new CoreException("协议不存在或缴费号和账号不对应或已被删除");
 		}
 		String OAC = tmpList.get(0).getActNo();
 		String OKH = tmpList.get(0).getNewBankNum();
