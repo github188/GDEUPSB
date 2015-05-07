@@ -425,7 +425,7 @@
 		Sub_Sts subSts,Gds_BId gdsBid, Org_Cod orgCod, LAgt_St lagtSt,
 		TAgt_St tagtSt, TCus_Id tcusId, Eff_Dat effDat,
 		Ivd_Dat ivdDat,
-		LER_MSG lerMsg,TER_MSG errMsg
+		LER_MSG lerMsg,TER_MSG errMsg,TCUS_NM TCUSNM,ACT_NO ACTNO
 		 ${extSql}
 		from ${agtSTb}
 		<trim prefix="WHERE" prefixOverrides="AND">
@@ -440,6 +440,12 @@
 			</if>
 			<if test="ivdDatt!=null">
 				AND ivdDat=#{ivdDatt}
+			</if>
+			<if test="lagtSt!=null">
+				AND LAgt_St=#{lagtSt}
+			</if>
+			<if test="tagtSt!=null">
+				AND TAgt_St=#{tagtSt}
 			</if>
 		</trim>
 	</select>
@@ -524,12 +530,12 @@
 
 	<!-- 更新原有协议信息 -->
 	<update id="updateOldAgtInf" parameterType="java.util.Map">
-		update ${AgtSTb}
+		update ${agtSTb}
 		set
-		Sub_Sts=#{subSts},LAGT_ST=#{lagtSt},TAGT_ST=#{tagtSt},BNK_TYP=#{bnkTyp},BNK_NO=#{bnkNo},BNK_NAM=#{bnkNam}
-		,ORG_COD=#{orgCod},TBUS_TP=#{tbusTp},TCUS_ID=#{tcusId},TCUS_NM=#{tcusNm},EFF_DAT=#{effDat},IVD_DAT=#{ivdDat}
-		where GDS_BID=#{gdsBid} and ACT_NO=#{actNo} and GDS_AID=#{gdsAid} and
-		TCUS_ID=#{tcusId}
+		Sub_Sts=#{SubSts},LAGT_ST=#{lagtSt},TAGT_ST=#{tagtSt},BNK_TYP=#{BnkTyp},BNK_NO=#{BnkNo},BNK_NAM=#{bnkNam}
+		,ORG_COD=#{OrgCod},TBUS_TP=#{TBusTp},TCUS_NM=#{TCusNm},EFF_DAT=#{EffDat},IVD_DAT=#{IvdDat}
+		where GDS_BID=#{gdsBid} and ACT_NO=#{actNo} and GDS_AID=#{GdsAId} and
+		TCUS_ID=#{TCusId}
 	</update>
 
 	<!-- 新增一条协议信息 -->
@@ -537,11 +543,11 @@
 		insert into
 		${agtSTb}
 		(Sub_Sts,LAGT_ST,TAGT_ST,GDS_BID,ACT_NO,GDS_AID,BNK_TYP,BNK_NO,BNK_NAM,ORG_COD,TBUS_TP,TCUS_ID,TCUS_NM,EFF_DAT,
-		IVD_DAT,TXN_CNL)
+		IVD_DAT,TXN_CNL,LER_MSG)
 		values
 		(#{SubSts},#{lagtSt},#{tagtSt},#{gdsBid},#{actNo},#{GdsAId},#{BnkTyp},#{BnkNo},#{bnkNam},#{OrgCod},#{TBusTp},#{TCusId},
 		#{TCusNm},#{EffDat},
-		#{IvdDat},#{txnCnl})
+		#{IvdDat},#{txnCnl},#{lerMsg})
 	</insert>
   <!-- 通讯广东移动 更新原有协议信息 -->
 	<update id="updateGdmobbOldAgtInf" parameterType="java.util.Map">
@@ -605,7 +611,7 @@
 		#{begDat} and #{endDat} ) and b.Sub_Sts='0' and b.TAgt_St in (
 		'U','C'
 		)
-		and b.usb_flg='Y' and length(trim(b.Tcus_Id)) = 10
+		and b.usb_flg='Y' and length(trim(b.Tcus_Id)) = 10 and b.LAgt_St!='F'
 		order by b.TCus_Id,
 		b.TBus_Tp asc for read only
 	</select>
@@ -613,15 +619,14 @@
 	<!-- 签约一站通协议拷盘:查找拷盘数据(广州有线/珠江数码) -->
 	<select id="findFileSndInfoTel" resultType="java.util.Map">
 		select 
-		a.Act_Typ actTyp, a.Act_No actNo, b.TCUS_NM actNm, a.Id_Typ idTyp, a.Id_No idNo, a.Mob_Tel mobTel,
+		a.Act_Typ actTyp, a.Act_No actNo, a.Act_Nm actNm, a.Id_Typ idTyp, a.Id_No idNo, a.Mob_Tel mobTel,
                b.TCus_Id tCusId, b.Txn_Cnl txnCnl, b.Eff_Dat effDat, b.Ivd_Dat ivdDat
 		from ${agtMTb} a, ${agtSTb} b
 		where a.Gds_BId=#{gdsBId}
 		and a.Gds_BId=b.Gds_BId and a.Act_No=b.Act_No and (
 		b.Eff_Dat between
-		#{begDat} and #{endDat} ) and b.Sub_Sts='0'
+		#{begDat} and #{endDat} ) and b.Sub_Sts='0' 
 	</select>
-	
 
 	<!-- 数据拷盘：更新该批次的批次号 -->
 	<update id="updateBchUsbFlg" parameterType="java.util.Map">
@@ -631,7 +636,7 @@
 		where Gds_BId=#{gdsBId} and
 		Eff_Dat between #{begDat} and #{endDat} and
 		Sub_Sts='0' and TAgt_St in
-		( 'U','C' )
+		( 'U','C' ) and  LAgt_St!='F'
 		and USB_FLG='Y'
 	</update>
 <!-- length(trim(TCus_Id)) -->
@@ -677,17 +682,27 @@
 	<!-- 签约一站通-:协议更新：更新协议子表信息 -->
 	<update id="updateAgtWtrDelSts" parameterType="java.util.Map">
 		update ${agtStb}
-		set TAgt_St=#{tAgtSt}, TER_MSG=#{terMsg},USB_FLG='Y' where
+		set TAgt_St=#{tAgtSt}, TER_MSG=#{terMsg} where
 		Gds_BId=#{gdsBId}
 		and ACT_NO=#{actNo} and Gds_AId=#{gdsAId}
 		and
 		Sub_Sts='0'
 	</update>
+	
+	<!-- 签约一站通-:协议更新：更新协议子表信息，珠江数码 -->
+	<update id="updateAgtDegDelSts" parameterType="java.util.Map">
+		update ${agtStb}
+		set TAgt_St=#{tAgtSt}, TER_MSG=#{terMsg} where
+		Gds_BId=#{gdsBId}
+		and ACT_NO=#{actNo} and TCUS_ID=#{tCusId}
+		Sub_Sts='0'
+	</update>
+	
 
 	<!-- 签约一站通-:协议更新：更新协议子表所有协议信息 -->
 	<update id="updateAgtWtrDelStsAll" parameterType="java.util.Map">
 		update
-		${agtStb} set TAgt_St=#{tAgtSt}, TER_MSG=#{terMsg},USB_FLG='Y' where
+		${agtStb} set TAgt_St=#{tAgtSt}, TER_MSG=#{terMsg} where
 		Gds_BId=#{gdsBId}
 		and ACT_NO=#{actNo} and Sub_Sts='0'
 	</update>
@@ -741,5 +756,12 @@
 		where TCUS_ID=#{TCusId} and gds_Bid=#{gdsBid} 
 		AND Act_No=#{actNo} and TBus_Tp=#{tBusTp}
 	</select>
+	
+	<!-- 签约一站通-:更新协议子表消息 -->
+	<update id="updateStbInf" parameterType="java.util.Map">
+		update
+		${agtstb} set LAGT_ST=#{lagtSt},LER_MSG=#{lerMsg} where ACT_NO=#{actNo} and gds_Bid=#{gdsBid} and TCUS_ID=#{tcusId}
+	</update>
+	
 
 </mapper>
