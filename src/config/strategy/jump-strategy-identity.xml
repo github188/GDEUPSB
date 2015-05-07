@@ -62,9 +62,13 @@
 		class="com.bocom.bbip.gdeupsb.action.plpd.PlpdBatchResultDealAction">
 	</bean>
 
-	<bean id="eups.qryDealStrategyActionELEC01"
+<!-- 	<bean id="eups.qryDealStrategyActionELEC01"
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.QueryElecUserStrategyAction">
-	</bean>
+	</bean> -->
+	
+		<!-- 费用查询处理前 -->
+	<bean id="eups.queryDealServiceActionELEC01"
+		class="com.bocom.bbip.gdeupsb.strategy.elcgd.QueryElecUserStrategyAction" />
 
 	<!-- 单笔缴费 -->
 	<!-- <bean id="eups.prepareCheckDealStrategyActionELEC01" class="com.bocom.bbip.gdeupsb.strategy.elcgd.PreInitElecStrategyAction"> 
@@ -365,11 +369,10 @@
 	<bean id="eups.afterBatchAcpServiceActionZSAG00"
 		class="com.bocom.bbip.gdeupsb.action.fbpd.AfterBatchAcpServiceImplZSAG00" />
 
-
 	<!--汕头电力单边划扣 -->
-	<bean
+<!-- 	<bean
 		class="com.bocom.bbip.gdeupsb.action.elec02.PayUnilateralToBankServiceImplELEC02"
-		id="eups.payUnilateralToBankServiceActionELEC02" />
+		id="eups.payUnilateralToBankServiceActionELEC02" /> -->
 
 	<!--汕头电力单边mozhaang -->
 	<bean
