@@ -11,6 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.comp.BBIPPublicService;
+import com.bocom.bbip.comp.CommonRequest;
+import com.bocom.bbip.comp.account.AccountService;
+import com.bocom.bbip.comp.account.support.CusActInfResult;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
@@ -50,6 +53,9 @@ public class DigitAgtMdyDealImlAction implements AgtMdyDealImlService {
 
 	@Autowired
 	GdsAgtTrcRepository gdsAgtTrcRepository;
+
+	@Autowired
+	AccountService accountService;
 
 	private final static Logger log = LoggerFactory.getLogger(DigitAgtMdyDealImlAction.class);
 
@@ -144,7 +150,7 @@ public class DigitAgtMdyDealImlAction implements AgtMdyDealImlService {
 						gdsAgtInf.setIvdDat(ivdDat);
 					}
 				}
-				gdsAgtInf.setBrno((String)context.getData("brno"));
+				gdsAgtInf.setBrno((String) context.getData("brno"));
 				// gdsAgtInf.setIvdDat("99991231");
 				gdsAgtInf = gdsAgtInfRepository.save(gdsAgtInf);
 			}
@@ -202,11 +208,11 @@ public class DigitAgtMdyDealImlAction implements AgtMdyDealImlService {
 		gdsAgtWaterRepository.updateOldAgtInfCnl(inparaSub);
 
 		List<Map<String, Object>> signDetailList = context.getData("prvDatReq");
-		
+
 		// 卡号限制判断
 		String actTyp = context.getData("actTyp"); // 账户性质
 		String chn = context.getData("chn");
-		if(!"00".equals(chn)){
+		if (!"00".equals(chn)) {
 			cardBinVerify(context, actTyp, actNo);
 		}
 
@@ -263,11 +269,41 @@ public class DigitAgtMdyDealImlAction implements AgtMdyDealImlService {
 				detailMap.put("lagtSt", "U");
 				detailMap.put("tagtSt", "U");
 
+				String idNo = context.getData("idNo");
+				// 如果输入了身份证则校验身份证号码与卡号是否绑定
+				if (StringUtils.isNotEmpty(idNo)) {
+					boolean crdChkR = idCardCheck(context, actNo,idNo);
+					if (crdChkR) {
+						detailMap.put("lagtSt", "S");
+					} else {
+						detailMap.put("lagtSt", "F");
+						detailMap.put("lerMsg", "卡号与身份证号不匹配");
+					}
+				}
+
 				log.info("新增信息=" + detailMap);
 				gdsAgtWaterRepository.insertDetailAgtInf(detailMap);
 			}
 
 		}
+	}
+
+	private boolean idCardCheck(Context context, String actNo,String idNo) throws CoreException {
+
+		String cusAc = actNo; 
+		CommonRequest commonRequest = CommonRequest.build(context);
+		CusActInfResult cusActInfResult = accountService.getAcInf(commonRequest, cusAc);
+		if (!cusActInfResult.isSuccess()) {
+			return false;
+		} else {
+			String hostIdno = cusActInfResult.getIdNo();
+			log.info("after qry id info,查询身份证信息，主机返回的身份证号为:[" + hostIdno + "],前台输入的身份证号为:[" + idNo + "]");
+
+			if (!hostIdno.equals(idNo)) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
@@ -301,11 +337,13 @@ public class DigitAgtMdyDealImlAction implements AgtMdyDealImlService {
 	 */
 	private void chechkCusInf(Context context, String cusNo, String tBusTyp, String agtStb, int i) throws CoreException {
 		// 校验用户编号长度
-//		if (cusNo.length() != 10) {
-//			context.setData("responseType", "E");
-//			context.setData("responseMessage", "第" + i + "条记录，用户编号" + cusNo + "，长度不足10位");
-//			throw new CoreException(GDErrorCodes.EUPS_SIGN_CUSNO_LENGTH_ERROR, "第" + i + "条记录，用户编号" + cusNo + "，长度不足10位");
-//		}
+		// if (cusNo.length() != 10) {
+		// context.setData("responseType", "E");
+		// context.setData("responseMessage", "第" + i + "条记录，用户编号" + cusNo +
+		// "，长度不足10位");
+		// throw new CoreException(GDErrorCodes.EUPS_SIGN_CUSNO_LENGTH_ERROR,
+		// "第" + i + "条记录，用户编号" + cusNo + "，长度不足10位");
+		// }
 		// 校验是否存在已签约的数据
 		Map<String, Object> inpara = new HashMap<String, Object>();
 		inpara.put("agtSTb", agtStb);

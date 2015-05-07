@@ -63,6 +63,8 @@ public class WaterDateUpdImlAction implements AgtDataUpdImlService {
 		eupsThdFtpConfig.setLocFleNme(filNam);
 
 		List<Map<String, Object>> watrFileList = operateFileAction.pareseFile(eupsThdFtpConfig, "waterAgtUpdFmt");
+
+		log.info("watrFileList=" + watrFileList);
 		String gdsAId = new String(); // 协议号
 		for (int i = 0; i < watrFileList.size(); i++) {
 			Map<String, Object> wtrDtlMap = watrFileList.get(i);
@@ -74,6 +76,7 @@ public class WaterDateUpdImlAction implements AgtDataUpdImlService {
 			String errFlg = new String(); // 错误标志
 			String rspCod = new String(); // 返回码
 
+			log.info("当前的结果文件中，处理结果为:[" + result + "]");
 			if (GDConstants.SIGN_STATION_THIRD_CHECK_SUC.equals(result)) {
 				tAgtSt = "S";
 			} else {
@@ -88,27 +91,49 @@ public class WaterDateUpdImlAction implements AgtDataUpdImlService {
 			agtSbinMap.put("actNo", wtrDtlMap.get("actNo")); // 帐号
 
 			String gdsAId1 = (String) wtrDtlMap.get("gdsAId1");
-			if (StringUtils.isNotEmpty(gdsAId1)) {
-				gdsAId = gdsAId1;
-				// 更新第一个协议号
-				agtSbinMap.put("gdsAId", gdsAId); // 协议号
-				try {
-					gdsAgtWaterRepository.updateAgtWtrDelStsAll(agtSbinMap);
-				} catch (Exception e) {
-					errFlg = "1";
-					rspCod = "GDS999";
-					log.info("文件【" + filNam + "】第【" + i + 1 + "】行更新协议【" + gdsAId + "】状态失败");
-				}
-				updAll = "0";
+
+			log.info("agtSbinMap=" + agtSbinMap);
+
+			// 错误信息条件设置
+			Map<String, Object> inparaMap = new HashMap<String, Object>();
+			inparaMap.put("agtStb", gdsRunCtl.getAgtStb());
+			inparaMap.put("gdsBId", gdsRunCtl.getGdsBid());
+			inparaMap.put("batchId", batchId);
+
+			// TODO:原ics代码中，需要判断gdsAId1是否为空，但是0505日拿到的返回结果中该字段为空，待确认！！。。
+			// if (StringUtils.isNotEmpty(gdsAId1)) {
+			log.info("gdsAId1 is not empty!..gdsAId1=[" + gdsAId1 + "]");
+
+			gdsAId = gdsAId1;
+			// 更新第一个协议号
+			agtSbinMap.put("gdsAId", gdsAId); // 协议号
+			try {
+				log.info("开始处理更新状态1..");
+				gdsAgtWaterRepository.updateAgtWtrDelStsAll(agtSbinMap);
+			} catch (Exception e) {
+				// 更新本批次为可制盘 UpdAgt44101UsbFlg
+				updBatUsbFlg(inparaMap);
+
+				errFlg = "1";
+				rspCod = "GDS999";
+				log.info("文件【" + filNam + "】第【" + i + 1 + "】行更新协议【" + gdsAId + "】状态失败");
 			}
+			updAll = "0";
+			// }
+			// TODO:如上！..
 			if (StringUtils.isNotEmpty(gdsAId1)) {
+				log.info("gdsAId1 is not empty!..gdsAId1=[" + gdsAId1 + "]");
 				String gdsAId2 = (String) wtrDtlMap.get("gdsAId2");
 				gdsAId = gdsAId2;
 				// 更新第二个协议号(协议号非空才更新)
 				agtSbinMap.put("gdsAId", gdsAId); // 协议号
 				try {
+					log.info("开始更新处理状态2！..");
 					gdsAgtWaterRepository.updateAgtWtrDelSts(agtSbinMap);
 				} catch (Exception e) {
+					// 更新本批次为可制盘 UpdAgt44101UsbFlg
+					updBatUsbFlg(inparaMap);
+
 					errFlg = "1";
 					rspCod = "GDS999";
 					log.info("文件【" + filNam + "】第【" + i + 1 + "】行更新协议【" + gdsAId + "】状态失败");
@@ -121,6 +146,9 @@ public class WaterDateUpdImlAction implements AgtDataUpdImlService {
 					// UpdAgt44101ResultAll，更新所有协议信息
 					gdsAgtWaterRepository.updateAgtWtrDelStsAll(agtSbinMap);
 				} catch (Exception e) {
+					// 更新本批次为可制盘 UpdAgt44101UsbFlg
+					updBatUsbFlg(inparaMap);
+
 					errFlg = "1";
 					rspCod = "GDS999";
 					log.info("文件【" + filNam + "】第【" + i + 1 + "】行更新协议【全部】状态失败");
@@ -132,7 +160,7 @@ public class WaterDateUpdImlAction implements AgtDataUpdImlService {
 		// 如果批次号不为空，即本次有数据，则需要判断本批是否都回应了
 		if (StringUtils.isNotEmpty(batchId)) {
 			// 统计批次数量 statAgt44101Batch
-			Map<String,Object> inpara=new HashMap<String, Object>();
+			Map<String, Object> inpara = new HashMap<String, Object>();
 			inpara.put("batchId", batchId);
 			inpara.put("agtStb", gdsRunCtl.getAgtStb());
 			List<Integer> cntList = gdsAgtWaterRepository.findBatchAgtCntAll(inpara);
@@ -144,11 +172,12 @@ public class WaterDateUpdImlAction implements AgtDataUpdImlService {
 				// 查询本批回盘标识还是Y的数据qryAgt44101Usbflg
 				List<String> actList = new ArrayList<String>();
 				try {
-					Map<String,Object> usbFlgPara=new HashMap<String,Object>();
+					Map<String, Object> usbFlgPara = new HashMap<String, Object>();
 					usbFlgPara.put("batchId", batchId);
 					usbFlgPara.put("agtStb", gdsRunCtl.getAgtStb());
 					actList = gdsAgtWaterRepository.findActInfUsbFlg(usbFlgPara);
 				} catch (Exception e) {
+
 					Result ret1 = bbipPublicService.unlock(gdsRunCtl.getGdsBid());
 					int status1 = ret1.getStatus();
 					if (status1 != 0) {
@@ -164,16 +193,15 @@ public class WaterDateUpdImlAction implements AgtDataUpdImlService {
 						unusbMsg + "'\n" + "请跟踪以上未回盘的账号信息.";
 			}
 
-			Map<String, Object> inparaMap = new HashMap<String, Object>();
-			inparaMap.put("agtStb", gdsRunCtl.getAgtStb());
-			inparaMap.put("gdsBId", gdsRunCtl.getGdsBid());
-			inparaMap.put("batchId", batchId);
-
-			// 更新本批次为可制盘 UpdAgt44101UsbFlg
-			gdsAgtWaterRepository.updateBatchUsbFlg(inparaMap);
 		}
 		context.setData("rstMsg", rstMsg);
 
 		return null;
 	}
+
+	private void updBatUsbFlg(Map<String, Object> inparaMap) {
+		log.info("更新制盘标志为可制盘！..当前的map为:[" + inparaMap + "]");
+		gdsAgtWaterRepository.updateBatchUsbFlg(inparaMap);
+	}
+
 }
