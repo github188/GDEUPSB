@@ -223,7 +223,7 @@ public class CheckThdDetlAcctAction implements Executable {
 		eupsStreamNos.setThdTxnSts("S");
 		eupsStreamNos.setRsvFld4(busType);
 		eupsStreamNos.setRsvFld5(payType);
-		List<EupsStreamNo> eupsStreamNoList=eupsStreamNoRepository.find(eupsStreamNos);
+		List<EupsStreamNo> eupsStreamNoList=eupsStreamNoRepository.findSubComNo(eupsStreamNos);
 		List<CheckDetailAcct> list=new ArrayList<CheckDetailAcct>();
 		//内容
 		int i=0;
@@ -275,8 +275,9 @@ public class CheckThdDetlAcctAction implements Executable {
 			i++;
 			String xh=i+"";
 			while(xh.length()<9){
-					xh="0"+i;
+					xh="0"+xh;
 			}
+			System.out.println("AAAAAAAAAAAAAAAAAAAAAAAA");
 			checkOneCode=checkOneCode+xh;
 			checkDetailAcct.setBakFld1(str);
 			checkDetailAcct.setRsvFld1(checkOneCode);
