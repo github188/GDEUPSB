@@ -39,7 +39,7 @@ public class EupsManageAgt extends BaseAction {
 				((BBIPPublicServiceImpl) get(GDConstants.BBIP_PUBLIC_SERVICE))
 						.getBBIPSequence(), 4));
 
-		final int oprType = Integer.parseInt((String) context.getData("CHT"));
+		 int oprType = Integer.parseInt((String) context.getData("CHT"));
 		switch (oprType) {
 		case ADD:
 			// get(EupsManageCounterAgt.class).checkCusInfoByCusAc(context);
