@@ -2,6 +2,7 @@ package com.bocom.bbip.gdeupsb.action.elec02;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +14,7 @@ import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.entity.GdeupsAgtElecTmp;
 import com.bocom.bbip.gdeupsb.repository.GdeupsAgtElecTmpRepository;
+import com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
@@ -89,7 +91,7 @@ public class EupsManageAgt extends BaseAction {
 			agtElecTmp.setBrNo("01445999999");
 			agtElecTmp.setComNo("4450000002");
 			// TODO 协议编号 
-//			agtElecTmp.setAgtNo(agtNo);
+			agtElecTmp.setAgtNo(getAgtNo()); // 445202 + 7位序列码
 			agtElecTmp.setBankNo("0500");
 			agtElecTmp.setStatus("0");
 			agtElecTmp.setRemark("签约日期:" + MGR_DATE);
@@ -97,6 +99,19 @@ public class EupsManageAgt extends BaseAction {
 			log.info("新增协议成功");
 
 		}
+	}
+
+	private String getAgtNo() throws CoreException {
+		String agtNo = null;
+		List<Map<String, Object>> agtNoList = get(
+				GdeupsAgtElecTmpRepository.class).findAgtNo();
+		String subAgtNo = String.valueOf(agtNoList.get(0).get("SUBAGTNO"));
+		long agtNoL = Long.parseLong(subAgtNo) + 1;
+		agtNo = String.valueOf(agtNoL);
+		agtNo = GdExpCommonUtils.AddChar(agtNo, 7, '0', '1');
+		agtNo = "445202" + agtNo;
+		logger.info("===========agtNo = " + agtNo);
+		return agtNo;
 	}
 
 	private void updateAgentDeal(Context context) throws CoreException {
