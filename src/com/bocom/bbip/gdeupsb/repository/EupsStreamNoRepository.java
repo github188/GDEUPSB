@@ -19,4 +19,6 @@ public interface EupsStreamNoRepository extends PagingAndSortingRepository<EupsS
 	@Find
 	public List<Map<String, Object>> findComNoGroup(Map<String, Object> map);
 	
+	public List<EupsStreamNo> findSubComNo(EupsStreamNo eupsStreamNo );
+	
 }
