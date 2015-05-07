@@ -105,6 +105,14 @@
 		<foreach name="detail"
 			ref="config/fmt/fileFmt/sign/waterAgtUpdFmtDetail.xml" encoding="GBK" />
 	</file>
+	
+		<!--签约一站通：电信协议更新文件 -->
+	<file id="degAgtUpdFmt" name="degAgtUpdFmt" encoding="GBK"
+		lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/sign/degAgtUpdFmtDetail.xml" encoding="GBK" />
+	</file>
+	
 
 	<!--文件代收付配置格式 -->
 	<file id="agtFileBatchFmt" name="agtFileBatchFmt" encoding="GBK"
