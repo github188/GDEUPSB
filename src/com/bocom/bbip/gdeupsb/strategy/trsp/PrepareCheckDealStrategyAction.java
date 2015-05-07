@@ -29,5 +29,6 @@ public class PrepareCheckDealStrategyAction implements Executable{
 		ctx.setData(GDParamKeys.NOD_NO, ctx.getData(ParamKeys.BR));
 		ctx.setData(GDParamKeys.TLR_ID, ctx.getData(ParamKeys.TELLER));
 		ctx.setData(GDParamKeys.BR_NO, ctx.getData(ParamKeys.BK));
+		ctx.setData("payPsw",ctx.getData("pinBlk"));  //支付密码
 	}
 }
