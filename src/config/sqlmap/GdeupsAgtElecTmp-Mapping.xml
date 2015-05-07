@@ -715,9 +715,9 @@
 	</delete>
 
 	<select id="findAgtNo" resultType="java.util.Map" parameterType="java.lang.String">
-		select * from(select COALESCE(substr(AGT_NO,7), 0) subAgtno from
-		GDEUPSB.GDEUPS_AGT_ELEC_TMP order by AGT_NO desc ) fetch first 1 rows
-		only
+		SELECT * FROM (SELECT COALESCE(SUBSTR(AGT_NO,7), 0) SUBAGTNO FROM
+		GDEUPSB.GDEUPS_AGT_ELEC_TMP ORDER BY AGT_NO DESC ) FETCH FIRST 1 ROWS
+		ONLY
 	</select>
 
 </mapper>
