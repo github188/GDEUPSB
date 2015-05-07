@@ -716,7 +716,7 @@
 
 	<select id="findAgtNo" resultType="java.util.Map" parameterType="java.lang.String">
 		select * from(select COALESCE(substr(AGT_NO,7), 0) subAgtno from
-		GDEUPSB.GDEUPS_AGT_ELEC_TMP order by AGT_NO desc ) fetch first 3 rows
+		GDEUPSB.GDEUPS_AGT_ELEC_TMP order by AGT_NO desc ) fetch first 1 rows
 		only
 	</select>
 
