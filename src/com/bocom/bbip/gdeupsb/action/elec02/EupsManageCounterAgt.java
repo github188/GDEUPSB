@@ -22,7 +22,6 @@ import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdeupsAgtElecTmp;
 import com.bocom.bbip.gdeupsb.repository.GdeupsAgtElecTmpRepository;
-import com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -52,14 +51,9 @@ public class EupsManageCounterAgt extends BaseAction {
 
 		switch (oprType) {
 		case ADD:
-			// checkCusInfoByCusAc(context);
-			// ICS： 先签本地再签thd
 			addAgentDeal(context);
-			buildContextAndCallThd(context);
 			break;
 		case UPDATE:
-			// checkCusInfoByCusAc(context);
-			checkOldBaseInfo(context);
 			// 不允许更改卡号缴费号对应关系，只修改其他辅助信息
 			updateAgentDeal(context);
 			break;
@@ -89,7 +83,7 @@ public class EupsManageCounterAgt extends BaseAction {
 		}
 		String OAC = tmpList.get(0).getActNo();
 		String OKH = tmpList.get(0).getNewBankNum();
-		context.setData("OAC", OAC);
+//		context.setData("OAC", OAC);
 		context.setData("OKH", OKH);
 	}
 
@@ -104,7 +98,6 @@ public class EupsManageCounterAgt extends BaseAction {
 		String sqnTmp = bbipPublicService.getBBIPSequence();
 		sqnTmp = sqnTmp.substring(12);
 		String msgId = br + " " + sqnTmp;
-
 		// 1.拼装外发报文头
 		context.setData("AppTradeCode", "30");
 		context.setData("StartAddr", "301");// wangxianfen:301
@@ -144,8 +137,6 @@ public class EupsManageCounterAgt extends BaseAction {
 		}
 		context.setDataMap(callThdRsp);
 
-		context.setData("comCode", "0500");
-		context.setData("feeCode", "0000");
 	}
 
 	public void checkCusInfoByCusAc(Context context) throws CoreException {
@@ -189,47 +180,58 @@ public class EupsManageCounterAgt extends BaseAction {
 	}
 
 	private void addAgentDeal(Context context) throws CoreException {
+		//TODO checkCusInfoByCusAc(context);
+		
+		// ICS： 先签本地再签thd
 		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
 		agtElecTmp.setFeeNum((String) context.getData("JFH"));
-		agtElecTmp.setStatus("0");
+//		agtElecTmp.setStatus("0");
 		List<GdeupsAgtElecTmp> list = get(GdeupsAgtElecTmpRepository.class)
 				.find(agtElecTmp);
 		if (list.size() > 0) {
-			log.info("协议已经存在");
-			throw new CoreException("协议已经存在");
+			if("0".equals(list.get(0).getStatus())){
+				log.info("协议已经存在");
+				throw new CoreException("协议已经存在");
+			}
+			if("1".equals(list.get(0).getStatus())){
+				//更新
+				checkOldBaseInfo(context);
+				updateAgentDeal(context);
+			}
+		}else{
+			agtElecTmp = toGdeupsAgtElecTmp(context);
+			agtElecTmp.setBrNo((String) context.getData(ParamKeys.BK));
+			agtElecTmp.setComNo("4450000002");
+//			agtElecTmp.setAgtNo(getAgtNo()); // 445202 + 7位序列码
+			agtElecTmp.setBankNo("301");
+			agtElecTmp.setComCode("0500");
+			agtElecTmp.setFeeCode("000");
+			agtElecTmp.setRemark("签约日期:" + MGR_DATE);
+			get(GdeupsAgtElecTmpRepository.class).save(agtElecTmp);
+
+			// 为返回的list 赋值
+			List<Map<String, Object>> infoList = new ArrayList<Map<String, Object>>();
+			Map<String, Object> infoMap = new HashMap<String, Object>();
+			infoMap.put("JFH", context.getData("JFH"));
+			infoMap.put("UsrNam", context.getData("UsrNam"));
+			infoMap.put("ActNo", context.getData("ActNo"));
+			infoMap.put("ActNm", context.getData("ActNm"));
+			infoMap.put("ACT", context.getData("ACT"));
+			infoMap.put("GPF", context.getData("GPF"));
+			infoMap.put("MOB", context.getData("MOB"));
+			infoMap.put("TEL", context.getData("TEL"));
+			infoMap.put("TXT", agtElecTmp.getRemark());
+			infoList.add(infoMap);
+			context.setData("infoList", infoList);
+			logger.info(" context after set infoList : ", context);
+			
+			buildContextAndCallThd(context);
+			log.info("新增协议成功");
 		}
-
-		agtElecTmp = toGdeupsAgtElecTmp(context);
-		agtElecTmp.setBrNo((String) context.getData(ParamKeys.BK));
-		agtElecTmp.setComNo("4450000002");
-		agtElecTmp.setAgtNo(getAgtNo()); // 445202 + 7位序列码
-		agtElecTmp.setBankNo("301");
-		agtElecTmp.setComCode("0500");
-		agtElecTmp.setFeeCode("000");
-		agtElecTmp.setStatus("0");
-		agtElecTmp.setRemark("签约日期:" + MGR_DATE);
-		get(GdeupsAgtElecTmpRepository.class).insert(agtElecTmp);
-
-		// 为返回的list 赋值
-		List<Map<String, Object>> infoList = new ArrayList<Map<String, Object>>();
-		Map<String, Object> infoMap = new HashMap<String, Object>();
-		infoMap.put("JFH", context.getData("JFH"));
-		infoMap.put("UsrNam", context.getData("UsrNam"));
-		infoMap.put("ActNo", context.getData("ActNo"));
-		infoMap.put("ActNm", context.getData("ActNm"));
-		infoMap.put("ACT", context.getData("ACT"));
-		infoMap.put("GPF", context.getData("GPF"));
-		infoMap.put("MOB", context.getData("MOB"));
-		infoMap.put("TEL", context.getData("TEL"));
-		infoMap.put("TXT", agtElecTmp.getRemark());
-		infoList.add(infoMap);
-		context.setData("infoList", infoList);
-		logger.info(" context after set infoList : ", context);
-		log.info("新增协议成功");
-
 	}
 
-	private String getAgtNo() throws CoreException {
+	/*private String getAgtNo() throws CoreException {
+//		  不可行，假若a b c .... 签约时间无限接近，将可能取得同一个编号！！！
 		String agtNo = null;
 		List<Map<String, Object>> agtNoList = get(
 				GdeupsAgtElecTmpRepository.class).findAgtNo();
@@ -240,9 +242,13 @@ public class EupsManageCounterAgt extends BaseAction {
 		agtNo = "445202" + agtNo;
 		logger.info("===========agtNo = " + agtNo);
 		return agtNo;
-	}
+	}*/
 
 	private void updateAgentDeal(Context context) throws CoreException {
+		
+		//TODO checkCusInfoByCusAc(context);
+		checkOldBaseInfo(context);
+
 		List<Map<String, Object>> infoList = new ArrayList<Map<String, Object>>();
 		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
 		agtElecTmp.setFeeNum((String) context.getData("JHF"));
@@ -267,12 +273,18 @@ public class EupsManageCounterAgt extends BaseAction {
 			infoMap.put("TXT", agtElecTmp.getRemark());
 			infoList.add(infoMap);
 		}
+		context.setData("infoList", infoList);
+		logger.info(" context after set infoList : ", context);
 		String oldCardNo = context.getData("OAC");
 		String oldBankNum = context.getData("OKH");
+		// 不允许更改卡号缴费号对应关系，只修改其他辅助信息
+		if( ! oldCardNo.equals(context.getData("ActNo"))){ //输入卡号与原签约卡号不一致，报错
+			throw new CoreException("输入卡号与原签约卡号不一致,不可进行交易");
+		}
 
 		agtElecTmp = toGdeupsAgtElecTmp(context);
 		agtElecTmp.setOldBankNum(oldBankNum);
-		agtElecTmp.setOldCardNo(oldCardNo);
+//		agtElecTmp.setOldCardNo(oldCardNo);
 		// get(GdeupsAgtElecTmpRepository.class).updateByAc(agtElecTmp);
 		agtElecTmp.setRemark("修改日期:" + MGR_DATE);
 		get(GdeupsAgtElecTmpRepository.class).updateByFeeNum(agtElecTmp);
@@ -302,18 +314,14 @@ public class EupsManageCounterAgt extends BaseAction {
 
 	private void queryAgentDeal(Context context) throws CoreException {
 		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
-
 		String feeNum = (String) context.getData("JFH");
 		String actNo = (String) context.getData("ActNo");
 		if (feeNum != null && !"".equals(feeNum.trim())) {
 			agtElecTmp.setFeeNum(feeNum); //
 		}
-
 		if (actNo != null && !"".equals(actNo.trim())) {
 			agtElecTmp.setActNo(actNo); //
 		}
-
-		// agtElecTmp.setStatus("0");
 		List<GdeupsAgtElecTmp> tmpList = get(GdeupsAgtElecTmpRepository.class)
 				.findBase(agtElecTmp);
 		if (tmpList.size() > 0) {
@@ -341,10 +349,6 @@ public class EupsManageCounterAgt extends BaseAction {
 		}
 		context.setData("infoList", infoList);
 		logger.info(" context after set infoList : ", context);
-
-		// context.setData("ACN", list.get(0).getActNo());
-		// context.setData("ActNo", list.get(0).getActNo());
-		// context.setData("TXT", list.get(0).getUserName());
 	}
 
 	// 删除交易（必输缴费号）
