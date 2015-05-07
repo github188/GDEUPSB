@@ -66,6 +66,7 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 		logger.info("=============context:" + context);
 
 		Map<String, Object> detailMap = new HashMap<String, Object>();
+		//TODO "4910000430"
 		detailMap.put("comNo", "4910000430");
 		detailMap.put("beginDte", beginDte);
 		detailMap.put("endDte", endDte);
