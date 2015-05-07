@@ -202,6 +202,8 @@ public class EupsManageCounterAgt extends BaseAction {
 		agtElecTmp.setComNo("4450000002");
 		agtElecTmp.setAgtNo(getAgtNo()); // 445202 + 7位序列码
 		agtElecTmp.setBankNo("301");
+		agtElecTmp.setComCode("0500");
+		agtElecTmp.setFeeCode("000");
 		agtElecTmp.setStatus("0");
 		agtElecTmp.setRemark("签约日期:" + MGR_DATE);
 		get(GdeupsAgtElecTmpRepository.class).insert(agtElecTmp);
@@ -382,7 +384,7 @@ public class EupsManageCounterAgt extends BaseAction {
 
 		GdeupsAgtElecTmp delElecTmp = toGdeupsAgtElecTmp(context);
 		delElecTmp.setStatus("1");
-		delElecTmp.setRemark("删除日期:" + MGR_DATE);
+		delElecTmp.setRemark("注销日期:" + MGR_DATE);
 		get(GdeupsAgtElecTmpRepository.class).updateByFeeNum(delElecTmp);
 
 		buildContextAndCallThd(context);

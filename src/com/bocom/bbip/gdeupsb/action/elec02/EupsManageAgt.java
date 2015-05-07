@@ -90,14 +90,13 @@ public class EupsManageAgt extends BaseAction {
 			agtElecTmp.setStatus("0");
 			agtElecTmp.setBrNo("01445999999");
 			agtElecTmp.setComNo("4450000002");
-			// TODO 协议编号 
 			agtElecTmp.setAgtNo(getAgtNo()); // 445202 + 7位序列码
-			agtElecTmp.setBankNo("0500");
-			agtElecTmp.setStatus("0");
+			agtElecTmp.setBankNo("301");
+			agtElecTmp.setComCode("0500");
+			agtElecTmp.setFeeCode("000");
 			agtElecTmp.setRemark("签约日期:" + MGR_DATE);
 			get(GdeupsAgtElecTmpRepository.class).insert(agtElecTmp);
 			log.info("新增协议成功");
-
 		}
 	}
 
