@@ -58,8 +58,6 @@ public class EupsManageAgt extends BaseAction {
 		}
 	}
 
-	// TODO catch exceptions
-
 	private void addAgentDeal(Context context) throws CoreException {
 
 		String gpf = (String) context.getData("GPF");
@@ -90,7 +88,7 @@ public class EupsManageAgt extends BaseAction {
 			agtElecTmp.setStatus("0");
 			agtElecTmp.setBrNo("01445999999");
 			agtElecTmp.setComNo("4450000002");
-			agtElecTmp.setAgtNo(getAgtNo()); // 445202 + 7位序列码
+//			agtElecTmp.setAgtNo(getAgtNo()); // 445202 + 7位序列码
 			agtElecTmp.setBankNo("301");
 			agtElecTmp.setComCode("0500");
 			agtElecTmp.setFeeCode("000");
