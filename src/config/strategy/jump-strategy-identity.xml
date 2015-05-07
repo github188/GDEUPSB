@@ -295,9 +295,7 @@
 		id="eups.checkBkFileToThirdStrategyActionHSSC00" />
 
 
-	<!--欠费查询 -->
-	<bean class="com.bocom.bbip.gdeupsb.strategy.trsp.QryDealStrategyAction"
-		id="eups.qryDealStrategyActionTRSP00" />
+	
 
 	<!--自助通缴费 -->
 	<bean
