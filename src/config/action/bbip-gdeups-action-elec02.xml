@@ -25,7 +25,7 @@
 
 
 <!-- 电力回执打印-->
-<action id="printBackELEC02" class="com.bocom.bbip.gdeupsb.action.elec02.EupsPrintElecBackAction" />
+<!-- <action id="printBackELEC02" class="com.bocom.bbip.gdeupsb.action.elec02.EupsPrintElecBackAction" /> -->
 
 <action id="afterBatchelec" class="com.bocom.bbip.gdeupsb.action.elec02.BatchBackAction" />
 </x:beans>
