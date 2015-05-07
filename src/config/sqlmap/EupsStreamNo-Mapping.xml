@@ -1858,7 +1858,7 @@
         AND  SVR_NME=#{svrNme,jdbcType=CHAR}
       </if>
       <if test="comNo!=null" >
-        AND  SUBSTR(COM_NO,1,6) as COM_NO=#{comNo,jdbcType=CHAR}
+        AND  SUBSTR(COM_NO,1,6) =#{comNo,jdbcType=CHAR}
       </if>
       <if test="rspCde!=null" >
         AND  RSP_CDE=#{rspCde,jdbcType=CHAR}
