@@ -39,7 +39,8 @@ public class AgtFileSendPreAction extends BaseAction {
 
 		String busNam = CodeSwitchUtils.codeGenerator("GdsBIdToBusNam", gdsBid);
 		context.setData("busNam", busNam);
-
+		
+		//TODO:进行修改
 		// 设置文件名称
 		String filNam = "GDS" + gdsBid +"_"+ context.getData("begDat") + ".TXT";
 		context.setData("filNam", filNam);

@@ -87,9 +87,21 @@ public class AgtScanPrintAction extends BaseAction {
 			inputMap.put("extSql", extSql);
 			inputMap.put("agtSTb", agtSTb);
 			inputMap.put("gdsBId", gdsBId);
-			inputMap.put("actNo", actNo);
+			if(StringUtils.isNotEmpty(actNo)){
+				inputMap.put("actNo", actNo);
+			}
 			inputMap.put("effDat", agtDat);
 			inputMap.put("ivdDat", agtDat);
+			
+			String lagtSt=context.getData("lagtSt");
+			if(StringUtils.isNotEmpty(lagtSt)){
+				inputMap.put("lagtSt", lagtSt);
+			}
+			
+			String tagtSt=context.getData("tagtSt");
+			if(StringUtils.isNotEmpty(tagtSt)){
+				inputMap.put("tagtSt", tagtSt);
+			}
 
 			List<Map<String, Object>> signDetail = get(GdsAgtWaterRepository.class).findSignDeatilInfo(inputMap); // 查询明细
 			log.info("明细信息查询结果=" + signDetail);
