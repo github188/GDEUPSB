@@ -799,7 +799,7 @@
 	where 
 				EUPS_BUS_TYP='ELEC00'  and  TXN_DTE=#{txnDte,jdbcType=CHAR}  
 	group by 
-				SUBSTR(COM_NO,1,6) as COM_NO
+				SUBSTR(COM_NO,1,6)
 	</select>
 	
 	<select id="findBySubComNo" resultMap="basicResultMap" >
