@@ -221,8 +221,6 @@ public class AgentFileToThdAction extends BaseAction{
 		        //获取MD5
 		        log.info("================Start Get  FileMD5");
 		        EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("efekMD5");
-		        eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/efek/");
-		        eupsThdFtpConfig.setRmtWay("/app/ics/dat/efek/send");
 		        eupsThdFtpConfig.setLocFleNme(srcFile+".MD5");
 		        eupsThdFtpConfig.setRmtFleNme(srcFile+".MD5");
 		        operateFTPAction.getFileFromFtp(eupsThdFtpConfig);

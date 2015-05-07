@@ -352,8 +352,6 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
         //获取MD5
         logger.info("================Start Get  FileMD5");
         EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("efekMD5");
-        eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/efek/");
-        eupsThdFtpConfig.setRmtWay("/app/ics/dat/efek/send");
         eupsThdFtpConfig.setLocFleNme(srcFile+".MD5");
         eupsThdFtpConfig.setRmtFleNme(srcFile+".MD5");
         operateFTP.getFileFromFtp(eupsThdFtpConfig);

@@ -97,7 +97,6 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 							logger.info("===========ErrMsg=",e);
 						}
 					
-					eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/efek/");
 					operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
 					String batNo=context.getData(ParamKeys.BAT_NO).toString();
 					//该更控制表
