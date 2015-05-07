@@ -84,7 +84,6 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
         eupsThdFtpConfig.setLocFleNme(fileName);
         String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + context.getData(ParamKeys.BR)+ "/" + context.getData(ParamKeys.TELLER) + "/";
 		eupsThdFtpConfig.setRmtWay(path);
-		eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/batch/");
 		operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
 		
 		logger.info("===============获取文件成功");
