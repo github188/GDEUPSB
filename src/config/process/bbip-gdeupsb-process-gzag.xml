@@ -11,11 +11,5 @@
 		</actions>
 	</process> 
 	
-	<!-- 根据批次号查询信息 -->
-	<process id="gdeupsb.qryBatchStatue" template="eups.simpleTran"   interceptors="eups.transMessageInterceptor">
-		<actions>
-		    <action id="act" ref="gdeupsb.qryBatchStatueAction"/>
-		</actions>
-	</process> 
 	
 </x:beans>

@@ -36,12 +36,6 @@
 			   </actions>
 		</process>		
 		
-	<!-- 南方电网  代收日志服务记录-->
-		<process id="gdeupsb.logService"  template="eups.simpleTran"  interceptors="bbip.bbipSchedulerInterceptor">
-			  <actions>
-			   			  <action id="act"  ref="gdeupsb.logServiceAction"/>
-			   </actions>
-		</process>			
 	
 	<!-- 南方电网  查询客户信息-->
 		<process id="gdeupsb.qryCusMsg"  template="eups.simpleTran"  interceptors="eups.transMessageInterceptor">
@@ -173,12 +167,6 @@
 				   </actions>
 			</process>			
 			
-	<!-- 南方电网  嵌套 根据地区 获取单位编码-->		
-		<process id="gdeupsb.qryComNoByArea"  template="eups.simpleTran"  interceptors="eups.thdELEC00Interceptor">
-				  <actions>
-				   			  <action id="act"  ref="gdeupsb.qryComNoByAreaAction"/>
-				   </actions>
-			</process>			
 			
 		<!-- 联机单笔记账  -->
 	<process id="eups.payFeeOnlineELEC00" template="eups.payOnlineTemplate"
