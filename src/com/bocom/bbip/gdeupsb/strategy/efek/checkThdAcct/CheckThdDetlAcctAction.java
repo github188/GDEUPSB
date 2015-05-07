@@ -380,8 +380,6 @@ public class CheckThdDetlAcctAction implements Executable {
         //获取MD5
         logger.info("================Start Get  FileMD5");
         EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("efekMD5");
-        eupsThdFtpConfig.setLocDir("/home/bbipadm/data/GDEUPSB/efek/");
-        eupsThdFtpConfig.setRmtWay("/app/ics/dat/efek/send");
         eupsThdFtpConfig.setLocFleNme(srcFile+".MD5");
         eupsThdFtpConfig.setRmtFleNme(srcFile+".MD5");
         operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
