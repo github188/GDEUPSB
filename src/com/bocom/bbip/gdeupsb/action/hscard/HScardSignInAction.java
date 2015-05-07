@@ -23,7 +23,7 @@ import com.bocom.jump.bp.util.Hex;
 /**
  * 华商一卡通签退
  * 
- * @author lhx
+ * @author lihaoxun
  * 
  */
 public class HScardSignInAction extends BaseAction {
