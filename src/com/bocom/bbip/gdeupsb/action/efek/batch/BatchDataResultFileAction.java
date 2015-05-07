@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.bocom.bbip.comp.BBIPPublicService;
-import com.bocom.bbip.comp.BBIPPublicServiceImpl;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
@@ -44,7 +43,6 @@ import com.bocom.bbip.service.Result;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
-import com.bocom.jump.bp.SystemConfig;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -91,13 +89,6 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			//文件名
 			String fileName="PTFH"+gdEupsBatchConsoleInfoUpdate.getFleNme().substring(4);
 			//取文件s路径
-			String tlr=(String)context.getData(ParamKeys.TELLER);
-			String br=(String)context.getData(ParamKeys.BR);
-			context.setData(ParamKeys.BR, br);
-	        String AcDate=DateUtils.format(((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getAcDate(),DateUtils.STYLE_yyyyMMdd);
-	        String systemCode=((SystemConfig)get(SystemConfig.class)).getSystemCode();
-	        String dir="/home/bbipadm/data/mftp/BBIP/"+systemCode+"/"+br+"/"+tlr+"/"+AcDate+"/";
-	        						
 	        EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecBatch");		
 			try{
 					Map<String, Object> resultMap=createFileMap(context,gdEupsBatchConsoleInfoUpdate,batNo);
@@ -105,8 +96,6 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 					String name=context.getData(ParamKeys.BAT_NO)+".result";
 					eupsThdFtpConfig.setLocFleNme(name);
 					eupsThdFtpConfig.setRmtFleNme(name);			        
-					eupsThdFtpConfig.setLocDir(dir);
-					eupsThdFtpConfig.setRmtWay(dir);
 					operateFile.createCheckFile(eupsThdFtpConfig, "efekBatchResult", fileName, resultMap);
 			}catch(CoreException e){
 					logger.info("~~~~~~~~~~~Error  Message",e);
@@ -114,7 +103,6 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			// 将生成的文件上传至指定服务器
 			eupsThdFtpConfig.setLocFleNme(fileName);
 			eupsThdFtpConfig.setRmtFleNme(fileName);
-			eupsThdFtpConfig.setRmtWay("/app/ics/dat/efek/send");
 			eupsThdFtpConfig.setFtpDir("0");
 			operateFTP.putCheckFile(eupsThdFtpConfig);
 			
@@ -341,8 +329,8 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 	}
     public  Process RecvEnCryptFile(String excPath, String srcFile, String objFile,Context context) throws IOException, InterruptedException, CoreRuntimeException, CoreException {
     	logger.info("================Start BatchDataFileActiion  RecvEnCryptFile");	    	
-        String cmd="ssh icsadm@182.53.15.200 /app/ics/app/efek/bin/EfeFilSend.sh 182.53.201.45 bcm exchange dat/efek/send "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
-        logger.info("cmd=" + cmd);
+    	String cmd=get(BBIPPublicService.class).getParam("efekMD5")+" "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
+    	logger.info("cmd=" + cmd);
         Process proc = Runtime.getRuntime().exec(cmd);
         proc.waitFor();
 
