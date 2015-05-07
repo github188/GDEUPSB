@@ -87,6 +87,9 @@ public final class GDErrorCodes {
 	
 	/**  签到签退标志为空 */
 	public static final String EUPS_ELE_GZ_SIGN_FLAG_ERROR = "BBIP4400EU0200";
+	
+	/** 当日无流水信息 */
+	public static final String EUPS_ELE_GZ_NO_RECORD = "BBIP4400EU0201";
 
 	/** 签约一站通-数据库查询失败或代理业务GdsBId不存在 */
 	public static final String EUPS_SIGN_GDSBID_NOT_EXIST = "BBIP4400EU1701";
@@ -113,27 +116,27 @@ public final class GDErrorCodes {
 	public static final String EUPS_SIGN_NO_RECORD_FOUND = "BBIP4400EU1708";
 
 	/** 文件名不符合规范 */
-	public static final String EUPS_FILE_RULE_ERROR = "BBIP0004EU0137";
+	public static final String EUPS_FILE_RULE_ERROR = "BBIP4400EU1709";
 	/** 文件名中的业务类型不正确 */
-	public static final String EUPS_FILE_BUSTYPE_ERROR = "BBIP0004EU0138";
+	public static final String EUPS_FILE_BUSTYPE_ERROR = "BBIP4400EU1710";
 	/** 检查文件头中的网点号 */
-	public static final String EUPS_FILE_HEADBR_ERROR = "BBIP0004EU0139";
+	public static final String EUPS_FILE_HEADBR_ERROR = "BBIP4400EU1711";
 	/** 文件头汇总笔数与明细不一致 */
-	public static final String EUPS_FILE_HEADCNT_ERROR = "BBIP0004EU0140";
+	public static final String EUPS_FILE_HEADCNT_ERROR = "BBIP4400EU1712";
 	/** 文件明细第 */
-	public static final String EUPS_FILE_DETAIL_ERROR = "BBIP0004EU0141";
+	public static final String EUPS_FILE_DETAIL_ERROR = "BBIP4400EU1713";
 	/** 打印报错 **/
-	public static final String PRINT_REPORT_ERROR = "BBIP0004EU0142";
+	public static final String PRINT_REPORT_ERROR = "BBIP4400EU1714";
 	/** 无打印模板 **/
-	public static final String PRINT_FMTFIL_ERROR = "BBIP0004EU0143";
+	public static final String PRINT_FMTFIL_ERROR = "BBIP4400EU1715";
 	/** 生成签约成功清单失败 **/
-	public static final String PRINT_SUCC_ERROR = "BBIP0004EU0144";
+	public static final String PRINT_SUCC_ERROR = "BBIP4400EU1716";
 	/** 生成签约失败清单失败 **/
-	public static final String PRINT_FAIL_ERROR = "BBIP0004EU01445";
+	public static final String PRINT_FAIL_ERROR = "BBIP4400EU1717";
 	/** 文件头的业务类型不对 **/
-	public static final String EUPS_FILE_HEADSBID_ERROR = "BBIP0004EU01446";
+	public static final String EUPS_FILE_HEADSBID_ERROR = "BBIP4400EU1718";
 	/** 文件头的日期不对 **/
-	public static final String EUPS_FILE_HEADDATE_ERROR = "BBIP0004EU01447";
+	public static final String EUPS_FILE_HEADDATE_ERROR = "BBIP4400EU1719";
 
 	// 汕头水费
 	/** 登录数据库错 */
