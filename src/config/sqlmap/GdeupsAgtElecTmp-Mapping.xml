@@ -47,8 +47,7 @@
 		<result column="REMARK" property="remark" jdbcType="CHAR" />
 		<result column="PRCESS_PASSWORD" property="prcessPassword"
 			jdbcType="CHAR" />
-		<result column="STATUS" property="status"
-			jdbcType="CHAR" />
+		<result column="STATUS" property="status" jdbcType="CHAR" />
 	</resultMap>
 	<sql id="baseColumnList">
 		BR_NO , AGT_NO ,COM_NO , BANK_NO, COM_CODE, FEE_CODE,
@@ -714,5 +713,11 @@
 			</if>
 		</trim>
 	</delete>
+
+	<select id="findAgtNo" resultType="java.util.Map" parameterType="java.lang.String">
+		select * from(select COALESCE(substr(AGT_NO,7), 0) subAgtno from
+		GDEUPSB.GDEUPS_AGT_ELEC_TMP order by AGT_NO desc ) fetch first 3 rows
+		only
+	</select>
 
 </mapper>
