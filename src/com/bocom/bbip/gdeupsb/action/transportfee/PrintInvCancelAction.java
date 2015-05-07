@@ -82,34 +82,6 @@ public class PrintInvCancelAction extends BaseAction{
 					throw new CoreException(responseCode);
 				}
 				
-			}else if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_FAIL)){
-//				if(!"000000".equals(thdReturnMessage.get(GDParamKeys.TRSP_CD))){
-//					ctx.setData(GDParamKeys.TTXN_ST, ctx.getData("otTxnSt"));
-//					ctx.setData(ParamKeys.RSP_MSG, "路桥方返回："+ thdReturnMessage.get(GDParamKeys.TRSP_CD));
-//					gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
-//					gdEupsbTrspTxnJnlRepository.update(gdEupsbTrspTxnJnl);
-//					throw new CoreRuntimeException(ErrorCodes.EUPS_THD_RSP_CODE_ERROR);
-//				}else{
-//					ctx.setData(GDParamKeys.TTXN_ST, "C");
-//					gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
-//					gdEupsbTrspTxnJnlRepository.update(gdEupsbTrspTxnJnl);
-//				}
-//				<If condition="INTCMP(GETSTRPOS(@PARA.TRsp_Suc,$inTRspCd),1,0)">
-//                <Set>RspCod=478614</Set><!--抹账失败-->
-//                <Set>RspMsg=STRCAT(路桥方方返回: [,$TRspCd,],$TRspMsg)</Set>
-//                <Set>TTxnSt=$OTTxnSt</Set>
-//                <Exec func="PUB:ExecSql">
-//                   <Arg name="SqlCmd" value="SetTTxnSt"/>
-//                </Exec>
-//                <Return/>
-//             </If>
-//             <Else>
-//                <Set>RspCod=000000</Set>
-//                <Set>TTxnSt=C</Set>
-//                <Exec func="PUB:ExecSql">
-//                   <Arg name="SqlCmd" value="SetTTxnSt"/>
-//                </Exec>
-//             </Else>
 			}else{
 				ctx.setData(GDParamKeys.TTXN_ST, ctx.getData("otTxnSt"));
 				gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
