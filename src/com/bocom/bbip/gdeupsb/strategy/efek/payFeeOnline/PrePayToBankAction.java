@@ -1,7 +1,6 @@
 package com.bocom.bbip.gdeupsb.strategy.efek.payFeeOnline;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.Date;
 
 import org.apache.commons.logging.Log;
@@ -33,11 +32,15 @@ public class PrePayToBankAction implements Executable{
 			CoreRuntimeException {
 			logger.info("=========Start PrePayToBankAction");
 //			context.setData(ParamKeys.COMPANY_NO, context.getData("comNos"));
+			context.setData(ParamKeys.THD_TXN_STS,"S");
 			context.setData(GDParamKeys.TOTNUM, "1");
-			
+			//TODO 删除
+			if(context.getData("txnTlr")==null){
+				context.setData("tlr", "EFC0000");
+			}
+			context.setData(ParamKeys.BR,"01441131999");
+			context.setData(ParamKeys.BK,"01441999999");
 //			
-//			context.setData(ParamKeys.BR,"01441131999");
-//			context.setData(ParamKeys.BK,"01441999999");
 //			context.setData(ParamKeys.TELLER, "ABIR148");
 //			context.setData(ParamKeys.BBIP_TERMINAL_NO, "ABIR148");
 			  
