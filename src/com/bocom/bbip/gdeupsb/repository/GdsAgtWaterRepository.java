@@ -65,6 +65,10 @@ public interface GdsAgtWaterRepository extends PagingAndSortingRepository<GdsAgt
 	/** 签约一站通-协议更新:更新协议子表所有协议处理状态*/
 	public void updateAgtWtrDelStsAll(Map<String, Object> inpara);
 	
+	/** 签约一站通-协议更新:更新协议子表处理状态-珠江数码*/
+	public void updateAgtDegDelSts(Map<String, Object> inpara);
+	
+	
 	/** 签约一站通-协议更新:统计批次数量(待删除)*/
 	public List<Integer> findBatchAgtCnt(GdsAgtWater gdsAgtWater);
 	
@@ -92,4 +96,7 @@ public interface GdsAgtWaterRepository extends PagingAndSortingRepository<GdsAgt
 	public void insertgduncbDetailAgtInf(Map<String, Object> inpara);
 	/**验证是否已签约*/
 	public List<Map<String, Object>> findExist(Map<String, Object> inpara);
+	
+	/**  更新协议子表状态消息*/
+	public void updateStbInf(Map<String, Object> inpara);
 }
