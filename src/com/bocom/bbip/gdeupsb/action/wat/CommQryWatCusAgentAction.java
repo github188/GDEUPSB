@@ -34,6 +34,7 @@ public class CommQryWatCusAgentAction extends BaseAction {
 		} else {
 			context.setDataMap(BeanUtils.toMap(resultList.get(0)));
 			context.setData("cusAC", context.getData("cusAc"));
+			context.setData("cusTyp", context.getData("agtSts"));
 		}
 		
 		log.info("最终的返回信息为:" + context.getDataMap());
