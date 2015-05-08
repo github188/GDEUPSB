@@ -152,9 +152,9 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 			//金额转换
 			batTmp.setTxnAmt(amtB.toString());
 			detailMap = BeanUtils.toMap(batTmp);
-			detailMap.put("OUROTHFLG", "0");
+			detailMap.put("rsvFld4", "0");
 			// 将临时表中的sqn set进代收付文件中的RMK1 即可解决代收付明细表与临时表数据匹配问题
-			detailMap.put("RMK1", batTmp.getSqn());
+			detailMap.put("sqn", batTmp.getSqn());
 			agtFileDetail.add(detailMap);
 		}
 		
