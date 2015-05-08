@@ -68,9 +68,6 @@ public class CheckThdDetlAcctAction implements Executable {
 	public void execute(Context context) throws CoreException,
 			CoreRuntimeException {
 			logger.info("=======Start CheckThdDetlAcctAction");
-			
-	        context.setData(ParamKeys.TXN_TLR, "ABIR148");
-	        context.setData(ParamKeys.CHL_TYP, "90");
 	        
 			//日期
 			Date txnDte=DateUtils.calDate(DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())),-1);

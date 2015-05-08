@@ -102,9 +102,6 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 			        context.setData(ParamKeys.THD_TXN_DATE, thdTxnDte);
 			        context.setData(ParamKeys.THD_TXN_TIME, thdTxnTme);
 			        
-			        context.setData(ParamKeys.TXN_TLR, "ABIR148");
-			        context.setData(ParamKeys.CHL_TYP, "90");
-//			        context.setData("rcnBat", sqn);
 			        context.setData("bakFld1", map.get("RSV_FLD4"));
 			        context.setData("bakFld2", map.get("RSV_FLD5"));
 				//把信息保存到第三方明细表中

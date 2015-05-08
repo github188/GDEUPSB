@@ -263,7 +263,7 @@ public class InsertCusAgentServiceAction extends BaseAction {
 		if(context.getData(ParamKeys.THD_SQN)!=null){
 			map.put("bk", "01441999999");
 			map.put("br", "01441131999");
-			context.setData("tlr", "ABIR148");
+			context.setData("tlr", "EFC0000");
 			context.setData("bk", "01441999999");
 			context.setData("br", "01441131999");
 		}
