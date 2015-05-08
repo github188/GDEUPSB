@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<segment xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	name="0200Request">
+	 <varString name="cusAcEx" type="D|" /> 
+	 <varString name="thdPayTyp" type="D|" />
+	 <varString name="amount" type="D|" />
+	 <varString name="txnDateTime" type="D|" />
+	 <varString name="pwrtxnDate" type="D|" />
+	 <varString name="pwrThdSub" type="D|" />
+	 <varString name="pwrFee" type="D|" /> 
+	 <varString name="eleBkNo" type="D|" />
+	 <varString name="eleThdSqn" type="D|" />
+	 <varString name="tTrmId" type="D|" />
+	 <varString name="delTdlId" type="D|" />
+	 <varString name="remarkData" type="D|" />
+	 <varString name="CCY" type="D|" />
+	 <varString name="password" type="D|" />      <!-- mima-->
+	 <varString name="thdRgnNo" type="D|" />
+	 <varString name="traTyp" type="D|" />
+	 <varString name="msgIdfCde" type="D|" />
+	 <varString name="rmkTmp" type="D|" />
+</segment>

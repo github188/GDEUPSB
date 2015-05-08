@@ -2,26 +2,18 @@
 <segment xmlns="http://www.bocom.com/jump/transformer/packet"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
-	name="0500Response">
+	name="0400Request">
 	<varString name="cusAcEx" type="D|" />
 	<varString name="thdPayTyp" type="D|" />
 	<varString name="amount" type="D|" />
-
-	<varString name="txnDateTime" type="D|" />	<!-- 7 -->
 
 	<varString name="transJournal" type="D|" />
 	<varString name="bnkTxnTime" type="D|" />
 	<varString name="bnkTxnDate" type="D|" />
 
-	<varString name="pwrtxnDate" type="D|" />	<!-- 15 -->
-
 	<varString name="pwrThdSub" type="D|" />
-	<!-- <varString name="pwrFee" type="D|" /> -->
-
+	<varString name="pwrFee" type="D|" />
 	<varString name="eleBkNo" type="D|" />
-
-	<varString name="eleThdSqn" type="D|" />   <!-- 37 -->
-	<varString name="thdRspCde" type="D|" />	 <!-- 39 -->
 
 	<varString name="tTrmId" type="D|" />
 	<varString name="delTdlId" type="D|" />

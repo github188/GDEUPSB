@@ -3,24 +3,24 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
 	name="0500Request">
-	<varString name="cusAcEx2" type="D|" />
-	<varString name="thdPayTyp3" type="D|" />
-	<varString name="amount4" type="D|" />
+	<varString name="cusAcEx" type="D|" />
+	<varString name="thdPayTyp" type="D|" />
+	<varString name="amount" type="D|" />
 
-	<varString name="transJournal11" type="D|" />
-	<varString name="bnkTxnTime12" type="D|" />
-	<varString name="bnkTxnDate13" type="D|" />
+	<varString name="transJournal" type="D|" />
+	<varString name="bnkTxnTime" type="D|" />
+	<varString name="bnkTxnDate" type="D|" />
 
-	<varString name="pwrThdSub18" type="D|" />
-	<varString name="pwrFee28" type="D|" />
+	<varString name="pwrThdSub" type="D|" />
+	<varString name="pwrFee" type="D|" />
 
-	<varString name="eleBkNo32" type="D|" />
-	<varString name="tTrmId41" type="D|" />
-	<varString name="delTdlId42" type="D|" />
-	<varString name="remarkData48" type="D|" />
+	<varString name="eleBkNo" type="D|" />
+	<varString name="tTrmId" type="D|" />
+	<varString name="delTdlId" type="D|" />
+	<varString name="remarkData" type="D|" />
 	<varString name="CCY" type="D|" />
 
-	<varString name="thdRgnNo100" type="D|" />
-	<varString name="traTyp104" type="D|" />
-	<varString name="msgIdfCde128" type="D|" />
+	<varString name="thdRgnNo" type="D|" />
+	<varString name="traTyp" type="D|" />
+	<varString name="msgIdfCde" type="D|" />
 </segment>

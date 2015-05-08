@@ -7,15 +7,19 @@
 #  filter="format,packets/translateDict.txt"
 #  filter="parse,packets/translateDict.txt"
 
-TransCode.eups.payUnilateralToBank=020002
-TransCode.020002=eups.payUnilateralToBank
-TransCode.0400=eups.cancelUnilateralToBank
-TransCode.eups.cancelUnilateralToBank=0400
-TransCode.0820=gdeups.eleCmuTestProcess
-TransCode.gdeups.eleCmuTestProcess=0820
-TransCode.020001=eups.queryThirdFeeOnline
-TransCode.eups.queryThirdFeeOnline=020001
+#TransCode.eups.payUnilateralToBank=020002
+#TransCode.020002=eups.payUnilateralToBank
+#TransCode.0400=eups.cancelUnilateralToBank
+#TransCode.eups.cancelUnilateralToBank=0400
+#TransCode.0820=gdeups.eleCmuTestProcess
+#TransCode.gdeups.eleCmuTestProcess=0820
+#TransCode.020001=eups.queryThirdFeeOnline
 #银行方发起的实时缴费
-TransCode.0500=eups.payFeeOnline
-#银行方缴费冲正
+TransCode.eups.queryThirdFeeOnline=020001
+TransCode.eups.payFeeOnline=020002
+TransCode.eups.automaticCancelProcessAdd=020003
+#TransCode.020005=eups.payUnilateralToBank
+TransCode.eups.payUnilateralToBank=020005
+TransCode.eups.cancelUnilateralToBank=020006
+
 #TransCode.0600=eups.automaticCancelProcess
