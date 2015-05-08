@@ -83,7 +83,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 				((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).BeforeBatchProcess(context);
 					
 				//文件下载
-					EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecBatch");
+					EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecBatchRecv");
 					eupsThdFtpConfig.setRmtFleNme(fleNme);
 					eupsThdFtpConfig.setLocFleNme(fleNme);		
 					eupsThdFtpConfig.setFtpDir("1");
@@ -308,7 +308,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 		 */
 	    public  Process RecvEnCryptFile(String excPath, String srcFile, String objFile,Context context) throws IOException, InterruptedException, CoreRuntimeException, CoreException {
 	    	logger.info("================Start BatchDataFileActiion  RecvEnCryptFile");	    	
-	    	String cmd=get(BBIPPublicService.class).getParam("efekMD5")+" "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
+	    	String cmd=get(BBIPPublicService.class).getParam("efekMD5Recv")+" "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
 	        logger.info("cmd=" + cmd);
 	        Process proc = Runtime.getRuntime().exec(cmd);
 	        proc.waitFor();

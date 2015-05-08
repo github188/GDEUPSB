@@ -89,7 +89,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			//文件名
 			String fileName="PTFH"+gdEupsBatchConsoleInfoUpdate.getFleNme().substring(4);
 			//取文件s路径
-	        EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecBatch");		
+	        EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("elecBatchSend");		
 			try{
 					Map<String, Object> resultMap=createFileMap(context,gdEupsBatchConsoleInfoUpdate,batNo);
 					eupsThdFtpConfig.setFtpDir("0");
@@ -329,7 +329,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 	}
     public  Process RecvEnCryptFile(String excPath, String srcFile, String objFile,Context context) throws IOException, InterruptedException, CoreRuntimeException, CoreException {
     	logger.info("================Start BatchDataFileActiion  RecvEnCryptFile");	    	
-    	String cmd=get(BBIPPublicService.class).getParam("efekMD5")+" "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
+    	String cmd=get(BBIPPublicService.class).getParam("efekMD5Send")+" "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
     	logger.info("cmd=" + cmd);
         Process proc = Runtime.getRuntime().exec(cmd);
         proc.waitFor();

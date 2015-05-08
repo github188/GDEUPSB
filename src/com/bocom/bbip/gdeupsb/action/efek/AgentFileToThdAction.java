@@ -209,7 +209,7 @@ public class AgentFileToThdAction extends BaseAction{
 
 		 public  Process RecvEnCryptFile(String excPath, String srcFile, String objFile,Context context) throws IOException, InterruptedException, CoreRuntimeException, CoreException {
 		    	log.info("================Start BatchDataFileActiion  RecvEnCryptFile");	    	
-		        String cmd=get(BBIPPublicService.class).getParam("efekMD5")+" "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
+		        String cmd=get(BBIPPublicService.class).getParam("efekMD5Send")+" "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
 		        log.info("cmd=" + cmd);
 		        Process proc = Runtime.getRuntime().exec(cmd);
 		        proc.waitFor();
