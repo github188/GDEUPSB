@@ -10,6 +10,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.comp.BBIPPublicServiceImpl;
 import com.bocom.bbip.comp.btp.BTPService;
 import com.bocom.bbip.eups.action.BaseAction;
@@ -172,7 +173,7 @@ public class BatchFileCommon extends BaseAction {
         final String AcDate=DateUtils.format(((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).getAcDate(),DateUtils.STYLE_yyyyMMdd);
         final String systemCode=((SystemConfig)get(SystemConfig.class)).getSystemCode();
         //路径
-        final String dir="/home/bbipadm/data/mftp/BBIP/"+systemCode+"/"+br+"/"+tlr+"/"+AcDate+"/";
+        final String dir=get(BBIPPublicService.class).getParam("batchPath")+systemCode+"/"+br+"/"+tlr+"/"+AcDate+"/";
         context.setData("dir", dir);
         File file=new File(dir);
         if(!file.exists()){
