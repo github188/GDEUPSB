@@ -114,6 +114,10 @@ public class DegDateUpdImlAction implements AgtDataUpdImlService {
 					gdsAgtWaterRepository.updateAgtDegDelSts(agtSbinMap);
 				} catch (Exception e) {
 					// 更新本批次为可制盘 UpdAgt44101UsbFlg
+					
+					inparaMap.put("tCusId", wtrDtlMap.get("tCusId"));
+					inparaMap.put("actNo", wtrDtlMap.get("actNo"));
+					
 					updBatUsbFlg(inparaMap);
 					
 					errFlg = "1";
@@ -131,7 +135,7 @@ public class DegDateUpdImlAction implements AgtDataUpdImlService {
 
 	private void updBatUsbFlg(Map<String, Object> inparaMap) {
 		log.info("更新制盘标志为可制盘！..当前的map为:[" + inparaMap + "]");
-		gdsAgtWaterRepository.updateBatchUsbFlg(inparaMap);
+		gdsAgtWaterRepository.updateBatchUsbFlgTel(inparaMap);
 	}
 
 }

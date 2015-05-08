@@ -273,12 +273,15 @@ public class TlvAgtMdyDealImlAction implements AgtMdyDealImlService {
 				String idNo = context.getData("idNo");
 				// 如果输入了身份证则校验身份证号码与卡号是否绑定
 				if (StringUtils.isNotEmpty(idNo)) {
-					boolean crdChkR = idCardCheck(context, actNo, idNo);
-					if (crdChkR) {
-						detailMap.put("lagtSt", "S");
-					} else {
-						detailMap.put("lagtSt", "F");
-						detailMap.put("lerMsg", "卡号与身份证号不匹配");
+					if(StringUtils.isEmpty((String)context.getData("batchOprFlg"))){
+						boolean crdChkR = idCardCheck(context, actNo,idNo);
+						if (crdChkR) {
+							detailMap.put("lagtSt", "S");
+						} else {
+							detailMap.put("lagtSt", "F");
+							detailMap.put("lerMsg", "卡号与身份证号不匹配");
+							throw new CoreException(GDErrorCodes.EUPS_SIGN_CARD_CHECK_ERROR);
+						}
 					}
 				}
 

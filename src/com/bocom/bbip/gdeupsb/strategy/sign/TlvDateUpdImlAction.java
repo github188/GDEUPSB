@@ -88,8 +88,9 @@ public class TlvDateUpdImlAction implements AgtDataUpdImlService {
 			agtSbinMap.put("tAgtSt", tAgtSt); // 状态
 			agtSbinMap.put("terMsg", wtrDtlMap.get("errMsg")); // 错误码
 			agtSbinMap.put("gdsBId", gdsRunCtl.getGdsBid()); // 业务种类
-			agtSbinMap.put("actNo", wtrDtlMap.get("actNo")); // 帐号
-
+			agtSbinMap.put("actNo", wtrDtlMap.get("ACTNO")); // 帐号
+			agtSbinMap.put("tCusId", wtrDtlMap.get("tCusId")); // 业务标志
+			
 			String gdsAId1 = (String) wtrDtlMap.get("gdsAId1");
 
 			log.info("agtSbinMap=" + agtSbinMap);
@@ -112,6 +113,10 @@ public class TlvDateUpdImlAction implements AgtDataUpdImlService {
 					gdsAgtWaterRepository.updateAgtDegDelSts(agtSbinMap);
 				} catch (Exception e) {
 					// 更新本批次为可制盘 UpdAgt44101UsbFlg
+					
+					inparaMap.put("tCusId", wtrDtlMap.get("tCusId"));
+					inparaMap.put("actNo", wtrDtlMap.get("actNo"));
+					
 					updBatUsbFlg(inparaMap);
 					
 					errFlg = "1";
@@ -201,7 +206,7 @@ public class TlvDateUpdImlAction implements AgtDataUpdImlService {
 
 	private void updBatUsbFlg(Map<String, Object> inparaMap) {
 		log.info("更新制盘标志为可制盘！..当前的map为:[" + inparaMap + "]");
-		gdsAgtWaterRepository.updateBatchUsbFlg(inparaMap);
+		gdsAgtWaterRepository.updateBatchUsbFlgTel(inparaMap);
 	}
 
 }
