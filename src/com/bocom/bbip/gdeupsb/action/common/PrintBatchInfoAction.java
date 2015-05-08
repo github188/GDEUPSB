@@ -142,7 +142,7 @@ public class PrintBatchInfoAction extends BaseAction{
 					tFTPTransfer.setPassword(sendFileToBBOSConfig.getOppUsrPsw());
 					 try {
 					       	tFTPTransfer.logon();
-					        Resource tResource = new FileSystemResource("/home/bbipadm/data/GDEUPSB/report/"+fileName);
+					        Resource tResource = new FileSystemResource(sendFileToBBOSConfig.getLocDir()+fileName);
 					        tFTPTransfer.putResource(tResource, "/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/", fileName);
 					} catch (Exception e) {
 					       	throw new CoreException("文件上传失败");
@@ -154,7 +154,7 @@ public class PrintBatchInfoAction extends BaseAction{
 					String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + context.getData(ParamKeys.BR)+ "/" ;
 					 try {
 					       	tFTPTransfer.logon();
-					        Resource tResource = new FileSystemResource("/home/bbipadm/data/GDEUPSB/batch/"+fileName);
+					        Resource tResource = new FileSystemResource(sendFileToBBOSConfig.getLocDir()+fileName);
 					        tFTPTransfer.putResource(tResource, path, fileName);
 					 } catch (Exception e) {
 					       	throw new CoreException("文件上传失败");
