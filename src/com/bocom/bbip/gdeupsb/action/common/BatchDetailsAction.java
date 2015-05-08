@@ -48,7 +48,7 @@ public class BatchDetailsAction extends BaseAction{
 				} else {
 					totalPages = totalElements / pageSize + 1;
 				}
-
+				totalPages=1;
 				List<Map<String, Object>> pageableResponse = new ArrayList<Map<String, Object>>();
 				Map<String, Object> pageMap = new HashMap<String, Object>();
 				pageMap.put("totalElements", totalElements);
