@@ -23,6 +23,7 @@ import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdeupsAgtElecTmp;
 import com.bocom.bbip.gdeupsb.repository.GdeupsAgtElecTmpRepository;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -72,8 +73,12 @@ public class EupsManageCounterAgt extends BaseAction {
 		String feeNum = context.getData("JFH");
 		String actNo = context.getData("ActNo");
 		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
-		agtElecTmp.setFeeNum(feeNum);
-		agtElecTmp.setActNo(actNo);
+		if (StringUtils.isNotEmpty(feeNum)) {
+			agtElecTmp.setFeeNum(feeNum);
+		}
+		if (StringUtils.isNotEmpty(actNo)) {
+			agtElecTmp.setActNo(actNo);
+		}
 		agtElecTmp.setStatus("0");
 		List<GdeupsAgtElecTmp> tmpList = get(GdeupsAgtElecTmpRepository.class)
 				.find(agtElecTmp);
@@ -83,7 +88,7 @@ public class EupsManageCounterAgt extends BaseAction {
 		}
 		String OAC = tmpList.get(0).getActNo();
 		String OKH = tmpList.get(0).getNewBankNum();
-//		context.setData("OAC", OAC);
+		// context.setData("OAC", OAC);
 		context.setData("OKH", OKH);
 	}
 
@@ -180,29 +185,29 @@ public class EupsManageCounterAgt extends BaseAction {
 	}
 
 	private void addAgentDeal(Context context) throws CoreException {
-		//TODO checkCusInfoByCusAc(context);
-		
+		// TODO checkCusInfoByCusAc(context);
+
 		// ICS： 先签本地再签thd
 		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
 		agtElecTmp.setFeeNum((String) context.getData("JFH"));
-//		agtElecTmp.setStatus("0");
+		// agtElecTmp.setStatus("0");
 		List<GdeupsAgtElecTmp> list = get(GdeupsAgtElecTmpRepository.class)
 				.find(agtElecTmp);
 		if (list.size() > 0) {
-			if("0".equals(list.get(0).getStatus())){
+			if ("0".equals(list.get(0).getStatus())) {
 				log.info("协议已经存在");
 				throw new CoreException("协议已经存在");
 			}
-			if("1".equals(list.get(0).getStatus())){
-				//更新
+			if ("1".equals(list.get(0).getStatus())) {
+				// 更新
 				checkOldBaseInfo(context);
 				updateAgentDeal(context);
 			}
-		}else{
+		} else {
 			agtElecTmp = toGdeupsAgtElecTmp(context);
 			agtElecTmp.setBrNo((String) context.getData(ParamKeys.BK));
 			agtElecTmp.setComNo("4450000002");
-//			agtElecTmp.setAgtNo(getAgtNo()); // 445202 + 7位序列码
+			// agtElecTmp.setAgtNo(getAgtNo()); // 445202 + 7位序列码
 			agtElecTmp.setBankNo("301");
 			agtElecTmp.setComCode("0500");
 			agtElecTmp.setFeeCode("000");
@@ -225,29 +230,25 @@ public class EupsManageCounterAgt extends BaseAction {
 			infoList.add(infoMap);
 			context.setData("infoList", infoList);
 			logger.info(" context after set infoList : ", context);
-			
+
 			buildContextAndCallThd(context);
 			log.info("新增协议成功");
 		}
 	}
 
-	/*private String getAgtNo() throws CoreException {
-//		  不可行，假若a b c .... 签约时间无限接近，将可能取得同一个编号！！！
-		String agtNo = null;
-		List<Map<String, Object>> agtNoList = get(
-				GdeupsAgtElecTmpRepository.class).findAgtNo();
-		String subAgtNo = String.valueOf(agtNoList.get(0).get("SUBAGTNO"));
-		long agtNoL = Long.parseLong(subAgtNo) + 1;
-		agtNo = String.valueOf(agtNoL);
-		agtNo = GdExpCommonUtils.AddChar(agtNo, 7, '0', '1');
-		agtNo = "445202" + agtNo;
-		logger.info("===========agtNo = " + agtNo);
-		return agtNo;
-	}*/
+	/*
+	 * private String getAgtNo() throws CoreException { // 不可行，假若a b c ....
+	 * 签约时间无限接近，将可能取得同一个编号！！！ String agtNo = null; List<Map<String, Object>>
+	 * agtNoList = get( GdeupsAgtElecTmpRepository.class).findAgtNo(); String
+	 * subAgtNo = String.valueOf(agtNoList.get(0).get("SUBAGTNO")); long agtNoL
+	 * = Long.parseLong(subAgtNo) + 1; agtNo = String.valueOf(agtNoL); agtNo =
+	 * GdExpCommonUtils.AddChar(agtNo, 7, '0', '1'); agtNo = "445202" + agtNo;
+	 * logger.info("===========agtNo = " + agtNo); return agtNo; }
+	 */
 
 	private void updateAgentDeal(Context context) throws CoreException {
-		
-		//TODO checkCusInfoByCusAc(context);
+
+		// TODO checkCusInfoByCusAc(context);
 		checkOldBaseInfo(context);
 
 		List<Map<String, Object>> infoList = new ArrayList<Map<String, Object>>();
@@ -279,13 +280,13 @@ public class EupsManageCounterAgt extends BaseAction {
 		String oldCardNo = context.getData("OAC");
 		String oldBankNum = context.getData("OKH");
 		// 不允许更改卡号缴费号对应关系，只修改其他辅助信息
-		if( ! oldCardNo.equals(context.getData("ActNo"))){ //输入卡号与原签约卡号不一致，报错
+		if (!oldCardNo.equals(context.getData("ActNo"))) { // 输入卡号与原签约卡号不一致，报错
 			throw new CoreException("输入卡号与原签约卡号不一致,不可进行交易");
 		}
 
 		agtElecTmp = toGdeupsAgtElecTmp(context);
 		agtElecTmp.setOldBankNum(oldBankNum);
-//		agtElecTmp.setOldCardNo(oldCardNo);
+		// agtElecTmp.setOldCardNo(oldCardNo);
 		// get(GdeupsAgtElecTmpRepository.class).updateByAc(agtElecTmp);
 		agtElecTmp.setRemark("修改日期:" + MGR_DATE);
 		get(GdeupsAgtElecTmpRepository.class).updateByFeeNum(agtElecTmp);
@@ -400,9 +401,9 @@ public class EupsManageCounterAgt extends BaseAction {
 
 		buildContextAndCallThd(context);
 
-//		context.setData("ACN", list.get(0).getActNo());
-//		context.setData("ActNo", list.get(0).getActNo());
-//		context.setData("TXT", list.get(0).getUserName());
+		// context.setData("ACN", list.get(0).getActNo());
+		// context.setData("ActNo", list.get(0).getActNo());
+		// context.setData("TXT", list.get(0).getUserName());
 
 	}
 
