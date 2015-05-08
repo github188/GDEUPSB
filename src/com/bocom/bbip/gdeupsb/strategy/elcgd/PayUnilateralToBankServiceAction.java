@@ -51,19 +51,13 @@ public class PayUnilateralToBankServiceAction implements PayUnilateralToBankServ
 			throws CoreException {
 		log.info("PayUnilateralToBankServiceAction prepareCheckDeal start!");
 		context.setData("MsgId", "0210");
-		// 将返回信息初始化为22，其他错误
-		// 初始化设置
-		// context.setData("transJournal", "000000000000");
-		Date nowDate = new Date();
-		context.setData("bnkTxnTime", DateUtils.format(nowDate, DateUtils.STYLE_HHmmss));
-		context.setData("bnkTxnDate", DateUtils.format(nowDate, DateUtils.STYLE_MMdd));
-
+		
 		String dpTyp = context.getData(GDParamKeys.GZ_ELE_THD_DPT_TYP); // 配型部类型
 		String comNo = CodeSwitchUtils.codeGenerator("eleGzComNoGen", dpTyp);
 
 		// TODO: for test,柜员号，机构号，分行号写死，为了测试
-		context.setData("tlr", "ABIR148");
-		context.setData("tlrTmlId", context.getData("tlr"));
+//		context.setData("tlr", "ABIR148");
+		context.setData("tlrTmlId", context.getData(ParamKeys.TELLER));
 		context.setData("br", "01441800999");
 		context.setData("bk", "01441999999");
 
@@ -102,9 +96,6 @@ public class PayUnilateralToBankServiceAction implements PayUnilateralToBankServ
 		context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse(thdTxnTme, DateUtils.STYLE_yyyyMMddHHmmss));
 		context.setData(ParamKeys.THD_SEQUENCE, context.getData("eleThdSqn"));
 
-		// TODO:for test
-		// context.setData("cusAcEx", "6222620710007282286");
-
 		context.setData(ParamKeys.CUS_AC, context.getData("cusAcEx"));
 
 		// TODO:待考虑此处是否对后续有影响
@@ -113,7 +104,25 @@ public class PayUnilateralToBankServiceAction implements PayUnilateralToBankServ
 		context.setData("transJournal", sqn.substring(2, 8) + sqn2); // 银行交易流水号
 		context.setData("rsvFld2", sqn.substring(2, 8) + sqn2); // 银行交易流水号,存在rsvFld2中，用于进行抹帐等交易
 
-		// 数据初始化，防止第三方返回错误
+		// 第三方交易日期，时间处理
+		String eleClrDte = context.getData("pwrtxnDate");
+		if (StringUtils.isNotEmpty(eleClrDte)) {
+			eleClrDte = eleClrDte.trim();
+			context.setData(ParamKeys.THD_TXN_DATE, DateUtils.parse(eleClrDte,"MMDD"));
+		}
+
+		// 第三方交易时间处理
+		String eleTxnTme = context.getData("txnDateTime");
+		if (StringUtils.isNotEmpty(eleTxnTme)) {
+			eleTxnTme=eleTxnTme.trim();
+			context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse(eleTxnTme, DateUtils.STYLE_MMddHHmmss));
+		}
+		
+		Date nowDate = new Date();
+		context.setData("bnkTxnTime", DateUtils.format(nowDate, DateUtils.STYLE_HHmmss));
+		context.setData("bnkTxnDate", DateUtils.format(nowDate, DateUtils.STYLE_MMdd));
+
+		
 		return null;
 	}
 
@@ -125,9 +134,6 @@ public class PayUnilateralToBankServiceAction implements PayUnilateralToBankServ
 		String txnAmt = context.getData("amount");
 		BigDecimal realAmt = NumberUtils.centToYuan(txnAmt);
 		context.setData(ParamKeys.TXN_AMOUNT, realAmt);
-
-		// TODO:for test
-		// context.setData(ParamKeys.TXN_AMOUNT, new BigDecimal("0.01"));
 
 		context.setData(ParamKeys.THD_TXN_CDE, "HK"); // 设置第三方交易码为划扣，用于对账
 

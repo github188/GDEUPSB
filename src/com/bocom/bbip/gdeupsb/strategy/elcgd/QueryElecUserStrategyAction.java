@@ -13,10 +13,12 @@ import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.spi.service.online.QueryDealService;
+import com.bocom.bbip.eups.spi.vo.CommHeadDomain;
+import com.bocom.bbip.eups.spi.vo.PreQryDomain;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
-import com.bocom.bbip.gdeupsb.utils.macgen.MacGenerator;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.bbip.utils.StringUtils;
@@ -31,7 +33,7 @@ import com.bocom.jump.bp.core.Executable;
  * @author qc.w
  * 
  */
-public class QueryElecUserStrategyAction implements Executable {
+public class QueryElecUserStrategyAction implements QueryDealService {
 
 	private final static Logger log = LoggerFactory.getLogger(QueryElecUserStrategyAction.class);
 
@@ -39,7 +41,7 @@ public class QueryElecUserStrategyAction implements Executable {
 	ThirdPartyAdaptor thirdPartyAdaptor;
 
 	@Override
-	public void execute(Context context) throws CoreException, CoreRuntimeException {
+	public Map<String, Object> prepareQueryDeal(CommHeadDomain arg0, PreQryDomain arg1, Context context) throws CoreException {
 		log.info("QueryElecUserStrategyAction start!..");
 
 		String tlr = context.getData(ParamKeys.TELLER); // 柜员号
@@ -73,7 +75,7 @@ public class QueryElecUserStrategyAction implements Executable {
 
 		String lchkTm = context.getData("lChkTm"); // 缴费月份
 		if (StringUtils.isEmpty(lchkTm)) {
-			lchkTm = "  999999";
+			lchkTm = "99999999";
 		}
 		context.setData("thdRgnNo", GDConstants.GZ_ELE_RECEIVE_ORG_CODE); // 电力机构标识码
 		context.setData("traTyp", GDConstants.GZ_ELE_TXN_TYP_JF); // 交易类别
@@ -125,6 +127,16 @@ public class QueryElecUserStrategyAction implements Executable {
 		}
 		context.setData("oweFeeAmt", NumberUtils.centToYuan(resultInfo.get("amount")));
 		log.info("QueryElecUserStrategyAction end!..context=" + context.getDataMap());
+		
+		
+		return null;
 	}
 
+	@Override
+	public Map<String, Object> qryDeal(CommHeadDomain arg0, PreQryDomain arg1, Context context) throws CoreException {
+		
+		return null;
+	}
+
+	
 }

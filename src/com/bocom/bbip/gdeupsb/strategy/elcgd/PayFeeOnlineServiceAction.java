@@ -48,18 +48,12 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 	@Autowired
 	GdElecClrInfRepository gdElecClrInfRepository;
 
-	// @Autowired
-	// CallHostByComNo callHostByComNo;
-
 	@Override
 	public Map<String, Object> preCheckDeal(CommHeadDomain commheaddomain, PayFeeOnlineDomain payfeeonlinedomain, Context context)
 			throws CoreException {
 		log.info("PayFeeOnlineServiceAction preCheckDeal start!..");
-
+		
 		context.setData("extFields", "01441800999");
-
-		// 根据单位编号查询记账网店
-		// callHostByComNo.callHost(context);
 
 		context.setData(ParamKeys.BUS_TYP, Constants.BUS_TYP_2); // 2-代缴
 
@@ -132,28 +126,30 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 		if (StringUtils.isNotEmpty(vchTyp)) {
 			context.setData("bvKnd", vchTyp.substring(1, 3));
 		}
-
+		
+		log.info("当前要处理的vchTyp=["+vchTyp+"]");
 		String payMde = new String();
 		if ("000".equals(vchTyp)) {
 			payMde = Constants.PAY_MDE_0; // 现金
 			context.setData(ParamKeys.AC_TYP, "00");
 		} else if ("007".equals(vchTyp)) {
 			payMde = Constants.PAY_MDE_4; // 卡
-		} else {
-			// TODO:默认为现金
-			payMde = Constants.PAY_MDE_0; // 现金
-			context.setData(ParamKeys.AC_TYP, "00");
+		}else if("115".equals(vchTyp)){
+			payMde = Constants.PAY_MDE_8; //对公结算账户 
 		}
-
-		// TODO: for test,用卡测试
-		payMde = Constants.PAY_MDE_4; // 卡
-		context.setData(ParamKeys.AC_TYP, "05");
+		else if("704".equals(vchTyp)){
+			payMde = Constants.PAY_MDE_2; //对公结算账户 
+		}
 
 		context.setData(ParamKeys.PAY_MDE, payMde);
 
 		context.setData("bvNo", context.getData("vchNo")); // 凭证号码
 		context.setData(ParamKeys.BAK_FLD5, context.getData("bilDte")); // 凭证日期
 
+		Date bnkTxnDate = new Date();
+		context.setData("bnkTxnTime", DateUtils.format(bnkTxnDate, DateUtils.STYLE_HHmmss));
+		context.setData("bnkTxnDate", DateUtils.format(bnkTxnDate, DateUtils.STYLE_MMdd));
+		
 		log.info("====================收费类型为：" + thdFeeWay);
 		context.setData(GDParamKeys.GZ_ELE_FEE_WAY, thdFeeWay); // 收费类型
 
@@ -173,13 +169,11 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 		context.setData(ParamKeys.THD_TXN_CDE, "JF"); // 第三方交易码设置为缴费，用于对账
 		String vchTyp = context.getData(ParamKeys.BV_KIND); // 凭证种类
 		
-		//TODO:for test
-		context.setData("txnAmt", new BigDecimal("0.01"));
 		// TODO:需要支持以下支付方式:现金缴费,银行卡,活期存折,本外活本,个人支票,本票,现金支票,转账支票,划线支票
 		// 对私
 		// if (GDConstants.GZ_ELE_PAY_KND_CASH.equals(vchTyp) ||
 		// GDConstants.GZ_ELE_PAY_KND_CARD.equals(vchTyp)
-		// || GDConstants.GZ_ELE_PAY_KND_ALVC.equals(vchTyp) ||
+		// || GDConstants.GddZ_ELE_PAY_KND_ALVC.equals(vchTyp) ||
 		// GDConstants.GZ_ELE_PAY_KND_AOVC.equals(vchTyp)
 		// || GDConstants.GZ_ELE_PAY_KND_PRCK.equals(vchTyp))
 		// {
@@ -194,14 +188,6 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 		// }
 
 		// 原代码中的渠道号转换不需要做
-
-		// TODO:TRM和D441渠道启动完整性检查，其他渠道是否超时不冲正？目前标准版超时都会去冲正，请确认 vipQc
-		// <Set>inTxnCnl=STRCAT(|,$TxnCnl,|)</Set>
-		// <If
-		// condition="AND(IS_EQUAL_STRING(@PARA.RollBack,1),INTCMP(GETSTRPOS(@PARA.RollBackCnls,$inTxnCnl),5,0))">
-		// <Exec func="PUB:BeginWork"/> <!--启动完整性控制-->
-		// </If>
-
 		return null;
 	}
 
@@ -214,28 +200,23 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 		context.setData(GDParamKeys.GZ_ELE_CUS_AC, context.getData(ParamKeys.CUS_AC)); // 客户帐号
 		context.setData("thdPayTyp", "020000");
 		
-		//TODO:for test取消交易金额
-		context.setData("txnAmt", new BigDecimal("4128.71"));
-		
 		context.setData("amount", NumberUtils.yuanToCent(context.getData(ParamKeys.TXN_AMOUNT))); // 交易金额
 
 		String mfmJrnNo = context.getData("acJrnNo"); // 获取主机流水号
 		context.setData("mfmJrnNo", mfmJrnNo); // 主机流水号,标准版未计入流水表
 		context.setData("bakFld7", mfmJrnNo); 
 		
-		//TODO:待考虑此处是否对后续有影响
 		String sqn = context.getData(ParamKeys.SEQUENCE);
 		String sqn2 = sqn.substring(sqn.length() - 6, sqn.length());
 		context.setData("transJournal", sqn.substring(2, 8) + sqn2); // 银行交易流水号
 		context.setData("rsvFld2", sqn.substring(2, 8) + sqn2); // 银行交易流水号,存在rsvFld2中，用于进行抹帐等交易
 		
+		if(null!=context.getData(ParamKeys.FEE)){
+			context.setData("pwrFee", NumberUtils.yuanToCent(context.getData(ParamKeys.FEE))); // 手续费
+		}else{
+			context.setData("pwrFee","0");
+		}
 		
-		Date bnkTxnDate = new Date();
-		context.setData("bnkTxnTime", DateUtils.format(bnkTxnDate, DateUtils.STYLE_HHmmss));
-		
-		context.setData("pwrFee", NumberUtils.yuanToCent(context.getData(ParamKeys.FEE))); // 手续费
-		
-		//TODO:要确保终端号及柜员号不为空
 		String ttrmId = (String) context.getData(ParamKeys.TERMINAL);
 		if(StringUtils.isEmpty(ttrmId)){
 			ttrmId=(String) context.getData("tlrTmlId");
@@ -269,6 +250,8 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 		//TODO:mac
 		context.setData("msgIdfCde", "11111111");
 		
+//		context.setData("isAutoReversalThirdAndCB", "N");   //关键字段，设置第三方超时时不进行任何冲正处理，否则会默认冲主机
+		
 		return null;
 	}
 
@@ -291,22 +274,22 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 		String clrYear = DateUtils.format(new Date(), "yyyy");
 
 		// 第三方清算日期处理-将第三方清算日期作为第三方交易日期存储
-		String eleClrDte = context.getData("pwrtxnDate");
+		String eleClrDte = context.getData("bnkTxnDate");
 		if (StringUtils.isNotEmpty(eleClrDte)) {
 			eleClrDte = eleClrDte.trim();
 			String thdTxnDteStr = clrYear + eleClrDte;
-			context.setData(ParamKeys.THD_TXN_DATE, DateUtils.parse(thdTxnDteStr));
+			context.setData(ParamKeys.THD_TXN_DATE, DateUtils.parse(thdTxnDteStr,"yyyyMMdd"));
 		}
 
 		// 第三方交易时间处理
 		String eleTxnTme = context.getData("txnDateTime");
 		if (StringUtils.isNotEmpty(eleTxnTme)) {
-			String thdTxnTmeStr = clrYear + eleTxnTme;
-			context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse(thdTxnTmeStr, DateUtils.STYLE_yyyyMMddHHmmss));
+//			String thdTxnTmeStr = clrYear + eleTxnTme;
+			context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse(eleTxnTme, DateUtils.STYLE_MMddHHmmss));
 		}
 
 		// 将附加数据保存到数据库
-		context.setData("eleClrDte", aftStr); // 供电公司清算日期
+		context.setData("eleClrDte", eleClrDte.substring(4)); // 供电公司清算日期
 
 		return null;
 	}

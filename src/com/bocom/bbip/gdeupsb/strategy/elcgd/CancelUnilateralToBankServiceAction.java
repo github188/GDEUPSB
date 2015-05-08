@@ -49,18 +49,28 @@ public class CancelUnilateralToBankServiceAction implements CancelUnilateralToBa
 
 		String thdRspCd = context.getData(ParamKeys.REVERSE_RESULT_CODE); // 冲正返回码
 		if (Constants.RESPONSE_CODE_SUCC_HOST.equals(thdRspCd)) {
+			context.setData("errRson", null);  //冲正附加数据设置为空
 			context.setData(ParamKeys.RESPONSE_CODE, "CNLSC00"); // 冲正成功
 		}
 		else {
 			context.setData(ParamKeys.RESPONSE_CODE, "CNLER00"); // 冲正不成功
 		}
-		context.setData("errRson", null);  //冲正附加数据设置为空
+		
 		log.info("#######thdRspCde= " + thdRspCd);
 		return null;
 	}
 
 	@Override
 	public Map<String, Object> preCclToBank(CommHeadDomain commheaddomain, CancelDomain canceldomain, Context context) throws CoreException {
+		
+		String remarkRsp = new String();
+		String rmkDate = context.getData("rmkTmp");
+		rmkDate = rmkDate.trim();
+		log.info("当前的remarkDate="+rmkDate);
+		remarkRsp = rmkDate.substring(rmkDate.indexOf("start") + 5);
+		context.setData("remarkData", remarkRsp);
+		
+		
 		log.info("PreCnlBnkSglDealStrategyAction start!..");
 		context.setData("MsgId", "0410"); 
 		
@@ -125,6 +135,7 @@ public class CancelUnilateralToBankServiceAction implements CancelUnilateralToBa
 
 		List<EupsTransJournal> list = eupsTransJournalRepository.find(eupsTransJournal);
 		if (CollectionUtils.isEmpty(list)) {
+			context.setData("errRson", "8072");
 			throw new CoreException(ErrorCodes.BIZ_ERROR_CANCEL_PAYMENT_ORIGINAL_PAYMENT_JOURNAL_NOT_FOUND);
 		}
 		else {
@@ -148,6 +159,8 @@ public class CancelUnilateralToBankServiceAction implements CancelUnilateralToBa
 
 		String oldSqn = eupsTransJournal.getSqn();
 		context.setData(ParamKeys.OLD_TXN_SEQUENCE, oldSqn); // 原交易流水号
+		
+		
 		return null;
 
 	}

@@ -1,5 +1,7 @@
 package com.bocom.bbip.gdeupsb.strategy.elcgd;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +28,7 @@ import com.bocom.bbip.gdeupsb.repository.GdEupsTransJournalRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -78,10 +81,11 @@ public class CheckBkEleGzFileToThirdAction implements CheckBkFileToThirdService 
 		// 检查签到签退
 		EupsThdTranCtlInfo eupsThdTranCtlInfo = eupsThdTranCtlInfoRepository.findOne(comNo);
 		if (!eupsThdTranCtlInfo.isTxnCtlStsSignout()) {
+			log.info("未签退，无法发起对账");
 			throw new CoreException(ErrorCodes.THD_CHL_TRADE_NOT_ALLOWWED);
 		}
-		log.info("已签退，可以进行对账");
 
+		log.info("已签退，可以进行对账");
 		// 分别生成划扣及缴费对账文件
 		String fileNameDk = "00" + "01_" + clearDteStr + "_315810" + "_001.bil"; // 代扣文件
 		String fileNameJf = "00" + "02_" + clearDteStr + "_315810" + "_001.bil"; // 缴费文件
@@ -102,48 +106,152 @@ public class CheckBkEleGzFileToThirdAction implements CheckBkFileToThirdService 
 
 		eupsTransJournal.setThdTxnCde("HK"); // 第三方交易码为划扣
 		Map<String, Object> headerInfoHK = new HashMap<String, Object>(); // 划账map头
-		headerInfoHK.put("clrDat", clearDteStr);
-		headerInfoHK.put("batNo", context.getData(ParamKeys.SEQUENCE));
 
 		// 统计划扣总体信息
 		List<Map<String, Object>> hkHeaderResult = gdEupsTransJournalRepository.findGzEleChkHKInfo(eupsTransJournal);
 		if (CollectionUtils.isNotEmpty(hkHeaderResult)) {
 			headerInfoHK = hkHeaderResult.get(0);
+			BigDecimal orgAmtS = (BigDecimal) headerInfoHK.get("TOTALFEE");
+			if (null == orgAmtS) {
+				orgAmtS = new BigDecimal("0");
+			}
+			headerInfoHK.put("TOTALFEE", NumberUtils.yuanToCentString(orgAmtS));
 		}
 		else { // 无数据
-			headerInfoHK.put("totalDeal", "0");
-			headerInfoHK.put("totalFee", "0");
+			headerInfoHK.put("TOTALDEAL", "0");
+			headerInfoHK.put("TOTALFEE", "0");
 		}
+		String thdClearDteStr = clearDteStr.substring(2);
+		headerInfoHK.put("clrDat", thdClearDteStr);
+		headerInfoHK.put("batNo", context.getData(ParamKeys.SEQUENCE));
 		checkFileHK.put("header", headerInfoHK);
 
 		// 查询划扣明细信息
 		List<Map<String, Object>> hkDetailResult = gdEupsTransJournalRepository.findGzEleChkHKDetail(eupsTransJournal);
+
+		List<Map<String, Object>> hkDetailResultReal = new ArrayList<Map<String, Object>>();
 		if (CollectionUtils.isNotEmpty(hkHeaderResult)) {
-			checkFileHK.put("detail", hkDetailResult);
+			for (Map<String, Object> hkDMap : hkDetailResult) {
+				Date tactDt = (Date) hkDMap.get("TACTDT");
+				if (null != tactDt) {
+					String tactDtS = DateUtils.format(tactDt, "yyyyMMdd");
+					tactDtS = tactDtS.substring(2);
+					hkDMap.put("TACTDT", tactDtS);
+				}
+
+				Date actDt = (Date) hkDMap.get("ACTDAT");
+				if (null != actDt) {
+					String actDts = DateUtils.format(actDt, "yyyy-MM-dd");
+					actDts = actDts.replace("-", "");
+					hkDMap.put("ACTDAT", actDts);
+				}
+
+				Date nkTme = (Date) hkDMap.get("BKTIM");
+				if (null != nkTme) {
+					String nkTmeS = DateUtils.format(nkTme, "yyyy-MM-dd HH:mm:ss");
+					nkTmeS = nkTmeS.substring(11).replace(":", "");
+					hkDMap.put("BKTIM", nkTmeS);
+				}
+
+				// 电费月份处理
+				String rmkTmp = (String) hkDMap.get("RMKTMP");
+				if (StringUtils.isNotEmpty(rmkTmp)) {
+					rmkTmp = rmkTmp.substring(23, 31);
+					hkDMap.put("RMKTMP", rmkTmp);
+				}
+
+				// 第三方交易日期，时间处理
+				Date thdTme = (Date) hkDMap.get("DLTIM");
+				if (null != thdTme) {
+					String thdTmeS = DateUtils.format(thdTme, "yyyy-MM-dd HH:mm:ss");
+					// 交易日期:
+					String dLDate = thdTmeS.substring(0, 10);
+					dLDate = dLDate.substring(5).replace("-", "");
+					hkDMap.put("DLDAT", dLDate);
+
+					// 交易时间：
+					String dLTim = thdTmeS.substring(11, 19);
+					dLTim = dLTim.replace(":", "");
+					hkDMap.put("DLTIM", dLTim);
+				}
+
+				hkDetailResultReal.add(hkDMap);
+			}
+
+			checkFileHK.put("detail", hkDetailResultReal);
 		}
 
 		Map<String, Object> checkFileJF = new HashMap<String, Object>(); // 缴费对账文件
 		// 统计缴费总体信息
 		eupsTransJournal.setThdTxnCde("JF"); // 第三方交易码为划扣
 		Map<String, Object> headerInfoJF = new HashMap<String, Object>(); // 划账map头
-		headerInfoJF.put("clrDat", clearDteStr);
-		headerInfoJF.put("batNo", context.getData(ParamKeys.SEQUENCE));
 
 		List<Map<String, Object>> jfHeaderResult = gdEupsTransJournalRepository.findGzEleChkJFInfo(eupsTransJournal);
 		if (CollectionUtils.isNotEmpty(jfHeaderResult)) {
 			headerInfoJF = jfHeaderResult.get(0);
+			String orgAmtS = (String) headerInfoHK.get("TOTALFEE");
+			headerInfoHK.put("TOTALFEE", NumberUtils.yuanToCentString(orgAmtS));
 		}
 		else { // 无数据
-			headerInfoJF.put("totalDeal", "0");
-			headerInfoJF.put("totalFee", "0");
+			headerInfoJF.put("TOTALDEAL", "0");
+			headerInfoJF.put("TOTALFEE", "0");
 		}
+		headerInfoJF.put("clrDat", thdClearDteStr);
+		headerInfoJF.put("batNo", context.getData(ParamKeys.SEQUENCE));
 
 		checkFileJF.put("header", headerInfoJF);
 
 		// 查询缴费明细信息
+		List<Map<String, Object>> jfDetailResultReal = new ArrayList<Map<String, Object>>();
+
 		List<Map<String, Object>> jfDetailResult = gdEupsTransJournalRepository.findGzEleChkJFDetail(eupsTransJournal);
 		if (CollectionUtils.isNotEmpty(jfHeaderResult)) {
-			checkFileJF.put("detail", jfDetailResult);
+			for (Map<String, Object> jfDMap : jfDetailResult) {
+
+				Date tactDt = (Date) jfDMap.get("TACTDT");
+				if (null != tactDt) {
+					String tactDtS = DateUtils.format(tactDt, "yyyyMMdd");
+					tactDtS = tactDtS.substring(2);
+					jfDMap.put("TACTDT", tactDtS);
+				}
+
+				Date actDt = (Date) jfDMap.get("ACTDAT");
+				if (null != actDt) {
+					String actDts = DateUtils.format(actDt, "yyyy-MM-dd");
+					actDts = actDts.replace("-", "");
+					jfDMap.put("ACTDAT", actDts);
+				}
+
+				Date nkTme = (Date) jfDMap.get("BKTIM");
+				String nkTmeS = DateUtils.format(nkTme, "yyyy-MM-dd HH:mm:ss");
+				nkTmeS = nkTmeS.substring(11).replace(":", "");
+				jfDMap.put("BKTIM", nkTmeS);
+
+				// 电费月份处理
+				String rmkTmp = (String) jfDMap.get("RMKTMP");
+				if (StringUtils.isNotEmpty(rmkTmp)) {
+					rmkTmp = rmkTmp.substring(23, 31);
+					jfDMap.put("RMKTMP", rmkTmp);
+				}
+
+				// 第三方交易日期，时间处理
+				Date thdTme = (Date) jfDMap.get("DLTIM");
+				if (null != thdTme) {
+					String thdTmeS = DateUtils.format(thdTme, "yyyy-MM-dd HH:mm:ss");
+					// 交易日期:
+					String dLDate = thdTmeS.substring(0, 10);
+					dLDate = dLDate.substring(5).replace("-", "");
+					jfDMap.put("DLDAT", dLDate);
+
+					// 交易时间：
+					String dLTim = thdTmeS.substring(11, 19);
+					dLTim = dLTim.replace(":", "");
+					jfDMap.put("DLTIM", dLTim);
+				}
+				jfDetailResultReal.add(jfDMap);
+			}
+
+			checkFileJF.put("detail", jfDetailResultReal);
 		}
 
 		EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("eleGzCheckHK");
@@ -157,16 +265,18 @@ public class CheckBkEleGzFileToThirdAction implements CheckBkFileToThirdService 
 
 		eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("eleGzCheckJF");
 
-		log.info("缴费的文件为:"+fileNameJf+checkFileJF);
+		log.info("缴费的文件为:" + fileNameJf + checkFileJF);
 		eupsThdFtpConfig.setRmtFleNme(fileNameJf);
 		eupsThdFtpConfig.setLocFleNme(fileNameJf);
-		
-		
+
 		operateFile.createCheckFile(eupsThdFtpConfig, "eleGzCheckJFFmt", fileNameJf, checkFileJF);
 
 		// ftpput缴费文件
 		eupsThdFtpConfig.setRmtFleNme(fileNameJf);
 		eupsThdFtpConfig.setLocFleNme(fileNameJf);
+
+		log.info("putCheckFile config,rmt path=[" + eupsThdFtpConfig.getRmtWay() + "],rmt file name=[" + eupsThdFtpConfig.getRmtFleNme() + "]"
+				+ ",local path=[" + eupsThdFtpConfig.getLocDir() + "],local file name=[" + eupsThdFtpConfig.getLocFleNme() + "]");
 		operateFTPAction.putCheckFile(eupsThdFtpConfig);
 
 		return null;
