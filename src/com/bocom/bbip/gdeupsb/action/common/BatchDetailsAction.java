@@ -31,6 +31,16 @@ public class BatchDetailsAction extends BaseAction{
 				EupsBatchInfoDetail eupsBatchInfoDetails=new EupsBatchInfoDetail();
 				eupsBatchInfoDetails.setBatNo(eupsBatNo);
 				List<EupsBatchInfoDetail> list=get(EupsBatchInfoDetailRepository.class).find(eupsBatchInfoDetails);
+				String eupsBusTyp=context.getData(ParamKeys.EUPS_BUSS_TYPE).toString();
+				if(eupsBusTyp!="ZHAG00"){
+						for (EupsBatchInfoDetail eupsBatchInfoDetail : list) {
+								eupsBatchInfoDetail.setRmk2(eupsBatchInfoDetail.getAgtSrvCusId());
+						}
+				}else{
+						for (EupsBatchInfoDetail eupsBatchInfoDetail : list) {
+								eupsBatchInfoDetail.setRmk2(eupsBatchInfoDetail.getAgtSrvCusId());
+						}
+				}
 				context.setData("detailList", BeanUtils.toMaps(list));
 		}
 }
