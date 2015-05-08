@@ -84,7 +84,7 @@ public class EupsManageCounterAgt extends BaseAction {
 				.find(agtElecTmp);
 		if (null == tmpList || CollectionUtils.isEmpty(tmpList)) {
 			logger.info("There are no records for select check elec agt tmp ");
-			throw new CoreException("协议不存在或缴费号与账号不匹配");
+			throw new CoreException("协议不存在或缴费号与原签约账号不匹配");
 		}
 		String OAC = tmpList.get(0).getActNo();
 		String OKH = tmpList.get(0).getNewBankNum();
@@ -200,13 +200,12 @@ public class EupsManageCounterAgt extends BaseAction {
 			}
 			if ("1".equals(list.get(0).getStatus())) {
 				// 更新
-				checkOldBaseInfo(context);
 				updateAgentDeal(context);
 			}
 		} else {
 			agtElecTmp = toGdeupsAgtElecTmp(context);
 			agtElecTmp.setBrNo((String) context.getData(ParamKeys.BK));
-			agtElecTmp.setComNo("4450000002");
+			agtElecTmp.setComNo((String) context.getData(ParamKeys.COMPANY_NO));
 			// agtElecTmp.setAgtNo(getAgtNo()); // 445202 + 7位序列码
 			agtElecTmp.setBankNo("301");
 			agtElecTmp.setComCode("0500");
