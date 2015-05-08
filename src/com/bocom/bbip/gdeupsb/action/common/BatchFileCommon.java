@@ -193,10 +193,8 @@ public class BatchFileCommon extends BaseAction {
         EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne(ParamKeys.FTPID_BATCH_PAY_FILE_TO_ACP);
 		Assert.isFalse(null==config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST);
 		//设置文件名 文件路径
-		config.setFtpDir("0");
 		config.setLocFleNme(fleNme);
 		config.setRmtFleNme(fleNme);
-		config.setRmtWay(dir);
 		/** 产生代收付格式文件 */
 		if(context.getData(ParamKeys.EUPS_BUSS_TYPE).equals("ELEC00") || context.getData(ParamKeys.EUPS_BUSS_TYPE).equals("GZAG00") || context.getData(ParamKeys.EUPS_BUSS_TYPE).toString().equals("FSAG00")){
 			((OperateFileAction)get("opeFile")).createCheckFile(config, "agtFileBatchFmt", fleNme, fileMap);
@@ -204,12 +202,10 @@ public class BatchFileCommon extends BaseAction {
 			((OperateFileAction)get("opeFile")).createCheckFile(config, "BatchFmt", fleNme, fileMap);
 		}
 		logger.info("===============生成代收付文件");
+		config.setFtpDir("0");
+		config.setRmtWay(dir);
 		operateFTPAction.putCheckFile(config);
-		//为得到代收付文件 更改ftpDir
-//		config.setFtpDir("1");
-//		config.setRmtWay("/home/bbipadm/data/mftp/BBIP/");
-//		get(EupsThdFtpConfigRepository.class).update(config);
-		
+		logger.info("============放置代收付文件完成");
 		//更改状态为待提交
 		GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=new GDEupsBatchConsoleInfo();
 		String batNo=context.getData(ParamKeys.BAT_NO).toString();

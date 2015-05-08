@@ -54,6 +54,9 @@ public class PrintBatchInfoAction extends BaseAction{
 				CoreRuntimeException {
 				String batNo=context.getData(ParamKeys.BAT_NO).toString();
 				GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=gdEupsBatchConsoleInfoRepository.findOne(batNo);
+				if(gdEupsBatchConsoleInfo==null){
+						throw new CoreException("没有"+batNo+"批次信息");
+				}	
 				context.setData("eupsBusTyp", gdEupsBatchConsoleInfo.getEupsBusTyp());
 				String fileName=gdEupsBatchConsoleInfo.getRsvFld1();
 				context.setData("printResult", fileName);
@@ -66,6 +69,7 @@ public class PrintBatchInfoAction extends BaseAction{
 				eupsBatchInfoDetail.setBatNo(eupsBatNo);
 				List<EupsBatchInfoDetail> list=eupsBatchInfoDetailRepository.find(eupsBatchInfoDetail);				
 				for (EupsBatchInfoDetail eupsBatchInfoDetails : list) {
+						eupsBatchInfoDetails.setRmk2("T");
 						if(eupsBatchInfoDetails.getSts().equals("S")){
 								eupsBatchInfoDetails.setErrMsg("扣款成功");
 						}
@@ -108,8 +112,9 @@ public class PrintBatchInfoAction extends BaseAction{
 				log.info("~~~~~~~~~~~~~~~~~~~~~"+result);
 				
 				//生成文件路径
+				EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
 				StringBuffer batNoFile=new StringBuffer();
-				batNoFile.append("/home/bbipadm/data/GDEUPSB/report/");
+				batNoFile.append(sendFileToBBOSConfig.getFtpDir());
 				File file =new File(batNoFile.toString());
 				if(!file.exists()){
 						file.mkdirs();
@@ -134,7 +139,6 @@ public class PrintBatchInfoAction extends BaseAction{
 					}
 					//报表		
 					log.info("=============Start   Send   File==========");
-					EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
 					// FTP上传设置
 					FTPTransfer tFTPTransfer = new FTPTransfer();
 					tFTPTransfer.setHost(sendFileToBBOSConfig.getThdIpAdr());
