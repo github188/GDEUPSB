@@ -81,12 +81,13 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 //		String br = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.BR, ErrorCodes.EUPS_FIELD_EMPTY);//机构号
 //		String tlr = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.TELLER, ErrorCodes.EUPS_FIELD_EMPTY);//柜员号
 		//虚拟柜员
-		context.setData("br", "01441800999");
-		
-		
-		context.setData("tlr", service.getETeller("01445999999"));
-		context.setData("extFields", "01441800999");
-
+//		context.setData("br", "01441800999");
+//		
+//		
+//		context.setData("tlr", service.getETeller("01445999999"));
+//		context.setData("extFields", "01441800999");
+		context.setData("br", "01445007999");
+		context.setData("tlr","AFBM013");
 		String br = context.getData("br");
 		String tlr = context.getData("tlr");
 		String comNo = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.COMPANY_NO, ErrorCodes.EUPS_FIELD_EMPTY);//代理单位号
