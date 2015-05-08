@@ -114,6 +114,9 @@ public final class GDErrorCodes {
 
 	/** 签约一站通-没有满足条件的记录 */
 	public static final String EUPS_SIGN_NO_RECORD_FOUND = "BBIP4400EU1708";
+	
+
+	
 
 	/** 文件名不符合规范 */
 	public static final String EUPS_FILE_RULE_ERROR = "BBIP4400EU1709";
@@ -138,6 +141,8 @@ public final class GDErrorCodes {
 	/** 文件头的日期不对 **/
 	public static final String EUPS_FILE_HEADDATE_ERROR = "BBIP4400EU1719";
 
+	/** 签约一站通-卡号与身份证号不匹配 */
+	public static final String EUPS_SIGN_CARD_CHECK_ERROR = "BBIP4400EU1720";
 	// 汕头水费
 	/** 登录数据库错 */
 	public static final String EUPS_WATR00_0001_ERROR = "BBIP4400EU0401";
