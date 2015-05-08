@@ -23,6 +23,7 @@ import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdBaseInfoRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
@@ -64,10 +65,11 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 		Date endDte = DateUtils.parse(endDate, DateUtils.STYLE_SIMPLE_DATE);
 
 		logger.info("=============context:" + context);
-
+		EupsThdBaseInfo findComNo = new EupsThdBaseInfo();
+		findComNo.setEupsBusTyp((String)context.getData(ParamKeys.EUPS_BUSS_TYPE));
+		String comNoString = get(EupsThdBaseInfoRepository.class).find(findComNo).get(0).getComNo();
 		Map<String, Object> detailMap = new HashMap<String, Object>();
-		//TODO "4910000430"
-		detailMap.put("comNo", "4910000430");
+		detailMap.put("comNo", comNoString);
 		detailMap.put("beginDte", beginDte);
 		detailMap.put("endDte", endDte);
 
@@ -75,7 +77,7 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 		context.setData("endDte", endDte);
 
 		String comNme = get(EupsThdBaseInfoRepository.class).findOne(
-				"4910000430").getComNme();
+				comNoString).getComNme();
 		context.setData("comNme", comNme);
 
 		List<Map<String, Object>> prtList = new ArrayList<Map<String, Object>>();

@@ -128,8 +128,6 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 			 * //TODO 根据errMsg确定rsvFld15,回盘用！ // 1-已扣 // 2-余额不足 // 3-帐号不符 //
 			 * 4-帐号已销 // 5-坏帐号及其他, 除“已扣”，其他扣不到款 // 8-直接借记支付中的金额超过事先规定限额 //
 			 * 9-直接借记无授权记录
-			 * 
-			 * 
 			 * }
 			 */
 			if ("S".equals(sts)) {
