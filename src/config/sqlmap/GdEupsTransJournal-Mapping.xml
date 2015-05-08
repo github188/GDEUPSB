@@ -1304,7 +1304,7 @@
 		EUPS_BUS_TYP='ELEC01' and
 		BAK_FLD1=#{bakFld1,jdbcType=CHAR}
 		and
-		(THD_TXN_CDE='HK' or THD_TXN_CDE='JF')
+		(THD_TXN_CDE='HK' or THD_TXN_CDE='JF') and TXN_TYP!='C' and TXN_STS!='C'
 	</select>
 
 	<!-- 查询广州电力当日所有流水汇总 -->
