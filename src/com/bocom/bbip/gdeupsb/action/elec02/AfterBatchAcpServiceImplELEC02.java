@@ -11,14 +11,12 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.comp.BBIPPublicService;
-import com.bocom.bbip.comp.BBIPPublicServiceImpl;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.ErrorCodes;
-import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.entity.EupsBatchInfoDetail;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
@@ -64,14 +62,6 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 	public void afterBatchDeal(AfterBatchAcpDomain arg0, Context context)
 			throws CoreException {
 		logger.info("电力返盘文件处理开始 with context : " + context);
-		String bk = "01445999999";
-		String br = "01445012999";
-		context.setData("extFields", br);
-		context.setData(ParamKeys.BK, bk);
-		context.setData("br", br);
-		String tlr = bbipPublicService.getETeller(bk);
-		context.setData(ParamKeys.TELLER, tlr);
-		logger.info("=========>>>>>>>>>>context after get tlr: " + context);
 
 		String batNo = context.getData("batNo").toString();
 		((BatchFileCommon) get(GDConstants.BATCH_FILE_COMMON_UTILS))
@@ -102,11 +92,14 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 				gdEupsBatchConSoleInfo);
 		((BatchFileCommon) get(GDConstants.BATCH_FILE_COMMON_UTILS))
 				.unLock(batNo);
+		
+		String br = gdEupsBatchConSoleInfo.getTxnOrgCde();
+		String tlr = gdEupsBatchConSoleInfo.getTxnTlr();
 
 		Map<String, Object> ret = new HashMap<String, Object>();
 		EupsBatchInfoDetail eupsBatchInfoDetail = new EupsBatchInfoDetail();
 		eupsBatchInfoDetail.setBatNo(batNo);
-		final List<EupsBatchInfoDetail> result = get(
+		List<EupsBatchInfoDetail> result = get(
 				EupsBatchInfoDetailRepository.class).find(eupsBatchInfoDetail);
 		Assert.isNotEmpty(result, ErrorCodes.EUPS_QUERY_NO_DATA);
 
@@ -115,8 +108,8 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		String tmpSqn = null;
 		String sts = null;
 		String errCde = null;
+		log.info("得到批扣result，更新进临时表");
 		for (EupsBatchInfoDetail dtl : result) {
-			log.info("");
 			tmpSqn = dtl.getRmk1();
 			GDEupsbElecstBatchTmp elec02batchTmp = new GDEupsbElecstBatchTmp();
 			elec02batchTmp.setSqn(tmpSqn);
@@ -212,12 +205,6 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		config.setLocFleNme(backFlieName);
 		config.setRmtFleNme(backFlieName);
 
-		// backFlieName = backFlieName.substring(0, 9) + "fh";
-		// //TODO 文件名举例： 0011900ptfh20080808_173030.txt
-		// String fliTme = DateUtils.format(new Date(), "yyyyMMdd_HHmmss");
-		// String fileName = backFlieName + fliTme + ".txt";
-		// config.setLocFleNme(fileName);
-		// config.setRmtFleNme(fileName);
 		log.info("上送给第三方的文件名为:" + config.getRmtFleNme());
 
 		Assert.isFalse(null == config, ErrorCodes.EUPS_THD_FTP_CONFIG_NOTEXIST);
@@ -255,10 +242,9 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		context.setData("TransCode", "23");
 		context.setData("WD0",
 				DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
-		String logNo = ((BBIPPublicServiceImpl) get(GDConstants.BBIP_PUBLIC_SERVICE))
-				.getBBIPSequence();
+		String logNo = gdEupsBatchConSoleInfo.getRsvFld7();
 		context.setData("LogNo", StringUtils.substring(logNo, 4));
-		context.setData("TMN", context.getData(ParamKeys.BK));// 经办网点
+		context.setData("TMN", br);// 经办网点
 
 		// String tlr= context.getData(ParamKeys.TELLER);
 
