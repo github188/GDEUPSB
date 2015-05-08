@@ -625,7 +625,7 @@
 		where a.Gds_BId=#{gdsBId}
 		and a.Gds_BId=b.Gds_BId and a.Act_No=b.Act_No and (
 		b.Eff_Dat between
-		#{begDat} and #{endDat} ) and b.Sub_Sts='0' 
+		#{begDat} and #{endDat} ) and b.Sub_Sts='0'  and b.LAgt_St!='F'
 	</select>
 
 	<!-- 数据拷盘：更新该批次的批次号 -->
@@ -694,7 +694,7 @@
 		update ${agtStb}
 		set TAgt_St=#{tAgtSt}, TER_MSG=#{terMsg} where
 		Gds_BId=#{gdsBId}
-		and ACT_NO=#{actNo} and TCUS_ID=#{tCusId}
+		and ACT_NO=#{actNo} and TCUS_ID=#{tCusId} and 
 		Sub_Sts='0'
 	</update>
 	
@@ -748,6 +748,15 @@
 		and
 		BATCH_ID=#{batchId,jdbcType=CHAR}
 	</update>
+	
+	<update id="updateBatchUsbFlgTel" parameterType="java.util.Map">
+		update
+		${agtStb} set
+		USB_FLG='Y' where
+		Gds_BId=#{gdsBId}
+		and  ACT_NO=#{actNo} and TCUS_ID=#{TCusId} and Sub_Sts='0'
+	</update>
+	
 		<!-- 签约一站通协议维护:检查签约是否已存在 -->
 	<select id="findExist"  resultType="java.util.Map"  parameterType="java.util.Map">
 		select *
