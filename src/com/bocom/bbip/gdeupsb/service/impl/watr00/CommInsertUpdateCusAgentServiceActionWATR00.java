@@ -37,6 +37,7 @@ public class CommInsertUpdateCusAgentServiceActionWATR00 extends BaseAction{
 		logger.info("oprTyp["+oprTyp+"]");
 		context.setData(ParamKeys.CUS_AC, context.getData("cusAC"));
 		context.setData(ParamKeys.BUS_TYP, "0");  //业务类型暂定为代收
+		context.setData("agtSts", context.getData("cusTyp")); //客户类型
 		if("0".equals(oprTyp)){
 			context.setData("ageBr", context.getData(ParamKeys.BK));
 			context.setData("agrBr", context.getData(ParamKeys.BR));

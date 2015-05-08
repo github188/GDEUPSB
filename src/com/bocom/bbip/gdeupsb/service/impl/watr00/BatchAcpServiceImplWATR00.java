@@ -128,6 +128,20 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		
 		
 		
+		
+		
+		
+		EupsThdFtpConfig configB = get(EupsThdFtpConfigRepository.class).findOne("BatchFileFtpNo");
+//		Assert.isNotNull(configB, ErrorCodes.EUPS_FTP_INFO_NOTEXIST,"第三方配置信息不存在");
+		configB.setLocFleNme(fileName);
+		configB.setRmtFleNme(fileName);
+//		configB.setRmtWay(dir);
+		String dir1 = configB.getLocDir().toString();
+		dir1 = dir1+"wat/";
+		
+		configB.setLocDir(dir1);
+		
+		
 		Map<String, Object> fileMap = (Map<String, Object>) ContextUtils.assertVariableNotNullAndGet(context, "agtFileMap","agtFileMap不能为空");
 		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne("BatchFileFtpNo");
 		Assert.isNotNull(config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST,"第三方配置信息不存在");
@@ -136,23 +150,12 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		String dir = config.getRmtWay().toString();
 		dir = dir+br+"/"+tlr+"/"+acDate+"/";
 		config.setRmtWay(dir);
-		config.setLocDir(dir);
+		config.setLocDir(dir1);
 		File file = new File(dir);
 	     if (!file.exists()) {
 	         file.mkdirs();
 	     }
 		logger.info("dir_filNam["+dir+filNam+"]");
-		
-		
-		EupsThdFtpConfig configB = get(EupsThdFtpConfigRepository.class).findOne("BatchFileFtpNo");
-		Assert.isNotNull(config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST,"第三方配置信息不存在");
-		configB.setLocFleNme(fileName);
-		configB.setRmtFleNme(fileName);
-//		configB.setRmtWay(dir);
-		String dir1 = configB.getLocDir().toString();
-		dir1 = dir1+"wat/";
-		
-		configB.setLocDir(dir1);
 		/** 产生代收付格式文件 */
 		((OperateFileAction)get("opeFile")).createCheckFile(configB, GDConstants.BATCH_FILE_FORMAT, fileName, fileMap);
 		/** 发送到指定路径 */

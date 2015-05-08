@@ -40,7 +40,7 @@ private static Logger logger = LoggerFactory.getLogger(PreDelCusAgentAction.clas
 		GdEupsWatAgtInf gdeups = new GdEupsWatAgtInf();
 		gdeups.setAgdAgrNo((String)context.getData("agdAgrNo"));
 		gdEupsWatAgtInfRepository.delete(gdeups);
-		// TODO:为第三方接口报文字段赋值，发送请求至第三方
+		//为第三方接口报文字段赋值，发送请求至第三方
 				context.setData("type", "Y007");
 				context.setData("accountdate", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
 				StepSequenceFactory s = context.getService("logNoService");
@@ -57,7 +57,7 @@ private static Logger logger = LoggerFactory.getLogger(PreDelCusAgentAction.clas
 				context.setData("password", "        ");
 				context.setData("md5digest", " ");
 				
-				System.out.println("context="+context);
+				logger.info("context="+context);
 				List<Map<String,Object>> infoList = context.getData("listAgreementInfo");
 				Map<String, Object> infoMap = infoList.get(0);
 				
