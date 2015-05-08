@@ -18,6 +18,8 @@ import org.springframework.core.io.Resource;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
+import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
 import com.bocom.bbip.file.transfer.ftp.FTPTransfer;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
@@ -42,16 +44,19 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 		String detailFlg = context.getData(GDParamKeys.GZ_ELE_DETAIL_FLAG); // 明细类型
 
 		// 获取电力清算信息表信息
-		GdElecClrInf gdElecClrInf = new GdElecClrInf();
-		gdElecClrInf.setBrNo(GDConstants.GZ_ELE_BK_GZ);
-		List<GdElecClrInf> gdElecClrInfList = get(GdElecClrInfRepository.class).find(gdElecClrInf);
-		if (CollectionUtils.isEmpty(gdElecClrInfList)) {
-			log.error("不存在清算参数信息");
-			throw new CoreException(GDErrorCodes.EUPS_ELE_GZ_CLEAR_INFO_ERROR); // 不存在清算参数信息
-		} else {
-			gdElecClrInf = gdElecClrInfList.get(0);
-		}
-		String thdClrDte = gdElecClrInf.getClrDat(); // 第三方约定的日期
+//		GdElecClrInf gdElecClrInf = new GdElecClrInf();
+//		gdElecClrInf.setBrNo(GDConstants.GZ_ELE_BK_GZ);
+//		List<GdElecClrInf> gdElecClrInfList = get(GdElecClrInfRepository.class).find(gdElecClrInf);
+//		if (CollectionUtils.isEmpty(gdElecClrInfList)) {
+//			log.error("不存在清算参数信息");
+//			throw new CoreException(GDErrorCodes.EUPS_ELE_GZ_CLEAR_INFO_ERROR); // 不存在清算参数信息
+//		} else {
+//			gdElecClrInf = gdElecClrInfList.get(0);
+//		}
+//		String thdClrDte = gdElecClrInf.getClrDat(); // 第三方约定的日期
+		
+		String thdClrDte=context.getData("thdClrDte");   //第三方约定的日期
+		
 		// 查找当日缴费及划扣金额，条件为主机及交易状态均为成功
 		GdEupsTransJournal transJnl = new GdEupsTransJournal();
 		transJnl.setBakFld1(thdClrDte);
@@ -149,7 +154,7 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 				if(CollectionUtils.isEmpty(allDtlJnl)){
 					throw new CoreException(GDErrorCodes.EUPS_ELE_GZ_NO_RECORD);
 				}
-				context.setData("allDtlJnl", allDtlJnl);
+				context.setData("detailList", allDtlJnl);
 				log.info("查询的汇总信息为:" + allDtlJnl);
 			}
 			else if ("0".equals(detailFlg)) {
@@ -157,7 +162,7 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 				if(CollectionUtils.isEmpty(allDtlJnl)){
 					throw new CoreException(GDErrorCodes.EUPS_ELE_GZ_NO_RECORD);
 				}
-				context.setData("allDtlJnl", allDtlJnl);
+				context.setData("detailList", allDtlJnl);
 				log.info("查询的成功明细信息为:" + allDtlJnl);
 			}
 			else if ("1".equals(detailFlg)) {
@@ -165,7 +170,7 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 				if(CollectionUtils.isEmpty(allDtlJnl)){
 					throw new CoreException(GDErrorCodes.EUPS_ELE_GZ_NO_RECORD);
 				}
-				context.setData("allDtlJnl", allDtlJnl);
+				context.setData("detailList", allDtlJnl);
 				log.info("查询的存疑明细信息为:" + allDtlJnl);
 			}
 
@@ -323,12 +328,13 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 			log.info("报表文件生成！！NEXT 上传FTP");
 
 			// 上传FTP
-			FTPTransfer tFTPTransfer = new FTPTransfer();
+			EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
 			// FTP上传设置
-			tFTPTransfer.setHost("182.53.15.187");
-			tFTPTransfer.setPort(21);
-			tFTPTransfer.setUserName("weblogic");
-			tFTPTransfer.setPassword("123456");
+			FTPTransfer tFTPTransfer = new FTPTransfer();
+			tFTPTransfer.setHost(sendFileToBBOSConfig.getThdIpAdr());
+			tFTPTransfer.setPort(Integer.parseInt(sendFileToBBOSConfig.getBidPot()));
+			tFTPTransfer.setUserName(sendFileToBBOSConfig.getOppNme());
+			tFTPTransfer.setPassword(sendFileToBBOSConfig.getOppUsrPsw());
 
 			try {
 				tFTPTransfer.logon();
