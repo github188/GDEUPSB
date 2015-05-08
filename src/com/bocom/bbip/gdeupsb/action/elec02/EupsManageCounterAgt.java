@@ -79,12 +79,12 @@ public class EupsManageCounterAgt extends BaseAction {
 		if (StringUtils.isNotEmpty(actNo)) {
 			agtElecTmp.setActNo(actNo);
 		}
-		agtElecTmp.setStatus("0");
+//		agtElecTmp.setStatus("1");
 		List<GdeupsAgtElecTmp> tmpList = get(GdeupsAgtElecTmpRepository.class)
 				.find(agtElecTmp);
 		if (null == tmpList || CollectionUtils.isEmpty(tmpList)) {
 			logger.info("There are no records for select check elec agt tmp ");
-			throw new CoreException("协议不存在或缴费号和账号不对应或已被删除");
+			throw new CoreException("协议不存在或缴费号与账号不匹配");
 		}
 		String OAC = tmpList.get(0).getActNo();
 		String OKH = tmpList.get(0).getNewBankNum();
@@ -249,7 +249,7 @@ public class EupsManageCounterAgt extends BaseAction {
 	private void updateAgentDeal(Context context) throws CoreException {
 
 		// TODO checkCusInfoByCusAc(context);
-//		checkOldBaseInfo(context);
+		checkOldBaseInfo(context);
 
 		List<Map<String, Object>> infoList = new ArrayList<Map<String, Object>>();
 		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
@@ -258,10 +258,10 @@ public class EupsManageCounterAgt extends BaseAction {
 		// 旧协议信息，返显
 		List<GdeupsAgtElecTmp> oldAgtElecTmps = get(
 				GdeupsAgtElecTmpRepository.class).findBase(agtElecTmp);
-		if (null == oldAgtElecTmps || CollectionUtils.isEmpty(oldAgtElecTmps)) {
-			logger.info("There are no records for select check elec agt tmp ");
-			throw new CoreException("协议不存在或已被删除");
-		}
+//		if (null == oldAgtElecTmps || CollectionUtils.isEmpty(oldAgtElecTmps)) {
+//			logger.info("There are no records for select check elec agt tmp ");
+//			throw new CoreException("协议不存在或已被删除");
+//		}
 		for (GdeupsAgtElecTmp perTmp : oldAgtElecTmps) {
 			Map<String, Object> infoMap = new HashMap<String, Object>();
 			infoMap.put("JFH", perTmp.getFeeNum());
@@ -280,10 +280,6 @@ public class EupsManageCounterAgt extends BaseAction {
 //		String oldCardNo = context.getData("OAC");
 		String oldCardNo = oldAgtElecTmps.get(0).getActNo();
 		String oldBankNum = context.getData("OKH");
-		// 不允许更改卡号缴费号对应关系，只修改其他辅助信息
-		if (!oldCardNo.equals(context.getData("ActNo"))) { // 输入卡号与原签约卡号不一致，报错
-			throw new CoreException("输入卡号与原签约卡号不一致,不可进行交易");
-		}
 
 		agtElecTmp = toGdeupsAgtElecTmp(context);
 		agtElecTmp.setOldBankNum(oldBankNum);
