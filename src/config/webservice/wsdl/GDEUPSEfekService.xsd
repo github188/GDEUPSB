@@ -1159,7 +1159,7 @@
       <xs:documentation>存折号码</xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
-      <xs:maxLength value="8"/>
+      <xs:maxLength value="32"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:simpleType name="password_SType">
