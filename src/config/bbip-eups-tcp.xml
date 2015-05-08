@@ -225,9 +225,8 @@
 		</property>
 	</bean>
 
-	<!-- <bean class="com.bocom.bbip.gdeupsb.channel.tcp.GzElcPackDeal" /> -->
-
-	<!-- <bean id="ELEC0100GateWay" class="com.bocom.jump.bp.channel.tcp.SocketGateway">
+<!-- 
+	 <bean id="ELEC0100GateWay" class="com.bocom.jump.bp.channel.tcp.SocketGateway">
 		<property name="host" value="127.0.0.1" />
 		<property name="port" value="9067" />
 		<property name="soTimeout" value="30000" />
@@ -252,43 +251,8 @@
 		<property name="tranportLister">
 			<bean class="com.bocom.jump.bp.channel.DefaultTransportListener"></bean>
 		</property>
-	</bean> -->
+	</bean>  -->
 
-
-	<!-- <bean id="ELEC00GateWay" class="com.bocom.bbip.gdeupsb.channel.tcp.ELEC00SocketGateway">
-		<property name="host" value="182.53.15.200" />
-		<property name="port" value="5680" />
-		<property name="soTimeout" value="60000" />
-		<property name="streamResolver">
-			<bean class="com.bocom.bbip.gdeupsb.channel.tcp.ElecFrontStreamResolver">
-			</bean>
-		</property>
-	</bean>
-
-	<bean id="ELEC00Transport" class="com.bocom.jump.bp.channel.DefaultTransport">
-		<property name="gateway" ref="ELEC00GateWay" />
-		<property name="encodeTransforms">
-			<array>
-				<bean class="com.bocom.jump.bp.channel.interceptors.EncoderTransform">
-					<constructor-arg
-						value="packet://WEB-INF/classes/config/stream/ELEC00/ELEC00ReqHeader.xml" />
-				</bean>
-			</array>
-		</property>
-		<property name="decodeTransforms">
-			<array>
-				<bean class="com.bocom.jump.bp.channel.interceptors.DecoderTransform">
-					<constructor-arg
-						value="packet://WEB-INF/classes/config/stream/ELEC00/ELEC00RspHeader.xml" />
-				</bean>
-			</array>
-		</property>
-		<property name="tranportLister">
-			<bean class="com.bocom.jump.bp.channel.DefaultTransportListener"></bean>
-		</property>
-	</bean> -->
-	
-	
 	<bean id="ELEC00GateWay" class="com.bocom.bbip.gdeupsb.channel.tcp.ELEC00SocketGateway">
 		<property name="host" value="182.53.15.200" />
 		<property name="port" value="5680" />
