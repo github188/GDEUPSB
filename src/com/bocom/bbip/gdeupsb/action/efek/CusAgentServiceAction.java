@@ -51,8 +51,6 @@ public class CusAgentServiceAction extends BaseAction{
 		 */
 		public void execute(Context context)throws CoreException,CoreRuntimeException{
 				logger.info("============Start  CusAgentServiceAction ");
-				//TODO  要删除
-				context.setData("txnTlr", "ABIR148");
 				
 				String cusAc=context.getData("cusAc");
 				String comNo=context.getData("comNos").toString();
@@ -282,7 +280,7 @@ public class CusAgentServiceAction extends BaseAction{
 			if(context.getData(ParamKeys.THD_SQN)!=null){
 				map.put("bk", "01441999999");
 				map.put("br", "01441131999");
-				context.setData("tlr", "ABIR148");
+				context.setData("tlr", "EFC0000");
 				context.setData("bk", "01441999999");
 				context.setData("br", "01441131999");
 			}
