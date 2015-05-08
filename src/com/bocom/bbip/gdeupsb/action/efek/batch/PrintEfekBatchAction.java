@@ -49,6 +49,9 @@ public class PrintEfekBatchAction extends BaseAction{
 				maps.put("txnDte", txnDte);
 				//地区分组
 				List<Map<String, Object>> mapList=gdEupsEleTmpRepository.findAllGroupByComNo(maps);
+				if(CollectionUtils.isEmpty(mapList)){
+						throw new CoreException(txnDte+"没有进行批量交易");
+				}
 				for (Map<String, Object> map : mapList) {
 						String comNo=map.get("COM_NO").toString();
 						context.setData("comNo", comNo);
