@@ -105,8 +105,9 @@ public class PrintEfekBatchAction extends BaseAction{
 								fileNameMap.put("printFile", fileName);
 								fileNameList.add(fileNameMap);
 															
+								EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
 								StringBuffer batNoFile=new StringBuffer();
-								batNoFile.append("/home/bbipadm/data/GDEUPSB/report/");
+								batNoFile.append(sendFileToBBOSConfig.getFtpDir());
 								File file =new File(batNoFile.toString());
 								if(!file.exists()){
 										file.mkdirs();
@@ -132,7 +133,6 @@ public class PrintEfekBatchAction extends BaseAction{
 									//报表		
 									log.info("=============Start   Send   File==========");
 									
-									EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
 									// FTP上传设置
 									FTPTransfer tFTPTransfer = new FTPTransfer();
 									tFTPTransfer.setHost(sendFileToBBOSConfig.getThdIpAdr());
