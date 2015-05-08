@@ -182,6 +182,7 @@ public class BatchSignFileInputAction extends BaseAction {
 		 * CoreException(GDErrorCodes.EUPS_FILE_RULE_ERROR); }
 		 */
 		// ====检验文件名中的业务类型==
+		log.info("strGdsBId=["+strGdsBId+"],gdsBid=["+gdsBid+"]");
 		if (!gdsBid.equals(strGdsBId)) {
 			log.info("check fileName rule error...... ");
 			throw new CoreException(GDErrorCodes.EUPS_FILE_BUSTYPE_ERROR);
@@ -454,6 +455,8 @@ public class BatchSignFileInputAction extends BaseAction {
 				context.setData("prvDatReq", prvDatReq);
 				try {
 					log.info("开始进行异步调用");
+					context.setData("batchOprFlg", "Y");
+					
 					Context newContext = bbipPubService.synExecute("gdeups.agtMdyDealProcess", context);
 					log.info("newContext......... ==" + newContext);
 					context.setDataMap(newContext.getDataMap());
