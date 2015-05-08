@@ -33,13 +33,17 @@ import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
+import com.bocom.bbip.gdeupsb.entity.GDEupsbElecstBatchTmp;
 import com.bocom.bbip.gdeupsb.entity.GdGasCusAll;
 import com.bocom.bbip.gdeupsb.entity.GdGashBatchTmp;
+import com.bocom.bbip.gdeupsb.entity.GdeupsAgtElecTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GdGasCusAllRepository;
 import com.bocom.bbip.gdeupsb.repository.GdGashBatchTmpRepository;
+import com.bocom.bbip.gdeupsb.repository.GdeupsAgtElecTmpRepository;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
+import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.ContextUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.JumpException;
@@ -132,7 +136,7 @@ public class BatchGashDealServiceAction extends BaseAction implements
 		List<GdGasCusAll> infoList = new ArrayList<GdGasCusAll>();
 		List<GdGashBatchTmp> list = (List<GdGashBatchTmp>) BeanUtils.toObjects(
 				detail, GdGashBatchTmp.class);
-		for (GdGashBatchTmp tmp : list) {
+		/*for (GdGashBatchTmp tmp : list) {
 			tmp.setSqn(get(BBIPPublicService.class).getBBIPSequence());
 			tmp.setBatNo(batNo1);
 			cusNo = tmp.getCusNo();
@@ -150,8 +154,32 @@ public class BatchGashDealServiceAction extends BaseAction implements
 					+ "===============thdCusNme:" + tmp.getTmpFld3());
 
 			get(GdGashBatchTmpRepository.class).insert(tmp);
+		}*/
+		
+		
+		for (GdGashBatchTmp tmp : list) {
+			// 判断在本地是否存在协议,若存在，则本地批次表更新为0，否则更新为1
+			String cusAc = tmp.getCusAc();
+			String cusNoTmp = tmp.getCusNo();
+			GdGasCusAll gdGasCusAlltmp = new GdGasCusAll();
+			gdGasCusAlltmp.setCusAc(cusAc);
+			gdGasCusAlltmp.setCusNme(cusNoTmp);
+			List<GdGasCusAll> checkR = get(GdGasCusAllRepository.class).find(gdGasCusAlltmp);
+			if (CollectionUtils.isEmpty(checkR)) {
+				tmp.setTmpFld5("B2"); // 不存在本地协议信息
+			} else {
+				tmp.setTmpFld5("0");
+				tmp.setTmpFld4(checkR.get(0).getCusNme());
+				tmp.setTmpFld3(checkR.get(0).getThdCusNme());// thdCusNme
+			}
+			tmp.setBk("cnjt");
+			tmp.setTmpFld2(bk);
+			tmp.setTxnDte(txnDate);
+			tmp.setSqn(get(BBIPPublicService.class).getBBIPSequence());
+			tmp.setBatNo(batNo1);
+			get(GdGashBatchTmpRepository.class).insert(tmp);
 		}
-
+		
 		List<GdGashBatchTmp> lt = get(GdGashBatchTmpRepository.class)
 				.findByBatNo((String) context.getData(ParamKeys.BAT_NO));
 
@@ -186,10 +214,10 @@ public class BatchGashDealServiceAction extends BaseAction implements
 			tmpMap.put("cusNme", tmp.getTmpFld4());
 			tmpMap.put("txnAmt", tmp.getTxnAmt());
 			tmpMap.put("thdCusNo", tmp.getCusNo());
-			tmpMap.put("OUROTHFLG", "0");
+			tmpMap.put("rsvFld4", "0");
 			tmpMap.put("thdCusNme", tmp.getTmpFld3());
 			// tmpMap.put("OBKBK", value);
-			tmpMap.put("RMK1", tmp.getThdSqn());
+			tmpMap.put("sqn", tmp.getThdSqn());
 //			tmpMap.put("RMK2", tmp.getCusNo());
 			totAmt = totAmt.add(new BigDecimal(tmp.getTxnAmt()));
 			gasBatDetail.add(tmpMap);
@@ -225,15 +253,13 @@ public class BatchGashDealServiceAction extends BaseAction implements
 		context.setData("fleNmeBak", fleNme);
 		// 提交代收付
 		userProcessToSubmit(context);
+		
 		logger.info("===================开始休眠3min===================");
 		try {
 			Thread.sleep(180000);
 		} catch (InterruptedException e) {
 			logger.info("sleep fail:" , e);
 		}
-		// 得到反盘文件
-//		 userProcessToGet(context);
-		// 处理成第三方格式返回
 
 		logger.info("==========End  BatchDataFileAction  prepareBatchDeal");
 
@@ -271,31 +297,14 @@ public class BatchGashDealServiceAction extends BaseAction implements
 		context.setData("reqTme",DateUtils.formatAsSimpleDate(date)+"T"+DateUtils.format(date, "HH:mm:ss"));
 		//提交
 		String mothed="eups.batchPaySubmitDataProcess";
-//		context.setData(ParamKeys.RSV_FLD3, context.getData(ParamKeys.THD_SQN));
 		context.setData(ParamKeys.RSV_FLD2, context.getData("rsvFld7"));
 		bbipPublicService.synExecute(mothed, context);
-//		String	rsvFld3=context.getData(ParamKeys.THD_SQN).toString();
 		EupsBatchConsoleInfo eupsBatchConsoleInfo =new EupsBatchConsoleInfo();
 		eupsBatchConsoleInfo.setRsvFld2((String) context.getData("rsvFld7"));
-//		eupsBatchConsoleInfo.setRsvFld3(rsvFld3);
 		
 		String batNo=get(EupsBatchConsoleInfoRepository.class).find(eupsBatchConsoleInfo).get(0).getBatNo();
 		context.setData(ParamKeys.BAT_NO, batNo);
 		
-//		String mothed = "eups.batchPaySubmitDataProcess";
-//
-//		Date date = new Date();
-//		context.setData("reqTme", DateUtils.formatAsSimpleDate(date) + "T"
-//				+ DateUtils.format(date, "HH:mm:ss"));
-//
-//		context.setData(ParamKeys.RSV_FLD2, context.getData("rsvFld7"));
-//		bbipPublicService.synExecute(mothed, context);
-//		String rsvFld2 = context.getData(ParamKeys.SEQUENCE).toString();
-//		EupsBatchConsoleInfo eupsBatchConsoleInfo = new EupsBatchConsoleInfo();
-//		eupsBatchConsoleInfo.setRsvFld2(rsvFld2);
-//		String batNo = get(EupsBatchConsoleInfoRepository.class)
-//				.find(eupsBatchConsoleInfo).get(0).getBatNo();
-//		context.setData(ParamKeys.BAT_NO, batNo);
 
 		logger.info("==========End   eups.batchPaySubmitDataProcess with context: "
 				+ context);

@@ -56,9 +56,8 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 		logger.info("Enter in PrintEupsbRptsActionBak....");
 		logger.info("===============context:" + context);
 
-		String eupsBusTyp = (String) context
-				.getData(ParamKeys.EUPS_BUSS_TYPE);
-		
+		String eupsBusTyp = (String) context.getData(ParamKeys.EUPS_BUSS_TYPE);
+
 		context.setData(ParamKeys.TXN_DTE,
 				DateUtils.format(new Date(), DateUtils.STYLE_SIMPLE_DATE));
 
@@ -84,15 +83,14 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 		comNo = infoList.get(0).getComNo();
 		context.setData(ParamKeys.COMPANY_NAME, comNme);
 		context.setData(ParamKeys.COMPANY_NO, comNo);
-		
+
 		logger.info("=============context:" + context);
 		GdEupsTransJournal eupsJnl = new GdEupsTransJournal();
 		Map<String, Object> baseMap = new HashMap<String, Object>();
 		eupsJnl.setEupsBusTyp((String) context
 				.getData(ParamKeys.EUPS_BUSS_TYPE));
 		// eupsJnl.setBr(br);
-		baseMap.put(ParamKeys.EUPS_BUSS_TYPE,
-				eupsBusTyp);
+		baseMap.put(ParamKeys.EUPS_BUSS_TYPE, eupsBusTyp);
 		if (StringUtils.isNotBlank((String) context
 				.getData(ParamKeys.COMPANY_NO))) {
 			eupsJnl.setComNo((String) context.getData(ParamKeys.COMPANY_NO));
@@ -108,12 +106,12 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 
 		String prtTtl = null;
 		if ("0".equals(prtTyp)) {
-			if("ELEC00".equals(eupsBusTyp)){
-				prtList = get(GdEupsTransJournalRepository.class).findElec00AllTxnList(
-						eupsJnl);
-			}else{
-				prtList = get(GdEupsTransJournalRepository.class).findAllTxnList(
-						eupsJnl);
+			if ("ELEC00".equals(eupsBusTyp)) {
+				prtList = get(GdEupsTransJournalRepository.class)
+						.findElec00AllTxnList(eupsJnl);
+			} else {
+				prtList = get(GdEupsTransJournalRepository.class)
+						.findAllTxnList(eupsJnl);
 				if (null == prtList || CollectionUtils.isEmpty(prtList)) {
 					logger.info("There are no records for select check trans journal ");
 					throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
@@ -126,17 +124,19 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 				context.setData("FAILCNT", prtList.get(0).get("FAILCNT"));
 				context.setData("TOTFAILAMT", prtList.get(0).get("TOTFAILAMT"));
 				context.setData("DOUBTCNT", prtList.get(0).get("DOUBTCNT"));
-				context.setData("TOTDOUBTAMT", prtList.get(0).get("TOTDOUBTAMT"));
+				context.setData("TOTDOUBTAMT", prtList.get(0)
+						.get("TOTDOUBTAMT"));
 				context.setData("OTHERCNT", prtList.get(0).get("OTHERCNT"));
-				context.setData("TOTOTHERAMT", prtList.get(0).get("TOTOTHERAMT"));
+				context.setData("TOTOTHERAMT", prtList.get(0)
+						.get("TOTOTHERAMT"));
 			}
-			
 
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
 					.toString().trim()
 					+ "_汇总报表";
 
-			fileName = ttlDate + "_" + context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_" + comNo
+			fileName = ttlDate + "_"
+					+ context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_" + comNo
 					+ "_JnlAll.txt";
 		}
 		if ("1".equals(prtTyp)) {
@@ -152,7 +152,8 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
 					.toString().trim()
 					+ "_成功交易清单报表";
-			fileName = ttlDate + "_" + context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_" + comNo
+			fileName = ttlDate + "_"
+					+ context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_" + comNo
 					+ "_Suss.txt";
 		}
 		if ("2".equals(prtTyp)) {
@@ -168,7 +169,8 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
 					.toString().trim()
 					+ "_失败交易清单报表";
-			fileName = ttlDate + "_" + context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_" + comNo
+			fileName = ttlDate + "_"
+					+ context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_" + comNo
 					+ "_Fail.txt";
 		}
 		if ("3".equals(prtTyp)) {
@@ -184,7 +186,8 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
 					.toString().trim()
 					+ "_可疑交易清单报表";
-			fileName = ttlDate + "_" + context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_" + comNo
+			fileName = ttlDate + "_"
+					+ context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_" + comNo
 					+ "_Doubt.txt";
 		}
 		if ("4".equals(prtTyp)) {
@@ -199,15 +202,16 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			context.setData("TOTOTHERAMT", prtList.get(0).get("TOTOTHERAMT"));
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
 					+ "_其他情况清单报表";
-			fileName = ttlDate + "_" + context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_" + comNo
+			fileName = ttlDate + "_"
+					+ context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_" + comNo
 					+ "_Other.txt";
 		}
 
 		if ("5".equals(prtTyp)) { // 批量报表 SQL
-			if(eupsBusTyp.equals("ELEC02")){
+			if (eupsBusTyp.equals("ELEC02")) {
 				prtList = get(GDEupsBatchConsoleInfoRepository.class)
 						.findElec02BatchRptInfo(baseMap);
-			}else{
+			} else {
 				prtList = get(GDEupsBatchConsoleInfoRepository.class)
 						.findBatchRptInfo(baseMap);
 			}
@@ -226,23 +230,25 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
 					.toString().trim()
 					+ "_批量交易报表";
-			fileName = ttlDate + "_" + context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_" + comNo
+			fileName = ttlDate + "_"
+					+ context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_" + comNo
 					+ "_BatchReport.txt";
 		}
 
 		context.setData("prtTtl", prtTtl);
 		String sampleFile = null;
 		String result = null;
-		
-		EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
-//		String filPath = "/home/bbipadm/data/GDEUPSB/report/";
+
+		EupsThdFtpConfig sendFileToBBOSConfig = get(
+				EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
+		// String filPath = "/home/bbipadm/data/GDEUPSB/report/";
 		String filPath = sendFileToBBOSConfig.getLocDir().trim();
 		Map<String, String> map = new HashMap<String, String>();
 
 		if ("0".equals(prtTyp)) {// 单笔全部
-			if("ELEC00".equals(eupsBusTyp)){
+			if ("ELEC00".equals(eupsBusTyp)) {
 				sampleFile = "config/report/common/elec00PrintReport_all.vm";
-			}else{
+			} else {
 				sampleFile = "config/report/common/commonPrintReport_all.vm";
 			}
 		} else if ("1".equals(prtTyp)) {// 单笔成功
@@ -253,11 +259,11 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			sampleFile = "config/report/common/commonPrintReport_doubt.vm";
 		} else if ("4".equals(prtTyp)) {// 单笔其他
 			sampleFile = "config/report/common/commonPrintReport_oth.vm";
-		} else if ("5".equals(prtTyp)) {//批量报表 VM
-			if(eupsBusTyp.equals("ELEC02")){
+		} else if ("5".equals(prtTyp)) {// 批量报表 VM
+			if (eupsBusTyp.equals("ELEC02")) {
 				sampleFile = "config/report/common/Elec02batchRpt.vm";
-			}else{
-			sampleFile = "config/report/common/commonPrintReport_batch.vm";
+			} else {
+				sampleFile = "config/report/common/commonPrintReport_batch.vm";
 			}
 		}
 
@@ -268,7 +274,7 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 		try {
 			render.afterPropertiesSet();
 		} catch (Exception e) {
-			logger.info("render afterPropertiesSet error : " , e);
+			logger.info("render afterPropertiesSet error : ", e);
 		}
 		context.setData("eles", prtList);
 		render.setReportNameTemplateLocationMapping(map);
@@ -294,32 +300,45 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			printWriter.write(result);
 
 		} catch (IOException e) {
-			logger.info("create file error:" , e);
+			logger.info("create file error:", e);
 		} finally {
 			if (null != printWriter) {
 				try {
 					printWriter.close();
 				} catch (Exception e) {
-					logger.info("close printWriter error:" , e);
+					logger.info("close printWriter error:", e);
 				}
 			}
 		}
 		logger.info("报表文件生成！！NEXT 上传FTP");
+		
+		// TODO elec02对账文件上传到汕头指定服务器
+		if ("ELEC02".equals(eupsBusTyp)) {
+			/**
+			 * 配置ftp 参考 watr00BatchResulfA
+			 */
+			EupsThdFtpConfig sendFileToElec02 = get(EupsThdFtpConfigRepository.class).findOne("sendFileToElec02");
+//			<Case value="445999">
+//	          <Set>LclFil=STRCAT(301586003dz,$TxnDat,.txt)</Set>
+			String stFilNme = "301586003dz" + DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd) + ".txt";
+			sendFileToElec02.setLocDir(filPath);
+			sendFileToElec02.setLocFleNme(fileName);
+			sendFileToElec02.setRmtFleNme(stFilNme);
+		}
 
-		// 上传FTP
+		// 上传前端FTP
 		// FTP上传设置
 		FTPTransfer tFTPTransfer = new FTPTransfer();
 		tFTPTransfer.setHost(sendFileToBBOSConfig.getThdIpAdr());
-		tFTPTransfer.setPort(Integer.parseInt(sendFileToBBOSConfig.getBidPot()));
+		tFTPTransfer
+				.setPort(Integer.parseInt(sendFileToBBOSConfig.getBidPot()));
 		tFTPTransfer.setUserName(sendFileToBBOSConfig.getOppNme());
 		tFTPTransfer.setPassword(sendFileToBBOSConfig.getOppUsrPsw());
-		
 		try {
 			tFTPTransfer.logon();
 			Resource tResource = new FileSystemResource(JYPath);
-			tFTPTransfer.putResource(tResource,
-					sendFileToBBOSConfig.getRmtWay().trim(),
-					fileName);
+			tFTPTransfer.putResource(tResource, sendFileToBBOSConfig
+					.getRmtWay().trim(), fileName);
 
 		} catch (Exception e) {
 			throw new CoreException("文件上传失败");
@@ -328,7 +347,7 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 		}
 
 		context.setData("fleNme", fileName);
-		logger.info("文件上传完成，等待打印！" , context);
+		logger.info("文件上传完成，等待打印！", context);
 
 		/*****************************************************************************************************************************/
 

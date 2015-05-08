@@ -426,7 +426,7 @@
 	<select id="findByBatNo" resultMap="basicResultMap"
 		parameterType="java.lang.String">
 		select * from ${GDEUPSB_SCHEMA}.GDEUPS_GASH_BATCH_TMP
-		where BAT_NO=#{batNo}
+		where BAT_NO=#{batNo} and TMP_FLD1='0'
 
 	</select>
 
@@ -437,4 +437,79 @@
 	THDCUSNOC, PAY_MON PAYYEA, TXN_AMT TXNAMT, TXN_DTE TXNDTE FROM
 	GDEUPSB.GDEUPS_GASH_BATCH_TMP WHERE TXN_DTE=#{txnDte, jdbcType=DATE} ORDER BY SQN
 	</select>
+	
+	
+	<update id="updateByThdSqn" parameterType="com.bocom.bbip.gdeupsb.entity.GdGashBatchTmp">
+		update ${GDEUPSB_SCHEMA}.GDEUPS_GASH_BATCH_TMP
+		<set>
+			<if test="batNo != null">
+				BAT_NO = #{batNo,jdbcType=CHAR},
+			</if>
+			<if test="batSts != null">
+				BAT_STS = #{batSts,jdbcType=CHAR},
+			</if>
+			<if test="pkgFlg != null">
+				PKG_FLG = #{pkgFlg,jdbcType=CHAR},
+			</if>
+			<if test="totCnt != null">
+				TOT_CNT = #{totCnt,jdbcType=CHAR},
+			</if>
+			<if test="totAmt != null">
+				TOT_AMT = #{totAmt,jdbcType=CHAR},
+			</if>
+			<if test="sucTotCnt != null">
+				SUC_TOT_CNT = #{sucTotCnt,jdbcType=CHAR},
+			</if>
+			<if test="sucTotAmt != null">
+				SUC_TOT_AMT = #{sucTotAmt,jdbcType=CHAR},
+			</if>
+			<if test="txnDte != null">
+				TXN_DTE = #{txnDte,jdbcType=DATE},
+			</if>
+			<if test="txnTme != null">
+				TXN_TME = #{txnTme,jdbcType=TIMESTAMP},
+			</if>
+			<if test="thdSqn != null">
+				THD_SQN = #{thdSqn,jdbcType=CHAR},
+			</if>
+			<if test="bk != null">
+				BK = #{bk,jdbcType=CHAR},
+			</if>
+			<if test="cusNo != null">
+				CUS_NO = #{cusNo,jdbcType=CHAR},
+			</if>
+			<if test="cusNme != null">
+				CUS_NME = #{cusNme,jdbcType=CHAR},
+			</if>
+			<if test="cusAc != null">
+				CUS_AC = #{cusAc,jdbcType=CHAR},
+			</if>
+			<if test="payMon != null">
+				PAY_MON = #{payMon,jdbcType=CHAR},
+			</if>
+			<if test="reqTxnAmt != null">
+				REQ_TXN_AMT = #{reqTxnAmt,jdbcType=CHAR},
+			</if>
+			<if test="txnAmt != null">
+				TXN_AMT = #{txnAmt,jdbcType=CHAR},
+			</if>
+			<if test="tmpFld1 != null">
+				TMP_FLD1 = #{tmpFld1,jdbcType=CHAR},
+			</if>
+			<if test="tmpFld2 != null">
+				TMP_FLD2 = #{tmpFld2,jdbcType=CHAR},
+			</if>
+			<if test="tmpFld3 != null">
+				TMP_FLD3 = #{tmpFld3,jdbcType=CHAR},
+			</if>
+			<if test="tmpFld4 != null">
+				TMP_FLD4 = #{tmpFld4,jdbcType=CHAR},
+			</if>
+			<if test="tmpFld5 != null">
+				TMP_FLD5 = #{tmpFld5,jdbcType=CHAR},
+			</if>
+		</set>
+		where THD_SQN = #{thdSqn,jdbcType=CHAR}
+	</update>
+	
 </mapper>

@@ -19,4 +19,6 @@ public interface GdGashBatchTmpRepository extends
 
 	@Find
 	public List<Map<String, Object>> findGasCheckRec(Map<String, Object> baseMap);
+
+	public void updateByThdSqn(GdGashBatchTmp gdGashBatchTmp);
 }

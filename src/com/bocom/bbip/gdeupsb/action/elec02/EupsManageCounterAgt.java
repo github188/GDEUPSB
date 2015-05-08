@@ -249,7 +249,7 @@ public class EupsManageCounterAgt extends BaseAction {
 	private void updateAgentDeal(Context context) throws CoreException {
 
 		// TODO checkCusInfoByCusAc(context);
-		checkOldBaseInfo(context);
+//		checkOldBaseInfo(context);
 
 		List<Map<String, Object>> infoList = new ArrayList<Map<String, Object>>();
 		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
@@ -277,7 +277,8 @@ public class EupsManageCounterAgt extends BaseAction {
 		}
 		context.setData("infoList", infoList);
 		logger.info(" context after set infoList : ", context);
-		String oldCardNo = context.getData("OAC");
+//		String oldCardNo = context.getData("OAC");
+		String oldCardNo = oldAgtElecTmps.get(0).getActNo();
 		String oldBankNum = context.getData("OKH");
 		// 不允许更改卡号缴费号对应关系，只修改其他辅助信息
 		if (!oldCardNo.equals(context.getData("ActNo"))) { // 输入卡号与原签约卡号不一致，报错
