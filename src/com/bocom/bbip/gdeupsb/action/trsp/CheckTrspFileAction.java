@@ -508,7 +508,7 @@ public class CheckTrspFileAction extends BaseAction {
 		
        try {
        	tFTPTransfer.logon();
-           Resource tResource = new FileSystemResource("/home/bbipadm/data/GDEUPSB/report/"+rptFil);
+           Resource tResource = new FileSystemResource(sendFileToBBOSConfig.getLocDir()+rptFil);
            tFTPTransfer.putResource(tResource, "/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/", rptFil);
 
        } catch (Exception e) {
