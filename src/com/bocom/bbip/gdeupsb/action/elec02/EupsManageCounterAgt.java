@@ -206,6 +206,7 @@ public class EupsManageCounterAgt extends BaseAction {
 			agtElecTmp.setBankNo("301");
 			agtElecTmp.setComCode("0500");
 			agtElecTmp.setFeeCode("000");
+			agtElecTmp.setStatus("0");
 			agtElecTmp.setRemark("签约日期:" + MGR_DATE);
 			get(GdeupsAgtElecTmpRepository.class).save(agtElecTmp);
 
