@@ -1188,6 +1188,7 @@
       <xs:element name="agdAgrNo" type="tns:agdAgrNo_SType" minOccurs="0"/>
       <xs:element name="cusAC" type="tns:cusAC_SType" minOccurs="0"/>
       <xs:element name="cusNme" type="tns:cusNme_SType" minOccurs="0"/>
+      <xs:element name="cusTyp" type="tns:cusTyp_SType" minOccurs="0"/>
       <xs:element name="thdCusNo" type="tns:thdCusNo_SType" minOccurs="0"/>
       <xs:element name="thdCusNme" type="tns:thdCusNme_SType" minOccurs="0"/>
       <xs:element name="idTyp" type="tns:idTyp_SType" minOccurs="0"/>
