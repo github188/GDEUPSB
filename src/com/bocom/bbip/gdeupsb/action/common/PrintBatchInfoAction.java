@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
-import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.common.ParamKeys;
@@ -31,6 +30,7 @@ import com.bocom.bbip.file.transfer.ftp.FTPTransfer;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
+import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -68,6 +68,9 @@ public class PrintBatchInfoAction extends BaseAction{
 				EupsBatchInfoDetail eupsBatchInfoDetail=new EupsBatchInfoDetail();
 				eupsBatchInfoDetail.setBatNo(eupsBatNo);
 				List<EupsBatchInfoDetail> list=eupsBatchInfoDetailRepository.find(eupsBatchInfoDetail);				
+				if(CollectionUtils.isEmpty(list)){
+						throw new CoreException(batNo+"没有返回，不能打印清单");
+				}
 				for (EupsBatchInfoDetail eupsBatchInfoDetails : list) {
 						eupsBatchInfoDetails.setRmk2("T");
 						if(eupsBatchInfoDetails.getSts().equals("S")){
