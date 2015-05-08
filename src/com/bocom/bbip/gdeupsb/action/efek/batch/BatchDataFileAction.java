@@ -65,9 +65,6 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 	public void prepareBatchDeal(PrepareBatchAcpDomain preparebatchacpdomain,
 			Context context) throws CoreException {
 				logger.info("==========Start  BatchDataFileAction  prepareBatchDeal");
-				if(context.getData("txnTlr")==null){
-					context.setData("txnTlr", "ABIR148");
-				}
 				//上锁
 				String locked="460420ELEC00";
 				Result ret1 = bbipPublicService.tryLock( locked,60*1000L, 600L);
