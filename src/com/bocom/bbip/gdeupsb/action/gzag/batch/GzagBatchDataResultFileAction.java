@@ -62,7 +62,7 @@ public class GzagBatchDataResultFileAction extends BaseAction implements AfterBa
 		final String br=(String)context.getData(ParamKeys.BR);
         final String AcDate=DateUtils.format(bbipPublicService.getAcDate(),DateUtils.STYLE_yyyyMMdd);
         final String systemCode=systemConfig.getSystemCode();
-        final String dir="/home/bbipadm/data/mftp/BBIP/"+systemCode+"/"+br+"/"+tlr+"/"+AcDate+"/";
+        final String dir=get(BBIPPublicService.class).getParam("batchPath")+systemCode+"/"+br+"/"+tlr+"/"+AcDate+"/";
 			//得到文件
 //			EupsThdFtpConfig eupsThdFtpConfigFile = eupsThdFtpConfigRepository.findOne(ParamKeys.FTPID_BATCH_PAY_FILE_TO_ACP);
 //			String fileNme=context.getData("batNo")+".result";
