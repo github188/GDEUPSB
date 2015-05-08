@@ -57,7 +57,7 @@ public class PrePayToBankStrategyAction implements Executable{
 		CommonRequest comReq = new CommonRequest();
 		ctx.setData(ParamKeys.BUS_TYP, Constants.BUS_TYP_2); //待缴
 		//密码校验标志,0为验，1为不验
-		ctx.setData("pswCekFlg", "0");
+		ctx.setData("pswCekFlg", "1");
 		log.info("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!actNo="+ctx.getData(GDParamKeys.ACT_NO));
 	//TODO:待验证卡号是否属于珠海分行
 		
