@@ -177,7 +177,7 @@ public class BatchFileCommon extends BaseAction {
         context.setData("dir", dir);
         File file=new File(dir);
         if(!file.exists()){
-        		file.mkdir();
+        		file.mkdirs();
         }
         EupsActSysPara eupsActSysPara = new EupsActSysPara();
         eupsActSysPara.setActSysTyp("0");
