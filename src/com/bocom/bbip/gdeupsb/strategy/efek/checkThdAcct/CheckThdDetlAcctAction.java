@@ -369,7 +369,7 @@ public class CheckThdDetlAcctAction implements Executable {
 	}
     public  Process RecvEnCryptFile(String excPath, String srcFile, String objFile,Context context) throws IOException, InterruptedException, CoreRuntimeException, CoreException {
     	logger.info("================Start BatchDataFileActiion  RecvEnCryptFile");	    	
-    	String cmd=bbipPublicService.getParam("efekMD5")+" "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
+    	String cmd=bbipPublicService.getParam("efekMD5Send")+" "+srcFile+" "+DateUtils.formatAsHHmmss(new Date());
     	logger.info("cmd=" + cmd);
         Process proc = Runtime.getRuntime().exec(cmd);
         proc.waitFor();
