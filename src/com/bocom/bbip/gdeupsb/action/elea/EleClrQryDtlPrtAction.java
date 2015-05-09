@@ -312,6 +312,9 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 				List<Map<String, Object>> allDtlJnlHk = get(GdEupsTransJournalRepository.class).findGdJnlSucHkDetail(transJnl);
 				if (CollectionUtils.isNotEmpty(allDtlJnlHk)) {
 					for (Map<String, Object> detail : allDtlJnlHk) {
+						System.out.println("TxnTme=" + detail.get("TXN_TME"));
+						String txnTme = DateUtils.format((Date)detail.get("TXN_TME"), "HH:mm:ss");
+						detail.put("TXN_TME", txnTme);
 						allDtlJnl.add(detail);
 					}
 				}
@@ -319,6 +322,9 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 				List<Map<String, Object>> allDtlJnlJf = get(GdEupsTransJournalRepository.class).findGdJnlSucJfDetail(transJnl);
 				if (CollectionUtils.isNotEmpty(allDtlJnlJf)) {
 					for (Map<String, Object> detail : allDtlJnlHk) {
+						System.out.println("TxnTme=" + detail.get("TXN_TME"));
+						String txnTme = DateUtils.format((Date)detail.get("TXN_TME"), "HH:mm:ss");
+						detail.put("TXN_TME", txnTme);
 						allDtlJnl.add(detail);
 					}
 				}
@@ -399,7 +405,8 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 
 			}
 
-			String filPath = "/home/bbipadm/data/GDEUPSB/report/";
+//			String filPath = "/home/bbipadm/data/GDEUPSB/report/";
+			String filPath="D:/dat/lshb/";
 
 			String JYPath = filPath + fileName;
 
@@ -432,30 +439,30 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 			}
 			log.info("报表文件生成！！NEXT 上传FTP");
 
-			// 上传FTP
-			EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
-			// FTP上传设置
-			FTPTransfer tFTPTransfer = new FTPTransfer();
-			tFTPTransfer.setHost(sendFileToBBOSConfig.getThdIpAdr());
-			tFTPTransfer.setPort(Integer.parseInt(sendFileToBBOSConfig.getBidPot()));
-			tFTPTransfer.setUserName(sendFileToBBOSConfig.getOppNme());
-			tFTPTransfer.setPassword(sendFileToBBOSConfig.getOppUsrPsw());
-
-			try {
-				tFTPTransfer.logon();
-				Resource tResource = new FileSystemResource(JYPath);
-				tFTPTransfer.putResource(tResource,
-						"/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/",
-						fileName);
-
-			} catch (Exception e) {
-				throw new CoreException("文件上传失败");
-			} finally {
-				tFTPTransfer.logout();
-			}
-
-			context.setData("fleNme", fileName);
-			log.info("文件上传完成，等待打印！" + context);
+//			// 上传FTP
+//			EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
+//			// FTP上传设置
+//			FTPTransfer tFTPTransfer = new FTPTransfer();
+//			tFTPTransfer.setHost(sendFileToBBOSConfig.getThdIpAdr());
+//			tFTPTransfer.setPort(Integer.parseInt(sendFileToBBOSConfig.getBidPot()));
+//			tFTPTransfer.setUserName(sendFileToBBOSConfig.getOppNme());
+//			tFTPTransfer.setPassword(sendFileToBBOSConfig.getOppUsrPsw());
+//
+//			try {
+//				tFTPTransfer.logon();
+//				Resource tResource = new FileSystemResource(JYPath);
+//				tFTPTransfer.putResource(tResource,
+//						"/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/",
+//						fileName);
+//
+//			} catch (Exception e) {
+//				throw new CoreException("文件上传失败");
+//			} finally {
+//				tFTPTransfer.logout();
+//			}
+//
+//			context.setData("fleNme", fileName);
+//			log.info("文件上传完成，等待打印！" + context);
 
 		}
 
