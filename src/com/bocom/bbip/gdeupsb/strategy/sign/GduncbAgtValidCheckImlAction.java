@@ -14,10 +14,12 @@ import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdsRunCtl;
+import com.bocom.bbip.gdeupsb.entity.TelNumSegment;
 import com.bocom.bbip.gdeupsb.expand.AgtValidCheckService;
 import com.bocom.bbip.gdeupsb.interceptors.GDUNCBHttpSoapTrasnport;
 import com.bocom.bbip.gdeupsb.repository.GdsAgtWaterRepository;
 import com.bocom.bbip.gdeupsb.repository.GdsRunCtlRepository;
+import com.bocom.bbip.gdeupsb.repository.TelNumSegmentRepository;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.JumpException;
@@ -47,12 +49,12 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
     private GduncbThdTcpServiceAccessObject gduncbThdTcpServiceAccessObject;*/
 	@Autowired
 	GDUNCBHttpSoapTrasnport GDUNCBHttpTransport;
-/*	@Autowired
-	TelNumSegmentRepository  telNumSegmentRepository;*/
+	@Autowired
+	TelNumSegmentRepository  telNumSegmentRepository;
 	@Override
 	public Map<String, Object> agtValidCheckService(Context context) throws CoreException {
 		log.info("agtValidCheckService start!..");
-		boolean flag=context.getDataMap().containsKey("funcTyp");
+		//boolean flag=context.getDataMap().containsKey("funcTyp");
 		String gdsBId = context.getData(GDParamKeys.SIGN_STATION_BID); // 业务类型
 		GdsRunCtl gdsRunctl = context.getVariable(GDParamKeys.SIGN_STATION_RUN_CTL_INFO);
 		if(null==gdsRunctl){
@@ -130,16 +132,16 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 		String sqn=bBIPPublicService.getBBIPSequence();
 	   //===根据电话号码查询得到该号码归属地区
 		String tcusid=(String)context.getData("tcusid");
-		/*TelNumSegment telNumSegment=new TelNumSegment();
+		TelNumSegment telNumSegment=new TelNumSegment();
 		
 		telNumSegment.setBegnum(tcusid);
 		telNumSegment.setEndnum(tcusid);
-		List<TelNumSegment> telNumSegmentList=telNumSegmentRepository.findAreaid(telNumSegment);*/
-	/*	String areaid="0020";
+		List<TelNumSegment> telNumSegmentList=telNumSegmentRepository.findAreaid(telNumSegment);
+		String areaid="0020";
 	    if(CollectionUtils.isNotEmpty(telNumSegmentList)){
 	    	areaid=telNumSegmentList.get(0).getAreaid();
 	    }
-	    */
+	    
 		String tcusName=context.getData("cusNam");
 		String strTime = DateUtils.format(new Date(),
 				DateUtils.STYLE_yyyyMMddHHmmss);
@@ -148,9 +150,9 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 			requestData.put("MSG_RECEIVER", "5100");
 			requestData.put("TRANS_IDO", sqn);
 			requestData.put("PROCESS_TIME", strTime);
-			requestData.put("EPARCHY_CODE", "0755");
-			requestData.put("CHANNEL_ID", "7BB73");
-			requestData.put("OPER_ID", "SZDQWSC1");//context.getData("tlr"));
+			requestData.put("EPARCHY_CODE", areaid);
+			requestData.put("CHANNEL_ID", "A3B23");
+			requestData.put("OPER_ID", "ITFJTYH1");//context.getData("tlr"));
 			requestData.put("SERVICE_NAME", "UserInfoService");
 			requestData.put("OPERATE_NAME", "qryUserProInfo");
 			requestData.put("RSP_CODE", "");
@@ -188,9 +190,9 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 		requestData.put("MSG_RECEIVER", "5100");
 		requestData.put("TRANS_IDO", sqn);
 		requestData.put("PROCESS_TIME", strTime);
-		requestData.put("EPARCHY_CODE", "0755");
-		requestData.put("CHANNEL_ID", "7BB73");
-		requestData.put("OPER_ID","SZDQWSC1" );//context.getData("tlr"));
+		requestData.put("EPARCHY_CODE", areaid);
+		requestData.put("CHANNEL_ID", "A3B23");
+		requestData.put("OPER_ID","ITFJTYH1" );//context.getData("tlr"));
 		requestData.put("SERVICE_NAME", "AcctInfoService");
 		 requestData.put("OPERATE_NAME", "acctInfoChange");
 		 requestData.put("RSP_CODE", "");
@@ -200,7 +202,7 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 		 requestData.put("ACCT_TYPE", context.getData("actTyp"));
 		 requestData.put("PAY_TYPE", "8");
 		 requestData.put("SUPER_BANK_CODE", "JT");
-		 requestData.put("BANK_CODE", "JT0SZ0");//JTYH001
+		 requestData.put("BANK_CODE", "JTYH001");//JTYH001
 		 requestData.put("CONSIGN_NO", (String)context.getData("actNo"));
 		 requestData.put("CONSIGN_NAME", tcusName);//"钟锡麟"
 		 requestData.put("SERVICE_CALSS_CODE", "G");
