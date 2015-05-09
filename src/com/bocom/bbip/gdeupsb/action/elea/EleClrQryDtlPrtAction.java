@@ -32,6 +32,7 @@ import com.bocom.bbip.gdeupsb.repository.GdElecClrInfRepository;
 import com.bocom.bbip.gdeupsb.repository.GdEupsTransJournalRepository;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -312,7 +313,8 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 				List<Map<String, Object>> allDtlJnlHk = get(GdEupsTransJournalRepository.class).findGdJnlSucHkDetail(transJnl);
 				if (CollectionUtils.isNotEmpty(allDtlJnlHk)) {
 					for (Map<String, Object> detail : allDtlJnlHk) {
-						String txnTme = DateUtils.format((Date)detail.get("TXN_TME"), "HH:mm:ss");
+						Date date = (Date) detail.get("TXN_TME");
+						String txnTme = DateUtils.format(date, "HH:mm:ss");
 						detail.put("TXN_TME", txnTme);
 						allDtlJnl.add(detail);
 					}
@@ -320,8 +322,9 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 
 				List<Map<String, Object>> allDtlJnlJf = get(GdEupsTransJournalRepository.class).findGdJnlSucJfDetail(transJnl);
 				if (CollectionUtils.isNotEmpty(allDtlJnlJf)) {
-					for (Map<String, Object> detail : allDtlJnlHk) {
-						String txnTme = DateUtils.format((Date)detail.get("TXN_TME"), "HH:mm:ss");
+					for (Map<String, Object> detail : allDtlJnlJf) {
+						Date date = (Date) detail.get("TXN_TME");
+						String txnTme = DateUtils.format(date, "HH:mm:ss");
 						detail.put("TXN_TME", txnTme);
 						allDtlJnl.add(detail);
 					}
@@ -348,7 +351,8 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 				
 				if (CollectionUtils.isNotEmpty(allDtlJnlUns)) {
 					for (Map<String, Object> detail : allDtlJnlUns) {
-						String txnTme = DateUtils.format((Date)detail.get("TXN_TME"), "HH:mm:ss");
+						Date date = (Date) detail.get("TXN_TME");
+						String txnTme = DateUtils.format(date, "HH:mm:ss");
 						detail.put("TXN_TME", txnTme);
 					}
 				}
@@ -407,7 +411,8 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 				
 				if (CollectionUtils.isNotEmpty(allDtlJnl)) {
 					for (Map<String, Object> detail : allDtlJnl) {
-						String txnTme = DateUtils.format((Date)detail.get("TXN_TME"), "HH:mm:ss");
+						Date date = (Date) detail.get("TXN_TME");
+						String txnTme = DateUtils.format(date, "HH:mm:ss");
 						detail.put("TXN_TME", txnTme);
 					}
 				}
