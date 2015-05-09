@@ -210,6 +210,5 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 		} catch (IOException e) {
 			logger.info("===============ErrMsg=",e);
 		}   
-
     }
 }
