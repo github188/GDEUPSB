@@ -15,7 +15,7 @@ public interface GDEupsbTrspFeeInfoRepository extends PagingAndSortingRepository
 	
 	public void updateStatus(GDEupsbTrspFeeInfo gdeupsb);
 
-	public int findInfoCount(GDEupsbTrspFeeInfo gdeupsb);
+	public List<Integer> findInfoCount(GDEupsbTrspFeeInfo gdeupsb);
 
 	public void updateThdFeeInfo(GDEupsbTrspFeeInfo gdeupsb);
 
