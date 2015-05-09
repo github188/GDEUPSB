@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -44,19 +45,21 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 		String detailFlg = context.getData(GDParamKeys.GZ_ELE_DETAIL_FLAG); // 明细类型
 
 		// 获取电力清算信息表信息
-//		GdElecClrInf gdElecClrInf = new GdElecClrInf();
-//		gdElecClrInf.setBrNo(GDConstants.GZ_ELE_BK_GZ);
-//		List<GdElecClrInf> gdElecClrInfList = get(GdElecClrInfRepository.class).find(gdElecClrInf);
-//		if (CollectionUtils.isEmpty(gdElecClrInfList)) {
-//			log.error("不存在清算参数信息");
-//			throw new CoreException(GDErrorCodes.EUPS_ELE_GZ_CLEAR_INFO_ERROR); // 不存在清算参数信息
-//		} else {
-//			gdElecClrInf = gdElecClrInfList.get(0);
-//		}
-//		String thdClrDte = gdElecClrInf.getClrDat(); // 第三方约定的日期
-		
-		String thdClrDte=context.getData("thdClrDte");   //第三方约定的日期
-		
+		// GdElecClrInf gdElecClrInf = new GdElecClrInf();
+		// gdElecClrInf.setBrNo(GDConstants.GZ_ELE_BK_GZ);
+		// List<GdElecClrInf> gdElecClrInfList =
+		// get(GdElecClrInfRepository.class).find(gdElecClrInf);
+		// if (CollectionUtils.isEmpty(gdElecClrInfList)) {
+		// log.error("不存在清算参数信息");
+		// throw new CoreException(GDErrorCodes.EUPS_ELE_GZ_CLEAR_INFO_ERROR);
+		// // 不存在清算参数信息
+		// } else {
+		// gdElecClrInf = gdElecClrInfList.get(0);
+		// }
+		// String thdClrDte = gdElecClrInf.getClrDat(); // 第三方约定的日期
+
+		String thdClrDte = context.getData("thdClrDte"); // 第三方约定的日期
+
 		// 查找当日缴费及划扣金额，条件为主机及交易状态均为成功
 		GdEupsTransJournal transJnl = new GdEupsTransJournal();
 		transJnl.setBakFld1(thdClrDte);
@@ -101,12 +104,12 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 			List<Map<String, Object>> falTotList = get(GdEupsTransJournalRepository.class).findGzFalJnl(transJnl);
 			if (CollectionUtils.isNotEmpty(falTotList)) {
 				Map<String, Object> falTotInf = falTotList.get(0);
-				Integer txnCnt= (Integer) falTotInf.get("TXNCNT");
-				if(null!=txnCnt){
+				Integer txnCnt = (Integer) falTotInf.get("TXNCNT");
+				if (null != txnCnt) {
 					falCnt = (Integer) falTotInf.get("TXNCNT");
 				}
-				BigDecimal txnAmt=(BigDecimal) falTotInf.get("TXNAMT");
-				if(null!=txnAmt){
+				BigDecimal txnAmt = (BigDecimal) falTotInf.get("TXNAMT");
+				if (null != txnAmt) {
 					falAmt = (BigDecimal) falTotInf.get("TXNAMT");
 				}
 			}
@@ -118,13 +121,13 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 			List<Map<String, Object>> unSurTotList = get(GdEupsTransJournalRepository.class).findGzUnsJnl(transJnl);
 			if (CollectionUtils.isNotEmpty(unSurTotList)) {
 				Map<String, Object> unSurTotInf = unSurTotList.get(0);
-				Integer txnCnt=(Integer) unSurTotInf.get("TXNCNT");
-				if(null!=txnCnt){
-					unSureCnt =txnCnt; 
+				Integer txnCnt = (Integer) unSurTotInf.get("TXNCNT");
+				if (null != txnCnt) {
+					unSureCnt = txnCnt;
 				}
-				BigDecimal txnAmt=(BigDecimal) unSurTotInf.get("TXNAMT");
-				if(null!=txnAmt){
-					unSureAmt =txnAmt; 
+				BigDecimal txnAmt = (BigDecimal) unSurTotInf.get("TXNAMT");
+				if (null != txnAmt) {
+					unSureAmt = txnAmt;
 				}
 			}
 			log.info("当前存疑的金额为:" + unSureAmt + ",当前存疑的笔数为:" + unSureCnt);
@@ -151,15 +154,30 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 			// detailFlg为0表示成功，1表示存疑，A表示全部
 			if ("A".equals(detailFlg)) {
 				List<Map<String, Object>> allDtlJnl = get(GdEupsTransJournalRepository.class).findGdJnlDetail(transJnl);
-				if(CollectionUtils.isEmpty(allDtlJnl)){
+				if (CollectionUtils.isEmpty(allDtlJnl)) {
 					throw new CoreException(GDErrorCodes.EUPS_ELE_GZ_NO_RECORD);
 				}
 				context.setData("detailList", allDtlJnl);
 				log.info("查询的汇总信息为:" + allDtlJnl);
 			}
 			else if ("0".equals(detailFlg)) {
-				List<Map<String, Object>> allDtlJnl = get(GdEupsTransJournalRepository.class).findGdJnlSucDetail(transJnl);
-				if(CollectionUtils.isEmpty(allDtlJnl)){
+				List<Map<String, Object>> allDtlJnl = new ArrayList<Map<String, Object>>();
+				// 查询缴费流水
+				List<Map<String, Object>> allDtlJnlHk = get(GdEupsTransJournalRepository.class).findGdJnlSucHkDetail(transJnl);
+				if (CollectionUtils.isNotEmpty(allDtlJnlHk)) {
+					for (Map<String, Object> detail : allDtlJnlHk) {
+						allDtlJnl.add(detail);
+					}
+				}
+
+				List<Map<String, Object>> allDtlJnlJf = get(GdEupsTransJournalRepository.class).findGdJnlSucJfDetail(transJnl);
+				if (CollectionUtils.isNotEmpty(allDtlJnlJf)) {
+					for (Map<String, Object> detail : allDtlJnlHk) {
+						allDtlJnl.add(detail);
+					}
+				}
+
+				if (CollectionUtils.isEmpty(allDtlJnl)) {
 					throw new CoreException(GDErrorCodes.EUPS_ELE_GZ_NO_RECORD);
 				}
 				context.setData("detailList", allDtlJnl);
@@ -167,7 +185,7 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 			}
 			else if ("1".equals(detailFlg)) {
 				List<Map<String, Object>> allDtlJnl = get(GdEupsTransJournalRepository.class).findGdJnlUnsDetail(transJnl);
-				if(CollectionUtils.isEmpty(allDtlJnl)){
+				if (CollectionUtils.isEmpty(allDtlJnl)) {
 					throw new CoreException(GDErrorCodes.EUPS_ELE_GZ_NO_RECORD);
 				}
 				context.setData("detailList", allDtlJnl);
@@ -179,49 +197,100 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 		else if (GDConstants.GZ_ELE_PRINT_FLAG_PRINT.equals(delFlg)) {
 			// detailFlg为0表示成功，1表示存疑，A表示全部
 			context.setData("prtDte", DateUtils.format(new Date(), "yyyy-MM-dd"));
-
-			// 查询汇总信息
-			int totCnt = 0;
-			int sucCnt = 0;
-			int failCnt = 0;
-			int doubCnt = 0;
-			int otherCnt = 0;
-
-			BigDecimal totAmt = new BigDecimal("0.00");
-			BigDecimal sucAmt = new BigDecimal("0.00");
-			BigDecimal failAmt = new BigDecimal("0.00");
-			BigDecimal doubAmt = new BigDecimal("0.00");
-			BigDecimal otherAmt = new BigDecimal("0.00");
-
-			List<Map<String, Object>> dtlTot = get(GdEupsTransJournalRepository.class).findGdJnlDtlTot(transJnl);
-			if (CollectionUtils.isNotEmpty(dtlTot)) {
-				Map<String, Object> dtlMap = dtlTot.get(0);
-				log.info("当前查询的汇总信息为:" + dtlMap);
-
-				totCnt = (Integer) dtlMap.get("TOTCNT");
-				sucCnt = (Integer) dtlMap.get("SUCCNT");
-				failCnt = (Integer) dtlMap.get("FAILCNT");
-				doubCnt = (Integer) dtlMap.get("DOUBTCNT");
-				otherCnt = (Integer) dtlMap.get("OTHERCNT");
-
-				totAmt = (BigDecimal) dtlMap.get("TOTAMT");
-				sucAmt = (BigDecimal) dtlMap.get("TOTSUCAMT");
-				failAmt = (BigDecimal) dtlMap.get("TOTFAILAMT");
-				doubAmt = (BigDecimal) dtlMap.get("TOTDOUBTAMT");
-				otherAmt = (BigDecimal) dtlMap.get("TOTOTHERAMT");
+			
+			int allCnt = 0;   //流水总笔数
+			BigDecimal allAmt = new BigDecimal("0.00");
+			
+			List<Map<String, Object>> allJnl = get(GdEupsTransJournalRepository.class).findGzAllCntAmt(transJnl);
+			if (CollectionUtils.isNotEmpty(allJnl)) {
+				Map<String, Object> allJnlDetail = allJnl.get(0);
+				if (null != allJnlDetail.get("ALLAMT")) {
+					allAmt = (BigDecimal) allJnlDetail.get("ALLAMT");
+				}
+				if (null != allJnlDetail.get("ALLCNT")) {
+					allCnt = (Integer) allJnlDetail.get("ALLCNT");
+				}
+				log.info("当前的总笔数为:" + allCnt + ",当前的总金额为:" + allAmt);
+			}
+			
+			BigDecimal sucJfAmt = new BigDecimal("0.00");
+			int sucJfCnt = 0;
+			List<Map<String, Object>> sucJfTotList = get(GdEupsTransJournalRepository.class).findGzSucJnlJF(transJnl);
+			if (CollectionUtils.isNotEmpty(sucJfTotList)) {
+				Map<String, Object> sucJfTotInf = sucJfTotList.get(0);
+				if (null != sucJfTotInf.get("TXNAMT")) {
+					sucJfAmt = (BigDecimal) sucJfTotInf.get("TXNAMT");
+				}
+				if (null != sucJfTotInf.get("TXNCNT")) {
+					sucJfCnt = (Integer) sucJfTotInf.get("TXNCNT");
+				}
+				log.info("当前的成功缴费清算金额为:" + sucJfAmt + ",当前的成功缴费清算笔数为:" + sucJfCnt);
 			}
 
-			context.setData("totCnt", totCnt);
-			context.setData("sucCnt", sucCnt);
-			context.setData("failCnt", failCnt);
-			context.setData("doubCnt", doubCnt);
-			context.setData("otherCnt", otherCnt);
+			BigDecimal sucHkAmt = new BigDecimal("0.00");
+			int sucHkCnt = 0;
+			List<Map<String, Object>> sucHkTotList = get(GdEupsTransJournalRepository.class).findGzSucJnlHK(transJnl);
+			if (CollectionUtils.isNotEmpty(sucHkTotList)) {
+				Map<String, Object> sucHkTotInf = sucHkTotList.get(0);
+				if (null != sucHkTotInf.get("TXNAMT")) {
+					sucHkAmt = (BigDecimal) sucHkTotInf.get("TXNAMT");
+				}
+				if (null != sucHkTotInf.get("TXNCNT")) {
+					sucHkCnt = (Integer) sucHkTotInf.get("TXNCNT");
+				}
+				log.info("当前的成功划扣清算金额为:" + sucHkAmt + ",当前的成功划扣清算笔数为:" + sucHkCnt);
+			}
+			BigDecimal sucAmt = sucHkAmt.add(sucJfAmt);
+			int sucCnt = sucHkCnt + sucJfCnt;
 
-			context.setData("totAmt", totAmt);
-			context.setData("sucAmt", sucAmt);
-			context.setData("failAmt", failAmt);
-			context.setData("doubAmt", doubAmt);
-			context.setData("otherAmt", otherAmt);
+			log.info("当前的总成功清算金额为:" + sucAmt + ",当前的总成功清算笔数为:" + sucCnt);
+
+			// 查找失败金额，笔数(主机状态及交易状态均为失败)
+			BigDecimal falAmt = new BigDecimal("0.00");
+			int falCnt = 0;
+			List<Map<String, Object>> falTotList = get(GdEupsTransJournalRepository.class).findGzFalJnl(transJnl);
+			if (CollectionUtils.isNotEmpty(falTotList)) {
+				Map<String, Object> falTotInf = falTotList.get(0);
+				Integer txnCnt = (Integer) falTotInf.get("TXNCNT");
+				if (null != txnCnt) {
+					falCnt = (Integer) falTotInf.get("TXNCNT");
+				}
+				BigDecimal txnAmt = (BigDecimal) falTotInf.get("TXNAMT");
+				if (null != txnAmt) {
+					falAmt = (BigDecimal) falTotInf.get("TXNAMT");
+				}
+			}
+			log.info("明确失败的金额为:" + falAmt + ",明确失败的笔数为:" + falCnt);
+
+			// 查找存疑笔数，金额
+			BigDecimal unSureAmt = new BigDecimal("0.00");
+			int unSureCnt = 0;
+			List<Map<String, Object>> unSurTotList = get(GdEupsTransJournalRepository.class).findGzUnsJnl(transJnl);
+			if (CollectionUtils.isNotEmpty(unSurTotList)) {
+				Map<String, Object> unSurTotInf = unSurTotList.get(0);
+				Integer txnCnt = (Integer) unSurTotInf.get("TXNCNT");
+				if (null != txnCnt) {
+					unSureCnt = txnCnt;
+				}
+				BigDecimal txnAmt = (BigDecimal) unSurTotInf.get("TXNAMT");
+				if (null != txnAmt) {
+					unSureAmt = txnAmt;
+				}
+			}
+			log.info("当前存疑的金额为:" + unSureAmt + ",当前存疑的笔数为:" + unSureCnt);
+			
+
+			context.setData("allCnt", allCnt);   //所有的笔数
+			context.setData("sucHkCnt", sucHkCnt);   //成功划扣总笔数
+			context.setData("sucJfCnt", sucJfCnt);   //成功缴费总笔数
+			context.setData("failCnt", falCnt);
+			context.setData("doubCnt", unSureCnt);
+
+			context.setData("allAmt", allAmt);   //所有的金额
+			context.setData("sucHkAmt", sucHkAmt);   //成功划扣总金额
+			context.setData("sucJfAmt", sucJfAmt);   //成功缴费总金额
+			context.setData("failAmt", falAmt);
+			context.setData("doubAmt", unSureAmt);
 
 			Map<String, String> map = new HashMap<String, String>();
 			String result = null;
@@ -237,13 +306,32 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 
 			if ("0".equals(detailFlg)) {
 				// 成功
-				List<Map<String, Object>> allDtlJnlSuc = get(GdEupsTransJournalRepository.class).findGdJnlSucDetail(transJnl);
-				context.setData("allDtlJnl", allDtlJnlSuc);
-				log.info("查询的成功明细信息为:" + allDtlJnlSuc);
+
+				List<Map<String, Object>> allDtlJnl = new ArrayList<Map<String, Object>>();
+				// 查询缴费流水
+				List<Map<String, Object>> allDtlJnlHk = get(GdEupsTransJournalRepository.class).findGdJnlSucHkDetail(transJnl);
+				if (CollectionUtils.isNotEmpty(allDtlJnlHk)) {
+					for (Map<String, Object> detail : allDtlJnlHk) {
+						allDtlJnl.add(detail);
+					}
+				}
+
+				List<Map<String, Object>> allDtlJnlJf = get(GdEupsTransJournalRepository.class).findGdJnlSucJfDetail(transJnl);
+				if (CollectionUtils.isNotEmpty(allDtlJnlJf)) {
+					for (Map<String, Object> detail : allDtlJnlHk) {
+						allDtlJnl.add(detail);
+					}
+				}
+
+				// List<Map<String, Object>> allDtlJnlSuc =
+				// get(GdEupsTransJournalRepository.class).findGdJnlSucDetail(transJnl);
+
+				context.setData("allDtlJnl", allDtlJnl);
+				log.info("查询的成功明细信息为:" + allDtlJnl);
 
 				map.put("commonPrtRpt", "config/report/elec01/commonPrintReport_suc.vm");
 				render.setReportNameTemplateLocationMapping(map);
-				context.setData("eles", allDtlJnlSuc);
+				context.setData("eles", allDtlJnl);
 				result = render.renderAsString("commonPrtRpt", context);
 
 				log.info(result);
@@ -292,6 +380,23 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 				log.info(result);
 
 				fileName = "gdElecClrJnl_OTH.txt"; // 文件名:其他
+			}
+			else if ("A".equals(detailFlg)) { // 全部
+
+				List<Map<String, Object>> allDtlJnl = get(GdEupsTransJournalRepository.class).findGdJnlAllDetail(transJnl);
+
+				context.setData("allDtlJnl", allDtlJnl);
+				log.info("查询的所有明细信息为:" + allDtlJnl);
+
+				map.put("commonPrtRpt", "config/report/elec01/commonPrintReport_all.vm");
+				render.setReportNameTemplateLocationMapping(map);
+				context.setData("eles", allDtlJnl);
+				result = render.renderAsString("commonPrtRpt", context);
+
+				log.info(result);
+
+				fileName = "gdElecClrJnl_All.txt"; // 文件名:成功
+
 			}
 
 			String filPath = "/home/bbipadm/data/GDEUPSB/report/";
