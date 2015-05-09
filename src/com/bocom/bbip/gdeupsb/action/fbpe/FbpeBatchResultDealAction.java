@@ -12,8 +12,6 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
@@ -21,13 +19,11 @@ import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.entity.EupsBatchInfoDetail;
-import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
 import com.bocom.bbip.eups.repository.EupsBatchInfoDetailRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
 import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
-import com.bocom.bbip.file.transfer.ftp.FTPTransfer;
 import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.entity.GdFbpeFileBatchTmp;
@@ -122,6 +118,7 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
      * @throws CoreException 
      */
     public void createGasFile(Context context,List<EupsBatchInfoDetail> eupsBatchInfoDetailList,String comNo,String batNos) throws CoreException{
+    	logger.info("===============Start  createGasFile ");
     	//文件名
     	String fileName = comNo+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";   	 
     	EupsBatchConsoleInfo eupsBatchConsoleInfo=eupsBatchConsoleInfoRepository.findOne(batNos);
@@ -210,5 +207,6 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 		} catch (IOException e) {
 			logger.info("===============ErrMsg=",e);
 		}   
+		logger.info("===============End  createGasFile ");
     }
 }
