@@ -81,7 +81,7 @@ public class BatchGashDealServiceAction extends BaseAction implements
 		context.setData("extFields", "01491800999");
 		
 		String bk = "01491999999";//分行号01441999999 ?
-		String br = "01491800999";//网点号、机构号01491800999?
+		String br = "01491001999";//网点号、机构号01491800999?
 		String tlr = null;//"4910153"
 		//  get tlr
 		context.setData(ParamKeys.BK, bk);// 分行号01491999999
