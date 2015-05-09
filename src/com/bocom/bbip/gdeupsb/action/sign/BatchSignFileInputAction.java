@@ -115,7 +115,7 @@ public class BatchSignFileInputAction extends BaseAction {
 		} else if (funcTyp.equals("P")) {
 			reportPrint(context);
 		} else if (funcTyp.equals("V")) {
-			// reportBrowse(context);
+//			 reportBrowse(context);
 		}
 		// 返回前端的信息
 		String retcod = context.getData("retcod");
@@ -538,7 +538,7 @@ public class BatchSignFileInputAction extends BaseAction {
 	 * }
 	 */
 
-	// 浏览
+	// 打印
 	public void reportPrint(Context context) throws CoreException, CoreRuntimeException {
 		// 生成报表之前的验证RptSrc=STRCAT($GdsBId,_batimp_suc)报表模板验证
 		String gdsBId = (String) context.getData("gdsBId");
@@ -603,8 +603,8 @@ public class BatchSignFileInputAction extends BaseAction {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				bbipPubSvr.sendFileToBBOS(new File(TransferUtils.resolveFilePath(localDir, reportName)), fileName,
-						MftpTransfer.FTYPE_NORMAL);
+//				bbipPubSvr.sendFileToBBOS(new File(TransferUtils.resolveFilePath(localDir, reportName)), fileName,
+//						MftpTransfer.FTYPE_NORMAL);
 				context.setData("retmsg", "报表生成成功！");
 				context.setData("SucRpt", localDir + reportName);// 返回前端文件名
 			}
@@ -637,7 +637,9 @@ public class BatchSignFileInputAction extends BaseAction {
 						.append(context.getData(ParamKeys.TELLER)).toString();
 				PrintWriter printWriter = null;
 				try {
+					
 					File file = new File(localDir);
+					
 					if (!file.exists()) {
 						file.mkdirs();
 					}
@@ -645,6 +647,8 @@ public class BatchSignFileInputAction extends BaseAction {
 							new OutputStreamWriter(new FileOutputStream(
 									localDir + reportName), "UTF-8")));
 					printWriter.write(result);
+					log.info("失败报表="+result);
+					
 				} catch (IOException e) {
 					log.info("---io异常");
 				} finally {
@@ -663,8 +667,8 @@ public class BatchSignFileInputAction extends BaseAction {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				bbipPubSvr.sendFileToBBOS(new File(TransferUtils.resolveFilePath(localDir, reportName)), fileName,
-						MftpTransfer.FTYPE_NORMAL);
+//				bbipPubSvr.sendFileToBBOS(new File(TransferUtils.resolveFilePath(localDir, reportName)), fileName,
+//						MftpTransfer.FTYPE_NORMAL);
 				context.setData("FailRpt", localDir + reportName);// 返回前端文件名
 				context.setData("retmsg", "报表生成成功！");
 			}
