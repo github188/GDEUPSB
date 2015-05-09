@@ -63,6 +63,7 @@ public class BatchFileCommon extends BaseAction {
 		GDEupsBatchConsoleInfo info = new GDEupsBatchConsoleInfo();
 		info.setFleNme(fleNme);
 		info.setEupsBusTyp(eupsBusTyp);
+		info.setSubDte(DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())));
 		GDEupsBatchConsoleInfo ret =get(GDEupsBatchConsoleInfoRepository.class).findConsoleInfo(info);
 		if(ret != null){
 				String batSts=ret.getBatSts();
