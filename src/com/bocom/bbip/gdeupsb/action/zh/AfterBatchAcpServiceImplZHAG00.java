@@ -93,7 +93,7 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
 		config.setLocFleNme(fileName);
         ((OperateFileAction)get("opeFile")).createCheckFile(config, formatOut, fileName, resultMap);
         config.setRmtFleNme(fileName);
-        String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + context.getData(ParamKeys.BR)+ "/" ;
+        String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + gdEupsBatchConsoleInfo.getTxnOrgCde()+ "/" ;
         config.setRmtWay(path);
         //放置到前台文件
         operateFTPAction.putCheckFile(config);
