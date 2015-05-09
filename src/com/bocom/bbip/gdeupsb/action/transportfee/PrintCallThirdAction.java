@@ -56,41 +56,41 @@ public class PrintCallThirdAction extends BaseAction{
 			log.info("responseCode:["+responseCode+"]");
 			if(Constants.RESPONSE_CODE_SUCC.equals(responseCode)){	
 				ctx.setDataMap(thdReturnMessage);
-//				ctx.setData(GDParamKeys.TXN_ST, "S");
-//				ctx.setData(GDParamKeys.TTXN_ST, "S");
-//				gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
-//				gdEupsbTrspTxnJnl.setTxnSt(ctx.getData(GDParamKeys.TXN_ST).toString());
-//				gdEupsbTrspTxnJnl.setNodNo(ctx.getData(ParamKeys.BR).toString());
-//				gdEupsbTrspTxnJnl.setInvNo(ctx.getData(GDParamKeys.INV_NO).toString());
-//				gdEupsbTrspTxnJnl.setSqn(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
-//				gdEupsbTrspTxnJnlRepository.updateSt(gdEupsbTrspTxnJnl);
-//
-//		        Date tactDt = new Date();
+				ctx.setData(GDParamKeys.TXN_ST, "S");
+				ctx.setData(GDParamKeys.TTXN_ST, "S");
+				gdEupsbTrspTxnJnl.setTtxnSt(ctx.getData(GDParamKeys.TTXN_ST).toString());
+				gdEupsbTrspTxnJnl.setTxnSt(ctx.getData(GDParamKeys.TXN_ST).toString());
+				gdEupsbTrspTxnJnl.setNodNo(ctx.getData(ParamKeys.BR).toString());
+				gdEupsbTrspTxnJnl.setInvNo(ctx.getData(GDParamKeys.INV_NO).toString());
+				gdEupsbTrspTxnJnl.setSqn(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
+				gdEupsbTrspTxnJnlRepository.updateSt(gdEupsbTrspTxnJnl);
+
+		        Date tactDt = new Date();
 //		        
 //		        //更新路桥方记账信息
-//				GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
-//
-//				gdEupsbTrspFeeInfo.setInvNo(ctx.getData(GDParamKeys.INV_NO).toString());
-//				gdEupsbTrspFeeInfo.setBegDat(DateUtils.parse(ctx.getData(GDParamKeys.BEG_DAT).toString())); 
-//				gdEupsbTrspFeeInfo.setEndDat(DateUtils.parse(ctx.getData(GDParamKeys.END_DAT).toString()));  
-//				gdEupsbTrspFeeInfo.setCarName((String)ctx.getData(GDParamKeys.CAR_NAME));
-//				gdEupsbTrspFeeInfo.setCarDzs((String)ctx.getData(GDParamKeys.CAR_DZS));
-//				gdEupsbTrspFeeInfo.setCntStd((String)ctx.getData(GDParamKeys.CNT_STD));
-//				gdEupsbTrspFeeInfo.setFeeStd(new BigDecimal((String)ctx.getData(GDParamKeys.FEE_STD)));
-//				gdEupsbTrspFeeInfo.setCorpus(new BigDecimal((String)ctx.getData(GDParamKeys.CORPUS)));
-//				gdEupsbTrspFeeInfo.setLateFee(new BigDecimal((String)ctx.getData(GDParamKeys.LATE_FEE)));
-//				gdEupsbTrspFeeInfo.setClgs((String)ctx.getData(GDParamKeys.CLGS));
-//				gdEupsbTrspFeeInfo.setYybz((String)ctx.getData(GDParamKeys.YYBZ));
-//				
-//				gdEupsbTrspFeeInfo.setTlogNo(ctx.getData(GDParamKeys.TLOG_NO).toString());
-//				gdEupsbTrspFeeInfo.setTactDt(tactDt);
-//				
-//			
-//				gdEupsbTrspFeeInfo.setPrtNod(ctx.getData(ParamKeys.BR).toString());     //打印网点号
-//				gdEupsbTrspFeeInfo.setPrtTlr(ctx.getData(ParamKeys.TELLER).toString());  //打印柜员号
-//				gdEupsbTrspFeeInfo.setPayLog(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
-//				gdEupsbTrspFeeInfoRepository.updateStatus(gdEupsbTrspFeeInfo);
-				ctx.setState("error");
+				GDEupsbTrspFeeInfo gdEupsbTrspFeeInfo = new GDEupsbTrspFeeInfo();
+
+				gdEupsbTrspFeeInfo.setInvNo(ctx.getData(GDParamKeys.INV_NO).toString());
+				gdEupsbTrspFeeInfo.setBegDat(DateUtils.parse(ctx.getData(GDParamKeys.BEG_DAT).toString())); 
+				gdEupsbTrspFeeInfo.setEndDat(DateUtils.parse(ctx.getData(GDParamKeys.END_DAT).toString()));  
+				gdEupsbTrspFeeInfo.setCarName((String)ctx.getData(GDParamKeys.CAR_NAME));
+				gdEupsbTrspFeeInfo.setCarDzs((String)ctx.getData(GDParamKeys.CAR_DZS));
+				gdEupsbTrspFeeInfo.setCntStd((String)ctx.getData(GDParamKeys.CNT_STD));
+				gdEupsbTrspFeeInfo.setFeeStd(new BigDecimal((String)ctx.getData(GDParamKeys.FEE_STD)));
+				gdEupsbTrspFeeInfo.setCorpus(new BigDecimal((String)ctx.getData(GDParamKeys.CORPUS)));
+				gdEupsbTrspFeeInfo.setLateFee(new BigDecimal((String)ctx.getData(GDParamKeys.LATE_FEE)));
+				gdEupsbTrspFeeInfo.setClgs((String)ctx.getData(GDParamKeys.CLGS));
+				gdEupsbTrspFeeInfo.setYybz((String)ctx.getData(GDParamKeys.YYBZ));
+				
+				gdEupsbTrspFeeInfo.setTlogNo(ctx.getData(GDParamKeys.TLOG_NO).toString());
+				gdEupsbTrspFeeInfo.setTactDt(tactDt);
+				
+			
+				gdEupsbTrspFeeInfo.setPrtNod(ctx.getData(ParamKeys.BR).toString());     //打印网点号
+				gdEupsbTrspFeeInfo.setPrtTlr(ctx.getData(ParamKeys.TELLER).toString());  //打印柜员号
+				gdEupsbTrspFeeInfo.setPayLog(ctx.getData(ParamKeys.OLD_TXN_SQN).toString());
+				gdEupsbTrspFeeInfoRepository.updateStatus(gdEupsbTrspFeeInfo);
+				ctx.setState("complete");
 			}else{
 				ctx.setData(GDParamKeys.TXN_ST, "F");
 				ctx.setData(GDParamKeys.TTXN_ST, "F");
