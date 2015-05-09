@@ -287,6 +287,7 @@ public class EupsManageCounterAgt extends BaseAction {
 		// agtElecTmp.setOldCardNo(oldCardNo);
 		// get(GdeupsAgtElecTmpRepository.class).updateByAc(agtElecTmp);
 		agtElecTmp.setRemark("修改日期:" + MGR_DATE);
+		agtElecTmp.setStatus("0");
 		get(GdeupsAgtElecTmpRepository.class).updateByFeeNum(agtElecTmp);
 
 		List<GdeupsAgtElecTmp> tmpList = get(GdeupsAgtElecTmpRepository.class)
