@@ -5,15 +5,6 @@
 
 
 
-<!-- 手动生成反盘文件 -->
-	<process id="gdeups.commNotifyBatchStatus" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
-			<actions>
-			<!-- 去指定路径取文件并进行解析处理 -->
-			<action id="act" ref="gdeups.commNotifyBatchStatusAction"  />
-			<!-- 发代收付后服务：需自己实现，如组装第三方文件或者发送第三方报文 -->
-			<action id="act" ref="eups.afterBatchAcpServiceAction" operations="afterBatchDeal" />
-			</actions>
-		</process>
 <!-- 批量处理公共撤销   策略接口-->
 <process id="gdeups.cancelBatch" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
 		<actions>
