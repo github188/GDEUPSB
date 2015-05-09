@@ -264,20 +264,20 @@ public class EupsManageCounterAgt extends BaseAction {
 		logger.info("context before select old agt :" + context);
 		List<GdeupsAgtElecTmp> oldAgtElecTmps = get(
 				GdeupsAgtElecTmpRepository.class).findBase(agtElecTmp);
-		for (GdeupsAgtElecTmp perTmp : oldAgtElecTmps) {
-			Map<String, Object> infoMap = new HashMap<String, Object>();
-			infoMap.put("JFH", perTmp.getFeeNum());
-			infoMap.put("UsrNam", perTmp.getUserName());
-			infoMap.put("ActNo", perTmp.getActNo());
-			infoMap.put("ActNm", perTmp.getAcountName());
-			infoMap.put("ACT", perTmp.getActType());
-			infoMap.put("GPF", perTmp.getPerComFlag());
-			infoMap.put("MOB", perTmp.getPhoneNum());
-			infoMap.put("TEL", perTmp.getTelNum());
-			infoMap.put("TXT", agtElecTmp.getRemark());
-			infoList.add(infoMap);
-		}
-		context.setData("infoList", infoList);
+//		for (GdeupsAgtElecTmp perTmp : oldAgtElecTmps) {
+//			Map<String, Object> infoMap = new HashMap<String, Object>();
+//			infoMap.put("JFH", perTmp.getFeeNum());
+//			infoMap.put("UsrNam", perTmp.getUserName());
+//			infoMap.put("ActNo", perTmp.getActNo());
+//			infoMap.put("ActNm", perTmp.getAcountName());
+//			infoMap.put("ACT", perTmp.getActType());
+//			infoMap.put("GPF", perTmp.getPerComFlag());
+//			infoMap.put("MOB", perTmp.getPhoneNum());
+//			infoMap.put("TEL", perTmp.getTelNum());
+//			infoMap.put("TXT", agtElecTmp.getRemark());
+//			infoList.add(infoMap);
+//		}
+//		context.setData("infoList", infoList);
 		logger.info(" context after set infoList : ", context);
 //		String oldCardNo = context.getData("OAC");
 		String oldCardNo = oldAgtElecTmps.get(0).getActNo();
@@ -287,7 +287,7 @@ public class EupsManageCounterAgt extends BaseAction {
 		agtElecTmp.setOldBankNum(oldBankNum);
 		// agtElecTmp.setOldCardNo(oldCardNo);
 		// get(GdeupsAgtElecTmpRepository.class).updateByAc(agtElecTmp);
-		agtElecTmp.setRemark("修改日期:" + MGR_DATE);
+		agtElecTmp.setRemark("签约日期:" + MGR_DATE);
 		agtElecTmp.setStatus("0");
 		get(GdeupsAgtElecTmpRepository.class).updateByFeeNum(agtElecTmp);
 
