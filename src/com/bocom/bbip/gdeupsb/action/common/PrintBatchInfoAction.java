@@ -7,7 +7,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.common.ParamKeys;
@@ -31,7 +31,6 @@ import com.bocom.bbip.file.transfer.ftp.FTPTransfer;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
-import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -55,9 +54,6 @@ public class PrintBatchInfoAction extends BaseAction{
 				CoreRuntimeException {
 				String batNo=context.getData(ParamKeys.BAT_NO).toString();
 				GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=gdEupsBatchConsoleInfoRepository.findOne(batNo);
-				if(gdEupsBatchConsoleInfo==null){
-						throw new CoreException("没有"+batNo+"批次信息");
-				}	
 				context.setData("eupsBusTyp", gdEupsBatchConsoleInfo.getEupsBusTyp());
 				String fileName=gdEupsBatchConsoleInfo.getRsvFld1();
 				context.setData("printResult", fileName);
@@ -69,20 +65,10 @@ public class PrintBatchInfoAction extends BaseAction{
 				EupsBatchInfoDetail eupsBatchInfoDetail=new EupsBatchInfoDetail();
 				eupsBatchInfoDetail.setBatNo(eupsBatNo);
 				List<EupsBatchInfoDetail> list=eupsBatchInfoDetailRepository.find(eupsBatchInfoDetail);				
-				if(CollectionUtils.isEmpty(list)){
-						throw new CoreException(batNo+"没有返回，不能打印清单");
-				}
-				List<Map<String, Object>> detailList=new ArrayList<Map<String,Object>>();
-				Map<String, Object> mapList=new HashMap<String, Object>();
 				for (EupsBatchInfoDetail eupsBatchInfoDetails : list) {
-						mapList.put("errMsg","扣款成功");
-						mapList.put("agtSrvCusId",eupsBatchInfoDetails.getAgtSrvCusId());
-						mapList.put("cusAc",eupsBatchInfoDetails.getCusAc());
-						mapList.put("cusNme",eupsBatchInfoDetails.getCusNme());
-						mapList.put("txnAmt",eupsBatchInfoDetails.getTxnAmt());
-						mapList.put("sts",eupsBatchInfoDetails.getSqn());
-						mapList.put("rmk2","S");
-						detailList.add(mapList);
+						if(eupsBatchInfoDetails.getSts().equals("S")){
+								eupsBatchInfoDetails.setErrMsg("扣款成功");
+						}
 				}
 				//获取日期 
 				Date date=null;
@@ -92,20 +78,16 @@ public class PrintBatchInfoAction extends BaseAction{
 						date=new Date();
 				}
 				//清单首尾信息
+				context.setData("exeDte", DateUtils.formatAsSimpleDate(date));
 				context.setData("comNo", eupsBatchConsoleInfo.getComNo());
+				context.setData(ParamKeys.TOT_CNT, eupsBatchConsoleInfo.getTotCnt());
+				context.setData(ParamKeys.TOT_AMT, eupsBatchConsoleInfo.getTotAmt());
+				context.setData(GDParamKeys.SUC_TOT_CNT, eupsBatchConsoleInfo.getSucTotCnt());
+				context.setData(GDParamKeys.SUC_TOT_AMT, eupsBatchConsoleInfo.getSucTotAmt());
+				context.setData(GDParamKeys.FAL_TOT_CNT, eupsBatchConsoleInfo.getFalTotCnt());
+				context.setData("Tlr", eupsBatchConsoleInfo.getTxnTlr());
+				context.setData("falTotAmt", eupsBatchConsoleInfo.getFalTotAmt());
 				context.setData("txnDte",DateUtils.formatAsSimpleDate(new Date()));
-				Map<String, Object> mapEnd=new HashMap<String, Object>();
-				
-				mapEnd.put("exeDte", DateUtils.formatAsSimpleDate(date));
-				mapEnd.put(ParamKeys.TOT_CNT, eupsBatchConsoleInfo.getTotCnt());
-				mapEnd.put(ParamKeys.TOT_AMT, eupsBatchConsoleInfo.getTotAmt());
-				mapEnd.put(GDParamKeys.SUC_TOT_CNT, eupsBatchConsoleInfo.getSucTotCnt());
-				mapEnd.put(GDParamKeys.SUC_TOT_AMT, eupsBatchConsoleInfo.getSucTotAmt());
-				mapEnd.put(GDParamKeys.FAL_TOT_CNT, eupsBatchConsoleInfo.getFalTotCnt());
-				mapEnd.put("Tlr", eupsBatchConsoleInfo.getTxnTlr());
-				mapEnd.put("falTotAmt", eupsBatchConsoleInfo.getFalTotAmt());
-				mapEnd.put("rmk2", "F");
-				detailList.add(mapEnd);
 				log.info("~~~~~~~~~~~"+context);
 				//清单文件
 				VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
@@ -121,14 +103,13 @@ public class PrintBatchInfoAction extends BaseAction{
 					map.put("printBatch", "config/report/common/printBatchZHAG.vm");
 				}
 				render.setReportNameTemplateLocationMapping(map);
-				context.setData("eles", detailList);
+				context.setData("eles", list);
 				String result = render.renderAsString("printBatch", context);
 				log.info("~~~~~~~~~~~~~~~~~~~~~"+result);
 				
 				//生成文件路径
-				EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
 				StringBuffer batNoFile=new StringBuffer();
-				batNoFile.append(sendFileToBBOSConfig.getLocDir());
+				batNoFile.append("/home/bbipadm/data/GDEUPSB/report/");
 				File file =new File(batNoFile.toString());
 				if(!file.exists()){
 						file.mkdirs();
@@ -153,6 +134,7 @@ public class PrintBatchInfoAction extends BaseAction{
 					}
 					//报表		
 					log.info("=============Start   Send   File==========");
+					EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
 					// FTP上传设置
 					FTPTransfer tFTPTransfer = new FTPTransfer();
 					tFTPTransfer.setHost(sendFileToBBOSConfig.getThdIpAdr());
@@ -168,10 +150,9 @@ public class PrintBatchInfoAction extends BaseAction{
 					} finally {
 					       	tFTPTransfer.logout();
 					}
-					 
 					log.info("=============放置报表文件");
 			        //反盘文件
-					String path ="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + context.getData(ParamKeys.BR)+ "/" ;
+					String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + context.getData(ParamKeys.BR)+ "/" ;
 					 try {
 					       	tFTPTransfer.logon();
 					        Resource tResource = new FileSystemResource(sendFileToBBOSConfig.getLocDir()+fileName);
