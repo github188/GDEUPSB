@@ -56,7 +56,7 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
         Assert.isNotEmpty(list, ErrorCodes.EUPS_QUERY_NO_DATA);
         for (EupsBatchInfoDetail eupsBatchInfoDetail : list) {
         	Map<String , Object > map=new HashMap<String, Object>();
-        	String sqn=eupsBatchInfoDetail.getAgtSrvCusId();
+        	String sqn=eupsBatchInfoDetail.getRmk1();
         	map.put("sqn", sqn);
         	String txnAmt=eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2)+"";
         	if(txnAmt.length()<12){
