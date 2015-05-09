@@ -150,12 +150,13 @@ public class PrintBatchInfoAction extends BaseAction{
 					} finally {
 					       	tFTPTransfer.logout();
 					}
+					 
 					log.info("=============放置报表文件");
 			        //反盘文件
 					String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + context.getData(ParamKeys.BR)+ "/" ;
 					 try {
 					       	tFTPTransfer.logon();
-					        Resource tResource = new FileSystemResource(sendFileToBBOSConfig.getLocDir()+fileName);
+					        Resource tResource = new FileSystemResource(get(BBIPPublicService.class).getParam("FSAG00")+fileName);
 					        tFTPTransfer.putResource(tResource, path, fileName);
 					 } catch (Exception e) {
 					       	throw new CoreException("文件上传失败");
