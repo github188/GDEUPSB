@@ -171,11 +171,11 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 				 			errMsg="扣收成功";
 				 	}else{
 					 		String errSeeason=errMsg;
-					 		if(errSeeason=="无效交易"){
-						 			sts=errSeeason;
-						 			stsLength="008";
-					 		}else{
-							 		errSeeason=errMsg.substring(0,6);
+					 				if(errMsg.length()>6){
+					 						errSeeason=errMsg.substring(0,6);
+					 				}else{
+					 						errSeeason=errMsg;
+					 				}
 							 		if(errSeeason.equals("PDM252")){
 							 			sts="004";
 							 			errMsg="帐号已取消";
@@ -190,13 +190,17 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 							 			errMsg="帐号不存在";
 							 		}else{
 							 			sts=errSeeason;
-							 			stsLength=errSeeason.length()+"";
+							 			byte[] byErrMsg=errSeeason.getBytes("GBK");
+							 			stsLength=byErrMsg.length+"";
+							 			System.out.println(errMsg);
+							 			System.out.println(errSeeason+"                   "+sts+"1                    "+stsLength);
 							 			while(stsLength.length()<3){
 							 					stsLength="0"+stsLength;
 							 			}
-							 			errMsg=eupsBatchInfoDetail.getErrMsg().substring(6);
+							 			if(eupsBatchInfoDetail.getErrMsg().length()>6){
+							 					errMsg=eupsBatchInfoDetail.getErrMsg().substring(6);
+							 			}
 							 		}
-					 		}
 				 	}
 				 	byte[] byErrMsg=errMsg.getBytes("GBK");
 				 	String errMsgLength=byErrMsg.length+"";
