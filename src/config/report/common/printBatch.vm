@@ -11,7 +11,7 @@
 #end
 #set($p.index=0)
 #td(1,$d.eles)#set($p.index=$p.index+1) 
-#if($ele.rmk2=="T")
+#if($ele.rmk2=="S")
 #lpara($p.index)
 #lpara($ele.agtSrvCusId)
 #lpara($ele.cusAc)
