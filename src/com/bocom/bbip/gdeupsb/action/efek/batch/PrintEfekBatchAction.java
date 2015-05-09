@@ -110,7 +110,7 @@ public class PrintEfekBatchAction extends BaseAction{
 															
 								EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
 								StringBuffer batNoFile=new StringBuffer();
-								batNoFile.append(sendFileToBBOSConfig.getFtpDir());
+								batNoFile.append(sendFileToBBOSConfig.getLocDir());
 								File file =new File(batNoFile.toString());
 								if(!file.exists()){
 										file.mkdirs();
