@@ -254,12 +254,12 @@ public class BatchGashDealServiceAction extends BaseAction implements
 		// 提交代收付
 		userProcessToSubmit(context);
 		
-		logger.info("===================开始休眠3min===================");
-		try {
-			Thread.sleep(180000);
-		} catch (InterruptedException e) {
-			logger.info("sleep fail:" , e);
-		}
+//		logger.info("===================开始休眠3min===================");
+//		try {
+//			Thread.sleep(180000);
+//		} catch (InterruptedException e) {
+//			logger.info("sleep fail:" , e);
+//		}
 
 		logger.info("==========End  BatchDataFileAction  prepareBatchDeal");
 
