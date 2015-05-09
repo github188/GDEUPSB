@@ -70,7 +70,7 @@ public class EupsManageCounterAgt extends BaseAction {
 	}
 
 	private void checkOldBaseInfo(Context context) throws CoreException {
-		String feeNum = context.getData("JFH");
+		/*String feeNum = context.getData("JFH");
 		String actNo = context.getData("ActNo");
 		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
 		if (StringUtils.isNotEmpty(feeNum)) {
@@ -79,17 +79,28 @@ public class EupsManageCounterAgt extends BaseAction {
 		if (StringUtils.isNotEmpty(actNo)) {
 			agtElecTmp.setActNo(actNo);
 		}
-//		agtElecTmp.setStatus("1");
 		List<GdeupsAgtElecTmp> tmpList = get(GdeupsAgtElecTmpRepository.class)
-				.find(agtElecTmp);
+				.find(agtElecTmp);*/
+		
+		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
+		String feeNum = (String) context.getData("JFH");
+		String actNo = (String) context.getData("ActNo");
+		if (feeNum != null && !"".equals(feeNum.trim())) {
+			agtElecTmp.setFeeNum(feeNum); //
+		}
+		if (actNo != null && !"".equals(actNo.trim())) {
+			agtElecTmp.setActNo(actNo); //
+		}
+		List<GdeupsAgtElecTmp> tmpList = get(GdeupsAgtElecTmpRepository.class)
+				.findBase(agtElecTmp);
 		if (null == tmpList || CollectionUtils.isEmpty(tmpList)) {
 			logger.info("There are no records for select check elec agt tmp ");
 			throw new CoreException("协议不存在或缴费号与原签约账号不匹配");
 		}
 		String OAC = tmpList.get(0).getActNo();
 		String OKH = tmpList.get(0).getNewBankNum();
-		// context.setData("OAC", OAC);
 		context.setData("OKH", OKH);
+		context.setData("JFH", tmpList.get(0).getFeeNum());
 	}
 
 	private void buildContextAndCallThd(Context context) throws CoreException {
@@ -253,7 +264,6 @@ public class EupsManageCounterAgt extends BaseAction {
 		List<Map<String, Object>> infoList = new ArrayList<Map<String, Object>>();
 		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
 		agtElecTmp.setFeeNum((String) context.getData("JHF"));
-//		agtElecTmp.setStatus("0");
 		// 旧协议信息，返显
 		List<GdeupsAgtElecTmp> oldAgtElecTmps = get(
 				GdeupsAgtElecTmpRepository.class).findBase(agtElecTmp);
@@ -284,7 +294,7 @@ public class EupsManageCounterAgt extends BaseAction {
 		get(GdeupsAgtElecTmpRepository.class).updateByFeeNum(agtElecTmp);
 
 		List<GdeupsAgtElecTmp> tmpList = get(GdeupsAgtElecTmpRepository.class)
-				.find(agtElecTmp);
+				.findBase(agtElecTmp);
 		// 修改后的协议信息，tmpList有且只有一条修改后的协议，返显
 		for (GdeupsAgtElecTmp perTmp : tmpList) {
 			Map<String, Object> infoMap = new HashMap<String, Object>();
