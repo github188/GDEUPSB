@@ -345,6 +345,14 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 			} else if ("1".equals(detailFlg)) { // 1表示存疑
 				// 存疑
 				List<Map<String, Object>> allDtlJnlUns = get(GdEupsTransJournalRepository.class).findGdJnlUnsDetail(transJnl);
+				
+				if (CollectionUtils.isNotEmpty(allDtlJnlUns)) {
+					for (Map<String, Object> detail : allDtlJnlUns) {
+						String txnTme = DateUtils.format((Date)detail.get("TXN_TME"), "HH:mm:ss");
+						detail.put("TXN_TME", txnTme);
+					}
+				}
+				
 				context.setData("allDtlJnl", allDtlJnlUns);
 				log.info("查询的存疑明细信息为:" + allDtlJnlUns);
 
@@ -360,6 +368,14 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 			else if ("2".equals(detailFlg)) { // 失败
 				// 失败
 				List<Map<String, Object>> allDtlJnlFal = get(GdEupsTransJournalRepository.class).findGdJnlFalDetail(transJnl);
+				
+				if (CollectionUtils.isNotEmpty(allDtlJnlFal)) {
+					for (Map<String, Object> detail : allDtlJnlFal) {
+						String txnTme = DateUtils.format((Date)detail.get("TXN_TME"), "HH:mm:ss");
+						detail.put("TXN_TME", txnTme);
+					}
+				}
+				
 				context.setData("allDtlJnl", allDtlJnlFal);
 				log.info("查询的失败明细信息为:" + allDtlJnlFal);
 
@@ -388,6 +404,14 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 			else if ("A".equals(detailFlg)) { // 全部
 
 				List<Map<String, Object>> allDtlJnl = get(GdEupsTransJournalRepository.class).findGdJnlAllDetail(transJnl);
+				
+				if (CollectionUtils.isNotEmpty(allDtlJnl)) {
+					for (Map<String, Object> detail : allDtlJnl) {
+						String txnTme = DateUtils.format((Date)detail.get("TXN_TME"), "HH:mm:ss");
+						detail.put("TXN_TME", txnTme);
+					}
+				}
+				
 
 				context.setData("allDtlJnl", allDtlJnl);
 				log.info("查询的所有明细信息为:" + allDtlJnl);
