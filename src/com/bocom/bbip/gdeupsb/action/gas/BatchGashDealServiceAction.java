@@ -163,7 +163,7 @@ public class BatchGashDealServiceAction extends BaseAction implements
 			String cusNoTmp = tmp.getCusNo();
 			GdGasCusAll gdGasCusAlltmp = new GdGasCusAll();
 			gdGasCusAlltmp.setCusAc(cusAc);
-			gdGasCusAlltmp.setCusNme(cusNoTmp);
+			gdGasCusAlltmp.setCusNo(cusNoTmp);
 			List<GdGasCusAll> checkR = get(GdGasCusAllRepository.class).find(gdGasCusAlltmp);
 			if (CollectionUtils.isEmpty(checkR)) {
 				tmp.setTmpFld5("B2"); // 不存在本地协议信息
