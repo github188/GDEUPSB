@@ -250,13 +250,17 @@ public class EupsManageCounterAgt extends BaseAction {
 		// TODO checkCusInfoByCusAc(context);
 		checkOldBaseInfo(context);
 		
-		String feeNum = (String) context.getData("JHF");
-
+		String feeNum = (String) context.getData("JFH");
+		
+		logger.info("feeNum in updateAgentDeal : " + feeNum);
 		List<Map<String, Object>> infoList = new ArrayList<Map<String, Object>>();
 		
 		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
 		agtElecTmp.setFeeNum(feeNum);
+		
+		System.out.println("asdasdasdasdasdsaasdasdasdasdasdasdasdsa");
 		// 旧协议信息，返显
+		logger.info("context before select old agt :" + context);
 		List<GdeupsAgtElecTmp> oldAgtElecTmps = get(
 				GdeupsAgtElecTmpRepository.class).findBase(agtElecTmp);
 		for (GdeupsAgtElecTmp perTmp : oldAgtElecTmps) {
