@@ -23,14 +23,14 @@
 #else
 #end
 #tf(2)
-#lpara($d.Tlr)
-#lpara($d.exeDte)
-#lpara($d.totCnt)
-#lpara($d.totAmt)
-#lpara($d.sucTotCnt)
-#lpara($d.sucTotAmt)
-#lpara($d.falTotCnt)
-#lpara($d.falTotAmt)
+#lpara($ele.Tlr)
+#lpara($ele.exeDte)
+#lpara($ele.totCnt)
+#lpara($ele.totAmt)
+#lpara($ele.sucTotCnt)
+#lpara($ele.sucTotAmt)
+#lpara($ele.falTotCnt)
+#lpara($ele.falTotAmt)
 ------------------------------------------------------------------------------------------------------------------------------------------------------
   操作柜员: ?操作日期:?总笔数: ? 总金额: ￥? 成功总笔数:?成功总金额:￥?  失败总笔数:? 失败总金额:￥? 
 #end
