@@ -426,7 +426,7 @@
 	<select id="findByBatNo" resultMap="basicResultMap"
 		parameterType="java.lang.String">
 		select * from ${GDEUPSB_SCHEMA}.GDEUPS_GASH_BATCH_TMP
-		where BAT_NO=#{batNo} and TMP_FLD1='0'
+		where BAT_NO=#{batNo} and TMP_FLD5='0'
 
 	</select>
 
