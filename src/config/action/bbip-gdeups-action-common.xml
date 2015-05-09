@@ -40,4 +40,8 @@
 	<action id="qryBatchInformationAction"
 		class="com.bocom.bbip.gdeupsb.action.common.QryBatchInformationAction" />
 
+	<!-- 手动调用反盘文件 -->
+	<action id="commNotifyBatchStatusAction"
+		class="com.bocom.bbip.gdeupsb.action.common.CommNotifyBatchStatusAction" />
+
 </x:beans>
