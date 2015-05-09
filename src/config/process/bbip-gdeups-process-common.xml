@@ -100,7 +100,7 @@
 	</process>
 	
 	<!-- 手动调用反盘 -->
-		<process id="gdeups.commNotifyBatchStatus" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
+		<process id="gdeupsb.commNotifyBatchStatus" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
 		<actions>
 			  <action id="act" ref="commNotifyBatchStatusAction"   />
 		</actions>
