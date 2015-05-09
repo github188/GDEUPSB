@@ -22,6 +22,7 @@ public class CommNotifyBatchStatusAction extends BaseAction{
 		@Override
 		public void execute(Context context) throws CoreException,
 				CoreRuntimeException {
+				log.info("==============Start  CommNotifyBatchStatusAction");
 				String batNo=context.getData("batNo").toString().trim();
 				//获取总行批次信息
 				EupsBatchConsoleInfo eupsBatchConsoleInfo=eupsBatchConsoleInfoRepository.findOne(batNo);
@@ -29,7 +30,8 @@ public class CommNotifyBatchStatusAction extends BaseAction{
 				eupsBatchConsoleInfo.setPayCnt(null);
 				//更改总行控制 使其可以手动调用反盘文件
 				eupsBatchConsoleInfoRepository.update(eupsBatchConsoleInfo);
-				
+				log.info("==============update  eupsBatchConsoleInfo  set  payCnt = null ; batNo = "+batNo);
+				  log.info("============================"+eupsBatchConsoleInfo);
 				//异步调用 反盘文件
 				String mothed="eups.commNotifyBatchStatus";
 				bbipPublicService.synExecute(mothed, context);
@@ -42,10 +44,11 @@ public class CommNotifyBatchStatusAction extends BaseAction{
 		        context.setData("comNo",  gdEupsBatchConsoleInfo.getComNo());
 		        context.setData("subDte",  gdEupsBatchConsoleInfo.getSubDte());
 		        context.setData("comNme", fileName );
-		       context.setData("batSts",  gdEupsBatchConsoleInfo.getBatSts());
+		        context.setData("batSts",  gdEupsBatchConsoleInfo.getBatSts());
 		        context.setData("totCnt",  gdEupsBatchConsoleInfo.getTotCnt());
 		        context.setData("totAmt",  gdEupsBatchConsoleInfo.getTotAmt());
 		        context.setData("sucTotCnt"  ,gdEupsBatchConsoleInfo.getSucTotCnt());
 		        context.setData("sucTotAmt", gdEupsBatchConsoleInfo.getSucTotAmt());
+		        log.info("==============End  CommNotifyBatchStatusAction");
 		}
 }
