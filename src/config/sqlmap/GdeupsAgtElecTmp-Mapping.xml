@@ -495,17 +495,93 @@
 		from ${GDEUPSB_SCHEMA}.GDEUPS_AGT_ELEC_TMP
 		<trim prefix="WHERE" prefixOverrides="AND">
 
-
-			<if test="actNo!=null">
-				AND ACT_NO=#{actNo,jdbcType=CHAR}
+			<if test="comCode!=null">
+				AND COM_CODE=#{comCode,jdbcType=CHAR}
+			</if>
+			<if test="feeCode!=null">
+				AND FEE_CODE=#{feeCode,jdbcType=CHAR}
 			</if>
 			<if test="feeNum!=null">
 				AND FEE_NUM=#{feeNum,jdbcType=CHAR}
 			</if>
-			<if test="status!=null">
-				AND STATUS=#{status,jdbcType=CHAR}
+			<if test="userName!=null">
+				AND USER_NAME=#{userName,jdbcType=CHAR}
 			</if>
-
+			<if test="oldBankNum!=null">
+				AND OLD_BANK_NUM=#{oldBankNum,jdbcType=CHAR}
+			</if>
+			<if test="oldCardNo!=null">
+				AND OLD_CARD_NO=#{oldCardNo,jdbcType=CHAR}
+			</if>
+			<if test="newBankNum!=null">
+				AND NEW_BANK_NUM=#{newBankNum,jdbcType=CHAR}
+			</if>
+			<if test="actNo!=null">
+				AND ACT_NO=#{actNo,jdbcType=CHAR}
+			</if>
+			<if test="acountName!=null">
+				AND ACOUNT_NAME=#{acountName,jdbcType=CHAR}
+			</if>
+			<if test="actType!=null">
+				AND ACT_TYPE=#{actType,jdbcType=CHAR}
+			</if>
+			<if test="perComFlag!=null">
+				AND PER_COM_FLAG=#{perComFlag,jdbcType=CHAR}
+			</if>
+			<if test="idType!=null">
+				AND ID_TYPE=#{idType,jdbcType=CHAR}
+			</if>
+			<if test="idNo!=null">
+				AND ID_NO=#{idNo,jdbcType=CHAR}
+			</if>
+			<if test="checkSendType!=null">
+				AND CHECK_SEND_TYPE=#{checkSendType,jdbcType=CHAR}
+			</if>
+			<if test="invoiceSnedType!=null">
+				AND INVOICE_SNED_TYPE=#{invoiceSnedType,jdbcType=CHAR}
+			</if>
+			<if test="pointNum!=null">
+				AND POINT_NUM=#{pointNum,jdbcType=CHAR}
+			</if>
+			<if test="invoiceSnedMan!=null">
+				AND INVOICE_SNED_MAN=#{invoiceSnedMan,jdbcType=CHAR}
+			</if>
+			<if test="invoiceSendZip!=null">
+				AND INVOICE_SEND_ZIP=#{invoiceSendZip,jdbcType=CHAR}
+			</if>
+			<if test="invoiceSendAddr!=null">
+				AND INVOICE_SEND_ADDR=#{invoiceSendAddr,jdbcType=CHAR}
+			</if>
+			<if test="checkSendMan!=null">
+				AND CHECK_SEND_MAN=#{checkSendMan,jdbcType=CHAR}
+			</if>
+			<if test="checkSendZip!=null">
+				AND CHECK_SEND_ZIP=#{checkSendZip,jdbcType=CHAR}
+			</if>
+			<if test="checkSendAddr!=null">
+				AND CHECK_SEND_ADDR=#{checkSendAddr,jdbcType=CHAR}
+			</if>
+			<if test="notifyType!=null">
+				AND NOTIFY_TYPE=#{notifyType,jdbcType=CHAR}
+			</if>
+			<if test="email!=null">
+				AND EMAIL=#{email,jdbcType=CHAR}
+			</if>
+			<if test="phoneNum!=null">
+				AND PHONE_NUM=#{phoneNum,jdbcType=CHAR}
+			</if>
+			<if test="telNum!=null">
+				AND TEL_NUM=#{telNum,jdbcType=CHAR}
+			</if>
+			<if test="remark!=null">
+				AND REMARK=#{remark,jdbcType=CHAR}
+			</if>
+			<if test="prcessPassword!=null">
+				AND PRCESS_PASSWORD=#{prcessPassword,jdbcType=CHAR}
+			</if>
+			<if test="status != null">
+				AND STATUS=#{status,jdbcType=CHAR},
+			</if>
 		</trim>
 	</select>
 
