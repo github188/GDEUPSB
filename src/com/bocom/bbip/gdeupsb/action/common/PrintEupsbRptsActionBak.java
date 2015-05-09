@@ -212,7 +212,10 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			if (eupsBusTyp.equals("ELEC02")) {
 				prtList = get(GDEupsBatchConsoleInfoRepository.class)
 						.findElec02BatchRptInfo(baseMap);
-			} else {
+			} else if(eupsBusTyp.equals("WATR00")){
+				prtList = get(GDEupsBatchConsoleInfoRepository.class)
+						.findWatrBatchRptInfo(baseMap);
+			}else {
 				prtList = get(GDEupsBatchConsoleInfoRepository.class)
 						.findBatchRptInfo(baseMap);
 			}
