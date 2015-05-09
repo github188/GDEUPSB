@@ -39,12 +39,17 @@ public class CancelBatchCheckAction extends BaseAction {
 		Result result = ((BBIPPublicServiceImpl)get(GDConstants.BBIP_PUBLIC_SERVICE)).tryLock(batNo, 60*1000L, 60*1000L);
 		//GDEUPSB批次
 		GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo = get(GDEupsBatchConsoleInfoRepository.class).findOne(batNo);
+		if(gdEupsBatchConsoleInfo==null){
+				throw new CoreException("没有"+batNo+"信息");
+		}
 		//EUPS 批次
 		EupsBatchConsoleInfo eupsBatchConsoleInfos=new EupsBatchConsoleInfo();
 		eupsBatchConsoleInfos.setRsvFld1(batNo);
 		List<EupsBatchConsoleInfo> list=get(EupsBatchConsoleInfoRepository.class).find(eupsBatchConsoleInfos);
 		if(CollectionUtils.isEmpty(list)){
-				throw new CoreException("没有"+batNo+"批次信息");
+				gdEupsBatchConsoleInfo.setBatSts("C");
+				get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(gdEupsBatchConsoleInfo);
+				context.setData("cancelReslt", "批次撤销完成");
 		}else{
 				/**只有状态为I或W，才可以撤销批次*/
 				EupsBatchConsoleInfo eupsBatchConsoleInfo=list.get(0);
