@@ -153,7 +153,6 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 				else{
 					 elec02batchTmp.setRsvFld15("5");
 				 }
-//				elec02batchTmp.setTxnAmt("0");
 				elec02batchTmp.setRsvFld16(dtl.getErrMsg());
 			}
 
