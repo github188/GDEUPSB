@@ -188,9 +188,19 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 					throw new CoreException("协议不存在或已被删除");
 				}
 				String oldCusAc = (String) cuslist.get(0).getCusAc();
+				//拼装列表查询报文
 				Map<String, Object> acpMap = new HashMap<String, Object>();
 				acpMap.put(ParamKeys.CUS_AC, oldCusAc);
-
+				acpMap.put(ParamKeys.TRACE_NO, context.getData(ParamKeys.TRACE_NO));
+				acpMap.put("traceSrc", context.getData(ParamKeys.TRACE_SOURCE));
+				acpMap.put("version",context.getData(ParamKeys.VERSION));
+				Date date = new Date();
+				acpMap.put("reqTme", DateUtils.formatAsSimpleDate(date)+"T"+DateUtils.format(date, "HH:mm:ss"));
+				acpMap.put("reqJrnNo",  context.getData("reqJrnNo"));
+				acpMap.put("reqSysCde", context.getData(ParamKeys.REQ_SYS_CDE));
+				acpMap.put("tlr", context.getData(ParamKeys.TELLER));
+				acpMap.put("chn", context.getData(ParamKeys.CHANNEL));
+				
 				// 用原签约CusAc到acp列表查询,得agtCllCusId等相关信息
 				Result accessObjList = bgspServiceAccessObject
 						.callServiceFlatting("queryListAgentCollectAgreement",
