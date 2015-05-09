@@ -21,8 +21,8 @@
 #para($ele.TXN_AMT)
 #para($f.conv('thdTxnCde', $ele.THD_TXN_CDE))
 #para($ele.MFM_VCH_NO)
-#para($ele.MFM_RSP_MSG)
-#para($ele.RSP_MSG)
+#para($ele.MFM_RSP_MSG.trim())
+#para($ele.RSP_MSG.trim())
 #para($ele.BR)
 ┃?   ┃?     ┃?               ┃?           ┃?       ┃?        ┃?        ┃ ?       ┃?       ┃?        ┃?           ┃?            ┃?    ┃
 #end     
