@@ -140,6 +140,9 @@ public interface GdEupsTransJournalRepository extends PagingAndSortingRepository
 	@Find
 	public List<Map<String, Object>> findElec00AllTxnList(
 			GdEupsTransJournal eupsJnl);
+
+	public Page<Map<String, Object>> findTxnJnlInfo(Pageable pageable,
+			GdEupsTransJournal txnJnl);
 	
 	
 

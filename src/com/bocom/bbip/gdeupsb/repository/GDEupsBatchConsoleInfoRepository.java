@@ -12,6 +12,7 @@ import com.bocom.bbip.data.domain.Page;
 import com.bocom.bbip.data.domain.Pageable;
 import com.bocom.bbip.data.repository.PagingAndSortingRepository;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
+import com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal;
 
 public interface GDEupsBatchConsoleInfoRepository extends PagingAndSortingRepository<GDEupsBatchConsoleInfo, String> {
 	

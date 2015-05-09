@@ -62,7 +62,7 @@ public class QryBatchInformationAction extends BaseAction{
 		logger.info("============== contxt after set batchDtl : " + context);
 
 		
-		context.setData("TestBatchDtl", page.getElements());
+		context.setData("batchDtl", page.getElements());
 		logger.info("============== contxt after set TestBatchDtl : " + context);
 		
 	}

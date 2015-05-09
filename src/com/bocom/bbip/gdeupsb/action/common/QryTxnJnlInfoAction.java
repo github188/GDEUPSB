@@ -10,12 +10,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
+import com.bocom.bbip.data.domain.Page;
+import com.bocom.bbip.data.domain.PageRequest;
+import com.bocom.bbip.data.domain.Pageable;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal;
+import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GdEupsTransJournalRepository;
+import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -37,13 +42,6 @@ public class QryTxnJnlInfoAction extends BaseAction{
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 		logger.info("=========context=====" + context);
 		
-//		交易类型	eupsBusTyp	CHAR	10	Y
-//		会计流水号	mfmVchNo	CHAR	20	
-//		用户编号	thdCusNo	CHAR	40	
-//		客户账号	cusAc	VARCHAR	40	
-//		开始日期	beginDate	CHAR	10	Y
-//		结束日期	endDate	CHAR	10	Y
-
 		GdEupsTransJournal txnJnl = new GdEupsTransJournal();
 			txnJnl.setEupsBusTyp((String) context.getData(ParamKeys.EUPS_BUSS_TYPE));
 			if(!((null==context.getData(ParamKeys.THD_CUS_NO)) || "".equals(context.getData(ParamKeys.THD_CUS_NO)) ||  "?".equals(context.getData(ParamKeys.THD_CUS_NO)) )){
@@ -67,10 +65,19 @@ public class QryTxnJnlInfoAction extends BaseAction{
 				throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
 			}
 			
+			
+			Pageable pageable = BeanUtils.toObject(context.getDataMap(), PageRequest.class);
+			Page<Map<String, Object>> page = get(GdEupsTransJournalRepository.class).findTxnJnlInfo(pageable, txnJnl);
+			logger.info("=== page.getElements() :" + page.getElements());
+			
+			setResponseFromPage(context, "loop", page);
+			logger.info("============== contxt after set loop : " + context);
+
+			
 			List<Map<String, Object>> tempList = new ArrayList<Map<String,Object>>();
-			for(Map<String, Object> tmpMap : qryTxnJnlInfo){
+			List<Map<String, Object>> pageElements = page.getElements();
+			for(Map<String, Object> tmpMap : pageElements){
 				Map<String, Object> tmp = new HashMap<String, Object>();
-				
 				//wsdl接口全部为Char
 				tmp.put("sqn", tmpMap.get("SQN"));
 				tmp.put("mfmVchNo", tmpMap.get("MFM_VCH_NO"));
@@ -93,7 +100,7 @@ public class QryTxnJnlInfoAction extends BaseAction{
 			context.setData("loop", tempList);
 			logger.info("==============context after set loop to context:" + context);
 			
-			int pageNum = (Integer) context.getData("pageNum");
+		/*	int pageNum = (Integer) context.getData("pageNum");
 			int pageSize = (Integer) context.getData("pageSize");
 
 			int totalElements = tempList.size();
@@ -112,7 +119,7 @@ public class QryTxnJnlInfoAction extends BaseAction{
 			context.setData("pageableResponse", pageableResponse);
 			
 			context.setData("totalElements", totalElements);
-			context.setData("totalPages", totalPages);
+			context.setData("totalPages", totalPages);*/
 			
 			
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
