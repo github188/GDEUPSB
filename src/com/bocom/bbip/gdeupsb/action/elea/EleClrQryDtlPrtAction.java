@@ -312,7 +312,6 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 				List<Map<String, Object>> allDtlJnlHk = get(GdEupsTransJournalRepository.class).findGdJnlSucHkDetail(transJnl);
 				if (CollectionUtils.isNotEmpty(allDtlJnlHk)) {
 					for (Map<String, Object> detail : allDtlJnlHk) {
-						System.out.println("TxnTme=" + detail.get("TXN_TME"));
 						String txnTme = DateUtils.format((Date)detail.get("TXN_TME"), "HH:mm:ss");
 						detail.put("TXN_TME", txnTme);
 						allDtlJnl.add(detail);
@@ -322,7 +321,6 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 				List<Map<String, Object>> allDtlJnlJf = get(GdEupsTransJournalRepository.class).findGdJnlSucJfDetail(transJnl);
 				if (CollectionUtils.isNotEmpty(allDtlJnlJf)) {
 					for (Map<String, Object> detail : allDtlJnlHk) {
-						System.out.println("TxnTme=" + detail.get("TXN_TME"));
 						String txnTme = DateUtils.format((Date)detail.get("TXN_TME"), "HH:mm:ss");
 						detail.put("TXN_TME", txnTme);
 						allDtlJnl.add(detail);
