@@ -239,19 +239,17 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 				
 				@SuppressWarnings("unchecked")
 				//更新客户信息	<customerInfo>
-				List<Map<String, Object>> customerInfoMaps = (List<Map<String, Object>>) context
-						.getData("customerInfo");
+				Map<String, Object> customerInfoMap = setCustomerInfoMap(context);
 				if(StringUtils.isNotBlank((String)context.getData("cusAcBak"))){
-					customerInfoMaps.get(0).put(ParamKeys.CUS_AC, context.getData("cusAcBak"));
-					customerInfoMaps.get(0).put(ParamKeys.CUS_NME, context.getData("cusNmeBak"));
+					customerInfoMap.put(ParamKeys.CUS_AC, context.getData("cusAcBak"));
+					customerInfoMap.put(ParamKeys.CUS_NME, context.getData("cusNmeBak"));
 				}
 				if(StringUtils.isNotBlank((String)context.getData("idNoBak"))){
-					customerInfoMaps.get(0).put(ParamKeys.ID_NO, context.getData("idNoBak"));
-					customerInfoMaps.get(0).put(ParamKeys.ID_TYPE, context.getData("idTypBak"));
+					customerInfoMap.put(ParamKeys.ID_NO, context.getData("idNoBak"));
+					customerInfoMap.put(ParamKeys.ID_TYPE, context.getData("idTypBak"));
 				}
-//				customerInfoMaps.get(0).put(ParamKeys.ID_TYPE, context.getData(ParamKeys.ID_TYPE));
-//				customerInfoMaps.get(0).put(ParamKeys.ID_NO, context.getData(ParamKeys.ID_NO));
-				context.setData("customerInfo", customerInfoMaps);
+				
+				context.setData("customerInfo", customerInfoMap);
 				logger.info("============ context after set customerInfo : "
 						, context);
 				
