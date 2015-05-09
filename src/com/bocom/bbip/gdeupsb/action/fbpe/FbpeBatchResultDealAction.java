@@ -170,26 +170,35 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 				 			sts="101";
 				 			errMsg="扣收成功";
 				 	}else{
-					 		String errSeeason=errMsg.substring(0,6);
-					 		if(errSeeason.equals("PDM252")){
-					 			sts="004";
-					 			errMsg="帐号已取消";
-					 		}else if(errSeeason.equals("TPM055")){
-					 			sts="007";
-					 			errMsg="帐号和开户名不对应";
-					 		}else if(errSeeason.equals("TPM050")){
-					 			sts="002";
-					 			errMsg="余额不足";
-					 		}else if(errSeeason.equals("CB1004")){
-					 			sts="006";
-					 			errMsg="帐号不存在";
+					 		String errSeeason=errMsg;
+					 		if(errSeeason.length()<=6){
+						 			sts=errSeeason;
+						 			stsLength=errSeeason.length()+"";
+						 			while(stsLength.length()<3){
+						 					stsLength="0"+stsLength;
+						 			}
 					 		}else{
-					 			sts=errSeeason;
-					 			stsLength=errSeeason.length()+"";
-					 			while(stsLength.length()<3){
-					 					stsLength="0"+stsLength;
-					 			}
-					 			errMsg=eupsBatchInfoDetail.getErrMsg().substring(6);
+							 		errSeeason=errMsg.substring(0,6);
+							 		if(errSeeason.equals("PDM252")){
+							 			sts="004";
+							 			errMsg="帐号已取消";
+							 		}else if(errSeeason.equals("TPM055")){
+							 			sts="007";
+							 			errMsg="帐号和开户名不对应";
+							 		}else if(errSeeason.equals("TPM050")){
+							 			sts="002";
+							 			errMsg="余额不足";
+							 		}else if(errSeeason.equals("CB1004")){
+							 			sts="006";
+							 			errMsg="帐号不存在";
+							 		}else{
+							 			sts=errSeeason;
+							 			stsLength=errSeeason.length()+"";
+							 			while(stsLength.length()<3){
+							 					stsLength="0"+stsLength;
+							 			}
+							 			errMsg=eupsBatchInfoDetail.getErrMsg().substring(6);
+							 		}
 					 		}
 				 	}
 				 	byte[] byErrMsg=errMsg.getBytes("GBK");
