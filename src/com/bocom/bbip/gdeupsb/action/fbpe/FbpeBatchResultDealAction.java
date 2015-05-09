@@ -173,10 +173,7 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 					 		String errSeeason=errMsg;
 					 		if(errSeeason=="无效交易"){
 						 			sts=errSeeason;
-						 			stsLength=errSeeason.length()+"";
-						 			while(stsLength.length()<3){
-						 					stsLength="0"+stsLength;
-						 			}
+						 			stsLength="008";
 					 		}else{
 							 		errSeeason=errMsg.substring(0,6);
 							 		if(errSeeason.equals("PDM252")){
