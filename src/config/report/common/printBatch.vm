@@ -11,7 +11,6 @@
 #end
 #set($p.index=0)
 #td(1,$d.eles)#set($p.index=$p.index+1) 
-#if($ele.rmk2=="S")
 #lpara($p.index)
 #lpara($ele.agtSrvCusId)
 #lpara($ele.cusAc)
@@ -20,19 +19,17 @@
 #lpara($ele.sts)
 #lpara($ele.errMsg)
 ?          ?                               ?                                ?                ?               ?          ?
-#else
 #end
 #tf(2)
-#lpara($ele.Tlr)
-#lpara($ele.exeDte)
-#lpara($ele.totCnt)
-#lpara($ele.totAmt)
-#lpara($ele.sucTotCnt)
-#lpara($ele.sucTotAmt)
-#lpara($ele.falTotCnt)
-#lpara($ele.falTotAmt)
+#lpara($d.Tlr)
+#lpara($d.exeDte)
+#lpara($d.totCnt)
+#lpara($d.totAmt)
+#lpara($d.sucTotCnt)
+#lpara($d.sucTotAmt)
+#lpara($d.falTotCnt)
+#lpara($d.falTotAmt)
 ------------------------------------------------------------------------------------------------------------------------------------------------------
   操作柜员: ?操作日期:?总笔数: ? 总金额: ￥? 成功总笔数:?成功总金额:￥?  失败总笔数:? 失败总金额:￥? 
-#end
 #end
 #end
