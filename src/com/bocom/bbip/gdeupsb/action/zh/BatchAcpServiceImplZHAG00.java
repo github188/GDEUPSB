@@ -110,7 +110,7 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
         logger.info("~~~~~~~End  ~~~~将数据插入临时表");
 		List <GDEupsZhAGBatchTemp>lt=get(GDEupsZHAGBatchTempRepository.class).findByBatNo((String)context.getData(ParamKeys.BAT_NO));
 		for (GDEupsZhAGBatchTemp gdEupsZhAGBatchTemp : lt) {
-				gdEupsZhAGBatchTemp.setThdCusNme("0");
+				gdEupsZhAGBatchTemp.setThdCusNme(gdEupsZhAGBatchTemp.getCusNme());
 		}
 		List<Map<String,Object>> detail=(List<Map<String, Object>>) BeanUtils.toMaps(lt);
 		EupsActSysPara eupsActSysPara = new EupsActSysPara();
