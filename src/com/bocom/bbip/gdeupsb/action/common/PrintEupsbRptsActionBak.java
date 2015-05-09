@@ -21,6 +21,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
@@ -324,6 +325,7 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			sendFileToElec02.setLocDir(filPath);
 			sendFileToElec02.setLocFleNme(fileName);
 			sendFileToElec02.setRmtFleNme(stFilNme);
+			get(OperateFTPAction.class).putCheckFile(sendFileToElec02);
 		}
 
 		// 上传前端FTP
