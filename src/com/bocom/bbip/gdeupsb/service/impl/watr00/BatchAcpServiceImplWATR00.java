@@ -86,8 +86,17 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 //		
 //		context.setData("tlr", service.getETeller("01445999999"));
 //		context.setData("extFields", "01441800999");
-		context.setData("br", "01445007999");
-		context.setData("tlr","AFBM013");
+		
+		
+//		context.setData("br", "01445007999");
+//		context.setData("tlr","AFBM013");
+//		String br = context.getData("br");
+//		String tlr = context.getData("tlr");
+		
+		context.setData(ParamKeys.BK, service.getParam("GDEUPSB", "stBK"));
+		context.setData(ParamKeys.BR, service.getParam("GDEUPSB", "stWatBr"));
+		context.setData(ParamKeys.TELLER, service.getETeller(context.getData(ParamKeys.BK).toString()));
+		
 		String br = context.getData("br");
 		String tlr = context.getData("tlr");
 		String comNo = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.COMPANY_NO, ErrorCodes.EUPS_FIELD_EMPTY);//代理单位号
@@ -138,7 +147,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		configB.setRmtFleNme(fileName);
 //		configB.setRmtWay(dir);
 		String dir1 = configB.getLocDir().toString();
-		dir1 = dir1+"wat/";
+		dir1 = dir1+"GDEUPSB/"+"wat/";
 		
 		configB.setLocDir(dir1);
 		
@@ -149,7 +158,7 @@ public class BatchAcpServiceImplWATR00 extends BaseAction implements BatchAcpSer
 		config.setLocFleNme(fileName);
 		config.setRmtFleNme(fileName);
 		String dir = config.getRmtWay().toString();
-		dir = dir+br+"/"+tlr+"/"+acDate+"/";
+		dir = dir+"GDEUPSB/"+br+"/"+tlr+"/"+acDate+"/";
 		config.setRmtWay(dir);
 		config.setLocDir(dir1);
 		File file = new File(dir);
