@@ -212,7 +212,7 @@ public class EupsManageCounterAgt extends BaseAction {
 			agtElecTmp.setFeeCode("000");
 			agtElecTmp.setStatus("0");
 			agtElecTmp.setRemark("签约日期:" + MGR_DATE);
-			get(GdeupsAgtElecTmpRepository.class).save(agtElecTmp);
+			get(GdeupsAgtElecTmpRepository.class).insert(agtElecTmp);
 
 			// 为返回的list 赋值
 			List<Map<String, Object>> infoList = new ArrayList<Map<String, Object>>();

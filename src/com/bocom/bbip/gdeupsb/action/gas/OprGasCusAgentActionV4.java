@@ -189,6 +189,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 				}
 				String oldCusAc = (String) cuslist.get(0).getCusAc();
 				context.setData(ParamKeys.CUS_AC, oldCusAc);
+				logger.info("====== 2 context before queryListAgentCollectAgreement", context);
 				// 用原签约CusAc到acp列表查询,得agtCllCusId等相关信息
 				Result accessObjList = bgspServiceAccessObject
 						.callServiceFlatting("queryListAgentCollectAgreement",
@@ -233,7 +234,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 				context.setData("agentCollectAgreement",
 						agentCollectAgreementMaps);
 				logger.info(
-						"=========context after delete other agentCollectAgreement set agentCollectAgreement=========",
+						"=========context after delete other agentCollectAgreement set agentCollectAgreement=========" + 
 						context);
 				
 				@SuppressWarnings("unchecked")

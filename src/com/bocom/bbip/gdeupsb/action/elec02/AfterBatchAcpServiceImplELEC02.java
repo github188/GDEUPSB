@@ -135,7 +135,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 			}
 			if ("F".equals(sts)) {
 				errCde = dtl.getErrMsg().toString().substring(0, 6);
-				if ("TPM050".equals(errCde)) {
+				if ("TPM050".equals(errCde) || "TP0017".equals(errCde)) {
 					elec02batchTmp.setRsvFld15("2");
 				}
 				else if ("CB1004".equals(errCde)) {
