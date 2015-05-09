@@ -59,7 +59,6 @@ public class AgentFileToThdAction extends BaseAction{
 				//日期
 				Date txnDate=DateUtils.calDate(DateUtils.parse(DateUtils.formatAsSimpleDate(date)),-1);
 				Map<String, Object> map=new HashMap<String, Object>();
-				txnDate=DateUtils.parse("2015-05-07");
 				map.put("txnDte", txnDate);
 				//分组
 				List<Map<String, Object>> comNoList=gdEupsCusAgentJournalRepository.findAllGroupByComNo(map);
