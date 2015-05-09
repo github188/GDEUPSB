@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.action.common;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -55,9 +56,13 @@ public class QryBatchInformationAction extends BaseAction{
 		
 		Pageable pageable = BeanUtils.toObject(context.getDataMap(), PageRequest.class);
 		Page<Map<String, Object>> page = get(GDEupsBatchConsoleInfoRepository.class).findBatInformation(pageable, baseMap);
+		logger.info("=== page.getElements() :" + page.getElements());
+		
 		setResponseFromPage(context, "batchDtl", page);
-	
 		logger.info("============== contxt after set batchDtl : " + context);
+
+		context.setData("TestBatchDtl", page.getElements());
+		logger.info("============== contxt after set TestBatchDtl : " + context);
 		
 	}
 	
