@@ -171,7 +171,7 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 				 			errMsg="扣收成功";
 				 	}else{
 					 		String errSeeason=errMsg;
-					 		if(errSeeason.length()<=6){
+					 		if(errSeeason=="无效交易"){
 						 			sts=errSeeason;
 						 			stsLength=errSeeason.length()+"";
 						 			while(stsLength.length()<3){
