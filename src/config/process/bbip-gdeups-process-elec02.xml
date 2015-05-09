@@ -100,10 +100,10 @@
 		</actions>
 	</process>
 	<!-- fan pan  -->
-	<process id="gdeups.commNotifyBatchStatus" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
+	<!-- <process id="gdeups.commNotifyBatchStatus" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
 		<actions>
 			  <action id="act" ref="afterBatchelec"  />
 		</actions>
-	</process>
+	</process> -->
 
 </x:beans>

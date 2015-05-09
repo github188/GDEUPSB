@@ -70,17 +70,6 @@ public class EupsManageCounterAgt extends BaseAction {
 	}
 
 	private void checkOldBaseInfo(Context context) throws CoreException {
-		/*String feeNum = context.getData("JFH");
-		String actNo = context.getData("ActNo");
-		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
-		if (StringUtils.isNotEmpty(feeNum)) {
-			agtElecTmp.setFeeNum(feeNum);
-		}
-		if (StringUtils.isNotEmpty(actNo)) {
-			agtElecTmp.setActNo(actNo);
-		}
-		List<GdeupsAgtElecTmp> tmpList = get(GdeupsAgtElecTmpRepository.class)
-				.find(agtElecTmp);*/
 		
 		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
 		String feeNum = (String) context.getData("JFH");
@@ -100,7 +89,7 @@ public class EupsManageCounterAgt extends BaseAction {
 		String OAC = tmpList.get(0).getActNo();
 		String OKH = tmpList.get(0).getNewBankNum();
 		context.setData("OKH", OKH);
-		context.setData("JFH", tmpList.get(0).getFeeNum());
+		logger.info("context after checkOldBaseInfo : " + context);
 	}
 
 	private void buildContextAndCallThd(Context context) throws CoreException {
@@ -260,10 +249,13 @@ public class EupsManageCounterAgt extends BaseAction {
 
 		// TODO checkCusInfoByCusAc(context);
 		checkOldBaseInfo(context);
+		
+		String feeNum = (String) context.getData("JHF");
 
 		List<Map<String, Object>> infoList = new ArrayList<Map<String, Object>>();
+		
 		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
-		agtElecTmp.setFeeNum((String) context.getData("JHF"));
+		agtElecTmp.setFeeNum(feeNum);
 		// 旧协议信息，返显
 		List<GdeupsAgtElecTmp> oldAgtElecTmps = get(
 				GdeupsAgtElecTmpRepository.class).findBase(agtElecTmp);
