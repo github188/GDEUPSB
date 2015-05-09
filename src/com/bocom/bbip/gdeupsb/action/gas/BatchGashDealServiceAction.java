@@ -250,10 +250,10 @@ public class BatchGashDealServiceAction extends BaseAction implements
 
 		logger.info("==============context:" + context);
 
-		context.setData("fleNmeBak", fleNme);
 		// 提交代收付
 		userProcessToSubmit(context);
 		
+		context.setData("fleNmeBak", fleNme);
 		logger.info("==========End  BatchDataFileAction  prepareBatchDeal");
 
 	}
