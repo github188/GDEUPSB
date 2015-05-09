@@ -138,21 +138,22 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 				if ("TPM050".equals(errCde)) {
 					elec02batchTmp.setRsvFld15("2");
 				}
-				if ("CB1004".equals(errCde)) {
+				else if ("CB1004".equals(errCde)) {
 					elec02batchTmp.setRsvFld15("4");
 				}
 				// if ("PDM252".equals(errCde)) {
 				// elec02batchTmp.setRsvFld15("4");
 				// }
-				if ("SDM015".equals(errCde)) {// SDM015记账账号状态字为全部法律冻结、全部内部止付、冻结暂封、存款证明止付、质押或者保全冻结
+				else if ("SDM015".equals(errCde)) {// SDM015记账账号状态字为全部法律冻结、全部内部止付、冻结暂封、存款证明止付、质押或者保全冻结
 					elec02batchTmp.setRsvFld15("5");
 				}
-				if("CDSS04".equals(errCde)){//CDSS04核心错误码，请联系核心
+				else if("CDSS04".equals(errCde)){//CDSS04核心错误码，请联系核心
 					elec02batchTmp.setRsvFld15("5");
-				 }else{
+				 }
+				else{
 					 elec02batchTmp.setRsvFld15("5");
 				 }
-				elec02batchTmp.setTxnAmt("0");
+//				elec02batchTmp.setTxnAmt("0");
 				elec02batchTmp.setRsvFld16(dtl.getErrMsg());
 			}
 
