@@ -168,9 +168,10 @@ public class PrintBatchInfoAction extends BaseAction{
 					} finally {
 					       	tFTPTransfer.logout();
 					}
+					 
 					log.info("=============放置报表文件");
 			        //反盘文件
-					String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + context.getData(ParamKeys.BR)+ "/" ;
+					String path ="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + context.getData(ParamKeys.BR)+ "/" ;
 					 try {
 					       	tFTPTransfer.logon();
 					        Resource tResource = new FileSystemResource(sendFileToBBOSConfig.getLocDir()+fileName);
