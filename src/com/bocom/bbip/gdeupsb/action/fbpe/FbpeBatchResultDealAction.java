@@ -192,8 +192,6 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 							 			sts=errSeeason;
 							 			byte[] byErrMsg=errSeeason.getBytes("GBK");
 							 			stsLength=byErrMsg.length+"";
-							 			System.out.println(errMsg);
-							 			System.out.println(errSeeason+"                   "+sts+"1                    "+stsLength);
 							 			while(stsLength.length()<3){
 							 					stsLength="0"+stsLength;
 							 			}
