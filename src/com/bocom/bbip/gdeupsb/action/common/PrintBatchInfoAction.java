@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -71,11 +72,17 @@ public class PrintBatchInfoAction extends BaseAction{
 				if(CollectionUtils.isEmpty(list)){
 						throw new CoreException(batNo+"没有返回，不能打印清单");
 				}
+				List<Map<String, Object>> detailList=new ArrayList<Map<String,Object>>();
+				Map<String, Object> mapList=new HashMap<String, Object>();
 				for (EupsBatchInfoDetail eupsBatchInfoDetails : list) {
-						eupsBatchInfoDetails.setRmk2("T");
-						if(eupsBatchInfoDetails.getSts().equals("S")){
-								eupsBatchInfoDetails.setErrMsg("扣款成功");
-						}
+						mapList.put("errMsg","扣款成功");
+						mapList.put("agtSrvCusId",eupsBatchInfoDetails.getAgtSrvCusId());
+						mapList.put("cusAc",eupsBatchInfoDetails.getCusAc());
+						mapList.put("cusNme",eupsBatchInfoDetails.getCusNme());
+						mapList.put("txnAmt",eupsBatchInfoDetails.getTxnAmt());
+						mapList.put("sts",eupsBatchInfoDetails.getSqn());
+						mapList.put("rmk2","S");
+						detailList.add(mapList);
 				}
 				//获取日期 
 				Date date=null;
@@ -85,16 +92,20 @@ public class PrintBatchInfoAction extends BaseAction{
 						date=new Date();
 				}
 				//清单首尾信息
-				context.setData("exeDte", DateUtils.formatAsSimpleDate(date));
 				context.setData("comNo", eupsBatchConsoleInfo.getComNo());
-				context.setData(ParamKeys.TOT_CNT, eupsBatchConsoleInfo.getTotCnt());
-				context.setData(ParamKeys.TOT_AMT, eupsBatchConsoleInfo.getTotAmt());
-				context.setData(GDParamKeys.SUC_TOT_CNT, eupsBatchConsoleInfo.getSucTotCnt());
-				context.setData(GDParamKeys.SUC_TOT_AMT, eupsBatchConsoleInfo.getSucTotAmt());
-				context.setData(GDParamKeys.FAL_TOT_CNT, eupsBatchConsoleInfo.getFalTotCnt());
-				context.setData("Tlr", eupsBatchConsoleInfo.getTxnTlr());
-				context.setData("falTotAmt", eupsBatchConsoleInfo.getFalTotAmt());
 				context.setData("txnDte",DateUtils.formatAsSimpleDate(new Date()));
+				Map<String, Object> mapEnd=new HashMap<String, Object>();
+				
+				mapEnd.put("exeDte", DateUtils.formatAsSimpleDate(date));
+				mapEnd.put(ParamKeys.TOT_CNT, eupsBatchConsoleInfo.getTotCnt());
+				mapEnd.put(ParamKeys.TOT_AMT, eupsBatchConsoleInfo.getTotAmt());
+				mapEnd.put(GDParamKeys.SUC_TOT_CNT, eupsBatchConsoleInfo.getSucTotCnt());
+				mapEnd.put(GDParamKeys.SUC_TOT_AMT, eupsBatchConsoleInfo.getSucTotAmt());
+				mapEnd.put(GDParamKeys.FAL_TOT_CNT, eupsBatchConsoleInfo.getFalTotCnt());
+				mapEnd.put("Tlr", eupsBatchConsoleInfo.getTxnTlr());
+				mapEnd.put("falTotAmt", eupsBatchConsoleInfo.getFalTotAmt());
+				mapEnd.put("rmk2", "F");
+				detailList.add(mapEnd);
 				log.info("~~~~~~~~~~~"+context);
 				//清单文件
 				VelocityTemplatedReportRender render = new VelocityTemplatedReportRender();
@@ -110,7 +121,7 @@ public class PrintBatchInfoAction extends BaseAction{
 					map.put("printBatch", "config/report/common/printBatchZHAG.vm");
 				}
 				render.setReportNameTemplateLocationMapping(map);
-				context.setData("eles", list);
+				context.setData("eles", detailList);
 				String result = render.renderAsString("printBatch", context);
 				log.info("~~~~~~~~~~~~~~~~~~~~~"+result);
 				
