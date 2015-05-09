@@ -56,6 +56,7 @@ public class EupsManageCounterAgt extends BaseAction {
 			break;
 		case UPDATE:
 			// 不允许更改卡号缴费号对应关系，只修改其他辅助信息
+			checkOldBaseInfo(context);
 			updateAgentDeal(context);
 			break;
 		case QUERY:
@@ -248,7 +249,7 @@ public class EupsManageCounterAgt extends BaseAction {
 	private void updateAgentDeal(Context context) throws CoreException {
 
 		// TODO checkCusInfoByCusAc(context);
-		checkOldBaseInfo(context);
+//		checkOldBaseInfo(context);
 		
 		String feeNum = (String) context.getData("JFH");
 		
