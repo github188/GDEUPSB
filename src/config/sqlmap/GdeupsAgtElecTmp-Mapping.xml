@@ -501,7 +501,7 @@
 				AND ACT_NO=#{actNo,jdbcType=CHAR}
 			</if>
 			<if test="status != null">
-				AND STATUS=#{status,jdbcType=CHAR},
+				AND STATUS=#{status,jdbcType=CHAR}
 			</if>
 		</trim>
 	</select>
