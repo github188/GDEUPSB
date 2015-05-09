@@ -58,7 +58,7 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
         	Map<String , Object > map=new HashMap<String, Object>();
         	String sqn=eupsBatchInfoDetail.getRmk1();
         	map.put("sqn", sqn);
-        	String txnAmt=eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2)+"";
+        	String txnAmt=eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2).intValue()+"";
         	if(txnAmt.length()<12){
         			txnAmt="0"+txnAmt;
         	}
