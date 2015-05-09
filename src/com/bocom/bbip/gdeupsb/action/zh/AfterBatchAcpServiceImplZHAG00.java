@@ -89,7 +89,7 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
 		Map<String, Object> resultMap = createFileMap(context,gdEupsBatchConsoleInfo);
 		
 		String formatOut=findFormat(gdEupsBatchConsoleInfo.getComNo());
-		String fileName=gdEupsBatchConsoleInfo.getComNo()+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";
+		String fileName=gdEupsBatchConsoleInfo.getRsvFld1();
 		config.setLocFleNme(fileName);
         ((OperateFileAction)get("opeFile")).createCheckFile(config, formatOut, fileName, resultMap);
         config.setRmtFleNme(fileName);
