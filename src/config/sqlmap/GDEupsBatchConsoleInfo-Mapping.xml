@@ -1145,4 +1145,47 @@
 		EUPS_BUS_TYP=#{eupsBusTyp, jdbcType=CHAR} AND EXE_DTE=#{txnDte,
 		jdbcType=DATE} AND BAT_STS='S'
 </select>
+
+<!-- 水费批量交易报表打印 -->
+	<select id="findWatrBatchRptInfo" resultType="java.util.Map"
+		parameterType="java.util.Map">
+		SELECT * FROM
+		(SELECT * FROM EUPS.EUPS_BATCH_INFO_DETAIL
+		C WHERE
+		C.BAT_NO IN
+		(
+		select DISTINCT BAT_NO from eups.EUPS_BATCH_CONSOLE_INFO
+		WHERE COM_NO in (select DISTINCT com_no from
+		GDEUPSB.GDEUPS_BATCH_CONSOLE_INFO where EUPS_BUS_TYP=#{eupsBusTyp,
+		jdbcType=CHAR} and SUB_DTE=#{txnDte, jdbcType=DATE}
+		<if test="comNo!=null">
+			AND COM_NO=#{comNo,jdbcType=CHAR}
+		</if>
+		) AND EXE_DTE=#{txnDte, jdbcType=DATE} AND BAT_STS='S'
+		)) A,
+		(SELECT
+		COALESCE(SUM(TOT_CNT), 0)
+		TOTCNT, COALESCE(SUM(TOT_AMT), 0) TOTAMT,
+		COALESCE(SUM(SUC_TOT_CNT), 0)
+		SUCTOTCNT, COALESCE(SUM(SUC_TOT_AMT), 0)
+		SUCTOTAMT,
+		COALESCE(SUM(FAL_TOT_CNT), 0) FALTOTCNT,
+		COALESCE(SUM(FAL_TOT_AMT), 0)
+		FALTOTAMT
+		FROM
+		EUPS.EUPS_BATCH_CONSOLE_INFO WHERE BAT_NO IN
+		(
+		select DISTINCT
+		BAT_NO
+		from eups.EUPS_BATCH_CONSOLE_INFO WHERE COM_NO in (select DISTINCT
+		com_no from GDEUPSB.GDEUPS_BATCH_CONSOLE_INFO where
+		EUPS_BUS_TYP=#{eupsBusTyp, jdbcType=CHAR} and SUB_DTE=#{txnDte,
+		jdbcType=DATE}
+		<if test="comNo!=null">
+			AND COM_NO=#{comNo,jdbcType=CHAR}
+		</if>
+		) AND EXE_DTE=#{txnDte, jdbcType=DATE} AND BAT_STS='S'
+		))
+		B
+	</select>
 </mapper>
