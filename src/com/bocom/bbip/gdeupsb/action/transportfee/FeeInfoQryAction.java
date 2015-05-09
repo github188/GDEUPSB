@@ -1,5 +1,8 @@
 package com.bocom.bbip.gdeupsb.action.transportfee;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,16 +66,16 @@ public class FeeInfoQryAction extends BaseAction{
 		gdEupsbTrspFeeInfo.setEndDat(DateUtils.parse(ctx.getData(GDParamKeys.END_DAT).toString(),DateUtils.STYLE_SIMPLE_DATE));
 		log.info(DateUtils.parse(ctx.getData(GDParamKeys.BEG_DAT).toString(),DateUtils.STYLE_SIMPLE_DATE));
 		gdEupsbTrspFeeInfo.setStatus((String)ctx.getData(GDParamKeys.STATUS));
-		if("T".equals(ctx.getData("tiaTyp"))){  //tiaTyp来源未知
-			totalElements = gdEupsbTrspFeeInfoRepository.findInfoCount(gdEupsbTrspFeeInfo);
-			if(totalElements == 0){
-				ctx.setData(ParamKeys.RSP_MSG, "无记录");
-				throw new CoreRuntimeException(ErrorCodes.EUPS_QUERY_NO_DATA);
-			}else{
-				ctx.setData(GDParamKeys.totalElements, totalElements);
-			}
-		}
-			
+//		if("T".equals(ctx.getData("tiaTyp"))){  //tiaTyp来源未知
+//			totalElements = gdEupsbTrspFeeInfoRepository.findInfoCount(gdEupsbTrspFeeInfo);
+//			if(totalElements == 0){
+//				ctx.setData(ParamKeys.RSP_MSG, "无记录");
+//				throw new CoreRuntimeException(ErrorCodes.EUPS_QUERY_NO_DATA);
+//			}else{
+//				ctx.setData(GDParamKeys.totalElements, totalElements);
+//			}
+//		}
+		
 //			int pageNum =ctx.getData("pageNum");
 //			int pageSize =ctx.getData("pageSize");
 //			 Pageable pageable =new PageRequest(pageNum,pageSize);
@@ -80,12 +83,28 @@ public class FeeInfoQryAction extends BaseAction{
 //			List<GDEupsbTrspFeeInfo> feeInfoList = gdEupsbTrspFeeInfoRepository.findInfo(pageable,gdEupsbTrspFeeInfo);
 		 
 			Pageable pageable =  BeanUtils.toObject(ctx.getDataMap(), PageRequest.class);
-			Page<GDEupsbTrspFeeInfo> TrspFeeInfoPage = get(GDEupsbTrspFeeInfoRepository.class).findInfo(pageable,gdEupsbTrspFeeInfo);
 			
+			totalElements = gdEupsbTrspFeeInfoRepository.findInfoCount(gdEupsbTrspFeeInfo).get(0);
+			int size = pageable.getPageSize();
+	        int num = pageable.getPageNum();
+	        int totalPages = size == 0 ? 0 : (int)Math.ceil((double)totalElements / (double)size);
 			
+	        log.info("@@@@@@@@@@@@@="+totalElements+"!!"+size+"!!"+num+"!!"+totalPages);
+	        Iterable<Map<String, Object>> list = null;
+	        if(num <= totalPages)
+	        {
+	        	Page<GDEupsbTrspFeeInfo> TrspFeeInfoPage = get(GDEupsbTrspFeeInfoRepository.class).findInfo(pageable,gdEupsbTrspFeeInfo);
+	            ctx.setData("totalElements", Long.valueOf(TrspFeeInfoPage.getTotalElements()));
+	            ctx.setData("totalPages", Integer.valueOf(TrspFeeInfoPage.getTotalPages()));           
+				list = BeanUtils.toMaps(TrspFeeInfoPage.getElements());
+			
+	              	
+	            }     
+	            
+	            ctx.setData("resultList", list);
 //				List<Map<String,Object>> resultList=(List<Map<String, Object>>) BeanUtils.toMaps(feeInfoList);
 //				ctx.setData("resultList", resultList);
-			setResponseFromPage(ctx, "resultList", TrspFeeInfoPage);
+//			setResponseFromPage(ctx, "resultList", TrspFeeInfoPage);
 			log.info("@@@@@@@context end="+ctx);
 	}
 	
