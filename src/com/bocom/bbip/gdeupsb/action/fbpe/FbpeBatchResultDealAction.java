@@ -210,28 +210,6 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 		} catch (IOException e) {
 			logger.info("===============ErrMsg=",e);
 		}   
-		
-		EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
-		// FTP上传设置
-		FTPTransfer tFTPTransfer = new FTPTransfer();
-		tFTPTransfer.setHost(sendFileToBBOSConfig.getThdIpAdr());
-		tFTPTransfer.setPort(Integer.parseInt(sendFileToBBOSConfig.getBidPot()));
-		tFTPTransfer.setUserName(sendFileToBBOSConfig.getOppNme());
-		tFTPTransfer.setPassword(sendFileToBBOSConfig.getOppUsrPsw());
-		   //反盘文件
-		String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + context.getData(ParamKeys.BR)+ "/" ;
-		 try {
-		       	tFTPTransfer.logon();
-		        Resource tResource = new FileSystemResource(sendFileToBBOSConfig.getLocDir()+fileName);
-		        tFTPTransfer.putResource(tResource, path, fileName);
-		 } catch (Exception e) {
-		       	throw new CoreException("文件上传失败");
-		 } finally {
-		       	tFTPTransfer.logout();
-		 }
-		log.info("=============放置反盘文件");
-		
-		
-		
+
     }
 }
