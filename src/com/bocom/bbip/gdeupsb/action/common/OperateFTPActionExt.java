@@ -66,6 +66,7 @@ public class OperateFTPActionExt{
         ftpTransfer.setUserName(eupsThdFtpConfig.getOppNme().trim());
         ftpTransfer.setPassword(eupsThdFtpConfig.getOppUsrPsw().trim());
         ftpTransfer.setControlEncoding("GBK");
+        ftpTransfer.setPassiveMode(true);
         try {
             ftpTransfer.logon();
             logger.info("FTP login success!");
