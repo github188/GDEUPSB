@@ -1317,7 +1317,7 @@
 		${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL where EUPS_BUS_TYP='ELEC01' 
 		and BAK_FLD1=#{bakFld1,jdbcType=CHAR}
 		and TXN_TYP!='C' and
-		TXN_STS!='C'
+		TXN_STS!='C' and MFM_TXN_STS!='C'
 	</select>
 	
 
@@ -1452,7 +1452,7 @@
 		EUPS_BUS_TYP='ELEC01' and
 		BAK_FLD1=#{bakFld1,jdbcType=CHAR}
 		and TXN_TYP!='C' and
-		TXN_STS!='C'
+		TXN_STS!='C' and MFM_TXN_STS!='C'
 	</select>
 
 
