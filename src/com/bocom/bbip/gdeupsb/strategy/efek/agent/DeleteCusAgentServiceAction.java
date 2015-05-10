@@ -137,6 +137,9 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 										                	context.setData(GDParamKeys.MSGTYP, "E");
 										                	context.setData(ParamKeys.RSP_CDE, "EFE999");
 										                	context.setData(ParamKeys.RSP_MSG, "交易超时");
+										                	//Date  String
+										    				context.setData(ParamKeys.TXN_DTE,txnDte);
+										    				context.setData(ParamKeys.TXN_TME,txnTme);
 										                	throw new CoreException("交易超时");
 										                }else{
 										                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
