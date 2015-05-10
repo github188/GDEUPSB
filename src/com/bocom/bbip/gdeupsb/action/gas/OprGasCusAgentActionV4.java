@@ -223,6 +223,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 					agentCollectAgreementMaps.get(0).put("bvNo", (String) context.getData("bvNo"));
 				}
 				agentCollectAgreementMaps.get(0).put("agrVldDte", AC_DTE);
+				agentCollectAgreementMaps.get(0).put("agrExpDte", "99991231");
 				agentCollectAgreementMaps.get(0).put("ageBr", context.getData(ParamKeys.BK));
 				agentCollectAgreementMaps.get(0).put("agrBr", context.getData(ParamKeys.BR));
 				agentCollectAgreementMaps.get(0).put("agrTlr", context.getData(ParamKeys.TELLER));
@@ -251,7 +252,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 				
 				context.setData("customerInfo", customerInfoMap);
 				logger.info("============ context after set customerInfo : "
-						, context);
+						+ context);
 				
 				context.setData("tCommd", "Edit");
 				context.setData("TransCode", "Edit");
@@ -470,7 +471,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			GdGasCusAll updateGasCusAll = BeanUtils.toObject(
 					context.getDataMap(), GdGasCusAll.class);
 			updateGasCusAll
-					.setCusNo((String) context.getData(ParamKeys.CUS_NO));
+					.setCusNo((String) context.getData(ParamKeys.THD_CUS_NO));
 			updateGasCusAll
 					.setCusAc((String) context.getData(ParamKeys.CUS_AC));
 			if (StringUtils.isNoneBlank((String) context
@@ -495,7 +496,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			GdGasCusDay insCusInfo = new GdGasCusDay();
 			insCusInfo.setSequence(get(BBIPPublicService.class)
 					.getBBIPSequence());
-			insCusInfo.setCusNo((String) context.getData(ParamKeys.CUS_NO));
+			insCusInfo.setCusNo((String) context.getData(ParamKeys.THD_CUS_NO));
 			insCusInfo.settCommd((String) context.getData("tCommd"));
 			insCusInfo.setCusAc((String) context.getData(ParamKeys.CUS_AC));
 			insCusInfo.setCusNme((String) context.getData(ParamKeys.CUS_NME));
