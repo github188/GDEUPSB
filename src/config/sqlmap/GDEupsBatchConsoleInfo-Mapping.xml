@@ -863,14 +863,14 @@
 		SUM(C.SUC_TOT_CNT) SUM_SUC_TOT_CNT, SUM(C.SUC_TOT_AMT)
 		SUM_SUC_TOT_AMT, SUM(C.FAL_TOT_CNT) SUM_FAL_TOT_CNT,
 		SUM(C.FAL_TOT_AMT) SUM_FAL_TOT_AMT FROM EUPS.EUPS_BATCH_CONSOLE_INFO C
-		WHERE COM_NO=#{comNo} AND SUB_DTE &gt;=#{beginDte} AND
-		SUB_DTE
-		&lt;=#{endDte}) b
+		WHERE COM_NO=#{comNo} AND EXE_DTE &gt;=#{beginDte, jdbcType=DATE} AND
+		EXE_DTE
+		&lt;=#{endDte, jdbcType=DATE}) b
 		WHERE a.BAT_NO IN (SELECT DISTINCT BAT_NO FROM
 		EUPS.EUPS_BATCH_CONSOLE_INFO
-		WHERE COM_NO=#{comNo} AND SUB_DTE
-		&gt;=#{beginDte} AND
-		SUB_DTE &lt;=#{endDte}) AND STS='S'
+		WHERE COM_NO=#{comNo} AND EXE_DTE
+		&gt;=#{beginDte, jdbcType=DATE} AND
+		EXE_DTE &lt;=#{endDte, jdbcType=DATE}) AND STS='S'
 	</select>
 	<!-- 燃气批量失败记录 -->
 	<select id="findGasBatFalRecord" resultType="java.util.Map"
@@ -883,14 +883,14 @@
 		SUM(C.SUC_TOT_CNT) SUM_SUC_TOT_CNT, SUM(C.SUC_TOT_AMT)
 		SUM_SUC_TOT_AMT, SUM(C.FAL_TOT_CNT) SUM_FAL_TOT_CNT,
 		SUM(C.FAL_TOT_AMT) SUM_FAL_TOT_AMT FROM EUPS.EUPS_BATCH_CONSOLE_INFO C
-		WHERE COM_NO=#{comNo} AND SUB_DTE &gt;=#{beginDte} AND
-		SUB_DTE
-		&lt;=#{endDte}) b
+		WHERE COM_NO=#{comNo} AND EXE_DTE &gt;=#{beginDte, jdbcType=DATE} AND
+		EXE_DTE
+		&lt;=#{endDte, jdbcType=DATE}) b
 		WHERE a.BAT_NO IN (SELECT DISTINCT BAT_NO FROM
 		EUPS.EUPS_BATCH_CONSOLE_INFO
-		WHERE COM_NO=#{comNo} AND SUB_DTE
-		&gt;=#{beginDte} AND
-		SUB_DTE &lt;=#{endDte}) AND STS !='S'
+		WHERE COM_NO=#{comNo} AND EXE_DTE
+		&gt;=#{beginDte, jdbcType=DATE} AND
+		EXE_DTE &lt;=#{endDte, jdbcType=DATE}) AND STS !='S'
 	</select>
 
 
@@ -913,18 +913,18 @@
 		SUM_FAL_TOT_AMT
 		FROM EUPS.EUPS_BATCH_CONSOLE_INFO C
 		WHERE
-		COM_NO=#{comNo} AND SUB_DTE
-		&gt;=#{beginDte} AND
-		SUB_DTE
-		&lt;=#{endDte})
+		COM_NO=#{comNo} AND EXE_DTE
+		&gt;=#{beginDte, jdbcType=DATE} AND
+		EXE_DTE
+		&lt;=#{endDte, jdbcType=DATE})
 		b
 		WHERE a.BAT_NO IN (SELECT
 		DISTINCT BAT_NO FROM
 		EUPS.EUPS_BATCH_CONSOLE_INFO
 		WHERE COM_NO=#{comNo}
-		AND SUB_DTE
-		&gt;=#{beginDte} AND
-		SUB_DTE &lt;=#{endDte})
+		AND EXE_DTE
+		&gt;=#{beginDte, jdbcType=DATE} AND
+		EXE_DTE &lt;=#{endDte, jdbcType=DATE})
 	</select>
 
 	<!-- 批量交易报表打印 -->
