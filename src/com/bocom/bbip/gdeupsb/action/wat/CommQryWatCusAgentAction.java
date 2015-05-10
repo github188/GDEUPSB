@@ -24,7 +24,7 @@ public class CommQryWatCusAgentAction extends BaseAction {
 //		GdEupsWatAgtInf para = BeanUtils.toObject(context.getDataMap(), GdEupsWatAgtInf.class);
 		GdEupsWatAgtInf para = new GdEupsWatAgtInf();
 		para.setThdCusNo((String)context.getData(ParamKeys.THD_CUS_NO));
-		List<GdEupsWatAgtInf> resultList = get(GdEupsWatAgtInfRepository.class).find(para);
+		List<GdEupsWatAgtInf> resultList = get(GdEupsWatAgtInfRepository.class).findA(para);
 		log.info("查询的返回信息为:" + resultList);
 		if (CollectionUtils.isEmpty(resultList)) {
 			throw new CoreException("BBIP0004EU0130");
