@@ -33,6 +33,10 @@ public class SynExcCheckEleGzFileAction extends BaseAction {
 	            if (null != dptTyp) {
 	                context.setData("dptTyp",dptTyp);
 	            } 
+	            String clrDat= (String)inmap.get("clrDat");
+	            if (null != clrDat) {
+	                context.setData("clrDat",clrDat);
+	            } 
 	        }
 		context.setData(ParamKeys.EUPS_BUSS_TYPE, this.ELEC_EUPS_BUS_TYP);
 		context.setData(ParamKeys.FTP_ID, "eleGzCheckFileToThird"); // ftpID
