@@ -273,7 +273,8 @@
 	</bean>
 	<bean id="tcpChannel_ELEC01" class="com.bocom.jump.bp.channel.tcp.SocketServer">
 		<property name="host" value="0.0.0.0" />
-		<property name="port" value="30123" />
+		<!-- <property name="port" value="30123" /> -->
+		<property name="port" value="30111" />
 		<property name="soTimeout" value="100000" />
 		<property name="mapping" ref="tcpMapping_ELEC01" />
 		<property name="threadPool" ref="tcpThreadPool_ELEC01" />
