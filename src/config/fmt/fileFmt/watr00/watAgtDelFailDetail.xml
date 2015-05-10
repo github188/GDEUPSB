@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	encoding="utf-8" trace="true">
+	
+	<segment name="detail"  encoding="utf-8">
+			<fixString name="cusAc" length="23"/><!--  银行账号-->
+			<fixString name="cusNme" length="60"/><!--  持卡人姓名-->
+			
+			<fixString name="thdCusNo" length="12"/><!--  户号-->
+			<fixString name="thdCusNme" length="60"/><!--  客户名称-->
+			<fixString name="idTyp" length="12"/><!--  证件类型-->
+			<fixString name="idNo" length="25"/><!--  证件号码-->
+			<fixString name="blNme" length="60"/><!--  办理人姓名-->
+			<fixString name="addr" length="80"/><!--  地址-->
+			<fixString name="lphone" length="15"/><!--  联系电话-->
+			<fixString name="agdAgrNo" length="26"/><!--  协议编号-->
+			
+			
+	</segment>
+	
+</message>
