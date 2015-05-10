@@ -50,7 +50,19 @@ public class InsertCusAgentServiceAction extends BaseAction {
 			CoreRuntimeException {
 		logger.info("=============Start   InsertCusAgentServiceAction");
 		
-		//调用代收付'
+		//更改账户类型  代收付
+		String cusTyp=context.getData("cusTyp").toString();
+		//第三方
+		if(context.getData("thdToBank")!=null){
+				String cusType="";
+				if(cusTyp.equals("0")){
+					cusType="1";
+				}else if(cusTyp.equals("1")){
+					cusType="0";
+				}
+				context.setData("cusTyp", cusType);
+		}
+		//调用代收付
 		String cusAc=context.getData("cusAc").toString();		
 		String newCusAc=context.getData("newCusAc").toString();		
 		context.setData(ParamKeys.COMPANY_NO, context.getData("comNo"));
@@ -76,28 +88,19 @@ public class InsertCusAgentServiceAction extends BaseAction {
 		context.setData("oprTyp", "0");
 		Result editCusAgtResult = bgspServiceAccessObject.callServiceFlatting("maintainAgentCollectAgreement",context.getDataMap());
 		logger.info("===========editCusAgtResult："+editCusAgtResult);
-		//更改账户类型  代收付
-		String cusTyp=context.getData("cusTyp").toString();
-		//第三方
-		if(context.getData(ParamKeys.THD_SQN)!=null){
-				String cusType="";
-				if(cusTyp.equals("0")){
-					cusType="1";
-				}else if(cusTyp.equals("1")){
-					cusType="0";
-				}
-				context.setData("cusType", cusType);
-		}else{
-			String cusType=context.getData("cusTyp").toString();
-			if(cusType.equals("0")){
-					cusTyp="1";
-			}else if(cusType.equals("1")){
-					cusTyp="0";
+		//发第三方更改
+		if(context.getData("bankToThd")!=null){
+			String cusType="";
+			if(cusTyp.equals("0")){
+				cusType="1";
+			}else if(cusTyp.equals("1")){
+				cusType="0";
 			}
-			context.setData("cusTyp", cusTyp);
+			context.setData("cusType", cusType);
 		}
 		if(context.getData("oprTypeBank").toString().equals("1")){
 			context.setData("oprTyp", "1");			
+			System.out.println(context.getData("oprTyp"));
 		}
 		if(editCusAgtResult.isSuccess() && editCusAgtResult.getResponseType().toString().equals("N") ){
 			if(context.getData("bankToThd")!=null){
