@@ -19,6 +19,7 @@ import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.entity.EupsBatchInfoDetail;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
+import com.bocom.bbip.gdeupsb.action.common.OperateFTPActionExt;
 import com.bocom.bbip.gdeupsb.entity.GdEupsWatAgtInf;
 import com.bocom.bbip.gdeupsb.repository.GdEupsWatAgtInfRepository;
 import com.bocom.bbip.utils.BeanUtils;
@@ -76,6 +77,11 @@ public class DelFailFtp extends BaseAction{
 		
 		// 生成文件
 		operateFile.createCheckFile(eupsThdFtpConfig, "watAgtDelFail", fileName, resultMap);
+		eupsThdFtpConfig.setLocFleNme(fileName);
+		eupsThdFtpConfig.setRmtFleNme(fileName);
+		log.info("start to put......");
+		OperateFTPActionExt operateFTP = new OperateFTPActionExt();
+		operateFTP.putCheckFile(eupsThdFtpConfig);
 		
 	}
 
