@@ -80,6 +80,8 @@ public class DelFailFtp extends BaseAction{
 		eupsThdFtpConfig.setLocFleNme(fileName);
 		eupsThdFtpConfig.setRmtFleNme(fileName);
 		log.info("start to put......");
+		
+		//TODO:路径配的是绝对路径，ftp方式为被动
 		OperateFTPActionExt operateFTP = new OperateFTPActionExt();
 		operateFTP.putCheckFile(eupsThdFtpConfig);
 		
