@@ -33,6 +33,19 @@ public class GdExpCommonUtils {
 		amt = StringUtils.leftPad(amt, len);
 		return amt;
 	}
+	
+	// 金额元转分再addchar
+	public static final String FmtAmtToCentAddZr(String amt, int len, char LorR) {
+		log.info("start FmtAmtToCentAddChar,amt=" + amt);
+		BigDecimal amtD = new BigDecimal(amt);
+		amtD = amtD.setScale(2);
+		amt = amtD.toString().replace(".", "");
+		System.out.println("amt=" + amt);
+		amt = StringUtils.leftPad(amt, len,"0");
+		return amt;
+	}
+	
+	
 
 	public static Integer loopBodyLength(String retNum) {
 
