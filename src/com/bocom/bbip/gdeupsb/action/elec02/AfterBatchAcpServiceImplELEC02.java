@@ -213,6 +213,15 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 
 		config.setFtpDir("0");// 0-外发
 		((OperateFTPAction) get("opeFTP")).putCheckFile(config);
+		
+		// 回盘文件同时上传汕头分行FTP
+		logger.info("elec02批扣返盘文件上传到汕头指定FTP");
+		String filPath = config.getLocDir();
+		EupsThdFtpConfig sendFileToElec02 = get(EupsThdFtpConfigRepository.class).findOne("sendFileToElec02");
+		sendFileToElec02.setLocDir(filPath);
+		sendFileToElec02.setLocFleNme(backFlieName);
+		sendFileToElec02.setRmtFleNme(backFlieName);
+		get(OperateFTPAction.class).putCheckFile(sendFileToElec02);
 
 		logger.info("======= context after put file to thd ftp:" + context);
 
