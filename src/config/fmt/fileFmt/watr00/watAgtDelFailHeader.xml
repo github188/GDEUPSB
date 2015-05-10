@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	encoding="utf-8" trace="true">
+	
+	<segment name="total"  encoding="utf-8">
+			<fixString name="d1"    length="23" default="银行账号"/>
+			<fixString name="d2"    length="60" default="持卡人姓名"/>
+			
+			<fixString name="d4"    length="12" default="户号"/>
+			<fixString name="d5"    length="60" default="客户名称"/>
+			<fixString name="d6"    length="12" default="证件类型"/>
+			<fixString name="d7"    length="25" default="证件号码"/>
+			<fixString name="d8"    length="18" default="办理人姓名"/>
+			<fixString name="d9"    length="80" default="地址"/>
+			<fixString name="d10"    length="15" default="联系电话"/>
+			<fixString name="d11"    length="26" default="协议编号"/>
+			
+	</segment>
+	
+</message>
