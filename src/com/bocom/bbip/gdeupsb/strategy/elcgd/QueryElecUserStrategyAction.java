@@ -1,6 +1,7 @@
 package com.bocom.bbip.gdeupsb.strategy.elcgd;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -128,6 +129,11 @@ public class QueryElecUserStrategyAction implements QueryDealService {
 		context.setData("oweFeeAmt", NumberUtils.centToYuan(resultInfo.get("amount")));
 		log.info("QueryElecUserStrategyAction end!..context=" + context.getDataMap());
 		
+		 Map<String, Object> remark = new HashMap<String, Object>();
+		 if (Constants.SHGFLAG_YES.equals(context.getData(ParamKeys.SHG_FLAG))) {
+             remark.put(GDParamKeys.GZ_ELE_DPT_TYP,"0000");
+             context.setData(ParamKeys.SHG_REMARK, remark);
+         }
 		
 		return null;
 	}
