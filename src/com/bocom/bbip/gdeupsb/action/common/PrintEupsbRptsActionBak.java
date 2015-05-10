@@ -321,15 +321,15 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			/**
 			 * 配置ftp 参考 watr00BatchResulfA
 			 */
+			OperateFTPActionExt operateFTP = new OperateFTPActionExt();
+			
 			logger.info("elec02对账文件上传到汕头指定服务器");
 			EupsThdFtpConfig sendFileToElec02 = get(EupsThdFtpConfigRepository.class).findOne("sendFileToElec02");
-//			<Case value="445999">
-//	          <Set>LclFil=STRCAT(301586003dz,$TxnDat,.txt)</Set>
 			String stFilNme = "301586003dz" + DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd) + ".txt";
 			sendFileToElec02.setLocDir(filPath);
 			sendFileToElec02.setLocFleNme(fileName);
 			sendFileToElec02.setRmtFleNme(stFilNme);
-			get(OperateFTPAction.class).putCheckFile(sendFileToElec02);
+			operateFTP.putCheckFile(sendFileToElec02);
 		}
 
 		// 上传前端FTP

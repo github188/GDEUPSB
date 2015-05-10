@@ -26,6 +26,7 @@ import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
 import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
 import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
+import com.bocom.bbip.gdeupsb.action.common.OperateFTPActionExt;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbElecstBatchTmp;
@@ -195,6 +196,8 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		ret.put("header", batchConsoleInfo);
 		ret.put("detail", tempList);
 
+		OperateFTPActionExt operateFTP = new OperateFTPActionExt();
+		
 		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class)
 				.findOne("elec02BatchThdFileTest");
 
@@ -212,7 +215,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		logger.info("=========== createCheckFile successfully ======== ");
 
 		config.setFtpDir("0");// 0-外发
-		((OperateFTPAction) get("opeFTP")).putCheckFile(config);
+		operateFTP.putCheckFile(config);
 		
 		// 回盘文件同时上传汕头分行FTP
 		logger.info("elec02批扣返盘文件上传到汕头指定FTP");
@@ -221,7 +224,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		sendFileToElec02.setLocDir(filPath);
 		sendFileToElec02.setLocFleNme(backFlieName);
 		sendFileToElec02.setRmtFleNme(backFlieName);
-		get(OperateFTPAction.class).putCheckFile(sendFileToElec02);
+		operateFTP.putCheckFile(sendFileToElec02);
 
 		logger.info("======= context after put file to thd ftp:" + context);
 
