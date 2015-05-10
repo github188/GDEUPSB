@@ -165,7 +165,7 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 			// 上传FTP
 			FTPTransfer tFTPTransfer = new FTPTransfer();
 			// FTP上传设置
-			tFTPTransfer.setHost("182.53.15.187");
+			tFTPTransfer.setHost("182.53.15.164");
 			tFTPTransfer.setPort(21);
 			tFTPTransfer.setUserName("weblogic");
 			tFTPTransfer.setPassword("123456");
@@ -310,7 +310,7 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 			// 上传FTP
 			FTPTransfer tFTPTransfer = new FTPTransfer();
 			// FTP上传设置
-			tFTPTransfer.setHost("182.53.15.187");
+			tFTPTransfer.setHost("182.53.15.164");
 			tFTPTransfer.setPort(21);
 			tFTPTransfer.setUserName("weblogic");
 			tFTPTransfer.setPassword("123456");
@@ -454,7 +454,7 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 			// 上传FTP
 			FTPTransfer tFTPTransfer = new FTPTransfer();
 			// FTP上传设置
-			tFTPTransfer.setHost("182.53.15.187");
+			tFTPTransfer.setHost("182.53.15.164");
 			tFTPTransfer.setPort(21);
 			tFTPTransfer.setUserName("weblogic");
 			tFTPTransfer.setPassword("123456");
