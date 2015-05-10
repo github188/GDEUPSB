@@ -208,13 +208,16 @@
 		&gt;=#{sqn,jdbcType=CHAR}
 	</select>
 
+
 	<!--广州电力划扣对账统计信息查询 -->
 	<select id="findGzEleChkHKInfo" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
 		select count(*) totalDeal, sum(TXN_AMT) totalFee from
-		eups.EUPS_TRANS_JOURNAL where EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
-		and BAK_FLD1=#{bakFld1,jdbcType=CHAR} and MFM_TXN_STS='S' and
-		THD_TXN_CDE='HK' and TXN_TYP!='C' and TXN_STS!='C'
+		eups.EUPS_TRANS_JOURNAL where  EUPS_BUS_TYP='ELEC01' and
+		MFM_TXN_STS='S' and TXN_STS='S' and TXN_TYP='N'
+		and
+		BAK_FLD1=#{bakFld1,jdbcType=CHAR}
+		and THD_TXN_CDE='HK'
 	</select>
 
 	<!--广州电力划扣对账明细信息查询 -->
@@ -227,38 +230,41 @@
 		dLTim,RSV_FLD1 rmkTmp,BAK_FLD2 lChkTm
 		from
 		eups.EUPS_TRANS_JOURNAL where
-		EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
+		 EUPS_BUS_TYP='ELEC01' and
+		MFM_TXN_STS='S' and TXN_STS='S' and TXN_TYP='N'
 		and
-		BAK_FLD1=#{bakFld1,jdbcType=CHAR} and MFM_TXN_STS='S' and
-		THD_TXN_CDE='HK' and TXN_TYP!='C' and TXN_STS!='C'
+		BAK_FLD1=#{bakFld1,jdbcType=CHAR}
+		and THD_TXN_CDE='HK'
 	</select>
 
 	<!--广州电力缴费对账统计信息查询 -->
 	<select id="findGzEleChkJFInfo" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
 		select count(*) totalDeal, sum(TXN_AMT) totalFee from
-		eups.EUPS_TRANS_JOURNAL where EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
-		and
-		BAK_FLD1=#{bakFld1,jdbcType=CHAR} and MFM_TXN_STS='S' and
-		THD_TXN_CDE='JF' and TXN_TYP!='C' and
-		TXN_STS!='C'
+		eups.EUPS_TRANS_JOURNAL where 
+		EUPS_BUS_TYP='ELEC01' and
+		MFM_TXN_STS='S' and TXN_STS='S' and
+		TXN_TYP='N' and THD_TXN_STS='S'
+		and BAK_FLD1=#{bakFld1,jdbcType=CHAR}
+		and THD_TXN_CDE='JF'
 	</select>
 
 	<!--广州电力缴费对账明细信息查询 -->
 	<select id="findGzEleChkJFDetail" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
 		select THD_SQN tLogNo,THD_CUS_NO thdCusNo,THD_TXN_DTE
-		tActDt,TXN_DTE actDat, TXN_TME BkTim, RSV_FLD2 bkLog,
+		tActDt,TXN_DTE actDat, TXN_TME BkTim, RSV_FLD2 bkLog,RSV_FLD3 ZPFLG,
 		CUS_AC actNo,
 		'0200' txnKnd,TXN_AMT txnAmt,' ' oTlogNo,THD_TXN_DTE dLDat,THD_TXN_TME
 		dLTim,RSV_FLD1 rmkTmp, BAK_FLD3 bakFld3, BV_NO bvNo,
 		BAK_FLD2 lChkTm
 		from
 		eups.EUPS_TRANS_JOURNAL where
-		EUPS_BUS_TYP=#{eupsBusTyp,jdbcType=CHAR}
-		and
-		BAK_FLD1=#{bakFld1,jdbcType=CHAR} and MFM_TXN_STS='S' and
-		THD_TXN_CDE='JF' and TXN_TYP!='C' and TXN_STS!='C'
+		EUPS_BUS_TYP='ELEC01' and
+		MFM_TXN_STS='S' and TXN_STS='S' and
+		TXN_TYP='N' and THD_TXN_STS='S'
+		and BAK_FLD1=#{bakFld1,jdbcType=CHAR}
+		and THD_TXN_CDE='JF'
 	</select>
 
 
