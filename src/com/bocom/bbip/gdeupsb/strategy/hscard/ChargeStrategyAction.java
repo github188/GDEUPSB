@@ -44,7 +44,7 @@ public class ChargeStrategyAction implements Executable{
 		
 		context.setData(ParamKeys.THD_TXN_DATE, tTxnDte);
 		context.setData(ParamKeys.BK, "01441999999"); // 分行号
-		context.setData(ParamKeys.BR, "01444800999"); // 机构号
+		context.setData(ParamKeys.BR, "01441800999"); // 机构号
 		String teller = bbipPublicService.getETeller(context.getData(ParamKeys.BK).toString());
 		context.setData(ParamKeys.TELLER, teller);
 		context.setData(ParamKeys.BUS_TYP, Constants.BUS_TYP_2); //待缴
