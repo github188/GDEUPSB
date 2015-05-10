@@ -319,9 +319,6 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 						allDtlJnl.add(detail);
 					}
 				}
-				else {
-					throw new CoreException("无记录");
-				}
 
 				List<Map<String, Object>> allDtlJnlJf = get(GdEupsTransJournalRepository.class).findGdJnlSucJfDetail(transJnl);
 				if (CollectionUtils.isNotEmpty(allDtlJnlJf)) {
@@ -332,15 +329,15 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 						allDtlJnl.add(detail);
 					}
 				}
-				else {
-					throw new CoreException("无记录");
-				}
 
 				// List<Map<String, Object>> allDtlJnlSuc =
 				// get(GdEupsTransJournalRepository.class).findGdJnlSucDetail(transJnl);
 
 				context.setData("allDtlJnl", allDtlJnl);
 				log.info("查询的成功明细信息为:" + allDtlJnl);
+				if(CollectionUtils.isEmpty(allDtlJnl)){
+					throw new CoreException("无记录");
+				}
 
 				map.put("commonPrtRpt", "config/report/elec01/commonPrintReport_suc.vm");
 				render.setReportNameTemplateLocationMapping(map);
