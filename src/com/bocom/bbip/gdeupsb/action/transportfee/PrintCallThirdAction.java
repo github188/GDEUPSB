@@ -106,6 +106,9 @@ public class PrintCallThirdAction extends BaseAction{
 				if(StringUtil.isEmpty(responseCode)){
 					responseCode = ErrorCodes.EUPS_THD_RSP_CODE_ERROR;
 				}
+				ctx.setData("tactDt", null);
+				ctx.setData("begDat", null);
+				ctx.setData("endDat", null);
 				throw new CoreException(responseCode);
 			}
 		}else if(ctx.getState().equals(BPState.BUSINESS_PROCESSNIG_STATE_TRANS_FAIL)){
