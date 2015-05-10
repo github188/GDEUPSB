@@ -630,6 +630,15 @@
 			ref="config/fmt/fileFmt/watr00/WatTransJnlDetail.xml" />
 		
 	</file>
+	
+	<file name="watAgtDelFail" id="watAgtDelFail" encoding="GBK"
+		lineSeparator="\n">
+		
+		<line name="head" ref="config/fmt/fileFmt/watr00/watAgtDelFailHeader.xml" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/watr00/watAgtDelFailDetail.xml" />
+		
+	</file>
 
 	
 	<file name="batchSignGdsfile" id="batchSignGdsfile" encoding="GBK"
