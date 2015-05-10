@@ -273,7 +273,7 @@
 	</bean>
 	<bean id="tcpChannel_ELEC01" class="com.bocom.jump.bp.channel.tcp.SocketServer">
 		<property name="host" value="0.0.0.0" />
-		<property name="port" value="9067" />
+		<property name="port" value="30123" />
 		<property name="soTimeout" value="100000" />
 		<property name="mapping" ref="tcpMapping_ELEC01" />
 		<property name="threadPool" ref="tcpThreadPool_ELEC01" />
@@ -281,21 +281,16 @@
 	<bean id="tcpEndpoint_ELEC01" class="com.bocom.jump.bp.channel.DefaultEndpoint">
 		<property name="interceptors">
 			<array>
-				<bean
-					class="com.bocom.jump.bp.channel.interceptors.RequestTracingInterceptor" />
-				<!-- <bean class="com.bocom.jump.extension.tcp.interceptors.NoFrontPayloadChannelInterceptor" 
-					/> -->
-				<bean
-					class="com.bocom.jump.bp.channel.tcp.interceptors.PayloadChannelInterceptor">
-					<property name="lengthSize" value="4" /><!-- 报文长度占5位 -->
-				</bean>
-
+				<!-- <bean
+					class="com.bocom.jump.bp.channel.interceptors.RequestTracingInterceptor" /> -->
+				<bean class="com.bocom.bbip.gdeupsb.channel.tcp.NoFrontPayloadChannelInterceptorGzd"/> 
+				
 				<bean class="com.bocom.jump.bp.channel.interceptors.TransformInterceptor">
 					<property name="encodeTransforms"><!-- 发送报文编码配置 -->
 						<array>
 							<bean class="com.bocom.jump.bp.channel.interceptors.EncoderTransform">
 								<constructor-arg
-									value="packet://WEB-INF/classes/config/stream/ELEC01/server/testELEC01RspHeader.xml" />
+									value="packet://WEB-INF/classes/config/stream/ELEC01/ELEC01Header.xml" />
 							</bean>
 							<bean class="com.bocom.jump.bp.channel.interceptors.ResponseTransform" />
 						</array>
@@ -305,7 +300,7 @@
 							<bean class="com.bocom.jump.bp.channel.interceptors.RequestTransform" />
 							<bean class="com.bocom.jump.bp.channel.interceptors.DecoderTransform">
 								<constructor-arg
-									value="packet://WEB-INF/classes/config/stream/ELEC01/server/testELEC01ReqHeader.xml" />
+									value="packet://WEB-INF/classes/config/stream/ELEC01/ELEC01Header.xml" />
 							</bean>
 						</array>
 					</property>
@@ -313,7 +308,7 @@
 				</bean>
 				<bean class="com.bocom.jump.bp.channel.interceptors.ContextInterceptor"></bean>
 				<bean class="com.bocom.bbip.eups.interceptor.ServiceThdInterceptor">
-					<constructor-arg value="9067" />
+					<constructor-arg value="30123" />
 				</bean>
 			</array>
 		</property>
