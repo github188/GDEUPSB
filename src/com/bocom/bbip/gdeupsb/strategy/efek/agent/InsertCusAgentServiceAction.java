@@ -53,16 +53,24 @@ public class InsertCusAgentServiceAction extends BaseAction {
 		//更改账户类型  代收付
 		String cusTyp=context.getData("cusTyp").toString();
 		//第三方
-		if(context.getData("thdToBank")!=null){
+		if(context.getData(ParamKeys.THD_SQN)!=null){
 				String cusType="";
 				if(cusTyp.equals("0")){
 					cusType="1";
 				}else if(cusTyp.equals("1")){
 					cusType="0";
 				}
-				context.setData("cusTyp", cusType);
+				context.setData("cusType", cusType);
+		}else{
+			String cusType=context.getData("cusTyp").toString();
+			if(cusType.equals("0")){
+					cusTyp="1";
+			}else if(cusType.equals("1")){
+					cusTyp="0";
+			}
+			context.setData("cusTyp", cusTyp);
 		}
-		//调用代收付
+		//调用代收付'
 		String cusAc=context.getData("cusAc").toString();		
 		String newCusAc=context.getData("newCusAc").toString();		
 		context.setData(ParamKeys.COMPANY_NO, context.getData("comNo"));
@@ -88,16 +96,6 @@ public class InsertCusAgentServiceAction extends BaseAction {
 		context.setData("oprTyp", "0");
 		Result editCusAgtResult = bgspServiceAccessObject.callServiceFlatting("maintainAgentCollectAgreement",context.getDataMap());
 		logger.info("===========editCusAgtResult："+editCusAgtResult);
-		//发第三方更改
-		if(context.getData("bankToThd")!=null){
-			String cusType="";
-			if(cusTyp.equals("0")){
-				cusType="1";
-			}else if(cusTyp.equals("1")){
-				cusType="0";
-			}
-			context.setData("cusType", cusType);
-		}
 		if(context.getData("oprTypeBank").toString().equals("1")){
 			context.setData("oprTyp", "1");			
 			System.out.println(context.getData("oprTyp"));
@@ -175,6 +173,7 @@ public class InsertCusAgentServiceAction extends BaseAction {
 													context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
 								                	context.setData(GDParamKeys.MSGTYP, "E");
 								                	context.setData(ParamKeys.RSP_CDE, "EFE999");
+								                	context.setData(ParamKeys.RESPONSE_MESSAGE, "交易失败");
 								                	throw new CoreException(responseCode);
 								                }
 									}

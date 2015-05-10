@@ -142,6 +142,7 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 										                	context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
 										                	context.setData(GDParamKeys.MSGTYP, "E");
 										                	context.setData(ParamKeys.RSP_CDE, "EFE999");
+										                	context.setData(ParamKeys.RSP_MSG, "交易失败");
 										                	throw new CoreException(responseCode);
 										                }
 											}
