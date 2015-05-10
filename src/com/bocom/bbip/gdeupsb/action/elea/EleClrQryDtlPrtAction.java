@@ -173,7 +173,7 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 
 				List<Map<String, Object>> allDtlJnlJf = get(GdEupsTransJournalRepository.class).findGdJnlSucJfDetail(transJnl);
 				if (CollectionUtils.isNotEmpty(allDtlJnlJf)) {
-					for (Map<String, Object> detail : allDtlJnlHk) {
+					for (Map<String, Object> detail : allDtlJnlJf) {
 						allDtlJnl.add(detail);
 					}
 				}
