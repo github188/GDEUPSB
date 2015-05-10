@@ -341,4 +341,15 @@
       
     </trim>
   </select>
+  
+  <select id="findDelFail" resultMap="basicResultMap" parameterType="java.util.Map">
+    select
+    a.AGD_AGR_NO, a.CUS_AC, a.CUS_NME, a.PWD, a.THD_CUS_NO, a.THD_CUS_NME, a.ID_TYP, a.ID_NO, a.BL_NME, 
+    a.ADDR, a.HPHONE, a.LPHONE, a.POST, a.SJMAN, a.POSTNO, a.TADDR, a.AGT_STS
+    from ${GDEUPSB_SCHEMA}.GDEUPS_WAT_AGT_INF a,bbip_acps.ACPS_CUSTOMER_PROTOCOL_INFO b
+    where a.agd_agr_no=b.agd_agr_no and b.agr_exp_dte = #{agrExpDte,jdbcType=DATE} and b.ped_agr_sts = '1' 
+    and a.AGT_STS='F'
+      
+   
+  </select>
 </mapper>
