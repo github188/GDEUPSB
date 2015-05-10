@@ -134,7 +134,9 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 			context.setData(ParamKeys.AC_TYP, "00");
 		} else if ("007".equals(vchTyp)) {
 			payMde = Constants.PAY_MDE_4; // 卡
-		}else if("115".equals(vchTyp)){
+		}else if("115".equals(vchTyp)){   //支票业务
+			log.info("当前的vchTyp为115，为支票业务!..");
+			context.setData("rsvFld3", vchTyp);
 			payMde = Constants.PAY_MDE_8; //对公结算账户 
 		}
 		else if("704".equals(vchTyp)){

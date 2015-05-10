@@ -121,10 +121,13 @@ public class CheckBkEleGzFileToThirdAction implements CheckBkFileToThirdService 
 			headerInfoHK.put("TOTALDEAL", "0");
 			headerInfoHK.put("TOTALFEE", "0");
 		}
-		String thdClearDteStr = clearDteStr.substring(2);
-		headerInfoHK.put("clrDat", thdClearDteStr);
+
+		headerInfoHK.put("clrDat", clearDteStr); // 对账日期(清算日期)
 		headerInfoHK.put("batNo", context.getData(ParamKeys.SEQUENCE));
 		checkFileHK.put("header", headerInfoHK);
+
+		String nowYear = DateUtils.format(new Date(), "yy");
+		log.info("now year=[" + nowYear + "]");
 
 		// 查询划扣明细信息
 		List<Map<String, Object>> hkDetailResult = gdEupsTransJournalRepository.findGzEleChkHKDetail(eupsTransJournal);
@@ -132,27 +135,22 @@ public class CheckBkEleGzFileToThirdAction implements CheckBkFileToThirdService 
 		List<Map<String, Object>> hkDetailResultReal = new ArrayList<Map<String, Object>>();
 		if (CollectionUtils.isNotEmpty(hkHeaderResult)) {
 			for (Map<String, Object> hkDMap : hkDetailResult) {
-				Date tactDt = (Date) hkDMap.get("TACTDT");
-				if (null != tactDt) {
-					String tactDtS = DateUtils.format(tactDt, "yyyyMMdd");
-					tactDtS = tactDtS.substring(2);
-					hkDMap.put("TACTDT", tactDtS);
+				// 清算日期处理
+				Date clrDt = (Date) hkDMap.get("DLDAT"); // 1970-MM-DD
+				if (null != clrDt) {
+					String clrDtStr = DateUtils.format(clrDt, "yyyyMMdd");
+					clrDtStr = clrDtStr.substring(4);
+					log.info("经过处理过后，清算日期=[" + clrDtStr + "]");
+					hkDMap.put("TACTDT", clrDtStr);
 				}
-
-				Date actDt = (Date) hkDMap.get("ACTDAT");
-				if (null != actDt) {
-					String actDts = DateUtils.format(actDt, "yyyy-MM-dd");
-					actDts = actDts.replace("-", "");
-					hkDMap.put("ACTDAT", actDts);
-				}
-
+				// 银行交易时间处理 hhmmss
 				Date nkTme = (Date) hkDMap.get("BKTIM");
 				if (null != nkTme) {
 					String nkTmeS = DateUtils.format(nkTme, "yyyy-MM-dd HH:mm:ss");
 					nkTmeS = nkTmeS.substring(11).replace(":", "");
 					hkDMap.put("BKTIM", nkTmeS);
 				}
-
+				// 银行交易流水号BKLOG
 				// 电费月份处理
 				String rmkTmp = (String) hkDMap.get("RMKTMP");
 				if (StringUtils.isNotEmpty(rmkTmp)) {
@@ -174,10 +172,8 @@ public class CheckBkEleGzFileToThirdAction implements CheckBkFileToThirdService 
 					dLTim = dLTim.replace(":", "");
 					hkDMap.put("DLTIM", dLTim);
 				}
-
 				hkDetailResultReal.add(hkDMap);
 			}
-
 			checkFileHK.put("detail", hkDetailResultReal);
 		}
 
@@ -189,18 +185,19 @@ public class CheckBkEleGzFileToThirdAction implements CheckBkFileToThirdService 
 		List<Map<String, Object>> jfHeaderResult = gdEupsTransJournalRepository.findGzEleChkJFInfo(eupsTransJournal);
 		if (CollectionUtils.isNotEmpty(jfHeaderResult)) {
 			headerInfoJF = jfHeaderResult.get(0);
-			String orgAmtS = (String) headerInfoHK.get("TOTALFEE");
-			headerInfoHK.put("TOTALFEE", NumberUtils.yuanToCentString(orgAmtS));
+			BigDecimal orgAmt = (BigDecimal) headerInfoJF.get("TOTALFEE");
+			headerInfoJF.put("TOTALFEE", NumberUtils.yuanToCentString(orgAmt));
 		}
 		else { // 无数据
 			headerInfoJF.put("TOTALDEAL", "0");
 			headerInfoJF.put("TOTALFEE", "0");
 		}
-		headerInfoJF.put("clrDat", thdClearDteStr);
+		headerInfoJF.put("clrDat", clearDteStr);
 		headerInfoJF.put("batNo", context.getData(ParamKeys.SEQUENCE));
 
 		checkFileJF.put("header", headerInfoJF);
 
+		String zpFlag = "N"; // 支票业务标志
 		// 查询缴费明细信息
 		List<Map<String, Object>> jfDetailResultReal = new ArrayList<Map<String, Object>>();
 
@@ -208,25 +205,22 @@ public class CheckBkEleGzFileToThirdAction implements CheckBkFileToThirdService 
 		if (CollectionUtils.isNotEmpty(jfHeaderResult)) {
 			for (Map<String, Object> jfDMap : jfDetailResult) {
 
-				Date tactDt = (Date) jfDMap.get("TACTDT");
-				if (null != tactDt) {
-					String tactDtS = DateUtils.format(tactDt, "yyyyMMdd");
-					tactDtS = tactDtS.substring(2);
-					jfDMap.put("TACTDT", tactDtS);
+				// 清算日期处理
+				Date clrDt = (Date) jfDMap.get("DLDAT"); // 1970-MM-DD
+				if (null != clrDt) {
+					String clrDtStr = DateUtils.format(clrDt, "yyyyMMdd");
+					clrDtStr = clrDtStr.substring(4);
+					log.info("经过处理过后，清算日期=[" + clrDtStr + "]");
+					jfDMap.put("TACTDT", clrDtStr);
 				}
-
-				Date actDt = (Date) jfDMap.get("ACTDAT");
-				if (null != actDt) {
-					String actDts = DateUtils.format(actDt, "yyyy-MM-dd");
-					actDts = actDts.replace("-", "");
-					jfDMap.put("ACTDAT", actDts);
-				}
-
+				// 银行交易时间处理 hhmmss
 				Date nkTme = (Date) jfDMap.get("BKTIM");
-				String nkTmeS = DateUtils.format(nkTme, "yyyy-MM-dd HH:mm:ss");
-				nkTmeS = nkTmeS.substring(11).replace(":", "");
-				jfDMap.put("BKTIM", nkTmeS);
-
+				if (null != nkTme) {
+					String nkTmeS = DateUtils.format(nkTme, "yyyy-MM-dd HH:mm:ss");
+					nkTmeS = nkTmeS.substring(11).replace(":", "");
+					jfDMap.put("BKTIM", nkTmeS);
+				}
+				// 银行交易流水号BKLOG
 				// 电费月份处理
 				String rmkTmp = (String) jfDMap.get("RMKTMP");
 				if (StringUtils.isNotEmpty(rmkTmp)) {
@@ -246,8 +240,73 @@ public class CheckBkEleGzFileToThirdAction implements CheckBkFileToThirdService 
 					// 交易时间：
 					String dLTim = thdTmeS.substring(11, 19);
 					dLTim = dLTim.replace(":", "");
+
+					// 支票标志处理
+					String zpFlg = (String) jfDMap.get("ZPFLG");
+					if (StringUtils.isNotEmpty(zpFlg)) {
+						if ("115".equals(zpFlg.trim())) {
+							zpFlag = "Y"; // 支票业务标志
+							String cusAc = (String) jfDMap.get("ACTNO");
+							dLTim =dLTim+"|" + cusAc  ;
+						}
+					}
+					jfDMap.put("DLTIM", dLTim);
+				} else {
+					String dLTim = "|";
+					// 支票标志处理
+					String zpFlg = (String) jfDMap.get("ZPFLG");
+					if (StringUtils.isNotEmpty(zpFlg)) {
+						if ("115".equals(zpFlg.trim())) {
+							zpFlag = "Y"; // 支票业务标志
+							String cusAc = (String) jfDMap.get("ACTNO");
+							dLTim = cusAc + "|" + dLTim;
+						}
+					}
 					jfDMap.put("DLTIM", dLTim);
 				}
+
+				// Date tactDt = (Date) jfDMap.get("TACTDT");
+				// if (null != tactDt) {
+				// String tactDtS = DateUtils.format(tactDt, "yyyyMMdd");
+				// tactDtS = tactDtS.substring(2);
+				// jfDMap.put("TACTDT", tactDtS);
+				// }
+				//
+				// Date actDt = (Date) jfDMap.get("ACTDAT");
+				// if (null != actDt) {
+				// String actDts = DateUtils.format(actDt, "yyyy-MM-dd");
+				// actDts = actDts.replace("-", "");
+				// jfDMap.put("ACTDAT", actDts);
+				// }
+				//
+				// Date nkTme = (Date) jfDMap.get("BKTIM");
+				// String nkTmeS = DateUtils.format(nkTme,
+				// "yyyy-MM-dd HH:mm:ss");
+				// nkTmeS = nkTmeS.substring(11).replace(":", "");
+				// jfDMap.put("BKTIM", nkTmeS);
+				//
+				// // 电费月份处理
+				// String rmkTmp = (String) jfDMap.get("RMKTMP");
+				// if (StringUtils.isNotEmpty(rmkTmp)) {
+				// rmkTmp = rmkTmp.substring(23, 31);
+				// jfDMap.put("RMKTMP", rmkTmp);
+				// }
+				//
+				// // 第三方交易日期，时间处理
+				// Date thdTme = (Date) jfDMap.get("DLTIM");
+				// if (null != thdTme) {
+				// String thdTmeS = DateUtils.format(thdTme,
+				// "yyyy-MM-dd HH:mm:ss");
+				// // 交易日期:
+				// String dLDate = thdTmeS.substring(0, 10);
+				// dLDate = dLDate.substring(5).replace("-", "");
+				// jfDMap.put("DLDAT", dLDate);
+				//
+				// // 交易时间：
+				// String dLTim = thdTmeS.substring(11, 19);
+				// dLTim = dLTim.replace(":", "");
+				// jfDMap.put("DLTIM", dLTim);
+				// }
 				jfDetailResultReal.add(jfDMap);
 			}
 
