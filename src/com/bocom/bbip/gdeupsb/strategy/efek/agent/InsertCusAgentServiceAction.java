@@ -173,7 +173,6 @@ public class InsertCusAgentServiceAction extends BaseAction {
 													context.setData(ParamKeys.THD_TXN_STS,Constants.THD_TXNSTS_FAIL);
 								                	context.setData(GDParamKeys.MSGTYP, "E");
 								                	context.setData(ParamKeys.RSP_CDE, "EFE999");
-								                	context.setData(ParamKeys.RESPONSE_MESSAGE, "交易失败");
 								                	throw new CoreException(responseCode);
 								                }
 									}
