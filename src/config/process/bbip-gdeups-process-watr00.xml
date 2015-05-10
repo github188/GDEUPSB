@@ -113,4 +113,11 @@
 	        <action id="act" class = "com.bocom.bbip.gdeupsb.action.wat.QueryThdCusNo"/>
 	   </actions>
 	</process>
+	
+	<!-- 发送当日删除失败的协议信息至分行 -->
+	<process id="gdeupsb.delFailFtp" template="eups.simpleTran" interceptors="bbip.defaultInterceptors">	
+	   <actions>
+	        <action id="act" class = "com.bocom.bbip.gdeupsb.action.wat.DelFailFtp"/>
+	   </actions>
+	</process>
 </x:beans>
