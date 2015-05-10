@@ -1,11 +1,11 @@
 #report(50)
 #rh(4)
- 			                    $f.conv('prtFlg', $d.prtFlg)
+ 			       $f.conv('prtFlg', $d.prtFlg)
 #end
 #th(2)
 #para($f.fmt($d.beginDte, 'yyyy年MM月dd日'))
 #para($f.fmt($d.endDte, 'yyyy年MM月dd日'))
-                                  日期:  ?  至    ?     共$totalPages 页            第 $pageNumber 页
+	日期:  ?  至    ?     共$totalPages 页            第 $pageNumber 页
 ==========================================================================
 #end 
 #set($p.index=0)
