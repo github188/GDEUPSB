@@ -1676,14 +1676,14 @@
 	<select id="findGasAllJnlInfo" resultType="java.util.Map"
 		parameterType="java.util.Map">
 		select * FROM
-		(select * FROM eups.EUPS_TRANS_JOURNAL
+	<!-- 	(select * FROM eups.EUPS_TRANS_JOURNAL
 		where TXN_DTE &gt;=#{beginDte} and
 		TXN_DTE &lt;=#{endDte} and
-		COM_NO=#{comNo} ) a,
+		COM_NO=#{comNo} ) a, -->
 		(select
 		COALESCE(count(*), 0) totCnt,
 		COALESCE(sum(TXN_AMT), 0) totAmt from
-		eups.EUPS_TRANS_JOURNAL
+		eups.EUPS_TRANS_JOURNAL 
 		where
 		TXN_DTE &gt;=#{beginDte} and TXN_DTE
 		&lt;=#{endDte} and
