@@ -328,7 +328,7 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			String stFilNme = "301586003dz" + DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd) + ".txt";
 			sendFileToElec02.setLocDir(filPath);
 			sendFileToElec02.setLocFleNme(fileName);
-			sendFileToElec02.setRmtFleNme(stFilNme);
+			sendFileToElec02.setRmtFleNme(fileName);
 			operateFTP.putCheckFile(sendFileToElec02);
 		}
 
