@@ -38,8 +38,9 @@ private static Logger logger = LoggerFactory.getLogger(PreDelCusAgentAction.clas
 	public void execute(Context context) throws CoreException,	CoreRuntimeException {
 		logger.info("CallThdAction start......");
 		GdEupsWatAgtInf gdeups = new GdEupsWatAgtInf();
+		gdeups.setAgtSts("F");  
 		gdeups.setAgdAgrNo((String)context.getData("agdAgrNo"));
-		gdEupsWatAgtInfRepository.delete(gdeups);
+		gdEupsWatAgtInfRepository.update(gdeups);
 		//为第三方接口报文字段赋值，发送请求至第三方
 				context.setData("type", "Y007");
 				context.setData("accountdate", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
@@ -128,6 +129,10 @@ private static Logger logger = LoggerFactory.getLogger(PreDelCusAgentAction.clas
 					throw new CoreException("BBIP4400EU0430");
 				}
 				logger.error(" callThd end!");
+				GdEupsWatAgtInf gdeupsA = new GdEupsWatAgtInf();
+				
+				gdeupsA.setAgdAgrNo((String)context.getData("agdAgrNo"));
+				gdEupsWatAgtInfRepository.update(gdeupsA);
 				logger.info("@@@@@@@@@@context="+context);
 				
 				
