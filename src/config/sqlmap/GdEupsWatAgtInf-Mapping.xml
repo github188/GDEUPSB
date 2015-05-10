@@ -322,4 +322,23 @@
       </foreach>
     </if>
   </select>
+  
+  <select id="findA" resultMap="basicResultMap" >
+    select
+    <include refid="baseColumnList" />
+    from ${GDEUPSB_SCHEMA}.GDEUPS_WAT_AGT_INF
+    <trim prefix="WHERE" prefixOverrides="AND" >
+     <if test="cusAc!=null" >
+        AND  CUS_AC=#{cusAc,jdbcType=CHAR}
+      </if>
+      
+      <if test="thdCusNo!=null" >
+        AND  THD_CUS_NO=#{thdCusNo,jdbcType=CHAR}
+      </if>
+      
+      
+        AND  AGT_STS!='F'
+      
+    </trim>
+  </select>
 </mapper>
