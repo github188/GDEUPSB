@@ -59,7 +59,6 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 		// 配VM文件
 		StringBuffer fileName = null;
 		String br = context.getData(ParamKeys.BR);
-		String tlr = context.getData(ParamKeys.TELLER);
 		String beginDate = context.getData("beginDate");
 		String endDate = context.getData("endDate");
 		Date beginDte = DateUtils.parse(beginDate, DateUtils.STYLE_SIMPLE_DATE);
