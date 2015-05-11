@@ -18,7 +18,6 @@ import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal;
-import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GdEupsTransJournalRepository;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;

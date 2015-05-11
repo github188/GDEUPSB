@@ -21,7 +21,6 @@ import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
-import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdBaseInfo;

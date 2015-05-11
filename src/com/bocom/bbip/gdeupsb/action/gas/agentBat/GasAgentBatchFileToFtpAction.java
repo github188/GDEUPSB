@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.eups.action.BaseAction;
-import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.ErrorCodes;

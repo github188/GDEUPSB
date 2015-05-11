@@ -1,6 +1,5 @@
 package com.bocom.bbip.gdeupsb.strategy.gash;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -19,16 +18,10 @@ import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
-import com.bocom.bbip.eups.entity.EupsTransJournal;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
-import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
-import com.bocom.bbip.eups.spi.service.check.CheckBkFileToThirdService;
-import com.bocom.bbip.eups.spi.vo.CheckDomain;
 import com.bocom.bbip.gdeupsb.action.common.OperateFTPActionExt;
-import com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal;
 import com.bocom.bbip.gdeupsb.repository.GdEupsTransJournalRepository;
 import com.bocom.bbip.gdeupsb.repository.GdGashBatchTmpRepository;
-import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
