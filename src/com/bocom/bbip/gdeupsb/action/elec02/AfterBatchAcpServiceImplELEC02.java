@@ -215,6 +215,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		logger.info("=========== createCheckFile successfully ======== ");
 
 		config.setFtpDir("0");// 0-外发
+		logger.info("====== send file to ELEC02 =======");
 		operateFTP.putCheckFile(config);
 		
 		// 回盘文件同时上传汕头分行FTP
@@ -224,6 +225,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		sendFileToElec02.setLocDir(filPath);
 		sendFileToElec02.setLocFleNme(backFlieName);
 		sendFileToElec02.setRmtFleNme(backFlieName);
+		logger.info("====== send file to ShanTou FTP =======");
 		operateFTP.putCheckFile(sendFileToElec02);
 
 		logger.info("======= context after put file to thd ftp:" + context);
