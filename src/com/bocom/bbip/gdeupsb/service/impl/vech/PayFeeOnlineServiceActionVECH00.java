@@ -31,9 +31,9 @@ public class PayFeeOnlineServiceActionVECH00 implements PayFeeOnlineService{
 					PayFeeOnlineDomain payfeeonlinedomain, Context context)
 					throws CoreException {
 				log.info("===========Start   PayFeeOnlineServiceActionVECH00  preCheckDeal");
-				context.setData(ParamKeys.SEQUENCE, context.getData(GDParamKeys.ORDER_ID));
-				List<GDVechIndentInfo> list=context.getData("ticketInfo");
-				GDVechIndentInfo gdVechIndentInfo=list.get(0);
+				String sqn=context.getData(GDParamKeys.ORDER_ID);
+				context.setData(ParamKeys.SEQUENCE, sqn);
+				GDVechIndentInfo gdVechIndentInfo=gdVechIndentInfoRepository.findOne(sqn);
 				String cusNme=gdVechIndentInfo.getUserNam();
 				context.setData(ParamKeys.CUS_NME, cusNme);
 				String userId=gdVechIndentInfo.getUserId();
