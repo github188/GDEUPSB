@@ -106,7 +106,7 @@ public class MsgToGasAftBatchAction extends BaseAction implements
 //		operateFTPAction.putCheckFile(gasFtpCfg);
 		get(OperateFTPActionExt.class).putCheckFile(gasFtpCfg);
 
-		//通知第三方
+		//返盘不用通知第三方，次日7时前传输文件到对方FTP即可
 //		callThd(context);
 		logger.info("===============End  BatchDataResultFileAction  afterBatchDeal");
 	}
