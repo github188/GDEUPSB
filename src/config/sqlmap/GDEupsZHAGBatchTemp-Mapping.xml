@@ -16,6 +16,9 @@
 		<result column="RSV_FLD2" property="rsvFld2" jdbcType="VARCHAR" />
 		<result column="RSV_FLD3" property="rsvFld3" jdbcType="VARCHAR" />
 		<result column="RSV_FLD4" property="rsvFld4" jdbcType="VARCHAR" />
+		<result column="RSV_FLD5" property="rsvFld2" jdbcType="VARCHAR" />
+		<result column="RSV_FLD6" property="rsvFld3" jdbcType="VARCHAR" />
+		<result column="RSV_FLD7" property="rsvFld4" jdbcType="VARCHAR" />
 	</resultMap>
 <resultMap id="BaseResultMap2" type="java.util.Map">
 		<id column="SQN" property="sqn" jdbcType="CHAR" />
@@ -32,6 +35,9 @@
 		<result column="RSV_FLD2" property="rsvFld2" jdbcType="VARCHAR" />
 		<result column="RSV_FLD3" property="rsvFld3" jdbcType="VARCHAR" />
 		<result column="RSV_FLD4" property="rsvFld4" jdbcType="VARCHAR" />
+		<result column="RSV_FLD5" property="rsvFld2" jdbcType="VARCHAR" />
+		<result column="RSV_FLD6" property="rsvFld3" jdbcType="VARCHAR" />
+		<result column="RSV_FLD7" property="rsvFld4" jdbcType="VARCHAR" />
 	</resultMap>
 
 
@@ -80,7 +86,10 @@
 		RSV_FLD1,
 		RSV_FLD2,
 		RSV_FLD3,
-		RSV_FLD4)
+		RSV_FLD4,
+		RSV_FLD5,
+		RSV_FLD6,
+		RSV_FLD7)
 		values
 		<foreach collection="list" item="item" index="index" separator=",">
 			( #{item.sqn},
@@ -96,7 +105,10 @@
 			#{item.rsvFld1},
 			#{item.rsvFld2},
 			#{item.rsvFld3},
-			#{item.rsvFld4})
+			#{item.rsvFld4},
+			#{item.rsvFld5},
+			#{item.rsvFld6},
+			#{item.rsvFld7})
       </foreach>
 	</select>
 
