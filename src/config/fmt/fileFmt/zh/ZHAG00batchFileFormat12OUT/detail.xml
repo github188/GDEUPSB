@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
     encoding="gbk" trace="true">
 	<segment name="detail" encoding="GBK">
-       <Item name="HLogNo"   length="16" />    <!-- 银行流水号 -->
+       <Item name="sqn"   length="16" />    <!-- 银行流水号 -->
       <Item name="TlrId"    length="5"  />    <!-- 操作员号 -->
       <Item name="ActDat"   length="8"  />    <!-- 银行入帐日期 -->
       <Item name="TrTime"   length="6"  />    <!-- 收费时间 -->
