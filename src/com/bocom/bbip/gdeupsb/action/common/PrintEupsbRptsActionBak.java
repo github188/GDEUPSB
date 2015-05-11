@@ -212,10 +212,10 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			if (eupsBusTyp.equals("ELEC02")) {
 				prtList = get(GDEupsBatchConsoleInfoRepository.class)
 						.findElec02BatchRptInfo(baseMap);
-			} else if(eupsBusTyp.equals("WATR00")){
+			} else if (eupsBusTyp.equals("WATR00")) {
 				prtList = get(GDEupsBatchConsoleInfoRepository.class)
 						.findWatrBatchRptInfo(baseMap);
-			}else {
+			} else {
 				prtList = get(GDEupsBatchConsoleInfoRepository.class)
 						.findBatchRptInfo(baseMap);
 			}
@@ -234,9 +234,18 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
 					.toString().trim()
 					+ "_批量交易报表";
-			fileName = ttlDate + "_"
-					+ context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_" + comNo
-					+ "_BatchReport.txt";
+			if (eupsBusTyp.equals("ELEC02")) {
+				fileName = "301586003BatchReport"
+						+ DateUtils
+								.format(new Date(), DateUtils.STYLE_yyyyMMdd)
+						+ ".txt";
+
+			} else {
+				fileName = ttlDate + "_"
+						+ context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_"
+						+ comNo + "_BatchReport.txt";
+			}
+
 		}
 
 		context.setData("prtTtl", prtTtl);
@@ -245,7 +254,6 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 
 		EupsThdFtpConfig sendFileToBBOSConfig = get(
 				EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
-		// String filPath = "/home/bbipadm/data/GDEUPSB/report/";
 		String filPath = sendFileToBBOSConfig.getLocDir().trim();
 		Map<String, String> map = new HashMap<String, String>();
 
@@ -315,22 +323,6 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			}
 		}
 		logger.info("报表文件生成！！NEXT 上传FTP");
-		
-		// TODO elec02对账文件上传到汕头指定服务器
-		if ("ELEC02".equals(eupsBusTyp)) {
-			/**
-			 * 配置ftp 参考 watr00BatchResulfA
-			 */
-			OperateFTPActionExt operateFTP = new OperateFTPActionExt();
-			
-			logger.info("elec02对账文件上传到汕头指定服务器");
-			EupsThdFtpConfig sendFileToElec02 = get(EupsThdFtpConfigRepository.class).findOne("sendFileToElec02");
-			String stFilNme = "301586003dz" + DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd) + ".txt";
-			sendFileToElec02.setLocDir(filPath);
-			sendFileToElec02.setLocFleNme(fileName);
-			sendFileToElec02.setRmtFleNme(fileName);
-			operateFTP.putCheckFile(sendFileToElec02);
-		}
 
 		// 上传前端FTP
 		// FTP上传设置
@@ -350,6 +342,23 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			throw new CoreException("文件上传失败");
 		} finally {
 			tFTPTransfer.logout();
+		}
+
+		// TODO elec02对账文件上传到汕头指定服务器
+		if ("ELEC02".equals(eupsBusTyp)) {
+			/**
+			 * 配置ftp 参考 watr00BatchResulfA
+			 */
+			OperateFTPActionExt operateFTP = new OperateFTPActionExt();
+
+			logger.info("elec02对账文件上传到汕头指定服务器");
+			EupsThdFtpConfig sendFileToElec02 = get(
+					EupsThdFtpConfigRepository.class).findOne(
+					"sendFileToElec02");
+			sendFileToElec02.setLocDir(filPath);
+			sendFileToElec02.setLocFleNme(fileName);
+			sendFileToElec02.setRmtFleNme(fileName);
+			operateFTP.putCheckFile(sendFileToElec02);
 		}
 
 		context.setData("fleNme", fileName);
