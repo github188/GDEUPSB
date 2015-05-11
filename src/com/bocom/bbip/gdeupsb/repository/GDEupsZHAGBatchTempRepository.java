@@ -34,4 +34,6 @@ public interface GDEupsZHAGBatchTempRepository extends
 	public Page<GDEupsZhAGBatchTemp>getDetails(Pageable pageable,final String batNo);
 
 	public void updateRsvFld2(Map<String, Object> map);
+	
+	public void updateTemp(GDEupsZhAGBatchTemp gdEupsZhAGBatchTemp);
 }
