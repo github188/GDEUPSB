@@ -90,6 +90,13 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 		Map<String,Object> result=pareseFileByPath(path, fleNme, fileFormat);
 		Assert.isFalse(null==result||0==result.size(), ErrorCodes.EUPS_FILE_PARESE_FAIL, "解析文件出错");
 		Map head=(Map)result.get("header");
+		if(comNo.equals("4440000166")){
+			String rsvFld1=(String)head.get("rsvFld1");
+			if(rsvFld1.equals("73")){
+				throw new CoreException(comNo+"来盘文件交易码错误");
+			}
+			head.put("rsvFld1", "75");
+		}
 		List lst=(List)result.get("detail");
 		if (null!=head) {
 			context.getDataMapDirectly().putAll(head);
@@ -97,16 +104,19 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 		GDEupsBatchConsoleInfo info=ContextUtils.getDataAsObject(context, GDEupsBatchConsoleInfo.class);
 		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(info);
 		List <GDEupsZhAGBatchTemp>list=(List<GDEupsZhAGBatchTemp>) BeanUtils.toObjects(lst, GDEupsZhAGBatchTemp.class);
+		/**插入临时表中*/
+		logger.info("~~~~~~~Start ~~~~将数据插入临时表");
         for(GDEupsZhAGBatchTemp tmp:list){
         	tmp.setSqn(bbipPublicService.getBBIPSequence());
         	tmp.setBatNo((String)context.getData(ParamKeys.BAT_NO));
         	tmp.setRsvFld4("0");
-        	tmp.setCusNme(tmp.getThdCusNme());
+        	if(tmp.getCusNme()==null || tmp.getCusNme()==""){
+        		tmp.setCusNme(tmp.getThdCusNme());
+        	}
+        	gdEupsZHAGBatchTempRepository.insert(tmp);
         }
-		/**插入临时表中*/
-        logger.info("~~~~~~~Start ~~~~将数据插入临时表");
 //        gdEupsZHAGBatchTempRepository.batchInsert(list);
-       ((SqlMap)get("sqlMap")).insert("com.bocom.bbip.gdeupsb.entity.GDEupsZhAGBatchTemp.batchInsert", list); 
+//       ((SqlMap)get("sqlMap")).insert("com.bocom.bbip.gdeupsb.entity.GDEupsZhAGBatchTemp.batchInsert", list); 
         logger.info("~~~~~~~End  ~~~~将数据插入临时表");
 		List <GDEupsZhAGBatchTemp>lt=get(GDEupsZHAGBatchTempRepository.class).findByBatNo((String)context.getData(ParamKeys.BAT_NO));
 		for (GDEupsZhAGBatchTemp gdEupsZhAGBatchTemp : lt) {

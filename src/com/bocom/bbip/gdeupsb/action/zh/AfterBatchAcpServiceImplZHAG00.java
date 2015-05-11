@@ -54,35 +54,61 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
 		eupsBatchInfoDetails.setBatNo(batNos);
         List<EupsBatchInfoDetail>list= eupsBatchInfoDetailRepository.find(eupsBatchInfoDetails);
         Assert.isNotEmpty(list, ErrorCodes.EUPS_QUERY_NO_DATA);
-        for (EupsBatchInfoDetail eupsBatchInfoDetail : list) {
-        	Map<String , Object > map=new HashMap<String, Object>();
-        	String sqn=eupsBatchInfoDetail.getRmk1();
-        	map.put("sqn", sqn);
-        	String txnAmts=eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2).intValue()+"";
-        	while(txnAmts.length()<12){
-        			txnAmts="0"+txnAmts;
+        String comNos=gdEupsBatchConsoleInfo.getComNo();
+        if(comNos.equals("4440001488")){
+	        for (EupsBatchInfoDetail eupsBatchInfoDetail : list) {
+	        	Map<String , Object > map=new HashMap<String, Object>();
+	        	String sqn=eupsBatchInfoDetail.getRmk1();
+	        	map.put("sqn", sqn);
+	        	String txnAmts=eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2).intValue()+"";
+	        	while(txnAmts.length()<12){
+	        			txnAmts="0"+txnAmts;
+	        	}
+	        	 map.put("txnAmt",txnAmts);
+				 String sts=eupsBatchInfoDetail.getSts();
+				 if(sts.equals("S")){
+					 map.put("rsvFld2","Y");
+				 }else{
+					 	String errMsg=eupsBatchInfoDetail.getErrMsg();
+					 	if(errMsg.length()>6){
+					 		errMsg=eupsBatchInfoDetail.getErrMsg().substring(0,6);
+					 	}
+					 	if(errMsg.equals("TPM050")){
+					 			map.put("rsvFld2","E");
+					 	}else if(errMsg.equals("SDM015")){
+					 			map.put("rsvFld2","B");
+					 	}else if(errMsg.equals("CB1004") || errMsg.equals("PDM252")){
+					 			map.put("rsvFld2","A");
+					 	}else{
+					 			map.put("rsvFld2","O");
+					 	}
+				 }
+				 gdEupsZHAGBatchTempRepository.updateRsvFld2(map);
+			}
+        }else if(comNos.equals("4440000166")){
+        	for (EupsBatchInfoDetail eupsBatchInfoDetail : list) {
+        			String sqn=eupsBatchInfoDetail.getRmk1();
+        			String sts=eupsBatchInfoDetail.getSts();
+        			GDEupsZhAGBatchTemp gdEupsZhAGBatchTemp=gdEupsZHAGBatchTempRepository.findOne(sqn);
+        			String rsvFld5=gdEupsZhAGBatchTemp.getRsvFld5();
+        			if(sts.equals("S")){
+        				rsvFld5="1"+rsvFld5;
+        			}else{
+        				String errSeeason=eupsBatchInfoDetail.getErrMsg().substring(0,6);
+        				if(errSeeason.equals("TPM050")){
+        					rsvFld5="2"+rsvFld5;
+				 		}else if(errSeeason.equals("TPM055")){
+				 			rsvFld5="3"+rsvFld5;
+				 		}else if(errSeeason.equals("PDM252")){
+				 			rsvFld5="4"+rsvFld5;
+				 		}else{
+				 			rsvFld5="5"+rsvFld5;
+				 		}
+        			}
+        			gdEupsZhAGBatchTemp.setRsvFld5(rsvFld5);
+        			gdEupsZHAGBatchTempRepository.updateTemp(gdEupsZhAGBatchTemp);
         	}
-        	 map.put("txnAmt",txnAmts);
-			 String sts=eupsBatchInfoDetail.getSts();
-			 if(sts.equals("S")){
-				 map.put("rsvFld2","Y");
-			 }else{
-				 	String errMsg=eupsBatchInfoDetail.getErrMsg();
-				 	if(errMsg.length()>6){
-				 		errMsg=eupsBatchInfoDetail.getErrMsg().substring(0,6);
-				 	}
-				 	if(errMsg.equals("TPM050")){
-				 			map.put("rsvFld2","E");
-				 	}else if(errMsg.equals("SDM015")){
-				 			map.put("rsvFld2","B");
-				 	}else if(errMsg.equals("CB1004") || errMsg.equals("PDM252")){
-				 			map.put("rsvFld2","A");
-				 	}else{
-				 			map.put("rsvFld2","O");
-				 	}
-			 }
-			 gdEupsZHAGBatchTempRepository.updateRsvFld2(map);
-		}
+        }
         EupsThdFtpConfig config=get(EupsThdFtpConfigRepository.class).findOne("zhag00");
         
       //拼装Map文件
