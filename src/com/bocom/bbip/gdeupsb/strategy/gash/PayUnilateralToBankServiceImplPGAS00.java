@@ -51,7 +51,7 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 
 		context.setData(ParamKeys.THD_TXN_STS, "S");
 		String bk = "01491999999";
-		String br = "01491800999";
+		String br = "01491001999";
 		context.setData(ParamKeys.BR, br);
 		context.setData(ParamKeys.BK, bk);//分行号01491999999
 		String trl = bbipPublicService.getETeller(bk);

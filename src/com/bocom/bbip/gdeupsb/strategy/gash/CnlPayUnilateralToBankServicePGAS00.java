@@ -17,7 +17,6 @@ import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.eups.spi.service.single.CancelUnilateralToBankService;
 import com.bocom.bbip.eups.spi.vo.CancelDomain;
 import com.bocom.bbip.eups.spi.vo.CommHeadDomain;
-import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.repository.GdGasCusAllRepository;
 import com.bocom.bbip.utils.CollectionUtils;
