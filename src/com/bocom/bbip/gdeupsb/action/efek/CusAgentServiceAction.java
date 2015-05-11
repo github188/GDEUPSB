@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import com.bocom.bbip.comp.BBIPPublicService;
+import com.bocom.bbip.comp.CommonRequest;
+import com.bocom.bbip.comp.account.AccountService;
+import com.bocom.bbip.comp.account.support.CusActInfResult;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.CommThdRspCdeAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
@@ -51,7 +54,6 @@ public class CusAgentServiceAction extends BaseAction{
 		 */
 		public void execute(Context context)throws CoreException,CoreRuntimeException{
 				logger.info("============Start  CusAgentServiceAction ");
-				
 				String cusAc=context.getData("cusAc");
 				String comNo=context.getData("comNos").toString();
 				context.setData("comNo", comNo);
@@ -363,5 +365,22 @@ public class CusAgentServiceAction extends BaseAction{
 	                throw new CoreException("发送失败");
 			}
 		}
+/**
+ *查询账号姓名 
+ */
+		public void checkCusNme(Context context) throws CoreException{
+			String cusAc = context.getData("newCusAc").toString().trim();
 
+			CusActInfResult cusactinfresult = new CusActInfResult();
+			try {
+				cusactinfresult = get(AccountService.class).getAcInf(CommonRequest.build(context), cusAc);
+			} catch (CoreException e) {
+				logger.info("查询账号状态失败", e);
+			}
+			if(cusactinfresult.getResponseCode()!="000000" || cusactinfresult.getResponseCode()!="SC0000"){
+				throw new CoreException("Error");
+			}
+			String newCusNme=cusactinfresult.getCusName();
+			context.setData("newCusNme", newCusNme);
+		}
 }
