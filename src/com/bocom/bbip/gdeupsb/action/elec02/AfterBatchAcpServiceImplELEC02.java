@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
-import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
@@ -266,7 +265,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		context.setData("HAM", sucAmt);
 		context.setData("LSN", failCnt);
 		context.setData("LSM", failAmt);
-		// 执行到此，表示批扣返盘完成，返回第三方00表示22报文成功
+		// 执行到此，表示批扣返盘完成，返回第三方00表示23报文成功
 		context.setData("responseCodeTHD", "00");
 
 		Map<String, Object> thdResult = callThdTradeManager.trade(context);

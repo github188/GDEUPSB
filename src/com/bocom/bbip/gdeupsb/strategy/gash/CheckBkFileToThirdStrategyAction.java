@@ -24,6 +24,7 @@ import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.eups.spi.service.check.CheckBkFileToThirdService;
 import com.bocom.bbip.eups.spi.vo.CheckDomain;
+import com.bocom.bbip.gdeupsb.action.common.OperateFTPActionExt;
 import com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal;
 import com.bocom.bbip.gdeupsb.repository.GdEupsTransJournalRepository;
 import com.bocom.bbip.gdeupsb.repository.GdGashBatchTmpRepository;
@@ -145,7 +146,7 @@ public class CheckBkFileToThirdStrategyAction extends BaseAction
 		}
 
 		// 向指定FTP路径放文件
-		operateFTPAction.putCheckFile(eupsThdFtpConfig);
+		get(OperateFTPActionExt.class).putCheckFile(eupsThdFtpConfig);
 		logger.info("对账文件FTP放置成功！");
 
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);

@@ -18,6 +18,7 @@ import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
+import com.bocom.bbip.gdeupsb.action.common.OperateFTPActionExt;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdGasCusAll;
@@ -102,8 +103,8 @@ public class GasAgentBatchFileToFtpAction extends BaseAction{
 	            throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
 	        }
 		
-		get(OperateFTPAction.class).putCheckFile(ftpConfigA);
-		get(OperateFTPAction.class).putCheckFile(ftpConfigB);
+		get(OperateFTPActionExt.class).putCheckFile(ftpConfigA);
+		get(OperateFTPActionExt.class).putCheckFile(ftpConfigB);
         logger.info("hdCNJTyyyyMMdd.txt文件FTP放置成功！");
 		
         ////////////////////////////////////////////////////////////    文件 rxyCNJTyyyyMMdd.txt
@@ -130,8 +131,8 @@ public class GasAgentBatchFileToFtpAction extends BaseAction{
             throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
         }
 		
-		get(OperateFTPAction.class).putCheckFile(ftpConfigA);
-		get(OperateFTPAction.class).putCheckFile(ftpConfigB);
+		get(OperateFTPActionExt.class).putCheckFile(ftpConfigA);
+		get(OperateFTPActionExt.class).putCheckFile(ftpConfigB);
 		logger.info("rxyCNJTyyyyMMdd.txt文件FTP放置成功！");
 		
 		

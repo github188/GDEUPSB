@@ -27,6 +27,7 @@ import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
 import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
 import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
+import com.bocom.bbip.gdeupsb.action.common.OperateFTPActionExt;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
@@ -35,7 +36,6 @@ import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GdGashBatchTmpRepository;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
-import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -103,10 +103,11 @@ public class MsgToGasAftBatchAction extends BaseAction implements
 			logger.info("~~~~~~~~~~~Error  Message", e);
 		}
 
-		operateFTPAction.putCheckFile(gasFtpCfg);
+//		operateFTPAction.putCheckFile(gasFtpCfg);
+		get(OperateFTPActionExt.class).putCheckFile(gasFtpCfg);
 
 		//通知第三方
-		callThd(context);
+//		callThd(context);
 		logger.info("===============End  BatchDataResultFileAction  afterBatchDeal");
 	}
 
