@@ -5,8 +5,8 @@
     encoding="gbk" trace="true">
 	<segment name="detail" encoding="GBK">
        <Item name="sqn"   length="16" />    <!-- 银行流水号 -->
-      <Item name="TlrId"    length="5"  />    <!-- 操作员号 -->
-      <Item name="ActDat"   length="8"  />    <!-- 银行入帐日期 -->
+      <Item name="txnTlr"    length="5"  />    <!-- 操作员号 -->
+      <Item name="txnDte"   length="8"  />    <!-- 银行入帐日期 -->
       <Item name="TrTime"   length="6"  />    <!-- 收费时间 -->
       <Item name="rsvFld1"       length="8"  />    <!-- 供电公司编号 -->
       <Item name="thdCusNo"   length="15" />    <!-- 户号 -->
