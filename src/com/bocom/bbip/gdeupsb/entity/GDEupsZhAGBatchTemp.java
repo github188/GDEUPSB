@@ -29,6 +29,10 @@ public class GDEupsZhAGBatchTemp {
 
 	private String rsvFld3;
 	private String rsvFld4;
+	private String rsvFld5;
+
+	private String rsvFld6;
+	private String rsvFld7;
 
 	public String getSqn() {
 		return sqn;
@@ -142,5 +146,29 @@ public class GDEupsZhAGBatchTemp {
 
 	public void setRsvFld4(String rsvFld4) {
 		this.rsvFld4 = rsvFld4 ;
+	}
+
+	public String getRsvFld5() {
+		return rsvFld5;
+	}
+
+	public void setRsvFld5(String rsvFld5) {
+		this.rsvFld5 = rsvFld5;
+	}
+
+	public String getRsvFld6() {
+		return rsvFld6;
+	}
+
+	public void setRsvFld6(String rsvFld6) {
+		this.rsvFld6 = rsvFld6;
+	}
+
+	public String getRsvFld7() {
+		return rsvFld7;
+	}
+
+	public void setRsvFld7(String rsvFld7) {
+		this.rsvFld7 = rsvFld7;
 	}
 }
