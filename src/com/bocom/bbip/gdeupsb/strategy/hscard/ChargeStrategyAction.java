@@ -43,9 +43,17 @@ public class ChargeStrategyAction implements Executable{
 		Date tTxnDte=DateUtils.parse(context.getData("tTxnDte").toString(), DateUtils.STYLE_yyyyMMdd);//第三方交易日期
 		
 		context.setData(ParamKeys.THD_TXN_DATE, tTxnDte);
-		context.setData(ParamKeys.BK, "01441999999"); // 分行号
-		context.setData(ParamKeys.BR, "01441800999"); // 机构号
+		context.setData(ParamKeys.BK, bbipPublicService.getParam("GDEUPSB", "THD_BR")); // 分行号
+		context.setData(ParamKeys.BR, bbipPublicService.getParam("GDEUPSB", "HSBR")); // 机构号
 		String teller = bbipPublicService.getETeller(context.getData(ParamKeys.BK).toString());
+		
+		
+		
+		
+		
+		
+		
+		
 		context.setData(ParamKeys.TELLER, teller);
 		context.setData(ParamKeys.BUS_TYP, Constants.BUS_TYP_2); //待缴
 //		检查报文是否重复
