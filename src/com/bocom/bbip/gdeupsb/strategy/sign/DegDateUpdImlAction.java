@@ -64,7 +64,7 @@ public class DegDateUpdImlAction implements AgtDataUpdImlService {
 		// 按照RCV44101 读取广州自来水处理结果文件
 		EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("watrAgtResult");
 		
-		try {			
+		try {
 			bbipPublicService.getFileFromBBOS(new File(eupsThdFtpConfig.getLocDir(),filNam), filNam, MftpTransfer.FTYPE_NORMAL);			
 		}catch (Exception e) {
 			throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
