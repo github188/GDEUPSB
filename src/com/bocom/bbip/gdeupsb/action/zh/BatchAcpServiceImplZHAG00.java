@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.action.zh;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
@@ -27,6 +28,7 @@ import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.BatchAcpService;
 import com.bocom.bbip.eups.spi.vo.PrepareBatchAcpDomain;
 import com.bocom.bbip.file.Marshaller;
+import com.bocom.bbip.file.MftpTransfer;
 import com.bocom.bbip.file.transfer.TransferUtils;
 import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
@@ -68,20 +70,14 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 
 		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne("zhag00");
 		String fleNme=context.getData(ParamKeys.FLE_NME).toString();
-		config.setRmtFleNme(fleNme);
-		config.setLocFleNme(fleNme);
-		config.setFtpDir("1");
-		EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
-
+		String filPath=config.getLocDir();
 		if(context.getData("mothed").toString().trim().equals("1")){
-			config.setThdIpAdr(sendFileToBBOSConfig.getThdIpAdr());
-			config.setFtpDir("1");
-			config.setOppNme(sendFileToBBOSConfig.getOppNme());
-			config.setOppUsrPsw(sendFileToBBOSConfig.getOppUsrPsw());
-			String path = "/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + context.getData(ParamKeys.BR)+ "/" + context.getData(ParamKeys.TELLER) + "/";
-			config.setRmtWay(path);
+			try {			
+				bbipPublicService.sendFileToBBOS(new File(filPath,fleNme), fleNme, MftpTransfer.FTYPE_NORMAL);			
+			}catch (Exception e) {
+				throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
+			}
 		}
-		((OperateFTPAction)get("opeFTP")).getFileFromFtp(config);
 		String path=config.getLocDir();
 		logger.info("===============获取文件成功");
 		final String fileFormat=findFormat(comNo);
