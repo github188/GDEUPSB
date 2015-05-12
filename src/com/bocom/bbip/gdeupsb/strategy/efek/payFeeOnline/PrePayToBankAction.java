@@ -34,12 +34,6 @@ public class PrePayToBankAction implements Executable{
 //			context.setData(ParamKeys.COMPANY_NO, context.getData("comNos"));
 			context.setData(ParamKeys.THD_TXN_STS,"S");
 			context.setData(GDParamKeys.TOTNUM, "1");
-			//TODO 删除
-			if(context.getData("txnTlr")==null){
-				context.setData("tlr", "EFC0000");
-			}
-			context.setData(ParamKeys.BR,"01441131999");
-			context.setData(ParamKeys.BK,"01441999999");
 			  
 			String ActFlg=(String)context.getData(ParamKeys.PAY_TYPE);
 			if("0".equals(ActFlg)){              //对公
