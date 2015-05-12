@@ -13,17 +13,20 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.entity.EupsBatchInfoDetail;
+import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
 import com.bocom.bbip.eups.repository.EupsBatchInfoDetailRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
 import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
+import com.bocom.bbip.file.MftpTransfer;
 import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.entity.GdFbpeFileBatchTmp;
@@ -49,7 +52,8 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
     GdFbpeFileBatchTmpRepository gdFbpeFileBatchTmpRepository;
     @Autowired
     GDEupsBatchConsoleInfoRepository gdEupsBatchConsoleInfoRepository;
-    
+    @Autowired
+    BBIPPublicService bbipPublicService;
     @Autowired
     GdFbpeFileBatchTmpRepository fileRepository;
 
@@ -110,6 +114,13 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
             context.setData("sucTotCnt"  ,gdEupsBatchConsoleInfo.getSucTotCnt());
             context.setData("sucTotAmt", gdEupsBatchConsoleInfo.getSucTotAmt());
             
+            EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
+            //放置文件
+            try {
+			 	bbipPublicService.sendFileToBBOS(new File(sendFileToBBOSConfig.getRmtWay(),fileName), fileName, MftpTransfer.FTYPE_NORMAL);		
+			} catch (Exception e) {
+			       	throw new CoreException("文件上传失败");
+			}
             logger.info("==================End BatchFbpeResultDealAction");
          	return;
     }
@@ -211,7 +222,7 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 				 	bufferedWriter.newLine();
 			}
 			bufferedWriter.close();
-			fileWriter.close();
+			fileWriter.close();			
 		} catch (IOException e) {
 			logger.info("===============ErrMsg=",e);
 		}   
