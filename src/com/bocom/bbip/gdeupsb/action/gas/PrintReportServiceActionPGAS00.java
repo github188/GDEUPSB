@@ -258,7 +258,7 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 //
 //		try {
 //			tFTPTransfer.logon();
-			Resource tResource = new FileSystemResource(JYPath);
+//			Resource tResource = new FileSystemResource(JYPath);
 //			tFTPTransfer.putResource(tResource,
 //					sendFileToBBOSConfig.getRmtWay().trim(),
 //					fileName.toString());
