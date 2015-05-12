@@ -217,9 +217,9 @@ public class BatchSignFileInputAction extends BaseAction {
 		operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
 
 		// TODO:for test
-		context.setData("tlr", "ABIR148");
-		context.setData("br", "01441800999");
-		context.setData("bk", "01441999999");
+//		context.setData("tlr", "ABIR148");
+//		context.setData("br", "01441800999");
+//		context.setData("bk", "01441999999");
 
 		// ====解析文件====String filePath, String fileName, String fileId
 		log.info("licDir:" + eupsThdFtpConfig.getLocDir());
