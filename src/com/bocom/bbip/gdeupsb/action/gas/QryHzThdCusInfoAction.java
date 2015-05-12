@@ -65,7 +65,7 @@ public class QryHzThdCusInfoAction extends BaseAction {
 		List<GdGasCusAll> gasCusAllList = get(
 				GdGasCusAllRepository.class).findDataByOptDate(map);
 		if (null == gasCusAllList || CollectionUtils.isEmpty(gasCusAllList)) {
-			logger.info("There are no records for select check trans journal ");
+			logger.info("There are no records for select GdGasCusAll whit findDataByOptDate ");
 			throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
 		}
 		

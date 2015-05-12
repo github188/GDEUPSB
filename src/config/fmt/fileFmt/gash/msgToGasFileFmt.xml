@@ -4,31 +4,6 @@
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet spacket.xsd"
 	encoding="GBK" trace="true">
 	<segment name="detail" encoding="GBK">
-<!-- 	
-数据结构:
-字符串格式报文，由一些指定长度的字符串（字符串没有达到指定长度的在右边以空格补足）组合而成中间以半角的逗号“,”为分割符，
-报文前10字符为报文指令，确定报文进行的业务类型
- -->
-  <!--     
-  <Process name="PKDATA"   desc="银行托收批量代扣文件返回">
-  	<Data line_wrap="N">
-    <Item name="ThdSts"   length="10"   />  			返回第三方状态
-    <Item name="DChar"   length="1"  value=","   />  
-    <Item name="BnkCod"   length="4"  value="cnjt"   /> 承办行代码
-    <Item name="DChar"   length="1"  value=","   /> 
-    <Item name="CLogNo"   length="18" desc="燃气流水号"/>
-    <Item name="DChar"   length="1"  value=","   /> 
-    <Item name="UserNo"   length="12" desc="用户编号"/>
-    <Item name="DChar"   length="1"  value=","   /> 
-    <Item name="PayYea"   length="6"  desc="费用年月"/>
-    <Item name="DChar"   length="1"  value=","   /> 
-    <Item name="OptAmt"   length="10" desc="已扣费用"/>
-    <Item name="DChar"   length="1"  value=","   /> 
-    <Item name="OptDat"   length="10" desc="交易日期"/>
-    <Item name="HChar"   value="&#x000D;&#x000A;" />
-    </Data>
-  </Process>
-  --> 
   
 	<fixString name="tmpFld5" length="10"/>
 	<fixString  name="Deli1" length="1" default=","/>
