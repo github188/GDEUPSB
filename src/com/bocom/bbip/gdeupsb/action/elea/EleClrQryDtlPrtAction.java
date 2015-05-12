@@ -16,11 +16,13 @@ import java.util.Map;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
+import com.bocom.bbip.file.MftpTransfer;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
 import com.bocom.bbip.file.transfer.ftp.FTPTransfer;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
@@ -476,26 +478,34 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 			log.info("报表文件生成！！NEXT 上传FTP");
 
 			// 上传FTP
-			EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
-			// FTP上传设置
-			FTPTransfer tFTPTransfer = new FTPTransfer();
-			tFTPTransfer.setHost(sendFileToBBOSConfig.getThdIpAdr());
-			tFTPTransfer.setPort(Integer.parseInt(sendFileToBBOSConfig.getBidPot()));
-			tFTPTransfer.setUserName(sendFileToBBOSConfig.getOppNme());
-			tFTPTransfer.setPassword(sendFileToBBOSConfig.getOppUsrPsw());
-
+//			EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
+//			// FTP上传设置
+//			FTPTransfer tFTPTransfer = new FTPTransfer();
+//			tFTPTransfer.setHost(sendFileToBBOSConfig.getThdIpAdr());
+//			tFTPTransfer.setPort(Integer.parseInt(sendFileToBBOSConfig.getBidPot()));
+//			tFTPTransfer.setUserName(sendFileToBBOSConfig.getOppNme());
+//			tFTPTransfer.setPassword(sendFileToBBOSConfig.getOppUsrPsw());
+//
+//			try {
+//				tFTPTransfer.logon();
+//				Resource tResource = new FileSystemResource(JYPath);
+//				tFTPTransfer.putResource(tResource,
+//						"/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/",
+//						fileName);
+//
+//			} catch (Exception e) {
+//				throw new CoreException("文件上传失败");
+//			} finally {
+//				tFTPTransfer.logout();
+//			}
+			
 			try {
-				tFTPTransfer.logon();
-				Resource tResource = new FileSystemResource(JYPath);
-				tFTPTransfer.putResource(tResource,
-						"/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/",
-						fileName);
-
-			} catch (Exception e) {
-				throw new CoreException("文件上传失败");
-			} finally {
-				tFTPTransfer.logout();
+				get(BBIPPublicService.class).getFileFromBBOS(new File(JYPath), fileName, MftpTransfer.FTYPE_NORMAL);			
+			}catch (Exception e) {
+				throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
 			}
+			
+			
 
 			context.setData("fleNme", fileName);
 			log.info("文件上传完成，等待打印！" + context);
