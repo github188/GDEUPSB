@@ -27,6 +27,7 @@ import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdBaseInfoRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
+import com.bocom.bbip.file.MftpTransfer;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
 import com.bocom.bbip.file.transfer.ftp.FTPTransfer;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
@@ -249,24 +250,31 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 
 		// 上传FTP
 		// FTP上传设置
-		FTPTransfer tFTPTransfer = new FTPTransfer();
-		tFTPTransfer.setHost(sendFileToBBOSConfig.getThdIpAdr());
-		tFTPTransfer.setPort(Integer.parseInt(sendFileToBBOSConfig.getBidPot()));
-		tFTPTransfer.setUserName(sendFileToBBOSConfig.getOppNme());
-		tFTPTransfer.setPassword(sendFileToBBOSConfig.getOppUsrPsw());
-
-		try {
-			tFTPTransfer.logon();
+//		FTPTransfer tFTPTransfer = new FTPTransfer();
+//		tFTPTransfer.setHost(sendFileToBBOSConfig.getThdIpAdr());
+//		tFTPTransfer.setPort(Integer.parseInt(sendFileToBBOSConfig.getBidPot()));
+//		tFTPTransfer.setUserName(sendFileToBBOSConfig.getOppNme());
+//		tFTPTransfer.setPassword(sendFileToBBOSConfig.getOppUsrPsw());
+//
+//		try {
+//			tFTPTransfer.logon();
 			Resource tResource = new FileSystemResource(JYPath);
-			tFTPTransfer.putResource(tResource,
-					sendFileToBBOSConfig.getRmtWay().trim(),
-					fileName.toString());
-
-		} catch (Exception e) {
-			throw new CoreException("文件上传失败");
-		} finally {
-			tFTPTransfer.logout();
+//			tFTPTransfer.putResource(tResource,
+//					sendFileToBBOSConfig.getRmtWay().trim(),
+//					fileName.toString());
+//
+//		} catch (Exception e) {
+//			throw new CoreException("文件上传失败");
+//		} finally {
+//			tFTPTransfer.logout();
+//		}
+		
+		try {			
+			bbipPublicService.sendFileToBBOS(new File(filPath,fileName.toString()), fileName.toString(), MftpTransfer.FTYPE_NORMAL);			
+		}catch (Exception e) {
+			throw new CoreException(ErrorCodes.EUPS_FTP_FILEPUT_NFAIL);
 		}
+		
 
 		context.setData("rspMsg", fileName.toString());
 		logger.info("文件上传完成，等待打印！" + context);
