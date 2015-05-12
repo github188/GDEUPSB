@@ -27,6 +27,7 @@ import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdBaseInfoRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
+import com.bocom.bbip.file.MftpTransfer;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
 import com.bocom.bbip.file.transfer.ftp.FTPTransfer;
 import com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal;
@@ -325,23 +326,32 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 
 		// 上传前端FTP
 		// FTP上传设置
-		FTPTransfer tFTPTransfer = new FTPTransfer();
-		tFTPTransfer.setHost(sendFileToBBOSConfig.getThdIpAdr());
-		tFTPTransfer
-				.setPort(Integer.parseInt(sendFileToBBOSConfig.getBidPot()));
-		tFTPTransfer.setUserName(sendFileToBBOSConfig.getOppNme());
-		tFTPTransfer.setPassword(sendFileToBBOSConfig.getOppUsrPsw());
-		try {
-			tFTPTransfer.logon();
-			Resource tResource = new FileSystemResource(JYPath);
-			tFTPTransfer.putResource(tResource, sendFileToBBOSConfig
-					.getRmtWay().trim(), fileName);
-
-		} catch (Exception e) {
-			throw new CoreException("文件上传失败");
-		} finally {
-			tFTPTransfer.logout();
+//		FTPTransfer tFTPTransfer = new FTPTransfer();
+//		tFTPTransfer.setHost(sendFileToBBOSConfig.getThdIpAdr());
+//		tFTPTransfer
+//				.setPort(Integer.parseInt(sendFileToBBOSConfig.getBidPot()));
+//		tFTPTransfer.setUserName(sendFileToBBOSConfig.getOppNme());
+//		tFTPTransfer.setPassword(sendFileToBBOSConfig.getOppUsrPsw());
+//		try {
+//			tFTPTransfer.logon();
+//			Resource tResource = new FileSystemResource(JYPath);
+//			tFTPTransfer.putResource(tResource, sendFileToBBOSConfig
+//					.getRmtWay().trim(), fileName);
+//
+//		} catch (Exception e) {
+//			throw new CoreException("文件上传失败");
+//		} finally {
+//			tFTPTransfer.logout();
+//		}
+		
+		
+		
+		try {			
+			bbipPublicService.sendFileToBBOS(new File(filPath,fileName), fileName, MftpTransfer.FTYPE_NORMAL);			
+		}catch (Exception e) {
+			throw new CoreException(ErrorCodes.EUPS_FTP_FILEPUT_NFAIL);
 		}
+		
 
 		// TODO elec02对账文件上传到汕头指定服务器
 		if ("ELEC02".equals(eupsBusTyp)) {
