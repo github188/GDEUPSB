@@ -19,9 +19,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
+import com.bocom.bbip.file.MftpTransfer;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
 import com.bocom.bbip.file.transfer.ftp.FTPTransfer;
 import com.bocom.bbip.gdeupsb.entity.GDEupsEleTmp;
@@ -38,6 +40,8 @@ public class PrintEfekBatchAction extends BaseAction{
 		private static Log logger=LogFactory.getLog(PrintEfekBatchAction.class);
 		@Autowired
 		GDEupsEleTmpRepository gdEupsEleTmpRepository;
+		@Autowired
+		BBIPPublicService bbipPublicService;
 		@Override
 		public void execute(Context context) throws CoreException,CoreRuntimeException {
 				logger.info("====================Start    PrintEfekBatchAction");
@@ -145,20 +149,10 @@ public class PrintEfekBatchAction extends BaseAction{
 									//报表		
 									log.info("=============Start   Send   File==========");
 									
-									// FTP上传设置
-									FTPTransfer tFTPTransfer = new FTPTransfer();
-									tFTPTransfer.setHost(sendFileToBBOSConfig.getThdIpAdr());
-									tFTPTransfer.setPort(Integer.parseInt(sendFileToBBOSConfig.getBidPot()));
-									tFTPTransfer.setUserName(sendFileToBBOSConfig.getOppNme());
-									tFTPTransfer.setPassword(sendFileToBBOSConfig.getOppUsrPsw());
 									 try {
-									       	tFTPTransfer.logon();
-									        Resource tResource = new FileSystemResource(sendFileToBBOSConfig.getLocDir()+fileName);
-									        tFTPTransfer.putResource(tResource, "/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/", fileName);
+										 	bbipPublicService.sendFileToBBOS(new File(sendFileToBBOSConfig.getRmtWay(),fileName), fileName, MftpTransfer.FTYPE_NORMAL);		
 									} catch (Exception e) {
 									       	throw new CoreException("文件上传失败");
-									} finally {
-									       	tFTPTransfer.logout();
 									}
 									log.info("=============放置报表文件");
 							}
