@@ -139,7 +139,7 @@ public class WaterAgtFileSendImlAction implements AgtFileSendImlService {
 //		operateFTPAction.putCheckFile(ftpConf);
 //		log.info("将文件存放到服务器上，服务器上的文件目录为:[" + rmtWay + "],文件名为:[" + fileName + "]" + ",本地的文件目录为:[" + ftpConf.getLocDir() + "],本地文件名为:[" + fileName
 //				+ "]");
-		try {			
+		try {
 			bbipPublicService.sendFileToBBOS(new File(eupsThdFtpConfig.getLocDir(),fileName), fileName, MftpTransfer.FTYPE_NORMAL);			
 		}catch (Exception e) {
 			throw new CoreException(ErrorCodes.EUPS_MFTP_FILEPUT_FAIL);
