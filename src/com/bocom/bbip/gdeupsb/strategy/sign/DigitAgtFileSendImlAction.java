@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.strategy.sign;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,9 +13,11 @@ import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.comp.btp.BTPService;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
+import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
+import com.bocom.bbip.file.MftpTransfer;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdsRunCtl;
@@ -51,6 +54,9 @@ public class DigitAgtFileSendImlAction implements AgtFileSendImlService {
 	@Autowired
 	OperateFTPAction operateFTPAction;
 
+	@Autowired
+	BBIPPublicService BBIPPublicService;
+	
 	@Override
 	public Map<String, Object> agtFleSndDelService(Context context) throws CoreException {
 		log.info("珠江数码协议数据拷盘开始！..");
@@ -103,20 +109,25 @@ public class DigitAgtFileSendImlAction implements AgtFileSendImlService {
 
 		operateFileAction.createCheckFile(eupsThdFtpConfig, "datFleSndTel", fileName, resultMap);
 		
-		String br = context.getData(ParamKeys.BR);// 机构号
-		String tlr = context.getData(ParamKeys.TELLER); // 柜员号
+//		String br = context.getData(ParamKeys.BR);// 机构号
+//		String tlr = context.getData(ParamKeys.TELLER); // 柜员号
+//
+//		// 设置ftp参数
+//		EupsThdFtpConfig ftpConf = eupsThdFtpConfigRepository.findOne("frtUsbWrtSgnFilSnd");
 
-		// 设置ftp参数
-		EupsThdFtpConfig ftpConf = eupsThdFtpConfigRepository.findOne("frtUsbWrtSgnFilSnd");
-
-		String rmtWay = "/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + br + "/" + tlr + "/";
-		ftpConf.setRmtWay(rmtWay);
-		ftpConf.setLocFleNme(fileName);
-		ftpConf.setRmtFleNme(fileName);
-		operateFTPAction.putCheckFile(ftpConf);
-		log.info("将文件存放到服务器上，服务器上的文件目录为:[" + rmtWay + "],文件名为:[" + fileName + "]" + ",本地的文件目录为:[" + ftpConf.getLocDir() + "],本地文件名为:[" + fileName
-				+ "]");
+//		String rmtWay = "/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + br + "/" + tlr + "/";
+//		ftpConf.setRmtWay(rmtWay);
+//		ftpConf.setLocFleNme(fileName);
+//		ftpConf.setRmtFleNme(fileName);
+//		operateFTPAction.putCheckFile(ftpConf);
+//		log.info("将文件存放到服务器上，服务器上的文件目录为:[" + rmtWay + "],文件名为:[" + fileName + "]" + ",本地的文件目录为:[" + ftpConf.getLocDir() + "],本地文件名为:[" + fileName
+//				+ "]");
 		
+		try {			
+			bbipPublicService.sendFileToBBOS(new File(eupsThdFtpConfig.getLocDir(),fileName), fileName, MftpTransfer.FTYPE_NORMAL);			
+		}catch (Exception e) {
+			throw new CoreException(ErrorCodes.EUPS_MFTP_FILEPUT_FAIL);
+		}
 
 		// 更新协议的批次号与制盘标志：UpdAgtBatchId
 		String fileName1 = fileName.substring(6, fileName.indexOf("."));
