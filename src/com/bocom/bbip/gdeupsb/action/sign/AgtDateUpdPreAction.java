@@ -1,10 +1,15 @@
 package com.bocom.bbip.gdeupsb.action.sign;
 
+import java.io.File;
+
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
+import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
+import com.bocom.bbip.file.MftpTransfer;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdsRunCtl;
@@ -42,15 +47,24 @@ public class AgtDateUpdPreAction extends BaseAction {
 		String tlr = context.getData(ParamKeys.TELLER); // 柜员号
 
 		// 设置ftp参数
-		EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne("frtUsbWrtSgnFilGet");
-		String rmtWay = "/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + br + "/" + tlr + "/";
-		eupsThdFtpConfig.setRmtWay(rmtWay);
-		eupsThdFtpConfig.setRmtFleNme(fileNme);
-		eupsThdFtpConfig.setLocFleNme(fileNme);
+//		EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne("frtUsbWrtSgnFilGet");
+//		String rmtWay = "/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + br + "/" + tlr + "/";
+//		eupsThdFtpConfig.setRmtWay(rmtWay);
+//		eupsThdFtpConfig.setRmtFleNme(fileNme);
+//		eupsThdFtpConfig.setLocFleNme(fileNme);
+//
+//		get(OperateFTPAction.class).getFileFromFtp(eupsThdFtpConfig);
+		
+		// 按照RCV44101 读取广州自来水处理结果文件
+		EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne("watrAgtResult");
+		
+		try {
+			get(BBIPPublicService.class).getFileFromBBOS(new File(eupsThdFtpConfig.getLocDir(),fileNme), fileNme, MftpTransfer.FTYPE_NORMAL);			
+		}catch (Exception e) {
+			throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
+		}
 
-		get(OperateFTPAction.class).getFileFromFtp(eupsThdFtpConfig);
-
-		log.info("get usb file from usb,rmt dir=[" + rmtWay + "]+,rmt file=[" + fileNme + "],local dir=[" + eupsThdFtpConfig.getLocDir()
+		log.info("get usb file from usb,rmt dir=["  + "]+,rmt file=[" + fileNme + "],local dir=[" + eupsThdFtpConfig.getLocDir()
 				+ "],local filename=[" + fileNme + "]");
 
 		log.info("AgtDateUpdPreAction end,start to do impl!..");
