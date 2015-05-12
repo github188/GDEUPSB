@@ -84,7 +84,7 @@
 	</bean>
 
 	<bean id="trspGateWay" class="com.bocom.bbip.gdeupsb.channel.tcp.ZhLqSocketGateway"> 
-				<property name="host" value="182.59.28.80"/>
+				<property name="host" value="182.59.59.27"/>
 				<property name="port" value="7600" />
 				<property name="timeout" value="30000" />
 				<property name="filePath" value="/home/bbipadm/data/GDEUPSB/trsp/" />
@@ -160,8 +160,8 @@
     
      <!-- add by WangMQ  start GASH -->
      <bean id="gashGateWay" class="com.bocom.jump.bp.channel.tcp.SocketGateway"> 
-                <property name="host" value="127.0.0.1"/>
-                <property name="port" value="9990" />
+                <property name="host" value="182.53.1.6"/>
+                <property name="port" value="9995" />
                 <property name="soTimeout" value="30000" />
                 <property name="streamResolver">
                     <bean class="com.bocom.bbip.eups.adaptor.channel.NoFrontLengthStreamResolver" />
@@ -191,8 +191,8 @@
     <!-- add by WangMQ  start GASH -->
     
 	<bean id="WATR00GateWay" class="com.bocom.bbip.gdeupsb.channel.tcp.WatrSocketGateway">
-		<property name="host" value="182.55.200.60" />
-		<property name="port" value="8888" />
+		<property name="host" value="192.168.64.1" />
+		<property name="port" value="6666" />
 		<property name="soTimeout" value="30000" />
 		<property name="streamResolver">
 			<bean class="com.bocom.bbip.gdeupsb.channel.tcp.WatrLengthStreamResolver">
@@ -225,36 +225,8 @@
 		</property>
 	</bean>
 
-<!-- 
-	 <bean id="ELEC0100GateWay" class="com.bocom.jump.bp.channel.tcp.SocketGateway">
-		<property name="host" value="127.0.0.1" />
-		<property name="port" value="9067" />
-		<property name="soTimeout" value="30000" />
-		<property name="streamResolver">
-			<bean
-				class="com.bocom.bbip.eups.adaptor.channel.NoFrontLengthStreamResolver" />
-		</property>
-	</bean>
-
-	<bean id="ELEC01Transport" class="com.bocom.jump.bp.channel.DefaultTransport">
-		<property name="gateway" ref="ELEC0100GateWay" />
-		<property name="encodeTransforms">
-			<array>
-				<bean class="com.bocom.bbip.gdeupsb.channel.tcp.GzElcPackDeal" />
-			</array>
-		</property>
-		<property name="decodeTransforms">
-			<array>
-				<bean class="com.bocom.bbip.gdeupsb.channel.tcp.GzElcUnPackDeal" />
-			</array>
-		</property>
-		<property name="tranportLister">
-			<bean class="com.bocom.jump.bp.channel.DefaultTransportListener"></bean>
-		</property>
-	</bean>  -->
-
 	<bean id="ELEC00GateWay" class="com.bocom.bbip.gdeupsb.channel.tcp.ELEC00SocketGateway">
-		<property name="host" value="182.53.15.200" />
+		<property name="host" value="182.53.1.6" />
 		<property name="port" value="5680" />
 		<property name="soTimeout" value="60000" />
 		<property name="streamResolver">
