@@ -199,27 +199,28 @@ public class BatchSignFileInputAction extends BaseAction {
 		// EupsThdFtpConfig eupsThdFtpConfig=
 		// operateFTPAction.getFTPInfo(strGdsBId, eupsThdFtpConfigRepository);
 
-		String br = context.getData(ParamKeys.BR);// 机构号
-		String tlr = context.getData(ParamKeys.TELLER); // 柜员号
+//		String br = context.getData(ParamKeys.BR);// 机构号
+//		String tlr = context.getData(ParamKeys.TELLER); // 柜员号
 
 		// 设置ftp参数
 		EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne("44107");
-		String rmtWay = "/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + br + "/" + tlr + "/";
-		eupsThdFtpConfig.setRmtWay(rmtWay);
-		eupsThdFtpConfig.setRmtFleNme(filNm);
-		eupsThdFtpConfig.setLocFleNme(filNm);
+//		String rmtWay = "/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + br + "/" + tlr + "/";
+//		eupsThdFtpConfig.setRmtWay(rmtWay);
+//		eupsThdFtpConfig.setRmtFleNme(filNm);
+//		eupsThdFtpConfig.setLocFleNme(filNm);
+		
+		try {
+			bbipPubService.getFileFromBBOS(new File(eupsThdFtpConfig.getLocDir(),filNm), filNm, MftpTransfer.FTYPE_NORMAL);			
+		}catch (Exception e) {
+			throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
+		}
 
 		// 登录FTP
-		operateFTPAction.loginFTP(eupsThdFtpConfig);
-		// ===设置远程文件名称=====
-		eupsThdFtpConfig.setRmtFleNme(filNm);
-		// ===下载远程文件到本地
-		operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
-
-		// TODO:for test
-//		context.setData("tlr", "ABIR148");
-//		context.setData("br", "01441800999");
-//		context.setData("bk", "01441999999");
+//		operateFTPAction.loginFTP(eupsThdFtpConfig);
+//		// ===设置远程文件名称=====
+//		eupsThdFtpConfig.setRmtFleNme(filNm);
+//		// ===下载远程文件到本地
+//		operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
 
 		// ====解析文件====String filePath, String fileName, String fileId
 		log.info("licDir:" + eupsThdFtpConfig.getLocDir());
