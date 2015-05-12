@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.strategy.sign;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
+import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
+import com.bocom.bbip.file.MftpTransfer;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
@@ -60,6 +63,13 @@ public class DegDateUpdImlAction implements AgtDataUpdImlService {
 
 		// 按照RCV44101 读取广州自来水处理结果文件
 		EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("watrAgtResult");
+		
+		try {			
+			bbipPublicService.getFileFromBBOS(new File(eupsThdFtpConfig.getLocDir(),filNam), filNam, MftpTransfer.FTYPE_NORMAL);			
+		}catch (Exception e) {
+			throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
+		}
+		
 		eupsThdFtpConfig.setLocFleNme(filNam);
 
 		List<Map<String, Object>> watrFileList = operateFileAction.pareseFile(eupsThdFtpConfig, "degAgtUpdFmt");
