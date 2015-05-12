@@ -279,13 +279,13 @@ public class CusAgentServiceAction extends BaseAction{
 			map.put("bk", context.getData(ParamKeys.BK));
 			map.put("br", context.getData(ParamKeys.BR));
 			map.put("obkBk", "301");
-			if(context.getData(ParamKeys.THD_SQN)!=null){
-				map.put("bk", "01441999999");
-				map.put("br", "01441131999");
-				context.setData("tlr", "EFC0000");
-				context.setData("bk", "01441999999");
-				context.setData("br", "01441131999");
-			}
+//			if(context.getData(ParamKeys.THD_SQN)!=null){
+//				map.put("bk", "01441999999");
+//				map.put("br", "01441131999");
+//				context.setData("tlr", "EFC0000");
+//				context.setData("bk", "01441999999");
+//				context.setData("br", "01441131999");
+//			}
 			map.put("cusAc", context.getData("cusAc"));
 //			map.put("cusAc", "6222620710007282377");
 			logger.info("~~~~~~~~~~requestHeader~~~~map~~~~~ "+map);
