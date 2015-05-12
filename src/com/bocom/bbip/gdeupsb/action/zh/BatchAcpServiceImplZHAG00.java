@@ -107,7 +107,7 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 		/**插入临时表中*/
 		logger.info("~~~~~~~Start ~~~~将数据插入临时表");
         for(GDEupsZhAGBatchTemp tmp:list){
-        	tmp.setSqn(bbipPublicService.getBBIPSequence());
+        	tmp.setSqn(bbipPublicService.getBBIPSequence().substring(4));
         	tmp.setBatNo((String)context.getData(ParamKeys.BAT_NO));
         	tmp.setRsvFld4("0");
         	if(tmp.getCusNme()==null || tmp.getCusNme()==""){
