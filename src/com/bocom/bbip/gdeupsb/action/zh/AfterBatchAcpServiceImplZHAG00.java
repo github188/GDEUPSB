@@ -1,8 +1,8 @@
 package com.bocom.bbip.gdeupsb.action.zh;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -13,6 +13,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
@@ -24,6 +25,7 @@ import com.bocom.bbip.eups.repository.EupsBatchInfoDetailRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
 import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
+import com.bocom.bbip.file.MftpTransfer;
 import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
@@ -31,7 +33,6 @@ import com.bocom.bbip.gdeupsb.entity.GDEupsZhAGBatchTemp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsZHAGBatchTempRepository;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
-import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -43,6 +44,8 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
 	GDEupsZHAGBatchTempRepository gdEupsZHAGBatchTempRepository;
 	@Autowired
 	OperateFTPAction operateFTPAction;
+	@Autowired
+	BBIPPublicService bbipPublicService;
 	@Override
 	public void afterBatchDeal(AfterBatchAcpDomain arg0, Context context)
 			throws CoreException {
@@ -122,7 +125,12 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
         String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + gdEupsBatchConsoleInfo.getTxnOrgCde()+ "/" ;
         config.setRmtWay(path);
         //放置到前台文件
-        operateFTPAction.putCheckFile(config);
+		try {			
+			bbipPublicService.sendFileToBBOS(new File(path,fileName), fileName, MftpTransfer.FTYPE_NORMAL);		
+		}catch (Exception e) {
+			throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
+		}
+		
         
         context.setData("ApFmt",  "48211");
         context.setData("batNo",  gdEupsBatchConsoleInfo.getBatNo());
