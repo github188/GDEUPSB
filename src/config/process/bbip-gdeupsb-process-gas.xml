@@ -22,7 +22,7 @@
 
 	<!-- 用户协议文件上传（0全部，1新增） -->
 	<process id="gdeupsb.gasAgentBatchFileToFTP" template="eups.simpleTran"
-		interceptors="eups.transMessageInterceptor">
+		interceptors="bbip.bbipSchedulerInterceptor">
 		<actions>
 			<action id="act" ref="gasAgentBatchFileToFTP" />
 		</actions>
@@ -97,7 +97,7 @@
 	</process>
 	
 	<process id="gdeupsb.checkBkFileToThird" template="eups.simpleTran"
-		interceptors="eups.transMessageInterceptor">
+		interceptors="bbip.bbipSchedulerInterceptor">
 		<actions>
 			<action id="act" ref="checkBkFileToThirdStrategyActionPGAS" />
 		</actions>
