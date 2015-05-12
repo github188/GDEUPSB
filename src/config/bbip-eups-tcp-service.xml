@@ -130,7 +130,7 @@
 				</bean>
 				<bean class="com.bocom.jump.bp.channel.interceptors.ContextInterceptor"></bean>
 				<bean class="com.bocom.bbip.eups.interceptor.ServiceThdInterceptor">
-					<constructor-arg value="6000" />
+					<constructor-arg value="30162" />
 				</bean>
 			</array>
 		</property>
@@ -140,7 +140,7 @@
 	
 	
 	<!-- PROF00 START -->
-	<bean id="tcpThreadPool_PROF00" class="com.bocom.jump.bp.util.Jdk15ThreadPool">
+	<!-- <bean id="tcpThreadPool_PROF00" class="com.bocom.jump.bp.util.Jdk15ThreadPool">
 		<property name="name" value="tcpChannel_PROF00" />
 		<property name="poolSize" value="10" />
 		<property name="workQueueSize" value="1024" />
@@ -162,10 +162,10 @@
 					class="com.bocom.jump.bp.channel.interceptors.RequestTracingInterceptor" />
 				<bean
 					class="com.bocom.jump.bp.channel.tcp.interceptors.PayloadChannelInterceptor">
-					<property name="lengthSize" value="8" /><!-- 报文长度占8位 -->
+					<property name="lengthSize" value="8" />报文长度占8位
 				</bean>
 				<bean class="com.bocom.jump.bp.channel.interceptors.TransformInterceptor">
-					<property name="encodeTransforms"><!-- 发送报文编码配置 -->
+					<property name="encodeTransforms">发送报文编码配置
 						<array>
 							<bean class="com.bocom.jump.bp.channel.interceptors.EncoderTransform">
 								<constructor-arg
@@ -174,7 +174,7 @@
 							<bean class="com.bocom.jump.bp.channel.interceptors.ResponseTransform" />
 						</array>
 					</property>
-					<property name="decodeTransforms"><!-- 接收报文解码配置 -->
+					<property name="decodeTransforms">接收报文解码配置
 						<array>
 							<bean class="com.bocom.jump.bp.channel.interceptors.RequestTransform" />
 							<bean class="com.bocom.jump.bp.channel.interceptors.DecoderTransform">
@@ -191,14 +191,14 @@
 				</bean>
 			</array>
 		</property>
-	</bean>
+	</bean> -->
 	<!-- PROF00 END -->
 
 
 	<!-- ======================================== -->
 	<!-- TBC BUSINESS TCP CHANNEL CONFIG -->
 	<!-- ======================================== -->
-	<bean id="tbc_TcpMapping" class="com.bocom.bbip.channel.tcp.EdgeSupportSocketURIEndpointMapping">
+	<!-- <bean id="tbc_TcpMapping" class="com.bocom.bbip.channel.tcp.EdgeSupportSocketURIEndpointMapping">
 		<property name="mapping">
 			<map>
 				<entry key="tcp://*:36010" value-ref="tbc_TcpEndpoint" />
@@ -206,7 +206,7 @@
 		</property>
 	</bean>
 	<bean id="tbc" class="com.bocom.jump.bp.channel.tcp.SocketServer">
-		<!-- 渠道接入端口，参数配置于sys.properties文件 -->
+		渠道接入端口，参数配置于sys.properties文件
 		<property name="host" value="127.0.0.1" />
 		<property name="port" value="36010" />
 		<property name="mapping" ref="tbc_TcpMapping" />
@@ -224,25 +224,25 @@
 					class="com.bocom.jump.bp.channel.interceptors.RequestTracingInterceptor" />
 				<bean
 					class="com.bocom.jump.bp.channel.tcp.interceptors.PayloadChannelInterceptor">
-					<!-- 报文前置长度，参数配置于sys.properties文件 -->
+					报文前置长度，参数配置于sys.properties文件
 					<property name="lengthSize" value="4" />
 				</bean>
 				<bean class="com.bocom.jump.bp.channel.interceptors.TransformInterceptor">
-					<property name="encodeTransforms"> <!-- unpack response -->
+					<property name="encodeTransforms"> unpack response
 						<array>
 							<bean class="com.bocom.jump.bp.channel.interceptors.EncoderTransform">
-								<!-- 渠道返回报文体，参数配置于sys.properties文件 -->
+								渠道返回报文体，参数配置于sys.properties文件
 								<constructor-arg
 									value="packet://WEB-INF/classes/config/stream/SGRT00/SGRT00RspHeader.xml" />
 							</bean>
 							<bean class="com.bocom.jump.bp.channel.interceptors.ResponseTransform" />
 						</array>
 					</property>
-					<property name="decodeTransforms"> <!-- unpack request -->
+					<property name="decodeTransforms"> unpack request
 						<array>
 							<bean class="com.bocom.jump.bp.channel.interceptors.RequestTransform" />
 							<bean class="com.bocom.jump.bp.channel.interceptors.DecoderTransform">
-								<!-- 渠道请求报文头，参数配置于sys.properties文件 -->
+								渠道请求报文头，参数配置于sys.properties文件
 								<constructor-arg
 									value="packet://WEB-INF/classes/config/stream/SGRT00/SGRT00ReqHeader.xml" />
 							</bean>
@@ -256,7 +256,7 @@
                 </bean>
 			</array>
 		</property>
-	</bean>
+	</bean> -->
 
 
 
@@ -309,7 +309,7 @@
 				</bean>
 				<bean class="com.bocom.jump.bp.channel.interceptors.ContextInterceptor"></bean>
 				<bean class="com.bocom.bbip.eups.interceptor.ServiceThdInterceptor">
-					<constructor-arg value="30123" />
+					<constructor-arg value="30111" />
 				</bean>
 			</array>
 		</property>
@@ -439,61 +439,6 @@
 		</property>
 	</bean>
 	
-<!-- 汕头电力第三方接出 start-->
-<!-- <bean id="Pool_ELEC02" class="com.bocom.jump.bp.util.Jdk15ThreadPool">
-		<property name="name" value="tcpChannel_ELEC02" />
-		<property name="poolSize" value="10" />
-		<property name="workQueueSize" value="1024" />
-	</bean>
-<bean id="tcpMapping_ELEC02" class="com.bocom.bbip.channel.tcp.EdgeSupportSocketURIEndpointMapping">
-	<property name="default" ref="tcpEndpoint_ELEC02" />
-</bean>
-<bean id="tcpChannel_ELEC02" class="com.bocom.jump.bp.channel.tcp.SocketServer">
-	<property name="host" value="0.0.0.0" />
-	<property name="port" value="30112" />
-	<property name="soTimeout" value="100000" />
-	<property name="mapping" ref="tcpMapping_ELEC02" />
-		<property name="threadPool" ref="Pool_ELEC02" />
-	</bean>
-<bean id="tcpEndpoint_ELEC02" class="com.bocom.jump.bp.channel.DefaultEndpoint">
-		<property name="interceptors">
-			<array>
-				<bean
-					class="com.bocom.jump.bp.channel.interceptors.RequestTracingInterceptor" />
-				 <bean
-					class="com.bocom.bbip.gdeupsb.channel.tcp.NoFrontPayloadChannelInterceptorSd">
-				</bean> 
-				<bean class="com.bocom.jump.bp.channel.interceptors.TransformInterceptor">
-					<property name="encodeTransforms">发送报文编码配置
-						<array>
-							<bean class="com.bocom.jump.bp.channel.interceptors.EncoderTransform">
-								<constructor-arg
-									value="packet://WEB-INF/classes/config/stream/ELEC02/ELEC02RsponseHeader.xml" />
-							</bean>
-							<bean class="com.bocom.jump.bp.channel.interceptors.ResponseTransform" />
-						</array>
-					</property>
-					<property name="decodeTransforms">接收报文解码配置
-						<array>
-							<bean class="com.bocom.jump.bp.channel.interceptors.RequestTransform" />
-							<bean class="com.bocom.jump.bp.channel.interceptors.DecoderTransform">
-								<constructor-arg
-									value="packet://WEB-INF/classes/config/stream/ELEC02/ELEC02RequestHeader.xml" />
-							</bean>
-						</array>
-					</property>
-					<property name="exceptionHandler" ref="exceptionHandler" />
-				</bean>
-				<bean class="com.bocom.bbip.gdeupsb.channel.tcp.ContextInterceptorExt"></bean>
-				<bean class="com.bocom.bbip.gdeupsb.channel.tcp.ServiceThdInterceptorExt">
-					<constructor-arg value="30112" />
-				</bean>
-			</array>
-		</property>
-	</bean> -->
-<!-- 汕头电力第三方接出 end-->
-
-
 
 <!-- 汕头电力第三方接出 start-->
 <bean id="Pool_ELEC02" class="com.bocom.jump.bp.util.Jdk15ThreadPool">
