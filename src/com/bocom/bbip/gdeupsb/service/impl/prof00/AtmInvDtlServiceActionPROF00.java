@@ -23,6 +23,7 @@ import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.MFTPConfigInfo;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
+import com.bocom.bbip.file.MftpTransfer;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
 import com.bocom.bbip.file.transfer.ftp.FTPTransfer;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
@@ -163,24 +164,29 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 
 			
 			// 上传FTP
-			FTPTransfer tFTPTransfer = new FTPTransfer();
-			// FTP上传设置
-			tFTPTransfer.setHost("182.53.15.164");
-			tFTPTransfer.setPort(21);
-			tFTPTransfer.setUserName("weblogic");
-			tFTPTransfer.setPassword("123456");
+//			FTPTransfer tFTPTransfer = new FTPTransfer();
+//			// FTP上传设置
+//			tFTPTransfer.setHost("182.53.15.164");
+//			tFTPTransfer.setPort(21);
+//			tFTPTransfer.setUserName("weblogic");
+//			tFTPTransfer.setPassword("123456");
 
-			try {
-				tFTPTransfer.logon();
-				Resource tResource = new FileSystemResource(FilNam);
-				tFTPTransfer.putResource(tResource,
-						"/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/",
-						fileName);
-
-			} catch (Exception e) {
-				throw new CoreException("文件上传失败");
-			} finally {
-				tFTPTransfer.logout();
+//			try {
+//				tFTPTransfer.logon();
+//				Resource tResource = new FileSystemResource(FilNam);
+//				tFTPTransfer.putResource(tResource,
+//						"/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/",
+//						fileName);
+//
+//			} catch (Exception e) {
+//				throw new CoreException("文件上传失败");
+//			} finally {
+//				tFTPTransfer.logout();
+//			}
+			try {			
+				bbipPublicService.sendFileToBBOS(new File(path,fileName), fileName, MftpTransfer.FTYPE_NORMAL);			
+			}catch (Exception e) {
+				throw new CoreException(ErrorCodes.EUPS_FAIL);
 			}
 
 			context.setData("fleNme", fileName);
@@ -308,24 +314,30 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 
 			
 			// 上传FTP
-			FTPTransfer tFTPTransfer = new FTPTransfer();
-			// FTP上传设置
-			tFTPTransfer.setHost("182.53.15.164");
-			tFTPTransfer.setPort(21);
-			tFTPTransfer.setUserName("weblogic");
-			tFTPTransfer.setPassword("123456");
-
-			try {
-				tFTPTransfer.logon();
-				Resource tResource = new FileSystemResource(FilNam);
-				tFTPTransfer.putResource(tResource,
-						"/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/",
-						fileName);
-
-			} catch (Exception e) {
-				throw new CoreException("文件上传失败");
-			} finally {
-				tFTPTransfer.logout();
+//			FTPTransfer tFTPTransfer = new FTPTransfer();
+//			// FTP上传设置
+//			tFTPTransfer.setHost("182.53.15.164");
+//			tFTPTransfer.setPort(21);
+//			tFTPTransfer.setUserName("weblogic");
+//			tFTPTransfer.setPassword("123456");
+//
+//			try {
+//				tFTPTransfer.logon();
+//				Resource tResource = new FileSystemResource(FilNam);
+//				tFTPTransfer.putResource(tResource,
+//						"/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/",
+//						fileName);
+//
+//			} catch (Exception e) {
+//				throw new CoreException("文件上传失败");
+//			} finally {
+//				tFTPTransfer.logout();
+//			}
+			
+			try {			
+				bbipPublicService.sendFileToBBOS(new File(path,fileName), fileName, MftpTransfer.FTYPE_NORMAL);			
+			}catch (Exception e) {
+				throw new CoreException(ErrorCodes.EUPS_FAIL);
 			}
 
 			context.setData("fleNme", fileName);
@@ -452,24 +464,30 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 
 			
 			// 上传FTP
-			FTPTransfer tFTPTransfer = new FTPTransfer();
-			// FTP上传设置
-			tFTPTransfer.setHost("182.53.15.164");
-			tFTPTransfer.setPort(21);
-			tFTPTransfer.setUserName("weblogic");
-			tFTPTransfer.setPassword("123456");
-
-			try {
-				tFTPTransfer.logon();
-				Resource tResource = new FileSystemResource(FilNam);
-				tFTPTransfer.putResource(tResource,
-						"/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/",
-						fileName);
-
-			} catch (Exception e) {
-				throw new CoreException("文件上传失败");
-			} finally {
-				tFTPTransfer.logout();
+//			FTPTransfer tFTPTransfer = new FTPTransfer();
+//			// FTP上传设置
+//			tFTPTransfer.setHost("182.53.15.164");
+//			tFTPTransfer.setPort(21);
+//			tFTPTransfer.setUserName("weblogic");
+//			tFTPTransfer.setPassword("123456");
+//
+//			try {
+//				tFTPTransfer.logon();
+//				Resource tResource = new FileSystemResource(FilNam);
+//				tFTPTransfer.putResource(tResource,
+//						"/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/",
+//						fileName);
+//
+//			} catch (Exception e) {
+//				throw new CoreException("文件上传失败");
+//			} finally {
+//				tFTPTransfer.logout();
+//			}
+			
+			try {			
+				bbipPublicService.sendFileToBBOS(new File(path,fileName), fileName, MftpTransfer.FTYPE_NORMAL);			
+			}catch (Exception e) {
+				throw new CoreException(ErrorCodes.EUPS_FAIL);
 			}
 
 			context.setData("fleNme", fileName);
