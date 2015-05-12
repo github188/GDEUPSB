@@ -88,7 +88,7 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 		Map head=(Map)result.get("header");
 		if(comNo.equals("4440000166")){
 			String rsvFld1=(String)head.get("rsvFld1");
-			if(rsvFld1.equals("73")){
+			if(!rsvFld1.equals("73")){
 				throw new CoreException(comNo+"来盘文件交易码错误");
 			}
 			head.put("rsvFld1", "75");
