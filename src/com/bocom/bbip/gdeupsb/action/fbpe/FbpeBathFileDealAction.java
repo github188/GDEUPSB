@@ -15,9 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.comp.BBIPPublicServiceImpl;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
+import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdBaseInfoRepository;
@@ -26,6 +28,7 @@ import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
 import com.bocom.bbip.eups.spi.service.batch.BatchAcpService;
 import com.bocom.bbip.eups.spi.vo.PrepareBatchAcpDomain;
 import com.bocom.bbip.file.Marshaller;
+import com.bocom.bbip.file.MftpTransfer;
 import com.bocom.bbip.file.transfer.TransferUtils;
 import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
@@ -65,6 +68,8 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
     BBIPPublicServiceImpl bbipPublicServiceImpl;
     @Autowired
     GdFbpeFileBatchTmpRepository fileBatchTmpRepository;
+    @Autowired
+    BBIPPublicService bbipPublicService;
     @SuppressWarnings("unchecked")
     @Override
     public void prepareBatchDeal(PrepareBatchAcpDomain arg0, Context context) throws CoreException {
@@ -79,13 +84,12 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
        
         //u盘文件获取
         EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne("FSAG00");
-        eupsThdFtpConfig.setFtpDir("1");
-        eupsThdFtpConfig.setRmtFleNme(fileName);
-        eupsThdFtpConfig.setLocFleNme(fileName);
-        String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + context.getData(ParamKeys.BR)+ "/" + context.getData(ParamKeys.TELLER) + "/";
-		eupsThdFtpConfig.setRmtWay(path);
-		operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
-		
+		String filPath=eupsThdFtpConfig.getLocDir();
+		try {			
+			bbipPublicService.sendFileToBBOS(new File(filPath,fileName), fileName, MftpTransfer.FTYPE_NORMAL);			
+		}catch (Exception e) {
+			throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
+		}
 		logger.info("===============获取文件成功");
         
 		String filePath=eupsThdFtpConfig.getLocDir();
