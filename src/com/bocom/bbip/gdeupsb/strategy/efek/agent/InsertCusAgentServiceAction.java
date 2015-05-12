@@ -81,10 +81,10 @@ public class InsertCusAgentServiceAction extends BaseAction {
 		
 		context.setData("ageBr", context.getData(ParamKeys.BK));
 		context.setData("agrBr", context.getData(ParamKeys.BR));
-		if(context.getData(ParamKeys.THD_SQN)!=null){
-			context.setData("bk", "01441999999");
-			context.setData("br", "01441131999");
-		}
+//		if(context.getData(ParamKeys.THD_SQN)!=null){
+//			context.setData("bk", "01441999999");
+//			context.setData("br", "01441131999");
+//		}
 		context.setData("oprTyp", "0");
 		if(context.getData("bankToThd")!=null){
 				context.setData("cusTyp", cusTyp);
@@ -265,13 +265,13 @@ public class InsertCusAgentServiceAction extends BaseAction {
 		map.put("bk", context.getData(ParamKeys.BK));
 		map.put("br", context.getData(ParamKeys.BR));
 		map.put("obkBk", "301");
-		if(context.getData(ParamKeys.THD_SQN)!=null){
-			map.put("bk", "01441999999");
-			map.put("br", "01441131999");
-			context.setData("tlr", "EFC0000");
-			context.setData("bk", "01441999999");
-			context.setData("br", "01441131999");
-		}
+//		if(context.getData(ParamKeys.THD_SQN)!=null){
+//			map.put("bk", "01441999999");
+//			map.put("br", "01441131999");
+//			context.setData("tlr", "EFC0000");
+//			context.setData("bk", "01441999999");
+//			context.setData("br", "01441131999");
+//		}
 		map.put("cusAc", cusAc);
 		logger.info("~~~~~~~~~~requestHeader~~~~map~~~~~ "+map);
 		logger.info("~~~~~~~~~~列表查询开始 ");
