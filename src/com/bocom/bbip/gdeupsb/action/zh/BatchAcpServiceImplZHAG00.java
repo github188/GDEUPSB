@@ -18,7 +18,6 @@ import org.springframework.core.io.Resource;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
-import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsActSysPara;
@@ -43,7 +42,6 @@ import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
-import com.bocom.jump.bp.service.sqlmap.SqlMap;
 import com.bocom.jump.bp.support.CollectionUtils;
 /**
  * @author wuyh
