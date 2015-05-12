@@ -31,6 +31,7 @@ import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
+import com.bocom.bbip.file.MftpTransfer;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
 import com.bocom.bbip.file.transfer.ftp.FTPTransfer;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
@@ -61,6 +62,8 @@ public class CheckTrspFileAction extends BaseAction {
 	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
 	@Autowired
 	OperateFileAction operateFileAction;
+	@Autowired
+	BBIPPublicService bbipPublicService;
 	@Autowired
 	@Qualifier("callThdTradeManager")
 	ThirdPartyAdaptor callThdTradeManager;
@@ -499,22 +502,10 @@ public class CheckTrspFileAction extends BaseAction {
 		}
 
 		EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
-		// FTP上传设置
-		FTPTransfer tFTPTransfer = new FTPTransfer();
-		tFTPTransfer.setHost(sendFileToBBOSConfig.getThdIpAdr());
-		tFTPTransfer.setPort(Integer.parseInt(sendFileToBBOSConfig.getBidPot()));
-		tFTPTransfer.setUserName(sendFileToBBOSConfig.getOppNme());
-		tFTPTransfer.setPassword(sendFileToBBOSConfig.getOppUsrPsw());
-		
        try {
-       	tFTPTransfer.logon();
-           Resource tResource = new FileSystemResource(sendFileToBBOSConfig.getLocDir()+rptFil);
-           tFTPTransfer.putResource(tResource, "/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/", rptFil);
-
+    	   bbipPublicService.sendFileToBBOS(new File(sendFileToBBOSConfig.getRmtWay(),rptFil), rptFil, MftpTransfer.FTYPE_NORMAL);		
        } catch (Exception e) {
        	throw new CoreException("文件上传失败");
-       } finally {
-       	tFTPTransfer.logout();
        }
 		
        context.setData("filNam", rptFil);
