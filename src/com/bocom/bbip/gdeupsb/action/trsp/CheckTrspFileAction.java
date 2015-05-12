@@ -28,6 +28,7 @@ import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
+import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
@@ -505,7 +506,7 @@ public class CheckTrspFileAction extends BaseAction {
        try {
     	   bbipPublicService.sendFileToBBOS(new File(sendFileToBBOSConfig.getRmtWay(),rptFil), rptFil, MftpTransfer.FTYPE_NORMAL);		
        } catch (Exception e) {
-       	throw new CoreException("文件上传失败");
+       	throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
        }
 		
        context.setData("filNam", rptFil);
