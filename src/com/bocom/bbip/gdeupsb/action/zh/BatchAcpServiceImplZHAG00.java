@@ -94,12 +94,11 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 			head.put("rsvFld1", "75");
 		}
 		List lst=(List)result.get("detail");
-		if (null!=head) {
-			context.getDataMapDirectly().putAll(head);
-		}
+		
 		GDEupsBatchConsoleInfo info=ContextUtils.getDataAsObject(context, GDEupsBatchConsoleInfo.class);
 		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(info);
 		List <GDEupsZhAGBatchTemp>list=(List<GDEupsZhAGBatchTemp>) BeanUtils.toObjects(lst, GDEupsZhAGBatchTemp.class);
+		BigDecimal totAmt=new BigDecimal("0.00");
 		/**插入临时表中*/
 		logger.info("~~~~~~~Start ~~~~将数据插入临时表");
         for(GDEupsZhAGBatchTemp tmp:list){
@@ -110,6 +109,13 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
         		tmp.setCusNme(tmp.getThdCusNme());
         	}
         	gdEupsZHAGBatchTempRepository.insert(tmp);
+        	totAmt=totAmt.add(new BigDecimal(tmp.getTxnAmt()));
+        }
+        if (null!=head) {
+        		context.getDataMapDirectly().putAll(head);
+		        if(totAmt.toString()!=(String)head.get("totAmt")  || (String)head.get("totCnt") !=(list.size()+"")){
+		        	throw new CoreException("录入总笔数或总金额与文件不符");
+		        }
         }
 //        gdEupsZHAGBatchTempRepository.batchInsert(list);
 //       ((SqlMap)get("sqlMap")).insert("com.bocom.bbip.gdeupsb.entity.GDEupsZhAGBatchTemp.batchInsert", list); 
