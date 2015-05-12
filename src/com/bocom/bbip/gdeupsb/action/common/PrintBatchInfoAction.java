@@ -19,6 +19,7 @@ import org.springframework.core.io.Resource;
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
+import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.entity.EupsBatchInfoDetail;
@@ -26,6 +27,7 @@ import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
 import com.bocom.bbip.eups.repository.EupsBatchInfoDetailRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
+import com.bocom.bbip.file.MftpTransfer;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
 import com.bocom.bbip.file.transfer.ftp.FTPTransfer;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
@@ -47,6 +49,8 @@ public class PrintBatchInfoAction extends BaseAction{
 	EupsBatchConsoleInfoRepository eupsBatchConsoleInfoRepository;
 	@Autowired
 	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
+	@Autowired
+	BBIPPublicService bbipPublicService;
 	@Autowired
 	OperateFTPAction operateFTPAction;
 		@Override
@@ -135,34 +139,20 @@ public class PrintBatchInfoAction extends BaseAction{
 					//报表		
 					log.info("=============Start   Send   File==========");
 					EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
-					// FTP上传设置
-					FTPTransfer tFTPTransfer = new FTPTransfer();
-					tFTPTransfer.setHost(sendFileToBBOSConfig.getThdIpAdr());
-					tFTPTransfer.setPort(Integer.parseInt(sendFileToBBOSConfig.getBidPot()));
-					tFTPTransfer.setUserName(sendFileToBBOSConfig.getOppNme());
-					tFTPTransfer.setPassword(sendFileToBBOSConfig.getOppUsrPsw());
 					 try {
-					       	tFTPTransfer.logon();
-					        Resource tResource = new FileSystemResource(sendFileToBBOSConfig.getLocDir()+fileName);
-					        tFTPTransfer.putResource(tResource, "/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/", fileName);
+						 bbipPublicService.sendFileToBBOS(new File(sendFileToBBOSConfig.getLocDir(),fileName), fileName, MftpTransfer.FTYPE_NORMAL);		
 					} catch (Exception e) {
-					       	throw new CoreException("文件上传失败");
-					} finally {
-					       	tFTPTransfer.logout();
+						throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
 					}
 					 
 					log.info("=============放置报表文件");
 			        //反盘文件
 					String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + context.getData(ParamKeys.BR)+ "/" ;
-					 try {
-					       	tFTPTransfer.logon();
-					        Resource tResource = new FileSystemResource(get(BBIPPublicService.class).getParam("FSAG00")+fileName);
-					        tFTPTransfer.putResource(tResource, path, fileName);
-					 } catch (Exception e) {
-					       	throw new CoreException("文件上传失败");
-					 } finally {
-					       	tFTPTransfer.logout();
-					 }
+					try {			
+						bbipPublicService.sendFileToBBOS(new File(path,fileName), fileName, MftpTransfer.FTYPE_NORMAL);		
+					}catch (Exception e) {
+						throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
+					}
 					log.info("=============放置反盘文件");
 				log.info("======================printResult"+context.getData("printResult"));
 		}
