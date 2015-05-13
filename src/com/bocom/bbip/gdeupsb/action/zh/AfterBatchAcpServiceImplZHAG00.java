@@ -97,12 +97,15 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
         			if(sts.equals("S")){
         				rsvFld5="1"+rsvFld5;
         			}else{
-        				String errSeeason=eupsBatchInfoDetail.getErrMsg().substring(0,6);
-        				if(errSeeason.equals("TPM050")){
+        				String errMsg=eupsBatchInfoDetail.getErrMsg();
+					 	if(errMsg.length()>6){
+					 		errMsg=eupsBatchInfoDetail.getErrMsg().substring(0,6);
+					 	}
+        				if(errMsg.equals("TPM050")){
         					rsvFld5="2"+rsvFld5;
-				 		}else if(errSeeason.equals("TPM055")){
+				 		}else if(errMsg.equals("TPM055")){
 				 			rsvFld5="3"+rsvFld5;
-				 		}else if(errSeeason.equals("PDM252")){
+				 		}else if(errMsg.equals("PDM252")){
 				 			rsvFld5="4"+rsvFld5;
 				 		}else{
 				 			rsvFld5="5"+rsvFld5;
