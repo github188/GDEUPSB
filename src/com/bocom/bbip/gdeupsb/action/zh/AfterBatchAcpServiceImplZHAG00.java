@@ -122,11 +122,9 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
 		config.setLocFleNme(fileName);
         ((OperateFileAction)get("opeFile")).createCheckFile(config, formatOut, fileName, resultMap);
         config.setRmtFleNme(fileName);
-        String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + gdEupsBatchConsoleInfo.getTxnOrgCde()+ "/" ;
-        config.setRmtWay(path);
         //放置到前台文件
 		try {			
-			bbipPublicService.sendFileToBBOS(new File(path,fileName), fileName, MftpTransfer.FTYPE_NORMAL);		
+			bbipPublicService.sendFileToBBOS(new File(config.getLocDir(),fileName), fileName, MftpTransfer.FTYPE_NORMAL);		
 		}catch (Exception e) {
 			throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
 		}
