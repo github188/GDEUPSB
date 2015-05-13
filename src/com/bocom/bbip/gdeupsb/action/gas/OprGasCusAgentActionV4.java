@@ -550,7 +550,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			// 燃气协议表新增一条数据
 			GdGasCusAll addGasCusAll = BeanUtils.toObject(context.getDataMap(),
 					GdGasCusAll.class);
-			addGasCusAll.setCusNo((String) context.getData(ParamKeys.CUS_NO));
+			addGasCusAll.setCusNo((String) context.getData(ParamKeys.THD_CUS_NO));
 			;
 			addGasCusAll.setCusAc((String) context.getData(ParamKeys.CUS_AC));
 			addGasCusAll.setCusNme((String) context.getData(ParamKeys.CUS_NME));
@@ -570,7 +570,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			GdGasCusDay insCusInfo = new GdGasCusDay();
 			insCusInfo.setSequence(get(BBIPPublicService.class)
 					.getBBIPSequence());
-			insCusInfo.setCusNo((String) context.getData(ParamKeys.CUS_NO));
+			insCusInfo.setCusNo((String) context.getData(ParamKeys.THD_CUS_NO));
 			;
 			insCusInfo.settCommd((String) context.getData("tCommd"));
 			insCusInfo.setCusAc((String) context.getData(ParamKeys.CUS_AC));
