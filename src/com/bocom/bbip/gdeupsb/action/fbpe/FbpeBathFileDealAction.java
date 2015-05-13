@@ -88,11 +88,13 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
 		if(context.getData("mothed").toString().trim().equals("1")){
 			try {			
 				bbipPublicService.getFileFromBBOS(new File(filPath,fileName), fileName, MftpTransfer.FTYPE_NORMAL);			
+				logger.info("===============获取文件成功");
 			}catch (Exception e) {
 				throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
 			}
+    	}else{
+    		throw new CoreException("获取文件方式错误");
     	}
-		logger.info("===============获取文件成功");
         
 		String filePath=eupsThdFtpConfig.getLocDir();
 		String pathName=filePath+"//"+fileName;
