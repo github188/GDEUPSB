@@ -1,21 +1,15 @@
 package com.bocom.bbip.gdeupsb.action.common;
 
-import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
-import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
-import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.bbip.service.Result;
-import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.ContextUtils;
 import com.bocom.jump.bp.core.Context;
@@ -31,7 +25,6 @@ public class EupsQueryBatchStatusAction extends BaseAction {
 	public void execute(Context context)throws CoreException{
 		logger.info("----批次信息查询开始----");
 		final String batNo=ContextUtils.assertDataNotEmptyAndGet(context, "batNo", ErrorCodes.EUPS_FIELD_EMPTY, "批次号");
-		final String eupsBusTyp=context.getData(ParamKeys.EUPS_BUSS_TYPE);
 
 		GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=get(GDEupsBatchConsoleInfoRepository.class).findOne(batNo);
 		logger.info("批次信息:"+BeanUtils.toFlatMap(gdEupsBatchConsoleInfo));
