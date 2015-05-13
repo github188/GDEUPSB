@@ -98,7 +98,7 @@ public class DegDateUpdImlAction implements AgtDataUpdImlService {
 			agtSbinMap.put("tAgtSt", tAgtSt); // 状态
 			agtSbinMap.put("terMsg", wtrDtlMap.get("errMsg")); // 错误码
 			agtSbinMap.put("gdsBId", gdsRunCtl.getGdsBid()); // 业务种类
-			agtSbinMap.put("actNo", wtrDtlMap.get("actNo")); // 帐号
+			agtSbinMap.put("actNo", wtrDtlMap.get("ACTNO")); // 帐号
 			agtSbinMap.put("tCusId", wtrDtlMap.get("tCusId")); // 客户标志
 			
 			
