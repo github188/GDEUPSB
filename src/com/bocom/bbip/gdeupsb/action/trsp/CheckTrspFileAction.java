@@ -474,8 +474,10 @@ public class CheckTrspFileAction extends BaseAction {
 		}
 		String result = render.renderAsString(rptFil, context);
 		// 文件路径
+		
+		EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
 		StringBuffer rpFmts = new StringBuffer();
-		rpFmts.append("/home/bbipadm/data/GDEUPSB/report/");
+		rpFmts.append(sendFileToBBOSConfig.getLocDir());
 		File file = new File(rptFil.toString());
 		if (!file.exists()) {
 			file.mkdirs();
@@ -502,9 +504,9 @@ public class CheckTrspFileAction extends BaseAction {
 			log.info("===========ErrMsg=",e);
 		}
 
-		EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
+		
        try {
-    	   bbipPublicService.sendFileToBBOS(new File(sendFileToBBOSConfig.getRmtWay(),rptFil), rptFil, MftpTransfer.FTYPE_NORMAL);		
+    	   bbipPublicService.sendFileToBBOS(new File(sendFileToBBOSConfig.getLocDir(),rptFil), rptFil, MftpTransfer.FTYPE_NORMAL);		
        } catch (Exception e) {
        	throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
        }
