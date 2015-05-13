@@ -74,6 +74,7 @@ public class QryHzThdCusInfoAction extends BaseAction {
 		setResponseFromPage(context, "loopDtl", page);
 		logger.info("========== context after set loopDtl =" + context);
 		
+		context.setData("loopDtl", page.getElements());
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
 	}
 }
