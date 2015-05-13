@@ -50,7 +50,6 @@ public class QryReportInfoAction extends BaseAction {
 		GdEupsTransJournal eupsJnl = new GdEupsTransJournal();
 		eupsJnl.setEupsBusTyp((String) context
 				.getData(ParamKeys.EUPS_BUSS_TYPE));
-		eupsJnl.setBr((String) context.getData(ParamKeys.BR));
 		if (StringUtils.isNotBlank((String) context
 				.getData(ParamKeys.COMPANY_NO))) {
 			eupsJnl.setComNo((String) context.getData(ParamKeys.COMPANY_NO));
