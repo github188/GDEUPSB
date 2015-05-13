@@ -212,8 +212,6 @@ public class BatchFileCommon extends BaseAction {
 			//待提交
 			gdEupsBatchConsoleInfo.setBatSts("W");
 			get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(gdEupsBatchConsoleInfo);
-			unLock(comNo);
-			logger.info("==============End sendBatchFileToACP and putCheckFile");
 		}else{
 			((OperateFileAction)get("opeFile")).createCheckFile(config, "BatchFmt", fleNme, fileMap);
 			 String path="/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/" ;
@@ -224,6 +222,8 @@ public class BatchFileCommon extends BaseAction {
 					throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
 			}
 		}
+		unLock(comNo);
+		logger.info("==============End sendBatchFileToACP and putCheckFile");
 	}
 /**
  * EUPS_BATCH_CONSOLE_INFO和GDEUPS_BATCH_CONSOLE_INFO关联起来
