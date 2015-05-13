@@ -15,10 +15,11 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
 public class BatchFileChangeAction extends BaseAction{
 	@Autowired
 	EupsActSysParaRepository eupsActSysParaRepository;
+	@Autowired
+	BBIPPublicService bbipPublicService;
 	@Override
 	public void execute(Context context) throws CoreException,
 			CoreRuntimeException {
-		BBIPPublicService bbipPublicService=get(BBIPPublicService.class);
 		log.info("====================Start   BatchFileChangeAction");
 		String eupsBusTyp=context.getData(ParamKeys.EUPS_BUSS_TYPE).toString();
 		String batNo =((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
