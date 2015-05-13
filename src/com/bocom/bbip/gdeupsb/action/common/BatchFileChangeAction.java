@@ -21,11 +21,11 @@ public class BatchFileChangeAction extends BaseAction{
 		log.info("====================Start   BatchFileChangeAction");
 		String eupsBusTyp=context.getData(ParamKeys.EUPS_BUSS_TYPE).toString();
 		if(eupsBusTyp.equals("FSAG00")){
+			log.info("====================Start   BatchFileChangeAction  FSAG00");
 			bbipPublicService.synExecute("eups.fileBatchPayCreateDataProcess",context);
 		}else if(eupsBusTyp.equals("ZHAG00") || eupsBusTyp.equals("ZHAG01") || eupsBusTyp.equals("ZHAG02")){
-			System.out.println(111);
+			log.info("====================Start   BatchFileChangeAction  "+eupsBusTyp);
 			bbipPublicService.asynExecute("eups.fileBatchPayCreateDataProcess",context);
-			System.out.println(222);
 		}else{
 			throw new CoreException("不支持该业务类型的交易");
 		}
