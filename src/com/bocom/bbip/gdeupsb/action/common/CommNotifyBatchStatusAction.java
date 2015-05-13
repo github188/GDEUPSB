@@ -40,7 +40,7 @@ public class CommNotifyBatchStatusAction extends BaseAction{
 				bbipPublicService.asynExecute(mothed, context);
 				//返回文件名
 				GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=gdEupsBatchConsoleInfoRepository.findOne(batNos);
-				String fileName=gdEupsBatchConsoleInfo.getComNo()+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
+				String fileName=gdEupsBatchConsoleInfo.getComNo()+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";
 				//返回字段配置
 		        context.setData("ApFmt",  "48211");
 		        context.setData("batNo",  gdEupsBatchConsoleInfo.getBatNo());
