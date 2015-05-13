@@ -87,7 +87,7 @@
 				<property name="host" value="182.59.59.27"/>
 				<property name="port" value="7600" />
 				<property name="timeout" value="30000" />
-				<property name="filePath" value="/home/bbipadm/data/GDEUPSB/trsp/" />
+				<property name="filePath" value="/home/bbipadm/data/mftp/" />
 				<!-- <property name="streamResolver">
 				
 				<bean class="com.bocom.jump.bp.channel.tcp.LengthStreamResolver" >
