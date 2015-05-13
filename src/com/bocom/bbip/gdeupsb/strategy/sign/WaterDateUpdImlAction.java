@@ -65,11 +65,11 @@ public class WaterDateUpdImlAction implements AgtDataUpdImlService {
 		EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("watrAgtResult");
 		eupsThdFtpConfig.setLocFleNme(filNam);
 		
-		try {			
-			bbipPublicService.getFileFromBBOS(new File(eupsThdFtpConfig.getLocDir(),filNam), filNam, MftpTransfer.FTYPE_NORMAL);			
-		}catch (Exception e) {
-			throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
-		}
+//		try {			
+//			bbipPublicService.getFileFromBBOS(new File(eupsThdFtpConfig.getLocDir(),filNam), filNam, MftpTransfer.FTYPE_NORMAL);			
+//		}catch (Exception e) {
+//			throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
+//		}
 
 		List<Map<String, Object>> watrFileList = operateFileAction.pareseFile(eupsThdFtpConfig, "waterAgtUpdFmt");
 
