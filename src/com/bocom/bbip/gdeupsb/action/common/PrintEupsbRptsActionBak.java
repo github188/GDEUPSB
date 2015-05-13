@@ -224,7 +224,7 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 					.toString().trim()
 					+ "_批量交易报表";
 			if (eupsBusTyp.equals("ELEC02")) {
-				fileName = "301586003BatchReport" + DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd) + br + "_p_" + tlr + ".txt";
+				fileName = "301586003BatchReport" + DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd) + ".txt";
 			} else {
 				fileName = ttlDate + context.getData(ParamKeys.EUPS_BUSS_TYPE) + "Batch" + "_p_"  + br + "_" + tlr + ".txt";
 			}
