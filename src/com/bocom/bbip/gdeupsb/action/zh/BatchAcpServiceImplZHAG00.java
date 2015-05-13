@@ -84,7 +84,7 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 		Map<String,Object> result=pareseFileByPath(path, fleNme, fileFormat);
 		Assert.isFalse(null==result||0==result.size(), ErrorCodes.EUPS_FILE_PARESE_FAIL, "解析文件出错");
 		Map head=(Map)result.get("header");
-		if(!comNo.equals("4440000166")){
+		if(comNo.equals("4440000166")){
 			String rsvFld1=(String)head.get("rsvFld1");
 			if(!rsvFld1.equals("73")){
 				throw new CoreException(comNo+"来盘文件交易码错误");
