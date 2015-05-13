@@ -29,6 +29,9 @@ public interface GDEupsZHAGBatchTempRepository extends
 	public void deleteByBatNo(final String BatNo);
 
 	@Delete
+	public void deleteByComNo( String BatNo);
+	
+	@Delete
 	public void deleteAll();
 	@Find
 	public Page<GDEupsZhAGBatchTemp>getDetails(Pageable pageable,final String batNo);
