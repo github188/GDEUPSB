@@ -217,7 +217,7 @@ public class BatchFileCommon extends BaseAction {
 		//待提交
 		gdEupsBatchConsoleInfo.setBatSts("W");
 		gdEupsBatchConsoleInfo.setTotCnt((Integer)context.getData("totCnt"));
-		gdEupsBatchConsoleInfo.setTotAmt(new BigDecimal((String)context.getData("totAmt")));
+		gdEupsBatchConsoleInfo.setTotAmt((BigDecimal)context.getData("totAmt"));
 		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(gdEupsBatchConsoleInfo);
 		unLock(comNo);
 		logger.info("==============End sendBatchFileToACP and putCheckFile");
