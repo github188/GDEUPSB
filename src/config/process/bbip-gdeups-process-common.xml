@@ -113,6 +113,11 @@
 		</actions>
 	</process>
 	
-	
+	<!-- 文件返回格式生成-->
+	<process id="gdeupsb.batchFileZHAG" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
+		<actions>
+			  <action id="act" ref="gdeupsb.batchFileZHAGAction"   />
+		</actions>
+	</process>
 </x:beans>
 
