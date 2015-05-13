@@ -109,12 +109,6 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
         	gdEupsZHAGBatchTempRepository.insert(tmp);
         	totAmt=totAmt.add(new BigDecimal(tmp.getTxnAmt()));
         }
-        if (null!=head) {
-		        if(totAmt.toString()!=(String)head.get("totAmt")  || (String)head.get("totCnt") !=(list.size()+"")){
-		        	throw new CoreException("录入总笔数或总金额与文件不符");
-		        }
-		        context.getDataMapDirectly().putAll(head);
-        }
 //        gdEupsZHAGBatchTempRepository.batchInsert(list);
 //       ((SqlMap)get("sqlMap")).insert("com.bocom.bbip.gdeupsb.entity.GDEupsZhAGBatchTemp.batchInsert", list); 
         logger.info("~~~~~~~End  ~~~~将数据插入临时表");
