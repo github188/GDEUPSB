@@ -109,8 +109,8 @@
 	
 	<!-- 文件格式确定 -->
 	<process id="gdeupsb.batchFileChange" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
-		<actions>
-			  <action id="act" ref="commNotifyBatchStatusAction"   />
+		<actions>	
+			  <action id="act" ref="gdeupsb.batchFileChangeAction"   />
 		</actions>
 	</process>
 	
