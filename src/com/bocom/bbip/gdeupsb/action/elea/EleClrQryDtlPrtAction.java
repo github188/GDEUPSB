@@ -500,7 +500,7 @@ public class EleClrQryDtlPrtAction extends BaseAction {
 //			}
 			
 			try {
-				get(BBIPPublicService.class).getFileFromBBOS(new File(JYPath), fileName, MftpTransfer.FTYPE_NORMAL);			
+				get(BBIPPublicService.class).sendFileToBBOS(new File(JYPath), fileName, MftpTransfer.FTYPE_NORMAL);			
 			}catch (Exception e) {
 				throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
 			}
