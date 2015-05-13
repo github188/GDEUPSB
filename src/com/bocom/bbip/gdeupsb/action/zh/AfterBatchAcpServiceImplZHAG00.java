@@ -22,7 +22,6 @@ import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
-import com.bocom.bbip.eups.repository.EupsBatchInfoDetailRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
 import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
@@ -36,8 +35,6 @@ import com.bocom.jump.bp.core.CoreException;
 
 public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterBatchAcpService {
 	private static final Log logger = LogFactory.getLog(AfterBatchAcpServiceImplZHAG00.class);
-	@Autowired
-	EupsBatchInfoDetailRepository eupsBatchInfoDetailRepository;
 	@Autowired
 	GDEupsZHAGBatchTempRepository gdEupsZHAGBatchTempRepository;
 	@Autowired
