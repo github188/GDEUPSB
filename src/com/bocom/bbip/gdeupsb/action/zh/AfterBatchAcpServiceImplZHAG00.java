@@ -55,12 +55,19 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
 		EupsThdFtpConfig eupsThdFtpConfig=get(EupsThdFtpConfigRepository.class).findOne("zhag00");
 		String resultName=batNos+".result";
 		List<Map<String, Object>> mapList=operateFileAction.pareseFile(eupsThdFtpConfig, "batchReturn");
-		if(comNos.equals("4440001488")){
+		//成功 失败金额
+		BigDecimal sucTotAmt=new BigDecimal("0.00");
+		BigDecimal falTotAmt=new BigDecimal("0.00");
+		//成功失败笔数
+		int sucTotCnt=0;
+		int falTotCnt=0;
+		if(comNos.equals("4440001488") || comNos.equals("4440000101")){
 	        for (int i=1;i<mapList.size();i++) {
 	        	Map<String, Object> map=mapList.get(i);
 	        	String sqn=(String)map.get("sqn");
 	        	map.put("sqn", sqn);
-	        	String txnAmts=new BigDecimal((String)map.get("txnAmt")).scaleByPowerOfTen(2).intValue()+"";
+	        	BigDecimal txnAmt=new BigDecimal((String)map.get("txnAmt"));
+	        	String txnAmts=txnAmt.scaleByPowerOfTen(2).intValue()+"";
 	        	while(txnAmts.length()<12){
 	        			txnAmts="0"+txnAmts;
 	        	}
@@ -91,10 +98,15 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
         			String sqn=(String)map.get("sqn");
         			String sts=(String)map.get("sts");
         			GDEupsZhAGBatchTemp gdEupsZhAGBatchTemp=gdEupsZHAGBatchTempRepository.findOne(sqn);
+        			BigDecimal txnAmt=new BigDecimal(gdEupsZhAGBatchTemp.getTxnAmt());
         			String rsvFld5=gdEupsZhAGBatchTemp.getRsvFld5();
         			if(sts.equals("S")){
         				rsvFld5="1"+rsvFld5;
+        				sucTotAmt=sucTotAmt.add(txnAmt);
+        				sucTotCnt++;
         			}else{
+        				falTotAmt=falTotAmt.add(txnAmt);
+        				falTotCnt++;
         				String errMsg=(String)map.get("errMsg");
 					 	if(errMsg.length()>6){
 					 		errMsg=errMsg.substring(0,6);
@@ -116,7 +128,15 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
         EupsThdFtpConfig config=get(EupsThdFtpConfigRepository.class).findOne("zhag00");
         
       //拼装Map文件
-        Map<String, Object> mapHeader=mapList.get(0);
+        Map<String, Object> mapHeader=new HashMap<String, Object>();
+        mapHeader.put("rsvFld1", "75");
+        mapHeader.put("rsvFld2", "006");
+        mapHeader.put("rsvFld3", mapList.size()-1);//记录条数
+        mapHeader.put("STotCnt", sucTotCnt);//成功笔数
+        mapHeader.put("STotAmt", sucTotAmt);//成功金额
+        mapHeader.put("FTotCnt", falTotCnt);//失败笔数
+        mapHeader.put("FTotAmt", sucTotAmt);//失败金额
+        
 		Map<String, Object> resultMap = createFileMap(context,mapHeader);
 		
 		String formatOut=findFormat(comNos);
