@@ -4,12 +4,12 @@
 	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet spacket.xsd"
 	encoding="gbk" trace="true">
 	<segment name="detail" encoding="GBK">
-		<varString name="RPTFIL" type="D|" />  
-		<varString name="DTLSEQ" type="D|" /> 
-		<varString name="BNKDAT" type="D|" />  
+		<varString name="RPTFIL" type="D|" />
+		<varString name="DTLSEQ" type="D|" />
+		<varString name="BNKDAT" type="D|" />
 		<!-- <varString name="IDTYP" type="D|" />  -->    <!-- 水务拷盘取消该字段 -->
-		<varString name="TCUSID" type="D|" />  
-		<varString name="ACTNM" type="D|" />    
+		<varString name="TCUSID" type="D|" />
+		<varString name="ACTNM" type="D|" />
 		<varString name="ACTNO" type="D|" /> 
 		<varString name="tmp1" type="D|"  default="301581000019"/> 
 		<varString name="BNKTYP" type="D|"  default="交通银行"/>  
