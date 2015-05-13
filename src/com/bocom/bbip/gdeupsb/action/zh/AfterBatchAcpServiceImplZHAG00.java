@@ -58,7 +58,7 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
         List<EupsBatchInfoDetail>list= eupsBatchInfoDetailRepository.find(eupsBatchInfoDetails);
         Assert.isNotEmpty(list, ErrorCodes.EUPS_QUERY_NO_DATA);
         String comNos=gdEupsBatchConsoleInfo.getComNo();
-        if(comNos.equals("4440001488")){
+        if(comNos.equals("4440001488") || comNos.equals("4440000101")){
 	        for (EupsBatchInfoDetail eupsBatchInfoDetail : list) {
 	        	Map<String , Object > map=new HashMap<String, Object>();
 	        	String sqn=eupsBatchInfoDetail.getRmk1();
