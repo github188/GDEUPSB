@@ -15,8 +15,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
 import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.comp.BBIPPublicService;
@@ -29,7 +27,6 @@ import com.bocom.bbip.eups.repository.EupsThdBaseInfoRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.file.MftpTransfer;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
-import com.bocom.bbip.file.transfer.ftp.FTPTransfer;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GdEupsTransJournalRepository;
 import com.bocom.bbip.utils.DateUtils;
@@ -60,6 +57,7 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 		// 配VM文件
 		StringBuffer fileName = null;
 		String br = context.getData(ParamKeys.BR);
+		String tlr = context.getData(ParamKeys.TELLER);
 		String beginDate = context.getData("beginDate");
 		String endDate = context.getData("endDate");
 		Date beginDte = DateUtils.parse(beginDate, DateUtils.STYLE_SIMPLE_DATE);
@@ -108,8 +106,8 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 			context.setData("TOTOTHERAMT", prtList.get(0).get("TOTOTHERAMT"));
 
 			fileName = new StringBuffer(
-					(new StringBuilder("PGAS00DKAll_" + "_" + beginDate
-							+ "_" + endDate).append(".txt").toString()));
+					(new StringBuilder("PGAS00dkAll" 
+			+ beginDate + "to" + endDate).append("_p_" + br + "_" + tlr).append(".txt").toString()));
 		}
 		if ("2".equals(prtFlg)) {
 			prtList = get(GdEupsTransJournalRepository.class)
@@ -121,8 +119,7 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 			context.setData("sumCnt", prtList.get(0).get("SUCCCNT"));
 			context.setData("sumAmt", prtList.get(0).get("TOTSUCCAMT"));
 			fileName = new StringBuffer(
-					(new StringBuilder("PGAS00DKSUC_" + br + "_" + beginDate
-							+ "_" + endDate).append(".txt").toString()));
+					(new StringBuilder("PGAS00dkSuc"+ beginDate + "to" + endDate).append("_p_" + br + "_" + tlr).append(".txt").toString()));
 		}
 		if ("3".equals(prtFlg)) {
 			prtList = get(GdEupsTransJournalRepository.class)
@@ -134,8 +131,7 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 			context.setData("sumCnt", prtList.get(0).get("FAILCNT"));
 			context.setData("sumAmt", prtList.get(0).get("TOTFAILAMT"));
 			fileName = new StringBuffer(
-					(new StringBuilder("PGAS00DKFAL_" + br + "_" + beginDate
-							+ "_" + endDate).append(".txt").toString()));
+					(new StringBuilder("PGAS00dkFal"+ beginDate + "to" + endDate).append("_p_" + br + "_" + tlr).append(".txt").toString()));
 		}
 		if ("4".equals(prtFlg)) {
 			prtList = get(GDEupsBatchConsoleInfoRepository.class)
@@ -152,8 +148,7 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 			context.setData("sumFalAmt", prtList.get(0).get("SUM_FAL_TOT_AMT"));
 
 			fileName = new StringBuffer(
-					(new StringBuilder("PGAS00BATALL_" + br + "_" + beginDate
-							+ "_" + endDate).append(".txt").toString()));
+					(new StringBuilder("PGAS00batAll"+ beginDate + "to" + endDate).append("_p_" + br + "_" + tlr).append(".txt").toString()));
 		}
 		if ("5".equals(prtFlg)) {
 			prtList = get(GDEupsBatchConsoleInfoRepository.class)
@@ -165,8 +160,7 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 			context.setData("sumCnt", prtList.get(0).get("SUM_SUC_TOT_CNT"));
 			context.setData("sumAmt", prtList.get(0).get("SUM_SUC_TOT_AMT"));
 			fileName = new StringBuffer(
-					(new StringBuilder("PGAS00BATSUC_" + br + "_" + beginDate
-							+ "_" + endDate).append(".txt").toString()));
+					(new StringBuilder("PGAS00batSuc"+ beginDate + "to" + endDate).append("_p_" + br + "_" + tlr).append(".txt").toString()));
 		}
 		if ("6".equals(prtFlg)) {
 			prtList = get(GDEupsBatchConsoleInfoRepository.class)
@@ -178,8 +172,7 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 			context.setData("sumCnt", prtList.get(0).get("SUM_FAL_TOT_CNT"));
 			context.setData("sumAmt", prtList.get(0).get("SUM_FAL_TOT_AMT"));
 			fileName = new StringBuffer(
-					(new StringBuilder("PGAS00BATFAL_" + br + "_" + beginDate
-							+ "_" + endDate).append(".txt").toString()));
+					(new StringBuilder("PGAS00batFal"+ beginDate + "to" + endDate).append("_p_" + br + "_" + tlr).append(".txt").toString()));
 		}
 
 		logger.info("================prtList.size:" + prtList.size());
@@ -243,7 +236,7 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 				} catch (Exception e) {
 					throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
 				}
-			}
+			} 
 		}
 		logger.info("报表文件生成！！NEXT 上传FTP");
 
@@ -259,7 +252,7 @@ public class PrintReportServiceActionPGAS00 extends BaseAction {
 //		try {
 //			tFTPTransfer.logon();
 //			Resource tResource = new FileSystemResource(JYPath);
-//			tFTPTransfer.putResource(tResource,
+//			tFTPTransfer.putResour ce(tResource,
 //					sendFileToBBOSConfig.getRmtWay().trim(),
 //					fileName.toString());
 //
