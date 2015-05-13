@@ -73,7 +73,7 @@ public class BatchGashDealServiceAction extends BaseAction implements
 			throws CoreException {
 		logger.info("批次前准备数据");
 
-		context.setData("extFields", "01491800999");
+		context.setData("extFields", "01491001999");
 		
 		String bk = "01491999999";//分行号01441999999 ?
 		String br = "01491001999";//网点号、机构号01491800999?
