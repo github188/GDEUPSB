@@ -177,7 +177,7 @@ public class WaterDateUpdImlAction implements AgtDataUpdImlService {
 
 			String unusbMsg = new String();
 			// 若总数和文件中处理的数目不同说明有不同的数据
-			if (recCnt != tolCnt) {
+			if (recCnt != tolCnt||recCnt != (tolCnt-1)) {
 				// 查询本批回盘标识还是Y的数据qryAgt44101Usbflg
 				List<String> actList = new ArrayList<String>();
 				try {
