@@ -216,7 +216,7 @@ public class BatchFileCommon extends BaseAction {
 			logger.info("==============End sendBatchFileToACP and putCheckFile");
 		}else{
 			((OperateFileAction)get("opeFile")).createCheckFile(config, "BatchFmt", fleNme, fileMap);
-			 String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + br+ "/" ;
+			 String path="/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/" ;
 		     //放置到前台文件
 			try {			
 					get(BBIPPublicService.class).sendFileToBBOS(new File(path,fleNme), fleNme, MftpTransfer.FTYPE_NORMAL);		
