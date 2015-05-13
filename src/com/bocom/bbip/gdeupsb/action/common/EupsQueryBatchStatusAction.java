@@ -27,6 +27,9 @@ public class EupsQueryBatchStatusAction extends BaseAction {
 		final String batNo=ContextUtils.assertDataNotEmptyAndGet(context, "batNo", ErrorCodes.EUPS_FIELD_EMPTY, "批次号");
 
 		GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=get(GDEupsBatchConsoleInfoRepository.class).findOne(batNo);
+		if(gdEupsBatchConsoleInfo.getBatSts().equals("I")){
+				throw new CoreException(batNo+"正在入库，请稍后");
+		}
 		logger.info("批次信息:"+BeanUtils.toFlatMap(gdEupsBatchConsoleInfo));
 		context.setData("batNo",gdEupsBatchConsoleInfo.getBatNo());
 		context.setData("comNo",gdEupsBatchConsoleInfo.getComNo());
