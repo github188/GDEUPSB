@@ -71,7 +71,7 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 		String filPath=config.getLocDir();
 		if(context.getData("mothed").toString().trim().equals("1")){
 			try {			
-				bbipPublicService.sendFileToBBOS(new File(filPath,fleNme), fleNme, MftpTransfer.FTYPE_NORMAL);			
+				bbipPublicService.getFileFromBBOS(new File(filPath,fleNme), fleNme, MftpTransfer.FTYPE_NORMAL);			
 			}catch (Exception e) {
 				throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
 			}
