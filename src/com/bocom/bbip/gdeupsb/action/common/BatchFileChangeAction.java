@@ -1,13 +1,19 @@
 package com.bocom.bbip.gdeupsb.action.common;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsActSysPara;
+import com.bocom.bbip.eups.repository.EupsActSysParaRepository;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
 
 public class BatchFileChangeAction extends BaseAction{
+	@Autowired
+	EupsActSysParaRepository eupsActSysParaRepository;
 	@Override
 	public void execute(Context context) throws CoreException,
 			CoreRuntimeException {
@@ -23,6 +29,12 @@ public class BatchFileChangeAction extends BaseAction{
 		}else{
 			throw new CoreException("不支持该业务类型的交易");
 		}
+		String comNo=context.getData("comNo").toString();
+		EupsActSysPara eupsActSysParas=new EupsActSysPara();
+		eupsActSysParas.setComNo(comNo);
+		String comNoAcps=eupsActSysParaRepository.find(eupsActSysParas).get(0).getSplNo();
+		String fileName="BATC"+comNoAcps+"0.txt";
+		context.setData(ParamKeys.FLE_NME, fileName);
 		log.info("====================End   BatchFileChangeAction");
 	}
 }
