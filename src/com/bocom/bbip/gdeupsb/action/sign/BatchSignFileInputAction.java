@@ -591,7 +591,7 @@ public class BatchSignFileInputAction extends BaseAction {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				bbipPubSvr.sendFileToBBOS(new File(TransferUtils.resolveFilePath(localDir, reportName)), fileName,
+				bbipPubSvr.sendFileToBBOS(new File(TransferUtils.resolveFilePath(localDir, reportName)), reportName,
 						MftpTransfer.FTYPE_NORMAL);
 				context.setData("retmsg", "报表生成成功！");
 				context.setData("SucRpt", reportName);// 返回前端文件名
@@ -655,7 +655,7 @@ public class BatchSignFileInputAction extends BaseAction {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				bbipPubSvr.sendFileToBBOS(new File(TransferUtils.resolveFilePath(localDir, reportName)), fileName,
+				bbipPubSvr.sendFileToBBOS(new File(TransferUtils.resolveFilePath(localDir, reportName)), reportName,
 						MftpTransfer.FTYPE_NORMAL);
 				context.setData("FailRpt", reportName);// 返回前端文件名
 				context.setData("retmsg", "报表生成成功！");
