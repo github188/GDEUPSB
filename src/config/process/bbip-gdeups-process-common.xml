@@ -105,5 +105,14 @@
 			  <action id="act" ref="commNotifyBatchStatusAction"   />
 		</actions>
 	</process>
+	
+	<!-- 文件处理方式-->
+	<process id="gdeupsb.batchFileChange" template="eups.simpleTran"	interceptors="bbip.defaultInterceptors" >
+		<actions>
+			  <action id="act" ref="gdeupsb.batchFileChangeAction"   />
+		</actions>
+	</process>
+	
+	
 </x:beans>
 
