@@ -3,8 +3,6 @@ package com.bocom.bbip.gdeupsb.action.zh;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -21,61 +19,62 @@ import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsBatchInfoDetail;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
+import com.bocom.bbip.eups.repository.EupsBatchInfoDetailRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
 import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
 import com.bocom.bbip.file.MftpTransfer;
+import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
+import com.bocom.bbip.gdeupsb.common.GDConstants;
+import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.entity.GDEupsZhAGBatchTemp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsZHAGBatchTempRepository;
+import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
-import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
 public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterBatchAcpService {
 	private static final Log logger = LogFactory.getLog(AfterBatchAcpServiceImplZHAG00.class);
 	@Autowired
+	EupsBatchInfoDetailRepository eupsBatchInfoDetailRepository;
+	@Autowired
 	GDEupsZHAGBatchTempRepository gdEupsZHAGBatchTempRepository;
 	@Autowired
 	OperateFTPAction operateFTPAction;
 	@Autowired
 	BBIPPublicService bbipPublicService;
-	@Autowired
-	OperateFileAction operateFileAction;
 	@Override
 	public void afterBatchDeal(AfterBatchAcpDomain arg0, Context context)
 			throws CoreException {
 		logger.info("================返盘文件处理开始");
 		String batNos=context.getData("batNo").toString();
-		String comNos=context.getData("comNo").toString();
-		EupsThdFtpConfig eupsThdFtpConfig=get(EupsThdFtpConfigRepository.class).findOne("zhag00");
-		String resultName=batNos+".result";
-		List<Map<String, Object>> mapList=operateFileAction.pareseFile(eupsThdFtpConfig, "batchReturn");
-		//成功 失败金额
-		BigDecimal sucTotAmt=new BigDecimal("0.00");
-		BigDecimal falTotAmt=new BigDecimal("0.00");
-		//成功失败笔数
-		int sucTotCnt=0;
-		int falTotCnt=0;
-		if(comNos.equals("4440001488") || comNos.equals("4440000101")){
-	        for (int i=1;i<mapList.size();i++) {
-	        	Map<String, Object> map=mapList.get(i);
-	        	String sqn=(String)map.get("sqn");
+		GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).eupsBatchConSoleInfoAndgdEupsBatchConSoleInfo(context);
+		//返回结果集合
+		EupsBatchInfoDetail eupsBatchInfoDetails=new EupsBatchInfoDetail();
+		eupsBatchInfoDetails.setBatNo(batNos);
+        List<EupsBatchInfoDetail>list= eupsBatchInfoDetailRepository.find(eupsBatchInfoDetails);
+        Assert.isNotEmpty(list, ErrorCodes.EUPS_QUERY_NO_DATA);
+        String comNos=gdEupsBatchConsoleInfo.getComNo();
+        if(comNos.equals("4440001488")){
+	        for (EupsBatchInfoDetail eupsBatchInfoDetail : list) {
+	        	Map<String , Object > map=new HashMap<String, Object>();
+	        	String sqn=eupsBatchInfoDetail.getRmk1();
 	        	map.put("sqn", sqn);
-	        	BigDecimal txnAmt=new BigDecimal((String)map.get("txnAmt"));
-	        	String txnAmts=txnAmt.scaleByPowerOfTen(2).intValue()+"";
+	        	String txnAmts=eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2).intValue()+"";
 	        	while(txnAmts.length()<12){
 	        			txnAmts="0"+txnAmts;
 	        	}
 	        	 map.put("txnAmt",txnAmts);
-				 String sts=(String)map.get("sts");
+				 String sts=eupsBatchInfoDetail.getSts();
 				 if(sts.equals("S")){
 					 map.put("rsvFld2","Y");
 				 }else{
-					 	String errMsg=(String)map.get("errMsg");
+					 	String errMsg=eupsBatchInfoDetail.getErrMsg();
 					 	if(errMsg.length()>6){
-					 		errMsg=errMsg.substring(0,6);
+					 		errMsg=eupsBatchInfoDetail.getErrMsg().substring(0,6);
 					 	}
 					 	if(errMsg.equals("TPM050")){
 					 			map.put("rsvFld2","E");
@@ -90,29 +89,20 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
 				 gdEupsZHAGBatchTempRepository.updateRsvFld2(map);
 			}
         }else if(comNos.equals("4440000166")){
-        	for (int i=1;i<mapList.size();i++) {
-        			Map<String, Object> map=mapList.get(i);
-        			String sqn=(String)map.get("sqn");
-        			String sts=(String)map.get("sts");
+        	for (EupsBatchInfoDetail eupsBatchInfoDetail : list) {
+        			String sqn=eupsBatchInfoDetail.getRmk1();
+        			String sts=eupsBatchInfoDetail.getSts();
         			GDEupsZhAGBatchTemp gdEupsZhAGBatchTemp=gdEupsZHAGBatchTempRepository.findOne(sqn);
-        			BigDecimal txnAmt=new BigDecimal(gdEupsZhAGBatchTemp.getTxnAmt());
         			String rsvFld5=gdEupsZhAGBatchTemp.getRsvFld5();
         			if(sts.equals("S")){
         				rsvFld5="1"+rsvFld5;
-        				sucTotAmt=sucTotAmt.add(txnAmt);
-        				sucTotCnt++;
         			}else{
-        				falTotAmt=falTotAmt.add(txnAmt);
-        				falTotCnt++;
-        				String errMsg=(String)map.get("errMsg");
-					 	if(errMsg.length()>6){
-					 		errMsg=errMsg.substring(0,6);
-					 	}
-        				if(errMsg.equals("TPM050")){
+        				String errSeeason=eupsBatchInfoDetail.getErrMsg().substring(0,6);
+        				if(errSeeason.equals("TPM050")){
         					rsvFld5="2"+rsvFld5;
-				 		}else if(errMsg.equals("TPM055")){
+				 		}else if(errSeeason.equals("TPM055")){
 				 			rsvFld5="3"+rsvFld5;
-				 		}else if(errMsg.equals("PDM252")){
+				 		}else if(errSeeason.equals("PDM252")){
 				 			rsvFld5="4"+rsvFld5;
 				 		}else{
 				 			rsvFld5="5"+rsvFld5;
@@ -125,39 +115,33 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
         EupsThdFtpConfig config=get(EupsThdFtpConfigRepository.class).findOne("zhag00");
         
       //拼装Map文件
-        Map<String, Object> mapHeader=new HashMap<String, Object>();
-        mapHeader.put("rsvFld1", "75");
-        mapHeader.put("rsvFld2", "006");
-        mapHeader.put("rsvFld3", mapList.size()-1);//记录条数
-        mapHeader.put("STotCnt", sucTotCnt);//成功笔数
-        mapHeader.put("STotAmt", sucTotAmt);//成功金额
-        mapHeader.put("FTotCnt", falTotCnt);//失败笔数
-        mapHeader.put("FTotAmt", sucTotAmt);//失败金额
-        
-		Map<String, Object> resultMap = createFileMap(context,mapHeader);
+		Map<String, Object> resultMap = createFileMap(context,gdEupsBatchConsoleInfo);
 		
-		String formatOut=findFormat(comNos);
-		String fileName=comNos+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
+		String formatOut=findFormat(gdEupsBatchConsoleInfo.getComNo());
+		String fileName=gdEupsBatchConsoleInfo.getRsvFld1();
 		config.setLocFleNme(fileName);
         ((OperateFileAction)get("opeFile")).createCheckFile(config, formatOut, fileName, resultMap);
         config.setRmtFleNme(fileName);
+        String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + gdEupsBatchConsoleInfo.getTxnOrgCde()+ "/" ;
+        config.setRmtWay(path);
         //放置到前台文件
 		try {			
-			bbipPublicService.sendFileToBBOS(new File(config.getLocDir(),fileName), fileName, MftpTransfer.FTYPE_NORMAL);		
+			bbipPublicService.sendFileToBBOS(new File(path,fileName), fileName, MftpTransfer.FTYPE_NORMAL);		
 		}catch (Exception e) {
 			throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
 		}
 		
         
         context.setData("ApFmt",  "48211");
-        context.setData("comNo",  comNos);
-        context.setData("subDte",  null);
+        context.setData("batNo",  gdEupsBatchConsoleInfo.getBatNo());
+        context.setData("comNo",  gdEupsBatchConsoleInfo.getComNo());
+        context.setData("subDte",  gdEupsBatchConsoleInfo.getSubDte());
         context.setData("comNme", fileName );
-       context.setData("batSts",  null);
-        context.setData("totCnt",  null);
-        context.setData("totAmt",  null);
-        context.setData("sucTotCnt"  ,null);
-        context.setData("sucTotAmt", null);
+       context.setData("batSts",  gdEupsBatchConsoleInfo.getBatSts());
+        context.setData("totCnt",  gdEupsBatchConsoleInfo.getTotCnt());
+        context.setData("totAmt",  gdEupsBatchConsoleInfo.getTotAmt());
+        context.setData("sucTotCnt"  ,gdEupsBatchConsoleInfo.getSucTotCnt());
+        context.setData("sucTotAmt", gdEupsBatchConsoleInfo.getSucTotAmt());
        
 		 logger.info("================返盘文件处理结束");
 
@@ -188,14 +172,12 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
 		/**
 		 * 拼装Map返回文件
 		 */
-		public Map<String, Object> createFileMap(Context context,Map<String, Object> map){
+		public Map<String, Object> createFileMap(Context context,GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo){
 				logger.info("===============Start  BatchDataResultFileAction  createFileMap");	
 				Map<String, Object> resultMap=new HashMap<String, Object>();		
-				resultMap.put(ParamKeys.EUPS_FILE_HEADER, map);
-				//文件内容  
-				GDEupsZhAGBatchTemp gdEupsZhAGBatchTemp=new GDEupsZhAGBatchTemp();
-				gdEupsZhAGBatchTemp.setComNo((String)map.get("comNo"));
-				List<GDEupsZhAGBatchTemp> detailList=gdEupsZHAGBatchTempRepository.find(gdEupsZhAGBatchTemp);
+				resultMap.put(ParamKeys.EUPS_FILE_HEADER, BeanUtils.toMap(gdEupsBatchConsoleInfo));
+				//文件内容 
+				List<GDEupsZhAGBatchTemp> detailList=gdEupsZHAGBatchTempRepository.findByBatNo(gdEupsBatchConsoleInfo.getBatNo());
 				resultMap.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(detailList));
 				logger.info("===============End   BatchDataResultFileAction  createFileMap");	
 				return resultMap;
