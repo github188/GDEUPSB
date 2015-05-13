@@ -226,7 +226,7 @@
 	</bean>
 
 	<bean id="ELEC00GateWay" class="com.bocom.bbip.gdeupsb.channel.tcp.ELEC00SocketGateway">
-		<property name="host" value="182.53.1.6" />
+		<property name="host" value="182.53.15.200" />
 		<property name="port" value="5680" />
 		<property name="soTimeout" value="60000" />
 		<property name="streamResolver">
