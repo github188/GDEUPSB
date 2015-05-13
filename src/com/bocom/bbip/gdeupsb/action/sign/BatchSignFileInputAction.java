@@ -204,11 +204,11 @@ public class BatchSignFileInputAction extends BaseAction {
 
 		// 设置ftp参数
 		EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne("telAgtFileSnd");
-		try {
-			bbipPubService.getFileFromBBOS(new File(eupsThdFtpConfig.getLocDir(),filNm), filNm, MftpTransfer.FTYPE_NORMAL);			
-		}catch (Exception e) {
-			throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
-		}
+//		try {
+//			bbipPubService.getFileFromBBOS(new File(eupsThdFtpConfig.getLocDir(),filNm), filNm, MftpTransfer.FTYPE_NORMAL);			
+//		}catch (Exception e) {
+//			throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
+//		}
 
 		log.info("licDir:" + eupsThdFtpConfig.getLocDir());
 		map = operateFileService.pareseFileByPath(eupsThdFtpConfig.getLocDir(), filNm, GDParamKeys.GDS_BATCH_FILE);
