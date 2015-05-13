@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
@@ -29,7 +27,6 @@ import com.bocom.bbip.eups.repository.EupsBatchInfoDetailRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.file.MftpTransfer;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
-import com.bocom.bbip.file.transfer.ftp.FTPTransfer;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
@@ -113,6 +110,11 @@ public class PrintBatchInfoAction extends BaseAction{
 				
 				//生成文件路径
 				StringBuffer batNoFile=new StringBuffer();
+				//创建路径
+				File files=new File("/home/bbipadm/data/GDEUPSB/report/");
+				if(!files.exists()){
+					files.mkdirs();
+				}
 				batNoFile.append("/home/bbipadm/data/GDEUPSB/report/");
 				File file =new File(batNoFile.toString());
 				if(!file.exists()){
@@ -147,7 +149,7 @@ public class PrintBatchInfoAction extends BaseAction{
 					 
 					log.info("=============放置报表文件");
 			        //反盘文件
-					String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + context.getData(ParamKeys.BR)+ "/" ;
+					String path=sendFileToBBOSConfig.getLocDir();
 					try {
 						bbipPublicService.sendFileToBBOS(new File(path,fileName), fileName, MftpTransfer.FTYPE_NORMAL);		
 					}catch (Exception e) {
