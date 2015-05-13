@@ -148,7 +148,7 @@ public class PrintBatchInfoAction extends BaseAction{
 					log.info("=============放置报表文件");
 			        //反盘文件
 					String path="/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + context.getData(ParamKeys.BR)+ "/" ;
-					try {			
+					try {
 						bbipPublicService.sendFileToBBOS(new File(path,fileName), fileName, MftpTransfer.FTYPE_NORMAL);		
 					}catch (Exception e) {
 						throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
