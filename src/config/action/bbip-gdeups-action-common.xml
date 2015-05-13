@@ -44,4 +44,8 @@
 	<action id="commNotifyBatchStatusAction"
 		class="com.bocom.bbip.gdeupsb.action.common.CommNotifyBatchStatusAction" />
 
+	<!-- 文件导入确定方式 -->
+	<action id="gdeupsb.batchFileChangeAction"
+		class="com.bocom.bbip.gdeupsb.action.common.BatchFileChangeAction" />
+
 </x:beans>
