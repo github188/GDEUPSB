@@ -6,7 +6,7 @@
 	<segment name="header" encoding="gbk">
 	   <fixString name="rsvFld1"   length="2" />     <!-- 交易码，返盘为75 -->
       <fixString name="rsvFld2"       length="3" />   <!--银行代号-->
-      <fixString name="rsvFld3"       length="8" />   <!--记录条数-->
+      <fixString name="totCnt"       length="8" />   <!--记录条数-->
       <fixString name="STotCnt"  length="8" />   <!--批扣成功记录数-->
       <fixString name="STotAmt"  length="14" />   <!--批扣成功总金额，金额元为单位，含小数点，右补空格-->
       <fixString name="FTotCnt"  length="8" />   <!--批扣失败记录数-->
