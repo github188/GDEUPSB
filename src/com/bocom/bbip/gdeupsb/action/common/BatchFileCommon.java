@@ -76,7 +76,10 @@ public class BatchFileCommon extends BaseAction {
 		}
 		/** 插入批次控制表 */
 		logger.info("==============Start  Insert  GDEupsBatchConsoleInfo");
-		String batNo =((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
+		String batNo =(String)context.getData("batNo");
+		if(batNo==null){
+			 batNo =((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
+		}
 		info.setBatNo(batNo);
 		info.setEupsBusTyp(eupsBusTyp);
 		info.setBatSts(GDConstants.BATCH_STATUS_INIT);
