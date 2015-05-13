@@ -1,5 +1,6 @@
 package com.bocom.bbip.gdeupsb.strategy.hscard;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -59,9 +60,12 @@ public class CheckBkFileToThirdStrategyAction implements Executable {
 		List<Map<String, Object>> list = gdEupsTransJournalRepository
 				.findSumTxnAmt(eups);
 		Map<String, Object> totMap = list.get(0);
-
+		
+		
+		BigDecimal totAmt = (BigDecimal)totMap.get("TOTAMT");
+		totAmt = totAmt.scaleByPowerOfTen(2);
 		context.setData("totNum", totMap.get("TOTNUM"));
-		context.setData("totAmt", totMap.get("TOTAMT"));
+		context.setData("totAmt", totAmt);
 
 		// 拼装对账文件map
 		Map<String, Object> map = encodeFileMap(context);
@@ -131,8 +135,17 @@ public class CheckBkFileToThirdStrategyAction implements Executable {
 			logger.info("There are no records for select check trans journal ");
 			throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
 		}
+//		Iterable<Map<String, Object>> iterable = BeanUtils.toMaps(chkGDEupsTransJournal);
+		BigDecimal txnAmt;
+		for(int i=0;i<chkGDEupsTransJournal.size();i++){
+			txnAmt = chkGDEupsTransJournal.get(i).getTxnAmt();
+			
+			chkGDEupsTransJournal.get(i).setTxnAmt(txnAmt.scaleByPowerOfTen(2));
+		}
+		
 		map.put(ParamKeys.EUPS_FILE_DETAIL,
 				BeanUtils.toMaps(chkGDEupsTransJournal));
+		logger.info("11111111111@@@@@@@@@@"+map);
 		return map;
 	}
 }
