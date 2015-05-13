@@ -21,6 +21,7 @@ import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.eupsreport.ReportHelper;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.entity.MFTPConfigInfo;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.file.MftpTransfer;
@@ -50,10 +51,17 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 	@Autowired
 	BBIPPublicServiceImpl bbipPublicService;
 	
+	@Autowired
+	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
+	
 	@Override
 	public void execute(Context context) throws CoreException,	CoreRuntimeException {
 		logger.info("AtmInvDtlServiceActionPROF00 start ... ...");
 		String func = context.getData("func");
+		
+		
+		
+		
 		logger.info("func["+func+"]");
 		if("1".equals(func)){//自助通发票使用情况明细表
 			invDtl(context);
@@ -134,7 +142,8 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 				e.printStackTrace();
 			}
 	
-			
+			EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("sendFileToBBOS");
+			String locDir = eupsThdFtpConfig.getLocDir();
 			
 			render.setReportNameTemplateLocationMapping(mapping);
 			String result = render.renderAsString("sample", context);
@@ -149,18 +158,18 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 			String fileName = date;
 			BufferedOutputStream outStream = null;
 			try {
-	
+				
 				outStream = new BufferedOutputStream(new FileOutputStream(
-						"/home/bbipadm/data/GDEUPSB/report/"+fileName));
+						locDir+fileName));
 				outStream.write(result.getBytes(GDConstants.CHARSET_ENCODING_GBK));
 				outStream.close();
 			} catch (IOException e) {
 				throw new CoreException("BBIP0004EU0128");
 			}
 			
-			String path = "/home/bbipadm/data/GDEUPSB/report/";
+//			String path = "/home/bbipadm/data/GDEUPSB/report/";
 			
-			String FilNam = "/home/bbipadm/data/GDEUPSB/report/" +fileName;
+//			String FilNam = "/home/bbipadm/data/GDEUPSB/report/" +fileName;
 
 			
 			// 上传FTP
@@ -184,7 +193,7 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 //				tFTPTransfer.logout();
 //			}
 			try {			
-				bbipPublicService.sendFileToBBOS(new File(path,fileName), fileName, MftpTransfer.FTYPE_NORMAL);			
+				bbipPublicService.sendFileToBBOS(new File(locDir,fileName), fileName, MftpTransfer.FTYPE_NORMAL);			
 			}catch (Exception e) {
 				throw new CoreException(ErrorCodes.EUPS_FAIL);
 			}
@@ -294,6 +303,9 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			
+			EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("sendFileToBBOS");
+			String locDir = eupsThdFtpConfig.getLocDir();
 			String date = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
 //			StringBuffer fileName = new StringBuffer((new StringBuilder("").append(date).toString()));
 			String fileName = date;
@@ -301,16 +313,16 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 			try {
 	
 				outStream = new BufferedOutputStream(new FileOutputStream(
-						"/home/bbipadm/data/GDEUPSB/report/"+fileName));
+						locDir+fileName));
 				outStream.write(result.getBytes(GDConstants.CHARSET_ENCODING_GBK));
 				outStream.close();
 			} catch (IOException e) {
 				throw new CoreException("BBIP0004EU0128");
 			}
 			
-			String path = "/home/bbipadm/data/GDEUPSB/report/";
+//			String path = "/home/bbipadm/data/GDEUPSB/report/";
 			
-			String FilNam = "/home/bbipadm/data/GDEUPSB/report/" +fileName;
+//			String FilNam = "/home/bbipadm/data/GDEUPSB/report/" +fileName;
 
 			
 			// 上传FTP
@@ -335,7 +347,7 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 //			}
 			
 			try {			
-				bbipPublicService.sendFileToBBOS(new File(path,fileName), fileName, MftpTransfer.FTYPE_NORMAL);			
+				bbipPublicService.sendFileToBBOS(new File(locDir,fileName), fileName, MftpTransfer.FTYPE_NORMAL);			
 			}catch (Exception e) {
 				throw new CoreException(ErrorCodes.EUPS_FAIL);
 			}
@@ -444,6 +456,9 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
+			
+			EupsThdFtpConfig eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("sendFileToBBOS");
+			String locDir = eupsThdFtpConfig.getLocDir();
 			String date = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
 //			StringBuffer fileName = new StringBuffer((new StringBuilder("").append(date).toString()));
 			String fileName = date;
@@ -451,16 +466,16 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 			try {
 	
 				outStream = new BufferedOutputStream(new FileOutputStream(
-						"/home/bbipadm/data/GDEUPSB/report/"+fileName));
+						locDir+fileName));
 				outStream.write(result.getBytes(GDConstants.CHARSET_ENCODING_GBK));
 				outStream.close();
 			} catch (IOException e) {
 				throw new CoreException("BBIP0004EU0128");
 			}
 			
-			String path = "/home/bbipadm/data/GDEUPSB/report/";
+//			String path = "/home/bbipadm/data/GDEUPSB/report/";
 			
-			String FilNam = "/home/bbipadm/data/GDEUPSB/report/" +fileName;
+//			String FilNam = "/home/bbipadm/data/GDEUPSB/report/" +fileName;
 
 			
 			// 上传FTP
@@ -485,7 +500,7 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 //			}
 			
 			try {			
-				bbipPublicService.sendFileToBBOS(new File(path,fileName), fileName, MftpTransfer.FTYPE_NORMAL);			
+				bbipPublicService.sendFileToBBOS(new File(locDir,fileName), fileName, MftpTransfer.FTYPE_NORMAL);			
 			}catch (Exception e) {
 				throw new CoreException(ErrorCodes.EUPS_FAIL);
 			}
