@@ -176,7 +176,15 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
 		public Map<String, Object> createFileMap(Context context,GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo){
 				logger.info("===============Start  BatchDataResultFileAction  createFileMap");	
 				Map<String, Object> resultMap=new HashMap<String, Object>();		
-				resultMap.put(ParamKeys.EUPS_FILE_HEADER, BeanUtils.toMap(gdEupsBatchConsoleInfo));
+				Map<String, Object> mapHeader=new HashMap<String, Object>();
+				mapHeader.put("rsvFld1", "75");
+				mapHeader.put("rsvFld2", gdEupsBatchConsoleInfo.getRsvFld2());
+				mapHeader.put("totCnt", gdEupsBatchConsoleInfo.getTotCnt());
+				mapHeader.put("STotCnt", gdEupsBatchConsoleInfo.getSucTotCnt());
+				mapHeader.put("STotAmt", gdEupsBatchConsoleInfo.getSucTotAmt());
+				mapHeader.put("FTotCnt", gdEupsBatchConsoleInfo.getFalTotCnt());
+				mapHeader.put("FTotAmt", gdEupsBatchConsoleInfo.getFalTotCnt());
+				resultMap.put(ParamKeys.EUPS_FILE_HEADER, mapHeader);
 				//文件内容 
 				List<GDEupsZhAGBatchTemp> detailList=gdEupsZHAGBatchTempRepository.findByBatNo(gdEupsBatchConsoleInfo.getBatNo());
 				resultMap.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(detailList));
