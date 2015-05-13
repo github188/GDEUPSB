@@ -25,7 +25,6 @@ import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsActSysParaRepository;
 import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
-import com.bocom.bbip.file.MftpTransfer;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
@@ -200,28 +199,21 @@ public class BatchFileCommon extends BaseAction {
 		/** 产生代收付格式文件 */
 		if(context.getData(ParamKeys.EUPS_BUSS_TYPE).equals("ELEC00") || context.getData(ParamKeys.EUPS_BUSS_TYPE).equals("GZAG00") || context.getData(ParamKeys.EUPS_BUSS_TYPE).toString().equals("FSAG00")){
 			((OperateFileAction)get("opeFile")).createCheckFile(config, "agtFileBatchFmt", fleNme, fileMap);
-			logger.info("===============生成代收付文件");
-			config.setFtpDir("0");
-			config.setRmtWay(dir);
-			operateFTPAction.putCheckFile(config);
-			logger.info("============放置代收付文件完成");
-			//更改状态为待提交
-			GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=new GDEupsBatchConsoleInfo();
-			String batNo=context.getData(ParamKeys.BAT_NO).toString();
-			gdEupsBatchConsoleInfo.setBatNo(batNo);
-			//待提交
-			gdEupsBatchConsoleInfo.setBatSts("W");
-			get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(gdEupsBatchConsoleInfo);
 		}else{
-			 EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne("zhag00");
 			((OperateFileAction)get("opeFile")).createCheckFile(config, "BatchFmt", fleNme, fileMap);
-		     //放置到前台文件
-			try {			
-					get(BBIPPublicService.class).sendFileToBBOS(new File(eupsThdFtpConfig.getLocDir(),fleNme), fleNme, MftpTransfer.FTYPE_NORMAL);		
-			}catch (Exception e) {
-					throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
-			}
 		}
+		logger.info("===============生成代收付文件");
+		config.setFtpDir("0");
+		config.setRmtWay(dir);
+		operateFTPAction.putCheckFile(config);
+		logger.info("============放置代收付文件完成");
+		//更改状态为待提交
+		GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=new GDEupsBatchConsoleInfo();
+		String batNo=context.getData(ParamKeys.BAT_NO).toString();
+		gdEupsBatchConsoleInfo.setBatNo(batNo);
+		//待提交
+		gdEupsBatchConsoleInfo.setBatSts("W");
+		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(gdEupsBatchConsoleInfo);
 		unLock(comNo);
 		logger.info("==============End sendBatchFileToACP and putCheckFile");
 	}
