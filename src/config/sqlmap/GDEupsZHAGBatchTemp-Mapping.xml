@@ -458,4 +458,10 @@
     where SQN = #{sqn,jdbcType=CHAR}
   </update>
 
+	<delete id="deleteByComNo" parameterType="java.lang.String">
+		delete from ${GDEUPSB_SCHEMA}.GDEUPS_ZHAG_BATCH_TEMP
+		where COM_NO = #{comNo,jdbcType=CHAR}
+  	</delete>
+
+
 </mapper>
