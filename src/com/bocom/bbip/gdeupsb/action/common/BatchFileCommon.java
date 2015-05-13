@@ -216,7 +216,7 @@ public class BatchFileCommon extends BaseAction {
 		gdEupsBatchConsoleInfo.setBatNo(batNo);
 		//待提交
 		gdEupsBatchConsoleInfo.setBatSts("W");
-		gdEupsBatchConsoleInfo.setTotCnt(Integer.parseInt((String)context.getData("totCnt")));
+		gdEupsBatchConsoleInfo.setTotCnt((Integer)context.getData("totCnt"));
 		gdEupsBatchConsoleInfo.setTotAmt(new BigDecimal((String)context.getData("totAmt")));
 		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(gdEupsBatchConsoleInfo);
 		unLock(comNo);
