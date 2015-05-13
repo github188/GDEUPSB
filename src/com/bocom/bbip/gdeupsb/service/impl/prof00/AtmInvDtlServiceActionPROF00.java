@@ -151,16 +151,16 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 			try {
 	
 				outStream = new BufferedOutputStream(new FileOutputStream(
-						"/home/bbipadm/data/mftp/BBIP/GDEUPSB/prof/"+fileName));
+						"/home/bbipadm/data/GDEUPSB/report/"+fileName));
 				outStream.write(result.getBytes(GDConstants.CHARSET_ENCODING_GBK));
 				outStream.close();
 			} catch (IOException e) {
 				throw new CoreException("BBIP0004EU0128");
 			}
 			
-			String path = "/home/bbipadm/data/mftp/BBIP/GDEUPSB/prof/";
+			String path = "/home/bbipadm/data/GDEUPSB/report/";
 			
-			String FilNam = "/home/bbipadm/data/mftp/BBIP/GDEUPSB/prof/" +fileName;
+			String FilNam = "/home/bbipadm/data/GDEUPSB/report/" +fileName;
 
 			
 			// 上传FTP
@@ -301,16 +301,16 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 			try {
 	
 				outStream = new BufferedOutputStream(new FileOutputStream(
-						"/home/bbipadm/data/mftp/BBIP/GDEUPSB/prof/"+fileName));
+						"/home/bbipadm/data/GDEUPSB/report/"+fileName));
 				outStream.write(result.getBytes(GDConstants.CHARSET_ENCODING_GBK));
 				outStream.close();
 			} catch (IOException e) {
 				throw new CoreException("BBIP0004EU0128");
 			}
 			
-			String path = "/home/bbipadm/data/mftp/BBIP/GDEUPSB/prof/";
+			String path = "/home/bbipadm/data/GDEUPSB/report/";
 			
-			String FilNam = "/home/bbipadm/data/mftp/BBIP/GDEUPSB/prof/" +fileName;
+			String FilNam = "/home/bbipadm/data/GDEUPSB/report/" +fileName;
 
 			
 			// 上传FTP
@@ -451,16 +451,16 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 			try {
 	
 				outStream = new BufferedOutputStream(new FileOutputStream(
-						"/home/bbipadm/data/mftp/BBIP/GDEUPSB/prof/"+fileName));
+						"/home/bbipadm/data/GDEUPSB/report/"+fileName));
 				outStream.write(result.getBytes(GDConstants.CHARSET_ENCODING_GBK));
 				outStream.close();
 			} catch (IOException e) {
 				throw new CoreException("BBIP0004EU0128");
 			}
 			
-			String path = "/home/bbipadm/data/mftp/BBIP/GDEUPSB/prof/";
+			String path = "/home/bbipadm/data/GDEUPSB/report/";
 			
-			String FilNam = "/home/bbipadm/data/mftp/BBIP/GDEUPSB/prof/" +fileName;
+			String FilNam = "/home/bbipadm/data/GDEUPSB/report/" +fileName;
 
 			
 			// 上传FTP
