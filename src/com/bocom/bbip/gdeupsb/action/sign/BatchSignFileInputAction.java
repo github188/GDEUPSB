@@ -203,26 +203,13 @@ public class BatchSignFileInputAction extends BaseAction {
 //		String tlr = context.getData(ParamKeys.TELLER); // 柜员号
 
 		// 设置ftp参数
-		EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne("44107");
-//		String rmtWay = "/home/weblogic/JumpServer/WEB-INF/save/tfiles/" + br + "/" + tlr + "/";
-//		eupsThdFtpConfig.setRmtWay(rmtWay);
-//		eupsThdFtpConfig.setRmtFleNme(filNm);
-//		eupsThdFtpConfig.setLocFleNme(filNm);
-		
+		EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne("telAgtFileSnd");
 		try {
 			bbipPubService.getFileFromBBOS(new File(eupsThdFtpConfig.getLocDir(),filNm), filNm, MftpTransfer.FTYPE_NORMAL);			
 		}catch (Exception e) {
 			throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
 		}
 
-		// 登录FTP
-//		operateFTPAction.loginFTP(eupsThdFtpConfig);
-//		// ===设置远程文件名称=====
-//		eupsThdFtpConfig.setRmtFleNme(filNm);
-//		// ===下载远程文件到本地
-//		operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
-
-		// ====解析文件====String filePath, String fileName, String fileId
 		log.info("licDir:" + eupsThdFtpConfig.getLocDir());
 		map = operateFileService.pareseFileByPath(eupsThdFtpConfig.getLocDir(), filNm, GDParamKeys.GDS_BATCH_FILE);
 		// ===把MAP转换List
