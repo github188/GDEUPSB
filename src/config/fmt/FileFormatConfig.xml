@@ -123,7 +123,15 @@
 			ref="config/fmt/fileFmt/agtFile/agtFileBatchDeatil.xml" encoding="GBK" />
 	</file>
 
-
+	<!--文件代收付返回配置格式 -->
+	<file id="batchReturn" name="batchReturn" encoding="GBK"
+		lineSeparator="\n">
+		<line name="header" ref="config/fmt/fileFmt/batch/BatchHeader.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/batch/BatchDeatil.xml" encoding="GBK" />
+	</file>
+	
 	<!-- 南方电网 对账 -->
 	<file name="elecCheckFile" id="elecCheckFile" encoding="GBK"
 		lineSeparator="\n">
