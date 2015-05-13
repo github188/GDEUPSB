@@ -62,7 +62,8 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 		// 配VM文件
 		String comNo = null;
 		String fileName = null;
-		// String br = context.getData(ParamKeys.BR);
+		 String br = context.getData(ParamKeys.BR);
+		 String tlr = context.getData(ParamKeys.TELLER);
 		String prtDte = context.getData("prtDte");
 		String prtTyp = context.getData("prtTyp");
 		Date prtDate = DateUtils.parse(prtDte, DateUtils.STYLE_SIMPLE_DATE);
@@ -133,9 +134,8 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 					.toString().trim()
 					+ "_汇总报表";
 
-			fileName = ttlDate + "_"
-					+ context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_" + comNo
-					+ "_JnlAll.txt";
+			fileName = ttlDate
+					+ context.getData(ParamKeys.EUPS_BUSS_TYPE) + "JnlAll" + br + "_p_" + tlr + ".txt";
 		}
 		if ("1".equals(prtTyp)) {
 			prtList = get(GdEupsTransJournalRepository.class).findSuccTxnList(
@@ -150,9 +150,7 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
 					.toString().trim()
 					+ "_成功交易清单报表";
-			fileName = ttlDate + "_"
-					+ context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_" + comNo
-					+ "_Suss.txt";
+			fileName = ttlDate + context.getData(ParamKeys.EUPS_BUSS_TYPE) + "jnlSus"  + br + "_p_" + tlr + ".txt";
 		}
 		if ("2".equals(prtTyp)) {
 			prtList = get(GdEupsTransJournalRepository.class).findFailTxnList(
@@ -167,9 +165,7 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
 					.toString().trim()
 					+ "_失败交易清单报表";
-			fileName = ttlDate + "_"
-					+ context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_" + comNo
-					+ "_Fail.txt";
+			fileName = ttlDate + context.getData(ParamKeys.EUPS_BUSS_TYPE) + "jnlFal"  + br + "_p_" + tlr + ".txt";
 		}
 		if ("3".equals(prtTyp)) {
 			prtList = get(GdEupsTransJournalRepository.class).findDoubtTxnList(
@@ -184,9 +180,7 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
 					.toString().trim()
 					+ "_可疑交易清单报表";
-			fileName = ttlDate + "_"
-					+ context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_" + comNo
-					+ "_Doubt.txt";
+			fileName = ttlDate + context.getData(ParamKeys.EUPS_BUSS_TYPE) + "jnlDoubt"  + br + "_p_" + tlr + ".txt";
 		}
 		if ("4".equals(prtTyp)) {
 			prtList = get(GdEupsTransJournalRepository.class).findOthTxnList(
@@ -200,9 +194,7 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			context.setData("TOTOTHERAMT", prtList.get(0).get("TOTOTHERAMT"));
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
 					+ "_其他情况清单报表";
-			fileName = ttlDate + "_"
-					+ context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_" + comNo
-					+ "_Other.txt";
+			fileName = ttlDate + context.getData(ParamKeys.EUPS_BUSS_TYPE) + "jnlOth"  + br + "_p_" + tlr + ".txt";
 		}
 
 		if ("5".equals(prtTyp)) { // 批量报表 SQL
@@ -232,15 +224,9 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 					.toString().trim()
 					+ "_批量交易报表";
 			if (eupsBusTyp.equals("ELEC02")) {
-				fileName = "301586003BatchReport"
-						+ DateUtils
-								.format(new Date(), DateUtils.STYLE_yyyyMMdd)
-						+ ".txt";
-
+				fileName = "301586003BatchReport" + DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd) + br + "_p_" + tlr + ".txt";
 			} else {
-				fileName = ttlDate + "_"
-						+ context.getData(ParamKeys.EUPS_BUSS_TYPE) + "_"
-						+ comNo + "_BatchReport.txt";
+				fileName = ttlDate + context.getData(ParamKeys.EUPS_BUSS_TYPE) + "Batch"  + br + "_p_" + tlr + ".txt";
 			}
 
 		}
