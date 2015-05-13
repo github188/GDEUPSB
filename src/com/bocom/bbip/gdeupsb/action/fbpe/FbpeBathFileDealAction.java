@@ -85,11 +85,13 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
         //u盘文件获取
         EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne("FSAG00");
 		String filPath=eupsThdFtpConfig.getLocDir();
-		try {			
-			bbipPublicService.sendFileToBBOS(new File(filPath,fileName), fileName, MftpTransfer.FTYPE_NORMAL);			
-		}catch (Exception e) {
-			throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
-		}
+		if(context.getData("mothed").toString().trim().equals("1")){
+			try {			
+				bbipPublicService.getFileFromBBOS(new File(filPath,fileName), fileName, MftpTransfer.FTYPE_NORMAL);			
+			}catch (Exception e) {
+				throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
+			}
+    	}
 		logger.info("===============获取文件成功");
         
 		String filePath=eupsThdFtpConfig.getLocDir();
