@@ -78,7 +78,7 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 		String prtFlg = context.getData("prtFlg");
 		logger.info("invTyp["+invTyp+"]begDat["+begDat+"]endDat["+endDat+"]qryNod["+qryNod+"]prtFlg["+prtFlg+"]");
 		if("1".equals(prtFlg)){//打印
-			//TODO:根据分行号和网点号查询网点名称，待实现
+			//根据分行号和网点号查询网点名称，待实现
 //			context.setData("nodNam", context.getData("filler"));//测试代码
 			
 			EupsThdFtpConfigRepository eupsThdFtpConfigRepository = get(EupsThdFtpConfigRepository.class);
@@ -158,7 +158,7 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 				throw new CoreException("BBIP0004EU0128");
 			}
 			
-			String path = "/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/";
+			String path = "/home/bbipadm/data/mftp/BBIP/GDEUPSB/prof/";
 			
 			String FilNam = "/home/bbipadm/data/mftp/BBIP/GDEUPSB/prof/" +fileName;
 
@@ -308,7 +308,7 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 				throw new CoreException("BBIP0004EU0128");
 			}
 			
-			String path = "/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/";
+			String path = "/home/bbipadm/data/mftp/BBIP/GDEUPSB/prof/";
 			
 			String FilNam = "/home/bbipadm/data/mftp/BBIP/GDEUPSB/prof/" +fileName;
 
@@ -381,12 +381,12 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 		String prtFlg = context.getData("prtFlg");
 		logger.info("invTyp["+invTyp+"]begDat["+begDat+"]endDat["+endDat+"]qryNod["+qryNod+"]prtFlg["+prtFlg+"]");
 		if("1".equals(prtFlg)){//打印
-			if(qryNod==null){
-				context.setData("nodNam", "珠海分行");
-			}else{
-				//TODO:根据分行号和网点号查询网点名称，待实现
-				context.setData("nodNam", "珠海分行");//测试代码
-			}
+//			if(qryNod==null){
+//				context.setData("nodNam", "珠海分行");
+//			}else{
+//				//根据分行号和网点号查询网点名称，待实现
+//				context.setData("nodNam", "珠海分行");//测试代码
+//			}
 			
 			
 			
@@ -458,7 +458,7 @@ public class AtmInvDtlServiceActionPROF00 extends BaseAction {
 				throw new CoreException("BBIP0004EU0128");
 			}
 			
-			String path = "/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/";
+			String path = "/home/bbipadm/data/mftp/BBIP/GDEUPSB/prof/";
 			
 			String FilNam = "/home/bbipadm/data/mftp/BBIP/GDEUPSB/prof/" +fileName;
 
