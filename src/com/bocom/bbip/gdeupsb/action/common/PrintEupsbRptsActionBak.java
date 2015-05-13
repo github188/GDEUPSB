@@ -336,7 +336,7 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 		}
 		
 
-		// TODO elec02对账文件上传到汕头指定服务器
+		// elec02对账文件上传到汕头指定服务器
 		if ("ELEC02".equals(eupsBusTyp)) {
 			/**
 			 * 配置ftp 参考 watr00BatchResulfA
