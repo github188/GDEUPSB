@@ -60,7 +60,7 @@ public class EupsQueryBatchStatusAction extends BaseAction {
 		context.setData("totAmt",eupsBatchConsoleInfo.getTotAmt());
 		context.setData("batSts",gdEupsBatchConsoleInfo.getBatSts());
 		context.setData("fleNme",gdEupsBatchConsoleInfo.getRsvFld8());
-		context.setData("thdBatNo",gdEupsBatchConsoleInfo.getRsvFld9());
+		context.setData("thdBatNo",gdEupsBatchConsoleInfo.getRsvFld7());
 		
 		 logger.info("===============End   EupsQueryBatchStatusAction");
 	}
