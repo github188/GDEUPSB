@@ -60,8 +60,7 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 	public void prepareBatchDeal(PrepareBatchAcpDomain domain, Context context)throws CoreException {
 		logger.info("===============Start  BatchAcpServiceImplZHAG00  prepareBatchDeal");
 		final String comNo=ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.COMPANY_NO, ErrorCodes.EUPS_FIELD_EMPTY);
-		gdEupsZHAGBatchTempRepository.deleteByComNo(comNo);
-		/**上锁*/
+        /**上锁*/
 		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).Lock(comNo);
 		/**批量前检查和初始化批量控制表 生成批次号batNo*/
 		((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).BeforeBatchProcess(context);
@@ -72,7 +71,7 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 		String filPath=config.getLocDir();
 		if(context.getData("mothed").toString().trim().equals("1")){
 			try {			
-				bbipPublicService.getFileFromBBOS(new File(filPath,fleNme), fleNme, MftpTransfer.FTYPE_NORMAL);			
+				bbipPublicService.sendFileToBBOS(new File(filPath,fleNme), fleNme, MftpTransfer.FTYPE_NORMAL);			
 			}catch (Exception e) {
 				throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
 			}
@@ -104,8 +103,6 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
         	tmp.setSqn(bbipPublicService.getBBIPSequence().substring(4));
         	tmp.setBatNo((String)context.getData(ParamKeys.BAT_NO));
         	tmp.setRsvFld4("0");
-        	tmp.setComNo(comNo);
-        	tmp.setTxnTlr((String)context.getData("tlr"));
         	if(tmp.getCusNme()==null || tmp.getCusNme()==""){
         		tmp.setCusNme(tmp.getThdCusNme());
         	}
