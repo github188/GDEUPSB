@@ -110,12 +110,13 @@ public class PrintBatchInfoAction extends BaseAction{
 				
 				//生成文件路径
 				StringBuffer batNoFile=new StringBuffer();
+				EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
 				//创建路径
-				File files=new File("/home/bbipadm/data/GDEUPSB/report/");
+				File files=new File(sendFileToBBOSConfig.getLocDir());
 				if(!files.exists()){
 					files.mkdirs();
 				}
-				batNoFile.append("/home/bbipadm/data/GDEUPSB/report/");
+				batNoFile.append(sendFileToBBOSConfig.getLocDir());
 				File file =new File(batNoFile.toString());
 				if(!file.exists()){
 						file.mkdirs();
@@ -140,7 +141,7 @@ public class PrintBatchInfoAction extends BaseAction{
 					}
 					//报表		
 					log.info("=============Start   Send   File==========");
-					EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
+					
 					 try {
 						 bbipPublicService.sendFileToBBOS(new File(sendFileToBBOSConfig.getLocDir(),fileName), fileName, MftpTransfer.FTYPE_NORMAL);		
 					} catch (Exception e) {
