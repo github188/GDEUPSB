@@ -142,7 +142,7 @@ public class PrintBatchInfoAction extends BaseAction{
 					log.info("=============Start   Send   File==========");
 					EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
 					 try {
-						 bbipPublicService.sendFileToBBOS(new File(sendFileToBBOSConfig.getRmtWay(),fileName), fileName, MftpTransfer.FTYPE_NORMAL);		
+						 bbipPublicService.sendFileToBBOS(new File(sendFileToBBOSConfig.getLocDir(),fileName), fileName, MftpTransfer.FTYPE_NORMAL);		
 					} catch (Exception e) {
 						throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
 					}
