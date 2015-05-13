@@ -12,10 +12,9 @@ import org.slf4j.LoggerFactory;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
-import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
-import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
 import com.bocom.bbip.eups.repository.EupsThdBaseInfoRepository;
+import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GdEupsTransJournalRepository;
@@ -44,7 +43,6 @@ public class QryReportInfoAction extends BaseAction {
 		List<EupsThdBaseInfo> infoList = get(EupsThdBaseInfoRepository.class)
 				.find(baseInfo);
 		String comNme = infoList.get(0).getComNme();
-		String comNo = infoList.get(0).getComNo();
 		context.setData(ParamKeys.COMPANY_NAME, comNme);
 //		context.setData(ParamKeys.COMPANY_NO, comNo);
 
@@ -105,14 +103,20 @@ public class QryReportInfoAction extends BaseAction {
 			context.setData("batFalAmt", elec02BatInfoList.get(0).get("FALTOTAMT") + "");
 			
 		}else{
-			EupsBatchConsoleInfo eupsBatchConsoleInfo = new EupsBatchConsoleInfo();
+			GDEupsBatchConsoleInfo eupsBatchConsoleInfo = new GDEupsBatchConsoleInfo();
 			eupsBatchConsoleInfo.setExeDte(printDate);
-			eupsBatchConsoleInfo.setComNo(comNo);
-			List<EupsBatchConsoleInfo> batInfoList = get(
-					EupsBatchConsoleInfoRepository.class)
+			eupsBatchConsoleInfo.setEupsBusTyp((String) context
+				.getData(ParamKeys.EUPS_BUSS_TYPE));
+			if(StringUtils.isNotEmpty((String)context.getData(ParamKeys.COMPANY_NO))){
+				eupsBatchConsoleInfo.setComNo((String) context
+						.getData(ParamKeys.COMPANY_NO));
+			}
+//			eupsBatchConsoleInfo.setComNo(comNo);
+			List<GDEupsBatchConsoleInfo> batInfoList = get(
+					GDEupsBatchConsoleInfoRepository.class)
 					.find(eupsBatchConsoleInfo);
 			if (null == batInfoList || CollectionUtils.isEmpty(batInfoList)) {
-				logger.info("There are no records for select check trans journal ");
+				logger.info("There are no records for select GDEupsBatchConsoleInfo batInfo ");
 				throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
 			}
 
@@ -123,7 +127,7 @@ public class QryReportInfoAction extends BaseAction {
 			BigDecimal batSucAmt = new BigDecimal(0.00);
 			BigDecimal batFalAmt = new BigDecimal(0.00);
 
-			for (EupsBatchConsoleInfo perInfo : batInfoList) {
+			for (GDEupsBatchConsoleInfo perInfo : batInfoList) {
 				batTotCnt = batTotCnt + perInfo.getTotCnt();
 				batSucCnt = batSucCnt + perInfo.getSucTotCnt();
 				batFalCnt = batFalCnt + perInfo.getFalTotCnt();
