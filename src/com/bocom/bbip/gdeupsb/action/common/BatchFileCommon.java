@@ -213,11 +213,11 @@ public class BatchFileCommon extends BaseAction {
 			gdEupsBatchConsoleInfo.setBatSts("W");
 			get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(gdEupsBatchConsoleInfo);
 		}else{
+			 EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne("zhag00");
 			((OperateFileAction)get("opeFile")).createCheckFile(config, "BatchFmt", fleNme, fileMap);
-			 String path="/home/weblogic/JumpServer/WEB-INF/data/mftp_recv/" ;
 		     //放置到前台文件
 			try {			
-					get(BBIPPublicService.class).sendFileToBBOS(new File(path,fleNme), fleNme, MftpTransfer.FTYPE_NORMAL);		
+					get(BBIPPublicService.class).sendFileToBBOS(new File(eupsThdFtpConfig.getRmtWay(),fleNme), fleNme, MftpTransfer.FTYPE_NORMAL);		
 			}catch (Exception e) {
 					throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
 			}
