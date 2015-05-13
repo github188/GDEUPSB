@@ -217,7 +217,7 @@ public class BatchFileCommon extends BaseAction {
 			((OperateFileAction)get("opeFile")).createCheckFile(config, "BatchFmt", fleNme, fileMap);
 		     //放置到前台文件
 			try {			
-					get(BBIPPublicService.class).sendFileToBBOS(new File(eupsThdFtpConfig.getRmtWay(),fleNme), fleNme, MftpTransfer.FTYPE_NORMAL);		
+					get(BBIPPublicService.class).sendFileToBBOS(new File(eupsThdFtpConfig.getLocDir(),fleNme), fleNme, MftpTransfer.FTYPE_NORMAL);		
 			}catch (Exception e) {
 					throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
 			}
