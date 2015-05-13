@@ -296,6 +296,7 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 
 		} catch (IOException e) {
 			logger.info("create file error:", e);
+			throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
 		} finally {
 			if (null != printWriter) {
 				try {
