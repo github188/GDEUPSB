@@ -32,17 +32,8 @@ public class EupsQueryBatchStatusAction extends BaseAction {
 		logger.info("----批次信息查询开始----");
 		final String batNo=ContextUtils.assertDataNotEmptyAndGet(context, "batNo", ErrorCodes.EUPS_FIELD_EMPTY, "批次号");
 		final String eupsBusTyp=context.getData(ParamKeys.EUPS_BUSS_TYPE);
-		GDEupsBatchConsoleInfo info = new GDEupsBatchConsoleInfo();
-		info.setBatNo(batNo);
-		info.setEupsBusTyp(eupsBusTyp);
-		List<GDEupsBatchConsoleInfo> ret = get(GDEupsBatchConsoleInfoRepository.class).find(info);
-		//EUPS 表中数据
-		GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=ret.get(0);
-		EupsBatchConsoleInfo eupsBatchConsoleInfos=new EupsBatchConsoleInfo();
-		eupsBatchConsoleInfos.setFleNme(gdEupsBatchConsoleInfo.getRsvFld8());
-		EupsBatchConsoleInfo eupsBatchConsoleInfo=get(EupsBatchConsoleInfoRepository.class).find(eupsBatchConsoleInfos).get(0);
-		gdEupsBatchConsoleInfo.setBatSts(eupsBatchConsoleInfo.getBatSts());
-		Assert.isNotEmpty(ret, ErrorCodes.EUPS_BAT_CTL_INFO_NOT_EXIST);
+
+		GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=get(GDEupsBatchConsoleInfoRepository.class).findOne(batNo);
 		logger.info("批次信息:"+BeanUtils.toFlatMap(gdEupsBatchConsoleInfo));
 		context.setData("batNo",gdEupsBatchConsoleInfo.getBatNo());
 		context.setData("comNo",gdEupsBatchConsoleInfo.getComNo());
@@ -56,8 +47,8 @@ public class EupsQueryBatchStatusAction extends BaseAction {
 		 logger.info("===============End   QryComInfoAction");
 		context.setData("comNme",comNme);
 		context.setData("eupsBusTyp",gdEupsBatchConsoleInfo.getEupsBusTyp());
-		context.setData("totCnt",eupsBatchConsoleInfo.getTotCnt());
-		context.setData("totAmt",eupsBatchConsoleInfo.getTotAmt());
+		context.setData("totCnt",gdEupsBatchConsoleInfo.getTotCnt());
+		context.setData("totAmt",gdEupsBatchConsoleInfo.getTotAmt());
 		context.setData("batSts",gdEupsBatchConsoleInfo.getBatSts());
 		context.setData("fleNme",gdEupsBatchConsoleInfo.getRsvFld8());
 		context.setData("thdBatNo",gdEupsBatchConsoleInfo.getRsvFld7());
