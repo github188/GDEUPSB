@@ -3,6 +3,7 @@ package com.bocom.bbip.gdeupsb.action.common;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.comp.BBIPPublicService;
+import com.bocom.bbip.comp.btp.BTPService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsActSysPara;
@@ -20,6 +21,8 @@ public class BatchFileChangeAction extends BaseAction{
 		BBIPPublicService bbipPublicService=get(BBIPPublicService.class);
 		log.info("====================Start   BatchFileChangeAction");
 		String eupsBusTyp=context.getData(ParamKeys.EUPS_BUSS_TYPE).toString();
+		String batNo =((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
+		context.setData("batNo", batNo);
 		if(eupsBusTyp.equals("FSAG00")){
 			log.info("====================Start   BatchFileChangeAction  FSAG00");
 			bbipPublicService.synExecute("eups.fileBatchPayCreateDataProcess",context);
