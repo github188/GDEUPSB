@@ -46,6 +46,7 @@ public class CommNotifyBatchStatusAction extends BaseAction{
 						String returnFileName=gdEupsBatchConsoleInfo.getComNo()+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
 						eupsBatchConsoleInfo.setPayCnt(null);
 						eupsBatchConsoleInfoRepository.update(eupsBatchConsoleInfo);
+						log.info("==============update  eupsBatchConsoleInfo's  payCnt   success");
 						//同步调用
 						String mothed="eups.commNotifyBatchStatus";
 						bbipPublicService.synExecute(mothed, context);
