@@ -123,8 +123,8 @@ public class BatchSignFileInputAction extends BaseAction {
 			context.setData("ApCode", "46");
 			context.setData("OFmtCd", "999");
 			context.setData("RetMsg", context.getData("retmsg"));
-			context.setData("SucRpt", "");
-			context.setData("FailRpt", "");
+//			context.setData("SucRpt", "");
+//			context.setData("FailRpt", "");
 
 		}
 	}
@@ -594,7 +594,7 @@ public class BatchSignFileInputAction extends BaseAction {
 				bbipPubSvr.sendFileToBBOS(new File(TransferUtils.resolveFilePath(localDir, reportName)), fileName,
 						MftpTransfer.FTYPE_NORMAL);
 				context.setData("retmsg", "报表生成成功！");
-				context.setData("SucRpt", localDir + reportName);// 返回前端文件名
+				context.setData("SucRpt", reportName);// 返回前端文件名
 			}
 			// ===========生成失败的报表============
 
@@ -657,7 +657,7 @@ public class BatchSignFileInputAction extends BaseAction {
 				}
 				bbipPubSvr.sendFileToBBOS(new File(TransferUtils.resolveFilePath(localDir, reportName)), fileName,
 						MftpTransfer.FTYPE_NORMAL);
-				context.setData("FailRpt", localDir + reportName);// 返回前端文件名
+				context.setData("FailRpt", reportName);// 返回前端文件名
 				context.setData("retmsg", "报表生成成功！");
 			}
 
