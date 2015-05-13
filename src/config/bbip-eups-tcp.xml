@@ -84,7 +84,7 @@
 	</bean>
 
 	<bean id="trspGateWay" class="com.bocom.bbip.gdeupsb.channel.tcp.ZhLqSocketGateway"> 
-				<property name="host" value="182.59.59.27"/>
+				<property name="host" value="182.59.28.80"/>
 				<property name="port" value="7600" />
 				<property name="timeout" value="30000" />
 				<property name="filePath" value="/home/bbipadm/data/mftp/" />
