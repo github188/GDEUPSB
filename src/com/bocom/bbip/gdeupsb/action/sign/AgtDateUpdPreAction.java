@@ -56,16 +56,16 @@ public class AgtDateUpdPreAction extends BaseAction {
 //		get(OperateFTPAction.class).getFileFromFtp(eupsThdFtpConfig);
 		
 		// 按照RCV44101 读取广州自来水处理结果文件
-		EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne("watrAgtResult");
+//		EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne("watrAgtResult");
 		
-		try {
-			get(BBIPPublicService.class).getFileFromBBOS(new File(eupsThdFtpConfig.getLocDir(),fileNme), fileNme, MftpTransfer.FTYPE_NORMAL);			
-		}catch (Exception e) {
-			throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
-		}
+//		try {
+//			get(BBIPPublicService.class).getFileFromBBOS(new File(eupsThdFtpConfig.getLocDir(),fileNme), fileNme, MftpTransfer.FTYPE_NORMAL);			
+//		}catch (Exception e) {
+//			throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
+//		}
 
-		log.info("get usb file from usb,rmt dir=["  + "]+,rmt file=[" + fileNme + "],local dir=[" + eupsThdFtpConfig.getLocDir()
-				+ "],local filename=[" + fileNme + "]");
+//		log.info("get usb file from usb,rmt dir=["  + "]+,rmt file=[" + fileNme + "],local dir=[" + eupsThdFtpConfig.getLocDir()
+//				+ "],local filename=[" + fileNme + "]");
 
 		log.info("AgtDateUpdPreAction end,start to do impl!..");
 	}
