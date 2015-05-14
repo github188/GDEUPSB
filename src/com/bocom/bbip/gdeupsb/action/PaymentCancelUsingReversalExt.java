@@ -120,8 +120,8 @@ public class PaymentCancelUsingReversalExt extends BaseAction {
         
         context.setData(ParamKeys.CARD_TYPE, cardTyp);
         context.setData(ParamKeys.ACT_SYS_TYP, actSysTyp);
-        System.out.println("~~~~~~~~~~~~~~~`"+context.getData(ParamKeys.RESPONSE_CODE));
-        System.out.println("~~~~~~~~~~~~~~~`"+context.getData(ParamKeys.RESPONSE_MESSAGE));
+        log.info("~~~~~~~~~~~~~~~`"+context.getData(ParamKeys.RESPONSE_CODE));
+        log.info("~~~~~~~~~~~~~~~`"+context.getData(ParamKeys.RESPONSE_MESSAGE));
         // }
 
         // catch (Exception e) {
@@ -145,10 +145,10 @@ public class PaymentCancelUsingReversalExt extends BaseAction {
         logger.info("~~~~~~~~~~~~~start callBuaReversal!");
         BUAResult response = get(BUAServiceAccessObject.class).reversal(request, hostOpr);
         context.setData(ParamKeys.AGTS_ACCOUNT_JOURNAL_NO, response.getAcoJrnNo());
-        System.out.println(42);
+        log.info(42);
         context.setData(ParamKeys.AGTS_ACCOUNT_VOUCHER_NO, response.getAcoVchNo());
         context.setData(ParamKeys.AGTS_ACCOUNT_DATE, response.getAcDte());
-        System.out.println(43);
+        log.info(43);
         context.setData(ParamKeys.AGTS_BBIP_JOURNAL_NO, response.getTxnSqn());
         context.setData(ParamKeys.MFM_RSP_MSG, response.getResponseMessage());
     }
