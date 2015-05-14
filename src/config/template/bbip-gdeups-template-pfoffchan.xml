@@ -455,5 +455,27 @@
 		
 		
 	</flow-template>
+	
+	 <!-- 个人代扣协议修改 -->
+	<flow-template id="gdeupsb.watBatchTemplete">
+		
+		<step id="preStep" useCtxState="true" transactional="txTemplate">
+			<action id="preAction" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="dealStep" />
+			<end on="*"/>
+		</step>
+		<step id="dealStep" useCtxState="true" transactional="txTemplate">
+			<action id="dealAction" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="dtlDealStep" />
+			<end on="*"/>
+		</step>
+		
+		<step id="dtlDealStep" useCtxState="true"  transactional="txTemplate">
+			<action id="aftAction" place-holder="true" />
+			<end on="*"/>
+		</step>
+		
+		
+	</flow-template>
 
 </x:beans>
