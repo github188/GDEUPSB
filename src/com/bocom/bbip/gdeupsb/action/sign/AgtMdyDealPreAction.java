@@ -36,7 +36,7 @@ public class AgtMdyDealPreAction extends BaseAction {
 		context.setData("nodNo", oldBr);
 		context.setData("brno", oldBk);
 
-		System.out.println("当前设值之后的context=" + context.getDataMap());
+		log.info("当前设值之后的context=" + context.getDataMap());
 
 		GdsRunCtlRepository gdsRunCtlRepository = get(GdsRunCtlRepository.class);
 		AccountService accountService = get(AccountService.class);

@@ -562,7 +562,6 @@ public class BatchSignFileInputAction extends BaseAction {
 				String result = reportRender.renderAsString("gdmodsignsuccbillReport", context);
 				String fileName = new StringBuilder(String.valueOf(reportName)).append("_p_").append(context.getData(ParamKeys.BR)).append("_")
 						.append(context.getData(ParamKeys.TELLER)).toString();
-				System.out.println(result);
 				PrintWriter printWriter = null;
 				try {
 					File file = new File(localDir);
