@@ -63,16 +63,9 @@ public class BatchFileCommon extends BaseAction {
 		GDEupsBatchConsoleInfo info = new GDEupsBatchConsoleInfo();
 		info.setFleNme(fleNme);
 		info.setEupsBusTyp(eupsBusTyp);
-		info.setSubDte(DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())));
 		GDEupsBatchConsoleInfo ret =get(GDEupsBatchConsoleInfoRepository.class).findConsoleInfo(info);
 		if(ret != null){
-				String batSts=ret.getBatSts();
-				if(batSts.equals("S")){
-						throw new CoreException("批次已完成，不能再次提交");
-				}else{
-						String batNo=ret.getBatNo();
-						get(GDEupsBatchConsoleInfoRepository.class).delete(batNo);
-				}
+				throw new CoreException("批次已提交");
 		}
 		/** 插入批次控制表 */
 		logger.info("==============Start  Insert  GDEupsBatchConsoleInfo");
