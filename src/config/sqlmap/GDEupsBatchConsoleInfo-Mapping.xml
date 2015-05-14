@@ -542,9 +542,6 @@
 		<include refid="baseColumnList" />
 		from ${GDEUPSB_SCHEMA}.GDEUPS_BATCH_CONSOLE_INFO
 		<trim prefix="WHERE" prefixOverrides="AND">
-			<if test="batNo!=null">
-				AND BAT_NO=#{batNo,jdbcType=CHAR}
-			</if>
 			<if test="fleNme!=null">
 				AND FLE_NME=#{fleNme,jdbcType=CHAR}
 			</if>
