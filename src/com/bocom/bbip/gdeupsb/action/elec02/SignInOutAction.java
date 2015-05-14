@@ -15,7 +15,6 @@ public class SignInOutAction extends BaseAction{
 
 	 @Override
 	    public void execute(Context context) throws CoreException, CoreRuntimeException {
-		 System.out.println("@@@@@@@@@@@@@"+context);
 		 context.setData("thdRspCde", "00");
 	    context.setData("rspMsg", "交易成功");
 	    context.setData("DlTxt", "交易成功");
@@ -25,7 +24,6 @@ public class SignInOutAction extends BaseAction{
 //		}else{
 //			context.setData(ParamKeys.TXN_TYP, Constants.SIGN_SET_TYPE_SIGNOUT);
 //		}
-//		System.out.println("@@@@@@@@@@@@@"+context.getData(ParamKeys.TXN_TYP));
 //	        String txnTyp = context.<String> getData(ParamKeys.TXN_TYP);
 //	        // 根据报文中操作选项（txnTyp）判断签到或者签退：0-签到；1-签退
 //	        if (Constants.SIGN_SET_TYPE_SIGNIN.equals(txnTyp)) {

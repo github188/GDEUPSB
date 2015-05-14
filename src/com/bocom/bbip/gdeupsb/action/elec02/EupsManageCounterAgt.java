@@ -259,7 +259,6 @@ public class EupsManageCounterAgt extends BaseAction {
 		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
 		agtElecTmp.setFeeNum(feeNum);
 		
-		System.out.println("asdasdasdasdasdsaasdasdasdasdasdasdasdsa");
 		// 旧协议信息，返显
 		logger.info("context before select old agt :" + context);
 		List<GdeupsAgtElecTmp> oldAgtElecTmps = get(
