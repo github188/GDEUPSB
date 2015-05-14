@@ -60,7 +60,7 @@
 	<fixString  name="Deli13" length="1" default=","/>
 	
 	<fixString name="optDat" length="10"   />	<!-- 签约日期 -->
-	<fixString  name="Deli14" length="8" default=""/>
+	<!-- <fixString  name="Deli14" length="8" default=""/> -->
 	
 	
 	</segment>
