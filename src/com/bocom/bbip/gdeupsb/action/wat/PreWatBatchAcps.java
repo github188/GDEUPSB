@@ -136,7 +136,7 @@ public class PreWatBatchAcps extends BaseAction{
 	 */
 	@SuppressWarnings("unchecked")
 	private void buildBatchFile(Context context) throws CoreException{
-		OperateFTPActionExt operateFTPAction = new OperateFTPActionExt();
+		
 		String path = context.getData("path");
 		String filename = context.getData("filename");
 		

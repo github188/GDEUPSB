@@ -21,6 +21,7 @@ import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.file.fmt.FileMarshaller;
+import com.bocom.bbip.gdeupsb.action.common.OperateFTPActionExt;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.entity.GdeupsWatBatInfTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
@@ -62,7 +63,9 @@ public class BatchFileDealAction extends BaseAction{
 		eupsThdFtpConfig.setLocFleNme(filename);
 		log.info("start get batch file now,thd ftp info=["+BeanUtils.toFlatMap(eupsThdFtpConfig)+"]");
 		
-		get(OperateFTPAction.class).getFileFromFtp(eupsThdFtpConfig);
+		OperateFTPActionExt operateFTPAction = new OperateFTPActionExt();
+//		get(OperateFTPAction.class).getFileFromFtp(eupsThdFtpConfig);
+		operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
 		
 		//根据模板解析第三方的文件，模板ID为"parseBatchFile"
 		Map<String,Object> srcFile = parseFileByPath(eupsThdFtpConfig.getLocDir(), 	filename, "watr00FmtIn");
