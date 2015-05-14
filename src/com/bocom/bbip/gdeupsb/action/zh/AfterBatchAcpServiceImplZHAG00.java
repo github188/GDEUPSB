@@ -178,7 +178,7 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
 				Map<String, Object> resultMap=new HashMap<String, Object>();		
 				Map<String, Object> mapHeader=new HashMap<String, Object>();
 				mapHeader.put("rsvFld1", "75");
-				mapHeader.put("rsvFld2", gdEupsBatchConsoleInfo.getRsvFld2());
+				mapHeader.put("rsvFld2", "006");
 				mapHeader.put("totCnt", gdEupsBatchConsoleInfo.getTotCnt());
 				mapHeader.put("STotCnt", gdEupsBatchConsoleInfo.getSucTotCnt());
 				mapHeader.put("STotAmt", gdEupsBatchConsoleInfo.getSucTotAmt());
