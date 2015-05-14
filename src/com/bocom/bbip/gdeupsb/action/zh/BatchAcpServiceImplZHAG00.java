@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -38,6 +39,7 @@ import com.bocom.bbip.gdeupsb.repository.GDEupsZHAGBatchTempRepository;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.ContextUtils;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -99,11 +101,17 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 		BigDecimal totAmt=new BigDecimal("0.00");
 		/**插入临时表中*/
 		logger.info("~~~~~~~Start ~~~~将数据插入临时表");
+		String tlr=(String)context.getData("tlr");
+		tlr=0+tlr.substring(3);
+		String txnDte=DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd+"      ");
         for(GDEupsZhAGBatchTemp tmp:list){
+        	String rsvFld1=tmp.getRsvFld1();
+        	rsvFld1=txnDte+rsvFld1;
+        	tmp.setRsvFld1(rsvFld1);
         	tmp.setSqn(bbipPublicService.getBBIPSequence().substring(4));
         	tmp.setBatNo((String)context.getData(ParamKeys.BAT_NO));
         	tmp.setRsvFld4("0");
-        	tmp.setTxnTlr((String)context.getData("tlr"));
+        	tmp.setTxnTlr(tlr);
         	tmp.setComNo(comNo);
         	if(tmp.getCusNme()==null || tmp.getCusNme()==""){
         		tmp.setCusNme(tmp.getThdCusNme());
