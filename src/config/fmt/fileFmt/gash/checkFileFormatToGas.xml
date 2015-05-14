@@ -30,6 +30,7 @@
 
 		<fixString name="TXNDTE" length="10" referred="true"
 			expression='exp:@com.bocom.bbip.utils.DateUtils@format(this.TXNDTE,"yyyy-MM-dd")' />
+			 	<fixString  name="Deli7" length="1" default="\n"/> 
 
 	</segment>
 </message>

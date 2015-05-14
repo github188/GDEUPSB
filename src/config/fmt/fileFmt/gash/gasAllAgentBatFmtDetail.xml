@@ -48,7 +48,7 @@
 	<fixString  name="Deli5" length="1" default=","/>
 	 
 	<fixString name="idNo" length="32" />		
-	<fixString  name="Deli6" length="1" default=""/>
+	<fixString  name="Deli6" length="1" default="\n"/>
 
 	</segment>
 </message>

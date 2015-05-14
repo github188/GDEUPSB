@@ -38,7 +38,7 @@
 	<fixString  name="Deli6" length="1" default=","/> 
 	
 	<fixString name="txnAmt" length="10"   />
-	<fixString  name="Deli7" length="1"  /> 
+ 	<fixString  name="Deli7" length="1" default="\n"/> 
 		
 		
 		
