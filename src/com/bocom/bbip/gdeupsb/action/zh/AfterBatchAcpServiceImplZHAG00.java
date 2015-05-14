@@ -183,7 +183,7 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
 				mapHeader.put("STotCnt", gdEupsBatchConsoleInfo.getSucTotCnt());
 				mapHeader.put("STotAmt", gdEupsBatchConsoleInfo.getSucTotAmt());
 				mapHeader.put("FTotCnt", gdEupsBatchConsoleInfo.getFalTotCnt());
-				mapHeader.put("FTotAmt", gdEupsBatchConsoleInfo.getFalTotCnt());
+				mapHeader.put("FTotAmt", gdEupsBatchConsoleInfo.getFalTotAmt());
 				resultMap.put(ParamKeys.EUPS_FILE_HEADER, mapHeader);
 				//文件内容 
 				List<GDEupsZhAGBatchTemp> detailList=gdEupsZHAGBatchTempRepository.findByBatNo(gdEupsBatchConsoleInfo.getBatNo());
