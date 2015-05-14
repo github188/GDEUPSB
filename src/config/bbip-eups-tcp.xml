@@ -84,7 +84,7 @@
 	</bean>
 
 	<bean id="trspGateWay" class="com.bocom.bbip.gdeupsb.channel.tcp.ZhLqSocketGateway"> 
-				<property name="host" value="182.59.28.80"/>
+				<property name="host" value="182.59.59.27"/>
 				<property name="port" value="7600" />
 				<property name="timeout" value="30000" />
 				<property name="filePath" value="/home/bbipadm/data/mftp/" />
@@ -191,7 +191,7 @@
     <!-- add by WangMQ  start GASH -->
     
 	<bean id="WATR00GateWay" class="com.bocom.bbip.gdeupsb.channel.tcp.WatrSocketGateway">
-		<property name="host" value="192.168.64.1" />
+		<property name="host" value="182.55.200.60" />
 		<property name="port" value="6666" />
 		<property name="soTimeout" value="30000" />
 		<property name="streamResolver">
@@ -226,7 +226,7 @@
 	</bean>
 
 	<bean id="ELEC00GateWay" class="com.bocom.bbip.gdeupsb.channel.tcp.ELEC00SocketGateway">
-		<property name="host" value="182.53.15.200" />
+		<property name="host" value="182.53.1.6" />
 		<property name="port" value="5680" />
 		<property name="soTimeout" value="60000" />
 		<property name="streamResolver">
