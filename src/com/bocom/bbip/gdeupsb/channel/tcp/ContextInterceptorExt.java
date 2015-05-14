@@ -23,11 +23,11 @@ public class ContextInterceptorExt<Request, Response>
     Map localMap = (Map)paramChannelContext.getRequestPayload();
     paramContextEx.setDataMap(localMap);
 
-    System.out.println("localMap="+localMap);
-    System.out.println("paramContextEx processId="+paramContextEx.getProcessId());
-    System.out.println("paramContextEx========="+paramContextEx);
-    System.out.println(this.a);
-    System.out.println((String)localMap.get(this.a));
+//    System.out.println("localMap="+localMap);
+//    System.out.println("paramContextEx processId="+paramContextEx.getProcessId());
+//    System.out.println("paramContextEx========="+paramContextEx);
+//    System.out.println(this.a);
+//    System.out.println((String)localMap.get(this.a));
     if (paramContextEx.getProcessId() == null) {
     		String str = (String)localMap.get(this.a);
       		if (str == null) {throw new JumpException("JUMPCO7000", "no_process_id");}

@@ -29,7 +29,7 @@ public class NoFrontPayloadChannelInterceptorGzd extends NoFrontLengthStreamReso
 		{
 			byte[] a = resolve(socket.getInputStream());
 			
-			System.out.println("初始的byte="+Hex.toDumpString(a));
+//			System.out.println("初始的byte="+Hex.toDumpString(a));
 			byte[] inputB = new byte[a.length + 81];
 			byte[] b = a;
 			int j = 0;
@@ -42,7 +42,7 @@ public class NoFrontPayloadChannelInterceptorGzd extends NoFrontLengthStreamReso
 			byte[] msgB=new byte[6];
 			System.arraycopy(a, 4, msgB, 0, 6);
 			String msgS=new String(msgB);
-			System.out.println("当前的msgS="+msgS);
+//			System.out.println("当前的msgS="+msgS);
 			if("020005".equals(msgS)){
 				for (int i = 0; i < b.length; i++) {
 					byte c = b[i];
@@ -54,7 +54,7 @@ public class NoFrontPayloadChannelInterceptorGzd extends NoFrontLengthStreamReso
 					if (j == 12) {
 						if (t == 0) {
 							t = i + 1; // 得到第12个|的长度
-							System.out.println("t=" + t);
+//							System.out.println("t=" + t);
 						}
 					}
 					if (j == 13) {
@@ -72,7 +72,7 @@ public class NoFrontPayloadChannelInterceptorGzd extends NoFrontLengthStreamReso
 				// 判断用户编号是否含有|,如果p-i的小于20，则表示用户编号含有|
 				if (len > 0 && len < 20) {
 					len = m - t;
-					System.out.println("用户编号含有|，当前的len处理后为：" + len + ",当前的m=" + m + ",当前的t=" + t);
+//					System.out.println("用户编号含有|，当前的len处理后为：" + len + ",当前的m=" + m + ",当前的t=" + t);
 				}
 				System.arraycopy(b, t, reamrk, 0, len);
 			}else if("020006".equals(msgS)){
@@ -86,7 +86,7 @@ public class NoFrontPayloadChannelInterceptorGzd extends NoFrontLengthStreamReso
 					if (j == 11) {
 						if (t == 0) {
 							t = i + 1; // 得到第12个|的长度
-							System.out.println("t=" + t);
+//							System.out.println("t=" + t);
 						}
 					}
 					if (j == 12) {
@@ -104,7 +104,7 @@ public class NoFrontPayloadChannelInterceptorGzd extends NoFrontLengthStreamReso
 				// 判断用户编号是否含有|,如果p-i的小于20，则表示用户编号含有|
 				if (len > 0 && len < 20) {
 					len = m - t;
-					System.out.println("用户编号含有|，当前的len处理后为：" + len + ",当前的m=" + m + ",当前的t=" + t);
+//					System.out.println("用户编号含有|，当前的len处理后为：" + len + ",当前的m=" + m + ",当前的t=" + t);
 				}
 				System.arraycopy(b, t, reamrk, 0, len);
 			}
@@ -126,10 +126,10 @@ public class NoFrontPayloadChannelInterceptorGzd extends NoFrontLengthStreamReso
 			byte[] aftDealB=aftDealS.getBytes();
 			System.arraycopy(aftDealB, 0, realB, 0, 4);
 			System.arraycopy(inputB, 4, realB, 4, inputB.length-4);
-			System.out.println(Hex.toDumpString(realB));
+//			System.out.println(Hex.toDumpString(realB));
 			
 			
-			System.out.println("在payload阶段，当前得到的东西为:\n" + Hex.toDumpString(realB));
+//			System.out.println("在payload阶段，当前得到的东西为:\n" + Hex.toDumpString(realB));
 			channelContext.setRequestPayload(realB);
 
 		} catch (IOException io)

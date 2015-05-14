@@ -26,12 +26,12 @@ public class NoFrontPayloadChannelInterceptorSd extends NoFrontLengthStreamResol
 
 			byte[] ints = resolve(socket.getInputStream());
 
-			System.out.println("接收到的初始报文为:" + Hex.toDumpString(ints));
+//			System.out.println("接收到的初始报文为:" + Hex.toDumpString(ints));
 			byte[] deal = new byte[ints.length - 10];
 			// syste
 			System.arraycopy(ints, 10, deal, 0, deal.length);
 
-			System.out.println("经过处理后的报文为:" + Hex.toDumpString(deal));
+//			System.out.println("经过处理后的报文为:" + Hex.toDumpString(deal));
 			channelContext.setRequestPayload(deal);
 		} catch (IOException io)
 		{
@@ -42,7 +42,7 @@ public class NoFrontPayloadChannelInterceptorSd extends NoFrontLengthStreamResol
 	public void onResponse(ChannelContext channelContext, ContextEx context, Throwable throwable)
 	{
 		byte arrayOfByte[] = (byte[]) channelContext.getResponsePalyload();
-		System.out.println("要发送的报文为:" + Hex.toDumpString(arrayOfByte));
+//		System.out.println("要发送的报文为:" + Hex.toDumpString(arrayOfByte));
 		int len = arrayOfByte.length;
 
 		byte[] deal = new byte[arrayOfByte.length + 10]; // 最终返回的报文

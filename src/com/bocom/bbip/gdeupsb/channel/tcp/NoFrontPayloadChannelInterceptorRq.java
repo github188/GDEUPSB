@@ -35,7 +35,7 @@ public class NoFrontPayloadChannelInterceptorRq extends NoFrontLengthStreamResol
 	{
 		byte arrayOfByte[] = (byte[]) channelContext.getResponsePalyload();
 		
-        System.out.println("处理后，byte=\n"+Hex.toDumpString(arrayOfByte)+",发送的报文转化为明文为:"+new String(arrayOfByte));
+//        System.out.println("处理后，byte=\n"+Hex.toDumpString(arrayOfByte)+",发送的报文转化为明文为:"+new String(arrayOfByte));
 		try
 		{
 			((Socket) channelContext.getResponse()).getOutputStream().write(arrayOfByte);

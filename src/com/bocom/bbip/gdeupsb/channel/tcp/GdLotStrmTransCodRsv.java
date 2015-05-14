@@ -30,7 +30,7 @@ public class GdLotStrmTransCodRsv implements StreamResolver{
 		ByteArrayOutputStream out = new ByteArrayOutputStream(64);
 		String outDat = null;
 //		outDat = is.read();
-		System.out.println("outDat["+outDat+"]");
+//		System.out.println("outDat["+outDat+"]");
 		out.write(outDat.getBytes("GBK"));
 		return out.toByteArray();
 	}

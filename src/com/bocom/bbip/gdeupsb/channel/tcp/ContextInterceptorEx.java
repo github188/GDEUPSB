@@ -40,7 +40,6 @@ public class ContextInterceptorEx
                 throw new JumpException("JUMPCO7000", "no_process_id");
             contextex.setProcessId(s);
         } 
-        System.out.println("hahahahahahaha!"+contextex+"hohohohohohohohoho"+channelcontext);
     
     }
 
