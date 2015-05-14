@@ -103,6 +103,8 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
         	tmp.setSqn(bbipPublicService.getBBIPSequence().substring(4));
         	tmp.setBatNo((String)context.getData(ParamKeys.BAT_NO));
         	tmp.setRsvFld4("0");
+        	tmp.setTxnTlr((String)context.getData("tlr"));
+        	tmp.setComNo(comNo);
         	if(tmp.getCusNme()==null || tmp.getCusNme()==""){
         		tmp.setCusNme(tmp.getThdCusNme());
         	}
