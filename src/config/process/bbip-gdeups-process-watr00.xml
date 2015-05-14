@@ -120,4 +120,13 @@
 	        <action id="act" class = "com.bocom.bbip.gdeupsb.action.wat.DelFailFtp"/>
 	   </actions>
 	</process>
+	
+	<!-- 水费批扣 -->
+	<process id="gdeupsb.watBatchAcps" template="gdeupsb.watBatchTemplete" interceptors="bbip.defaultInterceptors">	
+	   <actions>  
+	        <action id="preAction" class = "com.bocom.bbip.gdeupsb.action.wat.PreWatBatchAcps"/>
+	         <action id="dealAction" class = "com.bocom.bbip.gdeupsb.action.wat.BatchFileDealAction"/>
+	        <action id="aftAction" class = "com.bocom.bbip.gdeupsb.action.wat.WatBatchAcps"/>
+	   </actions>
+	</process>
 </x:beans>
