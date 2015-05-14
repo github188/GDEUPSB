@@ -38,7 +38,7 @@ public class FeeMonQryAction extends BaseAction{
 		}
 //			Date begDat = DateUtils.parse(DateUtils.format(feeInfoList.get(0).getBegDat(), DateUtils.STYLE_SIMPLE_DATE), DateUtils.STYLE_SIMPLE_DATE);
 //			Date endDat = DateUtils.parse(DateUtils.format(feeInfoList.get(0).getEndDat(), DateUtils.STYLE_SIMPLE_DATE), DateUtils.STYLE_SIMPLE_DATE);
-		System.out.print("@@@"+ctx);
+		log.info("@@@"+ctx);
 		ctx.setData(GDParamKeys.BEG_DAT, feeInfoList.get(0).getBegDat());
 		ctx.setData(GDParamKeys.END_DAT, feeInfoList.get(0).getEndDat());
 		ctx.setData(GDParamKeys.CAR_NO, feeInfoList.get(0).getCarNo());

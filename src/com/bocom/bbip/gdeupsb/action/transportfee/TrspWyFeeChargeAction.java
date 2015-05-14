@@ -98,7 +98,7 @@ public class TrspWyFeeChargeAction extends BaseAction{
 //		gdEupsbTrspTxnJnlRepository.insert(gdEupsbTrspTxnJnl);
 //		ctx.setData(ParamKeys.ACCOUNT_DATE, DateUtils.format((Date)ctx.getData(ParamKeys.ACCOUNT_DATE), DateUtils.STYLE_yyyyMMdd));
 //		ctx.setData(ParamKeys.AC_DATE, DateUtils.format((Date)ctx.getData(ParamKeys.AC_DATE), DateUtils.STYLE_yyyyMMdd));
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@"+ctx.getDataMap());
+		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@"+ctx.getDataMap());
 		
 		
 		get(BBIPPublicService.class).synExecute(CHARGE_PROCESS, ctx);

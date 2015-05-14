@@ -46,8 +46,8 @@ public class PrintAddInvCancelAction extends BaseAction {
 		gdEupsbTrspInvChgInfo.setSqn(ctx.getData(GDParamKeys.SQN).toString());
 		List<GDEupsbTrspInvChgInfo> invChgInfoList = gdEupsbTrspInvChgInfoRepository.find(gdEupsbTrspInvChgInfo);
 		// TODO:OLogNo找不到 ,且应该还再查出actDat
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + today);
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + invChgInfoList.get(0).getTactDt());
+		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + today);
+		log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + invChgInfoList.get(0).getTactDt());
 		if (!DateUtils.isSameDate(today, invChgInfoList.get(0).getTactDt())) { // 此处ics中是actDat，还未明确
 			ctx.setData(ParamKeys.RSP_MSG, "禁止跨日抹帐");
 			throw new CoreRuntimeException(GDErrorCodes.DATE_ERROR);

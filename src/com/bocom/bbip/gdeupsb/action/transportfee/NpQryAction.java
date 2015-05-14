@@ -33,7 +33,6 @@ public class NpQryAction extends BaseAction {
 	public void execute(Context ctx) throws CoreException, CoreRuntimeException {
 		log.info("NpQryAction start......");
 //---------------------------------------------------------------------------------------------
-		System.out.println(ctx.getDataMap());
 		// 统计总数,成功或失败
 		GDEupsbTrspNpManag gdEupsbTrspNpManag = new GDEupsbTrspNpManag();
 		gdEupsbTrspNpManag.setBegDat((Date) ctx.getData(GDParamKeys.BEG_DAT));
