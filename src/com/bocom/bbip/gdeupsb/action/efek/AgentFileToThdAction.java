@@ -87,7 +87,6 @@ public class AgentFileToThdAction extends BaseAction{
 							if(eupsCusAgentJournals.getTel()!=null){
 									eupsCusAgentJournals.setTel(eupsCusAgentJournals.getTel().trim());
 							}
-							System.out.println(eupsCusAgentJournals.getCusNme());
 						}
 						//首行
 						Map<String, Object> headerMap=new HashMap<String, Object>();
