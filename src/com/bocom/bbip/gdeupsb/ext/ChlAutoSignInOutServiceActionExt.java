@@ -21,7 +21,6 @@ public class ChlAutoSignInOutServiceActionExt extends ServiceDelegatorAction {
 
 	public void signInOutDeal(Context context) throws CoreException, CoreRuntimeException {
 		execute(context, "eups.signInOutDealStrategyAction");
-		System.out.println("(((((((((((((((((((((((((((((((((context="+context);
 		if (StringUtils.isNotBlank(beanName))
 		{
 			Object signInOutDealImpl = ServiceRegistry.findService(beanName);

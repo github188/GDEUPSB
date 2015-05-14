@@ -46,9 +46,6 @@ public class ManageChlSignInOutActionExt extends BaseAction
         }
         context.setData("txnDte", new Date());
         context.setData("txnTme", new Date());
-        
-        System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^context="+context.getDataMap());
-        
     }
 
     private void thdSignInOut(Context context)
