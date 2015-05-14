@@ -13,6 +13,6 @@
         <fixString name="txnTme"   length="6"   referred="true" /> <!--交易时间-->
         <fixString name="bakFld1"  length="10" referred="true" /> <!--学校代码-->
         <fixString name="mfmVchNo"  length="20" referred="true" /> <!--银行流水号-->
-        <fixString name="txnAmt"  length="15" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.txnAmt, 15, ' ','1')"/> <!--交易金额-->
+        <fixString name="txnAmt"  length="12" referred="true" expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.txnAmt, 12, ' ','1')"/> <!--交易金额-->
 	</segment>
 </message>
