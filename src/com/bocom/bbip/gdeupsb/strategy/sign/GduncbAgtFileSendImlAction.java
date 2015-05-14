@@ -63,10 +63,8 @@ public class GduncbAgtFileSendImlAction implements AgtFileSendImlService {
 		inpara.put("begDat", begDat);
 		inpara.put("endDat", endDat);
 
-		System.out.println("!!!!!!!!!!!!inpara=" + inpara);
 		// 查找拷盘数据
 		List<Map<String, Object>> fleSndList = gdsAgtWaterRepository.findFileSndInfo(inpara);
-		System.out.println("fleSndList=" + fleSndList);
 
 		// TODO:生成返盘文件
 		while (true) {

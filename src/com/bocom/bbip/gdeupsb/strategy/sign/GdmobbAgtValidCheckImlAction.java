@@ -119,8 +119,6 @@ public class GdmobbAgtValidCheckImlAction implements AgtValidCheckService {
 			inpara.put("subSts", subSts);
 			inpara.put("gdsBId", gdsBId);
 			
-			
-			System.out.println("===============inpara=" + inpara);
 			gdsAgtWaterRepository.updateAgtChkSts(inpara);
 		}
 

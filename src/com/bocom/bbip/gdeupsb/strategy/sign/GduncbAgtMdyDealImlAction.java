@@ -222,7 +222,6 @@ public class GduncbAgtMdyDealImlAction implements AgtMdyDealImlService {
 			detailMap.put("agtSTb", agtStb); // 子表
 			detailMap.put("gdsBid", gdsBId); // 代理业务id
 			detailMap.put("actNo", actNo); // 卡号
-			System.out.println("~~~~~~~~~~~~~~~~~context=" + context);
 
 			detailMap.put("txnCnl", context.getData(GDParamKeys.SIGN_STATION_TXN_CNL)); // 操作渠道
 
@@ -266,7 +265,6 @@ public class GduncbAgtMdyDealImlAction implements AgtMdyDealImlService {
 				detailMap.put("lagtSt", "U");
 				detailMap.put("tagtSt", "U");
 
-				System.out.println("+=======================detailMap=" + detailMap);
 				gdsAgtWaterRepository.insertgduncbDetailAgtInf(detailMap);
 			}
 

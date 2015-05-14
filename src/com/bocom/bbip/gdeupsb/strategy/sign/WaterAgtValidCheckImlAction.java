@@ -90,7 +90,6 @@ public class WaterAgtValidCheckImlAction implements AgtValidCheckService {
 			inpara.put("gdsBId", gdsBId);
 			
 			
-			System.out.println("===============inpara=" + inpara);
 			gdsAgtWaterRepository.updateAgtChkSts(inpara);
 		}
 
