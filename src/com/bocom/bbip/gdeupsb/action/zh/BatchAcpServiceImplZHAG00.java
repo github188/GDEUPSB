@@ -102,7 +102,7 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 		/**插入临时表中*/
 		logger.info("~~~~~~~Start ~~~~将数据插入临时表");
 		String tlr=(String)context.getData("tlr");
-		tlr=0+tlr.substring(3);
+		tlr=tlr.substring(2);
 		String txnDte=DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd+"      ");
         for(GDEupsZhAGBatchTemp tmp:list){
         	String rsvFld1=tmp.getRsvFld1();

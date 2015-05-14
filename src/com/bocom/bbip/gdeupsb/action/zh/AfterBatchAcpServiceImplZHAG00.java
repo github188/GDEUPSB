@@ -93,25 +93,25 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
         			String sqn=eupsBatchInfoDetail.getRmk1();
         			String sts=eupsBatchInfoDetail.getSts();
         			GDEupsZhAGBatchTemp gdEupsZhAGBatchTemp=gdEupsZHAGBatchTempRepository.findOne(sqn);
-        			String rsvFld5=gdEupsZhAGBatchTemp.getRsvFld5();
+        			String rsvFld4="1";
         			if(sts.equals("S")){
-        				rsvFld5="1"+rsvFld5;
+        				rsvFld4="1";
         			}else{
         				String errMsg=eupsBatchInfoDetail.getErrMsg();
 					 	if(errMsg.length()>6){
 					 		errMsg=eupsBatchInfoDetail.getErrMsg().substring(0,6);
 					 	}
         				if(errMsg.equals("TPM050")){
-        					rsvFld5="2"+rsvFld5;
+        					rsvFld4="2";
 				 		}else if(errMsg.equals("TPM055")){
-				 			rsvFld5="3"+rsvFld5;
+				 			rsvFld4="3";
 				 		}else if(errMsg.equals("PDM252")){
-				 			rsvFld5="4"+rsvFld5;
+				 			rsvFld4="4";
 				 		}else{
-				 			rsvFld5="5"+rsvFld5;
+				 			rsvFld4="5";
 				 		}
         			}
-        			gdEupsZhAGBatchTemp.setRsvFld5(rsvFld5);
+        			gdEupsZhAGBatchTemp.setRsvFld4(rsvFld4);
         			gdEupsZHAGBatchTempRepository.updateTemp(gdEupsZhAGBatchTemp);
         	}
         }
