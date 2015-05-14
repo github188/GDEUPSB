@@ -14,7 +14,7 @@ public class CreateResponseSqnAction extends BaseAction{
 			String reqDate=context.getData(GDParamKeys.TRADE_SEND_DATE).toString();
 			context.setData(ParamKeys.TXN_DAT, DateUtils.formatAsSimpleDate(new Date()));
 			context.setData(ParamKeys.TXN_TME, DateUtils.parse(DateUtils.formatAsTranstime(new Date())));
-			System.out.println(context.getData(ParamKeys.TXN_TME));
+			log.info(context.getData(ParamKeys.TXN_TME));
 			String reqBankNo=context.getData(ParamKeys.BANK_NO).toString();
 			//TODO  确定字段SelVal
 //			String reqSelVal=context.getData("SelVal");
