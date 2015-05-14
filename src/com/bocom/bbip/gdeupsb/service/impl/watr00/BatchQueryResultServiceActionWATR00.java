@@ -39,7 +39,7 @@ public class BatchQueryResultServiceActionWATR00 extends BaseAction {
 //		context.getAttribute("");// setVariable("PARAMETERS", map);
 		
 		//异步调用文件批量处理交易
-		get(BBIPPublicService.class).asynExecute("eups.fileBatchPayCreateDataProcess", context);
+		get(BBIPPublicService.class).asynExecute("gdeupsb.watBatchAcps", context);
 		logger.info("BatchQueryResultServiceActionWATR00 end ... ...");
 	}
 
