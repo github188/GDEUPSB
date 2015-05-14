@@ -222,8 +222,6 @@ public class MacEcbUtils {
 		// System.out.print((char)bs[i]);
 		// }
 		// System.out.println(new String(bs,"GBK"));
-		System.out.println(Arrays.toString(twoEcbMacHex(str, "GBK")));
-		System.out.println(new String(twoEcbMacByte(str), "GBK"));
 		// System.out.println(Arrays.toString(oneEcbMacHex(str)));
 	}
 }

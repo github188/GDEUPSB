@@ -134,9 +134,7 @@ public class GzFcXmlExchangeUtil{
 	public static void main(String[] args) throws Exception {
 		byte[] b = FileUtils.readFileToByteArray(new File("E:/test/gzfcRsp.xml"));
 		String ns = new String(b, "UTF-8");
-		System.out.println("初始报文"+ns);
 		ns = GzFcXmlDel(ns); //属性转为子节点
-		System.out.println(ns);
 //		ns = GzFcXmlDel(ns); //子节点转为属性
 //		System.out.println(ns);
 	}

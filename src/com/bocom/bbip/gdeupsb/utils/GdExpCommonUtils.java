@@ -25,11 +25,9 @@ public class GdExpCommonUtils {
 
 	// 金额元转分再addchar
 	public static final String FmtAmtToCentAddChar(String amt, int len, char LorR) {
-		System.out.println("start FmtAmtToCentAddChar,amt=" + amt);
 		BigDecimal amtD = new BigDecimal(amt);
 		amtD = amtD.setScale(2);
 		amt = amtD.toString().replace(".", "");
-		System.out.println("amt=" + amt);
 		amt = StringUtils.leftPad(amt, len);
 		return amt;
 	}
@@ -40,7 +38,6 @@ public class GdExpCommonUtils {
 		BigDecimal amtD = new BigDecimal(amt);
 		amtD = amtD.setScale(2);
 		amt = amtD.toString().replace(".", "");
-		System.out.println("amt=" + amt);
 		amt = StringUtils.leftPad(amt, len,"0");
 		return amt;
 	}
@@ -121,7 +118,6 @@ public class GdExpCommonUtils {
 
 	// 去左边0，加小数点加逗号ex:09123123>>>>91,231.23
 	public static final String AMTFMT(String res) {
-		System.out.println("AMTFMT>>>>>>>>>>" + res);
 		int i, j, len;
 		String amt = AMTDELZERO(res);
 		StringBuffer buf = new StringBuffer(amt);
@@ -145,7 +141,6 @@ public class GdExpCommonUtils {
 	// 金额转化成元
 	// 去左边0，加小数点ex:09123123>>>>91231.23
 	public static final String AMTFMT2(String res) {
-		System.out.println("AMTFMT>>>>>>>>>>" + res);
 		int i, j, len;
 		String amt = AMTDELZERO(res);
 		if (StringUtils.isEmpty(amt)) {
@@ -215,9 +210,7 @@ public class GdExpCommonUtils {
 			return "";
 
 		String des = null;
-		System.out.println("fmt>>>" + fmt);
 		des = DateUtils.format(res, fmt);
-		System.out.println(des);
 		return des;
 	}
 
@@ -229,7 +222,6 @@ public class GdExpCommonUtils {
 
 	// 删除所有空格
 	public static final String DeleteAllSpace(String str) {
-		System.out.println("delAllSpc" + str);
 		if (str == null || str.length() == 0)
 			return str;
 		int sz = str.length();
@@ -247,7 +239,6 @@ public class GdExpCommonUtils {
 
 	// 加小数点并判断是否补足字符长度
 	public static final String AMTADDDOTandADDCHAR(String res, int len, char des, char LorR, char addCharFlg) {// 1-���ո�
-		System.out.println("txnAmt>>" + res);
 		if (res == null || res.length() == 0)
 			return "";
 		StringBuffer buf = new StringBuffer(res);
@@ -286,22 +277,17 @@ public class GdExpCommonUtils {
 
 	// 补空格
 	public static final String AddChar(String res, int len, char des, char LorR) {
-		System.out.println("res>>>[" + res+"]");
-		System.out.println("addChar>>" + "‘" + des + "’");
 		if (res.trim().length() != len) {
 			int tm = len - res.trim().length();
 			if (LorR == '0') {
-				System.out.println("0右补-" + LorR);
 				for (int i = 0; i < tm; i++) {
 					res = res + des;
 				}
 			} else {
-				System.out.println("1左补-" + LorR);
 				for (int i = 0; i < tm; i++) {
 					res = des + res;
 				}
 			}
-			System.out.println("经过转换后的String=["+res+"]");
 			return res;
 		}
 		return res;
@@ -340,7 +326,6 @@ public class GdExpCommonUtils {
 
 	// 0000转为000000
 	public static final String GetRtn(String ags) {
-		System.out.println(ags);
 		if (ags.equals("0000")) {
 			return "000000";
 		}
@@ -463,7 +448,6 @@ public class GdExpCommonUtils {
 
 	// 删除所有空格
 	public static final String deleteAllSpace(String str) {
-		System.out.println("delAllSpc" + str);
 		if (str == null || str.length() == 0)
 			return str;
 		int sz = str.length();
