@@ -73,6 +73,7 @@ public class CheckThdDetlAcctAction implements Executable {
 			String tlr = bbipPublicService.getETeller(context.getData("bk").toString());
 	        context.setData("tlr", tlr);
 	        context.setData("txnTlr", tlr);
+	        context.setData("chlTyp", "90");
 			//日期
 			Date txnDte=DateUtils.calDate(DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())),-1);
 			context.setData(ParamKeys.TXN_DTE, txnDte);

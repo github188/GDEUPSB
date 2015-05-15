@@ -57,6 +57,7 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 		String tlr = bbipPublicService.getETeller(context.getData("bk").toString());
         context.setData("tlr", tlr);
         context.setData("txnTlr", tlr);
+        context.setData("chlTyp", "90");
 		//流水日期时间
 		Date txnDte=DateUtils.calDate(DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())),-1);
 		Date txnTme=DateUtils.parse(DateUtils.formatAsTranstime(new Date()));
