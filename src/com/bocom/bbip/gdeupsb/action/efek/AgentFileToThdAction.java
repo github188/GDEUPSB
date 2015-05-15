@@ -60,6 +60,7 @@ public class AgentFileToThdAction extends BaseAction{
 				String tlr = bbipPublicService.getETeller(context.getData("bk").toString());
 		        context.setData("tlr", tlr);
 		        context.setData("txnTlr", tlr);
+		        context.setData("chlTyp", "90");
 		        
 				context.setData(ParamKeys.EUPS_BUSS_TYPE, "ELEC00");
 				context.setData("TransCode", "31");
