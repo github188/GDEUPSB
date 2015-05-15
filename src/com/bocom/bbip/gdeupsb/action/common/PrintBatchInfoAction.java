@@ -150,7 +150,8 @@ public class PrintBatchInfoAction extends BaseAction{
 					 
 					log.info("=============放置报表文件");
 			        //反盘文件
-					String path=sendFileToBBOSConfig.getLocDir();
+					EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne("FSAG00");
+					String path=eupsThdFtpConfig.getLocDir();
 					try {
 						bbipPublicService.sendFileToBBOS(new File(path,fileName), fileName, MftpTransfer.FTYPE_NORMAL);		
 					}catch (Exception e) {
