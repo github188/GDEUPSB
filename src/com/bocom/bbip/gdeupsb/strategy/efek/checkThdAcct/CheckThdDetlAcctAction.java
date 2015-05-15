@@ -68,7 +68,11 @@ public class CheckThdDetlAcctAction implements Executable {
 	public void execute(Context context) throws CoreException,
 			CoreRuntimeException {
 			logger.info("=======Start CheckThdDetlAcctAction");
-	        
+			//柜员
+			context.setData("bk", bbipPublicService.getParam("BBIP", "BK"));
+			String tlr = bbipPublicService.getETeller(context.getData("bk").toString());
+	        context.setData("tlr", tlr);
+	        context.setData("txnTlr", tlr);
 			//日期
 			Date txnDte=DateUtils.calDate(DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())),-1);
 			context.setData(ParamKeys.TXN_DTE, txnDte);

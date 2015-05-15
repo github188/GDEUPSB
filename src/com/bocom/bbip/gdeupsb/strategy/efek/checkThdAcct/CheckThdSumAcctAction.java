@@ -52,6 +52,11 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 	public Map<String, Object> checkThdSumAcct(CheckDomain arg0, Context context)
 			throws CoreException {
 		logger.info("=========Start  CheckThdSumAcctAction");
+		//柜员
+		context.setData("bk", bbipPublicService.getParam("BBIP", "BK"));
+		String tlr = bbipPublicService.getETeller(context.getData("bk").toString());
+        context.setData("tlr", tlr);
+        context.setData("txnTlr", tlr);
 		//流水日期时间
 		Date txnDte=DateUtils.calDate(DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())),-1);
 		Date txnTme=DateUtils.parse(DateUtils.formatAsTranstime(new Date()));
