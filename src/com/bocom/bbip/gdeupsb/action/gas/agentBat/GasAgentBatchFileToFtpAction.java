@@ -8,8 +8,10 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.common.BPState;
@@ -40,11 +42,24 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
  *
  */
 public class GasAgentBatchFileToFtpAction extends BaseAction{
+	
+	@Autowired
+	BBIPPublicService bbipPublicService;
+	
 	private static Logger logger = LoggerFactory.getLogger(GasAgentBatchFileToFtpAction.class);
 	
 	public void execute(Context context) throws CoreException {
 		logger.info("Enter in GasAgentBatchFileToFtpAction.......");
 		logger.info("=================================context:" + context);
+		
+		String bk = "01491999999";
+		String br = "01491001999";
+		context.setData(ParamKeys.BR, br);
+		context.setData(ParamKeys.BK, bk);
+		String tlr = bbipPublicService.getETeller(bk);
+		context.setData(ParamKeys.TELLER, tlr);
+		context.setData("extFields", br);
+		
 		//判断是否自动发起
 		String fileDte = context.getData("fileDte");
 		logger.info("=================txnDte:" + fileDte);

@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
+import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
@@ -39,6 +40,8 @@ public class CheckBkFileToThirdStrategyAction extends BaseAction
 //implements	CheckBkFileToThirdService 
 {
 
+	@Autowired
+	BBIPPublicService bbipPublicService;
 	@Autowired
 	OperateFileAction operateFileAction;
 	@Autowired
@@ -101,6 +104,16 @@ public class CheckBkFileToThirdStrategyAction extends BaseAction
 		// String thdTxnCde = "460707";
 		// context.setData(ParamKeys.THD_TXN_CDE, thdTxnCde);
 		// String sqn = context.getData(ParamKeys.SEQUENCE);
+		
+		
+		String bk = "01491999999";
+		String br = "01491001999";
+		context.setData(ParamKeys.BR, br);
+		context.setData(ParamKeys.BK, bk);
+		String tlr = bbipPublicService.getETeller(bk);
+		context.setData(ParamKeys.TELLER, tlr);
+		context.setData("extFields", br);
+		
 		// 交易日期
 		String fileDte = null;
 
