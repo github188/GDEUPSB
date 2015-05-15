@@ -55,7 +55,6 @@ public class PayUnilateralToBankServiceAction implements PayUnilateralToBankServ
 		String dpTyp = context.getData(GDParamKeys.GZ_ELE_THD_DPT_TYP); // 配型部类型
 		String comNo = CodeSwitchUtils.codeGenerator("eleGzComNoGen", dpTyp);
 
-		// TODO: for test,柜员号，机构号，分行号写死，为了测试
 //		context.setData("tlr", "ABIR148");
 		context.setData("tlrTmlId", context.getData(ParamKeys.TELLER));
 		context.setData("br", "01441800999");
