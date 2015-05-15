@@ -66,10 +66,6 @@ public class NodTrspCheckFileAction extends BaseAction {
 		log.info("NodTrspCheckFileAction start......");
 		ctx.setData("chkFlg", "F");
 
-		// TODO 返回全段字匹配问题
-
-		// String
-		// tChkNo=((BTPService)get("BTPService")).applyBatchNo(ParamKeys.BUSINESS_CODE_COLLECTION);
 		String journalModel = (String) ctx.getData("journalModel");
 		String nodNo = null;
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -178,7 +174,7 @@ public class NodTrspCheckFileAction extends BaseAction {
 			rptFmt = rptFmt + "01";
 		} else if (2 == i) {// ~~~~~~~~~~~~~更改发票清单
 			rptFmt = rptFmt + "02";
-		} else if (3 == i) {// ~~~~~~~~~~~~~未打印发票清单 协办行对账无此交易 //TODO
+		} else if (3 == i) {// ~~~~~~~~~~~~~未打印发票清单 协办行对账  无此交易 
 			rptFmt = rptFmt + "03";
 		} else {
 			context.setData(GDParamKeys.MSGTYP, "E");
@@ -194,7 +190,8 @@ public class NodTrspCheckFileAction extends BaseAction {
 		try {
 			render.afterPropertiesSet();
 		} catch (Exception e) {
-			// IsbeUtils.busException(GDISBEErrorCodes.BBIP_GDISBE_CREATE_REPORT_ERROR);
+			log.info("create report file error:", e);
+			throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
 		}
 		context.setData("eles", detailList);
 		render.setReportNameTemplateLocationMapping(mapping);
@@ -247,7 +244,7 @@ public class NodTrspCheckFileAction extends BaseAction {
 
 		// 上传FTP
 		// FTPTransfer tFTPTransfer = new FTPTransfer();
-		// // TODO FTP上传设置
+		// FTP上传设置
 		// tFTPTransfer.setHost("182.53.15.187");
 		// tFTPTransfer.setPort(21);
 		// tFTPTransfer.setUserName("weblogic");
@@ -279,65 +276,5 @@ public class NodTrspCheckFileAction extends BaseAction {
 		context.setData("filNam", rptFil);
 		log.info("文件上传完成，等待打印！" + context);
 
-		// ////////////////////////////////////
-		/**
-		 * log.info(">>>>>>>>>>>>>rptFmt=" + rptFmt);
-		 * log.info(">>>>>>>>>>>>>path=" + path);
-		 * 
-		 * context.setData(rptFmt, path); // TODO 报表生成
-		 * VelocityTemplatedReportRender render = new
-		 * VelocityTemplatedReportRender(); try { render.afterPropertiesSet(); }
-		 * catch (Exception e) { e.printStackTrace(); }
-		 * 
-		 * String rptFil = "Car" + context.getData("tlr").toString() +
-		 * context.getData(GDParamKeys.START_DATE).toString().substring(4) +
-		 * ".dat";
-		 * 
-		 * // 拼装文件 Map<String, String> map = new HashMap<String, String>();
-		 * map.put(rptFil, path);
-		 * render.setReportNameTemplateLocationMapping(map);
-		 * context.setData("eles", detailList); String result =
-		 * render.renderAsString(rptFil, context); System.out
-		 * .println("~~~~~~~~~~~~~result~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-		 * System.out.println(result); /** // 文件路径 StringBuffer rpFmts = new
-		 * StringBuffer(); rpFmts.append("D:/test/trspTest/"); File file = new
-		 * File(rptFil.toString()); if (!file.exists()) { file.mkdirs(); } try {
-		 * FileOutputStream fileOutputStream = new FileOutputStream(rpFmts
-		 * .append(rptFil).toString()); OutputStreamWriter outputStreamWriter =
-		 * new OutputStreamWriter( fileOutputStream, "GBK"); BufferedWriter
-		 * bufferedWriter = new BufferedWriter( outputStreamWriter); PrintWriter
-		 * printWriter = new PrintWriter(bufferedWriter);
-		 * printWriter.write(result); // 关闭 printWriter.close();
-		 * bufferedWriter.close(); outputStreamWriter.close();
-		 * fileOutputStream.close(); } catch (FileNotFoundException e) { // TODO
-		 * Auto-generated catch block e.printStackTrace(); } catch
-		 * (UnsupportedEncodingException e) { // TODO Auto-generated catch block
-		 * e.printStackTrace(); } catch (IOException e) { // TODO Auto-generated
-		 * catch block e.printStackTrace(); }
-		 * 
-		 * // TODO 没有确定下名字rptFil 还是 fileName // String
-		 * fileName=context.getData("fileName").toString(); System.out
-		 * .println("~~~~~~~~~~~~~sendFile~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"); //
-		 * sendFile(context,rptFmt);
-		 * 
-		 * 
-		 * //////////////// FOR LCL TEST ///////////// PrintWriter printWriter =
-		 * null;
-		 * 
-		 * // TODO 拼装本地路径 StringBuffer sbLocDir = new StringBuffer();
-		 * sbLocDir.append("D:/testGash/checkFilTest/"); try { File file = new
-		 * File(sbLocDir.toString()); if (!file.exists()) { file.mkdirs(); }
-		 * printWriter = new PrintWriter(new BufferedWriter(new
-		 * OutputStreamWriter( new
-		 * FileOutputStream(sbLocDir.append(rptFil).toString()), "GBK")));
-		 * printWriter.write(result);
-		 * 
-		 * } catch (IOException e) { throw new
-		 * CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL); } finally { if (null
-		 * != printWriter) { try { printWriter.close(); } catch (Exception e) {
-		 * throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL); } } }
-		 */
-
-		// context.setData("filNam", rptFil);
 	}
 }
