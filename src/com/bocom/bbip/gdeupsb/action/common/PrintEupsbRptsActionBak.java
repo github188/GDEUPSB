@@ -42,9 +42,9 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 	@Autowired
 	VelocityTemplatedReportRender render;
 	@Autowired
-	private BBIPPublicService bbipPublicService;
+	BBIPPublicService bbipPublicService;
 	@Autowired
-	private SystemConfig systemConfig;
+	SystemConfig systemConfig;
 
 	private static Logger logger = LoggerFactory
 			.getLogger(PrintEupsbRptsActionBak.class);
