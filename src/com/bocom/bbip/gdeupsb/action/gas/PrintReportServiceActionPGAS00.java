@@ -38,11 +38,11 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
 public class PrintReportServiceActionPGAS00 extends BaseAction {
 
 	@Autowired
-	private VelocityTemplatedReportRender render;
+	VelocityTemplatedReportRender render;
 	@Autowired
-	private BBIPPublicService bbipPublicService;
+	BBIPPublicService bbipPublicService;
 	@Autowired
-	private SystemConfig systemConfig;
+	SystemConfig systemConfig;
 
 	private static Logger logger = LoggerFactory
 			.getLogger(PrintReportServiceActionPGAS00.class);
