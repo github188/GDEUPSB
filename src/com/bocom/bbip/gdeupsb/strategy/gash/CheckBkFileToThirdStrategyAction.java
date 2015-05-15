@@ -108,11 +108,19 @@ public class CheckBkFileToThirdStrategyAction extends BaseAction
 		
 		String bk = "01491999999";
 		String br = "01491001999";
-		context.setData(ParamKeys.BR, br);
-		context.setData(ParamKeys.BK, bk);
-		String tlr = bbipPublicService.getETeller(bk);
-		context.setData(ParamKeys.TELLER, tlr);
-		context.setData("extFields", br);
+		String tlr = null;
+		
+		if (StringUtils.isEmpty((String) context.getData(ParamKeys.BK))) {
+			context.setData(ParamKeys.BK, bk);
+		}
+		if (StringUtils.isEmpty((String) context.getData(ParamKeys.BR))) {
+			context.setData(ParamKeys.BR, br);
+			context.setData("extFields", br);
+		}
+		if (StringUtils.isEmpty((String) context.getData(ParamKeys.TELLER))) {
+			tlr = bbipPublicService.getETeller(bk);
+			context.setData(ParamKeys.TELLER, tlr);
+		}
 		
 		// 交易日期
 		String fileDte = null;
