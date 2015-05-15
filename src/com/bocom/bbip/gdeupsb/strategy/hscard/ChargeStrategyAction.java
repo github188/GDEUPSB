@@ -47,13 +47,6 @@ public class ChargeStrategyAction implements Executable{
 		context.setData(ParamKeys.BR, bbipPublicService.getParam("GDEUPSB", "HSBR")); // 机构号
 		String teller = bbipPublicService.getETeller(context.getData(ParamKeys.BK).toString());
 		
-		
-		
-		
-		
-		
-		
-		
 		context.setData(ParamKeys.TELLER, teller);
 		context.setData(ParamKeys.BUS_TYP, Constants.BUS_TYP_2); //待缴
 //		检查报文是否重复
