@@ -48,11 +48,19 @@ public class AgentFileToThdAction extends BaseAction{
 	@Autowired
 	OperateFTPAction operateFTPAction;
 	@Autowired
+	BBIPPublicService bbipPublicService;
+	@Autowired
 	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
 		@Override
 		public void execute(Context context) throws CoreException,
 				CoreRuntimeException {
 				log.info("==============Start  AgentFileToThdAction");
+				//柜员
+				context.setData("bk", bbipPublicService.getParam("BBIP", "BK"));
+				String tlr = bbipPublicService.getETeller(context.getData("bk").toString());
+		        context.setData("tlr", tlr);
+		        context.setData("txnTlr", tlr);
+		        
 				context.setData(ParamKeys.EUPS_BUSS_TYPE, "ELEC00");
 				context.setData("TransCode", "31");
 				Date date=new Date();
