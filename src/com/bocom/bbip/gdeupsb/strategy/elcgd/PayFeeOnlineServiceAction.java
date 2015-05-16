@@ -243,7 +243,9 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 			lchkTm = "99999999";
 		}
 		String vchNo = context.getData("vchNo"); // 凭证号码
-
+		if(null==vchNo){
+			vchNo="";
+		}
 		rmkDte.append(StringUtils.leftPad(thdCusNo, 21)).append(lchkTm).append("01")
 		.append(StringUtils.leftPad(" ", 12))
 				.append(context.getData(GDParamKeys.GZ_ELE_FEE_WAY)).append(StringUtils.leftPad(vchNo, 25));
@@ -265,9 +267,9 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 		//jump自动将48域前置空格截取，此处做特殊处理，补回原来的空格
 		String thdRemark=context.getData("remarkData");
 		
-		String subStr=thdRemark.substring(0,thdRemark.indexOf("9901"));
+		String subStr=thdRemark.substring(0,thdRemark.indexOf("01 ")-2);
 		subStr=StringUtils.leftPad(subStr, 31-4, ' ');
-		String aftStr=thdRemark.substring(thdRemark.indexOf("9901"));
+		String aftStr=thdRemark.substring(thdRemark.indexOf("01 ")-2);
 		context.setData("remarkData", subStr+aftStr);
 		context.setData(ParamKeys.RSV_FLD1, subStr+aftStr);
 
