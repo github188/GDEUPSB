@@ -113,7 +113,7 @@ public class QueryElecUserStrategyAction implements QueryDealService {
 		String lChkTm = remarkData.substring(21, 29);
 		String prdCde = remarkData.substring(29, 31);
 		// String oThdSqn=remarkData.substring(31,43); //原系统参考号
-		String thdExtInfo = remarkData.substring(58, remarkData.length()); // 用电地址户名
+		String thdExtInfo = remarkData.substring(44, remarkData.length()); // 用电地址户名
 
 		String usrAdd = thdExtInfo.substring(0, thdExtInfo.indexOf("^")); // 用电地址
 		String usrNme = thdExtInfo.substring(thdExtInfo.indexOf("^") + 1); // 户名
