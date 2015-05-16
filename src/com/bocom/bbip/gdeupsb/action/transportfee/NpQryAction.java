@@ -1,8 +1,6 @@
 package com.bocom.bbip.gdeupsb.action.transportfee;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +12,6 @@ import com.bocom.bbip.data.domain.Page;
 import com.bocom.bbip.data.domain.PageRequest;
 import com.bocom.bbip.data.domain.Pageable;
 import com.bocom.bbip.eups.action.BaseAction;
-import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsbTrspNpManag;
@@ -49,48 +46,35 @@ public class NpQryAction extends BaseAction {
 		}
 
 		Pageable pageable = BeanUtils.toObject(ctx.getDataMap(), PageRequest.class);
-		Page<GDEupsbTrspNpManag> TrspNpManagPage = get(GDEupsbTrspNpManagRepository.class).findNpInfo(pageable, gdEupsbTrspNpManag);
-		setResponseFromPage(ctx, "npResultList", TrspNpManagPage);
-//		
-//		--------------------------------------------------------------------------------------
-//		List<Map<String, Object>>  npResultList = new ArrayList<Map<String,Object>>();
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("nodNo", "1243");
-//		map.put("carNo", "1243");
-//		map.put("sqn", "1243");
-//		map.put("invNo", "1243");
-//		map.put("idNo", "1243");
-//		map.put("status", "1243");
-//		map.put("tlrId", "1243");
-//		npResultList.add(map);
-//		ctx.setData("npResultList", npResultList);
-//		ctx.setData("ttl", "0");
-//		ctx.setData("subTtl", "0");
+//		Page<GDEupsbTrspNpManag> TrspNpManagPage = get(GDEupsbTrspNpManagRepository.class).findNpInfo(pageable, gdEupsbTrspNpManag);
+//		setResponseFromPage(ctx, "npResultList", TrspNpManagPage);
 		
 		
-//		Map<String, Object> inpara = new HashMap<String, Object>();
-//		inpara.put("begDat", (Date) ctx.getData(GDParamKeys.BEG_DAT));
-//		inpara.put("endDat", (Date) ctx.getData(GDParamKeys.END_DAT));
-//		inpara.put("nodNo", ctx.getData(ParamKeys.BR).toString());
-//		inpara.put("carNo", ctx.getData(GDParamKeys.CAR_NO).toString());
-//		inpara.put("status", ctx.getData(GDParamKeys.STATUS).toString());
-//		inpara.put("idNo", ctx.getData("idNo").toString());
-//
-//		// 多页查询汇总信息
-//		Pageable pageable = BeanUtils.toObject(ctx.getDataMap(), PageRequest.class);
-//		Page<gdeupsb> result = get(GDEupsbTrspNpManagRepository.class).findNpInfo(pageable, inpara);
-//		log.info("汇总信息查询结果=" + result);
-//		if (result.getTotalElements() == 0) {
-//			log.error("agt total info query is null!");
-//			throw new CoreException(ErrorCodes.EUPS_CONSOLE_INFO_NOTEXIST); // 查无记录
-//		}
-//		ctx.setData(ParamKeys.TOTAL_ELEMETS, result.getTotalElements());
-//		ctx.setData(ParamKeys.TOTAL_PAGES, result.getTotalPages());
-//
-//		List<Map<String, Object>> npResultList = result.getElements();
-//		
-//		ctx.setData("npResultList", npResultList); // 查询汇总返回信息
-//		log.info("@@@@@@resultList="+ctx.getData("npResultList"));
+		//---------------------------------------------------
+		int totalElements;
+		totalElements = gdEupsbTrspNpManagRepository.findCountSum(gdEupsbTrspNpManag).get(0);
+		int size = pageable.getPageSize();
+        int num = pageable.getPageNum();
+        int totalPages = size == 0 ? 0 : (int)Math.ceil((double)totalElements / (double)size);
+		
+        log.info("@@@@@@@@@@@@@="+totalElements+"!!"+size+"!!"+num+"!!"+totalPages);
+        Iterable<Map<String, Object>> list = null;
+        if(num <= totalPages)
+        {
+        	Page<GDEupsbTrspNpManag> TrspNpManagPage = get(GDEupsbTrspNpManagRepository.class).findNpInfo(pageable, gdEupsbTrspNpManag);
+            ctx.setData("totalElements", Long.valueOf(TrspNpManagPage.getTotalElements()));
+            ctx.setData("totalPages", Integer.valueOf(TrspNpManagPage.getTotalPages()));           
+			list = BeanUtils.toMaps(TrspNpManagPage.getElements());
+		
+              	
+            }     
+            
+            ctx.setData("npResultList", list);
+//			List<Map<String,Object>> resultList=(List<Map<String, Object>>) BeanUtils.toMaps(feeInfoList);
+//			ctx.setData("resultList", resultList);
+//		setResponseFromPage(ctx, "resultList", TrspFeeInfoPage);
+		log.info("@@@@@@@context end="+ctx);
+
 		
 	}
 
