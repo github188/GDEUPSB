@@ -27,6 +27,14 @@ public class EfekEndAction extends BaseAction{
 	        }else{
 	        		euspThdTranCtlInfo.setTxnCtlSts("1");
 	        		eupsThdTranCtlInfoRepository.update(euspThdTranCtlInfo);
+	        		EupsThdTranCtlInfo euspThdTranCtlInfo1=eupsThdTranCtlInfoRepository.findOne("0320");
+	        		EupsThdTranCtlInfo euspThdTranCtlInfo2=eupsThdTranCtlInfoRepository.findOne("0306");
+	        		EupsThdTranCtlInfo euspThdTranCtlInfo3=eupsThdTranCtlInfoRepository.findOne("0318");
+	       
+	        		if(euspThdTranCtlInfo1.getTxnDte().equals("1")  && euspThdTranCtlInfo2.getTxnCtlSts().equals("1") && euspThdTranCtlInfo3.getTxnCtlSts().equals("1")){
+	        			euspThdTranCtlInfo.setComNo(context.getData("comNo").toString().trim());
+	        			eupsThdTranCtlInfoRepository.update(euspThdTranCtlInfo);
+	        		}
 	        }
 	        context.setData("PKGCNT", "000000");
 	        logger.info("===========End  EfekEndAction");
