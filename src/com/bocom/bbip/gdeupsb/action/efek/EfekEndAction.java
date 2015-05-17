@@ -19,8 +19,8 @@ public class EfekEndAction extends BaseAction{
 		logger.info("===========Start  EfekEndAction");
 			//状态
 	        String txnTyp = (String)context.getData("txnTyp");
-	        String comNo=context.getData("comNo").toString().trim();
-	        EupsThdTranCtlInfo euspThdTranCtlInfo=eupsThdTranCtlInfoRepository.findOne(comNo);
+	        String comNos=context.getData("comNos").toString().trim();
+	        EupsThdTranCtlInfo euspThdTranCtlInfo=eupsThdTranCtlInfoRepository.findOne(comNos);
 	        String txnCtlSts=euspThdTranCtlInfo.getTxnCtlSts();
 	        if(txnCtlSts.equals(txnTyp)){
 	        		throw new CoreException("供电已签退");

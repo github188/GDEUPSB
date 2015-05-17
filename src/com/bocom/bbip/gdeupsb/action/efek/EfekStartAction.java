@@ -19,14 +19,16 @@ public class EfekStartAction extends BaseAction{
 		logger.info("===========Start  EfekStartAction");
 			//状态
 	        String txnTyp = (String)context.getData("txnTyp");
-	        String comNo=context.getData("comNo").toString().trim();
+	        String comNos=context.getData("comNos").toString().trim();
 	        
-	        EupsThdTranCtlInfo euspThdTranCtlInfo=eupsThdTranCtlInfoRepository.findOne(comNo);
+	        EupsThdTranCtlInfo euspThdTranCtlInfo=eupsThdTranCtlInfoRepository.findOne(comNos);
 	        String txnCtlSts=euspThdTranCtlInfo.getTxnCtlSts();
 	        if(txnCtlSts.equals(txnTyp)){
 	        		throw new CoreException("供电已签到");
 	        }else{
 	        		euspThdTranCtlInfo.setTxnCtlSts("0");
+	        		eupsThdTranCtlInfoRepository.update(euspThdTranCtlInfo);
+	        		euspThdTranCtlInfo.setComNo(context.getData("comNo").toString().trim());
 	        		eupsThdTranCtlInfoRepository.update(euspThdTranCtlInfo);
 	        }
 	        context.setData("PKGCNT", "000000");
