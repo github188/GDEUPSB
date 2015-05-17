@@ -56,6 +56,7 @@ public class CusAgentServiceAction extends BaseAction{
 				logger.info("============Start  CusAgentServiceAction ");
 				
 				if(("20").equals((String)context.getData("chlTyp")) || ("50").equals((String)context.getData("chlTyp")) || ("20").equals((String)context.getData("chn")) || ("50").equals((String)context.getData("chn"))){
+					logger.info("=======================适配器");
 					context.setData("br", "01441800999");
 					context.setData("bk", "01441999999");
 					String pwd=context.getData("area").toString().trim();
