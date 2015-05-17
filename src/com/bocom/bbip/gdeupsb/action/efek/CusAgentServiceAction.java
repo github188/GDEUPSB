@@ -26,6 +26,7 @@ import com.bocom.bbip.eups.entity.EupsActSysPara;
 import com.bocom.bbip.eups.entity.EupsThdBaseInfo;
 import com.bocom.bbip.eups.repository.EupsActSysParaRepository;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
+import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.strategy.efek.agent.UpdateCusAgentServiceAction;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
@@ -66,6 +67,7 @@ public class CusAgentServiceAction extends BaseAction{
 					context.setData("pwd", pwd);
 				}
 				
+				checkCusNmeAndPwd(context);
 				if(context.getData(ParamKeys.THD_SQN)!=null){
 					context.setData("br", "01441800999");
 					context.setData("bk", "01441999999");
@@ -383,21 +385,37 @@ public class CusAgentServiceAction extends BaseAction{
 			}
 		}
 /**
- *查询账号姓名 
+ *查询账号姓名 ,验密
  */
-		public void checkCusNme(Context context) throws CoreException{
+		public void checkCusNmeAndPwd(Context context) throws CoreException{
+			log.info("================Start   checkCusNmeAndPwd");
 			String cusAc = context.getData("newCusAc").toString().trim();
-
+			
 			CusActInfResult cusactinfresult = new CusActInfResult();
 			try {
 				cusactinfresult = get(AccountService.class).getAcInf(CommonRequest.build(context), cusAc);
 			} catch (CoreException e) {
 				logger.info("查询账号状态失败", e);
 			}
-			if(cusactinfresult.getResponseCode()!="000000" || cusactinfresult.getResponseCode()!="SC0000"){
+			if(!cusactinfresult.isSuccess()){
 				throw new CoreException("Error");
 			}
 			String newCusNme=cusactinfresult.getCusName();
-			context.setData("newCusNme", newCusNme);
+			context.setData("newCusName", newCusNme);
+			
+			String chl=(String)context.getData("chl");
+			if(null != chl){
+				if("00".equals(chl.toString().trim())){
+					//验密
+					String pwd =(String)context.getData("pwd");
+					Result result=get(AccountService.class).auth(CommonRequest.build(context), cusAc, pwd);
+					if (!result.isSuccess()) {
+						log.info("check pwd eroor");
+						throw new CoreException(GDErrorCodes.EUPS_PASSWORD_ERROR); // 密码验证错误
+					}
+				}
+			}
+			context.setData("pwd", null);
+			log.info("================End   checkCusNmeAndPwd");
 		}
 }
