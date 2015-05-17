@@ -54,6 +54,15 @@ public class CusAgentServiceAction extends BaseAction{
 		 */
 		public void execute(Context context)throws CoreException,CoreRuntimeException{
 				logger.info("============Start  CusAgentServiceAction ");
+				
+				if(((String)context.getData("chlTyp")).equals("20") || ((String)context.getData("chlTyp")).equals("50") || ((String)context.getData("chn")).equals("20") || ((String)context.getData("chn")).equals("50")){
+					String pwd=context.getData("area").toString();
+					while(pwd.length()<20){
+						pwd=pwd+" ";
+					}
+					context.setData("pwd", pwd);
+				}
+				
 				String cusAc=context.getData("cusAc");
 				String comNo=context.getData("comNos").toString();
 				context.setData("comNo", comNo);
