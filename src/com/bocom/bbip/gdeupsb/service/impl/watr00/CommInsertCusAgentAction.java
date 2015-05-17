@@ -126,8 +126,13 @@ public class CommInsertCusAgentAction extends BaseAction{
 				logger.info("CommInsertCusAgentServiceActionWATR00 callThd success!");
 				context.setDataMap(thdReturnMessage);
 			} else {
-				Result respData = BeanFactoryUtils.get(BGSPServiceAccessObject.class).callServiceFlatting("deleteAgentCollectAgreement",
-		                context.getDataMap());
+//				Result respData = BeanFactoryUtils.get(BGSPServiceAccessObject.class).callServiceFlatting("deleteAgentCollectAgreement",
+//		                context.getDataMap());
+				List<String> agrNo = new ArrayList<String>();
+	            agrNo.add((String) context.getData("agdAgrNo"));
+	            context.setData("agdAgrNo", agrNo);
+				 Result respData = ((BGSPServiceAccessObject)BeanFactoryUtils.get(BGSPServiceAccessObject.class)).callServiceFlatting("deleteAgentCollectAgreement", 
+					        context.getDataMap());
 				if (StringUtil.isEmpty(responseCode)) {
 					responseCode = ErrorCodes.EUPS_THD_RSP_CODE_ERROR;
 				}
@@ -141,8 +146,8 @@ public class CommInsertCusAgentAction extends BaseAction{
             agrNo.add((String) context.getData("agdAgrNo"));
             context.setData("agdAgrNo", agrNo);
 
-            Result respData = BeanFactoryUtils.get(BGSPServiceAccessObject.class).callServiceFlatting("deleteAgentCollectAgreement",
-                context.getDataMap());
+            Result respData = ((BGSPServiceAccessObject)BeanFactoryUtils.get(BGSPServiceAccessObject.class)).callServiceFlatting("deleteAgentCollectAgreement", 
+			        context.getDataMap());
 			throw new CoreException(ErrorCodes.EUPS_THD_SYS_ERROR);
 		}
 		logger.info("CommInsertCusAgentServiceActionWATR00 callThd end ... ...");
