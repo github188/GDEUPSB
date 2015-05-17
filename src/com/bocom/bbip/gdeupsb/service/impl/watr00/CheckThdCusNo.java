@@ -6,12 +6,18 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bocom.bbip.comp.CommonRequest;
+import com.bocom.bbip.comp.account.AccountService;
+import com.bocom.bbip.comp.account.support.CardInfo;
+import com.bocom.bbip.comp.account.support.CusActInfResult;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.entity.GdEupsWatAgtInf;
 import com.bocom.bbip.gdeupsb.repository.GdEupsWatAgtInfRepository;
+import com.bocom.bbip.service.Result;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -33,6 +39,18 @@ public class CheckThdCusNo extends BaseAction{
 //			ctx.setData(ParamKeys.RSP_MSG, "协议已存在");
 			throw new CoreException("BBIP0004EU0132");
 		}
+		
+		// 验密
+		log.info("进行密码校验！..");
+		Result auth = get(AccountService.class).auth(CommonRequest.build(ctx), ctx.getData("cusAC").toString(), ctx.getData("pwd").toString());
+		log.info("check pwd end");
+		if (!auth.isSuccess()) {
+			log.info("check pwd eroor");
+			throw new CoreException(GDErrorCodes.EUPS_PASSWORD_ERROR); // 密码验证错误
+		}
+		
+		ctx.setData("pwd", null);
+		
 		ctx.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
 	}
 
