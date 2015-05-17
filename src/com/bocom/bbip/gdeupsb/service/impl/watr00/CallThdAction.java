@@ -132,7 +132,7 @@ private static Logger logger = LoggerFactory.getLogger(PreDelCusAgentAction.clas
 				GdEupsWatAgtInf gdeupsA = new GdEupsWatAgtInf();
 				
 				gdeupsA.setAgdAgrNo((String)context.getData("agdAgrNo"));
-				gdEupsWatAgtInfRepository.update(gdeupsA);
+				gdEupsWatAgtInfRepository.delete(gdeupsA);
 				logger.info("@@@@@@@@@@context="+context);
 				
 				
