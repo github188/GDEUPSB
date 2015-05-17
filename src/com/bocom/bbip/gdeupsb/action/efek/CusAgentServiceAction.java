@@ -65,6 +65,11 @@ public class CusAgentServiceAction extends BaseAction{
 					context.setData("pwd", pwd);
 				}
 				
+				if(context.getData(ParamKeys.THD_SQN)!=null){
+					context.setData("br", "01441800999");
+					context.setData("bk", "01441999999");
+				}
+				
 				String cusAc=context.getData("cusAc");
 				String comNo=context.getData("comNos").toString();
 				context.setData("comNo", comNo);
@@ -120,9 +125,6 @@ public class CusAgentServiceAction extends BaseAction{
 					if(context.getData("oprTyp").toString().trim().equals("1")){
 							context.setData("callThd", "callThd");
 					}
-					//TODO
-					context.setData("br", "01441800999");
-					context.setData("bk", "01441999999");
 				}else{
 						context.setData("bankToThd", "bankToThd");	
 						context.setData("sqns", context.getData("sqn"));
