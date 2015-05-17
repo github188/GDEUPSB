@@ -43,7 +43,7 @@ public class PreCheckDealAction implements Executable{
 				context.setData("extFields", "01441800999");
 				logger.info("~~~~~~~~~~~~~~~~~~chlTyp="+context.getData("chlTyp")+",chn="+context.getData("chn"));
 				if(context.getData("thdSqn")==null){
-						if(((String)context.getData("chlTyp")).equals("20") || ((String)context.getData("chlTyp")).equals("50") || ((String)context.getData("chn")).equals("20") || ((String)context.getData("chn")).equals("50")){
+						if(("20").equals((String)context.getData("chlTyp")) || ("50").equals((String)context.getData("chlTyp")) || ("20").equals((String)context.getData("chn")) || ("50").equals((String)context.getData("chn"))){
 								context.setData("acTyp", "05");
 								context.setData("capital", new BigDecimal(context.getData("capital").toString()).scaleByPowerOfTen(-2));
 								context.setData("dedit", new BigDecimal(context.getData("dedit").toString()).scaleByPowerOfTen(-2));
