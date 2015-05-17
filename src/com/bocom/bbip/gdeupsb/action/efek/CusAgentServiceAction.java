@@ -56,7 +56,9 @@ public class CusAgentServiceAction extends BaseAction{
 				logger.info("============Start  CusAgentServiceAction ");
 				
 				if(((String)context.getData("chlTyp")).equals("20") || ((String)context.getData("chlTyp")).equals("50") || ((String)context.getData("chn")).equals("20") || ((String)context.getData("chn")).equals("50")){
-					String pwd=context.getData("area").toString();
+					context.setData("br", "01441800999");
+					context.setData("bk", "01441999999");
+					String pwd=context.getData("area").toString().trim();
 					while(pwd.length()<20){
 						pwd=pwd+" ";
 					}
@@ -115,9 +117,12 @@ public class CusAgentServiceAction extends BaseAction{
 				if(context.getData(ParamKeys.THD_SQN)!=null){										
 					context.setData("sqns", context.getData("sqns"));
 					context.setData("thdToBank", "thdToBank");
-						if(context.getData("oprTyp").toString().trim().equals("1")){
-								context.setData("callThd", "callThd");
-						}
+					if(context.getData("oprTyp").toString().trim().equals("1")){
+							context.setData("callThd", "callThd");
+					}
+					//TODO
+					context.setData("br", "01441800999");
+					context.setData("bk", "01441999999");
 				}else{
 						context.setData("bankToThd", "bankToThd");	
 						context.setData("sqns", context.getData("sqn"));
