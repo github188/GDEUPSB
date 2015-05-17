@@ -42,7 +42,7 @@ public class PreCheckDealAction implements Executable{
 				
 				context.setData("extFields", "01441800999");
 				if(context.getData("thdSqn")==null){
-						if((context.getData("traceSrc").toString().equals("WE441") || context.getData("traceSrc").toString().equals("MB441"))){
+						if(((String)context.getData("chlTyp")).equals("20") || ((String)context.getData("chlTyp")).equals("50") || ((String)context.getData("chn")).equals("20") || ((String)context.getData("chn")).equals("50")){
 								context.setData("acTyp", "05");
 								context.setData("capital", new BigDecimal(context.getData("capital").toString()).scaleByPowerOfTen(-2));
 								context.setData("dedit", new BigDecimal(context.getData("dedit").toString()).scaleByPowerOfTen(-2));
