@@ -284,13 +284,14 @@ public class GduncbAgtMdyDealImlAction implements AgtMdyDealImlService {
 			String carBin = actNo.substring(0, 9);
 
 			String cardValid = CodeSwitchUtils.codeGenerator("CardBinExc", carBin);
-			if (!"Y".equals(cardValid)) {
-				// TODO:根据GdsBId获得对应的BusNam（业务名称），使用我待测试的codeSwitch
-				String busNam = "广东联通数码";
-				context.setData("responseType", "E");
-				context.setData("responseMessage", "该卡不支持" + busNam + "签约");
-				throw new CoreException(GDErrorCodes.EUPS_SIGN_CARD_NOT_SUPPORT, "该卡不支持" + busNam + "签约");
-			}
+			//TODO:modify by tandun 0517
+//			if (!"Y".equals(cardValid)) {
+//				// TODO:根据GdsBId获得对应的BusNam（业务名称），使用我待测试的codeSwitch
+//				String busNam = "广东联通数码";
+//				context.setData("responseType", "E");
+//				context.setData("responseMessage", "该卡不支持" + busNam + "签约");
+//				throw new CoreException(GDErrorCodes.EUPS_SIGN_CARD_NOT_SUPPORT, "该卡不支持" + busNam + "签约");
+//			}
 		}
 	}
 }
