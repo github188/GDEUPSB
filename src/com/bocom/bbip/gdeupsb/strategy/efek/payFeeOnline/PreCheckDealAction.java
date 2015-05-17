@@ -41,6 +41,7 @@ public class PreCheckDealAction implements Executable{
 //				context.setData(ParamKeys.PAYFEE_TYPE, Constants.TXN_PAYFEE_TYPE_PAYMENT);
 				
 				context.setData("extFields", "01441800999");
+				logger.info("~~~~~~~~~~~~~~~~~~chlTyp="+context.getData("chlTyp")+",chn="+context.getData("chn"));
 				if(context.getData("thdSqn")==null){
 						if(((String)context.getData("chlTyp")).equals("20") || ((String)context.getData("chlTyp")).equals("50") || ((String)context.getData("chn")).equals("20") || ((String)context.getData("chn")).equals("50")){
 								context.setData("acTyp", "05");
@@ -49,6 +50,7 @@ public class PreCheckDealAction implements Executable{
 								context.setData("accountsSerialNo", context.getData("accountsSerialNos"));
 								context.setData("br", "01441800999");
 								context.setData("bk", "01441999999");
+								logger.info("~~~~~~~~~~~~~~~~~~"+context.getData("br")+",bk="+context.getData("bk"));
 						}
 				}
 				logger.info("~~~~~~~~~~~交易日期："+context.getData(ParamKeys.TXN_DATE)+"~~~~~~~~~~~交易时间："+context.getData(ParamKeys.TXN_TIME));
