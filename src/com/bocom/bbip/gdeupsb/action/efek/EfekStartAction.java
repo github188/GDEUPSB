@@ -28,8 +28,9 @@ public class EfekStartAction extends BaseAction{
 	        }else{
 	        		euspThdTranCtlInfo.setTxnCtlSts("0");
 	        		eupsThdTranCtlInfoRepository.update(euspThdTranCtlInfo);
-	        		euspThdTranCtlInfo.setComNo(context.getData("comNo").toString().trim());
-	        		eupsThdTranCtlInfoRepository.update(euspThdTranCtlInfo);
+	        		EupsThdTranCtlInfo eupsThdTranCtlInfos=eupsThdTranCtlInfoRepository.findOne(context.getData("comNo").toString().trim());
+	        		eupsThdTranCtlInfos.setTxnCtlSts("0");
+	        		eupsThdTranCtlInfoRepository.update(eupsThdTranCtlInfos);
 	        }
 	        context.setData("PKGCNT", "000000");
 	        logger.info("===========End  EfekStartAction");
