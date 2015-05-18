@@ -80,8 +80,8 @@ public class CusAgentServiceAction extends BaseAction{
 						}
 						context.setData("pwd", pwd);
 					}
-					checkCusNmeAndPwd(context);
 				}
+				checkCusNmeAndPwd(context);
 				if(context.getData(ParamKeys.THD_SQN)!=null){
 					context.setData("br", "01441800999");
 					context.setData("bk", "01441999999");
