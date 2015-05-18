@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.taglibs.standard.tag.el.sql.SetDataSourceTag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,8 @@ public class PayUnilateralToBankServiceAction implements PayUnilateralToBankServ
 		log.info("已签到，可以进行业务");
 
 		// 获取电力清算信息表信息
+		String clrDatStr = new String();
+		
 		GdElecClrInf gdElecClrInf = new GdElecClrInf();
 		gdElecClrInf.setBrNo("441999");
 		List<GdElecClrInf> gdElecClrInfList = gdElecClrInfRepository.find(gdElecClrInf);
@@ -83,7 +86,7 @@ public class PayUnilateralToBankServiceAction implements PayUnilateralToBankServ
 		else {
 			gdElecClrInf = gdElecClrInfList.get(0);
 			// 获取与第三方约定的第三方会计日期
-			String clrDatStr = gdElecClrInf.getClrDat();
+			 clrDatStr = gdElecClrInf.getClrDat();
 			context.setData("bakFld1", clrDatStr);
 		}
 
@@ -97,30 +100,31 @@ public class PayUnilateralToBankServiceAction implements PayUnilateralToBankServ
 
 		context.setData(ParamKeys.CUS_AC, context.getData("cusAcEx"));
 
-		// TODO:待考虑此处是否对后续有影响
 		String sqn = context.getData(ParamKeys.SEQUENCE);
 		String sqn2 = sqn.substring(sqn.length() - 6, sqn.length());
 		context.setData("transJournal", sqn.substring(2, 8) + sqn2); // 银行交易流水号
 		context.setData("rsvFld2", sqn.substring(2, 8) + sqn2); // 银行交易流水号,存在rsvFld2中，用于进行抹帐等交易
 
-		// 第三方交易日期，时间处理
-		String eleClrDte = context.getData("pwrtxnDate");
+		String eleClrDte = clrDatStr;     //第三方交易日期处理（清算日）
 		if (StringUtils.isNotEmpty(eleClrDte)) {
 			eleClrDte = eleClrDte.trim();
-			context.setData(ParamKeys.THD_TXN_DATE, DateUtils.parse(eleClrDte,"MMDD"));
+			context.setData(ParamKeys.THD_TXN_DATE, DateUtils.parse(eleClrDte,"yyyyMMdd"));
 		}
 
 		// 第三方交易时间处理
-		String eleTxnTme = context.getData("txnDateTime");
-		if (StringUtils.isNotEmpty(eleTxnTme)) {
-			eleTxnTme=eleTxnTme.trim();
-			context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse(eleTxnTme, DateUtils.STYLE_MMddHHmmss));
-		}
+//		String eleTxnTme = context.getData("txnDateTime");
+//		if (StringUtils.isNotEmpty(eleTxnTme)) {
+//			eleTxnTme=eleTxnTme.trim();
+//			context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse(eleTxnTme, DateUtils.STYLE_MMddHHmmss));
+//		}
 		
-		Date nowDate = new Date();
-		context.setData("bnkTxnTime", DateUtils.format(nowDate, DateUtils.STYLE_HHmmss));
-		context.setData("bnkTxnDate", DateUtils.format(nowDate, DateUtils.STYLE_MMdd));
-
+		context.setData("bnkTxnTime", DateUtils.format(new Date(), DateUtils.STYLE_HHmmss));
+		
+		//第13域，使用清算日期
+		context.setData("bnkTxnDate", clrDatStr.substring(4));
+		
+		//第15域，使用清算日期
+		context.setData("pwrtxnDate", clrDatStr.substring(4));
 		
 		return null;
 	}
@@ -179,24 +183,7 @@ public class PayUnilateralToBankServiceAction implements PayUnilateralToBankServ
 			throws CoreException {
 
 		log.info("PayUnilateralToBankServiceAction aftPayToBank start!..");
-		// 返回主机流水号给第三方，以此作为唯一性标志(会计流水号及平台流水号都超长了)
-		// String mfmJrnNo = context.getData("acJrnNo"); // 获取主机流水号
-		// context.setData("mfmJrnNo", mfmJrnNo); // 主机流水号,标准版未计入流水表
-		// context.setData("transJournal", mfmJrnNo); //
-		// 银行交易流水号,此处用主机流水号代替银行方交易流水号
-
-		// Date nowTme = new Date();
-		// Date bnkTxnDate = context.getData("acDte");
-		// context.setData("bnkTxnTime", DateUtils.format(nowTme,
-		// DateUtils.STYLE_HHmmss));
-		//
-		// if (null != bnkTxnDate) {
-		// context.setData("bnkTxnDate", DateUtils.format(bnkTxnDate,
-		// DateUtils.STYLE_MMdd));
-		// } else {
-		// context.setData("bnkTxnDate", DateUtils.format(nowTme,
-		// DateUtils.STYLE_MMdd));
-		// }
+	
 		context.setData("reqTme", new Date()); // 设置请求时间
 
 		// TODO:第三方返回码转换(将主机的返回码转化为第三方需要的返回码)

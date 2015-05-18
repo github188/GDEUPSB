@@ -72,6 +72,7 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 		log.info("已签到，可以进行业务");
 
 		// 获取电力清算信息表信息
+		String clrDatStr =new String();
 		GdElecClrInf gdElecClrInf = new GdElecClrInf();
 		gdElecClrInf.setBrNo(GDConstants.GZ_ELE_BK_GZ);
 		List<GdElecClrInf> gdElecClrInfList = gdElecClrInfRepository.find(gdElecClrInf);
@@ -82,20 +83,11 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 		else {
 			gdElecClrInf = gdElecClrInfList.get(0);
 			// 获取与第三方约定的第三方会计日期
-			String clrDatStr = gdElecClrInf.getClrDat();
+			 clrDatStr = gdElecClrInf.getClrDat();
 			context.setData(ParamKeys.BAK_FLD1, clrDatStr);
 		}
 
-		// 缴费方式为充值
-		// if
-		// (StringUtils.isNotEmpty((String)context.getData(ParamKeys.OLD_TXN_SEQUENCE)))
-		// {
-		// context.setData(ParamKeys.PAYFEE_TYPE,
-		// Constants.TXN_PAYFEE_TYPE_PAYMENT);
-		// } else {
-		// TODO:for test，真实环境应校验当日该缴费号是否已完成缴费，不允许重复缴费
 		context.setData(ParamKeys.PAYFEE_TYPE, Constants.TXN_PAYFEE_TYPE_RECHARGE);
-		// }
 
 		// 设置备用字段2为电费月份，保存入库
 		context.setData(ParamKeys.BAK_FLD2, context.getData("lChkTm"));
@@ -150,12 +142,14 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 
 		Date bnkTxnDate = new Date();
 		context.setData("bnkTxnTime", DateUtils.format(bnkTxnDate, DateUtils.STYLE_HHmmss));
-		context.setData("bnkTxnDate", DateUtils.format(bnkTxnDate, DateUtils.STYLE_MMdd));
+		context.setData("bnkTxnDate", clrDatStr.substring(4));         //第13域，使用清算日期
+		
 		
 		log.info("====================收费类型为：" + thdFeeWay);
 		context.setData(GDParamKeys.GZ_ELE_FEE_WAY, thdFeeWay); // 收费类型
 
 		context.setData(ParamKeys.COMPANY_NO, comNo); // 单位编号
+		context.setVariable("clrDatStr", clrDatStr);
 
 		return null;
 	}
@@ -171,24 +165,6 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 		context.setData(ParamKeys.THD_TXN_CDE, "JF"); // 第三方交易码设置为缴费，用于对账
 		String vchTyp = context.getData(ParamKeys.BV_KIND); // 凭证种类
 		
-		// TODO:需要支持以下支付方式:现金缴费,银行卡,活期存折,本外活本,个人支票,本票,现金支票,转账支票,划线支票
-		// 对私
-		// if (GDConstants.GZ_ELE_PAY_KND_CASH.equals(vchTyp) ||
-		// GDConstants.GZ_ELE_PAY_KND_CARD.equals(vchTyp)
-		// || GDConstants.GddZ_ELE_PAY_KND_ALVC.equals(vchTyp) ||
-		// GDConstants.GZ_ELE_PAY_KND_AOVC.equals(vchTyp)
-		// || GDConstants.GZ_ELE_PAY_KND_PRCK.equals(vchTyp))
-		// {
-		// context.setData("rmkCde", "9102"); // 备注
-		// }
-		// else { // 对公
-		// // TODO:业务种类：电费,此处需要修改，老的是CRP51，数据库中长度不足
-		// //context.setData(ParamKeys.BUSS_KIND,
-		// GDConstants.GZ_ELE_BUS_KND_ELEC);
-		// context.setData(ParamKeys.BUS_TYP, Constants.BUS_TYP_2); // 业务类型：代缴
-		// // context.setData("rmkCde", "代扣电费"); //备注
-		// }
-
 		// 原代码中的渠道号转换不需要做
 		return null;
 	}
@@ -278,18 +254,17 @@ public class PayFeeOnlineServiceAction implements PayFeeOnlineService {
 		String clrYear = DateUtils.format(new Date(), "yyyy");
 
 		// 第三方清算日期处理-将第三方清算日期作为第三方交易日期存储
-		String eleClrDte = context.getData("bnkTxnDate");
+		String eleClrDte = context.getVariable("clrDatStr");
 		if (StringUtils.isNotEmpty(eleClrDte)) {
 			eleClrDte = eleClrDte.trim();
-			String thdTxnDteStr = clrYear + eleClrDte;
-			context.setData(ParamKeys.THD_TXN_DATE, DateUtils.parse(thdTxnDteStr,"yyyyMMdd"));
+			context.setData(ParamKeys.THD_TXN_DATE, DateUtils.parse(eleClrDte,"yyyyMMdd"));
 		}
 
 		// 第三方交易时间处理
 		String eleTxnTme = context.getData("txnDateTime");
 		if (StringUtils.isNotEmpty(eleTxnTme)) {
-//			String thdTxnTmeStr = clrYear + eleTxnTme;
-			context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse(eleTxnTme, DateUtils.STYLE_MMddHHmmss));
+			String thdTxnTmeStr = clrYear + eleTxnTme;
+			context.setData(ParamKeys.THD_TXN_TIME, DateUtils.parse(thdTxnTmeStr, DateUtils.STYLE_yyyyMMddHHmmss));
 		}
 
 		// 将附加数据保存到数据库
