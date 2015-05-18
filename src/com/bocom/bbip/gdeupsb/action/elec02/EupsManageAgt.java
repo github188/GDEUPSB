@@ -60,6 +60,8 @@ public class EupsManageAgt extends BaseAction {
 		context.setData("responseCodeTHD", "00");  
 		context.setData("rspMsg", "交易成功");  
 		
+		
+		
 	}
 
 	private void addAgentDeal(Context context) throws CoreException {

@@ -20,8 +20,10 @@ import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.entity.GdeupsAgtElecTmp;
 import com.bocom.bbip.gdeupsb.repository.GdeupsAgtElecTmpRepository;
+import com.bocom.bbip.service.Result;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
@@ -187,6 +189,14 @@ public class EupsManageCounterAgt extends BaseAction {
 
 	private void addAgentDeal(Context context) throws CoreException {
 		// TODO checkCusInfoByCusAc(context);
+		
+		log.info("进行密码校验！..");
+		Result auth = get(AccountService.class).auth(CommonRequest.build(context), context.getData("ActNo").toString(), context.getData("Pin").toString());
+		log.info("check pwd end");
+		if (!auth.isSuccess()) {
+			log.info("check pwd eroor");
+			throw new CoreException(GDErrorCodes.EUPS_PASSWORD_ERROR); // 密码验证错误
+		}
 
 		// ICS： 先签本地再签thd
 		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
