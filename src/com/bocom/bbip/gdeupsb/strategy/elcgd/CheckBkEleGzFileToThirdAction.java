@@ -11,17 +11,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
-import com.bocom.bbip.eups.entity.EupsThdTranCtlInfo;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
-import com.bocom.bbip.eups.spi.service.check.CheckBkFileToThirdService;
-import com.bocom.bbip.eups.spi.vo.CheckDomain;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal;
 import com.bocom.bbip.gdeupsb.repository.GdEupsTransJournalRepository;
@@ -32,6 +30,7 @@ import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
+import com.bocom.jump.bp.core.CoreRuntimeException;
 
 /**
  * 银行发起银行代扣代收电费对帐交易
@@ -39,7 +38,7 @@ import com.bocom.jump.bp.core.CoreException;
  * @author qc.w
  * 
  */
-public class CheckBkEleGzFileToThirdAction implements CheckBkFileToThirdService {
+public class CheckBkEleGzFileToThirdAction extends  BaseAction {
 
 	private final static Logger log = LoggerFactory.getLogger(CheckBkEleGzFileToThirdAction.class);
 
@@ -58,8 +57,9 @@ public class CheckBkEleGzFileToThirdAction implements CheckBkFileToThirdService 
 	@Autowired
 	EupsThdFtpConfigRepository eupsThdFtpConfigRepository;
 
+
 	@Override
-	public Map<String, Object> checkBkFileToThird(CheckDomain checkdomain, Context context) throws CoreException {
+	public void execute(Context context) throws CoreException, CoreRuntimeException {
 
 		String eupsBusTyp = context.getData(ParamKeys.EUPS_BUSS_TYPE); // 业务类型
 
@@ -68,8 +68,9 @@ public class CheckBkEleGzFileToThirdAction implements CheckBkFileToThirdService 
 		if (null == clearDteStr) { // 对账为自动发起
 			clearDteStr = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
 		}
-
-		Date clearDte = DateUtils.parse(clearDteStr);
+		
+		log.info("当前的对账日期clearDteStr为["+clearDteStr+"]");
+//		Date clearDte = DateUtils.parse(clearDteStr);
 
 		String dpTyp = context.getData(GDParamKeys.GZ_ELE_DPT_TYP);
 		String comNo = CodeSwitchUtils.codeGenerator("eleGzComNoGen", dpTyp);
@@ -78,14 +79,7 @@ public class CheckBkEleGzFileToThirdAction implements CheckBkFileToThirdService 
 			throw new CoreException(ErrorCodes.EUPS_COM_NO_NOTEXIST);
 		}
 
-		// 检查签到签退
-		EupsThdTranCtlInfo eupsThdTranCtlInfo = eupsThdTranCtlInfoRepository.findOne(comNo);
-		if (!eupsThdTranCtlInfo.isTxnCtlStsSignout()) {
-			log.info("未签退，无法发起对账");
-			throw new CoreException(ErrorCodes.THD_CHL_TRADE_NOT_ALLOWWED);
-		}
-
-		log.info("已签退，可以进行对账");
+		log.info("不检查签到状态，可以进行对账!..");
 		// 分别生成划扣及缴费对账文件
 		String fileNameDk = "00" + "01_" + clearDteStr + "_315810" + "_001.bil"; // 代扣文件
 		String fileNameJf = "00" + "02_" + clearDteStr + "_315810" + "_001.bil"; // 缴费文件
@@ -337,7 +331,6 @@ public class CheckBkEleGzFileToThirdAction implements CheckBkFileToThirdService 
 		log.info("putCheckFile config,rmt path=[" + eupsThdFtpConfig.getRmtWay() + "],rmt file name=[" + eupsThdFtpConfig.getRmtFleNme() + "]"
 				+ ",local path=[" + eupsThdFtpConfig.getLocDir() + "],local file name=[" + eupsThdFtpConfig.getLocFleNme() + "]");
 		operateFTPAction.putCheckFile(eupsThdFtpConfig);
-
-		return null;
 	}
+	
 }
