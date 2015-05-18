@@ -80,8 +80,8 @@ public class CusAgentServiceAction extends BaseAction{
 						}
 						context.setData("pwd", pwd);
 					}
+					checkCusNmeAndPwd(context);
 				}
-				checkCusNmeAndPwd(context);
 				if(context.getData(ParamKeys.THD_SQN)!=null){
 					context.setData("br", "01441800999");
 					context.setData("bk", "01441999999");
@@ -424,8 +424,15 @@ public class CusAgentServiceAction extends BaseAction{
 					String pwd =(String)context.getData("pwd");
 					Result result=get(AccountService.class).auth(CommonRequest.build(context), cusAc, pwd);
 					if (!result.isSuccess()) {
-						log.info("check pwd eroor");
-						throw new CoreException(GDErrorCodes.EUPS_PASSWORD_ERROR); // 密码验证错误
+							Map<String, Object> ext=new HashMap<String, Object>();
+							ext.put("drwMde","1");
+							ext.put("pswLvl","1");
+							ext.put("txnPsw",context.getData("pwd"));
+							CommonRequest commonReq = CommonRequest.build(context, ext);
+							CusActInfResult cs = get(AccountService.class).getAcInf(commonReq, context.getData("cusAC").toString());
+							if(!cs.isSuccess()){
+								throw new CoreException(GDErrorCodes.EUPS_PASSWORD_ERROR);
+						}
 					}
 				}
 			}
