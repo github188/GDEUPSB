@@ -153,8 +153,13 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			fileName = ttlDate + context.getData(ParamKeys.EUPS_BUSS_TYPE) + "jnlSus" + "_p_"  + br + "_" + tlr + ".txt";
 		}
 		if ("2".equals(prtTyp)) {
-			prtList = get(GdEupsTransJournalRepository.class).findFailTxnList(
-					eupsJnl);
+			if(eupsBusTyp.equals("ELEC00")){
+				prtList = get(GdEupsTransJournalRepository.class).findElecFailTxnList(
+						eupsJnl);
+			}else{
+				prtList = get(GdEupsTransJournalRepository.class).findFailTxnList(
+						eupsJnl);
+			}
 			if (null == prtList || CollectionUtils.isEmpty(prtList)) {
 				logger.info("There are no records for select check trans journal ");
 				throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
@@ -168,8 +173,13 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			fileName = ttlDate + context.getData(ParamKeys.EUPS_BUSS_TYPE) + "jnlFal" + "_p_"  + br + "_" + tlr + ".txt";
 		}
 		if ("3".equals(prtTyp)) {
-			prtList = get(GdEupsTransJournalRepository.class).findDoubtTxnList(
-					eupsJnl);
+			if(eupsBusTyp.equals("ELEC00")){
+				prtList = get(GdEupsTransJournalRepository.class).findElecDoubtTxnList(
+						eupsJnl);
+			}else{
+				prtList = get(GdEupsTransJournalRepository.class).findDoubtTxnList(
+						eupsJnl);
+			}
 			if (null == prtList || CollectionUtils.isEmpty(prtList)) {
 				logger.info("There are no records for select check trans journal ");
 				throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
@@ -183,8 +193,14 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			fileName = ttlDate + context.getData(ParamKeys.EUPS_BUSS_TYPE) + "jnlDoubt" + "_p_"  + br + "_" + tlr + ".txt";
 		}
 		if ("4".equals(prtTyp)) {
-			prtList = get(GdEupsTransJournalRepository.class).findOthTxnList(
-					eupsJnl);
+			
+			if(eupsBusTyp.equals("ELEC00")){
+				prtList = get(GdEupsTransJournalRepository.class).findElecOthTxnList(
+						eupsJnl);
+			}else{
+				prtList = get(GdEupsTransJournalRepository.class).findOthTxnList(
+						eupsJnl);
+			}
 			if (null == prtList || CollectionUtils.isEmpty(prtList)) {
 				logger.info("There are no records for select check trans journal ");
 				throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
