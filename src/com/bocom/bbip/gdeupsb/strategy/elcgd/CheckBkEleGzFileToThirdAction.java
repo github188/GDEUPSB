@@ -294,7 +294,9 @@ public class CheckBkEleGzFileToThirdAction extends  BaseAction {
 
 		log.info("putCheckFile config,rmt path=[" + eupsThdFtpConfig.getRmtWay() + "],rmt file name=[" + eupsThdFtpConfig.getRmtFleNme() + "]"
 				+ ",local path=[" + eupsThdFtpConfig.getLocDir() + "],local file name=[" + eupsThdFtpConfig.getLocFleNme() + "]");
-		operateFTPAction.putCheckFile(eupsThdFtpConfig);
+
+		//TODO: 生产先注释
+		//		operateFTPAction.putCheckFile(eupsThdFtpConfig);
 	}
 	
 }
