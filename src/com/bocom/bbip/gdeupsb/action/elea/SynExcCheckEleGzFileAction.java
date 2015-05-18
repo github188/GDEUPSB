@@ -21,7 +21,7 @@ public class SynExcCheckEleGzFileAction extends BaseAction {
 
 	private final String ELEC_EUPS_BUS_TYP = "ELEC01";
 
-	private final String ELEC_CHECK_PROCESS = "eups.checkBankFileToThird";
+	private final String ELEC_CHECK_PROCESS = "gdeupsb.checkBankEleFile";
 
 	@Override
 	public void execute(Context context) throws CoreException, CoreRuntimeException {
