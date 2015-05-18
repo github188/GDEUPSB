@@ -89,12 +89,12 @@ public class CheckBkEleGzFileToThirdAction extends  BaseAction {
 		String fileNameDk = "00" + "01_" + clearDteStr + "_315810" + "_001.bil"; // 代扣文件
 		String fileNameJf = "00" + "02_" + clearDteStr + "_315810" + "_001.bil"; // 缴费文件
 
-		String tmpTxnCodDk = "460230";
-		String tmpTxncodJf = "460245";
-
-		// TODO:switch code,单位编号根据适配类型做table转换
-		String cAgtNoDk = "4410001273";
-		String cAgtNoJf = "4410001273";
+//		String tmpTxnCodDk = "460230";
+//		String tmpTxncodJf = "460245";
+//
+//		// TODO:switch code,单位编号根据适配类型做table转换
+//		String cAgtNoDk = "4410001273";
+//		String cAgtNoJf = "4410001273";
 
 		Map<String, Object> checkFileHK = new HashMap<String, Object>(); // 划扣对账文件
 		// 查询代扣的数据
@@ -154,7 +154,7 @@ public class CheckBkEleGzFileToThirdAction extends  BaseAction {
 				// 电费月份处理
 				String rmkTmp = (String) hkDMap.get("RMKTMP");
 				if (StringUtils.isNotEmpty(rmkTmp)) {
-					rmkTmp = rmkTmp.substring(21, 27);
+					rmkTmp = rmkTmp.substring(21, 29);
 					hkDMap.put("RMKTMP", rmkTmp);
 				}
 
