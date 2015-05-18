@@ -63,14 +63,18 @@ public interface GdEupsTransJournalRepository extends PagingAndSortingRepository
     @Find
 	public List<Map<String, Object>> findFailTxnList(GdEupsTransJournal eupsJnl);
     
+    public List<Map<String, Object>> findElecFailTxnList(GdEupsTransJournal eupsJnl);
+    
     /** 报表打印 -可疑*/
     @Find
 	public List<Map<String, Object>> findDoubtTxnList(GdEupsTransJournal eupsJnl);
     
+    public List<Map<String, Object>> findElecDoubtTxnList(GdEupsTransJournal eupsJnl);
     /** 报表打印 -其他*/
     @Find
 	public List<Map<String, Object>> findOthTxnList(GdEupsTransJournal eupsJnl);
 
+    public List<Map<String, Object>> findElecOthTxnList(GdEupsTransJournal eupsJnl);
     /** 流水信息查询*/
     @Find
 	public List<Map<String, Object>> findTxnJnlInfo(GdEupsTransJournal txnJnl);
