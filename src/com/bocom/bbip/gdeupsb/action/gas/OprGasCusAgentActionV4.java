@@ -124,20 +124,6 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 
 			logger.info("========PGAS00 用户协议查询完成=======");
 		} else {
-			
-
-			// 验密
-			log.info("进行密码校验！..");
-			Result auth = get(AccountService.class).auth(CommonRequest.build(context), context.getData("cusAC").toString(), context.getData("NewCusAc").toString());
-			log.info("check pwd end");
-			if (!auth.isSuccess()) {
-				log.info("check pwd eroor");
-				throw new CoreException(GDErrorCodes.EUPS_PASSWORD_ERROR); // 密码验证错误
-			}
-			
-			context.setData("pwd", null);
-		
-			
 			String cusAc = context.getData(ParamKeys.CUS_AC).toString().trim();
 			String cusTyp = context.getData("cusTyp");
 			if ("0".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡
@@ -145,10 +131,33 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 				context.setData("bvCde", null);
 			}
 			if ("2".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡
+				// 验密
+				log.info("进行存折密码校验！..");
+				Map<String, Object> ext=new HashMap<String, Object>();
+				ext.put("drwMde","1");
+				ext.put("pswLvl","1");
+				ext.put("txnPsw",context.getData("NewCusAc"));
+				CommonRequest commonReq = CommonRequest.build(context, ext);
+				CusActInfResult cs = get(AccountService.class).getAcInf(commonReq, context.getData("cusAc").toString());
+				if(cs.isSuccess()==false){
+					throw new CoreException(GDErrorCodes.EUPS_PASSWORD_ERROR);
+				}
+				
 				context.setData("cusTyp", "0");
 				context.setData("bvCde", "704");
 			}
 			if ("4".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡
+				// 验密
+				log.info("进行对私卡密码校验！..");
+				Result auth = get(AccountService.class).auth(CommonRequest.build(context), context.getData("cusAc").toString(), context.getData("NewCusAc").toString());
+				log.info("check pwd end");
+				if (!auth.isSuccess()) {
+					log.info("check pwd eroor");
+					throw new CoreException(GDErrorCodes.EUPS_PASSWORD_ERROR); // 密码验证错误
+				}
+				
+				context.setData("pwd", null);
+				
 				context.setData("cusTyp", "0");
 				context.setData("bvCde", "009");
 			}
