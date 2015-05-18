@@ -3,7 +3,6 @@ package com.bocom.bbip.gdeupsb.action.efek;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import com.bea.common.security.xacml.context.ContextSchemaObject;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
