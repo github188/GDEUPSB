@@ -7,7 +7,7 @@
 		<varString name="TLOGNO" type="D|" />  <!-- 供电公司系统参考号-->
 		<varString name="THDCUSNO" type="D|"  expression='exp:str.leftPad(this.THDCUSNO,21)'/>  <!-- 供电公司用户编号-->
 		<varString name="TACTDT" type="D|" />  <!-- 供电公司清算日期-->
-		<varString name="ACTDAT" type="D|" expression='exp:str.replace(this.ACTDAT,"-","")'/>  <!-- 银行交易日期-->
+		<varString name="ACTDAT" type="D|" />  <!-- 银行交易日期-->
 		<varString name="BKTIM" type="D|" />  <!--银行交易时间-->
 		<varString name="BKLOG" type="D|" />  <!--银行交易流水号-->
 		<varString name="ACTNO" type="D|" expression='exp:str.leftPad(this.ACTNO,35)'/>  <!--客户帐号-->
