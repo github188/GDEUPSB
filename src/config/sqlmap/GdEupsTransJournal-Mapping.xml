@@ -224,7 +224,7 @@
 	<select id="findGzEleChkHKDetail" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
 		select THD_SQN tLogNo,THD_CUS_NO thdCusNo,THD_TXN_DTE
-		tActDt,TXN_DTE actDat, TXN_TME BkTim, RSV_FLD2 bkLog,
+		tActDt,BAK_FLD1 actDat, TXN_TME BkTim, RSV_FLD2 bkLog,
 		CUS_AC actNo,
 		'0200' txnKnd,TXN_AMT txnAmt,' ' oTlogNo,THD_TXN_DTE dLDat,THD_TXN_TME
 		dLTim,RSV_FLD1 rmkTmp,BAK_FLD2 lChkTm
@@ -253,7 +253,7 @@
 	<select id="findGzEleChkJFDetail" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
 		select THD_SQN tLogNo,THD_CUS_NO thdCusNo,THD_TXN_DTE
-		tActDt,TXN_DTE actDat, TXN_TME BkTim, RSV_FLD2 bkLog,RSV_FLD3 ZPFLG,
+		tActDt,BAK_FLD1 actDat, TXN_TME BkTim, RSV_FLD2 bkLog,RSV_FLD3 ZPFLG,
 		CUS_AC actNo,
 		'0200' txnKnd,TXN_AMT txnAmt,' ' oTlogNo,THD_TXN_DTE dLDat,THD_TXN_TME
 		dLTim,RSV_FLD1 rmkTmp, BAK_FLD3 bakFld3, BV_NO bvNo,
