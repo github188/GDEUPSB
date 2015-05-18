@@ -404,19 +404,19 @@ public class CusAgentServiceAction extends BaseAction{
 		public void checkCusNmeAndPwd(Context context) throws CoreException{
 			log.info("================Start   checkCusNmeAndPwd");
 			String cusAc = context.getData("newCusAc").toString().trim();
-			
-			CusActInfResult cusactinfresult = new CusActInfResult();
-			try {
-				cusactinfresult = get(AccountService.class).getAcInf(CommonRequest.build(context), cusAc);
-			} catch (CoreException e) {
-				logger.info("查询账号状态失败", e);
+			if("0".equals((String)context.getData("oprTyp")) || "1".equals((String)context.getData("oprTyp"))){
+				CusActInfResult cusactinfresult = new CusActInfResult();
+				try {
+					cusactinfresult = get(AccountService.class).getAcInf(CommonRequest.build(context), cusAc);
+				} catch (CoreException e) {
+					logger.info("查询账号状态失败", e);
+				}
+				if(!cusactinfresult.isSuccess()){
+					throw new CoreException("Error");
+				}
+				String newCusNme=cusactinfresult.getCusName();
+				context.setData("newCusName", newCusNme);
 			}
-			if(!cusactinfresult.isSuccess()){
-				throw new CoreException("Error");
-			}
-			String newCusNme=cusactinfresult.getCusName();
-			context.setData("newCusName", newCusNme);
-			
 			String chl=(String)context.getData("chl");
 			if(null != chl){
 				if("00".equals(chl.toString().trim())){
