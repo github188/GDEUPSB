@@ -54,10 +54,8 @@ public class QryCusMsgAction extends BaseAction{
 				bakFld1="清远";
 		}else if(comNos.equals("0320")){
 				bakFld1="中山";
-		}else if(comNos.equals("0306")){
-				bakFld1="佛山";
 		}else{
-				bakFld1="   ";
+				bakFld1="佛山";
 		}
 		context.setData(ParamKeys.BAK_FLD1, bakFld1);
 		//缴费号返回可能不同，需返回时替换
