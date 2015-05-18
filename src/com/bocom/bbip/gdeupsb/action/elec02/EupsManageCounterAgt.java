@@ -189,14 +189,28 @@ public class EupsManageCounterAgt extends BaseAction {
 
 	private void addAgentDeal(Context context) throws CoreException {
 		// TODO checkCusInfoByCusAc(context);
-		
-		log.info("进行密码校验！..");
-		Result auth = get(AccountService.class).auth(CommonRequest.build(context), context.getData("ActNo").toString(), context.getData("Pin").toString());
-		log.info("check pwd end");
-		if (!auth.isSuccess()) {
-			log.info("check pwd eroor");
-			throw new CoreException(GDErrorCodes.EUPS_PASSWORD_ERROR); // 密码验证错误
+		String ACT = context.getData("ACT");
+		if("3".equals(ACT)){ //银行卡验密
+			log.info("进行密码校验！..");
+			Result auth = get(AccountService.class).auth(CommonRequest.build(context), context.getData("ActNo").toString(), context.getData("Pin").toString());
+			log.info("check pwd end");
+			if (!auth.isSuccess()) {
+				log.info("check pwd eroor");
+				throw new CoreException(GDErrorCodes.EUPS_PASSWORD_ERROR); // 密码验证错误
+			}
+		}else if("1".equals(ACT)){ //存折验密
+			log.info("进行存折密码校验！..");
+			Map<String, Object> ext=new HashMap<String, Object>();
+			ext.put("drwMde","1");
+			ext.put("pswLvl","1");
+			ext.put("txnPsw",context.getData("Pin"));
+			CommonRequest commonReq = CommonRequest.build(context, ext);
+			CusActInfResult cs = get(AccountService.class).getAcInf(commonReq, context.getData("ActNo").toString());
+			if(cs.isSuccess()==false){
+				throw new CoreException(GDErrorCodes.EUPS_PASSWORD_ERROR);
+			}
 		}
+		
 
 		// ICS： 先签本地再签thd
 		GdeupsAgtElecTmp agtElecTmp = new GdeupsAgtElecTmp();
