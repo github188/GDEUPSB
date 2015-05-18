@@ -58,6 +58,8 @@ public class EupsManageAgt extends BaseAction {
 		}
 		//执行至此，表示电银协议维护成功 responseCodeTHD=00
 		context.setData("responseCodeTHD", "00");  
+		context.setData("rspMsg", "交易成功");
+		
 	}
 
 	private void addAgentDeal(Context context) throws CoreException {
