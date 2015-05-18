@@ -60,5 +60,14 @@ public class PrePayToBankAction implements Executable{
 			
 			context.setData("br", "01441800999");
 			context.setData("bk", "01441999999");
+			
+			String str=(String)context.getData("comNos");
+			if(str !=null){
+				if(str.length()>4){
+					context.setData("bakFld2", str.substring(0,4));
+				}else{
+					context.setData("bakFld2", str);
+				}
+			}
 		}
 }
