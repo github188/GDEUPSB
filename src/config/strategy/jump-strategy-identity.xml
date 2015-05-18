@@ -121,9 +121,9 @@
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.BatchAcpElecResultDealServiceAction">
 	</bean>
 
-	<bean id="eups.checkBkFileToThirdServiceActionELEC01"
+<!-- 	<bean id="eups.checkBkFileToThirdServiceActionELEC01"
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.CheckBkEleGzFileToThirdAction">
-	</bean>
+	</bean> -->
 
 	<bean id="eups.chlAutoSignInOutServiceActionExtELEC01"
 		class="com.bocom.bbip.gdeupsb.strategy.elcgd.ChlEleSignInOutAction">
