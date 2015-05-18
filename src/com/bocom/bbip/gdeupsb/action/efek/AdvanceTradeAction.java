@@ -99,7 +99,9 @@ public class AdvanceTradeAction extends BaseAction {
 			context.setData(ParamKeys.RSV_FLD5, context.getData(GDParamKeys.PAY_TYPE));
 			context.setData(ParamKeys.CUS_NME, context.getData("CusNme"));
 			context.setData(ParamKeys.BUS_TYP, "2");
-			context.setData("comNo", "032015");
+			
+			String bakFld2=context.getData("comNos").toString().substring(0,4);
+			context.setData("bakFld2", bakFld2);
 			logger.info("~~~~~~~~~~~~End AdvanceTradeAction");
 	}
 	/**
