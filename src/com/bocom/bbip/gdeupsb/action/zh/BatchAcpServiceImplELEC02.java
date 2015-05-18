@@ -207,8 +207,8 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 		
 		//执行到此，表示批扣准备完成，返回第三方00表示22报文成功
 		context.setData("responseCodeTHD", "00");
-		
 		context.setData("thdRspCde", "00");
+		context.setData("rspMsg", "交易成功");
 	}
 
 	/**
