@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.comp.CommonRequest;
 import com.bocom.bbip.comp.account.AccountService;
+import com.bocom.bbip.comp.account.support.CusActInfResult;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
@@ -45,13 +46,29 @@ public class CommInsertUpdateCusAgentServiceActionWATR00 extends BaseAction{
 		
 		if("0".equals(context.getData("cusTyp"))){
 			// 验密
-			log.info("进行密码校验！..");
-			Result auth = get(AccountService.class).auth(CommonRequest.build(context), context.getData("cusAC").toString(), context.getData("pwd").toString());
-			log.info("check pwd end");
-			if (!auth.isSuccess()) {
-				log.info("check pwd eroor");
-				throw new CoreException(GDErrorCodes.EUPS_PASSWORD_ERROR); // 密码验证错误
+			
+			if("".equals(context.getData("hphone"))|null==context.getData("hphone")){
+				
+				log.info("进行银行卡密码校验！..");
+				Result auth = get(AccountService.class).auth(CommonRequest.build(context), context.getData("cusAC").toString(), context.getData("pwd").toString());
+				log.info("check pwd end");
+				if (!auth.isSuccess()) {
+					log.info("check pwd eroor");
+					throw new CoreException(GDErrorCodes.EUPS_PASSWORD_ERROR); // 密码验证错误
+				}
+			}else{
+				log.info("进行存折密码校验！..");
+				Map<String, Object> ext=new HashMap<String, Object>();
+				ext.put("drwMde","1");
+				ext.put("pswLvl","1");
+				ext.put("txnPsw",context.getData("pwd"));
+				CommonRequest commonReq = CommonRequest.build(context, ext);
+				CusActInfResult cs = get(AccountService.class).getAcInf(commonReq, context.getData("cusAC").toString());
+				if(cs.isSuccess()==false){
+					throw new CoreException(GDErrorCodes.EUPS_PASSWORD_ERROR);
+				}
 			}
+			
 			
 			context.setData("pwd", null);
 		}
