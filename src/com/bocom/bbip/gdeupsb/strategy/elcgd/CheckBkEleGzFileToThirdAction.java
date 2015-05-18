@@ -11,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bocom.bbip.comp.BBIPPublicService;
+import com.bocom.bbip.comp.btp.BTPService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
@@ -64,6 +66,9 @@ public class CheckBkEleGzFileToThirdAction extends  BaseAction {
 		String eupsBusTyp = context.getData(ParamKeys.EUPS_BUSS_TYPE); // 业务类型
 
 		String clearDteStr = (String) context.getData("clrDat"); // 电费对账日期
+		String sqn=get(BBIPPublicService.class).getBBIPSequence();
+		
+		context.setData(ParamKeys.SEQUENCE, sqn.substring(2));
 
 		if (null == clearDteStr) { // 对账为自动发起
 			clearDteStr = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
