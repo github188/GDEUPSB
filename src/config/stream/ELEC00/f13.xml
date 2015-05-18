@@ -10,7 +10,7 @@
 			<fixString name="txnTme" length="6" /><!--  交易时间-->
 	   	 	 <fixString name="busType" length="3" /><!--  收费方式-->
 			<fixString name="payType" length="3" /><!--  费用类型-->
-			<fixString name="comNo" length="8" /><!--  单位编码-->
+			<fixString name="comNos" length="8" /><!--  单位编码-->
 			<fixString name="payNo" length="20" /><!-- 缴费号 -->
 		    <fixString name="traSendDate" length="8" /><!-- 存入日期 -->
 			<fixString name="traSendTime" length="6" /><!--  存入时间-->
