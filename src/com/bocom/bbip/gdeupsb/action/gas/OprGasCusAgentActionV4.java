@@ -68,7 +68,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 
 		context.setData("STR_AC_DTE", AC_DTE);
 
-		// 备份，修改时用 
+		// 备份，修改时用
 		String cusTypBak = context.getData("cusTyp");
 		context.setData("cusTypBak", cusTypBak);
 		context.setData("cusAcBak", context.getData(ParamKeys.CUS_AC));
@@ -124,6 +124,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 
 			logger.info("========PGAS00 用户协议查询完成=======");
 		} else {
+			
 			String cusAc = context.getData(ParamKeys.CUS_AC).toString().trim();
 			String cusTyp = context.getData("cusTyp");
 			if ("0".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡
@@ -163,7 +164,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			}
 
 			if ("1".equals(optFlg)) { // 新增
-				//TODO 校验账号状态
+				// TODO 校验账号状态
 				// checkCusAcSts(context);
 
 				// 查询本地协议表是否存在该cusNo
@@ -197,9 +198,9 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 				context.setData("cusTyp", cusTypBak);
 			}
 			if ("2".equals(optFlg)) { // 修改 （账号 户名 地址 手机）
-				//TODO 校验账号状态
-//				checkCusAcSts(context);
-				
+				// TODO 校验账号状态
+				// checkCusAcSts(context);
+
 				// 根据用户编号查询本地协议表得原签约CusAc
 				String thdCusno = context.getData(ParamKeys.THD_CUS_NO);
 				GdGasCusAll baseCusInfo = new GdGasCusAll();
@@ -212,7 +213,9 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 				}
 				String oldCusAc = (String) cuslist.get(0).getCusAc();
 				context.setData(ParamKeys.CUS_AC, oldCusAc);
-				logger.info("====== 2 context before queryListAgentCollectAgreement", context);
+				logger.info(
+						"====== 2 context before queryListAgentCollectAgreement",
+						context);
 				// 用原签约CusAc到acp列表查询,得agtCllCusId等相关信息
 				Result accessObjList = bgspServiceAccessObject
 						.callServiceFlatting("queryListAgentCollectAgreement",
@@ -236,47 +239,60 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 						agentCollectAgreementMaps.remove(i);
 					}
 				}
-				//更新协议信息	<agentCollectAgreement>
-				if(StringUtils.isNotBlank((String)context.getData("cusAcBak"))){
-					agentCollectAgreementMaps.get(0).put(ParamKeys.CUS_AC, context.getData("cusAcBak"));
-					agentCollectAgreementMaps.get(0).put("acoAc", context.getData("cusAcBak"));
+				// 更新协议信息 <agentCollectAgreement>
+				if (StringUtils
+						.isNotBlank((String) context.getData("cusAcBak"))) {
+					agentCollectAgreementMaps.get(0).put(ParamKeys.CUS_AC,
+							context.getData("cusAcBak"));
+					agentCollectAgreementMaps.get(0).put("acoAc",
+							context.getData("cusAcBak"));
 				}
-				agentCollectAgreementMaps.get(0).put("bvCde", context.getData("bvCde"));
+				agentCollectAgreementMaps.get(0).put("bvCde",
+						context.getData("bvCde"));
 				if (StringUtils.isNotBlank((String) context.getData("bvNo"))) {
-					agentCollectAgreementMaps.get(0).put("bvNo", (String) context.getData("bvNo"));
+					agentCollectAgreementMaps.get(0).put("bvNo",
+							(String) context.getData("bvNo"));
 				}
 				agentCollectAgreementMaps.get(0).put("agrVldDte", AC_DTE);
 				agentCollectAgreementMaps.get(0).put("agrExpDte", "99991231");
-				agentCollectAgreementMaps.get(0).put("ageBr", context.getData(ParamKeys.BK));
-				agentCollectAgreementMaps.get(0).put("agrBr", context.getData(ParamKeys.BR));
-				agentCollectAgreementMaps.get(0).put("agrTlr", context.getData(ParamKeys.TELLER));
-				if (StringUtils.isNotBlank((String) context.getData("cmuTelBak"))) {
-					agentCollectAgreementMaps.get(0).put("cmuTel", context.getData("cmuTelBak"));
+				agentCollectAgreementMaps.get(0).put("ageBr",
+						context.getData(ParamKeys.BK));
+				agentCollectAgreementMaps.get(0).put("agrBr",
+						context.getData(ParamKeys.BR));
+				agentCollectAgreementMaps.get(0).put("agrTlr",
+						context.getData(ParamKeys.TELLER));
+				if (StringUtils.isNotBlank((String) context
+						.getData("cmuTelBak"))) {
+					agentCollectAgreementMaps.get(0).put("cmuTel",
+							context.getData("cmuTelBak"));
 				}
-				
 
 				context.setData("agentCollectAgreement",
 						agentCollectAgreementMaps);
-				logger.info(
-						"=========context after delete other agentCollectAgreement set agentCollectAgreement=========" + 
-						context);
-				
+				logger.info("=========context after delete other agentCollectAgreement set agentCollectAgreement========="
+						+ context);
+
 				@SuppressWarnings("unchecked")
-				//更新客户信息	<customerInfo>
+				// 更新客户信息 <customerInfo>
 				Map<String, Object> customerInfoMap = setCustomerInfoMap(context);
-				if(StringUtils.isNotBlank((String)context.getData("cusAcBak"))){
-					customerInfoMap.put(ParamKeys.CUS_AC, context.getData("cusAcBak"));
-					customerInfoMap.put(ParamKeys.CUS_NME, context.getData("cusNmeBak"));
+				if (StringUtils
+						.isNotBlank((String) context.getData("cusAcBak"))) {
+					customerInfoMap.put(ParamKeys.CUS_AC,
+							context.getData("cusAcBak"));
+					customerInfoMap.put(ParamKeys.CUS_NME,
+							context.getData("cusNmeBak"));
 				}
-				if(StringUtils.isNotBlank((String)context.getData("idNoBak"))){
-					customerInfoMap.put(ParamKeys.ID_NO, context.getData("idNoBak"));
-					customerInfoMap.put(ParamKeys.ID_TYPE, context.getData("idTypBak"));
+				if (StringUtils.isNotBlank((String) context.getData("idNoBak"))) {
+					customerInfoMap.put(ParamKeys.ID_NO,
+							context.getData("idNoBak"));
+					customerInfoMap.put(ParamKeys.ID_TYPE,
+							context.getData("idTypBak"));
 				}
-				
+
 				context.setData("customerInfo", customerInfoMap);
 				logger.info("============ context after set customerInfo : "
 						+ context);
-				
+
 				context.setData("tCommd", "Edit");
 				context.setData("TransCode", "Edit");
 				logger.info("============有协议，可修改");
@@ -317,14 +333,13 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 					List<Map<String, Object>> agentCollectAgreementMaps = (List<Map<String, Object>>) context
 							.getData("agentCollectAgreement");
 					// 返回的协议信息List可能包含多条协议信息，剔除与目标删除用户无关的协议信息
-					 for (int i = 0; i < agentCollectAgreementMaps.size();
-					 i++) {
-					 if (!(context.getData(ParamKeys.THD_CUS_NME)
-					 .equals(agentCollectAgreementMaps.get(i).get(
-					 "agtSrvCusPnm")))) {
-					 agentCollectAgreementMaps.remove(i);
-					 }
-					 }
+					for (int i = 0; i < agentCollectAgreementMaps.size(); i++) {
+						if (!(context.getData(ParamKeys.THD_CUS_NME)
+								.equals(agentCollectAgreementMaps.get(i).get(
+										"agtSrvCusPnm")))) {
+							agentCollectAgreementMaps.remove(i);
+						}
+					}
 					logger.info("==================");
 					context.setData("agentCollectAgreement",
 							agentCollectAgreementMaps);
@@ -440,11 +455,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			;
 			insCusInfo.settCommd((String) context.getData("tCommd"));
 			insCusInfo.setCusAc((String) context.getData(ParamKeys.CUS_AC));
-			if (StringUtils.isNoneBlank((String) context
-					.getData(ParamKeys.CUS_NME))) {
-				insCusInfo.setCusNme((String) context
-						.getData(ParamKeys.CUS_NME));
-			}
+			insCusInfo.setCusNme((String) context.getData("cusNmeBak"));
 			insCusInfo.setOptDat(date);
 			insCusInfo.setAccTyp((String) context.getData("cusTypBak"));
 			insCusInfo.setOptNod((String) context.getData(ParamKeys.BR)
@@ -493,15 +504,11 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			// 燃气协议表
 			GdGasCusAll updateGasCusAll = BeanUtils.toObject(
 					context.getDataMap(), GdGasCusAll.class);
-			updateGasCusAll
-					.setCusNo((String) context.getData(ParamKeys.THD_CUS_NO));
+			updateGasCusAll.setCusNo((String) context
+					.getData(ParamKeys.THD_CUS_NO));
 			updateGasCusAll
 					.setCusAc((String) context.getData(ParamKeys.CUS_AC));
-			if (StringUtils.isNoneBlank((String) context
-					.getData(ParamKeys.CUS_NME))) {
-				updateGasCusAll.setCusNme((String) context
-						.getData(ParamKeys.CUS_NME));
-			}
+			updateGasCusAll.setCusNme((String) context.getData("cusNmeBak"));
 			updateGasCusAll.setCusTyp((String) context.getData("cusTypBak"));
 			updateGasCusAll.setOptDat(date);
 			updateGasCusAll.setOptNod((String) context.getData(ParamKeys.BR));
@@ -522,7 +529,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			insCusInfo.setCusNo((String) context.getData(ParamKeys.THD_CUS_NO));
 			insCusInfo.settCommd((String) context.getData("tCommd"));
 			insCusInfo.setCusAc((String) context.getData(ParamKeys.CUS_AC));
-			insCusInfo.setCusNme((String) context.getData(ParamKeys.CUS_NME));
+			insCusInfo.setCusNme((String) context.getData("cusNmeBak"));
 			insCusInfo.setOptDat(date);
 			insCusInfo.setAccTyp((String) context.getData("cusTypBak"));
 			insCusInfo.setOptNod((String) context.getData(ParamKeys.BR)
@@ -573,10 +580,11 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			// 燃气协议表新增一条数据
 			GdGasCusAll addGasCusAll = BeanUtils.toObject(context.getDataMap(),
 					GdGasCusAll.class);
-			addGasCusAll.setCusNo((String) context.getData(ParamKeys.THD_CUS_NO));
+			addGasCusAll.setCusNo((String) context
+					.getData(ParamKeys.THD_CUS_NO));
 			;
 			addGasCusAll.setCusAc((String) context.getData(ParamKeys.CUS_AC));
-			addGasCusAll.setCusNme((String) context.getData(ParamKeys.CUS_NME));
+			addGasCusAll.setCusNme((String) context.getData("cusNmeBak"));
 			addGasCusAll.setCusTyp((String) context.getData("cusTypBak"));
 			addGasCusAll.setOptDat(date);
 			addGasCusAll.setOptNod((String) context.getData(ParamKeys.BR));
@@ -597,11 +605,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			;
 			insCusInfo.settCommd((String) context.getData("tCommd"));
 			insCusInfo.setCusAc((String) context.getData(ParamKeys.CUS_AC));
-			if (StringUtils.isNoneBlank((String) context
-					.getData(ParamKeys.CUS_NME))) {
-				insCusInfo.setCusNme((String) context
-						.getData(ParamKeys.CUS_NME));
-			}
+			insCusInfo.setCusNme((String) context.getData("cusNmeBak"));
 			insCusInfo.setAccTyp((String) context.getData("cusTypBak"));
 			insCusInfo.setOptDat(date);
 			insCusInfo.setOptNod((String) context.getData(ParamKeys.BR)
@@ -644,7 +648,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 
 	private Map<String, Object> setCustomerInfoMap(Context context) {
 		Map<String, Object> map = new HashMap<String, Object>();
-//		map.put("agtCllCusId", context.getData("agtCllCusId"));
+		// map.put("agtCllCusId", context.getData("agtCllCusId"));
 		map.put("cusTyp", context.getData("cusTyp"));
 		map.put(ParamKeys.CUS_NO, context.getData(ParamKeys.THD_CUS_NO));
 		map.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
@@ -667,7 +671,7 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 			map.put("agdAgrNo", context.getData("agdAgrNo"));
 		}
 		map.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
-		map.put("acoAc", context.getData(ParamKeys.CUS_AC));//TODO 暂用CUS_AC，待确认
+		map.put("acoAc", context.getData(ParamKeys.CUS_AC));// TODO 暂用CUS_AC，待确认
 		if (StringUtils.isNotBlank((String) context.getData("pwd"))) {
 			map.put("pwd", (String) context.getData("pwd"));
 		}
