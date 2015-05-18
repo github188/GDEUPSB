@@ -221,7 +221,7 @@ public class CheckThdDetlAcctAction implements Executable {
 		eupsStreamNos.setComNo(comNo);
 		eupsStreamNos.setTxnDte((Date)context.getData(ParamKeys.TXN_DTE));
 		eupsStreamNos.setTxnSts("S");
-		eupsStreamNos.setThdTxnSts("S");
+		eupsStreamNos.setMfmTxnSts("S");
 		eupsStreamNos.setRsvFld4(busType);
 		eupsStreamNos.setRsvFld5(payType);
 		List<EupsStreamNo> eupsStreamNoList=eupsStreamNoRepository.findSubComNo(eupsStreamNos);
