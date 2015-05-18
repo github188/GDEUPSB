@@ -16,6 +16,7 @@ import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.adaptor.ThirdPartyAdaptor;
+import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.entity.EupsBatchInfoDetail;
@@ -25,6 +26,7 @@ import com.bocom.bbip.eups.repository.EupsBatchInfoDetailRepository;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
 import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
+import com.bocom.bbip.gdeupsb.action.common.FileFtpUtils;
 import com.bocom.bbip.gdeupsb.action.common.OperateFTPActionExt;
 import com.bocom.bbip.gdeupsb.entity.GdeupsWatBatInfTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsEleTmpRepository;
@@ -45,6 +47,9 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 	private static Logger logger = LoggerFactory.getLogger(AfterBatchAcpServiceImplWATR00.class);
 	@Autowired
 	OperateFileAction operateFile;
+	
+	@Autowired
+	OperateFTPAction operateFTPAction;
 	
 	@Autowired
 	BBIPPublicService service;
@@ -123,12 +128,38 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 		
 		// 生成文件
 		operateFile.createCheckFile(eupsThdFtpConfig, "watBatchResult", fileName, resultMap);
+		
+//-----------------------------------------------------------------
 		// 将生成的文件上传至第三方服务器
-		eupsThdFtpConfig.setLocFleNme(fileName);
-		eupsThdFtpConfig.setRmtFleNme(fileName);
-		logger.info("@@@@@@@@@@@@eupsThdFtpConfig=" + eupsThdFtpConfig);
-		OperateFTPActionExt operateFTP = new OperateFTPActionExt();
-		operateFTP.putCheckFile(eupsThdFtpConfig);
+//		eupsThdFtpConfig.setLocFleNme(fileName);
+//		eupsThdFtpConfig.setRmtFleNme(fileName);
+//		logger.info("@@@@@@@@@@@@eupsThdFtpConfig=" + eupsThdFtpConfig);
+//		OperateFTPActionExt operateFTP = new OperateFTPActionExt();
+//		operateFTP.putCheckFile(eupsThdFtpConfig);
+		
+//-----------------------------------------------------------------------------------
+		
+		String stwatIp = eupsThdFtpConfig.getThdIpAdr();
+		String userName = eupsThdFtpConfig.getOppNme();
+		String password = eupsThdFtpConfig.getOppUsrPsw();
+		String rmtDir = eupsThdFtpConfig.getRmtWay();
+		String locDir = eupsThdFtpConfig.getLocDir();
+		String[] shellArg = {"GDEUPSBFtpPutFile.sh",stwatIp,userName,password,rmtDir,fileName,locDir,"bin",fileName}; 
+		logger.info("ftp args="+shellArg.toString());
+		//ftp获取文件
+		try{
+			int result = FileFtpUtils.systemAndWait(shellArg,true);
+			if(result==0){
+				logger.info("put remote file success......");
+			}else{
+				throw new CoreException(ErrorCodes.EUPS_FAIL);
+			}
+		} catch (Exception e){
+			throw new CoreException(ErrorCodes.EUPS_FAIL);
+		}
+		
+		
+//-------------------------------------------------------------------------------------------------
 		File watFile = new File(eupsThdFtpConfig.getLocDir()+"/"+fileName);
 		String fileSize = watFile.length()+"";
 		logger.info("filesize=="+fileSize);
@@ -137,7 +168,7 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 		EupsThdFtpConfig eupsThdFtpConfigA =eupsThdFtpConfigRepository.findOne("watr00BatchResulfA");
 		eupsThdFtpConfigA.setLocFleNme(fileName);
 		eupsThdFtpConfigA.setRmtFleNme(fileName);
-		operateFTP.putCheckFile(eupsThdFtpConfigA);
+		operateFTPAction.putCheckFile(eupsThdFtpConfigA);
 		
 		context.setData("type", "Y004");
 		context.setData("accountdate", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
