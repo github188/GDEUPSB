@@ -11,10 +11,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.bocom.bbip.comp.BBIPPublicService;
+import com.bocom.bbip.comp.CommonRequest;
+import com.bocom.bbip.comp.account.AccountService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.entity.GdEupsWatAgtInf;
 import com.bocom.bbip.gdeupsb.repository.GdEupsWatAgtInfRepository;
+import com.bocom.bbip.service.Result;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -38,6 +42,20 @@ public class CommInsertUpdateCusAgentServiceActionWATR00 extends BaseAction{
 		context.setData(ParamKeys.CUS_AC, context.getData("cusAC"));
 		context.setData(ParamKeys.BUS_TYP, "0");  //业务类型暂定为代收
 		context.setData("agtSts", context.getData("cusTyp")); //客户类型
+		
+		if("0".equals(context.getData("cusTyp"))){
+			// 验密
+			log.info("进行密码校验！..");
+			Result auth = get(AccountService.class).auth(CommonRequest.build(context), context.getData("cusAC").toString(), context.getData("pwd").toString());
+			log.info("check pwd end");
+			if (!auth.isSuccess()) {
+				log.info("check pwd eroor");
+				throw new CoreException(GDErrorCodes.EUPS_PASSWORD_ERROR); // 密码验证错误
+			}
+			
+			context.setData("pwd", null);
+		}
+		
 		if("0".equals(oprTyp)){
 			context.setData("ageBr", context.getData(ParamKeys.BK));
 			context.setData("agrBr", context.getData(ParamKeys.BR));
