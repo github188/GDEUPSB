@@ -412,7 +412,7 @@ public class CusAgentServiceAction extends BaseAction{
 					logger.info("查询账号状态失败", e);
 				}
 				if(!cusactinfresult.isSuccess()){
-					throw new CoreException("Error");
+					throw new CoreException("没有查询到该账户");
 				}
 				String newCusNme=cusactinfresult.getCusName();
 				context.setData("newCusName", newCusNme);
