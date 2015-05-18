@@ -142,6 +142,7 @@ public class CheckBkEleGzFileToThirdAction extends  BaseAction {
 					log.info("经过处理过后，清算日期=[" + clrDtStr + "]");
 					hkDMap.put("TACTDT", clrDtStr);
 				}
+				
 				// 银行交易时间处理 hhmmss
 				Date nkTme = (Date) hkDMap.get("BKTIM");
 				if (null != nkTme) {
@@ -153,7 +154,7 @@ public class CheckBkEleGzFileToThirdAction extends  BaseAction {
 				// 电费月份处理
 				String rmkTmp = (String) hkDMap.get("RMKTMP");
 				if (StringUtils.isNotEmpty(rmkTmp)) {
-					rmkTmp = rmkTmp.substring(23, 31);
+					rmkTmp = rmkTmp.substring(21, 27);
 					hkDMap.put("RMKTMP", rmkTmp);
 				}
 
@@ -264,48 +265,6 @@ public class CheckBkEleGzFileToThirdAction extends  BaseAction {
 					jfDMap.put("DLTIM", dLTim);
 				}
 
-				// Date tactDt = (Date) jfDMap.get("TACTDT");
-				// if (null != tactDt) {
-				// String tactDtS = DateUtils.format(tactDt, "yyyyMMdd");
-				// tactDtS = tactDtS.substring(2);
-				// jfDMap.put("TACTDT", tactDtS);
-				// }
-				//
-				// Date actDt = (Date) jfDMap.get("ACTDAT");
-				// if (null != actDt) {
-				// String actDts = DateUtils.format(actDt, "yyyy-MM-dd");
-				// actDts = actDts.replace("-", "");
-				// jfDMap.put("ACTDAT", actDts);
-				// }
-				//
-				// Date nkTme = (Date) jfDMap.get("BKTIM");
-				// String nkTmeS = DateUtils.format(nkTme,
-				// "yyyy-MM-dd HH:mm:ss");
-				// nkTmeS = nkTmeS.substring(11).replace(":", "");
-				// jfDMap.put("BKTIM", nkTmeS);
-				//
-				// // 电费月份处理
-				// String rmkTmp = (String) jfDMap.get("RMKTMP");
-				// if (StringUtils.isNotEmpty(rmkTmp)) {
-				// rmkTmp = rmkTmp.substring(23, 31);
-				// jfDMap.put("RMKTMP", rmkTmp);
-				// }
-				//
-				// // 第三方交易日期，时间处理
-				// Date thdTme = (Date) jfDMap.get("DLTIM");
-				// if (null != thdTme) {
-				// String thdTmeS = DateUtils.format(thdTme,
-				// "yyyy-MM-dd HH:mm:ss");
-				// // 交易日期:
-				// String dLDate = thdTmeS.substring(0, 10);
-				// dLDate = dLDate.substring(5).replace("-", "");
-				// jfDMap.put("DLDAT", dLDate);
-				//
-				// // 交易时间：
-				// String dLTim = thdTmeS.substring(11, 19);
-				// dLTim = dLTim.replace(":", "");
-				// jfDMap.put("DLTIM", dLTim);
-				// }
 				jfDetailResultReal.add(jfDMap);
 			}
 
