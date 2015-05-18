@@ -124,6 +124,20 @@ public class OprGasCusAgentActionV4 extends BaseAction {
 
 			logger.info("========PGAS00 用户协议查询完成=======");
 		} else {
+			
+
+			// 验密
+			log.info("进行密码校验！..");
+			Result auth = get(AccountService.class).auth(CommonRequest.build(context), context.getData("cusAC").toString(), context.getData("NewCusAc").toString());
+			log.info("check pwd end");
+			if (!auth.isSuccess()) {
+				log.info("check pwd eroor");
+				throw new CoreException(GDErrorCodes.EUPS_PASSWORD_ERROR); // 密码验证错误
+			}
+			
+			context.setData("pwd", null);
+		
+			
 			String cusAc = context.getData(ParamKeys.CUS_AC).toString().trim();
 			String cusTyp = context.getData("cusTyp");
 			if ("0".equals(cusTyp)) { // 0 对公账户 2存折 4对私卡
