@@ -484,6 +484,9 @@ public final class GDErrorCodes {
 	public static final String EUPS_BATCH_STATUS_ERROR = "BBIP4400EU0352";
 	/** 批次已经存在 */
 	public static final String EUPS_BATCH_INFO_EXIST = "BBIP4400EU0353";
+	/**他行以签*/
+	public static final String EUPS_ELEC00_82_ERROR = "BBIP4400EU0382";
+	
 
 	/************************* 公共汽车 ***********************/
 	/** 0 成功 */
