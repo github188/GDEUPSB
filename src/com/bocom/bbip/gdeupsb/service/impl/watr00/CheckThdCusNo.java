@@ -40,17 +40,6 @@ public class CheckThdCusNo extends BaseAction{
 			throw new CoreException("BBIP0004EU0132");
 		}
 		
-		// 验密
-		log.info("进行密码校验！..");
-		Result auth = get(AccountService.class).auth(CommonRequest.build(ctx), ctx.getData("cusAC").toString(), ctx.getData("pwd").toString());
-		log.info("check pwd end");
-		if (!auth.isSuccess()) {
-			log.info("check pwd eroor");
-			throw new CoreException(GDErrorCodes.EUPS_PASSWORD_ERROR); // 密码验证错误
-		}
-		
-		ctx.setData("pwd", null);
-		
 		ctx.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
 	}
 
