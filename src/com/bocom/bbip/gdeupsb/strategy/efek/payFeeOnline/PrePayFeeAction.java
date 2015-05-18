@@ -29,5 +29,14 @@ public class PrePayFeeAction implements Executable{
 					}
 					context.setData(ParamKeys.CUS_NME, context.getData("CusNme"));
 					context.setData(ParamKeys.BUS_TYP, "2");
+					
+					String str=(String)context.getData("company");
+					if(str !=null){
+						if(str.length()>4){
+							context.setData("bakFld2", str.substring(0,4));
+						}else{
+							context.setData("bakFld2", str);
+						}
+					}
 			}
 }
