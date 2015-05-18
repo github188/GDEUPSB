@@ -158,6 +158,9 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 			agtFileDetail.add(detailMap);
 		}
 		
+		context.setData("totCnt", i);
+		context.setData("totAmt", amtTot);
+		
 		Map<String, Object> headAgt = new HashMap<String, Object>();
 		headAgt.put("totCnt", i);
 		headAgt.put("totAmt", amtTot.toString());
@@ -194,8 +197,7 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 //		String totAmt = context.getData("totAmt").toString();
 //		context.setData("totCnt", Integer.valueOf(totCnt));
 //		context.setData("totAmt", new BigDecimal(totAmt));
-		context.setData("totCnt", i);
-		context.setData("totAmt", amtTot);
+
 		
 		// 提交
 		bbipPublicService.synExecute("eups.batchPaySubmitDataProcess", context);
