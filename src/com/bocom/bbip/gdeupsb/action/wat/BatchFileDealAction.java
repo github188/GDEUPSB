@@ -21,6 +21,7 @@ import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.file.fmt.FileMarshaller;
+import com.bocom.bbip.gdeupsb.action.common.FileFtpUtils;
 import com.bocom.bbip.gdeupsb.action.common.OperateFTPActionExt;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.entity.GdeupsWatBatInfTmp;
@@ -47,26 +48,51 @@ public class BatchFileDealAction extends BaseAction{
 		
 		String filename = context.getData("filename");
 		
-		//根据ftpNo查找第三方FTP配置信息
+//--------------------------------------------------------------------------------------------------------------
+		
+//		//根据ftpNo查找第三方FTP配置信息
+//		EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne("waterBatchFile");
+//		if(eupsThdFtpConfig==null){
+//			//第三方FTP信息不存在
+//			log.error("第三方FTP配置信息不存在");
+//			throw new CoreException(ErrorCodes.EUPS_FTP_INFO_NOTEXIST);
+//		}
+////		Assert.isNotNull(eupsThdFtpConfig, ErrorCodes.EUPS_FTP_INFO_NOTEXIST);
+//		
+//		eupsThdFtpConfig.setRmtFleNme(filename);
+//		//eupsThdFtpConfig.setRmtWay("./");
+//		//eupsThdFtpConfig.setLocDir("/home");
+//		
+//		eupsThdFtpConfig.setLocFleNme(filename);
+//		log.info("start get batch file now,thd ftp info=["+BeanUtils.toFlatMap(eupsThdFtpConfig)+"]");
+//		
+//		OperateFTPActionExt operateFTPAction = new OperateFTPActionExt();
+////		get(OperateFTPAction.class).getFileFromFtp(eupsThdFtpConfig);
+//		operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
+//----------------------------------------------------------------------------------------------------------------
 		EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne("waterBatchFile");
-		if(eupsThdFtpConfig==null){
-			//第三方FTP信息不存在
-			log.error("第三方FTP配置信息不存在");
-			throw new CoreException(ErrorCodes.EUPS_FTP_INFO_NOTEXIST);
+		String stwatIp = eupsThdFtpConfig.getThdIpAdr();
+		String userName = eupsThdFtpConfig.getOppNme();
+		String password = eupsThdFtpConfig.getOppUsrPsw();
+		String rmtDir = eupsThdFtpConfig.getRmtWay();
+		String locDir = eupsThdFtpConfig.getLocDir();
+		String[] shellArg = {"GDEUPSBFtpGetFile.sh",stwatIp,userName,password,rmtDir,filename,locDir,"bin"}; 
+		log.info("ftp args="+shellArg.toString());
+		//ftp获取文件
+		try{
+			int result = FileFtpUtils.systemAndWait(shellArg,true);
+			if(result==0){
+				log.info("get remote file success......");
+			}else{
+				throw new CoreException(ErrorCodes.EUPS_FAIL);
+			}
+		} catch (Exception e){
+			throw new CoreException(ErrorCodes.EUPS_FAIL);
 		}
-//		Assert.isNotNull(eupsThdFtpConfig, ErrorCodes.EUPS_FTP_INFO_NOTEXIST);
 		
-		eupsThdFtpConfig.setRmtFleNme(filename);
-		//eupsThdFtpConfig.setRmtWay("./");
-		//eupsThdFtpConfig.setLocDir("/home");
 		
-		eupsThdFtpConfig.setLocFleNme(filename);
-		log.info("start get batch file now,thd ftp info=["+BeanUtils.toFlatMap(eupsThdFtpConfig)+"]");
 		
-		OperateFTPActionExt operateFTPAction = new OperateFTPActionExt();
-//		get(OperateFTPAction.class).getFileFromFtp(eupsThdFtpConfig);
-		operateFTPAction.getFileFromFtp(eupsThdFtpConfig);
-		
+//-----------------------------------------------------------------------------------------------------------------
 		//根据模板解析第三方的文件，模板ID为"parseBatchFile"
 		Map<String,Object> srcFile = parseFileByPath(eupsThdFtpConfig.getLocDir(), 	filename, "watr00FmtIn");
 		Assert.isFalse(null==srcFile||0==srcFile.size(), ErrorCodes.EUPS_FILE_PARESE_FAIL, "解析文件出错");
