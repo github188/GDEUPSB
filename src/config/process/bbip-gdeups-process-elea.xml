@@ -162,11 +162,25 @@
 
 	<!-- 银行发起银行代扣代收电费对帐交易 -->
 	<process id="gdeupsb.bnkcheckFileToEle" template="eups.simpleTran"
-		interceptors="bbip.defaultInterceptors">
+		interceptors="bbip.bbipSchedulerInterceptor">
 		<actions>
 			<action id="act" ref="gdeupsb.synExcCheckEleGzFileAction" />
 		</actions>
 	</process>
+	
+	<action class="com.bocom.bbip.gdeupsb.strategy.elcgd.CheckBkEleGzFileToThirdAction"
+	id="gdeupsb.makeChkFileAction"/>
+			
+	
+	
+	<!-- 银行发起银行代扣代收电费对帐交易 -->
+	<process id="gdeupsb.checkBankEleFile" template="eups.simpleTran"
+		interceptors="bbip.defaultInterceptors">
+		<actions>
+			<action id="act" ref="gdeupsb.makeChkFileAction" />
+		</actions>
+	</process>
+	
 
 	<action class="com.bocom.bbip.gdeupsb.action.elea.EleGzComPayPrtAction"
 		id="gdeupsb.eleGzComPayPrtAction" />
