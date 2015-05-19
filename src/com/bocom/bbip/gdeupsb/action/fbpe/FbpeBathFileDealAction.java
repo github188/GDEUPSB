@@ -62,8 +62,6 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
     @Autowired
     Marshaller marshaller;
     @Autowired
-    BatchFileCommon batchFileCommon;
-    @Autowired
     OperateFTPAction operateFTPAction;
     @Autowired
     BBIPPublicServiceImpl bbipPublicServiceImpl;
@@ -191,7 +189,7 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
 		temp.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(detailList));
         context.setVariable(GDParamKeys.COM_BATCH_AGT_FILE_MAP, temp);
         logger.info("===============代收付文件准备数据完成");
-        batchFileCommon.sendBatchFileToACP(context);
+        ((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).sendBatchFileToACP(context);
         logger.info("===============End  FbpeBathFileDealAction prepareBatchDeal");
     }
     /**
