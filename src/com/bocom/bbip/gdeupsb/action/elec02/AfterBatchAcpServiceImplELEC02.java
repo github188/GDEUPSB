@@ -164,26 +164,20 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 
 		GDEupsBatchConsoleInfo batchConsoleInfo = get(
 				GDEupsBatchConsoleInfoRepository.class).findOne(rsvFld9);
-		int totCnt = Integer.parseInt((String) batchConsoleInfo.getRsvFld3());
+		
+		int totCnt = batchConsoleInfo.getTotCnt();
 		int sucCnt = batchConsoleInfo.getSucTotCnt();// 已更新为上代收付后的成功笔数
-		int failCnt = totCnt - sucCnt;
+		int failCnt = batchConsoleInfo.getFalTotCnt();
 
-		BigDecimal totAmt = new BigDecimal(batchConsoleInfo.getRsvFld2());
-		BigDecimal sucAmt = batchConsoleInfo.getSucTotAmt();// 元
-		sucAmt = sucAmt.multiply(new BigDecimal(100));// 分
-		BigDecimal failAmt = totAmt.subtract(sucAmt);
-
-		batchConsoleInfo.setTotCnt(totCnt);
-		batchConsoleInfo.setSucTotCnt(sucCnt);
-		batchConsoleInfo.setFalTotCnt(failCnt);
+		BigDecimal totAmt= batchConsoleInfo.getTotAmt().multiply(new BigDecimal(100));
+		BigDecimal sucAmt = batchConsoleInfo.getSucTotAmt().multiply(new BigDecimal(100));
+		BigDecimal failAmt = batchConsoleInfo.getFalTotAmt().multiply(new BigDecimal(100));
+		
 		batchConsoleInfo.setTotAmt(totAmt);
 		batchConsoleInfo.setSucTotAmt(sucAmt);
 		batchConsoleInfo.setFalTotAmt(failAmt);
 
 		batchConsoleInfo.setRsvFld6("RMB");
-
-		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(
-				batchConsoleInfo);
 
 		batchConsoleInfo.setRsvFld8("1");// 收付标志,固定为收1
 		batchConsoleInfo.setRsvFld2("0000");// retCode
