@@ -63,10 +63,13 @@ public class BatchFileCommon extends BaseAction {
 		GDEupsBatchConsoleInfo info = new GDEupsBatchConsoleInfo();
 		info.setFleNme(fleNme);
 		info.setEupsBusTyp(eupsBusTyp);
-		GDEupsBatchConsoleInfo ret =get(GDEupsBatchConsoleInfoRepository.class).findConsoleInfo(info);
-		if(ret != null){
-				throw new CoreException("批次已提交");
+		List<Map<String, Object>> ret =get(GDEupsBatchConsoleInfoRepository.class).findConsoleInfo(info);
+		if(CollectionUtils.isNotEmpty(ret)){
+			Map<String, Object> retMap=ret.get(0);
+			log.info("批次已提交，已提交的数据为:retMap="+retMap);
+			throw new CoreException("批次已提交");
 		}
+			
 		/** 插入批次控制表 */
 		logger.info("==============Start  Insert  GDEupsBatchConsoleInfo");
 		String batNo =(String)context.getData("batNo");
