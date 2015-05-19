@@ -78,17 +78,17 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 			// <Quote name="CbsAgtProc"/>金融平台相关操作不做
 			//广东联通和广东移动需调用第三方
 			
-			String lAgtSt = "S";
-			String lErMsg = "验证成功";
+			String lAgtSt = "F";
+			String lErMsg = "签约失败";
 
 			// 水费不需要调用第三方
-			String tAgtSt = "S";
-			String terMsg = "验证成功";
+			String tAgtSt = "F";
+			String terMsg = "签约失败";
 			String actNo = agtDeatil.get("ACT_NO").toString().trim(); // 卡号
 			String gdsAId = agtDeatil.get("GDS_AID").toString().trim(); // 协议号
 			String subSts = agtDeatil.get("SUB_STS").toString().trim(); // 状态
 			//44102联通业务本地协议转发流程 、44103移动业务协议第三方验证流程
-            if(gdsRunctl.getThdChk().trim().equals("0")){
+            if(gdsRunctl.getThdChk().trim().equals("1")){
             	context.setData("tcusid",agtDeatil.get("TCUS_ID") );
             	context.setData("actNo", actNo);
             	context.setData("actName", agtDeatil.get("ACT_NM"));

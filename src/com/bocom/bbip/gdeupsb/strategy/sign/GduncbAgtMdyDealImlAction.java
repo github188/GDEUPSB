@@ -226,9 +226,9 @@ public class GduncbAgtMdyDealImlAction implements AgtMdyDealImlService {
 			detailMap.put("txnCnl", context.getData(GDParamKeys.SIGN_STATION_TXN_CNL)); // 操作渠道
 
 			// 从detailList中获取用户编号，验证长度是否合法，协议是否可以签订等
-			String cusNo = (String) detailMap.get("TCusId"); // 用户编号
-			String tBusTyp = (String) detailMap.get("TBusTp"); // 业务类型
-			String gdsAId = (String) detailMap.get("GdsAId"); // 协议号
+			String cusNo = (String) detailMap.get("TCUSID"); // 用户编号
+			String tBusTyp = (String) detailMap.get("TBUSTP"); // 业务类型
+			String gdsAId = (String) detailMap.get("GDSAID"); // 协议号
 			Map<String, Object> oldAgtInMap = new HashMap<String, Object>();
 			oldAgtInMap.put("agtSTb", agtStb);
 			oldAgtInMap.put("cusNo", cusNo);
