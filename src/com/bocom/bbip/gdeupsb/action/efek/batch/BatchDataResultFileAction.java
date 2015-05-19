@@ -163,6 +163,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 						gdEupsEleTmp.setRsvFld4(eupsBatchInfoDetail.getErrMsg());
 						if(eupsBatchInfoDetail.getSts().equals("S")){
 							gdEupsEleTmp.setPaymentResult("00");
+							gdEupsEleTmp.setRsvFld5(eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2).intValue()+"");
 						}else{
 							String errMsg=eupsBatchInfoDetail.getErrMsg();
 							String errSeeason=errMsg.substring(0,6);
@@ -175,10 +176,10 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 							}else{
 									gdEupsEleTmp.setPaymentResult("99");
 							}
+							gdEupsEleTmp.setRsvFld5("0");
 						}
 						gdEupsEleTmp.setTxnDte(gdEupsBatchConsoleInfoUpdate.getExeDte());
 						gdEupsEleTmpRepository.updateOne(gdEupsEleTmp);
-						gdEupsEleTmp.setRsvFld5(eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2).intValue()+"");
 						gdEupsEleTmp.setBankSqn(gdEupsEleTmp.getSqn());
 						gdEupsEleTmp.setBankNo("301");
 						Date date=new Date();
