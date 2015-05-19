@@ -76,7 +76,7 @@ public class BatchFileDealAction extends BaseAction{
 		String password = eupsThdFtpConfig.getOppUsrPsw();
 		String rmtDir = eupsThdFtpConfig.getRmtWay();
 		String locDir = eupsThdFtpConfig.getLocDir();
-		String[] shellArg = {"GDEUPSBFtpGetFile.sh",stwatIp,userName,password,rmtDir,filename,locDir,"bin"}; 
+		String[] shellArg = {"GDEUPSBFtpGetFile.sh",stwatIp,userName,password,rmtDir,filename,locDir,"passive"}; 
 		log.info("ftp args="+shellArg.toString());
 		//ftp获取文件
 		try{
