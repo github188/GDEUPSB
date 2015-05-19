@@ -68,6 +68,9 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 				//上锁
 				String locked="460420ELEC00";
 				Result ret1 = bbipPublicService.tryLock( locked,60*1000L, 600L);
+				//BR  BK  
+				context.setData("br", "01441800999");
+				context.setData("bk", "01441999999");
 				
 				String totAmt=context.getData("totAmt").toString();
 				String totCnt=context.getData("totCnt").toString();
