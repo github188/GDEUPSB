@@ -159,17 +159,9 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 		}
 		
 		
-//-------------------------------------------------------------------------------------------------
 		File watFile = new File(eupsThdFtpConfig.getLocDir()+"/"+fileName);
 		String fileSize = watFile.length()+"";
 		logger.info("filesize=="+fileSize);
-		
-		//将生成的文件上传至汕头分行指定服务器
-		EupsThdFtpConfig eupsThdFtpConfigA =eupsThdFtpConfigRepository.findOne("watr00BatchResulfA");
-		eupsThdFtpConfigA.setLocFleNme(fileName);
-		eupsThdFtpConfigA.setRmtFleNme(fileName);
-		operateFTPAction.putCheckFile(eupsThdFtpConfigA);
-		
 		context.setData("type", "Y004");
 		context.setData("accountdate", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
 		
@@ -193,6 +185,38 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 		context.setData("filesize", fileSize);
 //		context.setData("reserved", "");
 		callThdTradeManager.trade(context);
+//-------------------------------------------------------------------------------------------------
+		
+		
+		//将生成的文件上传至汕头分行指定服务器
+//		EupsThdFtpConfig eupsThdFtpConfigA =eupsThdFtpConfigRepository.findOne("watr00BatchResulfA");
+//		eupsThdFtpConfigA.setLocFleNme(fileName);
+//		eupsThdFtpConfigA.setRmtFleNme(fileName);
+//		operateFTPAction.putCheckFile(eupsThdFtpConfigA);
+//		------------------------------------------------
+		EupsThdFtpConfig eupsThdFtpConfigA =eupsThdFtpConfigRepository.findOne("watr00BatchResulfA");
+		String stwatIpA = eupsThdFtpConfigA.getThdIpAdr();
+		String userNameA = eupsThdFtpConfigA.getOppNme();
+		String passwordA = eupsThdFtpConfigA.getOppUsrPsw();
+		String rmtDirA = eupsThdFtpConfigA.getRmtWay();
+		String locDirA = eupsThdFtpConfigA.getLocDir();
+		String[] shellArgA = {"GDEUPSBFtpPutFile.sh",stwatIpA,userNameA,passwordA,rmtDirA,fileName,locDirA,"bin",fileName}; 
+		logger.info("ftp args="+shellArgA.toString());
+		//ftp放文件
+		try{
+			int result = FileFtpUtils.systemAndWait(shellArgA,true);
+			if(result==0){
+				logger.info("put remote file success......");
+			}else{
+				throw new CoreException(ErrorCodes.EUPS_FAIL);
+			}
+		} catch (Exception e){
+			throw new CoreException(ErrorCodes.EUPS_FAIL);
+		}
+		
+		
+//		--------------------------------------------------------
+		
 		logger.info("AfterBatchAcpServiceImplWATR00 end ... ...");
 	}
 
