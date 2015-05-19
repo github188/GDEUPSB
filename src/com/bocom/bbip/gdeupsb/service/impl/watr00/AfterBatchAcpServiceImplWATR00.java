@@ -144,7 +144,7 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 		String password = eupsThdFtpConfig.getOppUsrPsw();
 		String rmtDir = eupsThdFtpConfig.getRmtWay();
 		String locDir = eupsThdFtpConfig.getLocDir();
-		String[] shellArg = {"GDEUPSBFtpPutFile.sh",stwatIp,userName,password,rmtDir,fileName,locDir,"bin",fileName}; 
+		String[] shellArg = {"GDEUPSBFtpPutFile.sh",stwatIp,userName,password,rmtDir,fileName,locDir,"passive",fileName}; 
 		logger.info("ftp args="+shellArg.toString());
 		//ftp获取文件
 		try{
