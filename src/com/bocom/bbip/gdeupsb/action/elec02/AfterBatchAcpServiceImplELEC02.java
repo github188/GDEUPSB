@@ -191,7 +191,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class)
 				.findOne("elec02BatchThdFileTest");
 
-		String backFlieName = config.getLocFleNme();
+		String backFlieName = batchConsoleInfo.getFleNme();
 		backFlieName = backFlieName.replace('s', 'h');
 		config.setLocFleNme(backFlieName);
 		config.setRmtFleNme(backFlieName);
