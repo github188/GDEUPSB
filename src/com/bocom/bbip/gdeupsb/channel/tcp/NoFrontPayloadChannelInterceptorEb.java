@@ -42,6 +42,7 @@ public class NoFrontPayloadChannelInterceptorEb extends NoFrontLengthStreamResol
 	public void onResponse(ChannelContext channelContext, ContextEx context, Throwable throwable)
 	{
 		byte arrayOfByte[] = (byte[]) channelContext.getResponsePalyload();
+		log.info("当前收到的初始byte为："+Hex.toDumpString(arrayOfByte));
 		
         int len=arrayOfByte.length-10;
         String lenS=StringUtils.rightPad(String.valueOf(len), 10, " ");
