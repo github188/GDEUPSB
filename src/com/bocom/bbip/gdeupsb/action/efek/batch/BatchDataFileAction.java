@@ -198,7 +198,7 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 		public void userProcessToSubmit(Context context)throws CoreException{
 			logger.info("==========Start  BatchDataFileAction  userProcessToSubmit");
 			//生成代收付文件
-			get(BatchFileCommon.class).sendBatchFileToACP(context);
+			((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).sendBatchFileToACP(context);
 			Date date=new Date();
 			context.setData("reqTme",DateUtils.formatAsSimpleDate(date)+"T"+DateUtils.format(date, "HH:mm:ss"));
 			//提交
