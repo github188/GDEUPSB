@@ -404,7 +404,7 @@
 				</bean> -->
 
 				<bean
-					class="com.bocom.bbip.gdeupsb.channel.tcp.NoFrontPayloadChannelInterceptorEb">
+					class="com.bocom.bbip.gdeupsb.channel.tcp.NoFrontPayloadChannelInterceptorHSSC">
 				</bean>
 				<bean class="com.bocom.jump.bp.channel.interceptors.TransformInterceptor">
 					<property name="encodeTransforms"> <!-- unpack response -->
