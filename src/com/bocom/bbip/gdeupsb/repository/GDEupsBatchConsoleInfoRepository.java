@@ -16,8 +16,7 @@ import com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal;
 
 public interface GDEupsBatchConsoleInfoRepository extends PagingAndSortingRepository<GDEupsBatchConsoleInfo, String> {
 	
-	@FindOne
-	public GDEupsBatchConsoleInfo findConsoleInfo(GDEupsBatchConsoleInfo info);
+	public List<Map<String, Object>> findConsoleInfo(GDEupsBatchConsoleInfo info);
 
 	@Delete
 	public void deleteConsoleInfo(String batNo);
