@@ -92,7 +92,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 				gdEupsBatchConSoleInfo);
 		((BatchFileCommon) get(GDConstants.BATCH_FILE_COMMON_UTILS))
 				.unLock(batNo);
-		
+
 		String br = gdEupsBatchConSoleInfo.getTxnOrgCde();
 		String tlr = gdEupsBatchConSoleInfo.getTxnTlr();
 
@@ -127,8 +127,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 			 * errMsg = dtl.getErrMsg(); elec02batchTmp.setRsvFld16(errMsg);
 			 * //TODO 根据errMsg确定rsvFld15,回盘用！ // 1-已扣 // 2-余额不足 // 3-帐号不符 //
 			 * 4-帐号已销 // 5-坏帐号及其他, 除“已扣”，其他扣不到款 // 8-直接借记支付中的金额超过事先规定限额 //
-			 * 9-直接借记无授权记录
-			 * }
+			 * 9-直接借记无授权记录 }
 			 */
 			if ("S".equals(sts)) {
 				elec02batchTmp.setRsvFld15("1");
@@ -137,8 +136,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 				errCde = dtl.getErrMsg().toString().substring(0, 6);
 				if ("TPM050".equals(errCde) || "TP0017".equals(errCde)) {
 					elec02batchTmp.setRsvFld15("2");
-				}
-				else if ("CB1004".equals(errCde)) {
+				} else if ("CB1004".equals(errCde)) {
 					elec02batchTmp.setRsvFld15("4");
 				}
 				// if ("PDM252".equals(errCde)) {
@@ -146,13 +144,11 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 				// }
 				else if ("SDM015".equals(errCde)) {// SDM015记账账号状态字为全部法律冻结、全部内部止付、冻结暂封、存款证明止付、质押或者保全冻结
 					elec02batchTmp.setRsvFld15("5");
-				}
-				else if("CDSS04".equals(errCde)){//CDSS04核心错误码，请联系核心
+				} else if ("CDSS04".equals(errCde)) {// CDSS04核心错误码，请联系核心
 					elec02batchTmp.setRsvFld15("5");
-				 }
-				else{
-					 elec02batchTmp.setRsvFld15("5");
-				 }
+				} else {
+					elec02batchTmp.setRsvFld15("5");
+				}
 				elec02batchTmp.setRsvFld16(dtl.getErrMsg());
 			}
 
@@ -196,7 +192,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		ret.put("detail", tempList);
 
 		OperateFTPActionExt operateFTP = new OperateFTPActionExt();
-		
+
 		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class)
 				.findOne("elec02BatchThdFileTest");
 
@@ -216,21 +212,9 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		config.setFtpDir("0");// 0-外发
 		logger.info("====== send file to ELEC02 =======");
 		operateFTP.putCheckFile(config);
-		
-		// 回盘文件同时上传汕头分行FTP
-		logger.info("elec02批扣返盘文件上传到汕头指定FTP");
-		String filPath = config.getLocDir();
-		EupsThdFtpConfig sendFileToElec02 = get(EupsThdFtpConfigRepository.class).findOne("sendFileToElec02");
-		sendFileToElec02.setLocDir(filPath);
-		sendFileToElec02.setLocFleNme(backFlieName);
-		sendFileToElec02.setRmtFleNme(backFlieName);
-		logger.info("====== send file to ShanTou FTP =======");
-		operateFTP.putCheckFile(sendFileToElec02);
-
-		logger.info("======= context after put file to thd ftp:" + context);
 
 		/** 通知第三方 */
-
+		logger.info("=== send msg to ELEC02 ===");
 		context.setData("AppTradeCode", "23");
 		context.setData("StartAddr", "301");
 		context.setData("DestAddr", "0500");
@@ -257,8 +241,6 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		context.setData("LogNo", StringUtils.substring(logNo, 4));
 		context.setData("TMN", br);// 经办网点
 
-		// String tlr= context.getData(ParamKeys.TELLER);
-
 		// tlr截取后5位
 		context.setData("STO", tlr.substring(2));
 		context.setData("HAN", sucCnt);
@@ -273,6 +255,20 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 			throw new CoreException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
 		}
 		context.setDataMap(thdResult);
+
+		// 回盘文件同时上传汕头分行FTP
+		logger.info("elec02批扣返盘文件上传到汕头指定FTP");
+		String filPath = config.getLocDir();
+		EupsThdFtpConfig sendFileToElec02 = get(
+				EupsThdFtpConfigRepository.class).findOne("sendFileToElec02");
+		sendFileToElec02.setLocDir(filPath);
+		sendFileToElec02.setLocFleNme(backFlieName);
+		sendFileToElec02.setRmtFleNme(backFlieName);
+		logger.info("====== send file to ShanTou FTP =======");
+		operateFTP.putCheckFile(sendFileToElec02);
+
+		logger.info("======= context after put file to thd ftp:" + context);
+
 		logger.info("电力返盘文件处理结束 with conetxt : " + context);
 	}
 }
