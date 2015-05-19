@@ -358,16 +358,44 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			/**
 			 * 配置ftp 参考 watr00BatchResulfA
 			 */
-			OperateFTPActionExt operateFTP = new OperateFTPActionExt();
+//			OperateFTPActionExt operateFTP = new OperateFTPActionExt();
+//
+//			logger.info("elec02对账文件上传到汕头指定服务器");
+//			EupsThdFtpConfig sendFileToElec02 = get(
+//					EupsThdFtpConfigRepository.class).findOne(
+//					"sendFileToElec02");
+//			sendFileToElec02.setLocDir(filPath);
+//			sendFileToElec02.setLocFleNme(fileName);
+//			sendFileToElec02.setRmtFleNme(fileName);
+//			operateFTP.putCheckFile(sendFileToElec02);
+//			
+			
+//			-------------------------------------------------------------------
+//			String filPath = config.getLocDir();
+			EupsThdFtpConfig eupsThdFtpConfigA =get(
+					EupsThdFtpConfigRepository.class).findOne("sendFileToElec02");
+			String stwatIpA = eupsThdFtpConfigA.getThdIpAdr();
+			String userNameA = eupsThdFtpConfigA.getOppNme();
+			String passwordA = eupsThdFtpConfigA.getOppUsrPsw();
+			String rmtDirA = eupsThdFtpConfigA.getRmtWay();
+			String[] shellArgA = {"GDEUPSBFtpPutFile.sh",stwatIpA,userNameA,passwordA,rmtDirA,fileName,filPath,"bin",fileName}; 
+			logger.info("ftp args="+shellArgA.toString());
+			//ftp放文件
+			try{
+				int result1 = FileFtpUtils.systemAndWait(shellArgA,true);
+				if(result1==0){
+					logger.info("put remote file success......");
+				}else{
+					throw new CoreException(ErrorCodes.EUPS_FAIL);
+				}
+			} catch (Exception e){
+				throw new CoreException(ErrorCodes.EUPS_FAIL);
+			}
 
-			logger.info("elec02对账文件上传到汕头指定服务器");
-			EupsThdFtpConfig sendFileToElec02 = get(
-					EupsThdFtpConfigRepository.class).findOne(
-					"sendFileToElec02");
-			sendFileToElec02.setLocDir(filPath);
-			sendFileToElec02.setLocFleNme(fileName);
-			sendFileToElec02.setRmtFleNme(fileName);
-			operateFTP.putCheckFile(sendFileToElec02);
+			
+//			-----------------------------------------------------------------
+			
+			
 		}
 
 		context.setData("fleNme", fileName);
