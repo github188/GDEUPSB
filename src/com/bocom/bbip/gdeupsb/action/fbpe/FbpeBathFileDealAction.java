@@ -31,6 +31,7 @@ import com.bocom.bbip.file.Marshaller;
 import com.bocom.bbip.file.MftpTransfer;
 import com.bocom.bbip.file.transfer.TransferUtils;
 import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
+import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.AgtFileBatchDetail;
 import com.bocom.bbip.gdeupsb.entity.GdFbpeFileBatchTmp;
@@ -75,8 +76,7 @@ public class FbpeBathFileDealAction extends BaseAction implements BatchAcpServic
     public void prepareBatchDeal(PrepareBatchAcpDomain arg0, Context context) throws CoreException {
 
         logger.info("=================Start  FbpeBathFileDealAction prepareBatchDeal");
-        batchFileCommon.BeforeBatchProcess(context);
-        get(BatchFileCommon.class).BeforeBatchProcess(context);
+        ((BatchFileCommon)get(GDConstants.BATCH_FILE_COMMON_UTILS)).BeforeBatchProcess(context);
         String batNo=context.getData("batNo").toString();
         		
         /**  第三方文件名*/
