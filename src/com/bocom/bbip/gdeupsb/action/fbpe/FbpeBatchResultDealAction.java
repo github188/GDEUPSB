@@ -114,10 +114,10 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
             context.setData("sucTotCnt"  ,gdEupsBatchConsoleInfo.getSucTotCnt());
             context.setData("sucTotAmt", gdEupsBatchConsoleInfo.getSucTotAmt());
             
-            EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("sendFileToBBOS");
+            EupsThdFtpConfig sendFileToBBOSConfig = get(EupsThdFtpConfigRepository.class).findOne("FSAG00");
             //放置文件
             try {
-			 	bbipPublicService.sendFileToBBOS(new File(sendFileToBBOSConfig.getRmtWay(),fileName), fileName, MftpTransfer.FTYPE_NORMAL);		
+			 	bbipPublicService.sendFileToBBOS(new File(sendFileToBBOSConfig.getLocDir(),fileName), fileName, MftpTransfer.FTYPE_NORMAL);		
 			} catch (Exception e) {
 			       	throw new CoreException("文件上传失败");
 			}
