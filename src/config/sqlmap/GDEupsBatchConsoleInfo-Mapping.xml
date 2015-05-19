@@ -536,20 +536,12 @@
 		</if>
 	</select>
 
-	<select id="findConsoleInfo" resultMap="basicResultMap"
+	<select id="findConsoleInfo" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo">
-		select
-		<include refid="baseColumnList" />
-		from ${GDEUPSB_SCHEMA}.GDEUPS_BATCH_CONSOLE_INFO
-		<trim prefix="WHERE" prefixOverrides="AND">
-			<if test="fleNme!=null">
-				AND FLE_NME=#{fleNme,jdbcType=CHAR}
-			</if>
-			<if test="eupsBusTyp != null">
-				and EUPS_BUS_TYP = #{eupsBusTyp,jdbcType=VARCHAR}
-			</if>
-		</trim>
+		select * gdeupsb.GDEUPS_BATCH_CONSOLE_INFO
+		WHERE  FLE_NME=#{fleNme,jdbcType=CHAR} and EUPS_BUS_TYP = #{eupsBusTyp,jdbcType=VARCHAR}
 	</select>
+	
 	<delete id="deleteConsoleInfo" parameterType="java.lang.String">
 		delete from
 		${GDEUPSB_SCHEMA}.GDEUPS_BATCH_CONSOLE_INFO
