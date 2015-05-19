@@ -152,6 +152,10 @@ public class PayUnilateralToBankServiceImplPGAS00 implements
 				context.setData("TransCode", "B3");
 				logger.info("=========交易失败了啊！！！！！！！！context=" + context);
 			}
+			
+			String reMark1 = context.getData(ParamKeys.MFM_RSP_MSG);
+			context.setData("reMark1", reMark1);
+			
 		} 
 		context.setData(ParamKeys.RSV_FLD5, "cnjt");
 		
