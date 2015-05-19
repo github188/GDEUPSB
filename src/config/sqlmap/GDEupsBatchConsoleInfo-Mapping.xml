@@ -538,7 +538,7 @@
 
 	<select id="findConsoleInfo" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo">
-		select * gdeupsb.GDEUPS_BATCH_CONSOLE_INFO
+		select * from gdeupsb.GDEUPS_BATCH_CONSOLE_INFO
 		WHERE  FLE_NME=#{fleNme,jdbcType=CHAR} and EUPS_BUS_TYP = #{eupsBusTyp,jdbcType=VARCHAR}
 	</select>
 	
