@@ -148,7 +148,7 @@ public class PrintBatchInfoAction extends BaseAction{
 						throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
 					}
 					 
-					log.info("=============放置报表文件");
+					log.info("=============放置报表文件成功");
 			        //反盘文件
 					EupsThdFtpConfig eupsThdFtpConfig = get(EupsThdFtpConfigRepository.class).findOne("FSAG00");
 					String path=eupsThdFtpConfig.getLocDir();
@@ -157,7 +157,7 @@ public class PrintBatchInfoAction extends BaseAction{
 					}catch (Exception e) {
 						throw new CoreException(ErrorCodes.EUPS_MFTP_FILEDOWN_FAIL);
 					}
-					log.info("=============放置反盘文件");
+					log.info("=============放置反盘文件成功");
 				log.info("======================printResult"+context.getData("printResult"));
 		}
 }
