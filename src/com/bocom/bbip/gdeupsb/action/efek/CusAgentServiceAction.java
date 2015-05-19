@@ -403,7 +403,10 @@ public class CusAgentServiceAction extends BaseAction{
  */
 		public void checkCusNmeAndPwd(Context context) throws CoreException{
 			log.info("================Start   checkCusNmeAndPwd");
-			String cusAc = context.getData("cusAc").toString().trim();
+			String cusAc = (String)context.getData("cusAc");
+			if(null != cusAc){
+				cusAc=cusAc.trim();
+			}
 			if("0".equals((String)context.getData("oprTyp")) || "1".equals((String)context.getData("oprTyp"))){
 				cusAc=context.getData("newCusAc").toString().trim();
 				CusActInfResult cusactinfresult = new CusActInfResult();
