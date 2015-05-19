@@ -45,6 +45,5 @@ B0        ,20150114cnjt000002,15011400002830    ,000000081952,201412,19.4      ,
 	  <fixString  name="Deli15" length="1" default=","/>
 	  
 	  <fixString name="reMark1" length="60"  /> 
-	  <fixString  name="Deli16" length="1"  />
 
 </segment> 
