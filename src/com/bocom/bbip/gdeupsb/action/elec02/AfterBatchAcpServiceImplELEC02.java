@@ -25,6 +25,7 @@ import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
 import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
 import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
+import com.bocom.bbip.gdeupsb.action.common.FileFtpUtils;
 import com.bocom.bbip.gdeupsb.action.common.OperateFTPActionExt;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
@@ -255,18 +256,43 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 			throw new CoreException(ErrorCodes.TRANSACTION_ERROR_TIMEOUT);
 		}
 		context.setDataMap(thdResult);
-
+//----------------------------------------------------------------------
 		// 回盘文件同时上传汕头分行FTP
 		logger.info("elec02批扣返盘文件上传到汕头指定FTP");
-		String filPath = config.getLocDir();
-		EupsThdFtpConfig sendFileToElec02 = get(
-				EupsThdFtpConfigRepository.class).findOne("sendFileToElec02");
-		sendFileToElec02.setLocDir(filPath);
-		sendFileToElec02.setLocFleNme(backFlieName);
-		sendFileToElec02.setRmtFleNme(backFlieName);
-		logger.info("====== send file to ShanTou FTP =======");
-		operateFTP.putCheckFile(sendFileToElec02);
+//		String filPath = config.getLocDir();
+//		EupsThdFtpConfig sendFileToElec02 = get(
+//				EupsThdFtpConfigRepository.class).findOne("sendFileToElec02");
+//		sendFileToElec02.setLocDir(filPath);
+//		sendFileToElec02.setLocFleNme(backFlieName);
+//		sendFileToElec02.setRmtFleNme(backFlieName);
+//		logger.info("====== send file to ShanTou FTP =======");
+//		operateFTP.putCheckFile(sendFileToElec02);
 
+		
+//		-------------------------------------------------------------------
+		String filPath = config.getLocDir();
+		EupsThdFtpConfig eupsThdFtpConfigA =get(
+				EupsThdFtpConfigRepository.class).findOne("sendFileToElec02");
+		String stwatIpA = eupsThdFtpConfigA.getThdIpAdr();
+		String userNameA = eupsThdFtpConfigA.getOppNme();
+		String passwordA = eupsThdFtpConfigA.getOppUsrPsw();
+		String rmtDirA = eupsThdFtpConfigA.getRmtWay();
+		String[] shellArgA = {"GDEUPSBFtpPutFile.sh",stwatIpA,userNameA,passwordA,rmtDirA,backFlieName,filPath,"bin",backFlieName}; 
+		logger.info("ftp args="+shellArgA.toString());
+		//ftp放文件
+		try{
+			int result1 = FileFtpUtils.systemAndWait(shellArgA,true);
+			if(result1==0){
+				logger.info("put remote file success......");
+			}else{
+				throw new CoreException(ErrorCodes.EUPS_FAIL);
+			}
+		} catch (Exception e){
+			throw new CoreException(ErrorCodes.EUPS_FAIL);
+		}
+
+		
+//		-----------------------------------------------------------------
 		logger.info("======= context after put file to thd ftp:" + context);
 
 		logger.info("电力返盘文件处理结束 with conetxt : " + context);
