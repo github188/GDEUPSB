@@ -129,8 +129,10 @@ public class AdvanceTradeAction extends BaseAction {
 				if(StringUtils.isNotEmpty(comNos)){
 					if(comNos.length()>4){
 						comNos=comNos.substring(0,4)+"00";
-					}while(comNos.length()<6){
-						comNos=comNos+"0";
+					}else{
+						while(comNos.length()<6){
+							comNos=comNos+"0";
+						}
 					}
 				}else{
 					comNos="030000";
