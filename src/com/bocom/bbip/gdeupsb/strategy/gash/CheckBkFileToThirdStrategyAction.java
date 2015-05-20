@@ -160,7 +160,8 @@ public class CheckBkFileToThirdStrategyAction extends BaseAction
 		}
 
 		// 向指定FTP路径放文件
-		get(OperateFTPActionExt.class).putCheckFile(eupsThdFtpConfig);
+//		get(OperateFTPActionExt.class).putCheckFile(eupsThdFtpConfig);
+		get(OperateFTPAction.class).putCheckFile(eupsThdFtpConfig);
 		logger.info("对账文件FTP放置成功！");
 
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
