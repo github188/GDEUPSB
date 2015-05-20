@@ -96,9 +96,8 @@ public class CheckThdDetlAcctAction implements Executable {
 						throw new CoreException("统计明细记录总数出错");
 			}
 			List<Map<String, Object>>  detailList=new ArrayList<Map<String,Object>>();
-			int i=0;
 			for(Map<String, Object> maps:mapList){
-					i++;
+					int i=0;
 					//流水
 					String sqn =bbipPublicService.getBBIPSequence();
 					context.setData(ParamKeys.SEQUENCE, sqn);
