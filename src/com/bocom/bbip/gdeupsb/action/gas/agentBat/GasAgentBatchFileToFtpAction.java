@@ -164,8 +164,11 @@ public class GasAgentBatchFileToFtpAction extends BaseAction {
 			throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
 		}
 
-		get(OperateFTPActionExt.class).putCheckFile(ftpConfigA);
-		get(OperateFTPActionExt.class).putCheckFile(ftpConfigB);
+//		get(OperateFTPActionExt.class).putCheckFile(ftpConfigA);
+//		get(OperateFTPActionExt.class).putCheckFile(ftpConfigB);
+		
+		get(OperateFTPAction.class).putCheckFile(ftpConfigA);
+		get(OperateFTPAction.class).putCheckFile(ftpConfigB);
 		logger.info("rxyCNJTyyyyMMdd.txt文件FTP放置成功！");
 
 		context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
