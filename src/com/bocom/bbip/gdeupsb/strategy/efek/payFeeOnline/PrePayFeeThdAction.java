@@ -15,6 +15,7 @@ import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -74,6 +75,19 @@ public class PrePayFeeThdAction extends BaseAction implements Executable{
 				context.setData(GDParamKeys.NET_NAME, GDConstants.NET_NAME);//网点名称
 				context.setData(GDParamKeys.SECRETKEY_INDEX, GDConstants.SECRETKEY_INDEX);//密钥索引
 				context.setData(GDParamKeys.SECRETKEY_INIT, GDConstants.SECRETKEY_INIT);//密钥初始向量
+				String comNo=(String)context.getData("company");
+				if(!StringUtils.isEmpty(comNo)){
+					if(comNo.length()>4){
+							comNo=comNo.substring(0,4)+"00";
+					}else{
+						while(comNo.length()<6){
+							comNo=comNo+"0";
+						}
+					}
+				}else{
+					comNo="030000";
+				}
+				context.setData(GDParamKeys.TRADE_RECEIVE, comNo);//交易接收方
 				context.setData(GDParamKeys.TRADE_RECEIVE, GDConstants.TRADE_RECEIVE);//交易接收方
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址

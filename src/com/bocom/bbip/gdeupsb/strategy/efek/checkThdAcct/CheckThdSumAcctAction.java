@@ -97,7 +97,7 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 				context.setData(GDParamKeys.PAY_TYPE, map.get("RSV_FLD5"));
 				context.setData("PKGCNT", "000001");
 			        //外发第三方 
-			       callThd(context,sqn);
+			       callThd(context,sqn,map.get("COM_NO").toString());
 			       
 			        //修改时间格式s
 			        String thdTxnDate=context.getData(GDParamKeys.TRADE_SEND_DATE).toString();
@@ -120,7 +120,7 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 	/**
 	 *报文信息 外发第三方
 	 */
-	public void callThd(Context context,String sqn) throws CoreException{  
+	public void callThd(Context context,String sqn ,String comNo) throws CoreException{  
 		
 		context.setData(GDParamKeys.TREATY_VERSION, GDConstants.TREATY_VERSION);//协议版本
 		context.setData(GDParamKeys.TRADE_PERSON_IDENTIFY, GDConstants.TRADE_PERSON_IDENTIFY);//交易人标识
@@ -137,7 +137,7 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 				context.setData(GDParamKeys.NET_NAME, GDConstants.NET_NAME);//网点名称
 				context.setData(GDParamKeys.SECRETKEY_INDEX, GDConstants.SECRETKEY_INDEX);//密钥索引
 				context.setData(GDParamKeys.SECRETKEY_INIT, GDConstants.SECRETKEY_INIT);//密钥初始向量
-				context.setData(GDParamKeys.TRADE_RECEIVE, GDConstants.TRADE_RECEIVE);//交易接收方
+				context.setData(GDParamKeys.TRADE_RECEIVE, comNo);//交易接收方
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
 				context.setData(ParamKeys.BAT_NO, context.getData(ParamKeys.SEQUENCE));

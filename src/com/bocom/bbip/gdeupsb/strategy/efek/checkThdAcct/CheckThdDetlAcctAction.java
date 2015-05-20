@@ -174,7 +174,8 @@ public class CheckThdDetlAcctAction implements Executable {
 					}
 					context.setData("number", number);
 					context.setData("detailList", detailList);
-					callThd(context);
+					String	comNos  =maps.get("COM_NO").toString().substring(0,6);
+					callThd(context,comNos);
 			}
 			logger.info("====================End   CheckThdDetlAcctAction");
 	}
@@ -298,7 +299,7 @@ public class CheckThdDetlAcctAction implements Executable {
 	 *报文信息 外发第三方
 	 * @throws CoreException 
 	 */
-	public void callThd(Context context) throws CoreException{  
+	public void callThd(Context context,String comNos) throws CoreException{  
 		logger.info("=======Start  CheckDetailAcctAction     callThd");
 		context.setData(GDParamKeys.TREATY_VERSION, GDConstants.TREATY_VERSION);//协议版本
 		context.setData(GDParamKeys.TRADE_PERSON_IDENTIFY, GDConstants.TRADE_PERSON_IDENTIFY);//交易人标识
@@ -315,7 +316,7 @@ public class CheckThdDetlAcctAction implements Executable {
 				context.setData(GDParamKeys.NET_NAME, GDConstants.NET_NAME);//网点名称
 				context.setData(GDParamKeys.SECRETKEY_INDEX, GDConstants.SECRETKEY_INDEX);//密钥索引
 				context.setData(GDParamKeys.SECRETKEY_INIT, GDConstants.SECRETKEY_INIT);//密钥初始向量
-				context.setData(GDParamKeys.TRADE_RECEIVE, GDConstants.TRADE_RECEIVE);//交易接收方
+				context.setData(GDParamKeys.TRADE_RECEIVE, comNos);//交易接收方
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
 				
