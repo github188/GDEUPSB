@@ -20,7 +20,6 @@ import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
-import com.bocom.bbip.gdeupsb.action.common.OperateFTPActionExt;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdGasCusAll;
