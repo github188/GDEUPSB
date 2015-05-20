@@ -76,18 +76,22 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		GDEupsBatchConsoleInfo gdEupsBatchConSoleInfo = get(
 				GDEupsBatchConsoleInfoRepository.class).find(
 				gdEupsBatchConsoleInfos).get(0);
-		gdEupsBatchConSoleInfo.setTotAmt(eupsBatchConSoleInfo.getTotAmt());
-		gdEupsBatchConSoleInfo.setTotCnt(eupsBatchConSoleInfo.getTotCnt());
-		gdEupsBatchConSoleInfo
-				.setSucTotAmt(eupsBatchConSoleInfo.getSucTotAmt());
-		gdEupsBatchConSoleInfo
-				.setSucTotCnt(eupsBatchConSoleInfo.getSucTotCnt());
-		gdEupsBatchConSoleInfo
-				.setFalTotAmt(eupsBatchConSoleInfo.getFalTotAmt());
-		gdEupsBatchConSoleInfo
-				.setFalTotCnt(eupsBatchConSoleInfo.getFalTotCnt());
-		gdEupsBatchConSoleInfo.setExeDte((Date) eupsBatchConSoleInfo
-				.getExeDte());
+//		gdEupsBatchConSoleInfo.setTotAmt(eupsBatchConSoleInfo.getTotAmt());
+//		gdEupsBatchConSoleInfo.setTotCnt(eupsBatchConSoleInfo.getTotCnt());
+		
+		// 由于本地协议原因，代收付文件中的总笔数不一定为真正笔数，回盘处理中，总笔数=RsvFld3， 总金额=RsvFld2，失败笔数=RsvFld3-代收付成功笔数，失败金额=RsvFld2-代收付成功金额
+		int sucCntAfterAcp = eupsBatchConSoleInfo.getSucTotCnt();
+		int failCntAfterAcp = Integer.parseInt(gdEupsBatchConSoleInfo.getRsvFld3()) - sucCntAfterAcp;
+		BigDecimal sucAmtAfterAcp = eupsBatchConSoleInfo.getSucTotAmt();
+		BigDecimal failAmtAfterAcp = new BigDecimal(gdEupsBatchConSoleInfo.getRsvFld2()).subtract(sucAmtAfterAcp);
+		
+		gdEupsBatchConSoleInfo.setSucTotAmt(sucAmtAfterAcp);
+		gdEupsBatchConSoleInfo.setSucTotCnt(sucCntAfterAcp);
+		
+		gdEupsBatchConSoleInfo.setFalTotAmt(failAmtAfterAcp);
+		gdEupsBatchConSoleInfo.setFalTotCnt(failCntAfterAcp);
+		
+		gdEupsBatchConSoleInfo.setExeDte((Date) eupsBatchConSoleInfo.getExeDte());
 		gdEupsBatchConSoleInfo.setBatSts("S");
 		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(
 				gdEupsBatchConSoleInfo);
@@ -164,21 +168,25 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 
 		GDEupsBatchConsoleInfo batchConsoleInfo = get(
 				GDEupsBatchConsoleInfoRepository.class).findOne(rsvFld9);
-		
-		int totCnt = batchConsoleInfo.getTotCnt();
-		int sucCnt = batchConsoleInfo.getSucTotCnt();// 已更新为上代收付后的成功笔数
+//		由于本地协议原因，代收付文件中的总笔数不一定为真正笔数，回盘处理中，总笔数=RsvFld3， 总金额=RsvFld2，失败笔数=总笔数-代收付成功笔数，失败金额=总金额-代收付成功金额
+//		已更新为上代收付后的成功笔数,失败笔数
+		int totCnt = Integer.parseInt(batchConsoleInfo.getRsvFld3().toString().trim());
+		int sucCnt = batchConsoleInfo.getSucTotCnt();
 		int failCnt = batchConsoleInfo.getFalTotCnt();
 
-		BigDecimal totAmt= batchConsoleInfo.getTotAmt().multiply(new BigDecimal(100));
+		BigDecimal totAmt= new BigDecimal((String)batchConsoleInfo.getRsvFld2().trim()).multiply(new BigDecimal(100));
 		BigDecimal sucAmt = batchConsoleInfo.getSucTotAmt().multiply(new BigDecimal(100));
 		BigDecimal failAmt = batchConsoleInfo.getFalTotAmt().multiply(new BigDecimal(100));
+		
+		batchConsoleInfo.setTotCnt(totCnt);
+		batchConsoleInfo.setSucTotCnt(sucCnt);
+		batchConsoleInfo.setFalTotCnt(failCnt);
 		
 		batchConsoleInfo.setTotAmt(totAmt);
 		batchConsoleInfo.setSucTotAmt(sucAmt);
 		batchConsoleInfo.setFalTotAmt(failAmt);
 
 		batchConsoleInfo.setRsvFld6("RMB");
-
 		batchConsoleInfo.setRsvFld8("1");// 收付标志,固定为收1
 		batchConsoleInfo.setRsvFld2("0000");// retCode
 		batchConsoleInfo.setRsvFld3("交易成功");// retMsg

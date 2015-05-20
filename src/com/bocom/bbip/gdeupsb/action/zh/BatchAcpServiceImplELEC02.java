@@ -44,7 +44,8 @@ import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
 
-public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpService {
+public class BatchAcpServiceImplELEC02 extends BaseAction implements
+		BatchAcpService {
 	@Autowired
 	BBIPPublicService bbipPublicService;
 	@Autowired
@@ -52,15 +53,19 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 	@Autowired
 	GdBatchConsoleInfoRepository gdBatchConsoleInfoRepository;
 
-	private static final Log logger = LogFactory.getLog(BatchAcpServiceImplELEC02.class);
+	private static final Log logger = LogFactory
+			.getLog(BatchAcpServiceImplELEC02.class);
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void prepareBatchDeal(PrepareBatchAcpDomain domain, Context context) throws CoreException {
-	logger.info("start BatchAcpServiceImplELEC02 @ prepareBatchDeal with context " + context);
-		String fileNme = (String)context.getData("FilNam");
+	public void prepareBatchDeal(PrepareBatchAcpDomain domain, Context context)
+			throws CoreException {
+		logger.info("start BatchAcpServiceImplELEC02 @ prepareBatchDeal with context "
+				+ context);
+		String fileNme = (String) context.getData("FilNam");
 		context.setData(ParamKeys.FLE_NME, fileNme);
-		final String comNo = ContextUtils.assertDataHasLengthAndGetNNR(context, ParamKeys.COMPANY_NO, ErrorCodes.EUPS_FIELD_EMPTY);
+		final String comNo = ContextUtils.assertDataHasLengthAndGetNNR(context,
+				ParamKeys.COMPANY_NO, ErrorCodes.EUPS_FIELD_EMPTY);
 		Date tmpDate = new Date();
 		String eleTmpSqn = "301" + DateUtils.format(tmpDate, "yyMMdd");
 		String tmpSqn = null;
@@ -73,41 +78,46 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 		String tlr = bbipPublicService.getETeller(bk);
 		context.setData(ParamKeys.TELLER, tlr);
 		logger.info("=========>>>>>>>>>>context after get tlr: " + context);
-		
-		
+
 		/** 批量前检查和初始化批量控制表 生成批次号batNo */
-		((BatchFileCommon) get(GDConstants.BATCH_FILE_COMMON_UTILS)).BeforeBatchProcess(context);
+		((BatchFileCommon) get(GDConstants.BATCH_FILE_COMMON_UTILS))
+				.BeforeBatchProcess(context);
 		logger.info("开始解析批量文件-------------with conetxt: " + context);
 
-		
-//		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne("elec02BatchThdFile");
-		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class).findOne("elec02BatchThdFileTest");
-		Assert.isFalse(null == config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST, "FTP配置不存在");
-		
-		//ftp到第三方服务器获取文件
+		// EupsThdFtpConfig config =
+		// get(EupsThdFtpConfigRepository.class).findOne("elec02BatchThdFile");
+		EupsThdFtpConfig config = get(EupsThdFtpConfigRepository.class)
+				.findOne("elec02BatchThdFileTest");
+		Assert.isFalse(null == config, ErrorCodes.EUPS_FTP_INFO_NOTEXIST,
+				"FTP配置不存在");
+
+		// ftp到第三方服务器获取文件
 		config.setLocFleNme(fileNme);
 		config.setRmtFleNme(fileNme);
 		get(EupsThdFtpConfigRepository.class).update(config);
-		
+
 		get(OperateFTPAction.class).getFileFromFtp(config);
 
 		// 解析文件
-		Map<String, Object> result = pareseFileByPath(config.getLocDir(), config.getLocFleNme(), "ELEC02Batch");
+		Map<String, Object> result = pareseFileByPath(config.getLocDir(),
+				config.getLocFleNme(), "ELEC02Batch");
 
-		Assert.isFalse(null == result || 0 == result.size(), ErrorCodes.EUPS_FILE_PARESE_FAIL);
+		Assert.isFalse(null == result || 0 == result.size(),
+				ErrorCodes.EUPS_FILE_PARESE_FAIL);
 		Map<String, Object> head = (Map<String, Object>) result.get("header");
-		List<Map<String, Object>> batchDetailLst = (List<Map<String, Object>>) result.get("detail");
+		List<Map<String, Object>> batchDetailLst = (List<Map<String, Object>>) result
+				.get("detail");
 		context.setDataMap(head);
 		// context.getDataMapDirectly().putAll(head);
 
 		// 获取批次号
 		String batchNo = context.getData(ParamKeys.THD_BAT_NO);
 		// context.setData(ParamKeys.BAT_NO, batchNo);
-		logger.info("=============>>>>>>>>>>>>>the batNo is : " + batchNo );
-
+		logger.info("=============>>>>>>>>>>>>>the batNo is : " + batchNo);
 
 		/** 插入临时表中 */
-		List<GDEupsbElecstBatchTmp> listToBatchTmp = (List<GDEupsbElecstBatchTmp>) BeanUtils.toObjects(batchDetailLst, GDEupsbElecstBatchTmp.class);
+		List<GDEupsbElecstBatchTmp> listToBatchTmp = (List<GDEupsbElecstBatchTmp>) BeanUtils
+				.toObjects(batchDetailLst, GDEupsbElecstBatchTmp.class);
 		int i = 0;
 		BigDecimal amtTot = new BigDecimal("0.00");
 		for (GDEupsbElecstBatchTmp tmp : listToBatchTmp) {
@@ -118,38 +128,42 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 			agtElec.setActNo(cusAc);
 			agtElec.setFeeNum(feeNum);
 			agtElec.setStatus("0");
-			List<GdeupsAgtElecTmp> checkR = get(GdeupsAgtElecTmpRepository.class).find(agtElec);
+			List<GdeupsAgtElecTmp> checkR = get(
+					GdeupsAgtElecTmpRepository.class).find(agtElec);
 			if (CollectionUtils.isEmpty(checkR)) {
 				tmp.setRsvFld12("1"); // 不存在本地协议信息
-				//直接用某字段表示批扣状态，失败
+				// 直接用某字段表示批扣状态，失败
 				tmp.setRsvFld15("3");//
 				tmp.setRsvFld16("不存在代扣协议");
-				
+
 			} else {
 				tmp.setRsvFld12("0");
 			}
-			tmpSqn = eleTmpSqn + bbipPublicService.getBBIPSequence().toString().substring(13);
+			tmpSqn = eleTmpSqn
+					+ bbipPublicService.getBBIPSequence().toString()
+							.substring(13);
 			tmp.setTxnTlr(tlr);
 			tmp.setSqn(tmpSqn);
 			tmp.setBatNo(batchNo);
-			tmp.setRsvFld17(DateUtils.format(new Date(), "yyyyMMddHHmmss")); //实时
+			tmp.setRsvFld17(DateUtils.format(new Date(), "yyyyMMddHHmmss")); // 实时
 			gdEupsbElecstBatchTmpRepository.insert(tmp);
 		}
 		List<Map<String, Object>> agtFileDetail = new ArrayList<Map<String, Object>>(); // 代收付文件detail
-		List<GDEupsbElecstBatchTmp> toAcpList = gdEupsbElecstBatchTmpRepository.findByBatNoAndSigned(batchNo);
+		List<GDEupsbElecstBatchTmp> toAcpList = gdEupsbElecstBatchTmpRepository
+				.findByBatNoAndSigned(batchNo);
 		if (null == toAcpList || CollectionUtils.isEmpty(toAcpList)) {
 			logger.info("There are no records for select check trans journal ");
 			throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
 		}
-		for(GDEupsbElecstBatchTmp batTmp : toAcpList ){
+		for (GDEupsbElecstBatchTmp batTmp : toAcpList) {
 			Map<String, Object> detailMap = new HashMap<String, Object>();
 			BigDecimal amtB = new BigDecimal(batTmp.getTxnAmt());
 			amtB = amtB.divide(new BigDecimal("100"));
 			amtTot = amtTot.add(amtB);
 			amtTot = amtTot.setScale(2);
 			i++;
-		
-			//金额转换
+
+			// 金额转换
 			batTmp.setTxnAmt(amtB.toString());
 			detailMap = BeanUtils.toMap(batTmp);
 			detailMap.put("rsvFld4", "0");
@@ -157,57 +171,63 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 			detailMap.put("sqn", batTmp.getSqn());
 			agtFileDetail.add(detailMap);
 		}
-		
-		context.setData("totCnt", i);
-		context.setData("totAmt", amtTot);
-		
+
 		Map<String, Object> headAgt = new HashMap<String, Object>();
 		headAgt.put("totCnt", i);
 		headAgt.put("totAmt", amtTot.toString());
 		headAgt.put("comNo", context.getData("comNoAcps"));
-		
-		// 更新总笔数，总金额等信息,备用字段2，3分别表示其真正的笔数，金额
-		GDEupsBatchConsoleInfo info = ContextUtils.getDataAsObject(context, GDEupsBatchConsoleInfo.class);
+
+		// 更新总笔数，总金额等信息,备用字段2，3分别表示其真正的笔数，金额、 回盘用，
+		// 由于本地协议原因，代收付文件中的总笔数不一定为真正笔数，回盘处理中，总笔数=RsvFld3， 总金额=RsvFld2，失败笔数=RsvFld3-代收付成功笔数，失败金额=RsvFld2-代收付成功金额
+		// TotAmt TotCnt :代收付文件中的总金额，总笔数
+		GDEupsBatchConsoleInfo info = ContextUtils.getDataAsObject(context,
+				GDEupsBatchConsoleInfo.class);
 		info.setRsvFld2(info.getTotAmt().toString());
 		info.setRsvFld3(info.getTotCnt().toString());
 		info.setTotAmt(amtTot);
 		info.setTotCnt(i);
 		get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(info);
 
+		context.setData("totCnt", i);
+		context.setData("totAmt", amtTot);
+
 		// 生成代收付文件
-		context.setData(ParamKeys.COMPANY_NO, (String) context.getData("comNoAcps"));
+		context.setData(ParamKeys.COMPANY_NO,
+				(String) context.getData("comNoAcps"));
 		Map<String, Object> temp = new HashMap<String, Object>();
 		temp.put(ParamKeys.EUPS_FILE_HEADER, headAgt);
 		// 查找本地存在协议的批量信息，拼凑成代收付文件detail
 		temp.put(ParamKeys.EUPS_FILE_DETAIL, agtFileDetail);
 		context.setVariable("agtFileMap", temp);
-		
-		((BatchFileCommon) get(GDConstants.BATCH_FILE_COMMON_UTILS)).sendBatchFileToACP(context);
 
-//		((BatchFileCommon) get(GDConstants.BATCH_FILE_COMMON_UTILS)).unLock(comNo);
+		((BatchFileCommon) get(GDConstants.BATCH_FILE_COMMON_UTILS))
+				.sendBatchFileToACP(context);
+
+		// ((BatchFileCommon)
+		// get(GDConstants.BATCH_FILE_COMMON_UTILS)).unLock(comNo);
 
 		logger.info("批量文件数据准备结束-------------");
 
 		// 同步提交
 		Date date = new Date();
-		context.setData("reqTme", DateUtils.formatAsSimpleDate(date) + "T" + DateUtils.format(date, "HH:mm:ss"));
+		context.setData("reqTme", DateUtils.formatAsSimpleDate(date) + "T"
+				+ DateUtils.format(date, "HH:mm:ss"));
 
 		// 判空todo
-//		String totCnt = context.getData("totCnt").toString();
-//		String totAmt = context.getData("totAmt").toString();
-//		context.setData("totCnt", Integer.valueOf(totCnt));
-//		context.setData("totAmt", new BigDecimal(totAmt));
+		// String totCnt = context.getData("totCnt").toString();
+		// String totAmt = context.getData("totAmt").toString();
+		// context.setData("totCnt", Integer.valueOf(totCnt));
+		// context.setData("totAmt", new BigDecimal(totAmt));
 
-		
 		// 提交
 		bbipPublicService.synExecute("eups.batchPaySubmitDataProcess", context);
-		
-		String rspMsg=context.getData("rspMsg");
-		if(StringUtils.isEmpty(rspMsg)){
+
+		String rspMsg = context.getData("rspMsg");
+		if (StringUtils.isEmpty(rspMsg)) {
 			context.setData("rspMsg", "交易成功");
 		}
-		
-		//执行到此，表示批扣准备完成，返回第三方00表示22报文成功
+
+		// 执行到此，表示批扣准备完成，返回第三方00表示22报文成功
 		context.setData("responseCodeTHD", "00");
 		context.setData("thdRspCde", "00");
 		context.setData("rspMsg", "交易成功");
@@ -223,15 +243,18 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 	 * @throws CoreException
 	 * @throws CoreRuntimeException
 	 */
-	private Map<String, Object> pareseFileByPath(String filePath, String fileName, String fileId)
-			throws CoreException, CoreRuntimeException
-	{
+	private Map<String, Object> pareseFileByPath(String filePath,
+			String fileName, String fileId) throws CoreException,
+			CoreRuntimeException {
 		Resource resource;
 		Map map = new HashMap();
-		logger.info("this is path:" + TransferUtils.resolveFilePath(filePath, fileName));
+		logger.info("this is path:"
+				+ TransferUtils.resolveFilePath(filePath, fileName));
 		try {
-			resource = new FileSystemResource(TransferUtils.resolveFilePath(filePath, fileName));
-			map = (Map) ((Marshaller) get(Marshaller.class)).unmarshal(fileId, resource, Map.class);
+			resource = new FileSystemResource(TransferUtils.resolveFilePath(
+					filePath, fileName));
+			map = (Map) ((Marshaller) get(Marshaller.class)).unmarshal(fileId,
+					resource, Map.class);
 		} catch (JumpException e) {
 			logger.error("BBIP0004EU0015");
 			throw new CoreException("BBIP0004EU0015");
@@ -266,5 +289,4 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements BatchAcpSer
 	//
 	// }
 
-	
 }
