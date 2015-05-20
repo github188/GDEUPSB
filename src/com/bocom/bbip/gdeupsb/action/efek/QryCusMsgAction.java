@@ -83,7 +83,7 @@ public class QryCusMsgAction extends BaseAction{
 			context.setData(GDParamKeys.NET_NAME, GDConstants.NET_NAME);//网点名称
 			context.setData(GDParamKeys.SECRETKEY_INDEX, GDConstants.SECRETKEY_INDEX);//密钥索引
 			context.setData(GDParamKeys.SECRETKEY_INIT, GDConstants.SECRETKEY_INIT);//密钥初始向量
-			context.setData(GDParamKeys.TRADE_RECEIVE, GDConstants.TRADE_RECEIVE);//交易接收方
+			context.setData(GDParamKeys.TRADE_RECEIVE, "030000");//交易接收方
 			context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 			context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
 			context.setData("PKGCNT", "000001");	
