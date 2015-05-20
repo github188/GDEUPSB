@@ -154,7 +154,7 @@ public class CusAgentServiceAction extends BaseAction{
 				context.setData(ParamKeys.AGENT_COLLECT_AGREEMENT, list);
 				//第三方如果空 设定一个值判断返回报文
 				if(context.getData(ParamKeys.THD_SQN)==null){
-						constantOfSoapUI(context);
+						constantOfSoapUI(context,comNo);
 						context.setData(GDParamKeys.SVRCOD, "30");
 				}
 				context.setData("agtSrvCusPnm", context.getData("settleAccountsName"));
@@ -193,7 +193,7 @@ public class CusAgentServiceAction extends BaseAction{
 	    /**
 		 *报文信息 
 		*/
-		public void constantOfSoapUI(Context context){
+		public void constantOfSoapUI(Context context,String comNo){
 				//报文头常量
 			context.setData(GDParamKeys.TREATY_VERSION, GDConstants.TREATY_VERSION);//协议版本
 			context.setData(GDParamKeys.TRADE_PERSON_IDENTIFY, GDConstants.TRADE_PERSON_IDENTIFY);//交易人标识
@@ -210,7 +210,16 @@ public class CusAgentServiceAction extends BaseAction{
 				context.setData(GDParamKeys.NET_NAME, GDConstants.NET_NAME);//网点名称
 				context.setData(GDParamKeys.SECRETKEY_INDEX, GDConstants.SECRETKEY_INDEX);//密钥索引
 				context.setData(GDParamKeys.SECRETKEY_INIT, GDConstants.SECRETKEY_INIT);//密钥初始向量
-				context.setData(GDParamKeys.TRADE_RECEIVE, GDConstants.TRADE_RECEIVE);//交易接收方
+				if(context.getData(GDParamKeys.TRADE_RECEIVE) == null){
+					if(comNo.length()>4){
+							comNo=comNo.substring(0,4)+"00";
+					}else{
+						while(comNo.length()<6){
+							comNo=comNo+"0";
+						}
+					}
+					context.setData(GDParamKeys.TRADE_RECEIVE, comNo);//交易接收方
+				}
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
 				context.setData("PKGCNT", "000001");
@@ -344,7 +353,7 @@ public class CusAgentServiceAction extends BaseAction{
 		 * 外发第三方
 		 */
 		public void callThd(Context context) throws CoreException{
-			constantOfSoapUI(context);
+			constantOfSoapUI(context,(String)context.getData("comNos"));
 			Date txnDte=(Date)context.getData(ParamKeys.TXN_DTE);
 			Date txnTme=DateUtils.parse(context.getData("txnTme").toString());
 			
