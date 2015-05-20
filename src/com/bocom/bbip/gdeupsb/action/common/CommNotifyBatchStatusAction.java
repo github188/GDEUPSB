@@ -17,8 +17,6 @@ import com.bocom.jump.bp.core.CoreRuntimeException;
 
 public class CommNotifyBatchStatusAction extends BaseAction{
 		@Autowired
-		EupsBatchConsoleInfoRepository eupsBatchConsoleInfoRepository;
-		@Autowired
 		GDEupsBatchConsoleInfoRepository gdEupsBatchConsoleInfoRepository;
 		@Autowired
 		BBIPPublicService bbipPublicService;
@@ -28,11 +26,11 @@ public class CommNotifyBatchStatusAction extends BaseAction{
 				log.info("==============Start  CommNotifyBatchStatusAction");
 				String batNo=context.getData("batNo").toString().trim();
 				//获取总行批次信息
-				EupsBatchConsoleInfo eupsBatchConsoleInfo=eupsBatchConsoleInfoRepository.findOne(batNo);
+				EupsBatchConsoleInfo eupsBatchConsoleInfo=get(EupsBatchConsoleInfoRepository.class).findOne(batNo);
 				String batNos=eupsBatchConsoleInfo.getRsvFld1();
 				eupsBatchConsoleInfo.setPayCnt(null);
 				//更改总行控制 使其可以手动调用反盘文件
-				eupsBatchConsoleInfoRepository.update(eupsBatchConsoleInfo);
+				get(EupsBatchConsoleInfoRepository.class).update(eupsBatchConsoleInfo);
 				log.info("==============update  eupsBatchConsoleInfo  set  payCnt = null ; batNo = "+batNo);
 				log.info("============================"+eupsBatchConsoleInfo);
 				//异步调用 反盘文件
