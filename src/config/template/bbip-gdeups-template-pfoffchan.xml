@@ -387,6 +387,12 @@
 		<!-- 发代收付 -->
 		<step id="callACPS" useCtxState="true"  transactional="txTemplate">
 			<action id="callACPSAction" place-holder="true" />
+			<next on="BP_STATE_NORMAL" to="preCallThd" />
+			<end on="*"/>
+		</step>
+		<!-- 发第三方前预处理-->
+		<step id="preCallThd" useCtxState="true"  transactional="txTemplate">
+			<action id="preCallThdAction" place-holder="true" />
 			<next on="BP_STATE_NORMAL" to="callThd" />
 			<end on="*"/>
 		</step>
