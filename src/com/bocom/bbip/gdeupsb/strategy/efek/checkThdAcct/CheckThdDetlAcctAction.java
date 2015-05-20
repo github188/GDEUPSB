@@ -97,7 +97,7 @@ public class CheckThdDetlAcctAction implements Executable {
 			}
 			List<Map<String, Object>>  detailList=new ArrayList<Map<String,Object>>();
 			for(Map<String, Object> maps:mapList){
-					int i=0;
+					int i=1;
 					//流水
 					String sqn =bbipPublicService.getBBIPSequence();
 					context.setData(ParamKeys.SEQUENCE, sqn);
