@@ -136,7 +136,7 @@ public class CheckBkFileToThirdStrategyAction extends BaseAction
 		}
 
 		// 拼接文件名 ssCNJT20141231.txt
-		String filNam = "ssCNJT" + fileDte + ".txt";
+		String filNam = "sscnjt" + fileDte + ".txt";
 		logger.info("========================fileName【" + filNam + "】");
 
 		// 设置生成文件的名字
