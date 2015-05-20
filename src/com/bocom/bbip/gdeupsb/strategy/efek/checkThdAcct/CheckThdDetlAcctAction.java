@@ -1,6 +1,7 @@
 package com.bocom.bbip.gdeupsb.strategy.efek.checkThdAcct;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -37,6 +38,7 @@ import com.bocom.bbip.thd.org.apache.commons.collections.CollectionUtils;
 import com.bocom.bbip.thd.org.apache.commons.lang.StringUtils;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.FileUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -142,7 +144,9 @@ public class CheckThdDetlAcctAction implements Executable {
 						
 							operateFileAction.createCheckFile(eupsThdFtpConfig, "elecCheckFile", fileName, map);
 							 logger.info("=============对账文件生成成功==========");
-							 
+							String path=eupsThdFtpConfig.getLocDir()+fileName;
+							passSpace(path);
+								
 							//向指定FTP路径放文件  上传
 				            operateFTPAction.putCheckFile(eupsThdFtpConfig);
 				            
@@ -398,5 +402,17 @@ public class CheckThdDetlAcctAction implements Executable {
         logger.info("================End Get  FileMD5");
         return proc;
     }
-	
+    //去最后一行字符
+    public void passSpace(String path){
+    	File file = new File(path);
+		try {
+			byte[] bys = FileUtils.readFileToByteArray(file);
+			byte[] newbys = new byte[bys.length-1];
+			System.arraycopy(bys, 0, newbys, 0, newbys.length);
+			FileUtils.writeByteArrayToFile(file, newbys);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }
 }
