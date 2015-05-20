@@ -165,14 +165,14 @@ public class CheckThdDetlAcctAction implements Executable {
 					context.setData(GDParamKeys.CHECKDATE, DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
 					context.setData(GDParamKeys.CHECKTIME, DateUtils.formatAsHHmmss(txnTme));
 					context.setData(GDParamKeys.SVRCOD, "51");
+					String number=i+"";
+					while(number.length()<6){
+						number="0"+number;
+					}
+					context.setData("number", number);
+					context.setData("detailList", detailList);
+					callThd(context);
 			}
-			String number=i+"";
-			while(number.length()<6){
-				number="0"+number;
-			}
-			context.setData("number", number);
-			context.setData("detailList", detailList);
-			callThd(context);
 			logger.info("====================End   CheckThdDetlAcctAction");
 	}
 	/**
