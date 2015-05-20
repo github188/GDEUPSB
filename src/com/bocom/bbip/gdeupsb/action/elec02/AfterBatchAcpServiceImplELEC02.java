@@ -81,9 +81,9 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		
 		// 由于本地协议原因，代收付文件中的总笔数不一定为真正笔数，回盘处理中，总笔数=RsvFld3， 总金额=RsvFld2，失败笔数=RsvFld3-代收付成功笔数，失败金额=RsvFld2-代收付成功金额
 		int sucCntAfterAcp = eupsBatchConSoleInfo.getSucTotCnt();
-		int failCntAfterAcp = Integer.parseInt(gdEupsBatchConSoleInfo.getRsvFld3()) - sucCntAfterAcp;
+		int failCntAfterAcp = Integer.parseInt(gdEupsBatchConSoleInfo.getRsvFld3().toString().trim()) - sucCntAfterAcp;
 		BigDecimal sucAmtAfterAcp = eupsBatchConSoleInfo.getSucTotAmt();
-		BigDecimal failAmtAfterAcp = new BigDecimal(gdEupsBatchConSoleInfo.getRsvFld2()).subtract(sucAmtAfterAcp);
+		BigDecimal failAmtAfterAcp = new BigDecimal(gdEupsBatchConSoleInfo.getRsvFld2().toString().trim()).subtract(sucAmtAfterAcp);
 		
 		gdEupsBatchConSoleInfo.setSucTotAmt(sucAmtAfterAcp);
 		gdEupsBatchConSoleInfo.setSucTotCnt(sucCntAfterAcp);
