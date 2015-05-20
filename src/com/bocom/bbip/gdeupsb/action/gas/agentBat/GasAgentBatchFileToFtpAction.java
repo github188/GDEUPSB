@@ -86,8 +86,8 @@ public class GasAgentBatchFileToFtpAction extends BaseAction {
 
 		// 文件名
 		String fileNameDte = fileDte.replace("-", "");
-		String hdFileName = "hdCNJT" + fileNameDte + ".txt";
-		String rxyFileName = "rxyCNJT" + fileNameDte + ".txt";
+		String hdFileName = "hdcnjt" + fileNameDte + ".txt";
+		String rxyFileName = "rxycnjt" + fileNameDte + ".txt";
 		logger.info("================file name:[hdFileName:" + hdFileName
 				+ "][rxyFileName:" + rxyFileName + "]");
 		/*
