@@ -106,10 +106,10 @@ public class BatchAcpServiceImplZHAG00 extends BaseAction implements BatchAcpSer
 		String txnDte=DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd+"      ");
         for(GDEupsZhAGBatchTemp tmp:list){
         	String rsvFld1=tmp.getRsvFld1();
-        	if(!comNo.equals("4440000166")){
+        	if(comNo.equals("4440000166")){
 		        	rsvFld1=txnDte+rsvFld1;
-		        	tmp.setRsvFld1(rsvFld1);
         	}
+        	tmp.setRsvFld1(rsvFld1);
         	tmp.setSqn(bbipPublicService.getBBIPSequence().substring(4));
         	tmp.setBatNo((String)context.getData(ParamKeys.BAT_NO));
         	tmp.setRsvFld4("0");
