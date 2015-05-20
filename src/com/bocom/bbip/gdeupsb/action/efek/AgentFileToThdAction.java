@@ -1,6 +1,7 @@
 package com.bocom.bbip.gdeupsb.action.efek;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Date;
@@ -30,6 +31,7 @@ import com.bocom.bbip.gdeupsb.entity.GDEupsCusAgentJournal;
 import com.bocom.bbip.gdeupsb.repository.GDEupsCusAgentJournalRepository;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.FileUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -117,6 +119,10 @@ public class AgentFileToThdAction extends BaseAction{
 						EupsThdFtpConfig eupsThdFtpConfig=eupsThdFtpConfigRepository.findOne("efekAgent");
 						eupsThdFtpConfig.setLocFleNme(locName);
 						operateFileAction.createCheckFile(eupsThdFtpConfig, "efekAgent", locName, resultMap);	
+						
+						String path=eupsThdFtpConfig.getLocDir()+locName;
+						passSpace(path);
+						
 						eupsThdFtpConfig.setFtpDir("0"); 
 						eupsThdFtpConfig.setRmtFleNme(locName);
 						operateFTPAction.putCheckFile(eupsThdFtpConfig);
@@ -245,5 +251,18 @@ public class AgentFileToThdAction extends BaseAction{
 		        context.setData("fleMD5", rsvFld3);
 		        log.info("================End Get  FileMD5");
 		        return proc;
+		    }
+		    //去最后一行字符
+		    public void passSpace(String path){
+		    	File file = new File(path);
+				try {
+					byte[] bys = FileUtils.readFileToByteArray(file);
+					byte[] newbys = new byte[bys.length-1];
+					System.arraycopy(bys, 0, newbys, 0, newbys.length);
+					FileUtils.writeByteArrayToFile(file, newbys);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		    }
 }
