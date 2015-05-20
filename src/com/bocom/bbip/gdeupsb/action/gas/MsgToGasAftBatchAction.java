@@ -27,7 +27,6 @@ import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
 import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
 import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
-import com.bocom.bbip.gdeupsb.action.common.OperateFTPActionExt;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
@@ -103,8 +102,8 @@ public class MsgToGasAftBatchAction extends BaseAction implements
 			logger.info("~~~~~~~~~~~Error  Message", e);
 		}
 
-//		operateFTPAction.putCheckFile(gasFtpCfg);
-		get(OperateFTPActionExt.class).putCheckFile(gasFtpCfg);
+		operateFTPAction.putCheckFile(gasFtpCfg);
+//		get(OperateFTPActionExt.class).putCheckFile(gasFtpCfg);
 
 		//返盘不用通知第三方，次日7时前传输文件到对方FTP即可
 //		callThd(context);
