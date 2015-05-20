@@ -220,14 +220,17 @@ public class CheckBkEleGzFileToThirdAction extends  BaseAction {
 					nkTmeS = nkTmeS.substring(11).replace(":", "");
 					jfDMap.put("BKTIM", nkTmeS);
 				}
-				// 银行交易流水号BKLOG
 				// 电费月份处理
-				String rmkTmp = (String) jfDMap.get("RMKTMP");
-				if (StringUtils.isNotEmpty(rmkTmp)) {
-					rmkTmp = rmkTmp.substring(23, 31);
-					jfDMap.put("RMKTMP", rmkTmp);
+				String lchkTm = (String) jfDMap.get("LCHKTM");
+				if(null!=lchkTm){
+					lchkTm=lchkTm.trim();
+					while(lchkTm.length()<8){
+						lchkTm=lchkTm+"99";
+					}
 				}
-
+				
+				jfDMap.put("RMKTMP", lchkTm);
+				
 				// 第三方交易日期，时间处理
 				Date thdTme = (Date) jfDMap.get("DLTIM");
 				if (null != thdTme) {
@@ -278,7 +281,7 @@ public class CheckBkEleGzFileToThirdAction extends  BaseAction {
 		// ftpput划扣文件
 		eupsThdFtpConfig.setRmtFleNme(fileNameDk);
 		eupsThdFtpConfig.setLocFleNme(fileNameDk);
-		operateFTPAction.putCheckFile(eupsThdFtpConfig);
+//		operateFTPAction.putCheckFile(eupsThdFtpConfig);
 
 		eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("eleGzCheckJF");
 
