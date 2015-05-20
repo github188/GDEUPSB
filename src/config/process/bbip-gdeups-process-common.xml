@@ -76,6 +76,7 @@
 		<action id="preAction" ref="eups.commInitCusAgentAction" /> 检查协议，预计协议流水 -->
 	    <action id="callACPSAction"  ref="eups.commDelCusAgentAction"/>	<!-- 发代收付 -->
 	   	<!--<action id="callThdAction" ref="eups.delCusAgentThdStrategyAction"/>  发第三方 -->
+	   		<action id="preCallThdAction" class="com.bocom.bbip.gdeupsb.service.impl.watr00.PreCallThdAction"/> <!-- 发第三方前预处理 -->
 	   	<action id="callThdAction" class="com.bocom.bbip.gdeupsb.service.impl.watr00.CallThdAction"/> <!-- 发第三方 -->
 	    
 	   </actions>
