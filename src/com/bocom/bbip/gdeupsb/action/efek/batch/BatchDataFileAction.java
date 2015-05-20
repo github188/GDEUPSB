@@ -169,15 +169,15 @@ public class BatchDataFileAction extends BaseAction implements BatchAcpService{
 //				agtFileBatchDetail.setAGTSRVCUSNME(gdEupsEleTmp.getThdCusNme());
 				agtFileBatchDetail.setRMK2(gdEupsEleTmp.getSqn());
 				//本行标志
-				if(string.trim().equals("50")){
+//				if(string.trim().equals("50")){
 							agtFileBatchDetail.setOUROTHFLG("0");
-				}else{
-							if(get(AccountService.class).isOurBankCard(cusAc)){
-										agtFileBatchDetail.setOUROTHFLG("0");
-							}else{
-										agtFileBatchDetail.setOUROTHFLG("1");
-							}
-				}
+//				}else{
+//							if(get(AccountService.class).isOurBankCard(cusAc)){
+//										agtFileBatchDetail.setOUROTHFLG("0");
+//							}else{
+//										agtFileBatchDetail.setOUROTHFLG("1");
+//							}
+//				}
 //				agtFileBatchDetail.setOUROTHFLG("0");
 				agtFileBatchDetail.setOBKBK(gdEupsEleTmp.getBankNo());
 				
