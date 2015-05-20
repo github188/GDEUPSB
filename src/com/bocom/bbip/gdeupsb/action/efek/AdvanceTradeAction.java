@@ -15,6 +15,8 @@ import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.StringUtils;
+import com.bocom.euif.component.util.StringUtil;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -93,8 +95,8 @@ public class AdvanceTradeAction extends BaseAction {
 			context.setData(ParamKeys.BAK_FLD1, "支票代扣电费");
 		}
 			context.setData(GDParamKeys.SVRCOD, "13");
-			callThd(context);
 			
+			callThd(context);
 			context.setData(ParamKeys.RSV_FLD4, context.getData(GDParamKeys.BUS_TYPE));
 			context.setData(ParamKeys.RSV_FLD5, context.getData(GDParamKeys.PAY_TYPE));
 			context.setData(ParamKeys.CUS_NME, context.getData("CusNme"));
@@ -123,7 +125,17 @@ public class AdvanceTradeAction extends BaseAction {
 				context.setData(GDParamKeys.NET_NAME, GDConstants.NET_NAME);//网点名称
 				context.setData(GDParamKeys.SECRETKEY_INDEX, GDConstants.SECRETKEY_INDEX);//密钥索引
 				context.setData(GDParamKeys.SECRETKEY_INIT, GDConstants.SECRETKEY_INIT);//密钥初始向量
-				context.setData(GDParamKeys.TRADE_RECEIVE, GDConstants.TRADE_RECEIVE);//交易接收方
+				String comNos=context.getData("comNos");
+				if(StringUtils.isNotEmpty(comNos)){
+					if(comNos.length()>4){
+						comNos=comNos.substring(0,4)+"00";
+					}while(comNos.length()<6){
+						comNos=comNos+"0";
+					}
+				}else{
+					comNos="030000";
+				}
+				context.setData(GDParamKeys.TRADE_RECEIVE,comNos);//交易接收方
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
 				context.setData("PKGCNT", "000001");
