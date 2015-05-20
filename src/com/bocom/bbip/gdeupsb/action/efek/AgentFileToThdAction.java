@@ -134,7 +134,7 @@ public class AgentFileToThdAction extends BaseAction{
 						} catch (InterruptedException e) {
 							log.info("===========ErrMsg=",e);
 						}
-						callThd(context);
+						callThd(context,comNo);
 				}
 				log.info("==============End   AgentFileToThdAction");
 		}
@@ -143,7 +143,7 @@ public class AgentFileToThdAction extends BaseAction{
 		 *报文信息  外发第三方
 		 * @throws CoreException 
 		 */
-		public void callThd(Context context) throws CoreException{  
+		public void callThd(Context context,String comNo) throws CoreException{  
 			log.info("========Start QryCusMsgAction callThd");	
 			
 			context.setData(GDParamKeys.TREATY_VERSION, GDConstants.TREATY_VERSION);//协议版本
@@ -163,7 +163,18 @@ public class AgentFileToThdAction extends BaseAction{
 				context.setData(GDParamKeys.NET_NAME, GDConstants.NET_NAME);//网点名称
 				context.setData(GDParamKeys.SECRETKEY_INDEX, GDConstants.SECRETKEY_INDEX);//密钥索引
 				context.setData(GDParamKeys.SECRETKEY_INIT, GDConstants.SECRETKEY_INIT);//密钥初始向量
-				context.setData(GDParamKeys.TRADE_RECEIVE, GDConstants.TRADE_RECEIVE);//交易接收方
+				if(StringUtils.isNotEmpty(comNo)){
+					if(comNo.length()>4){
+						comNo=comNo.substring(0,4)+"00";
+					}else{
+						while(comNo.length()<6){
+							comNo=comNo+"0";
+						}
+					}
+				}else{
+					comNo="030000";
+				}
+				context.setData(GDParamKeys.TRADE_RECEIVE,comNo);//交易接收方
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址
 				context.setData("PKGCNT", "000001");	
