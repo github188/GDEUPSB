@@ -140,7 +140,7 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
     	gdEupsBatchConsoleInfoRepository.updateConsoleInfo(gdEupsBatchConsoleInfos);
 		try {
 			//生成文件
-			File file=new File("/home/bbipadm/data/GDEUPSB/batch/"+fileName);
+			File file=new File("/home/bbipadm/data/mftp/"+fileName);
 			if(!file.exists()){
 					file.createNewFile();
 			}
