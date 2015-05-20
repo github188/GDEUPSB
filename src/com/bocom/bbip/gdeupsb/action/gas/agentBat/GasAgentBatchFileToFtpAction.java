@@ -13,6 +13,7 @@ import org.springframework.util.CollectionUtils;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
+import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.ErrorCodes;
@@ -129,8 +130,11 @@ public class GasAgentBatchFileToFtpAction extends BaseAction {
 			throw new CoreException(ErrorCodes.EUPS_FILE_CREATE_FAIL);
 		}
 
-		get(OperateFTPActionExt.class).putCheckFile(ftpConfigA);
-		get(OperateFTPActionExt.class).putCheckFile(ftpConfigB);
+//		get(OperateFTPActionExt.class).putCheckFile(ftpConfigA);
+//		get(OperateFTPActionExt.class).putCheckFile(ftpConfigB);
+		
+		get(OperateFTPAction.class).putCheckFile(ftpConfigA);
+		get(OperateFTPAction.class).putCheckFile(ftpConfigB);
 		logger.info("hdCNJTyyyyMMdd.txt文件FTP放置成功！");
 
 		// ////////////////////////////////////////////////////////// 文件
