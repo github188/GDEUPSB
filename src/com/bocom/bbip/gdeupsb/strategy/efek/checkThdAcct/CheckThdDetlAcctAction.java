@@ -175,7 +175,7 @@ public class CheckThdDetlAcctAction implements Executable {
 					context.setData("number", number);
 					context.setData("detailList", detailList);
 					String	comNos  =maps.get("COM_NO").toString().substring(0,6);
-					callThd(context,comNos);
+					callThd(context,(comNos.substring(0, 4)+"00"));
 			}
 			logger.info("====================End   CheckThdDetlAcctAction");
 	}
