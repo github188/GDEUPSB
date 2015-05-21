@@ -86,11 +86,11 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 		context.setData(GDParamKeys.SVRCOD, "50");
 		
 		//对账日期
-		String chkDte=DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMdd);
+		String chkDte=DateUtils.format(txnDte,DateUtils.STYLE_yyyyMMdd);
 		
 		context.setData(ParamKeys.RCN_DATE, txnDte);
 		context.setData(GDParamKeys.CHECKDATE, chkDte);
-		context.setData(GDParamKeys.CHECKTIME, DateUtils.formatAsHHmmss(txnTme));
+		context.setData(GDParamKeys.CHECKTIME, "160000");
 		Map<String, Object> maps=new HashMap<String, Object>();
 		maps.put("txnDte", txnDte);
 		//得到记录

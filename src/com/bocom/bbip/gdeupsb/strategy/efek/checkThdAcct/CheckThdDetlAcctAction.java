@@ -174,8 +174,8 @@ public class CheckThdDetlAcctAction implements Executable {
 			            logger.info("File create error : " + e.getMessage());          
 			            throw new CoreException(e.getMessage());
 			        }  
-					context.setData(GDParamKeys.CHECKDATE, DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
-					context.setData(GDParamKeys.CHECKTIME, DateUtils.formatAsHHmmss(txnTme));
+					context.setData(GDParamKeys.CHECKDATE, txnDte);
+					context.setData(GDParamKeys.CHECKTIME, "160000");
 					context.setData(GDParamKeys.SVRCOD, "51");
 					String number=i+"";
 					while(number.length()<6){
@@ -225,7 +225,7 @@ public class CheckThdDetlAcctAction implements Executable {
         headerMap.put(GDParamKeys.PAY_TYPE, payType);
         headerMap.put(GDParamKeys.TOT_COUNT, acount);
         headerMap.put(GDParamKeys.ALL_MONEY, allMoney);
-        headerMap.put(GDParamKeys.CHECKDATE, DateUtils.format(bbipPublicService.getAcDate(),DateUtils.STYLE_yyyyMMdd));
+        headerMap.put(GDParamKeys.CHECKDATE,txnDte);
         headerMap.put(GDParamKeys.CHECKTIME , "160000");
 		
 		//查找对应数据
