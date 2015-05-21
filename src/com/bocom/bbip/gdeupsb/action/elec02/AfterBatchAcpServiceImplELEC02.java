@@ -25,7 +25,6 @@ import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.spi.service.batch.AfterBatchAcpService;
 import com.bocom.bbip.eups.spi.vo.AfterBatchAcpDomain;
 import com.bocom.bbip.gdeupsb.action.common.BatchFileCommon;
-import com.bocom.bbip.gdeupsb.action.common.FileFtpUtils;
 import com.bocom.bbip.gdeupsb.action.common.OperateFTPActionExt;
 import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
@@ -171,12 +170,12 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 				GDEupsBatchConsoleInfoRepository.class).findOne(rsvFld9);
 //		由于本地协议原因，代收付文件中的总笔数不一定为真正笔数，回盘处理中，总笔数=RsvFld3， 总金额=RsvFld2，失败笔数=总笔数-代收付成功笔数，失败金额=总金额-代收付成功金额
 //		已更新为上代收付后的成功笔数,失败笔数
-//		回盘中，金额单位为 分，成功失败金额需将元转化为分
 		int totCnt = Integer.parseInt(batchConsoleInfo.getRsvFld3().toString().trim());
 		int sucCnt = batchConsoleInfo.getSucTotCnt();
 		int failCnt = batchConsoleInfo.getFalTotCnt();
 
 		BigDecimal totAmt= new BigDecimal((String)batchConsoleInfo.getRsvFld2().trim());
+//		回盘中，金额单位为 分，成功失败金额需将元转化为分
 		BigDecimal sucAmt = batchConsoleInfo.getSucTotAmt().multiply(new BigDecimal(100));
 		BigDecimal failAmt = batchConsoleInfo.getFalTotAmt().multiply(new BigDecimal(100));
 		
