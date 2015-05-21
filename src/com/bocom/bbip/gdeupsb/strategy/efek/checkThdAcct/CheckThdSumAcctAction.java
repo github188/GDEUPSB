@@ -182,6 +182,7 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 						                //第三方返回码
 						                CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
 						                String responseCode = rspCdeAction.getThdRspCde(rspMap, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
+						                responseCode="000000";
 						                logger.info("third response code="+responseCode);
 						                if(StringUtils.isEmpty(responseCode)){
 						                	responseCode=ErrorCodes.EUPS_THD_SYS_ERROR;
