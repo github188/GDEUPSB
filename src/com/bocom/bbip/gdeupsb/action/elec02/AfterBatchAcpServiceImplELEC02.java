@@ -273,7 +273,7 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		
 //		-------------------------------------------------------------------
 		//注释  at 2015-05-21 10:20
-		//郑表示不再需要该文件上传至汕头FTP
+		//郑晓玲表示不再需要该文件上传至汕头FTP
 //		String filPath = config.getLocDir();
 //		EupsThdFtpConfig eupsThdFtpConfigA =get(
 //				EupsThdFtpConfigRepository.class).findOne("sendFileToElec02");
