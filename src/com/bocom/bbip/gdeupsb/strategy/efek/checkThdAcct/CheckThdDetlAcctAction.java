@@ -97,8 +97,8 @@ public class CheckThdDetlAcctAction implements Executable {
 						logger.info("~~~~~~~~~~~统计明细记录总数出错");
 						throw new CoreException("统计明细记录总数出错");
 			}
-			List<Map<String, Object>>  detailList=new ArrayList<Map<String,Object>>();
 			for(Map<String, Object> maps:mapList){
+					List<Map<String, Object>>  detailList=new ArrayList<Map<String,Object>>();
 					int i=1;
 					//流水
 					String sqn =bbipPublicService.getBBIPSequence();
