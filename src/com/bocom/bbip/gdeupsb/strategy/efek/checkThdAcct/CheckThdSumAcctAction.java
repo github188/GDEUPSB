@@ -115,7 +115,7 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 				context.setData(GDParamKeys.PAY_TYPE, map.get("RSV_FLD5"));
 				context.setData("PKGCNT", "000001");
 			        //外发第三方 
-			       callThd(context,sqn,(map.get("COM_NO").toString().substring(0,4)));
+			       callThd(context,sqn,(map.get("COM_NO").toString().substring(0,4)+"00"));
 			       
 			        //修改时间格式
 			        String thdTxnDate=context.getData(GDParamKeys.TRADE_SEND_DATE).toString();
