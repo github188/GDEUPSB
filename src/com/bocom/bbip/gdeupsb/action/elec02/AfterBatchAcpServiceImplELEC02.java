@@ -272,26 +272,27 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 
 		
 //		-------------------------------------------------------------------
-		String filPath = config.getLocDir();
-		EupsThdFtpConfig eupsThdFtpConfigA =get(
-				EupsThdFtpConfigRepository.class).findOne("sendFileToElec02");
-		String stwatIpA = eupsThdFtpConfigA.getThdIpAdr();
-		String userNameA = eupsThdFtpConfigA.getOppNme();
-		String passwordA = eupsThdFtpConfigA.getOppUsrPsw();
-		String rmtDirA = eupsThdFtpConfigA.getRmtWay();
-		String[] shellArgA = {"GDEUPSBFtpPutFile.sh",stwatIpA,userNameA,passwordA,rmtDirA,backFlieName,filPath,"bin",backFlieName}; 
-		logger.info("ftp args="+shellArgA.toString());
-		//ftp放文件
-		try{
-			int result1 = FileFtpUtils.systemAndWait(shellArgA,true);
-			if(result1==0){
-				logger.info("put remote file success......");
-			}else{
-				throw new CoreException(ErrorCodes.EUPS_FAIL);
-			}
-		} catch (Exception e){
-			throw new CoreException(ErrorCodes.EUPS_FAIL);
-		}
+		//注释  at 2015-05-21 10:20
+		//郑表示不再需要该文件上传至汕头FTP
+//		String filPath = config.getLocDir();
+//		EupsThdFtpConfig eupsThdFtpConfigA =get(
+//				EupsThdFtpConfigRepository.class).findOne("sendFileToElec02");
+//		String stwatIpA = eupsThdFtpConfigA.getThdIpAdr();
+//		String userNameA = eupsThdFtpConfigA.getOppNme();
+//		String passwordA = eupsThdFtpConfigA.getOppUsrPsw();
+//		String rmtDirA = eupsThdFtpConfigA.getRmtWay();
+//		String[] shellArgA = {"GDEUPSBFtpPutFile.sh",stwatIpA,userNameA,passwordA,rmtDirA,backFlieName,filPath,"bin",backFlieName}; 
+//		logger.info("ftp args="+shellArgA.toString());
+//		try{
+//			int result1 = FileFtpUtils.systemAndWait(shellArgA,true);
+//			if(result1==0){
+//				logger.info("put remote file success......");
+//			}else{
+//				throw new CoreException(ErrorCodes.EUPS_FAIL);
+//			}
+//		} catch (Exception e){
+//			throw new CoreException(ErrorCodes.EUPS_FAIL);
+//		}
 
 		
 //		-----------------------------------------------------------------
