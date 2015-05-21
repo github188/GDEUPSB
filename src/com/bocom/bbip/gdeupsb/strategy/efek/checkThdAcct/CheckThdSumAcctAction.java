@@ -62,7 +62,6 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 		//流水日期时间
 		 Map<String,Object> inmap=context.getData("jopSchedulingData");
 	        if(null!=inmap){
-	        	String dptTyp= (String)inmap.get("txnDte");
 	            String clrDat= (String)inmap.get("txnDte");
 	            if (null != clrDat) {
 	                context.setData("txnDte",clrDat);
