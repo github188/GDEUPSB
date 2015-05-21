@@ -162,6 +162,11 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 		File watFile = new File(eupsThdFtpConfig.getLocDir()+"/"+fileName);
 		String fileSize = watFile.length()+"";
 		logger.info("filesize=="+fileSize);
+		
+		context.setData(ParamKeys.BK, service.getParam("GDEUPSB", "stBK"));
+		context.setData(ParamKeys.BR, service.getParam("GDEUPSB", "stWatBr"));
+		context.setData(ParamKeys.TELLER, service.getETeller(context.getData(ParamKeys.BK).toString()));
+		logger.info("#######context="+context);
 		context.setData("type", "Y004");
 		context.setData("accountdate", DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
 		
