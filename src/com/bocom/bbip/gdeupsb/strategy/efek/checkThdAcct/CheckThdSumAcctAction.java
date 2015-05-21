@@ -28,6 +28,7 @@ import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.repository.EupsStreamNoRepository;
 import com.bocom.bbip.thd.org.apache.commons.lang.StringUtils;
 import com.bocom.bbip.utils.BeanUtils;
+import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -59,7 +60,24 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
         context.setData("txnTlr", tlr);
         context.setData("chlTyp", "90");
 		//流水日期时间
-		Date txnDte=DateUtils.calDate(DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())),-1);
+		 Map<String,Object> inmap=context.getData("jopSchedulingData");
+	        if(null!=inmap){
+	        	String dptTyp= (String)inmap.get("txnDte");
+	            String clrDat= (String)inmap.get("txnDte");
+	            if (null != clrDat) {
+	                context.setData("txnDte",clrDat);
+	            } 
+	        }
+        Date txnDte=null;
+        if(context.getData("txnDte") == null){
+        	log.info("=============new date============");
+        	txnDte=DateUtils.calDate(DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())),-1);
+        	log.info("=============new date=============txnDte=["+txnDte+"]");
+        }else{
+        	log.info("=============get date=============");
+        	 txnDte=DateUtils.parse((String)context.getData("txnDte"));
+        	log.info("=============get date=============txnDte=["+txnDte+"]");
+        }
 		Date txnTme=DateUtils.parse(DateUtils.formatAsTranstime(new Date()));
 		context.setData(ParamKeys.TXN_DTE, txnDte);
 		context.setData(ParamKeys.TXN_TME, txnTme);
@@ -68,7 +86,7 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 		context.setData(GDParamKeys.SVRCOD, "50");
 		
 		//对账日期
-		String chkDte=DateUtils.format(txnDte,DateUtils.STYLE_yyyyMMdd);
+		String chkDte=DateUtils.format(new Date(),DateUtils.STYLE_yyyyMMdd);
 		
 		context.setData(ParamKeys.RCN_DATE, txnDte);
 		context.setData(GDParamKeys.CHECKDATE, chkDte);
@@ -99,7 +117,7 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 			        //外发第三方 
 			       callThd(context,sqn,(map.get("COM_NO").toString().substring(0,4)));
 			       
-			        //修改时间格式s
+			        //修改时间格式
 			        String thdTxnDate=context.getData(GDParamKeys.TRADE_SEND_DATE).toString();
 			        String thdTxnTime=context.getData(GDParamKeys.TRADE_SEND_TIME).toString();
 			        Date thdTxnDte = DateUtils.parse(thdTxnDate,DateUtils.STYLE_yyyyMMdd);
@@ -109,8 +127,19 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 			        
 			        context.setData("bakFld1", map.get("RSV_FLD4"));
 			        context.setData("bakFld2", map.get("RSV_FLD5"));
-				//把信息保存到第三方明细表中
-		        eupsThdTranCtlDetailRepository.insert(BeanUtils.toObject(context.getDataMap(), EupsThdTranCtlDetail.class));
+			        
+			        EupsThdTranCtlDetail eupsThdTranCtlDetail=new EupsThdTranCtlDetail();
+			        eupsThdTranCtlDetail.setBakFld1((String)map.get("RSV_FLD4"));
+			        eupsThdTranCtlDetail.setBakFld2((String)map.get("RSV_FLD5"));
+			        eupsThdTranCtlDetail.setComNo(map.get("COM_NO").toString());
+			        eupsThdTranCtlDetail.setEupsBusTyp("ELEC00");
+			        eupsThdTranCtlDetail.setTxnDte(txnDte);
+			        List<EupsThdTranCtlDetail>  eupsThdTranCtlDetailList=eupsThdTranCtlDetailRepository.find(eupsThdTranCtlDetail);
+			        if(CollectionUtils.isNotEmpty(eupsThdTranCtlDetailList)){
+			        	eupsThdTranCtlDetailRepository.delete(eupsThdTranCtlDetailList.get(0));
+			        }
+			        //把信息保存到第三方明细表中
+			        eupsThdTranCtlDetailRepository.insert(BeanUtils.toObject(context.getDataMap(), EupsThdTranCtlDetail.class));
 		}
 		logger.info("=========End  CheckThdSumAcctAction");
         return null;
