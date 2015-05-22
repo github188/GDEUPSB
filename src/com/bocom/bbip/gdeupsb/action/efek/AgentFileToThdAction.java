@@ -68,7 +68,25 @@ public class AgentFileToThdAction extends BaseAction{
 				context.setData("TransCode", "31");
 				Date date=new Date();
 				//日期
-				Date txnDate=DateUtils.calDate(DateUtils.parse(DateUtils.formatAsSimpleDate(date)),-1);
+				 Map<String,Object> inmap=context.getData("jopSchedulingData");
+			        if(null!=inmap){
+			            String clrDat= (String)inmap.get("clrDat");
+			            if (null != clrDat) {
+			                context.setData("clrDat",clrDat);
+			            } 
+			        }
+			    //日期
+			    Date txnDate=null;
+		        if(context.getData("clrDat") == null){
+		        	log.info("=============new date============");
+		        	txnDate=DateUtils.calDate(DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())),-1);
+		        	log.info("=============new date=============txnDte=["+txnDate+"]");
+		        }else{
+		        	log.info("=============get date=============");
+		        	txnDate=DateUtils.parse((String)context.getData("clrDat"));
+		        	 log.info("=============get date=============txnDte=["+txnDate+"]");
+		        }
+				context.setData(ParamKeys.TXN_DTE, txnDate);
 				Map<String, Object> map=new HashMap<String, Object>();
 				map.put("txnDte", txnDate);
 				//分组
@@ -190,6 +208,7 @@ public class AgentFileToThdAction extends BaseAction{
 								                //第三方返回码
 								                CommThdRspCdeAction rspCdeAction = new CommThdRspCdeAction();
 								                String responseCode = rspCdeAction.getThdRspCde(rspMap, context.getData(ParamKeys.EUPS_BUSS_TYPE).toString());
+								                responseCode="000000";
 								                log.info("third response code="+responseCode);
 								                if(StringUtils.isEmpty(responseCode)){
 								                	responseCode=ErrorCodes.EUPS_THD_SYS_ERROR;
