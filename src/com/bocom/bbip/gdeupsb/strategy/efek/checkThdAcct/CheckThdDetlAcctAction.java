@@ -78,20 +78,20 @@ public class CheckThdDetlAcctAction implements Executable {
 	        context.setData("chlTyp", "90");
 			 Map<String,Object> inmap=context.getData("jopSchedulingData");
 		        if(null!=inmap){
-		            String clrDat= (String)inmap.get("txnDte");
+		            String clrDat= (String)inmap.get("clrDat");
 		            if (null != clrDat) {
-		                context.setData("txnDte",clrDat);
+		                context.setData("clrDat",clrDat);
 		            } 
 		        }
 		    //日期
 		    Date txnDte=null;
-	        if(context.getData("txnDte") == null){
+	        if(context.getData("clrDat") == null){
 	        	logger.info("=============new date============");
 	        	txnDte=DateUtils.calDate(DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())),-1);
 	        	logger.info("=============new date=============txnDte=["+txnDte+"]");
 	        }else{
 	        	logger.info("=============get date=============");
-	        	 txnDte=DateUtils.parse((String)context.getData("txnDte"));
+	        	txnDte=DateUtils.parse((String)context.getData("clrDat"));
 	        	 logger.info("=============get date=============txnDte=["+txnDte+"]");
 	        }
 			context.setData(ParamKeys.TXN_DTE, txnDte);

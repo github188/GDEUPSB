@@ -62,21 +62,22 @@ public class CheckThdSumAcctAction extends BaseAction implements  CheckThdSumAcc
 		//流水日期时间
 		 Map<String,Object> inmap=context.getData("jopSchedulingData");
 	        if(null!=inmap){
-	            String clrDat= (String)inmap.get("txnDte");
+	            String clrDat= (String)inmap.get("clrDat");
 	            if (null != clrDat) {
-	                context.setData("txnDte",clrDat);
+	                context.setData("clrDat",clrDat);
 	            } 
 	        }
-        Date txnDte=null;
-        if(context.getData("txnDte") == null){
-        	log.info("=============new date============");
-        	txnDte=DateUtils.calDate(DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())),-1);
-        	log.info("=============new date=============txnDte=["+txnDte+"]");
-        }else{
-        	log.info("=============get date=============");
-        	 txnDte=DateUtils.parse((String)context.getData("txnDte"));
-        	log.info("=============get date=============txnDte=["+txnDte+"]");
-        }
+	    //日期
+	    Date txnDte=null;
+     if(context.getData("clrDat") == null){
+     	logger.info("=============new date============");
+     	txnDte=DateUtils.calDate(DateUtils.parse(DateUtils.formatAsSimpleDate(new Date())),-1);
+     	logger.info("=============new date=============txnDte=["+txnDte+"]");
+     }else{
+     	logger.info("=============get date=============");
+     	txnDte=DateUtils.parse((String)context.getData("clrDat"));
+     	 logger.info("=============get date=============txnDte=["+txnDte+"]");
+     }
 		Date txnTme=DateUtils.parse(DateUtils.formatAsTranstime(new Date()));
 		context.setData(ParamKeys.TXN_DTE, txnDte);
 		context.setData(ParamKeys.TXN_TME, txnTme);
