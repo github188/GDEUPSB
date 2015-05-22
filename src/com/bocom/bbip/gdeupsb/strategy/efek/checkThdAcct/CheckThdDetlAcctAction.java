@@ -111,8 +111,8 @@ public class CheckThdDetlAcctAction implements Executable {
 						context.setData(ParamKeys.MESSAGE_TYPE, "E");
 						context.setData(ParamKeys.RSP_CDE,"EFE999");
 						context.setData(ParamKeys.RSP_MSG, "统计明细记录总数出错");
-						logger.info("~~~~~~~~~~~统计明细记录总数出错");
-						throw new CoreException("统计明细记录总数出错");
+						logger.info("~~~~~~~~~~~统计明细记录总数出错，或当天没有该交易");
+						throw new CoreException("统计明细记录总数出错，或当天没有该交易");
 			}
 			for(Map<String, Object> maps:mapList){
 					List<Map<String, Object>>  detailList=new ArrayList<Map<String,Object>>();
