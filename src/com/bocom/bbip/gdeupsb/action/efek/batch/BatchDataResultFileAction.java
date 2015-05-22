@@ -170,7 +170,14 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 							gdEupsEleTmp.setRsvFld5(eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2).intValue()+"");
 						}else{
 							String errMsg=eupsBatchInfoDetail.getErrMsg();
-							String errSeeason=errMsg.substring(0,6);
+							String errSeeason=null;
+							if(StringUtils.isNotEmpty(errMsg)){
+								 	if(errMsg.length()>6){
+								 		errSeeason=eupsBatchInfoDetail.getErrMsg().substring(0,6);
+								 	}else{
+								 		errSeeason=errMsg;
+								 	}
+						 	}
 							if(errSeeason.equals("TPM050")){
 									gdEupsEleTmp.setPaymentResult("02");
 							}else if(errSeeason.equals("TPM055")){
