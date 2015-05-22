@@ -168,7 +168,7 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 						gdEupsEleTmp.setRsvFld4(eupsBatchInfoDetail.getErrMsg());
 						if(eupsBatchInfoDetail.getSts().equals("S")){
 							gdEupsEleTmp.setPaymentResult("00");
-							gdEupsEleTmp.setRsvFld5(eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2).intValue()+"");
+							gdEupsEleTmp.setRsvFld5(NumberUtils.yuanToCentString(eupsBatchInfoDetail.getTxnAmt()));
 						}else{
 							String errMsg=eupsBatchInfoDetail.getErrMsg();
 							String errSeeason=null;
@@ -209,13 +209,13 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 			headMap.put("rsvFld3", gdEupsBatchConsoleInfoUpdate.getRsvFld3());
 			headMap.put("rsvFld4", gdEupsBatchConsoleInfoUpdate.getRsvFld4());
 			headMap.put("totCnt", gdEupsBatchConsoleInfoUpdate.getTotCnt());
-			headMap.put("totAmt",gdEupsBatchConsoleInfoUpdate.getTotAmt().scaleByPowerOfTen(2).intValue());			
+			headMap.put("totAmt",NumberUtils.yuanToCentString(gdEupsBatchConsoleInfoUpdate.getTotAmt()));			
 			headMap.put("sucTotCnt", gdEupsBatchConsoleInfoUpdate.getSucTotCnt());
 			
-			headMap.put("sucTotAmt", gdEupsBatchConsoleInfoUpdate.getSucTotAmt().scaleByPowerOfTen(2).intValue());
+			headMap.put("sucTotAmt", NumberUtils.yuanToCentString(gdEupsBatchConsoleInfoUpdate.getSucTotAmt()));
 			headMap.put("falTotCnt", gdEupsBatchConsoleInfoUpdate.getFalTotCnt());
 			
-			headMap.put("falTotAmt", gdEupsBatchConsoleInfoUpdate.getFalTotAmt().scaleByPowerOfTen(2).intValue());
+			headMap.put("falTotAmt", NumberUtils.yuanToCentString(gdEupsBatchConsoleInfoUpdate.getFalTotAmt()));
 			headMap.put("txnTlr", gdEupsBatchConsoleInfoUpdate.getTxnTlr());
 			Map<String, Object> resultMap=new HashMap<String, Object>(); 
 			resultMap.put(ParamKeys.EUPS_FILE_HEADER, headMap);
