@@ -44,6 +44,7 @@ import com.bocom.bbip.service.Result;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.FileUtils;
+import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -273,11 +274,11 @@ public class BatchDataResultFileAction extends BaseAction implements AfterBatchA
 		       context.setData("fileNme",fileName);
 		       context.setData("fileType","02");
 		       context.setData("totCnt" ,gdeupsBatchConsoleInfo.getTotCnt());
-		       context.setData("totAmt" ,gdeupsBatchConsoleInfo.getTotAmt().scaleByPowerOfTen(2).intValue());
+		       context.setData("totAmt" ,NumberUtils.yuanToCentString(gdeupsBatchConsoleInfo.getTotAmt()));
 		       context.setData("sucTotCnt",gdeupsBatchConsoleInfo.getSucTotCnt());
-		       context.setData("sucTotAmt",gdeupsBatchConsoleInfo.getSucTotAmt().scaleByPowerOfTen(2).intValue());
+		       context.setData("sucTotAmt",NumberUtils.yuanToCentString(gdeupsBatchConsoleInfo.getSucTotAmt()));
 		       context.setData("falTotCnt",gdeupsBatchConsoleInfo.getFalTotCnt());
-		       context.setData("falTotAmt",gdeupsBatchConsoleInfo.getFalTotAmt().scaleByPowerOfTen(2).intValue());
+		       context.setData("falTotAmt",NumberUtils.yuanToCentString(gdeupsBatchConsoleInfo.getFalTotAmt()));
 		       
 					try{
 						Map<String, Object> rspMap = callThdTradeManager.trade(context);
