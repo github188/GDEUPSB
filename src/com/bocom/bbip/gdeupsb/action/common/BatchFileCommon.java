@@ -208,7 +208,7 @@ public class BatchFileCommon extends BaseAction {
 			}
 			logger.info("===============生成代收付文件");
 		}catch(Exception e){
-			logger.info("================文件错误，请联系系统管理员");
+			logger.info("==============请检查代收付目录["+config.getLocDir()+"],是否存在该文件["+fleNme+"]");
 			throw new CoreException("文件错误或其他异常，请联系系统管理员;",e);
 		}
 		
