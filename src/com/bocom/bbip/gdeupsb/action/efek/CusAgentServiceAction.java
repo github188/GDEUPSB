@@ -417,19 +417,22 @@ public class CusAgentServiceAction extends BaseAction{
 			if(null != cusAc){
 				cusAc=cusAc.trim();
 			}
-			if("0".equals((String)context.getData("oprTyp")) || "1".equals((String)context.getData("oprTyp"))){
-				cusAc=context.getData("newCusAc").toString().trim();
-				CusActInfResult cusactinfresult = new CusActInfResult();
-				try {
-					cusactinfresult = get(AccountService.class).getAcInf(CommonRequest.build(context), cusAc);
-				} catch (CoreException e) {
-					logger.info("查询账号状态失败", e);
+			String cusTyp=(String)context.getData("cusTyp");
+			if("0".equals(cusTyp)){ //对私 验密 
+				if("0".equals((String)context.getData("oprTyp")) || "1".equals((String)context.getData("oprTyp"))){
+					cusAc=context.getData("newCusAc").toString().trim();
+					CusActInfResult cusactinfresult = new CusActInfResult();
+					try {
+						cusactinfresult = get(AccountService.class).getAcInf(CommonRequest.build(context), cusAc);
+					} catch (CoreException e) {
+						logger.info("查询账号状态失败", e);
+					}
+					if(!cusactinfresult.isSuccess()){
+						throw new CoreException("没有查询到该账户");
+					}
+					String newCusNme=cusactinfresult.getCusName();
+					context.setData("newCusName", newCusNme);
 				}
-				if(!cusactinfresult.isSuccess()){
-					throw new CoreException("没有查询到该账户");
-				}
-				String newCusNme=cusactinfresult.getCusName();
-				context.setData("newCusName", newCusNme);
 			}
 			String chl=(String)context.getData("chl");
 			if(null != chl){
