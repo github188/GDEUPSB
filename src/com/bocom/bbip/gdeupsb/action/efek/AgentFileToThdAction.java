@@ -91,9 +91,8 @@ public class AgentFileToThdAction extends BaseAction{
 				map.put("txnDte", txnDate);
 				//分组
 				List<Map<String, Object>> comNoList=gdEupsCusAgentJournalRepository.findAllGroupByComNo(map);
-				int i=0;
 				for(Map<String, Object> mapList:comNoList){
-						i++;
+						int i=1;
 						String comNo=mapList.get("COM_NO").toString().trim();
 //						String comNo="";
 //						if(comNos.length()>6){
