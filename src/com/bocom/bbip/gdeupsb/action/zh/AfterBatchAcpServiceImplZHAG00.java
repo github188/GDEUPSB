@@ -33,6 +33,7 @@ import com.bocom.bbip.gdeupsb.entity.GDEupsZhAGBatchTemp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsZHAGBatchTempRepository;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
+import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -64,7 +65,7 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
 	        	Map<String , Object > map=new HashMap<String, Object>();
 	        	String sqn=eupsBatchInfoDetail.getRmk1();
 	        	map.put("sqn", sqn);
-	        	String txnAmts=eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2).intValue()+"";
+	        	String txnAmts=NumberUtils.yuanToCentString(eupsBatchInfoDetail.getTxnAmt());
 	        	while(txnAmts.length()<12){
 	        			txnAmts="0"+txnAmts;
 	        	}
