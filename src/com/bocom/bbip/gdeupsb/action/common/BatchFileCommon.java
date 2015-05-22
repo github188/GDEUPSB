@@ -200,13 +200,18 @@ public class BatchFileCommon extends BaseAction {
 		config.setLocDir(dir);
 		
 		/** 产生代收付格式文件 */
-		if(context.getData(ParamKeys.EUPS_BUSS_TYPE).equals("ELEC00") || context.getData(ParamKeys.EUPS_BUSS_TYPE).equals("GZAG00") || context.getData(ParamKeys.EUPS_BUSS_TYPE).toString().equals("FSAG00")){
-			((OperateFileAction)get("opeFile")).createCheckFile(config, "agtFileBatchFmt", fleNme, fileMap);
-		}else{
-			((OperateFileAction)get("opeFile")).createCheckFile(config, "BatchFmt", fleNme, fileMap);
+		try{
+			if(context.getData(ParamKeys.EUPS_BUSS_TYPE).equals("ELEC00") || context.getData(ParamKeys.EUPS_BUSS_TYPE).equals("GZAG00") || context.getData(ParamKeys.EUPS_BUSS_TYPE).toString().equals("FSAG00")){
+				((OperateFileAction)get("opeFile")).createCheckFile(config, "agtFileBatchFmt", fleNme, fileMap);
+			}else{
+				((OperateFileAction)get("opeFile")).createCheckFile(config, "BatchFmt", fleNme, fileMap);
+			}
+			logger.info("===============生成代收付文件");
+		}catch(Exception e){
+			logger.info("================文件错误，请联系系统管理员");
+			throw new CoreException("文件错误或其他异常，请联系系统管理员;",e);
 		}
-		logger.info("===============生成代收付文件");
-
+		
 //		operateFTPAction.putCheckFile(config);
 		
 		logger.info("============放置代收付文件完成");
