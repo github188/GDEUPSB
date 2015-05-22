@@ -281,7 +281,7 @@ public class CheckBkEleGzFileToThirdAction extends  BaseAction {
 		// ftpput划扣文件
 		eupsThdFtpConfig.setRmtFleNme(fileNameDk);
 		eupsThdFtpConfig.setLocFleNme(fileNameDk);
-//		operateFTPAction.putCheckFile(eupsThdFtpConfig);
+		operateFTPAction.putCheckFile(eupsThdFtpConfig);
 
 		eupsThdFtpConfig = eupsThdFtpConfigRepository.findOne("eleGzCheckJF");
 
@@ -298,7 +298,7 @@ public class CheckBkEleGzFileToThirdAction extends  BaseAction {
 		log.info("putCheckFile config,rmt path=[" + eupsThdFtpConfig.getRmtWay() + "],rmt file name=[" + eupsThdFtpConfig.getRmtFleNme() + "]"
 				+ ",local path=[" + eupsThdFtpConfig.getLocDir() + "],local file name=[" + eupsThdFtpConfig.getLocFleNme() + "]");
 
-//				operateFTPAction.putCheckFile(eupsThdFtpConfig);
+				operateFTPAction.putCheckFile(eupsThdFtpConfig);
 	}
 	
 }
