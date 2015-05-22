@@ -65,17 +65,15 @@ public class WatBatchAcps extends BaseAction {
 		
 		
 		String acDate = DateUtils.format(date, DateUtils.STYLE_yyyyMMdd);//会计日期
-		EupsThdFtpConfig configB = get(EupsThdFtpConfigRepository.class)
-				.findOne("BatchFileFtpNo");
-		// Assert.isNotNull(configB,
-		// ErrorCodes.EUPS_FTP_INFO_NOTEXIST,"第三方配置信息不存在");
-		configB.setLocFleNme(fileName);
-		configB.setRmtFleNme(fileName);
-		// configB.setRmtWay(dir);
-		String dir1 = configB.getLocDir().toString();
-		dir1 = dir1 + "GDEUPSB/" + "wat/";
+//		EupsThdFtpConfig configB = get(EupsThdFtpConfigRepository.class)
+//				.findOne("BatchFileFtpNo");
+//		
+//		configB.setLocFleNme(fileName);
+//		configB.setRmtFleNme(fileName);
+//		String dir1 = configB.getLocDir().toString();
+//		dir1 = dir1 + "GDEUPSB/" + "wat/";
 
-		configB.setLocDir(dir1);
+//		configB.setLocDir(dir1);
 
 		Map<String, Object> fileMap = (Map<String, Object>) ContextUtils
 				.assertVariableNotNullAndGet(context, "agtFileMap",
@@ -86,10 +84,10 @@ public class WatBatchAcps extends BaseAction {
 				"第三方配置信息不存在");
 		config.setLocFleNme(fileName);
 		config.setRmtFleNme(fileName);
-		String dir = config.getRmtWay().toString();
+		String dir = config.getLocDir().toString();
 		dir = dir + "GDEUPSB/" + br + "/" + tlr + "/" + acDate + "/";
-		config.setRmtWay(dir);
-		config.setLocDir(dir1);
+//		config.setRmtWay(dir);
+		config.setLocDir(dir);
 		File file = new File(dir);
 		if (!file.exists()) {
 			file.mkdirs();
