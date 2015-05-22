@@ -39,6 +39,7 @@ import com.bocom.bbip.thd.org.apache.commons.lang.StringUtils;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.FileUtils;
+import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -183,7 +184,9 @@ public class CheckThdDetlAcctAction implements Executable {
 			            logger.info("File create error : " + e.getMessage());          
 			            throw new CoreException(e.getMessage());
 			        }  
-					context.setData(GDParamKeys.CHECKDATE, txnDte);
+					//对账日期
+			      	String chkDte=DateUtils.format(txnDte,DateUtils.STYLE_yyyyMMdd);
+					context.setData(GDParamKeys.CHECKDATE, chkDte);
 					context.setData(GDParamKeys.CHECKTIME, "160000");
 					context.setData(GDParamKeys.SVRCOD, "51");
 					String number=i+"";
@@ -234,7 +237,9 @@ public class CheckThdDetlAcctAction implements Executable {
         headerMap.put(GDParamKeys.PAY_TYPE, payType);
         headerMap.put(GDParamKeys.TOT_COUNT, acount);
         headerMap.put(GDParamKeys.ALL_MONEY, allMoney);
-        headerMap.put(GDParamKeys.CHECKDATE,txnDte);
+       //对账日期
+      	String chkDte=DateUtils.format(txnDte,DateUtils.STYLE_yyyyMMdd);
+        headerMap.put(GDParamKeys.CHECKDATE,chkDte);
         headerMap.put(GDParamKeys.CHECKTIME , "160000");
 		
 		//查找对应数据
@@ -261,8 +266,7 @@ public class CheckThdDetlAcctAction implements Executable {
 			checkDetailAcct.setCusAc(eupsStreamNo.getCusAc());
 			checkDetailAcct.setCusNme(eupsStreamNo.getCusNme());
 			checkDetailAcct.setTxnDte(DateUtils.format(eupsStreamNo.getTxnTme(),DateUtils.STYLE_FULL));
-			BigDecimal txnAmt=eupsStreamNo.getTxnAmt().scaleByPowerOfTen(2);
-			String txnAmts=txnAmt+"";
+			String txnAmts=NumberUtils.yuanToCentString(eupsStreamNo.getTxnAmt());
 			checkDetailAcct.setBankNo(eupsStreamNo.getThdObkCde());
 			checkDetailAcct.setTxnAmt(txnAmts);
 			String str="";
@@ -301,7 +305,8 @@ public class CheckThdDetlAcctAction implements Executable {
 			checkOneCode=checkOneCode+xh;
 			checkDetailAcct.setBakFld1(str);
 			checkDetailAcct.setRsvFld1(checkOneCode);
-			checkDetailAcct.setTxnTlr("301_030600");
+			String jyrbs="301_"+comNo.substring(0,4)+"00";
+			checkDetailAcct.setTxnTlr(jyrbs);
 			list.add(checkDetailAcct);
 		}
 		logger.info("~~~~~~~~~~~~list~~~~"+list);
