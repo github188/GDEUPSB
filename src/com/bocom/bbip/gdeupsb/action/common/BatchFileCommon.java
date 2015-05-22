@@ -47,7 +47,7 @@ import com.bocom.jump.bp.core.CoreException;
  */
 public class BatchFileCommon extends BaseAction {
 	@Autowired
-	OperateFTPAction operateFTPAction;
+//	OperateFTPAction operateFTPAction;
 	private static final Log logger = LogFactory.getLog(BatchFileCommon.class);
 	/**
 	 * 检查批量是否可以进行
@@ -195,6 +195,10 @@ public class BatchFileCommon extends BaseAction {
 		//设置文件名 文件路径
 		config.setLocFleNme(fleNme);
 		config.setRmtFleNme(fleNme);
+//		config.setFtpDir("0");
+		config.setRmtWay(dir);
+		config.setLocDir(dir);
+		
 		/** 产生代收付格式文件 */
 		if(context.getData(ParamKeys.EUPS_BUSS_TYPE).equals("ELEC00") || context.getData(ParamKeys.EUPS_BUSS_TYPE).equals("GZAG00") || context.getData(ParamKeys.EUPS_BUSS_TYPE).toString().equals("FSAG00")){
 			((OperateFileAction)get("opeFile")).createCheckFile(config, "agtFileBatchFmt", fleNme, fileMap);
@@ -202,9 +206,9 @@ public class BatchFileCommon extends BaseAction {
 			((OperateFileAction)get("opeFile")).createCheckFile(config, "BatchFmt", fleNme, fileMap);
 		}
 		logger.info("===============生成代收付文件");
-		config.setFtpDir("0");
-		config.setRmtWay(dir);
-		operateFTPAction.putCheckFile(config);
+
+//		operateFTPAction.putCheckFile(config);
+		
 		logger.info("============放置代收付文件完成");
 		//更改状态为待提交
 		GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=new GDEupsBatchConsoleInfo();
