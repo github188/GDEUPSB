@@ -33,6 +33,7 @@ import com.bocom.bbip.gdeupsb.entity.GdFbpeFileBatchTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GdFbpeFileBatchTmpRepository;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -182,11 +183,15 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 				 			errMsg="扣收成功";
 				 	}else{
 					 		String errSeeason=errMsg;
+					 		if(StringUtils.isNotEmpty(errMsg)){
 					 				if(errMsg.length()>6){
 					 						errSeeason=errMsg.substring(0,6);
 					 				}else{
 					 						errSeeason=errMsg;
 					 				}
+					 		}else{
+					 				errSeeason=errMsg;
+					 		}
 							 		if(errSeeason.equals("PDM252")){
 							 			sts="004";
 							 			errMsg="帐号已取消";
