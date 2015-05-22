@@ -62,7 +62,6 @@ public class PrePayFeeThdAction extends BaseAction implements Executable{
 	public void constantOfSoapUI(Context context){  
 		
 		context.setData(GDParamKeys.TREATY_VERSION, GDConstants.TREATY_VERSION);//协议版本
-		context.setData(GDParamKeys.TRADE_PERSON_IDENTIFY, GDConstants.TRADE_PERSON_IDENTIFY);//交易人标识
 		context.setData(GDParamKeys.BAG_TYPE, "0");//数据包类型
 		context.setData(GDParamKeys.TRADE_START,GDConstants.TRADE_START);//交易发起方
 		
@@ -87,6 +86,8 @@ public class PrePayFeeThdAction extends BaseAction implements Executable{
 				}else{
 					comNo="030000";
 				}
+				String jyrbs="301_"+comNo;
+				context.setData(GDParamKeys.TRADE_PERSON_IDENTIFY, jyrbs);//交易人标识
 				context.setData(GDParamKeys.TRADE_RECEIVE, comNo);//交易接收方
 				context.setData(GDParamKeys.TRADE_RECEIVE, GDConstants.TRADE_RECEIVE);//交易接收方
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
