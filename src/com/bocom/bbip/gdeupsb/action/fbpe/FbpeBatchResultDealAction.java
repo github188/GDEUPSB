@@ -33,6 +33,7 @@ import com.bocom.bbip.gdeupsb.entity.GdFbpeFileBatchTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.gdeupsb.repository.GdFbpeFileBatchTmpRepository;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -152,7 +153,7 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
 				 	String cusNo=eupsBatchInfoDetail.getAgtSrvCusId();
 				 	String cusAc=eupsBatchInfoDetail.getCusAc();
 				 	String cusNme=eupsBatchInfoDetail.getCusNme();
-				 	String txnAmt=eupsBatchInfoDetail.getTxnAmt().scaleByPowerOfTen(2).intValue()+"";
+				 	String txnAmt=NumberUtils.yuanToCentString(eupsBatchInfoDetail.getTxnAmt());
 				 	int length1=cusNo.length();
 				 	String cusNoLength=""+length1;
 				 	while(cusNoLength.length()<3){
