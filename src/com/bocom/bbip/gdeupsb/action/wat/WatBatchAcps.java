@@ -12,7 +12,7 @@ import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.comp.account.AccountService;
 import com.bocom.bbip.comp.btp.BTPService;
 import com.bocom.bbip.eups.action.BaseAction;
-import com.bocom.bbip.eups.action.common.OperateFTPAction;
+//import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
@@ -96,10 +96,12 @@ public class WatBatchAcps extends BaseAction {
 		}
 		logger.info("dir_filNam[" + dir + context.getVariable(ParamKeys.FLE_NME) + "]");
 		/** 产生代收付格式文件 */
-		((OperateFileAction) get("opeFile")).createCheckFile(configB,
-				GDConstants.BATCH_FILE_FORMAT, fileName, fileMap);
+//		((OperateFileAction) get("opeFile")).createCheckFile(configB,
+//				GDConstants.BATCH_FILE_FORMAT, fileName, fileMap);
+		//TODO:待测试！。。
+		((OperateFileAction) get("opeFile")).createCheckFile(config,	GDConstants.BATCH_FILE_FORMAT, fileName, fileMap);
 		/** 发送到指定路径 */
-		((OperateFTPAction) get("opeFTP")).putCheckFile(config);
+//		((OperateFTPAction) get("opeFTP")).putCheckFile(config);
 
 		context.setData(ParamKeys.TXN_MDE, "0");
 		context.setData(ParamKeys.TXN_CHL, "1");
