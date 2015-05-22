@@ -98,7 +98,7 @@ public class CheckThdDetlAcctAction implements Executable {
 			//一些常量
 			context.setData(GDParamKeys.TOTNUM, "1");
 			context.setData(ParamKeys.BANK_NO, "301");
-			context.setData(ParamKeys.TELLER_ID, "301_030600");  //收款人代码
+			
 			context.setData("allCheckNumber", "1");
 			//对账类型  明细
 			context.setData("checkTyp", "03");
@@ -140,7 +140,9 @@ public class CheckThdDetlAcctAction implements Executable {
 							//设置本地对账文件名称
 		//					对账文件名称
 							String	comNo  =maps.get("COM_NO").toString().substring(0,6);
-							comNo=comNo+"00";
+							String jyrbs="301_"+comNo.substring(0,4)+"00";
+							context.setData(ParamKeys.TELLER_ID, jyrbs);  //收款人代码
+							
 							String  busType=(String)maps.get("RSV_FLD4");
 							String  payType=(String)maps.get("RSV_FLD5");
 							String xuhao=i+"";
