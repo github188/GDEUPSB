@@ -33,6 +33,7 @@ import com.bocom.bbip.gdeupsb.entity.GDEupsZhAGBatchTemp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsZHAGBatchTempRepository;
 import com.bocom.bbip.utils.Assert;
 import com.bocom.bbip.utils.BeanUtils;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -73,8 +74,10 @@ public class AfterBatchAcpServiceImplZHAG00 extends BaseAction implements AfterB
 					 map.put("rsvFld2","Y");
 				 }else{
 					 	String errMsg=eupsBatchInfoDetail.getErrMsg();
-					 	if(errMsg.length()>6){
-					 		errMsg=eupsBatchInfoDetail.getErrMsg().substring(0,6);
+					 	if(StringUtils.isNotEmpty(errMsg)){
+							 	if(errMsg.length()>6){
+							 		errMsg=eupsBatchInfoDetail.getErrMsg().substring(0,6);
+							 	}
 					 	}
 					 	if(errMsg.equals("TPM050")){
 					 			map.put("rsvFld2","E");
