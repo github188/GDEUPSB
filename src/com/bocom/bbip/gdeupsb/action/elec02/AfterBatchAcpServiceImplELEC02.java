@@ -171,8 +171,8 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 //		由于本地协议原因，代收付文件中的总笔数不一定为真正笔数，回盘处理中，总笔数=RsvFld3， 总金额=RsvFld2，失败笔数=总笔数-代收付成功笔数，失败金额=总金额-代收付成功金额
 //		已更新为上代收付后的成功笔数,失败笔数
 		int totCnt = Integer.parseInt(batchConsoleInfo.getRsvFld3().toString().trim());
-		int sucCnt = batchConsoleInfo.getSucTotCnt();
-		int failCnt = batchConsoleInfo.getFalTotCnt();
+//		int sucCnt = batchConsoleInfo.getSucTotCnt();
+//		int failCnt = batchConsoleInfo.getFalTotCnt();
 
 		BigDecimal totAmt= new BigDecimal((String)batchConsoleInfo.getRsvFld2().trim());
 //		回盘中，金额单位为 分，成功失败金额需将元转化为分
@@ -180,8 +180,8 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 		BigDecimal failAmt = batchConsoleInfo.getFalTotAmt().multiply(new BigDecimal(100));
 		
 		batchConsoleInfo.setTotCnt(totCnt);
-		batchConsoleInfo.setSucTotCnt(sucCnt);
-		batchConsoleInfo.setFalTotCnt(failCnt);
+		batchConsoleInfo.setSucTotCnt(sucCntAfterAcp);
+		batchConsoleInfo.setFalTotCnt(failCntAfterAcp);
 		
 		batchConsoleInfo.setTotAmt(totAmt);
 		batchConsoleInfo.setSucTotAmt(sucAmt);
@@ -247,9 +247,9 @@ public class AfterBatchAcpServiceImplELEC02 extends BaseAction implements
 
 		// tlr截取后5位
 		context.setData("STO", tlr.substring(2));
-		context.setData("HAN", sucCnt);
+		context.setData("HAN", sucCntAfterAcp);
 		context.setData("HAM", sucAmt);
-		context.setData("LSN", failCnt);
+		context.setData("LSN", failCntAfterAcp);
 		context.setData("LSM", failAmt);
 		// 执行到此，表示批扣返盘完成，返回第三方00表示23报文成功
 		context.setData("responseCodeTHD", "00");
