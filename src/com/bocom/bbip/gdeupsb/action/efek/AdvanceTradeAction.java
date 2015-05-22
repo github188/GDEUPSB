@@ -16,7 +16,6 @@ import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
-import com.bocom.euif.component.util.StringUtil;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -112,7 +111,6 @@ public class AdvanceTradeAction extends BaseAction {
 	public void callThd(Context context){  
 		
 		context.setData(GDParamKeys.TREATY_VERSION, GDConstants.TREATY_VERSION);//协议版本
-		context.setData(GDParamKeys.TRADE_PERSON_IDENTIFY, GDConstants.TRADE_PERSON_IDENTIFY);//交易人标识
 		context.setData(GDParamKeys.BAG_TYPE, GDConstants.BAG_TYPE);//数据包类型
 		context.setData(GDParamKeys.TRADE_START,GDConstants.TRADE_START);//交易发起方
 		
@@ -137,6 +135,8 @@ public class AdvanceTradeAction extends BaseAction {
 				}else{
 					comNos="030000";
 				}
+				String jyrbs="301_"+comNos;
+				context.setData(GDParamKeys.TRADE_PERSON_IDENTIFY, jyrbs);//交易人标识
 				context.setData(GDParamKeys.TRADE_RECEIVE,comNos);//交易接收方
 				context.setData(GDParamKeys.TRADE_SOURCE_ADD, GDConstants.TRADE_SOURCE_ADD);//交易源地址
 				context.setData(GDParamKeys.TRADE_AIM_ADD, GDConstants.TRADE_AIM_ADD);//交易目标地址

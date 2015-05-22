@@ -47,7 +47,7 @@ public class QryCusPayRecordAction extends BaseAction{
 		public void callThd(Context context) throws CoreException{  
 			
 			context.setData(GDParamKeys.TREATY_VERSION, GDConstants.TREATY_VERSION);//协议版本
-			context.setData(GDParamKeys.TRADE_PERSON_IDENTIFY, GDConstants.TRADE_PERSON_IDENTIFY);//交易人标识
+			context.setData(GDParamKeys.TRADE_PERSON_IDENTIFY, "301_030000");//交易人标识
 			context.setData(GDParamKeys.BAG_TYPE, GDConstants.BAG_TYPE);//数据包类型
 			context.setData(GDParamKeys.TRADE_START,GDConstants.TRADE_START);//交易发起方
 			
