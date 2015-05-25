@@ -11,7 +11,7 @@
 			<fixString name="HAN" length="8" />  <!--已扣笔数-->
 			<fixString name="HAM" length="14"  referred="true"
 			expression='exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@deletePointAnd00(this.HAM)'/>  <!--已扣金额-->
-			<fixString name="LSN" length="8" alias="falTotCnt"/>  <!--失败笔数-->
+			<fixString name="LSN" length="8" />  <!--失败笔数, context已赋值LSN, 不需 alias="falTotCnt" -->
 			<fixString name="LSM" length="14"  referred="true"
 			expression='exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@deletePointAnd00(this.LSM)'/> <!--失败金额-->
 			<fixString name="FIF" length="2" default="02"/>  <!--文件类型-->
