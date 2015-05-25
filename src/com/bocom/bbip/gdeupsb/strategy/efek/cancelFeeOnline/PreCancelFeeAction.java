@@ -45,7 +45,7 @@ public class PreCancelFeeAction implements Executable{
 		}else if(txnSts.equals("R") ){
 				throw new CoreException("交易正在重发，不能经行抹账");
 		}
-		
+		context.setData("comNos", eupsTransJournal.getComNo().trim());
 		context.setData(GDParamKeys.SVRCOD, "12");
 		context.setData(ParamKeys.THD_CUS_NO, context.getData(GDParamKeys.PAY_NO));
 		BigDecimal bigDecimal=new BigDecimal(context.getData(ParamKeys.TXN_AMT).toString()).scaleByPowerOfTen(2);
@@ -81,7 +81,7 @@ public class PreCancelFeeAction implements Executable{
 				context.setData(GDParamKeys.NET_NAME, GDConstants.NET_NAME);//网点名称
 				context.setData(GDParamKeys.SECRETKEY_INDEX, GDConstants.SECRETKEY_INDEX);//密钥索引
 				context.setData(GDParamKeys.SECRETKEY_INIT, GDConstants.SECRETKEY_INIT);//密钥初始向量
-				String comNo=context.getData("comNo");
+				String comNo=context.getData("comNos");
 					if(StringUtils.isNotEmpty(comNo)){
 						if(comNo.length()>4){
 								comNo=comNo.substring(0,4)+"00";
