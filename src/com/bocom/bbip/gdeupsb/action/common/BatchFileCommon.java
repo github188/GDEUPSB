@@ -250,7 +250,7 @@ public class BatchFileCommon extends BaseAction {
 			gdEupsBatchConSoleInfo.setFalTotAmt(eupsBatchConSoleInfo.getFalTotAmt());
 			gdEupsBatchConSoleInfo.setFalTotCnt(eupsBatchConSoleInfo.getFalTotCnt());
 			gdEupsBatchConSoleInfo.setExeDte(eupsBatchConSoleInfo.getExeDte());
-			String fileName=gdEupsBatchConSoleInfo.getComNo()+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";
+			String fileName=gdEupsBatchConSoleInfo.getComNo()+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMddHHmmss)+".txt";
 			gdEupsBatchConSoleInfo.setRsvFld1(fileName);
 			gdEupsBatchConSoleInfo.setBatSts("S");
 			get(GDEupsBatchConsoleInfoRepository.class).updateConsoleInfo(gdEupsBatchConSoleInfo);
