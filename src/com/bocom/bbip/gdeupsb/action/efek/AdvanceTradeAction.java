@@ -91,7 +91,10 @@ public class AdvanceTradeAction extends BaseAction {
 
 			context.setData("GthFlg", "N");// <Set>GthFlg=N</Set>
 		}else if(ActFlg.equals("5")){
+			context.setData("acTyp", "02");
 			context.setData(ParamKeys.BAK_FLD1, "支票代扣电费");
+		}else{
+			throw new CoreException("没有该付款方式");
 		}
 			context.setData(GDParamKeys.SVRCOD, "13");
 			
