@@ -26,6 +26,10 @@ public class PrePayFeeAction implements Executable{
 						context.setData(ParamKeys.BAK_FLD1,"代扣电费");
 					}else if("2".equals(ActFlg) ||  "4".equals(ActFlg)){                  //卡  存折
 						context.setData(ParamKeys.TXN_CODE,"471140");
+					}else if("5".equals(ActFlg)){
+						context.setData("acTyp", "02");
+					}else{
+						throw new CoreException("没有该付款方式");
 					}
 					context.setData(ParamKeys.CUS_NME, context.getData("CusNme"));
 					context.setData(ParamKeys.BUS_TYP, "2");
