@@ -68,7 +68,7 @@ public class CheckBkFileToThirdStrategyAction extends BaseAction
 		List<Map<String, Object>> chkGasJnlList = gdEupsTransJournalRepository.findGasCheckRec(baseMap);
 		if (CollectionUtils.isEmpty(chkGasJnlList)) {
             logger.info("There are no records for select check trans journal ");
-            throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
+//            throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
         }
 		//		checkFileList.add(chkGasJnlList);
 		
