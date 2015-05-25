@@ -14,9 +14,11 @@ import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.action.common.OperateFTPAction;
 import com.bocom.bbip.eups.action.common.OperateFileAction;
+import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
+import com.bocom.bbip.gdeupsb.action.common.FileFtpUtils;
 import com.bocom.bbip.gdeupsb.entity.GdEupsWatAgtInf;
 import com.bocom.bbip.gdeupsb.repository.GdEupsWatAgtInfRepository;
 import com.bocom.bbip.utils.DateUtils;
@@ -123,7 +125,24 @@ public class DelFailFtp extends BaseAction{
 			
 			
 			
-			operateFTPAction.putCheckFile(eupsThdFtpConfig);
+			String stwatIpA = eupsThdFtpConfig.getThdIpAdr();
+			String userNameA = eupsThdFtpConfig.getOppNme();
+			String passwordA = eupsThdFtpConfig.getOppUsrPsw();
+			String rmtDirA = eupsThdFtpConfig.getRmtWay();
+			String locDirA = eupsThdFtpConfig.getLocDir();
+			String[] shellArgA = {"GDEUPSBFtpPutFile.sh",stwatIpA,userNameA,passwordA,rmtDirA,fileName,locDirA,"bin",fileName}; 
+			log.info("ftp args="+shellArgA.toString());
+			//ftp放文件
+			try{
+				int result = FileFtpUtils.systemAndWait(shellArgA,true);
+				if(result==0){
+					log.info("put remote file success......");
+				}else{
+					throw new CoreException(ErrorCodes.EUPS_FAIL);
+				}
+			} catch (Exception e){
+				throw new CoreException(ErrorCodes.EUPS_FAIL);
+			}
 		}
 		
 		
