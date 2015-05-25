@@ -69,6 +69,14 @@ public class GasAgentBatchFileToFtpAction extends BaseAction {
 			context.setData(ParamKeys.TELLER, tlr);
 		}
 
+		 Map<String,Object> inmap=context.getData("jopSchedulingData");
+	        if(null!=inmap){
+	            String fileDte= (String)inmap.get("fileDte");
+	            if (null != fileDte) {
+	                context.setData("fileDte",fileDte);
+	            } 
+	        }
+		
 		// 判断是否自动发起
 		String fileDte = context.getData("fileDte");
 		logger.info("=================txnDte:" + fileDte);
