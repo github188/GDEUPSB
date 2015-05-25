@@ -121,6 +121,13 @@ public class CheckBkFileToThirdStrategyAction extends BaseAction
 			context.setData(ParamKeys.TELLER, tlr);
 		}
 		
+		 Map<String,Object> inmap=context.getData("jopSchedulingData");
+	        if(null!=inmap){
+	            String fileDte= (String)inmap.get("fileDte");
+	            if (null != fileDte) {
+	                context.setData("fileDte",fileDte);
+	            } 
+	        }
 		// 交易日期
 		String fileDte = null;
 
