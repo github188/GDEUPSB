@@ -191,7 +191,7 @@ public class GasAgentBatchFileToFtpAction extends BaseAction {
 				.findDataBeforeOptDat(cusAllAgt);
 		if (CollectionUtils.isEmpty(cusAllList)) {
 			logger.info("There are no records for select check trans journal ");
-			throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
+//			throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
 		}
 		map.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(cusAllList));
 		logger.info("查询燃气协议表信息拼装待生成文件map完成>>>>>>>>>" + map.toString());
@@ -214,7 +214,7 @@ public class GasAgentBatchFileToFtpAction extends BaseAction {
 				cusDayAgt);
 		if (CollectionUtils.isEmpty(cusDayList)) {
 			logger.info("There are no records for select check trans journal ");
-			throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
+//			throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
 		}
 		map.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(cusDayList));
 		logger.info("查询每天动态协议表信息拼装待生成文件map完成>>>>>>>>>" + map.toString());
