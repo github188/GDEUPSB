@@ -59,7 +59,7 @@
 	   <actions>
 	   <action id="preAction" class="com.bocom.bbip.gdeupsb.service.impl.watr00.CheckThdCusNo"/>   <!-- 检查本地协议表户号是否已签约 -->
 		<action id="preAction" ref="eups.commBeforeDealCusAgentAction" operations="insertBeforeDeal" />  <!-- 协议操作前预处理 -->
-		<action id="preAction" ref="eups.commInsertCusAgentServiceAction" operations="preInsertCusAgent"/> <!-- 签约前服务 -->
+		<!-- <action id="preAction" ref="eups.commInsertCusAgentServiceAction" operations="preInsertCusAgent"/> --> <!-- 签约前服务 -->
 		<action id="preAction" ref="eups.commInitCusAgentAction" /> <!-- 检查协议，预计协议流水 -->
 		<action id="callACPSAction" ref="eups.commInsertCusAgentAction" />   <!-- 发代收付 -->
 		<!-- <action id="callThdAction" ref="eups.insertCusAgentThdStrategyAction" />  发第三方 -->
