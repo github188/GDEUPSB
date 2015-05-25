@@ -46,107 +46,129 @@ public class DelFailFtp extends BaseAction{
 	private final static Log log = LogFactory.getLog(DelFailFtp.class);
 	public void execute(Context ctx) throws CoreRuntimeException,CoreException{
 		log.info("DelFailFtp start......");
-		String clrDat = ctx.getData("clrDat");
-		
-		if(clrDat==null|"".equals(clrDat)){
-			Map<String, Object> resultMap = new HashMap<String, Object>();
-			String sqn = service.getBBIPSequence();
-			String date = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
-			
-			
-			
-			//文件名
-			String fileName=date;
-			//文件内容 
-//			GDEupsEleTmp gdEupsEleTmps =new GDEupsEleTmp();
-//			gdEupsEleTmps.setRsvFld5(batNo);
-//			List<GDEupsEleTmp> detailList=gdEupsEleTmpRepository.find(gdEupsEleTmps);
-//			resultMap.put(ParamKeys.EUPS_FILE_DETAIL, detailList);
-//			GdEupsWatAgtInf gdEupsWatAgtInf = new GdEupsWatAgtInf();
-//			gdEupsWatAgtInf.setAgtSts("F");
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("agtSts", "F");
-			map.put("agrExpDte", new Date());
-			map.put("pedAgrSts", "1");
-			List<GdEupsWatAgtInf> detailList = gdEupsWatAgtInfRepository.findDelFail(map);
-			
-			
-			
-			List<Object> list1 = new ArrayList<Object>();
-			
-			resultMap.put(ParamKeys.EUPS_FILE_DETAIL, detailList);
-			
-			EupsThdFtpConfig eupsThdFtpConfig =eupsThdFtpConfigRepository.findOne("watDelAgtFail");
-			
-			// 生成文件
-			operateFile.createCheckFile(eupsThdFtpConfig, "watAgtDelFail", fileName, resultMap);
-			eupsThdFtpConfig.setLocFleNme(fileName);
-			eupsThdFtpConfig.setRmtFleNme(fileName);
-			log.info("start to put......"+eupsThdFtpConfig);
-			
-			
-			
-			operateFTPAction.putCheckFile(eupsThdFtpConfig);
-		}else{
-			Map<String, Object> resultMap = new HashMap<String, Object>();
-			String sqn = service.getBBIPSequence();
-			String date = clrDat;
-			Date selDat = DateUtils.parse(date);
-			
-			
-			//文件名
-			String fileName=date;
-			//文件内容 
-//			GDEupsEleTmp gdEupsEleTmps =new GDEupsEleTmp();
-//			gdEupsEleTmps.setRsvFld5(batNo);
-//			List<GDEupsEleTmp> detailList=gdEupsEleTmpRepository.find(gdEupsEleTmps);
-//			resultMap.put(ParamKeys.EUPS_FILE_DETAIL, detailList);
-//			GdEupsWatAgtInf gdEupsWatAgtInf = new GdEupsWatAgtInf();
-//			gdEupsWatAgtInf.setAgtSts("F");
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("agtSts", "F");
-			map.put("agrExpDte", selDat);
-			map.put("pedAgrSts", "1");
-			List<GdEupsWatAgtInf> detailList = gdEupsWatAgtInfRepository.findDelFail(map);
-			
-			
-			
-			List<Object> list1 = new ArrayList<Object>();
-			
-			resultMap.put(ParamKeys.EUPS_FILE_DETAIL, detailList);
-			
-			EupsThdFtpConfig eupsThdFtpConfig =eupsThdFtpConfigRepository.findOne("watDelAgtFail");
-			
-			// 生成文件
-			operateFile.createCheckFile(eupsThdFtpConfig, "watAgtDelFail", fileName, resultMap);
-			eupsThdFtpConfig.setLocFleNme(fileName);
-			eupsThdFtpConfig.setRmtFleNme(fileName);
-			log.info("start to put......"+eupsThdFtpConfig);
-			
-			
-			
-			String stwatIpA = eupsThdFtpConfig.getThdIpAdr();
-			String userNameA = eupsThdFtpConfig.getOppNme();
-			String passwordA = eupsThdFtpConfig.getOppUsrPsw();
-			String rmtDirA = eupsThdFtpConfig.getRmtWay();
-			String locDirA = eupsThdFtpConfig.getLocDir();
-			String[] shellArgA = {"GDEUPSBFtpPutFile.sh",stwatIpA,userNameA,passwordA,rmtDirA,fileName,locDirA,"bin",fileName}; 
-			log.info("ftp args="+shellArgA.toString());
-			//ftp放文件
-			try{
-				int result = FileFtpUtils.systemAndWait(shellArgA,true);
-				if(result==0){
-					log.info("put remote file success......");
-				}else{
-					throw new CoreException(ErrorCodes.EUPS_FAIL);
-				}
-			} catch (Exception e){
-				throw new CoreException(ErrorCodes.EUPS_FAIL);
-			}
-		}
 		
 		
 		
+		
+		Map<String,Object> inmap=ctx.getData("jopSchedulingData");
+        if(null!=inmap){
+        	String clrDat = (String)ctx.getData("clrDat");
+        	if(clrDat==null|"".equals(clrDat)){
+    			Map<String, Object> resultMap = new HashMap<String, Object>();
+    			String sqn = service.getBBIPSequence();
+    			String date = DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd);
+    			
+    			
+    			
+    			//文件名
+    			String fileName=date;
+    			//文件内容 
+//    			GDEupsEleTmp gdEupsEleTmps =new GDEupsEleTmp();
+//    			gdEupsEleTmps.setRsvFld5(batNo);
+//    			List<GDEupsEleTmp> detailList=gdEupsEleTmpRepository.find(gdEupsEleTmps);
+//    			resultMap.put(ParamKeys.EUPS_FILE_DETAIL, detailList);
+//    			GdEupsWatAgtInf gdEupsWatAgtInf = new GdEupsWatAgtInf();
+//    			gdEupsWatAgtInf.setAgtSts("F");
+    			Map<String, Object> map = new HashMap<String, Object>();
+    			map.put("agtSts", "F");
+    			map.put("agrExpDte", new Date());
+    			map.put("pedAgrSts", "1");
+    			List<GdEupsWatAgtInf> detailList = gdEupsWatAgtInfRepository.findDelFail(map);
+    			
+    			
+    			
+    			List<Object> list1 = new ArrayList<Object>();
+    			
+    			resultMap.put(ParamKeys.EUPS_FILE_DETAIL, detailList);
+    			
+    			EupsThdFtpConfig eupsThdFtpConfig =eupsThdFtpConfigRepository.findOne("watDelAgtFail");
+    			
+    			// 生成文件
+    			operateFile.createCheckFile(eupsThdFtpConfig, "watAgtDelFail", fileName, resultMap);
+    			eupsThdFtpConfig.setLocFleNme(fileName);
+    			eupsThdFtpConfig.setRmtFleNme(fileName);
+    			log.info("start to put......"+eupsThdFtpConfig);
+    			
+    			
+    			
+    			String stwatIpA = eupsThdFtpConfig.getThdIpAdr();
+    			String userNameA = eupsThdFtpConfig.getOppNme();
+    			String passwordA = eupsThdFtpConfig.getOppUsrPsw();
+    			String rmtDirA = eupsThdFtpConfig.getRmtWay();
+    			String locDirA = eupsThdFtpConfig.getLocDir();
+    			String[] shellArgA = {"GDEUPSBFtpPutFile.sh",stwatIpA,userNameA,passwordA,rmtDirA,fileName,locDirA,"bin",fileName}; 
+    			log.info("ftp args="+shellArgA.toString());
+    			//ftp放文件
+    			try{
+    				int result = FileFtpUtils.systemAndWait(shellArgA,true);
+    				if(result==0){
+    					log.info("put remote file success......");
+    				}else{
+    					throw new CoreException(ErrorCodes.EUPS_FAIL);
+    				}
+    			} catch (Exception e){
+    				throw new CoreException(ErrorCodes.EUPS_FAIL);
+    			}
+    		}else{
+    			Map<String, Object> resultMap = new HashMap<String, Object>();
+    			String sqn = service.getBBIPSequence();
+    			String date = clrDat;
+    			Date selDat = DateUtils.parse(date);
+    			
+    			
+    			//文件名
+    			String fileName=date;
+    			//文件内容 
+//    			GDEupsEleTmp gdEupsEleTmps =new GDEupsEleTmp();
+//    			gdEupsEleTmps.setRsvFld5(batNo);
+//    			List<GDEupsEleTmp> detailList=gdEupsEleTmpRepository.find(gdEupsEleTmps);
+//    			resultMap.put(ParamKeys.EUPS_FILE_DETAIL, detailList);
+//    			GdEupsWatAgtInf gdEupsWatAgtInf = new GdEupsWatAgtInf();
+//    			gdEupsWatAgtInf.setAgtSts("F");
+    			Map<String, Object> map = new HashMap<String, Object>();
+    			map.put("agtSts", "F");
+    			map.put("agrExpDte", selDat);
+    			map.put("pedAgrSts", "1");
+    			List<GdEupsWatAgtInf> detailList = gdEupsWatAgtInfRepository.findDelFail(map);
+    			
+    			
+    			
+    			List<Object> list1 = new ArrayList<Object>();
+    			
+    			resultMap.put(ParamKeys.EUPS_FILE_DETAIL, detailList);
+    			
+    			EupsThdFtpConfig eupsThdFtpConfig =eupsThdFtpConfigRepository.findOne("watDelAgtFail");
+    			
+    			// 生成文件
+    			operateFile.createCheckFile(eupsThdFtpConfig, "watAgtDelFail", fileName, resultMap);
+    			eupsThdFtpConfig.setLocFleNme(fileName);
+    			eupsThdFtpConfig.setRmtFleNme(fileName);
+    			log.info("start to put......"+eupsThdFtpConfig);
+    			
+    			
+    			
+    			String stwatIpA = eupsThdFtpConfig.getThdIpAdr();
+    			String userNameA = eupsThdFtpConfig.getOppNme();
+    			String passwordA = eupsThdFtpConfig.getOppUsrPsw();
+    			String rmtDirA = eupsThdFtpConfig.getRmtWay();
+    			String locDirA = eupsThdFtpConfig.getLocDir();
+    			String[] shellArgA = {"GDEUPSBFtpPutFile.sh",stwatIpA,userNameA,passwordA,rmtDirA,fileName,locDirA,"bin",fileName}; 
+    			log.info("ftp args="+shellArgA.toString());
+    			//ftp放文件
+    			try{
+    				int result = FileFtpUtils.systemAndWait(shellArgA,true);
+    				if(result==0){
+    					log.info("put remote file success......");
+    				}else{
+    					throw new CoreException(ErrorCodes.EUPS_FAIL);
+    				}
+    			} catch (Exception e){
+    				throw new CoreException(ErrorCodes.EUPS_FAIL);
+    			}
+    		}
+        }
+
+	
 	}
 
 }
