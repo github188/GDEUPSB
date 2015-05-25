@@ -101,7 +101,7 @@ public class FbpeBatchResultDealAction extends BaseAction implements AfterBatchA
         
         //根据单位编号寻找返盘格式文件解析
         String comNo=gdEupsBatchConsoleInfo.getComNo();
-        String fileName = comNo+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";   	
+        String fileName = comNo+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMddHHmmss)+".txt";   	
         context.setData("printResult", fileName);
         //仅有44460002194
          	createGasFile(context, eupsBatchInfoDetailList, comNo,batNos);
