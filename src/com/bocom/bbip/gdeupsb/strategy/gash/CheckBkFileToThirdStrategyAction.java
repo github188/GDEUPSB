@@ -121,6 +121,7 @@ public class CheckBkFileToThirdStrategyAction extends BaseAction
 			context.setData(ParamKeys.TELLER, tlr);
 		}
 		
+		// 定时任务获取指定参数
 		 Map<String,Object> inmap=context.getData("jopSchedulingData");
 	        if(null!=inmap){
 	            String fileDte= (String)inmap.get("fileDte");
