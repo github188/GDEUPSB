@@ -56,12 +56,6 @@ public class CusAgentServiceAction extends BaseAction{
 		public void execute(Context context)throws CoreException,CoreRuntimeException{
 				logger.info("============Start  CusAgentServiceAction ");
 				
-				String agtSts=(String)context.getData("agtSts");
-				if(null != agtSts){
-					if("3".equals(agtSts.toString().trim())){
-							throw new CoreException(GDErrorCodes.EUPS_ELEC00_82_ERROR);
-					}
-				}
 				if(("20").equals((String)context.getData("chlTyp")) || ("50").equals((String)context.getData("chlTyp")) || ("20").equals((String)context.getData("chn")) || ("50").equals((String)context.getData("chn"))){
 					logger.info("=======================适配器");
 					context.setData("br", "01441800999");
