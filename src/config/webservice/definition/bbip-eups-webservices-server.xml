@@ -250,5 +250,14 @@
 			<qname-mapping operation="qryBatchInformation"  process-id="gdeupsb.qryBatchInformation" />
 		</qname-mappings>
 	</server-side-ws-def>	
+	
+	<!-- 广州文本格式转换 -->
+	<server-side-ws-def wsdl="GDEUPSELEC02Service.wsdl"
+		namespace="http://gdeups.service.bankcomm.com/basic/atomic/operation.GDEUPSELEC02Service/Schema">
+		<qname-mappings>
+			<qname-mapping operation="queryAgtInfo"  process-id="gdeupsb.changeFileFmt" />
+		</qname-mappings>
+	</server-side-ws-def>
+	
 		
 </x:beans>
