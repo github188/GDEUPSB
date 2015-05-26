@@ -105,5 +105,13 @@
 			  <action id="act" ref="afterBatchelec"  />
 		</actions>
 	</process> -->
+	<!-- 广州文本格式转换 gdeupsb.changeFileFmt -->
+	
+	<process id="gdeupsb.changeFileFmt" template="eups.simpleTran"
+		interceptors="bbip.defaultInterceptors">
+		<actions>
+			<action id="act" class="com.bocom.bbip.gdeupsb.action.gzag.batch.ChangeFileFmtAction"  />
+		</actions>
+	</process>
 
 </x:beans>
