@@ -13,6 +13,7 @@ import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdEupsWatAgtInf;
 import com.bocom.bbip.gdeupsb.repository.GdEupsWatAgtInfRepository;
 import com.bocom.bbip.utils.BeanUtils;
+import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
@@ -35,7 +36,9 @@ public class QueryThdCusNo extends BaseAction{
 		GdEupsWatAgtInf gdEupsWatAgtInf = new GdEupsWatAgtInf();
 		gdEupsWatAgtInf.setCusAc(ctx.getData(ParamKeys.CUS_AC).toString());
 		List<GdEupsWatAgtInf> infoList = gdEupsWatAgtInfRepository.find(gdEupsWatAgtInf);
-		
+		if(CollectionUtils.isEmpty(infoList)){
+			throw new CoreException("BBIP0004EU0130");
+		}
 		List<Map<String, Object>> list = new ArrayList<Map<String,Object>>();
 		for(int i = 0;i<infoList.size();i++){
 			list.add(BeanUtils.toMap(infoList.get(i)));
