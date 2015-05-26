@@ -16,8 +16,6 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
 
 import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
@@ -25,7 +23,6 @@ import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.file.MftpTransfer;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
-import com.bocom.bbip.file.transfer.ftp.FTPTransfer;
 import com.bocom.bbip.gdeupsb.entity.GDEupsEleTmp;
 import com.bocom.bbip.gdeupsb.repository.GDEupsEleTmpRepository;
 import com.bocom.bbip.utils.CollectionUtils;
@@ -49,6 +46,7 @@ public class PrintEfekBatchAction extends BaseAction{
 				String mothed=context.getData("mothed").toString();
 				Date txnDte=(Date)context.getData("printDate");
 				
+				context.setData("kkrq", DateUtils.format(txnDte, DateUtils.STYLE_SIMPLE_DATE)); 
 				Map<String, Object> maps=new HashMap<String, Object>();
 				maps.put("txnDte", txnDte);
 				//地区分组
@@ -58,6 +56,13 @@ public class PrintEfekBatchAction extends BaseAction{
 				}
 				for (Map<String, Object> map : mapList) {
 						String comNo=map.get("COM_NO").toString();
+						if("0320".equals(comNo)){
+							context.setData("ssdq", "中山");
+						}else if("0318".equals(comNo)){
+							context.setData("ssdq", "清远");
+						}else{
+							context.setData("ssdq", "佛山");
+						}
 						context.setData("comNo", comNo);
 						maps.put("comNo", comNo);
 						//全部清单   该地区总笔数 总金额
