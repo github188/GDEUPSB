@@ -213,7 +213,7 @@
 	<select id="findGzEleChkHKInfo" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
 		select count(*) totalDeal, sum(TXN_AMT) totalFee from
-		eups.EUPS_TRANS_JOURNAL where  EUPS_BUS_TYP='ELEC01' and
+		eups.EUPS_TRANS_JOURNAL where EUPS_BUS_TYP='ELEC01' and
 		MFM_TXN_STS='S' and TXN_STS='S' and TXN_TYP='N'
 		and
 		BAK_FLD1=#{bakFld1,jdbcType=CHAR}
@@ -230,8 +230,9 @@
 		dLTim,RSV_FLD1 rmkTmp,BAK_FLD2 lChkTm
 		from
 		eups.EUPS_TRANS_JOURNAL where
-		 EUPS_BUS_TYP='ELEC01' and
-		MFM_TXN_STS='S' and TXN_STS='S' and TXN_TYP='N'
+		EUPS_BUS_TYP='ELEC01' and
+		MFM_TXN_STS='S' and TXN_STS='S' and
+		TXN_TYP='N'
 		and
 		BAK_FLD1=#{bakFld1,jdbcType=CHAR}
 		and THD_TXN_CDE='HK'
@@ -241,7 +242,7 @@
 	<select id="findGzEleChkJFInfo" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
 		select count(*) totalDeal, sum(TXN_AMT) totalFee from
-		eups.EUPS_TRANS_JOURNAL where 
+		eups.EUPS_TRANS_JOURNAL where
 		EUPS_BUS_TYP='ELEC01' and
 		MFM_TXN_STS='S' and TXN_STS='S' and
 		TXN_TYP='N' and THD_TXN_STS='S'
@@ -255,12 +256,14 @@
 		select THD_SQN tLogNo,THD_CUS_NO thdCusNo,THD_TXN_DTE
 		tActDt,BAK_FLD1 actDat, TXN_TME BkTim, RSV_FLD2 bkLog,RSV_FLD3 ZPFLG,
 		CUS_AC actNo,
-		'0200' txnKnd,TXN_AMT txnAmt,' ' oTlogNo,THD_TXN_DTE dLDat,THD_TXN_TME
+		'0200' txnKnd,TXN_AMT txnAmt,' ' oTlogNo,THD_TXN_DTE
+		dLDat,THD_TXN_TME
 		dLTim,RSV_FLD1 rmkTmp, BAK_FLD3 bakFld3, BV_NO bvNo,
 		BAK_FLD2 lChkTm
 		from
 		eups.EUPS_TRANS_JOURNAL where
-		EUPS_BUS_TYP='ELEC01' and
+		EUPS_BUS_TYP='ELEC01'
+		and
 		MFM_TXN_STS='S' and TXN_STS='S' and
 		TXN_TYP='N' and THD_TXN_STS='S'
 		and BAK_FLD1=#{bakFld1,jdbcType=CHAR}
@@ -997,21 +1000,25 @@
 	<select id="findAllTxnList" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
 		select * FROM
-		<!-- (select <include refid="baseColumnList" /> FROM eups.EUPS_TRANS_JOURNAL 
-			where TXN_DTE=#{txnDte,jdbcType=DATE} and eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} 
-			) a, -->
+
 		(select
 		COALESCE(count(*), 0) totCnt, COALESCE(sum(TXN_AMT), 0) totAmt
 		from
 		eups.EUPS_TRANS_JOURNAL
 		where TXN_DTE=#{txnDte,jdbcType=DATE} and
-		eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR}) b,
+		eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and MFM_TXN_STS !='C' and
+		TXN_TYP!='C') b,
+
 		(select COALESCE(count(*),
-		0) succCnt, COALESCE(sum(TXN_AMT), 0) totSuccAmt from
-		eups.EUPS_TRANS_JOURNAL d where d.TXN_STS='S' AND d.MFM_TXN_STS='S'
-		and d.THD_TXN_STS!='U' and d.THD_TXN_STS!='F' and d.THD_TXN_STS!='T'
-		and d.TXN_DTE=#{txnDte,jdbcType=DATE} and
+		0) succCnt, COALESCE(sum(TXN_AMT), 0) totSuccAmt
+		from
+		eups.EUPS_TRANS_JOURNAL d where d.TXN_STS='S' AND
+		d.MFM_TXN_STS='S'
+		and d.THD_TXN_STS!='F' and d.THD_TXN_STS!='T'
+		and
+		d.TXN_DTE=#{txnDte,jdbcType=DATE} and
 		d.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and d.TXN_TYP!='C') c,
+
 		(select COALESCE(count(*), 0) failCnt, COALESCE(sum(TXN_AMT), 0)
 		totFailAmt from
 		eups.EUPS_TRANS_JOURNAL where TXN_STS='F' AND
@@ -1019,33 +1026,47 @@
 		(MFM_TXN_STS='S' and THD_TXN_STS='F')) and
 		TXN_DTE=#{txnDte,jdbcType=DATE} and
 		eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and TXN_TYP!='C') e,
+
 		(select
 		COALESCE(count(*), 0) doubtCnt, COALESCE(sum(TXN_AMT), 0) totDoubtAmt
 		from
 		eups.EUPS_TRANS_JOURNAL c where c.MFM_TXN_STS='S' and
-		c.THD_TXN_STS!='S' and c.THD_TXN_STS!='F' and c.MFM_TXN_STS!='C' and
-		c.TXN_TYP!='C' and c.TXN_DTE=#{txnDte,jdbcType=DATE} and
+		c.THD_TXN_STS!='S' and c.THD_TXN_STS!='F' and c.THD_TXN_STS!='U' and
+		c.MFM_TXN_STS!='C' and
+		c.TXN_TYP!='C' and
+		c.TXN_DTE=#{txnDte,jdbcType=DATE} and
 		c.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR}) d,
+
 		(select
 		COALESCE(count(*), 0) otherCnt, COALESCE(sum(TXN_AMT), 0) totOtherAmt
 		from
-		eups.EUPS_TRANS_JOURNAL where sqn not in(select a.sqn from (select
-		distinct a.sqn as sqn from eups.EUPS_TRANS_JOURNAL a where
-		a.TXN_STS='F' AND (a.MFM_TXN_STS='F' or (a.MFM_TXN_STS='S' and
-		a.THD_TXN_STS='F')) and a.TXN_DTE=#{txnDte,jdbcType=DATE} and
+		eups.EUPS_TRANS_JOURNAL where
+		sqn not in(select a.sqn from (select
+		distinct a.sqn as sqn from
+		eups.EUPS_TRANS_JOURNAL a where
+		a.TXN_STS='F' AND (a.MFM_TXN_STS='F' or
+		(a.MFM_TXN_STS='S' and
+		a.THD_TXN_STS='F')) and
+		a.TXN_DTE=#{txnDte,jdbcType=DATE} and
 		a.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and a.TXN_TYP!='C') a) and
+
 		sqn not in(select b.sqn from(select distinct b.sqn as sqn from
 		eups.EUPS_TRANS_JOURNAL b where b.MFM_TXN_STS='S' and
 		b.THD_TXN_STS!='S' and b.THD_TXN_STS!='F' and b.MFM_TXN_STS!='C' and
 		b.TXN_TYP!='C' and b.TXN_DTE=#{txnDte,jdbcType=DATE} and
-		b.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR})b) and sqn not in(select
-		c.sqn from(select c.sqn as sqn from eups.EUPS_TRANS_JOURNAL c where
-		c.TXN_STS='S' AND c.MFM_TXN_STS='S' and c.THD_TXN_STS!='U' and
+		b.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR})b) and
+
+		sqn not in(select
+		c.sqn from(select c.sqn as sqn from
+		eups.EUPS_TRANS_JOURNAL c where
+		c.TXN_STS='S' AND c.MFM_TXN_STS='S' and
+		c.THD_TXN_STS!='U' and
 		c.THD_TXN_STS!='F' and c.THD_TXN_STS!='T' and
 		c.TXN_DTE=#{txnDte,jdbcType=DATE} and
 		c.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and c.TXN_TYP!='C')c) and
 		TXN_DTE=#{txnDte,jdbcType=DATE} and
-		eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR}) y
+		eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and MFM_TXN_STS !='C' and
+		TXN_TYP!='C') y
 	</select>
 
 	<!-- 报表打印—成功 findSuccTxnList -->
@@ -1054,7 +1075,7 @@
 		select * from
 		(select c.* from eups.EUPS_TRANS_JOURNAL c
 		where c.TXN_STS='S' AND
-		c.MFM_TXN_STS='S' and c.THD_TXN_STS!='U' and
+		c.MFM_TXN_STS='S' and
 		c.THD_TXN_STS!='F' and
 		c.THD_TXN_STS!='T' and
 		c.TXN_DTE=#{txnDte,jdbcType=DATE} and
@@ -1063,9 +1084,10 @@
 		totSuccAmt from
 		eups.EUPS_TRANS_JOURNAL d where d.TXN_STS='S' AND
 		d.MFM_TXN_STS='S'
-		and d.THD_TXN_STS!='U' and d.THD_TXN_STS!='F' and
+		and d.THD_TXN_STS!='F' and
 		d.THD_TXN_STS!='T'
-		and d.TXN_DTE=#{txnDte,jdbcType=DATE} and
+		and
+		d.TXN_DTE=#{txnDte,jdbcType=DATE} and
 		d.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and
 		d.TXN_TYP!='C') b order
 		by com_no
@@ -1094,7 +1116,7 @@
 
 	<select id="findElecFailTxnList" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
-		select * from
+		<!-- select * from
 		(select * from eups.EUPS_TRANS_JOURNAL
 		where TXN_STS='F' AND (MFM_TXN_STS='F'
 		or (MFM_TXN_STS='S' and
@@ -1109,9 +1131,30 @@
 		THD_TXN_STS='F')) and
 		TXN_DTE=#{txnDte,jdbcType=DATE} and
 		eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and TXN_TYP!='C') b order by
-		BAK_FLD2
+		BAK_FLD2 -->
+		SELECT * FROM(
+select * from  eups.EUPS_TRANS_JOURNAL A
+ where  A.TXN_DTE=#{txnDte,jdbcType=DATE} and A.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND A.TXN_TYP !='C' AND A.MFM_TXN_STS !='C'
+and 
+((
+A.CHL_TYP !='90' and A.TXN_STS='F' AND A.MFM_TXN_STS='F' AND A.THD_TXN_STS !='S' AND (A.THD_TXN_STS ='F' OR A.THD_TXN_STS !='U')
+) 
+or 
+(
+A.CHL_TYP='90' and A.TXN_STS='F' AND A.MFM_TXN_STS='F' AND A.THD_TXN_STS !='S' 
+)) ) C,
+(select COALESCE(count(*), 0) failCnt, COALESCE(sum(TXN_AMT), 0) totFailAmt  from  eups.EUPS_TRANS_JOURNAL B
+ where  B.TXN_DTE=#{txnDte,jdbcType=DATE} and B.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND B.TXN_TYP !='C' AND B.MFM_TXN_STS !='C'
+and 
+((
+B.CHL_TYP !='90' and B.TXN_STS='F' AND B.MFM_TXN_STS='F' AND B.THD_TXN_STS !='S'AND (B.THD_TXN_STS ='F' OR B.THD_TXN_STS !='U')
+) 
+or 
+(
+B.CHL_TYP='90' and B.TXN_STS='F' AND B.MFM_TXN_STS='F' AND B.THD_TXN_STS !='S' 
+)) ) D  ORDER BY bak_fld2
 	</select>
-	
+
 	<!-- 报表打印—可疑 findDoubtTxnList -->
 	<select id="findDoubtTxnList" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
@@ -1119,6 +1162,7 @@
 		(select a.* from eups.EUPS_TRANS_JOURNAL a
 		where a.MFM_TXN_STS='S' and
 		a.THD_TXN_STS!='S' and a.THD_TXN_STS!='F'
+		and a.THD_TXN_STS!='U'
 		and a.MFM_TXN_STS!='C' and
 		a.TXN_TYP!='C' and
 		a.TXN_DTE=#{txnDte,jdbcType=DATE} and
@@ -1130,7 +1174,8 @@
 		from
 		eups.EUPS_TRANS_JOURNAL c where
 		c.MFM_TXN_STS='S' and
-		c.THD_TXN_STS!='S' and c.THD_TXN_STS!='F' and
+		c.THD_TXN_STS!='S' and c.THD_TXN_STS!='F' and c.THD_TXN_STS!='U'
+		and
 		c.MFM_TXN_STS!='C' and
 		c.TXN_TYP!='C' and
 		c.TXN_DTE=#{txnDte,jdbcType=DATE} and
@@ -1140,7 +1185,7 @@
 
 	<select id="findElecDoubtTxnList" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
-		select * FROM
+		<!-- select * FROM
 		(select a.* from eups.EUPS_TRANS_JOURNAL a
 		where a.MFM_TXN_STS='S' and
 		a.THD_TXN_STS!='S' and a.THD_TXN_STS!='F'
@@ -1160,7 +1205,20 @@
 		c.TXN_TYP!='C' and
 		c.TXN_DTE=#{txnDte,jdbcType=DATE} and
 		c.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR})
-		d order by BAK_FLD2
+		d order by BAK_FLD2 -->
+		
+		SELECT * FROM(
+select * from  eups.EUPS_TRANS_JOURNAL A
+ where  A.TXN_DTE=#{txnDte,jdbcType=DATE} and A.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND A.TXN_TYP !='C' AND A.MFM_TXN_STS !='C'
+and 
+A.CHL_TYP !='90' and A.TXN_STS='F' AND A.MFM_TXN_STS='F' AND A.THD_TXN_STS !='S' AND A.THD_TXN_STS !='F' AND A.THD_TXN_STS !='T'
+) C,
+(select COALESCE(count(*), 0)
+		doubtCnt, COALESCE(sum(TXN_AMT), 0) totDoubtAmt  from  eups.EUPS_TRANS_JOURNAL B
+ where  B.TXN_DTE=#{txnDte,jdbcType=DATE} and B.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND B.TXN_TYP !='C' AND B.MFM_TXN_STS !='C'
+and 
+B.CHL_TYP !='90' and B.TXN_STS='F' AND B.MFM_TXN_STS='F' AND B.THD_TXN_STS !='S' AND B.THD_TXN_STS !='F' AND B.THD_TXN_STS !='T'
+ ) D  ORDER BY bak_fld2
 	</select>
 	<!-- 报表打印—其他 findOthTxnList -->
 	<select id="findOthTxnList" resultType="java.util.Map"
@@ -1194,11 +1252,13 @@
 		c.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and c.TXN_TYP!='C')c) and
 		TXN_DTE=#{txnDte,jdbcType=DATE}
 		and
-		eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR}) x,
+		eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and MFM_TXN_STS !='C' and
+		TXN_TYP!='C') x,
 		(select COALESCE(count(*),
 		0) otherCnt,
 		COALESCE(sum(TXN_AMT), 0) totOtherAmt from
-		eups.EUPS_TRANS_JOURNAL where sqn not
+		eups.EUPS_TRANS_JOURNAL
+		where sqn not
 		in(select a.sqn from (select
 		distinct a.sqn as sqn from
 		eups.EUPS_TRANS_JOURNAL a where
@@ -1226,12 +1286,13 @@
 		c.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and c.TXN_TYP!='C')c) and
 		TXN_DTE=#{txnDte,jdbcType=DATE}
 		and
-		eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR}) y order by com_no
+		eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and MFM_TXN_STS !='C' and
+		TXN_TYP!='C') y order by com_no
 	</select>
 
 	<select id="findElecOthTxnList" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
-		select * from
+		<!-- select * from
 		(select * from eups.EUPS_TRANS_JOURNAL
 		where sqn not in(select a.sqn from
 		(select distinct a.sqn as sqn from
@@ -1292,9 +1353,94 @@
 		c.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and c.TXN_TYP!='C')c) and
 		TXN_DTE=#{txnDte,jdbcType=DATE}
 		and
-		eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR}) y order by BAK_FLD2
-	</select>
+		eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR}) y order by BAK_FLD2 -->
+		
+		select * from 
+(select * from eups.EUPS_TRANS_JOURNAL
+where sqn not in(
+ 
+select distinct a.sqn as sqn from  eups.EUPS_TRANS_JOURNAL A
+ where  A.TXN_DTE=#{txnDte,jdbcType=DATE} and A.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND A.TXN_TYP !='C' AND A.MFM_TXN_STS !='C'
+and 
+((
+A.CHL_TYP !='90' and A.TXN_STS='S' AND A.MFM_TXN_STS='S' AND A.THD_TXN_STS='S' 
+) 
+or 
+(
+A.CHL_TYP='90' and A.TXN_STS='S' AND A.MFM_TXN_STS='S' AND A.THD_TXN_STS !='F'  AND A.THD_TXN_STS !='T'  AND A.THD_TXN_STS !='R'
+))
+
+) 
+and sqn not in(
 	
+select distinct a.sqn as sqn from  eups.EUPS_TRANS_JOURNAL A
+ where  A.TXN_DTE=#{txnDte,jdbcType=DATE} and A.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND A.TXN_TYP !='C' AND A.MFM_TXN_STS !='C'
+and 
+((
+A.CHL_TYP !='90' and A.TXN_STS='F' AND A.MFM_TXN_STS='F' AND A.THD_TXN_STS !='S' AND (A.THD_TXN_STS ='F' OR A.THD_TXN_STS !='U')
+) 
+or 
+(
+A.CHL_TYP='90' and A.TXN_STS='F' AND A.MFM_TXN_STS='F' AND A.THD_TXN_STS !='S' 
+))
+	
+) 
+and sqn not in(
+
+select distinct a.sqn as sqn from  eups.EUPS_TRANS_JOURNAL A
+ where  A.TXN_DTE=#{txnDte,jdbcType=DATE} and A.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND A.TXN_TYP !='C' AND A.MFM_TXN_STS !='C'
+and 
+A.CHL_TYP !='90' and A.TXN_STS='F' AND A.MFM_TXN_STS='F' AND A.THD_TXN_STS !='S' AND A.THD_TXN_STS !='F' AND A.THD_TXN_STS !='T'
+
+
+) 
+and TXN_DTE=#{txnDte,jdbcType=DATE} and eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND TXN_TYP !='C' AND MFM_TXN_STS !='C') x,
+
+(select  COALESCE(count(*),
+		0) otherCnt,
+		COALESCE(sum(TXN_AMT), 0) totOtherAmt from eups.EUPS_TRANS_JOURNAL
+where sqn not in(
+ 
+select distinct a.sqn as sqn from  eups.EUPS_TRANS_JOURNAL A
+ where  A.TXN_DTE=#{txnDte,jdbcType=DATE} and A.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND A.TXN_TYP !='C' AND A.MFM_TXN_STS !='C'
+and 
+((
+A.CHL_TYP !='90' and A.TXN_STS='S' AND A.MFM_TXN_STS='S' AND A.THD_TXN_STS='S' 
+) 
+or 
+(
+A.CHL_TYP='90' and A.TXN_STS='S' AND A.MFM_TXN_STS='S' AND A.THD_TXN_STS !='F'  AND A.THD_TXN_STS !='T'  AND A.THD_TXN_STS !='R'
+))
+
+) 
+and sqn not in(
+	
+select distinct a.sqn as sqn from  eups.EUPS_TRANS_JOURNAL A
+ where  A.TXN_DTE=#{txnDte,jdbcType=DATE} and A.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND A.TXN_TYP !='C' AND A.MFM_TXN_STS !='C'
+and 
+((
+A.CHL_TYP !='90' and A.TXN_STS='F' AND A.MFM_TXN_STS='F' AND A.THD_TXN_STS !='S' AND (A.THD_TXN_STS ='F' OR A.THD_TXN_STS !='U')
+) 
+or 
+(
+A.CHL_TYP='90' and A.TXN_STS='F' AND A.MFM_TXN_STS='F' AND A.THD_TXN_STS !='S' 
+))
+	
+) 
+and sqn not in(
+
+select distinct a.sqn as sqn from  eups.EUPS_TRANS_JOURNAL A
+ where  A.TXN_DTE=#{txnDte,jdbcType=DATE} and A.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND A.TXN_TYP !='C' AND A.MFM_TXN_STS !='C'
+and 
+A.CHL_TYP !='90' and A.TXN_STS='F' AND A.MFM_TXN_STS='F' AND A.THD_TXN_STS !='S' AND A.THD_TXN_STS !='F' AND A.THD_TXN_STS !='T'
+
+
+) 
+and TXN_DTE=#{txnDte,jdbcType=DATE} and eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND TXN_TYP !='C' AND MFM_TXN_STS !='C') y
+		
+		
+	</select>
+
 	<!-- 流水信息查询 -->
 	<select id="findTxnJnlInfo" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
@@ -1343,8 +1489,8 @@
 			</if>
 		</trim>
 	</select>
-	
-		<select id="findTxnJnlInfoCount" resultType="java.lang.Integer">
+
+	<select id="findTxnJnlInfoCount" resultType="java.lang.Integer">
 		select
 		count(*)
 		from ${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL
@@ -1416,19 +1562,20 @@
 		BAK_FLD1=#{bakFld1,jdbcType=CHAR}
 		and THD_TXN_CDE='HK'
 	</select>
-	
-		<!-- 查找广州电力总笔数，金额 -->
+
+	<!-- 查找广州电力总笔数，金额 -->
 	<select id="findGzAllCntAmt" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
 		select
 		sum(TXN_AMT) allAmt ,count(*) allCnt
 		from
-		${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL where EUPS_BUS_TYP='ELEC01' 
+		${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL where EUPS_BUS_TYP='ELEC01'
 		and BAK_FLD1=#{bakFld1,jdbcType=CHAR}
 		and TXN_TYP!='C' and
-		TXN_STS!='C' and MFM_TXN_STS!='C'
+		TXN_STS!='C' and
+		MFM_TXN_STS!='C'
 	</select>
-	
+
 
 	<!-- 查询广州电力缴费明确成功信息 -->
 	<select id="findGzSucJnlJF" resultType="java.util.Map"
@@ -1552,7 +1699,7 @@
 		eups_bus_typ='ELEC01') y
 	</select>
 
-		<!-- 查询广州电力当日所有明细流水 -->
+	<!-- 查询广州电力当日所有明细流水 -->
 	<select id="findGdJnlAllDetail" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
 		select
@@ -1560,7 +1707,8 @@
 		${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL where
 		EUPS_BUS_TYP='ELEC01' and
 		BAK_FLD1=#{bakFld1,jdbcType=CHAR}
-		and TXN_TYP!='C' and
+		and
+		TXN_TYP!='C' and
 		TXN_STS!='C' and MFM_TXN_STS!='C'
 	</select>
 
@@ -1785,14 +1933,13 @@
 	<select id="findGasAllJnlInfo" resultType="java.util.Map"
 		parameterType="java.util.Map">
 		select * FROM
-	<!-- 	(select * FROM eups.EUPS_TRANS_JOURNAL
-		where TXN_DTE &gt;=#{beginDte} and
-		TXN_DTE &lt;=#{endDte} and
-		COM_NO=#{comNo} ) a, -->
+		<!-- (select * FROM eups.EUPS_TRANS_JOURNAL where TXN_DTE &gt;=#{beginDte} 
+			and TXN_DTE &lt;=#{endDte} and COM_NO=#{comNo} ) a, -->
 		(select
 		COALESCE(count(*), 0) totCnt,
-		COALESCE(sum(TXN_AMT), 0) totAmt from
-		eups.EUPS_TRANS_JOURNAL 
+		COALESCE(sum(TXN_AMT), 0) totAmt
+		from
+		eups.EUPS_TRANS_JOURNAL
 		where
 		TXN_DTE &gt;=#{beginDte} and TXN_DTE
 		&lt;=#{endDte} and
@@ -2013,14 +2160,35 @@
 
 	<select id="findElec00AllTxnList" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
-		
-		
-		select * FROM
-		(select count(*) totCnt,COALESCE(sum(TXN_AMT), 0) totAmt from eups.EUPS_TRANS_JOURNAL where TXN_DTE=#{txnDte, jdbcType=DATE} and eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and subStr(BAK_FLD2,1,2)='03')a,
-		(select count(*) QYtotCnt,COALESCE(sum(TXN_AMT), 0) QYtotAmt from eups.EUPS_TRANS_JOURNAL where TXN_DTE=#{txnDte, jdbcType=DATE} and eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and BAK_FLD2='0318') b,
-		(select count(*) QYsuccCnt, COALESCE(sum(TXN_AMT), 0) QYtotSuccAmt from eups.EUPS_TRANS_JOURNAL d where d.TXN_STS='S' AND d.MFM_TXN_STS='S' and d.THD_TXN_STS!='U' and  d.THD_TXN_STS!='F' and d.THD_TXN_STS!='T' and d.TXN_DTE=#{txnDte, jdbcType=DATE} and d.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and d.TXN_TYP!='C' and BAK_FLD2='0318') c,
-		(select count(*) QYfailCnt, COALESCE(sum(TXN_AMT), 0) QYtotFailAmt from eups.EUPS_TRANS_JOURNAL where TXN_STS='F' AND (MFM_TXN_STS='F' or (MFM_TXN_STS='S' and THD_TXN_STS='F')) and TXN_DTE=#{txnDte, jdbcType=DATE} and eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and TXN_TYP!='C' and BAK_FLD2='0318') e,
-		(select count(*) QYdoubtCnt, COALESCE(sum(TXN_AMT), 0) QYtotDoubtAmt from eups.EUPS_TRANS_JOURNAL c where c.MFM_TXN_STS='S' and c.THD_TXN_STS!='S' and c.THD_TXN_STS!='F' and c.MFM_TXN_STS!='C' and c.TXN_TYP!='C' and c.TXN_DTE=#{txnDte, jdbcType=DATE} and c.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and BAK_FLD2='0318') d,
+
+
+		<!-- select * FROM
+		(select count(*) totCnt,COALESCE(sum(TXN_AMT), 0) totAmt from
+		eups.EUPS_TRANS_JOURNAL where TXN_DTE=#{txnDte, jdbcType=DATE} and
+		eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and
+		subStr(BAK_FLD2,1,2)='03')a,
+		(select count(*)
+		QYtotCnt,COALESCE(sum(TXN_AMT), 0) QYtotAmt from
+		eups.EUPS_TRANS_JOURNAL where TXN_DTE=#{txnDte, jdbcType=DATE} and
+		eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and BAK_FLD2='0318') b,
+		(select count(*) QYsuccCnt, COALESCE(sum(TXN_AMT), 0) QYtotSuccAmt
+		from eups.EUPS_TRANS_JOURNAL d where d.TXN_STS='S' AND
+		d.MFM_TXN_STS='S' and d.THD_TXN_STS!='U' and d.THD_TXN_STS!='F' and
+		d.THD_TXN_STS!='T' and d.TXN_DTE=#{txnDte, jdbcType=DATE} and
+		d.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and d.TXN_TYP!='C' and
+		BAK_FLD2='0318') c,
+		(select count(*) QYfailCnt, COALESCE(sum(TXN_AMT),
+		0) QYtotFailAmt from eups.EUPS_TRANS_JOURNAL where TXN_STS='F' AND
+		(MFM_TXN_STS='F' or (MFM_TXN_STS='S' and THD_TXN_STS='F')) and
+		TXN_DTE=#{txnDte, jdbcType=DATE} and
+		eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and TXN_TYP!='C' and
+		BAK_FLD2='0318') e,
+		(select count(*) QYdoubtCnt, COALESCE(sum(TXN_AMT),
+		0) QYtotDoubtAmt from eups.EUPS_TRANS_JOURNAL c where
+		c.MFM_TXN_STS='S' and c.THD_TXN_STS!='S' and c.THD_TXN_STS!='F' and
+		c.MFM_TXN_STS!='C' and c.TXN_TYP!='C' and c.TXN_DTE=#{txnDte,
+		jdbcType=DATE} and c.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and
+		BAK_FLD2='0318') d,
 		(select count(*) QYothertCnt,
 		COALESCE(sum(TXN_AMT), 0) QYtotOtherAmt from
 		eups.EUPS_TRANS_JOURNAL
@@ -2034,7 +2202,8 @@
 		a.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and
 		a.TXN_TYP!='C'and
 		BAK_FLD2='0318') a) and sqn not in(select
-		b.sqn from(select
+		b.sqn
+		from(select
 		distinct b.sqn as sqn from eups.EUPS_TRANS_JOURNAL b
 		where
 		b.MFM_TXN_STS='S' and b.THD_TXN_STS!='S' and b.THD_TXN_STS!='F'
@@ -2042,7 +2211,8 @@
 		b.MFM_TXN_STS!='C' and b.TXN_TYP!='C' and b.TXN_DTE=#{txnDte,
 		jdbcType=DATE} and b.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and
 		BAK_FLD2='0318')b) and sqn not in(select c.sqn from(select
-		c.sqn as sqn from eups.EUPS_TRANS_JOURNAL c where c.TXN_STS='S' AND
+		c.sqn as sqn
+		from eups.EUPS_TRANS_JOURNAL c where c.TXN_STS='S' AND
 		c.MFM_TXN_STS='S' and c.THD_TXN_STS!='U' and c.THD_TXN_STS!='F' and
 		c.THD_TXN_STS!='T' and c.TXN_DTE=#{txnDte, jdbcType=DATE} and
 		c.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and c.TXN_TYP!='C' and
@@ -2059,28 +2229,39 @@
 		COALESCE(sum(TXN_AMT), 0) ZStotSuccAmt from
 		eups.EUPS_TRANS_JOURNAL d
 		where d.TXN_STS='S' AND d.MFM_TXN_STS='S'
-		and d.THD_TXN_STS!='U' and
+		and
+		d.THD_TXN_STS!='U' and
 		d.THD_TXN_STS!='F' and d.THD_TXN_STS!='T'
-		and d.TXN_DTE=#{txnDte,
+		and
+		d.TXN_DTE=#{txnDte,
 		jdbcType=DATE} and
 		d.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and
 		d.TXN_TYP!='C' and
 		BAK_FLD2='0320') g,
 		(select count(*)
-		ZSfailCnt, COALESCE(sum(TXN_AMT), 0) ZStotFailAmt from
-		eups.EUPS_TRANS_JOURNAL where TXN_STS='F' AND (MFM_TXN_STS='F' or
-		(MFM_TXN_STS='S' and THD_TXN_STS='F')) and TXN_DTE=#{txnDte,
-		jdbcType=DATE} and eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and
-		TXN_TYP!='C' and BAK_FLD2='0320') h,
+		ZSfailCnt, COALESCE(sum(TXN_AMT),
+		0) ZStotFailAmt from
+		eups.EUPS_TRANS_JOURNAL where TXN_STS='F' AND
+		(MFM_TXN_STS='F' or
+		(MFM_TXN_STS='S' and THD_TXN_STS='F')) and
+		TXN_DTE=#{txnDte,
+		jdbcType=DATE} and
+		eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and
+		TXN_TYP!='C' and
+		BAK_FLD2='0320') h,
 		(select count(*)
-		ZSdoubtCnt, COALESCE(sum(TXN_AMT), 0) ZStotDoubtAmt from
-		eups.EUPS_TRANS_JOURNAL c where c.MFM_TXN_STS='S' and
-		c.THD_TXN_STS!='S' and c.THD_TXN_STS!='F' and c.MFM_TXN_STS!='C' and
+		ZSdoubtCnt, COALESCE(sum(TXN_AMT),
+		0) ZStotDoubtAmt from
+		eups.EUPS_TRANS_JOURNAL c where c.MFM_TXN_STS='S'
+		and
+		c.THD_TXN_STS!='S' and c.THD_TXN_STS!='F' and c.MFM_TXN_STS!='C'
+		and
 		c.TXN_TYP!='C' and c.TXN_DTE=#{txnDte, jdbcType=DATE} and
 		c.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and
 		BAK_FLD2='0320') i,
 		(select count(*) ZSothertCnt,
-		COALESCE(sum(TXN_AMT), 0) ZStotOtherAmt from
+		COALESCE(sum(TXN_AMT), 0) ZStotOtherAmt
+		from
 		eups.EUPS_TRANS_JOURNAL
 		where sqn not in(select a.sqn from (select
 		distinct a.sqn as sqn from
@@ -2093,16 +2274,24 @@
 		a.TXN_TYP!='C'and
 		BAK_FLD2='0320') a) and sqn not in(select
 		b.sqn from(select
-		distinct b.sqn as sqn from eups.EUPS_TRANS_JOURNAL b
+		distinct
+		b.sqn as sqn from eups.EUPS_TRANS_JOURNAL b
 		where
-		b.MFM_TXN_STS='S' and b.THD_TXN_STS!='S' and b.THD_TXN_STS!='F'
+		b.MFM_TXN_STS='S' and
+		b.THD_TXN_STS!='S' and b.THD_TXN_STS!='F'
 		and
-		b.MFM_TXN_STS!='C' and b.TXN_TYP!='C' and b.TXN_DTE=#{txnDte,
-		jdbcType=DATE} and b.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and
-		BAK_FLD2='0320')b) and sqn not in(select c.sqn from(select
-		c.sqn as sqn from eups.EUPS_TRANS_JOURNAL c where c.TXN_STS='S' AND
-		c.MFM_TXN_STS='S' and c.THD_TXN_STS!='U' and c.THD_TXN_STS!='F' and
-		c.THD_TXN_STS!='T' and c.TXN_DTE=#{txnDte, jdbcType=DATE} and
+		b.MFM_TXN_STS!='C' and
+		b.TXN_TYP!='C' and b.TXN_DTE=#{txnDte,
+		jdbcType=DATE} and
+		b.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and
+		BAK_FLD2='0320')b) and
+		sqn not in(select c.sqn from(select
+		c.sqn as sqn from
+		eups.EUPS_TRANS_JOURNAL c where c.TXN_STS='S' AND
+		c.MFM_TXN_STS='S' and
+		c.THD_TXN_STS!='U' and c.THD_TXN_STS!='F' and
+		c.THD_TXN_STS!='T' and
+		c.TXN_DTE=#{txnDte, jdbcType=DATE} and
 		c.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and c.TXN_TYP!='C' and
 		BAK_FLD2='0320')c) and TXN_DTE=#{txnDte, jdbcType=DATE} and
 		eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and
@@ -2117,28 +2306,39 @@
 		COALESCE(sum(TXN_AMT), 0) FStotSuccAmt from
 		eups.EUPS_TRANS_JOURNAL d
 		where d.TXN_STS='S' AND d.MFM_TXN_STS='S'
-		and d.THD_TXN_STS!='U' and
+		and
+		d.THD_TXN_STS!='U' and
 		d.THD_TXN_STS!='F' and d.THD_TXN_STS!='T'
-		and d.TXN_DTE=#{txnDte,
+		and
+		d.TXN_DTE=#{txnDte,
 		jdbcType=DATE} and
 		d.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and
 		d.TXN_TYP!='C' and
 		BAK_FLD2='0306') l,
 		(select count(*)
-		FSfailCnt, COALESCE(sum(TXN_AMT), 0) FStotFailAmt from
-		eups.EUPS_TRANS_JOURNAL where TXN_STS='F' AND (MFM_TXN_STS='F' or
-		(MFM_TXN_STS='S' and THD_TXN_STS='F')) and TXN_DTE=#{txnDte,
-		jdbcType=DATE} and eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and
-		TXN_TYP!='C' and BAK_FLD2='0306') m,
+		FSfailCnt, COALESCE(sum(TXN_AMT),
+		0) FStotFailAmt from
+		eups.EUPS_TRANS_JOURNAL where TXN_STS='F' AND
+		(MFM_TXN_STS='F' or
+		(MFM_TXN_STS='S' and THD_TXN_STS='F')) and
+		TXN_DTE=#{txnDte,
+		jdbcType=DATE} and
+		eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and
+		TXN_TYP!='C' and
+		BAK_FLD2='0306') m,
 		(select count(*)
-		FSdoubtCnt, COALESCE(sum(TXN_AMT), 0) FStotDoubtAmt from
-		eups.EUPS_TRANS_JOURNAL c where c.MFM_TXN_STS='S' and
-		c.THD_TXN_STS!='S' and c.THD_TXN_STS!='F' and c.MFM_TXN_STS!='C' and
+		FSdoubtCnt, COALESCE(sum(TXN_AMT),
+		0) FStotDoubtAmt from
+		eups.EUPS_TRANS_JOURNAL c where c.MFM_TXN_STS='S'
+		and
+		c.THD_TXN_STS!='S' and c.THD_TXN_STS!='F' and c.MFM_TXN_STS!='C'
+		and
 		c.TXN_TYP!='C' and c.TXN_DTE=#{txnDte, jdbcType=DATE} and
 		c.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and
 		BAK_FLD2='0306') n,
 		(select count(*) FSothertCnt,
-		COALESCE(sum(TXN_AMT), 0) FStotOtherAmt from
+		COALESCE(sum(TXN_AMT), 0) FStotOtherAmt
+		from
 		eups.EUPS_TRANS_JOURNAL
 		where sqn not in(select a.sqn from (select
 		distinct a.sqn as sqn from
@@ -2151,23 +2351,82 @@
 		a.TXN_TYP!='C'and
 		BAK_FLD2='0306') a) and sqn not in(select
 		b.sqn from(select
-		distinct b.sqn as sqn from eups.EUPS_TRANS_JOURNAL b
+		distinct
+		b.sqn as sqn from eups.EUPS_TRANS_JOURNAL b
 		where
-		b.MFM_TXN_STS='S' and b.THD_TXN_STS!='S' and b.THD_TXN_STS!='F'
+		b.MFM_TXN_STS='S' and
+		b.THD_TXN_STS!='S' and b.THD_TXN_STS!='F'
 		and
-		b.MFM_TXN_STS!='C' and b.TXN_TYP!='C' and b.TXN_DTE=#{txnDte,
-		jdbcType=DATE} and b.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and
-		BAK_FLD2='0306')b) and sqn not in(select c.sqn from(select
-		c.sqn as sqn from eups.EUPS_TRANS_JOURNAL c where c.TXN_STS='S' AND
-		c.MFM_TXN_STS='S' and c.THD_TXN_STS!='U' and c.THD_TXN_STS!='F' and
-		c.THD_TXN_STS!='T' and c.TXN_DTE=#{txnDte, jdbcType=DATE} and
+		b.MFM_TXN_STS!='C' and
+		b.TXN_TYP!='C' and b.TXN_DTE=#{txnDte,
+		jdbcType=DATE} and
+		b.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and
+		BAK_FLD2='0306')b) and
+		sqn not in(select c.sqn from(select
+		c.sqn as sqn from
+		eups.EUPS_TRANS_JOURNAL c where c.TXN_STS='S' AND
+		c.MFM_TXN_STS='S' and
+		c.THD_TXN_STS!='U' and c.THD_TXN_STS!='F' and
+		c.THD_TXN_STS!='T' and
+		c.TXN_DTE=#{txnDte, jdbcType=DATE} and
 		c.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and c.TXN_TYP!='C' and
 		BAK_FLD2='0306')c) and TXN_DTE=#{txnDte, jdbcType=DATE} and
 		eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and
-		BAK_FLD2='0306') o
+		BAK_FLD2='0306') o -->
 		
+select * FROM
+
+(select count(*) totCnt,COALESCE(sum(TXN_AMT), 0) totAmt from eups.EUPS_TRANS_JOURNAL where TXN_DTE=#{txnDte,jdbcType=DATE} and eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and subStr(BAK_FLD2,1,2)='03'AND TXN_TYP !='C' AND MFM_TXN_STS !='C') aa,
+
+(select count(*) QYtotCnt ,COALESCE(sum(TXN_AMT), 0) QYtotAmt from eups.EUPS_TRANS_JOURNAL where TXN_DTE=#{txnDte,jdbcType=DATE} and eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND TXN_TYP !='C' AND MFM_TXN_STS !='C' and BAK_FLD2='0318') ab,
+(select count(*) QYsuccCnt, COALESCE(sum(TXN_AMT), 0) QYtotSuccAmt from eups.EUPS_TRANS_JOURNAL a where  A.TXN_DTE=#{txnDte,jdbcType=DATE} and A.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND A.TXN_TYP !='C' AND A.MFM_TXN_STS !='C' and a.bak_fld2='0318'and ((A.CHL_TYP !='90' and A.TXN_STS='S' AND A.MFM_TXN_STS='S' AND A.THD_TXN_STS='S' ) or (A.CHL_TYP='90' and A.TXN_STS='S' AND A.MFM_TXN_STS='S' AND A.THD_TXN_STS !='F'  AND A.THD_TXN_STS !='T'  AND A.THD_TXN_STS !='R'))) ac,
+(select count(*) QYfailCnt, COALESCE(sum(TXN_AMT), 0) QYtotFailAmt from eups.EUPS_TRANS_JOURNAL a where   A.TXN_DTE=#{txnDte,jdbcType=DATE} and A.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND A.TXN_TYP !='C' AND A.MFM_TXN_STS !='C' and ((A.CHL_TYP !='90' and A.TXN_STS='F' AND A.MFM_TXN_STS='F' AND A.THD_TXN_STS !='S' AND (A.THD_TXN_STS ='F' OR A.THD_TXN_STS !='U')) or (A.CHL_TYP='90' and A.TXN_STS='F' AND A.MFM_TXN_STS='F' AND A.THD_TXN_STS !='S' )) and a.BAK_FLD2='0318') ad,
+(select count(*) QYdoubtCnt, COALESCE(sum(TXN_AMT), 0) QYtotDoubtAmt from eups.EUPS_TRANS_JOURNAL c where c.TXN_DTE=#{txnDte,jdbcType=DATE} and c.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND c.TXN_TYP !='C' AND c.MFM_TXN_STS !='C' and c.CHL_TYP !='90' and c.TXN_STS='F' AND c.MFM_TXN_STS='F' AND c.THD_TXN_STS !='S' AND c.THD_TXN_STS !='F' AND c.THD_TXN_STS !='T' and BAK_FLD2='0318') ae,
+(select count(*) QYothertCnt, COALESCE(sum(TXN_AMT), 0) QYtotOtherAmt from eups.EUPS_TRANS_JOURNAL where sqn not in(select distinct a.sqn as sqn from  eups.EUPS_TRANS_JOURNAL A where  A.TXN_DTE=#{txnDte,jdbcType=DATE} and A.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND A.TXN_TYP !='C' AND A.MFM_TXN_STS !='C' and ((A.CHL_TYP !='90' and A.TXN_STS='S' AND A.MFM_TXN_STS='S' AND A.THD_TXN_STS='S' ) or (A.CHL_TYP='90' and A.TXN_STS='S' AND A.MFM_TXN_STS='S' AND A.THD_TXN_STS !='F'  AND A.THD_TXN_STS !='T'  AND A.THD_TXN_STS !='R'))) and sqn not in(select distinct a.sqn as sqn from  eups.EUPS_TRANS_JOURNAL A where  A.TXN_DTE=#{txnDte,jdbcType=DATE} and A.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND A.TXN_TYP !='C' AND A.MFM_TXN_STS !='C' and ((A.CHL_TYP !='90' and A.TXN_STS='F' AND A.MFM_TXN_STS='F' AND A.THD_TXN_STS !='S' AND (A.THD_TXN_STS ='F' OR A.THD_TXN_STS !='U')) or (A.CHL_TYP='90' and A.TXN_STS='F' AND A.MFM_TXN_STS='F' AND A.THD_TXN_STS !='S' ))) and sqn not in(select distinct a.sqn as sqn from  eups.EUPS_TRANS_JOURNAL A where  A.TXN_DTE=#{txnDte,jdbcType=DATE} and A.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND A.TXN_TYP !='C' AND A.MFM_TXN_STS !='C' and A.CHL_TYP !='90' and A.TXN_STS='F' AND A.MFM_TXN_STS='F' AND A.THD_TXN_STS !='S' AND A.THD_TXN_STS !='F' AND A.THD_TXN_STS !='T') and TXN_DTE=#{txnDte,jdbcType=DATE} and eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND TXN_TYP !='C' AND MFM_TXN_STS !='C' and TXN_DTE=#{txnDte,jdbcType=DATE} and eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and BAK_FLD2='0318') af,
+
+(select count(*) ZStotCnt ,COALESCE(sum(TXN_AMT), 0) ZStotAmt from eups.EUPS_TRANS_JOURNAL where TXN_DTE=#{txnDte,jdbcType=DATE} and eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND TXN_TYP !='C' AND MFM_TXN_STS !='C' and BAK_FLD2='0320') ag,
+(select count(*) ZSsuccCnt, COALESCE(sum(TXN_AMT), 0) ZStotSuccAmt from eups.EUPS_TRANS_JOURNAL a where  A.TXN_DTE=#{txnDte,jdbcType=DATE} and A.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND A.TXN_TYP !='C' AND A.MFM_TXN_STS !='C' and a.bak_fld2='0320'and ((A.CHL_TYP !='90' and A.TXN_STS='S' AND A.MFM_TXN_STS='S' AND A.THD_TXN_STS='S' ) or (A.CHL_TYP='90' and A.TXN_STS='S' AND A.MFM_TXN_STS='S' AND A.THD_TXN_STS !='F'  AND A.THD_TXN_STS !='T'  AND A.THD_TXN_STS !='R'))) ah,
+(select count(*) ZSfailCnt, COALESCE(sum(TXN_AMT), 0) ZStotFailAmt from eups.EUPS_TRANS_JOURNAL a where   A.TXN_DTE=#{txnDte,jdbcType=DATE} and A.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND A.TXN_TYP !='C' AND A.MFM_TXN_STS !='C' and ((A.CHL_TYP !='90' and A.TXN_STS='F' AND A.MFM_TXN_STS='F' AND A.THD_TXN_STS !='S' AND (A.THD_TXN_STS ='F' OR A.THD_TXN_STS !='U')) or (A.CHL_TYP='90' and A.TXN_STS='F' AND A.MFM_TXN_STS='F' AND A.THD_TXN_STS !='S' )) and a.BAK_FLD2='0320') ai,
+(select count(*) ZSdoubtCnt, COALESCE(sum(TXN_AMT), 0) ZStotDoubtAmt from eups.EUPS_TRANS_JOURNAL c where c.TXN_DTE=#{txnDte,jdbcType=DATE} and c.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND c.TXN_TYP !='C' AND c.MFM_TXN_STS !='C' and c.CHL_TYP !='90' and c.TXN_STS='F' AND c.MFM_TXN_STS='F' AND c.THD_TXN_STS !='S' AND c.THD_TXN_STS !='F' AND c.THD_TXN_STS !='T' and BAK_FLD2='0320') aj,
+(select count(*) ZSothertCnt, COALESCE(sum(TXN_AMT), 0) ZStotOtherAmt from eups.EUPS_TRANS_JOURNAL where sqn not in(select distinct a.sqn as sqn from  eups.EUPS_TRANS_JOURNAL A where  A.TXN_DTE=#{txnDte,jdbcType=DATE} and A.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND A.TXN_TYP !='C' AND A.MFM_TXN_STS !='C' and ((A.CHL_TYP !='90' and A.TXN_STS='S' AND A.MFM_TXN_STS='S' AND A.THD_TXN_STS='S' ) or (A.CHL_TYP='90' and A.TXN_STS='S' AND A.MFM_TXN_STS='S' AND A.THD_TXN_STS !='F'  AND A.THD_TXN_STS !='T'  AND A.THD_TXN_STS !='R'))) and sqn not in(select distinct a.sqn as sqn from  eups.EUPS_TRANS_JOURNAL A where  A.TXN_DTE=#{txnDte,jdbcType=DATE} and A.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND A.TXN_TYP !='C' AND A.MFM_TXN_STS !='C' and ((A.CHL_TYP !='90' and A.TXN_STS='F' AND A.MFM_TXN_STS='F' AND A.THD_TXN_STS !='S' AND (A.THD_TXN_STS ='F' OR A.THD_TXN_STS !='U')) or (A.CHL_TYP='90' and A.TXN_STS='F' AND A.MFM_TXN_STS='F' AND A.THD_TXN_STS !='S' ))) and sqn not in(select distinct a.sqn as sqn from  eups.EUPS_TRANS_JOURNAL A where  A.TXN_DTE=#{txnDte,jdbcType=DATE} and A.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND A.TXN_TYP !='C' AND A.MFM_TXN_STS !='C' and A.CHL_TYP !='90' and A.TXN_STS='F' AND A.MFM_TXN_STS='F' AND A.THD_TXN_STS !='S' AND A.THD_TXN_STS !='F' AND A.THD_TXN_STS !='T') and TXN_DTE=#{txnDte,jdbcType=DATE} and eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND TXN_TYP !='C' AND MFM_TXN_STS !='C' and TXN_DTE=#{txnDte,jdbcType=DATE} and eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and BAK_FLD2='0320') ak,
+
+(select count(*) FStotCnt ,COALESCE(sum(TXN_AMT), 0) FStotAmt from eups.EUPS_TRANS_JOURNAL where TXN_DTE=#{txnDte,jdbcType=DATE} and eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND TXN_TYP !='C' AND MFM_TXN_STS !='C' and BAK_FLD2='0306') al,
+(select count(*) FSsuccCnt, COALESCE(sum(TXN_AMT), 0) FStotSuccAmt from eups.EUPS_TRANS_JOURNAL a where  A.TXN_DTE=#{txnDte,jdbcType=DATE} and A.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND A.TXN_TYP !='C' AND A.MFM_TXN_STS !='C' and a.bak_fld2='0306'and ((A.CHL_TYP !='90' and A.TXN_STS='S' AND A.MFM_TXN_STS='S' AND A.THD_TXN_STS='S' ) or (A.CHL_TYP='90' and A.TXN_STS='S' AND A.MFM_TXN_STS='S' AND A.THD_TXN_STS !='F'  AND A.THD_TXN_STS !='T'  AND A.THD_TXN_STS !='R'))) am,
+(select count(*) FSfailCnt, COALESCE(sum(TXN_AMT), 0) FStotFailAmt from eups.EUPS_TRANS_JOURNAL a where   A.TXN_DTE=#{txnDte,jdbcType=DATE} and A.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND A.TXN_TYP !='C' AND A.MFM_TXN_STS !='C' and ((A.CHL_TYP !='90' and A.TXN_STS='F' AND A.MFM_TXN_STS='F' AND A.THD_TXN_STS !='S' AND (A.THD_TXN_STS ='F' OR A.THD_TXN_STS !='U')) or (A.CHL_TYP='90' and A.TXN_STS='F' AND A.MFM_TXN_STS='F' AND A.THD_TXN_STS !='S' )) and a.BAK_FLD2='0306') an,
+(select count(*) FSdoubtCnt, COALESCE(sum(TXN_AMT), 0) FStotDoubtAmt from eups.EUPS_TRANS_JOURNAL c where c.TXN_DTE=#{txnDte,jdbcType=DATE} and c.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND c.TXN_TYP !='C' AND c.MFM_TXN_STS !='C' and c.CHL_TYP !='90' and c.TXN_STS='F' AND c.MFM_TXN_STS='F' AND c.THD_TXN_STS !='S' AND c.THD_TXN_STS !='F' AND c.THD_TXN_STS !='T' and BAK_FLD2='0306') ao,
+(select count(*) FSothertCnt, COALESCE(sum(TXN_AMT), 0) FStotOtherAmt from eups.EUPS_TRANS_JOURNAL where sqn not in(select distinct a.sqn as sqn from  eups.EUPS_TRANS_JOURNAL A where  A.TXN_DTE=#{txnDte,jdbcType=DATE} and A.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND A.TXN_TYP !='C' AND A.MFM_TXN_STS !='C' and ((A.CHL_TYP !='90' and A.TXN_STS='S' AND A.MFM_TXN_STS='S' AND A.THD_TXN_STS='S' ) or (A.CHL_TYP='90' and A.TXN_STS='S' AND A.MFM_TXN_STS='S' AND A.THD_TXN_STS !='F'  AND A.THD_TXN_STS !='T'  AND A.THD_TXN_STS !='R'))) and sqn not in(select distinct a.sqn as sqn from  eups.EUPS_TRANS_JOURNAL A where  A.TXN_DTE=#{txnDte,jdbcType=DATE} and A.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND A.TXN_TYP !='C' AND A.MFM_TXN_STS !='C' and ((A.CHL_TYP !='90' and A.TXN_STS='F' AND A.MFM_TXN_STS='F' AND A.THD_TXN_STS !='S' AND (A.THD_TXN_STS ='F' OR A.THD_TXN_STS !='U')) or (A.CHL_TYP='90' and A.TXN_STS='F' AND A.MFM_TXN_STS='F' AND A.THD_TXN_STS !='S' ))) and sqn not in(select distinct a.sqn as sqn from  eups.EUPS_TRANS_JOURNAL A where  A.TXN_DTE=#{txnDte,jdbcType=DATE} and A.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND A.TXN_TYP !='C' AND A.MFM_TXN_STS !='C' and A.CHL_TYP !='90' and A.TXN_STS='F' AND A.MFM_TXN_STS='F' AND A.THD_TXN_STS !='S' AND A.THD_TXN_STS !='F' AND A.THD_TXN_STS !='T') and TXN_DTE=#{txnDte,jdbcType=DATE} and eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND TXN_TYP !='C' AND MFM_TXN_STS !='C' and TXN_DTE=#{txnDte,jdbcType=DATE} and eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} and BAK_FLD2='0306') ap
+
 		
+
+
 	</select>
 
+
+
+	<select id="findElec00SusList" resultType="java.util.Map"
+		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
+SELECT * FROM(
+select * from  eups.EUPS_TRANS_JOURNAL A
+ where  A.TXN_DTE=#{txnDte,jdbcType=DATE} and A.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND A.TXN_TYP !='C' AND A.MFM_TXN_STS !='C'
+and 
+((
+A.CHL_TYP !='90' and A.TXN_STS='S' AND A.MFM_TXN_STS='S' AND A.THD_TXN_STS='S' 
+) 
+or 
+(
+A.CHL_TYP='90' and A.TXN_STS='S' AND A.MFM_TXN_STS='S' AND A.THD_TXN_STS !='F'  AND A.THD_TXN_STS !='T'  AND A.THD_TXN_STS !='R'
+)) ) C,
+(select  COALESCE(count(*), 0) succCnt, COALESCE(sum(TXN_AMT), 0)
+		totSuccAmt  from  eups.EUPS_TRANS_JOURNAL B
+ where  B.TXN_DTE=#{txnDte,jdbcType=DATE} and B.eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR} AND B.TXN_TYP !='C' AND B.MFM_TXN_STS !='C'
+and 
+((
+B.CHL_TYP !='90' and B.TXN_STS='S' AND B.MFM_TXN_STS='S' AND B.THD_TXN_STS='S'
+) 
+or 
+(
+B.CHL_TYP='90' and B.TXN_STS='S' AND B.MFM_TXN_STS='S' AND B.THD_TXN_STS !='F'  AND B.THD_TXN_STS !='T'  AND B.THD_TXN_STS !='R'
+)) ) D  ORDER BY bak_fld2
+	</select>
 
 </mapper>
