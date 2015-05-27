@@ -62,8 +62,8 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 		// 配VM文件
 		String comNo = null;
 		String fileName = null;
-		 String br = context.getData(ParamKeys.BR);
-		 String tlr = context.getData(ParamKeys.TELLER);
+		String br = context.getData(ParamKeys.BR);
+		String tlr = context.getData(ParamKeys.TELLER);
 		String prtDte = context.getData("prtDte");
 		String prtTyp = context.getData("prtTyp");
 		Date prtDate = DateUtils.parse(prtDte, DateUtils.STYLE_SIMPLE_DATE);
@@ -108,7 +108,7 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			if ("ELEC00".equals(eupsBusTyp)) {
 				prtList = get(GdEupsTransJournalRepository.class)
 						.findElec00AllTxnList(eupsJnl);
-			} else {
+			} else if ("PGAS00".equals(eupsBusTyp)) {
 				prtList = get(GdEupsTransJournalRepository.class)
 						.findAllTxnList(eupsJnl);
 				if (null == prtList || CollectionUtils.isEmpty(prtList)) {
@@ -134,12 +134,17 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 					.toString().trim()
 					+ "_汇总报表";
 
-			fileName = ttlDate
-					+ context.getData(ParamKeys.EUPS_BUSS_TYPE) + "JnlAll" + "_p_"  + br + "_" + tlr + ".txt";
+			fileName = ttlDate + context.getData(ParamKeys.EUPS_BUSS_TYPE)
+					+ "JnlAll" + "_p_" + br + "_" + tlr + ".txt";
 		}
-		if ("1".equals(prtTyp)) {
-			prtList = get(GdEupsTransJournalRepository.class).findSuccTxnList(
-					eupsJnl);
+		if ("1".equals(prtTyp)) { // 成功
+			if (eupsBusTyp.equals("PGAS00")) {
+				prtList = get(GdEupsTransJournalRepository.class)
+						.findSuccTxnList(eupsJnl);
+			}
+			if (eupsBusTyp.equals("ELEC00")) {
+				prtList = get(GdEupsTransJournalRepository.class).findElec00SusList(eupsJnl);
+			}
 			if (null == prtList || CollectionUtils.isEmpty(prtList)) {
 				logger.info("There are no records for select check trans journal ");
 				throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
@@ -150,15 +155,16 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
 					.toString().trim()
 					+ "_成功交易清单报表";
-			fileName = ttlDate + context.getData(ParamKeys.EUPS_BUSS_TYPE) + "jnlSus" + "_p_"  + br + "_" + tlr + ".txt";
+			fileName = ttlDate + context.getData(ParamKeys.EUPS_BUSS_TYPE)
+					+ "jnlSus" + "_p_" + br + "_" + tlr + ".txt";
 		}
 		if ("2".equals(prtTyp)) {
-			if(eupsBusTyp.equals("ELEC00")){
-				prtList = get(GdEupsTransJournalRepository.class).findElecFailTxnList(
-						eupsJnl);
-			}else{
-				prtList = get(GdEupsTransJournalRepository.class).findFailTxnList(
-						eupsJnl);
+			if ("ELEC00".equals(eupsBusTyp)) {
+				prtList = get(GdEupsTransJournalRepository.class)
+						.findElecFailTxnList(eupsJnl);
+			} else if("PGAS00".equals(eupsBusTyp)) {
+				prtList = get(GdEupsTransJournalRepository.class)
+						.findFailTxnList(eupsJnl);
 			}
 			if (null == prtList || CollectionUtils.isEmpty(prtList)) {
 				logger.info("There are no records for select check trans journal ");
@@ -170,15 +176,16 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
 					.toString().trim()
 					+ "_失败交易清单报表";
-			fileName = ttlDate + context.getData(ParamKeys.EUPS_BUSS_TYPE) + "jnlFal" + "_p_"  + br + "_" + tlr + ".txt";
+			fileName = ttlDate + context.getData(ParamKeys.EUPS_BUSS_TYPE)
+					+ "jnlFal" + "_p_" + br + "_" + tlr + ".txt";
 		}
 		if ("3".equals(prtTyp)) {
-			if(eupsBusTyp.equals("ELEC00")){
-				prtList = get(GdEupsTransJournalRepository.class).findElecDoubtTxnList(
-						eupsJnl);
-			}else{
-				prtList = get(GdEupsTransJournalRepository.class).findDoubtTxnList(
-						eupsJnl);
+			if ("ELEC00".equals(eupsBusTyp)) {
+				prtList = get(GdEupsTransJournalRepository.class)
+						.findElecDoubtTxnList(eupsJnl);
+			} else if("PGAS00".equals(eupsBusTyp)) {
+				prtList = get(GdEupsTransJournalRepository.class)
+						.findDoubtTxnList(eupsJnl);
 			}
 			if (null == prtList || CollectionUtils.isEmpty(prtList)) {
 				logger.info("There are no records for select check trans journal ");
@@ -190,16 +197,17 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
 					.toString().trim()
 					+ "_可疑交易清单报表";
-			fileName = ttlDate + context.getData(ParamKeys.EUPS_BUSS_TYPE) + "jnlDoubt" + "_p_"  + br + "_" + tlr + ".txt";
+			fileName = ttlDate + context.getData(ParamKeys.EUPS_BUSS_TYPE)
+					+ "jnlDoubt" + "_p_" + br + "_" + tlr + ".txt";
 		}
 		if ("4".equals(prtTyp)) {
-			
-			if(eupsBusTyp.equals("ELEC00")){
-				prtList = get(GdEupsTransJournalRepository.class).findElecOthTxnList(
-						eupsJnl);
-			}else{
-				prtList = get(GdEupsTransJournalRepository.class).findOthTxnList(
-						eupsJnl);
+
+			if ("ELEC00".equals(eupsBusTyp)) {
+				prtList = get(GdEupsTransJournalRepository.class)
+						.findElecOthTxnList(eupsJnl);
+			} else if("PGAS00".equals(eupsBusTyp)) {
+				prtList = get(GdEupsTransJournalRepository.class)
+						.findOthTxnList(eupsJnl);
 			}
 			if (null == prtList || CollectionUtils.isEmpty(prtList)) {
 				logger.info("There are no records for select check trans journal ");
@@ -210,7 +218,8 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 			context.setData("TOTOTHERAMT", prtList.get(0).get("TOTOTHERAMT"));
 			prtTtl = (String) context.getData(ParamKeys.COMPANY_NAME)
 					+ "_其他情况清单报表";
-			fileName = ttlDate + context.getData(ParamKeys.EUPS_BUSS_TYPE) + "jnlOth" + "_p_"  + br + "_" + tlr + ".txt";
+			fileName = ttlDate + context.getData(ParamKeys.EUPS_BUSS_TYPE)
+					+ "jnlOth" + "_p_" + br + "_" + tlr + ".txt";
 		}
 
 		if ("5".equals(prtTyp)) { // 批量报表 SQL
@@ -240,9 +249,13 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 					.toString().trim()
 					+ "_批量交易报表";
 			if (eupsBusTyp.equals("ELEC02")) {
-				fileName = "301586003BatchReport" + DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd) + ".txt";
+				fileName = "301586003BatchReport"
+						+ DateUtils
+								.format(new Date(), DateUtils.STYLE_yyyyMMdd)
+						+ ".txt";
 			} else {
-				fileName = ttlDate + context.getData(ParamKeys.EUPS_BUSS_TYPE) + "Batch" + "_p_"  + br + "_" + tlr + ".txt";
+				fileName = ttlDate + context.getData(ParamKeys.EUPS_BUSS_TYPE)
+						+ "Batch" + "_p_" + br + "_" + tlr + ".txt";
 			}
 
 		}
@@ -326,76 +339,74 @@ public class PrintEupsbRptsActionBak extends BaseAction {
 
 		// 上传前端FTP
 		// FTP上传设置
-//		FTPTransfer tFTPTransfer = new FTPTransfer();
-//		tFTPTransfer.setHost(sendFileToBBOSConfig.getThdIpAdr());
-//		tFTPTransfer
-//				.setPort(Integer.parseInt(sendFileToBBOSConfig.getBidPot()));
-//		tFTPTransfer.setUserName(sendFileToBBOSConfig.getOppNme());
-//		tFTPTransfer.setPassword(sendFileToBBOSConfig.getOppUsrPsw());
-//		try {
-//			tFTPTransfer.logon();
-//			Resource tResource = new FileSystemResource(JYPath);
-//			tFTPTransfer.putResource(tResource, sendFileToBBOSConfig
-//					.getRmtWay().trim(), fileName);
-//
-//		} catch (Exception e) {
-//			throw new CoreException("文件上传失败");
-//		} finally {
-//			tFTPTransfer.logout();
-//		}
-		
-		
-		
-		try {			
-			bbipPublicService.sendFileToBBOS(new File(filPath,fileName), fileName, MftpTransfer.FTYPE_NORMAL);			
-		}catch (Exception e) {
+		// FTPTransfer tFTPTransfer = new FTPTransfer();
+		// tFTPTransfer.setHost(sendFileToBBOSConfig.getThdIpAdr());
+		// tFTPTransfer
+		// .setPort(Integer.parseInt(sendFileToBBOSConfig.getBidPot()));
+		// tFTPTransfer.setUserName(sendFileToBBOSConfig.getOppNme());
+		// tFTPTransfer.setPassword(sendFileToBBOSConfig.getOppUsrPsw());
+		// try {
+		// tFTPTransfer.logon();
+		// Resource tResource = new FileSystemResource(JYPath);
+		// tFTPTransfer.putResource(tResource, sendFileToBBOSConfig
+		// .getRmtWay().trim(), fileName);
+		//
+		// } catch (Exception e) {
+		// throw new CoreException("文件上传失败");
+		// } finally {
+		// tFTPTransfer.logout();
+		// }
+
+		try {
+			bbipPublicService.sendFileToBBOS(new File(filPath, fileName),
+					fileName, MftpTransfer.FTYPE_NORMAL);
+		} catch (Exception e) {
 			throw new CoreException(ErrorCodes.EUPS_FTP_FILEPUT_NFAIL);
 		}
-		
 
 		// elec02对账文件上传到汕头指定服务器
 		if ("ELEC02".equals(eupsBusTyp)) {
 			/**
 			 * 配置ftp 参考 watr00BatchResulfA
 			 */
-//			OperateFTPActionExt operateFTP = new OperateFTPActionExt();
-//
-//			logger.info("elec02对账文件上传到汕头指定服务器");
-//			EupsThdFtpConfig sendFileToElec02 = get(
-//					EupsThdFtpConfigRepository.class).findOne(
-//					"sendFileToElec02");
-//			sendFileToElec02.setLocDir(filPath);
-//			sendFileToElec02.setLocFleNme(fileName);
-//			sendFileToElec02.setRmtFleNme(fileName);
-//			operateFTP.putCheckFile(sendFileToElec02);
-//			
-			
-//			-------------------------------------------------------------------
-//			String filPath = config.getLocDir();
-			EupsThdFtpConfig eupsThdFtpConfigA =get(
-					EupsThdFtpConfigRepository.class).findOne("sendFileToElec02");
+			// OperateFTPActionExt operateFTP = new OperateFTPActionExt();
+			//
+			// logger.info("elec02对账文件上传到汕头指定服务器");
+			// EupsThdFtpConfig sendFileToElec02 = get(
+			// EupsThdFtpConfigRepository.class).findOne(
+			// "sendFileToElec02");
+			// sendFileToElec02.setLocDir(filPath);
+			// sendFileToElec02.setLocFleNme(fileName);
+			// sendFileToElec02.setRmtFleNme(fileName);
+			// operateFTP.putCheckFile(sendFileToElec02);
+			//
+
+			// -------------------------------------------------------------------
+			// String filPath = config.getLocDir();
+			EupsThdFtpConfig eupsThdFtpConfigA = get(
+					EupsThdFtpConfigRepository.class).findOne(
+					"sendFileToElec02");
 			String stwatIpA = eupsThdFtpConfigA.getThdIpAdr();
 			String userNameA = eupsThdFtpConfigA.getOppNme();
 			String passwordA = eupsThdFtpConfigA.getOppUsrPsw();
 			String rmtDirA = eupsThdFtpConfigA.getRmtWay();
-			String[] shellArgA = {"GDEUPSBFtpPutFile.sh",stwatIpA,userNameA,passwordA,rmtDirA,fileName,filPath,"bin",fileName}; 
-			logger.info("ftp args="+shellArgA.toString());
-			//ftp放文件
-			try{
-				int result1 = FileFtpUtils.systemAndWait(shellArgA,true);
-				if(result1==0){
+			String[] shellArgA = { "GDEUPSBFtpPutFile.sh", stwatIpA, userNameA,
+					passwordA, rmtDirA, fileName, filPath, "bin", fileName };
+			logger.info("ftp args=" + shellArgA.toString());
+			// ftp放文件
+			try {
+				int result1 = FileFtpUtils.systemAndWait(shellArgA, true);
+				if (result1 == 0) {
 					logger.info("put remote file success......");
-				}else{
+				} else {
 					throw new CoreException(ErrorCodes.EUPS_FAIL);
 				}
-			} catch (Exception e){
+			} catch (Exception e) {
 				throw new CoreException(ErrorCodes.EUPS_FAIL);
 			}
 
-			
-//			-----------------------------------------------------------------
-			
-			
+			// -----------------------------------------------------------------
+
 		}
 
 		context.setData("fleNme", fileName);
