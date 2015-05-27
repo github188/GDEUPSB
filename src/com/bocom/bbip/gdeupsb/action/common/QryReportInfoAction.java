@@ -1,6 +1,7 @@
 package com.bocom.bbip.gdeupsb.action.common;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -60,8 +61,18 @@ public class QryReportInfoAction extends BaseAction {
 		
 		if("0".equals(prtTyp) || "1".equals(prtTyp) || "2".equals(prtTyp) || "3".equals(prtTyp) || "4".equals(prtTyp) ){
 		// 统计单笔交易信息
-		List<Map<String, Object>> prtList = get(
-				GdEupsTransJournalRepository.class).findRptJnlInfo(eupsJnl);
+			List<Map<String, Object>> prtList = new ArrayList<Map<String,Object>>(); 
+			if("ELEC00".equals(((String) context
+					.getData(ParamKeys.EUPS_BUSS_TYPE)))){
+				prtList = get(
+						GdEupsTransJournalRepository.class).findEfekRptJnlInfo(eupsJnl);
+			}
+			else if("PGAS00".equals(((String) context
+					.getData(ParamKeys.EUPS_BUSS_TYPE)))){
+				prtList = get(
+						GdEupsTransJournalRepository.class).findRptJnlInfo(eupsJnl);
+			}
+			
 		if (null == prtList || CollectionUtils.isEmpty(prtList)) {
 			logger.info("There are no records for select check trans journal ");
 			throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
