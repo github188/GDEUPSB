@@ -70,7 +70,7 @@ public class QryReportInfoAction extends BaseAction {
 			else if("PGAS00".equals(((String) context
 					.getData(ParamKeys.EUPS_BUSS_TYPE)))){
 				prtList = get(
-						GdEupsTransJournalRepository.class).findRptJnlInfo(eupsJnl);
+						GdEupsTransJournalRepository.class).findAllTxnList(eupsJnl);
 			}
 			
 		if (null == prtList || CollectionUtils.isEmpty(prtList)) {
@@ -87,7 +87,7 @@ public class QryReportInfoAction extends BaseAction {
 		context.setData("totFailAmt", prtList.get(0).get("TOTFAILAMT") + "");
 		context.setData("doubtCnt", prtList.get(0).get("DOUBTCNT") + "");
 		context.setData("totDoubtAmt", prtList.get(0).get("TOTDOUBTAMT") + "");
-		context.setData("otherCnt", prtList.get(0).get("OTHERTCNT") + "");
+		context.setData("otherCnt", prtList.get(0).get("OTHERCNT") + "");
 		context.setData("totOtherAmt", prtList.get(0).get("TOTOTHERAMT") + "");
 		logger.info("======== jnl rpt info =====context:" + context);
 		}
