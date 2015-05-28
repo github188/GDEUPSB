@@ -1750,15 +1750,18 @@
 	
 	<!-- 南方电网 对总账 分组 -->
 	<select id="findMsgToChkTot" resultType="java.util.Map"  parameterType="java.util.Map">
-			select 
-						SUBSTR(COM_NO,1,6) as COM_NO,THD_OBK_CDE,RSV_FLD4,RSV_FLD5,TXN_DTE,count(*) as TOT_COUNT,sum(TXN_AMT) as ALL_MONEY
-			 from 
-			 			${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL
-			 where  
-			 			EUPS_BUS_TYP='ELEC00' AND TXN_STS='S' AND TXN_TYP='N' AND  MFM_TXN_STS='S'
-			 			AND TXN_DTE=#{txnDte,jdbcType=CHAR}  
-			  group by
-			 			SUBSTR(COM_NO,1,6),THD_OBK_CDE,RSV_FLD4,RSV_FLD5,TXN_DTE
+			select  SUBSTR(COM_NO,1,6) as COM_NO,THD_OBK_CDE,RSV_FLD4,RSV_FLD5,TXN_DTE,count(*) as TOT_COUNT,sum(TXN_AMT) as ALL_MONEY
+ 			from eups.EUPS_TRANS_JOURNAL where  EUPS_BUS_TYP='ELEC00' AND TXN_STS='S' AND TXN_TYP='N' AND  MFM_TXN_STS='S'  AND TXN_DTE=#{txnDte,jdbcType=CHAR} 
+ 			 group by  SUBSTR(COM_NO,1,6),THD_OBK_CDE,RSV_FLD4,RSV_FLD5,TXN_DTE
+			union (select com_no as COM_NO,
+			'301' as THD_OBK_CDE,
+			'070' as RSV_FLD4,
+			RSV_FLD4 as RSV_FLD5,
+			EXE_DTE as TXN_DTE, 
+			sum(SUC_TOT_CNT) as TOT_COUNT,
+			sum(SUC_TOT_AMT) as ALL_MONEY from gdeupsb.GDEUPS_BATCH_CONSOLE_INFO
+			where EUPS_BUS_TYP='ELEC00' and bat_sts='S' and EXE_DTE=#{txnDte,jdbcType=CHAR}  
+			and  SUC_TOT_CNT!='0' group by com_no,RSV_FLD4,EXE_DTE )
 	 </select>	
 	 	<!-- 南方电网 日志服务 分组 -->
 	<select id="findComNoGroup" resultType="java.util.Map"  parameterType="java.util.Map">
