@@ -56,7 +56,7 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 			
 			Result delResult = bgspServiceAccessObject.callServiceFlatting("deleteAgentCollectAgreement",context.getDataMap());
 			logger.info("==========delResult："+delResult);
-			if(delResult.isSuccess()){
+//			if(delResult.isSuccess()){
 				if(context.getData("oprTypeBank").equals("1")){
 					log.info("============insert   EupsCusAgentJournal");
 //					EupsCusAgentJournal eupsCusAgentJournal=new EupsCusAgentJournal();
@@ -194,10 +194,11 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 						context.setData("PKGCNT", "000000");
 					}
 				}
-			}else{
-					context.setData("thdRspCde", "83");
-					throw new CoreException("解约失败");
-			}
+//			}
+//			else{
+//					context.setData("thdRspCde", "83");
+//					throw new CoreException("解约失败");
+//			}
 			logger.info("=============End   DeleteCusAgentServiceAction ");
 	}
 	public Map<String, Object> createMap(Context context){
