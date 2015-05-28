@@ -125,6 +125,7 @@ public class CusAgentServiceAction extends BaseAction{
 					map.put("agdAgrNo", agdAgrNo);
 					i=1;
 				}else {
+					log.info("协议删除，准备进行协议查询，忽略协议查询中的错误!.......");
 					//add by qc 
 					try{
 						agdAgrNo=selectList(context);
