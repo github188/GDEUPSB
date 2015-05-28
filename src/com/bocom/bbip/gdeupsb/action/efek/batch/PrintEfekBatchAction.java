@@ -77,29 +77,51 @@ public class PrintEfekBatchAction extends BaseAction{
 						if(mothed.equals("0")){
 								list=gdEupsEleTmpRepository.findByComNo(gdEupsEleTmp);
 								if(CollectionUtils.isEmpty(list)){
-										throw new CoreException(txnDte+"没有进行批量交易");
+//										throw new CoreException(txnDte+"没有进行批量交易");
+//									return;
 								}
 								context.setData("printType", "全部清单");
 						}else if(mothed.equals("1")){
 								gdEupsEleTmp.setPaymentResult("00");
 								list=gdEupsEleTmpRepository.findByComNo(gdEupsEleTmp);
 								if(CollectionUtils.isEmpty(list)){
-									throw new CoreException(txnDte+"没有成功批量交易");
+//									throw new CoreException(txnDte+"没有成功批量交易");
+//									return;
 								}
-								mapTot=gdEupsEleTmpRepository.findByComNoSucTot(maps).get(0);
+								
+								List<Map<String,Object>> sucTotMap=gdEupsEleTmpRepository.findByComNoSucTot(maps);
+								if(CollectionUtils.isNotEmpty(sucTotMap)){
+									mapTot=sucTotMap.get(0);
+									context.setData("totCnt", mapTot.get("COMNOTOTCNT"));
+									context.setData("totAmt", mapTot.get("COMNOTOTAMT"));
+								}else{
+									context.setData("totCnt", 0);
+									context.setData("totAmt", "0.00");
+								}
+
+//								mapTot=gdEupsEleTmpRepository.findByComNoSucTot(maps).get(0);
 								//成功清单   该地区总笔数 总金额
-								context.setData("totCnt", mapTot.get("COMNOTOTCNT"));
-								context.setData("totAmt", mapTot.get("COMNOTOTAMT"));
 								context.setData("printType", "成功清单");
 						}else{
 								list=gdEupsEleTmpRepository.findFail(maps);
 								if(CollectionUtils.isEmpty(list)){
-									throw new CoreException(txnDte+"没有失败批量交易");
+//									throw new CoreException(txnDte+"没有失败批量交易");
+//									return;
 								}
-								mapTot=gdEupsEleTmpRepository.findByComNoFailTot(maps).get(0);
+								
+								List<Map<String,Object>> falTotMap=gdEupsEleTmpRepository.findByComNoSucTot(maps);
+								if(CollectionUtils.isNotEmpty(falTotMap)){
+									mapTot=falTotMap.get(0);
+									context.setData("totCnt", mapTot.get("COMNOTOTCNT"));
+									context.setData("totAmt", mapTot.get("COMNOTOTAMT"));
+								}else{
+									context.setData("totCnt", 0);
+									context.setData("totAmt", "0.00");
+								}
+//								mapTot=gdEupsEleTmpRepository.findByComNoFailTot(maps).get(0);
 								//失败清单   该地区总笔数 总金额
-								context.setData("totCnt", mapTot.get("COMNOTOTCNT"));
-								context.setData("totAmt", mapTot.get("COMNOTOTAMT"));
+//								context.setData("totCnt", mapTot.get("COMNOTOTCNT"));
+//								context.setData("totAmt", mapTot.get("COMNOTOTAMT"));
 								context.setData("printType", "失败清单");
 						}
 
