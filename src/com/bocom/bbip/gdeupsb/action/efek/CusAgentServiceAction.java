@@ -125,7 +125,14 @@ public class CusAgentServiceAction extends BaseAction{
 					map.put("agdAgrNo", agdAgrNo);
 					i=1;
 				}else {
-					agdAgrNo=selectList(context);
+					//add by qc 
+					try{
+						agdAgrNo=selectList(context);
+					}catch(Exception e){
+						agdAgrNo="";
+						context.setData("agdAgrNo", "");
+					}
+					
 					map.put("agdAgrNo", agdAgrNo);
 					logger.info("~~~~~~~~~~~~~~~~~Enter  eups.commDelCusAgentELEC00 ");
 					mothed="eups.commDelCusAgentELEC00";
