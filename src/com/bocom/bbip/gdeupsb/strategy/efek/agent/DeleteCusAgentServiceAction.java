@@ -25,6 +25,7 @@ import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.bbip.service.Result;
+import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
@@ -57,8 +58,8 @@ public class DeleteCusAgentServiceAction extends BaseAction{
 			Result delResult = bgspServiceAccessObject.callServiceFlatting("deleteAgentCollectAgreement",context.getDataMap());
 			
 			 //add by qc
-			String cusAgr=context.getData("agdAgrNo");
-			if(StringUtils.isEmpty(cusAgr)){
+			ArrayList cusAgr=context.getData("agdAgrNo");
+			if(CollectionUtils.isEmpty(cusAgr)){
 				context.setState("BP_STATE_NORMAL");  
 			}
 			
