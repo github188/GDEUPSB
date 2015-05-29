@@ -105,14 +105,14 @@
 		<foreach name="detail"
 			ref="config/fmt/fileFmt/sign/waterAgtUpdFmtDetail.xml" encoding="GBK" />
 	</file>
-	
-		<!--签约一站通：电信协议更新文件 -->
+
+	<!--签约一站通：电信协议更新文件 -->
 	<file id="degAgtUpdFmt" name="degAgtUpdFmt" encoding="GBK"
 		lineSeparator="\n">
-		<foreach name="detail"
-			ref="config/fmt/fileFmt/sign/degAgtUpdFmtDetail.xml" encoding="GBK" />
+		<foreach name="detail" ref="config/fmt/fileFmt/sign/degAgtUpdFmtDetail.xml"
+			encoding="GBK" />
 	</file>
-	
+
 
 	<!--文件代收付配置格式 -->
 	<file id="agtFileBatchFmt" name="agtFileBatchFmt" encoding="GBK"
@@ -128,10 +128,10 @@
 		lineSeparator="\n">
 		<line name="header" ref="config/fmt/fileFmt/batch/BatchHeader.xml"
 			encoding="GBK" />
-		<foreach name="detail"
-			ref="config/fmt/fileFmt/batch/BatchDeatil.xml" encoding="GBK" />
+		<foreach name="detail" ref="config/fmt/fileFmt/batch/BatchDeatil.xml"
+			encoding="GBK" />
 	</file>
-	
+
 	<!-- 南方电网 对账 -->
 	<file name="elecCheckFile" id="elecCheckFile" encoding="GBK"
 		lineSeparator="\n">
@@ -164,10 +164,9 @@
 	<file name="efekAgent" id="efekAgent" encoding="GBK"
 		lineSeparator="\n">
 		<line name="header" ref="config/fmt/fileFmt/efek/AgentDataHead.xml" />
-		<foreach name="detail"
-			ref="config/fmt/fileFmt/efek/AgentDataDetail.xml" />
+		<foreach name="detail" ref="config/fmt/fileFmt/efek/AgentDataDetail.xml" />
 	</file>
-	
+
 
 	<!-- 珠海路桥 -->
 	<file name="trspCheckFile" id="trspCheckFile" encoding="GBK"
@@ -175,9 +174,10 @@
 		<foreach name="detail" ref="config/fmt/fileFmt/TRSP00/CheckFileDetail.xml" />
 	</file>
 
-	<file name="trspCheckCreateFile" id="trspCheckCreateFile" encoding="GBK"
-		lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/TRSP00/CreateCheckFileDetail.xml" />
+	<file name="trspCheckCreateFile" id="trspCheckCreateFile"
+		encoding="GBK" lineSeparator="\n">
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/TRSP00/CreateCheckFileDetail.xml" />
 	</file>
 
 	<!-- 银行文件对账第三方（华商一卡通） -->
@@ -507,115 +507,197 @@
 	</file>
 	<!-- 珠海文本 -->
 	<file id="fmtin1" name="fmtin1" encoding="GBK" lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat01IN/detail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat01IN/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtout1" name="fmtout1" encoding="GBK" lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat01OUT/detail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat01OUT/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtin2" name="fmtin2" encoding="GBK" lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat02IN/detail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat02IN/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtout2" name="fmtout2" encoding="GBK" lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat02OUT/detail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat02OUT/detail.xml"
+			encoding="GBK" />
 	</file>
 
 	<file id="fmtin3" name="fmtin3" encoding="GBK" lineSeparator="\n">
-		<line name="header" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat03INheader.xml" encoding="GBK" />
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat03IN/detail.xml" encoding="GBK" />
+		<line name="header"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat03INheader.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat03IN/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtout3" name="fmtout3" encoding="GBK" lineSeparator="\n">
-		<line name="header" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat03OUT/header.xml" encoding="GBK" />
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat03OUT/detail.xml" encoding="GBK" />
+		<line name="header"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat03OUT/header.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat03OUT/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtin4" name="fmtin4" encoding="GBK" lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat04IN/detail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat04IN/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtout4" name="fmtout4" encoding="GBK" lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat04OUT/detail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat04OUT/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtin5" name="fmtin5" encoding="GBK" lineSeparator="\n">
-		<line name="header" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat05IN/header.xml" encoding="GBK" />
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat05IN/detail.xml" encoding="GBK" />
+		<line name="header"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat05IN/header.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat05IN/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtout5" name="fmtout5" encoding="GBK" lineSeparator="\n">
-		<line name="header" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat05OUT/header.xml" encoding="GBK" />
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat05OUT/detail.xml" encoding="GBK" />
+		<line name="header"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat05OUT/header.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat05OUT/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtin6" name="fmtin6" encoding="GBK" lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat06IN/detail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat06IN/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtout6" name="fmtout6" encoding="GBK" lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat06OUT/detail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat06OUT/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtin7" name="fmtin7" encoding="GBK" lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat07IN/detail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat07IN/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtout7" name="fmtout7" encoding="GBK" lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat07OUT/detail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat07OUT/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtin8" name="fmtin8" encoding="GBK" lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat08IN/detail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat08IN/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtout8" name="fmtout8" encoding="GBK" lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat08OUT/detail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat08OUT/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtin9" name="fmtin9" encoding="GBK" lineSeparator="\n">
-		<line name="header" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat09IN/header.xml" encoding="GBK" />
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat09IN/detail.xml" encoding="GBK"  />
+		<line name="header"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat09IN/header.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat09IN/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtout9" name="fmtout9" encoding="GBK" lineSeparator="\n">
-		<line name="header" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat09OUT/header.xml" encoding="GBK" />
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat09OUT/detail.xml" encoding="GBK" />
+		<line name="header"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat09OUT/header.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat09OUT/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtin10" name="fmtin10" encoding="GBK" lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat10IN/detail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat10IN/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtout10" name="fmtout10" encoding="GBK" lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat10OUT/detail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat10OUT/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtin12" name="fmtin12" encoding="GBK" lineSeparator="\n">
-		<line name="header" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat12IN/header.xml" encoding="GBK" />
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat12IN/detail.xml" encoding="GBK" />
+		<line name="header"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat12IN/header.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat12IN/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtout12" name="fmtout12" encoding="GBK" lineSeparator="\n">
-		<line name="header" ref ="config/fmt/fileFmt/zh/ZHAG00batchFileFormat12OUT/header.xml" encoding="GBK" />
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat12OUT/detail.xml" encoding="GBK" />
+		<line name="header"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat12OUT/header.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat12OUT/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtin15" name="fmtin15" encoding="GBK" lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat15IN/detail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat15IN/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtout15" name="fmtout15" encoding="GBK" lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat15OUT/detail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat15OUT/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtin16" name="fmtin16" encoding="GBK" lineSeparator="\n">
-		<line name="header" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat16IN/header.xml" encoding="GBK" />
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat16IN/detail.xml" encoding="GBK" />
+		<line name="header"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat16IN/header.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat16IN/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtout16" name="fmtout16" encoding="GBK" lineSeparator="\n">
-		<line name="header" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat16OUT/header.xml" encoding="GBK" />
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat16OUT/detail.xml" encoding="GBK" />
+		<line name="header"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat16OUT/header.xml"
+			encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat16OUT/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtin19" name="fmtin19" encoding="GBK" lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat19IN/detail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat19IN/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtout19" name="fmtout19" encoding="GBK" lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat19OUT/detail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat19OUT/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtin21" name="fmtin21" encoding="GBK" lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat21IN/detail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat21IN/detail.xml"
+			encoding="GBK" />
 	</file>
 	<file id="fmtout21" name="fmtout21" encoding="GBK" lineSeparator="\n">
-		<foreach name="detail" ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat21OUT/detail.xml" encoding="GBK" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/zh/ZHAG00batchFileFormat21OUT/detail.xml"
+			encoding="GBK" />
 	</file>
-	
-    <!-- 水务数据拷盘 -->
-	<file id="datFleSndWat" name="datFleSndWat" encoding="GBK" lineSeparator="\n">
+
+	<!-- 水务数据拷盘 -->
+	<file id="datFleSndWat" name="datFleSndWat" encoding="GBK"
+		lineSeparator="\n">
 		<foreach name="detail" ref="config/fmt/fileFmt/sign/datFleSndWat.xml"
 			encoding="GBK" />
 	</file>
 
 	<!-- 广州有线数据拷盘返盘文件 -->
-	<file id="datFleSndTel" name="datFleSndTel" encoding="GBK" lineSeparator="\n">
+	<file id="datFleSndTel" name="datFleSndTel" encoding="GBK"
+		lineSeparator="\n">
 		<foreach name="detail" ref="config/fmt/fileFmt/sign/datFleSndTel.xml"
 			encoding="GBK" />
 	</file>
@@ -629,32 +711,47 @@
 		<line name="header" ref="config/fmt/fileFmt/watr00/BatchDataResultHead.xml" />
 	</file>
 
-	<!-- 汕头水费 当日流水文件-->
+	<!-- 汕头水费 当日流水文件 -->
 	<file name="watTransJnl" id="watTransJnl" encoding="GBK"
 		lineSeparator="\n">
 		<line name="floor" ref="config/fmt/fileFmt/watr00/WatTransJnlFloor.xml" />
 		<line name="head" ref="config/fmt/fileFmt/watr00/WatTransJnlHeader.xml" />
 		<foreach name="detail"
 			ref="config/fmt/fileFmt/watr00/WatTransJnlDetail.xml" />
-		
+
 	</file>
-	
+
 	<file name="watAgtDelFail" id="watAgtDelFail" encoding="GBK"
 		lineSeparator="\n">
-		
+
 		<line name="head" ref="config/fmt/fileFmt/watr00/watAgtDelFailHeader.xml" />
 		<foreach name="detail"
 			ref="config/fmt/fileFmt/watr00/watAgtDelFailDetail.xml" />
-		
+
 	</file>
 
-	
+
 	<file name="batchSignGdsfile" id="batchSignGdsfile" encoding="GBK"
 		lineSeparator="\n">
-		<line name="header" ref="config/fmt/fileFmt/sign/batchSignGdsfileHeader.xml" encoding="GBK" />
+		<line name="header" ref="config/fmt/fileFmt/sign/batchSignGdsfileHeader.xml"
+			encoding="GBK" />
 		<foreach name="detail"
-			ref="config/fmt/fileFmt/sign/batchSignGdsfileDetail.xml"  encoding="GBK" />
+			ref="config/fmt/fileFmt/sign/batchSignGdsfileDetail.xml" encoding="GBK" />
 	</file>
-	
+
+	<!-- 广州文本格式转换  解析文件 -->
+	<file id="changeFileFmt" name="changeFileFmt" encoding="UTF-8"
+		lineSeparator="\n">
+		<foreach name="detail" ref="config/fmt/fileFmt/gzag/changeFileFmtDeatil.xml"
+			encoding="UTF-8" />
+	</file>
+	<file id="changeFileFmtAcp" name="changeFileFmtAcp" encoding="UTF-8"
+		lineSeparator="\n">
+		<line name="header" ref="config/fmt/fileFmt/changeFmt/agtFileBatchHeader.xml"
+			encoding="UTF-8" />
+		<foreach name="detail"
+			ref="config/fmt/fileFmt/changeFmt/agtFileBatchDeatil.xml" encoding="UTF-8" />
+	</file>
+
 
 </files>
