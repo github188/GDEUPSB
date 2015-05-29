@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet packet.xsd"
+	encoding="UTF-8" trace="true">
+	
+	<segment name="detail"  encoding="UTF-8">
+		<fixString name="rsvFld1" length="16" /> <!-- thdCusNo -->
+		<fixString name="rsvFld2" length="8"/>	<!-- feeDate -->
+		<fixString name="cusAc" length="21"/>
+		<fixString name="rsvFld5" length="12"/>  <!-- txnAmt -->
+		<fixString name="thdCusNme" length="30"/>
+		<fixString name="rsvFld3" length="18"/> <!-- idNo -->
+		<fixString name="rsvFld4" length="36"/> <!-- fileSqn -->
+	</segment>
+	
+</message>
