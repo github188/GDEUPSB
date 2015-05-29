@@ -84,6 +84,8 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 			// 水费不需要调用第三方
 			String tAgtSt = "F";
 			String terMsg = "签约失败";
+			context.setData("lAgtSt", "F");
+			context.setData("lErMsg", "签约失败");
 			String actNo = agtDeatil.get("ACT_NO").toString().trim(); // 卡号
 			String gdsAId = agtDeatil.get("GDS_AID").toString().trim(); // 协议号
 			String subSts = agtDeatil.get("SUB_STS").toString().trim(); // 状态
@@ -103,6 +105,8 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
             	preQueryThddeal(context);
             	tAgtSt=(String)context.getData("TAgtSt");
             	terMsg=(String)context.getData("TErMsg");
+            	lAgtSt=(String)context.getData("lAgtSt");
+            	lErMsg=(String)context.getData("lErMsg");
             }
 		
 
@@ -231,6 +235,8 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
       if(rspCode.equals("000000")||rspCode.equals("0000")){
     		context.setData("TAgtSt", "S");
 			context.setData("TErMsg", "签约成功");
+			context.setData("lAgtSt", "S");
+			context.setData("lErMsg", "签约成功");
 			context.setData("status", "S");
 			context.setData("retcod", "000000");
 			context.setData("retmsg", "签约成功");
@@ -248,7 +254,7 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 			context.setData("responseMessage", "签约失败");
 			if(context.getDataMap().containsKey("funcTyp")==false){
 				context.setData("responseType", "E");
-				context.setData("responseCode", map.get("RSP_CODE"));
+				context.setData("responseCode", rspCode);
 				throw new CoreException( "签约失败"+"["+map.get("RSP_DESC")+"]");	
 			}
 			//throw new CoreException( "签约失败"+"["+map.get("RSP_DESC")+"]");	   
@@ -265,7 +271,7 @@ public class GduncbAgtValidCheckImlAction implements AgtValidCheckService {
 				context.setData("responseCode", infoMap.get("RSP_CODE"));
 				if(context.getDataMap().containsKey("funcTyp")==false){
 					context.setData("responseType", "E");
-					context.setData("responseCode", infoMap.get("RSP_CODE"));
+					context.setData("responseCode", RSP_CODE);
 					throw new CoreException( "签约失败"+"["+infoMap.get("RSP_DESC")+"]");	
 				}
 				//throw new CoreException( "签约失败"+"["+infoMap.get("RSP_DESC")+"]");	  	
