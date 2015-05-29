@@ -50,6 +50,27 @@ public class InsertCusAgentServiceAction extends BaseAction {
 			CoreRuntimeException {
 		logger.info("=============Start   InsertCusAgentServiceAction");
 		
+		String chl=context.getData("chl");
+		if(StringUtils.isEmpty(chl)){
+			chl=context.getData("chn");
+		}
+		chl=chl.trim();
+		if("90".equals(chl)){   //第三方发 起的
+			log.info("thd chl.start to do cusTyp check!..");
+			String cusTypThd=context.getData("cusTyp");
+			log.info("cusTypThd=["+cusTypThd+"]");
+			if(StringUtils.isNotEmpty(cusTypThd)){
+				cusTypThd=cusTypThd.trim();
+				if("0".equals(cusTypThd)){   //对公
+					context.setData("thdRspCde", "00");
+					context.setData("PKGCNT", "000000");
+					log.info("该帐号为第三方发起的对公确认，直接进行正确返回!..");
+					return;
+				}
+			}
+		}
+		log.info("该帐号不为第三方发起的对公确认，开始进行新增代收付协议操作!..");
+		
 		//更改账户类型  代收付
 		String cusTyp=context.getData("cusTyp").toString();
 		//第三方
@@ -89,6 +110,7 @@ public class InsertCusAgentServiceAction extends BaseAction {
 		if(context.getData("bankToThd")!=null){
 				context.setData("cusTyp", cusTyp);
 		}
+		
 		Result editCusAgtResult = bgspServiceAccessObject.callServiceFlatting("maintainAgentCollectAgreement",context.getDataMap());
 		
 		logger.info("===========editCusAgtResult："+editCusAgtResult);
