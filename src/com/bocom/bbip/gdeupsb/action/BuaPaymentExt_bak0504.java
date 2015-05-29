@@ -30,7 +30,7 @@ import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
 
-public class BuaPaymentExt extends BaseAction
+public class BuaPaymentExt_bak0504 extends BaseAction
 {
 	
 	@Autowired
@@ -43,10 +43,10 @@ public class BuaPaymentExt extends BaseAction
 	  @Autowired
 	 private BBIPPublicService bbipPublicService;
 	
-    public BuaPaymentExt()
+    public BuaPaymentExt_bak0504()
     {
     }
-    private static final Log logger = LogFactory.getLog(BuaPaymentExt.class);
+    private static final Log logger = LogFactory.getLog(BuaPaymentExt_bak0504.class);
     @Autowired
     EupsActSysParaRepository  EupsActSysParaRepo;
     public void execute(Context context)

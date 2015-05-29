@@ -18,8 +18,8 @@ import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
-public class CancelBatchCheckAction extends BaseAction {
-	private static final Log logger=LogFactory.getLog(CancelBatchCheckAction.class);
+public class CancelBatchCheckAction_bak0504 extends BaseAction {
+	private static final Log logger=LogFactory.getLog(CancelBatchCheckAction_bak0504.class);
 
 	
     public void execute(Context context)throws CoreException{

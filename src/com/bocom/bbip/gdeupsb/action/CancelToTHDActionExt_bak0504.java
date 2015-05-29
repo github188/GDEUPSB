@@ -1,5 +1,5 @@
-package com.bocom.bbip.gdeupsb.action;
 
+package com.bocom.bbip.gdeupsb.action;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,9 +17,27 @@ import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
 
+/**
+ * 联机自动冲正处理（双边交易）.
+ * @version 1.0.0,2014-1-13
+ * @author cain.boc
+ * @since 1.0.0
+ */
 
-public class CancelToTHDExtAction extends BaseAction{
-    private static Logger logger = LoggerFactory.getLogger(CancelToTHDExtAction.class);
+/**
+ * 抹账处理，利用公共组件中的自动冲正组件实现异步冲正.同时，代收付提供的单笔缴费冲正组件已考虑冲正机制，此处仅考虑第三方冲正 联机自动冲正，首先向第三方发起一次冲正，根据交易通讯情况，决定是否调用公共冲正组件
+ * 
+ * 处理步骤： 1。登记冲正信息（自动冲正组件） 2。第三方冲正 2.1 第三方明确返回交易结果信息，向自动冲正组件登记取消冲正 2.1.1 第三方冲正成功，登记业务处理流程为冲正状态， 2.1.2
+ * 第三方冲正返回失败信息为约定的视同成功的信息，登记业务处理流程为冲正状态 2.1.3 第三方返回其他明确的失败，第三方交易状态为失败，登记业务处理流程为失败 2.2
+ * 第三方通讯错误等其他错误或异常抛出，向自动冲正机制发起自动冲正，业务处理流程为失败状态
+ * 
+ * @author cain.boc
+ * @date 2014-3-17
+ * 
+ */
+public class CancelToTHDActionExt_bak0504 extends BaseAction {
+
+    private static Logger logger = LoggerFactory.getLogger(CancelToTHDActionExt_bak0504.class);
 
     public void execute(Context context) throws CoreException, CoreRuntimeException {
         ThirdPartyAdaptor callThirdOther = get(Constants.CALL_THIRD_MANAGER);
@@ -49,6 +67,8 @@ public class CancelToTHDExtAction extends BaseAction{
                     context.setData(ParamKeys.RESPONSE_TYPE, "N");
                     context.setData(ParamKeys.RESPONSE_CODE, responseCode);
                     context.setData(ParamKeys.RESPONSE_MESSAGE, Constants.RESPONSE_MSG);
+                    context.setData(ParamKeys.RSP_MSG, Constants.RESPONSE_MSG);
+                    
 
                     updOldTxnJnl.setThdTxnSts(Constants.TXNSTS_CANCEL);
                     logger.info("==============Bypass call THIRD response successful.==============");
@@ -109,7 +129,10 @@ public class CancelToTHDExtAction extends BaseAction{
         } catch (CoreException e) {
         	
         	rspMap=new HashMap<String, Object>();
-        	rspMap.put("", "");
+        	rspMap.put(ParamKeys.RESPONSE_TYPE, "N");
+        	rspMap.put(ParamKeys.THD_TXN_STS, Constants.TXNSTS_SUCCESS);
+        	rspMap.put(ParamKeys.RESPONSE_CODE, "000000");
+        	rspMap.put(ParamKeys.RESPONSE_MESSAGE, Constants.RESPONSE_MSG);
         	
         	context.setDataMap(rspMap);
         	 context.setState(BPState.BUSINESS_PROCESSNIG_STATE_SUCCESS);
@@ -138,4 +161,3 @@ public class CancelToTHDExtAction extends BaseAction{
         logger.info("=================cancel to third end! the context is [" + context.getDataMap() + "]==============");
     }
 }
-
