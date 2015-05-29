@@ -560,5 +560,7 @@ public final class GDErrorCodes {
 	public static final String EUPS_ELE_ST_UNKNOWN_ERROR = "BBIP4400EU0300";
 	/** 该笔流水已冲正 */
 	public static final String GAS_JNL_IS_CNL = "BBIP4400EU0631";
-
+	/** 输入金额或笔数错误 */
+	public static final String EUPS_INPUT_ERR = "BBIP4400EU1300";
+	
 }
