@@ -68,7 +68,9 @@
 		 <dependency>
             <groupId>com.bocom.bbip</groupId>
             <artifactId>bbip-comp-eups</artifactId>
-            <version>2.0.13-SNAPSHOT</version>
+          <!--  <version>2.0.13-SNAPSHOT</version>  -->
+            <version>2.0.4-fix1</version>
+          <!-- <version>2.0.5</version> -->
         </dependency> 
         
 		<dependency>
@@ -76,8 +78,8 @@
 			<artifactId>bbip-runtime</artifactId>
 			<version>1.0-SNAPSHOT</version>
 			<type>pom</type>
-			<!-- <scope>provided</scope> -->
-		 <scope>compiler</scope> 
+		    <scope>provided</scope> 
+		    <!-- <scope>compiler</scope>  -->
 		</dependency>
 
 		<dependency>
