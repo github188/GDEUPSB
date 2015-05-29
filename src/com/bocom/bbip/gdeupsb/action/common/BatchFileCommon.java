@@ -212,6 +212,12 @@ public class BatchFileCommon extends BaseAction {
 			throw new CoreException("文件错误或其他异常，请联系系统管理员;",e);
 		}
 		
+		try {
+			Thread.currentThread().sleep(15000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 //		operateFTPAction.putCheckFile(config);
 		
 		logger.info("============放置代收付文件完成");
