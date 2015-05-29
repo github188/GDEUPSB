@@ -27,11 +27,13 @@
 				<encoder>
 					<pattern>${fileLayoutPattern}</pattern>
 					<charset>GBK</charset>
+					<!-- <timeout>60000</timeout>
+                    <maxAppenderCount>100</maxAppenderCount> -->
 				</encoder>
-				<timeout>60000</timeout>
-                <maxAppenderCount>100</maxAppenderCount>
 			</appender>
 		</sift>
+		 <timeout>60000</timeout>
+        <maxAppenderCount>100</maxAppenderCount>
 	</appender>
 
 	<appender name="ROLLING"
@@ -56,7 +58,7 @@
 		</encoder>
 	</appender>
 
-	<logger name="com.bocom.jump.bp.requestTracing" level="DEBUG" />
+	<!-- <logger name="com.bocom.jump.bp.requestTracing" level="DEBUG" />
 	<logger name="com.bocom.jump.bp.processTracing" level="TRACE" />
 	<logger name="com.bocom.jump.bp.transportTracing" level="DEBUG" />
 	<logger name="com.bocom.jump.bp.messageTracing" level="TRACE" />
@@ -73,9 +75,32 @@
 	<logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG" />
 	<logger name="com.bocom.jump.bp.transform.util.TraceListener" level="TRACE" />
 
-	<root level="DEBUG">
+	<root level="INFO">
 		<appender-ref ref="CONSOLE" />
 		<appender-ref ref="ROLLING" />
 		<appender-ref ref="TRACE_NO_SIFT" />
+	</root> -->
+	
+	<logger name="com.bocom.jump.bp.requestTracing" level="TRACE" />
+	<logger name="com.bocom.jump.bp.processTracing" level="TRACE" />
+	<logger name="com.bocom.jump.bp.transportTracing" level="TRACE" />
+	<logger name="com.bocom.jump.bp.messageTracing" level="TRACE" />
+	<logger name="com.bocom.jump.bp.support.TRACER" level="TRACE" />
+	<logger name="org.springframework.ws.server.MessageTracing"	level="TRACE" />
+	<logger name="java.sql.PreparedStatement" level="DEBUG" />
+	<logger name="java.sql.Connection" level="DEBUG" />
+	<logger name="java.sql.Statement" level="DEBUG" />
+	<logger name="com.ibatis" level="DEBUG" />
+	<logger name="com.ibatis.common.jdbc.SimpleDataSource" level="DEBUG" />
+	<logger name="com.ibatis.common.jdbc.ScriptRunner" level="DEBUG" />
+	<logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG" />
+	<logger name="com.bocom.jump.bp.transform.util.TraceListener" level="TRACE" />
+	<logger name="org.springframework.ws.client.MessageTracing" level="TRACE" />
+
+	<root level="INFO">
+		<!-- <appender-ref ref="CONSOLE" />  -->
+		<appender-ref ref="ROLLING" />
+		<appender-ref ref="TRACE_NO_SIFT" />
 	</root>
+	
 </configuration>
