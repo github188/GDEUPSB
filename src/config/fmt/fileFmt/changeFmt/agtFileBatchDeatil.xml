@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message xmlns="http://www.bocom.com/jump/transformer/packet"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.bocom.com/jump/transformer/packet spacket.xsd"
+    encoding="utf-8" trace="true">
+<!--客户账号|姓名|金额|代理服务客户标识|代理服务客户姓名|本行标志|开户银行|备注一|备注二|状态|描述  -->
+	<segment name="detail" encoding="utf-8">
+		<varString name="CUSAC" type="D|" />
+		<varString name="CUSNME" type="D|" />
+		<varString name="TXNAMT" type="D|" />
+<!-- 		<varString name="AGTSRVCUSID" type="D|" />
+		<varString name="AGTSRVCUSNME" type="D|" /> -->
+		<varString name="OUROTHFLG" type="D|" />
+		<!-- <varString name="OBKBK" type="D|" /> -->
+		<varString name="RMK1" type="D|" />
+		<varString name="RMK2" type="D|" />
+		<!-- <varString name="sts" type="D|" />
+		<varString name="errMsg" type="D|" /> -->
+	</segment>
+</message>
