@@ -19,6 +19,9 @@ import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
 
+/*
+ * 此类已作废！！
+ */
 public class TrspWyFeeQryAction extends BaseAction{
 	private final static Log log = LogFactory.getLog(TrspWyFeeQryAction.class);
 	
@@ -82,7 +85,6 @@ public class TrspWyFeeQryAction extends BaseAction{
             Date endDat = DateUtils.parse((String)thdReturnMessage.get("endDat"), DateUtils.STYLE_yyyyMMdd);
             
             
-            //TODO:待修改！不能用double转！
             double i=Double.parseDouble((String)thdReturnMessage.get("corpus"));
 			double d=i/100;
 			DecimalFormat df=new DecimalFormat("#.00");
