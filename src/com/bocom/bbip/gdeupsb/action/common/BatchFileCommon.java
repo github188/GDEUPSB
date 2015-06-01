@@ -148,10 +148,9 @@ public class BatchFileCommon extends BaseAction {
 		    BigDecimal sucTotAmt = (BigDecimal)context.getData("sucTotAmt");
 		    
 		    
-		    //TODO:不能使用double!.............
 		    Integer falTotCnt = Integer.valueOf(totCnt.intValue() - sucTotCnt.intValue());
-		    double falTotAmtdouble = totAmt.doubleValue() - sucTotAmt.doubleValue();
-		    BigDecimal falTotAmt = new BigDecimal(falTotAmtdouble);
+//		    double falTotAmtdouble = totAmt.doubleValue() - sucTotAmt.doubleValue();
+		    BigDecimal falTotAmt =totAmt.subtract(sucTotAmt);  //modify by qc 0601
 
 		    ret.setSucTotCnt(sucTotCnt);
 		    ret.setSucTotAmt(sucTotAmt);
