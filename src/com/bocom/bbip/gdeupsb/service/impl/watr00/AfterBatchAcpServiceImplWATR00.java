@@ -115,9 +115,9 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 //			Double d = Double.parseDouble(map.get(ParamKeys.TXN_AMT).toString());
 //			d = d *  100;
 //			txnAmtA = d.intValue();
-			BigDecimal d = new BigDecimal(map.get(ParamKeys.TXN_AMT).toString());
-			txnAmtA = d.scaleByPowerOfTen(2).intValue();
-			map.put(ParamKeys.TXN_AMT, txnAmtA);
+//			BigDecimal d = new BigDecimal(map.get(ParamKeys.TXN_AMT).toString());
+//			txnAmtA = d.scaleByPowerOfTen(2).intValue();
+			map.put(ParamKeys.TXN_AMT, NumberUtils.yuanToCentString(map.get(ParamKeys.TXN_AMT).toString()));
 			if("S".equals(detailList.get(i).getSts())){
 				map.put("sts", "1");
 			}else{
