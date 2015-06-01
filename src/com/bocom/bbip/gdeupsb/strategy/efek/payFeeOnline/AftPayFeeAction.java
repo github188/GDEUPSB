@@ -16,7 +16,7 @@ import com.bocom.jump.bp.core.Executable;
 public class AftPayFeeAction implements Executable{
 	private final static Log logger=LogFactory.getLog(AftPayFeeAction.class);
 	/**
-	 * 记账后处理
+	 * 联机单笔记账  记账后处理
 	 */
 	@Override
 	public void execute(Context context) throws CoreException,

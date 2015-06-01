@@ -20,7 +20,7 @@ import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
 import com.bocom.jump.bp.core.Executable;
-/**
+/** 联机单笔记账，第三方处理前 
  * @author liyawei
  */
 public class PrePayFeeThdAction extends BaseAction implements Executable{

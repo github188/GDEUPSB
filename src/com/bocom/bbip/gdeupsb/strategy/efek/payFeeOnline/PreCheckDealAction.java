@@ -20,7 +20,7 @@ public class PreCheckDealAction implements Executable{
 	@Autowired
 	EupsThdTranCtlInfoRepository eupsThdTranCtlInfoRepository;
 	/**
-	 * 交易前策略处理
+	 * 单笔记账/划扣 交易前策略处理
 	 */
 	@Override
 	public void execute(Context context) throws CoreException,

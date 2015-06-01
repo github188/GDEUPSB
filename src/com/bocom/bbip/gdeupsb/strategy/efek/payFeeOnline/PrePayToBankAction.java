@@ -18,6 +18,11 @@ import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
 import com.bocom.jump.bp.core.Executable;
 
+/**
+ * 划扣   联机银行方单边记账
+ * @author liyawei
+ *
+ */
 public class PrePayToBankAction implements Executable{
 		private final static Log logger=LogFactory.getLog(PrePayToBankAction.class);
 		@Autowired

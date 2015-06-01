@@ -14,6 +14,7 @@ import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.core.CoreRuntimeException;
 import com.bocom.jump.bp.core.Executable;
 /**
+ * 联机银行方单边记账(划扣)
  * @author lyw_i7iiiiii
  */
 public class AftPayToBankAction implements Executable{

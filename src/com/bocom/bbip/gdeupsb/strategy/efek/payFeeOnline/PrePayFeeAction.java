@@ -13,7 +13,7 @@ public class PrePayFeeAction implements Executable{
 	private final static Log logger=LogFactory.getLog(PrePayFeeAction.class);
 
 	/**
-	 * 记账前策略处理
+	 * 联机单笔记账 记账前特色处理 
 	 */
 	@Override
 	public void execute(Context context) throws CoreException,
