@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+	<soapenv:Header xmlns:wsa="http://www.w3.org/2005/08/addressing">
+		<wsa:To soapenv:mustUnderstand="0">GDEFSS</wsa:To>
+		<wsa:From>
+			<wsa:Address>GDBBOS</wsa:Address>
+		</wsa:From>
+		<wsa:Action>http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service/queryThirdCus</wsa:Action>
+		<wsa:MessageID>urn:uuid:0f781f82-32fd-42df-bfa2-a5f3f23b1968</wsa:MessageID>
+	</soapenv:Header>
+	<soapenv:Body>
+		<p0:queryThirdCus
+			xmlns:p0="http://gdeupsb.service.bankcomm.com/basic/atomic/operation.GDEUPSWATR00Service/Schema"
+			xmlns:p2="http://bbip.bankcomm.com" xmlns:p1="http://gsp.bankcomm.com">
+			<p1:requestInformation>
+				<p1:traceNo>2004440320150210142500000183</p1:traceNo>
+				<p1:version />
+				<p1:traceSrc>HPFS0036</p1:traceSrc>
+			</p1:requestInformation>
+			<p0:request>
+				<p0:requestHeader>
+					<p2:bbipRequestHead>
+						<p2:chn>00</p2:chn>
+						<p2:reqSysCde />
+						<p2:subSysCde />
+						<p2:bbipBusCde />
+						<p2:reqJrnNo>2004440320150210142500000183</p2:reqJrnNo>
+						<p2:tlr>4439527</p2:tlr>
+						<p2:br>01443999999</p2:br>
+						<p2:bk>01443999999</p2:bk>
+						<p2:tlrTmlId>1</p2:tlrTmlId>
+						<p2:reqTyp />
+						<p2:authLvl />
+						<p2:sup1Id />
+						<p2:sup1Auth />
+						<p2:sup2Id />
+						<p2:sup2Auth />
+						<p2:authLog />
+						<p2:filler />
+						<p2:reqTme>2015-02-10T14:25:31</p2:reqTme>
+					</p2:bbipRequestHead>
+				</p0:requestHeader>
+				<p0:eupsBusTyp>WATR00</p0:eupsBusTyp>
+				<p0:thdCusNo>1111</p0:thdCusNo>
+			</p0:request>
+		</p0:queryThirdCus>
+	</soapenv:Body>
+</soapenv:Envelope
