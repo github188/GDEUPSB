@@ -70,6 +70,8 @@ public class FileBatchAcpsCallBackActionExt extends BaseAction
     Integer sucTotCnt = (Integer)context.getData("sucTotCnt");
     BigDecimal sucTotAmt = (BigDecimal)context.getData("sucTotAmt");
 
+    
+    //TODO:不能使用double!...............
     Integer falTotCnt = Integer.valueOf(totCnt.intValue() - sucTotCnt.intValue());
     double falTotAmtdouble = totAmt.doubleValue() - sucTotAmt.doubleValue();
     BigDecimal falTotAmt = new BigDecimal(falTotAmtdouble);
