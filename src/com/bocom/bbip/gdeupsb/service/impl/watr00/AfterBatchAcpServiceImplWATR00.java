@@ -110,7 +110,8 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 			map = BeanUtils.toMap(detailList.get(i));
 			map.put("sj", date);
 			
-		
+			
+			//TODO:不能使用double!....
 			Double d = Double.parseDouble(map.get(ParamKeys.TXN_AMT).toString());
 			d = d *  100;
 			txnAmtA = d.intValue();
