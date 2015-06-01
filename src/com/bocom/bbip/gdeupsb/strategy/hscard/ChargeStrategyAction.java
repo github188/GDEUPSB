@@ -18,6 +18,7 @@ import com.bocom.bbip.eups.entity.EupsTransJournal;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -73,8 +74,8 @@ public class ChargeStrategyAction implements Executable {
 //		double d = i / 100;
 //		DecimalFormat df = new DecimalFormat("#.00");
 //		BigDecimal txnAmt = new BigDecimal(df.format(d));
-		BigDecimal d = new BigDecimal(context.getData(ParamKeys.TXN_AMT).toString());
-		BigDecimal txnAmt = d.movePointLeft(2);
+//		BigDecimal d = new BigDecimal(context.getData(ParamKeys.TXN_AMT).toString());
+		BigDecimal txnAmt = NumberUtils.centToYuan(context.getData(ParamKeys.TXN_AMT).toString());
 		context.setData(ParamKeys.TXN_AMT, txnAmt);
 		if ((txnAmt.compareTo(new BigDecimal(400))) > 0) {
 
