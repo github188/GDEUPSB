@@ -24,12 +24,13 @@ public class EleGzCmuTestAction extends BaseAction {
 		String sqn = context.getData(ParamKeys.SEQUENCE);
 		String sqn1 = sqn.substring(0, 8);
 		String sqn2 = sqn.substring(sqn.length() - 4, sqn.length());
-		context.setData("txnDateTime7", DateUtils.format(new Date(), DateUtils.STYLE_MMddHHmmss)); // txnDateTime7
-		context.setData("transJournal11", sqn1 + sqn2); // transJournal11
+//		context.setData("txnDateTime7", DateUtils.format(new Date(), DateUtils.STYLE_MMddHHmmss)); // txnDateTime7
+//		context.setData("transJournal11", sqn1 + sqn2); // transJournal11
 
-		context.setData("sndFlg33", "33"); // 发送机构标识码
+//		context.setData("sndFlg33", "33"); // 发送机构标识码
 		context.setData("thdRspCde", "000000"); // 返回码
-		context.setData("cmuCde70", "301"); // 线路测试
+//		context.setData("cmuCde70", "301"); // 线路测试
+		context.setData("MsgId", "0830"); 
 	}
 
 }
