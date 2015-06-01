@@ -81,6 +81,8 @@ public class TrspWyFeeQryAction extends BaseAction{
             Date begDat = DateUtils.parse((String)thdReturnMessage.get("begDat"), DateUtils.STYLE_yyyyMMdd);
             Date endDat = DateUtils.parse((String)thdReturnMessage.get("endDat"), DateUtils.STYLE_yyyyMMdd);
             
+            
+            //TODO:待修改！不能用double转！
             double i=Double.parseDouble((String)thdReturnMessage.get("corpus"));
 			double d=i/100;
 			DecimalFormat df=new DecimalFormat("#.00");
