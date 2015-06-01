@@ -126,6 +126,8 @@ public class CheckInBankELEC02Action extends BaseAction {
 		
 		BigDecimal decinal=list.get(0).getTotalAmt();
 		BigDecimal decinl=lst.get(0).getTotalAmt();
+		
+		//不能使用double!..............
 		BigDecimal ret=new BigDecimal(decinal.doubleValue()+decinl.doubleValue());
 		return ret;
 	}
