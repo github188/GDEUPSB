@@ -19,6 +19,9 @@ public class PrePayFeeAction implements Executable{
 	public void execute(Context context) throws CoreException,
 			CoreRuntimeException {
 			logger.info("============Start  PrePayFeeAction");
+			context.setData("acoBr", "01441800999");
+			
+			
 					String ActFlg=(String)context.getData(ParamKeys.PAY_MDE);          //银行内部账务类型
 					
 					if("0".equals(ActFlg)){              //对公

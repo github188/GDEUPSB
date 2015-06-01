@@ -36,6 +36,8 @@ public class PrePayToBankAction implements Executable{
 		public void execute(Context context) throws CoreException,
 			CoreRuntimeException {
 			logger.info("=========Start PrePayToBankAction");
+			context.setData("acoBr", "01441800999");
+			
 //			context.setData(ParamKeys.COMPANY_NO, context.getData("comNos"));
 			context.setData(ParamKeys.THD_TXN_STS,"S");
 			context.setData(GDParamKeys.TOTNUM, "1");

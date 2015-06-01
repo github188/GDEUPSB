@@ -41,6 +41,8 @@ public class PreCheckDealAction implements Executable{
 //				context.setData(ParamKeys.PAYFEE_TYPE, Constants.TXN_PAYFEE_TYPE_PAYMENT);
 				
 				context.setData("extFields", "01441800999");
+				context.setData("acoBr", "01441800999");
+				
 				logger.info("~~~~~~~~~~~~~~~~~~chlTyp="+context.getData("chlTyp")+",chn="+context.getData("chn"));
 				if(context.getData("thdSqn")==null){
 						if(("20").equals((String)context.getData("chlTyp")) || ("50").equals((String)context.getData("chlTyp")) || ("20").equals((String)context.getData("chn")) || ("50").equals((String)context.getData("chn"))){
