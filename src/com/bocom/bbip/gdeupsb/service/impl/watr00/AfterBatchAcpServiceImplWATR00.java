@@ -33,6 +33,7 @@ import com.bocom.bbip.gdeupsb.repository.GDEupsEleTmpRepository;
 import com.bocom.bbip.gdeupsb.repository.GdeupsWatBatInfTmpRepository;
 import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.NumberUtils;
 import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -79,12 +80,12 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 		//头部
 		Map<String, Object> resultMapHead = BeanUtils.toMap(eupsBatchConsoleInfo);
 		resultMapHead.put("abc", "HDR2");
-		BigDecimal b = new BigDecimal(resultMapHead.get("totAmt").toString());
+//		BigDecimal b = new BigDecimal(resultMapHead.get("totAmt").toString());
 //		Double b = Double.parseDouble(resultMapHead.get("totAmt").toString());
 		
 //		b = b*100;
-		int totAmt = b.scaleByPowerOfTen(2).intValue();
-		resultMapHead.put("totAmt", totAmt);
+//		int totAmt = b.scaleByPowerOfTen(2).intValue();
+		resultMapHead.put("totAmt", NumberUtils.yuanToCentString(resultMapHead.get("totAmt").toString()));
 		resultMap.put(ParamKeys.EUPS_FILE_HEADER, resultMapHead);
 		Map<String, Object> hdr1 = new HashMap<String, Object>();
 		hdr1.put("HDR1", "HDR1");
