@@ -111,10 +111,11 @@ public class AfterBatchAcpServiceImplWATR00 implements AfterBatchAcpService{
 			map.put("sj", date);
 			
 			
-			//TODO:不能使用double!....
-			Double d = Double.parseDouble(map.get(ParamKeys.TXN_AMT).toString());
-			d = d *  100;
-			txnAmtA = d.intValue();
+//			Double d = Double.parseDouble(map.get(ParamKeys.TXN_AMT).toString());
+//			d = d *  100;
+//			txnAmtA = d.intValue();
+			BigDecimal d = new BigDecimal(map.get(ParamKeys.TXN_AMT).toString());
+			txnAmtA = d.scaleByPowerOfTen(2).intValue();
 			map.put(ParamKeys.TXN_AMT, txnAmtA);
 			if("S".equals(detailList.get(i).getSts())){
 				map.put("sts", "1");
