@@ -122,6 +122,9 @@ public class DeductMoneyAction extends BaseAction {
                 BigDecimal totAmt = new BigDecimal(0.0);
                 BigDecimal totNum = new BigDecimal(0.0);
                 for (GdLotChkCtl eupslotChkCtl : gdLotChkCtls) {
+                	
+                	
+                	//TODO:不能使用double!...
                     totAmt = totAmt.add(BigDecimal.valueOf(Double.valueOf(eupslotChkCtl.getTotAmt())));
                     totNum = totAmt.add(BigDecimal.valueOf(Double.valueOf(eupslotChkCtl.getTotNum())));
                 }
