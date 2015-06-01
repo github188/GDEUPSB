@@ -66,6 +66,8 @@ public class ChargeStrategyAction implements Executable {
 			context.setData("responseMessage", "交易流水已存在");
 			throw new CoreException(ErrorCodes.EUPS_SQN_IS_EXIST);
 		}
+		
+		//TODO：不能使用double.................
 		// 金额控制，不能超过400.但标准版交易流水表中有交易金额和请求交易金额两个字段，应该用交易金额。
 		double i = Double.parseDouble(context.getData(ParamKeys.TXN_AMT)
 				.toString());
