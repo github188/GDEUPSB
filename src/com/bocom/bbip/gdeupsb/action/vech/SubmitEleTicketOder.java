@@ -118,6 +118,9 @@ public class SubmitEleTicketOder extends BaseAction{
         context.setData("ticEntNo", infoArr[2]);// 检票口
         context.setData("bunSurPri", infoArr[3]);//燃油附加费金额
         BigDecimal bunSurPri = new BigDecimal(0.0);
+        
+        
+        //TODO:不能使用double!！
         bunSurPri = bunSurPri.add(BigDecimal.valueOf(Double.valueOf(infoArr[3])));
        
         //易票联 电子票下单报文拼装 及 电子票下单接口调用 TODO;
