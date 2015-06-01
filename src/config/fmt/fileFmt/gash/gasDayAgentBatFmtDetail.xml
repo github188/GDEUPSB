@@ -59,8 +59,9 @@
 	<fixString name="idNo" length="32" /><!-- 证件号码 -->
 	<fixString  name="Deli13" length="1" default=","/>
 	
-	<fixString name="optDat" length="10"   />	<!-- 签约日期 -->
-	<!-- <fixString  name="Deli14" length="8" default=""/> -->
+	<!-- <fixString name="optDat" length="10"   /> -->	<!-- 签约日期 -->
+	<varString name="optDat" type="D\r" referred="true"
+			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.optDat, 10, ' ','0')" />
 	
 	
 	</segment>

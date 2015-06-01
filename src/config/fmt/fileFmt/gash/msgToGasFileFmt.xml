@@ -23,8 +23,7 @@
 	<fixString name="txnAmt" length="10"   />
 	 <fixString  name="Deli6" length="1" default="," /> 
 	
-	<fixString name="txnDte" length="10" referred="true" expression='exp:@com.bocom.bbip.utils.DateUtils@format(this.txnDte,"yyyy-MM-dd")'  />
- 	<!-- <fixString  name="Deli7" length="1" default=""/>  -->
+	<varString name="txnDte" type="D\r" referred="true" expression='exp:@com.bocom.bbip.utils.DateUtils@format(this.txnDte,"yyyy-MM-dd")'  />
 	
 	</segment>
 </message>

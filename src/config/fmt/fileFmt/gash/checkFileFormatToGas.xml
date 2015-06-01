@@ -28,9 +28,11 @@
 		<varString name="TXNAMT" type="D," referred="true"
 			expression="exp:@com.bocom.bbip.gdeupsb.utils.GdExpCommonUtils@AddChar(this.TXNAMT, 10, ' ','0')" />
 
-		<fixString name="TXNDTE" length="10" referred="true"
+		<!-- <fixString name="TXNDTE" length="10" referred="true"
 			expression='exp:@com.bocom.bbip.utils.DateUtils@format(this.TXNDTE,"yyyy-MM-dd")' />
-			 <!-- 	<fixString  name="Deli7" length="1" default=""/>  -->
+	<fixString  name="Deli7" length="2" default="\r"/> -->
+	<varString name="TXNDTE" type="D\r" referred="true"
+			expression='exp:@com.bocom.bbip.utils.DateUtils@format(this.TXNDTE,"yyyy-MM-dd")' />
 
 	</segment>
 </message>
