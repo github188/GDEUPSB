@@ -67,13 +67,14 @@ public class ChargeStrategyAction implements Executable {
 			throw new CoreException(ErrorCodes.EUPS_SQN_IS_EXIST);
 		}
 		
-		//TODO：不能使用double.................
 		// 金额控制，不能超过400.但标准版交易流水表中有交易金额和请求交易金额两个字段，应该用交易金额。
-		double i = Double.parseDouble(context.getData(ParamKeys.TXN_AMT)
-				.toString());
-		double d = i / 100;
-		DecimalFormat df = new DecimalFormat("#.00");
-		BigDecimal txnAmt = new BigDecimal(df.format(d));
+//		double i = Double.parseDouble(context.getData(ParamKeys.TXN_AMT)
+//				.toString());
+//		double d = i / 100;
+//		DecimalFormat df = new DecimalFormat("#.00");
+//		BigDecimal txnAmt = new BigDecimal(df.format(d));
+		BigDecimal d = new BigDecimal(context.getData(ParamKeys.TXN_AMT).toString());
+		BigDecimal txnAmt = d.movePointLeft(2);
 		context.setData(ParamKeys.TXN_AMT, txnAmt);
 		if ((txnAmt.compareTo(new BigDecimal(400))) > 0) {
 
