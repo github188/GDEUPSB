@@ -38,7 +38,7 @@ public class AdvanceTradeAction extends BaseAction {
 			CoreRuntimeException {
 		logger.info("===========Start  AdvanceTradeAction");
 		
-		
+		context.setData("acoBr", "01441800999");
 		context.setData("extFields", "01441800999");
 		context.setData(GDParamKeys.TOTNUM, "1");
 		// 第三方客户标识
