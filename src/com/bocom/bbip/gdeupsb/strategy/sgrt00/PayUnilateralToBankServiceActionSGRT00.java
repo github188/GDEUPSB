@@ -88,7 +88,14 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
 			context.setData(GDParamKeys.RSP_MSG, "客户未签约");
 			throw new CoreException(GDParamKeys.RSP_MSG);
 		}
-        
+        ///////////////=======================================//////////////////////
+        // 校验协议状态   --add by MQ
+        if(!"0".equals(cusAgtInfo.getStatus())){ // 非0，协议状态为删除状态，不允许交易
+        	context.setData(GDParamKeys.RSP_CDE, "9999");
+			context.setData(GDParamKeys.RSP_MSG, "该客户处于不允许交易状态");
+			throw new CoreException(GDParamKeys.RSP_MSG);
+        }
+        ///////////////=======================================//////////////////////
         context.setData(ParamKeys.CUS_AC, cusAgtInfo.getActNo());
         context.setData(ParamKeys.THD_SEQUENCE, publicService.getBBIPSequence());
         context.setData(ParamKeys.BR, context.getData(ParamKeys.BR));
