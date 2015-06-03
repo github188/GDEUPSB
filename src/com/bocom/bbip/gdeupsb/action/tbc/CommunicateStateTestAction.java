@@ -3,6 +3,7 @@ package com.bocom.bbip.gdeupsb.action.tbc;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
+import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
@@ -19,7 +20,7 @@ public class CommunicateStateTestAction extends BaseAction {
      public void execute(Context context) throws CoreException {
          log.info("CommunicateStateTest Action start!");
          context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
-         context.setData(GDParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
+         context.setData(GDParamKeys.RSP_CDE,GDConstants.TBC_RESPONSE_CODE_SUCC);
          context.setData(GDParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
          context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
     }

@@ -16,6 +16,7 @@ import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdTbcBasInf;
@@ -116,44 +117,45 @@ public class EstablishAccountAction extends BaseAction {
         List<GdTbcCusAgtInfo> gdTbcAgtInfo = get(GdTbcCusAgtInfoRepository.class).find(tbcCusAgtInfo);
         if (CollectionUtils.isEmpty(gdTbcAgtInfo)) {
         	log.info("本地协议表无数据，开始调用代收付新增协议!..");
-        	setAgtCltAndCusInf(context);
-        	context.setData("oprTyp", "0");
-        	context.setData("agrChl", "01");
-        	context.setData("cusNme", context.getData("tCusNm"));
-        	context.setData("ccy", "CNY");
-        	context.setData("idTyp", context.getData("pasTyp"));
-        	context.setData("idNo", context.getData("pasId"));
-        	context.setData("reqTme",  new Date());
-        	context.setData("cusAc", cusAc );   //帐号
-        	context.setData("cusNo", context.getData("custId") );  //第三方客户标志
+// 已确认不上代收付签约
         	
-            Result operateAcpAgtResult = serviceAccess.callServiceFlatting("maintainAgentCollectAgreement", context.getDataMap());
-            log.info("===========respMap: " + operateAcpAgtResult.getPayload() + "===========");
-            if (!operateAcpAgtResult.isSuccess()) {
-            	
-            	context.setData(GDParamKeys.RSP_CDE,"9999");
-                context.setData(GDParamKeys.RSP_MSG,operateAcpAgtResult.getResponseMessage());
-                
-                Throwable e = operateAcpAgtResult.getException();
-                if (Status.SEND_ERROR == operateAcpAgtResult.getStatus()) {
-                    context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
-                    context.setData(GDParamKeys.RSP_CDE,"9999");
-                    context.setData(GDParamKeys.RSP_MSG,GDErrorCodes.TBC_COM_OTHER_ERROR);
-                    log.error(GDErrorCodes.TBC_COM_OTHER_ERROR,e);
-                    throw new CoreException(GDErrorCodes.TBC_COM_OTHER_ERROR);
-                }
-                // 连接错误或等待超时,但不知道是否已上送,这里交易已处于未知状态
-                context.setState(BPState.BUSINESS_PROCESSNIG_STATE_UNKOWN_FAIL);
-                if (Status.TIMEOUT == operateAcpAgtResult.getStatus()) {
-                    context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
-                    context.setData(GDParamKeys.RSP_CDE,"9999");
-                    context.setData(GDParamKeys.RSP_MSG,GDErrorCodes.TBC_OUT_TIME_ERROR);
-                    log.error(GDErrorCodes.TBC_OUT_TIME_ERROR,e);
-                    throw new CoreException(GDErrorCodes.TBC_OUT_TIME_ERROR);
-                }else{
-                	throw new CoreException(GDErrorCodes.TBC_COM_OTHER_ERROR);
-                }
-            }
+//        	setAgtCltAndCusInf(context);
+//        	context.setData("oprTyp", "0");
+//        	context.setData("agrChl", "01");
+//        	context.setData("cusNme", context.getData("tCusNm"));
+//        	context.setData("ccy", "CNY");
+//        	context.setData("idTyp", context.getData("pasTyp"));
+//        	context.setData("idNo", context.getData("pasId"));
+//        	context.setData("reqTme",  new Date());
+//        	context.setData("cusAc", cusAc );   //帐号
+//        	context.setData("cusNo", context.getData("custId") );  //第三方客户标志
+//        	
+//            Result operateAcpAgtResult = serviceAccess.callServiceFlatting("maintainAgentCollectAgreement", context.getDataMap());
+//            log.info("===========respMap: " + operateAcpAgtResult.getPayload() + "===========");
+//            if (!operateAcpAgtResult.isSuccess()) {
+//            	context.setData(GDParamKeys.RSP_CDE,"9999");
+//                context.setData(GDParamKeys.RSP_MSG,operateAcpAgtResult.getResponseMessage());
+//                
+//                Throwable e = operateAcpAgtResult.getException();
+//                if (Status.SEND_ERROR == operateAcpAgtResult.getStatus()) {
+//                    context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
+//                    context.setData(GDParamKeys.RSP_CDE,"9999");
+//                    context.setData(GDParamKeys.RSP_MSG,GDErrorCodes.TBC_COM_OTHER_ERROR);
+//                    log.error(GDErrorCodes.TBC_COM_OTHER_ERROR,e);
+//                    throw new CoreException(GDErrorCodes.TBC_COM_OTHER_ERROR);
+//                }
+//                // 连接错误或等待超时,但不知道是否已上送,这里交易已处于未知状态
+//                context.setState(BPState.BUSINESS_PROCESSNIG_STATE_UNKOWN_FAIL);
+//                if (Status.TIMEOUT == operateAcpAgtResult.getStatus()) {
+//                    context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
+//                    context.setData(GDParamKeys.RSP_CDE,"9999");
+//                    context.setData(GDParamKeys.RSP_MSG,GDErrorCodes.TBC_OUT_TIME_ERROR);
+//                    log.error(GDErrorCodes.TBC_OUT_TIME_ERROR,e);
+//                    throw new CoreException(GDErrorCodes.TBC_OUT_TIME_ERROR);
+//                }else{
+//                	throw new CoreException(GDErrorCodes.TBC_COM_OTHER_ERROR);
+//                }
+//            }
             //GDEUPS协议临时表添加数据 
             GdTbcCusAgtInfo  cusAgtInfo =new  GdTbcCusAgtInfo();
             cusAgtInfo.setActNo(context.getData("actNo").toString());
@@ -165,42 +167,42 @@ public class EstablishAccountAction extends BaseAction {
             cusAgtInfoRepository.insert(cusAgtInfo);
         } else {
         	log.info("存在本地协议,开始修改!..");
-        	setAgtCltAndCusInf(context);
-        	context.setData("oprTyp", "0");
-        	context.setData("agrChl", "01");
-        	context.setData("bk", "01441999999");//TODO
-        	context.setData("br", "01441800999");
-        	context.setData("cusNme", context.getData("tCusNm"));
-        	context.setData("ccy", "CNY");
-        	context.setData("idTyp", context.getData("pasTyp"));
-        	context.setData("idNo", context.getData("pasId"));
-        	context.setData("reqTme",  new Date());
-        	context.setData(ParamKeys.CUS_NO, context.getData("custId"));
-            Result result = serviceAccess.callServiceFlatting("maintainAgentCollectAgreement", context.getDataMap());
-            log.info("===========respMap: " + result.getPayload() + "===========");
-            if (!result.isSuccess()) {
-            	context.setData(GDParamKeys.RSP_CDE,"9999");
-                context.setData(GDParamKeys.RSP_MSG,result.getResponseMessage());
-                
-                Throwable e = result.getException();
-                if (Status.SEND_ERROR == result.getStatus()) {
-                    context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
-                    context.setData(GDParamKeys.RSP_CDE,"9999");
-                    context.setData(GDParamKeys.RSP_MSG,GDErrorCodes.TBC_COM_OTHER_ERROR);
-                    log.error(GDErrorCodes.TBC_COM_OTHER_ERROR,e);
-                    throw new CoreException(GDErrorCodes.TBC_COM_OTHER_ERROR);
-                }
-                if (Status.TIMEOUT == result.getStatus()) {
-                    context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
-                    context.setData(GDParamKeys.RSP_CDE,"9999");
-                    context.setData(GDParamKeys.RSP_MSG,GDErrorCodes.TBC_OUT_TIME_ERROR);
-                    log.error(GDErrorCodes.TBC_OUT_TIME_ERROR,e);
-                    throw new CoreException(GDErrorCodes.TBC_OUT_TIME_ERROR);
-                 }else{
-                	 // 连接错误或等待超时,但不知道是否已上送,这里交易已处于未知状态
-                	 context.setState(BPState.BUSINESS_PROCESSNIG_STATE_UNKOWN_FAIL);	 
-                 }
-            }
+//        	setAgtCltAndCusInf(context);
+//        	context.setData("oprTyp", "0");
+//        	context.setData("agrChl", "01");
+//        	context.setData("bk", "01441999999");//TODO
+//        	context.setData("br", "01441800999");
+//        	context.setData("cusNme", context.getData("tCusNm"));
+//        	context.setData("ccy", "CNY");
+//        	context.setData("idTyp", context.getData("pasTyp"));
+//        	context.setData("idNo", context.getData("pasId"));
+//        	context.setData("reqTme",  new Date());
+//        	context.setData(ParamKeys.CUS_NO, context.getData("custId"));
+//            Result result = serviceAccess.callServiceFlatting("maintainAgentCollectAgreement", context.getDataMap());
+//            log.info("===========respMap: " + result.getPayload() + "===========");
+//            if (!result.isSuccess()) {
+//            	context.setData(GDParamKeys.RSP_CDE,"9999");
+//                context.setData(GDParamKeys.RSP_MSG,result.getResponseMessage());
+//                
+//                Throwable e = result.getException();
+//                if (Status.SEND_ERROR == result.getStatus()) {
+//                    context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
+//                    context.setData(GDParamKeys.RSP_CDE,"9999");
+//                    context.setData(GDParamKeys.RSP_MSG,GDErrorCodes.TBC_COM_OTHER_ERROR);
+//                    log.error(GDErrorCodes.TBC_COM_OTHER_ERROR,e);
+//                    throw new CoreException(GDErrorCodes.TBC_COM_OTHER_ERROR);
+//                }
+//                if (Status.TIMEOUT == result.getStatus()) {
+//                    context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
+//                    context.setData(GDParamKeys.RSP_CDE,"9999");
+//                    context.setData(GDParamKeys.RSP_MSG,GDErrorCodes.TBC_OUT_TIME_ERROR);
+//                    log.error(GDErrorCodes.TBC_OUT_TIME_ERROR,e);
+//                    throw new CoreException(GDErrorCodes.TBC_OUT_TIME_ERROR);
+//                 }else{
+//                	 // 连接错误或等待超时,但不知道是否已上送,这里交易已处于未知状态
+//                	 context.setState(BPState.BUSINESS_PROCESSNIG_STATE_UNKOWN_FAIL);	 
+//                 }
+//            }
             //GDEUPS协议临时表更改数据
             GdTbcCusAgtInfo  cusAgtInfo =new  GdTbcCusAgtInfo();
             cusAgtInfo.setActNo(context.getData("actNo").toString());
@@ -211,7 +213,7 @@ public class EstablishAccountAction extends BaseAction {
             cusAgtInfo.setAccTyp(context.getData("accTyp").toString());
             cusAgtInfoRepository.update(cusAgtInfo);
         }
-        context.setData(GDParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
+        context.setData(GDParamKeys.RSP_CDE,GDConstants.TBC_RESPONSE_CODE_SUCC);
         context.setData(GDParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
     }

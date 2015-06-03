@@ -18,6 +18,7 @@ import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsThdFtpConfig;
 import com.bocom.bbip.eups.repository.EupsThdFtpConfigRepository;
 import com.bocom.bbip.eups.repository.EupsThdTranCtlInfoRepository;
+import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal;
 import com.bocom.bbip.gdeupsb.entity.GdTbcBasInf;
@@ -103,7 +104,7 @@ public class CheckThdFileToBkAction extends BaseAction {
          fileHeader.put("TRADE_SEQ", "<TRADE_SEQ>"+context.getData("oLogNo").toString()+"</TRADE_SEQ>\n");
          fileHeader.put("APP_TYPE", "<APP_TYPE>"+context.getData("APP_TYPE").toString()+"</APP_TYPE>\n");
          fileHeader.put("pubEnd","</PUB>\n<OUT>\n");
-         fileHeader.put("RET_CODE", "<RET_CODE>000000</RET_CODE>\n");
+         fileHeader.put("RET_CODE", "<RET_CODE>0000</RET_CODE>\n");  // <RET_CODE>交易返回码（0000成功，否则错误）</RET_CODE>
          fileHeader.put("MSG", "<MSG>交易成功</MSG>\n<RE>\n");
          fileMap.put("tops", fileHeader);
          GdEupsTransJournal eupsTransJournal = new GdEupsTransJournal();
@@ -135,7 +136,7 @@ public class CheckThdFileToBkAction extends BaseAction {
              context.setData(GDParamKeys.RSP_MSG,"上传对账文件失败！");
              throw new CoreException("上传对账文件失败！");
          }
-         context.setData(GDParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
+         context.setData(GDParamKeys.RSP_CDE,GDConstants.TBC_RESPONSE_CODE_SUCC);
          context.setData(GDParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
          context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
      }

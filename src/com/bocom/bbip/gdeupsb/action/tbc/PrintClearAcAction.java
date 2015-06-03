@@ -20,12 +20,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 
 
+
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
 import com.bocom.bbip.eups.entity.EupsTransJournal;
 import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.file.reporting.impl.VelocityTemplatedReportRender;
+import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;

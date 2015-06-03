@@ -6,6 +6,7 @@ import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ErrorCodes;
+import com.bocom.bbip.gdeupsb.common.GDConstants;
 import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdTbcBasInf;
@@ -64,7 +65,7 @@ public class SignOutAction  extends BaseAction {
                 throw new CoreException(GDErrorCodes.TBC_DB_ERROR);
             }
  //       }
-        context.setData(GDParamKeys.RSP_CDE,Constants.RESPONSE_CODE_SUCC);
+        context.setData(GDParamKeys.RSP_CDE,GDConstants.TBC_RESPONSE_CODE_SUCC);
         context.setData(GDParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
     }
