@@ -74,6 +74,7 @@ public class DestroyAccountAction extends BaseAction {
         //客户签约状态
         GdTbcCusAgtInfo tbcCusAgtInfo = new GdTbcCusAgtInfo();
         tbcCusAgtInfo.setActNo(context.getData("actNo").toString());
+        tbcCusAgtInfo.setStatus("0");
         List<GdTbcCusAgtInfo> gdTbcAgtInfo = get(GdTbcCusAgtInfoRepository.class).find(tbcCusAgtInfo);
         if (CollectionUtils.isEmpty(gdTbcAgtInfo)){
             context.setData(GDParamKeys.RSP_CDE,"9999");
@@ -156,8 +157,13 @@ public class DestroyAccountAction extends BaseAction {
 //            }
 //        }
         //GDEUPS协议临时表删除数据
+//        cusAgtInfoRepository.delete(context.getData("custId").toString());
+
         //TODO 更改为update status,不用delete  --by MQ
-        cusAgtInfoRepository.delete(context.getData("custId").toString());
+        tbcCusAgtInfo.setCustId(context.getData("custId").toString());
+        tbcCusAgtInfo.setStatus("1");
+        cusAgtInfoRepository.update(tbcCusAgtInfo);
+        
         context.setData(GDParamKeys.RSP_CDE,GDConstants.TBC_RESPONSE_CODE_SUCC);
         context.setData(GDParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
