@@ -37,7 +37,7 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
     @Override
     public Map<String, Object> aftPayToBank(CommHeadDomain commheaddomain, PayFeeOnlineDomain payfeeonlinedomain,
             Context context) throws CoreException {
-        context.setData(GDParamKeys.RSP_CDE, context.getData("responseCode"));
+        context.setData(GDParamKeys.RSP_CDE, context.getData("responseCode").toString().trim().subSequence(0, 4));
         if (Constants.RESPONSE_CODE_SUCC.equals(context.getData("responseCode").toString())) {
             context.setData(GDParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
         } else {
