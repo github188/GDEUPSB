@@ -54,7 +54,7 @@ public class QryRemainingAction extends BaseAction {
     public void execute(Context context) throws CoreException {
         log.info("QryRemaining Action start!");
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
-        
+        context.setData("ACCOUNT", "0"); //预置为0， 接口文档：<ACCOUNT>余额(错误时返回0)</ACCOUNT>   -- add by MQ
         //转换
         context.setData("txnTme", context.getData("TRAN_TIME"));
         context.setData("bk", context.getData("BANK_ID"));
