@@ -112,6 +112,7 @@ public class CheckThdFileToBkAction extends BaseAction {
          eupsTransJournal.setTxnDte( DateUtils.parse(context.getData("TRADE_DATE").toString(), DateUtils.STYLE_yyyyMMdd));
          eupsTransJournal.setComNo(cAgtNo);
          eupsTransJournal.setSqn(context.getData("oLogNo").toString());
+         transJournal.setRsvFld2(context.getData("DPT_ID").toString().trim());
          List<GdEupsTransJournal> transJournalList =transJournalRepository.findTbcTransJournalDetails(eupsTransJournal);
          fileMap.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(transJournalList));
          fileBottom.put("REEND", "\n</RE>\n<TOTAL>\n");
