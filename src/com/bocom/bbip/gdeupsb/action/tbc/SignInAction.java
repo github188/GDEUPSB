@@ -78,6 +78,8 @@ public class SignInAction extends BaseAction {
 			String newKey = getMD5Code(mainkey).substring(0, 16);//by zds		
 			context.setData("NEW_KEY", newKey);
 			
+			tbcBasInfo.setRsvFld1(newKey);//记录新密钥 -- add by MQ
+			
 			//生成通讯密钥文件
 			
 			// tbcBasInfo.setComKey(mainkey);
