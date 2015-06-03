@@ -164,6 +164,7 @@ public class EstablishAccountAction extends BaseAction {
             cusAgtInfo.setPasId(context.getData("pasId").toString());
             cusAgtInfo.setComId(context.getData("comId").toString());
             cusAgtInfo.setAccTyp(context.getData("accTyp").toString());
+            cusAgtInfo.setStatus("0");  // add by MQ 
             cusAgtInfoRepository.insert(cusAgtInfo);
         } else {
         	log.info("存在本地协议,开始修改!..");
@@ -211,6 +212,7 @@ public class EstablishAccountAction extends BaseAction {
             cusAgtInfo.setPasId(context.getData("pasId").toString());
             cusAgtInfo.setComId(context.getData("comId").toString());
             cusAgtInfo.setAccTyp(context.getData("accTyp").toString());
+            cusAgtInfo.setStatus("0"); // add by MQ 
             cusAgtInfoRepository.update(cusAgtInfo);
         }
         context.setData(GDParamKeys.RSP_CDE,GDConstants.TBC_RESPONSE_CODE_SUCC);
