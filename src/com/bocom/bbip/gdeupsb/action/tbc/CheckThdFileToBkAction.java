@@ -87,6 +87,7 @@ public class CheckThdFileToBkAction extends BaseAction {
          GdEupsTransJournal transJournal = new GdEupsTransJournal();
          transJournal.setTxnDte(DateUtils.parse(context.getData("TRADE_DATE").toString(), DateUtils.STYLE_yyyyMMdd));
          transJournal.setComNo(cAgtNo);
+         transJournal.setRsvFld2(context.getData("DPT_ID").toString().trim());
          transJournal.setSqn(context.getData("oLogNo").toString());
          List<Map<String, Object>>resultList =transJournalRepository.findTbcTransJournal(transJournal);
          if (CollectionUtils.isEmpty(resultList)){
