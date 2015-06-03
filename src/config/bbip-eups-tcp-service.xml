@@ -207,7 +207,7 @@
 	</bean>
 	<bean id="tbc" class="com.bocom.jump.bp.channel.tcp.SocketServer">
 		<!-- 渠道接入端口，参数配置于sys.properties文件 -->
-		<property name="host" value="127.0.0.1" />
+		<property name="host" value="0.0.0.0" />
 		<property name="port" value="36010" />
 		<property name="mapping" ref="tbc_TcpMapping" />
 		<property name="threadPool" ref="tbc_TcpThreadPool" />
