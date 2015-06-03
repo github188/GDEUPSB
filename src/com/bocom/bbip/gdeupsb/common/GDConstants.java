@@ -477,6 +477,8 @@ public final class GDConstants {
 		public static final Object GAS_NOD_NO = "491800";
 
 		public static final String GAS_TXN_BY_CASH = "00000000";
+
+		public static final Object TBC_RESPONSE_CODE_SUCC = "0000";
 		
 		
 }
