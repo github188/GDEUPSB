@@ -190,7 +190,7 @@
 		#{comNo,jdbcType=CHAR}
 		AND TXN_DTE=#{txnDte,jdbcType=DATE} AND
 		MFM_TXN_STS='S'
-		AND MFM_RSP_CDE='SC0000' AND TXN_CDE='gdeupsb.tb' and
+		AND MFM_RSP_CDE='SC0000' AND TXN_CDE='gdeupsb.tb' and RSV_FLD2=#{rsvFld2,jdbcType=VARCHAR} AND
 		SQN
 		&gt;=#{sqn,jdbcType=CHAR}
 	</select>
@@ -203,7 +203,7 @@
 		#{comNo,jdbcType=CHAR}
 		AND TXN_DTE=#{txnDte,jdbcType=DATE} AND
 		MFM_TXN_STS='S'
-		AND MFM_RSP_CDE='SC0000' AND TXN_CDE='gdeupsb.tb' and
+		AND MFM_RSP_CDE='SC0000' AND TXN_CDE='gdeupsb.tb' and RSV_FLD2=#{rsvFld2,jdbcType=VARCHAR} AND
 		SQN
 		&gt;=#{sqn,jdbcType=CHAR}
 	</select>
