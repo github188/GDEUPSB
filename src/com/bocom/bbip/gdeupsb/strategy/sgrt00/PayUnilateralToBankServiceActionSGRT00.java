@@ -79,6 +79,9 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
         context.setData("tCusId", context.getData("CUST_ID"));
         // TODO; 待确定
         context.setData("rsFld2", context.getData("DPT_ID"));
+        
+        context.setData(ParamKeys.RSV_FLD2, context.getData("DPT_ID")); //对账用！ --add By MQ
+        
         context.setData(ParamKeys.TXN_DATE, DateUtils.parse(context.getData("TRAN_TIME").toString().substring(0, 8), DateUtils.STYLE_yyyyMMdd));
         context.setData(ParamKeys.THD_CUS_NO, context.getData("CUST_ID"));
         GdTbcCusAgtInfo cusAgtInfo = cusAgtInfoRepository.findOne(context.getData("CUST_ID").toString());
