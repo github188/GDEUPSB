@@ -90,7 +90,7 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
 		}
         ///////////////=======================================//////////////////////
         // 校验协议状态   --add by MQ
-		// 同时解决生产测试之初只允许部分客户交易的问题
+		// 同时解决生产测试之初只允许部分客户交易的问题，数据库将不允许交易的客户status置1
         if(!"0".equals(cusAgtInfo.getStatus())){ // 非0，协议状态为删除状态，不允许交易
         	context.setData(GDParamKeys.RSP_CDE, "9999");
 			context.setData(GDParamKeys.RSP_MSG, "该客户处于不允许交易状态");
