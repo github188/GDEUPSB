@@ -10,14 +10,18 @@ import javax.crypto.spec.SecretKeySpec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import utils.system;
+
+import com.bocom.bbip.utils.CryptoUtils;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.channel.ChannelContext;
+import com.bocom.jump.bp.channel.tcp.interceptors.PayloadChannelInterceptor;
 import com.bocom.jump.bp.channel.tcp.interceptors.SocketChannelInterceptor;
 import com.bocom.jump.bp.core.ContextEx;
 import com.bocom.jump.bp.support.TRACER;
 import com.bocom.jump.bp.util.Hex;
 
-public class PayloadChannelInterceptorTbc extends NoFrontLengthStreamResolverEb
+public class PayloadChannelInterceptorTbc extends PayloadChannelInterceptor
 		implements SocketChannelInterceptor
 {
 	private Logger log = LoggerFactory.getLogger(PayloadChannelInterceptorTbc.class);
@@ -44,7 +48,7 @@ public class PayloadChannelInterceptorTbc extends NoFrontLengthStreamResolverEb
 			byte[] frtB = new byte[15];
 			System.arraycopy(inB, 0, frtB, 0, 15);
 			System.arraycopy(inB, 0, realB, 0, 15);
-
+			
 			// 获取交易码
 			String tbcTransCode = new String(frtB);
 			tbcTransCode = tbcTransCode.substring(7, 11);
@@ -59,7 +63,7 @@ public class PayloadChannelInterceptorTbc extends NoFrontLengthStreamResolverEb
 			if ("8910".equals(tbcTransCode) || "8888".equals(tbcTransCode) || "8918".equals(tbcTransCode)) {
 				log.info("当前的烟草交易码为:[" + tbcTransCode + "],使用初始秘钥进行解密！..");
 				byte[] relBody = trbDes("1111111111111111", desBody, "1"); // 使用初始秘钥解密
-
+				
 				System.arraycopy(relBody, 0, realB, 15, inL - 18); // 复制明文,去除后三位报文尾，前十五位报文头
 			}
 			System.arraycopy(inB, inL - 3, realB, inL - 3, 3); // 复制明文,去除后三位报文尾，前十五位报文头
@@ -128,14 +132,14 @@ public class PayloadChannelInterceptorTbc extends NoFrontLengthStreamResolverEb
 	 */
 	private byte[] trbDes(String desKey, byte[] desBody, String desFlg) {
 
-		if (desKey.length() != 24) {
-			log.info("秘钥长度不足24位，进行长度补齐..");
-			String lstkey = desKey.substring(0, 8);
-			desKey = desKey + lstkey;
-		}
+    	String desKeyL=desKey.substring(0,8);
+    	String keyL=Hex.encode(desKeyL.getBytes());
+    	
+    	String desKeyR=desKey.substring(8,16);
+    	String keyR=Hex.encode(desKeyR.getBytes());
 
 		log.info("加密key=" + desKey);
-		byte[] keyBytes = desKey.getBytes();
+		
 		byte[] msg = desBody;
 		int i = msg.length / 8;
 		byte[] newMsg = null;
@@ -154,12 +158,25 @@ public class PayloadChannelInterceptorTbc extends NoFrontLengthStreamResolverEb
 		byte[] result = null;
 
 		if ("0".equals(desFlg)) { // 加密
-			result = encryptMode(keyBytes, newMsg);
-			log.info("加密后的字节为:\n" + Hex.toDumpString(result));
+			
+			String bb=CryptoUtils.desEncrpty(Hex.encode(newMsg), keyL);
+			
+			String cc=CryptoUtils.desDecrypt(bb, keyR);
+			
+			String dd=CryptoUtils.desEncrpty(cc, keyL);
+			result=Hex.decode(dd);
+			log.info("最终的加密结果为:"+Hex.toDumpString(result));
+			
 		}
 		else if ("1".equals(desFlg)) { // 解密
-			result = decryptMode(keyBytes, newMsg);
-			log.info("解密后的字节为:\n" + Hex.toDumpString(result));
+			
+			String bb=CryptoUtils.desDecrypt(Hex.encode(newMsg), keyL);
+			
+			String cc=CryptoUtils.desEncrpty(bb, keyR);
+			
+			String dd=CryptoUtils.desDecrypt(cc, keyL);
+			result=Hex.decode(dd);
+			log.info("最终的解密结果为:"+new String(result));
 		}
 		return result;
 	}
@@ -195,7 +212,6 @@ public class PayloadChannelInterceptorTbc extends NoFrontLengthStreamResolverEb
 			c1.init(Cipher.DECRYPT_MODE, deskey);
 			return c1.doFinal(src);
 		} catch (java.security.NoSuchAlgorithmException e1) {
-			// TODO: handle exception
 			e1.printStackTrace();
 		} catch (javax.crypto.NoSuchPaddingException e2) {
 			e2.printStackTrace();
@@ -204,5 +220,5 @@ public class PayloadChannelInterceptorTbc extends NoFrontLengthStreamResolverEb
 		}
 		return null;
 	}
-
+	
 }
