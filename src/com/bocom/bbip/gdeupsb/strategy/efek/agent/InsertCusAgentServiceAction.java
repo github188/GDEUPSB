@@ -55,7 +55,8 @@ public class InsertCusAgentServiceAction extends BaseAction {
 			chl=context.getData("chn");
 		}
 		chl=chl.trim();
-		if("90".equals(chl)){   //第三方发 起的
+		if("90".equals(chl)){   //第三方发 起的  cusTyp : 0 对公账户   1 对私储蓄	2 对私信用卡  3 对私借记卡 
+
 			log.info("thd chl.start to do cusTyp check!..");
 			String cusTypThd=context.getData("cusTyp");
 			log.info("cusTypThd=["+cusTypThd+"]");
@@ -78,7 +79,8 @@ public class InsertCusAgentServiceAction extends BaseAction {
 				String cusType="";
 				if(cusTyp.equals("0")){
 					cusType="1";
-				}else if(cusTyp.equals("1")){
+//				}else if(cusTyp.equals("1")){
+				}else { // 第三方发过来不是对公0， 那么上代收付应该将cusTyp置0，对私    -- by MQ
 					cusType="0";
 				}
 				context.setData("cusTyp", cusType);
