@@ -1,5 +1,7 @@
 package com.bocom.bbip.gdeupsb.strategy.sgrt00;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -20,6 +22,8 @@ import com.bocom.bbip.gdeupsb.repository.GdTbcCusAgtInfoRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.bbip.utils.DateUtils;
+import com.bocom.bbip.utils.NumberUtils;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -65,6 +69,25 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
         context.setData("itgTyp", "0");
         context.setData(ParamKeys.COMPANY_NO, context.getData("cAgtNo"));
         context.setData(ParamKeys.TXN_TYP, Constants.RESPONSE_TYPE_SUCC);
+        
+        
+//		String txnAmt = context.getData("amount");
+//		BigDecimal realAmt = NumberUtils.centToYuan(txnAmt);
+//		context.setData(ParamKeys.TXN_AMOUNT, realAmt);
+        
+        String thdAmt=context.getData("QTY_TRADE");
+        BigDecimal realAmt=new BigDecimal("0.00");
+        
+        if(!thdAmt.contains(".")){
+        	realAmt=NumberUtils.centToYuan(thdAmt);
+        }else{
+        	context.setData(GDParamKeys.RSP_CDE, "9999");
+			context.setData(GDParamKeys.RSP_MSG, "交易金额格式错误！");
+        	throw new CoreException("9999");
+        }
+        
+        context.setData(ParamKeys.TXN_AMT,realAmt);
+        
         return null;
     }
 
@@ -76,8 +99,15 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
         context.setData("responseCode","999999");   //初始化为交易失败
         context.setData(GDParamKeys.RSP_MSG, "交易失败");
         
+        if(null!=context.getData("TRAN_TIME")){
+        	context.setData("txnTme", DateUtils.parse(context.getData("TRAN_TIME").toString(), DateUtils.STYLE_yyyyMMddHHmmss));
+        	context.setData(ParamKeys.TXN_DATE, DateUtils.parse(context.getData("TRAN_TIME").toString().substring(0, 8), DateUtils.STYLE_yyyyMMdd));
+        }else{
+        	context.setData("txnTme", new Date());
+        	context.setData(ParamKeys.TXN_DATE, new Date());
+        }
+        
         // 转换
-        context.setData("txnTme", DateUtils.parse(context.getData("TRAN_TIME").toString(), DateUtils.STYLE_yyyyMMddHHmmss));
         String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("DPT_ID").toString());
         if (null == cAgtNo) {
             cAgtNo ="4410000560";
@@ -91,7 +121,7 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
         
         context.setData(ParamKeys.RSV_FLD2, context.getData("DPT_ID")); //对账用！ --add By MQ
         
-        context.setData(ParamKeys.TXN_DATE, DateUtils.parse(context.getData("TRAN_TIME").toString().substring(0, 8), DateUtils.STYLE_yyyyMMdd));
+        
         context.setData(ParamKeys.THD_CUS_NO, context.getData("CUST_ID"));
         GdTbcCusAgtInfo cusAgtInfo = cusAgtInfoRepository.findOne(context.getData("CUST_ID").toString());
         
@@ -116,8 +146,7 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
        //TODO:虚拟柜员
 //        context.setData(ParamKeys.TELLER, "EFC0000");
         context.setData(ParamKeys.EUPS_BUSS_TYPE, "SGRT00");
-        context.setData(ParamKeys.TXN_AMT, context.getData("QTY_TRADE"));
-
+        
         context.setData(ParamKeys.THD_TXN_CDE, "483805");
         return null;
     }
