@@ -36,6 +36,7 @@ public class PayloadChannelInterceptorTbc extends NoFrontLengthStreamResolverEb
 			// 获取初始报文
 			byte[] inB = resolve(socket.getInputStream());
 			int inL = inB.length;
+			log.info("收到的初始报文为:\n" + Hex.toDumpString(inB));
 
 			byte[] realB = new byte[inL];
 
@@ -52,7 +53,7 @@ public class PayloadChannelInterceptorTbc extends NoFrontLengthStreamResolverEb
 			byte[] desBody = new byte[inL - 18]; // 长度为总报文-15位头，-3位尾
 			System.arraycopy(inB, 15, desBody, 0, desBody.length);
 
-			log.info("收到的初始报文为:\n" + Hex.toDumpString(inB) + "\n" + ",收到的加密报文体为\n:" + Hex.toDumpString(desBody));
+			log.info("收到的加密报文体为\n:" + Hex.toDumpString(desBody));
 
 			// 初始报文解密:
 			if ("8910".equals(tbcTransCode) || "8888".equals(tbcTransCode) || "8918".equals(tbcTransCode)) {
