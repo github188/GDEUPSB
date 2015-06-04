@@ -37,13 +37,17 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
     @Override
     public Map<String, Object> aftPayToBank(CommHeadDomain commheaddomain, PayFeeOnlineDomain payfeeonlinedomain,
             Context context) throws CoreException {
-        context.setData(GDParamKeys.RSP_CDE, context.getData("responseCode").toString().trim().subSequence(0, 4));
-        if (Constants.RESPONSE_CODE_SUCC.equals(context.getData("responseCode").toString())) {
+    	
+    	 context.setData(GDParamKeys.RSP_CDE, "9999");
+    	 String hstRspString=context.getData("responseCode").toString();
+    	 
+    	 if (Constants.RESPONSE_CODE_SUCC.equals(hstRspString)||Constants.RESPONSE_CODE_SUCC_HOST.equals(hstRspString)) {
             context.setData(GDParamKeys.RSP_MSG,Constants.RESPONSE_MSG);
+            context.setData(GDParamKeys.RSP_CDE, "0000");
         } else {
             context.setData(GDParamKeys.RSP_MSG, context.getData("responseMessage"));
         }
-        context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
+//        context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
         context.setData("BANK_SEQ", context.getData("sqn"));
         return null;
     }
@@ -67,6 +71,8 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
     public Map<String, Object> prepareCheckDeal(CommHeadDomain commheaddomain, PayFeeOnlineDomain payfeeonlinedomain,
             Context context) throws CoreException {
         log.info("PayUnilateralToBankServiceActionSGRT00 start!");
+        
+        context.setData("responseCode","999999");   //初始化为交易失败
         // 转换
         context.setData("txnTme", DateUtils.parse(context.getData("TRAN_TIME").toString(), DateUtils.STYLE_yyyyMMddHHmmss));
         String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("DPT_ID").toString());
