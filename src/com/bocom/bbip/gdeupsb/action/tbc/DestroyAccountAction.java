@@ -25,6 +25,7 @@ import com.bocom.bbip.service.BGSPServiceAccessObject;
 import com.bocom.bbip.service.Result;
 import com.bocom.bbip.service.Status;
 import com.bocom.bbip.utils.CollectionUtils;
+import com.bocom.bbip.utils.DateUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -162,6 +163,7 @@ public class DestroyAccountAction extends BaseAction {
         //TODO 更改为update status,不用delete  --by MQ
         tbcCusAgtInfo.setCustId(context.getData("custId").toString());
         tbcCusAgtInfo.setStatus("1");
+        tbcCusAgtInfo.setClsDat(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)); //销户日期
         cusAgtInfoRepository.update(tbcCusAgtInfo);
         
         context.setData(GDParamKeys.RSP_CDE,GDConstants.TBC_RESPONSE_CODE_SUCC);

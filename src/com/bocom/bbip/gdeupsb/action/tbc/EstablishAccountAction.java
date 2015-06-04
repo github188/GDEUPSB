@@ -165,6 +165,7 @@ public class EstablishAccountAction extends BaseAction {
             cusAgtInfo.setComId(context.getData("comId").toString());
             cusAgtInfo.setAccTyp(context.getData("accTyp").toString());
             cusAgtInfo.setStatus("0");  // add by MQ 
+            cusAgtInfo.setOpnDat(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)); //开户日期
             cusAgtInfoRepository.insert(cusAgtInfo);
         } else {
         	log.info("存在本地协议,开始修改!..");
