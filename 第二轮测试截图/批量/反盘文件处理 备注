@@ -1,1 +1,0 @@
-由于代收付没有主动调用process  eups.commNotifyBatchStatus 所以手动调用 使其完成反盘文件生成
