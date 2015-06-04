@@ -3,14 +3,8 @@ package com.bocom.bbip.gdeupsb.channel.tcp;
 import java.io.IOException;
 import java.net.Socket;
 
-import javax.crypto.Cipher;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import utils.system;
 
 import com.bocom.bbip.utils.CryptoUtils;
 import com.bocom.jump.bp.JumpException;
@@ -119,10 +113,6 @@ public class PayloadChannelInterceptorTbc extends PayloadChannelInterceptor
 		}
 	}
 
-	// 加解密方法:
-	private static final String Algorithm = "DESede"; // 定义加密算法,可用
-														// DES,DESede,Blowfish
-
 	/**
 	 * 加解密处理
 	 * 
@@ -179,46 +169,6 @@ public class PayloadChannelInterceptorTbc extends PayloadChannelInterceptor
 			log.info("最终的解密结果为:"+new String(result));
 		}
 		return result;
-	}
-
-	// keybyte为加密密钥，长度为24字节
-	// src为被加密的数据缓冲区（源）
-	public static byte[] encryptMode(byte[] keybyte, byte[] src) {
-		try {
-			// 生成密钥
-			SecretKey deskey = new SecretKeySpec(keybyte, Algorithm);
-			// 加密
-			Cipher c1 = Cipher.getInstance(Algorithm);
-			c1.init(Cipher.ENCRYPT_MODE, deskey);
-			return c1.doFinal(src);// 在单一方面的加密或解密
-		} catch (java.security.NoSuchAlgorithmException e1) {
-			e1.printStackTrace();
-		} catch (javax.crypto.NoSuchPaddingException e2) {
-			e2.printStackTrace();
-		} catch (java.lang.Exception e3) {
-			e3.printStackTrace();
-		}
-		return null;
-	}
-
-	// keybyte为加密密钥，长度为24字节
-	// src为加密后的缓冲区
-	public static byte[] decryptMode(byte[] keybyte, byte[] src) {
-		try {
-			// 生成密钥
-			SecretKey deskey = new SecretKeySpec(keybyte, Algorithm);
-			// 解密
-			Cipher c1 = Cipher.getInstance(Algorithm);
-			c1.init(Cipher.DECRYPT_MODE, deskey);
-			return c1.doFinal(src);
-		} catch (java.security.NoSuchAlgorithmException e1) {
-			e1.printStackTrace();
-		} catch (javax.crypto.NoSuchPaddingException e2) {
-			e2.printStackTrace();
-		} catch (java.lang.Exception e3) {
-			e3.printStackTrace();
-		}
-		return null;
 	}
 	
 }
