@@ -225,7 +225,9 @@
 				<!-- <bean class="com.bocom.jump.bp.channel.tcp.interceptors.PayloadChannelInterceptor">
 					<property name="lengthSize" value="4" />
 				</bean> -->
-				<bean class="com.bocom.bbip.gdeupsb.channel.tcp.PayloadChannelInterceptorTbc"/>
+				<bean class="com.bocom.bbip.gdeupsb.channel.tcp.PayloadChannelInterceptorTbc">
+					<property name="lengthSize" value="4" />
+				</bean>
 				
 				<bean class="com.bocom.jump.bp.channel.interceptors.TransformInterceptor">
 					<property name="encodeTransforms"><!--  unpack response -->
