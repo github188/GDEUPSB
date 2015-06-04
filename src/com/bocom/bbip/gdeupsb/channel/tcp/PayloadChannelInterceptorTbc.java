@@ -53,18 +53,21 @@ public class PayloadChannelInterceptorTbc extends PayloadChannelInterceptor
 
 			log.info("收到的加密报文体为\n:" + Hex.toDumpString(desBody));
 
-			// 初始报文解密:
+			// 初始秘钥报文解密:
 			if ("8910".equals(tbcTransCode) || "8888".equals(tbcTransCode) || "8918".equals(tbcTransCode)) {
 				log.info("当前的烟草交易码为:[" + tbcTransCode + "],使用初始秘钥进行解密！..");
 				byte[] relBody = trbDes("1111111111111111", desBody, "1"); // 使用初始秘钥解密
 				
 				System.arraycopy(relBody, 0, realB, 15, inL - 18); // 复制明文,去除后三位报文尾，前十五位报文头
 			}
+			//TODO:通讯密钥处理
+			
 			System.arraycopy(inB, inL - 3, realB, inL - 3, 3); // 复制明文,去除后三位报文尾，前十五位报文头
 
 			log.info("最终传给context的字节为:" + Hex.toDumpString(realB));
 			channelContext.setRequestPayload(realB);
-		} catch (IOException ioexception)
+		}
+		catch (IOException ioexception)
 		{
 			throw new JumpException("JUMPTP8000", "socket_read_error", ioexception);
 		}
@@ -101,6 +104,9 @@ public class PayloadChannelInterceptorTbc extends PayloadChannelInterceptor
 						
 						System.arraycopy(relBody, 0, realB, 15, inL - 18); // 复制明文,去除后三位报文尾，前十五位报文头
 					}
+					//TODO:通讯密钥加密
+					
+					
 					System.arraycopy(inB, inL - 3, realB, inL - 3, 3); // 复制明文,去除后三位报文尾，前十五位报文头
 
 					log.info("最终返回给第三方的字节为:" + Hex.toDumpString(realB));
