@@ -4,6 +4,6 @@
     xsi:schemaLocation="http://www.bocom.com/jump/transformer/xml xml.xsd"
     name="OUT">
         <string name="RET_CODE" default="9999"/>
-        <string name="MSG" />
+        <string name="MSG" default="交易失败"/>
         <string name="BANK_SEQ" />  <!-- 银行流水号 -->
 </record>
