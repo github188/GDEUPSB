@@ -95,6 +95,7 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
     public Map<String, Object> prepareCheckDeal(CommHeadDomain commheaddomain, PayFeeOnlineDomain payfeeonlinedomain,
             Context context) throws CoreException {
         log.info("PayUnilateralToBankServiceActionSGRT00 start!");
+        context.setData("acoBr", "01441800999");
         
         context.setData("responseCode","999999");   //初始化为交易失败
         context.setData(GDParamKeys.RSP_MSG, "交易失败");
