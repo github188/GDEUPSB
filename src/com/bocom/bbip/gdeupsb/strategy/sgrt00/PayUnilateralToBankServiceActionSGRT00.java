@@ -39,6 +39,7 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
             Context context) throws CoreException {
     	
     	 context.setData(GDParamKeys.RSP_CDE, "9999");
+    	 context.setData(GDParamKeys.RSP_MSG, "交易失败");
     	 String hstRspString=context.getData("responseCode").toString();
     	 
     	 if (Constants.RESPONSE_CODE_SUCC.equals(hstRspString)||Constants.RESPONSE_CODE_SUCC_HOST.equals(hstRspString)) {
@@ -73,6 +74,8 @@ public class PayUnilateralToBankServiceActionSGRT00 implements PayUnilateralToBa
         log.info("PayUnilateralToBankServiceActionSGRT00 start!");
         
         context.setData("responseCode","999999");   //初始化为交易失败
+        context.setData(GDParamKeys.RSP_MSG, "交易失败");
+        
         // 转换
         context.setData("txnTme", DateUtils.parse(context.getData("TRAN_TIME").toString(), DateUtils.STYLE_yyyyMMddHHmmss));
         String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("DPT_ID").toString());
