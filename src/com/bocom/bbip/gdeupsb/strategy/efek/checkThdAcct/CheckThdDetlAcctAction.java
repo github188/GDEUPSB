@@ -126,7 +126,8 @@ public class CheckThdDetlAcctAction implements Executable {
 					
 					//对账唯一标识码
 					context.setData(ParamKeys.COMPANY_NO, maps.get("COM_NO").toString());
-					String checkOneCode="0301"+maps.get("COM_NO").toString().substring(0,6)+DateUtils.format(txnDte, DateUtils.STYLE_yyyyMMdd)+maps.get("RSV_FLD4".toString());
+//					String checkOneCode="0301"+maps.get("COM_NO").toString().substring(0,6)+DateUtils.format(txnDte, DateUtils.STYLE_yyyyMMdd)+maps.get("RSV_FLD4".toString());
+					String checkOneCode="0301"+maps.get("COM_NO").toString() +DateUtils.format(txnDte, DateUtils.STYLE_yyyyMMdd)+maps.get("RSV_FLD4".toString());
 					context.setData("checkOneCode", checkOneCode);					
 					//初始化对账控制类型
 					context.setData(ParamKeys.TXN_CTL_TYP, Constants.TXN_CTL_TYP_CHKBANKFILE_THD);  
