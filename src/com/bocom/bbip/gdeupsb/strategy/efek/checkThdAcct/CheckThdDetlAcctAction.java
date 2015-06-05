@@ -126,8 +126,25 @@ public class CheckThdDetlAcctAction implements Executable {
 					
 					//对账唯一标识码
 					context.setData(ParamKeys.COMPANY_NO, maps.get("COM_NO").toString());
+					String Begin6OfComNo = maps.get("COM_NO").toString();
+					if(Begin6OfComNo.length() > 6){
+						Begin6OfComNo=Begin6OfComNo.substring(0,6);
+					}else if(Begin6OfComNo.length() ==0){
+						Begin6OfComNo="000000";
+					}else if(Begin6OfComNo.length() ==1){
+						Begin6OfComNo+="00000";
+					}else if(Begin6OfComNo.length() ==2){
+						Begin6OfComNo+="0000";
+					}else if(Begin6OfComNo.length() ==3){
+						Begin6OfComNo+="000";
+					}else if(Begin6OfComNo.length() ==4){
+						Begin6OfComNo+="00";
+					}else if(Begin6OfComNo.length() ==5){
+						Begin6OfComNo+="0";
+					}
+
 //					String checkOneCode="0301"+maps.get("COM_NO").toString().substring(0,6)+DateUtils.format(txnDte, DateUtils.STYLE_yyyyMMdd)+maps.get("RSV_FLD4".toString());
-					String checkOneCode="0301"+maps.get("COM_NO").toString() +DateUtils.format(txnDte, DateUtils.STYLE_yyyyMMdd)+maps.get("RSV_FLD4".toString());
+					String checkOneCode="0301"+Begin6OfComNo +DateUtils.format(txnDte, DateUtils.STYLE_yyyyMMdd)+maps.get("RSV_FLD4".toString());
 					context.setData("checkOneCode", checkOneCode);					
 					//初始化对账控制类型
 					context.setData(ParamKeys.TXN_CTL_TYP, Constants.TXN_CTL_TYP_CHKBANKFILE_THD);  
@@ -141,8 +158,8 @@ public class CheckThdDetlAcctAction implements Executable {
 							
 							//设置本地对账文件名称
 		//					对账文件名称
-							String	comNo  =maps.get("COM_NO").toString().substring(0,6);
-							String jyrbs="301_"+comNo.substring(0,4)+"00";
+							
+							String jyrbs="301_"+Begin6OfComNo.substring(0,4)+"00";
 							context.setData(ParamKeys.TELLER_ID, jyrbs);  //收款人代码
 							
 							String  busType=(String)maps.get("RSV_FLD4");
@@ -152,7 +169,7 @@ public class CheckThdDetlAcctAction implements Executable {
 								xuhao="0"+xuhao;
 							}
 							String bankNo="0301";
-							String fileName = "DZ"+busType+payType+"_"+bankNo+comNo+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+xuhao+".txt";
+							String fileName = "DZ"+busType+payType+"_"+bankNo+Begin6OfComNo+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+xuhao+".txt";
 
 							context.setData("fileName", fileName);
 							context.setData("batNo", sqn);
@@ -196,8 +213,7 @@ public class CheckThdDetlAcctAction implements Executable {
 					}
 					context.setData("number", number);
 					context.setData("detailList", detailList);
-					String	comNos  =maps.get("COM_NO").toString().substring(0,6);
-					callThd(context,(comNos.substring(0, 4)+"00"));
+					callThd(context,(Begin6OfComNo.substring(0, 4)+"00"));
 			}
 			logger.info("====================End   CheckThdDetlAcctAction");
 	}
@@ -233,7 +249,12 @@ public class CheckThdDetlAcctAction implements Executable {
 		Map<String, Object> headerMap=new HashMap<String, Object>();
 		headerMap.put(ParamKeys.SEQUENCE, eupsThdTranCtlDetails.getSqn());
 		headerMap.put(ParamKeys.BANK_NO,context.getData(ParamKeys.BANK_NO));
-        headerMap.put(ParamKeys.COMPANY_NO, comNo.substring(0, 6));
+		logger.info("******comNo:"+comNo);
+		if(6>comNo.length()){
+	        headerMap.put(ParamKeys.COMPANY_NO, comNo);
+		}else{
+	        headerMap.put(ParamKeys.COMPANY_NO, comNo.substring(0, 6));
+		}
         headerMap.put(GDParamKeys.BUS_TYPE, busType);
         headerMap.put(GDParamKeys.PAY_TYPE, payType);
         headerMap.put(GDParamKeys.TOT_COUNT, acount);
@@ -311,7 +332,7 @@ public class CheckThdDetlAcctAction implements Executable {
 			list.add(checkDetailAcct);
 		}
 		logger.info("~~~~~~~~~~~~list~~~~"+list);
-        
+           
 		Map<String, Object> map=new HashMap<String, Object>();
         map.put(ParamKeys.EUPS_FILE_HEADER, headerMap);
 		map.put(ParamKeys.EUPS_FILE_DETAIL, BeanUtils.toMaps(list));
