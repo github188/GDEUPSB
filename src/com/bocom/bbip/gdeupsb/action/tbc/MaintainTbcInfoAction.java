@@ -51,7 +51,8 @@ public class MaintainTbcInfoAction extends BaseAction {
                 context.setData(ParamKeys.COMPANY_NO, tbcBaseInfo.getDptId());
                 context.setData(ParamKeys.RSP_CDE, GDConstants.TBC_RSP_COD);
                 context.setData(ParamKeys.RSP_MSG, "该单位已存在 !");
-                return;
+//                return;
+                throw new CoreException((String) context.getData(GDParamKeys.RSP_MSG));
             }
             break;
         case 1: // multiquery
@@ -71,7 +72,8 @@ public class MaintainTbcInfoAction extends BaseAction {
             if (null == thdBaseInfo) { // --检测单位是否存在--
                 context.setData(ParamKeys.RSP_CDE, GDConstants.TBC_RSP_COD);
                 context.setData(ParamKeys.RSP_MSG, "该单位不存在 !");
-                return;
+//                return;
+                throw new CoreException((String) context.getData(GDParamKeys.RSP_MSG));
             } else {
                 get(EupsThdBaseInfoRepository.class).delete(context.getData(ParamKeys.COMPANY_NO).toString());
             }
