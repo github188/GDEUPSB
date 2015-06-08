@@ -156,6 +156,7 @@ public class BatchAcpServiceImplELEC02 extends BaseAction implements
 			throw new CoreException(ErrorCodes.EUPS_QUERY_NO_DATA);
 		}
 		for (GDEupsbElecstBatchTmp batTmp : toAcpList) {
+			logger.info("当前明细sqn : " + batTmp.getSqn()); // add on 2015-06-08 20:00
 			Map<String, Object> detailMap = new HashMap<String, Object>();
 			BigDecimal amtB = new BigDecimal(batTmp.getTxnAmt());
 			amtB = amtB.divide(new BigDecimal("100"));
