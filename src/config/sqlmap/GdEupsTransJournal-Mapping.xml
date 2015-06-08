@@ -212,7 +212,7 @@
 	<!--广州电力划扣对账统计信息查询 -->
 	<select id="findGzEleChkHKInfo" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
-		select count(*) totalDeal, sum(TXN_AMT) totalFee from
+		select count(*) totalDeal, value(sum(TXN_AMT), 0) totalFee from
 		eups.EUPS_TRANS_JOURNAL where EUPS_BUS_TYP='ELEC01' and
 		MFM_TXN_STS='S' and TXN_STS='S' and TXN_TYP='N'
 		and
@@ -241,7 +241,7 @@
 	<!--广州电力缴费对账统计信息查询 -->
 	<select id="findGzEleChkJFInfo" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
-		select count(*) totalDeal, sum(TXN_AMT) totalFee from
+		select count(*) totalDeal, value(sum(TXN_AMT), 0) totalFee from
 		eups.EUPS_TRANS_JOURNAL where
 		EUPS_BUS_TYP='ELEC01' and
 		MFM_TXN_STS='S' and TXN_STS='S' and
@@ -678,7 +678,7 @@
 
 	<select id="findSumTxnAmt" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
-		select count(TXN_AMT) as totNum ,sum(TXN_AMT) as totAmt from
+		select count(TXN_AMT) as totNum ,value(sum(TXN_AMT), 0) as totAmt from
 		EUPS.EUPS_TRANS_JOURNAL
 		<trim prefix="WHERE" prefixOverrides="AND">
 			<if test="sqn!=null">
@@ -1512,7 +1512,7 @@ and TXN_DTE=#{txnDte,jdbcType=DATE} and eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR}
 	<select id="findGzClrJnl" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
 		select
-		sum(TXN_AMT) TXNAMT,count(*) TXNCNT
+		value(sum(TXN_AMT), 0) TXNAMT,count(*) TXNCNT
 		from
 		${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL where EUPS_BUS_TYP='ELEC01' and
 		MFM_TXN_STS='S' and TXN_STS='S'
@@ -1525,7 +1525,7 @@ and TXN_DTE=#{txnDte,jdbcType=DATE} and eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR}
 	<select id="findGzSucJnlHK" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
 		select
-		sum(TXN_AMT) TXNAMT,count(*) TXNCNT
+		value(sum(TXN_AMT), 0) TXNAMT,count(*) TXNCNT
 		from
 		${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL where EUPS_BUS_TYP='ELEC01' and
 		MFM_TXN_STS='S' and TXN_STS='S' and TXN_TYP='N'
@@ -1538,7 +1538,7 @@ and TXN_DTE=#{txnDte,jdbcType=DATE} and eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR}
 	<select id="findGzAllCntAmt" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
 		select
-		sum(TXN_AMT) allAmt ,count(*) allCnt
+		value(sum(TXN_AMT), 0) allAmt ,count(*) allCnt
 		from
 		${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL where EUPS_BUS_TYP='ELEC01'
 		and BAK_FLD1=#{bakFld1,jdbcType=CHAR}
@@ -1552,7 +1552,7 @@ and TXN_DTE=#{txnDte,jdbcType=DATE} and eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR}
 	<select id="findGzSucJnlJF" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
 		select
-		sum(TXN_AMT) TXNAMT,count(*) TXNCNT
+		value(sum(TXN_AMT), 0) TXNAMT,count(*) TXNCNT
 		from
 		${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL where EUPS_BUS_TYP='ELEC01' and
 		MFM_TXN_STS='S' and TXN_STS='S' and TXN_TYP='N' and THD_TXN_STS='S'
@@ -1564,7 +1564,7 @@ and TXN_DTE=#{txnDte,jdbcType=DATE} and eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR}
 	<select id="findGzFalJnl" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
 		select
-		sum(TXN_AMT) TXNAMT,count(*) TXNCNT
+		value(sum(TXN_AMT), 0) TXNAMT,count(*) TXNCNT
 		from
 		${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL where EUPS_BUS_TYP='ELEC01' and
 		MFM_TXN_STS='F' and TXN_STS='F' and TXN_TYP='N'
@@ -1578,7 +1578,7 @@ and TXN_DTE=#{txnDte,jdbcType=DATE} and eups_bus_typ=#{eupsBusTyp,jdbcType=CHAR}
 	<select id="findGzUnsJnl" resultType="java.util.Map"
 		parameterType="com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal">
 		select
-		sum(TXN_AMT) TXNAMT,count(*) TXNCNT
+		value(sum(TXN_AMT), 0) TXNAMT,count(*) TXNCNT
 		from
 		${EUPS_SCHEMA}.EUPS_TRANS_JOURNAL where EUPS_BUS_TYP='ELEC01' and
 		MFM_TXN_STS='S' and THD_TXN_STS!='S' and THD_TXN_STS!='F' and
