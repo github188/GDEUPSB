@@ -10,6 +10,7 @@ import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.common.BPState;
 import com.bocom.bbip.eups.common.Constants;
 import com.bocom.bbip.eups.common.ParamKeys;
+import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdEupsTransJournal;
 import com.bocom.bbip.gdeupsb.repository.GdEupsTransJournalRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
@@ -45,7 +46,8 @@ public class QryClearAccountAction extends BaseAction {
         if (!bankNo.equals(dptId)) {
             context.setData(ParamKeys.RSP_CDE, "460299");
             context.setData(ParamKeys.RSP_MSG, "清算单位非本分行!");
-            return;
+//            return;
+            throw new CoreException((String) context.getData(GDParamKeys.RSP_MSG));
         }
         //查询烟草公司清算信息
         GdEupsTransJournal transJournal = new GdEupsTransJournal();
@@ -56,7 +58,8 @@ public class QryClearAccountAction extends BaseAction {
          if ("0"== resultMap.get(0).get("totCnt")) {
              context.setData(ParamKeys.RSP_CDE, "331012");
              context.setData(ParamKeys.RSP_MSG,"没有清算数据");
-             return;
+//             return;
+             throw new CoreException((String) context.getData(GDParamKeys.RSP_MSG));
          }
         context.setData("sumAmt", resultMap.get(0).get("sumAmt"));
         context.setData("totCnt", resultMap.get(0).get("totCnt"));

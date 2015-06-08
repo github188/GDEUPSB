@@ -109,7 +109,7 @@ public class VerifyToThirdAction extends BaseAction {
                 context.setData(GDParamKeys.RSP_MSG,"此交易不存在!");
                 context.setData(GDParamKeys.BANK_SEQ_OLD, null);
 //              return;
-                throw new CoreException(GDParamKeys.RSP_MSG);
+                throw new CoreException((String) context.getData(GDParamKeys.RSP_MSG));
             } else {
                  if (eupsTransJournal.getMfmTxnSts().equals("S")) {
                      context.setData(GDParamKeys.RET_CODE_OLD,"0000");
@@ -136,7 +136,7 @@ public class VerifyToThirdAction extends BaseAction {
             context.setData(GDParamKeys.RET_CODE_OLD,null);
             context.setData(GDParamKeys.RSP_MSG_OLD,null);
 //          return;
-            throw new CoreException(GDParamKeys.RSP_MSG);
+            throw new CoreException((String) context.getData(GDParamKeys.RSP_MSG));
         }
         context.setData(GDParamKeys.RSP_CDE,"0000");
         context.setData(GDParamKeys.RSP_MSG,"处理成功 ");

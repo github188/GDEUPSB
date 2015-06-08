@@ -79,7 +79,7 @@ public class QryRemainingAction extends BaseAction {
                 context.setData(GDParamKeys.RSP_CDE,"9999");
                 context.setData(GDParamKeys.RSP_MSG,"无此用户信息 !");
 //              return;
-                throw new CoreException(GDParamKeys.RSP_MSG);
+                throw new CoreException((String) context.getData(GDParamKeys.RSP_MSG));
             }
             //   检查该客户是否已签约
             Map<String, Object> map = getMap();
@@ -94,7 +94,7 @@ public class QryRemainingAction extends BaseAction {
                 context.setData(ParamKeys.RSP_MSG,"该客户未开户!");
                 context.setData("bal", "0");
 //              return;
-                throw new CoreException(GDParamKeys.RSP_MSG);
+                throw new CoreException((String) context.getData(GDParamKeys.RSP_MSG));
             } 
             context.setData("tCusNm", accessObject.getData("cusNme"));
             context.setData("actNo", accessObject.getData("cusAc"));
