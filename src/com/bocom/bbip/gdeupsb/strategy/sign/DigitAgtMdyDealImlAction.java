@@ -122,6 +122,44 @@ public class DigitAgtMdyDealImlAction implements AgtMdyDealImlService {
 				log.info("old agent info not found!start to insert new record!");
 				gdsAgtInf = BeanUtils.toObject(context.getDataMap(), GdsAgtInf.class);
 				// gdsAgtInf.setGdsBid(gdsBId); //业务类型
+				
+				// 根据卡号取idNo
+				if(StringUtils.isEmpty(gdsAgtInf.getIdNo())){
+					String cusAc = context.getData(gdsAgtInf.getActNo()).toString().trim();
+					CusActInfResult cusactinfresult = new CusActInfResult();
+					try {
+						cusactinfresult = accountService.getAcInf(
+								CommonRequest.build(context), cusAc);
+					} catch (CoreException e) {
+						e.printStackTrace();
+						log.info("check cusAcInfo error :", e);
+					}
+
+					if ("E".equals(cusactinfresult.getResponseType())) {
+						throw new CoreException(cusactinfresult.getResponseMessage());
+					}
+					gdsAgtInf.setIdNo(cusactinfresult.getIdNo().toString().trim());
+					log.info("根据卡号取idNo得idno : " + gdsAgtInf.getIdNo());
+				}
+				// 根据卡号取开卡户主姓名
+				if(StringUtils.isEmpty(gdsAgtInf.getActNm())){
+					String cusAc = context.getData(gdsAgtInf.getActNo()).toString().trim();
+					CusActInfResult cusactinfresult = new CusActInfResult();
+					try {
+						cusactinfresult = accountService.getAcInf(
+								CommonRequest.build(context), cusAc);
+					} catch (CoreException e) {
+						e.printStackTrace();
+						log.info("check cusAcInfo error :", e);
+					}
+
+					if ("E".equals(cusactinfresult.getResponseType())) {
+						throw new CoreException(cusactinfresult.getResponseMessage());
+					}
+					gdsAgtInf.setActNm(cusactinfresult.getAcNme().toString().trim());
+					log.info("根据卡号取开卡户主姓名得 ActNm ：" + gdsAgtInf.getActNm());
+				}
+				
 				gdsAgtInf.setEffDat(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd));
 				gdsAgtInf.setIvdDat("99991231");
 				gdsAgtInf.setBrno((String) context.getData("brno"));
@@ -150,6 +188,44 @@ public class DigitAgtMdyDealImlAction implements AgtMdyDealImlService {
 						gdsAgtInf.setIvdDat(ivdDat);
 					}
 				}
+				
+				// 根据卡号取idNo
+				if(StringUtils.isEmpty(gdsAgtInf.getIdNo())){
+					String cusAc = context.getData(gdsAgtInf.getActNo()).toString().trim();
+					CusActInfResult cusactinfresult = new CusActInfResult();
+					try {
+						cusactinfresult = accountService.getAcInf(
+								CommonRequest.build(context), cusAc);
+					} catch (CoreException e) {
+						e.printStackTrace();
+						log.info("check cusAcInfo error :", e);
+					}
+
+					if ("E".equals(cusactinfresult.getResponseType())) {
+						throw new CoreException(cusactinfresult.getResponseMessage());
+					}
+					gdsAgtInf.setIdNo(cusactinfresult.getIdNo().toString().trim());
+					log.info("根据卡号取idNo得idno : " + gdsAgtInf.getIdNo());
+				}
+				// 根据卡号取开卡户主姓名
+				if(StringUtils.isEmpty(gdsAgtInf.getActNm())){
+					String cusAc = context.getData(gdsAgtInf.getActNo()).toString().trim();
+					CusActInfResult cusactinfresult = new CusActInfResult();
+					try {
+						cusactinfresult = accountService.getAcInf(
+								CommonRequest.build(context), cusAc);
+					} catch (CoreException e) {
+						e.printStackTrace();
+						log.info("check cusAcInfo error :", e);
+					}
+
+					if ("E".equals(cusactinfresult.getResponseType())) {
+						throw new CoreException(cusactinfresult.getResponseMessage());
+					}
+					gdsAgtInf.setActNm(cusactinfresult.getAcNme().toString().trim());
+					log.info("根据卡号取开卡户主姓名得 ActNm ：" + gdsAgtInf.getActNm());
+				}
+				
 				gdsAgtInf.setBrno((String) context.getData("brno"));
 				// gdsAgtInf.setIvdDat("99991231");
 				gdsAgtInf = gdsAgtInfRepository.save(gdsAgtInf);
