@@ -37,11 +37,16 @@ public class AgtQryActInf extends BaseAction {
 			context.setData("HldAmt", cusAc);
 			context.setData("actNo", cusAc);
 			context.setData("cusNme", actInf.getAcNme().trim()); // 户名
-			context.setData("idNo", actInf.getIdNo()); // 证件号
+			context.setData("idNo", actInf.getIdNo().trim()); // 证件号
 //			context.setData("idType", actInf.getIdTyp()); // 证件类型
 			log.info("=======this idType aft getAcInf By CusAc : " + actInf.getIdTyp().trim());
 			context.setData("idType", get(SwitchActInfo.class).getIdTypeInMap(actInf.getIdTyp().trim()));
-			context.setData("bCusNo", actInf.getCusNo()); // 客户号
+			
+			String bCusNo = actInf.getCusNo().trim();
+			if(bCusNo.length()>13){ //截取后13位
+				bCusNo = bCusNo.substring(bCusNo.length()-13);
+			}
+			context.setData("bCusNo", bCusNo); // 客户号
 		}
 	}
 }

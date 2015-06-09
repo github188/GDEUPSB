@@ -77,42 +77,49 @@ public class PayloadChannelInterceptorTbc extends PayloadChannelInterceptor
 	{
 		byte[] abyte0 = (byte[]) channelContext.getResponsePalyload();
 		
-					byte[] inB = abyte0;
-					int inL = inB.length;
+					//报文头长度15，报文结尾长度3
+					int headLength = 15, lastLength = 3;
+					//明文字节数
+					byte[] inBody = abyte0;
+					//明文字节数总长度
+					int inLength = inBody.length;
+					log.info("context返回的报文为:\n" + Hex.toDumpString(inBody));
+					//返回加密后报文长度
+					int encodeBodyLength = 0;
+					//返回加密后报文长度
+					byte[] encodeBody = null;
 
-					byte[] realB = new byte[inL];
-
-					// 获取头消息
-					byte[] frtB = new byte[15];
-					System.arraycopy(inB, 0, frtB, 0, 15);
-					System.arraycopy(inB, 0, realB, 0, 15);
+					// 获取报文头
+					byte[] frontBody = new byte[headLength];
+					System.arraycopy(inBody, 0, frontBody, 0, headLength);
 
 					// 获取交易码
-					String tbcTransCode = new String(frtB);
+					String tbcTransCode = new String(frontBody);
 					tbcTransCode = tbcTransCode.substring(7, 11);
 
-					// 获取加密体
-					byte[] desBody = new byte[inL - 18]; // 长度为总报文-15位头，-3位尾
-					System.arraycopy(inB, 15, desBody, 0, desBody.length);
+					// 获取明文中需要加密的部分
+					byte[] srcBody = new byte[inLength - headLength];
+					System.arraycopy(inBody, 15, srcBody, 0, srcBody.length);
 
-					log.info("context返回的报文为:\n" + Hex.toDumpString(inB) + "\n" + ",待加密的初始报文体为\n:" + Hex.toDumpString(desBody));
+					log.info("待加密的初始报文体为\n:" + Hex.toDumpString(srcBody));
 
-					// 初始报文加:
+					// 初始报文加
+					byte[] destBody = null;
 					if ("8910".equals(tbcTransCode) || "8888".equals(tbcTransCode) || "8918".equals(tbcTransCode)) {
 						log.info("当前的烟草交易码为:[" + tbcTransCode + "],使用初始秘钥进行加密！..");
-						byte[] relBody = trbDes("1111111111111111", desBody, "0"); // 使用初始秘钥加密
-						
-						System.arraycopy(relBody, 0, realB, 15, inL - 18); // 复制明文,去除后三位报文尾，前十五位报文头
+						destBody = trbDes("1111111111111111", srcBody, "0"); // 使用初始秘钥加密
 					}
-					//TODO:通讯密钥加密
-					
-					
-					System.arraycopy(inB, inL - 3, realB, inL - 3, 3); // 复制明文,去除后三位报文尾，前十五位报文头
-
-					log.info("最终返回给第三方的字节为:" + Hex.toDumpString(realB));
+					encodeBodyLength += headLength;
+					encodeBodyLength += destBody.length;
+					encodeBodyLength += lastLength;
+					encodeBody = new byte[encodeBodyLength];
+					System.arraycopy(inBody, 0, encodeBody, 0, headLength); // 复制明文,去除后三位报文尾，前十五位报文头
+					System.arraycopy(destBody, 0, encodeBody, 15, destBody.length); // 复制明文,去除后三位报文尾，前十五位报文头
+					System.arraycopy("***".getBytes(), 0, encodeBody, headLength+destBody.length, lastLength); // 复制明文,去除后三位报文尾，前十五位报文头
+					log.info("最终返回给第三方的字节为:" + Hex.toDumpString(encodeBody));
 		try
 		{
-			((Socket) channelContext.getResponse()).getOutputStream().write(realB);
+			((Socket) channelContext.getResponse()).getOutputStream().write(encodeBody);
 		} catch (IOException ioexception)
 		{
 			TRACER.trace("write socket error", ioexception);
