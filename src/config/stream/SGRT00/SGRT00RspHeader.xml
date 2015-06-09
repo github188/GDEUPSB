@@ -12,7 +12,8 @@
          <varbytes type="X" name="mix" format="none">
             <include elementFactory="xml://WEB-INF/classes/config/stream/SGRT00/" path="XMLFormat"/>
         </varbytes>
-        <fixString name="endex" length="3" default="***"/>
+        <!-- 报文中的结尾星号在拦截器里面处理 -->
+        <!-- <fixString name="endex" length="3" default="***"/> -->
     </segment>
     
 </message>
