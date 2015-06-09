@@ -15,6 +15,7 @@
 	<bean id="opeFile" class="com.bocom.bbip.eups.action.common.OperateFileAction" />
 	<!-- for file batch common utils-->
 	
+	<bean id="SwitchActInfo" class="com.bocom.bbip.gdeupsb.action.sign.SwitchActInfo" />
 	<bean id="BatchFileCommon" class="com.bocom.bbip.gdeupsb.action.common.BatchFileCommon" />
 	<bean id="lotCommon" class="com.bocom.bbip.gdeupsb.action.lot.CommonLotAction" />
 	<bean id="reportHelper" class="com.bocom.bbip.eups.action.eupsreport.ReportHelper" />
