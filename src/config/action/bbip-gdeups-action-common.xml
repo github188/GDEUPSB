@@ -48,4 +48,7 @@
 	<action id="gdeupsb.batchFileChangeAction"
 		class="com.bocom.bbip.gdeupsb.action.common.BatchFileChangeAction" />
 
+
+<action id="gdeupsb.switchActInfo" class="com.bocom.bbip.gdeupsb.action.sign.SwitchActInfo" />
+
 </x:beans>
