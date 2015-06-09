@@ -1,7 +1,5 @@
 package com.bocom.bbip.gdeupsb.action.sign;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.bocom.bbip.comp.CommonRequest;
 import com.bocom.bbip.comp.account.AccountService;
 import com.bocom.bbip.comp.account.support.CusActInfResult;
@@ -29,6 +27,7 @@ public class AgtQryActInf extends BaseAction {
 
 		} else if ("1".equals(actTyp) || "2".equals(actTyp) || "4".equals(actTyp)) { // 一本通,存折,卡
 			String cusAc = context.getData(ParamKeys.ACT_NO);
+//			SwitchActInfo sa = new SwitchActInfo();
 			CusActInfResult actInf = get(AccountService.class).getAcInf(CommonRequest.build(context), cusAc);
 			log.info("返回的信息为:actInf" + actInf);
 			context.setData("actNo", cusAc); // 卡号
@@ -37,9 +36,11 @@ public class AgtQryActInf extends BaseAction {
 			context.setData("bal", actInf.getActBal()); // 余额
 			context.setData("HldAmt", cusAc);
 			context.setData("actNo", cusAc);
-			context.setData("cusNme", actInf.getAcNme()); // 户名
+			context.setData("cusNme", actInf.getAcNme().trim()); // 户名
 			context.setData("idNo", actInf.getIdNo()); // 证件号
-			context.setData("idType", actInf.getIdTyp()); // 证件类型
+//			context.setData("idType", actInf.getIdTyp()); // 证件类型
+			log.info("=======this idType aft getAcInf By CusAc : " + actInf.getIdTyp().trim());
+			context.setData("idType", get(SwitchActInfo.class).getIdTypeInMap(actInf.getIdTyp().trim()));
 			context.setData("bCusNo", actInf.getCusNo()); // 客户号
 		}
 	}
