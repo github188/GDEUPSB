@@ -82,23 +82,23 @@ public class QryRemainingAction extends BaseAction {
                 throw new CoreException((String) context.getData(GDParamKeys.RSP_MSG));
             }
             //   检查该客户是否已签约
-            Map<String, Object> map = getMap();
-            map.put("cusAc",cusAc);
-            map.put("bk", context.getData(ParamKeys.BK));
-            map.put("br", context.getData(ParamKeys.BR));
-
-            
-            Result accessObject =  serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", map);
-            if (CollectionUtils.isEmpty(accessObject.getPayload())) {
-                context.setData(ParamKeys.RSP_CDE,"9999");
-                context.setData(ParamKeys.RSP_MSG,"该客户未开户!");
-                context.setData("bal", "0");
-//              return;
-                throw new CoreException((String) context.getData(GDParamKeys.RSP_MSG));
-            } 
-            context.setData("tCusNm", accessObject.getData("cusNme"));
-            context.setData("actNo", accessObject.getData("cusAc"));
-            context.setData("dbPasWrd", accessObject.getData("pwd"));
+//            Map<String, Object> map = getMap();
+//            map.put("cusAc",cusAc);
+//            map.put("bk", context.getData(ParamKeys.BK));
+//            map.put("br", context.getData(ParamKeys.BR));
+//
+//            
+//            Result accessObject =  serviceAccess.callServiceFlatting("queryListAgentCollectAgreement", map);
+//            if (CollectionUtils.isEmpty(accessObject.getPayload())) {
+//                context.setData(ParamKeys.RSP_CDE,"9999");
+//                context.setData(ParamKeys.RSP_MSG,"该客户未开户!");
+//                context.setData("bal", "0");
+////              return;
+//                throw new CoreException((String) context.getData(GDParamKeys.RSP_MSG));
+//            } 
+//            context.setData("tCusNm", accessObject.getData("cusNme"));
+//            context.setData("actNo", accessObject.getData("cusAc"));
+//            context.setData("dbPasWrd", accessObject.getData("pwd"));
             //构成网点号
             String cAgtNo = CodeSwitchUtils.codeGenerator("GDYC_DPTID",  context.getData("dptId").toString());
             if (null == cAgtNo) {

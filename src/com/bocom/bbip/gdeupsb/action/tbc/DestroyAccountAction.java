@@ -47,6 +47,10 @@ public class DestroyAccountAction extends BaseAction {
         log.info("DestroyAccount Action start!...");
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
 
+        //预置交易失败
+        context.setData(GDParamKeys.RSP_CDE,"9999");
+        context.setData(GDParamKeys.RSP_MSG,"交易失败");
+        
         //转换
         context.setData("txnTme", context.getData("TRAN_TIME"));
         context.setData("bk", context.getData("BANK_ID"));
@@ -70,18 +74,19 @@ public class DestroyAccountAction extends BaseAction {
         if (resultTbcBasInfo.getSigSts().equals(Constants.TXN_CTL_STS_SIGNOUT)) {
             throw new CoreException(ErrorCodes.THD_CHL_ALDEAY_SIGN_OUT);
         }
-        //客户签约状态
+        
+        //客户签约状态  
         GdTbcCusAgtInfo tbcCusAgtInfo = new GdTbcCusAgtInfo();
         tbcCusAgtInfo.setActNo(context.getData("actNo").toString());
         tbcCusAgtInfo.setStatus("0");
         List<GdTbcCusAgtInfo> gdTbcAgtInfo = get(GdTbcCusAgtInfoRepository.class).find(tbcCusAgtInfo);
         if (CollectionUtils.isEmpty(gdTbcAgtInfo)){
             context.setData(GDParamKeys.RSP_CDE,"9999");
-            context.setData(GDParamKeys.RSP_MSG,"账户已注销!");
+            context.setData(GDParamKeys.RSP_MSG,"不存在客户信息，销户操作失败！");
             throw new CoreException(GDParamKeys.RSP_MSG);
         }
         
-        //校验客户姓名
+        //校验客户姓名  
         String cusNme = context.getData("cusNam").toString().trim();
         String tCusNm = gdTbcAgtInfo.get(0).getCusNm().trim();
         if (!cusNme.equals(tCusNm)) {
@@ -90,15 +95,13 @@ public class DestroyAccountAction extends BaseAction {
             context.setData(GDParamKeys.RSP_MSG,"客户姓名不符!");
             throw new CoreException(GDParamKeys.RSP_MSG);
         }
-                
-        String cusTyp = context.getData("CusTyp").toString().trim();
-        String pasId = context.getData("pasId").toString().trim();
-        String idNo =gdTbcAgtInfo.get(0).getPasId().trim();
-        String liceId = context.getData("liceId").toString().trim();
-        String LiceId = gdTbcAgtInfo.get(0).getLiceId().trim();
+        
+        String cusTyp = context.getData("cusTyp").toString().trim(); 
         
         //校验身份证号
         if ("01".equals(cusTyp)) {
+        	String pasId = context.getData("pasId").toString().trim();
+        	String idNo =gdTbcAgtInfo.get(0).getPasId().trim();
             if (!idNo.equals(pasId)) {
             	log.info("身份证号码不符，当前context中的pasId=" + pasId + ",数据库中记录的pasId=" + idNo);
                 context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
@@ -109,6 +112,8 @@ public class DestroyAccountAction extends BaseAction {
         }
         //校验营业执照号
         else {
+        	String liceId = context.getData("liceId").toString().trim();
+        	String LiceId = gdTbcAgtInfo.get(0).getLiceId().trim();
             if (!LiceId.equals(liceId)) {
             	log.info("营业执照号码不符，当前context中的liceId=" + liceId + ",数据库中记录的LiceId=" + LiceId);
                 context.setData("MsgTyp",Constants.RESPONSE_TYPE_FAIL);
