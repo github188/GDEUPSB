@@ -5,19 +5,27 @@ import java.net.Socket;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import com.bocom.bbip.gdeupsb.entity.GdTbcBasInf;
+import com.bocom.bbip.gdeupsb.repository.GdTbcBasInfRepository;
 import com.bocom.bbip.utils.CryptoUtils;
+import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.JumpException;
 import com.bocom.jump.bp.channel.ChannelContext;
 import com.bocom.jump.bp.channel.tcp.interceptors.PayloadChannelInterceptor;
 import com.bocom.jump.bp.channel.tcp.interceptors.SocketChannelInterceptor;
 import com.bocom.jump.bp.core.ContextEx;
+import com.bocom.jump.bp.core.CoreException;
 import com.bocom.jump.bp.support.TRACER;
 import com.bocom.jump.bp.util.Hex;
 
 public class PayloadChannelInterceptorTbc extends PayloadChannelInterceptor
 		implements SocketChannelInterceptor
 {
+	@Autowired
+	GdTbcBasInfRepository gdTbcBasInfRepository;
+	
 	private Logger log = LoggerFactory.getLogger(PayloadChannelInterceptorTbc.class);
 
 	public PayloadChannelInterceptorTbc()
@@ -45,6 +53,8 @@ public class PayloadChannelInterceptorTbc extends PayloadChannelInterceptor
 			
 			// 获取交易码
 			String tbcTransCode = new String(frtB);
+			String dptId = tbcTransCode.substring(11); //截取烟草单位编码
+			String decKey = getKeyFromDB(dptId);  // 获取通讯密钥
 			tbcTransCode = tbcTransCode.substring(7, 11);
 
 			// 获取加密体
@@ -57,10 +67,13 @@ public class PayloadChannelInterceptorTbc extends PayloadChannelInterceptor
 			if ("8910".equals(tbcTransCode) || "8888".equals(tbcTransCode) || "8918".equals(tbcTransCode)) {
 				log.info("当前的烟草交易码为:[" + tbcTransCode + "],使用初始秘钥进行解密！..");
 				byte[] relBody = trbDes("1111111111111111", desBody, "1"); // 使用初始秘钥解密
-				
 				System.arraycopy(relBody, 0, realB, 15, inL - 18); // 复制明文,去除后三位报文尾，前十五位报文头
 			}
-			//TODO:通讯密钥处理
+			else{ // 通讯密钥处理
+				log.info("当前的烟草交易码为:[" + tbcTransCode + "],使用通讯密钥进行解密！..");
+				byte[] relBody = trbDes(decKey, desBody, "1"); // 使用通讯密钥解密
+				System.arraycopy(relBody, 0, realB, 15, inL - 18); // 复制明文,去除后三位报文尾，前十五位报文头
+			}
 			
 			System.arraycopy(inB, inL - 3, realB, inL - 3, 3); // 复制明文,去除后三位报文尾，前十五位报文头
 
@@ -95,6 +108,13 @@ public class PayloadChannelInterceptorTbc extends PayloadChannelInterceptor
 
 					// 获取交易码
 					String tbcTransCode = new String(frontBody);
+					String dptId = tbcTransCode.substring(11); //截取烟草单位编码
+					String decKey = null; 
+					try {
+						decKey = getKeyFromDB(dptId); //获取通讯密钥
+					} catch (CoreException e) {
+						log.info("~~~~~~~~~~~~ 获取通讯密钥出错，" + e);
+					}
 					tbcTransCode = tbcTransCode.substring(7, 11);
 
 					// 获取明文中需要加密的部分
@@ -108,12 +128,22 @@ public class PayloadChannelInterceptorTbc extends PayloadChannelInterceptor
 					if ("8910".equals(tbcTransCode) || "8888".equals(tbcTransCode) || "8918".equals(tbcTransCode)) {
 						log.info("当前的烟草交易码为:[" + tbcTransCode + "],使用初始秘钥进行加密！..");
 						destBody = trbDes("1111111111111111", srcBody, "0"); // 使用初始秘钥加密
+						log.info("加密后的报文尝试解密\n:" + Hex.toDumpString(trbDes("1111111111111111", destBody, "1")));
+					}else{
+						log.info("当前的烟草交易码为:[" + tbcTransCode + "],使用通讯密钥进行加密！..");
+						destBody = trbDes(decKey, srcBody, "0"); // 使用通讯密钥加密
+						log.info("加密后的报文尝试解密\n:" + Hex.toDumpString(trbDes("1111111111111111", destBody, "1")));
 					}
 					encodeBodyLength += headLength;
 					encodeBodyLength += destBody.length;
 					encodeBodyLength += lastLength;
+					//由于原报文长度没有计算加密后的长度，需要重新计算报文长度
+					int totalBodyLength = 0;
+					totalBodyLength += encodeBodyLength - 4;
+					log.info("加密后报文长度为\n:" + String.format("%04d", totalBodyLength));
 					encodeBody = new byte[encodeBodyLength];
 					System.arraycopy(inBody, 0, encodeBody, 0, headLength); // 复制明文,去除后三位报文尾，前十五位报文头
+					System.arraycopy(String.format("%04d", totalBodyLength).getBytes(), 0, encodeBody, 0, 4); // 更正加密后的报文长度
 					System.arraycopy(destBody, 0, encodeBody, 15, destBody.length); // 复制明文,去除后三位报文尾，前十五位报文头
 					System.arraycopy("***".getBytes(), 0, encodeBody, headLength+destBody.length, lastLength); // 复制明文,去除后三位报文尾，前十五位报文头
 					log.info("最终返回给第三方的字节为:" + Hex.toDumpString(encodeBody));
@@ -183,5 +213,20 @@ public class PayloadChannelInterceptorTbc extends PayloadChannelInterceptor
 		}
 		return result;
 	}
-	
+	/**
+	 * 1.根据报文头后4位（单位编码 dptId ）查表 GdTbcBasInf  ，用findOne(dptId)
+	 * 2.取rsvFld1 即为通讯密钥
+	 * 3.异常控制
+	 */
+	private String getKeyFromDB(String dptId) throws CoreException{
+		log.info("~~~~~~~~~~~~ getKeyFromDB started...");
+		GdTbcBasInf basInf = gdTbcBasInfRepository.findOne(dptId);
+		String key = basInf.getRsvFld1();
+		if(StringUtils.isEmpty(key)){
+			throw new CoreException("~~~~~~~~~ 通讯密钥为空 ~~~~~~~~");
+		}
+		key = key.toString().trim();
+		log.info("~~~~~~~~~~~~ the key from DB is : " + key);
+		return key;
+	}
 }
