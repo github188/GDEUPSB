@@ -1,10 +1,7 @@
 package com.bocom.bbip.gdeupsb.action.tbc;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,9 +19,9 @@ import com.bocom.bbip.gdeupsb.repository.GdTbcBasInfRepository;
 import com.bocom.bbip.gdeupsb.repository.GdTbcCusAgtInfoRepository;
 import com.bocom.bbip.gdeupsb.utils.CodeSwitchUtils;
 import com.bocom.bbip.service.BGSPServiceAccessObject;
+import com.bocom.bbip.utils.BeanUtils;
 import com.bocom.bbip.utils.CollectionUtils;
 import com.bocom.bbip.utils.DateUtils;
-import com.bocom.bbip.utils.StringUtils;
 import com.bocom.jump.bp.core.Context;
 import com.bocom.jump.bp.core.CoreException;
 
@@ -45,7 +42,7 @@ public class EstablishAccountAction extends BaseAction {
     
     @Override
      public void execute(Context context) throws CoreException {
-        log.info("EstablishAccount Action start!");
+        log.info("EstablishAccount Action start with context: \n" + context);
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_FAIL);
         
         //转换
@@ -69,6 +66,7 @@ public class EstablishAccountAction extends BaseAction {
         context.setData("telNum", context.getData("TEL"));
         context.setData("devId", context.getData("DEV_ID"));
         context.setData("teller", context.getData("TELLER"));
+        log.info(" ~~~~~~ context sft switch data : \n"+ context);
 
         //检查系统签到状态
         GdTbcBasInf resultTbcBasInfo = get(GdTbcBasInfRepository.class).findOne(context.getData("dptId").toString());
@@ -105,7 +103,6 @@ public class EstablishAccountAction extends BaseAction {
         context.setData("bk", "01441999999");//TODO
     	context.setData("br", "01441800999");
     	
-    	//TODO 查询账户(对公/对私)信息
               
         //检查该客户是否已签约
         String cusAc=context.getData("actNo").toString();  //帐号        
@@ -154,13 +151,16 @@ public class EstablishAccountAction extends BaseAction {
 //                }
 //            }
             //GDEUPS协议临时表添加数据 
-            GdTbcCusAgtInfo  cusAgtInfo =new  GdTbcCusAgtInfo();
-            cusAgtInfo.setActNo(context.getData("actNo").toString());
-            cusAgtInfo.setCustId(context.getData("custId").toString());
-            cusAgtInfo.setCusNm(context.getData("tCusNm").toString());
-            cusAgtInfo.setPasId(context.getData("pasId").toString());
-            cusAgtInfo.setComId(context.getData("comId").toString());
-            cusAgtInfo.setAccTyp(context.getData("accTyp").toString());
+//            GdTbcCusAgtInfo  cusAgtInfo =new  GdTbcCusAgtInfo();
+            GdTbcCusAgtInfo  cusAgtInfo = BeanUtils.toObject(context.getDataMap(), GdTbcCusAgtInfo.class);
+            cusAgtInfo.setBrNo(context.getData("nodNo").toString().trim());
+            cusAgtInfo.setComNo(context.getData("cAgtNo").toString().trim());
+//            cusAgtInfo.setActNo(context.getData("actNo").toString());
+//            cusAgtInfo.setCustId(context.getData("custId").toString());
+//            cusAgtInfo.setCusNm(context.getData("tCusNm").toString());
+//            cusAgtInfo.setPasId(context.getData("pasId").toString());
+//            cusAgtInfo.setComId(context.getData("comId").toString());
+//            cusAgtInfo.setAccTyp(context.getData("accTyp").toString());
             cusAgtInfo.setStatus("0");  // add by MQ 
             cusAgtInfo.setOpnDat(DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)); //开户日期
             cusAgtInfoRepository.insert(cusAgtInfo);
@@ -203,13 +203,14 @@ public class EstablishAccountAction extends BaseAction {
 //                 }
 //            }
             //GDEUPS协议临时表更改数据
-            GdTbcCusAgtInfo  cusAgtInfo =new  GdTbcCusAgtInfo();
-            cusAgtInfo.setActNo(context.getData("actNo").toString());
-            cusAgtInfo.setCustId(context.getData("custId").toString());
-            cusAgtInfo.setCusNm(context.getData("tCusNm").toString());
-            cusAgtInfo.setPasId(context.getData("pasId").toString());
-            cusAgtInfo.setComId(context.getData("comId").toString());
-            cusAgtInfo.setAccTyp(context.getData("accTyp").toString());
+//            GdTbcCusAgtInfo  cusAgtInfo =new  GdTbcCusAgtInfo();
+        	GdTbcCusAgtInfo  cusAgtInfo = BeanUtils.toObject(context.getDataMap(), GdTbcCusAgtInfo.class);
+//            cusAgtInfo.setActNo(context.getData("actNo").toString());
+//            cusAgtInfo.setCustId(context.getData("custId").toString());
+//            cusAgtInfo.setCusNm(context.getData("tCusNm").toString());
+//            cusAgtInfo.setPasId(context.getData("pasId").toString());
+//            cusAgtInfo.setComId(context.getData("comId").toString());
+//            cusAgtInfo.setAccTyp(context.getData("accTyp").toString());
             cusAgtInfo.setStatus("0"); // add by MQ 
             cusAgtInfoRepository.update(cusAgtInfo);
         }
@@ -218,68 +219,67 @@ public class EstablishAccountAction extends BaseAction {
         context.setState(BPState.BUSINESS_PROCESSNIG_STATE_NORMAL);
     }
     
-	private void setAgtCltAndCusInf(Context context) {
-		List<Map<String, Object>> agentCollectAgreementList = new ArrayList<Map<String, Object>>();
-		Map<String, Object> agentCollectAgreementListMap = setAgentCollectAgreementMap(context);
-		agentCollectAgreementList.add(agentCollectAgreementListMap);
-		context.setData("agentCollectAgreement", agentCollectAgreementList);
-		// context.setDataMap(agentCollectAgreementListMap);
-
-		List<Map<String, Object>> customerInfoList = new ArrayList<Map<String, Object>>();
-		Map<String, Object> customerInfoMap = setCustomerInfoMap(context);
-		customerInfoList.add(customerInfoMap);
-		context.setData("customerInfo", customerInfoList);
-		// context.setDataMap(customerInfoMap);
-	}
-
+//	private void setAgtCltAndCusInf(Context context) {
+//		List<Map<String, Object>> agentCollectAgreementList = new ArrayList<Map<String, Object>>();
+//		Map<String, Object> agentCollectAgreementListMap = setAgentCollectAgreementMap(context);
+//		agentCollectAgreementList.add(agentCollectAgreementListMap);
+//		context.setData("agentCollectAgreement", agentCollectAgreementList);
+//		// context.setDataMap(agentCollectAgreementListMap);
+//
+//		List<Map<String, Object>> customerInfoList = new ArrayList<Map<String, Object>>();
+//		Map<String, Object> customerInfoMap = setCustomerInfoMap(context);
+//		customerInfoList.add(customerInfoMap);
+//		context.setData("customerInfo", customerInfoList);
+//		// context.setDataMap(customerInfoMap);
+//	}
 	
 
-	private Map<String, Object> setCustomerInfoMap(Context context) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("agtCllCusId", context.getData(ParamKeys.THD_CUS_NO));
-		map.put("cusTyp", context.getData("cusTyp"));
-		map.put(ParamKeys.CUS_NO, context.getData("custId"));
-		map.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
-		map.put(ParamKeys.CUS_NME, context.getData("tCusNm"));
-		map.put(ParamKeys.CCY, "CNY");
-		map.put(ParamKeys.ID_TYPE, context.getData("pasTyp"));
-		map.put("idNo", context.getData("pasId"));
-		map.put("bvCde", context.getData("bvCde"));
-		if (StringUtils.isNotBlank((String) context.getData("bvNo"))) {
-			map.put("bvNo", (String) context.getData("bvNo"));
-		}
-		map.put("ourOthFlg", "0");
-		return map;
-	}
-	private Map<String, Object> setAgentCollectAgreementMap(Context context) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		if (StringUtils.isNotBlank((String) context.getData("agdAgrNo"))) {
-			map.put("agdAgrNo", context.getData("agdAgrNo"));
-		}
-		map.put(ParamKeys.CUS_AC, context.getData("actNo"));
-		map.put("acoAc", context.getData(ParamKeys.CUS_AC));
-		if (StringUtils.isNotBlank((String) context.getData("pasWrd"))) {
-			map.put("pwd", (String) context.getData("pasWrd"));
-		}
-		map.put("bvCde", context.getData("bvCde"));
-		if (StringUtils.isNotBlank((String) context.getData("bvNo"))) {
-			map.put("bvNo", (String) context.getData("bvNo"));
-		}
-		map.put(ParamKeys.COMPANY_NO,"4410011485");//TODO
-		map.put("comNum", context.getData("comNum"));
-
-		map.put(ParamKeys.BUS_TYP, "0"); // TODO 0-代收； 暂用0，待确认0-代收,1-代付,2-代缴
-											// 0-批量代收；1-批量代付；2-联机缴费；
-		map.put(ParamKeys.BUSS_KIND, "A123");
-		map.put(ParamKeys.CCY, "CNY");
-		map.put("cusFeeDerFlg", "0"); // TODO 暂用0，待确认
-		map.put("agtSrvCusId", context.getData("CUST_ID").toString());
-		map.put("agtSrvCusPnm", context.getData(ParamKeys.THD_CUS_NME));
-		map.put("agrVldDte",DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)); // YYYYMMDD默认当日
-		map.put("agrExpDte", "99991231"); // YYYYMMDD默认最大日，99991231
-		map.put(ParamKeys.CMU_TEL, context.getData("telNum"));
-		map.put(ParamKeys.THD_CUS_NO, context.getData(ParamKeys.THD_CUS_NO));
-		return map;
-	}
+//	private Map<String, Object> setCustomerInfoMap(Context context) {
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		map.put("agtCllCusId", context.getData(ParamKeys.THD_CUS_NO));
+//		map.put("cusTyp", context.getData("cusTyp"));
+//		map.put(ParamKeys.CUS_NO, context.getData("custId"));
+//		map.put(ParamKeys.CUS_AC, context.getData(ParamKeys.CUS_AC));
+//		map.put(ParamKeys.CUS_NME, context.getData("tCusNm"));
+//		map.put(ParamKeys.CCY, "CNY");
+//		map.put(ParamKeys.ID_TYPE, context.getData("pasTyp"));
+//		map.put("idNo", context.getData("pasId"));
+//		map.put("bvCde", context.getData("bvCde"));
+//		if (StringUtils.isNotBlank((String) context.getData("bvNo"))) {
+//			map.put("bvNo", (String) context.getData("bvNo"));
+//		}
+//		map.put("ourOthFlg", "0");
+//		return map;
+//	}
+//	private Map<String, Object> setAgentCollectAgreementMap(Context context) {
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		if (StringUtils.isNotBlank((String) context.getData("agdAgrNo"))) {
+//			map.put("agdAgrNo", context.getData("agdAgrNo"));
+//		}
+//		map.put(ParamKeys.CUS_AC, context.getData("actNo"));
+//		map.put("acoAc", context.getData(ParamKeys.CUS_AC));
+//		if (StringUtils.isNotBlank((String) context.getData("pasWrd"))) {
+//			map.put("pwd", (String) context.getData("pasWrd"));
+//		}
+//		map.put("bvCde", context.getData("bvCde"));
+//		if (StringUtils.isNotBlank((String) context.getData("bvNo"))) {
+//			map.put("bvNo", (String) context.getData("bvNo"));
+//		}
+//		map.put(ParamKeys.COMPANY_NO,"4410011485");//TODO
+//		map.put("comNum", context.getData("comNum"));
+//
+//		map.put(ParamKeys.BUS_TYP, "0"); // TODO 0-代收； 暂用0，待确认0-代收,1-代付,2-代缴
+//											// 0-批量代收；1-批量代付；2-联机缴费；
+//		map.put(ParamKeys.BUSS_KIND, "A123");
+//		map.put(ParamKeys.CCY, "CNY");
+//		map.put("cusFeeDerFlg", "0"); // TODO 暂用0，待确认
+//		map.put("agtSrvCusId", context.getData("CUST_ID").toString());
+//		map.put("agtSrvCusPnm", context.getData(ParamKeys.THD_CUS_NME));
+//		map.put("agrVldDte",DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)); // YYYYMMDD默认当日
+//		map.put("agrExpDte", "99991231"); // YYYYMMDD默认最大日，99991231
+//		map.put(ParamKeys.CMU_TEL, context.getData("telNum"));
+//		map.put(ParamKeys.THD_CUS_NO, context.getData(ParamKeys.THD_CUS_NO));
+//		return map;
+//	}
 
 }
