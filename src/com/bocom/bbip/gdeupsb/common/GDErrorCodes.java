@@ -564,5 +564,11 @@ public final class GDErrorCodes {
 	public static final String EUPS_INPUT_ERR = "BBIP4400EU1300";
 	/** 正在处理，请稍候......*/
 	public static final String BAT_STS_IS_NOT_SUCC = "BBIP4400EU1398";
+	/**该客户处于不允许交易状态*/
+	public static final String TBC_CUST_NOT_ALLOW_TRANS = "BBIP4400EU1397";
+	/**客户未签约*/
+	public static String TBC_CUST_NOT_SIGN="BBIP4400EU1396";
+	/**交易金额格式错误*/
+	public static String TBC_AMT_EROR="BBIP4400EU1395";
 	
 }
