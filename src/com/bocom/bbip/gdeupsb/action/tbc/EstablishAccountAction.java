@@ -48,7 +48,7 @@ public class EstablishAccountAction extends BaseAction {
         //转换
         context.setData("txnTme", context.getData("TRAN_TIME"));
 //      context.setData(ParamKeys.BK, context.getData("BANK_ID"));
-        context.setData(ParamKeys.BK, "01441999999");
+//        context.setData(ParamKeys.BK, "01441999999");
         context.setData("dptId", context.getData("DPT_ID"));
         //上面公共报文头，下面报文体
         context.setData("custId", context.getData("CUST_ID"));
@@ -62,7 +62,7 @@ public class EstablishAccountAction extends BaseAction {
         context.setData("actNo", context.getData("ACC"));
         context.setData("pasFlg", context.getData("PASS_FLAG"));
         context.setData("pasWrd", context.getData("PASSWORD"));
-        context.setData("addres", context.getData("ADDR"));
+        context.setData("addr", context.getData("ADDR"));
         context.setData("telNum", context.getData("TEL"));
         context.setData("devId", context.getData("DEV_ID"));
         context.setData("teller", context.getData("TELLER"));
@@ -78,9 +78,9 @@ public class EstablishAccountAction extends BaseAction {
         }
         
         //获取虚拟柜员号 add by zds
-        String tlr = publicService.getETeller("01441999999");
-        System.out.println("tlr=" + tlr);
-        context.setData("tlr", tlr);
+//        String tlr = publicService.getETeller("01441999999");
+//        System.out.println("tlr=" + tlr);
+//        context.setData("tlr", tlr);
         
         //转换机构编号
         context.setData("comNum", resultTbcBasInfo.getDptNam());
@@ -100,8 +100,6 @@ public class EstablishAccountAction extends BaseAction {
 
         context.setData("tTxnCd","483803");
         context.setData("txnCtlSts", "0");
-        context.setData("bk", "01441999999");//TODO
-    	context.setData("br", "01441800999");
     	
               
         //检查该客户是否已签约
@@ -153,8 +151,8 @@ public class EstablishAccountAction extends BaseAction {
             //GDEUPS协议临时表添加数据 
 //            GdTbcCusAgtInfo  cusAgtInfo =new  GdTbcCusAgtInfo();
             GdTbcCusAgtInfo  cusAgtInfo = BeanUtils.toObject(context.getDataMap(), GdTbcCusAgtInfo.class);
-            cusAgtInfo.setBrNo(context.getData("nodNo").toString().trim());
-            cusAgtInfo.setComNo(context.getData("cAgtNo").toString().trim());
+            cusAgtInfo.setBrNo(nodNo);
+            cusAgtInfo.setComNo(cAgtNo);
 //            cusAgtInfo.setActNo(context.getData("actNo").toString());
 //            cusAgtInfo.setCustId(context.getData("custId").toString());
 //            cusAgtInfo.setCusNm(context.getData("tCusNm").toString());
