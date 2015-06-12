@@ -8,6 +8,7 @@ import com.bocom.bbip.comp.BBIPPublicService;
 import com.bocom.bbip.eups.action.BaseAction;
 import com.bocom.bbip.eups.entity.EupsBatchConsoleInfo;
 import com.bocom.bbip.eups.repository.EupsBatchConsoleInfoRepository;
+import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.entity.GDEupsBatchConsoleInfo;
 import com.bocom.bbip.gdeupsb.repository.GDEupsBatchConsoleInfoRepository;
 import com.bocom.bbip.utils.DateUtils;
@@ -28,17 +29,22 @@ public class CommNotifyBatchStatusAction extends BaseAction{
 				//获取总行批次信息
 				EupsBatchConsoleInfo eupsBatchConsoleInfo=get(EupsBatchConsoleInfoRepository.class).findOne(batNo);
 				String batNos=eupsBatchConsoleInfo.getRsvFld1();
-				eupsBatchConsoleInfo.setPayCnt(null);
-				//更改总行控制 使其可以手动调用反盘文件
-				get(EupsBatchConsoleInfoRepository.class).update(eupsBatchConsoleInfo);
-				log.info("==============update  eupsBatchConsoleInfo  set  payCnt = null ; batNo = "+batNo);
-				log.info("============================"+eupsBatchConsoleInfo);
-				//异步调用 反盘文件
-				String mothed="eups.commNotifyBatchStatus";
-				bbipPublicService.asynExecute(mothed, context);
+//				eupsBatchConsoleInfo.setPayCnt(null);
+//				//更改总行控制 使其可以手动调用反盘文件
+//				get(EupsBatchConsoleInfoRepository.class).update(eupsBatchConsoleInfo);
+//				log.info("==============update  eupsBatchConsoleInfo  set  payCnt = null ; batNo = "+batNo);
+//				log.info("============================"+eupsBatchConsoleInfo);
+//				//异步调用 反盘文件
+//				String mothed="eups.commNotifyBatchStatus";
+//				bbipPublicService.asynExecute(mothed, context);
 				//返回文件名
 				GDEupsBatchConsoleInfo gdEupsBatchConsoleInfo=gdEupsBatchConsoleInfoRepository.findOne(batNos);
-				String fileName=gdEupsBatchConsoleInfo.getComNo()+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";
+				//判断批次处理状态				
+				if(!"S".equals(gdEupsBatchConsoleInfo.getBatSts())){ //"正在处理，请稍候......"
+					throw new CoreException(GDErrorCodes.BAT_STS_IS_NOT_SUCC);
+				}
+//				String fileName=gdEupsBatchConsoleInfo.getComNo()+"_"+DateUtils.format(new Date(), DateUtils.STYLE_yyyyMMdd)+".txt";
+				String fileName=gdEupsBatchConsoleInfo.getRsvFld1().toString().trim();
 				//返回字段配置
 		        context.setData("ApFmt",  "48211");
 		        context.setData("batNo",  gdEupsBatchConsoleInfo.getBatNo());
