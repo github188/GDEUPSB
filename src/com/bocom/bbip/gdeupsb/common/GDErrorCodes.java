@@ -562,5 +562,7 @@ public final class GDErrorCodes {
 	public static final String GAS_JNL_IS_CNL = "BBIP4400EU0631";
 	/** 输入金额或笔数错误 */
 	public static final String EUPS_INPUT_ERR = "BBIP4400EU1300";
+	/** 正在处理，请稍候......*/
+	public static final String BAT_STS_IS_NOT_SUCC = "BBIP4400EU1398";
 	
 }
