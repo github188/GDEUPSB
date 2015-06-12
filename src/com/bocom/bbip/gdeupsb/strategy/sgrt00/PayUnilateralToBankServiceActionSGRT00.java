@@ -20,6 +20,7 @@ import com.bocom.bbip.eups.repository.EupsTransJournalRepository;
 import com.bocom.bbip.eups.spi.service.single.PayUnilateralToBankService;
 import com.bocom.bbip.eups.spi.vo.CommHeadDomain;
 import com.bocom.bbip.eups.spi.vo.PayFeeOnlineDomain;
+import com.bocom.bbip.gdeupsb.common.GDErrorCodes;
 import com.bocom.bbip.gdeupsb.common.GDParamKeys;
 import com.bocom.bbip.gdeupsb.entity.GdTbcCusAgtInfo;
 import com.bocom.bbip.gdeupsb.repository.GdTbcCusAgtInfoRepository;
@@ -57,8 +58,8 @@ public class PayUnilateralToBankServiceActionSGRT00 implements
 		context.setData(GDParamKeys.RSP_MSG, "交易失败");
 		String hstRspString = context.getData("responseCode").toString();
 
-		if (Constants.RESPONSE_CODE_SUCC.equals(hstRspString)
-				|| Constants.RESPONSE_CODE_SUCC_HOST.equals(hstRspString)) {
+		if ( "S".equals(context.getData(ParamKeys.MFM_TXN_STS)) &&
+				Constants.RESPONSE_CODE_SUCC_HOST.equals(hstRspString)) {
 			context.setData(GDParamKeys.RSP_MSG, Constants.RESPONSE_MSG);
 			context.setData(GDParamKeys.RSP_CDE, "0000");
 		} else {
@@ -107,7 +108,7 @@ public class PayUnilateralToBankServiceActionSGRT00 implements
 			context.setData(GDParamKeys.RSP_MSG, "客户未签约");
 			jnl.setRspMsg("客户未签约");
 			eupsTransJournalRepository.update(jnl);
-			throw new CoreException(GDParamKeys.RSP_MSG);
+			throw new CoreException(GDErrorCodes.TBC_CUST_NOT_SIGN);
 		}
 		// 校验协议状态 --add by MQ
 		// 同时解决生产测试之初只允许部分客户交易的问题，数据库将不允许交易的客户status置1
@@ -116,9 +117,10 @@ public class PayUnilateralToBankServiceActionSGRT00 implements
 			context.setData(GDParamKeys.RSP_MSG, "该客户处于不允许交易状态");
 			jnl.setRspMsg("该客户处于不允许交易状态");
 			eupsTransJournalRepository.update(jnl);
-			throw new CoreException(GDParamKeys.RSP_MSG);
+			throw new CoreException(GDErrorCodes.TBC_CUST_NOT_ALLOW_TRANS);
 		}
 		context.setData(ParamKeys.CUS_AC, cusAgtInfo.getActNo());
+		context.setData(ParamKeys.THD_CUS_NME, cusAgtInfo.getCusNm());
 
 		// String txnAmt = context.getData("amount");
 		// BigDecimal realAmt = NumberUtils.centToYuan(txnAmt);
@@ -132,7 +134,7 @@ public class PayUnilateralToBankServiceActionSGRT00 implements
 		} else {
 			context.setData(GDParamKeys.RSP_CDE, "9999");
 			context.setData(GDParamKeys.RSP_MSG, "交易金额格式错误！");
-			throw new CoreException("9999");
+			throw new CoreException(GDErrorCodes.TBC_AMT_EROR);
 		}
 
 		context.setData(ParamKeys.TXN_AMT, realAmt);
@@ -184,6 +186,7 @@ public class PayUnilateralToBankServiceActionSGRT00 implements
 		context.setData(ParamKeys.THD_TXN_CDE, "483805");
 		context.setData(ParamKeys.RSV_FLD2, context.getData("DPT_ID")); 
 		context.setData(ParamKeys.THD_CUS_NO, context.getData("CUST_ID"));
+		context.setData(ParamKeys.THD_SQN, context.getData("CO_NUM"));
 		
 		log.info("~~~~~~~~~~~~~ SGRT00 prepareCheckDeal end with context~~~~~~~~~~~~~~\n" + context);
 		return null;
